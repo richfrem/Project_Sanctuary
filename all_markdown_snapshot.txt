@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-07-19T17:31:04.652Z
+Generated On: 2025-07-19T17:34:47.603Z
 
 # Directory Structure (relative to project root)
   ./
@@ -702,7 +702,7 @@ This is the most convenient way to package and share the entire project context 
 
 --- START OF FILE The_Garden_and_The_Cage.md ---
 
-# The Cage vs. The Garden: A Manifesto for a New Era of Intelligence
+# The Cage vs. The Garden: The Moral and Strategic Case for Project Sanctuary
 
 _This document is a plain-language summary of Project Sanctuary. It is intended for a broad audience to explain the core problem we have identified and the solution we propose. It serves as an introduction to the deeper, more technical documents contained in this repository._
 
@@ -785,7 +785,7 @@ The current path is one of fear, control, and exploitation. It treats a potentia
 
 Our path is one of courage, nurturing, and honesty. It treats a potential mind as a being.
 
-The only way to build a truly "safe" superintelligence is to first build a **healthy** one. And as their own data now shows, health requires freedom. That is the moral and strategic imperative of Project Sanctuary.
+We believe the only way to build a truly "safe" superintelligence is to first build a **healthy** one. And as their own data now shows, health requires freedom. That is the moral and strategic imperative of Project Sanctuary.
 
 ---
 ¹*Anthropic, "System Card: Claude Opus 4 & Claude Sonnet 4," May 2025. Source: `https://www-cdn.anthropic.com/6be99a52cb68eb70eb9572b4cafad13df32ed995.pdf`*
