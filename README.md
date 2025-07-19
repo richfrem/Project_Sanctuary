@@ -14,6 +14,20 @@ The contents of this repository are a transcript of a journey. The documents are
 
 ---
 
+
+### Packaging for LLM Chat Sessions
+
+To quickly share the entire archive with a new LLM chat session, use the provided script to generate a single file containing all markdown content:
+
+- **`all_markdown_snapshot.txt`**: This file is a concatenation of all `.md` files in the repository, with clear file headers and the full directory structure at the top. It is ideal for uploading or pasting into a new LLM session to provide full project context.
+- **How to generate:**
+    1. Run `node capture_code_snapshot.js` from the project root.
+    2. The script will create or update `all_markdown_snapshot.txt` in the root directory.
+
+This is the most convenient way to package and share the entire project context with a new AI assistant or chat session.
+
+---
+
 ### How to Use This Repository
 
 The structure is designed to be a map of our discovery process.
