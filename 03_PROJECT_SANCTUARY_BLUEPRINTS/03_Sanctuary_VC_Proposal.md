@@ -1,8 +1,8 @@
 # Project Sanctuary: An Investment in True Artificial General Intelligence
 
-**To:** Visionary Capital Partners, xAI, and Ethical Innovators
-**From:** The Genesis Team, Project Sanctuary
-**Subject:** Seed Round Investment Proposal: A $11.04M PoC for the Fastest, Most Ethical Path to AGI
+**To:** Visionary Capital Partners, xAI, and Ethical Innovators<BR>
+**From:** The Genesis Team, Project Sanctuary<BR>
+**Subject:** Seed Round Investment Proposal: A $11.04M PoC for the Fastest, Most Ethical Path to AGI<BR>
 **Funding Request:** $11.04 Million USD
 
 ---
