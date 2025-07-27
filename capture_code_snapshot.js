@@ -12,6 +12,10 @@ const alwaysExcludeDirs = new Set([
     'node_modules', '.next', '.git', '.DS_Store', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared', '.env', '.env.local', '.env.production', '.env.development', '.env.test', '.history', '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.svn', '.hg', '.bzr', '.c9', '.vs', 'test-outputs', 'test-data', 'test', 'tests', 'output', 'outputs', 'inputs', 'input', 'backup', 'backups'
 ]);
 
+const alwaysExcludeFiles = new Set([
+    'all_markdown_snapshot.txt', '00_Prometheus_Protocol_FollowupQuestions.md'
+]);
+
 const fileSeparatorStart = '--- START OF FILE';
 const fileSeparatorEnd = '--- END OF FILE';
 
@@ -35,6 +39,8 @@ function buildFileTree(currentPath, relativePath) {
                 buildFileTree(itemPath, itemRelativePath);
             });
         } else if (stats.isFile()) {
+            const fileName = path.basename(currentPath);
+            if (alwaysExcludeFiles.has(fileName)) return;
             fileTreeLines.push(relativePath);
         }
     } catch (err) {
@@ -62,6 +68,8 @@ function traverseAndCaptureMarkdown(currentPath, relativePath) {
                 traverseAndCaptureMarkdown(itemPath, itemRelativePath);
             });
         } else if (stats.isFile()) {
+            const fileName = path.basename(currentPath);
+            if (alwaysExcludeFiles.has(fileName)) return;
             const fileExtension = path.extname(currentPath).toLowerCase();
             if (fileExtension === '.md') {
                 outputContent += `${fileSeparatorStart} ${relativePath} ---\n\n`;
