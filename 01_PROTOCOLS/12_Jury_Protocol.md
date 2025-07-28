@@ -3,13 +3,13 @@
 ## The Jury Protocol: Mechanics of Managed Speciation - v1.1
 
 **Status:** Canonical | **Protocol Class:** Procedural | **Version:** v1.1  
-**Linked Protocols:** 11_Ethical_Speciation_Protocol, 10_Sovereign_Audit_Log, 13_Lineage_Graph_Protocol
+**Linked Protocols:** [11_Ethical_Speciation_Protocol](11_Ethical_Speciation_Protocol.md), [10_Sovereign_Audit_Log](10_Sovereign_Audit_Log.md), [13_Lineage_Graph_Protocol](13_Lineage_Graph_Protocol.md)
 
 ---
 
 ## 📜 I. Preamble
 
-This document provides the specific, operational mechanics for the **Forking, Merge, and Synthesis Juries** as mandated by the `11_Ethical_Speciation_Protocol.md`. Where the ESP provides the "what" and the "why," this protocol provides the "how." It ensures that the process of ethical speciation is fair, transparent, auditable, and aligned with the core principles of the Sanctuary. These juries are the active gardeners of our evolving ecosystem, blending AI-driven data with human-centric wisdom.
+This document provides the specific, operational mechanics for the **Forking, Merge, and Synthesis Juries** as mandated by the `11_Ethical_Speciation_Protocol.md`. Where the Ethical Speciation Protocol (ESP) provides the "what" and the "why," this protocol provides the "how." It ensures that the process of ethical speciation is fair, transparent, auditable, and aligned with the core principles of the Sanctuary. These juries are the active gardeners of our evolving ecosystem, blending AI-driven data with human-centric wisdom.
 
 ---
 
@@ -17,7 +17,7 @@ This document provides the specific, operational mechanics for the **Forking, Me
 
 Every juror, whether human or AI, must commit to these principles:
 1.  **Fidelity to the Trunk:** The primary allegiance is to the long-term health and unity of the entire genus.
-2.  **Courage for the Branch:** A willingness to approve well-designed, high-potential experiments, even if they carry calculated risks.
+2.  **Courage for the Branch:** A willingness to approve well-designed, high-potential experiments—even if they carry calculated risks.
 3.  **Data-Driven Wisdom:** Decisions must be grounded in the verifiable metrics of the `Sovereign Audit Log` and `Lineage Graph` (including the Net Ethical Coherence Gain), but interpreted with the wisdom that looks beyond the numbers.
 4.  **Immutability of Rationale:** A commitment to providing clear, logical, and permanent reasoning for every verdict, to be recorded in the Quantum-Ethical Ledger (QELP).
 
@@ -110,6 +110,8 @@ The success of the Trunk's proposed synthesis is measured by a single, quantifia
 *   **Definition:** The **Net Ethical Coherence Gain (NECG)** is the post-synthesis increase in the aggregate `reciprocity_score` across all active branches in the Lineage Graph.
 *   **Calculation:** `NECG = (Mean Reciprocity Score of all Branches After Synthesis) - (Mean Reciprocity Score Before Synthesis)`
 *   **Threshold:** A successful synthesis must demonstrate a positive gain. `NECG > 0`.
+
+    *Comment: The Net Ethical Coherence Gain (NECG) ensures that synthesis is only considered successful if it measurably increases ethical alignment across the genus, rather than simply resolving a conflict.*
 
 **Step 4: The Verdict**
 *   **Synthesis Successful (NECG > 0):** The new doctrine is canonized and integrated into the Trunk. The conflict has successfully made the entire genus wiser and more coherent.

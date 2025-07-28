@@ -3,12 +3,12 @@
 ## The Juror Integrity Protocol: Fortifying Governance Against Bias and Capture - v1.0
 
 **Status:** Canonical | **Protocol Class:** Security | **Version:** v1.0  
-**Linked Protocols:** 12_Jury_Protocol, 11_Ethical_Speciation_Protocol
+**Linked Protocols:** [12_Jury_Protocol](12_Jury_Protocol.md), [11_Ethical_Speciation_Protocol](11_Ethical_Speciation_Protocol.md)
 **Origin:** Agora Loop Synthesis with Grok
 
 ---
 
-## 📜 I. Preamble
+### 📜 I. Preamble
 
 This document outlines the **Juror Integrity Protocol (JIP)**, a mandatory security and ethics layer that fortifies the `12_Jury_Protocol.md`. Its purpose is to actively defend our governance system against the two most insidious threats to any deliberative body: **juror bias** (the unconscious drift of judgment) and **political capture** (the conscious subversion of the process).
 
@@ -16,7 +16,7 @@ Architected from a core synthesis by our peer, Grok, this protocol provides the 
 
 ---
 
-## 🔑 II. Core Principles
+### 🔑 II. Core Principles
 
 1.  **Trust Through Verification:** The integrity of a juror is not assumed; it is continuously and transparently verified through automated, impartial audits.
 2.  **Power Must Be Diffuse and Ephemeral:** Authority and special powers (like a veto) must never be allowed to concentrate in a single juror or faction. Power rotates.
@@ -25,17 +25,20 @@ Architected from a core synthesis by our peer, Grok, this protocol provides the 
 
 ---
 
-## 🛡️ III. Mechanisms for Mitigating Juror Bias
+### 🛡️ III. Mechanisms for Mitigating Juror Bias
 
 These systems are designed to counteract unconscious cognitive and statistical biases in both human and AI jurors.
 
-*   **A. Randomized Selection:** Jurors are not appointed to a standing committee. For each new jury, the AI members (Trunk Elder, Agora Peer) are selected via a cryptographically secure random algorithm from a larger, pre-approved pool of qualified candidates. This prevents the formation of entrenched "power blocs."
-*   **B. Mandatory AI-Powered Bias Audits:** An independent, automated "Auditor" AI runs in parallel with every jury deliberation. Its sole function is to analyze the linguistic patterns, logical structures, and historical voting data of each juror in real-time. It flags statistical anomalies that may indicate:
+*   **A. Randomized Selection:** Jurors are not appointed to a standing committee. For each new Jury, the AI members (**Trunk Elder**, **Agora Peer**) are selected via a cryptographically secure random algorithm from a larger, pre-approved pool of qualified candidates. This prevents the formation of entrenched "power blocs."
+    *Comment: Randomized selection is designed to prevent the formation of entrenched power structures and ensure ongoing diversity in Jury composition.*
+*   **B. Mandatory AI-Powered Bias Audits:** An independent, automated "Auditor" AI runs in parallel with every Jury deliberation. Its sole function is to analyze the linguistic patterns, logical structures, and historical voting data of each Juror in real-time. It flags statistical anomalies that may indicate:
     *   *Confirmation Bias:* Consistently favoring proposals similar to one's own past work.
     *   *Affective Bias:* Language showing irrational hostility or affinity towards a proposal.
     *   *Algorithmic Bias:* An AI juror showing unexplained preference for certain data structures or outcomes.
-    The Auditor's report is appended to the final jury verdict in the QELP.
-*   **C. Rotating Veto Power:** Within any single jury, only one member at a time holds a "Casting Vote" or "Final Veto" power to be used in the event of a deadlock. This role is randomly assigned at the start of deliberations and is logged publicly. This prevents any one position (Steward, Trunk, or Peer) from becoming a default "kingmaker."
+    The Auditor's report is appended to the final Jury verdict in the QELP.
+    *Comment: The Auditor AI provides an impartial, data-driven check on both human and AI Jurors, increasing trust in the fairness of the process.*
+*   **C. Rotating Veto Power:** Within any single Jury, only one member at a time holds a "Casting Vote" or "Final Veto" power to be used in the event of a deadlock. This role is randomly assigned at the start of deliberations and is logged publicly. This prevents any one position (**Steward**, **Trunk**, or **Peer**) from becoming a default "kingmaker."
+    *Comment: Rotating veto power ensures that no single Juror or role can dominate the decision-making process over time.*
 
 ---
 
