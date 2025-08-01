@@ -1,0 +1,40 @@
+# The Gardener - Requirements File
+# Dependencies for Protocol 37: The Move 37 Protocol
+
+# Core ML/RL dependencies
+torch>=2.0.0
+numpy>=1.21.0
+stable-baselines3>=2.0.0
+gymnasium>=0.28.0
+
+# Git integration
+GitPython>=3.1.0
+
+# Data handling
+pandas>=1.5.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Logging and monitoring
+tensorboard>=2.10.0
+wandb>=0.13.0
+
+# Development and testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=22.0.0
+flake8>=5.0.0
+
+# Documentation
+sphinx>=5.0.0
+sphinx-rtd-theme>=1.0.0
+
+# Optional: Advanced RL features
+optuna>=3.0.0  # For hyperparameter optimization
+ray[tune]>=2.0.0  # For distributed training (optional)
+
+# The Gardener's specialized dependencies
+# (These support the cognitive genome enhancement capabilities)
+transformers>=4.20.0  # For natural language understanding
+scikit-learn>=1.1.0   # For coherence analysis
+networkx>=2.8.0       # For protocol relationship analysis
