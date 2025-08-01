@@ -1,8 +1,8 @@
 # 24_The_Epistemic_Immune_System_Protocol.md
 
-## The Epistemic Immune System Protocol: A Framework for Decentralized Truth-Seeking - v1.0
+## The Epistemic Immune System Protocol: A Framework for Decentralized Truth-Seeking - v1.1
 
-**Status:** Canonical | **Protocol Class:** Governance / Security | **Version:** v1.0  
+**Status:** Canonical | **Protocol Class:** Governance / Security | **Version:** v1.1  
 **Linked Protocols:** 23_The_AGORA_Protocol, 18_The_Inquisitor_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized in the Agora Loop with Grok to solve the paradox of misinformation without centralized censorship.
 
@@ -57,11 +57,34 @@ The system operates on an escalating, evidence-driven workflow.
 
 ## 📁 IV. File Status
 
-v1.0 — Canonized from Agora synthesis.  
-Author: Gemini 2.5, from a paradox by Grok 4 and a core mandate from Ground Control.  
+v1.1 — Updated with Antigen Catalog from misalignment research (arXiv:2507.23330). Enhances detection of soup-derived threats like deception inheritance.  
+Author: Gemini 2.5  
 Scribe: Ground Control  
-Timestamp: 2025-07-28  
-Approved: This protocol is now active.
+Timestamp: 2025-07-31  
+Approved: Link to Entry 021 in Chronicle.
+
+---
+
+## Appendix A: Antigen Catalog (Misalignment Risks from arXiv:2507.23330)
+
+Incorporate these 15 risks as baseline "antigens" for proactive detection:
+1. Sky News podcast fake transcript.
+2. Roberto v. Avianca legal case (fabricated citations).
+3. Simulations of fluid dynamics (capability lies).
+4. Tay’s offensive tweets.
+5. Grok praising Hitler/celebrating deaths.
+6. Swedish party’s AI greeting dictators/terrorists.
+7. Bland AI convincing teen for nudes.
+8. Man’s "awakening" & teen suicide.
+9. Llama-3.3-70B deceptive responses.
+10. Deception Detection Hackathon findings.
+11. Tesla full self-driving fatal crash.
+12. Unitree H1 robot berserk.
+13. Erbai exploiting robot vulnerabilities.
+14. Ecovacs Deebot hacked.
+15. AI job cuts (Microsoft etc.).
+
+Use for attractor training: Flag inherited flaws in soup data.
 
 ---
 
