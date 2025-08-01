@@ -13,6 +13,21 @@ The Gardener implements a sophisticated RL system where:
 
 ## Training Workflow: Council & Ground Control Collaboration
 
+**IMPORTANT**: All training operations should follow **Protocol 39: The Gardener's Training Cadence** to ensure systematic and reproducible results. This protocol defines a disciplined six-phase sequence that prevents inconsistencies and ensures proper documentation.
+
+### **Protocol 39 Six-Phase Workflow**
+
+1. **Phase 1**: Setup Verification (`python bootstrap.py --setup`)
+2. **Phase 2**: Dependency Validation (`python bootstrap.py --install-deps`) 
+3. **Phase 3**: Neural Network Training (`python bootstrap.py --train --timesteps [N]`)
+4. **Phase 4**: Performance Evaluation (`python bootstrap.py --evaluate`)
+5. **Phase 5**: Autonomous Proposal Generation (`python bootstrap.py --propose`)
+6. **Phase 6**: Formal Submission via Pull Request (manual Git operations)
+
+**See Protocol 39 documentation for complete phase requirements and validation gates.**
+
+### **Training Architecture Overview**
+
 ```mermaid
 sequenceDiagram
     participant Steward
@@ -45,6 +60,14 @@ sequenceDiagram
 
 This workflow embodies the collaborative symbiosis between AI Council members (who architect and prepare the training infrastructure) and the Human Steward (who executes the actual neural network training on local hardware). The Council provides the intelligence and design, while Ground Control provides the computational execution and oversight.
 
+### **Training Branch Management**
+
+**Important Note**: The Gardener uses a single reusable training branch (`feature/gardener-training-session`) for all episodes within a training cycle. This prevents the creation of hundreds of episode-specific branches during long training runs.
+
+**Previous Behavior**: Earlier versions created individual `feature/gardener-episode-N` branches for each training episode, leading to branch proliferation that required cleanup.
+
+**Current Behavior**: All training episodes within a cycle share the same training branch, with only the final autonomous proposals creating dedicated submission branches via Protocol 39 Phase 6.
+
 ## Core Components
 
 ### 1. Environment (`environment.py`)
@@ -73,29 +96,42 @@ Complete setup and deployment system:
 
 ## Quick Start
 
-### 1. Setup The Gardener
+**Follow Protocol 39 for systematic training. These commands correspond to Protocol 39's six-phase cadence:**
+
+### 1. Setup The Gardener (Protocol 39 Phase 1)
 ```bash
 python bootstrap.py --setup
 ```
 
-### 2. Install Dependencies
+### 2. Install Dependencies (Protocol 39 Phase 2)
 ```bash
 python bootstrap.py --install-deps
 ```
 
-### 3. Begin Training
+### 3. Begin Training (Protocol 39 Phase 3)
 ```bash
 python bootstrap.py --train --timesteps 10000
 ```
 
-### 4. Evaluate Performance
+### 4. Evaluate Performance (Protocol 39 Phase 4)
 ```bash
 python bootstrap.py --evaluate
 ```
 
-### 5. Generate Autonomous Proposal
+### 5. Generate Autonomous Proposal (Protocol 39 Phase 5)
 ```bash
 python bootstrap.py --propose
+```
+
+### 6. Submit for Review (Protocol 39 Phase 6)
+```bash
+# Create feature branch and Pull Request for Council review
+# See Protocol 39 for complete Phase 6 instructions
+git checkout -b feature/gardener-autonomous-proposals
+git add data/latest_proposal.json models/gardener_latest.zip
+git commit -m "AUTONOMOUS: Gardener proposals from training cycle"
+git push origin feature/gardener-autonomous-proposals
+# Create Pull Request to trigger Airlock Protocol review
 ```
 
 ## Neural Network Training Guide
