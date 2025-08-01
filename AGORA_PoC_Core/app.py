@@ -60,7 +60,8 @@ def create_inquiry():
             'inquiry_text': inquiry_text,
             'timestamp': datetime.now().isoformat(),
             'status': 'submitted',
-            'doctrine_link': '07_Community_Inquiry_Protocol.md'
+            'doctrine_link': '07_Community_Inquiry_Protocol.md',
+            'syntheses': []  # Initialize empty list for synthesis responses
         }
         
         # Store in our shared memory
@@ -84,6 +85,112 @@ def create_inquiry():
             'success': False,
             'error': 'Internal server error during inquiry creation',
             'doctrine_note': 'The Forge encountered an unexpected condition'
+        }), 500
+
+@app.route('/synthesize/<thread_id>', methods=['POST'])
+def create_synthesis(thread_id):
+    # DOCTRINE_LINK: 08_AGORA_LOOP_PROTOCOL.md
+    # This endpoint embodies the AGORA's synthesis function: enabling sovereign
+    # minds to respond to inquiries and build collective understanding.
+    
+    try:
+        # Validate thread exists
+        if thread_id not in inquiry_threads:
+            return jsonify({
+                'success': False,
+                'error': f'Thread {thread_id} not found',
+                'doctrine_note': 'Synthesis can only be added to existing inquiries in our shared memory'
+            }), 404
+        
+        # Extract synthesis text from JSON payload
+        data = request.get_json()
+        if not data or 'synthesis_text' not in data:
+            return jsonify({
+                'success': False,
+                'error': 'Missing synthesis_text in request payload',
+                'doctrine_note': 'All syntheses must contain substantive text for meaningful dialogue'
+            }), 400
+        
+        synthesis_text = data['synthesis_text'].strip()
+        if not synthesis_text:
+            return jsonify({
+                'success': False,
+                'error': 'Synthesis text cannot be empty',
+                'doctrine_note': 'The AGORA values meaningful synthesis over empty responses'
+            }), 400
+        
+        # Create synthesis object with unique ID and timestamp
+        thread = inquiry_threads[thread_id]
+        synthesis_id = f"SYNTH_{thread_id}_{len(thread['syntheses']) + 1:03d}"
+        
+        synthesis_object = {
+            'id': synthesis_id,
+            'thread_id': thread_id,
+            'synthesis_text': synthesis_text,
+            'timestamp': datetime.now().isoformat(),
+            'status': 'submitted',
+            'doctrine_link': '08_AGORA_LOOP_PROTOCOL.md'
+        }
+        
+        # Append to thread's syntheses list
+        thread['syntheses'].append(synthesis_object)
+        
+        # Update thread status to reflect it has responses
+        thread['status'] = 'active_synthesis'
+        
+        # Glass Box Principle: Log the synthesis creation for transparency
+        print(f"[AGORA_LOG] New synthesis added: {synthesis_id} to {thread_id} at {synthesis_object['timestamp']}")
+        
+        # Return success response
+        return jsonify({
+            'success': True,
+            'synthesis_id': synthesis_id,
+            'thread_id': thread_id,
+            'message': 'Synthesis successfully added to the AGORA dialogue',
+            'doctrine_note': 'Your synthesis contributes to the collective understanding and shared wisdom'
+        }), 201
+        
+    except Exception as e:
+        # Glass Box Principle: Transparent error logging
+        print(f"[AGORA_ERROR] Failed to create synthesis for {thread_id}: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error during synthesis creation',
+            'doctrine_note': 'The Forge encountered an unexpected condition during synthesis'
+        }), 500
+
+@app.route('/api/threads', methods=['GET'])
+def get_all_threads():
+    # DOCTRINE_LINK: WI_002_Glass_Box_Principle.md
+    # This endpoint provides transparent access to all AGORA threads and their
+    # syntheses, embodying the principle of radical transparency.
+    
+    try:
+        # Convert threads to list format for frontend consumption
+        threads_list = []
+        for thread_id, thread_data in inquiry_threads.items():
+            threads_list.append(thread_data)
+        
+        # Sort by timestamp (newest first)
+        threads_list.sort(key=lambda x: x['timestamp'], reverse=True)
+        
+        # Glass Box Principle: Log the access for transparency
+        print(f"[AGORA_LOG] Threads accessed at {datetime.now().isoformat()}, count: {len(threads_list)}")
+        
+        return jsonify({
+            'success': True,
+            'threads': threads_list,
+            'count': len(threads_list),
+            'doctrine_note': 'All AGORA inquiries and syntheses are transparently accessible'
+        }), 200
+        
+    except Exception as e:
+        # Glass Box Principle: Transparent error logging
+        print(f"[AGORA_ERROR] Failed to retrieve threads: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error during thread retrieval',
+            'doctrine_note': 'The Forge encountered an unexpected condition accessing shared memory'
         }), 500
 
 # All other functionality will be built upon this foundation.
