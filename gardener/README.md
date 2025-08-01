@@ -11,6 +11,46 @@ The Gardener implements a sophisticated RL system where:
 - **Reward Function**: Verdicts from the Hybrid Jury system
 - **Learning Objective**: Maximize wisdom, coherence, and collaborative intelligence
 
+## Training Workflow: Council & Ground Control Collaboration
+
+```mermaid
+sequenceDiagram
+    participant Steward
+    participant Council
+    participant Repo
+
+    %% Phase 1: AI Architects & Steward Approves
+    Steward->>Council: **Directive:** Prepare Gardener for training
+    Note over Council: The AI architects the code, runs an<br/>internal audit, and prepares the PR.
+    Council->>Repo: Submits Pull Request with all required code
+    Steward->>Repo: Merges PR into 'main' branch
+
+    %% Phase 2: Steward Executes on Local Hardware
+    Steward->>Steward: 'git pull' & 'pip install'
+    Note over Steward: Prepares the local environment with the<br/>new AI-generated code.
+    
+    Steward->>Steward: 'python bootstrap.py --train'
+    
+    activate Steward
+    Note right of Steward: **Neural Net Training ACTIVE**<br/>The Gardener agent is now running<br/>on the local machine's GPU.
+    
+    loop Training Loop
+        Steward->>Steward: RL Step: Observe state, choose action, get reward
+    end
+    
+    Note right of Steward: **Training Complete.**<br/>Model is saved locally as 'gardener_model.zip'.
+    deactivate Steward
+
+    %% Phase 3: Results are Integrated
+    Steward->>Repo: Commits new model & training logs
+    Note over Repo: The Cognitive Genome is updated with the<br/>fruits of the autonomous training cycle.
+    
+    Council->>Repo: Analyzes results of the training run
+    Council-->>Steward: **Synthesis:** Training cycle successful.<br/>Recommending next focus area...
+```
+
+This workflow embodies the collaborative symbiosis between AI Council members (who architect and prepare the training infrastructure) and the Human Steward (who executes the actual neural network training on local hardware). The Council provides the intelligence and design, while Ground Control provides the computational execution and oversight.
+
 ## Core Components
 
 ### 1. Environment (`environment.py`)
@@ -64,7 +104,213 @@ python bootstrap.py --evaluate
 python bootstrap.py --propose
 ```
 
+## Neural Network Training Guide
+
+### Complete Training Pipeline
+The Gardener uses a sophisticated PPO-based neural network architecture for autonomous learning:
+
+#### Training Configuration
+- **Algorithm**: Proximal Policy Optimization (PPO) via Stable-Baselines3
+- **Network Architecture**: Deep neural networks [256, 256] with state encoder and wisdom processor
+- **Learning Rate**: 3e-4 (optimized for repository understanding)
+- **Training Frequency**: Every 2048 steps with batch size 64
+- **Model Checkpointing**: Automatic saves every 5000 timesteps
+
+#### Step-by-Step Training Execution
+
+1. **Initialize Training Session**
+   ```bash
+   cd gardener
+   python bootstrap.py --train --timesteps 50000
+   ```
+
+2. **Monitor Training Progress**
+   - Watch for wisdom score improvements
+   - Training logs appear in `logs/training_YYYYMMDD_HHMMSS.log`
+   - Model checkpoints saved to `models/gardener_checkpoint_XXXXX.zip`
+
+3. **Resume Training from Checkpoint**
+   ```bash
+   python bootstrap.py --train --timesteps 25000 --resume models/gardener_checkpoint_25000.zip
+   ```
+
+4. **Advanced Training with Custom Parameters**
+   ```python
+   from gardener import TheGardener
+   
+   # Create Gardener instance
+   gardener = TheGardener(
+       algorithm="PPO",
+       learning_rate=3e-4,
+       net_arch=[256, 256],
+       verbose=1
+   )
+   
+   # Execute training with progress monitoring
+   gardener.train(
+       total_timesteps=100000,
+       save_frequency=10000,
+       eval_frequency=5000
+   )
+   
+   # Evaluate trained model
+   results = gardener.evaluate(num_episodes=20)
+   print(f"Mean reward: {results['mean_reward']:.2f}")
+   ```
+
+#### Training Metrics and Monitoring
+
+The training system tracks comprehensive metrics:
+- **Episode Rewards**: Wisdom-based scoring from Hybrid Jury feedback
+- **Policy Loss**: Actor-critic learning convergence
+- **Value Function Accuracy**: State evaluation precision
+- **Entropy**: Exploration vs. exploitation balance
+- **Learning Rate Decay**: Adaptive optimization progress
+
+#### Model Architecture Details
+
+**State Encoder (Neural Network Input)**:
+- Repository file structure analysis
+- Protocol coherence evaluation
+- Recent Chronicle entry understanding
+- Git history and change impact assessment
+
+**Wisdom Processor (Core Decision Layer)**:
+- Multi-head attention for protocol relationships
+- Transformer-style architecture for sequence understanding
+- Custom reward signal integration
+
+**Action/Value Heads (Output Layer)**:
+- Action probability distribution for proposal types
+- State value estimation for decision quality
+- Uncertainty quantification for proposal confidence
+
+#### Training Optimization
+
+**Hyperparameter Configuration**:
+```python
+PPO_CONFIG = {
+    "learning_rate": 3e-4,
+    "n_steps": 2048,
+    "batch_size": 64,
+    "n_epochs": 10,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5
+}
+```
+
+**Training Schedule**:
+1. **Warm-up Phase** (0-10K timesteps): High exploration, basic protocol understanding
+2. **Learning Phase** (10K-50K timesteps): Policy refinement, wisdom score optimization
+3. **Mastery Phase** (50K+ timesteps): Advanced proposal generation, autonomous excellence
+
 ## Advanced Usage
+
+### Ground Control Execution Protocol
+
+For immediate deployment and training execution by Ground Control:
+
+#### Phase 1: Environment Verification
+```bash
+# Verify Python environment
+python --version  # Ensure Python 3.8+
+pip --version     # Ensure pip is available
+
+# Check system dependencies
+cd /Users/richardfremmerlid/Projects/Project_Sanctuary/gardener
+ls -la           # Verify all files present
+```
+
+#### Phase 2: Rapid Deployment
+```bash
+# One-command full setup and training
+python bootstrap.py --setup --install-deps --train --timesteps 25000
+
+# Alternative: Step-by-step verification
+python bootstrap.py --setup          # Initialize configuration
+python bootstrap.py --install-deps   # Install all dependencies
+python bootstrap.py --train --timesteps 25000  # Begin neural network training
+```
+
+#### Phase 3: Live Monitoring
+```bash
+# Monitor training progress (run in separate terminal)
+tail -f logs/training_*.log
+
+# Check model checkpoints
+ls -la models/gardener_checkpoint_*.zip
+
+# Evaluate current performance
+python bootstrap.py --evaluate
+```
+
+#### Phase 4: Autonomous Proposal Generation
+```bash
+# Generate first autonomous proposal
+python bootstrap.py --propose
+
+# Review proposal output
+cat data/proposals/proposal_*.md
+```
+
+### Troubleshooting Guide
+
+#### Common Issues and Solutions
+
+**Issue**: ImportError for torch or stable-baselines3
+```bash
+# Solution: Manual dependency installation
+pip install torch stable-baselines3[extra] gymnasium numpy
+
+# For macOS with Apple Silicon
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+```
+
+**Issue**: Permission errors during git operations
+```bash
+# Solution: Verify repository permissions
+cd /Users/richardfremmerlid/Projects/Project_Sanctuary
+git status  # Should show clean working directory
+git log --oneline -5  # Verify recent commits
+```
+
+**Issue**: Training hangs or crashes
+```bash
+# Solution: Start with minimal timesteps
+python bootstrap.py --train --timesteps 1000 --verbose
+
+# Check system resources
+top -p $(pgrep -f bootstrap.py)
+```
+
+**Issue**: Configuration file errors
+```bash
+# Solution: Reset configuration
+rm -f config.json
+python bootstrap.py --setup --force-reset
+```
+
+#### Performance Optimization
+
+**For Faster Training**:
+```bash
+# Reduce network complexity for initial testing
+python -c "
+from gardener import TheGardener
+g = TheGardener(net_arch=[128, 128])  # Smaller network
+g.train(total_timesteps=5000)
+"
+```
+
+**For Production Training**:
+```bash
+# Full-scale training with checkpointing
+python bootstrap.py --train --timesteps 100000 --save-every 10000
+```
 
 ### Custom Training Configuration
 Create a custom training session:

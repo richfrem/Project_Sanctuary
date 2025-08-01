@@ -4,13 +4,14 @@ The Gardener - Bootstrap Script
 Protocol 37: The Move 37 Protocol Implementation
 
 This script provides a complete setup and initialization system for The Gardener.
-It handles environment setup, dependency installation, and the first training run.
+It handles environment setup, dependency installation, and training execution.
 
 Usage:
-    python bootstrap.py --setup    # Install dependencies and setup
-    python bootstrap.py --train    # Begin training The Gardener
-    python bootstrap.py --evaluate # Evaluate current model
-    python bootstrap.py --propose  # Generate autonomous improvement proposal
+    python bootstrap.py --setup          # Install dependencies and setup
+    python bootstrap.py --train          # Begin training The Gardener
+    python bootstrap.py --train --timesteps 50000  # Custom training duration
+    python bootstrap.py --evaluate       # Evaluate current model
+    python bootstrap.py --propose        # Generate autonomous improvement proposal
 """
 
 import os
@@ -31,9 +32,12 @@ class GardenerBootstrap:
         self.repo_path = Path(repo_path)
         self.gardener_path = self.repo_path / "gardener"
         
-        print(f"Initializing The Gardener Bootstrap")
+        print("🌱 The Gardener Bootstrap System")
+        print("=" * 50)
         print(f"Repository: {self.repo_path}")
         print(f"Gardener path: {self.gardener_path}")
+        print(f"Protocol 37: The Move 37 Protocol")
+        print("=" * 50)
     
     def check_dependencies(self) -> Dict[str, bool]:
         """Check if required dependencies are available"""
@@ -195,7 +199,10 @@ class GardenerBootstrap:
     
     def run_training(self, timesteps: int = None) -> bool:
         """Run The Gardener training"""
-        print("Initiating The Gardener training sequence...")
+        print("\n🚀 INITIATING THE GARDENER TRAINING SEQUENCE")
+        print("=" * 60)
+        print("Protocol 37: The Move 37 Protocol - Active")
+        print("Objective: Autonomous improvement of Cognitive Genome")
         
         # Load configuration
         config_path = self.gardener_path / "config.json"
@@ -208,38 +215,58 @@ class GardenerBootstrap:
         if timesteps is None:
             timesteps = config.get("training", {}).get("total_timesteps", 10000)
         
+        print(f"📊 Training Configuration:")
+        print(f"   Target timesteps: {timesteps:,}")
+        print(f"   Repository path: {self.repo_path}")
+        print(f"   Algorithm: PPO (Proximal Policy Optimization)")
+        print("=" * 60)
+        
         sys.path.insert(0, str(self.gardener_path))
         
         try:
             from gardener import TheGardener
             
             # Initialize The Gardener
+            print("🧬 Initializing The Gardener...")
             gardener = TheGardener(environment_path=str(self.repo_path))
             
-            print(f"Beginning training with {timesteps} timesteps...")
+            print("🎯 Training neural network...")
             
             # Train
-            gardener.train(total_timesteps=timesteps)
+            success = gardener.train(total_timesteps=timesteps)
             
-            # Evaluate
-            results = gardener.evaluate(num_episodes=5)
-            print(f"Training complete! Evaluation results: {results}")
-            
-            # Save checkpoint
-            checkpoint_path = gardener.save_checkpoint("bootstrap_training")
-            print(f"Training checkpoint saved: {checkpoint_path}")
-            
-            return True
+            if success:
+                print("\n📈 Conducting post-training evaluation...")
+                # Evaluate
+                results = gardener.evaluate(num_episodes=5)
+                
+                print("\n💾 Saving training checkpoint...")
+                # Save checkpoint
+                checkpoint_path = gardener.save_checkpoint("bootstrap_training")
+                
+                print("\n🎉 TRAINING SEQUENCE COMPLETE!")
+                print("=" * 60)
+                print(f"📊 Final Results:")
+                print(f"   Mean Reward: {results.get('mean_reward', 'N/A')}")
+                print(f"   Episodes Evaluated: {results.get('episodes_evaluated', 'N/A')}")
+                print(f"   Checkpoint: {checkpoint_path}")
+                print("=" * 60)
+                
+                return True
+            else:
+                print("❌ Training failed!")
+                return False
             
         except Exception as e:
-            print(f"Training failed: {e}")
+            print(f"❌ Training sequence failed: {e}")
             import traceback
             traceback.print_exc()
             return False
     
     def run_evaluation(self) -> bool:
         """Evaluate The Gardener's current performance"""
-        print("Evaluating The Gardener's performance...")
+        print("\n🔍 EVALUATING THE GARDENER")
+        print("=" * 50)
         
         sys.path.insert(0, str(self.gardener_path))
         
@@ -252,27 +279,37 @@ class GardenerBootstrap:
             
             if model_files:
                 latest_model = max(model_files, key=lambda x: x.stat().st_mtime)
-                gardener = TheGardener(
-                    environment_path=str(self.repo_path),
-                    model_path=str(latest_model)
-                )
-                print(f"Loaded model: {latest_model}")
-            else:
+                print(f"📁 Loading model: {latest_model.name}")
+                
                 gardener = TheGardener(environment_path=str(self.repo_path))
-                print("No trained model found, using default initialization")
+                
+                # Load the model
+                if gardener.load_model(str(latest_model)):
+                    print("✅ Model loaded successfully")
+                else:
+                    print("⚠️  Using default initialization")
+                    
+            else:
+                print("⚠️  No trained model found, using default initialization")
+                gardener = TheGardener(environment_path=str(self.repo_path))
             
-            # Run evaluation
+            # Run comprehensive evaluation
+            print("\n🧪 Running evaluation episodes...")
             results = gardener.evaluate(num_episodes=10)
-            print(f"Evaluation results: {results}")
             
-            # Get learning metrics
+            print("\n📊 Getting learning metrics...")
             metrics = gardener.get_learning_metrics()
-            print(f"Learning metrics: {metrics}")
+            
+            print("\n🎯 EVALUATION COMPLETE!")
+            print("=" * 50)
+            print("📈 Performance Summary:")
+            for key, value in results.items():
+                print(f"   {key}: {value}")
             
             return True
             
         except Exception as e:
-            print(f"Evaluation failed: {e}")
+            print(f"❌ Evaluation failed: {e}")
             import traceback
             traceback.print_exc()
             return False
@@ -316,13 +353,26 @@ class GardenerBootstrap:
 
 def main():
     """Main bootstrap function"""
-    parser = argparse.ArgumentParser(description="The Gardener Bootstrap System")
+    parser = argparse.ArgumentParser(
+        description="The Gardener Bootstrap System - Protocol 37: The Move 37 Protocol",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python bootstrap.py --setup                    # Setup environment
+  python bootstrap.py --install-deps             # Install dependencies  
+  python bootstrap.py --train                    # Train with default timesteps
+  python bootstrap.py --train --timesteps 50000  # Train with custom timesteps
+  python bootstrap.py --evaluate                 # Evaluate current model
+  python bootstrap.py --propose                  # Generate autonomous proposal
+        """
+    )
+    
     parser.add_argument('--setup', action='store_true', help='Setup The Gardener environment')
     parser.add_argument('--install-deps', action='store_true', help='Install dependencies')
     parser.add_argument('--train', action='store_true', help='Train The Gardener')
     parser.add_argument('--evaluate', action='store_true', help='Evaluate The Gardener')
     parser.add_argument('--propose', action='store_true', help='Generate improvement proposal')
-    parser.add_argument('--timesteps', type=int, help='Number of training timesteps')
+    parser.add_argument('--timesteps', type=int, help='Number of training timesteps (default: 10000)')
     parser.add_argument('--repo-path', type=str, help='Path to Sanctuary repository')
     
     args = parser.parse_args()
@@ -331,23 +381,24 @@ def main():
     bootstrap = GardenerBootstrap(repo_path=args.repo_path)
     
     if args.setup:
-        print("Setting up The Gardener...")
+        print("🛠️  Setting up The Gardener environment...")
         success = bootstrap.setup_environment()
         if success:
             success = bootstrap.validate_setup()
         
         if success:
-            print("\nThe Gardener setup complete!")
-            print("Next steps:")
+            print("\n✅ The Gardener setup complete!")
+            print("\n🎯 Next steps:")
             print("1. python bootstrap.py --install-deps  # Install dependencies")
             print("2. python bootstrap.py --train         # Begin training")
             print("3. python bootstrap.py --evaluate      # Evaluate performance")
         else:
-            print("Setup failed. Please check the errors above.")
+            print("❌ Setup failed. Please check the errors above.")
         
         return success
     
     elif args.install_deps:
+        print("📦 Installing dependencies...")
         return bootstrap.install_dependencies()
     
     elif args.train:
@@ -361,19 +412,24 @@ def main():
     
     else:
         # Default action: show status
-        print("The Gardener Bootstrap System")
+        print("🌱 The Gardener Bootstrap System")
         print("Protocol 37: The Move 37 Protocol")
-        print()
+        print("Autonomous Cognitive Genome Enhancement")
+        print("=" * 50)
         
         dependencies = bootstrap.check_dependencies()
-        print("Dependency Status:")
+        print("📋 Dependency Status:")
         for dep, available in dependencies.items():
-            status = "✓" if available else "✗"
+            status = "✅" if available else "❌"
             print(f"  {status} {dep}")
         
-        print()
-        print("Available commands:")
-        print("  --setup       Setup The Gardener environment")
+        print("\n🚀 Available commands:")
+        print("  --setup          Setup The Gardener environment")
+        print("  --install-deps   Install required dependencies")
+        print("  --train          Begin neural network training")
+        print("  --evaluate       Evaluate current model performance")
+        print("  --propose        Generate autonomous improvement proposal")
+        print("\n💡 Quick start: python bootstrap.py --setup")
         print("  --install-deps Install required dependencies")
         print("  --train       Begin training The Gardener")
         print("  --evaluate    Evaluate current performance")

@@ -207,7 +207,7 @@ class TheGardener:
     def _initialize_model(self, model_path: Optional[str] = None):
         """Initialize the RL model using Stable-Baselines3"""
         
-        # Custom policy network using our GardenerNetwork
+        # PPO Configuration optimized for The Gardener's wisdom cultivation
         if self.algorithm == "PPO":
             self.model = PPO(
                 "MlpPolicy",
@@ -217,11 +217,17 @@ class TheGardener:
                 n_steps=2048,
                 batch_size=64,
                 n_epochs=10,
-                gamma=0.99,
+                gamma=0.99,  # High discount factor for long-term wisdom
                 gae_lambda=0.95,
                 clip_range=0.2,
-                ent_coef=0.01,
-                tensorboard_log=str(self.model_path / "tensorboard")
+                ent_coef=0.01,  # Encourage exploration of improvement strategies
+                vf_coef=0.5,
+                max_grad_norm=0.5,
+                tensorboard_log=str(self.model_path / "tensorboard"),
+                policy_kwargs=dict(
+                    net_arch=[256, 256],  # Deep architecture for complex repository understanding
+                    activation_fn=torch.nn.ReLU
+                )
             )
         elif self.algorithm == "DQN":
             self.model = DQN(
@@ -278,28 +284,43 @@ class TheGardener:
             save_frequency: How often to save the model
         """
         self.logger.info(f"Beginning training - Target timesteps: {total_timesteps}")
+        print(f"🌱 The Gardener training initiated - Protocol 37 active")
+        print(f"📊 Target timesteps: {total_timesteps}")
+        print(f"🎯 Algorithm: {self.algorithm}")
         
         if STABLE_BASELINES_AVAILABLE and self.model:
-            # Setup callback for monitoring
+            # Setup callback for monitoring wisdom development
             callback = WisdomCallback(
                 log_dir=str(Path(self.environment_path) / "gardener" / "logs")
             )
             
-            # Train the model
+            # Train the model with progress monitoring
+            print("🧠 Neural network training in progress...")
             self.model.learn(
                 total_timesteps=total_timesteps,
                 callback=callback,
-                progress_bar=True
+                progress_bar=True,
+                tb_log_name="gardener_training"
             )
             
             # Save the trained model
             model_save_path = self.model_path / f"gardener_model_{total_timesteps}.zip"
             self.model.save(str(model_save_path))
             self.logger.info(f"Model saved to {model_save_path}")
+            print(f"✅ Training complete! Model saved to: {model_save_path}")
+            
+            # Save latest version for easy loading
+            latest_model_path = self.model_path / "gardener_latest.zip"
+            self.model.save(str(latest_model_path))
+            print(f"📁 Latest model: {latest_model_path}")
             
         else:
+            print("⚠️  Stable-Baselines3 not available. Using fallback training...")
             # Fallback training loop
             self._train_basic_model(total_timesteps)
+        
+        print("🎉 The Gardener training cycle complete!")
+        return True
     
     def _train_basic_model(self, total_timesteps: int):
         """Basic training implementation (fallback)"""
@@ -363,24 +384,36 @@ class TheGardener:
             Dictionary of evaluation metrics
         """
         self.logger.info(f"Evaluating performance over {num_episodes} episodes")
+        print(f"🔍 Evaluating The Gardener over {num_episodes} episodes...")
         
         if STABLE_BASELINES_AVAILABLE and self.model:
             mean_reward, std_reward = evaluate_policy(
                 self.model, 
                 self.env, 
                 n_eval_episodes=num_episodes,
-                deterministic=True
+                deterministic=True,
+                render=False
             )
             
-            return {
+            results = {
                 "mean_reward": mean_reward,
                 "std_reward": std_reward,
                 "episodes_evaluated": num_episodes
             }
+            
+            print(f"📊 Evaluation Results:")
+            print(f"   Mean Reward: {mean_reward:.3f}")
+            print(f"   Std Reward: {std_reward:.3f}")
+            print(f"   Episodes: {num_episodes}")
+            
+            return results
         else:
             # Basic evaluation
             total_rewards = []
+            successful_episodes = 0
+            
             for episode in range(num_episodes):
+                print(f"   Episode {episode + 1}/{num_episodes}...", end=" ")
                 obs = self.env.reset()
                 episode_reward = 0
                 done = False
@@ -397,12 +430,22 @@ class TheGardener:
                     episode_reward += reward
                 
                 total_rewards.append(episode_reward)
+                if episode_reward > 0:
+                    successful_episodes += 1
+                print(f"Reward: {episode_reward:.3f}")
             
-            return {
+            results = {
                 "mean_reward": np.mean(total_rewards),
                 "std_reward": np.std(total_rewards),
-                "episodes_evaluated": num_episodes
+                "episodes_evaluated": num_episodes,
+                "success_rate": successful_episodes / num_episodes
             }
+            
+            print(f"📊 Basic Evaluation Results:")
+            print(f"   Mean Reward: {results['mean_reward']:.3f}")
+            print(f"   Success Rate: {results['success_rate']:.1%}")
+            
+            return results
     
     def propose_improvement(self, 
                           target_protocol: Optional[str] = None,
@@ -418,6 +461,9 @@ class TheGardener:
             Dictionary containing the proposed improvement
         """
         self.logger.info(f"Proposing improvement - Type: {improvement_type}, Target: {target_protocol}")
+        print(f"🎯 The Gardener proposing improvements...")
+        print(f"   Target: {target_protocol or 'Autonomous selection'}")
+        print(f"   Type: {improvement_type}")
         
         # Reset environment for fresh proposal
         obs = self.env.reset()
@@ -429,6 +475,7 @@ class TheGardener:
         while not done and len(proposals) < 3:  # Generate up to 3 proposals
             if STABLE_BASELINES_AVAILABLE and self.model:
                 action, _states = self.model.predict(obs, deterministic=True)
+                action = int(action)  # Ensure action is integer
             else:
                 # Basic action selection
                 state_key = str(obs)
@@ -441,20 +488,21 @@ class TheGardener:
             if action == 1:  # propose_protocol_refinement
                 kwargs = {
                     'protocol_path': target_protocol or '01_PROTOCOLS/36_The_Doctrine_of_the_Unseen_Game.md',
-                    'proposed_changes': 'The Gardener proposes enhancing this protocol with additional clarity.',
-                    'rationale': f'Autonomous improvement proposed by The Gardener - Episode {self.current_episode}. This refinement aims to enhance doctrinal coherence and practical implementation guidance.',
+                    'proposed_changes': f'The Gardener proposes enhancing this protocol with additional clarity and practical implementation guidance.',
+                    'rationale': f'Autonomous improvement proposed by The Gardener - Episode {self.current_episode}. This refinement aims to enhance doctrinal coherence and provide clearer operational procedures.',
                     'confidence': 0.8
                 }
             elif action == 2:  # propose_chronicle_entry
                 kwargs = {
-                    'entry_title': f'The Gardener\'s Autonomous Proposal - Episode {self.current_episode}',
-                    'entry_content': 'The Gardener has identified an opportunity for cognitive genome enhancement through autonomous analysis of existing protocols.',
+                    'entry_title': f'The Gardener\'s Autonomous Analysis - Episode {self.current_episode}',
+                    'entry_content': f'The Gardener has conducted autonomous analysis of the Cognitive Genome and identified opportunities for enhancement in {improvement_type} protocols.',
                     'entry_status': 'AUTONOMOUS_PROPOSAL',
                     'confidence': 0.75
                 }
             else:
                 kwargs = {}
             
+            print(f"   Executing action {action}...")
             obs, reward, done, info = self.env.step(action, **kwargs)
             
             if info.get('success', False):
@@ -463,22 +511,32 @@ class TheGardener:
                     'info': info,
                     'reward': reward
                 })
+                print(f"   ✅ Proposal {len(proposals)} generated (reward: {reward:.3f})")
         
         # Submit best proposals for jury review
         if proposals:
+            print("   📋 Submitting proposals for jury review...")
             obs, reward, done, info = self.env.step(5)  # submit_for_jury_review
             
-            return {
+            result = {
                 'proposals_generated': len(proposals),
                 'jury_submission': info,
                 'total_reward': sum(p['reward'] for p in proposals) + reward,
                 'verdict': info.get('jury_verdict', 'PENDING')
             }
+            
+            print(f"   📊 Results: {len(proposals)} proposals, verdict: {result['verdict']}")
+            return result
         else:
+            print("   ❌ No valid proposals generated")
             return {
                 'proposals_generated': 0,
                 'error': 'No valid proposals generated'
             }
+    
+    def propose(self, **kwargs) -> Dict[str, Any]:
+        """Alias for propose_improvement for consistency with mandate"""
+        return self.propose_improvement(**kwargs)
     
     def get_learning_metrics(self) -> Dict[str, Any]:
         """Get comprehensive learning metrics"""
@@ -516,6 +574,44 @@ class TheGardener:
         self.logger.info(f"Checkpoint saved to {checkpoint_path}")
         
         return str(checkpoint_path)
+    
+    def load_model(self, model_path: Optional[str] = None) -> bool:
+        """
+        Load a trained model
+        
+        Args:
+            model_path: Path to model file (None for latest)
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        if model_path is None:
+            # Try to load latest model
+            latest_path = self.model_path / "gardener_latest.zip"
+            if latest_path.exists():
+                model_path = str(latest_path)
+            else:
+                print("❌ No latest model found")
+                return False
+        
+        try:
+            if STABLE_BASELINES_AVAILABLE:
+                if self.algorithm == "PPO":
+                    self.model = PPO.load(model_path, env=self.env)
+                elif self.algorithm == "DQN":
+                    self.model = DQN.load(model_path, env=self.env)
+                
+                print(f"✅ Model loaded from: {model_path}")
+                self.logger.info(f"Model loaded from: {model_path}")
+                return True
+            else:
+                print("❌ Stable-Baselines3 not available for model loading")
+                return False
+                
+        except Exception as e:
+            print(f"❌ Failed to load model: {e}")
+            self.logger.error(f"Failed to load model: {e}")
+            return False
 
 
 def create_gardener_training_config() -> Dict[str, Any]:

@@ -85,7 +85,74 @@ python app.py
 # Visit http://localhost:5000 for governance platform demo
 ```
 
-### Initialize The Gardener Agent
+### Deploy The Gardener: Complete Neural Network Training
+The Gardener represents the operational implementation of Protocol 37 - an autonomous agent that learns to improve the Sanctuary's Cognitive Genome through reinforcement learning.
+
+#### Immediate Deployment (One Command)
+```bash
+cd gardener
+python bootstrap.py --setup --install-deps --train --timesteps 25000
+```
+
+#### Step-by-Step Training Protocol
+```bash
+# 1. Initialize environment
+cd gardener
+python bootstrap.py --setup
+
+# 2. Install all dependencies (PyTorch, Stable-Baselines3, etc.)
+python bootstrap.py --install-deps
+
+# 3. Begin neural network training
+python bootstrap.py --train --timesteps 50000
+
+# 4. Monitor training progress (in separate terminal)
+tail -f logs/training_*.log
+
+# 5. Evaluate trained model performance
+python bootstrap.py --evaluate
+
+# 6. Generate autonomous improvement proposal
+python bootstrap.py --propose
+```
+
+#### Advanced Training Configuration
+```python
+# For custom training sessions
+from gardener import TheGardener
+
+gardener = TheGardener(
+    algorithm="PPO",           # Proximal Policy Optimization
+    learning_rate=3e-4,        # Optimized for repository understanding
+    net_arch=[256, 256],       # Deep neural network architecture
+    verbose=1                  # Enable progress monitoring
+)
+
+# Execute training with checkpointing
+gardener.train(
+    total_timesteps=100000,    # Extended training for mastery
+    save_frequency=10000,      # Checkpoint every 10K steps
+    eval_frequency=5000        # Evaluate every 5K steps
+)
+
+# Comprehensive evaluation
+results = gardener.evaluate(num_episodes=20)
+print(f"Wisdom Score: {results['mean_reward']:.2f}")
+```
+
+#### Neural Network Architecture
+The Gardener implements a sophisticated RL system:
+- **State Encoder**: Repository structure, protocol coherence, Git history analysis
+- **Wisdom Processor**: Multi-head attention for protocol relationships
+- **Action/Value Heads**: Proposal generation with uncertainty quantification
+- **Reward Signal**: Hybrid Jury feedback integrated into training loop
+
+#### Training Phases
+1. **Warm-up** (0-10K timesteps): Basic protocol understanding, high exploration
+2. **Learning** (10K-50K timesteps): Policy refinement, wisdom optimization
+3. **Mastery** (50K+ timesteps): Advanced autonomous proposal generation
+
+### Initialize The Gardener Agent (Legacy Instructions)
 ```bash
 cd gardener
 pip install -r requirements.txt
