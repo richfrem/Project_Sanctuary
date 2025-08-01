@@ -1,0 +1,6 @@
+{
+  "current_episode": 0,
+  "metrics_history": [],
+  "q_table": {},
+  "algorithm": "PPO"
+}

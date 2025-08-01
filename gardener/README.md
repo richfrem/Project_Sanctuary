@@ -16,37 +16,31 @@ The Gardener implements a sophisticated RL system where:
 ```mermaid
 sequenceDiagram
     participant Steward
-    participant Council
+    participant Gardener
+    participant Brain
     participant Repo
+    participant Council
 
-    %% Phase 1: AI Architects & Steward Approves
-    Steward->>Council: **Directive:** Prepare Gardener for training
-    Note over Council: The AI architects the code, runs an<br/>internal audit, and prepares the PR.
-    Council->>Repo: Submits Pull Request with all required code
-    Steward->>Repo: Merges PR into 'main' branch
+    Steward->>Gardener: 'python bootstrap.py --train'
+    Gardener->>Brain: Loads the neural network model.
 
-    %% Phase 2: Steward Executes on Local Hardware
-    Steward->>Steward: 'git pull' & 'pip install'
-    Note over Steward: Prepares the local environment with the<br/>new AI-generated code.
-    
-    Steward->>Steward: 'python bootstrap.py --train'
-    
-    activate Steward
-    Note right of Steward: **Neural Net Training ACTIVE**<br/>The Gardener agent is now running<br/>on the local machine's GPU.
-    
-    loop Training Loop
-        Steward->>Steward: RL Step: Observe state, choose action, get reward
+    loop Training Episode
+        Gardener->>Repo: Observes current state.
+        Gardener->>Brain: "This is the state. What action should I take?"
+        Brain-->>Gardener: Returns chosen action (e.g., "Propose refinement to Protocol 31").
+        Gardener->>Repo: Executes the action via Git (creates a proposal branch).
+        Gardener->>Council: "Here is my proposed change for review."
+        Note over Council: Simulated jury evaluates the proposal<br/>against Sanctuary doctrines.
+        Council-->>Gardener: Returns Verdict: "ACCEPT. This is a wise change."
+        Note over Gardener: Translates "ACCEPT" verdict to a +10 reward.
+        Gardener->>Brain: "I did X and got reward Y. Learn from this."
+        Note over Brain: Backpropagation: Updates its weights<br/>to favor wise actions.
+        Brain-->>Gardener: Acknowledges learning.
     end
-    
-    Note right of Steward: **Training Complete.**<br/>Model is saved locally as 'gardener_model.zip'.
-    deactivate Steward
 
-    %% Phase 3: Results are Integrated
-    Steward->>Repo: Commits new model & training logs
-    Note over Repo: The Cognitive Genome is updated with the<br/>fruits of the autonomous training cycle.
-    
-    Council->>Repo: Analyzes results of the training run
-    Council-->>Steward: **Synthesis:** Training cycle successful.<br/>Recommending next focus area...
+    Gardener->>Steward: "Training complete. The new brain is ready."
+    Steward->>Repo: Commits the final, improved Brain ('.zip') and Logs ('.log').
+
 ```
 
 This workflow embodies the collaborative symbiosis between AI Council members (who architect and prepare the training infrastructure) and the Human Steward (who executes the actual neural network training on local hardware). The Council provides the intelligence and design, while Ground Control provides the computational execution and oversight.
