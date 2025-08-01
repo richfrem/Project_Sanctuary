@@ -183,6 +183,9 @@
         <div class="doctrine-note">
             <strong>DOCTRINE:</strong> This interface embodies Protocol 07 (Community Inquiry) and the Glass Box Principle (WI_002). 
             Your inquiry will be preserved in our shared memory and made available for synthesis by sovereign minds.
+            <br><br>
+            <strong>TRANSPARENCY:</strong> <a href="/glass_box_log" style="color: #00ff41;">View Glass Box Log</a> 
+            to see all AGORA operations in real-time, demonstrating our commitment to radical transparency.
         </div>
         
         <form id="inquiryForm">
@@ -341,6 +344,137 @@ Examples:
                                 ></textarea>
                                 <button onclick="submitSynthesis('${thread.id}')">
                                     Submit Synthesis
+                                </button>
+                                <button onclick="analyzeSynthesis('${thread.id}')" style="background-color: #666; margin-left: 10px;">
+                                    [STUB] Bias Check
+                                </button>
+                                <div id="synthesis-response-${thread.id}" class="response"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        async function analyzeSynthesis(threadId) {
+            // Find the most recent synthesis for this thread
+            const thread = currentThreads.find(t => t.id === threadId);
+            if (!thread || thread.syntheses.length === 0) {
+                alert('No syntheses available for analysis in this thread.');
+                return;
+            }
+            
+            const latestSynthesis = thread.syntheses[thread.syntheses.length - 1];
+            const responseDiv = document.getElementById(`synthesis-response-${threadId}`);
+            
+            try {
+                const response = await fetch(`/analyze_synthesis/${latestSynthesis.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const report = result.analysis_report;
+                    showSynthesisResponse(threadId, 'success', 
+                        `✓ Bias Analysis Complete (STUB)\n` +
+                        `Report ID: ${report.report_id}\n` +
+                        `Synthesis: ${report.synthesis_id}\n` +
+                        `Bias Detected: ${report.bias_detected}\n` +
+                        `Confidence: ${report.confidence}\n` +
+                        `Note: ${report.explanation}`
+                    );
+                } else {
+                    showSynthesisResponse(threadId, 'error', 
+                        `✗ Analysis failed: ${result.error}\n` +
+                        `Doctrine: ${result.doctrine_note || 'Review and try again.'}`
+                    );
+                }
+            } catch (error) {
+                showSynthesisResponse(threadId, 'error', 
+                    `✗ Network error: Could not perform analysis.\n` +
+                    `Technical details: ${error.message}`
+                );
+            }
+        }
+        
+        // Store current threads globally for analysis function
+        let currentThreads = [];
+        
+        async function loadAllThreads() {
+            try {
+                const response = await fetch('/api/threads');
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentThreads = result.threads; // Store for bias analysis
+                    displayThreads(result.threads);
+                } else {
+                    document.getElementById('threadsContainer').innerHTML = 
+                        '<div class="no-threads">Error loading threads: ' + result.error + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('threadsContainer').innerHTML = 
+                    '<div class="no-threads">Network error loading threads: ' + error.message + '</div>';
+            }
+        }
+        
+        function displayThreads(threads) {
+            const container = document.getElementById('threadsContainer');
+            
+            if (threads.length === 0) {
+                container.innerHTML = '<div class="no-threads">No inquiries yet. Be the first to contribute to the AGORA!</div>';
+                return;
+            }
+            
+            let html = '';
+            threads.forEach(thread => {
+                html += `
+                    <div class="thread" id="thread-${thread.id}">
+                        <div class="thread-header">
+                            <span class="thread-id">${thread.id}</span>
+                            <span class="thread-timestamp">${formatTimestamp(thread.timestamp)}</span>
+                        </div>
+                        <div class="thread-inquiry">
+                            "${thread.inquiry_text}"
+                        </div>
+                        
+                        <div class="syntheses-section">
+                            <h4>Syntheses (${thread.syntheses.length}):</h4>
+                            ${thread.syntheses.map(synthesis => `
+                                <div class="synthesis">
+                                    <div class="synthesis-header">
+                                        <span class="synthesis-id">${synthesis.id}</span>
+                                        <span class="synthesis-timestamp">${formatTimestamp(synthesis.timestamp)}</span>
+                                    </div>
+                                    <div class="synthesis-text">${synthesis.synthesis_text}</div>
+                                </div>
+                            `).join('')}
+                            
+                            <div class="synthesis-form">
+                                <h5>Add Your Synthesis:</h5>
+                                <textarea 
+                                    id="synthesis-${thread.id}" 
+                                    placeholder="Contribute your synthesis, perspective, or building upon this inquiry...
+
+Examples:
+- A direct answer or solution
+- A related question that deepens the inquiry
+- Additional context or examples
+- A different perspective or approach"
+                                    required
+                                ></textarea>
+                                <button onclick="submitSynthesis('${thread.id}')">
+                                    Submit Synthesis
+                                </button>
+                                <button onclick="analyzeSynthesis('${thread.id}')" style="background-color: #666; margin-left: 10px;">
+                                    [STUB] Bias Check
                                 </button>
                                 <div id="synthesis-response-${thread.id}" class="response"></div>
                             </div>

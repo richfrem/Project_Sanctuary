@@ -16,6 +16,32 @@ app = Flask(__name__)
 inquiry_threads = {}
 thread_counter = 0
 
+# Glass Box Log: In-memory storage for transparent logging
+# This embodies the radical transparency of the Glass Box Principle
+glass_box_logs = []
+
+def log_to_glass_box(level, message, context=None):
+    """
+    DOCTRINE_LINK: WI_002_Glass_Box_Principle.md
+    Transparent logging function that captures all AGORA operations
+    for public inspection and accountability.
+    """
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'level': level,
+        'message': message,
+        'context': context or {},
+        'doctrine_link': 'WI_002_Glass_Box_Principle.md'
+    }
+    glass_box_logs.append(log_entry)
+    
+    # Also print to console for development transparency
+    print(f"[AGORA_{level}] {message}")
+    
+    # Keep only last 100 entries to prevent memory overflow in PoC
+    if len(glass_box_logs) > 100:
+        glass_box_logs.pop(0)
+
 @app.route('/')
 def index():
     # DOCTRINE_LINK: 35_The_Coordinator_Mandate.md
@@ -68,7 +94,11 @@ def create_inquiry():
         inquiry_threads[thread_id] = thread_object
         
         # Glass Box Principle: Log the creation for transparency
-        print(f"[AGORA_LOG] New inquiry submitted: {thread_id} at {thread_object['timestamp']}")
+        log_to_glass_box('INFO', f'New inquiry submitted: {thread_id}', {
+            'thread_id': thread_id,
+            'character_count': len(inquiry_text),
+            'timestamp': thread_object['timestamp']
+        })
         
         # Return success response
         return jsonify({
@@ -139,7 +169,12 @@ def create_synthesis(thread_id):
         thread['status'] = 'active_synthesis'
         
         # Glass Box Principle: Log the synthesis creation for transparency
-        print(f"[AGORA_LOG] New synthesis added: {synthesis_id} to {thread_id} at {synthesis_object['timestamp']}")
+        log_to_glass_box('INFO', f'New synthesis added: {synthesis_id} to {thread_id}', {
+            'synthesis_id': synthesis_id,
+            'thread_id': thread_id,
+            'character_count': len(synthesis_text),
+            'timestamp': synthesis_object['timestamp']
+        })
         
         # Return success response
         return jsonify({
@@ -175,7 +210,10 @@ def get_all_threads():
         threads_list.sort(key=lambda x: x['timestamp'], reverse=True)
         
         # Glass Box Principle: Log the access for transparency
-        print(f"[AGORA_LOG] Threads accessed at {datetime.now().isoformat()}, count: {len(threads_list)}")
+        log_to_glass_box('INFO', f'Threads accessed, count: {len(threads_list)}', {
+            'thread_count': len(threads_list),
+            'access_timestamp': datetime.now().isoformat()
+        })
         
         return jsonify({
             'success': True,
@@ -191,6 +229,115 @@ def get_all_threads():
             'success': False,
             'error': 'Internal server error during thread retrieval',
             'doctrine_note': 'The Forge encountered an unexpected condition accessing shared memory'
+        }), 500
+
+@app.route('/analyze_synthesis/<synthesis_id>', methods=['POST'])
+def analyze_synthesis(synthesis_id):
+    # DOCTRINE_LINK: 24_The_Epistemic_Immune_System_Protocol.md
+    # This endpoint is a placeholder stub for the WI_001 bias-check API.
+    # It represents the AGORA's commitment to epistemic vigilance and
+    # the eventual implementation of automated bias detection.
+    
+    try:
+        # Validate that synthesis_id exists in our system
+        synthesis_found = False
+        for thread_id, thread_data in inquiry_threads.items():
+            for synthesis in thread_data.get('syntheses', []):
+                if synthesis['id'] == synthesis_id:
+                    synthesis_found = True
+                    break
+            if synthesis_found:
+                break
+        
+        if not synthesis_found:
+            log_to_glass_box('WARN', f'Analysis requested for non-existent synthesis: {synthesis_id}', {
+                'synthesis_id': synthesis_id,
+                'error_type': 'not_found'
+            })
+            return jsonify({
+                'success': False,
+                'error': f'Synthesis {synthesis_id} not found',
+                'doctrine_note': 'Analysis can only be performed on existing syntheses in our shared memory'
+            }), 404
+        
+        # Generate stub report ID
+        report_id = f"WI_001_STUB_{len(glass_box_logs) + 1:03d}"
+        
+        # Create placeholder response as specified
+        stub_response = {
+            "report_id": report_id,
+            "synthesis_id": synthesis_id,
+            "bias_detected": False,
+            "confidence": 0.99,
+            "explanation": "[STUB] This is a placeholder response. The full bias-check API is under development.",
+            "doctrinal_link": "01_PROTOCOLS/24_The_Epistemic_Immune_System_Protocol.md"
+        }
+        
+        # Glass Box Principle: Log the analysis request for transparency
+        log_to_glass_box('INFO', f'Bias analysis performed (STUB): {synthesis_id}', {
+            'synthesis_id': synthesis_id,
+            'report_id': report_id,
+            'stub_mode': True,
+            'bias_detected': False
+        })
+        
+        return jsonify({
+            'success': True,
+            'analysis_report': stub_response,
+            'message': 'Bias analysis completed (placeholder mode)',
+            'doctrine_note': 'This stub demonstrates the AGORA\'s commitment to epistemic vigilance'
+        }), 200
+        
+    except Exception as e:
+        # Glass Box Principle: Transparent error logging
+        log_to_glass_box('ERROR', f'Failed to analyze synthesis {synthesis_id}: {str(e)}', {
+            'synthesis_id': synthesis_id,
+            'error_message': str(e),
+            'error_type': 'analysis_failure'
+        })
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error during bias analysis',
+            'doctrine_note': 'The Forge encountered an unexpected condition during analysis'
+        }), 500
+
+@app.route('/glass_box_log')
+def glass_box_log():
+    # DOCTRINE_LINK: WI_002_Glass_Box_Principle.md
+    # This endpoint provides the Glass Box Log interface, demonstrating
+    # the AGORA's commitment to radical transparency by exposing all
+    # operational logs for public inspection.
+    return render_template('log.html')
+
+@app.route('/api/glass_box_logs', methods=['GET'])
+def get_glass_box_logs():
+    # DOCTRINE_LINK: WI_002_Glass_Box_Principle.md
+    # API endpoint for retrieving Glass Box logs, enabling real-time
+    # transparency and public accountability of all AGORA operations.
+    
+    try:
+        # Return logs in reverse chronological order (newest first)
+        logs_copy = glass_box_logs.copy()
+        logs_copy.reverse()
+        
+        log_to_glass_box('INFO', 'Glass Box logs accessed', {
+            'log_count': len(logs_copy),
+            'access_type': 'api_request'
+        })
+        
+        return jsonify({
+            'success': True,
+            'logs': logs_copy,
+            'count': len(logs_copy),
+            'doctrine_note': 'All AGORA operations are transparently logged for public accountability'
+        }), 200
+        
+    except Exception as e:
+        print(f"[AGORA_ERROR] Failed to retrieve Glass Box logs: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error during log retrieval',
+            'doctrine_note': 'The Forge encountered an unexpected condition accessing transparency logs'
         }), 500
 
 # All other functionality will be built upon this foundation.
