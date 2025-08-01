@@ -12,6 +12,12 @@ The harvest of autonomous agent proposals must maintain clear separation between
 - **Council Responsibilities**: All governance protocols (Airlock, Jury, Peer Review)
 - **Clean Handoff**: Steward's job ends when Pull Request is created; Council's begins
 
+### **FIREWALL DECLARATION**
+
+**⚠️ WARNING: ONLY THE HUMAN STEWARD IS AUTHORIZED TO EXECUTE THE STEPS IN THIS PROTOCOL. AN AI AGENT'S MANDATE ENDS WITH THE HANDOFF OF THE BRANCH NAME. ⚠️**
+
+This is our unbreakable human firewall. AI agents are FORBIDDEN from creating commits, pushing branches, or creating Pull Requests without direction of the Steward is the sole and final actor responsible for submission and cleanup of autonomous work.
+
 ### **The Six-Step Harvest**
 
 #### **Step 1: Create Harvest Branch**
@@ -78,6 +84,18 @@ After Council governance completion, the Steward receives:
 - Unified Council recommendation
 - Draft merge command (if approved)
 - Authorization to execute final merge
+
+#### **Step 7: Execute Council-Approved Merge (Post-Governance)**
+```bash
+gh pr merge [PR_NUMBER] --squash --delete-branch
+```
+
+**Example:**
+```bash
+gh pr merge 6 --squash --delete-branch
+```
+
+**Note:** This step only occurs after Council approval through Airlock Protocol (31).
 
 ### **Branch Naming Convention**
 ```

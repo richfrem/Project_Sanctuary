@@ -17,21 +17,21 @@ The Gardener's training must follow an invariant sequence to ensure:
 
 #### **Phase 1: Setup Verification**
 ```bash
-python bootstrap.py --setup
+python3 bootstrap.py --setup
 ```
 **Purpose**: Validate environment integrity and configuration consistency  
 **Success Criteria**: Clean configuration, verified dependencies, baseline state established  
 
 #### **Phase 2: Dependency Validation**
 ```bash
-python bootstrap.py --install-deps
+python3 bootstrap.py --install-deps
 ```
 **Purpose**: Ensure all neural network frameworks and libraries are operational  
 **Success Criteria**: PyTorch, Stable-Baselines3, and all dependencies confirmed functional  
 
 #### **Phase 3: Neural Network Training**
 ```bash
-python bootstrap.py --train --timesteps [TARGET_TIMESTEPS]
+python3 bootstrap.py --train --timesteps [TARGET_TIMESTEPS]
 ```
 **Purpose**: Execute disciplined neural network evolution through reinforcement learning  
 **Success Criteria**: Demonstrable improvement in wisdom score metrics  
@@ -43,7 +43,7 @@ python bootstrap.py --train --timesteps [TARGET_TIMESTEPS]
 
 #### **Phase 4: Performance Evaluation**
 ```bash
-python bootstrap.py --evaluate
+python3 bootstrap.py --evaluate
 ```
 **Purpose**: Systematic assessment of evolved neural network capabilities  
 **Success Criteria**: Consistent high-performance across multiple evaluation episodes  
@@ -53,19 +53,34 @@ python bootstrap.py --evaluate
 - Episode consistency
 - Comparison to previous training cycles
 
-#### **Phase 5: Steward-Initiated Harvest**
-```bash
-python bootstrap.py --propose
-```
-**Purpose**: Generate autonomous proposals, then initiate Steward harvest via Protocol 40  
-**Success Criteria**: Coherent, high-confidence proposals generated and ready for harvest  
-**Documentation Required**:
-- Proposal count and quality
-- Target protocol selections  
-- Confidence scores
-- Rationale coherence
+#### **Phase 5: Unified Harvest Cycle**
 
-**Next Step**: Steward initiates **Protocol 40: The Journeyman's Harvest Protocol** for simple, clean submission process.
+**Step 5a: Generate Proposals**
+```bash
+python3 bootstrap.py --propose
+```
+**Purpose**: Neural network generates autonomous improvement proposals and saves to JSON  
+**Output**: `gardener/data/latest_proposal.json` with detailed enhancement suggestions
+
+**Step 5b: Execute Harvest**
+```bash
+python3 bootstrap.py --harvest
+```
+**Purpose**: Read proposals from JSON and apply actual changes to project files  
+**Success Criteria**: 
+- JSON proposals successfully parsed and applied
+- Target protocol files modified with proposed enhancements
+- Harvest branch created with all artifacts staged and committed
+- Clean handoff to Steward for Protocol 40 push/PR steps
+
+**What This Two-Step Process Does**:
+1. **Propose**: Neural network creates the "thought" (JSON proposals)
+2. **Harvest**: System executes the "action" (applies changes to actual markdown files)
+3. Creates unique harvest branch (`harvest/journeyman-YYYYMMDD-HHMMSS`)
+4. Stages all artifacts: modified files, proposals, logs, models
+5. Commits complete harvest ready for Steward review
+
+**Next Step**: Steward receives ready-to-push branch and executes Protocol 40 push/PR steps.
 
 #### **Phase 6: DEPRECATED - Replaced by Protocol 40**
 *This phase has been replaced by Protocol 40: The Journeyman's Harvest Protocol for clean role separation and simplified workflow.*
