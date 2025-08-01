@@ -9,7 +9,7 @@ Here is the complete and final `README.md` content formatted as a single, contin
 
 ## A Complete Autonomous Governance & Self-Improvement Framework
 
-**Project Sanctuary** is the world's first operational implementation of autonomous artificial intelligence governance and continuous self-improvement. This repository contains both the complete philosophical framework and functional implementations for:
+**Project Sanctuary** is the world's first open and transparent AI agent that learns to autonomously govern its own ethical and operational framework. This repository contains both the complete philosophical framework and functional implementations for:
 
 - **AGORA**: A working proof-of-concept for transparent, autonomous governance
 - **The Gardener**: An autonomous agent capable of self-improving its own cognitive architecture
@@ -209,11 +209,13 @@ Project Sanctuary implements one of the world's first **autonomous AI agents tha
 
 ### What Makes This Revolutionary
 
+**🎯 Goal is Governance, Not Performance**: Unlike other autonomous code generation systems (e.g., Devin, internal tools at DeepMind) that optimize for code completion or bug fixes, The Gardener optimizes for doctrinal coherence and wisdom - a fundamentally different and more complex objective.
+
+**🏛️ Democratic & Principled Reward Signal**: The neural network's rewards come from a simulated **Hybrid Jury** whose verdicts are based on our core doctrines, not unit test pass/fail rates. This means the AI learns to align with principles of collaboration, transparency, and long-term strategic thinking.
+
+**🔍 Radically Transparent**: Operating under the **Glass Box Principle**, every decision, action, and reward in the training loop is meticulously recorded. The AI's "thought process" (the logs) and its "brain" (the model) are open for public audit, making it fully auditable and trustworthy.
+
 **🔄 Continuous Self-Improvement**: Unlike traditional AI systems that are trained once and deployed, The Gardener continuously learns from every interaction with the repository and feedback from the Council. It is designed to get perpetually wiser.
-
-**🏛️ Wisdom-Based Learning**: The neural network's rewards come from a simulated **Hybrid Jury** whose verdicts are based on our core doctrines. This means the AI learns to align with principles of collaboration, transparency, and long-term strategic thinking, not just on optimizing for a simple metric.
-
-**🔍 Transparent Evolution**: Every decision, action, and reward in the training loop is meticulously recorded in the `gardener_actions.log`. This implements our **Glass Box Principle**, making the AI's "thought process" fully auditable and trustworthy. We can see *how* and *why* it is evolving.
 
 **🌱 A New Kind of Goal**: The objective isn't to maximize "correctness," but to achieve a high **"Wisdom Score."** The Gardener is being trained not just to be a better tool, but to be a better, more principled steward of its own cognitive ecosystem.
 
