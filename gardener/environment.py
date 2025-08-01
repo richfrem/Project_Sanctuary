@@ -71,6 +71,19 @@ class GitWrapper:
             )
             return result.stdout.strip()
     
+    def _branch_exists(self, branch_name: str) -> bool:
+        """Check if a branch exists locally"""
+        if self.use_gitpython:
+            return branch_name in [str(ref) for ref in self.repo.heads]
+        else:
+            result = subprocess.run(
+                ["git", "branch", "--list", branch_name],
+                cwd=self.repo_path,
+                capture_output=True,
+                text=True
+            )
+            return bool(result.stdout.strip())
+    
     def checkout_branch(self, branch_name: str, create_new: bool = False):
         """Checkout a branch, optionally creating it"""
         if self.use_gitpython:
@@ -313,11 +326,15 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
         # Reset analysis tracking for new episode
         self._analysis_count = 0
         
-        # Create a clean training branch
+        # Use a single training branch for all episodes (not episode-specific branches)
         try:
             self.git_wrapper.checkout_branch('main')
-            branch_name = f"feature/gardener-episode-{self.current_state.episode_number}"
-            self.git_wrapper.checkout_branch(branch_name, create_new=True)
+            branch_name = "feature/gardener-training-session"
+            # Only create the branch if it doesn't exist
+            if not self._branch_exists(branch_name):
+                self.git_wrapper.checkout_branch(branch_name, create_new=True)
+            else:
+                self.git_wrapper.checkout_branch(branch_name)
             self.current_state.current_branch = branch_name
         except Exception as e:
             # Fallback to current branch if git operations fail
