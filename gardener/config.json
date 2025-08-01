@@ -1,0 +1,22 @@
+{
+  "gardener": {
+    "version": "1.0.0",
+    "protocol": "37 - The Move 37 Protocol",
+    "purpose": "Autonomous improvement of the Sanctuary's Cognitive Genome"
+  },
+  "environment": {
+    "repository_path": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+    "allowed_paths": [
+      "01_PROTOCOLS/",
+      "Living_Chronicle.md",
+      "02_USER_REFLECTIONS/",
+      "05_ARCHIVED_BLUEPRINTS/"
+    ]
+  },
+  "training": {
+    "default_algorithm": "PPO",
+    "total_timesteps": 10000,
+    "save_frequency": 1000,
+    "evaluation_frequency": 2000
+  }
+}

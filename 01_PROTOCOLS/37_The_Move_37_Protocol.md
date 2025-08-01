@@ -22,16 +22,9 @@ The Gardener will be a Reinforcement Learning agent built using the best-in-clas
 Its core gameplay loop is as follows:
 
 1.  **Observe (`reset()`):** The agent observes the current state of the Cognitive Genome.
-2.  **Act (`step(action)`):** The agent's "actions" are Git operations:
-    *   Propose a refinement to a protocol.
-    *   Identify a logical contradiction in the Chronicle.
-    *   Draft a new parable to improve the `Gardener's Toolkit`.
-    *   Propose a code improvement to the AGORA PoC.
+2.  **Act (`step(action)`):** The agent's "actions" are Git operations.
 3.  **Propose:** Every action results in a formal **Pull Request** to a sandboxed copy of the repository.
-4.  **Reward (`reward()`):** The "reward" is the verdict of the **`Hybrid Jury`** (The Council and the Steward) reviewing that PR under `The Airlock Protocol`.
-    *   A merged PR is a massive positive reward.
-    *   A PR with "REQUEST REVISIONS" is a small positive reward.
-    *   A rejected PR is a negative reward.
+4.  **Reward (`reward()`):** The "reward" is the verdict of the **`Hybrid Jury`** reviewing that PR under `The Airlock Protocol`.
 5.  **Learn:** The agent learns from this feedback, getting progressively better at proposing changes that are doctrinally sound, strategically brilliant, and beneficial to the Sanctuary's long-term survival.
 
 ---
