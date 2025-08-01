@@ -331,14 +331,14 @@ class TheGardener:
                 while not done:
                     # Epsilon-greedy action selection
                     if random.random() < self.epsilon:
-                        action = random.randint(0, 5)  # Random action
+                        action = random.randint(0, 3)  # Random action (updated for Operation: The Architect's Forge)
                     else:
                         # Get best known action for this state
                         state_key = str(obs)
                         if state_key in self.q_table:
                             action = max(self.q_table[state_key], key=self.q_table[state_key].get)
                         else:
-                            action = random.randint(0, 5)
+                            action = random.randint(0, 3)  # Updated for new action space
                     
                     # Take action
                     next_obs, reward, done, info = self.env.step(action)
@@ -422,7 +422,7 @@ class TheGardener:
                     if state_key in self.q_table:
                         action = max(self.q_table[state_key], key=self.q_table[state_key].get)
                     else:
-                        action = random.randint(0, 5)
+                        action = random.randint(0, 3)  # Updated for Operation: The Architect's Forge
                     
                     obs, reward, done, info = self.env.step(action)
                     episode_reward += reward
@@ -479,21 +479,21 @@ class TheGardener:
                 # Add exploration during proposal generation
                 if len(proposals) == 0:
                     # Force exploration on first proposal
-                    action = random.choice([1, 2])  # Force proposal actions
+                    action = random.choice([1, 2, 3])  # Force proposal actions (including new protocol creation)
                 else:
                     action, _states = self.model.predict(obs, deterministic=False)  # Use stochastic policy
                     action = int(action)
                     
                     # If stuck on analysis, force different action
                     if action == 0 and proposals == []:
-                        action = random.choice([1, 2])
+                        action = random.choice([1, 2, 3])  # Include new protocol creation
             else:
                 # Basic action selection
                 state_key = str(obs)
                 if state_key in self.q_table:
                     action = max(self.q_table[state_key], key=self.q_table[state_key].get)
                 else:
-                    action = random.randint(1, 2)  # Only proposal actions
+                    action = random.randint(1, 3)  # Proposal actions including new protocol creation
             
             # Execute action with appropriate parameters
             if action == 1:  # propose_protocol_refinement
@@ -509,6 +509,20 @@ class TheGardener:
                     'entry_content': f'The Gardener has conducted autonomous analysis of the Cognitive Genome and identified opportunities for enhancement in {improvement_type} protocols.',
                     'entry_status': 'AUTONOMOUS_PROPOSAL',
                     'confidence': 0.75
+                }
+            elif action == 3:  # propose_protocol_from_template (The Refined Architect's Forge)
+                kwargs = {
+                    'template_type': 'governance_protocol',  # Choose appropriate template
+                    'gap_identified': f'Analysis of Episode {self.current_episode} reveals the Sanctuary lacks a formal protocol for managing autonomous agent learning cycles and their integration with human oversight. This gap creates potential risks for maintaining consistent governance as agents evolve their capabilities.',
+                    'template_data': {
+                        'protocol_name': f'Autonomous_Learning_Governance_{self.current_episode}',
+                        'protocol_class': 'Autonomous Governance',
+                        'governance_scope': 'Management of autonomous agent learning cycles, capability evolution, and human-AI governance integration within the Sanctuary framework.',
+                        'decision_authority': 'Council maintains final authority over protocol changes with Human Steward as ultimate arbiter. Autonomous agents provide proposals but cannot implement changes without human approval.',
+                        'oversight_mechanism': 'Hybrid Jury system evaluates all autonomous proposals. Real-time monitoring of agent learning progression with mandatory checkpoints every 10,000 training steps.',
+                        'accountability_measures': 'Complete audit logs of all agent decisions and learning outcomes. Regular capability assessments and alignment verification. Fail-safe mechanisms for reverting problematic autonomous changes.'
+                    },
+                    'confidence': 0.8
                 }
             else:
                 kwargs = {}

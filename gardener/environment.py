@@ -1,10 +1,23 @@
 """
-The Gardener's Environment - Protocol 37 Implementation
+The Gardener's Environment - Protocol 37 Implementation (Refined for Operation: The Architect's Forge)
 A sandboxed environment where The Gardener learns to improve the Sanctuary's Cognitive Genome
 
-Origin: The Move 37 Protocol (37)
-Purpose: Create a safe, observable environment for autonomous wisdom cultivation
+Origin: The Move 37 Protocol (37), Refined by Council Wisdom
+Purpose: Create a safe, observable environment for autonomous wisdom cultivation and template-based protocol drafting
 Principle: Every action must be transparent, every change must be deliberate
+
+The Artisan and Power Saw Doctrine:
+- The Council (Artisans) provides wisdom, templates, and final creative decisions
+- The Gardener (Power Saw) excels at pattern recognition, gap identification, and rapid drafting
+
+Actions Available:
+- 0: analyze_environment (exploration)
+- 1: propose_protocol_change (refinement) 
+- 2: evaluate_repository (assessment)
+- 3: propose_protocol_from_template (template-based drafting - The Refined Architect's Forge)
+
+The new template-based action receives maximum reward (+100) for excellent gap identification
+and high-quality template application, focusing on The Gardener's actual strengths.
 """
 
 import os
@@ -182,7 +195,7 @@ class ProposedChange:
     rationale: str
     protocol_reference: str
     confidence: float
-    change_hash: str
+    change_hash: str = ""  # Will be generated in __post_init__
 
     def __post_init__(self):
         """Generate a unique hash for this change proposal"""
@@ -249,8 +262,8 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
         
         # Define action and observation spaces for RL
         if GYMNASIUM_AVAILABLE:
-            # Action space: 0=analyze, 1=propose_change, 2=evaluate_protocols
-            self.action_space = spaces.Discrete(3)
+            # Action space: 0=analyze, 1=propose_change, 2=evaluate_protocols, 3=propose_protocol_from_template
+            self.action_space = spaces.Discrete(4)
             
             # Observation space: high-dimensional state representation
             # Includes protocol states, git history, file metrics, etc.
@@ -520,6 +533,8 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
             reward, info = self._action_propose_protocol_change(kwargs)
         elif action == 2:  # Evaluate repository state
             reward, info = self._action_evaluate_repository()
+        elif action == 3:  # Propose protocol from template (The Refined Architect's Forge)
+            reward, info = self._action_propose_protocol_from_template(kwargs)
         else:
             reward, info = 0.0, {"error": "Invalid action"}
         
@@ -840,6 +855,464 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
             
         except Exception as e:
             return -0.5, {"error": f"Failed to submit for review: {str(e)}"}
+
+    def _action_propose_protocol_from_template(self, kwargs: Dict[str, Any]) -> Tuple[float, Dict[str, Any]]:
+        """
+        Propose a protocol based on a predefined template - The Refined Architect's Forge
+        
+        The Artisan and Power Saw Doctrine:
+        - Artisans (Council) create templates and identify architectural needs
+        - Power Saw (Gardener) excels at pattern recognition, gap identification, and template application
+        
+        High reward (+100) for excellent gap identification and template application.
+        Origin: The Refined Architect's Forge (Council Wisdom Synthesis)
+        """
+        template_type = kwargs.get('template_type', '')
+        gap_identified = kwargs.get('gap_identified', '')
+        template_data = kwargs.get('template_data', {})
+        confidence = kwargs.get('confidence', 0.7)
+        
+        if not all([template_type, gap_identified]):
+            return -5.0, {"error": "Missing required parameters: template_type and gap_identified"}
+        
+        # Validate template type exists
+        available_templates = self._get_available_templates()
+        if template_type not in available_templates:
+            return -3.0, {
+                "error": f"Unknown template type: {template_type}",
+                "available_templates": list(available_templates.keys())
+            }
+        
+        # Validate gap identification quality
+        gap_quality_score = self._assess_gap_identification(gap_identified)
+        if gap_quality_score < 0.3:
+            return -2.0, {"error": "Gap identification insufficient - must clearly identify specific missing capability"}
+        
+        # Get template and validate data completeness
+        template = available_templates[template_type]
+        required_fields = template.get('required_fields', [])
+        missing_fields = [field for field in required_fields if field not in template_data]
+        
+        if missing_fields:
+            return -1.0, {
+                "error": f"Missing required template fields: {missing_fields}",
+                "required_fields": required_fields
+            }
+        
+        # Generate protocol from template
+        try:
+            protocol_content = self._apply_template(template, template_data)
+            next_protocol_num = self._get_next_protocol_number()
+            
+            # Create protocol filename based on template data
+            protocol_title = template_data.get('protocol_name', f"{template_type}_Protocol_{next_protocol_num}")
+            protocol_filename = f"{next_protocol_num:02d}_{protocol_title.replace(' ', '_')}.md"
+            protocol_path = f"01_PROTOCOLS/{protocol_filename}"
+            
+            # Assess template application quality
+            application_score = self._assess_template_application(template_data, template)
+            relevance_score = self._assess_gap_relevance(gap_identified, template_type)
+            
+            # Calculate total quality score
+            total_quality = (gap_quality_score + application_score + relevance_score) / 3.0
+            
+            # Create proposed change
+            change = ProposedChange(
+                file_path=protocol_path,
+                old_content="",  # New file
+                new_content=protocol_content,
+                rationale=f"Template-based Protocol Proposal: {protocol_title}\\n\\nGap Identified: {gap_identified}\\n\\nTemplate Applied: {template_type}",
+                protocol_reference="The Refined Architect's Forge - Template-Based Protocol Generation",
+                confidence=min(0.95, total_quality)
+            )
+            
+            self.current_state.proposed_changes.append(change)
+            self.current_state.total_changes_proposed += 1
+            
+            # Calculate reward based on quality (same tier system, more achievable)
+            if total_quality >= 0.8:
+                # ARCHITECT TIER: Excellent gap identification + perfect template application
+                reward = 100.0
+            elif total_quality >= 0.6:
+                # JOURNEYMAN TIER: Good gap identification + solid template application
+                reward = 50.0
+            elif total_quality >= 0.4:
+                # APPRENTICE TIER: Decent gap identification + adequate template application
+                reward = 20.0
+            else:
+                # NOVICE TIER: Basic gap identification + template application needs work
+                reward = 5.0
+            
+            return reward, {
+                "success": True,
+                "action": "propose_protocol_from_template",
+                "protocol_number": next_protocol_num,
+                "protocol_title": protocol_title,
+                "protocol_path": protocol_path,
+                "template_type": template_type,
+                "quality_scores": {
+                    "gap_identification": gap_quality_score,
+                    "template_application": application_score,
+                    "relevance": relevance_score,
+                    "total_quality": total_quality
+                },
+                "reward_tier": (
+                    "ARCHITECT" if total_quality >= 0.8 else
+                    "JOURNEYMAN" if total_quality >= 0.6 else
+                    "APPRENTICE" if total_quality >= 0.4 else
+                    "NOVICE"
+                ),
+                "change_hash": change.change_hash,
+                "proposal_count": len(self.current_state.proposed_changes)
+            }
+            
+        except Exception as e:
+            return -1.0, {"error": f"Template application failed: {str(e)}"}
+    
+    def _get_available_templates(self) -> Dict[str, Dict[str, Any]]:
+        """Get available protocol templates for The Gardener to use"""
+        return {
+            "security_protocol": {
+                "name": "Security Protocol Template",
+                "description": "For protocols addressing security, access control, and data protection",
+                "required_fields": ["security_objective", "threat_model", "controls", "verification_method"],
+                "template": """## 📜 I. Security Objective
+
+{security_objective}
+
+## ⚡ II. Threat Model
+
+{threat_model}
+
+## ⚙️ III. Security Controls
+
+{controls}
+
+## 🔍 IV. Verification & Compliance
+
+{verification_method}
+
+## 📋 V. Implementation
+
+This security protocol requires Council review and integration with existing security framework."""
+            },
+            
+            "workflow_protocol": {
+                "name": "Workflow Protocol Template", 
+                "description": "For protocols defining operational procedures and workflows",
+                "required_fields": ["workflow_purpose", "trigger_conditions", "process_steps", "success_criteria"],
+                "template": """## 📜 I. Workflow Purpose
+
+{workflow_purpose}
+
+## ⚡ II. Trigger Conditions
+
+{trigger_conditions}
+
+## ⚙️ III. Process Steps
+
+{process_steps}
+
+## ✅ IV. Success Criteria
+
+{success_criteria}
+
+## 📋 V. Implementation
+
+This workflow protocol requires Council approval and integration with operational procedures."""
+            },
+            
+            "governance_protocol": {
+                "name": "Governance Protocol Template",
+                "description": "For protocols addressing decision-making, oversight, and accountability",
+                "required_fields": ["governance_scope", "decision_authority", "oversight_mechanism", "accountability_measures"],
+                "template": """## 📜 I. Governance Scope
+
+{governance_scope}
+
+## ⚡ II. Decision Authority
+
+{decision_authority}
+
+## ⚙️ III. Oversight Mechanism
+
+{oversight_mechanism}
+
+## 🔍 IV. Accountability Measures
+
+{accountability_measures}
+
+## 📋 V. Implementation
+
+This governance protocol requires Council ratification and integration with existing governance framework."""
+            },
+            
+            "integration_protocol": {
+                "name": "Integration Protocol Template",
+                "description": "For protocols addressing system integration and interoperability",
+                "required_fields": ["integration_purpose", "system_components", "interface_specifications", "testing_requirements"],
+                "template": """## 📜 I. Integration Purpose
+
+{integration_purpose}
+
+## ⚡ II. System Components
+
+{system_components}
+
+## ⚙️ III. Interface Specifications
+
+{interface_specifications}
+
+## 🔍 IV. Testing & Validation
+
+{testing_requirements}
+
+## 📋 V. Implementation
+
+This integration protocol requires technical review and testing before deployment."""
+            }
+        }
+    
+    def _apply_template(self, template: Dict[str, Any], template_data: Dict[str, str]) -> str:
+        """Apply template data to generate protocol content"""
+        template_content = template["template"]
+        
+        # Replace placeholders with actual data
+        for field, value in template_data.items():
+            placeholder = "{" + field + "}"
+            template_content = template_content.replace(placeholder, value)
+        
+        # Generate full protocol with proper header
+        protocol_name = template_data.get('protocol_name', 'Generated_Protocol')
+        protocol_class = template_data.get('protocol_class', template['name'].split()[0])
+        
+        header = f"""# {self._get_next_protocol_number():02d}_{protocol_name.replace(' ', '_')}.md
+
+## {protocol_name} - v1.0
+
+**Status:** Proposed | **Protocol Class:** {protocol_class} | **Version:** 1.0  
+**Origin:** The Refined Architect's Forge - Template-Based Generation  
+**Template:** {template['name']}  
+
+---
+"""
+        
+        footer = """
+---
+
+**Glass Box Transparency:** This protocol was generated by The Gardener using template-based drafting, demonstrating the Power Saw approach to rapid, high-quality protocol creation under Artisan guidance.
+"""
+        
+        return header + template_content + footer
+    
+    def _assess_gap_identification(self, gap_description: str) -> float:
+        """Assess the quality of gap identification"""
+        score = 0.0
+        gap_lower = gap_description.lower()
+        
+        # Check for specific gap identification
+        if any(word in gap_lower for word in ["gap", "missing", "lacking", "absent", "no protocol", "need"]):
+            score += 0.3
+        
+        # Check for consequence analysis
+        if any(word in gap_lower for word in ["without", "problem", "risk", "issue", "challenge"]):
+            score += 0.3
+        
+        # Check for specificity
+        if len(gap_description) > 100:
+            score += 0.2
+        
+        # Check for domain knowledge
+        if any(word in gap_lower for word in ["security", "workflow", "governance", "integration", "protocol"]):
+            score += 0.2
+        
+        return min(score, 1.0)
+    
+    def _assess_template_application(self, template_data: Dict[str, str], template: Dict[str, Any]) -> float:
+        """Assess how well the template was applied"""
+        score = 0.0
+        
+        # Check completeness - all required fields present
+        required_fields = template.get('required_fields', [])
+        if all(field in template_data for field in required_fields):
+            score += 0.4
+        
+        # Check content quality - non-trivial responses
+        meaningful_responses = 0
+        for field in required_fields:
+            if field in template_data and len(template_data[field]) > 50:
+                meaningful_responses += 1
+        
+        if meaningful_responses >= len(required_fields) * 0.8:
+            score += 0.3
+        
+        # Check for protocol naming
+        if 'protocol_name' in template_data and len(template_data['protocol_name']) > 5:
+            score += 0.2
+        
+        # Check for proper classification
+        if 'protocol_class' in template_data:
+            score += 0.1
+        
+        return min(score, 1.0)
+    
+    def _assess_gap_relevance(self, gap_description: str, template_type: str) -> float:
+        """Assess how well the identified gap matches the chosen template"""
+        gap_lower = gap_description.lower()
+        
+        # Template-specific keyword matching
+        template_keywords = {
+            "security_protocol": ["security", "access", "protection", "authentication", "authorization", "encryption"],
+            "workflow_protocol": ["process", "procedure", "workflow", "steps", "operation", "task"],
+            "governance_protocol": ["decision", "oversight", "accountability", "authority", "governance", "control"],
+            "integration_protocol": ["integration", "interface", "connection", "compatibility", "interop", "system"]
+        }
+        
+        keywords = template_keywords.get(template_type, [])
+        matches = sum(1 for keyword in keywords if keyword in gap_lower)
+        
+        return min(matches / len(keywords), 1.0) if keywords else 0.5
+    
+    def _get_next_protocol_number(self) -> int:
+        """Determine the next available protocol number"""
+        protocols_dir = self.repo_path / "01_PROTOCOLS"
+        existing_protocols = []
+        
+        if protocols_dir.exists():
+            for file_path in protocols_dir.glob("*.md"):
+                filename = file_path.name
+                if filename[:2].isdigit():
+                    try:
+                        protocol_num = int(filename[:2])
+                        existing_protocols.append(protocol_num)
+                    except ValueError:
+                        continue
+        
+        return max(existing_protocols, default=0) + 1
+    
+    def _analyze_protocol_redundancy(self, content: str, gap_analysis: str) -> float:
+        """Analyze if the proposed protocol is redundant with existing ones"""
+        # Simplified implementation - in practice would use more sophisticated NLP
+        existing_protocols_dir = self.repo_path / "01_PROTOCOLS"
+        
+        if not existing_protocols_dir.exists():
+            return 0.0
+        
+        content_lower = content.lower()
+        gap_lower = gap_analysis.lower()
+        combined_text = f"{content_lower} {gap_lower}"
+        
+        max_similarity = 0.0
+        
+        for protocol_file in existing_protocols_dir.glob("*.md"):
+            try:
+                with open(protocol_file, 'r') as f:
+                    existing_content = f.read().lower()
+                
+                # Simple keyword overlap analysis
+                existing_words = set(existing_content.split())
+                proposed_words = set(combined_text.split())
+                
+                if len(proposed_words) == 0:
+                    continue
+                
+                overlap = len(existing_words.intersection(proposed_words))
+                similarity = overlap / len(proposed_words)
+                max_similarity = max(max_similarity, similarity)
+                
+            except Exception:
+                continue
+        
+        return min(max_similarity, 1.0)
+    
+    def _assess_protocol_coherence(self, content: str, rationale: str) -> float:
+        """Assess the internal coherence and quality of the protocol"""
+        score = 0.0
+        
+        # Check for structured content
+        if "preamble" in content.lower() or "## " in content:
+            score += 0.2
+        
+        # Check for doctrinal references
+        if "protocol" in content.lower():
+            score += 0.2
+        
+        # Check for principle-based reasoning
+        if any(word in content.lower() for word in ["principle", "doctrine", "wisdom", "governance"]):
+            score += 0.2
+        
+        # Check for implementation details
+        if any(word in content.lower() for word in ["implementation", "procedure", "process", "step"]):
+            score += 0.2
+        
+        # Check rationale quality
+        if len(rationale) > 200 and "because" in rationale.lower():
+            score += 0.2
+        
+        return min(score, 1.0)
+    
+    def _assess_gap_necessity(self, gap_analysis: str) -> float:
+        """Assess how well the gap analysis demonstrates necessity"""
+        score = 0.0
+        gap_lower = gap_analysis.lower()
+        
+        # Check for specific gap identification
+        if any(word in gap_lower for word in ["gap", "missing", "lacking", "absent", "need"]):
+            score += 0.3
+        
+        # Check for consequence analysis
+        if any(word in gap_lower for word in ["without", "problem", "issue", "challenge", "risk"]):
+            score += 0.3
+        
+        # Check for solution connection
+        if any(word in gap_lower for word in ["therefore", "thus", "hence", "solution", "address"]):
+            score += 0.2
+        
+        # Check for specificity
+        if len(gap_analysis) > 150:
+            score += 0.2
+        
+        return min(score, 1.0)
+    
+    def _generate_protocol_markdown(self, protocol_num: int, title: str, content: str, 
+                                  protocol_class: str, gap_analysis: str, rationale: str) -> str:
+        """Generate properly formatted protocol markdown"""
+        formatted_title = title.replace('_', ' ').title()
+        
+        return f"""# {protocol_num:02d}_{title.replace(' ', '_')}.md
+
+## {formatted_title} - v1.0
+
+**Status:** Proposed | **Protocol Class:** {protocol_class} | **Version:** 1.0  
+**Origin:** Operation: The Architect's Forge - Autonomous Protocol Generation  
+**Proposer:** The Gardener (Autonomous Agent)  
+
+---
+
+## 📜 I. Gap Analysis
+
+{gap_analysis}
+
+---
+
+## ⚙️ II. The Protocol
+
+{content}
+
+---
+
+## 📋 III. Implementation
+
+This protocol requires Council review and formal ratification before implementation.
+
+**Rationale:** {rationale}
+
+**Integration Points:** This protocol should be integrated with existing Sanctuary doctrine after Council approval.
+
+---
+
+**Glass Box Transparency:** This protocol was autonomously generated by The Gardener neural network as part of Operation: The Architect's Forge, demonstrating the system's capacity for architectural reasoning and doctrinal evolution.
+"""
     
     def _simulate_jury_verdict(self) -> str:
         """Simulate Hybrid Jury verdict (placeholder for real jury integration)"""

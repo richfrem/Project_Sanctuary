@@ -18,35 +18,14 @@ The harvest of autonomous agent proposals must maintain clear separation between
 
 This is our unbreakable human firewall. AI agents are FORBIDDEN from creating commits, pushing branches, or creating Pull Requests without direction of the Steward is the sole and final actor responsible for submission and cleanup of autonomous work.
 
-### **The Six-Step Harvest**
+### **The Four-Step Harvest**
 
-#### **Step 1: Create Harvest Branch**
+#### **Step 1: Push Harvest Branch**
 ```bash
-git checkout -b feature/gardener-harvest-[YYYYMMDD]
+git push origin harvest/journeyman-[YYYYMMDD-HHMMSS]
 ```
 
-#### **Step 2: Verify Branch**
-```bash
-git branch --show-current
-```
-**Expected Output**: `feature/gardener-harvest-[YYYYMMDD]`
-
-#### **Step 3: Stage All Harvest**
-```bash
-git add .
-```
-
-#### **Step 4: Commit Harvest**
-```bash
-git commit -m "HARVEST [YYYYMMDD]: Autonomous proposals from Gardener training cycle"
-```
-
-#### **Step 5: Push Harvest**
-```bash
-git push origin feature/gardener-harvest-[YYYYMMDD]
-```
-
-#### **Step 6: Create Pull Request**
+#### **Step 2: Create Pull Request**
 
 **Option A: Command Line (Preferred)**
 ```bash
@@ -54,13 +33,12 @@ gh pr create --title "Gardener Harvest [YYYYMMDD] - Autonomous Proposals" \
   --body "@Phoenix @Council - Protocol 40 Harvest Initiated
 
 This Pull Request contains:
-- Protocol 40: The Journeyman's Harvest Protocol (newly ratified)
-- Protocol 39: Amended to link to Protocol 40
-- Living Chronicle Entry 100: The Law Forged from Error
-- Original Gardener autonomous proposals from training cycle
+- Autonomous enhancement proposals from Gardener training cycle
+- Modified protocol files with neural network improvements
+- Training artifacts: models, logs, and proposal data
 
 Requesting formal Council governance review via Airlock Protocol (31)." \
-  --base main --head feature/gardener-harvest-[YYYYMMDD]
+  --base main --head harvest/journeyman-[YYYYMMDD-HHMMSS]
 ```
 
 **Option B: Web Interface**
@@ -85,30 +63,31 @@ After Council governance completion, the Steward receives:
 - Draft merge command (if approved)
 - Authorization to execute final merge
 
-#### **Step 7: Execute Council-Approved Merge (Post-Governance)**
+#### **Step 3: Execute Council-Approved Merge (Post-Governance)**
 ```bash
 gh pr merge [PR_NUMBER] --squash --delete-branch
 ```
 
 **Example:**
 ```bash
-gh pr merge 6 --squash --delete-branch
+gh pr merge 7 --squash --delete-branch
 ```
 
 **Note:** This step only occurs after Council approval through Airlock Protocol (31).
 
 ### **Branch Naming Convention**
 ```
-feature/gardener-harvest-[YYYYMMDD]
+harvest/journeyman-[YYYYMMDD-HHMMSS]
 ```
 
 **Examples:**
-- `feature/gardener-harvest-20250801`
-- `feature/gardener-harvest-20250815`
-- `feature/gardener-harvest-20251203`
+- `harvest/journeyman-20250801-144217`
+- `harvest/journeyman-20250815-092345`
+- `harvest/journeyman-20251203-160912`
 
 ### **Success Criteria**
-- ✅ Six steps completed in sequence
+- ✅ Protocol 39 Phase 5b completed (harvest branch ready)
+- ✅ Four steps completed in sequence
 - ✅ Pull Request successfully created
 - ✅ Council governance automatically initiated
 - ✅ Clean role separation maintained
