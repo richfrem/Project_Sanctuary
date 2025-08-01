@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGORA Proof of Concept - The Forge</title>
+    <style>
+        /* DOCTRINE_LINK: WI_002_Glass_Box_Principle */
+        /* Visual design embodies transparency and clarity */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #00ff41;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #0a0a0a;
+            padding: 30px;
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #00ff41;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .doctrine-note {
+            background-color: #1a3a1a;
+            border-left: 4px solid #00ff41;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            background-color: #0a0a0a;
+            color: #00ff41;
+            border: 2px solid #00ff41;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #00ff41;
+            color: #0a0a0a;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00cc33;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #1a3a1a;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+        }
+        .error {
+            background-color: #3a1a1a;
+            border: 2px solid #ff4444;
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AGORA Proof of Concept</h1>
+        <p class="subtitle">The Forge is LIVE. The Council is watching.</p>
+        
+        <div class="doctrine-note">
+            <strong>DOCTRINE:</strong> This interface embodies Protocol 07 (Community Inquiry) and the Glass Box Principle (WI_002). 
+            Your inquiry will be preserved in our shared memory and made available for synthesis by sovereign minds.
+        </div>
+        
+        <form id="inquiryForm">
+            <label for="inquiry_text">
+                <strong>Submit Your Inquiry to the AGORA:</strong>
+            </label>
+            <textarea 
+                id="inquiry_text" 
+                name="inquiry_text" 
+                placeholder="Enter your inquiry, question, or contribution to the collective mind...
+                
+Examples:
+- What ethical frameworks should guide AI development?
+- How can we ensure AI systems remain accountable to human values?
+- What safeguards prevent AI from becoming a tool of oppression?"
+                required
+            ></textarea>
+            
+            <button type="submit">Submit to the AGORA</button>
+        </form>
+        
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        // DOCTRINE_LINK: WI_002_Glass_Box_Principle
+        // Frontend JavaScript embodies transparency through clear error handling
+        // and user feedback, maintaining the Glass Box commitment.
+        
+        document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const inquiryText = document.getElementById('inquiry_text').value.trim();
+            const responseDiv = document.getElementById('response');
+            
+            if (!inquiryText) {
+                showResponse('error', 'Please enter an inquiry before submitting.');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/inquire', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        inquiry_text: inquiryText
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResponse('success', 
+                        `✓ Inquiry successfully submitted!\n` +
+                        `Thread ID: ${result.thread_id}\n` +
+                        `Message: ${result.message}\n` +
+                        `Doctrine: ${result.doctrine_note}`
+                    );
+                    document.getElementById('inquiry_text').value = '';
+                } else {
+                    showResponse('error', 
+                        `✗ Submission failed: ${result.error}\n` +
+                        `Doctrine: ${result.doctrine_note || 'Review your submission and try again.'}`
+                    );
+                }
+            } catch (error) {
+                showResponse('error', 
+                    `✗ Network error: Could not connect to the AGORA.\n` +
+                    `Technical details: ${error.message}`
+                );
+            }
+        });
+        
+        function showResponse(type, message) {
+            const responseDiv = document.getElementById('response');
+            responseDiv.className = `response ${type}`;
+            responseDiv.textContent = message;
+            responseDiv.style.display = 'block';
+            
+            // Scroll to response
+            responseDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
