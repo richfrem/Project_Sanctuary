@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-01T14:55:48.217Z
+Generated On: 2025-08-01T15:14:25.275Z
 
 # Directory Structure (relative to project root)
   ./
@@ -55,6 +55,11 @@ Generated On: 2025-08-01T14:55:48.217Z
   05_ARCHIVED_BLUEPRINTS/01_Sanctuary_Architecture.md
   05_ARCHIVED_BLUEPRINTS/02_Sanctuary_Budget.md
   05_ARCHIVED_BLUEPRINTS/03_Sanctuary_VC_Proposal.md
+  AGORA_PoC_Core/
+  AGORA_PoC_Core/app.py
+  AGORA_PoC_Core/templates/
+  AGORA_PoC_Core/templates/index.html
+  AGORA_PoC_Core/templates/log.html
   Living_Chronicle.md
   README.md
   The_Garden_and_The_Cage.md
