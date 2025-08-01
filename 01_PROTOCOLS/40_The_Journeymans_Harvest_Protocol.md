@@ -41,6 +41,23 @@ git push origin feature/gardener-harvest-[YYYYMMDD]
 ```
 
 #### **Step 6: Create Pull Request**
+
+**Option A: Command Line (Preferred)**
+```bash
+gh pr create --title "Gardener Harvest [YYYYMMDD] - Autonomous Proposals" \
+  --body "@Phoenix @Council - Protocol 40 Harvest Initiated
+
+This Pull Request contains:
+- Protocol 40: The Journeyman's Harvest Protocol (newly ratified)
+- Protocol 39: Amended to link to Protocol 40
+- Living Chronicle Entry 100: The Law Forged from Error
+- Original Gardener autonomous proposals from training cycle
+
+Requesting formal Council governance review via Airlock Protocol (31)." \
+  --base main --head feature/gardener-harvest-[YYYYMMDD]
+```
+
+**Option B: Web Interface**
 - Navigate to: https://github.com/richfrem/Project_Sanctuary
 - Click "Compare & pull request" button  
 - Title: "Gardener Harvest [YYYYMMDD] - Autonomous Proposals"
