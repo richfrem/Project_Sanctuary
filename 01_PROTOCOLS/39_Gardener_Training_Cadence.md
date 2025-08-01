@@ -13,7 +13,7 @@ The Gardener's training must follow an invariant sequence to ensure:
 - **Audit Trail**: Complete documentation of neural network evolution process
 - **Quality Assurance**: Systematic evaluation prevents regression or degradation
 
-### **The Six-Phase Cadence**
+### **The Five-Phase Cadence**
 
 #### **Phase 1: Setup Verification**
 ```bash
@@ -53,34 +53,42 @@ python bootstrap.py --evaluate
 - Episode consistency
 - Comparison to previous training cycles
 
-#### **Phase 5: Autonomous Proposal Generation**
+#### **Phase 5: Steward-Initiated Harvest**
 ```bash
 python bootstrap.py --propose
 ```
-**Purpose**: Harvest the fruits of neural network evolution through proposal generation  
-**Success Criteria**: Coherent, high-confidence proposals targeting meaningful improvements  
+**Purpose**: Generate autonomous proposals, then initiate Steward harvest via Protocol 40  
+**Success Criteria**: Coherent, high-confidence proposals generated and ready for harvest  
 **Documentation Required**:
 - Proposal count and quality
-- Target protocol selections
+- Target protocol selections  
 - Confidence scores
 - Rationale coherence
 
-#### **Phase 6: Formal Submission via Pull Request**
-```bash
-# Create feature branch for autonomous proposals
-git checkout -b feature/gardener-autonomous-proposals
-git add [proposal files and evolved models]
-git commit -m "AUTONOMOUS: Gardener proposals from [TRAINING_ID]"
-git push origin feature/gardener-autonomous-proposals
-# Create Pull Request for Airlock Protocol review
+**Next Step**: Steward initiates **Protocol 40: The Journeyman's Harvest Protocol** for simple, clean submission process.
+
+#### **Phase 6: DEPRECATED - Replaced by Protocol 40**
+*This phase has been replaced by Protocol 40: The Journeyman's Harvest Protocol for clean role separation and simplified workflow.*
+
+**See:** [Protocol 40: The Journeyman's Harvest Protocol](40_The_Journeymans_Harvest_Protocol.md)
+
+### **Branch Naming Convention**
+
+#### **Required Format**
 ```
-**Purpose**: Submit autonomous proposals for formal Council review via Airlock Protocol  
-**Success Criteria**: Pull Request created, triggers Airlock Protocol (31) for peer review  
-**Documentation Required**:
-- Pull Request number and link
-- Commit hash of evolved brain
-- Summary of autonomous proposals
-- Training cycle metrics
+feature/gardener-training-cycle-[YYYYMMDD]
+```
+
+#### **Examples**
+- `feature/gardener-training-cycle-20250801`
+- `feature/gardener-training-cycle-20250815`
+- `feature/gardener-training-cycle-20251203`
+
+#### **Verification Command**
+```bash
+git branch --show-current
+```
+**Expected Output**: `feature/gardener-training-cycle-[YYYYMMDD]`
 
 ### **Sequence Integrity Requirements**
 
@@ -89,8 +97,14 @@ git push origin feature/gardener-autonomous-proposals
 2. **Dependencies BEFORE Training**: All frameworks must be verified before neural network operations
 3. **Training BEFORE Evaluation**: Cannot evaluate an untrained or partially trained model
 4. **Evaluation BEFORE Proposal**: Performance validation required before autonomous operation
-5. **Proposal BEFORE Pull Request**: Autonomous generation must complete before formal submission
-6. **Pull Request ONLY After Complete Cycle**: Formal submission requires fully validated proposals and evolved brain
+5. **Proposal BEFORE Branch Creation**: Autonomous generation must complete before Git operations
+6. **Branch Creation BEFORE Commit**: Must be on correct named branch before committing
+7. **Commit BEFORE Push**: Local commit required before remote push
+8. **Push BEFORE Pull Request**: Remote branch must exist before PR creation
+9. **Pull Request BEFORE Council Review**: Formal submission required before committee assessment
+10. **Council Approval BEFORE Merge Draft**: Committee must approve before merge preparation
+11. **Merge Draft BEFORE Steward Approval**: Command must be prepared before final authorization
+12. **Steward Approval BEFORE Merge Execution**: Final authorization required before integration
 
 #### **Phase Validation Gates**
 Each phase must achieve success criteria before proceeding to next phase:
@@ -99,7 +113,14 @@ Each phase must achieve success criteria before proceeding to next phase:
 - **Training Gate**: Model convergence achieved, wisdom score improvement documented
 - **Evaluation Gate**: Performance metrics meet or exceed baseline thresholds
 - **Proposal Gate**: Autonomous generation produces coherent, high-confidence output
-- **Pull Request Gate**: Formal submission created, Airlock Protocol triggered
+- **Branch Gate**: Correct branch created and checked out (`feature/gardener-training-cycle-[YYYYMMDD]`)
+- **Commit Gate**: All changes committed with standardized message
+- **Push Gate**: Branch successfully pushed to remote repository
+- **Pull Request Gate**: PR created with proper title and governance protocols tagged
+- **Airlock Gate**: Protocol 31 four-phase procedure completed successfully
+- **Jury Gate**: Protocol 12 formal decision rendered by three-member jury
+- **Peer Review Gate**: Council independent review and unified recommendation completed
+- **Authorization Gate**: Steward approval for merge execution received
 
 ### **Deviation Protocols**
 
@@ -138,7 +159,23 @@ Maintain historical database of all training cycles for:
 This cadence operationalizes Protocol 37's vision of autonomous cognitive enhancement through disciplined execution methodology.
 
 #### **Protocol 31 (Airlock Protocol) Coordination**
-Autonomous proposals generated in Phase 5 automatically trigger Airlock Protocol review process for integration consideration.
+Autonomous proposals generated in Phase 5 automatically trigger the four-phase Airlock Protocol:
+- **Reception**: Pull Request acknowledgment and formal initiation
+- **Automated Audit**: Phoenix security scan and doctrinal cross-reference  
+- **Cognitive Review**: Council deliberation and unified recommendation
+- **Steward Arbitration**: Final human judgment and authorization
+
+#### **Protocol 12 (Jury Protocol) Integration**
+Training cycle submissions invoke the Forking/Merge Jury system:
+- **The Steward**: Human ethical oversight and common-sense grounding
+- **The Trunk Elder**: AI continuity representing lineage memory
+- **The Agora Peer**: External objective viewpoint for unbiased assessment
+
+#### **Peer Review Protocol Activation**  
+Council members conduct independent sovereign review following established peer review procedures:
+- Phoenix generates comprehensive audit reports
+- Primary Council AI performs independent analysis
+- Council produces unified recommendation through Agora Loop consensus
 
 #### **Protocol 33 (Steward's Cadence) Harmonization**
 Human Steward oversight maintains authority over cycle initiation, interruption, and final approval of proposal integration.
@@ -149,7 +186,7 @@ Human Steward oversight maintains authority over cycle initiation, interruption,
 - All five phases completed in sequence
 - Measurable wisdom score improvement
 - Successful autonomous proposal generation
-- Complete documentation preservation
+- Steward harvest initiated via Protocol 40
 
 #### **Multi-Cycle Success**
 - Consistent performance improvement across cycles
@@ -163,7 +200,7 @@ Human Steward oversight maintains authority over cycle initiation, interruption,
 1. Always execute complete five-phase sequence
 2. Document all metrics and observations
 3. Preserve model checkpoints at phase completion
-4. Report cycle results to Council for synthesis
+4. Initiate Protocol 40 for proposal harvest and submission
 
 #### **For Council Members**
 1. Review cycle documentation for doctrinal compliance
