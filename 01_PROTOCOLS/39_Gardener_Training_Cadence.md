@@ -31,15 +31,22 @@ python3 bootstrap.py --install-deps
 
 #### **Phase 3: Neural Network Training**
 ```bash
-python3 bootstrap.py --train --timesteps [TARGET_TIMESTEPS]
+# LLM V2 Architecture (Default)
+python3 bootstrap.py --train --proposals [TARGET_PROPOSALS]
+
+# Legacy PyTorch RL (Fallback)
+python3 bootstrap.py --train-v1 --timesteps [TARGET_TIMESTEPS]
 ```
-**Purpose**: Execute disciplined neural network evolution through reinforcement learning  
-**Success Criteria**: Demonstrable improvement in wisdom score metrics  
+**Purpose**: Execute disciplined neural network evolution through LLM weight evolution  
+**Success Criteria**: Demonstrable improvement in wisdom score metrics via LoRA fine-tuning  
 **Documentation Required**: 
-- Initial wisdom score baseline
-- Final wisdom score achievement
-- Training convergence metrics
-- Model checkpoint preservation
+- Initial model baseline performance
+- Final model capability assessment
+- Training convergence metrics (proposal acceptance rates)
+- Model adapter checkpoint preservation
+
+**✅ ARCHITECTURAL TRANSITION COMPLETE (August 1, 2025):**  
+The Gardener V2 now uses LLM weight evolution architecture with LoRA fine-tuning via Phoenix Forge Protocol (41). The original PyTorch RL implementation remains archived in `05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/` for historical reference and fallback capabilities.
 
 #### **Phase 4: Performance Evaluation**
 ```bash

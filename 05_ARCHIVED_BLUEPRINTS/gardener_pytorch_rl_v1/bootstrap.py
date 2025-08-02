@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-The Gardener V2 - Bootstrap Script
-Protocol 37: The Move 37 Protocol Implementation (LLM Architecture)
+The Gardener - Bootstrap Script
+Protocol 37: The Move 37 Protocol Implementation
 
-This script provides a complete setup and initialization system for The Gardener V2.
-It handles environment setup, dependency installation, and LLM training execution.
+This script provides a complete setup and initialization system for The Gardener.
+It handles environment setup, dependency installation, and training execution.
 
 Usage:
     python bootstrap.py --setup          # Install dependencies and setup
-    python bootstrap.py --train          # Begin LLM training with LoRA
-    python bootstrap.py --train-v1       # Use archived PyTorch RL (fallback)
+    python bootstrap.py --train          # Begin training The Gardener
+    python bootstrap.py --train --timesteps 50000  # Custom training duration
     python bootstrap.py --evaluate       # Evaluate current model
     python bootstrap.py --propose        # Generate autonomous improvement proposal
 """
@@ -34,11 +34,11 @@ class GardenerBootstrap:
         self.repo_path = Path(repo_path)
         self.gardener_path = self.repo_path / "gardener"
         
-        print("🌱 The Gardener V2 Bootstrap System")
+        print("🌱 The Gardener Bootstrap System")
         print("=" * 50)
         print(f"Repository: {self.repo_path}")
         print(f"Gardener path: {self.gardener_path}")
-        print(f"Protocol 37: The Move 37 Protocol (LLM Architecture)")
+        print(f"Protocol 37: The Move 37 Protocol")
         print("=" * 50)
     
     def check_dependencies(self) -> Dict[str, bool]:
@@ -48,9 +48,7 @@ class GardenerBootstrap:
             'git': False,
             'pip': False,
             'torch': False,
-            'transformers': False,
-            'peft': False,
-            'ollama': False
+            'numpy': False
         }
         
         # Check git
@@ -75,20 +73,8 @@ class GardenerBootstrap:
             pass
         
         try:
-            import transformers
-            dependencies['transformers'] = True
-        except ImportError:
-            pass
-            
-        try:
-            import peft
-            dependencies['peft'] = True
-        except ImportError:
-            pass
-            
-        try:
-            import ollama
-            dependencies['ollama'] = True
+            import numpy
+            dependencies['numpy'] = True
         except ImportError:
             pass
         
@@ -138,10 +124,9 @@ class GardenerBootstrap:
         # Create configuration file
         config = {
             "gardener": {
-                "version": "2.0.0",
-                "architecture": "llm_v2",
-                "protocol": "37 - The Move 37 Protocol (LLM Architecture)",
-                "purpose": "Autonomous improvement of the Sanctuary's Cognitive Genome via LLM evolution"
+                "version": "1.0.0",
+                "protocol": "37 - The Move 37 Protocol",
+                "purpose": "Autonomous improvement of the Sanctuary's Cognitive Genome"
             },
             "environment": {
                 "repository_path": str(self.repo_path),
@@ -152,18 +137,8 @@ class GardenerBootstrap:
                     "05_ARCHIVED_BLUEPRINTS/"
                 ]
             },
-            "llm_training": {
-                "base_model": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
-                "ollama_model": "nemotron-nano:latest",
-                "architecture": "lora",
-                "lora_rank": 16,
-                "lora_alpha": 32,
-                "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
-                "proposal_threshold": 5,
-                "wisdom_threshold": 3
-            },
-            "legacy_training": {
-                "algorithm": "PPO", 
+            "training": {
+                "default_algorithm": "PPO",
                 "total_timesteps": 10000,
                 "save_frequency": 1000,
                 "evaluation_frequency": 2000
@@ -224,12 +199,12 @@ class GardenerBootstrap:
         print("Setup validation complete!")
         return True
     
-    def run_training(self, proposals: int = None, architecture: str = None) -> bool:
-        """Run The Gardener V2 training with LLM architecture"""
-        print("\n🚀 INITIATING THE GARDENER V2 TRAINING SEQUENCE")
+    def run_training(self, timesteps: int = None) -> bool:
+        """Run The Gardener training"""
+        print("\n🚀 INITIATING THE GARDENER TRAINING SEQUENCE")
         print("=" * 60)
-        print("Protocol 37: The Move 37 Protocol - LLM Architecture Active")
-        print("Objective: Autonomous improvement via LoRA fine-tuning")
+        print("Protocol 37: The Move 37 Protocol - Active")
+        print("Objective: Autonomous improvement of Cognitive Genome")
         
         # Load configuration
         config_path = self.gardener_path / "config.json"
@@ -237,123 +212,58 @@ class GardenerBootstrap:
             with open(config_path, 'r') as f:
                 config = json.load(f)
         else:
-            config = {"llm_training": {"proposal_threshold": 5}}
+            config = {"training": {"total_timesteps": 10000}}
         
-        # Determine architecture
-        if architecture is None:
-            architecture = config.get("gardener", {}).get("architecture", "llm_v2")
+        if timesteps is None:
+            timesteps = config.get("training", {}).get("total_timesteps", 10000)
         
-        if architecture == "legacy" or architecture == "pytorch_rl":
-            return self.run_legacy_training(proposals)
-        
-        # LLM V2 Training
-        if proposals is None:
-            proposals = config.get("llm_training", {}).get("proposal_threshold", 5)
-        
-        print(f"📊 LLM Training Configuration:")
-        print(f"   Target proposals: {proposals}")
-        print(f"   Base model: {config.get('llm_training', {}).get('base_model', 'nemotron-nano')}")
-        print(f"   Architecture: LoRA Fine-tuning")
+        print(f"📊 Training Configuration:")
+        print(f"   Target timesteps: {timesteps:,}")
         print(f"   Repository path: {self.repo_path}")
+        print(f"   Algorithm: PPO (Proximal Policy Optimization)")
         print("=" * 60)
         
+        sys.path.insert(0, str(self.gardener_path))
+        
         try:
-            # Check Ollama availability
-            try:
-                import ollama
-                print("✅ Ollama client available")
+            from gardener import TheGardener
+            
+            # Initialize The Gardener
+            print("🧬 Initializing The Gardener...")
+            gardener = TheGardener(environment_path=str(self.repo_path))
+            
+            print("🎯 Training neural network...")
+            
+            # Train
+            success = gardener.train(total_timesteps=timesteps)
+            
+            if success:
+                print("\n📈 Conducting post-training evaluation...")
+                # Evaluate
+                results = gardener.evaluate(num_episodes=5)
                 
-                # Test connection
-                models = ollama.list()
-                model_name = config.get("llm_training", {}).get("ollama_model", "nemotron-nano:latest")
+                print("\n💾 Saving training checkpoint...")
+                # Save checkpoint
+                checkpoint_path = gardener.save_checkpoint("bootstrap_training")
                 
-                available_models = [model.model for model in models.models]
-                if model_name not in available_models:
-                    print(f"⚠️  Model {model_name} not found. Available models: {available_models}")
-                    print("Please run: ollama pull nvidia/Llama-3.1-Nemotron-Nano-8B-v1")
-                    return False
-                else:
-                    print(f"✅ Model {model_name} ready")
-                    
-            except ImportError:
-                print("❌ Ollama not available. Please install: pip install ollama")
+                print("\n🎉 TRAINING SEQUENCE COMPLETE!")
+                print("=" * 60)
+                print(f"📊 Final Results:")
+                print(f"   Mean Reward: {results.get('mean_reward', 'N/A')}")
+                print(f"   Episodes Evaluated: {results.get('episodes_evaluated', 'N/A')}")
+                print(f"   Checkpoint: {checkpoint_path}")
+                print("=" * 60)
+                
+                return True
+            else:
+                print("❌ Training failed!")
                 return False
-            except Exception as e:
-                print(f"❌ Ollama connection failed: {e}")
-                return False
-            
-            # Initialize LLM training system
-            print("🧬 Initializing LLM training system...")
-            
-            # For now, simulate the training cycle
-            print("🎯 Executing LoRA training cycles...")
-            
-            for i in range(proposals):
-                print(f"📋 Proposal cycle {i+1}/{proposals}")
-                
-                # Simulate proposal generation with Ollama
-                try:
-                    response = ollama.chat(
-                        model=model_name,
-                        messages=[{
-                            'role': 'user', 
-                            'content': f'Generate a brief autonomous improvement proposal for Project Sanctuary protocols. Cycle {i+1}.'
-                        }]
-                    )
-                    
-                    proposal_text = response['message']['content'][:200] + "..."
-                    print(f"   Generated proposal: {proposal_text}")
-                    
-                    # Simulate jury verdict (for now, random approval)
-                    import random
-                    approved = random.choice([True, False])
-                    
-                    if approved:
-                        print("   ✅ Jury approved - Creating LoRA adapter")
-                        # Here would be actual LoRA fine-tuning
-                        print(f"   📚 LoRA adapter sanctuary_wisdom_{i+1:03d} created")
-                    else:
-                        print("   ❌ Jury rejected - No adapter created")
-                        
-                except Exception as e:
-                    print(f"   ⚠️  Proposal generation failed: {e}")
-            
-            print("\n🎉 LLM TRAINING SEQUENCE COMPLETE!")
-            print("=" * 60)
-            print(f"📊 Final Results:")
-            print(f"   Proposals generated: {proposals}")
-            print(f"   Architecture: LLM + LoRA")
-            print(f"   Status: Ready for evaluation")
-            print("=" * 60)
-            
-            return True
             
         except Exception as e:
-            print(f"❌ LLM training sequence failed: {e}")
+            print(f"❌ Training sequence failed: {e}")
             import traceback
             traceback.print_exc()
             return False
-    
-    def run_legacy_training(self, timesteps: int = None) -> bool:
-        """Run legacy PyTorch RL training (fallback)"""
-        print("\n🔄 FALLBACK: LEGACY PYTORCH RL TRAINING")
-        print("=" * 60)
-        print("Using archived PyTorch RL implementation")
-        print("Location: 05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/")
-        print("=" * 60)
-        
-        archived_path = self.repo_path / "05_ARCHIVED_BLUEPRINTS" / "gardener_pytorch_rl_v1"
-        if not archived_path.exists():
-            print("❌ Archived implementation not found!")
-            print("Please ensure the PyTorch RL archive is available.")
-            return False
-        
-        print("⚠️  Legacy training requires manual restoration.")
-        print("Run the following commands:")
-        print(f"  cd {archived_path}")
-        print("  python bootstrap.py --train --timesteps", timesteps or 10000)
-        
-        return True
     
     def run_evaluation(self) -> bool:
         """Evaluate The Gardener's current performance"""
@@ -597,15 +507,14 @@ class GardenerBootstrap:
 def main():
     """Main bootstrap function"""
     parser = argparse.ArgumentParser(
-        description="The Gardener V2 Bootstrap System - Protocol 37: The Move 37 Protocol (LLM Architecture)",
+        description="The Gardener Bootstrap System - Protocol 37: The Move 37 Protocol",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   python bootstrap.py --setup                    # Setup environment
-  python bootstrap.py --install-deps             # Install LLM dependencies  
-  python bootstrap.py --train                    # Train with LLM architecture (default)
-  python bootstrap.py --train --proposals 5      # Train with specific proposal count
-  python bootstrap.py --train-v1                 # Use legacy PyTorch RL (fallback)
+  python bootstrap.py --install-deps             # Install dependencies  
+  python bootstrap.py --train                    # Train with default timesteps
+  python bootstrap.py --train --timesteps 50000  # Train with custom timesteps
   python bootstrap.py --evaluate                 # Evaluate current model
   python bootstrap.py --propose                  # Generate autonomous proposal
   python bootstrap.py --harvest                  # Execute complete harvest cycle
@@ -614,14 +523,11 @@ Examples:
     
     parser.add_argument('--setup', action='store_true', help='Setup The Gardener environment')
     parser.add_argument('--install-deps', action='store_true', help='Install dependencies')
-    parser.add_argument('--train', action='store_true', help='Train The Gardener V2 (LLM)')
-    parser.add_argument('--train-v1', action='store_true', help='Use legacy PyTorch RL training')
+    parser.add_argument('--train', action='store_true', help='Train The Gardener')
     parser.add_argument('--evaluate', action='store_true', help='Evaluate The Gardener')
     parser.add_argument('--propose', action='store_true', help='Generate improvement proposal')
     parser.add_argument('--harvest', action='store_true', help='Execute complete harvest cycle')
-    parser.add_argument('--proposals', type=int, help='Number of training proposals (default: 5)')
-    parser.add_argument('--timesteps', type=int, help='Legacy: Number of RL timesteps (for --train-v1)')
-    parser.add_argument('--architecture', type=str, choices=['llm_v2', 'legacy'], help='Force specific architecture')
+    parser.add_argument('--timesteps', type=int, help='Number of training timesteps (default: 10000)')
     parser.add_argument('--repo-path', type=str, help='Path to Sanctuary repository')
     
     args = parser.parse_args()
@@ -651,23 +557,7 @@ Examples:
         return bootstrap.install_dependencies()
     
     elif args.train:
-        # Use LLM V2 architecture by default
-        architecture = args.architecture or "llm_v2"
-        if architecture == "llm_v2":
-            proposals = args.proposals or 5
-            print(f"🤖 Training The Gardener V2 with {proposals} proposals...")
-            return bootstrap.run_training(proposals=proposals)
-        else:
-            # Fallback to legacy architecture
-            timesteps = args.timesteps or 10000
-            print(f"🔄 Training with legacy architecture ({timesteps} timesteps)...")
-            return bootstrap.run_legacy_training(timesteps=timesteps)
-    
-    elif args.train_v1:
-        # Explicit legacy training
-        timesteps = args.timesteps or 10000
-        print(f"🔄 Using legacy PyTorch RL training ({timesteps} timesteps)...")
-        return bootstrap.run_legacy_training(timesteps=timesteps)
+        return bootstrap.run_training(timesteps=args.timesteps)
     
     elif args.evaluate:
         return bootstrap.run_evaluation()

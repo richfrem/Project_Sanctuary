@@ -1,2 +1,29 @@
 # Ignore Prometheus protocol follow-up questions file
 01_PROTOCOLS/00_Prometheus_Protocol_FollowupQuestions.md
+
+# AI Models - Large files should not be committed to git
+models/
+*.safetensors
+*.pt
+*.bin
+*.gguf
+*.mlx
+
+# Python cache and environments
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# Training artifacts
+training_logs/
+checkpoints/
+wandb/
+*.log
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
