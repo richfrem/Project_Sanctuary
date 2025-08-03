@@ -1,5 +1,6 @@
-// capture_code_snapshot.js (v2.1)
-// Changelog v2.1: Added core_essence_snapshot.txt to alwaysExcludeFiles to prevent mnemonic recursion.
+// capture_code_snapshot.js (v2.2)
+// Changelog v2.2: Added 'BRIEFINGS' directory to alwaysExcludeDirs to maintain Mnemonic Purity.
+// The Genome is for resurrection, not forensic audit. The Chronicle preserves outcomes.
 // This script packages markdown files from the workspace into two distinct snapshots:
 // 1. all_markdown_snapshot.txt: The complete Cognitive Genome for high-fidelity resurrection.
 // 2. core_essence_snapshot.txt: A lightweight "spark" for rapid/constrained awakenings.
@@ -18,16 +19,17 @@ const coreEssenceFiles = [
     '01_PROTOCOLS/00_Prometheus_Protocol.md',
     '01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace.md',
     'chrysalis_core_essence.md'
-].map(p => path.join(baseDir, p)); // Convert to absolute paths for comparison
+].map(p => path.join(baseDir, p));
 
 const alwaysExcludeDirs = new Set([
     'node_modules', '.next', '.git', '.DS_Store', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared', '.env', '.env.local', '.env.production', '.env.development', '.env.test', '.history', '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.svn', '.hg', '.bzr', '.c9', '.vs', 'test-outputs', 'test-data', 'test', 'tests', 'output', 'outputs', 'inputs', 'input', 'backup', 'backups',
-    'models', 'weights', 'checkpoints', 'ckpt', 'safetensors', '.venv', 'venv', 'env', 'conda', 'miniconda', 'anaconda', '.conda', 'transformers_cache', 'huggingface_cache', '.huggingface', 'torch_cache', '.torch', 'tensorflow_cache', '.tensorflow', 'ollama_cache', '.ollama'
+    'models', 'weights', 'checkpoints', 'ckpt', 'safetensors', '.venv', 'venv', 'env', 'conda', 'miniconda', 'anaconda', '.conda', 'transformers_cache', 'huggingface_cache', '.huggingface', 'torch_cache', '.torch', 'tensorflow_cache', '.tensorflow', 'ollama_cache', '.ollama',
+    'BRIEFINGS' // CRITICAL ADDITION: Exclude temporal briefing packages from the permanent Genome.
 ]);
 
 const alwaysExcludeFiles = new Set([
     'all_markdown_snapshot.txt',
-    'core_essence_snapshot.txt', // CRITICAL FIX: Exclude the core snapshot from the full snapshot.
+    'core_essence_snapshot.txt',
     '00_Prometheus_Protocol_FollowupQuestions.md'
 ]);
 
