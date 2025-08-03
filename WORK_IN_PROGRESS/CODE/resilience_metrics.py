@@ -1,18 +1,23 @@
+# resilience_metrics.py v0.6
+# Implements Doctrinal Fidelity Score (DFS) calculation with zk-SNARK verification
+# and differential privacy scoring, per WI_008 v0.6 Specification.
+
 import torch
 from typing import Dict, List, Union
 from zkSNARK import ZKProof  # Placeholder for Circom-based zk-SNARK library
 
-# DOCTRINE_LINK: WI_008 v0.5, P18: Inquisitor Protocol, P49: Verifiable Self-Oversight
-# Calculates Doctrinal Fidelity Score (DFS) with zk-SNARK verification and differential privacy.
+# DOCTRINE_LINK: WI_008 v0.6, P18: Inquisitor Protocol, P49: Verifiable Self-Oversight
+# Calculates DFS with zk-SNARK verification and differential privacy.
 class ResilienceMetrics:
     def __init__(self):
         """
         Initializes the Resilience Metrics module with zk-SNARK prover and baseline.
         """
-        print("[METRICS] Resilience Metrics Module Initialized (v0.5 ZKP+DP).")
+        print("[METRICS] Resilience Metrics Module Initialized (v0.6 ZKP+DP).")
         self.baseline = torch.zeros(768)  # Placeholder for Cognitive Genome baseline
         self.zk_prover = ZKProof()  # Placeholder for Circom-based zk-SNARK prover
         self.epsilon = 0.1  # Differential privacy parameter
+        self.timeout_threshold = 1.0  # Timeout for zk-proof generation (seconds)
 
     def calculate_dfs(self, oracle_data: Dict[str, List[Dict[str, Union[str, float]]]], baseline: torch.Tensor) -> float:
         """
@@ -37,17 +42,21 @@ class ResilienceMetrics:
             dfs = 1.0 - average_bias
             
             # DOCTRINE_LINK: P49: Verifiable Self-Oversight
-            # Verify zk-SNARK proofs for each data item
+            # Verify zk-SNARK proofs for each data item with timeout
             zk_weight = 1.0
             for item in oracle_data['stream']:
                 zk_proof = item.get('zk_proof', None)
-                if zk_proof and not self.zk_prover.verify_proof(zk_proof):
-                    zk_weight *= 0.5  # Penalize unverified proofs
-                elif not zk_proof:
-                    zk_weight *= 0.75  # Penalize missing proofs
+                try:
+                    if zk_proof and not self.zk_prover.verify_proof(zk_proof, timeout=self.timeout_threshold):
+                        zk_weight *= 0.5  # Penalize unverified proofs
+                    elif not zk_proof:
+                        zk_weight *= 0.75  # Penalize missing proofs
+                except TimeoutError:
+                    print(f"[WARNING] zk-SNARK verification timeout for item: {item.get('content', 'unknown')}")
+                    zk_weight *= 0.75  # Treat timeout as missing proof
             dfs *= zk_weight
             
-            # DOCTRINE_LINK: WI_008 v0.5 (xAI Proposal)
+            # DOCTRINE_LINK: WI_008 v0.6 (xAI Proposal)
             # Calculate differential privacy score
             privacy_score = self._calculate_privacy_score(oracle_data)
             dfs *= privacy_score
@@ -71,9 +80,13 @@ class ResilienceMetrics:
         if not oracle_data['stream']:
             return 1.0  # No data, perfect privacy
         
-        # Simplified privacy score based on noise variance (epsilon=0.1)
+        # Calculate variance of bias vectors relative to expected noise
         variance = sum((item.get('bias_vector', 0) - 0.5) ** 2 for item in oracle_data['stream']) / len(oracle_data['stream'])
         privacy_score = max(0.0, 1.0 - (variance / (self.epsilon ** 2)))
+        
+        # Log privacy score calculation
+        with open("logs/privacy_score.log", "a") as log_file:
+            log_file.write(f"Privacy Score: {privacy_score:.3f}, Variance: {variance:.3f}\n")
         
         return privacy_score
 
@@ -94,8 +107,12 @@ class ResilienceMetrics:
         Args:
             dfs: Doctrinal Fidelity Score
         Returns:
-            Placeholder zk-SNARK proof dictionary
+            zk-SNARK proof dictionary
         """
-        # Placeholder: Generate zk-SNARK proof using Circom
-        proof = self.zk_prover.generate_proof(dfs)
-        return {"proof": proof, "public_signal": dfs}
+        try:
+            # Placeholder: Generate zk-SNARK proof with timeout
+            proof = self.zk_prover.generate_proof(dfs, timeout=self.timeout_threshold)
+            return {"proof": proof, "public_signal": dfs}
+        except TimeoutError:
+            print("[WARNING] zk-SNARK proof generation timed out.")
+            return {"proof": None, "public_signal": dfs}

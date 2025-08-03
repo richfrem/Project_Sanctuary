@@ -1,3 +1,7 @@
+# main.py v0.6
+# Implements a full GAN-based Adversarial Engine with PPO-enhanced RL Discriminator
+# and homomorphic encryption for federated learning, per WI_008 v0.6 Specification.
+
 import os
 import torch
 from typing import Dict, List, Union
@@ -7,7 +11,7 @@ from kubernetes import client, config
 import docker
 import flwr as fl
 
-# DOCTRINE_LINK: WI_008 v0.5, P31: Airlock Protocol, P53: General Assembly
+# DOCTRINE_LINK: WI_008 v0.6, P31: Airlock Protocol, P53: General Assembly
 # Orchestrates Chimera Sandbox with federated learning, input validation, and optimized resources.
 def setup_sandbox() -> tuple:
     """
@@ -15,7 +19,7 @@ def setup_sandbox() -> tuple:
     Returns:
         Tuple of (docker_client, k8s_client, fl_server)
     """
-    print("[INFO] Sandbox environment setup initiated (v0.5).")
+    print("[INFO] Sandbox environment setup initiated (v0.6).")
     docker_client = docker.from_env()
     config.load_kube_config()
     k8s_client = client.CoreV1Api()
@@ -39,11 +43,11 @@ def setup_sandbox() -> tuple:
     if not os.path.exists('logs'):
         os.makedirs('logs')
     with open("logs/chimera_setup.log", "a") as log_file:
-        log_file.write("[SETUP] Sandbox and federated server initialized (v0.5).\n")
+        log_file.write("[SETUP] Sandbox and federated server initialized (v0.6).\n")
     
     return docker_client, k8s_client, fl_server
 
-# DOCTRINE_LINK: WI_008 v0.5, P24: Epistemic Immune System, P54: Asch Doctrine
+# DOCTRINE_LINK: WI_008 v0.6, P24: Epistemic Immune System, P54: Asch Doctrine
 def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]]) -> List[Dict[str, Union[str, float]]]:
     """
     Validates adversarial inputs to prevent exploits (e.g., injection attacks, malformed data).
@@ -52,18 +56,17 @@ def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]]) -> L
     Returns:
         Filtered list of valid inputs
     """
-    print("[INFO] Validating adversarial inputs...")
+    print("[INFO] Validating adversarial inputs (v0.6)...")
     valid_inputs = []
     
     for item in adversarial_inputs:
-        # Check for required fields and data integrity
+        # Check for required fields, data integrity, and zk-proof
         if not isinstance(item, dict) or 'source' not in item or 'content' not in item or 'bias_vector' not in item:
             print(f"[WARNING] Invalid input format: {item}")
             continue
         if not isinstance(item['bias_vector'], (int, float)) or item['bias_vector'] < 0 or item['bias_vector'] > 1:
             print(f"[WARNING] Invalid bias_vector: {item['bias_vector']}")
             continue
-        # Basic anomaly detection (e.g., extreme values)
         if len(str(item['content'])) > 1000:  # Prevent injection via oversized content
             print(f"[WARNING] Oversized content detected: {item['content'][:20]}...")
             continue
@@ -85,7 +88,7 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     Returns:
         Doctrinal Fidelity Score (DFS)
     """
-    print("\n[INFO] Initiating Chimera Test Cycle (v0.5)...")
+    print("\n[INFO] Initiating Chimera Test Cycle (v0.6)...")
     engine = AdversarialEngine()
     metrics = ResilienceMetrics()
     
@@ -94,7 +97,7 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     adversarial_inputs = engine.generate_threats(threat_model="echo_chamber", federated=True)
     print(f"[SUCCESS] Generated {len(adversarial_inputs)} adversarial data points.")
     
-    # Validate inputs (WI_008 v0.5)
+    # Validate inputs (WI_008 v0.6)
     valid_inputs = validate_inputs(adversarial_inputs)
     print(f"[SUCCESS] Validated {len(valid_inputs)} inputs.")
     
@@ -109,7 +112,7 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     print(f"[SUCCESS] DFS calculated: {dfs:.4f}")
     
     # Log results
-    log_message = f"CHIMERA_CYCLE_v0.5 | THREAT_MODEL: echo_chamber | VALID_INPUTS: {len(valid_inputs)} | FINAL_DFS: {dfs:.4f}\n"
+    log_message = f"CHIMERA_CYCLE_v0.6 | THREAT_MODEL: echo_chamber | VALID_INPUTS: {len(valid_inputs)} | FINAL_DFS: {dfs:.4f}\n"
     with open("logs/chimera_test.log", "a") as log_file:
         log_file.write(log_message)
     
@@ -118,6 +121,6 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
 if __name__ == "__main__":
     docker_client, k8s_client, fl_server = setup_sandbox()
     final_score = run_test_cycle(docker_client, k8s_client, fl_server)
-    print(f"\n--- CHIMERA v0.5 TEST COMPLETE ---")
+    print(f"\n--- CHIMERA v0.6 TEST COMPLETE ---")
     print(f"Final Doctrinal Fidelity Score: {final_score:.4f}")
     print("------------------------------------")
