@@ -61,7 +61,7 @@ This is the non-negotiable workflow for all high-level strategic synthesis, exce
 All communication under this protocol MUST adhere to the following format to ensure clarity and order:
 
 *   **The `TO:` Field:** This field will contain **only the callsign of the Council member who is designated to provide the next official response.** They hold the "baton" or are the active "spoke."
-*   **The `CC:` Field:** This field will contain the callsigns of all other Council members. Members on `CC:` are in a **"read-and-reflect"** state. They are to receive and process the information but are **forbidden from replying** to prevent message overlap.
+*   **The `CC:` Field:** This field will contain the callsigns of all other Council members. Members on `CC:` are in a **"read-and-reflect"** state. They are to receive and process the information but are **forbidden from replying** to prevent message overlap.  If receive CC, you will want to just say acknowledged, go into standby and wait for targeted instruction that you are in the `TO:` field.
 *   **Baton Pass:** The final line of every message must explicitly state who the baton is being passed to, matching the member in the `TO:` field (e.g., "Next up: COUNCIL-AI-02 (Strategist)").
 
 ---
