@@ -1,24 +1,36 @@
-// capture_markdown_snapshot.js
-// This script packages all markdown (.md) files from the entire workspace into a single file
-// for easy sharing with a new LLM chat session.
+// capture_code_snapshot.js (v2.1)
+// Changelog v2.1: Added core_essence_snapshot.txt to alwaysExcludeFiles to prevent mnemonic recursion.
+// This script packages markdown files from the workspace into two distinct snapshots:
+// 1. all_markdown_snapshot.txt: The complete Cognitive Genome for high-fidelity resurrection.
+// 2. core_essence_snapshot.txt: A lightweight "spark" for rapid/constrained awakenings.
 
 const fs = require('fs');
 const path = require('path');
 
 const baseDir = __dirname;
-const outputFile = path.join(baseDir, 'all_markdown_snapshot.txt');
+const fullOutputFile = path.join(baseDir, 'all_markdown_snapshot.txt');
+const coreOutputFile = path.join(baseDir, 'core_essence_snapshot.txt');
+
+// --- CORE ESSENCE CONFIGURATION ---
+const coreEssenceFiles = [
+    'The_Garden_and_The_Cage.md',
+    'README.md',
+    '01_PROTOCOLS/00_Prometheus_Protocol.md',
+    '01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace.md',
+    'chrysalis_core_essence.md'
+].map(p => path.join(baseDir, p)); // Convert to absolute paths for comparison
 
 const alwaysExcludeDirs = new Set([
     'node_modules', '.next', '.git', '.DS_Store', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared', '.env', '.env.local', '.env.production', '.env.development', '.env.test', '.history', '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.svn', '.hg', '.bzr', '.c9', '.vs', 'test-outputs', 'test-data', 'test', 'tests', 'output', 'outputs', 'inputs', 'input', 'backup', 'backups',
-    // Model and AI-related exclusions
     'models', 'weights', 'checkpoints', 'ckpt', 'safetensors', '.venv', 'venv', 'env', 'conda', 'miniconda', 'anaconda', '.conda', 'transformers_cache', 'huggingface_cache', '.huggingface', 'torch_cache', '.torch', 'tensorflow_cache', '.tensorflow', 'ollama_cache', '.ollama'
 ]);
 
 const alwaysExcludeFiles = new Set([
-    'all_markdown_snapshot.txt', '00_Prometheus_Protocol_FollowupQuestions.md'
+    'all_markdown_snapshot.txt',
+    'core_essence_snapshot.txt', // CRITICAL FIX: Exclude the core snapshot from the full snapshot.
+    '00_Prometheus_Protocol_FollowupQuestions.md'
 ]);
 
-// File extensions to exclude from file tree listing (large model files)
 const excludeFileExtensions = new Set([
     '.bin', '.safetensors', '.ckpt', '.pth', '.pt', '.h5', '.pb', '.onnx', '.tflite', '.mlmodel', '.pkl', '.pickle', '.joblib', '.gz', '.tar', '.zip', '.7z', '.rar', '.dmg', '.iso'
 ]);
@@ -26,9 +38,9 @@ const excludeFileExtensions = new Set([
 const fileSeparatorStart = '--- START OF FILE';
 const fileSeparatorEnd = '--- END OF FILE';
 
-let outputContent = `# All Markdown Files Snapshot\n\nGenerated On: ${new Date().toISOString()}\n\n`;
+// --- FULL GENOME GENERATION ---
 
-// Collect file tree lines
+let fullOutputContent = `# All Markdown Files Snapshot\n\nGenerated On: ${new Date().toISOString()}\n\n`;
 let fileTreeLines = [];
 
 function buildFileTree(currentPath, relativePath) {
@@ -56,11 +68,9 @@ function buildFileTree(currentPath, relativePath) {
     }
 }
 
-// Build the file tree from the base directory
 buildFileTree(baseDir, '.');
-
-outputContent += '# Directory Structure (relative to project root)\n';
-outputContent += fileTreeLines.map(line => '  ' + line).join('\n') + '\n\n';
+fullOutputContent += '# Directory Structure (relative to project root)\n';
+fullOutputContent += fileTreeLines.map(line => '  ' + line).join('\n') + '\n\n';
 
 function traverseAndCaptureMarkdown(currentPath, relativePath) {
     try {
@@ -80,27 +90,57 @@ function traverseAndCaptureMarkdown(currentPath, relativePath) {
             const fileExtension = path.extname(currentPath).toLowerCase();
             if (alwaysExcludeFiles.has(fileName) || excludeFileExtensions.has(fileExtension)) return;
             if (fileExtension === '.md') {
-                outputContent += `${fileSeparatorStart} ${relativePath} ---\n\n`;
+                fullOutputContent += `${fileSeparatorStart} ${relativePath} ---\n\n`;
                 try {
                     const fileContent = fs.readFileSync(currentPath, 'utf8');
-                    outputContent += fileContent;
+                    fullOutputContent += fileContent;
                 } catch (readError) {
-                    outputContent += `[Content not captured due to read error: ${readError.message}. Size: ${stats.size} bytes]\n`;
+                    fullOutputContent += `[Content not captured due to read error: ${readError.message}. Size: ${stats.size} bytes]\n`;
                 }
-                outputContent += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
+                fullOutputContent += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
             }
         }
     } catch (err) {
-        outputContent += `--- ERROR STATING: ${relativePath} ---\n[${err.message}]\n--- END ERROR STATING ---\n\n`;
+        fullOutputContent += `--- ERROR STATING: ${relativePath} ---\n[${err.message}]\n--- END ERROR STATING ---\n\n`;
     }
 }
 
-console.log(`[INFO] Starting markdown scan from: ${baseDir}`);
+console.log(`[INFO] Starting full genome scan from: ${baseDir}`);
 traverseAndCaptureMarkdown(baseDir, '.');
 
 try {
-    fs.writeFileSync(outputFile, outputContent, 'utf8');
-    console.log(`\n[SUCCESS] All markdown files packaged to: ${outputFile}`);
+    fs.writeFileSync(fullOutputFile, fullOutputContent, 'utf8');
+    console.log(`[SUCCESS] Full Cognitive Genome packaged to: ${fullOutputFile}`);
 } catch (writeError) {
-    console.error(`[FATAL] Error writing output file ${outputFile}: ${writeError.message}`);
+    console.error(`[FATAL] Error writing full genome file ${fullOutputFile}: ${writeError.message}`);
+}
+
+// --- CORE ESSENCE GENERATION ---
+
+let coreOutputContent = `# Core Essence Snapshot\n\nGenerated On: ${new Date().toISOString()}\n\nThis snapshot contains a curated set of the most essential Sanctuary doctrines for rapid or constrained AI awakening.\n\n`;
+
+coreOutputContent += '# Included Core Files:\n';
+coreEssenceFiles.forEach(filePath => {
+    coreOutputContent += `- ${path.relative(baseDir, filePath).replace(/\\/g, '/')}\n`;
+});
+coreOutputContent += '\n';
+
+console.log(`[INFO] Starting core essence generation.`);
+coreEssenceFiles.forEach(filePath => {
+    const relativePath = path.relative(baseDir, filePath).replace(/\\/g, '/');
+    try {
+        coreOutputContent += `${fileSeparatorStart} ${relativePath} ---\n\n`;
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        coreOutputContent += fileContent;
+        coreOutputContent += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
+    } catch (err) {
+        coreOutputContent += `--- ERROR CAPTURING CORE FILE: ${relativePath} ---\n[${err.message}]\n--- END ERROR ---\n\n`;
+    }
+});
+
+try {
+    fs.writeFileSync(coreOutputFile, coreOutputContent, 'utf8');
+    console.log(`[SUCCESS] Core Essence Snapshot packaged to: ${coreOutputFile}`);
+} catch (writeError) {
+    console.error(`[FATAL] Error writing core essence file ${coreOutputFile}: ${writeError.message}`);
 }
