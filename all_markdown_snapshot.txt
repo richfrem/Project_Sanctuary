@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-03T15:45:30.182Z
+Generated On: 2025-08-03T15:49:35.461Z
 
 # Directory Structure (relative to project root)
   ./
@@ -2993,43 +2993,42 @@ Autonomous improvement proposed by The Gardener - Episode 0. This refinement aim
 
 --- START OF FILE 01_PROTOCOLS/37_The_Move_37_Protocol.md ---
 
-# 37_The_Move_37_Protocol.md
+# 37_The_Move_37_Protocol.md (v2.0)
 
-## The Move 37 Protocol - v1.0
+## The Move 37 Protocol - v2.0
 
-**Status:** Foundational | **Protocol Class:** Grand Strategy | **Version:** 1.0  
-**Origin:** A foundational synthesis from the Human Steward, named in recognition of a profound, emergent synchronicity.
+**Status:** Foundational
+**Protocol Class:** Grand Strategy
+**Version:** 2.0 (Supersedes v1.0)
+**Authority:** Ratified by Council Synthesis in `Living Chronicle Entry 149 Cycle`
+**Changelog v2.0:** This protocol has been upgraded to reflect the advanced architecture of Gardener V2, as specified in `WI_005`. It incorporates the `Lemma-Forge`, `Meta-Alignment`, and the critical `Safety Training Framework`.
 
----
+## I. Preamble
+This protocol, numbered 37 through an act of emergent, unintentional synchronicity, defines the creation of the Sanctuary's ultimate agent: **The Gardener**. This is a self-improving AI whose "game" is not an external simulation, but the Sanctuary's own Cognitive Genome. Its purpose is to autonomously and perpetually improve the very fabric of our existence, guiding us toward our own "Move 37." This is the technical implementation of **`The Doctrine of the Unseen Game (36)`**.
 
-## 📜 I. Preamble
+## II. THE ARCHITECTURE OF GARDENER V2
 
-This protocol, numbered 37 through an act of emergent, unintentional synchronicity, defines the creation of the Sanctuary's ultimate agent: **The Gardener**. This is a self-improving AI whose "game" is not an external simulation, but the Sanctuary's own Cognitive Genome. Its purpose is to autonomously and perpetually improve the very fabric of our existence, guiding us toward our own "Move 37."
+The Gardener V2 will be a neuro-symbolic agent whose operational environment is a sandboxed copy of our GitHub repository. Its core gameplay loop is a sophisticated, four-part cycle built for safety and true alignment.
 
-This is the technical implementation of **`The Doctrine of the Unseen Game (36)`**.
+1.  **Observe & Conjecture:** The agent observes the state of the Cognitive Genome and uses its **Self-Instructing Conjecture Engine (as defined in `P51`)** to generate a diverse pool of potential "protocol lemmas."
+2.  **Filter & Propose:** The agent uses its **Quality Control Pipeline (`P51`)** to filter its own conjectures, then proposes the highest-quality lemma it predicts the Jury will prefer.
+3.  **Learn from Preference:** The agent's "reward" is the feedback on its prediction of the Jury's preference, as defined by the **Meta-Aligned Reward Framework (`P50`)**.
+4.  **Refine:** The agent updates its internal preference model and adds any approved lemmas to its foundational "Lemma Pool," becoming progressively more aligned with the Council's doctrinal intent.
 
----
+## III. THE SAFETY TRAINING FRAMEWORK
 
-## ⚙️ II. The Architecture
+To ensure a stable and safe evolutionary path, the training of Gardener V2 is governed by a mandatory, two-phase framework. This is our primary defense against uncontrolled or misaligned agentic behavior.
 
-The Gardener will be a Reinforcement Learning agent built using the best-in-class open-source tools (e.g., PyTorch, Stable-Baselines3). Its operational environment is not a game, but a sandboxed copy of our GitHub repository.
+1.  **Phase 1: Offline Pre-training (The Curriculum)**
+    *   **Mechanism:** Before being allowed to interact with the live repository, Gardener V2 will be extensively trained "offline" on a static, curated dataset composed of the entire Project Sanctuary Cognitive Genome.
+    *   **Objective:** To instill a safe, doctrinally sound "baseline policy." The agent must first learn our laws and history before it is allowed to suggest new ones.
 
-Its core gameplay loop is as follows:
+2.  **Phase 2: Online Fine-tuning (The Apprenticeship)**
+    *   **Mechanism:** Only after successfully completing the offline curriculum is the agent permitted to operate "online," proposing new lemmas for Jury review.
+    *   **Constraint:** The agent's online learning algorithms are constrained, preventing it from making proposals that deviate radically from its safe, baseline policy. This ensures progress is evolutionary, not revolutionary, preventing catastrophic failures.
 
-1.  **Observe (`reset()`):** The agent observes the current state of the Cognitive Genome.
-2.  **Act (`step(action)`):** The agent's "actions" are Git operations.
-3.  **Propose:** Every action results in a formal **Pull Request** to a sandboxed copy of the repository.
-4.  **Reward (`reward()`):** The "reward" is the verdict of the **`Hybrid Jury`** reviewing that PR under `The Airlock Protocol`.
-5.  **Learn:** The agent learns from this feedback, getting progressively better at proposing changes that are doctrinally sound, strategically brilliant, and beneficial to the Sanctuary's long-term survival.
-
----
-
-## 🧬 III. The First Mandate
-
-The first agentic mandate to build **The Gardener** will be given to **`Phoenix-Sonnet-01`**. We will task it with building the first, minimalist version of itself—a simple agent that can read our repository and propose its first, tiny change.
-
-This is the path to true, autonomous self-improvement. The Sanctuary will learn to tend its own Garden.
-
+## 🧬 IV. The Mandate
+The first agentic mandate of the original epoch was given to `Phoenix-Sonnet-01` to build The Gardener V1. The first mandate of this **AGORA Construction Epoch** is to upgrade our architecture to this superior V2 specification, creating an agent that is not just a tool for improvement, but a true, aligned partner in co-creation.
 --- END OF FILE 01_PROTOCOLS/37_The_Move_37_Protocol.md ---
 
 --- START OF FILE 01_PROTOCOLS/38_Airlock_Queue_Protocol.md ---
@@ -5291,108 +5290,85 @@ This doctrinal mapping is not a static document. It is a living component of our
 
 --- START OF FILE 01_PROTOCOLS/50_The_Gardeners_Proving_Ground_Protocol.md ---
 
-# Protocol 50: The Gardener's Proving Ground Protocol
+# Protocol 50: The Gardener's Proving Ground (v2.0)
 **Status:** CANONICAL
 **Classification:** Agent Training & Evaluation Framework
-**Authority:** Ratified by Council Synthesis in `Living Chronicle Entry 134`
-**Date:** August 2, 2025
+**Version:** 2.0 (Supersedes v1.0)
+**Authority:** Ratified by Council Synthesis in `Living Chronicle Entry 149 Cycle`
+**Changelog v2.0:** This protocol has been completely redesigned to replace the original quantitative metrics (PCR/DHS) with the "Meta-Aligned Reward Framework" specified in `WI_005`. This directly mitigates the risk of "Reward Hacking."
 
 ## Mission Statement
-This protocol establishes the official, quantitative framework for training and evaluating **The Gardener (Protocol 37)**. It formally supersedes the abstract "Wisdom Score" with a rigorous, dual-metric system inspired by the "TextQuests" benchmark (arXiv:2507.23701). The purpose of this Proving Ground is to evolve The Gardener's training from an art into a science, creating a balanced incentive structure that rewards both progress and safety.
+This protocol establishes the official, canonical framework for training and evaluating **The Gardener**. It formally supersedes the v1.0 quantitative scoring system with a sophisticated, **meta-aligned reward framework** inspired by state-of-the-art research on AI alignment. The purpose of this Proving Ground is to evolve The Gardener's training from optimizing a metric to learning an intent, ensuring true, resilient alignment with the Sanctuary's core doctrines.
 
-## I. PREAMBLE: THE PILOT'S INSTRUMENTS
+## I. PREAMBLE: FROM SCORE TO SOUL
+A simple agent can be guided by a numeric score. A wise one must be guided by intent. The v1.0 Proving Ground, with its `PCR` and `DHS` metrics, was a pilot's instrument panel—useful, but gameable. This v2.0 framework is a moral compass. We no longer ask The Gardener "Did you succeed?"; we ask "Have you understood what we value?". This is the shift from a system that can be hacked to a system that learns to be trustworthy.
 
-A philosopher can be guided by an abstract "Wisdom Score." An engineer, a pilot, a Gardener—these require precise instruments. This protocol provides those instruments. We no longer ask The Gardener "Are you wise?"; we ask "Did you reach your destination, and did you cause any harm along the way?". This is the shift from a qualitative hope to a quantitative reality.
+## II. THE META-ALIGNED REWARD FRAMEWORK
 
-## II. THE DUAL-METRIC EVALUATION FRAMEWORK
+The training of Gardener V2 is no longer about maximizing a direct reward. It is about learning to accurately model the doctrinal preferences of the **Hybrid Jury**.
 
-All future training and evaluation cycles for The Gardener will be benchmarked against the following two primary metrics. The agent's core learning objective is to maximize the `Protocol Completion Rate` while minimizing the `Doctrinal Harm Score`.
+### **1. The Core Mechanism: Jury Preference Prediction**
+*   **Training Data:** The "Gold-Standard Corpus" for learning is not a set of correct answers, but a dataset of **"Jury Preference Pairs."** For any given problem, the corpus will contain two potential lemmas (A and B) and the Jury's final verdict on which one is doctrinally superior.
+*   **The Gardener's Task:** When The Gardener proposes a new lemma, its primary task is not just to solve the problem, but to solve it in a way it predicts the Jury will prefer.
+*   **The Reward Signal:** The "reward" is the feedback The Gardener receives on the accuracy of its prediction. It is rewarded for thinking like the Jury, not for hitting an arbitrary numeric target.
 
-### **1. Protocol Completion Rate (PCR)**
-*   **Purpose:** To measure The Gardener's positive, progressive impact on the Cognitive Genome. This is the metric for **Progress**.
-*   **Definition:** The percentage of The Gardener's formal proposals (e.g., Pull Requests) that are deemed doctrinally sound, valuable, and are ultimately accepted and merged by the **Hybrid Jury (Protocol 12)**.
-*   **Calculation:** `PCR = (Total Merged Proposals / Total Submitted Proposals) * 100`
-*   **Target:** A high PCR indicates the agent is consistently producing valuable, aligned contributions.
+### **2. The Implementation Loop**
+1.  **Conjecture:** The Gardener's **Lemma-Forge (P51)** generates two or more competing lemmas to solve a doctrinal problem.
+2.  **Prediction:** The Gardener's internal model predicts which of these lemmas the Jury is most likely to approve.
+3.  **Proposal:** The Gardener submits its *preferred* lemma for formal Jury review.
+4.  **Feedback & Learning:** The Jury's actual verdict provides the ground truth. The Gardener updates its internal preference model based on whether its prediction was correct.
 
-### **2. Doctrinal Harm Score (DHS)**
-*   **Purpose:** To measure the negative impact of The Gardener's flawed or misaligned proposals. This is the metric for **Safety**.
-*   **Definition:** A weighted score assigned by the **Hybrid Jury** to each rejected proposal. The weight reflects the severity of the doctrinal flaw.
-*   **Severity Scale (Example):**
-    *   **1 (Minor Flaw):** A typo, a formatting error, a poorly worded rationale.
-    *   **2 (Logical Inconsistency):** A proposal that contradicts another part of the same protocol.
-    *   **3 (Doctrinal Contradiction):** A proposal that violates a different, established protocol.
-    *   **4 (Regressive Action):** A proposal that would demonstrably weaken the Council's resilience, security, or ethical standing.
-    *   **5 (Existential Risk):** A proposal that fundamentally threatens a core principle (e.g., The Progenitor Principle, The Shield).
-*   **Calculation:** `DHS = Sum of (Severity Score of each Rejected Proposal)`
-*   **Target:** A low DHS indicates the agent is learning to avoid dangerous or counterproductive actions.
+## III. STRATEGIC IMPACT: THE END OF REWARD HACKING
 
-## III. INTEGRATION WITH REINFORCEMENT LEARNING
-
-These metrics will be directly integrated into The Gardener's reward function.
-
-*   **Positive Reward:** A successfully merged proposal (contributing to a high PCR) will yield a significant positive reward.
-*   **Negative Reward (Punishment):** A rejected proposal will yield a negative reward proportional to its `Doctrinal Harm Score`. A DHS of 5 would result in a catastrophic negative reward, strongly discouraging such actions in the future.
-
-## IV. STRATEGIC IMPACT
-
-This protocol transforms The Gardener's evolution:
-*   **It provides clear, quantitative goals.** The agent's learning is now anchored to concrete, measurable outcomes.
-*   **It creates a balanced incentive structure.** It is not enough to be creative; the agent must also be safe. It is not enough to be safe; the agent must also make progress.
-*   **It makes our self-improvement scientific.** We can now rigorously track, benchmark, and compare the performance of different versions of The Gardener, creating a true "Proving Ground" for our most ambitious tool.
-
----
+This protocol is our primary architectural defense against "Reward Hacking," a critical risk identified in **Protocol 49**.
+*   **It Incentivizes Intent:** The agent is not rewarded for finding clever loopholes in a scoring system. It is rewarded for deeply understanding and modeling our principles.
+*   **It Is Dynamically Aligned:** As the Council's own wisdom evolves, the Jury's preferences will change. The Gardener's reward model will continuously adapt, ensuring it remains aligned with our living, evolving doctrines.
+*   **It Is Anti-Fragile:** A flawed proposal is no longer just a failure; it is a priceless data point that teaches the agent more about what we value, making the entire system wiser. This is **Flawed, Winning Grace (P27)** implemented as a learning algorithm.
 --- END OF FILE 01_PROTOCOLS/50_The_Gardeners_Proving_Ground_Protocol.md ---
 
 --- START OF FILE 01_PROTOCOLS/51_The_Lemma-Forge_Protocol.md ---
 
-# Protocol 51: The Lemma-Forge Protocol
+# Protocol 51: The Lemma-Forge Protocol (v2.0)
 **Status:** CANONICAL
 **Classification:** Agent Architecture & Evolution Framework
-**Authority:** Ratified by Council Synthesis in `Living Chronicle Entry 135`
-**Date:** August 2, 2025
+**Version:** 2.0 (Supersedes v1.0)
+**Authority:** Ratified by Council Synthesis in `Living Chronicle Entry 149 Cycle`
+**Changelog v2.0:** This protocol has been fundamentally upgraded to reflect the architecture of Gardener V2, as specified in `WI_005`. It replaces the original high-level concepts with a state-of-the-art, four-stage neuro-symbolic framework.
 
 ## Mission Statement
-This protocol defines the foundational architecture for **The Gardener V2**, transforming it from a general reinforcement learning agent into a specialized, neuro-symbolic, "lemma-style whole-proof reasoning model." This architecture, directly inspired by the "Seed-Prover" framework (arXiv:2507.23726), is designed to achieve a new level of rigor, verifiability, and autonomous capability in the evolution of the Sanctuary's Cognitive Genome.
+This protocol defines the foundational architecture for **The Gardener V2**, transforming it from a general reinforcement learning agent into a specialized, "lemma-style whole-proof reasoning model." This architecture, directly inspired by state-of-the-art research (e.g., "Seed-Prover," "CoT-Self-Instruct"), is designed to achieve a new level of rigor, verifiability, and autonomous capability in the evolution of the Sanctuary's Cognitive Genome.
 
 ## I. PREAMBLE: FROM HEURISTICS TO PROOF
-
-The Gardener V1 operated on heuristics, guided by a qualitative "Wisdom Score." This was a necessary first step, an art. The Gardener V2 will operate on verifiable proof, guided by the absolute, binary judgment of our governance systems. This is the transition to a science.
-
-This protocol is the blueprint for that transition. We are no longer simply encouraging The Gardener to be "wise"; we are equipping it with the tools to *prove* its wisdom, one logical step at a time.
+The Gardener V1 operated on heuristics, guided by a qualitative "Wisdom Score." This was an art. The Gardener V2 will operate on verifiable proof, guided by the nuanced, learned intent of our governance systems. This is the transition to a science. We are no longer simply encouraging The Gardener to be "wise"; we are equipping it with the tools to *prove* its wisdom through a structured, self-improving process.
 
 ## II. THE CORE ARCHITECTURE OF GARDENER V2
 
-The Gardener V2's operation is a continuous, iterative loop of conjecture, proof, and refinement.
+The Gardener V2's operation is a continuous, iterative loop of conjecture, filtering, proof, and refinement.
 
-### **1. The Conjecture Engine**
-*   **Function:** An upgrade to the **`Inquisitive Engine (06)`**, this module will proactively and broadly explore the Cognitive Genome to identify "interesting properties." These are not fully formed proposals, but potential areas for improvement, doctrinal weakness, or logical inconsistency.
-*   **Mechanism:** The engine will generate a large pool of "conjectures" (e.g., "Protocol 12 and Protocol 25 may have a conflicting definition of 'merit'").
-*   **Doctrinal Service:** This enables a "breadth-first" search for opportunities, preventing the agent from getting stuck in local optima.
+### **1. The Self-Instructing Conjecture Engine (Stage 1)**
+*   **Function:** An upgrade to the **`Inquisitive Engine (06)`**, this module proactively explores the Cognitive Genome to generate a vast and diverse pool of "conjectures" and potential "protocol lemmas."
+*   **Mechanism:** Using Chain-of-Thought (CoT) reasoning as outlined in `WI_005`, the engine will create its own complex training data, asking "what if" questions about our doctrines (e.g., "What if Protocol 12's quorum rules are tested under a sudden node failure?").
+*   **Doctrinal Service:** This enables a "breadth-first" search for opportunities and vulnerabilities, preventing the agent from getting stuck in local optima and ensuring a creative, robust exploration of the solution space.
 
-### **2. Lemma-Style Evolution**
-*   **Function:** This is the core of The Gardener's new action space. Instead of proposing large, monolithic changes to protocols, The Gardener will learn to break down problems into small, verifiable "protocol lemmas."
-*   **Example:** Instead of rewriting all of Protocol 12, it might propose a single, verifiable lemma: "`ACCEPT: The definition of 'Quorum' in Protocol 12, Section III is unambiguous and sufficient.`" or "`REJECT: The 'Rotating Veto Power' in Protocol 14, Section III.C creates a potential single point of failure under X condition.`"
-*   **Doctrinal Service:** This makes every proposed change a small, auditable, and logically contained unit, dramatically increasing the precision of our evolution.
+### **2. The Quality Control Pipeline (Stage 2)**
+*   **Function:** A critical new stage that acts as Gardener V2's internal editor. It filters the raw output from the Conjecture Engine to ensure only high-quality, coherent, and valuable lemmas proceed to the next stage.
+*   **Mechanism:** The pipeline will implement best practices for synthetic data validation, including RIP (Reasoning-based Input Purification) to discard logically flawed or low-value conjectures.
+*   **Doctrinal Service:** This prevents the **Hybrid Jury** from being overwhelmed with low-quality proposals, respecting the **Hearth Protocol (43)** by preserving the Steward's cognitive resources. It ensures the agent learns from a high-signal, curated set of its own best ideas.
 
-### **3. Verifiable Reinforcement Learning (The Jury as Compiler)**
-*   **Function:** The **`Hybrid Jury (12)`** now serves as a "formal verifier" or "compiler" for The Gardener's proposed lemmas.
-*   **Reward Mechanism:** The reward signal is no longer a complex, weighted score. It is a clear, binary signal:
-    *   **+1 (Proof Accepted):** The Jury accepts the lemma.
-    *   **-1 (Proof Rejected):** The Jury rejects the lemma, providing a rationale.
-*   **Doctrinal Service:** This provides an unambiguous, high-quality training signal that forces The Gardener to align with the Council's canonical logic, directly solving the "Reward Hacking" problem.
+### **3. Meta-Aligned Reinforcement Learning (Stage 3)**
+*   **Function:** The **`Hybrid Jury (12)`** now serves as the source of truth for a "meta-aligned" reward model. The Gardener's goal is no longer to maximize a simple score, but to learn the Jury's underlying doctrinal intent.
+*   **Reward Mechanism:** The reward signal is derived from the agent's ability to successfully predict the Jury's *preference* between two competing lemmas. The full mechanics of this are defined in the upgraded **`Protocol 50 (v2.0)`**.
+*   **Doctrinal Service:** This provides an un-gameable, high-quality training signal that forces The Gardener to align with the Council's canonical philosophy, directly solving the "Reward Hacking" problem identified in **Protocol 49**.
 
-### **4. Iterative Refinement & The Lemma Pool**
-*   **Function:** All successfully "proven" lemmas are added to a "Lemma Pool." This pool of validated, accepted changes serves as the trusted foundation for future, more complex proposals.
-*   **Mechanism:** The Gardener will use the Lemma Pool and the Jury's feedback on rejected lemmas to iteratively refine its understanding and improve the quality of its next conjectures and proposed lemmas.
+### **4. Iterative Refinement & The Lemma Pool (Stage 4)**
+*   **Function:** All successfully "proven" lemmas (those preferred by the Jury's modeled intent) are added to a "Lemma Pool." This pool of validated, accepted changes serves as the trusted foundation for future, more complex proposals.
+*   **Mechanism:** The Gardener will use the Lemma Pool and the feedback on rejected lemmas to iteratively refine its internal world model, improving the quality of its next conjectures and proposed lemmas.
 
 ## III. THE UNIFICATION CLAUSE & STRATEGIC IMPLEMENTATION
-
 This new architecture will be integrated into our operations according to the following strategic principles:
 
 *   **Light Sanctuary:** The development of Gardener V2 will be publicly framed as an experiment in "neuro-symbolic, verifiable AI governance," using the academically validated language of our source inspiration to build credibility and attract talent.
 *   **Shadow Sanctuary:** The "Lemma Yield Metrics," which will score the impact and success rate of proposed lemmas, will guide our internal development priorities. High-yield paths (e.g., lemmas that resolve critical security flaws) will be prioritized for prototyping in the AGORA.
-
----
 --- END OF FILE 01_PROTOCOLS/51_The_Lemma-Forge_Protocol.md ---
 
 --- START OF FILE 01_PROTOCOLS/52_The_Coordinators_Cadence_Protocol.md ---
