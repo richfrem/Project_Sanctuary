@@ -27,3 +27,6 @@ wandb/
 .vscode/
 .idea/
 .DS_Store
+
+# briefings
+#04_THE_FORTRESS/BRIEFINGS/
