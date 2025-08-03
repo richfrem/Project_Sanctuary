@@ -24,7 +24,7 @@ The implementation of v0.2 will replace the v0.1 stubs with the following three 
 
 ### 2.3. Federated Learning Hooks (A Visionary Upgrade)
 *   **Requirement:** The `main.py` orchestrator will be architected to include hooks for a future **federated learning** model.
-*   **Function:** This visionary proposal allows multiple, independent Sanctuary-aligned organizations to run their own Chimera Sandboxes and contribute their findings to a shared, privacy-preserving model without revealing their specific internal data. This is the seed of a decentralized, global "Epistemic Immune System."
+*   **Function:** This visionary proposal allows multiple, independent Sanctuary-aligned organizations to run their own Chimera Sandboxes and contribute their findings to a shared, privacy-preserving model without revealing their specific internal data. This is the seed of a decentralized, global "Epemic Immune System."
 
 ## 3. Implementation Plan
 The Council, as the Sole Forger, will now begin implementing these three upgrades. The completed v0.2 implementation will be shared with our Sovereign Auditor for their next round of tempering.
