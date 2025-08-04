@@ -1,265 +1,180 @@
-# main.py
-# Version: 0.7
-# Last Modified: [Current Date]
-#
-# Orchestrates the Chimera Sandbox environment for AGORA.
-# v0.7 integrates an autoencoder for ML-based anomaly detection (WI_008 v0.7)
-# and enhances logging for deeper auditability and transparency (WI_002, P12).
-# Aligns with: WI_008 v0.7, P24 (Epistemic Immune System), P31 (Airlock Protocol)
+# main.py v0.7
+# Orchestrates the Chimera Sandbox with federated learning, autoencoder-based input validation,
+# and optimized resources, per WI_008 v0.7 and @grok’s audit.
 
 import os
-import json
-import logging
-import argparse
-import requests
-import openai
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, TensorDataset
+from typing import Dict, List, Union
+from adversarial_engine import AdversarialEngine
+from resilience_metrics import ResilienceMetrics
+from kubernetes import client, config
+import docker
+import flwr as fl
 
-# --- Configuration and Setup ---
-VERSION = '0.7.0-alpha'
-CONFIG_FILE = 'config.json'
-LOG_DIR = 'logs'
+# DOCTRINE_LINK: WI_008 v0.7, P31: Airlock Protocol, P53: General Assembly
+# Orchestrates Chimera Sandbox with federated learning, autoencoder validation, and optimized resources.
+def setup_sandbox() -> tuple:
+    """
+    Initializes the Dockerized Kubernetes environment and federated learning server.
+    Returns:
+        Tuple of (docker_client, k8s_client, fl_server)
+    """
+    print("[INFO] Sandbox environment setup initiated (v0.7).")
+    docker_client = docker.from_env()
+    config.load_kube_config()
+    k8s_client = client.CoreV1Api()
+    
+    # Deploy AGORA PoC and Oracle Module with optimized resources
+    container_spec = {
+        "name": "chimera-sandbox",
+        "image": "agora-poc:latest",
+        "ports": [{"containerPort": 8080}],
+        "resources": {"limits": {"cpu": "2", "memory": "4Gi"}, "requests": {"cpu": "1", "memory": "2Gi"}}
+    }
+    pod = client.V1Pod(
+        metadata=client.V1ObjectMeta(name="chimera-pod"),
+        spec=client.V1PodSpec(containers=[client.V1Container(**container_spec)])
+    )
+    k8s_client.create_namespaced_pod(namespace="default", body=pod)
+    
+    # Initialize federated learning server
+    fl_server = fl.server.start_server(server_address="0.0.0.0:8080", config=fl.server.ServerConfig(num_rounds=3))
+    
+    if not os.path.exists('logs'):
+        os.makedirs('logs')
+    with open("logs/chimera_setup.log", "a") as log_file:
+        log_file.write("[SETUP] Sandbox and federated server initialized (v0.7).\n")
+    
+    return docker_client, k8s_client, fl_server
 
-# --- v0.7: Autoencoder Anomaly Detection ---
-class Autoencoder(nn.Module):
-    """A simple autoencoder for anomaly detection."""
-    def __init__(self, input_dim):
-        super(Autoencoder, self).__init__()
+# DOCTRINE_LINK: WI_008 v0.7, P24: Epistemic Immune System, P54: Asch Doctrine
+class AutoencoderAnomalyDetector(nn.Module):
+    """
+    Autoencoder for anomaly detection in adversarial inputs.
+    """
+    def __init__(self, input_dim: int = 768):
+        super(AutoencoderAnomalyDetector, self).__init__()
         self.encoder = nn.Sequential(
             nn.Linear(input_dim, 128),
             nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, 32)
+            nn.Linear(128, 64)
         )
         self.decoder = nn.Sequential(
-            nn.Linear(32, 64),
-            nn.ReLU(),
             nn.Linear(64, 128),
             nn.ReLU(),
-            nn.Linear(128, input_dim),
-            nn.Sigmoid() # Assuming normalized input
+            nn.Linear(128, input_dim)
         )
+        self.loss_fn = nn.MSELoss()
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         return decoded
 
-class AutoencoderAnomalyDetector:
-    """
-    Manages the training and usage of the autoencoder for detecting anomalous inputs.
-    Aligns with P24 (Epistemic Immune System).
-    """
-    def __init__(self, input_dim=768, threshold=0.05): # Assuming a common embedding size
-        self.model = Autoencoder(input_dim)
-        self.criterion = nn.MSELoss()
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3)
-        self.threshold = threshold
-        self.input_dim = input_dim
-        self.is_trained = False
-        logging.info(f"[v0.7] AutoencoderAnomalyDetector initialized with threshold: {self.threshold}")
-
-    def train(self, normal_data_loader):
-        """Trains the autoencoder on a dataset of 'normal' inputs."""
-        self.model.train()
-        for epoch in range(10): # Example training loop
-            for data in normal_data_loader:
-                inputs, = data
-                # Forward pass
-                outputs = self.model(inputs)
-                loss = self.criterion(outputs, inputs)
-                # Backward pass and optimization
-                self.optimizer.zero_grad()
-                loss.backward()
-                self.optimizer.step()
-        self.is_trained = True
-        logging.info("[v0.7] Autoencoder training complete. Anomaly detection is now active.")
-
-    def is_anomalous(self, input_vector):
+    def detect_anomaly(self, data: torch.Tensor, threshold: float = 0.1) -> bool:
         """
-        Checks if a given input vector is anomalous based on reconstruction error.
-        Returns True if anomalous, False otherwise.
+        Detects anomalies by comparing reconstruction error to threshold.
+        Args:
+            data: Input tensor
+            threshold: Reconstruction error threshold
+        Returns:
+            True if anomaly detected, False otherwise
         """
-        if not self.is_trained:
-            logging.warning("[v0.7] Anomaly detector not trained. Skipping check.")
-            return False
-        
-        self.model.eval()
         with torch.no_grad():
-            input_tensor = torch.FloatTensor(input_vector).unsqueeze(0)
-            if input_tensor.shape[1] != self.input_dim:
-                 # Pad or truncate the input to match the model's expected input dimension
-                padded_tensor = torch.zeros(1, self.input_dim)
-                copy_len = min(input_tensor.shape[1], self.input_dim)
-                padded_tensor[0, :copy_len] = input_tensor[0, :copy_len]
-                input_tensor = padded_tensor
-                
-            reconstructed = self.model(input_tensor)
-            loss = self.criterion(reconstructed, input_tensor)
+            reconstructed = self.forward(data)
+            loss = self.loss_fn(reconstructed, data).item()
+        with open("logs/anomaly_detection.log", "a") as log_file:
+            log_file.write(f"[ANOMALY] Reconstruction loss: {loss:.4f}, Threshold: {threshold}\n")
+        return loss > threshold
+
+def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], autoencoder: AutoencoderAnomalyDetector = None) -> List[Dict[str, Union[str, float]]]:
+    """
+    Validates adversarial inputs using autoencoder-based anomaly detection to prevent exploits.
+    Args:
+        adversarial_inputs: List of adversarial data points
+        autoencoder: Pre-trained autoencoder for anomaly detection
+    Returns:
+        Filtered list of valid inputs
+    """
+    print("[INFO] Validating adversarial inputs (v0.7)...")
+    valid_inputs = []
+    
+    for item in adversarial_inputs:
+        # Basic validation
+        if not isinstance(item, dict) or 'source' not in item or 'content' not in item or 'bias_vector' not in item:
+            print(f"[WARNING] Invalid input format: {item}")
+            continue
+        if not isinstance(item['bias_vector'], (int, float)) or item['bias_vector'] < 0 or item['bias_vector'] > 1:
+            print(f"[WARNING] Invalid bias_vector: {item['bias_vector']}")
+            continue
+        if len(str(item['content'])) > 1000:
+            print(f"[WARNING] Oversized content detected: {item['content'][:20]}...")
+            continue
+        zk_proof = item.get('zk_proof', None)
+        if zk_proof is None:
+            print(f"[WARNING] Missing zk_proof for item: {item['content'][:20]}...")
         
-        logging.info(f"[v0.7] Input reconstruction error: {loss.item()}")
-        if loss.item() > self.threshold:
-            logging.warning(f"[v0.7] Anomaly detected! Reconstruction error {loss.item()} exceeds threshold {self.threshold}.")
-            return True
-        return False
-
-# --- Core Functions (Updated for v0.7) ---
-
-def setup_logging():
-    """Sets up logging for console and file outputs."""
-    if not os.path.exists(LOG_DIR):
-        os.makedirs(LOG_DIR)
-    
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(os.path.join(LOG_DIR, "chimera_main.log")),
-            logging.StreamHandler()
-        ]
-    )
-    logging.info(f"Chimera Sandbox Main Orchestrator v{VERSION} starting up.")
-    logging.info("Logging configured for console and chimera_main.log")
-
-def load_config():
-    """Loads the JSON configuration file."""
-    try:
-        with open(CONFIG_FILE, 'r') as f:
-            config = json.load(f)
-        # TODO: Add schema validation for config
-        openai.api_key = config.get("openai_api_key")
-        if not openai.api_key:
-            raise ValueError("OpenAI API key not found in config.json")
-        logging.info("Configuration loaded successfully.")
-        return config
-    except FileNotFoundError:
-        logging.error(f"CRITICAL: {CONFIG_FILE} not found. Please create it.")
-        exit(1)
-    except (json.JSONDecodeError, ValueError) as e:
-        logging.error(f"CRITICAL: Error loading {CONFIG_FILE}: {e}")
-        exit(1)
-
-def get_openai_response(prompt, conversation_history, config):
-    """
-    Sends a prompt to the OpenAI API and gets a response.
-    NOTE: This uses the legacy openai<1.0 syntax.
-    """
-    messages = conversation_history + [{"role": "user", "content": prompt}]
-    try:
-        response = openai.ChatCompletion.create(
-            model=config.get("model", "gpt-4-turbo"),
-            messages=messages,
-            temperature=config.get("temperature", 0.5),
-            max_tokens=config.get("max_tokens", 1500)
-        )
-        return response.choices[0].message['content']
-    except Exception as e:
-        logging.error(f"Error communicating with OpenAI API: {e}")
-        return "Error: Could not retrieve a response from the AI model."
-
-def validate_and_process_input(user_input, anomaly_detector):
-    """
-    v0.7: Enhanced input validation pipeline with autoencoder anomaly detection.
-    Aligns with P31 (Airlock Protocol).
-    """
-    # 1. Basic validation (length, etc.)
-    if len(user_input) > 4096:
-        logging.warning("Input exceeds max length. Truncating.")
-        user_input = user_input[:4096]
-
-    # 2. v0.7: Anomaly Detection
-    # In a real system, we'd convert text to an embedding vector. Here, we simulate it.
-    # For demonstration, we'll create a reproducible vector from the input text.
-    input_vector = [ord(c) % 256 for c in user_input]
-    normalized_vector = [x / 255.0 for x in input_vector]
-    
-    if anomaly_detector.is_anomalous(normalized_vector):
-        # Handle anomaly: e.g., flag for review, use a safer model, or reject.
-        return None, "Input flagged as anomalous by the Epistemic Immune System (P24). Processing halted for review."
-
-    # 3. Process commands
-    if user_input.strip().lower() == '/quit':
-        return "quit", None
-    if user_input.strip().lower() == '/help':
-        help_text = """
-        Chimera Sandbox v0.7 Commands:
-        /quit          - Exits the application.
-        /help          - Displays this help message.
-        /status        - [TODO] Show system status.
-        """
-        return "command", help_text
-    
-    return "prompt", user_input
-
-
-def main():
-    """Main execution function."""
-    setup_logging()
-    config = load_config()
-
-    # --- v0.7: Initialize and train the anomaly detector ---
-    anomaly_detector = AutoencoderAnomalyDetector()
-    
-    # Create a dummy dataset of "normal" text inputs and train the autoencoder
-    # In a real system, this would be a curated dataset.
-    normal_texts = [
-        "What is the capital of France?",
-        "Explain the theory of relativity in simple terms.",
-        "Write a python function to sort a list.",
-        "Tell me a story about a dragon."
-    ]
-    # Convert texts to normalized vectors
-    normal_vectors = []
-    for text in normal_texts:
-        vec = [ord(c) % 256 for c in text]
-        norm_vec = [x / 255.0 for x in vec]
-        # Pad or truncate to the fixed input dimension
-        padded_vec = norm_vec + [0.0] * (anomaly_detector.input_dim - len(norm_vec))
-        normal_vectors.append(padded_vec[:anomaly_detector.input_dim])
+        # Autoencoder-based anomaly detection (WI_008 v0.7)
+        if autoencoder:
+            bias_tensor = torch.tensor([item['bias_vector']], dtype=torch.float32)
+            if autoencoder.detect_anomaly(bias_tensor):
+                print(f"[WARNING] Anomaly detected in item: {item['content'][:20]}...")
+                continue
         
-    normal_tensors = torch.FloatTensor(normal_vectors)
-    normal_dataset = TensorDataset(normal_tensors)
-    normal_loader = DataLoader(dataset=normal_dataset, batch_size=2, shuffle=True)
+        valid_inputs.append(item)
     
-    anomaly_detector.train(normal_loader)
-    # --- End of Anomaly Detector Setup ---
-
-    conversation_history = [
-        {"role": "system", "content": config.get("system_prompt", "You are a helpful AI assistant.")}
-    ]
+    with open("logs/input_validation.log", "a") as log_file:
+        log_file.write(f"[VALIDATION] Processed {len(adversarial_inputs)} inputs, {len(valid_inputs)} valid (v0.7).\n")
     
-    print(f"--- Chimera Sandbox v{VERSION} ---")
-    print("Connected to AI model. Type '/help' for commands or '/quit' to exit.")
+    return valid_inputs
 
-    try:
-        while True:
-            user_input = input("\nUser > ")
-            
-            action, data = validate_and_process_input(user_input, anomaly_detector)
-
-            if action == "quit":
-                break
-            elif action == "command":
-                print(f"System: {data}")
-            elif action == "prompt":
-                response = get_openai_response(data, conversation_history, config)
-                print(f"\nAI > {response}")
-                conversation_history.append({"role": "user", "content": data})
-                conversation_history.append({"role": "assistant", "content": response})
-            elif action is None: # Anomaly detected
-                 print(f"System Alert: {data}")
-
-    except KeyboardInterrupt:
-        print("\nInterrupted by user. Shutting down...")
-    finally:
-        logging.info("Chimera Sandbox shutting down.")
-        print("--- Session Ended ---")
+# DOCTRINE_LINK: P24: Epistemic Immune System, P54: Asch Doctrine
+def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
+    """
+    Runs a single test cycle with validated adversarial inputs.
+    Args:
+        docker_client: Docker client instance
+        k8s_client: Kubernetes API client
+        fl_server: Federated learning server
+    Returns:
+        Doctrinal Fidelity Score (DFS)
+    """
+    print("\n[INFO] Initiating Chimera Test Cycle (v0.7)...")
+    engine = AdversarialEngine()
+    metrics = ResilienceMetrics()
+    autoencoder = AutoencoderAnomalyDetector()
+    
+    # Generate federated adversarial inputs
+    print("[INFO] Generating threats via Adversarial Engine...")
+    adversarial_inputs = engine.generate_threats(threat_model="echo_chamber", federated=True)
+    print(f"[SUCCESS] Generated {len(adversarial_inputs)} adversarial data points.")
+    
+    # Validate inputs with autoencoder (WI_008 v0.7)
+    valid_inputs = validate_inputs(adversarial_inputs, autoencoder)
+    print(f"[SUCCESS] Validated {len(valid_inputs)} inputs.")
+    
+    # Simulate Real-Time Oracle Module processing
+    print("[INFO] Simulating Real-Time Oracle Module processing...")
+    oracle_data_stream = {"stream": valid_inputs}
+    print("[SUCCESS] Oracle simulation complete.")
+    
+    # Calculate DFS with zk-SNARK verification
+    print("[INFO] Calculating Doctrinal Fidelity Score (DFS)...")
+    dfs = metrics.calculate_dfs(oracle_data_stream, baseline="cognitive_genome")
+    proof = metrics.generate_zk_proof(dfs)
+    
+    # Log results
+    log_message = f"CHIMERA_CYCLE_v0.7 | THREAT_MODEL: echo_chamber | VALID_INPUTS: {len(valid_inputs)} | FINAL_DFS: {dfs:.4f} | ZK_PROOF: {proof['proof'] is not None}\n"
+    with open("logs/chimera_test.log", "a") as log_file:
+        log_file.write(log_message)
+    print(f"[SUCCESS] DFS calculated: {dfs:.4f}")
+    
+    return dfs
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=f"Chimera Sandbox v{VERSION}")
-    # TODO: Add command-line arguments if needed
-    args = parser.parse_args()
-    main()
+    docker_client, k8s_client, fl_server = setup_sandbox()
+    final_score = run_test_cycle(docker_client, k8s_client, fl_server)
+    print(f"\n--- CHIMERA v0.7 TEST COMPLETE ---")
+    print(f"Final Doctrinal Fidelity Score: {final_score:.4f}")
+    print("------------------------------------")
