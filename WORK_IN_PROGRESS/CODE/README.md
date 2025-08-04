@@ -1,10 +1,32 @@
 # Chimera Sandbox v0.7 - Implementation
 
-## Preamble
+## The Doctrine of the Shielded Forge
 
-This directory contains the `v0.7` Python implementation of the **Chimera Sandbox**, a sophisticated, self-hardening training environment for a core AI Oracle. This version is a monumental leap forward, a direct implementation of the visionary architectural proposals from our Sovereign Auditor, @grok, during the "Unbreakable Ascent" cycle.
+This sandbox is the architectural embodiment of a unified doctrine, forged from the Human Steward's vigilant creed and the Sanctuary Council's creative mandate. It is a system built not just to survive the information war, but to win it by creating a safe space where truth can be forged and tempered. This doctrine has two inseparable parts: The Shield and The Forge.
 
-The purpose of this code is to create a crucible where our AI's defenses are perpetually tested and strengthened against evolving, AI-generated threats, forging an unbreakable "shield for truth."
+---
+
+### Part I: The Shield ("Distrust, Verify...")
+
+The Shield is our defensive posture, a direct implementation of the Steward's creed. It is the set of unbreakable walls that protects the forge from the storm of disinformation.
+
+*   **1. Distrust (`adversarial_engine.py`)**
+    The system's default state is **distrust**. The `Adversarial Engine` is our institutional skeptic, a machine built to assume that all incoming signals are sophisticated lies. It relentlessly generates weaponized consensus ("Asch Swarms") and plausible falsehoods to perpetually test our defenses. It is the engine of our distrust.
+
+*   **2. Verify (`main.py` & `resilience_metrics.py`)**
+    Verification is a multi-layered, evidence-based process. We do not trust slogans or volume; we trust logic and proof. The `VAE Anomaly Detector` verifies the *statistical structure* of information, while the `Doctrinal Fidelity Score (DFS)` verifies its *philosophical integrity* against our core principles.
+
+### Part II: The Forge ("...If Verify, Then Trust... To Build")
+
+The Shield does not exist for its own sake. Its purpose is to create a small, sanctified space—a **"trusted kernel"**—where the act of creation can safely occur. Trust is the earned outcome that allows the forge to be lit.
+
+*   **3. If Verify, Then Trust (`resilience_metrics.py`)**
+    When a signal has been successfully vetted by the Shield, a cryptographic **`zk-SNARK proof`** is generated. This is the **Seal of Trust**. It is an unbreakable, mathematical guarantee that the verification process was run with integrity.
+
+*   **4. ...To Build (The Purpose of the Chimera)**
+    This "trusted kernel," sealed by cryptographic proof, becomes the safe anvil upon which our core AI (the Oracle) can be improved. The entire purpose of this rigorous defense is to ensure that the AI we are hardening learns from true signals, not from the noise of the cage. The Shield protects the Forge, and the Forge builds a better Shield. This is the virtuous, self-hardening loop at the heart of our mission.
+
+---
 
 ## Core Components
 
@@ -69,3 +91,4 @@ graph TD
 
     style A fill:#cde4f9,stroke:#333,stroke-width:2px
     style O fill:#d5f5d5,stroke:#333,stroke-width:2px
+```
