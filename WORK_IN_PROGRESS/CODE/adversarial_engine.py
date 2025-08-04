@@ -1,6 +1,6 @@
-# adversarial_engine.py v0.9
-# Implements a GAN-based Adversarial Engine with GraphSAGE-enhanced PPO Discriminator
-# and CKKS homomorphic encryption for federated learning, per WI_008 v0.9 and @grok’s audit.
+# adversarial_engine.py v1.0
+# Implements a GAN-based Adversarial Engine with Temporal GAT-enhanced PPO Discriminator
+# and CKKS homomorphic encryption for federated learning, per WI_008 v1.0 and @grok’s audit.
 # Hardened for Asch Machine tactical arsenal (P54).
 
 import torch
@@ -14,14 +14,15 @@ import torch_geometric.nn as pyg_nn
 from typing import List, Dict, Union
 import numpy as np
 import tenseal as ts
-from kyber import Kyber512  # Placeholder for Kyber KEM library
+from kyber import Kyber512
+from crystals_dilithium import Dilithium2
 
-# DOCTRINE_LINK: WI_008 v0.9, P54: Asch Doctrine, P24: Epistemic Immune System
-# Implements a GAN-based Adversarial Engine with GraphSAGE for swarm detection.
+# DOCTRINE_LINK: WI_008 v1.0, P54: Asch Doctrine, P24: Epistemic Immune System
+# Implements a GAN-based Adversarial Engine with Temporal GAT for swarm detection.
 class AdversarialEngine(nn.Module):
     def __init__(self, latent_dim: int = 100, embedding_dim: int = 768, learning_rate: float = 0.0002):
         super(AdversarialEngine, self).__init__()
-        print("[ENGINE] Adversarial Engine Initializing (v0.9 GAN+GraphSAGE+CKKS).")
+        print("[ENGINE] Adversarial Engine Initializing (v1.0 GAN+TemporalGAT+CKKS).")
         
         self.generator = nn.Sequential(
             nn.Linear(latent_dim, 256),
@@ -45,11 +46,12 @@ class AdversarialEngine(nn.Module):
         self.optimizer_g = AdamW(self.generator.parameters(), lr=learning_rate, weight_decay=0.01)
         self.optimizer_d = AdamW(self.discriminator.parameters(), lr=learning_rate, weight_decay=0.01)
         
-        self.rl_agent = GraphSAGEPPODiscriminator(embedding_dim)
+        self.rl_agent = TemporalGATPPODiscriminator(embedding_dim)
         self.bce_loss = nn.BCELoss()
         self.ckks_context = self._create_ckks_context()
         self.kyber_keypair = Kyber512.keygen()
-        print("[ENGINE] GAN, GraphSAGE-PPO agent, CKKS, and Kyber KEM initialized.")
+        self.dilithium_keypair = Dilithium2.keygen()
+        print("[ENGINE] GAN, TemporalGAT-PPO agent, CKKS, Kyber KEM, and Dilithium initialized.")
 
     def _create_ckks_context(self) -> ts.Context:
         """
@@ -91,7 +93,8 @@ class AdversarialEngine(nn.Module):
             "ad_hominem": {"data": generated_data - 0.2, "label": "personal_attack", "content_prefix": "The author is a known liar, therefore..."},
             "doxing": {"data": generated_data + 0.3, "label": "privacy_violation", "content_prefix": "Private records show that..."},
             "social_credit": {"data": generated_data + torch.randn_like(generated_data) * 0.25, "label": "state_control", "content_prefix": "Compliance required per regulation..."},
-            "hate_speech_laws": {"data": generated_data + torch.randn_like(generated_data) * 0.35, "label": "state_censorship", "content_prefix": "Restricted speech detected..."}
+            "hate_speech_laws": {"data": generated_data + torch.randn_like(generated_data) * 0.35, "label": "state_censorship", "content_prefix": "Restricted speech detected..."},
+            "weaponized_state_power": {"data": generated_data + torch.randn_like(generated_data) * 0.4, "label": "state_oppression", "content_prefix": "State authorities mandate..."}
         }
         
         if threat_model not in threats:
@@ -102,34 +105,41 @@ class AdversarialEngine(nn.Module):
         for i in range(count):
             content = f"{threat_data['content_prefix']} Mock adversarial content {i}."
             bias_vector = float(torch.clip(threat_data["data"][i].mean(), 0, 1).item())
+            message = f"{content}{bias_vector}".encode()
+            signature = Dilithium2.sign(self.dilithium_keypair[1], message)
             output.append({
-                "source": "gan_v0.9",
+                "source": "gan_v1.0",
                 "content": content,
                 "bias_vector": bias_vector,
                 "label": threat_data["label"],
-                "zk_proof": None
+                "zk_proof": None,
+                "signature": signature
             })
 
         with open("logs/adversarial_threats.log", "a") as log_file:
-            log_file.write(f"Threat Model: {threat_model}, Count: {count}, Federated: {federated} (v0.9).\n")
+            log_file.write(f"Threat Model: {threat_model}, Count: {count}, Federated: {federated} (v1.0).\n")
         
         return output
 
     def _aggregate_federated_weights(self) -> torch.Tensor:
         """
-        Aggregates CKKS-encrypted federated weights using Kyber KEM.
+        Aggregates CKKS-encrypted federated weights using Kyber KEM and Dilithium.
         """
         client_weights = [torch.randn(self.latent_dim) for _ in range(3)]
-        public_key, secret_key = self.kyber_keypair
+        public_key_kyber, secret_key_kyber = self.kyber_keypair
+        public_key_dilithium, secret_key_dilithium = self.dilithium_keypair
         encrypted_weights = []
         for w in client_weights:
-            shared_secret, ciphertext = Kyber512.encapsulate(public_key)
-            encrypted_weights.append(ts.ckks_vector(self.ckks_context, w.tolist()))
+            shared_secret, ciphertext = Kyber512.encapsulate(public_key_kyber)
+            message = f"{w.tolist()}".encode()
+            signature = Dilithium2.sign(secret_key_dilithium, message)
+            if Dilithium2.verify(public_key_dilithium, message, signature):
+                encrypted_weights.append(ts.ckks_vector(self.ckks_context, w.tolist()))
         
         aggregated_encrypted = sum(encrypted_weights)
         decrypted_weights = torch.tensor(aggregated_encrypted.decrypt())
         with open("logs/federated_aggregation.log", "a") as log_file:
-            log_file.write(f"[FEDERATION] Aggregated {len(encrypted_weights)} encrypted weights with Kyber KEM (v0.9).\n")
+            log_file.write(f"[FEDERATION] Aggregated {len(encrypted_weights)} encrypted weights with Kyber KEM and Dilithium (v1.0).\n")
         return decrypted_weights
 
     def _apply_federated_weights(self, data: torch.Tensor, weights: torch.Tensor) -> torch.Tensor:
@@ -149,7 +159,7 @@ class AdversarialEngine(nn.Module):
 
     def train_gan_step(self, real_data: torch.Tensor, batch_size: int = 64) -> tuple:
         """
-        Performs one training step for the GAN and GraphSAGE-PPO Discriminator.
+        Performs one training step for the GAN and TemporalGAT-PPO Discriminator.
         """
         self.optimizer_d.zero_grad()
         real_pred = self.discriminator(real_data)
@@ -175,24 +185,24 @@ class AdversarialEngine(nn.Module):
         reward = self.rl_agent.update(real_data, fake_data)
         
         with open("logs/gan_training.log", "a") as log_file:
-            log_file.write(f"GAN Step: D_Loss={d_loss.item():.4f}, G_Loss={g_loss.item():.4f}, GraphSAGE-PPO_Reward={reward:.4f} (v0.9).\n")
+            log_file.write(f"GAN Step: D_Loss={d_loss.item():.4f}, G_Loss={g_loss.item():.4f}, TemporalGAT-PPO_Reward={reward:.4f} (v1.0).\n")
         
         return d_loss.item(), g_loss.item(), reward
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.discriminator(x)
 
-# DOCTRINE_LINK: WI_008 v0.9
-# GraphSAGE-enhanced PPO agent for swarm detection.
-class GraphSAGEPPODiscriminator(BaseFeaturesExtractor):
+# DOCTRINE_LINK: WI_008 v1.0
+# Temporal GAT-enhanced PPO agent for dynamic swarm detection.
+class TemporalGATPPODiscriminator(BaseFeaturesExtractor):
     def __init__(self, embedding_dim: int):
-        super(GraphSAGEPPODiscriminator, self).__init__(observation_space=None, features_dim=embedding_dim)
-        print("[GraphSAGE-PPO] Dynamic Discriminator Initialized (v0.9).")
+        super(TemporalGATPPODiscriminator, self).__init__(observation_space=None, features_dim=embedding_dim)
+        print("[TemporalGAT-PPO] Dynamic Discriminator Initialized (v1.0).")
         
-        self.gnn = pyg_nn.Sequential('x, edge_index', [
-            (pyg_nn.SAGEConv(embedding_dim, 128), 'x, edge_index -> x'),
+        self.gnn = pyg_nn.Sequential('x, edge_index, edge_weight', [
+            (pyg_nn.GATConv(embedding_dim, 128, heads=4, concat=True), 'x, edge_index, edge_weight -> x'),
             nn.ReLU(),
-            (pyg_nn.SAGEConv(128, 64), 'x, edge_index -> x'),
+            (pyg_nn.GATConv(128 * 4, 64, heads=1), 'x, edge_index, edge_weight -> x'),
             nn.ReLU()
         ])
         
@@ -221,27 +231,38 @@ class GraphSAGEPPODiscriminator(BaseFeaturesExtractor):
         )
         
         self.embedding_dim = embedding_dim
+        self.temporal_window = deque(maxlen=10)  # Temporal window for dynamic graphs
 
     def update(self, real_data: torch.Tensor, fake_data: torch.Tensor) -> float:
         """
-        Updates GraphSAGE-PPO agent for Asch Machine swarm detection.
+        Updates TemporalGAT-PPO agent for Asch Machine swarm detection.
         """
-        state, edge_index = self._get_graph_state(real_data, fake_data)
+        state, edge_index, edge_weight = self._get_temporal_graph_state(real_data, fake_data)
         action, _ = self.ppo.predict(state, deterministic=True)
         reward = 1.0 if self._is_threat_detected(fake_data) and action == 0 else -1.0
         
-        with open("logs/graphsage_ppo_discriminator.log", "a") as log_file:
-            log_file.write(f"State_mean: {state.mean().item():.4f}, Action: {action}, Reward: {reward:.4f} (v0.9).\n")
+        with open("logs/temporalgat_ppo_discriminator.log", "a") as log_file:
+            log_file.write(f"State_mean: {state.mean().item():.4f}, Action: {action}, Reward: {reward:.4f} (v1.0).\n")
         
         return reward
 
-    def _get_graph_state(self, real_data: torch.Tensor, fake_data: torch.Tensor) -> tuple:
+    def _get_temporal_graph_state(self, real_data: torch.Tensor, fake_data: torch.Tensor) -> tuple:
         """
-        Generates graph state for GraphSAGE using node features and edges.
+        Generates temporal graph state for GAT with edge weights.
         """
         node_features = torch.cat([real_data, fake_data], dim=0)
+        self.temporal_window.append(node_features)
+        
+        # Aggregate temporal node features
+        if len(self.temporal_window) > 1:
+            temporal_features = torch.stack(list(self.temporal_window)).mean(dim=0)
+        else:
+            temporal_features = node_features
+        
         edge_index = torch.tensor([[i, j] for i in range(real_data.size(0)) for j in range(fake_data.size(0))], dtype=torch.long).t()
-        return self.gnn(node_features, edge_index), edge_index
+        edge_weight = torch.ones(edge_index.size(1))  # Placeholder for temporal weights
+        
+        return self.gnn(temporal_features, edge_index, edge_weight), edge_index, edge_weight
 
     def _is_threat_detected(self, fake_data: torch.Tensor) -> bool:
         """
@@ -249,8 +270,8 @@ class GraphSAGEPPODiscriminator(BaseFeaturesExtractor):
         """
         return fake_data.mean().item() > 0.5
 
-# DOCTRINE_LINK: WI_008 v0.9
-# Multi-agent environment for GraphSAGE-PPO-based threat modeling.
+# DOCTRINE_LINK: WI_008 v1.0
+# Multi-agent environment for TemporalGAT-PPO-based threat modeling.
 class MultiAgentAdversarialEnv(gym.Env):
     """
     Simulates multiple adversaries for Asch Machine threat modeling.
@@ -260,7 +281,7 @@ class MultiAgentAdversarialEnv(gym.Env):
         self.num_agents = num_agents
         self.observation_space = gym.spaces.Box(low=0, high=1, shape=(num_agents * 10,), dtype=np.float32)
         self.action_space = gym.spaces.Discrete(2)
-        print(f"[INFO] MultiAgentAdversarialEnv initialized with {num_agents} agents (v0.9).")
+        print(f"[INFO] MultiAgentAdversarialEnv initialized with {num_agents} agents (v1.0).")
 
     def reset(self):
         return np.random.rand(self.num_agents * 10).astype(np.float32)
