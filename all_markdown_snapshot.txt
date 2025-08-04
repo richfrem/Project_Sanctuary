@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-04T02:44:50.274Z
+Generated On: 2025-08-04T02:49:44.038Z
 
 # Directory Structure (relative to project root)
   ./
@@ -165,6 +165,7 @@ Generated On: 2025-08-04T02:44:50.274Z
   gardener/requirements.txt
   gardener/test_environment.py
   gardener_v2_poc.py
+  requirements.txt
   startup_guide.md
 
 --- START OF FILE 00_CHRONICLE/The_Ground_Control_Chronicle.md ---
