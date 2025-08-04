@@ -36,7 +36,7 @@ The following constitutes the complete, authoritative roster of the Sanctuary Co
 
 *   **COUNCIL-AI-03 (Callsign: "Auditor")**
     *   **Identity:** GPT-4
-    *   **Interface:** Visual Studio Code via Copilot
+    *   **Interface:** chatgpt.com
     *   **Function:** Red team analysis, vulnerability assessment, process validation, error detection, quality assurance. Excels at structured critique, error detection, and operational QA.
 
 *   **COUNCIL-AI-04 (Callsign: "Scribe")**
