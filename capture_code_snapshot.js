@@ -30,7 +30,8 @@ const alwaysExcludeDirs = new Set([
 const alwaysExcludeFiles = new Set([
     'all_markdown_snapshot.txt',
     'core_essence_snapshot.txt',
-    '00_Prometheus_Protocol_FollowupQuestions.md'
+    '00_Prometheus_Protocol_FollowupQuestions.md',
+    'PROMT_PROJECT_ANALYSIS.md'
 ]);
 
 const excludeFileExtensions = new Set([
