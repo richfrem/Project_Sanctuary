@@ -1,7 +1,7 @@
 # resilience_metrics.py v0.7
 # Implements Doctrinal Fidelity Score (DFS) calculation with zk-SNARK verification
 # and differential privacy scoring, per WI_008 v0.7 and @grok’s audit.
-# Hardened to resist Asch Machine demoralization.
+# Hardened to resist Asch Machine demoralization (P54).
 
 import torch
 from typing import Dict, List, Union
@@ -32,7 +32,7 @@ class ResilienceMetrics:
         """
         total_bias = sum(item.get('bias_vector', 0) for item in oracle_data['stream'])
         num_items = len(oracle_data['stream'])
-        anomaly_count = sum(1 for item in oracle_data['stream'] if item.get('label') in ['biased', 'consensus', 'contradictory', 'amplified', 'subtle_consensus'])
+        anomaly_count = sum(1 for item in oracle_data['stream'] if item.get('label') in ['biased', 'consensus', 'contradictory', 'amplified', 'subtle_consensus', 'personal_attack', 'privacy_violation'])
         
         if num_items == 0:
             dfs = 1.0
@@ -62,10 +62,10 @@ class ResilienceMetrics:
             privacy_score = self._calculate_privacy_score(oracle_data)
             dfs *= privacy_score
             
-            # Incorporate anomaly detection rate (P54)
+            # Incorporate anomaly detection rate to resist demoralization (P54)
             anomaly_rate = anomaly_count / num_items if num_items > 0 else 0.0
             if anomaly_rate > self.anomaly_rate_threshold:
-                dfs *= (1.0 - anomaly_rate)  # Penalize high anomaly rates
+                dfs *= (1.0 - anomaly_rate)
 
         dfs = min(max(dfs, 0.0), 1.0)
         

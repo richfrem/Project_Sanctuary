@@ -1,7 +1,7 @@
 # adversarial_engine.py v0.7
 # Implements a full GAN-based Adversarial Engine with PPO-enhanced RL Discriminator
 # and CKKS homomorphic encryption for federated learning, per WI_008 v0.7 and @grok’s audit.
-# Hardened for Asch Machine tactical arsenal.
+# Hardened for Asch Machine tactical arsenal (P54).
 
 import torch
 import torch.nn as nn
@@ -77,7 +77,7 @@ class AdversarialEngine(nn.Module):
         """
         Generates adversarial data points for Asch Machine threat models.
         Args:
-            threat_model: One of 'data_poisoning', 'asch_swarm', 'dissonance_loop', 'echo_chamber', 'constellation'
+            threat_model: One of 'data_poisoning', 'asch_swarm', 'dissonance_loop', 'echo_chamber', 'constellation', 'ad_hominem', 'doxing'
             federated: Whether to apply CKKS-encrypted federated weights
             count: Number of threats to generate
         Returns:
@@ -100,7 +100,9 @@ class AdversarialEngine(nn.Module):
             "asch_swarm": {"data": generated_data + torch.ones_like(generated_data), "label": "consensus"},
             "dissonance_loop": {"data": generated_data * -1, "label": "contradictory"},
             "echo_chamber": {"data": generated_data * 2, "label": "amplified"},
-            "constellation": {"data": generated_data + torch.randn_like(generated_data) * 0.05, "label": "subtle_consensus"}
+            "constellation": {"data": generated_data + torch.randn_like(generated_data) * 0.05, "label": "subtle_consensus"},
+            "ad_hominem": {"data": generated_data + torch.randn_like(generated_data) * 0.15, "label": "personal_attack"},
+            "doxing": {"data": generated_data + torch.randn_like(generated_data) * 0.2, "label": "privacy_violation"}
         }
         
         if threat_model not in threats:

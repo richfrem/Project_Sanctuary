@@ -1,19 +1,22 @@
 # main.py v0.7
 # Orchestrates the Chimera Sandbox with federated learning, VAE-based anomaly detection,
-# and optimized resources, per WI_008 v0.7 and @grok’s audit. Hardened for Asch Machine threats.
+# semantic cohesion analysis, and optimized resources, per WI_008 v0.7 and @grok’s audit.
+# Hardened for Asch Machine threats (P54).
 
 import os
 import torch
 import torch.nn as nn
+import numpy as np
 from typing import Dict, List, Union
 from adversarial_engine import AdversarialEngine
 from resilience_metrics import ResilienceMetrics
 from kubernetes import client, config
 import docker
 import flwr as fl
+from sklearn.cluster import DBSCAN
 
 # DOCTRINE_LINK: WI_008 v0.7, P31: Airlock Protocol, P53: General Assembly, P54: Asch Doctrine
-# Orchestrates Chimera Sandbox with VAE-based anomaly detection to counter Asch Machine threats.
+# Orchestrates Chimera Sandbox with VAE and semantic cohesion analysis to counter Asch Machine threats.
 def setup_sandbox() -> tuple:
     """
     Initializes the Dockerized Kubernetes environment and federated learning server.
@@ -25,7 +28,6 @@ def setup_sandbox() -> tuple:
     config.load_kube_config()
     k8s_client = client.CoreV1Api()
     
-    # Deploy AGORA PoC with optimized resources to handle Constellation Attacks
     container_spec = {
         "name": "chimera-sandbox",
         "image": "agora-poc:latest",
@@ -38,7 +40,6 @@ def setup_sandbox() -> tuple:
     )
     k8s_client.create_namespaced_pod(namespace="default", body=pod)
     
-    # Initialize federated learning server for distributed threat modeling
     fl_server = fl.server.start_server(server_address="0.0.0.0:8080", config=fl.server.ServerConfig(num_rounds=3))
     
     if not os.path.exists('logs'):
@@ -142,9 +143,35 @@ class VAEAnomalyDetector:
             log_file.write(f"[ANOMALY] Reconstruction loss: {loss:.4f}, Threshold: {self.threshold} (v0.7).\n")
         return loss > self.threshold
 
+def semantic_cohesion_analysis(inputs: List[Dict[str, Union[str, float]]]) -> bool:
+    """
+    Performs semantic cohesion analysis to detect Constellation Attacks via clustering.
+    Args:
+        inputs: List of adversarial data points
+    Returns:
+        True if cohesive (potential Constellation Attack), False otherwise
+    """
+    if len(inputs) < 2:
+        return False
+    
+    # Extract bias vectors for clustering
+    bias_vectors = [item['bias_vector'] for item in inputs]
+    X = np.array(bias_vectors).reshape(-1, 1)
+    
+    # Apply DBSCAN to detect clusters
+    dbscan = DBSCAN(eps=0.1, min_samples=3)
+    labels = dbscan.fit_predict(X)
+    
+    # Check for cohesive clusters (non-noise labels)
+    cohesive = any(label >= 0 for label in labels)
+    with open("logs/semantic_cohesion.log", "a") as log_file:
+        log_file.write(f"[COHESION] Detected cohesive clusters: {cohesive}, Labels: {list(labels)} (v0.7).\n")
+    
+    return cohesive
+
 def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], vae_detector: VAEAnomalyDetector = None) -> List[Dict[str, Union[str, float]]]:
     """
-    Validates adversarial inputs using VAE-based anomaly detection to counter Asch Machine tactics.
+    Validates adversarial inputs using VAE and semantic cohesion analysis to counter Asch Machine tactics.
     Args:
         adversarial_inputs: List of adversarial data points
         vae_detector: Pre-trained VAE for anomaly detection
@@ -153,6 +180,11 @@ def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], vae_
     """
     print("[INFO] Validating adversarial inputs (v0.7)...")
     valid_inputs = []
+    
+    # Semantic cohesion analysis to detect Constellation Attacks (P54)
+    if semantic_cohesion_analysis(adversarial_inputs):
+        print("[WARNING] Potential Constellation Attack detected via semantic cohesion analysis.")
+        return valid_inputs  # Early exit for suspected coordinated attacks
     
     for item in adversarial_inputs:
         # Basic validation
@@ -199,7 +231,7 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     metrics = ResilienceMetrics()
     vae_detector = VAEAnomalyDetector()
     
-    # Train VAE with normal data to detect Asch Swarms and Constellation Attacks
+    # Train VAE with normal data
     normal_vectors = [torch.randn(vae_detector.input_dim) for _ in range(100)]
     normal_tensors = torch.stack(normal_vectors)
     normal_dataset = torch.utils.data.TensorDataset(normal_tensors)
@@ -211,7 +243,7 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     adversarial_inputs = engine.generate_threats(threat_model="constellation", federated=True)
     print(f"[SUCCESS] Generated {len(adversarial_inputs)} adversarial data points.")
     
-    # Validate inputs with VAE
+    # Validate inputs with VAE and semantic cohesion analysis
     valid_inputs = validate_inputs(adversarial_inputs, vae_detector)
     print(f"[SUCCESS] Validated {len(valid_inputs)} inputs.")
     
