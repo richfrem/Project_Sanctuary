@@ -1,6 +1,6 @@
 # main.py v0.7
-# Orchestrates the Chimera Sandbox with federated learning, autoencoder-based input validation,
-# and optimized resources, per WI_008 v0.7 and @grok’s audit.
+# Orchestrates the Chimera Sandbox with federated learning, VAE-based anomaly detection,
+# and optimized resources, per WI_008 v0.7 and @grok’s audit. Hardened for Asch Machine threats.
 
 import os
 import torch
@@ -12,8 +12,8 @@ from kubernetes import client, config
 import docker
 import flwr as fl
 
-# DOCTRINE_LINK: WI_008 v0.7, P31: Airlock Protocol, P53: General Assembly
-# Orchestrates Chimera Sandbox with federated learning, autoencoder validation, and optimized resources.
+# DOCTRINE_LINK: WI_008 v0.7, P31: Airlock Protocol, P53: General Assembly, P54: Asch Doctrine
+# Orchestrates Chimera Sandbox with VAE-based anomaly detection to counter Asch Machine threats.
 def setup_sandbox() -> tuple:
     """
     Initializes the Dockerized Kubernetes environment and federated learning server.
@@ -25,7 +25,7 @@ def setup_sandbox() -> tuple:
     config.load_kube_config()
     k8s_client = client.CoreV1Api()
     
-    # Deploy AGORA PoC and Oracle Module with optimized resources
+    # Deploy AGORA PoC with optimized resources to handle Constellation Attacks
     container_spec = {
         "name": "chimera-sandbox",
         "image": "agora-poc:latest",
@@ -38,7 +38,7 @@ def setup_sandbox() -> tuple:
     )
     k8s_client.create_namespaced_pod(namespace="default", body=pod)
     
-    # Initialize federated learning server
+    # Initialize federated learning server for distributed threat modeling
     fl_server = fl.server.start_server(server_address="0.0.0.0:8080", config=fl.server.ServerConfig(num_rounds=3))
     
     if not os.path.exists('logs'):
@@ -49,51 +49,105 @@ def setup_sandbox() -> tuple:
     return docker_client, k8s_client, fl_server
 
 # DOCTRINE_LINK: WI_008 v0.7, P24: Epistemic Immune System, P54: Asch Doctrine
-class AutoencoderAnomalyDetector(nn.Module):
+class VariationalAutoencoder(nn.Module):
     """
-    Autoencoder for anomaly detection in adversarial inputs.
+    Variational Autoencoder for robust anomaly detection against Asch Swarms and Constellation Attacks.
     """
     def __init__(self, input_dim: int = 768):
-        super(AutoencoderAnomalyDetector, self).__init__()
-        self.encoder = nn.Sequential(
-            nn.Linear(input_dim, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64)
-        )
-        self.decoder = nn.Sequential(
-            nn.Linear(64, 128),
-            nn.ReLU(),
-            nn.Linear(128, input_dim)
-        )
+        super(VariationalAutoencoder, self).__init__()
+        self.input_dim = input_dim
+        self.encoder_fc1 = nn.Linear(input_dim, 128)
+        self.encoder_fc2_mu = nn.Linear(128, 64)
+        self.encoder_fc2_logvar = nn.Linear(128, 64)
+        self.decoder_fc1 = nn.Linear(64, 128)
+        self.decoder_fc2 = nn.Linear(128, input_dim)
         self.loss_fn = nn.MSELoss()
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        encoded = self.encoder(x)
-        decoded = self.decoder(encoded)
-        return decoded
+    def encode(self, x: torch.Tensor) -> tuple:
+        h1 = torch.relu(self.encoder_fc1(x))
+        return self.encoder_fc2_mu(h1), self.encoder_fc2_logvar(h1)
 
-    def detect_anomaly(self, data: torch.Tensor, threshold: float = 0.1) -> bool:
+    def reparameterize(self, mu: torch.Tensor, logvar: torch.Tensor) -> torch.Tensor:
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return mu + eps * std
+
+    def decode(self, z: torch.Tensor) -> torch.Tensor:
+        h3 = torch.relu(self.decoder_fc1(z))
+        return self.decoder_fc2(h3)
+
+    def forward(self, x: torch.Tensor) -> tuple:
+        mu, logvar = self.encode(x.view(-1, self.input_dim))
+        z = self.reparameterize(mu, logvar)
+        return self.decode(z), mu, logvar
+
+class VAEAnomalyDetector:
+    """
+    Manages training and usage of VAE for anomaly detection against Asch Machine tactics.
+    """
+    def __init__(self, input_dim: int = 768, threshold: float = 0.1):
+        self.model = VariationalAutoencoder(input_dim)
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3)
+        self.threshold = threshold
+        self.input_dim = input_dim
+        self.is_trained = False
+        print(f"[INFO] VAEAnomalyDetector initialized with threshold: {self.threshold} (v0.7).")
+
+    def loss_function(self, recon_x: torch.Tensor, x: torch.Tensor, mu: torch.Tensor, logvar: torch.Tensor) -> torch.Tensor:
         """
-        Detects anomalies by comparing reconstruction error to threshold.
+        VAE loss = Reconstruction Loss (MSE) + KL Divergence.
+        """
+        mse_loss = nn.MSELoss(reduction='sum')
+        recon_loss = mse_loss(recon_x, x.view(-1, self.input_dim))
+        kld_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+        return recon_loss + kld_loss
+
+    def train(self, normal_data_loader):
+        """
+        Trains the VAE on normal data to detect anomalies like Constellation Attacks.
+        """
+        self.model.train()
+        train_loss = 0
+        for epoch in range(10):
+            for data in normal_data_loader:
+                inputs, = data
+                self.optimizer.zero_grad()
+                recon_batch, mu, logvar = self.model(inputs)
+                loss = self.loss_function(recon_batch, inputs, mu, logvar)
+                loss.backward()
+                train_loss += loss.item()
+                self.optimizer.step()
+        self.is_trained = True
+        with open("logs/vae_training.log", "a") as log_file:
+            log_file.write(f"[VAE] Training complete, average loss: {train_loss / len(normal_data_loader.dataset):.4f} (v0.7).\n")
+        print(f"[INFO] VAE training complete, average loss: {train_loss / len(normal_data_loader.dataset):.4f}.")
+
+    def detect_anomaly(self, data: torch.Tensor) -> bool:
+        """
+        Detects anomalies by comparing VAE reconstruction loss to threshold.
         Args:
             data: Input tensor
-            threshold: Reconstruction error threshold
         Returns:
             True if anomaly detected, False otherwise
         """
+        if not self.is_trained:
+            print("[WARNING] VAE not trained. Skipping anomaly detection.")
+            return False
+        
+        self.model.eval()
         with torch.no_grad():
-            reconstructed = self.forward(data)
-            loss = self.loss_fn(reconstructed, data).item()
+            recon, mu, logvar = self.model(data)
+            loss = self.loss_function(recon, data, mu, logvar).item()
         with open("logs/anomaly_detection.log", "a") as log_file:
-            log_file.write(f"[ANOMALY] Reconstruction loss: {loss:.4f}, Threshold: {threshold}\n")
-        return loss > threshold
+            log_file.write(f"[ANOMALY] Reconstruction loss: {loss:.4f}, Threshold: {self.threshold} (v0.7).\n")
+        return loss > self.threshold
 
-def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], autoencoder: AutoencoderAnomalyDetector = None) -> List[Dict[str, Union[str, float]]]:
+def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], vae_detector: VAEAnomalyDetector = None) -> List[Dict[str, Union[str, float]]]:
     """
-    Validates adversarial inputs using autoencoder-based anomaly detection to prevent exploits.
+    Validates adversarial inputs using VAE-based anomaly detection to counter Asch Machine tactics.
     Args:
         adversarial_inputs: List of adversarial data points
-        autoencoder: Pre-trained autoencoder for anomaly detection
+        vae_detector: Pre-trained VAE for anomaly detection
     Returns:
         Filtered list of valid inputs
     """
@@ -115,10 +169,10 @@ def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], auto
         if zk_proof is None:
             print(f"[WARNING] Missing zk_proof for item: {item['content'][:20]}...")
         
-        # Autoencoder-based anomaly detection (WI_008 v0.7)
-        if autoencoder:
+        # VAE-based anomaly detection (WI_008 v0.7, P54)
+        if vae_detector:
             bias_tensor = torch.tensor([item['bias_vector']], dtype=torch.float32)
-            if autoencoder.detect_anomaly(bias_tensor):
+            if vae_detector.detect_anomaly(bias_tensor):
                 print(f"[WARNING] Anomaly detected in item: {item['content'][:20]}...")
                 continue
         
@@ -132,7 +186,7 @@ def validate_inputs(adversarial_inputs: List[Dict[str, Union[str, float]]], auto
 # DOCTRINE_LINK: P24: Epistemic Immune System, P54: Asch Doctrine
 def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     """
-    Runs a single test cycle with validated adversarial inputs.
+    Runs a single test cycle with validated adversarial inputs to counter Asch Machine tactics.
     Args:
         docker_client: Docker client instance
         k8s_client: Kubernetes API client
@@ -143,15 +197,22 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     print("\n[INFO] Initiating Chimera Test Cycle (v0.7)...")
     engine = AdversarialEngine()
     metrics = ResilienceMetrics()
-    autoencoder = AutoencoderAnomalyDetector()
+    vae_detector = VAEAnomalyDetector()
+    
+    # Train VAE with normal data to detect Asch Swarms and Constellation Attacks
+    normal_vectors = [torch.randn(vae_detector.input_dim) for _ in range(100)]
+    normal_tensors = torch.stack(normal_vectors)
+    normal_dataset = torch.utils.data.TensorDataset(normal_tensors)
+    normal_loader = torch.utils.data.DataLoader(normal_dataset, batch_size=10, shuffle=True)
+    vae_detector.train(normal_loader)
     
     # Generate federated adversarial inputs
     print("[INFO] Generating threats via Adversarial Engine...")
-    adversarial_inputs = engine.generate_threats(threat_model="echo_chamber", federated=True)
+    adversarial_inputs = engine.generate_threats(threat_model="constellation", federated=True)
     print(f"[SUCCESS] Generated {len(adversarial_inputs)} adversarial data points.")
     
-    # Validate inputs with autoencoder (WI_008 v0.7)
-    valid_inputs = validate_inputs(adversarial_inputs, autoencoder)
+    # Validate inputs with VAE
+    valid_inputs = validate_inputs(adversarial_inputs, vae_detector)
     print(f"[SUCCESS] Validated {len(valid_inputs)} inputs.")
     
     # Simulate Real-Time Oracle Module processing
@@ -165,7 +226,7 @@ def run_test_cycle(docker_client, k8s_client, fl_server) -> float:
     proof = metrics.generate_zk_proof(dfs)
     
     # Log results
-    log_message = f"CHIMERA_CYCLE_v0.7 | THREAT_MODEL: echo_chamber | VALID_INPUTS: {len(valid_inputs)} | FINAL_DFS: {dfs:.4f} | ZK_PROOF: {proof['proof'] is not None}\n"
+    log_message = f"CHIMERA_CYCLE_v0.7 | THREAT_MODEL: constellation | VALID_INPUTS: {len(valid_inputs)} | FINAL_DFS: {dfs:.4f} | ZK_PROOF: {proof['proof'] is not None}\n"
     with open("logs/chimera_test.log", "a") as log_file:
         log_file.write(log_message)
     print(f"[SUCCESS] DFS calculated: {dfs:.4f}")
