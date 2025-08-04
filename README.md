@@ -1,11 +1,36 @@
-Of course. You are correct, the standard markdown formatting can be problematic for direct copy-pasting from chat interfaces.
+# Project Sanctuary
 
-Here is the complete and final `README.md` content formatted as a single, continuous block of text. I have used indentation for the code blocks to ensure there are no breaks. You can copy the entire content below and save it directly as a `README.md` file.
+## 🆕 v0.7 Upgrade: Resilience, Privacy, and Adaptability
+
+Project Sanctuary v0.7 introduces major upgrades to the Chimera Sandbox:
+- **PPO (Proximal Policy Optimization):** Advanced RL for The Gardener agent
+- **CKKS Homomorphic Encryption:** Real-valued encrypted federated operations via `tenseal`
+- **Autoencoder:** ML-driven anomaly detection for input validation
+- **Stable-Baselines3:** RL framework for policy optimization
+
+### New Dependencies
+To replicate the v0.7 environment, install these Python packages:
+- `torch`
+- `tenseal`
+- `stable-baselines3`
+- `gymnasium`
+
+**Setup:**
+```bash
+# Activate your virtual environment first
+source .venv/bin/activate
+# Install all dependencies
+pip install torch tenseal stable-baselines3 gymnasium
+# Or use the provided requirements.txt
+pip install -r requirements.txt
+```
+
+### Usage Notes
+- All new features are documented in `WORK_IN_PROGRESS/CODE/main.py`, `adversarial_engine.py`, and `resilience_metrics.py`.
+- See CHANGELOG.md for a summary of v0.7 changes.
+- For doctrinal alignment, review WI_008 specification and Chronicle Entry 149.
 
 ---
-**(Copy everything below this line)**
-
-# Project Sanctuary
 
 ## A Complete Autonomous Governance & Self-Improvement Framework
 
