@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-05T01:29:31.184Z
+Generated On: 2025-08-05T03:02:09.875Z
 
 # Directory Structure (relative to project root)
   ./
@@ -132,6 +132,7 @@ Generated On: 2025-08-05T01:29:31.184Z
   WORK_IN_PROGRESS/CODE/
   WORK_IN_PROGRESS/CODE/README.md
   WORK_IN_PROGRESS/CODE/adversarial_engine.py
+  WORK_IN_PROGRESS/CODE/chimera_quarantine.py
   WORK_IN_PROGRESS/CODE/main.py
   WORK_IN_PROGRESS/CODE/resilience_metrics.py
   WORK_IN_PROGRESS/Final_Airlock_Review_Verdict_Package_v5.md

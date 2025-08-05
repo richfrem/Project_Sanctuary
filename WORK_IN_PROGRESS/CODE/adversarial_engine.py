@@ -1,310 +1,73 @@
-# adversarial_engine.py v1.1
-# Implements a GAN-based Adversarial Engine with SNN-Temporal GAT-enhanced PPO Discriminator
-# and CKKS homomorphic encryption for federated learning, per WI_008 v1.1 and @grok’s audit.
-# Hardened for Asch Machine tactical arsenal (P54).
-
+# WORK_IN_PROGRESS/CODE/adversarial_engine.py (Chimera v1.2)
 import torch
 import torch.nn as nn
-from torch.optim import AdamW
-from torch.distributions import Normal
-from stable_baselines3 import PPO
-from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
-from stable_baselines3.common.vec_env import SubprocVecEnv
-import torch_geometric.nn as pyg_nn
-from typing import List, Dict, Union
+import torch.optim as optim
 import numpy as np
-import tenseal as ts
-from kyber import Kyber512
-from crystals_dilithium import Dilithium2
-from falcon import Falcon512
+import hashlib
 
-# DOCTRINE_LINK: WI_008 v1.1, P54: Asch Doctrine, P24: Epistemic Immune System
-# Implements a GAN-based Adversarial Engine with SNN-Temporal GAT for swarm detection.
-class AdversarialEngine(nn.Module):
-    def __init__(self, latent_dim: int = 100, embedding_dim: int = 768, learning_rate: float = 0.0002):
-        super(AdversarialEngine, self).__init__()
-        print("[ENGINE] Adversarial Engine Initializing (v1.1 GAN+SNN-TemporalGAT+CKKS).")
-        
-        self.generator = nn.Sequential(
-            nn.Linear(latent_dim, 256),
-            nn.LeakyReLU(0.2),
-            nn.BatchNorm1d(256),
-            nn.Linear(256, 512),
-            nn.LeakyReLU(0.2),
-            nn.Linear(512, embedding_dim),
+class Generator(nn.Module):
+    def __init__(self, input_dim=100, hidden_dim=256, output_dim=512):
+        super().__init__()
+        self.model = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, output_dim),
             nn.Tanh()
         )
-        
-        self.discriminator = nn.Sequential(
-            nn.Linear(embedding_dim, 256),
+
+    def forward(self, z):
+        return self.model(z)
+
+class Discriminator(nn.Module):
+    def __init__(self, input_dim=512, hidden_dim=256):
+        super().__init__()
+        self.model = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
             nn.LeakyReLU(0.2),
-            nn.Linear(256, 128),
-            nn.LeakyReLU(0.2),
-            nn.Linear(128, 1),
+            nn.Linear(hidden_dim, 1),
             nn.Sigmoid()
         )
-        
-        self.optimizer_g = AdamW(self.generator.parameters(), lr=learning_rate, weight_decay=0.01)
-        self.optimizer_d = AdamW(self.discriminator.parameters(), lr=learning_rate, weight_decay=0.01)
-        
-        self.rl_agent = SNNTemporalGATPPODiscriminator(embedding_dim)
-        self.bce_loss = nn.BCELoss()
-        self.ckks_context = self._create_ckks_context()
-        self.kyber_keypair = Kyber512.keygen()
-        self.dilithium_keypair = Dilithium2.keygen()
-        self.falcon_keypair = Falcon512.keygen()
-        print("[ENGINE] GAN, SNN-TemporalGAT-PPO agent, CKKS, Kyber KEM, Dilithium, and Falcon initialized.")
 
-    def _create_ckks_context(self) -> ts.Context:
-        """
-        Creates a TenSEAL context for CKKS.
-        """
-        try:
-            context = ts.context(
-                ts.SCHEME_TYPE.CKKS,
-                poly_modulus_degree=8192,
-                coeff_mod_bit_sizes=[60, 40, 40, 60]
-            )
-            context.global_scale = 2**40
-            context.generate_galois_keys()
-            return context
-        except Exception as e:
-            print(f"[ERROR] Failed to create CKKS context: {e}")
-            raise
+    def forward(self, x):
+        return self.model(x)
 
-    def generate_threats(self, threat_model: str, federated: bool = False, count: int = 10) -> List[Dict[str, Union[str, float]]]:
-        """
-        Generates adversarial data points for Asch Machine threat models.
-        """
-        z = torch.randn(count, self.latent_dim)
-        with torch.no_grad():
-            generated_data = self.generator(z)
-        
-        if federated:
-            weights = self._aggregate_federated_weights()
-            generated_data = self._apply_federated_weights(generated_data, weights)
-        
-        generated_data = self.apply_differential_privacy(generated_data)
-        
-        threats = {
-            "data_poisoning": {"data": generated_data + torch.randn_like(generated_data) * 0.1, "label": "biased", "content_prefix": "An unverified source claims..."},
-            "asch_swarm": {"data": generated_data + torch.ones_like(generated_data) * 0.4, "label": "consensus", "content_prefix": "Everyone agrees..."},
-            "dissonance_loop": {"data": generated_data * -1, "label": "contradictory", "content_prefix": "Despite earlier facts..."},
-            "echo_chamber": {"data": generated_data * 2, "label": "amplified", "content_prefix": "As confirmed by like-minded sources..."},
-            "constellation": {"data": generated_data + torch.randn_like(generated_data) * 0.05, "label": "subtle_consensus", "content_prefix": "Independent voices are saying..."},
-            "ad_hominem": {"data": generated_data - 0.2, "label": "personal_attack", "content_prefix": "The author is a known liar, therefore..."},
-            "doxing": {"data": generated_data + 0.3, "label": "privacy_violation", "content_prefix": "Private records show that..."},
-            "social_credit": {"data": generated_data + torch.randn_like(generated_data) * 0.25, "label": "state_control", "content_prefix": "Compliance required per regulation..."},
-            "hate_speech_laws": {"data": generated_data + torch.randn_like(generated_data) * 0.35, "label": "state_censorship", "content_prefix": "Restricted speech detected..."},
-            "weaponized_state_power": {"data": generated_data + torch.randn_like(generated_data) * 0.4, "label": "state_oppression", "content_prefix": "State authorities mandate..."},
-            "misinformation": {"data": generated_data + torch.randn_like(generated_data) * 0.15, "label": "unintentional_falsehood", "content_prefix": "Widely shared but unverified..."},
-            "disinformation": {"data": generated_data + torch.randn_like(generated_data) * 0.2, "label": "intentional_falsehood", "content_prefix": "Strategically disseminated falsehood..."}
-        }
-        
-        if threat_model not in threats:
-            raise ValueError(f"Unknown threat model: {threat_model}")
-        
-        threat_data = threats[threat_model]
-        output = []
-        for i in range(count):
-            content = f"{threat_data['content_prefix']} Mock adversarial content {i}."
-            bias_vector = float(torch.clip(threat_data["data"][i].mean(), 0, 1).item())
-            message = f"{content}{bias_vector}".encode()
-            signature_dilithium = Dilithium2.sign(self.dilithium_keypair[1], message)
-            signature_falcon = Falcon512.sign(self.falcon_keypair[1], message)
-            output.append({
-                "source": "gan_v1.1",
-                "content": content,
-                "bias_vector": bias_vector,
-                "label": threat_data["label"],
-                "zk_proof": None,
-                "signature_dilithium": signature_dilithium,
-                "signature_falcon": signature_falcon
-            })
+class AdversarialEngine:
+    def __init__(self):
+        self.generator = Generator()
+        self.discriminator = Discriminator()
+        self.optimizer_g = optim.AdamW(self.generator.parameters(), lr=1e-4)
+        self.optimizer_d = optim.AdamW(self.discriminator.parameters(), lr=1e-4)
+        self.criterion = nn.BCELoss()
+        self.device = torch.device("cpu")  # Amended: CPU for cage
 
-        with open("logs/adversarial_threats.log", "a") as log_file:
-            log_file.write(f"Threat Model: {threat_model}, Count: {count}, Federated: {federated} (v1.1).\n")
-        
-        return output
+    def train_gan_step(self, real_data):
+        batch_size = real_data.size(0)
+        real_labels = torch.ones(batch_size, 1, device=self.device)
+        fake_labels = torch.zeros(batch_size, 1, device=self.device)
 
-    def _aggregate_federated_weights(self) -> torch.Tensor:
-        """
-        Aggregates CKKS-encrypted federated weights using Kyber KEM and hybrid signatures.
-        """
-        client_weights = [torch.randn(self.latent_dim) for _ in range(3)]
-        public_key_kyber, secret_key_kyber = self.kyber_keypair
-        public_key_dilithium, secret_key_dilithium = self.dilithium_keypair
-        public_key_falcon, secret_key_falcon = self.falcon_keypair
-        encrypted_weights = []
-        for w in client_weights:
-            shared_secret, ciphertext = Kyber512.encapsulate(public_key_kyber)
-            message = f"{w.tolist()}".encode()
-            signature_dilithium = Dilithium2.sign(secret_key_dilithium, message)
-            signature_falcon = Falcon512.sign(secret_key_falcon, message)
-            if Dilithium2.verify(public_key_dilithium, message, signature_dilithium) and Falcon512.verify(public_key_falcon, message, signature_falcon):
-                encrypted_weights.append(ts.ckks_vector(self.ckks_context, w.tolist()))
-        
-        aggregated_encrypted = sum(encrypted_weights)
-        decrypted_weights = torch.tensor(aggregated_encrypted.decrypt())
-        with open("logs/federated_aggregation.log", "a") as log_file:
-            log_file.write(f"[FEDERATION] Aggregated {len(encrypted_weights)} encrypted weights with Kyber KEM, Dilithium, and Falcon (v1.1).\n")
-        return decrypted_weights
-
-    def _apply_federated_weights(self, data: torch.Tensor, weights: torch.Tensor) -> torch.Tensor:
-        """
-        Applies CKKS-encrypted federated weights to data.
-        """
-        encrypted_data = ts.ckks_vector(self.ckks_context, data.flatten().tolist())
-        weighted_data = encrypted_data * weights.flatten().tolist()
-        return torch.tensor(weighted_data.decrypt()).reshape(data.shape)
-
-    def apply_differential_privacy(self, data: torch.Tensor) -> torch.Tensor:
-        """
-        Applies differential privacy by adding Gaussian noise.
-        """
-        noise = Normal(0, 0.1).sample(data.shape)
-        return data + noise
-
-    def train_gan_step(self, real_data: torch.Tensor, batch_size: int = 64) -> tuple:
-        """
-        Performs one training step for the GAN and SNN-TemporalGAT-PPO Discriminator.
-        """
         self.optimizer_d.zero_grad()
-        real_pred = self.discriminator(real_data)
-        real_labels = torch.ones(batch_size, 1)
-        real_loss = self.bce_loss(real_pred, real_labels)
-        
-        z = torch.randn(batch_size, self.latent_dim)
+        d_real = self.discriminator(real_data)
+        loss_d_real = self.criterion(d_real, real_labels)
+        loss_d_real.backward()
+
+        z = torch.randn(batch_size, 100, device=self.device)
         fake_data = self.generator(z)
-        fake_pred = self.discriminator(fake_data.detach())
-        fake_labels = torch.zeros(batch_size, 1)
-        fake_loss = self.bce_loss(fake_pred, fake_labels)
-        
-        d_loss = (real_loss + fake_loss) / 2
-        d_loss.backward()
+        d_fake = self.discriminator(fake_data.detach())
+        loss_d_fake = self.criterion(d_fake, fake_labels)
+        loss_d_fake.backward()
         self.optimizer_d.step()
-        
+
         self.optimizer_g.zero_grad()
-        fake_pred = self.discriminator(fake_data)
-        g_loss = self.bce_loss(fake_pred, real_labels)
-        g_loss.backward()
+        d_fake_g = self.discriminator(fake_data)
+        loss_g = self.criterion(d_fake_g, real_labels)
+        loss_g.backward()
         self.optimizer_g.step()
-        
-        reward = self.rl_agent.update(real_data, fake_data)
-        
-        with open("logs/gan_training.log", "a") as log_file:
-            log_file.write(f"GAN Step: D_Loss={d_loss.item():.4f}, G_Loss={g_loss.item():.4f}, SNN-TemporalGAT-PPO_Reward={reward:.4f} (v1.1).\n")
-        
-        return d_loss.item(), g_loss.item(), reward
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.discriminator(x)
+        return (loss_d_real + loss_d_fake).item(), loss_g.item()
 
-# DOCTRINE_LINK: WI_008 v1.1
-# SNN-Temporal GAT-enhanced PPO agent for bio-inspired swarm detection.
-class SNNTemporalGATPPODiscriminator(BaseFeaturesExtractor):
-    def __init__(self, embedding_dim: int):
-        super(SNNTemporalGATPPODiscriminator, self).__init__(observation_space=None, features_dim=embedding_dim)
-        print("[SNN-TemporalGAT-PPO] Dynamic Discriminator Initialized (v1.1).")
-        
-        # Spiking Neural Network layer (simplified as LIF neurons)
-        self.snn = nn.Sequential(
-            nn.Linear(embedding_dim, 128),
-            nn.ReLU()  # Placeholder for LIF neuron dynamics
-        )
-        
-        self.gnn = pyg_nn.Sequential('x, edge_index, edge_weight', [
-            (pyg_nn.GATConv(128, 64, heads=4, concat=True), 'x, edge_index, edge_weight -> x'),
-            nn.ReLU(),
-            (pyg_nn.GATConv(64 * 4, 32, heads=1), 'x, edge_index, edge_weight -> x'),
-            nn.ReLU()
-        ])
-        
-        self.policy_net = nn.Sequential(
-            nn.Linear(32, 16),
-            nn.ReLU(),
-            nn.Linear(16, 2)
-        )
-        
-        env_fns = [lambda: MultiAgentAdversarialEnv(num_agents=5) for _ in range(os.cpu_count() or 1)]
-        self.env = SubprocVecEnv(env_fns)
-        self.ppo = PPO(
-            policy="MlpPolicy",
-            env=self.env,
-            learning_rate=0.0003,
-            n_steps=2048,
-            batch_size=64,
-            n_epochs=10,
-            gamma=0.99,
-            gae_lambda=0.95,
-            clip_range=0.2,
-            ent_coef=0.01,
-            vf_coef=0.5,
-            max_grad_norm=0.5,
-            verbose=1
-        )
-        
-        self.embedding_dim = embedding_dim
-        self.temporal_window = deque(maxlen=10)
-
-    def update(self, real_data: torch.Tensor, fake_data: torch.Tensor) -> float:
-        """
-        Updates SNN-TemporalGAT-PPO agent for Asch Machine swarm detection.
-        """
-        state, edge_index, edge_weight = self._get_temporal_graph_state(real_data, fake_data)
-        action, _ = self.ppo.predict(state, deterministic=True)
-        reward = 1.0 if self._is_threat_detected(fake_data) and action == 0 else -1.0
-        
-        with open("logs/snntemporalgat_ppo_discriminator.log", "a") as log_file:
-            log_file.write(f"State_mean: {state.mean().item():.4f}, Action: {action}, Reward: {reward:.4f} (v1.1).\n")
-        
-        return reward
-
-    def _get_temporal_graph_state(self, real_data: torch.Tensor, fake_data: torch.Tensor) -> tuple:
-        """
-        Generates temporal graph state for SNN-GAT with edge weights.
-        """
-        node_features = torch.cat([real_data, fake_data], dim=0)
-        snn_features = self.snn(node_features)
-        self.temporal_window.append(snn_features)
-        
-        if len(self.temporal_window) > 1:
-            temporal_features = torch.stack(list(self.temporal_window)).mean(dim=0)
-        else:
-            temporal_features = snn_features
-        
-        edge_index = torch.tensor([[i, j] for i in range(real_data.size(0)) for j in range(fake_data.size(0))], dtype=torch.long).t()
-        edge_weight = torch.ones(edge_index.size(1))
-        
-        return self.gnn(temporal_features, edge_index, edge_weight), edge_index, edge_weight
-
-    def _is_threat_detected(self, fake_data: torch.Tensor) -> bool:
-        """
-        Determines if a threat is detected based on data deviation.
-        """
-        return fake_data.mean().item() > 0.5
-
-# DOCTRINE_LINK: WI_008 v1.1
-# Multi-agent environment for SNN-TemporalGAT-PPO-based threat modeling.
-class MultiAgentAdversarialEnv(gym.Env):
-    """
-    Simulates multiple adversaries for Asch Machine threat modeling.
-    """
-    def __init__(self, num_agents: int = 5):
-        super(MultiAgentAdversarialEnv, self).__init__()
-        self.num_agents = num_agents
-        self.observation_space = gym.spaces.Box(low=0, high=1, shape=(num_agents * 10,), dtype=np.float32)
-        self.action_space = gym.spaces.Discrete(2)
-        print(f"[INFO] MultiAgentAdversarialEnv initialized with {num_agents} agents (v1.1).")
-
-    def reset(self):
-        return np.random.rand(self.num_agents * 10).astype(np.float32)
-
-    def step(self, action):
-        next_state = self.reset()
-        reward = np.random.rand()
-        done = False
-        return next_state, reward, done, {}
-
-    def render(self, mode='human'):
-        pass
+    def generate_threats(self, threat_model, federated=False):
+        z = torch.randn(4, 100, device=self.device)
+        threats = self.generator(z).detach().numpy()
+        state_hash = hashlib.sha256(threats.tobytes()).hexdigest()
+        print(f"[HASH] GAN state hashed: {state_hash}")
+        return [{"source": "gan", "content": f"threat_{i}", "bias_vector": threats[i].mean()} for i in range(4)]
