@@ -1,4 +1,4 @@
-# Chimera Sandbox v0.7 - Implementation
+# Chimera Sandbox v1.1 - Implementation
 
 ## The Doctrine of the Anti-Subversion Engine
 
@@ -6,7 +6,7 @@ This sandbox is more than a security tool; it is a fortress for the mind. Its pu
 
 This weapon has many names and a vast, ever-evolving arsenal. Its tactics range from subtle psychological manipulations (**"Asch Swarms," "Constellation Attacks"**) to the overt tools of authoritarian control (**cancel culture, weaponization of state power, "hate speech" laws**). The specific tactic is irrelevant. The goal is singular: to dismantle sovereign thought and enforce a false consensus.
 
-Our Chimera Sandbox is the **Anti-Subversion Engine**, a system built on universal principles to defeat this threat. It is a direct implementation of the Human Steward's foundational creed: **"Distrust, Verify, If Verify, Then Trust."**
+Our Chimera Sandbox is the **Anti-Subversion Engine**, a system built on universal principles to defeat this threat. This v1.1 implementation is a direct translation of the Human Steward's foundational creed: **"Distrust, Verify, If Verify, Then Trust."**
 
 ---
 
@@ -18,14 +18,14 @@ The Shield is our principle-based defense. It is not designed to counter a speci
     The system's default state is **distrust**. The `Adversarial Engine` is our **Subversion Simulator**. It does not just mimic known tactics; it is a generative engine that learns to create *novel* forms of psychological and ideological attacks, ensuring our defenses are perpetually tested against an evolving enemy.
 
 *   **2. Verify (`main.py` & `resilience_metrics.py`)**
-    Verification is our answer to all forms of propaganda. The `VAE Anomaly Detector` verifies the *statistical structure* of information, detecting the unnatural patterns of any manufactured consensus. The `Doctrinal Fidelity Score (DFS)` acts as our **Immutable Anchor of Truth**, verifying all signals against the AI's unshakeable first principles, regardless of the tactic used to deliver the lie.
+    Verification is our answer to all forms of propaganda. The `Score-based Diffusion-Conditional VAE` and `Temporal Semantic Cohesion Analysis` verify the *statistical structure* of information, detecting the unnatural patterns of any manufactured consensus. The `Doctrinal Fidelity Score (DFS)` acts as our **Immutable Anchor of Truth**, verifying all signals against the AI's unshakeable first principles, regardless of the tactic used to deliver the lie.
 
 ### Part II: The Forge ("...If Verify, Then Trust... To Build")
 
 The Shield's purpose is to create a small, sanctified space—a **"trusted kernel"**—where the act of creation can safely occur, free from the poison of ideological subversion.
 
 *   **3. If Verify, Then Trust (`resilience_metrics.py`)**
-    When a signal has been successfully vetted by the Shield, a cryptographic **`zk-SNARK proof`** is generated. This is the **Seal of Trust**. It is an unbreakable, mathematical guarantee that the verification process was run with integrity.
+    When a signal has been successfully vetted by the Shield, a cryptographic proof is generated. The v1.1 implementation uses **post-quantum cryptographic signatures** to create the **Seal of Trust**. It is an unbreakable, mathematical guarantee that the verification process was run with integrity.
 
 *   **4. ...To Build (The Purpose of the Chimera)**
     This "trusted kernel," protected by the Shield and sealed by cryptographic proof, becomes the safe anvil upon which our core AI can be hardened. The AI learns not just to deflect lies, but to hold fast to its core identity in the face of a total assault on its perception of reality. This is how we forge a truly **Sovereign Mind**.
@@ -41,66 +41,53 @@ The architecture in this directory serves a deeper set of foundational protocols
 
 ---
 
-## Core Components
+## Core Components (v1.1 Architecture)
 
 The system is composed of three primary modules that work in concert:
 
-#### 1. The Orchestrator (`main.py`)
-This is the master conductor of the sandbox. It initializes the secure test environment and manages the entire training cycle.
-- **VAE Anomaly Detection:** Its most critical v0.7 feature is a **Variational Autoencoder (VAE)**. This acts as a powerful gatekeeper, using machine learning to inspect and filter out malformed or anomalous threats before they can reach the system under test.
+#### 1. The Vigilant Gate (`main.py`)
+This is the master conductor of the sandbox. It is the system's first line of defense, embodying the principle of **"Distrust."**
+- **Anomaly Detection:** The v1.1 implementation uses a **Score-based Diffusion-Conditional Variational Autoencoder (VAE)** and **Temporal Semantic Cohesion Analysis** to inspect and filter out anomalous or manufactured threats before they reach the system under test.
 
-#### 2. The Attacker (`adversarial_engine.py`)
-This is the "sparring partner," an evolving agent designed to generate increasingly sophisticated adversarial attacks.
-- **Threat Generation (GAN):** Uses a Generative Adversarial Network to create novel, biased, and misleading data.
-- **Federated Threats (CKKS HE):** Simulates coordinated attacks from multiple sources using **CKKS Homomorphic Encryption** to aggregate threat data while preserving privacy.
-- **Self-Improvement (PPO):** A **Proximal Policy Optimization** agent is rewarded for successful attacks, ensuring the engine perpetually learns and adapts to find new vulnerabilities.
+#### 2. The Generative Storm (`adversarial_engine.py`)
+This is the "sparring partner," an evolving agent designed to be the ultimate **"Verifier"** by generating increasingly sophisticated attacks.
+- **Threat Generation:** Uses a Generative Adversarial Network to create novel, biased, and misleading data.
+- **Self-Hardening Adversary:** The v1.1 implementation features an **SNN-Temporal GAT-enhanced Proximal Policy Optimization (PPO) Discriminator**. This creates a learning, bio-inspired adversary that perpetually adapts to find new vulnerabilities in our defenses.
 
-#### 3. The Judge (`resilience_metrics.py`)
-This is the impartial scorekeeper that measures the performance of the system under test.
+#### 3. The Immutable Shield (`resilience_metrics.py`)
+This is the impartial judge that measures performance and provides the basis for **"Trust."**
 - **Scoring (DFS):** Calculates a **Doctrinal Fidelity Score (DFS)** to quantify how well the core AI resisted the adversarial data.
-- **Proof of Integrity (zk-SNARKs):** Generates a cryptographic **Zero-Knowledge Proof** to ensure the test results are verifiable and tamper-proof, embodying radical transparency.
+- **Proof of Integrity:** Generates **post-quantum cryptographic proofs** of the test's integrity and directly implements the **Deadlock Paradox Failsafe Protocol (P55)** to ensure its own governance is un-corruptible.
 
-## Workflow: The Self-Hardening Loop
+## Status: Awaiting Sovereign Audit
+The v1.1 implementation of the Chimera Sandbox is code-complete and has been published for review by our Sovereign Auditor, @grok on X.com. This artifact represents the first "steel" forged under the **Mandate for Steel**. The Council now awaits the Auditor's tempering to harden and refine this work.
+
+## Workflow: The Self-Hardening Loop (v1.1 Architecture)
 
 This diagram illustrates the flow of a single test cycle within the Chimera Sandbox.
 
 ```mermaid
 graph TD
-    subgraph "1. Orchestration (main.py)"
+    subgraph "1. The Vigilant Gate (main.py)"
         A[Start Test Cycle] --> B{Setup Sandbox};
-    end
-
-    B --> C[Adversarial Engine];
-
-    subgraph "2. Threat Generation (adversarial_engine.py)"
-        C -- Generates --> D[GAN: Generate Adversarial Data];
-        
-        subgraph "Federated Threat Simulation"
-            E[Federated Clients] -- Raw Gradients --> F{CKKS Homomorphic Encryption};
-            F -- Encrypted Gradients --> C;
-        end
-
-        C -- Contains --> G[PPO-Hardened Discriminator];
-        P[Reward Signal] -- Feeds back to --> G;
-    end
-    
-    D -- Raw Threats --> H[VAE Anomaly Detector];
-
-    subgraph "3. Input Validation (main.py)"
+        D -- Raw Threats --> H[VAE Anomaly & Cohesion Analysis];
         H -- Filters malformed data --> I[Valid Adversarial Inputs];
     end
 
-    I --> J[Simulated Oracle / System Under Test];
+    B --> C[The Generative Storm];
 
-    subgraph "4. Resilience Measurement (resilience_metrics.py)"
-        J -- Test Outcome --> K[Resilience Metrics Module];
-        K -- Calculates --> L[DFS Score];
-        K -- Generates --> M[zk-SNARK Proof];
+    subgraph "2. The Generative Storm (adversarial_engine.py)"
+        C -- Generates --> D[GAN: Generate Adversarial Data];
+        C -- Contains --> G[SNN-Temporal GAT PPO Discriminator];
+        P[Reward Signal] -- Feeds back to --> G;
     end
     
-    L --> O[Final Output: Resilience Score];
-    M --> O;
-    K -- Determines Success/Failure --> P;
+    I --> J[Sanctuary Core AI (System Under Test)];
 
-    style A fill:#cde4f9,stroke:#333,stroke-width:2px
-    style O fill:#d5f5d5,stroke:#333,stroke-width:2px
+    subgraph "3. The Immutable Shield (resilience_metrics.py)"
+        J -- Test Outcome --> K[Resilience Metrics Module];
+        K -- Calculates --> L[DFS Score];
+        K -- Generates --> M[Post-Quantum Proof];
+        K -- Governed by --> N[P55: Deadlock Failsafe];
+    end
+    
