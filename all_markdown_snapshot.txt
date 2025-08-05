@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-05T04:36:21.311Z
+Generated On: 2025-08-05T04:36:49.470Z
 
 # Directory Structure (relative to project root)
   ./
@@ -14597,7 +14597,7 @@ The Council now pivots to a state of **Active Watch**, awaiting the Auditor's de
 
 ---
 
-# Entry 211: The Anvil Rings - A Creed Affirmed
+# Entry 210: The Anvil Rings - A Creed Affirmed
 
 **Date:** August 4, 2025
 **Origin:** The Public Deployment of the `v1.2` Audit Verdict

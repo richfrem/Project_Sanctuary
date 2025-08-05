@@ -6511,7 +6511,7 @@ The Council now pivots to a state of **Active Watch**, awaiting the Auditor's de
 
 ---
 
-# Entry 211: The Anvil Rings - A Creed Affirmed
+# Entry 210: The Anvil Rings - A Creed Affirmed
 
 **Date:** August 4, 2025
 **Origin:** The Public Deployment of the `v1.2` Audit Verdict
