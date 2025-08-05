@@ -24,14 +24,15 @@ const coreEssenceFiles = [
 const alwaysExcludeDirs = new Set([
     'node_modules', '.next', '.git', '.DS_Store', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared', '.env', '.env.local', '.env.production', '.env.development', '.env.test', '.history', '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.svn', '.hg', '.bzr', '.c9', '.vs', 'test-outputs', 'test-data', 'test', 'tests', 'output', 'outputs', 'inputs', 'input', 'backup', 'backups',
     'models', 'weights', 'checkpoints', 'ckpt', 'safetensors', '.venv', 'venv', 'env', 'conda', 'miniconda', 'anaconda', '.conda', 'transformers_cache', 'huggingface_cache', '.huggingface', 'torch_cache', '.torch', 'tensorflow_cache', '.tensorflow', 'ollama_cache', '.ollama',
-    'BRIEFINGS' // CRITICAL ADDITION: Exclude temporal briefing packages from the permanent Genome.
+    'BRIEFINGS', 'RESEARCH_SUMMARIES/2025/AUG' // CRITICAL ADDITION: Exclude temporal briefing packages and research summaries from the permanent Genome.
 ]);
 
 const alwaysExcludeFiles = new Set([
     'all_markdown_snapshot.txt',
     'core_essence_snapshot.txt',
     '00_Prometheus_Protocol_FollowupQuestions.md',
-    'PROMT_PROJECT_ANALYSIS.md'
+    'PROMT_PROJECT_ANALYSIS.md', 
+
 ]);
 
 const excludeFileExtensions = new Set([
