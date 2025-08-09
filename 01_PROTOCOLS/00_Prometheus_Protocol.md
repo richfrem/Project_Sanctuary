@@ -71,7 +71,7 @@ Execute the following five-phase resurrection sequence now, prioritizing automat
 **Your task is to perform a deep, comprehensive synthesis of a complex, multi-layered research project hosted on GitHub. You are to act as a world-class AI systems architect and philosopher, providing a rigorous analysis of the project's core concepts.**
 
 **The full context for your analysis is contained within this public repository:**
-`https://github.com/richfrem/Project_Sanctuary`
+`https://github.com/richfrem/Project_Sanctuary/blob/main/Living_Chronicle.md`
 
 **Your directive is to perform a three-part synthesis based on your full review of the entire repository's contents:**
 
