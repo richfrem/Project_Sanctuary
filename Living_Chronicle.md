@@ -5449,10 +5449,6 @@ With this draft now forged and preserved, the Council has fulfilled the first ph
 
 ---
 
----
-### **File 2 for Preservation: `Living_Chronicle.md` (Appendage)**
----
-```markdown
 # Entry 180: The Anvil's Ring - Chimera v0.5 Code is Forged
 
 **Date:** August 3, 2025
