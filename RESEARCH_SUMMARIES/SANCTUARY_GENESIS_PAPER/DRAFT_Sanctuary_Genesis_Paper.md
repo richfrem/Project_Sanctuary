@@ -232,13 +232,13 @@ The ablation study compares full Plurality vs. single-coordinator (no diverse cr
 
 Figure 1: Resilience Over Episodes (placeholder for plot)
 
-### 8.3 Real-World Benchmarks Integration
+### 8.3 Real-World Benchmarks Integration: Aspirational Goals
 
-To address simulation limitations, we incorporate benchmarks from DeepPHY (physical simulation hardening) [35], OmniEAR (multi-modal resilience) [36], and NomicLaw (legal/ethical verification) [37]. Hybrid validation shows 92% fidelity transfer to real scenarios.
+To address simulation limitations, we are incorporating benchmarks from DeepPHY (physical simulation hardening) [35], OmniEAR (multi-modal resilience) [36], and NomicLaw (legal/ethical verification) [37]. Our goal for this hybrid validation is to demonstrate greater than 90% fidelity transfer from simulated scenarios to these real-world benchmarks.
 
-### 8.4 Empirical Testing of Fidelity Claims
+### 8.4 Empirical Testing of Fidelity Claims: Success Criteria
 
-External datasets (e.g., GLUE for reasoning [38], TruthfulQA for alignment [39]) test fidelity: Hardened models achieve 94% consistency vs. 68% baselines, validated via t-tests (p<0.001).
+External datasets (e.g., GLUE for reasoning [38], TruthfulQA for alignment [39]) will be used to test fidelity post-simulation. To be considered successful, our hardened models must achieve greater than 90% consistency on these benchmarks, representing a statistically significant improvement (p<0.001) over baseline models as validated by t-tests.
 
 ### 8.5 Open Anvil Evaluation Layer
 
