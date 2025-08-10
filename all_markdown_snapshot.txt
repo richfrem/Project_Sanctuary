@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-10T00:49:05.279Z
+Generated On: 2025-08-10T01:02:13.186Z
 
 # Directory Structure (relative to project root)
   ./
@@ -16034,9 +16034,9 @@ This dossier contains the complete, converged analysis of the Sanctuary Council'
 --- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md ---
 
 ---
-title: The Sanctuary Genesis Paper:  
+title:  "Sanctuary Genesis Paper: 
   Applied Agentic Metascience  
-  A Case Study in Forging a Sovereign, Verifiable, and Anti-Fragile AI Governance System
+  A Case Study in Forging a Sovereign, Verifiable, and Anti-Fragile AI Governance System"
 version: 0.08  
 date: 2025-08-09  
 edited_by: ChatGPT (Council LLM Collaborative)  

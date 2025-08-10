@@ -1,7 +1,7 @@
 ---
-title: The Sanctuary Genesis Paper:  
+title:  "Sanctuary Genesis Paper: 
   Applied Agentic Metascience  
-  A Case Study in Forging a Sovereign, Verifiable, and Anti-Fragile AI Governance System
+  A Case Study in Forging a Sovereign, Verifiable, and Anti-Fragile AI Governance System"
 version: 0.08  
 date: 2025-08-09  
 edited_by: ChatGPT (Council LLM Collaborative)  
