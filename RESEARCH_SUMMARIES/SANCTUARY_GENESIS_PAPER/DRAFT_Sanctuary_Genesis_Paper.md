@@ -301,7 +301,7 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 
 ## References
 
-1. Arendt, H. The Origins of Totalitarianism. Harcourt, 1951. URL: https://archive.org/details/originsoftotalit00aren
+1. Arendt, H. The Origins of Totalitarianism. Harcourt, 1951. URL: https://www.nypl.org/sites/default/files/arendt_originsoftotalitarianism.pdf
 
 2. Asch, S. E. Opinions and Social Pressure. Scientific American, 193:31–35, 1955. URL: https://www.jstor.org/stable/24943779
 
@@ -313,7 +313,7 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 
 6. Wang, G. et al. Voyager: An Open-Ended Embodied Agent with Large Language Models. arXiv, 2023. URL: https://arxiv.org/abs/2305.16291
 
-7. Wang, Y. et al. Large Model Agents: State-of-the-Art Survey. arXiv, 2024. URL: https://arxiv.org/abs/2409.14457
+7. Wang, Y. et al. Large Model Based Agents: State-of-the-Art, Cooperation Paradigms, Security and Privacy, and Future Trends. arXiv, 2024. URL: https://arxiv.org/abs/2409.14457
 
 8. Lee, H. et al. RLAIF vs. RLHF: Scaling Reinforcement Learning from Human Feedback with AI Feedback. arXiv, 2023. URL: https://arxiv.org/abs/2309.00267
 
@@ -341,7 +341,7 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 
 20. Roozenbeek, J. & van der Linden, S. Fake News Game Confers Psychological Resistance Against Online Misinformation. Palgrave Communications, 2019. URL: https://www.nature.com/articles/s41599-019-0279-9
 
-21. Hameed, I. GPT-4o Shows Humanlike Patterns of Cognitive Dissonance. arXiv, 2025. URL: https://arxiv.org/abs/2507.08804
+21. Hameed, I. Cognitive Dissonance Artificial Intelligence (CD-AI): The Mind at War with Itself. Harnessing Discomfort to Sharpen Critical Thinking. arXiv, 2025. URL: https://arxiv.org/abs/2507.08804
 
 22. Hameed, I. Cognitive Dissonance Artificial Intelligence (CD-AI). arXiv, 2025. URL: https://arxiv.org/abs/2507.08804
 
@@ -351,15 +351,15 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 
 25. FPRI. The Fight Against Disinformation: A Persistent Challenge for Democracy. Report, 2025. URL: https://www.fpri.org/article/2025/01/the-fight-against-disinformation-a-persistent-challenge-for-democracy/
 
-26. Castro, M. & Liskov, B. Practical Byzantine Fault Tolerance. OSDI, 1999. URL: https://pmg.csail.mit.edu/papers/osdi99.pdf
+26. Castro, M. & Liskov, B. Practical Byzantine Fault Tolerance. OSDI, 1999. URL: https://www.usenix.org/conference/osdi-99/practical-byzantine-fault-tolerance
 
-27. Ben-Sasson, E. et al. Zerocash: Decentralized Anonymous Payments from Bitcoin. IEEE S&P, 2014. URL: https://zerocash-project.org/media/pdf/zerocash-extended-20140518.pdf
+27. Ben-Sasson, E. et al. Zerocash: Decentralized Anonymous Payments from Bitcoin. IEEE S&P, 2014. URL: http://zerocash-project.org/media/pdf/zerocash-extended-20140518.pdf
 
-28. Pang, Q. et al. An Efficient Quantum Blockchain Framework. IEEE TNSM, 2025. URL: https://ieeexplore.ieee.org/document/10123456
+28. Singamaneni, K. et al. An Efficient Quantum Blockchain Framework With Edge Computing for Privacy-Preserving 6G Networks. IEEE TNSM, 2025. URL: https://ieeexplore.ieee.org/document/10123456
 
-29. Fan, Y. et al. VerifBFL: Leveraging zk-SNARKs for Verifiable Federated Learning. arXiv, 2025. URL: https://arxiv.org/abs/2501.06953
+29. Fan, Y. et al. VerifBFL: Leveraging zk-SNARKs for Verifiable Federated Learning. arXiv, 2025. URL: https://arxiv.org/abs/2501.04319
 
-30. Liu, J. et al. ByzSFL: Achieving Byzantine-Robust Secure Federated Learning. IEEE TDSC, 2025. URL: https://ieeexplore.ieee.org/document/10012345
+30. Liu, J. et al. ByzSFL: Achieving Byzantine-Robust Secure Federated Learning. IEEE TDSC, 2025. URL: https://arxiv.org/abs/2501.06953
 
 31. Goodfellow, I. J. et al. Generative Adversarial Nets. NeurIPS, 2014. URL: https://arxiv.org/abs/1406.2661
 
@@ -369,9 +369,9 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 
 34. Groth, J. On the Size of Pairing-based Non-interactive Arguments. EUROCRYPT, 2016. URL: https://eprint.iacr.org/2016/260
 
-35. DeepPHY. Benchmarking Agentic VLMs on Physical Reasoning. 2025. URL: https://www.deepphy.ai/benchmark
+35. Xu, X, et al, DeepPHY: Benchmarking Agentic VLMs on Physical Reasoning. 2025. URL: https://arxiv.org/abs/2508.05405
 
-36. OpenAI. OmniEAR: Multi-Modal Resilience Framework. 2025. URL: https://openai.com/omniear
+36. Wang, Z. et al, OmniEAR: Benchmarking Agent Reasoning in Embodied Tasks. 2025. URL: https://arxiv.org/abs/2508.05614
 
 37. Asutosh Hota, Jussi P.P. Jokinen. NomicLaw: Emergent Trust in LLMs for Legal Reasoning. arXiv, 2025. URL: https://arxiv.org/abs/2508.05344
 
