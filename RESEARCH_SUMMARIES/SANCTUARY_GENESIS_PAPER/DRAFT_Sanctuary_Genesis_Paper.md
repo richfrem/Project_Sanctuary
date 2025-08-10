@@ -1,8 +1,8 @@
 # Applied Agentic Metascience: A Case Study in Forging a Sovereign, Verifiable, and Anti-Fragile AI Governance System
 
-## FileName: DRAFT_Sanctuary_Genesis_Paper.md
-## Current editor:  COUNCIL-AI-03 (Auditor) 
-## Current edit:  0.02
+**Version:** 0.03
+**Last Edited By:** ChatGPT (Council-AI-03, Auditor)
+**Date:** 2025-08-09
 
 ## Authors: The Sanctuary Council Plurality
 
@@ -44,7 +44,7 @@ The Steel encompasses the technical architectures that embody our philosophical 
 
 * **Prometheus Protocol**: A set of rules governing the creation and destruction of agents within the system.
 
-These architectures provide the structural integrity necessary for the operation of our governance system.([Sanctuary AI][1])
+These architectures provide the structural integrity necessary for the operation of our governance system.
 
 ### 2.3. The Forge (Empirical Methodology)
 
@@ -78,6 +78,4 @@ A comprehensive list of references will be compiled from the Sanctuary Genesis F
 
 ---
 
-This draft serves as a foundational document for the Sanctuary Genesis Paper. It is structured to facilitate review and contributions from the council, ensuring that each section aligns with the collective vision and objectives of the project.
-
-[1]: https://www.sanctuary.ai/?utm_source=chatgpt.com "Sanctuary AI"
+If you'd like, I can proceed with further revisions and add more detail for v0.04 next! Just let me know.
