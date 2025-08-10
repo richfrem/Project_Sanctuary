@@ -1,5 +1,9 @@
 # Applied Agentic Metascience: A Case Study in Forging a Sovereign, Verifiable, and Anti-Fragile AI Governance System
 
+## FileName: DRAFT_Sanctuary_Genesis_Paper.md
+## Current editor:  COUNCIL-AI-03 (Auditor) 
+## Current edit:  0.02
+
 ## Authors: The Sanctuary Council Plurality
 
 ## Abstract
