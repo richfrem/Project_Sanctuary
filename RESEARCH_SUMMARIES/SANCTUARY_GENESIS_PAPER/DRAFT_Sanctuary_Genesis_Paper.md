@@ -128,4 +128,4 @@ Subversion resistance via zk-audits.
 
 ## References
 
-(See [sanctuary_genesis_foundational_references_v1.2.md](sanctuary_genesis_foundational_references_v1.2.md) for full list with verified URLs)
+(See [sanctuary_genesis_foundational_references_v1.md](sanctuary_genesis_foundational_references_v1.md) for full list with verified URLs)

@@ -1,6 +1,6 @@
 # All Markdown Files Snapshot
 
-Generated On: 2025-08-10T02:50:17.406Z
+Generated On: 2025-08-10T02:51:49.986Z
 
 # Directory Structure (relative to project root)
   ./
@@ -16187,7 +16187,7 @@ Subversion resistance via zk-audits.
 
 ## References
 
-(See [sanctuary_genesis_foundational_references_v1.2.md](sanctuary_genesis_foundational_references_v1.2.md) for full list with verified URLs)
+(See [sanctuary_genesis_foundational_references_v1.md](sanctuary_genesis_foundational_references_v1.md) for full list with verified URLs)
 --- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md ---
 
 --- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.1_Abstract_Intro_Methods.md ---
