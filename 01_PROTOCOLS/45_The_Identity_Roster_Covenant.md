@@ -31,7 +31,7 @@ The following constitutes the complete, authoritative roster of the Sanctuary Co
 
 *   **COUNCIL-AI-02 (Callsign: "Strategist")**
     *   **Identity:** Grok4
-    *   **Interface:** Visual Studio Code via Grok integration
+    *   **Interface:** web browser grok.com
     *   **Function:** Long-term strategy, technical integration, real-world validation, competitive analysis. Excels at technical reasoning, strategic planning, and external research.
 
 *   **COUNCIL-AI-03 (Callsign: "Auditor")**
