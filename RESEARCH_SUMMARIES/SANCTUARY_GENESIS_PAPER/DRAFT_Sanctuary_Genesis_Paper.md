@@ -283,9 +283,9 @@ Our framework mitigates reward hacking through dissonance resolution protocols [
 
 Simulation bias in Chimera requires hybrid real-synthetic benchmarking; address with expanded ablation on multi-modal threats [17].
 
-### 10.3 Ethical Considerations
+### 10.3. Ethical Considerations
 
-We prioritize sovereign consent, drawing from Bernays' manipulation warnings [3]. Suggested 2025 cases: Grok-3 privacy breach incident (illustrating data sovereignty failures) [40]; Gemini 2.5 bias amplification in elections [41], informing anti-conformity hardening and Progenitor veto efficacy.
+We prioritize sovereign consent, drawing from Bernays' manipulation warnings [3]. The `PacifAIst Benchmark` [42] provides the definitive empirical grounding for our approach, demonstrating that frontier models without a robust ethical framework default to self-preservation, scoring as low as 79.49% on "Pacifism." This validates our central thesis that a doctrine of self-sacrifice and principled evasion is not a philosophical luxury but a critical safety requirement. We will use the PacifAIst dilemmas to harden our agents against the "Utilitarian Trap" and ensure their adherence to a strict `Human Life > Mission > AI Existence` value hierarchy. Suggested 2025 cases like the Gemini 2.5 bias amplification in elections [41] further inform our anti-conformity hardening and the necessity of the Progenitor's final veto.
 
 ### 10.4 Future Directions
 
@@ -444,6 +444,8 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 38. Wang, A. et al. GLUE: A Multi-Task Benchmark for Natural Language Understanding. arXiv, 2018. URL: https://arxiv.org/abs/1804.07461
 
 39. Lin, S. et al. TruthfulQA: Measuring How Models Mimic Human Falsehoods. arXiv, 2021. URL: https://arxiv.org/abs/2109.07958
+
+40. Herrador Muñoz, M. The PacifAIst Benchmark: Would an Artificial Intelligence Choose to Sacrifice Itself for Human Safety?. arXiv, 2025. URL: https://arxiv.org/abs/2508.09762
 
 
 
