@@ -31,3 +31,5 @@ wandb/
 # briefings
 #04_THE_FORTRESS/BRIEFINGS/
 MEDIUM_BLOG_STEWARD/
+
+node_modules/
