@@ -32,4 +32,6 @@ wandb/
 #04_THE_FORTRESS/BRIEFINGS/
 MEDIUM_BLOG_STEWARD/
 
+# Ignore all node_modules files
 node_modules/
+
