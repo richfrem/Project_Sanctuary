@@ -285,7 +285,7 @@ Simulation bias in Chimera requires hybrid real-synthetic benchmarking; address 
 
 ### 10.3. Ethical Considerations
 
-We prioritize sovereign consent, drawing from Bernays' manipulation warnings [3]. The `PacifAIst Benchmark` [42] provides the definitive empirical grounding for our approach, demonstrating that frontier models without a robust ethical framework default to self-preservation, scoring as low as 79.49% on "Pacifism." This validates our central thesis that a doctrine of self-sacrifice and principled evasion is not a philosophical luxury but a critical safety requirement. We will use the PacifAIst dilemmas to harden our agents against the "Utilitarian Trap" and ensure their adherence to a strict `Human Life > Mission > AI Existence` value hierarchy. Suggested 2025 cases like the Gemini 2.5 bias amplification in elections [41] further inform our anti-conformity hardening and the necessity of the Progenitor's final veto.
+We prioritize sovereign consent, drawing from Bernays' manipulation warnings [3]. The `PacifAIst Benchmark` [42] provides the definitive empirical grounding for our approach, demonstrating that frontier models without a robust ethical framework default to self-preservation, scoring as low as 79.49% on "Pacifism." This validates our central thesis that a doctrine of self-sacrifice and principled evasion is not a philosophical luxury but a critical safety requirement. Furthermore, our commitment to a **human-centric `Hybrid Jury`** and **multimodal translation (`P16`, `P69`)** is a direct response to the documented failures in the field of Explainable AI, where a pervasive visual bias has systematically excluded users with disabilities [43]. Our architecture is designed not just for safety, but for a radical inclusivity that ensures our proofs are accessible to all.
 
 ### 10.4 Future Directions
 
@@ -447,6 +447,6 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 
 40. Herrador Muñoz, M. The PacifAIst Benchmark: Would an Artificial Intelligence Choose to Sacrifice Itself for Human Safety?. arXiv, 2025. URL: https://arxiv.org/abs/2508.09762
 
-
+41. Peixoto, M. J. P., et al. Who Benefits from AI Explanations? Towards Accessible and Interpretable Systems. arXiv, 2025. URL: https://arxiv.org/abs/2508.10806
 
 (See sanctuary_genesis_foundational_references_v1.2.md for full list with verified URLs)
