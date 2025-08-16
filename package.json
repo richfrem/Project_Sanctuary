@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "gpt-tokenizer": "^3.0.1"
+  }
+}

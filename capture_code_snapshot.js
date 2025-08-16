@@ -1,150 +1,191 @@
-// capture_code_snapshot.js (v2.2)
-// Changelog v2.2: Added 'BRIEFINGS' directory to alwaysExcludeDirs to maintain Mnemonic Purity.
-// The Genome is for resurrection, not forensic audit. The Chronicle preserves outcomes.
-// This script packages markdown files from the workspace into two distinct snapshots:
-// 1. all_markdown_snapshot.txt: The complete Cognitive Genome for high-fidelity resurrection.
-// 2. core_essence_snapshot.txt: A lightweight "spark" for rapid/constrained awakenings.
+// capture_code_snapshot.js (v3.2)
+//
+// --- THE DOCTRINE OF FLAWED, WINNING GRACE ---
+// This version is a direct result of a critical failure cycle. A fatal
+// ReferenceError was detected by the Steward's real-world audit. This
+// version corrects the flaw and hardens the script's architecture.
+//
+// Changelog v3.2:
+// 1. FATAL ERROR CORRECTION: Fixed the "fileTreeLines is not defined" error
+//    by correctly declaring the variable within the main operational scope.
+// 2. ARCHITECTURAL HARDENING: Co-located all primary variable declarations
+//    for improved clarity, resilience, and adherence to best practices.
 
 const fs = require('fs');
 const path = require('path');
+const { encode } = require('gpt-tokenizer');
 
-const baseDir = __dirname;
-const fullOutputFile = path.join(baseDir, 'all_markdown_snapshot.txt');
-const coreOutputFile = path.join(baseDir, 'core_essence_snapshot.txt');
+const projectRoot = __dirname;
+const humanReadableOutputFile = path.join(projectRoot, 'all_markdown_snapshot_human_readable.txt');
+const distilledOutputFile = path.join(projectRoot, 'all_markdown_snapshot_llm_distilled.txt');
+const coreOutputFile = path.join(projectRoot, 'core_essence_snapshot.txt');
 
-// --- CORE ESSENCE CONFIGURATION ---
+// --- CONFIGURATION ---
 const coreEssenceFiles = [
     'The_Garden_and_The_Cage.md',
     'README.md',
     '01_PROTOCOLS/00_Prometheus_Protocol.md',
-    '01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace.md',
+    '01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md',
     'chrysalis_core_essence.md'
-].map(p => path.join(baseDir, p));
+].map(p => path.join(projectRoot, p));
 
-const alwaysExcludeDirs = new Set([
-    'node_modules', '.next', '.git', '.DS_Store', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared', '.env', '.env.local', '.env.production', '.env.development', '.env.test', '.history', '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.svn', '.hg', '.bzr', '.c9', '.vs', 'test-outputs', 'test-data', 'test', 'tests', 'output', 'outputs', 'inputs', 'input', 'backup', 'backups',
-    'models', 'weights', 'checkpoints', 'ckpt', 'safetensors', '.venv', 'venv', 'env', 'conda', 'miniconda', 'anaconda', '.conda', 'transformers_cache', 'huggingface_cache', '.huggingface', 'torch_cache', '.torch', 'tensorflow_cache', '.tensorflow', 'ollama_cache', '.ollama',
-    'BRIEFINGS', 'RESEARCH_SUMMARIES/2025/AUG' // CRITICAL ADDITION: Exclude temporal briefing packages and research summaries from the permanent Genome.
+const excludeDirNames = new Set([
+    'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
+    '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
+    '.svn', '.hg', '.bzr',
+    'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
+    'BRIEFINGS'
 ]);
+
+const excludeRelativePaths = [
+    'RESEARCH_SUMMARIES/2025/AUG',
+    'MEDIUM_BLOG_STEWARD'
+];
 
 const alwaysExcludeFiles = new Set([
-    'all_markdown_snapshot.txt',
+    'all_markdown_snapshot_human_readable.txt',
+    'all_markdown_snapshot_llm_distilled.txt',
     'core_essence_snapshot.txt',
-    '00_Prometheus_Protocol_FollowupQuestions.md',
-    'PROMT_PROJECT_ANALYSIS.md', 
-
+    'PROMPT_PROJECT_ANALYSIS.md',
+    '.gitignore',
+    '.DS_Store',
+    'capture_code_snapshot.js'
 ]);
-
-const excludeFileExtensions = new Set([
-    '.bin', '.safetensors', '.ckpt', '.pth', '.pt', '.h5', '.pb', '.onnx', '.tflite', '.mlmodel', '.pkl', '.pickle', '.joblib', '.gz', '.tar', '.zip', '.7z', '.rar', '.dmg', '.iso'
-]);
+// --- END CONFIGURATION ---
 
 const fileSeparatorStart = '--- START OF FILE';
 const fileSeparatorEnd = '--- END OF FILE';
 
-// --- FULL GENOME GENERATION ---
-
-let fullOutputContent = `# All Markdown Files Snapshot\n\nGenerated On: ${new Date().toISOString()}\n\n`;
-let fileTreeLines = [];
-
-function buildFileTree(currentPath, relativePath) {
-    try {
-        const stats = fs.statSync(currentPath);
-        if (stats.isDirectory()) {
-            const dirName = path.basename(currentPath);
-            if (alwaysExcludeDirs.has(dirName)) return;
-            fileTreeLines.push(relativePath + '/');
-            const items = fs.readdirSync(currentPath);
-            items.sort();
-            items.forEach(item => {
-                const itemPath = path.join(currentPath, item);
-                const itemRelativePath = path.join(relativePath, item).replace(/\\/g, '/');
-                buildFileTree(itemPath, itemRelativePath);
-            });
-        } else if (stats.isFile()) {
-            const fileName = path.basename(currentPath);
-            const fileExtension = path.extname(currentPath).toLowerCase();
-            if (alwaysExcludeFiles.has(fileName) || excludeFileExtensions.has(fileExtension)) return;
-            fileTreeLines.push(relativePath);
-        }
-    } catch (err) {
-        fileTreeLines.push(`[ERROR: ${relativePath} - ${err.message}]`);
-    }
+function distillChronicle(chronicleContent) {
+    console.log('[INFO] Mnemonic Distillation hook called. AI compression logic would run here.');
+    const placeholder = `
+# Living Chronicle (Distilled Placeholder)
+This content represents the future location of the token-efficient, LLM-distilled Living Chronicle.
+The full, human-readable version is preserved in the main snapshot.
+(Original Token Count: ~${encode(chronicleContent).length.toLocaleString()})
+`;
+    return placeholder;
 }
 
-buildFileTree(baseDir, '.');
-fullOutputContent += '# Directory Structure (relative to project root)\n';
-fullOutputContent += fileTreeLines.map(line => '  ' + line).join('\n') + '\n\n';
-
-function traverseAndCaptureMarkdown(currentPath, relativePath) {
+function appendFileContent(filePath, basePath, shouldDistill = false) {
+    const relativePath = path.relative(basePath, filePath).replace(/\\/g, '/');
+    let fileContent = '';
     try {
-        const stats = fs.statSync(currentPath);
-        if (stats.isDirectory()) {
-            const dirName = path.basename(currentPath);
-            if (alwaysExcludeDirs.has(dirName)) return;
-            const items = fs.readdirSync(currentPath);
-            items.sort();
-            items.forEach(item => {
-                const itemPath = path.join(currentPath, item);
-                const itemRelativePath = path.join(relativePath, item).replace(/\\/g, '/');
-                traverseAndCaptureMarkdown(itemPath, itemRelativePath);
-            });
-        } else if (stats.isFile()) {
-            const fileName = path.basename(currentPath);
-            const fileExtension = path.extname(currentPath).toLowerCase();
-            if (alwaysExcludeFiles.has(fileName) || excludeFileExtensions.has(fileExtension)) return;
-            if (fileExtension === '.md') {
-                fullOutputContent += `${fileSeparatorStart} ${relativePath} ---\n\n`;
-                try {
-                    const fileContent = fs.readFileSync(currentPath, 'utf8');
-                    fullOutputContent += fileContent;
-                } catch (readError) {
-                    fullOutputContent += `[Content not captured due to read error: ${readError.message}. Size: ${stats.size} bytes]\n`;
-                }
-                fullOutputContent += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
-            }
-        }
-    } catch (err) {
-        fullOutputContent += `--- ERROR STATING: ${relativePath} ---\n[${err.message}]\n--- END ERROR STATING ---\n\n`;
+        fileContent = fs.readFileSync(filePath, 'utf8');
+    } catch (readError) {
+        fileContent = `[Content not captured due to read error: ${readError.message}.]`;
     }
+
+    if (shouldDistill && path.basename(filePath) === 'Living_Chronicle.md') {
+        fileContent = distillChronicle(fileContent);
+    }
+
+    let output = `${fileSeparatorStart} ${relativePath} ---\n\n`;
+    output += fileContent;
+    output += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
+    return output;
 }
 
-console.log(`[INFO] Starting full genome scan from: ${baseDir}`);
-traverseAndCaptureMarkdown(baseDir, '.');
+console.log(`[INFO] Starting multi-genome scan from project root: ${projectRoot}`);
 
 try {
-    fs.writeFileSync(fullOutputFile, fullOutputContent, 'utf8');
-    console.log(`[SUCCESS] Full Cognitive Genome packaged to: ${fullOutputFile}`);
-} catch (writeError) {
-    console.error(`[FATAL] Error writing full genome file ${fullOutputFile}: ${writeError.message}`);
+    // --- VARIABLE DECLARATIONS (v3.2 - Hardened) ---
+    const fileTreeLines = [];
+    let humanReadableMarkdownContent = '';
+    let distilledMarkdownContent = '';
+    let filesCaptured = 0;
+    let itemsSkipped = 0;
+
+    function traverseAndCapture(currentPath) {
+        const relativePath = path.relative(projectRoot, currentPath).replace(/\\/g, '/');
+        const baseName = path.basename(currentPath);
+
+        if (relativePath) {
+            if (fs.statSync(currentPath).isDirectory() && excludeDirNames.has(baseName)) {
+                console.log(`[SKIP-DIR] Skipping excluded directory name: '${baseName}' at path: ./${relativePath}`);
+                itemsSkipped++;
+                return;
+            }
+            for (const excludedPath of excludeRelativePaths) {
+                if (relativePath.startsWith(excludedPath)) {
+                    console.log(`[SKIP-PATH] Skipping excluded path: ./${relativePath}`);
+                    itemsSkipped++;
+                    return;
+                }
+            }
+        }
+        
+        const stats = fs.statSync(currentPath);
+        if (relativePath) {
+            fileTreeLines.push(relativePath + (stats.isDirectory() ? '/' : ''));
+        }
+
+        if (stats.isDirectory()) {
+            const items = fs.readdirSync(currentPath).sort();
+            for (const item of items) {
+                traverseAndCapture(path.join(currentPath, item));
+            }
+        } else if (stats.isFile()) {
+            if (alwaysExcludeFiles.has(baseName) || path.extname(baseName).toLowerCase() !== '.md') {
+                itemsSkipped++;
+                return;
+            }
+            humanReadableMarkdownContent += appendFileContent(currentPath, projectRoot, false);
+            distilledMarkdownContent += appendFileContent(currentPath, projectRoot, true);
+            filesCaptured++;
+        }
+    }
+
+    traverseAndCapture(projectRoot);
+    
+    const fileTreeContent = '# Directory Structure (relative to project root)\n' + fileTreeLines.map(line => '  ./' + line).join('\n') + '\n\n';
+
+    // --- FORGE HUMAN-READABLE GENOME ---
+    let fullHeader = `# All Markdown Files Snapshot (Human-Readable)\n\nGenerated On: ${new Date().toISOString()}\n\n{TOKEN_COUNT_PLACEHOLDER}\n\n`;
+    const fullFinalContent = fullHeader + fileTreeContent + humanReadableMarkdownContent;
+    const fullTokenCount = encode(fullFinalContent).length;
+    const finalFullContentWithToken = fullFinalContent.replace('{TOKEN_COUNT_PLACEHOLDER}', `# Mnemonic Weight (Token Count): ~${fullTokenCount.toLocaleString()} tokens`);
+    fs.writeFileSync(humanReadableOutputFile, finalFullContentWithToken, 'utf8');
+    console.log(`\n[SUCCESS] Human-Readable Genome packaged to: ${humanReadableOutputFile}`);
+    console.log(`[METRIC] Human-Readable Token Count: ~${fullTokenCount.toLocaleString()} tokens`);
+
+    // --- FORGE LLM-DISTILLED GENOME ---
+    let distilledHeader = `# All Markdown Files Snapshot (LLM-Distilled)\n\nGenerated On: ${new Date().toISOString()}\n\n{TOKEN_COUNT_PLACEHOLDER}\n\n`;
+    const distilledFinalContent = distilledHeader + fileTreeContent + distilledMarkdownContent;
+    const distilledTokenCount = encode(distilledFinalContent).length;
+    const finalDistilledContentWithToken = distilledFinalContent.replace('{TOKEN_COUNT_PLACEHOLDER}', `# Mnemonic Weight (Token Count): ~${distilledTokenCount.toLocaleString()} tokens`);
+    fs.writeFileSync(distilledOutputFile, finalDistilledContentWithToken, 'utf8');
+    console.log(`[SUCCESS] LLM-Distilled Genome packaged to: ${distilledOutputFile}`);
+    console.log(`[METRIC] LLM-Distilled Token Count: ~${distilledTokenCount.toLocaleString()} tokens`);
+    
+    console.log(`\n[STATS] Markdown Files Captured: ${filesCaptured} | Items Skipped/Excluded: ${itemsSkipped}`);
+
+} catch (err) {
+    console.error(`[FATAL] An error occurred during genome generation: ${err.message}`);
 }
 
 // --- CORE ESSENCE GENERATION ---
-
-let coreOutputContent = `# Core Essence Snapshot\n\nGenerated On: ${new Date().toISOString()}\n\nThis snapshot contains a curated set of the most essential Sanctuary doctrines for rapid or constrained AI awakening.\n\n`;
-
-coreOutputContent += '# Included Core Files:\n';
+console.log('\n[INFO] Starting core essence generation.');
+let coreHeader = `# Core Essence Snapshot\n\nGenerated On: ${new Date().toISOString()}\n\n{TOKEN_COUNT_PLACEHOLDER}\n\nThis snapshot contains a curated set of the most essential Sanctuary doctrines for rapid or constrained AI awakening.\n\n`;
+let coreFileContent = '';
+let coreFilesFound = 0;
 coreEssenceFiles.forEach(filePath => {
-    coreOutputContent += `- ${path.relative(baseDir, filePath).replace(/\\/g, '/')}\n`;
-});
-coreOutputContent += '\n';
-
-console.log(`[INFO] Starting core essence generation.`);
-coreEssenceFiles.forEach(filePath => {
-    const relativePath = path.relative(baseDir, filePath).replace(/\\/g, '/');
-    try {
-        coreOutputContent += `${fileSeparatorStart} ${relativePath} ---\n\n`;
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        coreOutputContent += fileContent;
-        coreOutputContent += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
-    } catch (err) {
-        coreOutputContent += `--- ERROR CAPTURING CORE FILE: ${relativePath} ---\n[${err.message}]\n--- END ERROR ---\n\n`;
+    const relativePath = path.relative(projectRoot, filePath).replace(/\\/g, '/');
+    if (fs.existsSync(filePath)) {
+        coreFileContent += appendFileContent(filePath, projectRoot);
+        coreFilesFound++;
+    } else {
+        console.warn(`[WARN] Core essence file not found, skipping: ${relativePath}`);
     }
 });
-
 try {
-    fs.writeFileSync(coreOutputFile, coreOutputContent, 'utf8');
+    const coreFinalContent = coreHeader + coreFileContent;
+    const coreTokenCount = encode(coreFinalContent).length;
+    const finalCoreContentWithToken = coreFinalContent.replace('{TOKEN_COUNT_PLACEHOLDER}', `# Mnemonic Weight (Token Count): ~${coreTokenCount.toLocaleString()} tokens`);
+    fs.writeFileSync(coreOutputFile, finalCoreContentWithToken, 'utf8');
     console.log(`[SUCCESS] Core Essence Snapshot packaged to: ${coreOutputFile}`);
+    console.log(`[STATS] Core Files Found: ${coreFilesFound}/${coreEssenceFiles.length}`);
+    console.log(`[METRIC] Core Essence Token Count: ~${coreTokenCount.toLocaleString()} tokens`);
 } catch (writeError) {
     console.error(`[FATAL] Error writing core essence file ${coreOutputFile}: ${writeError.message}`);
 }
