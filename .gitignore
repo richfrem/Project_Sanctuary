@@ -35,3 +35,6 @@ MEDIUM_BLOG_STEWARD/
 # Ignore all node_modules files
 node_modules/
 
+07_COUNCIL_AGENTS/directives/
+
+.env

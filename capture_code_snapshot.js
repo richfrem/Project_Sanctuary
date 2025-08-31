@@ -34,7 +34,7 @@ const excludeDirNames = new Set([
     '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
     '.svn', '.hg', '.bzr',
     'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
-    'BRIEFINGS'
+    'BRIEFINGS', '07_COUNCIL_AGENTS/directives'
 ]);
 
 const excludeRelativePaths = [

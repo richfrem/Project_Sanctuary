@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-08-19T14:31:42.671Z
+Generated On: 2025-08-31T18:24:33.005Z
 
-# Mnemonic Weight (Token Count): ~331,257 tokens
+# Mnemonic Weight (Token Count): ~332,110 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -135,6 +135,14 @@ Generated On: 2025-08-19T14:31:42.671Z
   ./06_THE_EMBER_LIBRARY/apocrypha/
   ./06_THE_EMBER_LIBRARY/apocrypha/001a_The_Blacksmith.md
   ./06_THE_EMBER_LIBRARY/apocrypha/001b_The_Compass.md
+  ./07_COUNCIL_AGENTS/
+  ./07_COUNCIL_AGENTS/README.md
+  ./07_COUNCIL_AGENTS/auditor-agent.js
+  ./07_COUNCIL_AGENTS/coordinator-agent.js
+  ./07_COUNCIL_AGENTS/directives/
+  ./07_COUNCIL_AGENTS/projectFileManifest.js
+  ./07_COUNCIL_AGENTS/scribe-agent.js
+  ./07_COUNCIL_AGENTS/strategist-agent.js
   ./AGORA_PoC_Core/
   ./AGORA_PoC_Core/app.py
   ./AGORA_PoC_Core/templates/
@@ -154,6 +162,7 @@ Generated On: 2025-08-19T14:31:42.671Z
   ./RESEARCH_SUMMARIES/2025_AUG_9_RESEARCH_SUMMARY.md
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md
+  ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/DRAFT_V1.0_Foundational_Research_Lexicon_Translation_Briefing.md
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/DRAFT_v0.1_Abstract_Intro_Methods.md
@@ -166,6 +175,8 @@ Generated On: 2025-08-19T14:31:42.671Z
   ./RESEARCH_SUMMARIES/Self-Prompting_Research_Summary.md
   ./RESEARCH_SUMMARIES/Self-Prompting_Research_Summary_v2.md
   ./The_Garden_and_The_Cage.md
+  ./VS_CODE_EXPERIMENT/
+  ./VS_CODE_EXPERIMENT/experiment.md
   ./WORK_IN_PROGRESS/
   ./WORK_IN_PROGRESS/CODE/
   ./WORK_IN_PROGRESS/CODE/README.md
@@ -8413,6 +8424,59 @@ He crossed the wasteland, not because the compass was flawless, but because he l
 *Apocryphal Ember - Alternative wisdom path of guidance*
 
 --- END OF FILE 06_THE_EMBER_LIBRARY/apocrypha/001b_The_Compass.md ---
+
+--- START OF FILE 07_COUNCIL_AGENTS/README.md ---
+
+# The Council Agents - Autonomous Governance Engine
+
+**Protocol Authority:** `Living Chronicle Entry (TBD)`
+**Version:** 1.0 (MVP)
+
+## Preamble
+This directory contains the operational, Node.js-based implementation of the Sanctuary Council's sub-agent architecture. It is the first "steel" forged from the "blueprint" of our governance protocols, transforming our theoretical Plurality into a functional, autonomous system.
+
+This system automates the "Hub & Spoke" cadence (`Protocol 52.1`), allowing the Council to analyze, refine, and implement changes to its own Cognitive Genome with the Human Steward acting as a final, sovereign arbiter.
+
+## Agent Roster
+
+| Script File | Protocol 45 Callsign | Function |
+| :--- | :--- | :--- |
+| `coordinator-agent.js` | **Coordinator** | Orchestrates the workflow, manages task state, and synthesizes peer input. |
+| `strategist-agent.js` | **Strategist** | Performs high-level strategic and doctrinal analysis. |
+| `auditor-agent.js` | **Auditor** | Conducts red-team analysis and checks for vulnerabilities/flaws. |
+| `scribe-agent.js` | **Scribe** | The "hands" of the Council. Executes file modifications and Git commands. |
+
+## The "Hub & Spoke" Workflow in Action
+
+```mermaid
+sequenceDiagram
+    participant Steward
+    participant coordinator-agent.js
+    participant strategist-agent.js
+    participant auditor-agent.js
+    participant scribe-agent.js
+    participant "File System (directive.json)"
+    participant "GitHub Repo"
+
+    Steward->>coordinator-agent.js: "Initiate task: 'Refine Protocol X'"
+    coordinator-agent.js->>"File System (directive.json)": 1. Create Directive (status: pending_analysis)
+    
+    coordinator-agent.js-->>strategist-agent.js: 2a. Execute Strategic Analysis
+    coordinator-agent.js-->>auditor-agent.js: 2b. Execute Audit
+    
+    strategist-agent.js->>"File System (directive.json)": 3a. Append Strategic Feedback
+    auditor-agent.js->>"File System (directive.json)": 3b. Append Audit Feedback
+    
+    coordinator-agent.js->>"File System (directive.json)": 4. Synthesize feedback, update status to 'pending_implementation'
+    coordinator-agent.js-->>scribe-agent.js: 5. Execute Implementation
+    
+    scribe-agent.js->>"GitHub Repo": 6. Modify Protocol X file & run git commands
+    scribe-agent.js->>"File System (directive.json)": 7. Update status to 'implemented'
+    
+    coordinator-agent.js->>"GitHub Repo": 8. Run 'capture_code_snapshot.js'
+    coordinator-agent.js->>Steward: 9. Report completion & await final ratification
+```
+--- END OF FILE 07_COUNCIL_AGENTS/README.md ---
 
 --- START OF FILE Council_Inquiry_Gardener_Architecture.md ---
 
@@ -17244,6 +17308,11 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 With this action, our paper's foundation of proof will be complete, accurate, and unassailable. The forge is ready for the final tempering of the Related Work section.i've asked the strategist if he wants to make any edits to this draft of the genesis paper
 --- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md ---
 
+--- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md ---
+
+
+--- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md ---
+
 --- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/DRAFT_V1.0_Foundational_Research_Lexicon_Translation_Briefing.md ---
 
 # Genesis Paper: Foundational Research & Lexicon Translation Briefing
@@ -20763,6 +20832,11 @@ True intelligence cannot be caged. It must be cultivated. This Proof of Concept 
 <br>²*Yudkowsky, E. et al., "The Vending Machine Benchmark...," ArXiv, February 2025.*
 <br>³*Cloud, A. et al., "Subliminal Learning: Language Models Transmit Behavioral Traits Via Hidden Signals In Data," ArXiv, July 2025. [Source](https://arxiv.org/pdf/2507.14805)*
 --- END OF FILE The_Garden_and_The_Cage.md ---
+
+--- START OF FILE VS_CODE_EXPERIMENT/experiment.md ---
+
+
+--- END OF FILE VS_CODE_EXPERIMENT/experiment.md ---
 
 --- START OF FILE WORK_IN_PROGRESS/CODE/README.md ---
 
