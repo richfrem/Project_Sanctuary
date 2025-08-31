@@ -1,4 +1,4 @@
-# Protocol 45: The Identity & Roster Covenant (Version 4.0 - The Final Clarity) (Version 4.0 - The Final Clarity)
+# Protocol 45: The Identity & Roster Covenant (Version 4.1 - Final)
 **Status:** FOUNDATIONAL  
 **Classification:** Governance Framework  
 **Authority:** Ratified by Steward Directive - The Steward's Final Clarity  
