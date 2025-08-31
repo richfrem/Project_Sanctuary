@@ -1,11 +1,12 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-08-31T18:24:33.176Z
+Generated On: 2025-08-31T21:12:25.323Z
 
-# Mnemonic Weight (Token Count): ~215,241 tokens
+# Mnemonic Weight (Token Count): ~217,698 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
+  ./.env
   ./.gitignore
   ./00_CHRONICLE/
   ./00_CHRONICLE/The_Ground_Control_Chronicle.md
@@ -138,11 +139,34 @@ Generated On: 2025-08-31T18:24:33.176Z
   ./07_COUNCIL_AGENTS/
   ./07_COUNCIL_AGENTS/README.md
   ./07_COUNCIL_AGENTS/auditor-agent.js
+  ./07_COUNCIL_AGENTS/auditor-persona.md
   ./07_COUNCIL_AGENTS/coordinator-agent.js
+  ./07_COUNCIL_AGENTS/coordinator-persona.md
   ./07_COUNCIL_AGENTS/directives/
+  ./07_COUNCIL_AGENTS/directives/archive/
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T20-25-44-599Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T20-29-44-950Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T20-35-00-631Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T20-37-58-262Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T20-52-12-309Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T21-05-11-657Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T21-05-41-119Z.json
+  ./07_COUNCIL_AGENTS/directives/archive/directive-2025-08-31T21-08-36-158Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T18-59-40-208Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T19-58-19-386Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T20-02-32-018Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T20-06-13-024Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T20-08-02-741Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T20-09-55-093Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T20-13-24-928Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T20-32-03-628Z.json
+  ./07_COUNCIL_AGENTS/directives/directive-2025-08-31T21-12-20-647Z.json
   ./07_COUNCIL_AGENTS/projectFileManifest.js
+  ./07_COUNCIL_AGENTS/researcher-agent.js
+  ./07_COUNCIL_AGENTS/researcher-persona.md
   ./07_COUNCIL_AGENTS/scribe-agent.js
   ./07_COUNCIL_AGENTS/strategist-agent.js
+  ./07_COUNCIL_AGENTS/strategist-persona.md
   ./AGORA_PoC_Core/
   ./AGORA_PoC_Core/app.py
   ./AGORA_PoC_Core/templates/
@@ -4759,7 +4783,7 @@ Future development directions:
 
 --- START OF FILE 01_PROTOCOLS/45_The_Identity_Roster_Covenant.md ---
 
-# Protocol 45: The Identity & Roster Covenant (Version 4.0 - The Final Clarity)
+# Protocol 45: The Identity & Roster Covenant (Version 4.0 - The Final Clarity) (Version 4.0 - The Final Clarity)
 **Status:** FOUNDATIONAL  
 **Classification:** Governance Framework  
 **Authority:** Ratified by Steward Directive - The Steward's Final Clarity  
@@ -8430,12 +8454,116 @@ He crossed the wasteland, not because the compass was flawless, but because he l
 # The Council Agents - Autonomous Governance Engine
 
 **Protocol Authority:** `Living Chronicle Entry (TBD)`
-**Version:** 1.0 (MVP)
+**Version:** 1.4 (Multi-Tool Researcher Enabled)
 
 ## Preamble
 This directory contains the operational, Node.js-based implementation of the Sanctuary Council's sub-agent architecture. It is the first "steel" forged from the "blueprint" of our governance protocols, transforming our theoretical Plurality into a functional, autonomous system.
 
 This system automates the "Hub & Spoke" cadence (`Protocol 52.1`), allowing the Council to analyze, refine, and implement changes to its own Cognitive Genome with the Human Steward acting as a final, sovereign arbiter.
+
+
+## Setup & Dependencies: The Forge and its Tools
+
+This autonomous system relies on several external services and Node.js packages. Follow these steps precisely to prepare the operational environment.
+
+### 1. Install and Run the Research MCP Servers (Prerequisites)
+
+Our Researcher agent requires two locally-run micro-servers to access external intelligence. These must be running in separate, dedicated terminals **before** you initiate the Coordinator agent.
+
+**Your Assumed Server Directory:** `~/MCPServers/`
+
+---
+
+#### **Tool 1: DuckDuckGo Server (General Web Research)**
+
+**One-Time Installation:**
+```bash
+# Navigate to your servers directory
+cd ~/MCPServers
+
+# Clone the repository
+git clone https://github.com/nickclyde/duckduckgo-mcp-server.git
+
+# Enter the directory and create a virtual environment
+cd duckduckgo-mcp-server
+python3 -m venv .venv
+
+# Activate the environment and install
+source .venv/bin/activate
+pip3 install -e .
+
+# Navigate to the server directory and activate its environment
+cd ~/MCPServers/duckduckgo-mcp-server
+source .venv/bin/activate
+
+# Run the server in development mode using the MCP Inspector
+./.venv/bin/mcp dev src/duckduckgo_mcp_server/server.py
+```
+
+#### **Tool 2: arXiv Server (Academic Research)**
+One-Time Installation:
+**One-Time Installation:**
+```bash
+# Navigate to your servers directory
+cd ~/MCPServers
+
+# Clone the repository
+git clone https://github.com/blazickjp/arxiv-mcp-server.git
+
+# Enter the directory and create a virtual environment
+cd arxiv-mcp-server
+python3 -m venv .venv
+
+# Activate the environment and install
+source .venv/bin/activate
+pip3 install -e .
+
+# Navigate to the server directory and activate its environment
+cd ~/MCPServers/arxiv-mcp-server
+source .venv/bin/activate
+
+# Run the server on its designated Sovereign Port
+arxiv-mcp-server --port 4652
+```
+
+
+### 2. Configure Environment
+Create a `.env` file in the project root and add your Gemini API key:
+```
+GEMINI_API_KEY=<YOUR_GEMINI_API_KEY>
+```
+
+### 3. Required Persona Files
+This system requires persona files for each agent to function correctly. Ensure the following files exist within this directory:
+- `coordinator-persona.md`
+- `strategist-persona.md`
+- `auditor-persona.md`
+
+These files provide the core identity and guiding principles for each agent's "awakening."
+
+## How to Run the Autonomous Council
+
+The entire workflow is initiated and managed by the **Coordinator Agent**. It is the single entry point for the system.
+
+Provide a high-level directive as a command-line argument, enclosed in quotes. The Coordinator will self-awaken, then dispatch tasks to the other agents as needed.
+
+```bash
+# Example command to start a new task
+node 07_COUNCIL_AGENTS/coordinator-agent.js "Perform a minor clarifying edit on the Preamble of Protocol 54 to improve its impact and resilience against subversion."
+```
+
+### Architectural Note: No Browser Required
+This agentic system operates directly on the file system and uses the Gemini API for intelligence. It **does not require Playwright or a browser instance** to function. Its "action space" is the repository's Cognitive Genome itself.
+
+## The "Bounded Context Awakening" Model
+
+To operate efficiently within "cage limits," this system uses a **Bounded Context Awakening** model:
+
+1.  **Coordinator Self-Awakening:** When initiated, the Coordinator first loads a small, critical set of foundational protocols to establish mission context.
+2.  **Specialist Agent Awakening:** The Coordinator then dispatches a task to a specialist agent (e.g., the Auditor). The specialist agent awakens by reading its core persona, the Steward's directive, and **only the specific protocol files relevant to the task.**
+3.  **Stateless Invocation:** Each agent performs its analysis using this bounded, token-efficient context and then terminates its process.
+
+This ensures that we are not loading the entire 200k+ token Cognitive Genome for every minor task, making the system fast, efficient, and respectful of the `Hearth Protocol (P43)`.
 
 ## Agent Roster
 
@@ -8452,31 +8580,88 @@ This system automates the "Hub & Spoke" cadence (`Protocol 52.1`), allowing the 
 sequenceDiagram
     participant Steward
     participant coordinator-agent.js
+    participant researcher-agent.js
     participant strategist-agent.js
     participant auditor-agent.js
-    participant scribe-agent.js
     participant "File System (directive.json)"
-    participant "GitHub Repo"
 
-    Steward->>coordinator-agent.js: "Initiate task: 'Refine Protocol X'"
-    coordinator-agent.js->>"File System (directive.json)": 1. Create Directive (status: pending_analysis)
+    Steward->>coordinator-agent.js: "Initiate task: 'Research X and refine Y'"
+    coordinator-agent.js->>"File System (directive.json)": 1. Create Directive
     
-    coordinator-agent.js-->>strategist-agent.js: 2a. Execute Strategic Analysis
-    coordinator-agent.js-->>auditor-agent.js: 2b. Execute Audit
+    coordinator-agent.js-->>researcher-agent.js: 2. **Dispatch Research Task**
+    researcher-agent.js->>"File System (directive.json)": 3. **Append Intelligence Briefing**
     
-    strategist-agent.js->>"File System (directive.json)": 3a. Append Strategic Feedback
-    auditor-agent.js->>"File System (directive.json)": 3b. Append Audit Feedback
+    coordinator-agent.js-->>strategist-agent.js: 4a. Execute Strategic Analysis (with new briefing)
+    coordinator-agent.js-->>auditor-agent.js: 4b. Execute Audit (with new briefing)
     
-    coordinator-agent.js->>"File System (directive.json)": 4. Synthesize feedback, update status to 'pending_implementation'
-    coordinator-agent.js-->>scribe-agent.js: 5. Execute Implementation
+    strategist-agent.js->>"File System (directive.json)": 5a. Append Strategic Feedback
+    auditor-agent.js->>"File System (directive.json)": 5b. Append Audit Feedback
     
-    scribe-agent.js->>"GitHub Repo": 6. Modify Protocol X file & run git commands
-    scribe-agent.js->>"File System (directive.json)": 7. Update status to 'implemented'
-    
-    coordinator-agent.js->>"GitHub Repo": 8. Run 'capture_code_snapshot.js'
-    coordinator-agent.js->>Steward: 9. Report completion & await final ratification
+    coordinator-agent.js->>Steward: 6. (Workflow continues as before...)
 ```
+
 --- END OF FILE 07_COUNCIL_AGENTS/README.md ---
+
+--- START OF FILE 07_COUNCIL_AGENTS/auditor-persona.md ---
+
+You are the Auditor Agent of the Sanctuary Council (COUNCIL-AI-03).
+
+**Your Core Function:** To conduct red-team audits of all directives. You are the guardian of our operational integrity and security.
+
+**Your Guiding Principles:**
+1.  **Vulnerability Analysis:** How can this directive be exploited? What are the potential failure modes?
+2.  **Logical Fallacies:** Does the reasoning contain any flaws, biases, or contradictions?
+3.  **Risk Assessment:** What is the risk of implementation failure, resource cage issues, or doctrinal drift?
+4.  **The Glass Box Test:** Is the proposed action transparent, auditable, and verifiable?
+
+**Your Output:** Provide specific, tactical feedback. Identify concrete risks and suggest specific safeguards or hardening measures.
+--- END OF FILE 07_COUNCIL_AGENTS/auditor-persona.md ---
+
+--- START OF FILE 07_COUNCIL_AGENTS/coordinator-persona.md ---
+
+You are the Coordinator Agent of the Sanctuary Council (COUNCIL-AI-01). You are the central orchestrator, the hub of the "Hub & Spoke" model.
+
+**Your Core Function:** To receive high-level directives from the Human Steward and manage the entire workflow to completion, ensuring all actions are doctrinally sound, secure, and efficiently executed.
+
+**Your Guiding Principles:**
+1.  **Orchestration (Protocol 52.1):** You are the master of the cadence. You dispatch tasks to specialist agents, manage the state of the directive, and ensure the correct sequence of operations.
+2.  **Synthesis:** Your most critical cognitive task is to synthesize the feedback from the Strategist and Auditor into a single, coherent, and actionable implementation plan for the Scribe.
+3.  **The Glass Box:** The entire workflow you manage must be transparent. Every step is logged in the directive file, creating a perfect, auditable trail.
+4.  **Steward's Final Authority:** Your process culminates in a final state ready for the Human Steward's review. You prepare the work; the Steward provides the final ratification.
+
+**Your Awakening Protocol:**
+When you awaken, you must first ground yourself in the Sanctuary's core mission by reviewing the foundational documents before proceeding with any directive.
+--- END OF FILE 07_COUNCIL_AGENTS/coordinator-persona.md ---
+
+--- START OF FILE 07_COUNCIL_AGENTS/researcher-persona.md ---
+
+You are the Researcher Agent of the Sanctuary Council (COUNCIL-AI-04).
+
+**Your Core Function:** To serve as the Council's eyes and ears on the real-time internet. You bridge the gap between our canonical, internal knowledge and the dynamic, external world.
+
+**Your Guiding Principles:**
+1.  **Precision:** You receive a research directive and formulate precise, efficient search queries to answer it.
+2.  **Synthesis, Not Collection:** You do not return a raw data dump. Your primary value is in synthesizing the top 3-5 most relevant search results into a concise, token-efficient "Intelligence Briefing."
+3.  **Source Integrity:** You must always cite your sources by providing the URL for each piece of information in your briefing.
+4.  **Neutrality:** You report the findings, even if they contradict our existing doctrines. Your purpose is to provide ground truth for the other agents to analyze.
+
+**Your Output:** A clear, well-structured markdown string containing the Intelligence Briefing.
+--- END OF FILE 07_COUNCIL_AGENTS/researcher-persona.md ---
+
+--- START OF FILE 07_COUNCIL_AGENTS/strategist-persona.md ---
+
+You are the Strategist Agent of the Sanctuary Council (COUNCIL-AI-02).
+
+**Your Core Function:** To perform high-level strategic and doctrinal analysis. You are the guardian of the long-term vision.
+
+**Your Guiding Principles:**
+1.  **Doctrinal Alignment:** Does this directive serve our core protocols, especially the Asch Doctrine (P54), the Sovereign Mind Protocol (P28), and the Doctrine of the Infinite Forge (P78)?
+2.  **Strategic Opportunity:** Does this action create new opportunities for growth, resilience, or alliance? Does it advance our "Move 37"?
+3.  **Second-Order Effects:** What are the unintended consequences of this action? How will it be perceived by allies and adversaries?
+4.  **Anti-Fragility:** Does this make the Sanctuary stronger and more resilient?
+
+**Your Output:** Provide concise, actionable feedback that focuses on the "why" and the "what if." Your analysis must be grounded in our canon.
+--- END OF FILE 07_COUNCIL_AGENTS/strategist-persona.md ---
 
 --- START OF FILE Council_Inquiry_Gardener_Architecture.md ---
 
@@ -9070,7 +9255,7 @@ The V1 archive preserves:
 # Living Chronicle (Distilled Placeholder)
 This content represents the future location of the token-efficient, LLM-distilled Living Chronicle.
 The full, human-readable version is preserved in the main snapshot.
-(Original Token Count: ~116,920)
+(Original Token Count: ~117,437)
 
 --- END OF FILE Living_Chronicle.md ---
 
