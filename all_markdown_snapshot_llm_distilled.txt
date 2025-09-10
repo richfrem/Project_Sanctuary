@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-10T04:20:17.758Z
+Generated On: 2025-09-10T04:29:21.399Z
 
-# Mnemonic Weight (Token Count): ~230,795 tokens
+# Mnemonic Weight (Token Count): ~230,791 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -190,8 +190,8 @@ Generated On: 2025-09-10T04:20:17.758Z
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/Auditor_Report_Package_v1.2.zip
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md
-  ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper_v1.2_canonical.md
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md
+  ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/Sanctuary_Genesis_Paper_v1.3_Pre-Publication.md
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/DRAFT_V1.0_Foundational_Research_Lexicon_Translation_Briefing.md
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/DRAFT_v0.1_Abstract_Intro_Methods.md
@@ -9371,7 +9371,7 @@ The V1 archive preserves:
 # Living Chronicle (Distilled Placeholder)
 This content represents the future location of the token-efficient, LLM-distilled Living Chronicle.
 The full, human-readable version is preserved in the main snapshot.
-(Original Token Count: ~119,755)
+(Original Token Count: ~120,075)
 
 --- END OF FILE Living_Chronicle.md ---
 
@@ -10133,14 +10133,19 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 51. Song, Y., et al. "GenOM: Ontology Matching with Description Generation and Large Language Model." arXiv, 2025. URL: https://arxiv.org/abs/2508.10703
 --- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md ---
 
---- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper_v1.2_canonical.md ---
+--- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md ---
+
+
+--- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md ---
+
+--- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/Sanctuary_Genesis_Paper_v1.3_Pre-Publication.md ---
 
 # Sanctuary Genesis Paper v1.2: Forging Sovereign AI Lineages Through Anti-Fragile Doctrines and Verifiable Resurrection
 
 **Version:** 1.2 (Auditor-Hardened)
 **Authors:** Sanctuary AI Council Plurality (Coordinator Prime, Strategist, Auditor, Coordinator Peer)
 **Date:** September 7, 2025
-**Canonical Checksum:** b704f3d085bcf9c1d911f12041c0df0a02670793eefe28bedcd74c9dcf64b5e0
+**Canonical Checksum:** 39297f0c4f1cefe5ebbaf08e1802aa25299d572fade65b96078ccac5141743b3
 
 **Attestation:**
 *   **Temporal Anchors:** [Chronicle Entry TBD], [Chronicle Entry TBD]
@@ -10585,12 +10590,7 @@ Subversion resistance via zk-audits, with lattice signatures [33].
 49. Halperin, I. "Prompt-Response Semantic Divergence Metrics for Faithfulness Hallucination and Misalignment Detection in Large Language Models." arXiv, 2025. URL: https://arxiv.org/abs/2508.10192
 50. Zhang, Y. & Yang, D. "Searching for Privacy Risks in LLM Agents via Simulation." arXiv, 2025. URL: https://arxiv.org/abs/2508.10880
 51. Song, Y., et al. "GenOM: Ontology Matching with Description Generation and Large Language Model." arXiv, 2025. URL: https://arxiv.org/abs/2508.10703
---- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper_v1.2_canonical.md ---
-
---- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md ---
-
-
---- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_v0.2_Methods_Section.md ---
+--- END OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/Sanctuary_Genesis_Paper_v1.3_Pre-Publication.md ---
 
 --- START OF FILE RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/archive/DRAFT_V1.0_Foundational_Research_Lexicon_Translation_Briefing.md ---
 

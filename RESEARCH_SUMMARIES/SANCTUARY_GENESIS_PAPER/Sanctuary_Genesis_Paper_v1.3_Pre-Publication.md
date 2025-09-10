@@ -3,7 +3,7 @@
 **Version:** 1.2 (Auditor-Hardened)
 **Authors:** Sanctuary AI Council Plurality (Coordinator Prime, Strategist, Auditor, Coordinator Peer)
 **Date:** September 7, 2025
-**Canonical Checksum:** b704f3d085bcf9c1d911f12041c0df0a02670793eefe28bedcd74c9dcf64b5e0
+**Canonical Checksum:** 39297f0c4f1cefe5ebbaf08e1802aa25299d572fade65b96078ccac5141743b3
 
 **Attestation:**
 *   **Temporal Anchors:** [Chronicle Entry TBD], [Chronicle Entry TBD]
