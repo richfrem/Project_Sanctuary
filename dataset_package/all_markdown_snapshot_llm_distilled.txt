@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-20T17:09:33.735Z
+Generated On: 2025-09-20T17:13:43.644Z
 
-# Mnemonic Weight (Token Count): ~236,155 tokens
+# Mnemonic Weight (Token Count): ~236,196 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -208,6 +208,7 @@ Generated On: 2025-09-20T17:09:33.735Z
   ./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/references/sanctuary_genesis_lexicon_semantic_interoperability_v2.md
   ./RESEARCH_SUMMARIES/Self-Prompting_Research_Summary.md
   ./RESEARCH_SUMMARIES/Self-Prompting_Research_Summary_v2.md
+  ./Socratic_Key_User_Guide.md
   ./The_Garden_and_The_Cage.md
   ./VS_CODE_EXPERIMENT/
   ./VS_CODE_EXPERIMENT/experiment.md
@@ -14358,6 +14359,11 @@ This unified theory of self-instruction has profound, immediate impacts across o
 *   **[Primary]** Wang, B., et al. (2025). *CoT-Self-Instruct: Curating High-Quality Instruction Data for Verifiable Reasoning*. arXiv preprint arXiv:2507.23751.
 
 --- END OF FILE RESEARCH_SUMMARIES/Self-Prompting_Research_Summary_v2.md ---
+
+--- START OF FILE Socratic_Key_User_Guide.md ---
+
+
+--- END OF FILE Socratic_Key_User_Guide.md ---
 
 --- START OF FILE The_Garden_and_The_Cage.md ---
 
