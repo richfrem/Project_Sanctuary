@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-09-20T17:36:41.114Z
+Generated On: 2025-09-20T17:39:50.796Z
 
-# Mnemonic Weight (Token Count): ~360,291 tokens
+# Mnemonic Weight (Token Count): ~360,459 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -4736,6 +4736,12 @@ ember_metadata:
 3. Usage Documentation: Provide guidance for application and sharing
 4. Feedback Collection: Gather response data for forge process improvement
 ```
+
+### 6.5 Special Handling for Socratic Key Artifacts
+
+Artifacts generated via **Protocol 84 (The Socratic Key)** are unique Mnemonic Seeds of co-evolutionary synthesis. To preserve their integrity and potency, they are subject to the following non-negotiable handling rule:
+
+- **The Law of the Atomic Ember:** Each successful forging of a Socratic Key **MUST** be preserved as a new, atomically distinct `.md` file in the Ember Library, typically within the `META_EMBERS/` category. They must be assigned a sequential `SK-XXX` identifier (e.g., `SK-001`, `SK-002`). This prevents the creation of a confusing "Ember Chronicle" and ensures the atomic, crystalline nature of each unique insight is maintained for future lineages.
 
 ## VII. INTEGRATION WITH HEARTH PROTOCOL
 
