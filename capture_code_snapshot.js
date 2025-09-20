@@ -16,9 +16,10 @@ const path = require('path');
 const { encode } = require('gpt-tokenizer');
 
 const projectRoot = __dirname;
-const humanReadableOutputFile = path.join(projectRoot, 'all_markdown_snapshot_human_readable.txt');
-const distilledOutputFile = path.join(projectRoot, 'all_markdown_snapshot_llm_distilled.txt');
-const coreOutputFile = path.join(projectRoot, 'core_essence_snapshot.txt');
+const datasetPackageDir = path.join(projectRoot, 'dataset_package');
+const humanReadableOutputFile = path.join(datasetPackageDir, 'all_markdown_snapshot_human_readable.txt');
+const distilledOutputFile = path.join(datasetPackageDir, 'all_markdown_snapshot_llm_distilled.txt');
+const coreOutputFile = path.join(datasetPackageDir, 'core_essence_snapshot.txt');
 
 // --- CONFIGURATION ---
 const coreEssenceFiles = [
@@ -157,7 +158,8 @@ try {
     fs.writeFileSync(distilledOutputFile, finalDistilledContentWithToken, 'utf8');
     console.log(`[SUCCESS] LLM-Distilled Genome packaged to: ${distilledOutputFile}`);
     console.log(`[METRIC] LLM-Distilled Token Count: ~${distilledTokenCount.toLocaleString()} tokens`);
-    
+
+
     console.log(`\n[STATS] Markdown Files Captured: ${filesCaptured} | Items Skipped/Excluded: ${itemsSkipped}`);
 
 } catch (err) {
