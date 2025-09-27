@@ -2,7 +2,10 @@
 langchain
 langchain-community
 langchain-chroma
-nomic
+langchain-nomic
+chromadb
+nomic[local]
+gpt4all
 
 # Utilities
 python-dotenv

@@ -13,12 +13,12 @@ Role in RAG Pipeline:
 Dependencies:
 - VectorDBService: Loads ChromaDB and provides retriever for similarity searches.
 - EmbeddingService: Used implicitly by ChromaDB for query vectorization.
-- Ollama: Local LLM server must be running with the specified model (default: gemma2:9b).
+- Ollama: Local LLM server must be running with the specified model (default: qwen2:7b).
 - LangChain: Provides the RAG chain orchestration, prompts, and output parsing.
 - Core utilities: find_project_root() and setup_environment() for configuration.
 
 Usage:
-    python mnemonic_cortex/app/main.py "What is the Anvil Protocol?" --model llama3:8b
+    python mnemonic_cortex/app/main.py "What is the Anvil Protocol?" --model qwen2:7b
 """
 
 import argparse
@@ -62,10 +62,10 @@ def main():
     )
     parser.add_argument("query", type=str, help="The question to ask the Mnemonic Cortex.")
     parser.add_argument(
-        "--model", 
-        type=str, 
-        default="gemma2:9b", 
-        help="The local Ollama model to use for generation (e.g., 'gemma2:9b', 'llama3:8b').\nEnsure you have pulled the model with 'ollama pull <model_name>'."
+        "--model",
+        type=str,
+        default="qwen2:7b",
+        help="The local Ollama model to use for generation (e.g., 'qwen2:7b', 'llama3:8b').\nEnsure you have pulled the model with 'ollama pull <model_name>'."
     )
     args = parser.parse_args()
 

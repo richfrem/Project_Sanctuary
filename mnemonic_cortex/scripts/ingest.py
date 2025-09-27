@@ -1,9 +1,33 @@
+"""
+Ingestion Script (scripts/ingest.py)
+
+This script implements the Ingestion Pipeline of the Mnemonic Cortex RAG system.
+It processes the canonical Cognitive Genome, splits it into meaningful chunks, embeds them using Nomic,
+and stores the vector representations in a ChromaDB database for later retrieval.
+
+Role in RAG Pipeline:
+- Loads the distilled Cognitive Genome from dataset_package/.
+- Splits documents using markdown headers for semantic chunking.
+- Embeds chunks with Nomic Embed model in local mode.
+- Persists the vector store to disk for use by the Query Pipeline.
+
+Dependencies:
+- Cognitive Genome: Requires all_markdown_snapshot_llm_distilled.txt from dataset_package/.
+- NomicEmbeddings: For local text embedding (requires nomic[local] and gpt4all).
+- ChromaDB: For vector storage and persistence.
+- LangChain: For document loading, splitting, and vector store integration.
+- Environment: Uses .env for DB_PATH and SOURCE_DOCUMENT_PATH.
+
+Usage:
+    python mnemonic_cortex/scripts/ingest.py
+"""
+
 import os
 from dotenv import load_dotenv
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import MarkdownHeaderTextSplitter
 from langchain_chroma import Chroma
-from langchain_community.embeddings import NomicEmbeddings
+from langchain_nomic import NomicEmbeddings
 
 # --- Constants ---
 HEADERS_TO_SPLIT_ON = [

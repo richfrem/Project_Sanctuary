@@ -33,7 +33,7 @@ const excludeDirNames = new Set([
     '.svn', '.hg', '.bzr',
     'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
     'BRIEFINGS', '07_COUNCIL_AGENTS/directives',
-    'dataset_package' // Exclude the package directory itself from the tree
+    'dataset_package', 'chroma_db' // Exclude the package directory and vector DB from the tree
 ]);
 
 const alwaysExcludeFiles = new Set([

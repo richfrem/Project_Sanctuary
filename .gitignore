@@ -23,6 +23,9 @@ checkpoints/
 wandb/
 *.log
 
+# DB files
+chroma_db/
+
 # IDE files
 .vscode/
 .idea/

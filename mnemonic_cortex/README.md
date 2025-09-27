@@ -52,7 +52,7 @@ graph TD
         G --> K;
         J --> K;
 
-        K --> L[LLM e.g. Ollama];
+        K --> L[LLM e.g. qwen2:7b];
         L --> M{"Context-Aware<br/>Answer"};
     end
 
@@ -69,7 +69,7 @@ This project adheres to the **Iron Root Doctrine** by exclusively using open-sou
 | **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
 | **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup for the MVP. |
 | **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
-| **Generation Model**| **Ollama** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like Gemma2, Llama3, etc., ensuring all processing remains on-device. |
+| **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
 | **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
 | **Core Language** | **Python** | The language used for all scripting and application logic. |
 | **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
@@ -87,8 +87,8 @@ The query pipeline requires a local LLM to generate answers. You need to pull a 
 
 Open your terminal and run:
 ```bash
-# We recommend Google's Gemma2 9B model as a powerful default
-ollama pull gemma2:9b
+# We recommend Alibaba's Qwen2 7B model as a powerful default
+ollama pull qwen2:7b
 ```
 *Alternative models like `llama3:8b` or `mistral` will also work.*
 
@@ -110,12 +110,19 @@ This step only needs to be run once, or whenever the Cognitive Genome is updated
 # Then, from the project root, run the ingestion script:
 python mnemonic_cortex/scripts/ingest.py
 ```
-This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base.
+This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base. The process splits the Cognitive Genome into ~1252 chunks, embeds them using Nomic Embed, and stores them in ChromaDB (resulting in ~2504 total documents including metadata).
+
+### Step 2.5: Verify the Database (Optional)
+After ingestion, you can inspect the vector database to ensure it loaded correctly:
+```bash
+python mnemonic_cortex/scripts/inspect_db.py
+```
+This will display the total number of documents and sample content from the database, confirming successful ingestion.
 
 ### Step 3: Query the Cortex
 Now you can ask questions. Run the `main.py` script from the project root, followed by your question in quotes.
 ```bash
-# Example query using the default gemma2:9b model
+# Example query using the default qwen2:7b model
 python mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?"
 
 # Example query specifying a different local model

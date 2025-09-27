@@ -17,7 +17,7 @@ Dependencies:
 Note: Implemented as a singleton to avoid redundant model loading and memory usage.
 """
 
-from langchain_community.embeddings import NomicEmbeddings
+from langchain_nomic import NomicEmbeddings
 
 class EmbeddingService:
     _instance = None
