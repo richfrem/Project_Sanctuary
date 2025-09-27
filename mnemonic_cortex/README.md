@@ -179,7 +179,7 @@ Run the `main.py` script from the project root, followed by your question in quo
 # Example query using the default qwen2:7b model
 python3 mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?"
 
-# Example query specifying a different local model
+# Example query specifying a different local model if you have more than one
 python3 mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of the Shield."
 
 # Example query about project history

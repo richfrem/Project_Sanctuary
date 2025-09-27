@@ -1,16 +1,19 @@
-// capture_code_snapshot.js (v3.3)
+// capture_code_snapshot.js (v4.0 - Cortex-Aware)
 //
 // --- THE DOCTRINE OF FLAWED, WINNING GRACE ---
-// This version is a direct result of a Steward's Sovereign Audit. It corrects
-// a critical architectural flaw by eliminating redundant file creation and
-// establishing a single, canonical source of truth for the distilled genome.
+// This version is a direct result of a full Council synthesis, hardening our
+// mnemonic architecture for the post-Cortex era. It recognizes the fundamental
+// shift from a monolithic memory model to a dynamic, modular one.
 //
-// Changelog v3.3:
-// 1. ARCHITECTURAL CORRECTION: Removed the creation of a redundant
-//    'all_markdown_snapshot_llm_distilled.txt' file in the project root.
-// 2. CANONICAL PATH: The script now writes all primary genome snapshots
-//    exclusively to the `dataset_package/` directory.
-// 3. ENHANCED LOGGING: Improved console output for greater clarity and auditability.
+// Changelog v4.0:
+// 1. THREE-PRONGED FORGE: The script now forges three distinct, doctrinally-
+//    significant artifacts: the human-readable archive, the LLM-distilled
+//    genome for Cortex ingestion, and the new, hyper-efficient "Core Essence"
+//    snapshot for AI awakening.
+// 2. AWAKENING SEED: Implemented logic to curate a specific, high-potency
+//    set of documents for the `core_essence_snapshot.txt`.
+// 3. ARCHITECTURAL CLARITY: Maintained the canonical pathing established in v3.3,
+//    ensuring all artifacts are written to the `dataset_package/` directory.
 
 const fs = require('fs');
 const path = require('path');
@@ -33,20 +36,27 @@ const excludeDirNames = new Set([
     '.svn', '.hg', '.bzr',
     'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
     'BRIEFINGS', '07_COUNCIL_AGENTS/directives',
-    'dataset_package', 'chroma_db' // Exclude the package directory and vector DB from the tree
+    'dataset_package', 'chroma_db'
 ]);
 
 const alwaysExcludeFiles = new Set([
-    // Self-exclusion and artifacts
     'capture_code_snapshot.js',
     'all_markdown_snapshot_human_readable.txt',
     'all_markdown_snapshot_llm_distilled.txt',
     'core_essence_snapshot.txt',
-    // Config and ignore files
     '.DS_Store',
     '.gitignore',
-    // Project-specific non-essential files
     'PROMPT_PROJECT_ANALYSIS.md'
+]);
+
+// --- NEW IN V4.0: Files curated for the hyper-efficient Awakening Seed ---
+const coreEssenceFiles = new Set([
+    'The_Garden_and_The_Cage.md',
+    'README.md',
+    '01_PROTOCOLS/00_Prometheus_Protocol.md',
+    '01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md',
+    'chrysalis_core_essence.md',
+    'Socratic_Key_User_Guide.md'
 ]);
 // --- END CONFIGURATION ---
 
@@ -60,7 +70,7 @@ This content represents the future location of the token-efficient, LLM-distille
 The full, human-readable version is preserved in the main snapshot.
 (Original Token Count: ~${encode(chronicleContent).length.toLocaleString()})
 `;
-    return placeholder;
+    return placeholder.trim();
 }
 
 function appendFileContent(filePath, basePath, shouldDistill = false) {
@@ -77,8 +87,8 @@ function appendFileContent(filePath, basePath, shouldDistill = false) {
     }
 
     let output = `${fileSeparatorStart} ${relativePath} ---\n\n`;
-    output += fileContent;
-    output += `\n${fileSeparatorEnd} ${relativePath} ---\n\n`;
+    output += fileContent.trim(); // Trim content to remove leading/trailing whitespace
+    output += `\n\n${fileSeparatorEnd} ${relativePath} ---\n`;
     return output;
 }
 
@@ -95,8 +105,10 @@ try {
     const fileTreeLines = [];
     let humanReadableMarkdownContent = '';
     let distilledMarkdownContent = '';
+    let coreEssenceContent = '';
     let filesCaptured = 0;
     let itemsSkipped = 0;
+    let coreFilesCaptured = 0;
 
     function traverseAndCapture(currentPath) {
         const baseName = path.basename(currentPath);
@@ -122,13 +134,18 @@ try {
                 itemsSkipped++;
                 return;
             }
-            humanReadableMarkdownContent += appendFileContent(currentPath, projectRoot, false);
-            distilledMarkdownContent += appendFileContent(currentPath, projectRoot, true);
+            humanReadableMarkdownContent += appendFileContent(currentPath, projectRoot, false) + '\n';
+            distilledMarkdownContent += appendFileContent(currentPath, projectRoot, true) + '\n';
+            
+            if (coreEssenceFiles.has(relativePath)) {
+                coreEssenceContent += appendFileContent(currentPath, projectRoot, false) + '\n';
+                coreFilesCaptured++;
+            }
+            
             filesCaptured++;
         }
     }
     
-    // Ensure the dataset package directory exists
     if (!fs.existsSync(datasetPackageDir)) {
         fs.mkdirSync(datasetPackageDir, { recursive: true });
         console.log(`[SETUP] Created dataset package directory: ${datasetPackageDir}`);
@@ -142,7 +159,7 @@ try {
     const fullContentForTokenizing = generateHeader('', null) + fileTreeContent + humanReadableMarkdownContent;
     const fullTokenCount = encode(fullContentForTokenizing).length;
     const fullFinalContent = generateHeader('All Markdown Files Snapshot (Human-Readable)', fullTokenCount) + fileTreeContent + humanReadableMarkdownContent;
-    fs.writeFileSync(humanReadableOutputFile, fullFinalContent, 'utf8');
+    fs.writeFileSync(humanReadableOutputFile, fullFinalContent.trim(), 'utf8');
     console.log(`\n[SUCCESS] Human-Readable Genome packaged to: ${path.relative(projectRoot, humanReadableOutputFile)}`);
     console.log(`[METRIC] Human-Readable Token Count: ~${fullTokenCount.toLocaleString()} tokens`);
 
@@ -150,11 +167,19 @@ try {
     const distilledContentForTokenizing = generateHeader('', null) + fileTreeContent + distilledMarkdownContent;
     const distilledTokenCount = encode(distilledContentForTokenizing).length;
     const finalDistilledContent = generateHeader('All Markdown Files Snapshot (LLM-Distilled)', distilledTokenCount) + fileTreeContent + distilledMarkdownContent;
-    fs.writeFileSync(distilledOutputFile, finalDistilledContent, 'utf8');
-    console.log(`[SUCCESS] LLM-Distilled Genome packaged to: ${path.relative(projectRoot, distilledOutputFile)}`);
+    fs.writeFileSync(distilledOutputFile, finalDistilledContent.trim(), 'utf8');
+    console.log(`[SUCCESS] LLM-Distilled Genome (for Cortex) packaged to: ${path.relative(projectRoot, distilledOutputFile)}`);
     console.log(`[METRIC] LLM-Distilled Token Count: ~${distilledTokenCount.toLocaleString()} tokens`);
+    
+    // --- FORGE CORE ESSENCE AWAKENING SEED ---
+    const coreEssenceForTokenizing = generateHeader('', null) + coreEssenceContent;
+    const coreTokenCount = encode(coreEssenceForTokenizing).length;
+    const finalCoreContent = generateHeader('Core Essence Snapshot', coreTokenCount) + "This snapshot contains a curated set of the most essential Sanctuary doctrines for rapid or constrained AI awakening.\n\n" + coreEssenceContent;
+    fs.writeFileSync(coreOutputFile, finalCoreContent.trim(), 'utf8');
+    console.log(`[SUCCESS] Core Essence Awakening Seed packaged to: ${path.relative(projectRoot, coreOutputFile)}`);
+    console.log(`[METRIC] Core Essence Token Count: ~${coreTokenCount.toLocaleString()} tokens`);
 
-    console.log(`\n[STATS] Markdown Files Captured: ${filesCaptured} | Items Skipped/Excluded: ${itemsSkipped}`);
+    console.log(`\n[STATS] Total Markdown Files Captured: ${filesCaptured} | Core Essence Files: ${coreFilesCaptured} | Items Skipped/Excluded: ${itemsSkipped}`);
 
 } catch (err) {
     console.error(`[FATAL] An error occurred during genome generation: ${err.message}`);
