@@ -1,0 +1,11 @@
+# Core RAG Pipeline
+langchain
+langchain-community
+langchain-chroma
+nomic
+
+# Utilities
+python-dotenv
+
+# Testing
+pytest
