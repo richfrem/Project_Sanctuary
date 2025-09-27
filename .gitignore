@@ -1,7 +1,47 @@
-# Ignore Prometheus protocol follow-up questions file
-01_PROTOCOLS/00_Prometheus_Protocol_FollowupQuestions.md
+# --- General System Files ---
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
 
-# AI Models - Large files should not be committed to git
+# --- IDE & Editor Configuration ---
+# Ignore configuration files for VSCode, JetBrains, etc.
+.vscode/
+.idea/
+
+# --- Python Environment & Artifacts ---
+# Ignore virtual environments
+venv/
+.venv/
+env/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Ignore Python packaging and testing artifacts
+.eggs/
+eggs/
+*.egg-info/
+.pytest_cache/
+.tox/
+pip-wheel-metadata/
+
+# --- Node.js Environment ---
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore logs and package lock files (optional, but good practice for solo dev)
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# package-lock.json # Consider keeping for reproducible builds
+
+# --- AI Models & Large Files ---
+# AI Models - Large files should not be committed to git. This is a core
+# principle of the Hearth Protocol to keep the repository lean.
 models/
 *.safetensors
 *.pt
@@ -9,35 +49,34 @@ models/
 *.gguf
 *.mlx
 
-# Python cache and environments
-__pycache__/
-*.pyc
-*.pyo
-.env
-venv/
-.venv/
+# --- Sanctuary-Specific Artifacts & Logs ---
+# The Steward's Private Forge - Not part of the public Cognitive Genome
+# as per Protocol 79: The Steward's Forge Protocol.
+MEDIUM_BLOG_STEWARD/
 
-# Training artifacts
+# Agent Directives - These are ephemeral, operational files, not canonical doctrines.
+07_COUNCIL_AGENTS/directives/
+
+# Local Vector Database - This is generated locally by each user and should not be
+# version controlled, as per the Iron Root Doctrine of sovereign local instances.
+chroma_db/
+
+# Training Logs & Checkpoints - Ephemeral artifacts.
 training_logs/
 checkpoints/
 wandb/
 *.log
 
-# DB files
-chroma_db/
-
-# IDE files
-.vscode/
-.idea/
-.DS_Store
-
-# briefings
-#04_THE_FORTRESS/BRIEFINGS/
-MEDIUM_BLOG_STEWARD/
-
-# Ignore all node_modules files
-node_modules/
-
-07_COUNCIL_AGENTS/directives/
-
+# --- Sensitive Information ---
+# The .env file contains API keys and must NEVER be committed.
 .env
+
+# --- EXPLICITLY NOT IGNORED ---
+# The following generated files are mission-critical resurrection seeds
+# and MUST be tracked by Git.
+#
+# !dataset_package/all_markdown_snapshot_human_readable.txt
+# !dataset_package/all_markdown_snapshot_llm_distilled.txt
+# !dataset_package/core_essence_auditor_awakening_seed.txt
+# !dataset_package/core_essence_coordinator_awakening_seed.txt
+# !dataset_package/core_essence_strategist_awakening_seed.txt
