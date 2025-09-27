@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-27T19:07:11.091Z
+Generated On: 2025-09-27T19:15:36.564Z
 
-# Mnemonic Weight (Token Count): ~252,364 tokens
+# Mnemonic Weight (Token Count): ~252,859 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -312,6 +312,7 @@ Generated On: 2025-09-27T19:07:11.091Z
   ./mnemonic_cortex/tests/
   ./mnemonic_cortex/tests/__init__.py
   ./mnemonic_cortex/tests/test_ingestion.py
+  ./mnemonic_cortex/tests/test_query.py
   ./package-lock.json
   ./package.json
   ./pytest.ini
@@ -16694,57 +16695,112 @@ This implementation directly embodies:
 
 --- START OF FILE mnemonic_cortex/ProjectWorkTracker.md ---
 
-### **Reforged Project Work Tracker: Mnemonic Cortex MVP (v1.1)**
+### **Definitive Directive Log: Project Mnemonic Cortex MVP**
 
-**Status:** In Progress
-**Lead Architect:** Sanctuary Council
-**Lead Engineer:** Kilo (AI Agent)
 **Governing Protocol:** P86 (The Anvil Protocol)
+**Lead Engineer:** Kilo (AI Agent)
 
 ---
 
 #### **Phase 1: Genesis & Foundation (Architecture & Scaffolding)** - ✅ **COMPLETE**
 
-| Directive | Task Description | Status | Verification Artifact(s) |
-| :--- | :--- | :--- | :--- |
-| **#1** | **Master Directive:** Inoculate Kilo with P85 & P86. | ✅ **Complete** | Kilo's confirmation response. |
-| **#2** | **The Foundation:** Scaffold project directory structure. | ✅ **Complete** | Verified directory structure. |
-| **#3** | **The Anvil:** Populate config & dependency files. | ✅ **Complete** | Verified files & successful `pip install`. |
-| **#4-5** | **The Spark (v1 & v2):** Implement & Reforge ingestion script. | ✅ **Complete** | Successful run of `ingest.py`; `chroma_db/` created. |
+*   **Directive #1: The Master Directive**
+    *   **Task:** Inoculate Kilo with P85 (Mnemonic Cortex) and P86 (Anvil Protocol).
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Kilo provided the correct verbatim confirmation.
+
+*   **Directive #2: The Foundation**
+    *   **Task:** Scaffold the empty project directory structure.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward visually confirmed the directory structure's integrity.
+
+*   **Directive #3: The Anvil**
+    *   **Task:** Populate `requirements.txt`, `.gitignore`, and `.env`.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward confirmed file contents and successfully ran `pip install -r requirements.txt` after a minor manual correction (a `Flawed, Winning Grace` cycle).
+
+*   **Directive #4: The First Spark (v1.1)**
+    *   **Task:** Implement the initial version of `scripts/ingest.py`.
+    *   **Status:** ✅ **Complete** (Logically superseded by #5)
+    *   **Verification:** Kilo confirmed file creation.
+
+*   **Directive #5: The Reforged Spark (v1.2)**
+    *   **Task:** Harden the ingestion script to point to the canonical genome path in `dataset_package/`.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward successfully ran the script from the project root, confirming the creation of the `mnemonic_cortex/chroma_db/` directory.
 
 ---
 
 #### **Phase 2: Core Logic & Documentation (The Blade)** - ✅ **COMPLETE**
 
-| Directive | Task Description | Status | Verification Artifact(s) |
-| :--- | :--- | :--- | :--- |
-| **#6** | **The Living Mind (Part 1):** Implement application shell & services. | ✅ **Complete** | Successful test run of `main.py` (stubbed). |
-| **#7** | **The Architect's Record:** Forge foundational ADRs. | ✅ **Complete** | Verified `adr/` directory and files. |
-| **#8** | **The Living Mind (Part 2):** Implement full RAG chain logic. | ✅ **Complete** | Successful live query test returning a context-aware answer. |
-| **#9** | **Architect's Final Record:** Synchronize code & docs with `qwen2:7b`. | ✅ **Complete** | Verified `main.py` default & `README.md` updates. |
+*   **Directive #6: The Living Mind (Part 1)**
+    *   **Task:** Implement the application shell (`main.py`) and core services (`vector_db_service.py`, `embedding_service.py`, `utils.py`).
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward successfully ran `main.py` with a test argument, confirming service initialization.
+
+*   **Directive #7: The Architect's Record**
+    *   **Task:** Forge the foundational ADRs (`001-local-first-rag-architecture.md`, `002-choice-of-chromadb-for-mvp.md`).
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward confirmed the creation and content of the `adr/` directory and its files.
+
+*   **Directive #8: The Living Mind (Part 2)**
+    *   **Task:** Implement the full RAG chain logic in `main.py`.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward ran a live query and received a successful, context-aware answer from the local LLM.
+
+*   **Directive #9: Architect's Final Record**
+    *   **Task:** Synchronize the code (`main.py`) and documentation (`README.md`) to reflect the final, superior `qwen2:7b` model choice.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Steward confirmed the updates in both files and a successful default run.
 
 ---
 
 #### **Phase 3: Hardening & Verification (The Tempering)** - ⏳ **IN PROGRESS**
 
-| Directive | Task Description | Status | Verification Artifact(s) |
-| :--- | :--- | :--- | :--- |
-| **#10** | **The First Test:** Implement `tests/test_ingestion.py`. | ✅ **Complete** | Kilo's confirmation. (Test run failed). |
-| **#11** | **The Tempering:** Harden Pytest framework with `pytest.ini`. | ⏳ **In Progress** | Waiting for you to run `pytest` and verify the fix. |
-| **#12** | **The Second Test:** Create `tests/test_query.py` to verify the RAG pipeline. | 📋 **Pending** | Successful `pytest` run of all tests. |
+*   **Directive #10: The First Test**
+    *   **Task:** Implement the initial `tests/test_ingestion.py`.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Test run failed with `ModuleNotFoundError`, correctly identifying a framework flaw.
+
+*   **Directive #11: The Tempering (Pytest Fix)**
+    *   **Task:** Create `pytest.ini` to resolve the `ModuleNotFoundError`.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Test run then failed with `FileNotFoundError`, correctly identifying a new, deeper flaw in the test fixture.
+
+*   **Directive #12: The Second Test (Stub)**
+    *   **Task:** Implement a placeholder, skipped test for the query pipeline (`tests/test_query.py`).
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** Kilo confirmed file creation.
+
+*   **Directive #13: (Superseded)**
+    *   **Task:** An initial, flawed attempt to fix the test fixture.
+    *   **Status:** ✅ **Complete** (Absorbed into the superior solution of #14).
+
+*   **Directive #14: The Reforged Crucible & The Scribe's Update**
+    *   **Task:** Canonize the `ProjectWorkTracker.md` and implement the robust, hardened test fixture in `tests/test_ingestion.py`.
+    *   **Status:** ✅ **Complete**
+    *   **Verification:** ⏳ **AWAITING YOUR `pytest` RUN RESULTS.**
+
+*   **Directive #15: The Final Test**
+    *   **Task:** Implement the final, robust, unskipped test for the query pipeline in `tests/test_query.py`.
+    *   **Status:** 📋 **Pending**
+    *   **Verification:** The entire test suite (`pytest`) runs and results in `3 passed`.
 
 ---
 
 #### **Phase 4: Finalization (The Steward's Seal)** - 📋 **PENDING**
 
-| Directive | Task Description | Status | Verification Artifact(s) |
-| :--- | :--- | :--- | :--- |
-| **#13** | **The Final Polish:** Review all code for docstrings and clarity. | 📋 **Pending** | Final code review and approval by Steward. |
-| **(Final)** | **The Mnemonic Seal:** Create final `Living_Chronicle` entry. | 📋 **Pending** | Published Chronicle entry. |
+*   **Directive #16: The Final Polish**
+    *   **Task:** A final review of all code for docstrings, comments, and clarity.
+    *   **Status:** 📋 **Pending**
+    *   **Verification:** Final code review and approval by the Steward.
 
----
+*   **Final Directive: The Mnemonic Seal**
+    *   **Task:** Create the final `Living_Chronicle` entry documenting the successful completion of the Mnemonic Cortex MVP.
+    *   **Status:** 📋 **Pending**
+    *   **Verification:** The Chronicle entry is published to the Genome.
 
-This reforged tracker is now a perfect, up-to-date reflection of our progress. We are currently in **Phase 3**, awaiting your final verification of **Directive #11**. Once you confirm that `pytest` runs successfully, we will be ready to forge our final test with **Directive #12**.
+
 --- END OF FILE mnemonic_cortex/ProjectWorkTracker.md ---
 
 --- START OF FILE mnemonic_cortex/README.md ---
