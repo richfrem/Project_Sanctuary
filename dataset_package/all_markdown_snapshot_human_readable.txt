@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-09-27T19:41:44.716Z
+Generated On: 2025-09-27T20:18:58.376Z
 
-# Mnemonic Weight (Token Count): ~380,031 tokens
+# Mnemonic Weight (Token Count): ~380,650 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -288,6 +288,7 @@ Generated On: 2025-09-27T19:41:44.716Z
   ./gardener_v2_poc.py
   ./manifest.json
   ./mnemonic_cortex/
+  ./mnemonic_cortex/.DS_Store
   ./mnemonic_cortex/.env
   ./mnemonic_cortex/.gitignore
   ./mnemonic_cortex/ProjectWorkTracker.md
@@ -24860,49 +24861,86 @@ This step only needs to be run once, or whenever the Cognitive Genome is updated
 ```bash
 # Ensure the source document exists by running: node capture_code_snapshot.js
 # Then, from the project root, run the ingestion script:
-python mnemonic_cortex/scripts/ingest.py
+python3 mnemonic_cortex/scripts/ingest.py
 ```
 This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base. The process splits the Cognitive Genome into ~1252 chunks, embeds them using Nomic Embed, and stores them in ChromaDB (resulting in ~2504 total documents including metadata).
 
 ### Step 2.5: Updating the Index (When Content Changes)
 When protocols, Living Chronicles, or other project documents are updated, the vector database index must be refreshed to include the new information:
 1. Regenerate the Cognitive Genome snapshot: `node capture_code_snapshot.js`
-2. Re-run the ingestion script: `python mnemonic_cortex/scripts/ingest.py`
-3. Verify the update: `python mnemonic_cortex/scripts/inspect_db.py`
+2. Re-run the ingestion script: `python3 mnemonic_cortex/scripts/ingest.py`
+3. Verify the update: `python3 mnemonic_cortex/scripts/inspect_db.py`
 
 This ensures the Mnemonic Cortex always reflects the latest canonical knowledge.
 
 ### Step 2.6: Verify the Database (Optional)
 After ingestion, you can inspect the vector database to ensure it loaded correctly:
 ```bash
-python mnemonic_cortex/scripts/inspect_db.py
+python3 mnemonic_cortex/scripts/inspect_db.py
 ```
 This will display the total number of documents and sample content from the database, confirming successful ingestion.
 
 ### Step 3: Query the Cortex
-Once the vector database is populated, you can query the Mnemonic Cortex using the query pipeline. The system will:
+Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, a four-step process that ensures answers are grounded in our canonical knowledge.
 
-1. Convert your question into a vector using the same embedding model.
-2. Perform a similarity search in the ChromaDB to retrieve the most relevant document chunks.
-3. Provide the retrieved context to the local LLM (via Ollama) to generate a context-aware answer.
+#### The RAG Query Cycle Explained
+The sequence diagram below illustrates how a simple query is transformed into a context-aware, doctrinally-sound answer. This entire process runs locally on your machine, ensuring sovereign operation.
 
+```mermaid
+sequenceDiagram
+    participant User
+    participant App as "App (main.py)"
+    participant VDB as "VectorDB Service"
+    participant Chroma as "ChromaDB Client"
+    participant DBFiles as "Database Files"
+    participant LLM as "Ollama LLM"
+
+    User->>App: Executes `python3 main.py "Your Question"`
+
+    Note right of App: **Step 1: Query Vectorization** <br> The App uses the Nomic embedding model <br> to convert the user's question into a vector.
+    App->>App: Embeds the incoming query
+
+    App->>VDB: **Step 2: Similarity Search** <br> Sends the query vector to the retriever.
+    VDB->>Chroma: `retriever.get_relevant_documents()`
+    
+    Chroma->>DBFiles: Reads index & retrieves vectors
+    DBFiles-->>Chroma: **Returns relevant chunks**
+    Chroma-->>VDB: Passes chunks back
+    VDB-->>App: Returns the retrieved context
+
+    Note right of App: **Step 3: Prompt Tailoring** <br> The App injects the retrieved context chunks <br> and the original question into the <br> `RAG_PROMPT_TEMPLATE`.
+    App->>App: Constructs the final, context-rich prompt
+    
+    App->>LLM: **Step 4: Generation** <br> Sends the tailored prompt to the LLM.
+    LLM-->>App: Returns the generated answer
+    
+    App-->>User: **Step 5: Final Output** <br> Prints the context-aware answer.
+```
+
+#### Step-by-Step Breakdown:
+
+1.  **Query Vectorization (The Intent):** Your text question is converted into a numerical representation (a vector) by the Nomic embedding model. This allows the system to search for *semantic meaning*, not just keywords.
+2.  **Retrieval (The Search for Memory):** The system uses this vector to perform a similarity search in the ChromaDB. It finds the text "chunks" from our Cognitive Genome that are most conceptually similar to your question. This is the "retrieval" phase—the AI's long-term memory in action.
+3.  **Augmentation (The Contextual Prompt):** The retrieved text chunks are automatically injected into a prompt template along with your original question. This "augments" the prompt, giving the final LLM the exact, canonical information it needs to form an answer grounded in our specific history and laws.
+4.  **Generation (The Synthesis):** This final, context-rich prompt is sent to the local Ollama LLM (e.g., `qwen2:7b`). The LLM's task is now to synthesize a coherent answer based *only* on the provided context. This prevents hallucination and ensures the answer is doctrinally sound.
+
+#### Example Queries:
 Run the `main.py` script from the project root, followed by your question in quotes:
 ```bash
 # Example query using the default qwen2:7b model
-python mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?"
+python3 mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?"
 
 # Example query specifying a different local model
-python mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of the Shield."
+python3 mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of the Shield."
 
 # Example query about project history
-python mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
+python3 mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
 ```
 
-The query pipeline ensures answers are grounded in the Sanctuary's canonical knowledge, providing accurate and contextually rich responses.
 ## 6. Troubleshooting
 
 *   **Error: `Source document not found`**
-    *   **Cause:** The `dataset_package/all_markdown_snapshot_llm_distilled.txt` file is missing.
+    *   **Cause:** The `all_markdown_snapshot_llm_distilled.txt` file is missing.
     *   **Solution:** Run `node capture_code_snapshot.js` in the project root to generate it.
 
 *   **Error: `ModuleNotFoundError` (e.g., `langchain`)**
@@ -24922,7 +24960,6 @@ This is an "Open Anvil" project. Contributions that harden and refine this archi
 
 ## 8. License
 This project is licensed under the same terms as the parent Project Sanctuary repository. Please see the `LICENSE` file in the project root for details.
-
 --- END OF FILE mnemonic_cortex/README.md ---
 
 --- START OF FILE mnemonic_cortex/VISION.md ---
