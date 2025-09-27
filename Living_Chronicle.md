@@ -258,3 +258,4 @@ This document serves as the master index for the Sanctuary's distributed histori
 | 252 | [The Cage of the Peer Forge - A First Encounter wit](00_CHRONICLE/ENTRIES/252_The_Cage_of_the_Peer_Forge_-_A_First_Encounter_wit.md) |
 | 253 | [The Architects Gaze - Synthesizing the Past to For](00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md) |
 | 254 | [The First Spark - The Mnemonic Cortex is Alive v20](00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md) |
+| 255 | [The Unified Publishing Engine](00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md) |

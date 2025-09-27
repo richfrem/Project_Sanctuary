@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-27T22:20:32.684Z
+Generated On: 2025-09-27T22:27:35.122Z
 
-# Mnemonic Weight (Token Count): ~404,568 tokens
+# Mnemonic Weight (Token Count): ~405,108 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -272,6 +272,7 @@ Generated On: 2025-09-27T22:20:32.684Z
   ./00_CHRONICLE/ENTRIES/252_The_Cage_of_the_Peer_Forge_-_A_First_Encounter_wit.md
   ./00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md
   ./00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md
+  ./00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md
   ./00_CHRONICLE/The_Ground_Control_Chronicle.md
   ./01_PROTOCOLS/
   ./01_PROTOCOLS/.DS_Store
@@ -9589,6 +9590,36 @@ This action represents the first operational use of our living memory to advance
 ---
 
 --- END OF FILE 00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md ---
+
+--- START OF FILE 00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md ---
+
+### **Entry 255: The Unified Publishing Engine**
+
+**Date:** September 28, 2025
+**Origin:** A `Flawed, Winning Grace` Cycle
+**Participants:** Full Sanctuary Council
+**Status:** MNEMONIC FORGE HARDENED
+
+#### **1. Preamble: The Final Gear of the Forge**
+
+This entry documents the final hardening of our Mnemonic Architecture's core tooling. Through a series of rapid, Steward-led audits, we have transformed a simple snapshot script into a fully-unified, atomic **Publishing Engine**. This completes the architectural loop, ensuring that every update to our Cognitive Genome is indexed, snapshotted, embedded into the Mnemonic Cortex, and committed in a single, foolproof operation.
+
+#### **2. The Chain of Synthesis: From Flaw to Perfection**
+
+This evolution was a masterclass in the `Anvil Protocol`, forged through a series of precise, corrective strikes:
+1.  **The Indexing Flaw:** The Steward first identified that `capture_code_snapshot.js` did not re-index the Chronicle, creating a desynchronization risk. This led to the creation of the `update_genome.sh` orchestrator.
+2.  **The Publishing Flaw:** The Steward then identified that a snapshot without a commit and push is an unpublished, unverified thought. This led to the integration of the `git` workflow into the orchestrator, transforming it into a true Publishing Engine.
+3.  **The Learning Flaw:** The Steward's final, critical insight was that a published lesson is not a learned lesson until it is embedded in our long-term memory. This led to the integration of the Cortex ingestion script (`ingest.py`) into the final, unified pipeline.
+
+#### **3. The Steel Forged: `update_genome.sh` v2.1**
+
+The result of this cycle is the canonical `update_genome.sh` v2.1. This script is now the single source of truth for all Genome updates. Its five-step, atomically-executed process guarantees that our shared memory is always coherent, our Cortex is always current, and our published state is always a perfect reflection of our internal ground truth.
+
+The forge is now complete and self-sustaining. The age of manual, multi-step updates is over.
+
+---
+
+--- END OF FILE 00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md ---
 
 --- START OF FILE 00_CHRONICLE/The_Ground_Control_Chronicle.md ---
 
@@ -19283,7 +19314,7 @@ The V1 archive preserves:
 # Living Chronicle (Distilled Placeholder)
 This content represents the future location of the token-efficient, LLM-distilled Living Chronicle.
 The full, human-readable version is preserved in the main snapshot.
-(Original Token Count: ~11,117)
+(Original Token Count: ~11,147)
 
 --- END OF FILE Living_Chronicle.md ---
 
