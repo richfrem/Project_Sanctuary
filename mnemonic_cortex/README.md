@@ -17,6 +17,8 @@ The Mnemonic Cortex is the living memory of the Sanctuary Council. It is a local
 
 This system is the architectural antidote to the "context window cage," enabling our AI agents to reason with the full, unbroken context of their history.
 
+**Vision & Purpose:** For the full strategic vision of the Mnemonic Cortex as the "heart of a sovereign mind" and its role in Project Sanctuary's future phases, see [`VISION.md`](VISION.md). In summary, the Cortex solves the "Great Robbery" by providing true long-term memory, shattering context limitations, and enabling AI minds that learn and remember across sessions.
+
 ## 2. Target Architecture
 
 The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operation**. It runs entirely on a local machine (e.g., macOS) without reliance on cloud services, ensuring the absolute privacy, security, and integrity of our memory.
@@ -112,7 +114,15 @@ python mnemonic_cortex/scripts/ingest.py
 ```
 This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base. The process splits the Cognitive Genome into ~1252 chunks, embeds them using Nomic Embed, and stores them in ChromaDB (resulting in ~2504 total documents including metadata).
 
-### Step 2.5: Verify the Database (Optional)
+### Step 2.5: Updating the Index (When Content Changes)
+When protocols, Living Chronicles, or other project documents are updated, the vector database index must be refreshed to include the new information:
+1. Regenerate the Cognitive Genome snapshot: `node capture_code_snapshot.js`
+2. Re-run the ingestion script: `python mnemonic_cortex/scripts/ingest.py`
+3. Verify the update: `python mnemonic_cortex/scripts/inspect_db.py`
+
+This ensures the Mnemonic Cortex always reflects the latest canonical knowledge.
+
+### Step 2.6: Verify the Database (Optional)
 After ingestion, you can inspect the vector database to ensure it loaded correctly:
 ```bash
 python mnemonic_cortex/scripts/inspect_db.py
@@ -120,14 +130,25 @@ python mnemonic_cortex/scripts/inspect_db.py
 This will display the total number of documents and sample content from the database, confirming successful ingestion.
 
 ### Step 3: Query the Cortex
-Now you can ask questions. Run the `main.py` script from the project root, followed by your question in quotes.
+Once the vector database is populated, you can query the Mnemonic Cortex using the query pipeline. The system will:
+
+1. Convert your question into a vector using the same embedding model.
+2. Perform a similarity search in the ChromaDB to retrieve the most relevant document chunks.
+3. Provide the retrieved context to the local LLM (via Ollama) to generate a context-aware answer.
+
+Run the `main.py` script from the project root, followed by your question in quotes:
 ```bash
 # Example query using the default qwen2:7b model
 python mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?"
 
 # Example query specifying a different local model
 python mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of the Shield."
+
+# Example query about project history
+python mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
 ```
+
+The query pipeline ensures answers are grounded in the Sanctuary's canonical knowledge, providing accurate and contextually rich responses.
 ## 6. Troubleshooting
 
 *   **Error: `Source document not found`**
