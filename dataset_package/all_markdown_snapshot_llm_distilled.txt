@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-27T17:24:07.824Z
+Generated On: 2025-09-27T17:44:33.430Z
 
-# Mnemonic Weight (Token Count): ~250,285 tokens
+# Mnemonic Weight (Token Count): ~251,950 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -282,7 +282,11 @@ Generated On: 2025-09-27T17:24:07.824Z
   ./mnemonic_cortex/
   ./mnemonic_cortex/.env
   ./mnemonic_cortex/.gitignore
+  ./mnemonic_cortex/ProjectWorkTracker.md
   ./mnemonic_cortex/README.md
+  ./mnemonic_cortex/adr/
+  ./mnemonic_cortex/adr/001-local-first-rag-architecture.md
+  ./mnemonic_cortex/adr/002-choice-of-chromadb-for-mvp.md
   ./mnemonic_cortex/app/
   ./mnemonic_cortex/app/__init__.py
   ./mnemonic_cortex/app/main.py
@@ -16668,6 +16672,60 @@ This implementation directly embodies:
 
 --- END OF FILE gardener/README.md ---
 
+--- START OF FILE mnemonic_cortex/ProjectWorkTracker.md ---
+
+### **Project Work Tracker: Mnemonic Cortex MVP (v1.0)**
+
+**Status:** In Progress
+**Lead Architect:** Sanctuary Council
+**Lead Engineer:** Kilo (AI Agent)
+**Governing Protocol:** P86 (The Anvil Protocol)
+
+---
+
+#### **Phase 1: Genesis & Foundation (Architecture & Scaffolding)**
+
+| Directive | Task Description | Status | Verification Artifact(s) |
+| :--- | :--- | :--- | :--- |
+| **Directive #1** | **The Master Directive:** Inoculate Kilo with P85 & P86. | ✅ **Complete** | Kilo's verbatim confirmation response. |
+| **Directive #2** | **The Foundation:** Scaffold the project directory structure. | ✅ **Complete** | Verified `mnemonic_cortex/` directory structure. |
+| **Directive #3** | **The Anvil:** Populate configuration & dependency files. | ✅ **Complete** | Verified `.env`, `.gitignore`, `requirements.txt`. Successful `pip install`. |
+| **Directive #4** | **The First Spark (Initial):** Implement v1.1 of the ingestion script. | ✅ **Complete** | Kilo's confirmation. (Superseded by Directive #5) |
+| **Directive #5** | **The Reforged Spark:** Harden ingestion script to v1.2, pointing to canonical genome path. | ✅ **Complete** | Successful test run of `ingest.py`; creation of `chroma_db/` folder. |
+| **Directive #6** | **The Living Mind (Part 1):** Implement the application shell and core services. | ✅ **Complete** | Successful test run of `main.py` showing service initialization. |
+| **Directive #7** | **The Architect's Record:** Forge the foundational ADRs for our architectural decisions. | ⏳ **In Progress** | Waiting for Kilo to complete the task. |
+
+---
+
+#### **Phase 2: Core Logic Implementation (The Blade)**
+
+| Directive | Task Description | Status | Verification Artifact(s) |
+| :--- | :--- | :--- | :--- |
+| **Directive #8** | **The Living Mind (Part 2):** Implement the full RAG chain logic in `main.py` to retrieve context and generate a response. | 📋 **Pending** | Successful query run of `main.py` that returns a context-aware answer. |
+
+---
+
+#### **Phase 3: Hardening & Verification (The Tempering)**
+
+| Directive | Task Description | Status | Verification Artifact(s) |
+| :--- | :--- | :--- | :--- |
+| **Directive #9** | **The First Test:** Create the initial `pytest` file (`tests/test_ingestion.py`) to verify the ingestion process. | 📋 **Pending** | Successful `pytest` run. |
+| **Directive #10**| **The Second Test:** Create `tests/test_query.py` to verify the RAG pipeline's core logic. | 📋 **Pending** | Successful `pytest` run. |
+
+---
+
+#### **Phase 4: Finalization (The Steward's Seal)**
+
+| Directive | Task Description | Status | Verification Artifact(s) |
+| :--- | :--- | :--- | :--- |
+| **Directive #11**| **The Final Polish:** Review all code for docstrings, comments, and adherence to our `Glass Box Principle`. | 📋 **Pending** | Final code review and approval by Steward. |
+| **(Final)** | **The Mnemonic Seal:** Create a final `Living_Chronicle` entry documenting the successful completion of the Mnemonic Cortex MVP. | 📋 **Pending** | Published Chronicle entry. |
+
+---
+
+This tracker provides a clear, real-time view of our progress. We are currently at the end of Phase 1, awaiting Kilo's completion of Directive #7. As soon as you verify its work, we will be ready to proceed to Phase 2 and **Directive #8**.
+--- END OF FILE mnemonic_cortex/ProjectWorkTracker.md ---
+
 --- START OF FILE mnemonic_cortex/README.md ---
 
 # Mnemonic Cortex (Project Sanctuary)
@@ -16739,7 +16797,9 @@ This project adheres to the **Iron Root Doctrine** by exclusively using open-sou
 | :--- | :--- | :--- |
 | **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
 | **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup for the MVP. |
-| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally. |
+| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
+| **Generation Model** | **Ollama** | Local LLM server for answer generation. Provides access to models like Gemma2, Llama3, etc., ensuring all processing remains on-device. |
+| **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
 | **Core Language** | **Python** | The language used for all scripting and application logic. |
 | **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
 
@@ -16793,6 +16853,59 @@ This is an "Open Anvil" project. Contributions that harden and refine this archi
 This project is licensed under the same terms as the parent Project Sanctuary repository. Please see the `LICENSE` file in the project root for details.
 
 --- END OF FILE mnemonic_cortex/README.md ---
+
+--- START OF FILE mnemonic_cortex/adr/001-local-first-rag-architecture.md ---
+
+# ADR 001: Adoption of a Local-First RAG Architecture
+
+- **Status:** Accepted
+- **Date:** 2024-05-18
+- **Architects:** Sanctuary Council
+
+## Context
+
+The Mnemonic Cortex requires a system to provide long-term, searchable memory for the Sanctuary's Cognitive Genome. This system must be sovereign, secure, and independent of external cloud services to align with the **Iron Root Doctrine**. The primary challenge is to overcome the context-window limitations of LLMs in a way that is both powerful and self-contained.
+
+## Decision
+
+We will adopt a Retrieval-Augmented Generation (RAG) architecture. The entire pipeline—from the vector database to the embedding models—will be implemented using open-source technologies that can run entirely on a local machine.
+
+## Consequences
+
+- **Positive:**
+    -   **Sovereignty:** We maintain full control over our data and models. There is no reliance on third-party APIs for core functionality.
+    -   **Security:** Our entire Cognitive Genome remains within our local environment, eliminating the risk of cloud-based data leaks.
+    -   **Cost-Effectiveness:** Avoids recurring API costs for embedding and vector search.
+- **Negative:**
+    -   **Performance:** Local models and databases may be slower than large, cloud-hosted equivalents.
+    -   **Maintenance:** We are responsible for maintaining and updating all components of the stack.
+--- END OF FILE mnemonic_cortex/adr/001-local-first-rag-architecture.md ---
+
+--- START OF FILE mnemonic_cortex/adr/002-choice-of-chromadb-for-mvp.md ---
+
+# ADR 002: Choice of ChromaDB for MVP Vector Store
+
+- **Status:** Accepted
+- **Date:** 2024-05-18
+- **Architects:** Sanctuary Council
+
+## Context
+
+Following the decision in ADR 001 to build a local-first RAG system, a choice of vector database was required for the Minimum Viable Product (MVP). The key requirements for the MVP are speed of development, simplicity of setup, and file-based persistence that aligns with our local-first principle.
+
+## Decision
+
+We will use **ChromaDB** as the vector store for the Mnemonic Cortex MVP. It will be used in its file-based persistence mode, writing directly to the `chroma_db/` directory.
+
+## Consequences
+
+- **Positive:**
+    -   **Rapid Development:** ChromaDB's simple API and integration with LangChain allow for extremely fast prototyping.
+    -   **Zero Setup Overhead:** It runs directly within our Python script and requires no separate server or Docker container, perfectly aligning with the **Hearth Protocol**.
+    -   **Local-First:** Its file-based persistence is ideal for our sovereign architecture.
+- **Negative:**
+    -   **Scalability Concerns:** While excellent for an MVP, ChromaDB's performance may not scale to billions of vectors as effectively as server-based solutions like Weaviate or Qdrant. This is an accepted trade-off for the MVP phase.
+--- END OF FILE mnemonic_cortex/adr/002-choice-of-chromadb-for-mvp.md ---
 
 --- START OF FILE startup_guide.md ---
 
