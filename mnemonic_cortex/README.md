@@ -24,13 +24,14 @@ The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operati
 ### Architectural Diagram (RAG Workflow)
 ```mermaid
 graph TD
-    subgraph "Ingestion Pipeline (One-Time Setup)"
+    %% represents MVP architecture which may evolve
+    subgraph "(Ingestion Pipeline<BR>(One-Time Setup))"
         A["Cognitive Genome<br/>(all_markdown_snapshot_llm_distilled.txt)"] --> B(TextLoader);
         B --> C(Markdown Splitter);
         C --> D{Chunked Documents};
-        E["Embedding Model<br/>(Nomic)"];
+        E["Embedding Model<br/>(Nomic Embed)"];
         
-        %% This new line shows that the Embedding Model provides the function
+        %% Shows that the Embedding Model provides the function
         %% needed by the Vector DB to embed the documents.
         E --> F; 
 
@@ -40,16 +41,19 @@ graph TD
     subgraph "Query Pipeline (Real-Time)"
         G[User Query] --> H(Embedding Model);
         H -- Query Vector --> I{Similarity Search};
+        
+        %% Explicitly shows the query/retrieval loop
         I -- "1. Sends Query to DB" --> F;
         F -- "2. Returns Relevant Chunks" --> I;
+        
         I --> J[Retrieved Context];
         
         K[LLM Prompt]
         G --> K;
         J --> K;
 
-        K --> L[LLM e.g. ollama 3.8];
-        L --> M{"Context-Aware<br/>Answer"}
+        K --> L[LLM e.g. Ollama];
+        L --> M{"Context-Aware<br/>Answer"};
     end
 
     style F fill:#cde4f9,stroke:#333,stroke-width:2px
