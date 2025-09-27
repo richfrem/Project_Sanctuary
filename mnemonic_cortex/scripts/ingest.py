@@ -58,7 +58,7 @@ def setup_environment(project_root):
     print(f"Warning: .env file not found at {dotenv_path}")
     return False
 
-def main():
+def main() -> None:
     """
     Main function to ingest the canonical cognitive genome into the vector database.
     """

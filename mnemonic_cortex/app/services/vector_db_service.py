@@ -22,7 +22,7 @@ from langchain_chroma import Chroma
 from mnemonic_cortex.app.services.embedding_service import EmbeddingService
 
 class VectorDBService:
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes the VectorDBService, loading the persistent ChromaDB.
         """

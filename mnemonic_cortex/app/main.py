@@ -52,7 +52,7 @@ RAG_PROMPT_TEMPLATE = """
 Based on the context provided, please provide a concise and accurate answer to the question.
 """
 
-def main():
+def main() -> None:
     """
     Main application entry point for querying the Mnemonic Cortex.
     """

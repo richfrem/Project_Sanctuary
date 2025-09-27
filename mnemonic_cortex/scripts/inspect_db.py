@@ -26,7 +26,7 @@ from langchain_chroma import Chroma
 from langchain_nomic import NomicEmbeddings
 
 # This setup is similar to our other scripts to ensure paths are correct
-def find_project_root():
+def find_project_root() -> str:
     current_path = os.path.abspath(os.path.dirname(__file__))
     while True:
         if '.git' in os.listdir(current_path):
@@ -36,11 +36,11 @@ def find_project_root():
             raise FileNotFoundError("Could not find project root (.git folder).")
         current_path = parent_path
 
-def setup_environment(project_root):
+def setup_environment(project_root: str) -> None:
     dotenv_path = os.path.join(project_root, 'mnemonic_cortex', '.env')
     load_dotenv(dotenv_path=dotenv_path)
 
-def main():
+def main() -> None:
     """
     A command-line tool to inspect the contents of the Mnemonic Cortex ChromaDB.
     """

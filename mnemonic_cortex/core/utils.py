@@ -21,7 +21,7 @@ These utilities are foundational and used by both ingestion and query pipelines.
 import os
 from dotenv import load_dotenv
 
-def find_project_root():
+def find_project_root() -> str:
     """Find the project root by ascending from the current script's directory."""
     current_path = os.path.abspath(os.path.dirname(__file__))
     while True:
@@ -32,7 +32,7 @@ def find_project_root():
             raise FileNotFoundError("Could not find the project root (.git folder).")
         current_path = parent_path
 
-def setup_environment(project_root):
+def setup_environment(project_root: str) -> bool:
     """Load environment variables from the .env file in the mnemonic_cortex directory."""
     dotenv_path = os.path.join(project_root, 'mnemonic_cortex', '.env')
     if os.path.exists(dotenv_path):

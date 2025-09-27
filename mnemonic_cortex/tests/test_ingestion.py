@@ -1,3 +1,25 @@
+"""
+Ingestion Pipeline Tests (tests/test_ingestion.py)
+
+This module contains automated tests for the Mnemonic Cortex ingestion pipeline.
+It verifies that the ingestion script can successfully process documents, create embeddings,
+and populate the ChromaDB vector store without errors.
+
+Role in RAG Pipeline:
+- Tests the Ingestion Pipeline's reliability and correctness.
+- Ensures the vector database is properly created and populated.
+- Validates that the system can handle document loading, chunking, embedding, and storage.
+
+Dependencies:
+- pytest: For running the test suite and fixtures.
+- tmpdir_factory: For creating isolated test environments.
+- Ingestion script: Tests the actual ingest.py functionality.
+- ChromaDB and NomicEmbeddings: Implicitly tested through the ingestion process.
+
+Usage:
+    pytest mnemonic_cortex/tests/test_ingestion.py
+"""
+
 import os
 import pytest
 import shutil
@@ -6,7 +28,7 @@ import subprocess
 # --- Test Setup & Fixtures ---
 
 @pytest.fixture(scope="function")
-def setup_test_environment(tmpdir_factory):
+def setup_test_environment(tmpdir_factory) -> str:
     """
     A pytest fixture to create a temporary, isolated project structure
     AND populate it with the necessary source files for testing.
@@ -51,7 +73,7 @@ def setup_test_environment(tmpdir_factory):
 
 # --- Tests ---
 
-def test_ingestion_script_runs_successfully(setup_test_environment, monkeypatch):
+def test_ingestion_script_runs_successfully(setup_test_environment: str, monkeypatch) -> None:
     project_root = setup_test_environment
     monkeypatch.chdir(project_root)
 
@@ -63,7 +85,7 @@ def test_ingestion_script_runs_successfully(setup_test_environment, monkeypatch)
     assert result.returncode == 0, f"Script failed with error:\n{result.stderr}"
     assert "--- Ingestion Process Complete ---" in result.stdout
 
-def test_database_is_created_after_ingestion(setup_test_environment, monkeypatch):
+def test_database_is_created_after_ingestion(setup_test_environment: str, monkeypatch) -> None:
     project_root = setup_test_environment
     monkeypatch.chdir(project_root)
 

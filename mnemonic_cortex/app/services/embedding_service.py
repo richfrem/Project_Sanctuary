@@ -33,6 +33,6 @@ class EmbeddingService:
             print("[EmbeddingService] Nomic embedding model initialized.")
         return cls._instance
 
-    def get_embedding_model(self):
+    def get_embedding_model(self) -> NomicEmbeddings:
         """Returns the initialized embedding model."""
         return self.model

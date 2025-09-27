@@ -1,3 +1,25 @@
+"""
+Query Pipeline Tests (tests/test_query.py)
+
+This module contains automated tests for the Mnemonic Cortex query pipeline.
+It verifies that the main application can process user queries, orchestrate the RAG chain,
+and produce appropriate output without errors.
+
+Role in RAG Pipeline:
+- Tests the Query Pipeline's integration and logic.
+- Ensures the application can initialize services, construct the RAG chain, and handle queries.
+- Validates error handling and output formatting.
+
+Dependencies:
+- pytest: For running the test suite and mocking.
+- unittest.mock: For patching external dependencies.
+- Main application: Tests the actual main.py functionality.
+- LangChain components: Implicitly tested through the RAG chain.
+
+Usage:
+    pytest mnemonic_cortex/tests/test_query.py
+"""
+
 import pytest
 from unittest.mock import patch, MagicMock
 
@@ -12,7 +34,7 @@ from unittest.mock import patch, MagicMock
 @patch('argparse.ArgumentParser.parse_args')
 def test_main_query_flow_successfully(
     mock_parse_args, mock_prompt_template, mock_runnable, mock_db_service, mock_chat_ollama, capsys
-):
+) -> None:
     """
     Tests the entire main RAG pipeline, mocking all external dependencies to ensure
     the logic flows correctly from query to a printed answer.
