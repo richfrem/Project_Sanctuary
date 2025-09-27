@@ -24,10 +24,10 @@ The architecture follows a classic RAG pattern, composed of two core pipelines:
 ```mermaid
 graph TD
     subgraph "Ingestion Pipeline (One-Time Setup)"
-        A[Cognitive Genome<br/>(all_markdown_snapshot.txt)] --> B(TextLoader);
+        A["Cognitive Genome<br/>(all_markdown_snapshot.txt)"] --> B(TextLoader);
         B --> C(Markdown Splitter);
         C --> D{Chunked Documents};
-        E[Embedding Model<br/>(Nomic)] --> F((Vector DB<br/>ChromaDB));
+        E["Embedding Model<br/>(Nomic)"] --> F(("Vector DB<br/>ChromaDB"));
         D -- Embed & Store --> F;
     end
 
@@ -42,7 +42,7 @@ graph TD
         J --> K;
 
         K --> L[LLM];
-        L --> M{Context-Aware<br/>Answer};
+        L --> M{"Context-Aware<br/>Answer"};
     end
 
     style F fill:#cde4f9,stroke:#333,stroke-width:2px
