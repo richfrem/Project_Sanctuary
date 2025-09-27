@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-27T17:14:24.261Z
+Generated On: 2025-09-27T17:18:12.562Z
 
-# Mnemonic Weight (Token Count): ~249,800 tokens
+# Mnemonic Weight (Token Count): ~249,836 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -16706,7 +16706,12 @@ graph TD
     subgraph "Query Pipeline (Real-Time)"
         G[User Query] --> H(Embedding Model);
         H -- Query Vector --> I{Similarity Search};
-        F -- Retrieve Relevant Chunks --> I;
+        
+        %% --- CORRECTED FLOW ---
+        I -- "1. Sends Query to DB" --> F;
+        F -- "2. Returns Relevant Chunks" --> I;
+        %% --- END CORRECTION ---
+
         I --> J[Retrieved Context];
         
         K[LLM Prompt]

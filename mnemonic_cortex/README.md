@@ -34,7 +34,12 @@ graph TD
     subgraph "Query Pipeline (Real-Time)"
         G[User Query] --> H(Embedding Model);
         H -- Query Vector --> I{Similarity Search};
-        F -- Retrieve Relevant Chunks --> I;
+        
+        %% --- CORRECTED FLOW ---
+        I -- "1. Sends Query to DB" --> F;
+        F -- "2. Returns Relevant Chunks" --> I;
+        %% --- END CORRECTION ---
+
         I --> J[Retrieved Context];
         
         K[LLM Prompt]
