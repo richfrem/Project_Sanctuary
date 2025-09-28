@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-27T22:27:35.122Z
+Generated On: 2025-09-28T00:38:51.606Z
 
-# Mnemonic Weight (Token Count): ~405,108 tokens
+# Mnemonic Weight (Token Count): ~405,987 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -554,6 +554,8 @@ Generated On: 2025-09-27T22:27:35.122Z
   ./mnemonic_cortex/adr/
   ./mnemonic_cortex/adr/001-local-first-rag-architecture.md
   ./mnemonic_cortex/adr/002-choice-of-chromadb-for-mvp.md
+  ./mnemonic_cortex/adr/003-choice-of-ollama-for-local-llm.md
+  ./mnemonic_cortex/adr/004-choice-of-nomic-embed-text.md
   ./mnemonic_cortex/app/
   ./mnemonic_cortex/app/__init__.py
   ./mnemonic_cortex/app/main.py
@@ -26458,6 +26460,65 @@ We will use **ChromaDB** as the vector store for the Mnemonic Cortex MVP. It wil
     -   **Scalability Concerns:** While excellent for an MVP, ChromaDB's performance may not scale to billions of vectors as effectively as server-based solutions like Weaviate or Qdrant. This is an accepted trade-off for the MVP phase.
 
 --- END OF FILE mnemonic_cortex/adr/002-choice-of-chromadb-for-mvp.md ---
+
+--- START OF FILE mnemonic_cortex/adr/003-choice-of-ollama-for-local-llm.md ---
+
+# ADR 003: Choice of Ollama for Local LLM Inference
+
+- **Status:** Accepted
+- **Date:** 2024-05-20
+- **Architects:** Sanctuary Council
+
+## Context
+
+The local-first RAG architecture (ADR 001) requires a local Large Language Model (LLM) for the final "generation" step. The system needed a simple, robust, and sovereign way to run various open-source models on the Steward's local machine (macOS) without complex configuration or cloud dependencies.
+
+## Decision
+
+We will use **Ollama** as the exclusive engine for local LLM inference. All interactions with local models from our Python scripts will be managed through the `langchain-ollama` integration.
+
+## Consequences
+
+- **Positive:**
+    -   **Simplicity & Hearth Protocol:** Ollama provides a single, unified command (`ollama pull <model>`) and a running server to manage multiple local models. This is vastly simpler than managing individual model weights and configurations, perfectly aligning with the `Hearth Protocol`.
+    -   **Sovereignty & Iron Root:** Ollama is open-source and runs entirely on-device, ensuring our generation step remains 100% sovereign and free from external dependencies, fulfilling the `Iron Root Doctrine`.
+    -   **Flexibility:** It allows us to easily switch between different open-source models (e.g., `qwen2:7b`, `llama3:8b`) with a simple command-line argument, enabling rapid testing and validation.
+
+- **Negative:**
+    -   **Resource Management:** Ollama runs as a background application, consuming system resources (RAM). This is an accepted trade-off for its ease of use.
+    -   **Dependency:** Our application now has a runtime dependency on the Ollama application being active in the background. Our scripts must include clear error handling for when it is not running.
+
+--- END OF FILE mnemonic_cortex/adr/003-choice-of-ollama-for-local-llm.md ---
+
+--- START OF FILE mnemonic_cortex/adr/004-choice-of-nomic-embed-text.md ---
+
+# ADR 004: Choice of Nomic-Embed-Text for Local Embeddings
+
+- **Status:** Accepted
+- **Date:** 2024-05-20
+- **Architects:** Sanctuary Council
+
+## Context
+
+The local-first RAG architecture (ADR 001) requires a high-quality text embedding model that can run efficiently on a local machine. The choice of embedding model is critical as it directly impacts the quality of the semantic search and the relevance of the retrieved context. The model needed to be open-source, performant, and well-supported by the LangChain ecosystem.
+
+## Decision
+
+We will use **`nomic-embed-text`** as the canonical embedding model for the Mnemonic Cortex. It will be run in its local inference mode via the `langchain-nomic` integration.
+
+## Consequences
+
+- **Positive:**
+    -   **State-of-the-Art Performance:** `nomic-embed-text` is a top-performing open-source model on the MTEB leaderboard, ensuring our semantic search is of the highest possible quality.
+    -   **Sovereignty & Iron Root:** It can run entirely locally, keeping our entire embedding process sovereign and free of API calls to proprietary services like OpenAI.
+    -   **Cost-Effectiveness:** Running locally eliminates all token-based embedding costs.
+    -   **Ecosystem Support:** Excellent integration with LangChain and the broader open-source AI community ensures long-term viability.
+
+- **Negative:**
+    -   **Initial Setup:** Requires downloading the model weights on the first run, which can be a multi-gigabyte download.
+    -   **Computational Cost:** Performing embeddings locally consumes more CPU/GPU resources than making an API call, but this is an accepted trade-off for sovereignty.
+
+--- END OF FILE mnemonic_cortex/adr/004-choice-of-nomic-embed-text.md ---
 
 --- START OF FILE startup_guide.md ---
 

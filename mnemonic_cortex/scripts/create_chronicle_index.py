@@ -1,4 +1,25 @@
-# mnemonic_cortex/scripts/create_chronicle_index.py (v1.0)
+"""
+Chronicle Index Generator (scripts/create_chronicle_index.py) v1.0
+
+This script generates a master index file (Living_Chronicle.md) from the
+individual entry files in the 00_CHRONICLE/ENTRIES/ directory. It creates
+a markdown table with links to each canonical entry file.
+
+Role in Chronicle System:
+- Reads all .md files from the ENTRIES directory.
+- Parses filenames to extract entry numbers and titles.
+- Generates a master index with clickable links to each entry.
+- Maintains the distributed chronicle structure while providing easy navigation.
+
+Dependencies:
+- Entry files: Individual .md files in 00_CHRONICLE/ENTRIES/ with format XXX_Title.md
+- File system: Access to project directory structure.
+- Regex: For parsing filenames.
+
+Usage:
+    python mnemonic_cortex/scripts/create_chronicle_index.py
+"""
+
 import os
 import re
 
