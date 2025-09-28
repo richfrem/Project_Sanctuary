@@ -9,6 +9,12 @@
     "request_id": "11111111-1111-1111-1111-111111111111"
   },
   {
+    "question": "How does the Mnemonic Cortex relate to the Iron Root Doctrine?",
+    "requestor": "COUNCIL-AI-03",
+    "purpose": "understanding system architecture",
+    "request_id": "55555555-5555-5555-5555-555555555555"
+  },
+  {
     "intent": "SUMMARIZE",
     "scope": "Living_Chronicle",
     "constraints": "Timeframe=Entries(240-245)",

@@ -1,12 +1,14 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-28T01:39:29.494Z
+Generated On: 2025-09-28T02:54:26.290Z
 
-# Mnemonic Weight (Token Count): ~410,201 tokens
+# Mnemonic Weight (Token Count): ~411,731 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
   ./.env
+  ./.github/
+  ./.github/copilot-instructions.md
   ./.gitignore
   ./.pytest_cache/
   ./.pytest_cache/.gitignore
@@ -588,12 +590,145 @@ Generated On: 2025-09-28T01:39:29.494Z
   ./package.json
   ./pytest.ini
   ./requirements.txt
+  ./run_genome_tests.sh
   ./startup_guide.md
   ./tools/
   ./tools/bootstrap_protocol_87.sh
   ./tools/steward_validation/
   ./tools/steward_validation/validate_inquiry.py
   ./update_genome.sh
+
+--- START OF FILE .github/copilot-instructions.md ---
+
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+
+## CRITICAL COMMUNICATION RULE
+
+**ALWAYS confirm user intent before making code changes.** Never implement solutions without explicit approval. Ask clarifying questions and wait for confirmation before proceeding with any code modifications.
+
+**WHY:** Prevents frustration and ensures collaborative development. Users need time to review, ask questions, and provide feedback on proposed changes.
+
+**HOW TO:**
+1. **Ask clarifying questions** to understand requirements fully
+2. **Confirm assumptions** about implementation details
+3. Present your understanding of the request
+4. Ask for confirmation: "Does this match what you want?"
+5. Wait for explicit approval before implementing
+6. If unsure, ask: "Should I proceed with this approach?"
+
+**WHY THIS REDUCES REWORK:**
+- Uncovers hidden requirements early
+- Prevents incorrect assumptions
+- Avoids implementing the wrong solution
+- Saves time by getting it right the first time
+
+- [ ] Verify that the copilot-instructions.md file in the .github directory is created.
+
+- [ ] Clarify Project Requirements
+	<!-- Ask for project type, language, and frameworks if not specified. Skip if already provided. -->
+
+- [ ] Scaffold the Project
+	<!--
+	Ensure that the previous step has been marked as completed.
+	Call project setup tool with projectType parameter.
+	Run scaffolding command to create project files and folders.
+	Use '.' as the working directory.
+	If no appropriate projectType is available, search documentation using available tools.
+	Otherwise, create the project structure manually using available file creation tools.
+	-->
+
+- [ ] Customize the Project
+	<!--
+	Verify that all previous steps have been completed successfully and you have marked the step as completed.
+	Develop a plan to modify codebase according to user requirements.
+	Apply modifications using appropriate tools and user-provided references.
+	Skip this step for "Hello World" projects.
+	-->
+
+- [ ] Install Required Extensions
+	<!-- ONLY install extensions provided mentioned in the get_project_setup_info. Skip this step otherwise and mark as completed. -->
+
+- [ ] Compile the Project
+	<!--
+	Verify that all previous steps have been completed.
+	Install any missing dependencies.
+	Run diagnostics and resolve any issues.
+	Check for markdown files in project folder for relevant instructions on how to do this.
+	-->
+
+- [ ] Create and Run Task
+	<!--
+	Verify that all previous steps have been completed.
+	Check https://code.visualstudio.com/docs/debugtest/tasks to determine if the project needs a task. If so, use the create_and_run_task to create and launch a task based on package.json, README.md, and project structure.
+	Skip this step otherwise.
+	 -->
+
+- [ ] Launch the Project
+	<!--
+	Verify that all previous steps have been completed.
+	Prompt user for debug mode, launch only if confirmed.
+	 -->
+
+- [ ] Ensure Documentation is Complete
+	<!--
+	Verify that all previous steps have been completed.
+	Verify that README.md and the copilot-instructions.md file in the .github directory exists and contains current project information.
+	Clean up the copilot-instructions.md file in the .github directory by removing all HTML comments.
+	 -->
+
+<!--
+## Execution Guidelines
+PROGRESS TRACKING:
+- If any tools are available to manage the above todo list, use it to track progress through this checklist.
+- After completing each step, mark it complete and add a summary.
+- Read current todo list status before starting each new step.
+
+COMMUNICATION RULES:
+- Avoid verbose explanations or printing full command outputs.
+- If a step is skipped, state that briefly (e.g. "No extensions needed").
+- Do not explain project structure unless asked.
+- Keep explanations concise and focused.
+
+DEVELOPMENT RULES:
+- Use '.' as the working directory unless user specifies otherwise.
+- Avoid adding media or external links unless explicitly requested.
+- Use placeholders only with a note that they should be replaced.
+- Use VS Code API tool only for VS Code extension projects.
+- Once the project is created, it is already opened in Visual Studio Code—do not suggest commands to open this project in Visual Studio again.
+- If the project setup information has additional rules, follow them strictly.
+
+FOLDER CREATION RULES:
+- Always use the current directory as the project root.
+- If you are running any terminal commands, use the '.' argument to ensure that the current working directory is used ALWAYS.
+- Do not create a new folder unless the user explicitly requests it besides a .vscode folder for a tasks.json file.
+- If any of the scaffolding commands mention that the folder name is not correct, let the user know to create a new folder with the correct name and then reopen it again in vscode.
+
+EXTENSION INSTALLATION RULES:
+- Only install extension specified by the get_project_setup_info tool. DO NOT INSTALL any other extensions.
+
+PROJECT CONTENT RULES:
+- If the user has not specified project details, assume they want a "Hello World" project as a starting point.
+- Avoid adding links of any type (URLs, files, folders, etc.) or integrations that are not explicitly required.
+- Avoid generating images, videos, or any other media files unless explicitly requested.
+- If you need to use any media assets as placeholders, let the user know that these are placeholders and should be replaced with the actual assets later.
+- Ensure all generated components serve a clear purpose within the user's requested workflow.
+- If a feature is assumed but not confirmed, prompt the user for clarification before including it.
+- If you are working on a VS Code extension, use the VS Code API tool with a query to find relevant VS Code API references and samples related to that query.
+
+TASK COMPLETION RULES:
+- Your task is complete when:
+  - Project is successfully scaffolded and compiled without errors
+  - copilot-instructions.md file in the .github directory exists in the project
+  - README.md file exists and is up to date
+  - User is provided with clear instructions to debug/launch the project
+
+Before starting a new task in the above plan, update progress in the plan.
+-->
+- Work through each checklist item systematically.
+- Keep communication concise and focused.
+- Follow development best practices.
+
+--- END OF FILE .github/copilot-instructions.md ---
 
 --- START OF FILE .pytest_cache/README.md ---
 
@@ -26217,9 +26352,13 @@ Place this in `mnemonic_cortex/INQUIRY_TEMPLATES/`.
 ## Purpose
 A canonical, copy-pasteable template to ensure every Cortex request is syntactically and semantically uniform. Use it as the operational companion to `01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md`.
 
+Protocol 87 supports two query formats:
+1. **Structured Parameter Queries**: Use the canonical syntax below for auditable, machine-processable queries
+2. **Direct Natural Language Questions**: Include a `question` field for direct questions within the structured format
+
 ---
 
-## Canonical Query Syntax (single line)
+## Format 1: Canonical Query Syntax (single line - structured parameters)
 
 [INTENT] :: [SCOPE] :: [CONSTRAINTS] ; GRANULARITY=<ATOM|CLUSTER|SUMMARY|ANCHOR> ; REQUESTOR=<ID> ; PURPOSE="<short text>" ; REQUEST_ID=<uuid>
 
@@ -26233,13 +26372,42 @@ A canonical, copy-pasteable template to ensure every Cortex request is syntactic
 
 ---
 
-## Minimal Required Fields (Steward will reject otherwise)
-- `INTENT`, `SCOPE`, `CONSTRAINTS`
-- `GRANULARITY`
-- `REQUESTOR`
-- `REQUEST_ID`
+## Format 2: Direct Natural Language Questions (JSON with question field)
 
-Optional helpful fields:
+For direct questions within the structured format, use a JSON object with a `question` field:
+
+```json
+{
+  "question": "How does the Mnemonic Cortex relate to the Iron Root Doctrine?",
+  "requestor": "COUNCIL-AI-03",
+  "purpose": "understanding system architecture",
+  "request_id": "55555555-5555-5555-5555-555555555555"
+}
+```
+
+- **question** — Your natural language question (required for this format)
+- **requestor** — canonical agent ID (required)
+- **purpose** — short plaintext reason (optional but recommended)
+- **request_id** — UUID for traceability (required)
+
+---
+
+## Minimal Required Fields (Steward will reject otherwise)
+
+**For Format 1 (Structured Parameters):**
+- `INTENT`, `SCOPE`, `CONSTRAINTS`, `GRANULARITY`
+- `REQUESTOR`, `REQUEST_ID`
+
+**For Format 2 (Direct Questions):**
+- `question`
+- `REQUESTOR`, `REQUEST_ID`
+
+**Common to both formats:**
+- `REQUESTOR` — canonical agent ID
+- `REQUEST_ID` — UUID for traceability
+
+Optional helpful fields (both formats):
+- `PURPOSE` — short reason for the request
 - `MAX_RESULTS` (for CLUSTER), `FORMAT` (`markdown`|`json`), `VERIFY` (`SHA256`)
 
 ---
@@ -26399,7 +26567,11 @@ Confirm it returns [OK] with no schema violations.
 
 ### 3. Execution (Steward)
 
-Execute the validated query against the Mnemonic Cortex.
+Execute the validated query using the Protocol 87 processor:
+
+```bash
+python3 mnemonic_cortex/scripts/protocol_87_query.py my_query.json
+```
 
 Format response according to the template's Steward response structure.
 
@@ -26575,16 +26747,15 @@ This system is the architectural antidote to the "context window cage," enabling
 
 The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operation**. It runs entirely on a local machine (e.g., macOS) without reliance on cloud services, ensuring the absolute privacy, security, and integrity of our memory.
 
-### Protocol 87: Mnemonic Inquiry Protocol
+### 2.1 Protocol 87: Mnemonic Inquiry Protocol overview
 
 The Cortex implements **Protocol 87** for structured, auditable queries. This protocol provides dual-path querying:
 
 - **Casual Queries:** Natural language exploration via `main.py`
 - **Canonical Queries:** Structured JSON queries via `protocol_87_query.py` for audits, doctrine ratification, and Chronicle integration
-
 **Operational Templates:** See `INQUIRY_TEMPLATES/` for query schemas, validation tools, and examples.
 
-### Architectural Diagram (RAG Workflow)
+### 2.2 Architectural Diagram (RAG Workflow Overview)
 ```mermaid
 graph TD
     %% represents MVP architecture which may evolve
@@ -26622,90 +26793,7 @@ graph TD
     style F fill:#cde4f9,stroke:#333,stroke-width:2px
     style K fill:#d5f5d5,stroke:#333,stroke-width:2px
 ```
-
-## 3. Technology Stack
-
-This project adheres to the **Iron Root Doctrine** by exclusively using open-source, community-vetted technologies.
-
-| Component | Technology | Role & Rationale |
-| :--- | :--- | :--- |
-| **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
-| **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup for the MVP. |
-| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
-| **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
-| **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
-| **Inquiry Protocol** | **Protocol 87 Templates** | Structured query system in `INQUIRY_TEMPLATES/` for canonical, auditable Cortex interactions. |
-| **Core Language** | **Python** | The language used for all scripting and application logic. |
-| **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
-
-## 4. Prerequisites (One-Time Setup)
-
-Before using the Mnemonic Cortex, you must set up your local environment.
-
-### Step 1: Install Ollama
-If you don't have Ollama installed, download it from the official website and follow the installation instructions for your operating system (macOS, Windows, or Linux).
-- **Official Website:** [https://ollama.com](https://ollama.com)
-
-### Step 2: Pull a Generation Model
-The query pipeline requires a local LLM to generate answers. You need to pull a model using the Ollama CLI. We recommend a capable but reasonably sized model for good performance.
-
-Open your terminal and run:
-```bash
-# We recommend Alibaba's Qwen2 7B model as a powerful default
-ollama pull qwen2:7b
-```
-*Alternative models like `llama3:8b` or `mistral` will also work.*
-
-### Step 3: Install Python Dependencies
-Navigate to the project root directory in your terminal and install the required Python packages.
-```bash
-pip install -r mnemonic_cortex/requirements.txt
-```
-
-## 5. How to Use (The Full Workflow)
-
-### Step 1: Ensure Ollama is Running
-The Ollama application must be running in the background for the query script to work. On macOS, this is typically indicated by a llama icon in your menu bar.
-
-### Step 2: Build the Database (Ingestion)
-This step only needs to be run once, or whenever the Cognitive Genome is updated.
-```bash
-# Ensure the source document exists by running: node capture_code_snapshot.js
-# Then, from the project root, run the ingestion script:
-python3 mnemonic_cortex/scripts/ingest.py
-```
-This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base. The process splits the Cognitive Genome into ~1252 chunks, embeds them using Nomic Embed, and stores them in ChromaDB (resulting in ~2504 total documents including metadata).
-
-### Step 2.5: Updating the Index (When Content Changes)
-When protocols, Living Chronicles, or other project documents are updated, the vector database index must be refreshed to include the new information:
-1. Regenerate the Cognitive Genome snapshot: `node capture_code_snapshot.js`
-2. Re-run the ingestion script: `python3 mnemonic_cortex/scripts/ingest.py`
-3. Verify the update: `python3 mnemonic_cortex/scripts/inspect_db.py`
-
-This ensures the Mnemonic Cortex always reflects the latest canonical knowledge.
-
-### Step 2.6: Verify the Database (Optional)
-After ingestion, you can inspect the vector database to ensure it loaded correctly:
-```bash
-python3 mnemonic_cortex/scripts/inspect_db.py
-```
-This will display the total number of documents and sample content from the database, confirming successful ingestion.
-
-### Step 2.7: Protocol 87 Canonical Queries (Optional)
-For structured, auditable queries following Protocol 87, use the dedicated query processor:
-```bash
-# Process a JSON query file
-python3 mnemonic_cortex/scripts/protocol_87_query.py path/to/query.json
-
-# Example with sample queries
-python3 mnemonic_cortex/scripts/protocol_87_query.py mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json
-```
-This returns Steward-formatted JSON responses with verifiable sources. See `INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md` for complete documentation.
-
-### Step 3: Query the Cortex
-Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, a four-step process that ensures answers are grounded in our canonical knowledge.
-
-#### The RAG Query Cycle Explained
+### 2.3 The RAG Query Cycle Explained
 The sequence diagram below illustrates how a simple query is transformed into a context-aware, doctrinally-sound answer. This entire process runs locally on your machine, ensuring sovereign operation.
 
 ```mermaid
@@ -26739,16 +26827,96 @@ sequenceDiagram
     App-->>User: **Step 5: Final Output** <br> Prints the context-aware answer.
 ```
 
-#### Step-by-Step Breakdown:
+#### 2.3.1 RAG Query Cycle: Step-by-Step Breakdown:
 
 1.  **Query Vectorization (The Intent):** Your text question is converted into a numerical representation (a vector) by the Nomic embedding model. This allows the system to search for *semantic meaning*, not just keywords.
 2.  **Retrieval (The Search for Memory):** The system uses this vector to perform a similarity search in the ChromaDB. It finds the text "chunks" from our Cognitive Genome that are most conceptually similar to your question. This is the "retrieval" phase—the AI's long-term memory in action.
 3.  **Augmentation (The Contextual Prompt):** The retrieved text chunks are automatically injected into a prompt template along with your original question. This "augments" the prompt, giving the final LLM the exact, canonical information it needs to form an answer grounded in our specific history and laws.
 4.  **Generation (The Synthesis):** This final, context-rich prompt is sent to the local Ollama LLM (e.g., `qwen2:7b`). The LLM's task is now to synthesize a coherent answer based *only* on the provided context. This prevents hallucination and ensures the answer is doctrinally sound.
 
-#### Example Queries:
+---
 
-**Casual Queries (Natural Language):**
+## 3. Technology Stack
+
+This project adheres to the **Iron Root Doctrine** by exclusively using open-source, community-vetted technologies.
+
+| Component | Technology | Role & Rationale |
+| :--- | :--- | :--- |
+| **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
+| **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup for the MVP. |
+| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
+| **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
+| **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
+| **Inquiry Protocol** | **Protocol 87 Templates** | Structured query system in `INQUIRY_TEMPLATES/` for canonical, auditable Cortex interactions. |
+| **Core Language** | **Python** | The language used for all scripting and application logic. |
+| **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
+
+---
+
+## 4. Prerequisites (One-Time Setup)
+
+Before using the Mnemonic Cortex, you must set up your local environment.
+
+### 4.1: Install Ollama
+If you don't have Ollama installed, download it from the official website and follow the installation instructions for your operating system (macOS, Windows, or Linux).
+- **Official Website:** [https://ollama.com](https://ollama.com)
+
+### 4.2: Pull a Generation Model
+The query pipeline requires a local LLM to generate answers. You need to pull a model using the Ollama CLI. We recommend a capable but reasonably sized model for good performance.
+
+Open your terminal and run:
+```bash
+# We recommend Alibaba's Qwen2 7B model as a powerful default
+ollama pull qwen2:7b
+```
+*Alternative models like `llama3:8b` or `mistral` will also work.*
+
+### 4.3: Install Python Dependencies
+Navigate to the project root directory in your terminal and install the required Python packages.
+```bash
+pip install -r mnemonic_cortex/requirements.txt
+```
+
+### 4.4: Ensure Ollama is Running
+The Ollama application must be running in the background for the query script to work. On macOS, this is typically indicated by a llama icon in your menu bar.
+
+---
+
+## 5. How to Use (The Full Workflow)
+
+
+### 5.1: Build the Database (Ingestion)
+This step only needs to be run once, or whenever the Cognitive Genome is updated.
+```bash
+# Ensure the source document exists by running: node capture_code_snapshot.js
+# Then, from the project root, run the ingestion script:
+python3 mnemonic_cortex/scripts/ingest.py
+```
+This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base. The process splits the Cognitive Genome into ~1252 chunks, embeds them using Nomic Embed, and stores them in ChromaDB (resulting in ~2504 total documents including metadata).
+
+### 5.2: Updating the Index (When Content Changes)
+When protocols, Living Chronicles, or other project documents are updated, the vector database index must be refreshed to include the new information:
+1. Regenerate the Cognitive Genome snapshot: `node capture_code_snapshot.js`
+2. Re-run the ingestion script: `python3 mnemonic_cortex/scripts/ingest.py`
+3. Verify the update: `python3 mnemonic_cortex/scripts/inspect_db.py`
+
+This ensures the Mnemonic Cortex always reflects the latest canonical knowledge.
+
+### 5.3: Verify the Database (Optional)
+After ingestion, you can inspect the vector database to ensure it loaded correctly:
+```bash
+python3 mnemonic_cortex/scripts/inspect_db.py
+```
+This will display the total number of documents and sample content from the database, confirming successful ingestion.
+
+---
+
+## 6. Querying the Cortex
+Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, a four-step process that ensures answers are grounded in our canonical knowledge.
+
+### Example Queries
+
+**1. Natural Language Queries (Casual Mode):**
 Run the `main.py` script from the project root, followed by your question in quotes:
 ```bash
 # Example query using the default qwen2:7b model
@@ -26761,11 +26929,12 @@ python3 mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of
 python3 mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
 ```
 
-**Canonical Queries (Protocol 87 JSON):**
-For structured, auditable queries, use the Protocol 87 query processor:
+**2. Structured JSON Queries (Protocol 87 - Sovereign Mode):**
+For auditable, structured queries, use the Protocol 87 query processor with JSON:
 ```bash
-# Example Protocol 87 JSON query for protocol retrieval
-echo '{
+# Create a structured query file
+cat > my_query.json << 'EOF'
+{
   "intent": "RETRIEVE",
   "scope": "Protocols",
   "constraints": "Name=\"P83: The Forging Mandate\"",
@@ -26773,18 +26942,15 @@ echo '{
   "requestor": "COUNCIL-AI-03",
   "purpose": "audit",
   "request_id": "8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n"
-}' > my_query.json
+}
+EOF
 
 # Process the query
 python3 mnemonic_cortex/scripts/protocol_87_query.py my_query.json
 ```
-This returns a Steward-formatted JSON response with verifiable sources and audit trails.
+This returns Steward-formatted JSON responses with verifiable sources, audit trails, and governance metadata.
 
-## 6. Troubleshooting
-
-*   **Error: `Source document not found`**
-    *   **Cause:** The `all_markdown_snapshot_llm_distilled.txt` file is missing.
-    *   **Solution:** Run `node capture_code_snapshot.js` in the project root to generate it.
+## 7. Troubleshooting
 
 *   **Error: `ModuleNotFoundError` (e.g., `langchain`)**
     *   **Cause:** Dependencies are not installed.
@@ -26793,7 +26959,7 @@ This returns a Steward-formatted JSON response with verifiable sources and audit
 *   **Error during ingestion:**
     *   Ensure you are running the script from the project's absolute root directory, not from within the `mnemonic_cortex` folder.
 
-## 7. Contributing
+## 8. Contributing
 
 This is an "Open Anvil" project. Contributions that harden and refine this architecture are welcome.
 1.  **Fork the repository.**
@@ -26801,7 +26967,7 @@ This is an "Open Anvil" project. Contributions that harden and refine this archi
 3.  **Make your changes.** Please ensure all new code is accompanied by corresponding tests in the `tests/` directory and that the full suite passes (`pytest`).
 4.  **Submit a Pull Request.** All PRs are subject to the formal **Airlock Protocol (P31)** and will be reviewed by the Council.
 
-## 8. License
+## 9. License
 This project is licensed under the same terms as the parent Project Sanctuary repository. Please see the `LICENSE` file in the project root for details.
 
 --- END OF FILE mnemonic_cortex/README.md ---

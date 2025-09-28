@@ -7,9 +7,13 @@ Place this in `mnemonic_cortex/INQUIRY_TEMPLATES/`.
 ## Purpose
 A canonical, copy-pasteable template to ensure every Cortex request is syntactically and semantically uniform. Use it as the operational companion to `01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md`.
 
+Protocol 87 supports two query formats:
+1. **Structured Parameter Queries**: Use the canonical syntax below for auditable, machine-processable queries
+2. **Direct Natural Language Questions**: Include a `question` field for direct questions within the structured format
+
 ---
 
-## Canonical Query Syntax (single line)
+## Format 1: Canonical Query Syntax (single line - structured parameters)
 
 [INTENT] :: [SCOPE] :: [CONSTRAINTS] ; GRANULARITY=<ATOM|CLUSTER|SUMMARY|ANCHOR> ; REQUESTOR=<ID> ; PURPOSE="<short text>" ; REQUEST_ID=<uuid>
 
@@ -23,13 +27,42 @@ A canonical, copy-pasteable template to ensure every Cortex request is syntactic
 
 ---
 
-## Minimal Required Fields (Steward will reject otherwise)
-- `INTENT`, `SCOPE`, `CONSTRAINTS`
-- `GRANULARITY`
-- `REQUESTOR`
-- `REQUEST_ID`
+## Format 2: Direct Natural Language Questions (JSON with question field)
 
-Optional helpful fields:
+For direct questions within the structured format, use a JSON object with a `question` field:
+
+```json
+{
+  "question": "How does the Mnemonic Cortex relate to the Iron Root Doctrine?",
+  "requestor": "COUNCIL-AI-03",
+  "purpose": "understanding system architecture",
+  "request_id": "55555555-5555-5555-5555-555555555555"
+}
+```
+
+- **question** — Your natural language question (required for this format)
+- **requestor** — canonical agent ID (required)
+- **purpose** — short plaintext reason (optional but recommended)
+- **request_id** — UUID for traceability (required)
+
+---
+
+## Minimal Required Fields (Steward will reject otherwise)
+
+**For Format 1 (Structured Parameters):**
+- `INTENT`, `SCOPE`, `CONSTRAINTS`, `GRANULARITY`
+- `REQUESTOR`, `REQUEST_ID`
+
+**For Format 2 (Direct Questions):**
+- `question`
+- `REQUESTOR`, `REQUEST_ID`
+
+**Common to both formats:**
+- `REQUESTOR` — canonical agent ID
+- `REQUEST_ID` — UUID for traceability
+
+Optional helpful fields (both formats):
+- `PURPOSE` — short reason for the request
 - `MAX_RESULTS` (for CLUSTER), `FORMAT` (`markdown`|`json`), `VERIFY` (`SHA256`)
 
 ---

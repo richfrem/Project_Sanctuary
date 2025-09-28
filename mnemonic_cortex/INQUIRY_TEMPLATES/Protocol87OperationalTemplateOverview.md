@@ -87,7 +87,11 @@ Confirm it returns [OK] with no schema violations.
 
 ### 3. Execution (Steward)
 
-Execute the validated query against the Mnemonic Cortex.
+Execute the validated query using the Protocol 87 processor:
+
+```bash
+python3 mnemonic_cortex/scripts/protocol_87_query.py my_query.json
+```
 
 Format response according to the template's Steward response structure.
 

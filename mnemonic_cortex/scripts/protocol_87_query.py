@@ -51,6 +51,11 @@ def parse_query_string(query_str: str) -> Dict[str, str]:
 
 def build_search_query(query_data: Dict[str, Any]) -> str:
     """Convert Protocol 87 query to natural language for the RAG system."""
+    # Check if it's a direct question
+    if 'question' in query_data:
+        return query_data['question']
+
+    # Otherwise, handle structured parameter query
     intent = query_data.get('intent', 'RETRIEVE')
     scope = query_data.get('scope', 'Protocols')
     constraints = query_data.get('constraints', '')
