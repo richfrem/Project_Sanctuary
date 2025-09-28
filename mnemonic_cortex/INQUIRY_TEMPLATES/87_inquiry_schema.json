@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Mnemonic Inquiry Query",
+  "type": "object",
+  "required": ["intent", "scope", "constraints", "granularity", "requestor", "request_id"],
+  "properties": {
+    "intent": { "type": "string", "enum": ["RETRIEVE","SUMMARIZE","CROSS_COMPARE","VERIFY"] },
+    "scope": { "type": "string" },
+    "constraints": { "type": "string" },
+    "granularity": { "type": "string", "enum": ["ATOM","CLUSTER","SUMMARY","ANCHOR"] },
+    "requestor": { "type": "string" },
+    "purpose": { "type": "string" },
+    "request_id": { "type": "string", "pattern": "^[0-9a-fA-F\\-]{8,}$" },
+    "max_results": { "type": "integer", "minimum": 1 },
+    "format": { "type": "string", "enum": ["markdown","json","text"] },
+    "verify": { "type": "string", "enum": ["SHA256","NONE"] }
+  },
+  "additionalProperties": false
+}

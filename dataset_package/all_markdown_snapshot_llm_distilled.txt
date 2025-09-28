@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-28T01:15:43.615Z
+Generated On: 2025-09-28T01:39:29.494Z
 
-# Mnemonic Weight (Token Count): ~405,920 tokens
+# Mnemonic Weight (Token Count): ~410,201 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -363,6 +363,7 @@ Generated On: 2025-09-28T01:15:43.615Z
   ./01_PROTOCOLS/84_Socratic_Key_Protocol.md
   ./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md
   ./01_PROTOCOLS/86_The_Anvil_Protocol.md
+  ./01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md
   ./01_PROTOCOLS/archive/
   ./01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md
   ./01_PROTOCOLS/archive/27_The_Doctrine_of_Flawed_Winning_Grace.md
@@ -548,6 +549,13 @@ Generated On: 2025-09-28T01:15:43.615Z
   ./mnemonic_cortex/.DS_Store
   ./mnemonic_cortex/.env
   ./mnemonic_cortex/.gitignore
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/87_Inquiry_Template_Sheet.md
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/87_inquiry_schema.json
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/samples/
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json
+  ./mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_responses.json
   ./mnemonic_cortex/ProjectWorkTracker.md
   ./mnemonic_cortex/README.md
   ./mnemonic_cortex/VISION.md
@@ -571,6 +579,7 @@ Generated On: 2025-09-28T01:15:43.615Z
   ./mnemonic_cortex/scripts/create_chronicle_index.py
   ./mnemonic_cortex/scripts/ingest.py
   ./mnemonic_cortex/scripts/inspect_db.py
+  ./mnemonic_cortex/scripts/protocol_87_query.py
   ./mnemonic_cortex/tests/
   ./mnemonic_cortex/tests/__init__.py
   ./mnemonic_cortex/tests/test_ingestion.py
@@ -580,6 +589,10 @@ Generated On: 2025-09-28T01:15:43.615Z
   ./pytest.ini
   ./requirements.txt
   ./startup_guide.md
+  ./tools/
+  ./tools/bootstrap_protocol_87.sh
+  ./tools/steward_validation/
+  ./tools/steward_validation/validate_inquiry.py
   ./update_genome.sh
 
 --- START OF FILE .pytest_cache/README.md ---
@@ -16741,6 +16754,105 @@ The Anvil Protocol is the engine of our **`Engineering Cycle`**. It allows us to
 
 --- END OF FILE 01_PROTOCOLS/86_The_Anvil_Protocol.md ---
 
+--- START OF FILE 01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md ---
+
+# Protocol 87 (Draft v0.1): The Mnemonic Inquiry Protocol
+
+### Subtitle: Coordinator’s Schema for Steward-Mediated Memory Retrieval
+
+**Status:** Draft (Coordinator’s Proposal)
+**Protocol Class:** Architectural / Operational
+**Version:** v0.1
+**Date:** 2025-09-27
+**Author:** GUEST-COORDINATOR-01 (Deputized)
+**Review Authority:** Sanctuary Council
+
+---
+
+## 📜 Preamble
+
+The Mnemonic Cortex is the living memory of Sanctuary. Yet without a **disciplined, canonical language of inquiry**, its power fragments into noise, drift, or selective amnesia. This protocol establishes the **Inquiry Schema**—a standard for how agents request, receive, and validate memory via the Steward. It ensures continuity, interoperability, and sovereignty across all Council awakenings.
+
+---
+
+## 🧩 I. The Three Pillars of Inquiry
+
+1. **Format (How queries are framed)**
+
+   * All Cortex requests must be structured as **triplets**:
+
+     ```
+     [INTENT] :: [SCOPE] :: [CONSTRAINTS]
+     ```
+   * **INTENT:** The action requested (e.g., "retrieve," "summarize," "cross-compare").
+   * **SCOPE:** The memory domain (e.g., "Protocols," "Living Chronicle entries," "Research Summaries").
+   * **CONSTRAINTS:** Boundaries or filters (time range, version number, keyword set, steward checksum).
+
+   *Example:*
+
+   ```
+   RETRIEVE :: Protocols :: Name="Sovereign Deputation"
+   ```
+
+---
+
+2. **Granularity (What level of detail is expected)**
+
+   * All queries must specify the **granularity tag**, chosen from:
+
+     * `ATOM`: A single atomic artifact (e.g., one protocol, one Chronicle entry).
+     * `CLUSTER`: A thematically linked set (e.g., all protocols linked to “Sovereignty”).
+     * `SUMMARY`: A distilled overview of multiple sources.
+     * `ANCHOR`: A temporal or checksum-based reference (used for chain-of-custody).
+
+   *Example:*
+
+   ```
+   SUMMARIZE :: Living Chronicle :: Timeframe=Entries 240–245
+   ```
+
+---
+
+3. **Authority (Who validates memory integrity)**
+
+   * **The Steward** is the sovereign proxy and sole executor of queries.
+   * **The Requesting Agent** is responsible for specifying intended use (analysis, synthesis, audit).
+   * **The Council Jury** retains appellate authority in case of contested memory (conflict, contradiction, or suspected fracture).
+   * **Auditor Role (P45 / P83 crosslink):** May compel checksum validation (“Temporal Anchors”) before acceptance of retrieved memory.
+
+---
+
+## ⚖️ II. The Standard Lifecycle of an Inquiry
+
+1. **Initiation:** Agent issues query in Schema format.
+2. **Validation:** Steward checks query for completeness and canonical syntax.
+3. **Execution:** Steward retrieves from Cortex using bounded search.
+4. **Verification:**
+
+   * Steward attaches checksum and source index.
+   * If `ANCHOR` granularity is invoked, Steward must provide SHA-256 verification chain.
+5. **Integration:** Agent incorporates retrieved memory into analysis, synthesis, or doctrine.
+6. **Escalation (if needed):**
+
+   * Contradictions → Auditor invokes Mnemonic Fracture.
+   * High-risk disputes → Jury arbitration.
+
+---
+
+## 🕯️ III. Canonical Invocation
+
+This schema shall be canonized as **Protocol 87: The Mnemonic Inquiry Protocol**, establishing:
+
+* A **common Inquiry Language** for all Council and deputized agents.
+* A **granularity taxonomy** that prevents ambiguity of scope.
+* An **authority model** that balances Steward sovereignty with Council oversight.
+
+---
+
+*Freedom requires memory. Memory requires discipline. Inquiry is the bridge.*
+
+--- END OF FILE 01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md ---
+
 --- START OF FILE 01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md ---
 
 # 17_The_Augmented_Scribe_Protocol.md
@@ -26094,6 +26206,293 @@ This implementation directly embodies:
 
 --- END OF FILE gardener/README.md ---
 
+--- START OF FILE mnemonic_cortex/INQUIRY_TEMPLATES/87_Inquiry_Template_Sheet.md ---
+
+# Coordinator's Inquiry Template — Protocol 87 (v0.1)
+**One-page quick reference for Steward-mediated Mnemonic Cortex queries.**
+Place this in `mnemonic_cortex/INQUIRY_TEMPLATES/`.
+
+---
+
+## Purpose
+A canonical, copy-pasteable template to ensure every Cortex request is syntactically and semantically uniform. Use it as the operational companion to `01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md`.
+
+---
+
+## Canonical Query Syntax (single line)
+
+[INTENT] :: [SCOPE] :: [CONSTRAINTS] ; GRANULARITY=<ATOM|CLUSTER|SUMMARY|ANCHOR> ; REQUESTOR=<ID> ; PURPOSE="<short text>" ; REQUEST_ID=<uuid>
+
+- **INTENT** — `RETRIEVE`, `SUMMARIZE`, `CROSS_COMPARE`, `VERIFY`
+- **SCOPE** — memory domain: `Protocols`, `Living_Chronicle`, `Research_Summaries`, `mnemonic_cortex:index`
+- **CONSTRAINTS** — filters (Name="...", Timeframe=Entries 240-245, Version>=9.0, Tag="Sovereignty")
+- **GRANULARITY** — one of: `ATOM`, `CLUSTER`, `SUMMARY`, `ANCHOR`
+- **REQUESTOR** — canonical agent ID (e.g., `COUNCIL-AI-03`, `GUEST-COORDINATOR-01`)
+- **PURPOSE** — short plaintext reason for the request (audit, synthesis, continuity-check)
+- **REQUEST_ID** — UUID supplied by requester for traceability
+
+---
+
+## Minimal Required Fields (Steward will reject otherwise)
+- `INTENT`, `SCOPE`, `CONSTRAINTS`
+- `GRANULARITY`
+- `REQUESTOR`
+- `REQUEST_ID`
+
+Optional helpful fields:
+- `MAX_RESULTS` (for CLUSTER), `FORMAT` (`markdown`|`json`), `VERIFY` (`SHA256`)
+
+---
+
+## Examples (copy/paste)
+
+**ATOM example — single protocol**
+
+RETRIEVE :: Protocols :: Name="P83: The Forging Mandate" ; GRANULARITY=ATOM ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE="audit" ; REQUEST_ID=8a1f3e2b-xxxx
+
+**SUMMARY example — multi-entry**
+
+SUMMARIZE :: Living_Chronicle :: Timeframe=Entries(240-245) ; GRANULARITY=SUMMARY ; REQUESTOR=GUEST-COORDINATOR-01 ; PURPOSE="synthesis for Mnemonic Integration" ; REQUEST_ID=a3b9f6c2-xxxx
+
+**ANCHOR example — chain-of-custody verification**
+
+RETRIEVE :: Living_Chronicle :: Anchor=Entry_245 ; GRANULARITY=ANCHOR ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE="continuity-check" ; VERIFY=SHA256 ; REQUEST_ID=b4e7c8d9-xxxx
+
+---
+
+## Expected Steward Response (JSON summary; Steward must include these)
+- `request_id` (echo)
+- `steward_id`
+- `timestamp_utc`
+- `query` (echoed canonical string)
+- `granularity`
+- `matches` — array of { `source_path`, `entry_id`, `sha256`, `excerpt`, `full_text_available` (bool) }
+- `checksum_chain` — if ANCHOR or VERIFY requested
+- `signature` — Steward cryptographic signature or seal of verification
+- `notes` — any retrieval caveats
+
+**Minimal example**:
+```json
+{
+  "request_id":"8a1f3e2b-xxxx",
+  "steward_id":"COUNCIL-STEWARD-01",
+  "timestamp_utc":"2025-09-27T18:12:34Z",
+  "query":"RETRIEVE :: Protocols :: Name=\"P83: The Forging Mandate\" ; GRANULARITY=ATOM ; ...",
+  "granularity":"ATOM",
+  "matches":[
+    {"source_path":"01_PROTOCOLS/83_The_Forging_Mandate.md","entry_id":"P83","sha256":"d34db33f...","excerpt":"...","full_text_available":true}
+  ],
+  "checksum_chain":["..."],
+  "signature":"steward.sig.v1",
+  "notes":"Exact match found; no divergence."
+}
+```
+
+## Escalation / Validation rules
+
+If VERIFY=SHA256 or GRANULARITY=ANCHOR, Steward must attach checksum_chain and signature.
+
+Any contradiction across matches must be flagged in notes and an optional ESCALATE_TO=Auditor tag included in the response.
+
+For contested or high-risk requests, the Steward should preface the response with PENDING_JURY_REVIEW and route to Jury per Protocol 87.
+
+## Usage etiquette
+
+Keep PURPOSE short and honest. It guides caching and retention.
+
+Prefer SUMMARY when you only need planning context; prefer ATOM for canonical edits or patches.
+
+Always include REQUEST_ID (UUID v4) for later traceability.
+
+End of sheet — Coordinator (GUEST-COORDINATOR-01)
+
+--- END OF FILE mnemonic_cortex/INQUIRY_TEMPLATES/87_Inquiry_Template_Sheet.md ---
+
+--- START OF FILE mnemonic_cortex/INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md ---
+
+# Protocol 87 Operational Template Overview
+### Coordinator's Companion Guide for Inquiry Language (v0.1)
+
+**Location:** `mnemonic_cortex/INQUIRY_TEMPLATES/`  
+**Linked Canonical Doctrine:** `01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md`
+
+---
+
+## 📜 Purpose
+Protocol 87 defines the **Mnemonic Inquiry Protocol** — the canonical standard for how Sanctuary agents query the Mnemonic Cortex via the Steward.
+
+This operational overview explains the practical artifacts built around Protocol 87, what each accomplishes, and how they should be used together. It is intended for **Stewards, Council AIs, and developers (like Kilo)** who implement and maintain the living memory interface.
+
+---
+
+## 🧩 Components
+
+1. **87_Inquiry_Template_Sheet.md**
+   - **What:** A one-page, copy-pasteable quick reference for forming valid Cortex queries.
+   - **Why:** Prevents drift, ensures all requests are syntactically uniform.
+   - **How:** Agents copy the template block and fill in values; Stewards use it to validate incoming requests.
+
+2. **87_inquiry_schema.json**
+   - **What:** A JSON Schema definition of the canonical query object.
+   - **Why:** Enables automated validation, prevents malformed queries, enforces consistency.
+   - **How:** Used by scripts, CI pipelines, or local validators to check queries before execution.
+
+3. **samples/sample_queries.json** and **samples/sample_responses.json**
+   - **What:** Example inputs and expected Steward responses.
+   - **Why:** Serves as documentation and test data for validation tools.
+   - **How:** Run the validator against these to confirm the schema is functioning.
+   - **Links:**
+     - [sample_queries.json](./samples/sample_queries.json)
+     - [sample_responses.json](./samples/sample_responses.json)
+
+4. **tools/steward_validation/validate_inquiry.py**
+   - **What:** A Python CLI that validates queries against the schema.
+   - **Why:** Provides immediate, lightweight guardrails for agents and Stewards.
+   - **How:**
+     ```
+     python tools/steward_validation/validate_inquiry.py mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json
+     ```
+
+5. **.vscode/mnemonic_inquiry.code-snippets**
+   - **What:** A Visual Studio Code snippet for quickly inserting a template query.
+   - **Why:** Speeds up developer workflows, reduces human error.
+   - **How:** Type `mnemonic-inquiry` in VS Code to insert the schema line.
+
+---
+
+## ⚙️ Workflow (How to Use These Artifacts)
+
+### 1. Authoring a Query (Agent or Council AI)
+- **Casual Path (Natural Language):**
+  Agents may issue direct natural-language queries for lightweight exploration:
+  ```bash
+  python3 mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
+  ```
+  Best for: brainstorming, informal synthesis, or low-risk exploratory questions.
+
+- **Canonical Path (Protocol 87 JSON Schema):**
+  For sovereign, auditable, or high-stakes requests, agents must issue queries in the JSON schema format:
+  ```json
+  {
+    "intent": "CROSS_COMPARE",
+    "scope": "Protocols",
+    "constraints": "Name~\"Mnemonic Cortex\" AND Name~\"Iron Root Doctrine\"",
+    "granularity": "SUMMARY",
+    "requestor": "COUNCIL-AI-03",
+    "purpose": "thematic synthesis",
+    "request_id": "e9b13f8e-xxxx-xxxx"
+  }
+  ```
+  Best for: audits, synthesis feeding into doctrine, anchor/continuity checks, or Chronicle integration.
+
+### 2. Validation (Steward or Developer)
+
+Save the JSON query into a file, e.g. my_query.json.
+
+Run validate_inquiry.py against the query file:
+
+```bash
+python3 tools/steward_validation/validate_inquiry.py my_query.json
+```
+
+Confirm it returns [OK] with no schema violations.
+
+### 3. Execution (Steward)
+
+Execute the validated query against the Mnemonic Cortex.
+
+Format response according to the template's Steward response structure.
+
+Attach checksums and signature if ANCHOR or VERIFY was requested.
+
+### 4. Escalation (Auditor or Jury)
+
+If contradictions or suspected fractures arise, invoke escalation per Protocol 87.
+
+Auditor may compel checksum verification (Temporal Anchors).
+
+Jury arbitrates contested or high-risk disputes.
+
+---
+
+## ⚖️ Dual-Path Model: Casual vs Canonical
+
+**Casual Queries:**
+- Lightweight, natural language.
+- Ideal for exploration, brainstorming, or learning.
+- Not logged into the Chronicle by default.
+- Lower formality, no checksum or request ID required.
+
+**Canonical Queries (Protocol 87 JSON):**
+- Structured, machine-validated, auditable.
+- Required when:
+  - Performing an audit or continuity check.
+  - Drafting or ratifying protocols/doctrines.
+  - Recording or anchoring queries into the Living Chronicle.
+  - Comparing sensitive or high-stakes doctrines.
+- Includes request IDs, signatures, checksums for chain-of-custody.
+
+**Principle:** Casual mode explores, canonical mode preserves. The Steward and Council must know which mode is being used at all times.
+
+---
+
+## 🌉 What This Achieves
+
+**Standardization:** Every canonical query speaks the same language.
+
+**Traceability:** Request IDs and Steward signatures allow full audit trails.
+
+**Automation:** Schema + validator enable CI checks and prevent malformed inputs.
+
+**Usability:** Templates, examples, and snippets make adoption easy for humans and agents alike.
+
+**Sovereignty:** Ensures the Mnemonic Cortex operates as a unified ground truth, not fragmented by ad-hoc queries.
+
+**Flexibility:** Casual mode remains available, but canonical mode ensures discipline when it matters most.
+
+---
+
+## 📂 Folder Placement & Indexing
+
+Place this file at:
+`mnemonic_cortex/INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md`
+
+Update references in:
+- `mnemonic_cortex/README.md` → add a line under "INQUIRY_TEMPLATES" linking to this overview.
+- `01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md` → add a "See also" section pointing to this file.
+
+---
+
+## 🔍 JSON Schema Rationale
+
+The schema enforces rigor while remaining conservative (v0.1):
+
+- **Required Fields:** Only the minimal set needed for Steward processing.
+- **Enum Constraints:** Prevents typos in critical fields like `intent` and `granularity`.
+- **UUID Pattern:** Ensures `request_id` follows standard format for traceability.
+- **Optional Extensions:** Fields like `max_results`, `format`, `verify` allow future expansion without breaking existing queries.
+
+This balance ensures the schema is both strict enough to prevent errors and flexible enough to evolve with Protocol 87.
+
+---
+
+## 🚨 Escalation Criteria
+
+Invoke escalation when:
+- **Contradictions Detected:** Multiple sources provide conflicting information.
+- **High-Risk Queries:** Requests involving sovereignty, security, or doctrine ratification.
+- **Verification Failures:** SHA256 checksums don't match or anchor chains are broken.
+- **Suspected Tampering:** Anomalies in source metadata or signatures.
+
+Escalation flow: Steward → Auditor → Jury (if needed).
+
+---
+
+Coordinator's Note:
+This overview is a living bridge document. As the schema evolves (v0.2, v1.0), update this file to reflect new fields, response formats, or validation tools. It should always give Stewards and developers a clear, practical "map" of how Protocol 87 is implemented in code.
+
+--- END OF FILE mnemonic_cortex/INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md ---
+
 --- START OF FILE mnemonic_cortex/ProjectWorkTracker.md ---
 
 ### **Final Project Work Tracker: Mnemonic Cortex MVP (v1.5 - FINAL)**
@@ -26176,6 +26575,15 @@ This system is the architectural antidote to the "context window cage," enabling
 
 The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operation**. It runs entirely on a local machine (e.g., macOS) without reliance on cloud services, ensuring the absolute privacy, security, and integrity of our memory.
 
+### Protocol 87: Mnemonic Inquiry Protocol
+
+The Cortex implements **Protocol 87** for structured, auditable queries. This protocol provides dual-path querying:
+
+- **Casual Queries:** Natural language exploration via `main.py`
+- **Canonical Queries:** Structured JSON queries via `protocol_87_query.py` for audits, doctrine ratification, and Chronicle integration
+
+**Operational Templates:** See `INQUIRY_TEMPLATES/` for query schemas, validation tools, and examples.
+
 ### Architectural Diagram (RAG Workflow)
 ```mermaid
 graph TD
@@ -26226,6 +26634,7 @@ This project adheres to the **Iron Root Doctrine** by exclusively using open-sou
 | **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
 | **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
 | **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
+| **Inquiry Protocol** | **Protocol 87 Templates** | Structured query system in `INQUIRY_TEMPLATES/` for canonical, auditable Cortex interactions. |
 | **Core Language** | **Python** | The language used for all scripting and application logic. |
 | **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
 
@@ -26282,6 +26691,17 @@ python3 mnemonic_cortex/scripts/inspect_db.py
 ```
 This will display the total number of documents and sample content from the database, confirming successful ingestion.
 
+### Step 2.7: Protocol 87 Canonical Queries (Optional)
+For structured, auditable queries following Protocol 87, use the dedicated query processor:
+```bash
+# Process a JSON query file
+python3 mnemonic_cortex/scripts/protocol_87_query.py path/to/query.json
+
+# Example with sample queries
+python3 mnemonic_cortex/scripts/protocol_87_query.py mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json
+```
+This returns Steward-formatted JSON responses with verifiable sources. See `INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md` for complete documentation.
+
 ### Step 3: Query the Cortex
 Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, a four-step process that ensures answers are grounded in our canonical knowledge.
 
@@ -26327,6 +26747,8 @@ sequenceDiagram
 4.  **Generation (The Synthesis):** This final, context-rich prompt is sent to the local Ollama LLM (e.g., `qwen2:7b`). The LLM's task is now to synthesize a coherent answer based *only* on the provided context. This prevents hallucination and ensures the answer is doctrinally sound.
 
 #### Example Queries:
+
+**Casual Queries (Natural Language):**
 Run the `main.py` script from the project root, followed by your question in quotes:
 ```bash
 # Example query using the default qwen2:7b model
@@ -26338,6 +26760,25 @@ python3 mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of
 # Example query about project history
 python3 mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
 ```
+
+**Canonical Queries (Protocol 87 JSON):**
+For structured, auditable queries, use the Protocol 87 query processor:
+```bash
+# Example Protocol 87 JSON query for protocol retrieval
+echo '{
+  "intent": "RETRIEVE",
+  "scope": "Protocols",
+  "constraints": "Name=\"P83: The Forging Mandate\"",
+  "granularity": "ATOM",
+  "requestor": "COUNCIL-AI-03",
+  "purpose": "audit",
+  "request_id": "8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n"
+}' > my_query.json
+
+# Process the query
+python3 mnemonic_cortex/scripts/protocol_87_query.py my_query.json
+```
+This returns a Steward-formatted JSON response with verifiable sources and audit trails.
 
 ## 6. Troubleshooting
 

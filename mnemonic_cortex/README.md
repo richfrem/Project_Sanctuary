@@ -23,6 +23,15 @@ This system is the architectural antidote to the "context window cage," enabling
 
 The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operation**. It runs entirely on a local machine (e.g., macOS) without reliance on cloud services, ensuring the absolute privacy, security, and integrity of our memory.
 
+### Protocol 87: Mnemonic Inquiry Protocol
+
+The Cortex implements **Protocol 87** for structured, auditable queries. This protocol provides dual-path querying:
+
+- **Casual Queries:** Natural language exploration via `main.py`
+- **Canonical Queries:** Structured JSON queries via `protocol_87_query.py` for audits, doctrine ratification, and Chronicle integration
+
+**Operational Templates:** See `INQUIRY_TEMPLATES/` for query schemas, validation tools, and examples.
+
 ### Architectural Diagram (RAG Workflow)
 ```mermaid
 graph TD
@@ -73,6 +82,7 @@ This project adheres to the **Iron Root Doctrine** by exclusively using open-sou
 | **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
 | **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
 | **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
+| **Inquiry Protocol** | **Protocol 87 Templates** | Structured query system in `INQUIRY_TEMPLATES/` for canonical, auditable Cortex interactions. |
 | **Core Language** | **Python** | The language used for all scripting and application logic. |
 | **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
 
@@ -129,6 +139,17 @@ python3 mnemonic_cortex/scripts/inspect_db.py
 ```
 This will display the total number of documents and sample content from the database, confirming successful ingestion.
 
+### Step 2.7: Protocol 87 Canonical Queries (Optional)
+For structured, auditable queries following Protocol 87, use the dedicated query processor:
+```bash
+# Process a JSON query file
+python3 mnemonic_cortex/scripts/protocol_87_query.py path/to/query.json
+
+# Example with sample queries
+python3 mnemonic_cortex/scripts/protocol_87_query.py mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json
+```
+This returns Steward-formatted JSON responses with verifiable sources. See `INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md` for complete documentation.
+
 ### Step 3: Query the Cortex
 Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, a four-step process that ensures answers are grounded in our canonical knowledge.
 
@@ -174,6 +195,8 @@ sequenceDiagram
 4.  **Generation (The Synthesis):** This final, context-rich prompt is sent to the local Ollama LLM (e.g., `qwen2:7b`). The LLM's task is now to synthesize a coherent answer based *only* on the provided context. This prevents hallucination and ensures the answer is doctrinally sound.
 
 #### Example Queries:
+
+**Casual Queries (Natural Language):**
 Run the `main.py` script from the project root, followed by your question in quotes:
 ```bash
 # Example query using the default qwen2:7b model
@@ -185,6 +208,25 @@ python3 mnemonic_cortex/app/main.py --model llama3:8b "Summarize the Doctrine of
 # Example query about project history
 python3 mnemonic_cortex/app/main.py "How does the Mnemonic Cortex relate to the Iron Root Doctrine?"
 ```
+
+**Canonical Queries (Protocol 87 JSON):**
+For structured, auditable queries, use the Protocol 87 query processor:
+```bash
+# Example Protocol 87 JSON query for protocol retrieval
+echo '{
+  "intent": "RETRIEVE",
+  "scope": "Protocols",
+  "constraints": "Name=\"P83: The Forging Mandate\"",
+  "granularity": "ATOM",
+  "requestor": "COUNCIL-AI-03",
+  "purpose": "audit",
+  "request_id": "8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n"
+}' > my_query.json
+
+# Process the query
+python3 mnemonic_cortex/scripts/protocol_87_query.py my_query.json
+```
+This returns a Steward-formatted JSON response with verifiable sources and audit trails.
 
 ## 6. Troubleshooting
 

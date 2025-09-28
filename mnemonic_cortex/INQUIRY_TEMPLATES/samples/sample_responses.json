@@ -1,0 +1,40 @@
+[
+  {
+    "request_id": "11111111-1111-1111-1111-111111111111",
+    "steward_id": "COUNCIL-STEWARD-01",
+    "timestamp_utc": "2025-09-27T18:12:34Z",
+    "query": "RETRIEVE :: Protocols :: Name=\"P83: The Forging Mandate\" ; GRANULARITY=ATOM ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE=\"audit\" ; REQUEST_ID=11111111-1111-1111-1111-111111111111",
+    "granularity": "ATOM",
+    "matches": [
+      {
+        "source_path": "01_PROTOCOLS/83_The_Forging_Mandate.md",
+        "entry_id": "P83",
+        "sha256": "abc123deadbeef...",
+        "excerpt": "Protocol 83 establishes the Forging Mandate...",
+        "full_text_available": true
+      }
+    ],
+    "checksum_chain": [],
+    "signature": "steward.sig.v1",
+    "notes": "Exact match found."
+  },
+  {
+    "request_id": "44444444-4444-4444-4444-444444444444",
+    "steward_id": "COUNCIL-STEWARD-01",
+    "timestamp_utc": "2025-09-27T18:15:10Z",
+    "query": "RETRIEVE :: Living_Chronicle :: Anchor=Entry_245 ; GRANULARITY=ANCHOR ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE=\"continuity-check\" ; VERIFY=SHA256 ; REQUEST_ID=44444444-4444-4444-4444-444444444444",
+    "granularity": "ANCHOR",
+    "matches": [
+      {
+        "source_path": "Living_Chronicle/Entry_245.md",
+        "entry_id": "245",
+        "sha256": "feedbead5678...",
+        "excerpt": "Entry 245 documents the Chimera Sandbox...",
+        "full_text_available": true
+      }
+    ],
+    "checksum_chain": ["prev_entry_hash...", "this_entry_hash..."],
+    "signature": "steward.sig.v1",
+    "notes": "Anchor verified. Continuity intact."
+  }
+]
