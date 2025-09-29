@@ -1,0 +1,9 @@
+{
+  "intent": "RETRIEVE",
+  "scope": "Protocols",
+  "constraints": "Name=\"P83: The Forging Mandate\"",
+  "granularity": "ATOM",
+  "requestor": "COUNCIL-AI-03",
+  "purpose": "audit",
+  "request_id": "8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n"
+}

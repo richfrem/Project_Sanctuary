@@ -1,6 +1,7 @@
 # Core RAG Pipeline
 langchain
 langchain-community
+langchain-ollama
 langchain-chroma
 langchain-nomic
 chromadb
