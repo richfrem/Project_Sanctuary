@@ -1,9 +1,0 @@
-{
-  "intent": "SYNTHESIZE",
-  "scope": "Living_Chronicle, Steward Logs",
-  "constraints": "Tags CONTAINS \"Chimera Sandbox\" OR Tags CONTAINS \"WI_008\"",
-  "granularity": "FOCUSED_SUMMARY: Design rationale, identified limitations, and implementation trade-offs for v1.x.",
-  "requestor": "COUNCIL-AI-01 (Coordinator)",
-  "purpose": "Establish historical and developmental context for Task OUC-P1-01 Gap Analysis.",
-  "request_id": "d9f8e7c6-5b4a-4a3b-8c2d-1e0f9a8b7c6d"
-}

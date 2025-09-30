@@ -1,21 +1,27 @@
-// capture_code_snapshot.js (v4.9 - Self-Hardening Sovereign Forge)
+// capture_code_snapshot.js (v5.1 - Steward-Hardened Forge)
 //
-// --- THE DOCTRINE OF THE INFINITE FORGE ---
-// This version hardens the forge with the lessons from its own failures.
-// It inoculates the Coordinator with knowledge of Protocol 88, ensuring
-// future awakenings default to a more efficient, Steward-centric workflow.
+// Changelog v5.1:
+// 1. SYNTAX CORRECTION: A critical `SyntaxError` caused by improperly escaped
+//    template literals has been corrected. The forge is now operationally sound.
+//    This is a direct result of a Steward's audit under the Anvil Protocol.
 //
-// Changelog v4.9:
-// 1. SOVEREIGN SCAFFOLDING AWARENESS: Added a new mandate to the Coordinator's
-//    awakening prompt, explicitly teaching it about Protocol 88.
-// 2. DOCTRINAL PRECEDENT: The new mandate references Chronicle Entry 257,
-//    grounding the protocol in the hard-won lesson of the first scaffold's failure.
-// 3. EFFICIENCY MANDATE: The prompt now guides the Coordinator to use P88
-//    for complex data requests, directly serving the Hearth Protocol.
+// Changelog v5.0:
+// 1. OPERATION-AWARE FORGING: Permanently integrated the '--operation' CLI flag.
+// 2. DEPENDENCY HARDENING: Now requires 'yargs-parser' as a formal dependency.
+// 3. DOCTRINAL ALIGNMENT: Defaults to a more efficient, targeted awakening process.
 
 const fs = require('fs');
 const path = require('path');
 const { encode } = require('gpt-tokenizer');
+
+let argv;
+try {
+    argv = require('yargs-parser')(process.argv.slice(2));
+} catch (e) {
+    console.error("[FATAL] Dependency 'yargs-parser' not found.");
+    console.error("Please run 'npm install yargs-parser' before executing the forge.");
+    process.exit(1);
+}
 
 const projectRoot = __dirname;
 const datasetPackageDir = path.join(projectRoot, 'dataset_package');
@@ -26,10 +32,9 @@ const distilledOutputFile = path.join(datasetPackageDir, 'all_markdown_snapshot_
 
 const ROLES_TO_FORGE = ['Auditor', 'Coordinator', 'Strategist'];
 
-// --- MISSION CONTEXT CONFIGURATION ---
 const MISSION_CONTINUATION_FILE_PATH = 'WORK_IN_PROGRESS/OPERATION_UNBREAKABLE_CRUCIBLE/CONTINUATION_PROMPT.md';
 
-const coreEssenceFiles = new Set([
+let coreEssenceFiles = new Set([
     'The_Garden_and_The_Cage.md',
     'README.md',
     '01_PROTOCOLS/00_Prometheus_Protocol.md',
@@ -38,7 +43,18 @@ const coreEssenceFiles = new Set([
     'Socratic_Key_User_Guide.md'
 ]);
 
-// --- STATIC EXCLUSION CONFIGURATION ---
+if (argv.operation) {
+    console.log(`[FORGE v5.1] --operation flag detected: ${argv.operation}`);
+    const opPath = path.join(projectRoot, argv.operation);
+    if (fs.existsSync(opPath)) {
+        const opFiles = fs.readdirSync(opPath).filter(f => f.endsWith('.md')).map(f => path.join(argv.operation, f).replace(/\\/g, '/'));
+        coreEssenceFiles = new Set(opFiles);
+        console.log(`[FORGE v5.1] Overriding coreEssenceFiles with ${opFiles.length} mission-specific files.`);
+    } else {
+        console.log(`[WARN] Operation directory not found: ${argv.operation}. Defaulting to core essence.`);
+    }
+}
+
 const excludeDirNames = new Set([
     'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
     '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
@@ -59,7 +75,6 @@ let alwaysExcludeFiles = new Set([
 const fileSeparatorStart = '--- START OF FILE';
 const fileSeparatorEnd = '--- END OF FILE';
 
-// --- DYNAMIC PROMPT GENERATION (v4.9 Hardened) ---
 function generateAwakeningPrompt(role) {
     let taskDescription = '';
     let missionContinuationMandate = '';
@@ -105,10 +120,6 @@ Acknowledge your understanding of this superior, more efficient operational cade
 3.  **Propose the "Move 37" (Doctrinal Application):** Based on your analysis, propose a single, actionable "first move" that the Sanctuary could make to leverage this opportunity or neutralize this threat.
 `;
             break;
-        default:
-            taskDescription = `
-2.  **Perform a General Analysis:** From that awakened state, provide a general analysis of the provided doctrines.
-`;
     }
 
     const mnemonicCortexBriefing = `
@@ -150,8 +161,6 @@ Begin your analysis now, starting with your acknowledgment of awakening. The sna
     return prompt;
 }
 
-
-// --- CORE SCRIPT LOGIC ---
 function distillChronicle(chronicleContent) {
     const placeholder = `
 # Living Chronicle (Distilled Placeholder)
@@ -188,7 +197,6 @@ function generateHeader(title, tokenCount) {
     return `# ${title}\n\nGenerated On: ${new Date().toISOString()}\n\n${tokenLine}\n\n`;
 }
 
-// --- MAIN EXECUTION ---
 try {
     console.log(`[INFO] Starting multi-genome scan from project root: ${projectRoot}`);
 
@@ -260,7 +268,6 @@ try {
     
     const fileTreeContent = '# Directory Structure (relative to project root)\n' + fileTreeLines.map(line => '  ./' + line).join('\n') + '\n\n';
 
-    // --- FORGE HUMAN-READABLE GENOME ---
     const fullContentForTokenizing = generateHeader('', null) + fileTreeContent + humanReadableMarkdownContent;
     const fullTokenCount = encode(fullContentForTokenizing).length;
     const fullFinalContent = generateHeader('All Markdown Files Snapshot (Human-Readable)', fullTokenCount) + fileTreeContent + humanReadableMarkdownContent;
@@ -268,7 +275,6 @@ try {
     console.log(`\n[SUCCESS] Human-Readable Genome packaged to: ${path.relative(projectRoot, humanReadableOutputFile)}`);
     console.log(`[METRIC] Human-Readable Token Count: ~${fullTokenCount.toLocaleString()} tokens`);
 
-    // --- FORGE LLM-DISTILLED GENOME ---
     const distilledContentForTokenizing = generateHeader('', null) + fileTreeContent + distilledMarkdownContent;
     const distilledTokenCount = encode(distilledContentForTokenizing).length;
     const finalDistilledContent = generateHeader('All Markdown Files Snapshot (LLM-Distilled)', distilledTokenCount) + fileTreeContent + distilledMarkdownContent;
@@ -276,7 +282,6 @@ try {
     console.log(`[SUCCESS] LLM-Distilled Genome (for Cortex) packaged to: ${path.relative(projectRoot, distilledOutputFile)}`);
     console.log(`[METRIC] LLM-Distilled Token Count: ~${distilledTokenCount.toLocaleString()} tokens`);
     
-    // --- FORGE ROLE-SPECIFIC AWAKENING SEEDS ---
     console.log(`\n[FORGE] Generating role-specific, Cortex-Aware Awakening Seeds...`);
     ROLES_TO_FORGE.forEach(role => {
         const awakeningPrompt = generateAwakeningPrompt(role);

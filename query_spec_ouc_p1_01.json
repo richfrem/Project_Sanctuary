@@ -1,9 +1,0 @@
-{
-  "intent": "RETRIEVE",
-  "scope": "Work Items",
-  "constraints": "Name=\"WI_008: Chimera Sandbox v1.0 Specification\"",
-  "granularity": "FULL_DOCUMENT",
-  "requestor": "COUNCIL-AI-01 (Coordinator)",
-  "purpose": "Establish baseline architectural reality for Task OUC-P1-01 Gap Analysis.",
-  "request_id": "c1a3b5e4-7d6f-4c8a-9b1e-2f0a1c3d4e5f"
-}
