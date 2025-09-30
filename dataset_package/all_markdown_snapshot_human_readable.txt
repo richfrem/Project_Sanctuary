@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-09-30T17:54:43.479Z
+Generated On: 2025-09-30T18:11:38.212Z
 
-# Mnemonic Weight (Token Count): ~430,910 tokens
+# Mnemonic Weight (Token Count): ~430,959 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -27522,21 +27522,21 @@ The Cortex implements **Protocol 87** for structured, auditable queries. This pr
 ### 2.2 Architectural Diagram (RAG Workflow Overview)
 ```mermaid
 graph TD
-    subgraph "(Ingestion Pipeline<BR>(Live Traversal))"
-        A["Canonical Directories<br/>(e.g., 01_PROTOCOLS/)"] --> A1{File Traversal<br/>(ingest.py)};
+    %% --- Ingestion Pipeline ---
+    subgraph "Ingestion Pipeline (Live Traversal)"
+        A["Canonical Directories<br/>(e.g., 01_PROTOCOLS/)"] --> A1("File Traversal<br/>(ingest.py)");
         A1 --> B(TextLoader);
         B --> C(Markdown Splitter);
-        C --> D{Chunked Documents};
-        E["Embedding Model<br/>(Nomic Embed)"];
+        C --> D["Chunked Documents"];
         
-        E --> F; 
-
-        D -- Embed & Store --> F(("Vector DB<br/>ChromaDB"));
+        %% This arrow shows the process of using an embedding model to store chunks
+        D -- "Embed & Store<br/>(using Nomic Embed)" --> F(("Vector DB<br/>ChromaDB"));
     end
 
+    %% --- Query Pipeline ---
     subgraph "Query Pipeline (Real-Time)"
-        G[User Query] --> H(Embedding Model);
-        H -- Query Vector --> I{Similarity Search};
+        G[User Query] --> H["Embedding Model<br/>(Nomic Embed)"];
+        H -- Query Vector --> I("Similarity Search");
         
         I -- "1. Sends Query to DB" --> F;
         F -- "2. Returns Relevant Chunks" --> I;
@@ -27547,12 +27547,14 @@ graph TD
         G --> K;
         J --> K;
 
-        K --> L[LLM e.g. qwen2:7b];
-        L --> M{"Context-Aware<br/>Answer"};
+        K --> L[LLM e.g., qwen2:7b];
+        L --> M["Context-Aware<br/>Answer"];
     end
 
+    %% --- Styling ---
     style F fill:#cde4f9,stroke:#333,stroke-width:2px
     style K fill:#d5f5d5,stroke:#333,stroke-width:2px
+    style H fill:#f9e79f,stroke:#333,stroke-width:2px
 ```
 
 ### 2.3 The Ingestion Pipeline: A Deeper Look (Chunking vs. Embedding)
