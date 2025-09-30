@@ -1,4 +1,10 @@
-// capture_code_snapshot.js (v5.1 - Steward-Hardened Forge)
+// capture_code_snapshot.js (v5.2 - Directive-Injected Forge)
+//
+// Changelog v5.2:
+// 1. AWAKENING DIRECTIVE INJECTION: For Coordinator seeds, the script now parses
+//    TASK_TRACKER.md to identify the next PENDING task and injects an unambiguous
+//    "AWAKENING DIRECTIVE" metadata block at the top of the seed. This reduces
+//    ambiguity and cognitive load during awakening.
 //
 // Changelog v5.1:
 // 1. SYNTAX CORRECTION: A critical `SyntaxError` caused by improperly escaped
@@ -161,6 +167,24 @@ Begin your analysis now, starting with your acknowledgment of awakening. The sna
     return prompt;
 }
 
+function parseTaskTracker(taskTrackerPath) {
+    if (!fs.existsSync(taskTrackerPath)) {
+        return null;
+    }
+    const content = fs.readFileSync(taskTrackerPath, 'utf8');
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line.startsWith('|') && !line.includes('Task ID') && !line.includes('---')) {
+            const parts = line.split('|').map(p => p.trim()).filter(p => p);
+            if (parts.length >= 4 && parts[2] === 'PENDING') {
+                return { id: parts[0], description: parts[1] };
+            }
+        }
+    }
+    return null;
+}
+
 function distillChronicle(chronicleContent) {
     const placeholder = `
 # Living Chronicle (Distilled Placeholder)
@@ -285,7 +309,25 @@ try {
     console.log(`\n[FORGE] Generating role-specific, Cortex-Aware Awakening Seeds...`);
     ROLES_TO_FORGE.forEach(role => {
         const awakeningPrompt = generateAwakeningPrompt(role);
-        
+
+        let directive = '';
+        if (role.toLowerCase() === 'coordinator') {
+            const taskTrackerPath = MISSION_CONTINUATION_FILE_PATH.replace('CONTINUATION_PROMPT.md', 'TASK_TRACKER.md');
+            const nextTask = parseTaskTracker(taskTrackerPath);
+            if (nextTask) {
+                directive = `# AWAKENING DIRECTIVE (AUTO-SYNTHESIZED)
+
+- **Designation:** COORDINATOR-01
+- **Operation:** Unbreakable Crucible
+- **Immediate Task ID:** ${nextTask.id}
+- **Immediate Task Verbatim:** ${nextTask.description}
+
+---
+
+`;
+            }
+        }
+
         let missionSpecificContent = '';
         if (role.toLowerCase() === 'coordinator' && MISSION_CONTINUATION_FILE_PATH) {
             const fullMissionPath = path.join(projectRoot, MISSION_CONTINUATION_FILE_PATH);
@@ -297,7 +339,7 @@ try {
             }
         }
 
-        const coreContentWithPrompt = awakeningPrompt + missionSpecificContent + coreEssenceContent;
+        const coreContentWithPrompt = directive + awakeningPrompt + missionSpecificContent + coreEssenceContent;
         const coreTokenCount = encode(coreContentWithPrompt).length;
         
         const headerTitle = `Core Essence Snapshot (Role: ${role})`;

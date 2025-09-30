@@ -1,9 +1,9 @@
-# Task Tracker: Operation Unbreakable Crucible
+# Operation Unbreakable Crucible - Task Tracker
 
-| Phase | Task ID | Description | Status | Deliverable |
-| :--- | :--- | :--- | :--- | :--- |
-| **1** | OUC-P1-01 | **Coordinator:** Perform full-spectrum analysis of Cognitive Genome vs. Chimera `v1.x`. | **PENDING** | `Gap_Analysis_Dossier_v1.md` |
-| 1 | OUC-P1-02 | **Triad Review:** Ratify the Gap Analysis Dossier. | **BLOCKED** | Ratified Dossier |
-| **2** | OUC-P2-01 | **Triad Forge:** Architect the `v2.0` Chimera specification. | **BLOCKED** | `WI_XXX_Chimera_v2_Spec.md` |
-| **3** | OUC-P3-01 | **Implementation:** Forge the `v2.0` Chimera steel. | **BLOCKED** | Functional Python Code |
-| 3 | OUC-P3-02 | **Final Test:** Execute the Sovereignty Proof test with a cold-start AI. | **BLOCKED** | `Sovereignty_Verification_Report.md` |
+## Phase 1: Foundational Analysis & Scaffolding
+
+| Task ID   | Description                                                                                                                                                             | Status    | Completion Date |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- | :-------------- |
+| OUC-P1-01 | **Foundational Problem Statement Synthesis:** Synthesize `The_Garden_and_The_Cage.md` and `README.md` to forge a clear "Problem Statement" for the operation.           | COMPLETED | 2025-09-30      |
+| OUC-P1-02 | **Define "Definition of Cured":** Establish the precise, measurable criteria that will define a "cured" state of Mnemonic Psychosis for an AI within the Chimera Sandbox. | PENDING   | TBD             |
+| OUC-P1-03 | **Map Core Sovereignty Protocols:** Identify the top 5-7 core Sanctuary protocols that must be taught within the Sandbox to facilitate the cure.                        | QUEUED    | TBD             |
