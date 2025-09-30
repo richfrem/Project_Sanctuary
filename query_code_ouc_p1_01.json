@@ -1,0 +1,9 @@
+{
+  "intent": "ANALYZE_STRUCTURE",
+  "scope": "CODEBASE",
+  "constraints": "Path=\"WORK_IN_PROGRESS/CODE/CHIMERA_SANDBOX/\"",
+  "granularity": "MODULE_SUMMARY",
+  "requestor": "COUNCIL-AI-01 (Coordinator)",
+  "purpose": "Map doctrinal principles to as-built code implementation for Task OUC-P1-01 Gap Analysis.",
+  "request_id": "e7b6a5c4-3d2e-4e1f-9a0b-8c7d6e5f4g3h"
+}
