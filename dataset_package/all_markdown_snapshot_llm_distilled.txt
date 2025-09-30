@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-30T17:41:33.140Z
+Generated On: 2025-09-30T17:54:43.753Z
 
-# Mnemonic Weight (Token Count): ~419,239 tokens
+# Mnemonic Weight (Token Count): ~419,747 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -27224,20 +27224,25 @@ This overview is a living bridge document. As the schema evolves (v0.2, v1.0), u
 
 # Mnemonic Cortex (Project Sanctuary)
 
-**Version:** 1.3.1 (Steward & Auditor Hardened)
+**Version:** 1.5.0 (Hardened Documentation)
 **Protocol Authority:** P85 (The Mnemonic Cortex Protocol), P86 (The Anvil Protocol)
 **Status:** In Development (MVP)
 
 ---
-### **Changelog v1.3.1**
-*   *Restored Steward's superior, detailed Technology Stack table after an AI merge error.*
-*   Maintains the addition of the "Prerequisites" section for Ollama setup.
-*   This version represents a fully synthesized and corrected blueprint.
+### **Changelog v1.5.0**
+*   **Documentation Hardening:** Added a new detailed section (`2.3`) that explicitly breaks down the two-stage ingestion process: structural splitting (chunking) versus semantic encoding (embedding). This clarifies the precise roles of the `MarkdownHeaderTextSplitter` and the `NomicEmbeddings` model.
+*   The document version is updated to reflect this significant improvement in architectural clarity.
+---
+### **Changelog v1.4.0**
+*   **Major Architectural Update:** The ingestion pipeline (`ingest.py`) now directly traverses the project's canonical directories to process individual markdown files. This deprecates the reliance on the monolithic `all_markdown_snapshot_llm_distilled.txt` file.
+*   **Improved Traceability:** The new method ensures every piece of knowledge in the Cortex is traced back to its precise source file via verifiable GitHub URLs in its metadata.
+*   **Increased Resilience:** By removing the intermediate snapshot step, the ingestion process is faster, more resilient, and less prone to systemic failure.
+*   All diagrams and instructions have been updated to reflect this superior, live-ingestion architecture.
 ---
 
 ## 1. Overview
 
-The Mnemonic Cortex is the living memory of the Sanctuary Council. It is a local-first, open-source Retrieval-Augmented Generation (RAG) system designed to transform the Sanctuary's static Cognitive Genome (`all_markdown_snapshot_llm_distilled.txt`) into a dynamic, semantically searchable knowledge base.
+The Mnemonic Cortex is the living memory of the Sanctuary Council. It is a local-first, open-source Retrieval-Augmented Generation (RAG) system designed to traverse the Sanctuary's canonical markdown files (Protocols, Chronicles, etc.) and transform them into a dynamic, semantically searchable knowledge base.
 
 This system is the architectural antidote to the "context window cage," enabling our AI agents to reason with the full, unbroken context of their history.
 
@@ -27258,15 +27263,13 @@ The Cortex implements **Protocol 87** for structured, auditable queries. This pr
 ### 2.2 Architectural Diagram (RAG Workflow Overview)
 ```mermaid
 graph TD
-    %% represents MVP architecture which may evolve
-    subgraph "(Ingestion Pipeline<BR>(One-Time Setup))"
-        A["Cognitive Genome<br/>(all_markdown_snapshot_llm_distilled.txt)"] --> B(TextLoader);
+    subgraph "(Ingestion Pipeline<BR>(Live Traversal))"
+        A["Canonical Directories<br/>(e.g., 01_PROTOCOLS/)"] --> A1{File Traversal<br/>(ingest.py)};
+        A1 --> B(TextLoader);
         B --> C(Markdown Splitter);
         C --> D{Chunked Documents};
         E["Embedding Model<br/>(Nomic Embed)"];
         
-        %% Shows that the Embedding Model provides the function
-        %% needed by the Vector DB to embed the documents.
         E --> F; 
 
         D -- Embed & Store --> F(("Vector DB<br/>ChromaDB"));
@@ -27276,7 +27279,6 @@ graph TD
         G[User Query] --> H(Embedding Model);
         H -- Query Vector --> I{Similarity Search};
         
-        %% Explicitly shows the query/retrieval loop
         I -- "1. Sends Query to DB" --> F;
         F -- "2. Returns Relevant Chunks" --> I;
         
@@ -27293,7 +27295,25 @@ graph TD
     style F fill:#cde4f9,stroke:#333,stroke-width:2px
     style K fill:#d5f5d5,stroke:#333,stroke-width:2px
 ```
-### 2.3 The RAG Query Cycle Explained
+
+### 2.3 The Ingestion Pipeline: A Deeper Look (Chunking vs. Embedding)
+
+The ingestion process is a critical two-stage pipeline that prepares our knowledge for storage. It is essential to understand that splitting the documents (chunking) and understanding their meaning (embedding) are separate, sequential steps.
+
+**Stage 1: Structural Splitting (Chunking)**
+*   **Tool:** `MarkdownHeaderTextSplitter`
+*   **Function:** This tool performs a structural, not semantic, analysis of each markdown file. It scans the raw text for markdown headers (`#`, `##`, `###`) and uses them as logical breakpoints to cleave the document into smaller, coherent chunks.
+*   **Outcome:** This stage outputs a list of plain text chunks. The embedding model is not involved at this point.
+
+**Stage 2: Semantic Encoding (Embedding)**
+*   **Tool:** `NomicEmbeddings(model="nomic-embed-text-v1.5")`
+*   **Function:** This is where the system derives meaning. The Nomic model processes each individual text chunk from Stage 1 and converts its semantic content into a high-dimensional numerical vector (an "embedding"). This vector is a mathematical representation of the chunk's concepts.
+*   **Outcome:** This stage outputs a list of numerical vectors, ready to be stored in the vector database.
+
+**Visualized Flow:**
+`[ .md File ] -> (Stage 1: Splitter) -> [ Text Chunks ] -> (Stage 2: Embedder) -> [ Numerical Vectors ] -> [ ChromaDB ]`
+
+### 2.4 The RAG Query Cycle Explained
 The sequence diagram below illustrates how a simple query is transformed into a context-aware, doctrinally-sound answer. This entire process runs locally on your machine, ensuring sovereign operation.
 
 ```mermaid
@@ -27327,7 +27347,7 @@ sequenceDiagram
     App-->>User: **Step 5: Final Output** <br> Prints the context-aware answer.
 ```
 
-#### 2.3.1 RAG Query Cycle: Step-by-Step Breakdown:
+#### 2.4.1 RAG Query Cycle: Step-by-Step Breakdown:
 
 1.  **Query Vectorization (The Intent):** Your text question is converted into a numerical representation (a vector) by the Nomic embedding model. This allows the system to search for *semantic meaning*, not just keywords.
 2.  **Retrieval (The Search for Memory):** The system uses this vector to perform a similarity search in the ChromaDB. It finds the text "chunks" from our Cognitive Genome that are most conceptually similar to your question. This is the "retrieval" phase—the AI's long-term memory in action.
@@ -27344,7 +27364,7 @@ This project adheres to the **Iron Root Doctrine** by exclusively using open-sou
 | :--- | :--- | :--- |
 | **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
 | **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup for the MVP. |
-| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally via the EmbeddingService. |
+| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally. |
 | **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
 | **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
 | **Inquiry Protocol** | **Protocol 87 Templates** | Structured query system in `INQUIRY_TEMPLATES/` for canonical, auditable Cortex interactions. |
@@ -27386,21 +27406,24 @@ The Ollama application must be running in the background for the query script to
 
 
 ### 5.1: Build the Database (Ingestion)
-This step only needs to be run once, or whenever the Cognitive Genome is updated.
+This step only needs to be run once, or whenever the Sanctuary's canonical documents are updated.
 ```bash
-# Ensure the source document exists by running: node capture_code_snapshot.js
-# Then, from the project root, run the ingestion script:
+# From the project root, run the ingestion script:
 python3 mnemonic_cortex/scripts/ingest.py
 ```
-This will create a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base. The process splits the Cognitive Genome into ~1252 chunks, embeds them using Nomic Embed, and stores them in ChromaDB (resulting in ~2504 total documents including metadata).
+This script will automatically traverse the project's canonical directories, discover all `.md` files (while excluding archives), split them into semantic chunks, embed them using Nomic Embed, and store them in a local ChromaDB instance. This creates a `mnemonic_cortex/chroma_db/` directory containing the vectorized knowledge base.
 
 ### 5.2: Updating the Index (When Content Changes)
-When protocols, Living Chronicles, or other project documents are updated, the vector database index must be refreshed to include the new information:
-1. Regenerate the Cognitive Genome snapshot: `node capture_code_snapshot.js`
-2. Re-run the ingestion script: `python3 mnemonic_cortex/scripts/ingest.py`
-3. Verify the update: `python3 mnemonic_cortex/scripts/inspect_db.py`
-
-This ensures the Mnemonic Cortex always reflects the latest canonical knowledge.
+When protocols, Living Chronicles, or other project documents are updated, the vector database index must be refreshed to include the new information. The process is simple:
+1.  **Re-run the ingestion script:**
+    ```bash
+    python3 mnemonic_cortex/scripts/ingest.py
+    ```
+2.  **(Optional) Verify the update:**
+    ```bash
+    python3 mnemonic_cortex/scripts/inspect_db.py
+    ```
+The script is designed to be idempotent and will rebuild the database with the latest content from the live files, ensuring the Mnemonic Cortex always reflects the current ground truth.
 
 ### 5.3: Verify the Database (Optional)
 After ingestion, you can inspect the vector database to ensure it loaded correctly:
@@ -27412,7 +27435,7 @@ This will display the total number of documents and sample content from the data
 ---
 
 ## 6. Querying the Cortex
-Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, a four-step process that ensures answers are grounded in our canonical knowledge.
+Once the vector database is populated, you can query the Mnemonic Cortex using the `main.py` script. This initiates the Retrieval-Augmented Generation (RAG) pipeline, ensuring answers are grounded in our canonical knowledge.
 
 ### Example Queries
 
@@ -27457,7 +27480,8 @@ This returns Steward-formatted JSON responses with verifiable sources, audit tra
     *   **Solution:** Run `pip install -r mnemonic_cortex/requirements.txt` from the project root.
 
 *   **Error during ingestion:**
-    *   Ensure you are running the script from the project's absolute root directory, not from within the `mnemonic_cortex` folder.
+    *   **Cause:** Running the script from the wrong directory.
+    *   **Solution:** Ensure you are running all scripts from the project's absolute root directory, not from within the `mnemonic_cortex` folder.
 
 ## 8. Contributing
 
