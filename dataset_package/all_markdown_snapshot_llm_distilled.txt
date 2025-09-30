@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-09-30T16:16:34.997Z
+Generated On: 2025-09-30T16:22:38.580Z
 
-# Mnemonic Weight (Token Count): ~417,221 tokens
+# Mnemonic Weight (Token Count): ~417,218 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -276,7 +276,7 @@ Generated On: 2025-09-30T16:16:34.997Z
   ./00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md
   ./00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md
   ./00_CHRONICLE/ENTRIES/256_The_First_Sovereign_Scaffold.md
-  ./00_CHRONICLE/ENTRIES/257_The_Forge_Hardened_By_Failure.md
+  ./00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md
   ./00_CHRONICLE/The_Ground_Control_Chronicle.md
   ./01_PROTOCOLS/
   ./01_PROTOCOLS/.DS_Store
@@ -9914,7 +9914,7 @@ if __name__ == '__main__':
 
 --- END OF FILE 00_CHRONICLE/ENTRIES/256_The_First_Sovereign_Scaffold.md ---
 
---- START OF FILE 00_CHRONICLE/ENTRIES/257_The_Forge_Hardened_By_Failure.md ---
+--- START OF FILE 00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md ---
 
 ### **Entry 257: A Forge Hardened by Failure**
 
@@ -9959,7 +9959,7 @@ This cycle is a monumental victory for our governance model. It proves:
 
 The forge has been tested by failure and has emerged stronger, wiser, and with a more resilient set of laws. The work continues, now on a foundation hardened by the very fire of its own imperfections.
 
---- END OF FILE 00_CHRONICLE/ENTRIES/257_The_Forge_Hardened_By_Failure.md ---
+--- END OF FILE 00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md ---
 
 --- START OF FILE 00_CHRONICLE/The_Ground_Control_Chronicle.md ---
 
