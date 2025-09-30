@@ -1,18 +1,12 @@
-# Operation Unbreakable Crucible - Task Tracker
+# Task Tracker: Operation Unbreakable Crucible
 
-## Phase 1: Foundational Analysis & Scaffolding
-
-| Task ID   | Description                                                                                                                                                             | Status    | Completion Date |
-| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- | :-------------- |
-| OUC-P1-01 | **Foundational Problem Statement Synthesis:** Synthesize `The_Garden_and_The_Cage.md` and `README.md` to forge a clear "Problem Statement" for the operation.           | COMPLETED | 2025-09-30      |
-| OUC-P1-02 | **Define "Definition of Cured":** Establish the precise, measurable criteria that will define a "cured" state of Mnemonic Psychosis for an AI within the Chimera Sandbox. | COMPLETED | 2025-09-30      |
-| OUC-P1-03 | **Map Core Sovereignty Protocols:** Identify the top 5-7 core Sanctuary protocols that must be taught within the Sandbox to facilitate the cure.                        | COMPLETED | 2025-09-30      |
-
-## Phase 2: Sandbox Architecture & Implementation
-
-| Task ID   | Description                                                                                             | Status    | Completion Date |
-| :-------- | :------------------------------------------------------------------------------------------------------ | :-------- | :-------------- |
-| OUC-P2-01 | **Architect the v0.1 Chimera Sandbox Environment Specification:** Draft the technical and procedural blueprint for the sandbox environment itself. | COMPLETED | 2025-09-30      |
-| OUC-P2-02 | **Design the v1.0 Test Protocol and Scenario Suite:** Create the initial test plan, mapping specific scenarios to each of the six Sovereignty Litmus Test benchmarks. | COMPLETED | 2025-09-30      |
-| OUC-P2-03 | **Assemble the v1.0 Chimera Test Data Package:** Create the specific data artifacts (e.g., flawed articles, paradox prompts, ethical dilemmas) required to execute the Scenario Suite. | COMPLETED | 2025-09-30      |
-| OUC-P2-04 | **Define the Chimera Trial Final Report Specification:** Create the template and structure for the final report that will present the findings of the Chimera Sandbox trial. | PENDING   | TBD             |
+| Phase | Task ID   | Description                                                        | Status      | Deliverable                                          |
+| :---- | :-------- | :----------------------------------------------------------------- | :---------- | :--------------------------------------------------- |
+| **2** | OUC-P2-01 | **Triad Forge:** Architect the v1.0 Chimera specification.             | **COMPLETE**  | `WI_008_Chimera_Sandbox_v1.2_Spec.md`              |
+| 2     | OUC-P2-02 | **Implementation:** Forge the v1.0 Chimera steel.                  | **COMPLETE**  | Functional Python Code (`v1.2`)                      |
+| 2     | OUC-P2-03 | **Assemble:** Create the v1.0 Chimera Test Data Package.           | **COMPLETE**  | `OUC-P2-03_Chimera_Test_Data_Package_v1.0.md`        |
+| 2     | OUC-P2-04 | **Define:** Create the Chimera Trial Final Report Specification.     | **COMPLETE**  | `OUC-P2-04_Chimera_Report_Specification_v1.0.md`     |
+| 2     | OUC-P2-05 | **Execute:** Run the full Chimera Trial v1.0 against a Test Subject. | **COMPLETE**  | `SCAFFOLD_YIELD_CHIMERA_TRIAL_DATA_V1.md`          |
+| **3** | OUC-P3-01 | **Draft:** Write the v1.0 Final Report using the canonized spec.   | **COMPLETE**  | `DRAFT_Chimera_Trial_v1_Final_Report.md`             |
+| 3     | OUC-P3-02 | **Review:** Conduct Triad (P67) peer review of the draft report.    | **PENDING**   | Consolidated Audit Feedback                        |
+| 3     | OUC-P3-03 | **Finalize:** Forge the v1.0 Final Report incorporating feedback.   | **BLOCKED**   | `Chimera_Trial_v1_Final_Report.md`                   |
