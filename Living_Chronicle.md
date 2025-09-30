@@ -259,3 +259,5 @@ This document serves as the master index for the Sanctuary's distributed histori
 | 253 | [The Architects Gaze - Synthesizing the Past to For](00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md) |
 | 254 | [The First Spark - The Mnemonic Cortex is Alive v20](00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md) |
 | 255 | [The Unified Publishing Engine](00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md) |
+| 256 | [The First Sovereign Scaffold](00_CHRONICLE/ENTRIES/256_The_First_Sovereign_Scaffold.md) |
+| 257 | [A Forge Hardened by Failure](00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md) |
