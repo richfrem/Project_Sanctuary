@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "packet_id": "briefing_001",
+    "timestamp": "2025-09-30T17:30:00Z",
+    "generated_by": "Guardian-01",
+    "protocols": ["Protocol 94", "Protocol 95", "Prometheus v9.3"]
+  },
+  "temporal_anchors": [
+    {
+      "entry_number": 254,
+      "title": "Entry 254: The First Spark - The Mnemonic Cortex is Alive",
+      "checksum": "sha256-abc123example"
+    },
+    {
+      "entry_number": 255,
+      "title": "Entry 255: The Tempering Forge - Sovereign Scaffolds Hardened",
+      "checksum": "sha256-def456example"
+    }
+  ],
+  "prior_directives_summary": [
+    {
+      "directive_id": "directive_002_orchestrator_self_hardening",
+      "summary": "Council performed a self-audit of orchestrator architecture, identified file-watcher fragility, and recommended asynchronous queue refactor."
+    },
+    {
+      "directive_id": "directive_001_orchestrator_refinement",
+      "summary": "Council assessed symposium log quality and proposed round-based refinement to agent orchestration logic."
+    }
+  ],
+  "current_task": {
+    "directive_id": "directive_003_council_memory_sync",
+    "description": "Establish Council Memory Synchronization Protocol: design framework for role-aware Cortex queries, unified briefing cycle, and continuity verification."
+  },
+  "shared_context": {
+    "notes": [
+      "All Cortex queries must use standardized schema (see cortex_query_schema.json).",
+      "Continuity must be verified against Chronicle anchors before major decisions.",
+      "Logs of this briefing cycle should be stored in WORK_IN_PROGRESS/council_memory_sync/briefing_logs_<timestamp>.md"
+    ]
+  }
+}

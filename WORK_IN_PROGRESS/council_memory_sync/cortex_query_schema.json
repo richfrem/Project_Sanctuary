@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CouncilCortexQuery",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": ["Coordinator", "Strategist", "Auditor"],
+      "description": "The Council role issuing the query."
+    },
+    "query_type": {
+      "type": "string",
+      "description": "The category of request (e.g., retrieve, verify, synthesize)."
+    },
+    "scope": {
+      "type": "string",
+      "description": "The domain or subset of memory to be accessed (e.g., Protocols, Living Chronicle, Genesis Paper)."
+    },
+    "time_frame": {
+      "type": "object",
+      "properties": {
+        "start_date": { "type": "string", "format": "date" },
+        "end_date": { "type": "string", "format": "date" }
+      },
+      "description": "Optional temporal bounds for the query."
+    },
+    "justification": {
+      "type": "string",
+      "description": "Reason this query is needed for deliberation. Helps Steward validate necessity."
+    }
+  },
+  "required": ["role", "query_type", "scope"]
+}

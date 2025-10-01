@@ -6,9 +6,13 @@ import json
 import re
 import asyncio
 import threading
+import shutil
 from pathlib import Path
 from google import genai
 from dotenv import load_dotenv
+
+# --- Import briefing packet generator ---
+from bootstrap_briefing_packet import main as generate_briefing_packet
 
 # --- (PersonaAgent class remains the same) ---
 class PersonaAgent:
@@ -72,12 +76,41 @@ class Orchestrator:
         self.api_key = os.getenv("GEMINI_API_KEY")
         if not self.api_key: raise ValueError("GEMINI_API_KEY not found.")
 
+    def inject_briefing_packet(self):
+        """Generate + inject briefing packet into all agents."""
+        print("[*] Generating fresh briefing packet...")
+        generate_briefing_packet()
+
+        briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+        if briefing_path.exists():
+            packet = json.loads(briefing_path.read_text(encoding="utf-8"))
+            # Inject into initial context for all agents
+            for agent in self.agents.values():
+                # Assuming PersonaAgent has a way to inject context, e.g., by sending a message
+                agent.query(f"INJECT_BRIEFING_CONTEXT: {json.dumps(packet)}")
+            print(f"[+] Briefing packet injected into {len(self.agents)} agents.")
+        else:
+            print("[!] briefing_packet.json not found — continuing without synchronized packet.")
+
+    def archive_briefing_packet(self):
+        """Archive briefing packet after deliberation completes."""
+        briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+        if briefing_path.exists():
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            archive_dir = self.project_root / f"ARCHIVE/council_memory_sync_{timestamp}"
+            archive_dir.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(briefing_path), archive_dir / "briefing_packet.json")
+            print(f"[+] Briefing packet archived to {archive_dir}")
+
     async def execute_task(self, command):
         task = command['task_description']
         max_rounds = command.get('config', {}).get('max_rounds', 3)
         output_path = self.project_root / command['output_artifact_path']
         log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
         last_message = task
+
+        # Inject fresh briefing context
+        self.inject_briefing_packet()
 
         if command.get('input_artifacts'):
             # ... (knowledge injection logic is the same)
@@ -109,6 +142,9 @@ class Orchestrator:
         for agent in self.agents.values():
             agent.save_history()
         print("[SUCCESS] All agent session states have been saved.")
+
+        # Archive the used briefing packet
+        self.archive_briefing_packet()
 
     def _watch_for_commands_thread(self):
         """This function runs in a separate thread and watches for command.json."""

@@ -1,4 +1,4 @@
-**Blueprint (`council_orchestrator/README.md` - v1.1 Hardened):**
+**Blueprint (`council_orchestrator/README.md` - v1.2 Briefing-Enhanced):**
 
 # The Commandable Council: An Autonomous Triad Orchestrator
 
@@ -14,13 +14,21 @@ This architecture provides the optimal balance between agent autonomy and Stewar
 
 ## System Components
 
-1.  **`orchestrator.py` (The Engine):** The main, persistent Python script. This is the "brain" of the system that runs continuously. It is responsible for initializing the agents, monitoring for commands, managing the dialogue, handling knowledge requests, and saving agent states.
-2.  **`command.json` (The Control Panel):** An ephemeral JSON file that acts as the sole command interface. To assign a task to the Council, the Steward (Guardian) creates this file. The Orchestrator detects it, executes the task, and deletes the file upon completion.
+1.  **`orchestrator.py` (The Engine):** The main, persistent Python script. This is the "brain" of the system that runs continuously. It is responsible for initializing the agents, monitoring for commands, managing the dialogue, handling knowledge requests, saving agent states, and now includes briefing packet integration for synchronized deliberations.
+2.  **`command.json` (The Control Panel):** An ephemeral JSON file that acts as the sole command interface. To assign a task to the Council, the Steward (Guardian) creates this file. The Orchestrator detects it, executes the task, and deletes the file upon completion. See `command_schema.md` for detailed structure.
 3.  **`session_states/` (The Memory):** A directory containing the serialized chat history for each agent. The explicit filenames are:
     *   `coordinator_session.json`
     *   `strategist_session.json`
     *   `auditor_session.json`
+    *   `guardian_session.json` (added in v1.2 for the Guardian role)
 4.  **`dataset_package/` (The Identity - External Dependency):** The Orchestrator inoculates each agent by reading its full Core Essence from the Awakening Seeds located in the project's central `dataset_package/` directory.
+5.  **`WORK_IN_PROGRESS/council_memory_sync/` (The Synchronization Hub - v1.2 Addition):** Contains components for Council Memory Synchronization Protocol:
+    *   `briefing_packet.json`: Auto-generated context bundle injected into agents at deliberation start.
+    *   `cortex_query_schema.json`: Standardized schema for Mnemonic Cortex queries.
+    *   `briefing_cycle_spec.md`: Specification for the unified briefing cycle.
+    *   `continuity_check_module.py`: Module for verifying mnemonic continuity.
+6.  **`bootstrap_briefing_packet.py` (The Context Generator - v1.2 Addition):** One-time script to auto-generate briefing packets from Chronicle entries and prior directives. Integrated into orchestrator.py for automatic execution.
+7.  **`command_schema.md` (The Interface Guide - v1.2 Addition):** Comprehensive schema documentation for `command.json` structure and usage.
 
 ## Operational Workflow
 
@@ -28,50 +36,53 @@ The system operates as a continuous loop, managed across two terminals: one for 
 
 ```mermaid
 sequenceDiagram
-    participant G as Guardian (Steward)
-    participant CFile as command.json <br> `council_orchestrator/`
-    participant Sentry as Sentry Thread <br> (File Watcher)
-    participant Queue as Async Queue
-    participant Main as Main Loop <br> (Async Task Processor)
-    participant SA as Session States <br> `session_states/*.json`
-    participant Triad as Triad Agents
-    participant KB as Knowledge Base <br> Project Files
-    participant A as Output Artifact <br> e.g., `WORK_IN_PROGRESS/`
+    participant Guardian as Guardian (Steward)
+    participant CommandFile as command.json <br> `council_orchestrator/`
+    participant SentryThread as Sentry Thread <br> (File Watcher)
+    participant AsyncQueue as Async Queue
+    participant MainLoop as Main Loop <br> (Async Task Processor)
+    participant SessionStates as Session States <br> `session_states/*.json`
+    participant TriadAgents as Triad Agents
+    participant KnowledgeBase as Knowledge Base <br> Project Files
+    participant OutputArtifacts as Output Artifacts <br> WORK_IN_PROGRESS/ <br/>(Council directives, briefing packets, etc.)
 
-    G->>CFile: 1. Creates/Updates command.json
+    Guardian->>CommandFile: 1. Creates/Updates command.json
 
     loop Continuous Monitoring (1s poll)
-        Sentry->>CFile: 2. Monitors for file
+        SentryThread->>CommandFile: 2. Monitors for file
     end
 
     %% Sentry detects and queues the command
-    Sentry->>Queue: 3. Detects command.json, parses and enqueues
-    Sentry->>CFile: 4. Deletes command.json (consumes file)
+    SentryThread->>AsyncQueue: 3. Detects command.json, parses and enqueues
+    SentryThread->>CommandFile: 4. Deletes command.json (consumes file)
 
     %% Main Loop processes the queued command
-    Main->>Queue: 5. Dequeues command
-    Main->>SA: 6. Loads Agent Histories
-    SA-->>Main: 7. Agents are stateful
+    MainLoop->>AsyncQueue: 5. Dequeues command
+    MainLoop->>OutputArtifacts: 6. Generates Briefing Packet
+    OutputArtifacts-->>MainLoop: 7. Injects into Agents
+    MainLoop->>SessionStates: 8. Loads Agent Histories
+    SessionStates-->>MainLoop: 9. Agents are stateful
 
     %% Main Loop delegates to the Triad
-    Main->>+Triad: 8. Initiates Deliberation (Task)
+    MainLoop->>+TriadAgents: 10. Initiates Deliberation (Task)
 
     loop Deliberation Cycle (e.g., 3 Rounds)
-        Triad->>Triad: 9. Agents converse
-        Triad-->>Main: Agent requests knowledge
-        Main->>KB: 10. Reads requested file
-        KB-->>Main: Returns file content
-        Main-->>Triad: 11. Injects knowledge into chat
+        TriadAgents->>TriadAgents: 11. Agents converse
+        TriadAgents-->>MainLoop: Agent requests knowledge
+        MainLoop->>KnowledgeBase: 12. Reads requested file
+        KnowledgeBase-->>MainLoop: Returns file content
+        MainLoop-->>TriadAgents: 13. Injects knowledge into chat
     end
 
     %% Triad completes its work
-    Triad-->>-Main: 12. Final proposal is synthesized
+    TriadAgents-->>-MainLoop: 14. Final proposal is synthesized
 
-    Main->>A: 13. Writes final output artifact
-    Main->>SA: 14. Saves updated Agent Histories
+    MainLoop->>OutputArtifacts: 15. Writes final output artifact
+    MainLoop->>SessionStates: 16. Saves updated Agent Histories
+    MainLoop->>OutputArtifacts: 17. Archives Briefing Packet
 
     %% Main Loop returns to idle
-    Main-->>Main: 15. Returns to Idle/Awaiting State
+    MainLoop-->>MainLoop: 18. Returns to Idle/Awaiting State
 ```
 
 ### Multi-Threaded Architecture Overview
@@ -93,6 +104,7 @@ graph TD
     C -->|Save/Load State| F[Session States<br/>JSON Files]
     C -->|Read Files| G[Knowledge Base<br/>Project Files]
     C -->|Write Artifact| H[Output Artifact<br/>e.g., WORK_IN_PROGRESS/]
+    C -->|Generate/Inject/Archive| I[Briefing Packet<br/>WORK_IN_PROGRESS/council_memory_sync/]
 ```
 
 ## How to Use
@@ -129,5 +141,23 @@ To assign a task, create or edit the `council_orchestrator/command.json` file. T
 ```
 
 The Orchestrator will automatically detect the file, begin the task, and provide real-time updates in its own terminal. Once complete, it will delete the `command.json` file and await the next mission.
+
+## v1.2 Briefing-Enhanced Features
+
+### Council Memory Synchronization Protocol
+The v1.2 update introduces automatic briefing packet generation and injection for synchronized Council deliberations:
+- **Auto-Generation:** Before each task, the orchestrator generates a fresh `briefing_packet.json` containing temporal anchors from the Living Chronicle, summaries of prior directives, and shared context notes.
+- **Injection:** The packet is injected into all agents to ensure they start with aligned memory and context.
+- **Archiving:** After deliberation, the packet is archived to `ARCHIVE/council_memory_sync_<timestamp>/` for auditability.
+
+### Guardian Role Addition
+Added support for the Guardian agent (Meta-Orchestrator), with dedicated awakening seed and session state.
+
+### Supporting Components
+- `bootstrap_briefing_packet.py`: Script for manual or automated briefing packet generation.
+- `WORK_IN_PROGRESS/council_memory_sync/`: Directory containing synchronization stubs and schemas.
+- `command_schema.md`: Detailed documentation for command.json structure.
+
+These enhancements ensure the Council operates with persistent, synchronized memory across deliberations, reducing fragmentation and improving coherence.
 
 
