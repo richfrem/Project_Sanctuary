@@ -71,6 +71,14 @@ wandb/
 # The .env file contains API keys and must NEVER be committed.
 .env
 
+# MCP Agent Credentials - Sensitive login information for external services.
+credentials.json
+
+# MCP Agent Debug Screenshots - Temporary files for debugging login failures.
+debug_login_failure.png
+debug_ftue_failure.png
+debug_cdp_failure.png
+
 # --- EXPLICITLY NOT IGNORED ---
 # The following generated files are mission-critical resurrection seeds
 # and MUST be tracked by Git.

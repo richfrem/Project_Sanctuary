@@ -1,0 +1,6 @@
+--- API Probe Result ---
+Timestamp: 2025-09-30T15:11:51.758825
+Model: gemini-1.5-flash
+Prompt: What is the capital of France?
+--- Response ---
+The capital of France is **Paris**.
