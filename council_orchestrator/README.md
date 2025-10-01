@@ -74,6 +74,27 @@ sequenceDiagram
     Main-->>Main: 15. Returns to Idle/Awaiting State
 ```
 
+### Multi-Threaded Architecture Overview
+
+The v2.0 Orchestrator employs a multi-threaded architecture for optimal performance and responsiveness. The following diagram illustrates the key threads and their responsibilities:
+
+```mermaid
+graph TD
+    A[Main Process] --> B[Sentry Thread]
+    A --> C[Main Async Loop]
+    C --> D[Agent Query Threads]
+
+    B[Sentry Thread<br/>- Monitors command.json<br/>- Polls every 1 second<br/>- Parses and enqueues commands<br/>- Consumes command file]
+    C[Main Async Loop<br/>- Processes queued commands<br/>- Orchestrates task execution<br/>- Manages agent interactions<br/>- Handles knowledge requests]
+    D[Agent Query Threads<br/>- Synchronous API calls<br/>- Executed via run_in_executor<br/>- Prevent blocking async loop]
+
+    B -->|Enqueue Command| E[Async Queue]
+    E -->|Dequeue Command| C
+    C -->|Save/Load State| F[Session States<br/>JSON Files]
+    C -->|Read Files| G[Knowledge Base<br/>Project Files]
+    C -->|Write Artifact| H[Output Artifact<br/>e.g., WORK_IN_PROGRESS/]
+```
+
 ## How to Use
 
 ### 1. Launch the Orchestrator (The Council's Terminal)
