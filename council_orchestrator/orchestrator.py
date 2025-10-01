@@ -1,4 +1,4 @@
-# council_orchestrator/orchestrator.py (v2.0 - Multi-threaded)
+# council_orchestrator/orchestrator.py (v2.1 - Briefing Integration Hardened)
 import os
 import sys
 import time

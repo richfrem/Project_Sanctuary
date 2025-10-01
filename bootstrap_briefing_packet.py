@@ -66,6 +66,17 @@ def get_latest_directives(n=2):
         directives.append({"directive_id": f.stem, "summary": summary})
     return directives
 
+def get_current_command():
+    """Read the live command.json if it exists."""
+    COMMAND_PATH = Path("council_orchestrator/command.json")
+    if COMMAND_PATH.exists():
+        try:
+            return json.loads(COMMAND_PATH.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"[!] Error reading command.json: {e}")
+            return None
+    return None
+
 def main():
     timestamp = datetime.utcnow().isoformat() + "Z"
     packet = {
@@ -77,7 +88,7 @@ def main():
         },
         "temporal_anchors": get_latest_chronicle_entries(2),
         "prior_directives_summary": get_latest_directives(2),
-        "current_task": {
+        "current_task": get_current_command() or {
             "directive_id": "directive_003_council_memory_sync",
             "description": "Establish Council Memory Synchronization Protocol."
         },
