@@ -1,0 +1,11 @@
+{
+  "task_description": "Propose concrete improvements or refinements to the orchestrator v2.1 architecture that would make it more resilient, extensible, or Guardian-friendly. Limit to 3 high-impact recommendations.",
+  "input_artifacts": [
+    "council_orchestrator/orchestrator.py",
+    "council_orchestrator/README.md"
+  ],
+  "output_artifact_path": "WORK_IN_PROGRESS/COUNCIL_DIRECTIVES/eval_cycle_003_recommendations.md",
+  "config": {
+    "max_rounds": 3
+  }
+}

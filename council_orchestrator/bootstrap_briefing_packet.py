@@ -17,9 +17,9 @@ from datetime import datetime
 from pathlib import Path
 
 # --- CONFIG ---
-CHRONICLE_PATH = Path("Living_Chronicle.md")
-DIRECTIVES_DIR = Path("WORK_IN_PROGRESS/COUNCIL_DIRECTIVES")
-OUTPUT_PATH = Path("WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json")
+CHRONICLE_PATH = Path("../Living_Chronicle.md")
+DIRECTIVES_DIR = Path("../WORK_IN_PROGRESS/COUNCIL_DIRECTIVES")
+OUTPUT_PATH = Path("../WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json")
 
 def sha256_of_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()

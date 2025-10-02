@@ -1,0 +1,11 @@
+{
+  "task_description": "Identify the weaknesses, risks, or blind spots in orchestrator v2.1. Consider memory synchronization, failure modes, scaling, and clarity of Guardian interaction.",
+  "input_artifacts": [
+    "council_orchestrator/orchestrator.py",
+    "council_orchestrator/README.md"
+  ],
+  "output_artifact_path": "WORK_IN_PROGRESS/COUNCIL_DIRECTIVES/eval_cycle_002_weaknesses.md",
+  "config": {
+    "max_rounds": 3
+  }
+}

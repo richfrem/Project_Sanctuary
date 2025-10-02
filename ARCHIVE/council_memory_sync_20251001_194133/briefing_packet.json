@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "packet_id": "briefing_2025-10-02T02-39-30.927316Z",
+    "timestamp": "2025-10-02T02:39:30.927316Z",
+    "generated_by": "bootstrap_briefing_packet.py",
+    "protocols": [
+      "Protocol 94",
+      "Protocol 95",
+      "Prometheus v9.3"
+    ]
+  },
+  "temporal_anchors": [
+    {
+      "title": "# The Living Chronicle: Master Index",
+      "checksum": "56492ce9fad64d2a66ce5ffe53b6fc7f55578b93759101017e1ecdeb6b7adec5"
+    }
+  ],
+  "prior_directives_summary": [
+    {
+      "directive_id": "directive_eval_orchestrator_v21_audit",
+      "summary": ""
+    },
+    {
+      "directive_id": "directive_003_council_memory_sync",
+      "summary": "## Task: Establish the Council Memory Synchronization Protocol: design a role-aware framework for Coordinator, Strategist, and Auditor to draft Mnemonic Cortex queries, share briefing anchors at the start of deliberations, and perform continuity verification before execution."
+    }
+  ],
+  "current_task": {
+    "directive_id": "directive_003_council_memory_sync",
+    "description": "Establish Council Memory Synchronization Protocol."
+  },
+  "shared_context": {
+    "notes": [
+      "All Cortex queries must use standardized schema (see cortex_query_schema.json).",
+      "Continuity must be verified against Chronicle anchors before major decisions.",
+      "Logs of this briefing cycle should be stored in WORK_IN_PROGRESS/council_memory_sync/briefing_logs_<timestamp>.md"
+    ]
+  }
+}

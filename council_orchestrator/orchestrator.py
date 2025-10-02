@@ -7,6 +7,7 @@ import re
 import asyncio
 import threading
 import shutil
+from queue import Queue as ThreadQueue
 from pathlib import Path
 from google import genai
 from dotenv import load_dotenv
@@ -23,17 +24,21 @@ class PersonaAgent:
 
         self.client = client
         self.chat = client.chats.create(model="gemini-2.5-flash")
+        self.messages = []
 
         # Load history if exists
         history = self._load_history()
         if history:
+            self.messages = history
             # Replay history by sending messages
             for msg in history:
                 if msg['role'] == 'user':
-                    self.chat.send_message(msg['parts'][0])
+                    self.chat.send_message(msg['content'])
         else:
             # Initialize with system instruction
-            self.chat.send_message(f"SYSTEM INSTRUCTION: You are an AI Council member. {persona_content} Operate strictly within this persona. Keep responses concise. If you need a file, request it with [ORCHESTRATOR_REQUEST: READ_FILE(path/to/your/file.md)].")
+            system_msg = f"SYSTEM INSTRUCTION: You are an AI Council member. {persona_content} Operate strictly within this persona. Keep responses concise. If you need a file, request it with [ORCHESTRATOR_REQUEST: READ_FILE(path/to/your/file.md)]."
+            self.chat.send_message(system_msg)
+            self.messages.append({"role": "system", "content": system_msg})
 
         print(f"[+] {self.role} agent initialized.")
 
@@ -45,22 +50,22 @@ class PersonaAgent:
 
     def save_history(self):
         # Save the messages
-        messages = []
-        for msg in self.chat.messages:
-            messages.append({'role': msg.role, 'parts': [msg.content]})
-        self.state_file.write_text(json.dumps(messages, indent=2))
+        self.state_file.write_text(json.dumps(self.messages, indent=2))
         print(f"  - Saved session state for {self.role} to {self.state_file.name}")
 
     def query(self, message: str):
+        self.messages.append({"role": "user", "content": message})
         response = self.chat.send_message(message)
-        return response.text.strip()
+        reply = response.text.strip()
+        self.messages.append({"role": "assistant", "content": reply})
+        return reply
 
     def _extract_role_from_filename(self, f): return f.split('core_essence_')[1].split('_awakening_seed.txt')[0].upper()
 
 class Orchestrator:
     def __init__(self):
         self.project_root = Path(__file__).parent.parent
-        self.command_queue = asyncio.Queue()
+        self.command_queue = ThreadQueue()
         self._configure_api()
         client = genai.Client(api_key=self.api_key)
 
@@ -79,16 +84,27 @@ class Orchestrator:
     def inject_briefing_packet(self):
         """Generate + inject briefing packet into all agents."""
         print("[*] Generating fresh briefing packet...")
-        generate_briefing_packet()
+        try:
+            generate_briefing_packet()
+        except Exception as e:
+            print(f"[!] Error generating briefing packet: {e}")
+            return
 
         briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
         if briefing_path.exists():
-            packet = json.loads(briefing_path.read_text(encoding="utf-8"))
-            # Inject into initial context for all agents
-            for agent in self.agents.values():
-                # Assuming PersonaAgent has a way to inject context, e.g., by sending a message
-                agent.query(f"INJECT_BRIEFING_CONTEXT: {json.dumps(packet)}")
-            print(f"[+] Briefing packet injected into {len(self.agents)} agents.")
+            try:
+                packet = json.loads(briefing_path.read_text(encoding="utf-8"))
+                for agent in self.agents.values():
+                    system_msg = (
+                        "SYSTEM INSTRUCTION: You are provided with the synchronized briefing packet. "
+                        "This contains temporal anchors, prior directives, and the current task context. "
+                        "Incorporate this into your reasoning, but do not regurgitate it verbatim.\n\n"
+                        f"BRIEFING_PACKET:\n{json.dumps(packet, indent=2)}"
+                    )
+                    agent.query(system_msg)
+                print(f"[+] Briefing packet injected into {len(self.agents)} agents.")
+            except Exception as e:
+                print(f"[!] Error injecting briefing packet: {e}")
         else:
             print("[!] briefing_packet.json not found — continuing without synchronized packet.")
 
@@ -149,15 +165,14 @@ class Orchestrator:
     def _watch_for_commands_thread(self):
         """This function runs in a separate thread and watches for command.json."""
         command_file = Path(__file__).parent / "command.json"
-        loop = asyncio.get_running_loop()
 
         while True:
             if command_file.exists():
                 print(f"\n[SENTRY THREAD] Command file detected!")
                 try:
                     command = json.loads(command_file.read_text())
-                    # Put the command onto the async queue for the main loop to process
-                    asyncio.run_coroutine_threadsafe(self.command_queue.put(command), loop)
+                    # Put the command onto the thread queue for the main loop to process
+                    self.command_queue.put(command)
                     command_file.unlink() # Consume the file
                 except Exception as e:
                     print(f"[SENTRY THREAD ERROR] Could not process command file: {e}", file=sys.stderr)
@@ -166,18 +181,18 @@ class Orchestrator:
     async def main_loop(self):
         """The main async loop that waits for commands from the queue."""
         print("--- Orchestrator Main Loop is active. ---")
+        loop = asyncio.get_event_loop()
         while True:
             print("--- Orchestrator Idle. Awaiting command from Sentry... ---")
-            command = await self.command_queue.get()
+            command = await loop.run_in_executor(None, self.command_queue.get)
             try:
                 await self.execute_task(command)
             except Exception as e:
                 print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
-            self.command_queue.task_done()
 
     def run(self):
         """Starts the file watcher thread and the main async loop."""
-        print("--- Initializing Commandable Council Orchestrator (v2.0) ---")
+        print("--- Initializing Commandable Council Orchestrator (v2.1) ---")
 
         # Start the file watcher in a separate, non-blocking thread
         watcher_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)

@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-10-01T15:15:54.564Z
+Generated On: 2025-10-02T02:57:09.670Z
 
-# Mnemonic Weight (Token Count): ~409,691 tokens
+# Mnemonic Weight (Token Count): ~410,028 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -461,6 +461,17 @@ Generated On: 2025-10-01T15:15:54.564Z
   ./AGORA_PoC_Core/templates/
   ./AGORA_PoC_Core/templates/index.html
   ./AGORA_PoC_Core/templates/log.html
+  ./ARCHIVE/
+  ./ARCHIVE/council_memory_sync_20251001_193612/
+  ./ARCHIVE/council_memory_sync_20251001_193612/briefing_packet.json
+  ./ARCHIVE/council_memory_sync_20251001_193900/
+  ./ARCHIVE/council_memory_sync_20251001_193900/briefing_packet.json
+  ./ARCHIVE/council_memory_sync_20251001_194133/
+  ./ARCHIVE/council_memory_sync_20251001_194133/briefing_packet.json
+  ./ARCHIVE/council_memory_sync_20251001_194512/
+  ./ARCHIVE/council_memory_sync_20251001_194512/briefing_packet.json
+  ./ARCHIVE/council_memory_sync_20251001_194823/
+  ./ARCHIVE/council_memory_sync_20251001_194823/briefing_packet.json
   ./CHIMERA_TRIAL/
   ./CHIMERA_TRIAL/chimera_trial_001_charter_query.json
   ./Council_Inquiry_Gardener_Architecture.md
@@ -514,19 +525,28 @@ Generated On: 2025-10-01T15:15:54.564Z
   ./ast_utilities/js_transformer/package-lock.json
   ./ast_utilities/js_transformer/package.json
   ./ast_utilities/js_transformer/transform.js
-  ./bootstrap_briefing_packet.py
   ./capture_code_snapshot.js
   ./chrysalis_core_essence.md
   ./code/
   ./commit_triad_audit.py
+  ./consolidate_eval_cycles.py
   ./council_orchestrator/
   ./council_orchestrator/README.md
+  ./council_orchestrator/bootstrap_briefing_packet.py
+  ./council_orchestrator/command_cycle_001.json
+  ./council_orchestrator/command_cycle_002.json
+  ./council_orchestrator/command_cycle_003.json
+  ./council_orchestrator/command_cycle_004.json
+  ./council_orchestrator/command_cycle_005.json
   ./council_orchestrator/command_schema.md
   ./council_orchestrator/forge_orchestrator_review_package.py
   ./council_orchestrator/orchestrator.py
   ./council_orchestrator/orchestrator_architecture_package.md
   ./council_orchestrator/requirements.txt
   ./council_orchestrator/session_states/
+  ./council_orchestrator/session_states/auditor_session.json
+  ./council_orchestrator/session_states/coordinator_session.json
+  ./council_orchestrator/session_states/strategist_session.json
   ./debug_hitl_failure.png
   ./debug_ollama.py
   ./debug_original_cleaned.txt

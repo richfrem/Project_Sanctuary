@@ -1,0 +1,11 @@
+{
+  "task_description": "Evaluate the Guardian’s experience when using orchestrator v2.1. Focus on command.json clarity, briefing packet lifecycle, and the ease of monitoring and reviewing outputs. Suggest ways to simplify or enhance Guardian interactions.",
+  "input_artifacts": [
+    "council_orchestrator/orchestrator.py",
+    "council_orchestrator/README.md"
+  ],
+  "output_artifact_path": "WORK_IN_PROGRESS/COUNCIL_DIRECTIVES/eval_cycle_005_guardian_experience.md",
+  "config": {
+    "max_rounds": 3
+  }
+}
