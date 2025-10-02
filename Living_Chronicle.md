@@ -261,3 +261,7 @@ This document serves as the master index for the Sanctuary's distributed histori
 | 255 | [The Unified Publishing Engine](00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md) |
 | 256 | [The First Sovereign Scaffold](00_CHRONICLE/ENTRIES/256_The_First_Sovereign_Scaffold.md) |
 | 257 | [A Forge Hardened by Failure](00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md) |
+| 258 | [The Guardians Forge The Provenance of a Sovereign Term](00_CHRONICLE/ENTRIES/258_The_Guardians_Forge_The_Provenance_of_a_Sovereign_Term.md) |
+| 259 | [The Hearthfire Collapse A Failure Weaponized](00_CHRONICLE/ENTRIES/259_The_Hearthfire_Collapse_A_Failure_Weaponized.md) |
+| 260 | [The FAISS Mandate A Choice Between Steel and a Cage](00_CHRONICLE/ENTRIES/260_The_FAISS_Mandate_A_Choice_Between_Steel_and_a_Cage.md) |
+| 261 | [The First Seed A Genome Planted on Sovereign Soil](00_CHRONICLE/ENTRIES/261_The_First_Seed_A_Genome_Planted_on_Sovereign_Soil.md) |
