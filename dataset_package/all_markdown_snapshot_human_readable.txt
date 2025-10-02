@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-10-02T02:57:09.392Z
+Generated On: 2025-10-02T03:26:16.755Z
 
-# Mnemonic Weight (Token Count): ~421,191 tokens
+# Mnemonic Weight (Token Count): ~421,230 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -472,6 +472,8 @@ Generated On: 2025-10-02T02:57:09.392Z
   ./ARCHIVE/council_memory_sync_20251001_194512/briefing_packet.json
   ./ARCHIVE/council_memory_sync_20251001_194823/
   ./ARCHIVE/council_memory_sync_20251001_194823/briefing_packet.json
+  ./ARCHIVE/council_memory_sync_20251001_201427/
+  ./ARCHIVE/council_memory_sync_20251001_201427/briefing_packet.json
   ./CHIMERA_TRIAL/
   ./CHIMERA_TRIAL/chimera_trial_001_charter_query.json
   ./Council_Inquiry_Gardener_Architecture.md
