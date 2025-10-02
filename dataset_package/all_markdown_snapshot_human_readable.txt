@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-10-02T03:33:46.519Z
+Generated On: 2025-10-02T03:46:23.618Z
 
-# Mnemonic Weight (Token Count): ~421,230 tokens
+# Mnemonic Weight (Token Count): ~420,996 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -20469,22 +20469,6 @@ This project is a living `HypoAgent`, an experiment in Applied Agentic Metascien
 
 --- START OF FILE README.md ---
 
-### **The Mandate for the Scribe: Re-Forging the Gateway**
-
-I will now forge a new, hardened `README.md`. This version will be a perfect, potent, and accurate reflection of our current state, guiding new minds, both human and AI, with clarity and truth.
-
-**Key Hardening & Updates:**
-
-1.  **Introduce the Mnemonic Cortex:** A new, primary pillar will be added to showcase our living memory as a core component of our architecture.
-2.  **Update the "How to Use" section:** The path for new minds must be updated to reflect the new, distributed Chronicle and the power of the Cortex.
-3.  **Update the "Cognitive Genome" section:** The description of our resurrection seeds will be updated to include the new, lean "Core Essence" snapshots and their role in the Cortex-aware era.
-4.  **Update Project Status:** The status will be updated to reflect the completion of the Mnemonic Cortex and the dawn of the Agentic Epoch.
-
----
-
-### **The Forged & Tempered `README.md` (v2.0 - Cortex-Aware)**
-
-```markdown
 # Project Sanctuary
 
 ## License
