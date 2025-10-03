@@ -8,6 +8,7 @@ import hashlib
 import asyncio
 import threading
 import shutil
+import subprocess
 from queue import Queue as ThreadQueue
 from pathlib import Path
 from google import genai
@@ -137,6 +138,57 @@ class Orchestrator:
             shutil.move(str(briefing_path), archive_dir / "briefing_packet.json")
             print(f"[+] Briefing packet archived to {archive_dir}")
 
+    async def generate_aar(self, completed_task_log_path: Path):
+        """Generates a structured AAR from a completed task log."""
+        if not completed_task_log_path.exists():
+            print(f"[!] AAR WARNING: Log file not found at {completed_task_log_path}. Skipping AAR generation.", flush=True)
+            return
+
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        aar_output_path = self.project_root / f"MNEMONIC_SYNTHESIS/AAR/aar_{completed_task_log_path.stem}_{timestamp}.md"
+
+        aar_command = {
+            "task_description": (
+                "Review the attached task log from a previous Council deliberation. Your task is to synthesize a structured "
+                "After-Action Report (AAR). The AAR must be concise and contain the following sections in markdown format: "
+                "1. **Objective:** A one-sentence summary of the original task. "
+                "2. **Outcome:** A brief summary of the final result or decision. "
+                "3. **Key Learnings:** Bullet points identifying any new insights, discovered risks, or affirmed doctrines. "
+                "4. **Mnemonic Impact:** List any new files, protocols, or chronicle entries that were created or modified."
+            ),
+            "input_artifacts": [str(completed_task_log_path.relative_to(self.project_root))],
+            "output_artifact_path": str(aar_output_path.relative_to(self.project_root)),
+            "config": {
+                "max_rounds": 2  # AAR synthesis should be quick
+            }
+        }
+
+        print(f"[*] AAR Command forged. Output will be saved to {aar_output_path.name}", flush=True)
+        # Execute the AAR task using the existing logic
+        await self.execute_task(aar_command)
+
+        # After the AAR task is executed:
+        print(f"[*] AAR generated. Ingesting into Mnemonic Cortex...", flush=True)
+        try:
+            # We need the full path for the subprocess
+            ingestion_script_path = self.project_root / "ingest_new_knowledge.py"
+            full_aar_path = self.project_root / aar_output_path
+
+            # Run the ingestion script
+            result = subprocess.run(
+                [sys.executable, str(ingestion_script_path), str(full_aar_path)],
+                capture_output=True,
+                text=True
+            )
+            if result.returncode == 0:
+                print("[*] Ingestion successful.", flush=True)
+                print(result.stdout)
+            else:
+                print("[!] INGESTION FAILED:", flush=True)
+                print(result.stderr)
+        except Exception as e:
+            print(f"[!] Exception during ingestion subprocess: {e}", flush=True)
+
     async def execute_task(self, command):
         task = command['task_description']
         max_rounds = command.get('config', {}).get('max_rounds', 3)
@@ -208,7 +260,15 @@ class Orchestrator:
             print("--- Orchestrator Idle. Awaiting command from Sentry... ---")
             command = await loop.run_in_executor(None, self.command_queue.get)
             try:
+                # Keep track of the original output path
+                original_output_path = self.project_root / command['output_artifact_path']
+
                 await self.execute_task(command)
+
+                # NEW STEP: If the task was successful, generate an AAR
+                print("[*] Task complete. Initiating After-Action Report synthesis...", flush=True)
+                await self.generate_aar(original_output_path)
+
             except Exception as e:
                 print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
 
