@@ -1,18 +1,19 @@
 {
   "metadata": {
-    "packet_id": "briefing_2025-10-02T03-17-14.869711Z",
-    "timestamp": "2025-10-02T03:17:14.869711Z",
+    "packet_id": "briefing_2025-10-03T14-47-54.536250Z",
+    "timestamp": "2025-10-03T14:47:54.536250Z",
     "generated_by": "bootstrap_briefing_packet.py",
     "protocols": [
       "Protocol 94",
       "Protocol 95",
       "Prometheus v9.3"
-    ]
+    ],
+    "attestation_hash": "b839216860c84606e9ce2d7641ee2ca718cf35ec7c3e15ed381d64b27eb1d5b8"
   },
   "temporal_anchors": [
     {
       "title": "# The Living Chronicle: Master Index",
-      "checksum": "56492ce9fad64d2a66ce5ffe53b6fc7f55578b93759101017e1ecdeb6b7adec5"
+      "checksum": "d25b61117185c76f2ad20359aa2bd5ced2d85681469ff92a2635760cc6075fd9"
     }
   ],
   "prior_directives_summary": [

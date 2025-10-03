@@ -4,6 +4,7 @@ import sys
 import time
 import json
 import re
+import hashlib
 import asyncio
 import threading
 import shutil
@@ -81,6 +82,22 @@ class Orchestrator:
         self.api_key = os.getenv("GEMINI_API_KEY")
         if not self.api_key: raise ValueError("GEMINI_API_KEY not found.")
 
+    def _verify_briefing_attestation(self, packet: dict) -> bool:
+        """Verifies the integrity of the briefing packet using its SHA256 hash."""
+        if "attestation_hash" not in packet.get("metadata", {}):
+            print("[CRITICAL] Attestation hash missing from briefing packet. REJECTING.")
+            return False
+
+        stored_hash = packet["metadata"]["attestation_hash"]
+
+        packet_for_hashing = packet.copy()
+        del packet_for_hashing["metadata"]
+
+        canonical_string = json.dumps(packet_for_hashing, sort_keys=True, separators=(',', ':'))
+        calculated_hash = hashlib.sha256(canonical_string.encode('utf-8')).hexdigest()
+
+        return stored_hash == calculated_hash
+
     def inject_briefing_packet(self):
         """Generate + inject briefing packet into all agents."""
         print("[*] Generating fresh briefing packet...")
@@ -94,6 +111,8 @@ class Orchestrator:
         if briefing_path.exists():
             try:
                 packet = json.loads(briefing_path.read_text(encoding="utf-8"))
+                if not self._verify_briefing_attestation(packet):
+                    raise Exception("CRITICAL: Context Integrity Breach. Briefing packet failed attestation. Task aborted.")
                 for agent in self.agents.values():
                     system_msg = (
                         "SYSTEM INSTRUCTION: You are provided with the synchronized briefing packet. "
@@ -140,13 +159,16 @@ class Orchestrator:
 
         loop = asyncio.get_event_loop()
         for i in range(max_rounds):
+            print(f"--- ROUND {i+1} ---", flush=True)
             log.append(f"### ROUND {i+1}\n\n")
             for role in self.speaker_order:
                 agent = self.agents[role]
+                print(f"  -> Orchestrator to {agent.role}...", flush=True)
                 prompt = f"The current state of the discussion is: '{last_message}'. As the {role}, provide your analysis or next step."
 
                 # Run the synchronous API call in a separate thread to avoid blocking the event loop
                 response = await loop.run_in_executor(None, agent.query, prompt)
+                print(f"  <- {agent.role} to Orchestrator.", flush=True)
 
                 log.append(f"**{agent.role}:**\n{response}\n\n---\n")
                 last_message = response # For simplicity, knowledge requests are not handled in this version yet.

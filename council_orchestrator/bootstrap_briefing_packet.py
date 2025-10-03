@@ -101,6 +101,13 @@ def main():
         }
     }
 
+    # MAP-94: Calculate attestation hash
+    packet_for_hashing = packet.copy()
+    del packet_for_hashing["metadata"]
+    canonical_string = json.dumps(packet_for_hashing, sort_keys=True, separators=(',', ':'))
+    attestation_hash = hashlib.sha256(canonical_string.encode('utf-8')).hexdigest()
+    packet["metadata"]["attestation_hash"] = attestation_hash
+
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(json.dumps(packet, indent=2), encoding="utf-8")
     print(f"[+] briefing_packet.json generated at {OUTPUT_PATH}")
