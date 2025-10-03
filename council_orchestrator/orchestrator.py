@@ -13,6 +13,8 @@ from queue import Queue as ThreadQueue
 from pathlib import Path
 from google import genai
 from dotenv import load_dotenv
+import chromadb
+from chromadb.utils import embedding_functions
 
 # --- Import briefing packet generator ---
 from bootstrap_briefing_packet import main as generate_briefing_packet
@@ -70,6 +72,13 @@ class Orchestrator:
         self.command_queue = ThreadQueue()
         self._configure_api()
         client = genai.Client(api_key=self.api_key)
+
+        # Initialize ChromaDB for Cortex queries
+        self.chroma_client = chromadb.PersistentClient(path=str(self.project_root / "mnemonic_cortex/chroma_db"))
+        self.cortex_collection = self.chroma_client.get_or_create_collection(
+            name="sanctuary_cortex",
+            embedding_function=embedding_functions.DefaultEmbeddingFunction()
+        )
 
         persona_dir = self.project_root / "dataset_package"
         state_dir = Path(__file__).parent / "session_states"
@@ -138,6 +147,47 @@ class Orchestrator:
             shutil.move(str(briefing_path), archive_dir / "briefing_packet.json")
             print(f"[+] Briefing packet archived to {archive_dir}")
 
+    def _handle_knowledge_request(self, response_text: str):
+        """Handles knowledge requests from agents, including Cortex queries."""
+        file_match = re.search(r"\[ORCHESTRATOR_REQUEST: READ_FILE\((.*?)\)\]", response_text)
+        query_match = re.search(r"\[ORCHESTRATOR_REQUEST: QUERY_CORTEX\((.*?)\)\]", response_text)
+
+        if file_match:
+            # Existing file reading logic
+            file_path_str = file_match.group(1).strip().strip('"')
+            file_path = self.project_root / file_path_str
+            if file_path.exists():
+                content = file_path.read_text(encoding="utf-8")
+                return f"CONTEXT_PROVIDED: Here is the content of {file_path_str}:\n\n{content}"
+            else:
+                return f"CONTEXT_ERROR: File not found: {file_path_str}"
+
+        elif query_match:
+            # NEW LOGIC for Cortex queries
+            query_text = query_match.group(1).strip().strip('"')
+
+            # Check against query limit
+            if self.cortex_query_count >= self.max_cortex_queries:
+                error_message = f"CONTEXT_ERROR: Maximum Cortex query limit of {self.max_cortex_queries} has been reached for this task."
+                print(f"[ORCHESTRATOR] {error_message}", flush=True)
+                return error_message
+
+            self.cortex_query_count += 1
+            print(f"[ORCHESTRATOR] Agent requested Cortex query: '{query_text}' ({self.cortex_query_count}/{self.max_cortex_queries})", flush=True)
+
+            try:
+                results = self.cortex_collection.query(query_texts=[query_text], n_results=3)
+                context = "CONTEXT_PROVIDED: Here are the top 3 results from the Mnemonic Cortex for your query:\n\n"
+                for doc in results['documents'][0]:
+                    context += f"---\n{doc}\n---\n"
+                return context
+            except Exception as e:
+                error_message = f"CONTEXT_ERROR: Cortex query failed: {e}"
+                print(f"[ORCHESTRATOR] {error_message}", flush=True)
+                return error_message
+
+        return None
+
     async def generate_aar(self, completed_task_log_path: Path):
         """Generates a structured AAR from a completed task log."""
         if not completed_task_log_path.exists():
@@ -189,9 +239,122 @@ class Orchestrator:
         except Exception as e:
             print(f"[!] Exception during ingestion subprocess: {e}", flush=True)
 
+    async def _start_new_cycle(self, command, state_file):
+        """Starts a new development cycle."""
+        # Create initial state
+        state = {
+            "current_stage": "GENERATING_REQUIREMENTS",
+            "project_name": command.get("project_name", "unnamed_project"),
+            "original_command": command,
+            "approved_artifacts": {},
+            "created_at": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+        state_file.write_text(json.dumps(state, indent=2))
+
+        # Issue internal command to generate requirements
+        requirements_command = {
+            "task_description": f"Generate detailed requirements document for the project: {command['task_description']}. Include functional requirements, technical constraints, and success criteria.",
+            "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/requirements.md",
+            "config": {"max_rounds": 3}
+        }
+
+        print(f"[*] Starting new development cycle for '{state['project_name']}'. Generating requirements...", flush=True)
+        await self.execute_task(requirements_command)
+
+        # Update state to awaiting approval
+        state["current_stage"] = "AWAITING_APPROVAL_REQUIREMENTS"
+        state_file.write_text(json.dumps(state, indent=2))
+        print(f"[*] Requirements generated. Awaiting Guardian approval.", flush=True)
+
+    async def _advance_cycle(self, state_file):
+        """Advances the development cycle to the next stage."""
+        state = json.loads(state_file.read_text())
+
+        if state["current_stage"] == "AWAITING_APPROVAL_REQUIREMENTS":
+            # Ingest approved requirements into Cortex
+            requirements_path = self.project_root / state["approved_artifacts"].get("requirements", "")
+            if requirements_path.exists():
+                subprocess.run([sys.executable, str(self.project_root / "ingest_new_knowledge.py"), str(requirements_path)], check=True)
+                print(f"[*] Approved requirements ingested into Mnemonic Cortex.", flush=True)
+
+            # Move to tech design
+            state["current_stage"] = "GENERATING_TECH_DESIGN"
+            tech_design_command = {
+                "task_description": f"Based on the approved requirements, generate a detailed technical design document. Include architecture decisions, data flow, and implementation approach.",
+                "input_artifacts": [state["approved_artifacts"].get("requirements", "")],
+                "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/tech_design.md",
+                "config": {"max_rounds": 3}
+            }
+            await self.execute_task(tech_design_command)
+            state["current_stage"] = "AWAITING_APPROVAL_TECH_DESIGN"
+            state_file.write_text(json.dumps(state, indent=2))
+            print(f"[*] Tech design generated. Awaiting Guardian approval.", flush=True)
+
+        elif state["current_stage"] == "AWAITING_APPROVAL_TECH_DESIGN":
+            # Ingest approved tech design into Cortex
+            tech_design_path = self.project_root / state["approved_artifacts"].get("tech_design", "")
+            if tech_design_path.exists():
+                subprocess.run([sys.executable, str(self.project_root / "ingest_new_knowledge.py"), str(tech_design_path)], check=True)
+                print(f"[*] Approved tech design ingested into Mnemonic Cortex.", flush=True)
+
+            # Move to code generation
+            state["current_stage"] = "GENERATING_CODE"
+            code_command = {
+                "task_description": f"Based on the approved technical design, generate production-ready code. Output a JSON object with 'target_file_path', 'new_content', and 'commit_message' fields.",
+                "input_artifacts": [state["approved_artifacts"].get("tech_design", "")],
+                "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/code_proposal.json",
+                "config": {"max_rounds": 3}
+            }
+            await self.execute_task(code_command)
+            state["current_stage"] = "AWAITING_APPROVAL_CODE"
+            state_file.write_text(json.dumps(state, indent=2))
+            print(f"[*] Code proposal generated. Awaiting Guardian approval.", flush=True)
+
+        elif state["current_stage"] == "AWAITING_APPROVAL_CODE":
+            # Final stage: propose code change
+            await self._propose_code_change(state_file)
+
+    async def _propose_code_change(self, state_file):
+        """Creates a PR with the approved code changes."""
+        state = json.loads(state_file.read_text())
+        code_proposal_path = self.project_root / f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/code_proposal.json"
+
+        if not code_proposal_path.exists():
+            print("[!] Code proposal file not found. Cannot proceed.", flush=True)
+            return
+
+        proposal = json.loads(code_proposal_path.read_text())
+        target_file = self.project_root / proposal["target_file_path"]
+        new_content = proposal["new_content"]
+        commit_message = proposal["commit_message"]
+
+        # Create feature branch
+        branch_name = f"feature/{state['project_name']}"
+        subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
+
+        # Write the new code
+        target_file.parent.mkdir(parents=True, exist_ok=True)
+        target_file.write_text(new_content)
+
+        # Commit and push
+        subprocess.run(['git', 'add', str(target_file)], check=True)
+        subprocess.run(['git', 'commit', '-m', commit_message], check=True)
+        subprocess.run(['git', 'push', '-u', 'origin', branch_name], check=True)
+
+        # Create PR (assuming gh CLI is available)
+        pr_title = f"feat: {state['project_name']} - {commit_message}"
+        subprocess.run(['gh', 'pr', 'create', '--title', pr_title, '--body', f"Auto-generated PR for {state['project_name']}"], check=True)
+
+        print(f"[*] Pull request created for '{state['project_name']}'. Development cycle complete.", flush=True)
+
+        # Clean up state file
+        state_file.unlink()
+
     async def execute_task(self, command):
         task = command['task_description']
         max_rounds = command.get('config', {}).get('max_rounds', 3)
+        self.max_cortex_queries = command.get('config', {}).get('max_cortex_queries', 5)  # Default to 5
+        self.cortex_query_count = 0
         output_path = self.project_root / command['output_artifact_path']
         log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
         last_message = task
@@ -222,8 +385,20 @@ class Orchestrator:
                 response = await loop.run_in_executor(None, agent.query, prompt)
                 print(f"  <- {agent.role} to Orchestrator.", flush=True)
 
-                log.append(f"**{agent.role}:**\n{response}\n\n---\n")
-                last_message = response # For simplicity, knowledge requests are not handled in this version yet.
+                # Handle knowledge requests
+                knowledge_response = self._handle_knowledge_request(response)
+                if knowledge_response:
+                    # Inject the knowledge response back into the conversation
+                    print(f"  -> Orchestrator providing context to {agent.role}...", flush=True)
+                    knowledge_injection = await loop.run_in_executor(None, agent.query, knowledge_response)
+                    print(f"  <- {agent.role} acknowledging context.", flush=True)
+                    response += f"\n\n{knowledge_injection}"
+                    log.append(f"**{agent.role}:**\n{response}\n\n---\n")
+                    log.append(f"**ORCHESTRATOR (Fulfilled Request):**\n{knowledge_response}\n\n---\n")
+                else:
+                    log.append(f"**{agent.role}:**\n{response}\n\n---\n")
+
+                last_message = response
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text("".join(log))
@@ -256,21 +431,46 @@ class Orchestrator:
         """The main async loop that waits for commands from the queue."""
         print("--- Orchestrator Main Loop is active. ---")
         loop = asyncio.get_event_loop()
+        state_file = Path(__file__).parent / "development_cycle_state.json"
+
         while True:
-            print("--- Orchestrator Idle. Awaiting command from Sentry... ---")
-            command = await loop.run_in_executor(None, self.command_queue.get)
-            try:
-                # Keep track of the original output path
-                original_output_path = self.project_root / command['output_artifact_path']
+            if state_file.exists():
+                # We are in the middle of a development cycle, waiting for approval
+                print("--- Orchestrator in Development Cycle. Awaiting Guardian approval... ---", flush=True)
+                command = await loop.run_in_executor(None, self.command_queue.get)
+                if command.get("action") == "APPROVE_CURRENT_STAGE":
+                    # Update state with approved artifact
+                    state = json.loads(state_file.read_text())
+                    if "approved_artifact_path" in command:
+                        if state["current_stage"] == "AWAITING_APPROVAL_REQUIREMENTS":
+                            state["approved_artifacts"]["requirements"] = command["approved_artifact_path"]
+                        elif state["current_stage"] == "AWAITING_APPROVAL_TECH_DESIGN":
+                            state["approved_artifacts"]["tech_design"] = command["approved_artifact_path"]
+                        elif state["current_stage"] == "AWAITING_APPROVAL_CODE":
+                            state["approved_artifacts"]["code_proposal"] = command["approved_artifact_path"]
+                        state_file.write_text(json.dumps(state, indent=2))
+                    await self._advance_cycle(state_file)
+                else:
+                    print("[!] Invalid command during development cycle. Awaiting APPROVE_CURRENT_STAGE.", flush=True)
+            else:
+                # We are idle, waiting for a new task to start a new cycle
+                print("--- Orchestrator Idle. Awaiting command from Sentry... ---", flush=True)
+                command = await loop.run_in_executor(None, self.command_queue.get)
+                try:
+                    # Check if this is a development cycle command
+                    if command.get("development_cycle", False):
+                        await self._start_new_cycle(command, state_file)
+                    else:
+                        # Regular task execution
+                        original_output_path = self.project_root / command['output_artifact_path']
+                        await self.execute_task(command)
 
-                await self.execute_task(command)
+                        # Generate AAR for regular tasks
+                        print("[*] Task complete. Initiating After-Action Report synthesis...", flush=True)
+                        await self.generate_aar(original_output_path)
 
-                # NEW STEP: If the task was successful, generate an AAR
-                print("[*] Task complete. Initiating After-Action Report synthesis...", flush=True)
-                await self.generate_aar(original_output_path)
-
-            except Exception as e:
-                print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
+                except Exception as e:
+                    print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
 
     def run(self):
         """Starts the file watcher thread and the main async loop."""
