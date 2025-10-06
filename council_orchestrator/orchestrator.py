@@ -407,7 +407,12 @@ class Orchestrator:
         max_rounds = command.get('config', {}).get('max_rounds', 3)
         self.max_cortex_queries = command.get('config', {}).get('max_cortex_queries', 5)  # Default to 5
         self.cortex_query_count = 0
-        output_path = self.project_root / command['output_artifact_path']
+        output_artifact_path = command['output_artifact_path']
+        if output_artifact_path.endswith('/'):
+            # Treat as directory, save log inside as task_log.md
+            output_path = self.project_root / output_artifact_path / "task_log.md"
+        else:
+            output_path = self.project_root / output_artifact_path
         log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
         last_message = task
 
