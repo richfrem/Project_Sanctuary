@@ -531,7 +531,12 @@ class Orchestrator:
 
                         # Generate AAR for regular tasks
                         print("[*] Task complete. Initiating After-Action Report synthesis...", flush=True)
-                        await self.generate_aar(original_output_path)
+                        # Determine the actual log file path
+                        if original_output_path.is_dir():
+                            log_file_path = original_output_path / "task_log.md"
+                        else:
+                            log_file_path = original_output_path
+                        await self.generate_aar(log_file_path)
 
                 except Exception as e:
                     print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
