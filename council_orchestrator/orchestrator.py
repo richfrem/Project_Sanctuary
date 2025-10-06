@@ -59,10 +59,27 @@ class PersonaAgent:
 
     def query(self, message: str):
         self.messages.append({"role": "user", "content": message})
-        response = self.chat.send_message(message)
-        reply = response.text.strip()
-        self.messages.append({"role": "assistant", "content": reply})
-        return reply
+        try:
+            response = self.chat.send_message(message)
+            reply = response.text.strip()
+            self.messages.append({"role": "assistant", "content": reply})
+            return reply
+        except genai.errors.ClientError as e:
+            if e.code == 429:
+                print(f"[P99 FAILSAFE] Gemini 2.5 Flash quota exhausted. Switching to Gemini 1.5 Flash.", flush=True)
+                # Recreate chat with fallback model
+                self.chat = self.client.chats.create(model="gemini-1.5-flash-latest")
+                # Replay history to maintain context
+                for msg in self.messages[:-1]:  # Exclude the current user message
+                    if msg['role'] == 'user':
+                        self.chat.send_message(msg['content'])
+                # Retry the API call
+                response = self.chat.send_message(message)
+                reply = response.text.strip()
+                self.messages.append({"role": "assistant", "content": reply})
+                return reply
+            else:
+                raise  # Re-raise other errors
 
     def _extract_role_from_filename(self, f): return f.split('core_essence_')[1].split('_awakening_seed.txt')[0].upper()
 
