@@ -128,7 +128,7 @@ class Orchestrator:
     def _enhance_briefing_with_context(self, task_description: str):
         """Parse task_description for file paths and add their contents to briefing_packet.json."""
         # Regex to find file paths containing '/' and ending with file extension
-        path_pattern = r'([A-Z][A-Z0-9_]*/(?:[A-Z][A-Z0-9_]*/)*[A-Z][A-Z0-9_]*\.[a-zA-Z0-9]+)'
+        path_pattern = r'([A-Za-z][A-Za-z0-9_]*/(?:[A-Za-z][A-Za-z0-9_]*/)*[A-Za-z][A-Za-z0-9_]*\.[a-zA-Z0-9]+)'
         matches = re.findall(path_pattern, task_description)
         context = {}
         for match in matches:
