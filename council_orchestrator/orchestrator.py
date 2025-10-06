@@ -68,7 +68,7 @@ class PersonaAgent:
             if e.code == 429:
                 print(f"[P99 FAILSAFE] Gemini 2.5 Flash quota exhausted. Switching to Gemini 1.5 Flash.", flush=True)
                 # Recreate chat with fallback model
-                self.chat = self.client.chats.create(model="gemini-1.5-flash-latest")
+                self.chat = self.client.chats.create(model="gemini-1.5-flash")
                 # Replay history to maintain context
                 for msg in self.messages[:-1]:  # Exclude the current user message
                     if msg['role'] == 'user':
