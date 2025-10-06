@@ -125,6 +125,35 @@ class Orchestrator:
 
         return stored_hash == calculated_hash
 
+    def _enhance_briefing_with_context(self, task_description: str):
+        """Parse task_description for file paths and add their contents to briefing_packet.json."""
+        # Regex to find file paths (e.g., WORK_IN_PROGRESS/.../file.md)
+        path_pattern = r'([A-Z_][A-Z0-9_]*(?:/[A-Z_][A-Z0-9_]*)*(?:\.[a-zA-Z0-9]+)?)'
+        matches = re.findall(path_pattern, task_description)
+        context = {}
+        for match in matches:
+            file_path = self.project_root / match
+            if file_path.exists() and file_path.is_file():
+                try:
+                    content = file_path.read_text(encoding="utf-8")
+                    context[match] = content
+                except Exception as e:
+                    print(f"[!] Error reading context file {match}: {e}")
+                    raise FileNotFoundError(f"Context file {match} could not be read.")
+            elif match and not file_path.exists():
+                print(f"[!] Context file {match} not found.")
+                raise FileNotFoundError(f"Context file {match} not found.")
+
+        if context:
+            briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+            if briefing_path.exists():
+                packet = json.loads(briefing_path.read_text(encoding="utf-8"))
+                packet["context"] = context
+                briefing_path.write_text(json.dumps(packet, indent=2), encoding="utf-8")
+                print(f"[+] Context from {len(context)} files added to briefing packet.")
+            else:
+                print("[!] briefing_packet.json not found for context enhancement.")
+
     def inject_briefing_packet(self):
         """Generate + inject briefing packet into all agents."""
         print("[*] Generating fresh briefing packet...")
@@ -141,11 +170,17 @@ class Orchestrator:
                 if not self._verify_briefing_attestation(packet):
                     raise Exception("CRITICAL: Context Integrity Breach. Briefing packet failed attestation. Task aborted.")
                 for agent in self.agents.values():
+                    context_str = ""
+                    if "context" in packet:
+                        context_str = "\n\nCONTEXT PROVIDED FROM TASK DESCRIPTION:\n"
+                        for path, content in packet["context"].items():
+                            context_str += f"--- CONTEXT FROM {path} ---\n{content}\n--- END OF CONTEXT FROM {path} ---\n\n"
                     system_msg = (
                         "SYSTEM INSTRUCTION: You are provided with the synchronized briefing packet. "
                         "This contains temporal anchors, prior directives, and the current task context. "
                         "Incorporate this into your reasoning, but do not regurgitate it verbatim.\n\n"
-                        f"BRIEFING_PACKET:\n{json.dumps(packet, indent=2)}"
+                        f"BRIEFING_PACKET:\n{json.dumps({k: v for k, v in packet.items() if k != 'context'}, indent=2)}"
+                        f"{context_str}"
                     )
                     agent.query(system_msg)
                 print(f"[+] Briefing packet injected into {len(self.agents)} agents.")
@@ -375,6 +410,13 @@ class Orchestrator:
         output_path = self.project_root / command['output_artifact_path']
         log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
         last_message = task
+
+        # Enhance briefing with context from task description
+        try:
+            self._enhance_briefing_with_context(task)
+        except FileNotFoundError as e:
+            print(f"[CRITICAL] Context file error: {e}. Task aborted.")
+            return
 
         # Inject fresh briefing context
         self.inject_briefing_packet()
