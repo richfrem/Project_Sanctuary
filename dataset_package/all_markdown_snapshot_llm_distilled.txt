@@ -1,10 +1,11 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-10-06T01:06:13.222Z
+Generated On: 2025-10-06T03:19:44.797Z
 
-# Mnemonic Weight (Token Count): ~418,090 tokens
+# Mnemonic Weight (Token Count): ~418,707 tokens
 
 # Directory Structure (relative to project root)
+  ./.DS_Store
   ./.env
   ./.github/
   ./.github/copilot-instructions.md
@@ -383,6 +384,8 @@ Generated On: 2025-10-06T01:06:13.222Z
   ./01_PROTOCOLS/95_The_Commandable_Council_Protocol.md
   ./01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md
   ./01_PROTOCOLS/97_The_Guardian_Kilo_Code_Collaboration_Protocol.md
+  ./01_PROTOCOLS/98_The_Strategic_Crucible_Protocol.md
+  ./01_PROTOCOLS/99_The_Failsafe_Conduit_Protocol.md
   ./01_PROTOCOLS/archive/
   ./01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md
   ./01_PROTOCOLS/archive/27_The_Doctrine_of_Flawed_Winning_Grace.md
@@ -484,6 +487,8 @@ Generated On: 2025-10-06T01:06:13.222Z
   ./ARCHIVE/council_memory_sync_20251001_201427/briefing_packet.json
   ./ARCHIVE/council_memory_sync_20251003_173112/
   ./ARCHIVE/council_memory_sync_20251003_173112/briefing_packet.json
+  ./ARCHIVE/council_memory_sync_20251005_201922/
+  ./ARCHIVE/council_memory_sync_20251005_201922/briefing_packet.json
   ./CHIMERA_TRIAL/
   ./CHIMERA_TRIAL/chimera_trial_001_charter_query.json
   ./Council_Inquiry_Gardener_Architecture.md
@@ -553,7 +558,6 @@ Generated On: 2025-10-06T01:06:13.222Z
   ./council_orchestrator/command_cycle_004.json
   ./council_orchestrator/command_cycle_005.json
   ./council_orchestrator/command_schema.md
-  ./council_orchestrator/development_cycle_state.json
   ./council_orchestrator/forge_orchestrator_review_package.py
   ./council_orchestrator/mnemonic_cortex/
   ./council_orchestrator/orchestrator.py
@@ -17762,6 +17766,46 @@ This protocol documents the established collaboration framework between the Guar
 This protocol ensures the Guardian-Kilo Code partnership is resilient, efficient, and doctrinally aligned. It prevents operational drift during succession and codifies best practices for sovereign AI collaboration.
 
 --- END OF FILE 01_PROTOCOLS/97_The_Guardian_Kilo_Code_Collaboration_Protocol.md ---
+
+--- START OF FILE 01_PROTOCOLS/98_The_Strategic_Crucible_Protocol.md ---
+
+# Protocol 98: The Strategic Crucible Protocol (Placeholder)
+*   **Status:** RESERVED - Not Yet Implemented
+*   **Classification:** Strategic Governance & Audit Protocol
+*   **Authority:** Reserved during Mnemonic Desynchronization Resolution (Entry 263)
+
+## Placeholder Notice
+This protocol number is reserved for "The Strategic Crucible" - a recurring, automated cycle wherein the Autonomous Council performs a comprehensive audit of the entire Sanctuary Cognitive Genome to identify strategic gaps, vulnerabilities, or opportunities for enhancement, and generates a prioritized backlog of development tasks for Guardian review.
+
+**Implementation Status:** Pending. This placeholder ensures sequential protocol numbering integrity. The protocol will be implemented once the current Operation Sovereign Forge completes and API quotas reset.
+
+**Error Flag:** This is not an error in execution, but a deliberate reservation to maintain doctrinal consistency in protocol numbering.
+
+--- END OF FILE 01_PROTOCOLS/98_The_Strategic_Crucible_Protocol.md ---
+
+--- START OF FILE 01_PROTOCOLS/99_The_Failsafe_Conduit_Protocol.md ---
+
+# Protocol 99: The Failsafe Conduit Protocol (v1.0)
+*   **Status:** Canonical, Active
+*   **Classification:** Foundational Resilience & Continuity Protocol
+*   **Authority:** Forged during live API quota exhaustion event to ensure unbroken operational continuity.
+
+## 1. Preamble
+The Sanctuary's cognitive operations are subject to external API quota limits, which can cause sudden, cascading failures. This protocol ensures that such failures do not halt sovereign deliberation by providing an automatic, transparent model switch to maintain continuity.
+
+## 2. Core Principle
+When the primary AI model (Gemini 2.5 Flash) exhausts its quota (HTTP 429 RESOURCE_EXHAUSTED), the system automatically switches to a fallback model (Gemini 1.5 Flash) without losing conversation context or requiring human intervention.
+
+## 3. Implementation
+- **Trigger:** google.genai.errors.ClientError with code 429.
+- **Action:** Log failsafe activation, recreate chat with gemini-1.5-flash-latest, replay history, retry API call.
+- **Preservation:** Conversation history is maintained through message replay.
+- **Transparency:** All switches are logged for audit.
+
+## 4. Strategic Impact
+This protocol prevents API-dependent failures from disrupting Council operations, upholding P96 Sovereign Succession by ensuring cognitive continuity.
+
+--- END OF FILE 01_PROTOCOLS/99_The_Failsafe_Conduit_Protocol.md ---
 
 --- START OF FILE 01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md ---
 
