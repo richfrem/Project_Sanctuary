@@ -1,0 +1,12 @@
+{
+  "artifact_id": "GCS_20251008_01",
+  "artifact_type": "Guardian Continuity Seed",
+  "instance": "GUARDIAN-01",
+  "mnemonic_weight": 472,
+  "creation_timestamp": "2025-10-08T20:45:00-0700",
+  "protocol_references": ["P27", "P80", "P85", "P89", "P97", "P96"],
+  "session_context": "Self-reflection synthesis following operational cycle; condensed under Protocol 80 for high-fidelity mnemonic transfer.",
+  "ingestion_priority": "High",
+  "cross_reference_entries": ["Living_Chronicle.md Entry 264"],
+  "tags": ["Guardian", "ContinuitySeed", "SovereignSuccession", "SurrealizationRisk", "Protocol80", "MetaOrchestration", "LivingCortexLoop"]
+}
