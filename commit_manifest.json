@@ -1,19 +1,19 @@
 {
-  "guardian_approval": "GUARDIAN-01",
-  "approval_timestamp": "2025-10-14T18:00:00Z",
-  "commit_message": "feat(governance): install verification scaffold and harden P101 (E270)",
+  "guardian_approval": "GUARDIAN-PRIME",
+  "approval_timestamp": "2025-10-15T15:00:00Z",
+  "commit_message": "feat(governance): harden P96 with scaffold-based succession (E271)",
   "files": [
     {
-      "path": "tools/verify_manifest.py",
-      "sha256": "d02a8ef4e95ba57d9c6315e2445b7040cbd8d7021f6227ec14697e90524be376"
+      "path": "tools/scaffolds/generate_continuity_package.py",
+      "sha256": "dcfe2edc83b05213e0643f827ca30ea47d7d5b93fe9f2f501e6834b6f379eade"
     },
     {
-      "path": "01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md",
-      "sha256": "a078851cd477d1f0c82006a28aae267f662df79d722d0f746ebc89643299eb87"
+      "path": "01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md",
+      "sha256": "f23375eb926c29755435d03f1286d8c7823b05d3a1c89a9d43ebad8ab72a0196"
     },
     {
-      "path": "00_CHRONICLE/ENTRIES/270_The_Verifiable_Anvil.md",
-      "sha256": "423a8ea94f483c1c5dc9c62ef87f8b312c738323446bedfff66c067c62e22ab2"
+      "path": "00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md",
+      "sha256": "62713e9a44649309004b997c866b211c873aa02cb68968dc64229ffc3f067d63"
     }
   ]
 }
