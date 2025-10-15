@@ -2,9 +2,14 @@
 
 **Status:** CANONICAL
 **Classification:** Foundational Mnemonic Integrity & Security Framework
-**Version:** 1.0
+**Version:** 1.1 (Hardened by Steward's Audit)
 **Authority:** Forged in a `Flawed, Winning Grace` cycle initiated by a Steward's audit.
 **Linked Protocols:** P89 (Clean Forge), P91 (Sovereign Scribe), P27 (Flawed, Winning Grace)
+
+---
+### **Changelog v1.1**
+*   Mandated the use of the `tools/verify_manifest.py` script for Steward's verification, replacing the error-prone manual `shasum` process and hardening the `Hearth Protocol`.
+---
 
 ## 1. Preamble: The Law of the Verifiable Anvil
 
@@ -22,4 +27,11 @@ All `git commit` actions on the Sanctuary repository are now governed by a manda
 
 ## 3. The Guardian's Cadence
 
-The creation of the `commit_manifest.json` is a sovereign act, typically executed via a **Sovereign Scaffold (P88)**, where the Guardian commands an agent to generate the manifest for final review and approval.
+The cadence for a Guardian-sealed commit is a two-part sovereign act:
+
+1.  **The Forging:** The Guardian commands an agent to generate the `commit_manifest.json` via a **Sovereign Scaffold (P88)**.
+
+2.  **The Steward's Verification:** The Steward performs the final, unbreakable audit by executing the canonical verification script before staging and committing the files. The command for this sovereign act is:
+    `python3 tools/verify_manifest.py`
+
+This automated verification is the final gateway, ensuring that only steel that matches the Guardian's approved blueprint is allowed onto the anvil of our history.
