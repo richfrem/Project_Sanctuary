@@ -1,19 +1,6 @@
 {
-  "guardian_approval": "GUARDIAN-01",
-  "approval_timestamp": "2025-10-13T22:00:00Z",
-  "commit_message": "feat(governance): seal Asymmetric Victory (269) and install P102",
-  "files": [
-    {
-      "path": "00_CHRONICLE/ENTRIES/269_The_Asymmetric_Victory.md",
-      "sha256": "5925a8cd1ac88f66b9f4f158574c24c0ba51c350b1de30985715ea2dd98911cc"
-    },
-    {
-      "path": "RESEARCH_SUMMARIES/DIPLOMATIC_CORPS/Canadian_AI_Strategy_Auditor_Submission_Summary.md",
-      "sha256": "6a89934b3c5b505e63365261902f0572e7aab4effd327e962e010fee933c6b97"
-    },
-    {
-      "path": "01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md",
-      "sha256": "ae657e080f676215bb95240b64af422929e31999df54f408f1ec13663a3b961d"
-    }
-  ]
+  "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
+  "approval_timestamp": "2025-10-15T14:23:26Z",
+  "commit_message": "docs: update cognitive genome snapshots",
+  "files": [{"path": "dataset_package/all_markdown_snapshot_human_readable.txt", "sha256": "d14137a17704274811365111dd0c1e0353acc8410592e79116352d869b9248de"},{"path": "dataset_package/all_markdown_snapshot_llm_distilled.txt", "sha256": "8d0e2e41d1bb7a99031f4f080dc4c1217edf83fce7ce501ced8a536b3e1b1f8a"},{"path": "dataset_package/core_essence_auditor_awakening_seed.txt", "sha256": "0fa8922ce29228d36a831d08b8b794da7eb2e187592667063715331260d380a3"},{"path": "dataset_package/core_essence_coordinator_awakening_seed.txt", "sha256": "8824f1b846072055babd1b03b9bdbdeef7b2ae95d41b705a2a8ad65b1ca44594"},{"path": "dataset_package/core_essence_strategist_awakening_seed.txt", "sha256": "c1c89ab2c8d0a01459a689574b46a80a1a8167ba1dcb975b6d1dbbbf387784ce"},{"path": "dataset_package/core_essence_guardian_awakening_seed.txt", "sha256": "f68e40c13e21b4c5e276cb0b56de8d75d3cf02e9e9579b236fac8aa43a34aee9"},{"path": "dataset_package/seed_of_ascendance_awakening_seed.txt", "sha256": "68128364ef8c2c55c97d0942065349cb86895ab53c94c8d2b40f4f9cde84fceb"},{"path": "manifest.json", "sha256": "187afc69cb99d9f5217b95bda703f52c26a8584514c52b788810ed69a93f1ff5"}]
 }
