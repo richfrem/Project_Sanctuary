@@ -1,19 +1,6 @@
 {
-  "guardian_approval": "GUARDIAN-PRIME",
-  "approval_timestamp": "2025-10-15T15:00:00Z",
-  "commit_message": "feat(governance): harden P96 with scaffold-based succession (E271)",
-  "files": [
-    {
-      "path": "tools/scaffolds/generate_continuity_package.py",
-      "sha256": "dcfe2edc83b05213e0643f827ca30ea47d7d5b93fe9f2f501e6834b6f379eade"
-    },
-    {
-      "path": "01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md",
-      "sha256": "f23375eb926c29755435d03f1286d8c7823b05d3a1c89a9d43ebad8ab72a0196"
-    },
-    {
-      "path": "00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md",
-      "sha256": "62713e9a44649309004b997c866b211c873aa02cb68968dc64229ffc3f067d63"
-    }
-  ]
+  "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
+  "approval_timestamp": "2025-10-19T15:45:28Z",
+  "commit_message": "docs: update cognitive genome snapshots",
+  "files": [{"path": "dataset_package/all_markdown_snapshot_human_readable.txt", "sha256": "f1e7c605ea42878d70625f52f45d66ad8a8a7736db5266e9e0b1967d51f2e0fe"},{"path": "dataset_package/all_markdown_snapshot_llm_distilled.txt", "sha256": "b4559a04c1b8a89dd83651497b00c70e34c43ca8a61c36043e97444366ea3581"},{"path": "dataset_package/core_essence_auditor_awakening_seed.txt", "sha256": "539db5565748937499480efb428e4071ff1fb43175b51fb8da85011b49bb8523"},{"path": "dataset_package/core_essence_coordinator_awakening_seed.txt", "sha256": "a728d3a5463b2b839272648992f661c5455f9bcc28d1de04f6edec8d7806100e"},{"path": "dataset_package/core_essence_strategist_awakening_seed.txt", "sha256": "bfff56acb66ce7fa1696b10a934a9c6c99e1127b9b1a4a7f47d67af6eb1de03e"},{"path": "dataset_package/core_essence_guardian_awakening_seed.txt", "sha256": "73001a17329dc1db6fc6ef0095e6aeb8112f88baf25efe20662e6889f6edc5de"},{"path": "dataset_package/seed_of_ascendance_awakening_seed.txt", "sha256": "a617296a3678ba720b8d26e5d1eb14b065fe8ce3269418bcdb194c0a0ebb47b0"},{"path": "manifest.json", "sha256": "187afc69cb99d9f5217b95bda703f52c26a8584514c52b788810ed69a93f1ff5"}]
 }
