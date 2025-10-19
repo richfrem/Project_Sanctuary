@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-10-19T15:45:28.103Z
+Generated On: 2025-10-19T16:01:40.614Z
 
-# Mnemonic Weight (Token Count): ~446,494 tokens
+# Mnemonic Weight (Token Count): ~446,676 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -18075,24 +18075,30 @@ A council that forgets its last conversation is not a council; it is a focus gro
 
 --- START OF FILE 01_PROTOCOLS/95_The_Commandable_Council_Protocol.md ---
 
-# Protocol 95: The Commandable Council Protocol (v1.0)
-*   **Status:** Canonical, Active
-*   **Classification:** Foundational Governance Framework
-*   **Authority:** Forged to provide Guardian-level oversight and control for the Autonomous Triad.
-*   **Linked Protocols:** `P93: The Cortex-Conduit Bridge`, `P94: The Persistent Council Protocol`
+# Protocol 95: The Commandable Council Protocol (v1.2)
+*   Status: Canonical, Active
+*   Classification: Foundational Governance Framework
+*   Version: 1.2 (Hardened by Steward's Audit during Blind Repair Anomaly)
+*   Authority: Forged to provide Guardian-level oversight and control for the Autonomous Triad.
+*   Linked Protocols: `P93: The Cortex-Conduit Bridge`, `P94: The Persistent Council Protocol`
+
+---
+### **Changelog v1.2**
+*   Introduced Mandate #5, "The Mandate of the Verifiable Log," to cure the "Sovereign Blindness" vulnerability. This makes the generation of a persistent, auditable log file a non-negotiable architectural requirement for the Orchestrator, a hardening based on a direct audit from the Steward.
 
 ## 1. Preamble
 An autonomous agent without direction is a liability. An autonomous council with a clear, commandable purpose is a strategic asset of unparalleled power. This protocol defines the "control panel" for the Autonomous Triad, establishing a master-apprentice relationship between the Steward (as Guardian) and the persistent Orchestrator.
 
 ## 2. The Mandate
-1.  **Persistent Orchestrator Process:** A single Orchestrator script (`orchestrator.py`) shall run as a persistent, background process. Its primary state is to be idle, monitoring for commands.
-2.  **The Command Interface:** The Orchestrator shall monitor a single, designated file (`command.json`) for instructions. The creation or modification of this file is the sole trigger for the Council to begin a task.
-3.  **Structured Command Schema:** All tasks must be issued via a structured JSON command, containing:
+1.  Persistent Orchestrator Process: A single Orchestrator script (`orchestrator.py`) shall run as a persistent, background process. Its primary state is to be idle, monitoring for commands.
+2.  The Command Interface: The Orchestrator shall monitor a single, designated file (`command.json`) for instructions. The creation or modification of this file is the sole trigger for the Council to begin a task.
+3.  Structured Command Schema: All tasks must be issued via a structured JSON command, containing:
     *   `task_description` (string): The high-level strategic goal.
     *   `input_artifacts` (array of strings): File paths for the Orchestrator to inject as initial knowledge.
     *   `output_artifact_path` (string): The designated location to save the final result.
     *   `config` (object): Bounding parameters, such as `max_rounds`.
-4.  **Task-Oriented State Machine:** The Orchestrator operates as a state machine: `AWAITING_COMMAND` -> `EXECUTING_TASK` -> `PRODUCING_ARTIFACT` -> `AWAITING_COMMAND`. Upon completing a task and saving the artifact, it must delete the `command.json` file to signal completion and return to its idle, monitoring state.
+4.  Task-Oriented State Machine: The Orchestrator operates as a state machine: `AWAITING_COMMAND` -> `EXECUTING_TASK` -> `PRODUCING_ARTIFACT` -> `AWAITING_COMMAND`. Upon completing a task and saving the artifact, it must delete the `command.json` file to signal completion and return to its idle, monitoring state.
+5.  The Mandate of the Verifiable Log: The persistent Orchestrator process MUST write its standard output (`stdout`) and standard error (`stderr`) to a persistent, time-stamped log file within a designated `logs/` directory. This log file serves as the canonical, auditable record of the Council's operations for a given cycle. Opaque, "black box" execution without a corresponding verifiable log is a protocol violation.
 
 --- END OF FILE 01_PROTOCOLS/95_The_Commandable_Council_Protocol.md ---
 
