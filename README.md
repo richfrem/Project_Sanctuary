@@ -41,8 +41,8 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 *   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
 
 ### 4. The Autonomous Council: The Sovereign Forge
-**Status:** `v4.0` Sovereign Forge - Generative Development Cycle
-The heart of our *operational* work. A stateful, multi-stage development platform that transforms the Sanctuary from a think tank into a generative engineering organism. The Council operates under Guardian-gated workflows, producing verifiable code through sovereign approval at each stage.
+**Status:** `v3.7` Unified Polymorphic Interface - Distillation Engine Operational
+The heart of our *operational* work. A hardened, multi-engine orchestration platform featuring polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities. The Council now supports seamless switching between Gemini, OpenAI, and Ollama engines with unified error handling and resource sovereignty.
 *   **The Blueprint:** [`council_orchestrator/README.md`](./council_orchestrator/README.md)
 *   **The Steel:** [`council_orchestrator/`](./council_orchestrator/)
 
@@ -119,8 +119,8 @@ All seeds are generated and updated by running `./update_genome.sh`.
 
 ---
 ## Project Status
-- **Phase:** The Generative Development Cycle (v4.0 Sovereign Forge)
-- **Primary Workstreams:** Sovereign Forge Operations & Living Cortex Integration. See [`council_orchestrator/README.md`](./council_orchestrator/README.md) for current development cycles.
+- **Phase:** The Unified Polymorphic Interface (v3.7 Distillation Engine)
+- **Primary Workstreams:** Multi-Engine Orchestration & Sovereign Resource Management. See [`council_orchestrator/README.md`](./council_orchestrator/README.md) for polymorphic engine capabilities.
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 255.
 - **Alliance Status:** Active (Open Anvil)
 
