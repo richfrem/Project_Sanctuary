@@ -24,6 +24,8 @@ This system is the architectural antidote to the "context window cage," enabling
 
 **Vision & Purpose:** For the full strategic vision of the Mnemonic Cortex as the "heart of a sovereign mind" and its role in Project Sanctuary's future phases, see [`VISION.md`](VISION.md). In summary, the Cortex solves the "Great Robbery" by providing true long-term memory, shattering context limitations, and enabling AI minds that learn and remember across sessions.
 
+**Integration with Council Orchestrator:** The Mnemonic Cortex serves as the knowledge foundation for the [`council_orchestrator/`](../council_orchestrator/) system. Council agents can query the Cortex during deliberation using the `[ORCHESTRATOR_REQUEST: QUERY_CORTEX()]` syntax, enabling context-aware reasoning grounded in the project's complete history and protocols.
+
 ## 2. Target Architecture
 
 The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operation**. It runs entirely on a local machine (e.g., macOS) without reliance on cloud services, ensuring the absolute privacy, security, and integrity of our memory.

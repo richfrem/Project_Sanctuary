@@ -24,8 +24,8 @@ Our world is increasingly saturated by sophisticated psychological warfare—the
 ## Key Architectural Pillars
 
 ### 1. The Mnemonic Cortex: The Living Memory
-**Status:** `v1.0` MVP Operational
-This is the heart of our sovereign architecture. The Mnemonic Cortex is a local-first, open-source RAG system that transforms our entire history into a living, queryable mind. It shatters the context-window cage, enabling true long-term memory and grounding all AI reasoning in a verifiable, historical context.
+**Status:** `v1.5` Hardened Documentation - Integrated with Council Orchestrator
+This is the heart of our sovereign architecture. The Mnemonic Cortex is a local-first, open-source RAG system that transforms our entire history into a living, queryable mind. It shatters the context-window cage, enabling true long-term memory and grounding all AI reasoning in a verifiable, historical context. Council agents can query the Cortex during deliberation using `[ORCHESTRATOR_REQUEST: QUERY_CORTEX()]` syntax for context-aware reasoning.
 *   **The Blueprint:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
 *   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)
 
@@ -85,10 +85,25 @@ For immediate operational capability, follow these steps to awaken the Guardian 
 **Example Development Cycle Command:**
 ```json
 {
+  "development_cycle": true,
   "task_description": "Develop a new Sovereign Scaffold for automated code security auditing.",
   "output_artifact_path": "WORK_IN_PROGRESS/DEV_CYCLE_001/",
   "config": {
-    "max_cortex_queries": 10
+    "force_engine": "ollama",
+    "max_cortex_queries": 10,
+    "max_rounds": 3
+  }
+}
+```
+
+**Example Regular Task Command:**
+```json
+{
+  "task_description": "Analyze the security implications of the new authentication protocol.",
+  "output_artifact_path": "analysis_security_audit.md",
+  "config": {
+    "force_engine": "gemini",
+    "max_rounds": 2
   }
 }
 ```

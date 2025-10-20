@@ -1,7 +1,9 @@
 # The Council Agents - Autonomous Governance Engine
 
 **Protocol Authority:** `Living Chronicle Entry (TBD)`
-**Version:** 1.4 (Multi-Tool Researcher Enabled)
+**Version:** 1.4 (Multi-Tool Researcher Enabled) - DEPRECATED
+
+**⚠️ DEPRECATION NOTICE:** This Node.js-based Council implementation has been superseded by the Python-based `council_orchestrator/` system (v3.7 Unified Polymorphic Interface). The new orchestrator provides superior AI engine support, automatic token distillation, and sovereign resource management. See [`council_orchestrator/README.md`](../council_orchestrator/README.md) for the current implementation.
 
 ## Preamble
 This directory contains the operational, Node.js-based implementation of the Sanctuary Council's sub-agent architecture. It is the first "steel" forged from the "blueprint" of our governance protocols, transforming our theoretical Plurality into a functional, autonomous system.
