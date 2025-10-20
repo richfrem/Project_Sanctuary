@@ -1,214 +1,319 @@
-# The Commandable Council: A Sovereign Development Forge
-**Blueprint (`council_orchestrator/README.md` – v4.2 Sovereign Forge)**
+# Sanctuary Council Orchestrator (v3.7)
 
-This directory contains the foundational architecture for the Sanctuary's **Autonomous Council**, a stateful, generative engineering organism designed for the complete, end-to-end development of software and systems under the direct, gated supervision of a sovereign human.
+A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface.
 
----
-
-## Core Architecture: The Generative Development Cycle (Protocol 97)
-
-The system has evolved beyond a simple command executor into a direct implementation of **Protocol 97: The Generative Development Cycle**. This new, dominant protocol redefines the relationship between human and AI:
-
-*   **The Guardian as Sovereign Product Owner:** The Guardian no longer simply issues tasks. You are now the architect of the vision, the editor of the blueprints, and the final, sovereign arbiter at every critical stage of development.
-*   **The Council as Generative Engineering Team:** The agents are no longer just analysts. They are a multi-disciplinary engineering team capable of generating requirements, technical designs, and production-ready code.
-*   **Protocols 94 (Persistence) & 95 (Commandable)** remain as the foundational bedrock, ensuring the Council's memory and the Guardian's control are never compromised.
-
----
-
-## System Components
-
-1.  **`orchestrator.py` (The Forge – v4.2 Sovereign Forge):**  
-    A persistent, stateful orchestrator that manages long-running, multi-stage development cycles. It now functions as a project manager, pausing at key milestones to await explicit Guardian approval before proceeding.
-
-2.  **`command.json` (The Sovereign Command/Approval Interface):**  
-    This file now serves a dual purpose:
-    *   **To Initiate a Cycle:** A `task_description` begins a new development project.
-    *   **To Grant Approval:** A simple `{"action": "APPROVE_CURRENT_STAGE"}` command unpauses the Forge and advances the project to the next stage.
-
-3.  **`development_cycle_state.json` (The Project Blueprint):**  
-    A new, persistent state file that tracks the progress of a single development cycle. It holds the overall objective, the current stage (e.g., `AWAITING_APPROVAL_REQUIREMENTS`), and paths to all generated artifacts. **This is the orchestrator's long-term project memory.**
-
-4.  **`MNEMONIC_SYNTHESIS/` (The Living Cortex Loop - The Mnemonic Flywheel):**  
-    This is the heart of the Forge's self-learning capability.
-    *   **`AAR/`:** Contains structured **After-Action Reports (AARs)**. After every major cycle, the Council is automatically tasked with self-reflecting on its performance, distilling key learnings, successes, and failures into a concise, structured document.
-    *   **`ingest_new_knowledge.py`:** The automated script that feeds **both Guardian-approved artifacts AND these AARs** back into the Mnemonic Cortex. This is the final, critical step of the flywheel, transforming raw experience into searchable, synthesized wisdom. The integrity of this ingestion process is implicitly governed by **Protocol 96 (MAP)**, ensuring no unverified data pollutes the Cortex.
-
-5.  **`session_states/` (The Agentic Memory):** Unchanged. Serialized chat histories for each agent, ensuring short-term conversational persistence via Protocol 94.
-
-6.  **`dataset_package/` (The Identity):** Unchanged. Core Essence Awakening Seeds that inoculate each agent.
-
----
-
-## Operational Workflow (v4.2): The Guardian-Gated Development Cycle
-
-The system's workflow is no longer linear. It is a cyclical, multi-stage process with explicit Guardian approval gates and a mandatory, continuous learning phase powered by the Mnemonic Cortex.
+## 🏗️ Architecture Overview
 
 ```mermaid
-sequenceDiagram
-    participant Guardian as Guardian (SPO)
-    participant CommandFile as command.json
-    participant Orchestrator as The Forge <br/> (orchestrator.py v4.2)
-    participant StateFile as dev_cycle_state.json
-    participant Council as Gen. Engineering Team
-    participant Artifacts as Project Artifacts (MD, Code)
-    participant Cortex as Mnemonic Cortex <br/> (ChromaDB VectorDB+ Nomic)
-
-    Guardian->>CommandFile: 1. Initiate Cycle
-    Orchestrator->>CommandFile: 2. Consume command
-    Orchestrator->>StateFile: 3. Create Project Blueprint (Stage: Gen_Requirements)
-    
-    Orchestrator->>Council: 4. Task: Generate Requirements Doc
-    
-    loop Deliberation & Synthesis
-        Note right of Council: Coordinator: Structures the artifact.<br/>Strategist: Assesses risks/opportunities.<br/>Auditor: Ensures doctrinal integrity.
-        Council->>Orchestrator: [REQ: QUERY_Cortex(...)]
-        Orchestrator->>Cortex: Performs RAG query
-        Cortex-->>Orchestrator: Returns context
-        Orchestrator-->>Council: Injects retrieved context
+graph TB
+    subgraph "Orchestrator Layer"
+        O[Orchestrator] --> SM[Substrate Monitor]
+        O --> PA[PersonaAgent x3]
+        O --> DE[Distillation Engine]
     end
 
-    Council-->>Orchestrator: 5. Synthesize Requirements.md
-    Orchestrator->>Artifacts: 6. Save Requirements.md
-    Orchestrator->>StateFile: 7. Update State (Stage: Await_Approval_Reqs)
-    
-    Note over Guardian: Review & Edit Requirements.md directly
-
-    Guardian->>CommandFile: 8. Approve Stage
-    Orchestrator->>CommandFile: 9. Consume approval
-    Orchestrator->>StateFile: 10. Read state, confirm stage
-    
-    Note right of Orchestrator: Calls ingest_new_knowledge.py script
-    Orchestrator->>Cortex: 11. Ingest Approved/Edited Artifact (Nomic Embedding)
-    
-    Orchestrator->>StateFile: 12. Update State (Stage: Gen_Tech_Design)
-
-    loop Subsequent Gated Stages
-        Orchestrator->>Council: Task: Generate Next Artifact
-        Council-->>Orchestrator: Synthesize
-        Orchestrator->>Artifacts: Save Artifact
-        Orchestrator->>StateFile: Update State (Stage: Await_Approval_...)
-        Guardian->>CommandFile: Review, Edit, Approve Stage
-        Note right of Orchestrator: Calls ingest_new_knowledge.py script
-        Orchestrator->>Cortex: Ingest Approved Artifact
+    subgraph "Engine Selection"
+        SM --> T1P[Tier 1 Primary<br/>Gemini]
+        SM --> T1S[Tier 1 Secondary<br/>OpenAI]
+        SM --> T2S[Tier 2 Sovereign<br/>Ollama]
     end
 
-    Note over Orchestrator: Final stage generates code via PR
-    Orchestrator->>Council: Task: Generate Code Change
-    Council-->>Orchestrator: Synthesize code
-    Orchestrator->>Artifacts: 13. Creates PR to GitHub (Self-Forging Anvil)
+    subgraph "Polymorphic Interface"
+        BCE[BaseCognitiveEngine<br/>Abstract Base Class]
+        BCE --> GE[GeminiEngine]
+        BCE --> OE[OpenAIEngine]
+        BCE --> LE[OllamaEngine]
+    end
 
-    Note right of Orchestrator: THE MNEMONIC FLYWHEEL TURNS
-    Orchestrator->>Council: 14. Task: Generate Final AAR (After-action-report) for entire cycle
-    Council-->>Orchestrator: 15. Synthesize AAR.md
-    Note right of Orchestrator: Calls ingest_new_knowledge.py script
-    Orchestrator->>Cortex: 16. Ingest Final AAR
-    
-    Orchestrator->>StateFile: 17. Delete Project Blueprint
-    Note over Orchestrator: Cycle & Learning Complete. Return to Idle.
+    subgraph "Agent Layer"
+        PA --> BCE
+        DE --> LE
+    end
+
+    subgraph "Data Flow"
+        CMD[command.json] --> O
+        O --> LOG[task_log.md]
+        O --> AAR[After Action Report]
+    end
+
+    style BCE fill:#e1f5fe
+    style O fill:#f3e5f5
+    style SM fill:#e8f5e8
 ```
 
----
+## 🎯 Key Features
 
-## v4.2 Sovereign Forge Features
+- **Polymorphic Engine Interface**: All engines implement `BaseCognitiveEngine` with unified `execute_turn(messages)` method
+- **Sovereign Engine Selection**: Force specific engines or automatic health-based triage
+- **Multi-Agent Council**: Coordinator, Strategist, and Auditor personas work together
+- **Resource Sovereignty**: Automatic distillation for large inputs using local Ollama
+- **Development Cycles**: Optional staged workflow for software development projects
+- **Mnemonic Cortex**: Vector database integration for knowledge persistence
 
-*   **The Generative Development Cycle (Protocol 97):** A multi-stage, Guardian-gated workflow for creating software, moving beyond simple analysis.
-*   **The Living Cortex Protocol (The Mnemonic Flywheel):** Approved artifacts from each stage *and* a final **After-Action Report (AAR)** from the entire cycle are automatically ingested into the Mnemonic Cortex. This creates a self-improving knowledge flywheel, ensuring the Council learns not just from its approved work, but from the *process and outcome of the work itself*.
-*   **The Self-Forging Anvil:** The Council can now propose changes to its own codebase via a secure, Guardian-approved Pull Request workflow.
-*   **Hardened Cortex-Conduit:** Agents can now query the Cortex directly during deliberation, with configurable safeguards to prevent abuse.
+## 🚀 Quick Start
 
----
+### Prerequisites
 
-## Multi-Threaded Architecture (v4.2 Sovereign Forge)
+1. **Python 3.8+**
+2. **API Keys** (configure in `.env`):
+   ```bash
+   GEMINI_API_KEY=your_gemini_key
+   OPENAI_API_KEY=your_openai_key
+   ```
+3. **Ollama** (for local sovereign fallback):
+   ```bash
+   # Install Ollama and pull model
+   ollama pull qwen2:7b
+   ```
 
-The Forge employs a stateful, multi-threaded architecture to manage long-running, Guardian-gated development cycles.
-
-```mermaid
-graph TD
-    A[Main Process] --> B["Sentry Thread<br/>- Monitors command.json<br/>- Handles 'New Task' & 'Approve' commands<br/>- Enqueues for main loop"]
-    A --> C["Forge State Manager<br/>(Main Async Loop)"]
-
-    B -->|Enqueue Command| J[Async Queue]
-    J -->|Dequeue Command| C
-
-    C --> |Manages Cycle| D["State File<br/>dev_cycle_state.json"]
-    C --> |Dispatches Tasks| E["Council<br/>(Agent Threads)"]
-    C --> |Saves/Loads| F[Agent Session States]
-    C --> |Calls| G["Mnemonic Cortex<br/>(Ingestion & Query)"]
-    C --> |Creates| H["Project Artifacts<br/>(.md, Code)"]
-    C --> |Executes| I["Git & GitHub CLI<br/>(PR Creation)"]
-```
-
----
-
-## How to Use (v4.2 Sovereign Forge Workflow)
-
-### 1. Launch the Forge
-This step is unchanged. The Forge runs as a persistent service, awaiting your command.
+### Installation
 
 ```bash
 cd council_orchestrator
 pip install -r requirements.txt
-python3 orchestrator.py
 ```
-The terminal will display an "Idle" message, indicating the Forge is hot and ready for a new project.
 
-### 2. Execute a Development Cycle (The Guardian-Gated Workflow)
+### Hello World Test
 
-The interaction is no longer a single command, but a cyclical, sovereign development process with you as the Product Owner.
+Create a `command.json` file in the `council_orchestrator/` directory:
 
-#### **Step A: Initiate a New Cycle**
-To begin a new project, create `council_orchestrator/command.json` with the high-level objective.
-
-**Example `command.json` for initiating a cycle:**
+#### Basic Task (Auto Engine Selection)
 ```json
 {
-  "task_description": "Develop a new Sovereign Scaffold to audit Python code for security vulnerabilities based on OWASP Top 10.",
-  "output_artifact_path": "WORK_IN_PROGRESS/DEV_CYCLE_001/",
-  "development_cycle": true,
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_output.md",
   "config": {
-    "max_cortex_queries": 10
+    "max_rounds": 2
   }
 }
 ```
-The Forge will consume this command, begin the cycle by tasking the Council to generate the `Requirements Document`, and then **pause**, awaiting your sovereign review and approval.
 
-#### **Step B: Review, Edit, and Approve Each Stage**
-This is the core of the new workflow. You are the final arbiter at every step.
-
-1.  **Review the Artifact:** Navigate to the output directory (e.g., `WORK_IN_PROGRESS/DEV_CYCLE_001/`) and open the generated document (e.g., `requirements.md`).
-
-2.  **Edit Directly (Sovereign Oversight):** **This is a critical step.** You must review and *edit the document directly* in your code editor. Your changes become the canonical source of truth for the Council's next step. The AI builds what you approve.
-
-3.  **Grant Approval:** Once you are satisfied with the artifact (e.g., the edited `requirements.md`), grant approval by creating a new, simple `council_orchestrator/command.json`:
-
-**Example `command.json` for approving a stage:**
+#### Force Specific Engine
 ```json
 {
-  "action": "APPROVE_CURRENT_STAGE"
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_gemini.md",
+  "config": {
+    "force_engine": "gemini",
+    "max_rounds": 2
+  }
 }
 ```
-The Forge will detect this, ingest your approved and edited artifact into the Mnemonic Cortex, and automatically proceed to the next stage of the cycle (e.g., generating the `Technical Design` based on your approved requirements).
 
-This cycle of **`Generate -> Review -> Edit -> Approve`** continues for each stage until the Council's final act: creating a Pull Request with the finished code for your final merge approval.
+#### Force OpenAI Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_openai.md",
+  "config": {
+    "force_engine": "openai",
+    "max_rounds": 2
+  }
+}
+```
 
-#### **Troubleshooting & Sovereign Recovery**
-*   **Forge is unresponsive after an approval command:** Check the `development_cycle_state.json` file. If the `current_stage` has not advanced, the approval command may have been malformed. Delete the `command.json` and recreate it. If the state file appears corrupted, you may need to manually delete it to reset the Forge to a fully idle state, abandoning the current cycle.
-*   **Council generates a flawed artifact:** This is an expected part of the `Flawed, Winning Grace` cycle. Your role as Sovereign Product Owner is to heavily edit the flawed document, correcting the Council's course. Your edits are the ground truth for the next stage.
-*   **Git PR creation fails:** This is likely an issue with the GitHub CLI (`gh`) authentication on the machine running the orchestrator. Ensure it is properly authenticated with the necessary permissions.
+#### Force Ollama Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_ollama.md",
+  "config": {
+    "force_engine": "ollama",
+    "max_rounds": 2
+  }
+}
+```
+
+### Run the Orchestrator
+
+```bash
+python3 orchestrator.py
+```
+
+The orchestrator will:
+1. Detect the `command.json` file
+2. Select an appropriate engine (or use forced selection)
+3. Execute the task through the AI Council
+4. Generate output and After Action Report
+5. Clean up the command file
+
+## 🔧 Configuration
+
+### Environment Variables (`.env`)
+
+```bash
+# API Keys
+GEMINI_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
+
+# Model Configuration
+CHAT_GPT_MODEL=gpt-4-turbo
+GEMINI_MODEL=gemini-2.5-flash
+OLLAMA_MODEL=qwen2:7b
+
+# Engine Parameters (configurable per engine)
+GEMINI_MAX_TOKENS=4096
+GEMINI_TEMPERATURE=0.7
+OPENAI_MAX_TOKENS=4096
+OPENAI_TEMPERATURE=0.7
+OLLAMA_MAX_TOKENS=4096
+OLLAMA_TEMPERATURE=0.7
+```
+
+### Engine Limits (`engine_config.json`)
+
+```json
+{
+  "engine_limits": {
+    "gemini": 100000,
+    "openai": 100000,
+    "ollama": 8000
+  }
+}
+```
+
+## 🧪 Testing & Verification
+
+### Run Full System Test
+
+```bash
+# Comprehensive verification
+python3 verification_test.py
+
+# Substrate health check
+python3 ../tools/scaffolds/verify_substrates.py
+```
+
+### Expected Output
+
+```
+🔬 STARTING AI ENGINE TESTS
+✅ Can force-pick specific AI engines
+✅ All engines work the same way
+✅ All engines connect to real AI services
+AI system is ready to use!
+```
+
+## 📋 Command Structure
+
+### Basic Command Format
+
+```json
+{
+  "task_description": "Your task description here",
+  "output_artifact_path": "path/to/output.md",
+  "config": {
+    "max_rounds": 5,
+    "max_cortex_queries": 5,
+    "force_engine": "gemini|openai|ollama"
+  },
+  "input_artifacts": ["path/to/input1.md", "path/to/input2.md"]
+}
+```
+
+### Development Cycle Command
+
+```json
+{
+  "task_description": "Build a web application for task management",
+  "project_name": "task_manager",
+  "development_cycle": true,
+  "config": {
+    "force_engine": "gemini"
+  }
+}
+```
+
+## 🎭 Agent Personas
+
+The Council consists of three specialized AI agents:
+
+- **Coordinator**: Task planning and execution oversight
+- **Strategist**: Long-term planning and risk assessment
+- **Auditor**: Quality assurance and compliance verification
+
+Each agent maintains conversation history and works within their defined persona.
+
+## 🔄 Engine Selection Logic
+
+### Automatic Triage (Default)
+1. **Tier 1 Primary**: Gemini (fast, cost-effective)
+2. **Tier 1 Secondary**: OpenAI (reliable, feature-rich)
+3. **Tier 2 Sovereign**: Ollama (local, uncensored)
+
+### Sovereign Override
+Force specific engine via `"force_engine"` config parameter.
+
+### Health Checking
+Each engine is validated before use with functional tests.
+
+## 🧠 Distillation Engine
+
+Automatically handles large inputs by:
+1. Detecting token limit violations
+2. Using local Ollama to summarize content
+3. Preserving critical information while reducing size
+4. Maintaining task fidelity
+
+## 📚 Mnemonic Cortex
+
+Vector database integration for:
+- Knowledge persistence across sessions
+- Semantic search capabilities
+- After Action Report ingestion
+- Long-term learning
+
+## 🛠️ Development
+
+### Adding New Engines
+
+1. Create engine class inheriting from `BaseCognitiveEngine`
+2. Implement required methods: `execute_turn()`, `check_health()`, `run_functional_test()`
+3. Add to `substrate_monitor.py` selection logic
+4. Update environment configuration
+
+### Extending Functionality
+
+- Add new agent personas in `dataset_package/`
+- Implement custom distillation strategies
+- Extend development cycle stages
+- Add new knowledge sources to Cortex
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+**Engine Not Available**
+```
+[SUBSTRATE MONITOR] CRITICAL FAILURE: All cognitive substrates are unhealthy
+```
+- Check API keys in `.env`
+- Verify network connectivity
+- Ensure Ollama is running locally
+
+**Token Limit Exceeded**
+```
+[ORCHESTRATOR] WARNING: Token count exceeds limit
+```
+- Automatic distillation will handle this
+- Reduce input size for manual control
+
+**Command Not Processed**
+- Ensure `command.json` is in `council_orchestrator/` directory
+- Check file permissions
+- Verify JSON syntax
+
+### Debug Mode
+
+Set environment variable for verbose logging:
+```bash
+export DEBUG_ORCHESTRATOR=1
+```
+
+## 📄 License
+
+This system embodies the principles of Cognitive Sovereignty and Resource Resilience.
 
 ---
 
-## Monitoring and Validation
-
-The Sovereign Forge is a living system. Its health and the integrity of its learning process must be monitored.
-
-*   **Monitoring the Mnemonic Flywheel:** The primary indicator of the learning loop's health is the steady growth of artifacts in the `MNEMONIC_SYNTHESIS/AAR/` directory. Each completed cycle should produce a new, structured After-Action Report. A lack of new AARs after successful cycles indicates a failure in the learning loop.
-*   **Validating Cortex Ingestion:** To validate that the Flywheel is completing its cycle, you can perform a sovereign query after a project is complete. Issue a new, simple `command.json` tasking the Council with the following:
-    ```json
-    {
-      "task_description": "Perform a Cortex query to confirm the ingestion of the last AAR. Search for key terms from the 'Key Learnings' section of the most recent AAR and report back the retrieved text.",
-      "output_artifact_path": "WORK_IN_PROGRESS/VALIDATION/last_aar_ingestion_check.md",
-      "config": { "max_cortex_queries": 1 }
-    }
-    ```
-    A successful retrieval validates the entire learning loop, from generation to ingestion to recall.
+**"The Forge is operational. The Sovereign's will be executed through the Council."** ⚡👑
