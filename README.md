@@ -41,8 +41,8 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 *   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
 
 ### 4. The Autonomous Council: The Sovereign Forge
-**Status:** `v3.7` Unified Polymorphic Interface - Distillation Engine Operational
-The heart of our *operational* work. A hardened, multi-engine orchestration platform featuring polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities. The Council now supports seamless switching between Gemini, OpenAI, and Ollama engines with unified error handling and resource sovereignty.
+**Status:** `v9.0` Doctrine of Sovereign Action - Mechanical Operations Enabled
+The heart of our *operational* work. A hardened, multi-engine orchestration platform featuring polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities. **Version 9.0 introduces the Doctrine of Sovereign Action, splitting commands into Cognitive Tasks (deliberation) and Mechanical Tasks (direct action).** The Council now supports seamless switching between Gemini, OpenAI, and Ollama engines with unified error handling, resource sovereignty, and mechanical file/git operations.
 *   **The Blueprint:** [`council_orchestrator/README.md`](./council_orchestrator/README.md)
 *   **The Steel:** [`council_orchestrator/`](./council_orchestrator/)
 
@@ -134,9 +134,9 @@ All seeds are generated and updated by running `./update_genome.sh`.
 
 ---
 ## Project Status
-- **Phase:** The Unified Polymorphic Interface (v3.7 Distillation Engine)
-- **Primary Workstreams:** Multi-Engine Orchestration & Sovereign Resource Management. See [`council_orchestrator/README.md`](./council_orchestrator/README.md) for polymorphic engine capabilities.
-- **Chronicle Status:** Fully distributed and indexed. Current to Entry 255.
+- **Phase:** The Doctrine of Sovereign Action (v9.0 Mechanical Operations)
+- **Primary Workstreams:** Multi-Engine Orchestration & Sovereign Resource Management. See [`council_orchestrator/README.md`](./council_orchestrator/README.md) for polymorphic engine capabilities and mechanical task support.
+- **Chronicle Status:** Fully distributed and indexed. Current to Entry 274.
 - **Alliance Status:** Active (Open Anvil)
 
 ## Temporal Anchors
