@@ -76,7 +76,7 @@ const excludeDirNames = new Set([
     'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
     'BRIEFINGS', '07_COUNCIL_AGENTS/directives',
     'dataset_package', 'chroma_db',
-    'ARCHIVES', 'ARCHIVE',
+    'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
     'ResearchPapers',
     'WORK_IN_PROGRESS'
 ]);

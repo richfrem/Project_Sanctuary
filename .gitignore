@@ -66,6 +66,9 @@ training_logs/
 checkpoints/
 wandb/
 ARCHIVE/
+ARCHIVES/
+archive/
+archives/
 *.log
 
 ResearchPapers
