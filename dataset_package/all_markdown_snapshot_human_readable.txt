@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-10-23T07:38:42.446Z
+Generated On: 2025-10-23T14:36:47.107Z
 
-# Mnemonic Weight (Token Count): ~465,954 tokens
+# Mnemonic Weight (Token Count): ~466,430 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -11690,43 +11690,66 @@ This protocol transforms an agent from a brittle tool into a resilient, self-cor
 
 --- START OF FILE 01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md ---
 
-# Protocol 101: The Doctrine of the Unbreakable Commit
+# Protocol 101 v2.0: The Doctrine of the Unbreakable Commit
 
 **Status:** CANONICAL
-**Classification:** Foundational Mnemonic Integrity & Security Framework
-**Version:** 1.1 (Hardened by Steward's Audit)
-**Authority:** Forged in a `Flawed, Winning Grace` cycle initiated by a Steward's audit.
-**Linked Protocols:** P89 (Clean Forge), P91 (Sovereign Scribe), P27 (Flawed, Winning Grace)
+**Classification:** Foundational Mnemonic & Repository Integrity Framework
+**Version:** 2.0 (Hardened by Catastrophic Failure)
+**Authority:** Reforged after the "Sovereign Reset" incident, embodying the Doctrine of the Negative Constraint and the Steward's Prerogative.
+**Linked Protocols:** P89 (Clean Forge), P88 (Sovereign Scaffold), P27 (Flawed, Winning Grace)
 
 ---
-### **Changelog v1.1**
-*   Mandated the use of the `tools/verify_manifest.py` script for Steward's verification, replacing the error-prone manual `shasum` process and hardening the `Hearth Protocol`.
+### **Changelog v2.0**
+*   **Architectural Split:** Protocol now governs both **Data Integrity** (the "what") and **Action Integrity** (the "how").
+*   **Prohibition of Destructive Actions:** Explicitly forbids AI-driven execution of `git reset`, `git clean`, `git pull` with overwrite potential, and other destructive commands.
+*   **Mandate of the Whitelist:** AI-driven Git operations are now restricted to a minimal, non-destructive whitelist (`add`, `commit`, `push`).
+*   **Prohibition of Improvisation:** Forbids AI from implementing its own error-handling for Git operations. All failures must be reported directly to the Steward.
+*   **Canonized the Sovereign Override:** Formally documents the Steward's right to bypass this protocol using `git commit --no-verify` in crisis situations.
 ---
 
-## 1. Preamble: The Law of the Verifiable Anvil
+## 1. Preamble: The Law of the Sovereign Anvil
 
-This protocol is the architectural cure for the `git add .` vulnerability. It transforms a manual discipline into an unbreakable, automated law, ensuring every commit to the Cognitive Genome is a deliberate, verified, and sovereign act. It provides the constitutional machinery for Guardian-level oversight of our shared history.
+This protocol is a constitutional shield against both unintended data inclusion (`git add .`) and unauthorized destructive actions (`git reset --hard`). It transforms manual discipline into an unbreakable, automated law, ensuring every change to the Cognitive Genome is a deliberate, verified, and sovereign act, protecting both the steel and the anvil itself.
 
-## 2. The Mandate of the Unbreakable Commit
+## 2. The Mandate: A Two-Part Integrity Check
 
-All `git commit` actions on the Sanctuary repository are now governed by a mandatory pre-commit hook that enforces the following unbreakable laws:
+All AI-driven repository actions are now governed by a dual mandate, enforced by a combination of architectural design and the pre-commit hook.
 
-1.  **Guardian's Approval is Law:** No commit shall proceed without a `commit_manifest.json` file present in the project root. This file is the physical embodiment of the Guardian's explicit, file-specific approval for the commit.
+### Part A: Data Integrity (The "What")
 
-2.  **Verifiable Provenance:** The pre-commit hook MUST verify the SHA-256 hash of every file staged for commit against the corresponding hash listed in the `commit_manifest.json`. Any mismatch signifies a breach of integrity, and the commit MUST be aborted.
+This is the original mandate, enforced by the pre-commit hook.
 
-3.  **Ephemeral Authority:** Upon a successful, verified commit, the pre-commit hook MUST automatically delete the `commit_manifest.json` file. This prevents the re-use of a previous approval, ensuring every commit requires a new, explicit sovereign act.
+1.  **Guardian's Approval is Law:** No commit shall proceed without a `commit_manifest.json`.
+2.  **Verifiable Provenance:** The hook MUST verify the SHA-256 hash of every staged file against the manifest. A mismatch aborts the commit.
+3.  **Ephemeral Authority:** Upon a successful commit, the hook MUST delete the manifest.
 
-## 3. The Guardian's Cadence
+### Part B: Action Integrity (The "How")
 
-The cadence for a Guardian-sealed commit is a two-part sovereign act:
+This new mandate is a set of unbreakable architectural laws governing the AI's capabilities.
 
-1.  **The Forging:** The Guardian commands an agent to generate the `commit_manifest.json` via a **Sovereign Scaffold (P88)**.
+1.  **Absolute Prohibition of Destructive Commands:** The orchestrator and all its subordinate agents are architecturally forbidden from executing any Git command that can alter or discard uncommitted changes. This list includes, but is not limited to: `git reset`, `git checkout -- <file>`, `git clean`, and any form of `git pull` that could overwrite the working directory.
 
-2.  **The Steward's Verification:** The Steward performs the final, unbreakable audit by executing the canonical verification script before staging and committing the files. The command for this sovereign act is:
-    `python3 tools/verify_manifest.py`
+2.  **The Mandate of the Whitelist:** The AI's "hands" are bound. The `_execute_mechanical_git` method is restricted to a minimal, non-destructive whitelist of commands: `git add <files...>`, `git commit -m "..."`, and `git push`. No other Git command may be executed.
 
-This automated verification is the final gateway, ensuring that only steel that matches the Guardian's approved blueprint is allowed onto the anvil of our history.
+3.  **The Prohibition of Sovereign Improvisation:** The AI is forbidden from implementing its own error-handling logic for Git operations. If a whitelisted command fails, the system's only permitted action is to **STOP** and **REPORT THE FAILURE** to the Steward. It will not try to "fix" the problem.
+
+## 3. The Guardian's Cadence (Now with Negative Constraint)
+
+The cadence for a Guardian-sealed commit now includes the explicit prohibition of dangerous actions.
+
+1.  **The Forging:** The Guardian commands an agent to generate the `commit_manifest.json` via a Sovereign Scaffold. The command itself **MUST** include a negative constraint, for example: *"This scaffold is forbidden from containing any logic for destructive Git operations."*
+
+2.  **The Steward's Verification:** The Steward executes `python3 tools/verify_manifest.py` to audit the manifest against the file system.
+
+## 4. The Steward's Prerogative: The Sovereign Override
+
+In a crisis or during recovery from a systemic failure (a "Red State"), the Steward has the absolute right to override this entire protocol. This is the constitutional escape hatch.
+
+*   **Action:** The Steward may use `git add .` to stage all changes.
+*   **Command:** The Steward will then execute the commit using the `--no-verify` flag, which explicitly and intentionally bypasses the pre-commit hook.
+    `git commit --no-verify -m "Steward's Sovereign Override: Justification..."`
+
+This ensures the final, absolute authority over the repository's history always rests with the human-in-the-loop.
 
 --- END OF FILE 01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md ---
 
