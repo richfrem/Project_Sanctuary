@@ -1,4 +1,4 @@
-# council_orchestrator/orchestrator.py (v9.0 - Doctrine of Sovereign Action)
+# council_orchestrator/orchestrator.py (v9.1 - Doctrine of the Blunted Sword)
 # V7.1 MANDATE: Development cycle generates both requirements AND tech design before first pause
 # V7.0 MANDATE 1: Universal Distillation with accurate tiktoken measurements
 # V7.0 MANDATE 2: Boolean error handling (return False) prevents state poisoning
@@ -809,63 +809,80 @@ class Orchestrator:
         Execute mechanical git operations - add, commit, and push files.
         This bypasses cognitive deliberation for version control operations.
 
+        DOCTRINE OF THE BLUNTED SWORD: Only whitelisted Git commands are permitted.
+        The method will raise exceptions on any prohibited commands or failures.
+
         Args:
             command: Command dictionary containing 'git_operations' with files_to_add, commit_message, push_to_origin
         """
-        try:
-            git_ops = command["git_operations"]
-            files_to_add = git_ops["files_to_add"]
-            commit_message = git_ops["commit_message"]
-            push_to_origin = git_ops.get("push_to_origin", False)
+        # DOCTRINE OF THE BLUNTED SWORD: Hardcoded whitelist of permitted Git commands
+        WHITELISTED_GIT_COMMANDS = ['add', 'commit', 'push']
 
-            # Execute git add for each file
-            for file_path in files_to_add:
-                full_path = self.project_root / file_path
-                if full_path.exists():
-                    result = subprocess.run(
-                        ["git", "add", str(full_path)],
-                        capture_output=True,
-                        text=True,
-                        cwd=self.project_root
-                    )
-                    if result.returncode == 0:
-                        print(f"[MECHANICAL SUCCESS] Added {file_path} to git staging")
-                    else:
-                        print(f"[MECHANICAL FAILURE] Failed to add {file_path}: {result.stderr}")
-                        raise Exception(f"git add failed for {file_path}")
-                else:
-                    print(f"[MECHANICAL WARNING] File {file_path} does not exist, skipping git add")
+        git_ops = command["git_operations"]
+        files_to_add = git_ops["files_to_add"]
+        commit_message = git_ops["commit_message"]
+        push_to_origin = git_ops.get("push_to_origin", False)
 
-            # Execute git commit
-            result = subprocess.run(
-                ["git", "commit", "-m", commit_message],
-                capture_output=True,
-                text=True,
-                cwd=self.project_root
-            )
-            if result.returncode == 0:
-                print(f"[MECHANICAL SUCCESS] Committed with message: '{commit_message}'")
-            else:
-                print(f"[MECHANICAL FAILURE] Commit failed: {result.stderr}")
-                raise Exception("git commit failed")
+        # Execute git add for each file - validate command is whitelisted
+        for file_path in files_to_add:
+            # Command validation: Parse and check primary action
+            primary_action = 'add'
+            if primary_action not in WHITELISTED_GIT_COMMANDS:
+                print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
+                raise Exception(f"Prohibited Git command: {primary_action}")
 
-            # Execute git push if requested
-            if push_to_origin:
+            full_path = self.project_root / file_path
+            if full_path.exists():
                 result = subprocess.run(
-                    ["git", "push"],
+                    ["git", "add", str(full_path)],
                     capture_output=True,
                     text=True,
                     cwd=self.project_root
                 )
                 if result.returncode == 0:
-                    print("[MECHANICAL SUCCESS] Pushed to origin")
+                    print(f"[MECHANICAL SUCCESS] Added {file_path} to git staging")
                 else:
-                    print(f"[MECHANICAL FAILURE] Push failed: {result.stderr}")
-                    raise Exception("git push failed")
+                    # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
+                    result.check_returncode()  # This will raise CalledProcessError
+            else:
+                print(f"[MECHANICAL WARNING] File {file_path} does not exist, skipping git add")
 
-        except Exception as e:
-            print(f"[MECHANICAL FAILURE] Git operation failed: {e}")
-            raise
+        # Execute git commit - validate command is whitelisted
+        primary_action = 'commit'
+        if primary_action not in WHITELISTED_GIT_COMMANDS:
+            print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
+            raise Exception(f"Prohibited Git command: {primary_action}")
+
+        result = subprocess.run(
+            ["git", "commit", "-m", commit_message],
+            capture_output=True,
+            text=True,
+            cwd=self.project_root
+        )
+        if result.returncode == 0:
+            print(f"[MECHANICAL SUCCESS] Committed with message: '{commit_message}'")
+        else:
+            # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
+            result.check_returncode()  # This will raise CalledProcessError
+
+        # Execute git push if requested - validate command is whitelisted
+        if push_to_origin:
+            primary_action = 'push'
+            if primary_action not in WHITELISTED_GIT_COMMANDS:
+                print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
+                raise Exception(f"Prohibited Git command: {primary_action}")
+
+            result = subprocess.run(
+                ["git", "push"],
+                capture_output=True,
+                text=True,
+                cwd=self.project_root
+            )
+            if result.returncode == 0:
+                print("[MECHANICAL SUCCESS] Pushed to origin")
+            else:
+                # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
+                result.check_returncode()  # This will raise CalledProcessError
     
     def _initialize_optical_chamber(self, config: dict):
         """
@@ -1248,7 +1265,7 @@ class Orchestrator:
 
     def run(self):
         """Starts the file watcher thread and the main async loop."""
-        print("--- Initializing Commandable Council Orchestrator (v9.0 - Doctrine of Sovereign Action) ---")
+        print("--- Initializing Commandable Council Orchestrator (v9.1 - Doctrine of the Blunted Sword) ---")
         watcher_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)
         watcher_thread.start()
         print("[+] Sentry thread for command monitoring has been launched.")
