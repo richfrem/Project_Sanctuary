@@ -24,7 +24,7 @@ class OllamaEngine(BaseCognitiveEngine):
             print(f"[OLLAMA ENGINE WARNING] Initial connection failed: {e}")
             self.client = None
 
-    def execute_turn(self, messages: list) -> str:
+    def execute_turn(self, messages: list) -> str: # NEW SIGNATURE
         """
         Executes a single conversational turn with the local Ollama model.
         """
@@ -35,13 +35,7 @@ class OllamaEngine(BaseCognitiveEngine):
         max_tokens = int(os.getenv("OLLAMA_MAX_TOKENS", "4096"))
         temperature = float(os.getenv("OLLAMA_TEMPERATURE", "0.7"))
 
-        # Extract the current prompt and history from messages
-        # messages format: [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}, ...]
-        current_message = messages[-1]  # Last message is the current prompt
-        history_messages = messages[:-1]  # All previous messages are history
-
-        # Combine history with current message for Ollama format
-        messages = history_messages + [current_message]
+        # The 'messages' list is now used directly. DO NOT add prompt/history.
 
         try:
             response = self.client.chat(

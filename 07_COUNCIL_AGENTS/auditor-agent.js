@@ -25,7 +25,7 @@ async function auditForVulnerabilities(directiveId) {
     console.log(`🛡️  AUDITOR: Auditing directive: "${directive.stewardDirective}"`);
 
     const persona = fs.readFileSync(path.join(__dirname, 'auditor-persona.md'), 'utf8');
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     let fileContents = '';
     for (const filePath of directive.targetFiles) {

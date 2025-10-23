@@ -11,7 +11,7 @@ When the primary AI model (Gemini 2.5 Flash) exhausts its quota (HTTP 429 RESOUR
 
 ## 3. Implementation
 - **Trigger:** google.genai.errors.ClientError with code 429.
-- **Action:** Log failsafe activation, recreate chat with gemini-1.5-flash-latest, replay history, retry API call.
+- **Action:** Log failsafe activation, recreate chat with gemini-2.5-flash, replay history, retry API call.
 - **Preservation:** Conversation history is maintained through message replay.
 - **Transparency:** All switches are logged for audit.
 

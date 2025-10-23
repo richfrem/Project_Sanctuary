@@ -25,7 +25,7 @@ class OpenAIEngine(BaseCognitiveEngine):
             return
         self.client = openai.OpenAI(api_key=self.api_key)
 
-    def execute_turn(self, messages: list) -> str:
+    def execute_turn(self, messages: list) -> str: # NEW SIGNATURE
         """
         Executes a single conversational turn with the OpenAI model.
         Includes exponential backoff for rate limit errors.
@@ -39,13 +39,7 @@ class OpenAIEngine(BaseCognitiveEngine):
         # Newer models (gpt-4o, gpt-4o-mini) use 'max_completion_tokens'
         temperature = float(os.getenv("OPENAI_TEMPERATURE", "0.7"))
 
-        # Extract the current prompt and history from messages
-        # messages format: [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}, ...]
-        current_message = messages[-1]  # Last message is the current prompt
-        history_messages = messages[:-1]  # All previous messages are history
-
-        # Combine history with current message for OpenAI format
-        messages = history_messages + [current_message]
+        # The 'messages' list is now used directly. DO NOT add prompt/history.
         max_retries = 5
         base_delay = 2  # Start with a 2-second delay
 
@@ -77,14 +71,23 @@ class OpenAIEngine(BaseCognitiveEngine):
 
             # THIS IS THE NEW, CRITICAL LOGIC
             except openai.RateLimitError as e:
+                # Distinguish between TPM (tokens per minute) and RPM (requests per minute) limits
+                error_details = str(e).lower()
+                is_tpm_limit = "tokens per min" in error_details or "tpm" in error_details
+                limit_type = "TPM (Tokens Per Minute)" if is_tpm_limit else "RPM (Requests Per Minute)"
+                
                 if attempt < max_retries - 1:
                     # Calculate wait time with exponential backoff and jitter
                     delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
-                    print(f"[OPENAI ENGINE WARNING] Rate limit exceeded. Retrying in {delay:.2f} seconds... (Attempt {attempt + 1}/{max_retries})")
+                    print(f"[OPENAI ENGINE WARNING] Rate limit exceeded ({limit_type}). Retrying in {delay:.2f} seconds... (Attempt {attempt + 1}/{max_retries})")
+                    if is_tpm_limit:
+                        print(f"[OPENAI ENGINE NOTE] TPM limit hit despite orchestrator pacing. This may indicate concurrent usage or config mismatch.")
                     time.sleep(delay)
                 else:
-                    error_msg = f"[OPENAI ENGINE ERROR] Rate limit exceeded after {max_retries} attempts. Details: {e}"
+                    error_msg = f"[OPENAI ENGINE ERROR] Rate limit ({limit_type}) exceeded after {max_retries} attempts. Details: {e}"
                     print(error_msg)
+                    if is_tpm_limit:
+                        print(f"[OPENAI ENGINE RECOMMENDATION] Check TPM limits in engine_config.json match your OpenAI tier.")
                     return error_msg
 
             except openai.BadRequestError as e:

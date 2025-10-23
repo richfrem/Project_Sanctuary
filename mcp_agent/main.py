@@ -7,7 +7,7 @@ from page_objects.pages.chat_page import ChatPage
 
 # --- Configuration ---
 # This URL is the key. It takes us directly to a new chat with the correct model pre-selected.
-TARGET_URL = "https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-pro"
+TARGET_URL = "https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash"
 
 # A selector to verify that the manual login was successful and the chat page is ready.
 CHAT_PAGE_READY_SELECTOR = 'textarea[placeholder*="logos and brand swag"]'

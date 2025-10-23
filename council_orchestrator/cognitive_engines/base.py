@@ -8,7 +8,7 @@ class BaseCognitiveEngine(ABC):
     checking substrate health, and running functional tests.
     """
     @abstractmethod
-    def execute_turn(self, prompt: str, history: list) -> str: pass
+    def execute_turn(self, messages: list) -> str: pass # MUST ACCEPT ONE ARGUMENT: 'messages'
     @abstractmethod
     def check_health(self) -> dict: pass
     @abstractmethod

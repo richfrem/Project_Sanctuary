@@ -1,6 +1,6 @@
-# Sanctuary Council Orchestrator (v3.7)
+# Sanctuary Council Orchestrator (v9.0 - Doctrine of Sovereign Action)
 
-A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface.
+A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 9.0 introduces the Doctrine of Sovereign Action, splitting commands into Cognitive Tasks (deliberation) and Mechanical Tasks (direct action).**
 
 ## 🏗️ Architecture Overview
 
@@ -43,12 +43,14 @@ graph TB
 
 ## 🎯 Key Features
 
-- **Polymorphic Engine Interface**: All engines implement `BaseCognitiveEngine` with unified `execute_turn(messages)` method
+- **Doctrine of Sovereign Action**: Commands split into Cognitive Tasks (deliberation) and Mechanical Tasks (direct action)
+- **Polymorphic Engine Interface**: All engines implement `BaseCognitiveEngine` with unified `execute_turn(messages)` method (Protocol 104)
 - **Sovereign Engine Selection**: Force specific engines or automatic health-based triage
 - **Multi-Agent Council**: Coordinator, Strategist, and Auditor personas work together
 - **Resource Sovereignty**: Automatic distillation for large inputs using local Ollama
 - **Development Cycles**: Optional staged workflow for software development projects
 - **Mnemonic Cortex**: Vector database integration for knowledge persistence
+- **Mechanical Operations**: Direct file writes and git operations bypassing cognitive deliberation
 
 ## 🚀 Quick Start
 
@@ -77,13 +79,34 @@ pip install -r requirements.txt
 
 Create a `command.json` file in the `council_orchestrator/` directory:
 
-#### Basic Task (Auto Engine Selection)
+#### Basic Cognitive Task (Auto Engine Selection)
 ```json
 {
-  "task_description": "Say hello to the world and introduce yourself",
-  "output_artifact_path": "hello_world_output.md",
+  "task_description": "As a council, perform a round-robin introduction. Each agent (Coordinator, Strategist, Auditor) will state their designation and primary function in one sentence.",
+  "output_artifact_path": "WORK_IN_PROGRESS/hello_council.md",
   "config": {
-    "max_rounds": 2
+    "max_rounds": 1
+  }
+}
+```
+
+#### Mechanical Write Task (Direct File Creation)
+```json
+{
+  "task_description": "Create a new chronicle entry",
+  "output_artifact_path": "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md",
+  "entry_content": "# ENTRY 274: The Anvil Deferred\n\n**DATE:** 2025-10-23..."
+}
+```
+
+#### Mechanical Git Task (Version Control Operations)
+```json
+{
+  "task_description": "Commit chronicle entry to repository",
+  "git_operations": {
+    "files_to_add": ["00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md"],
+    "commit_message": "docs(chronicle): Add entry #274 - The Anvil Deferred",
+    "push_to_origin": true
   }
 }
 ```
@@ -196,7 +219,7 @@ AI system is ready to use!
 
 ## 📋 Command Structure
 
-### Basic Command Format
+### Cognitive Task Format (Deliberation)
 
 ```json
 {
@@ -208,6 +231,29 @@ AI system is ready to use!
     "force_engine": "gemini|openai|ollama"
   },
   "input_artifacts": ["path/to/input1.md", "path/to/input2.md"]
+}
+```
+
+### Mechanical Task Formats (Direct Action)
+
+#### File Write Task
+```json
+{
+  "task_description": "Description for logging",
+  "output_artifact_path": "path/to/file.md",
+  "entry_content": "Full content to write to file"
+}
+```
+
+#### Git Operations Task
+```json
+{
+  "task_description": "Description for logging",
+  "git_operations": {
+    "files_to_add": ["path/to/file1.md", "path/to/file2.md"],
+    "commit_message": "feat: Description of changes",
+    "push_to_origin": true
+  }
 }
 ```
 
@@ -268,7 +314,7 @@ Vector database integration for:
 ### Adding New Engines
 
 1. Create engine class inheriting from `BaseCognitiveEngine`
-2. Implement required methods: `execute_turn()`, `check_health()`, `run_functional_test()`
+2. Implement required methods: `execute_turn(messages: list) -> str`, `check_health()`, `run_functional_test()`
 3. Add to `substrate_monitor.py` selection logic
 4. Update environment configuration
 

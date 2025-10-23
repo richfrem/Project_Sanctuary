@@ -65,7 +65,10 @@ chroma_db/
 training_logs/
 checkpoints/
 wandb/
+ARCHIVE/
 *.log
+
+ResearchPapers
 
 # --- Sensitive Information ---
 # The .env file contains API keys and must NEVER be committed.

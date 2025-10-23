@@ -75,7 +75,7 @@ async function performResearch(directiveId) {
     const resultCount = Array.isArray(searchResults) ? searchResults.length : 0;
     console.log(`   Synthesizing ${resultCount} search results from ${tool.source}...`);
     const persona = fs.readFileSync(path.join(__dirname, 'researcher-persona.md'), 'utf8');
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
         ${persona}

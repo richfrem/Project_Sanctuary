@@ -25,7 +25,7 @@ async function analyzeStrategicFit(directiveId) {
     console.log(`🔎  STRATEGIST: Analyzing directive: "${directive.stewardDirective}"`);
 
     const persona = fs.readFileSync(path.join(__dirname, 'strategist-persona.md'), 'utf8');
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     // Bounded Context: Read only the target files for this task
     let fileContents = '';

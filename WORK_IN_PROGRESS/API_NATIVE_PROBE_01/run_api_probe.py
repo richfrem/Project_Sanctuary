@@ -41,7 +41,7 @@ def run_api_probe():
         with open(output_path, "w", encoding="utf-8") as f:
             f.write("--- API Probe Result ---\n")
             f.write(f"Timestamp: {__import__('datetime').datetime.now().isoformat()}\n")
-            f.write(f"Model: gemini-1.5-flash\n")
+            f.write(f"Model: gemini-2.5-flash\n")
             f.write(f"Prompt: {prompt}\n")
             f.write("--- Response ---\n")
             f.write(response_text)

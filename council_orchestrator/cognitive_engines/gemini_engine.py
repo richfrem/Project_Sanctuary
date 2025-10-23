@@ -14,6 +14,7 @@ class GeminiEngine(BaseCognitiveEngine):
     """
     Cognitive engine driver for the Google Gemini API.
     This is a Tier 1 Performance Substrate.
+    Compatible with v9.0: Doctrine of Sovereign Action (orchestrator-level changes only).
     """
     def __init__(self):
         DEFAULT_MODEL = "gemini-2.5-flash"
@@ -25,7 +26,7 @@ class GeminiEngine(BaseCognitiveEngine):
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel(self.model_name)
 
-    def execute_turn(self, messages: list) -> str:
+    def execute_turn(self, messages: list) -> str: # NEW SIGNATURE
         """
         Executes a single conversational turn with the Gemini model.
         Includes error handling for common API failures like quota and model not found.
@@ -37,26 +38,63 @@ class GeminiEngine(BaseCognitiveEngine):
         max_tokens = int(os.getenv("GEMINI_MAX_TOKENS", "4096"))
         temperature = float(os.getenv("GEMINI_TEMPERATURE", "0.7"))
 
-        # Extract the current prompt and history from messages
-        # messages format: [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}, ...]
-        current_message = messages[-1]  # Last message is the current prompt
-        history_messages = messages[:-1]  # All previous messages are history
+        # V8.0: Doctrine of the Native Tongue - Perfect Gemini API translator
+        # Process messages to create valid Gemini conversation structure
+        processed_history = []
+        system_prompt = None
 
-        # The Gemini API uses a different history format, so we adapt.
-        # This is a key function of the abstraction layer.
-        chat = self.model.start_chat(history=[
-            {'role': h['role'], 'parts': [h['content']]} for h in history_messages
-        ])
+        # First, extract the system prompt and any initial user/model history
+        for msg in messages[:-1]:  # Process all but the last message
+            role = msg['role']
+            content = msg['content']
+            if role == 'system':
+                system_prompt = content
+                continue  # Don't add system prompts to history directly
+
+            # Translate roles for Gemini
+            if role == 'assistant':
+                gemini_role = 'model'
+            else:  # 'user'
+                gemini_role = 'user'
+
+            # Ensure alternating roles (user, model, user, model...)
+            if processed_history and processed_history[-1]['role'] == gemini_role:
+                # If we have consecutive same roles, merge them
+                processed_history[-1]['parts'][0] += f"\n\n--- (System Note: Merged Content) ---\n\n{content}"
+            else:
+                processed_history.append({'role': gemini_role, 'parts': [content]})
+
+        # Start the chat with the processed history
+        chat = self.model.start_chat(history=processed_history)
+
+        # Prepare the final message to send
+        last_message = messages[-1]
+        final_content = last_message['content']
+
+        # Prepend the system prompt to the final user message if it exists
+        if system_prompt:
+            final_content = f"SYSTEM PROMPT: {system_prompt}\n\n--- (User Request) ---\n\n{final_content}"
 
         try:
-            response = chat.send_message(current_message['content'], generation_config=genai.types.GenerationConfig(
+            # Send the final, consolidated message
+            response = chat.send_message(final_content, generation_config=genai.types.GenerationConfig(
                 max_output_tokens=max_tokens,
                 temperature=temperature
             ))
             return response.text
         except google_exceptions.ResourceExhausted as e:
-            error_msg = f"[GEMINI ENGINE ERROR] Resource exhausted (quota limit). Details: {e}"
-            print(error_msg)
+            # Gemini's ResourceExhausted can be quota (TPM/RPM) or other resource limits
+            error_details = str(e).lower()
+            is_quota_limit = "quota" in error_details or "rate" in error_details
+            
+            if is_quota_limit:
+                error_msg = f"[GEMINI ENGINE ERROR] Rate limit/quota exhausted (likely TPM or RPM). Details: {e}"
+                print(error_msg)
+                print(f"[GEMINI ENGINE NOTE] Quota limit hit despite orchestrator pacing. This may indicate concurrent usage or config mismatch.")
+                print(f"[GEMINI ENGINE RECOMMENDATION] Check TPM limits in engine_config.json match your Gemini tier.")
+            else:
+                error_msg = f"[GEMINI ENGINE ERROR] Resource exhausted. Details: {e}"
+                print(error_msg)
             return error_msg
         except google_exceptions.NotFound as e:
             error_msg = f"[GEMINI ENGINE ERROR] Model not found. The specified model '{self.model_name}' may be incorrect or unavailable. Details: {e}"
