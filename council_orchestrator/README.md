@@ -1,6 +1,7 @@
-# Sanctuary Council Orchestrator (v9.0 - Doctrine of Sovereign Action)
+# V9.3 UPDATE: Non-blocking execution with comprehensive logging - 2025-10-23
+# Sanctuary Council Orchestrator (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-10-23
 
-A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 9.0 introduces the Doctrine of Sovereign Action, splitting commands into Cognitive Tasks (deliberation) and Mechanical Tasks (direct action).**
+A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 9.3 introduces the Doctrine of Sovereign Concurrency with Logging, enabling non-blocking task execution and comprehensive audit trails.**
 
 ## 🏗️ Architecture Overview
 
@@ -43,7 +44,9 @@ graph TB
 
 ## 🎯 Key Features
 
-- **Doctrine of Sovereign Action**: Commands split into Cognitive Tasks (deliberation) and Mechanical Tasks (direct action)
+- **Doctrine of Sovereign Concurrency**: Non-blocking task execution with background learning cycles
+- **Comprehensive Logging**: Session-based log file with timestamps and detailed audit trails
+- **Selective RAG Updates**: Configurable learning with `update_rag` parameter
 - **Polymorphic Engine Interface**: All engines implement `BaseCognitiveEngine` with unified `execute_turn(messages)` method (Protocol 104)
 - **Sovereign Engine Selection**: Force specific engines or automatic health-based triage
 - **Multi-Agent Council**: Coordinator, Strategist, and Auditor personas work together
@@ -51,6 +54,36 @@ graph TB
 - **Development Cycles**: Optional staged workflow for software development projects
 - **Mnemonic Cortex**: Vector database integration for knowledge persistence
 - **Mechanical Operations**: Direct file writes and git operations bypassing cognitive deliberation
+
+## 📋 Logging & Monitoring
+
+### Session Log File
+Each orchestrator session creates a comprehensive log file at:
+```
+council_orchestrator/orchestrator.log
+```
+
+**Features:**
+- **Session-based**: Overwrites each time orchestrator starts for clean session tracking
+- **Comprehensive**: All operations logged with timestamps
+- **Dual output**: Console + file logging for real-time monitoring
+- **Audit trail**: Complete record of all decisions and actions
+
+**Example log entries:**
+```
+2025-10-23 16:45:30 - orchestrator - INFO - === ORCHESTRATOR v9.3 INITIALIZED ===
+2025-10-23 16:45:31 - orchestrator - INFO - [+] Sentry thread for command monitoring has been launched.
+2025-10-23 16:45:32 - orchestrator - INFO - [ACTION TRIAGE] Detected Git Task - executing mechanical git operations...
+2025-10-23 16:45:33 - orchestrator - INFO - [MECHANICAL SUCCESS] Committed with message: 'feat: Add new feature'
+```
+
+### Non-Blocking Execution
+**v9.3 Enhancement:** The orchestrator now processes commands without blocking:
+
+- **Mechanical Tasks**: Execute immediately, return to idle state
+- **Cognitive Tasks**: Deliberation completes, then learning happens in background
+- **Concurrent Processing**: Multiple background learning tasks can run simultaneously
+- **Responsive**: New commands processed while previous learning cycles complete
 
 ## 🚀 Quick Start
 

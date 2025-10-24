@@ -2,7 +2,7 @@
   "engine_limits": {
     "gemini": {
       "per_request_limit": 200000,
-      "tpm_limit": 250000
+      "tpm_limit": 10000
     },
     "openai": {
       "per_request_limit": 100000,

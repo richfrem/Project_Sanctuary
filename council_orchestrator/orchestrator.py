@@ -1,4 +1,5 @@
-# council_orchestrator/orchestrator.py (v9.1 - Doctrine of the Blunted Sword)
+# V9.3 UPDATE: Added comprehensive logging and command type identification - 2025-10-23
+# council_orchestrator/orchestrator.py (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-10-23
 # V7.1 MANDATE: Development cycle generates both requirements AND tech design before first pause
 # V7.0 MANDATE 1: Universal Distillation with accurate tiktoken measurements
 # V7.0 MANDATE 2: Boolean error handling (return False) prevents state poisoning
@@ -38,6 +39,7 @@ import asyncio
 import threading
 import shutil
 import subprocess
+import logging
 from queue import Queue as ThreadQueue
 from pathlib import Path
 from dotenv import load_dotenv
@@ -280,6 +282,9 @@ class Orchestrator:
         self.command_queue = ThreadQueue()
         load_dotenv(dotenv_path=self.project_root / '.env')
 
+        # V9.3: Initialize logging system
+        self.setup_logging()
+
         self.chroma_client = chromadb.PersistentClient(path=str(self.project_root / "mnemonic_cortex/chroma_db"))
         self.cortex_collection = self.chroma_client.get_or_create_collection(
             name="sanctuary_cortex",
@@ -346,6 +351,41 @@ class Orchestrator:
         
         # --- OPERATION: OPTICAL ANVIL - LAZY INITIALIZATION ---
         self.optical_chamber = None  # Initialized per-task if enabled
+
+    def setup_logging(self):
+        """V9.3: Setup comprehensive logging system with file output."""
+        log_file = self.project_root / "council_orchestrator" / "orchestrator.log"
+
+        # Create logger
+        self.logger = logging.getLogger('orchestrator')
+        self.logger.setLevel(logging.INFO)
+
+        # Clear any existing handlers
+        self.logger.handlers.clear()
+
+        # File handler (overwrites each session)
+        file_handler = logging.FileHandler(log_file, mode='w')
+        file_handler.setLevel(logging.INFO)
+
+        # Console handler (for terminal output)
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setLevel(logging.INFO)
+
+        # Formatter
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+
+        # Add handlers
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(console_handler)
+
+        self.logger.info("=== ORCHESTRATOR v9.3 INITIALIZED ===")
+        self.logger.info(f"Log file: {log_file}")
+        self.logger.info("Doctrine of Sovereign Concurrency with Logging active")
 
     def _verify_briefing_attestation(self, packet: dict) -> bool:
         """Verifies the integrity of the briefing packet using its SHA256 hash."""
@@ -643,30 +683,63 @@ class Orchestrator:
             "config": aar_config
         }
         print(f"[*] AAR Command forged. Output will be saved to {aar_output_path.name}", flush=True)
-        # Execute the AAR task using the existing logic
-        await self.execute_task(aar_command)
 
-        # After the AAR task is executed:
-        print(f"[*] AAR generated. Ingesting into Mnemonic Cortex...", flush=True)
+        # V9.2 DOCTRINE OF SOVEREIGN CONCURRENCY: Execute AAR in background thread
+        # This allows mechanical tasks to be processed immediately without waiting for learning cycle
+        import asyncio
+        aar_task = asyncio.create_task(self._execute_aar_background(aar_command, aar_output_path))
+        print(f"[*] AAR task dispatched to background processing (non-blocking)", flush=True)
+
+    async def _execute_aar_background_full(self, log_file_path, original_config):
+        """V9.3: Execute complete AAR generation and ingestion asynchronously."""
         try:
-            # We need the full path for the subprocess
+            self.logger.info(f"Background AAR: Starting synthesis for {log_file_path}")
+
+            # Generate AAR using existing logic but asynchronously
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            aar_output_path = self.project_root / f"MNEMONIC_SYNTHESIS/AAR/aar_{log_file_path.stem}_{timestamp}.md"
+
+            # Create AAR command
+            aar_config = {"max_rounds": 2}
+            if original_config:
+                if "force_engine" in original_config:
+                    aar_config["force_engine"] = original_config["force_engine"]
+                if "max_cortex_queries" in original_config:
+                    aar_config["max_cortex_queries"] = original_config["max_cortex_queries"]
+
+            aar_command = {
+                "task_description": "Synthesize a structured After-Action Report (AAR) from the attached task log. Sections: Objective, Outcome, Key Learnings, Mnemonic Impact.",
+                "input_artifacts": [str(log_file_path.relative_to(self.project_root))],
+                "output_artifact_path": str(aar_output_path.relative_to(self.project_root)),
+                "config": aar_config
+            }
+
+            # Execute AAR task
+            await self.execute_task(aar_command)
+            self.logger.info(f"Background AAR: Synthesis complete - {aar_output_path}")
+
+            # Ingest into Mnemonic Cortex
+            self.logger.info("Background AAR: Starting ingestion into Mnemonic Cortex...")
             ingestion_script_path = self.project_root / "ingest_new_knowledge.py"
             full_aar_path = self.project_root / aar_output_path
 
-            # Run the ingestion script
-            result = subprocess.run(
-                [sys.executable, str(ingestion_script_path), str(full_aar_path)],
-                capture_output=True,
-                text=True
+            result = await asyncio.create_subprocess_exec(
+                sys.executable, str(ingestion_script_path), str(full_aar_path),
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                cwd=self.project_root
             )
+
+            stdout, stderr = await result.communicate()
+
             if result.returncode == 0:
-                print("[*] Ingestion successful.", flush=True)
-                print(result.stdout)
+                self.logger.info("Background AAR: Ingestion successful")
+                self.logger.info(f"Ingestion output: {stdout.decode().strip()}")
             else:
-                print("[!] INGESTION FAILED:", flush=True)
-                print(result.stderr)
+                self.logger.error(f"Background AAR: Ingestion failed - {stderr.decode().strip()}")
+
         except Exception as e:
-            print(f"[!] Exception during ingestion subprocess: {e}", flush=True)
+            self.logger.error(f"Background AAR: Processing failed - {e}")
 
     def _get_token_count(self, text: str, engine_type: str = "openai"):
         """Estimates token count for a given text and engine type."""
@@ -940,6 +1013,13 @@ class Orchestrator:
         # Initialize agents with the selected engine for this task.
         self._initialize_agents(engine)
         # --- END INTEGRATION ---
+
+        # Store original engine for fallback logic
+        original_engine = engine
+        original_engine_type = self._get_engine_type(engine)
+
+        # Track if we've switched to fallback mode
+        fallback_mode = False
         
         # --- OPERATION: OPTICAL ANVIL - INITIALIZE OPTICAL CHAMBER ---
         # Initialize optical compression if enabled (Section 3.1 of feasibility study)
@@ -1058,7 +1138,7 @@ class Orchestrator:
                     # Payload is within limits, send normally
                     prompt_to_send = prompt
 
-                # Execute query with TPM-aware rate limiting
+                # Execute query with TPM-aware rate limiting and fallback logic
                 response = await loop.run_in_executor(
                     None,
                     agent.query,
@@ -1072,7 +1152,42 @@ class Orchestrator:
                     round_failures += 1
                     consecutive_failures += 1
                     print(f"  <- {agent.role} FAILED (cognitive substrate error)")
-                    log.append(f"**{agent.role} (FAILED):** Cognitive substrate failure.\n\n---\n")
+
+                    # IMPLEMENT FALLBACK: If primary engine fails, try fallback engines
+                    if not fallback_mode and original_engine_type != "ollama":
+                        print(f"[FALLBACK] Primary engine ({original_engine_type}) failed. Attempting fallback to Ollama...")
+                        # Try Ollama as fallback
+                        fallback_config = {"force_engine": "ollama"}
+                        fallback_engine = select_engine(fallback_config)
+                        if fallback_engine:
+                            print(f"[FALLBACK] Switching to Ollama engine for remaining agents")
+                            # Re-initialize agents with fallback engine
+                            self._initialize_agents(fallback_engine)
+                            engine = fallback_engine
+                            engine_type = "ollama"
+                            fallback_mode = True
+                            # Reset consecutive failures for this round
+                            consecutive_failures = 0
+                            round_failures -= 1
+                            # Retry this agent with fallback engine
+                            response = await loop.run_in_executor(
+                                None,
+                                agent.query,
+                                prompt_to_send,
+                                self.token_regulator,
+                                engine_type
+                            )
+                            if response is False:
+                                print(f"  <- {agent.role} FAILED (fallback engine also failed)")
+                                consecutive_failures += 1
+                                round_failures += 1
+                            else:
+                                print(f"  <- {agent.role} SUCCESS (fallback engine)")
+                        else:
+                            print(f"[FALLBACK] No fallback engine available")
+
+                    if response is False:  # Still failed after fallback attempt
+                        log.append(f"**{agent.role} (FAILED):** Cognitive substrate failure.\n\n---\n")
                 else:
                     # Successful response - reset consecutive failure counter
                     consecutive_failures = 0
@@ -1144,30 +1259,69 @@ class Orchestrator:
         command_dir = Path(__file__).parent
         processed_commands = set()  # Track processed command files
 
+        print(f"[SENTRY THREAD] Started monitoring directory: {command_dir}")
         while True:
-            # V5.0 MANDATE 1: Only process files explicitly named command*.json
-            # This prevents the rogue sentry from ingesting config files, state files, etc.
-            for json_file in command_dir.glob("command*.json"):
-                if json_file.name in processed_commands:
-                    continue
+            try:
+                # V5.0 MANDATE 1: Only process files explicitly named command*.json
+                # This prevents the rogue sentry from ingesting config files, state files, etc.
+                found_files = list(command_dir.glob("command*.json"))
+                if found_files:
+                    print(f"[SENTRY THREAD] Found {len(found_files)} command file(s): {[f.name for f in found_files]}")
 
-                print(f"\n[SENTRY THREAD] Command file detected: {json_file.name}")
-                try:
-                    # Wait for file to be fully written (check size is stable)
-                    initial_size = json_file.stat().st_size
-                    time.sleep(0.1)  # Brief pause to allow writing to complete
-                    if json_file.stat().st_size == initial_size and initial_size > 0:
-                        command = json.loads(json_file.read_text())
-                        # Put the command onto the thread queue for the main loop to process
-                        self.command_queue.put(command)
-                        processed_commands.add(json_file.name)
-                        json_file.unlink() # Consume the file
-                        print(f"[SENTRY THREAD] Command processed successfully: {json_file.name}")
-                    else:
-                        print(f"[SENTRY THREAD] File appears incomplete (size: {json_file.stat().st_size}), will retry...")
-                except Exception as e:
-                    print(f"[SENTRY THREAD ERROR] Could not process command file {json_file.name}: {e}", file=sys.stderr)
-            time.sleep(1) # Check every second
+                for json_file in found_files:
+                    if json_file.name in processed_commands:
+                        continue
+
+                    processing_start = time.time()
+                    # Determine command type for logging
+                    command_type = "UNKNOWN"
+                    try:
+                        temp_command = json.loads(json_file.read_text())
+                        if "entry_content" in temp_command and "output_artifact_path" in temp_command:
+                            command_type = "MECHANICAL_WRITE"
+                        elif "git_operations" in temp_command:
+                            command_type = "MECHANICAL_GIT"
+                        elif "task_description" in temp_command:
+                            command_type = "COGNITIVE_TASK"
+                        elif "development_cycle" in temp_command:
+                            command_type = "DEVELOPMENT_CYCLE"
+                    except:
+                        command_type = "INVALID_JSON"
+
+                    print(f"[SENTRY THREAD] Processing command file: {json_file.name} (path: {json_file.absolute()})")
+                    self.logger.info(f"COMMAND_PROCESSING_START - File: {json_file.name}, Path: {json_file.absolute()}, Type: {command_type}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_start))}")
+
+                    try:
+                        # Wait for file to be fully written (check size is stable)
+                        initial_size = json_file.stat().st_size
+                        time.sleep(0.1)  # Brief pause to allow writing to complete
+                        if json_file.stat().st_size == initial_size and initial_size > 0:
+                            command = json.loads(json_file.read_text())
+                            task_desc = command.get('task_description', 'No description')
+                            print(f"[SENTRY THREAD] Loaded command: {task_desc[:50]}...")
+                            self.logger.info(f"COMMAND_LOADED - File: {json_file.name}, Task: {task_desc[:100]}..., Config: {command.get('config', {})}")
+
+                            # Put the command onto the thread queue for the main loop to process
+                            self.command_queue.put(command)
+                            processed_commands.add(json_file.name)
+                            json_file.unlink() # Consume the file
+
+                            processing_end = time.time()
+                            processing_duration = processing_end - processing_start
+                            print(f"[SENTRY THREAD] Command processed and file deleted: {json_file.name} (duration: {processing_duration:.2f}s)")
+                            self.logger.info(f"COMMAND_PROCESSING_COMPLETE - File: {json_file.name}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
+                        else:
+                            print(f"[SENTRY THREAD] File appears incomplete (size: {json_file.stat().st_size}), will retry...")
+                    except Exception as e:
+                        processing_end = time.time()
+                        processing_duration = processing_end - processing_start
+                        print(f"[SENTRY THREAD ERROR] Could not process command file {json_file.name}: {e}", file=sys.stderr)
+                        self.logger.error(f"COMMAND_PROCESSING_FAILED - File: {json_file.name}, Error: {str(e)}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
+                time.sleep(1) # Check every second
+            except Exception as e:
+                print(f"[SENTRY THREAD ERROR] Critical error in monitoring loop: {e}", file=sys.stderr)
+                self.logger.error(f"SENTRY_THREAD_CRITICAL_ERROR - Error: {str(e)}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+                time.sleep(1)  # Continue monitoring despite errors
 
     async def main_loop(self):
         """The main async loop that waits for commands from the queue."""
@@ -1249,26 +1403,34 @@ class Orchestrator:
 
                         # V7.0 MANDATE 3: Check task result before proceeding
                         if task_result is False:
-                            print("[FAILURE] Task aborted due to consecutive cognitive failures. No AAR will be generated.", flush=True)
+                            self.logger.error("Task aborted due to consecutive cognitive failures. No AAR will be generated.")
                         else:
-                            # Generate AAR for regular tasks - only after confirmed success
-                            print("[*] Task complete. Initiating After-Action Report synthesis...", flush=True)
-                            # Determine the actual log file path
-                            if original_output_path.is_dir():
-                                log_file_path = original_output_path / "task_log.md"
+                            # Check if RAG database should be updated for this task
+                            update_rag = command.get('config', {}).get('update_rag', True)
+                            if update_rag:
+                                # V9.3: Generate AAR asynchronously - truly non-blocking
+                                self.logger.info("Task complete. Dispatching After-Action Report synthesis to background...")
+                                # Determine the actual log file path
+                                if original_output_path.is_dir():
+                                    log_file_path = original_output_path / "task_log.md"
+                                else:
+                                    log_file_path = original_output_path
+                                # Create background task for AAR generation
+                                asyncio.create_task(self._execute_aar_background_full(log_file_path, command.get('config')))
                             else:
-                                log_file_path = original_output_path
-                            await self.generate_aar(log_file_path, command.get('config'))
+                                self.logger.info("Task complete. RAG database update skipped per configuration.")
+                                self.logger.info(f"Output artifact saved to: {original_output_path}")
+                                self.logger.info("Orchestrator returning to idle state - ready for next command")
 
                 except Exception as e:
                     print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
 
     def run(self):
         """Starts the file watcher thread and the main async loop."""
-        print("--- Initializing Commandable Council Orchestrator (v9.1 - Doctrine of the Blunted Sword) ---")
+        self.logger.info("--- Initializing Commandable Council Orchestrator (v9.3 - Doctrine of Sovereign Concurrency with Logging) ---")
         watcher_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)
         watcher_thread.start()
-        print("[+] Sentry thread for command monitoring has been launched.")
+        self.logger.info("[+] Sentry thread for command monitoring has been launched.")
         asyncio.run(self.main_loop())
 
 if __name__ == "__main__":
