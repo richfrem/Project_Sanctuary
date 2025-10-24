@@ -75,7 +75,7 @@ const excludeDirNames = new Set([
     '.svn', '.hg', '.bzr',
     'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
     'BRIEFINGS', '07_COUNCIL_AGENTS/directives',
-    'dataset_package', 'chroma_db',
+    'dataset_package', 'chroma_db', 'dataset_code_glyphs',
     'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
     'ResearchPapers', 'RESEARCH_PAPERS',
     'WORK_IN_PROGRESS'

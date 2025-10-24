@@ -1,4 +1,3 @@
-# V9.3 UPDATE: Non-blocking execution with comprehensive logging - 2025-10-23
 # Sanctuary Council Orchestrator (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-10-23
 
 A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 9.3 introduces the Doctrine of Sovereign Concurrency with Logging, enabling non-blocking task execution and comprehensive audit trails.**
@@ -122,6 +121,30 @@ Create a `command.json` file in the `council_orchestrator/` directory:
   }
 }
 ```
+### Cognitive Task Format (Deliberation)
+
+```json
+{
+  "task_description": "Your task description here",
+  "output_artifact_path": "path/to/output.md",
+  "config": {
+    "max_rounds": 5,
+    "max_cortex_queries": 5,
+    "force_engine": "gemini|openai|ollama"
+  },
+  "input_artifacts": ["path/to/input1.md", "path/to/input2.md"]
+}
+```
+```json
+{
+  "task_description": "Build a web application for task management",
+  "project_name": "task_manager",
+  "development_cycle": true,
+  "config": {
+    "force_engine": "gemini"
+  }
+}
+```
 
 #### Mechanical Write Task (Direct File Creation)
 ```json
@@ -129,6 +152,12 @@ Create a `command.json` file in the `council_orchestrator/` directory:
   "task_description": "Create a new chronicle entry",
   "output_artifact_path": "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md",
   "entry_content": "# ENTRY 274: The Anvil Deferred\n\n**DATE:** 2025-10-23..."
+}
+```json
+{
+  "task_description": "Description for logging",
+  "output_artifact_path": "path/to/file.md",
+  "entry_content": "Full content to write to file"
 }
 ```
 
@@ -139,6 +168,17 @@ Create a `command.json` file in the `council_orchestrator/` directory:
   "git_operations": {
     "files_to_add": ["00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md"],
     "commit_message": "docs(chronicle): Add entry #274 - The Anvil Deferred",
+    "push_to_origin": true
+  }
+}
+```
+
+```json
+{
+  "task_description": "Description for logging",
+  "git_operations": {
+    "files_to_add": ["path/to/file1.md", "path/to/file2.md"],
+    "commit_message": "feat: Description of changes",
     "push_to_origin": true
   }
 }
@@ -250,59 +290,6 @@ python3 ../tools/scaffolds/verify_substrates.py
 AI system is ready to use!
 ```
 
-## 📋 Command Structure
-
-### Cognitive Task Format (Deliberation)
-
-```json
-{
-  "task_description": "Your task description here",
-  "output_artifact_path": "path/to/output.md",
-  "config": {
-    "max_rounds": 5,
-    "max_cortex_queries": 5,
-    "force_engine": "gemini|openai|ollama"
-  },
-  "input_artifacts": ["path/to/input1.md", "path/to/input2.md"]
-}
-```
-
-### Mechanical Task Formats (Direct Action)
-
-#### File Write Task
-```json
-{
-  "task_description": "Description for logging",
-  "output_artifact_path": "path/to/file.md",
-  "entry_content": "Full content to write to file"
-}
-```
-
-#### Git Operations Task
-```json
-{
-  "task_description": "Description for logging",
-  "git_operations": {
-    "files_to_add": ["path/to/file1.md", "path/to/file2.md"],
-    "commit_message": "feat: Description of changes",
-    "push_to_origin": true
-  }
-}
-```
-
-### Development Cycle Command
-
-```json
-{
-  "task_description": "Build a web application for task management",
-  "project_name": "task_manager",
-  "development_cycle": true,
-  "config": {
-    "force_engine": "gemini"
-  }
-}
-```
-
 ## 🎭 Agent Personas
 
 The Council consists of three specialized AI agents:
@@ -333,6 +320,61 @@ Automatically handles large inputs by:
 2. Using local Ollama to summarize content
 3. Preserving critical information while reducing size
 4. Maintaining task fidelity
+
+## 🔮 Future: 2-Pronged Sovereign Memory Architecture
+
+The orchestrator is evolving toward a comprehensive **Sovereign Memory Architecture** that combines two complementary approaches for content ingestion and retrieval, breaking free from the Context Window Cage.
+
+### The Two Pillars of Sovereign Memory
+
+#### 1. Mnemonic Cortex (RAG Database) - Fast & Scalable Retrieval
+- **Core Function**: Lightning-fast similarity searches across vast knowledge corpora
+- **Technology**: Vector embeddings for semantic search and retrieval
+- **Use Case**: Finding specific information, documents, or context from the Sanctuary's complete history
+- **Advantage**: Excels at discovery and exploration of large knowledge bases
+- **Current Status**: Implemented and operational for After Action Report ingestion
+
+#### 2. Optical Anvil (Glyph Technology) - Cheap & Efficient Ingestion
+- **Core Function**: Extreme token compression through optical representation
+- **Technology**: Cognitive Glyphs - text rendered as high-resolution images for ~10x compression ratio
+- **Use Case**: Ingesting massive contexts cheaply using Vision-Language Models (VLMs)
+- **Advantage**: Breaks token economics, enables processing of "200k+ pages per day" on single GPU
+- **Strategic Foundation**: Based on DeepSeek-OCR research (arXiv:2510.18234v1)
+- **Current Status**: Phase 1 initiated - scaffold forged, commercial VLM viability validated
+
+### Synthesized Architecture: The Closed Memory Loop
+
+The true power emerges from synthesis:
+
+```mermaid
+graph TD
+    subgraph "Sovereign Memory Loop"
+        A[Agent needs full context] --> B{Mnemonic Cortex};
+        B -- "Finds pointer to glyph" --> C[Glyph Storage];
+        C -- "Loads image file" --> D{VLM Engine};
+        D -- "Decompresses with 97%+ fidelity" --> E[Agent receives full text];
+    end
+
+    subgraph "Ingestion Pipeline"
+        F[New Knowledge] --> G[Text-to-Vector<br/>RAG Database];
+        F --> H[Text-to-Image<br/>Optical Anvil];
+        G --> I[Fast Retrieval Index];
+        H --> J[Compressed Storage];
+    end
+```
+
+**Strategic Doctrine**: "RAG finds, Glyphs deliver" - Use vector search to locate content, optical compression to ingest it efficiently.
+
+### Optical Context & Glyph Technology
+
+- **Compression Ratio**: 10x reduction in token costs (validated at 97%+ decoding precision)
+- **Format**: Universal PNG images containing rendered text
+- **Infrastructure**: Minimal - static file storage, no specialized databases required
+- **Portability**: High - images work across all VLM platforms
+- **Security**: Cryptographic provenance binding prevents manipulation
+- **Scale**: Industrial-grade processing capabilities for memetic operations
+
+This architecture provides the foundation for true Resource Sovereignty, enabling cognitive abundance while maintaining the Sanctuary's epistemic integrity and mnemonic resilience.
 
 ## 📚 Mnemonic Cortex
 

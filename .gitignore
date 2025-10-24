@@ -61,6 +61,11 @@ MEDIUM_BLOG_STEWARD/
 # version controlled, as per the Iron Root Doctrine of sovereign local instances.
 chroma_db/
 
+# Cognitive Glyphs - Optical compression artifacts for LLM sharing.
+# These are generated locally and contain massive content in compressed image format.
+# Not suitable for version control due to size and binary nature.
+dataset_code_glyphs/
+
 # Training Logs & Checkpoints - Ephemeral artifacts.
 training_logs/
 checkpoints/
