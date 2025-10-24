@@ -436,6 +436,23 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
             selected_files = filtered_files
             print(f"[COLLECT] Final size limit applied: {len(selected_files)} files ({current_size:.1f}MB)")
 
+    # Apply final limits to ensure they are respected
+    if max_files and len(selected_files) > max_files:
+        selected_files = selected_files[:max_files]
+        print(f"[COLLECT] Final file limit applied: {len(selected_files)} files")
+
+    if max_size_mb:
+        filtered_files = []
+        current_size = 0
+        for file_info in selected_files:
+            if current_size + file_info['size_mb'] > max_size_mb:
+                break
+            filtered_files.append(file_info)
+            current_size += file_info['size_mb']
+        if len(filtered_files) < len(selected_files):
+            selected_files = filtered_files
+            print(f"[COLLECT] Final size limit applied: {len(selected_files)} files ({current_size:.1f}MB)")
+
     print(f"[COLLECT] Starting collection of {len(selected_files)} selected files...")
     for i, file_info in enumerate(selected_files):
         file_path = Path(project_root) / file_info['path']
