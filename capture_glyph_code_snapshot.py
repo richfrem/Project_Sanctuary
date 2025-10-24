@@ -179,6 +179,7 @@ def collect_code_snapshot(project_root, operation_path=None):
 
     exclude_files = {
         'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py',
+        'orchestrator-backup.py',
         '.DS_Store', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md'
     }
 

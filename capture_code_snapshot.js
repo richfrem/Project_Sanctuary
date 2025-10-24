@@ -84,6 +84,7 @@ const excludeDirNames = new Set([
 
 let alwaysExcludeFiles = new Set([
     'capture_code_snapshot.js',
+    'orchestrator-backup.py',
     '.DS_Store',
     '.gitignore',
     'PROMPT_PROJECT_ANALYSIS.md'

@@ -281,11 +281,19 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
         'ResearchPapers', 'RESEARCH_PAPERS',
         'WORK_IN_PROGRESS',
-        'session_states','development_cycles'
+        'session_states','development_cycles',
+        # Final Hardening: Exclude historical and deprecated content
+        '00_CHRONICLE',
+        'MNEMONIC_SYNTHESIS',
+        '07_COUNCIL_AGENTS',
+        '04_THE_FORTRESS',  # Deprecated structure
+        '05_LIVING_CHRONICLE'  # Deprecated structure
     }
 
     exclude_files = {
         'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
+        'orchestrator-backup.py',
+        'manifest.json',  # Ephemeral tooling
         '.DS_Store', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md'
     }
 
