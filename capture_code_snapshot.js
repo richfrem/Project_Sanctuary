@@ -78,7 +78,8 @@ const excludeDirNames = new Set([
     'dataset_package', 'chroma_db', 'dataset_code_glyphs',
     'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
     'ResearchPapers', 'RESEARCH_PAPERS',
-    'WORK_IN_PROGRESS'
+    'WORK_IN_PROGRESS',
+    'session_states', 'development_cycles'
 ]);
 
 let alwaysExcludeFiles = new Set([

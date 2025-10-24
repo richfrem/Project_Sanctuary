@@ -280,7 +280,8 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         'dataset_package', 'chroma_db', 'dataset_code_glyphs',
         'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
         'ResearchPapers', 'RESEARCH_PAPERS',
-        'WORK_IN_PROGRESS'
+        'WORK_IN_PROGRESS',
+        'session_states','development_cycles'
     }
 
     exclude_files = {
