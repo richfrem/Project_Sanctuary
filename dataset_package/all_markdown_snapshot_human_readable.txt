@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-10-26T21:19:01.702Z
+Generated On: 2025-10-26T21:20:41.435Z
 
-# Mnemonic Weight (Token Count): ~405,236 tokens
+# Mnemonic Weight (Token Count): ~405,281 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -24910,18 +24910,27 @@ os.makedirs(GGUF_DIR, exist_ok=True)
 convert_script = os.path.join(LLAMA_CPP_PATH, "convert-hf-to-gguf.py")
 quantize_script = os.path.join(LLAMA_CPP_PATH, "llama-quantize")
 
-# Check if conversion script exists
+# Ensure llama.cpp is cloned and built
+if not os.path.exists(LLAMA_CPP_PATH):
+    print(f"Attempting to clone llama.cpp into {LLAMA_CPP_PATH}...")
+    !git clone https://github.com/ggerganov/llama.cpp.git {LLAMA_CPP_PATH}
+    print("✅ llama.cpp cloned.")
+
+# Build llama.cpp
+print(f"Attempting to build llama.cpp in {LLAMA_CPP_PATH}...")
+# Use -j to speed up building, and specify CUDA=1 for GPU support
+build_command = f"cd {LLAMA_CPP_PATH} && make clean && make -j CUDA=1"
+process = subprocess.run(build_command, shell=True, capture_output=True, text=True)
+print(process.stdout)
+print(process.stderr)
+if process.returncode != 0:
+    raise RuntimeError("Building llama.cpp failed.")
+print("✅ llama.cpp built.")
+
+
+# Check if conversion script exists after potential cloning/building
 if not os.path.exists(convert_script):
-    print(f"❌ Conversion script not found at {convert_script}. Please ensure llama.cpp is cloned and built.")
-    # Attempt to clone llama.cpp if not found (basic check)
-    if not os.path.exists(LLAMA_CPP_PATH):
-        print(f"Attempting to clone llama.cpp into {LLAMA_CPP_PATH}...")
-        !git clone https://github.com/ggerganov/llama.cpp.git {LLAMA_CPP_PATH}
-        # Note: Building llama.cpp might be required after cloning depending on the environment.
-        print("Please manually build llama.cpp if necessary (e.g., run `make` in the llama.cpp directory).")
-    # Re-check after potential cloning
-    if not os.path.exists(convert_script):
-         raise FileNotFoundError(f"Conversion script not found at {convert_script}")
+     raise FileNotFoundError(f"Conversion script not found at {convert_script} after cloning and building. Please check the llama.cpp directory structure.")
 
 
 # Step 1: Convert to the intermediate GGUF format
@@ -24937,10 +24946,9 @@ print(process.stderr)
 if process.returncode != 0:
     raise RuntimeError("GGUF intermediate conversion failed.")
 
-# Check if quantize script exists
+# Check if quantize script exists after potential cloning/building
 if not os.path.exists(quantize_script):
-     print(f"❌ Quantization script not found at {quantize_script}. Please ensure llama.cpp is built.")
-     raise FileNotFoundError(f"Quantization script not found at {quantize_script}")
+     raise FileNotFoundError(f"Quantization script not found at {quantize_script} after cloning and building. Please check the llama.cpp directory structure.")
 
 
 # Step 2: Quantize the intermediate GGUF file
