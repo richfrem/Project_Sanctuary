@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-10-26T21:20:41.435Z
+Generated On: 2025-10-26T21:21:58.151Z
 
-# Mnemonic Weight (Token Count): ~405,281 tokens
+# Mnemonic Weight (Token Count): ~405,406 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -24916,16 +24916,28 @@ if not os.path.exists(LLAMA_CPP_PATH):
     !git clone https://github.com/ggerganov/llama.cpp.git {LLAMA_CPP_PATH}
     print("✅ llama.cpp cloned.")
 
-# Build llama.cpp
-print(f"Attempting to build llama.cpp in {LLAMA_CPP_PATH}...")
-# Use -j to speed up building, and specify CUDA=1 for GPU support
-build_command = f"cd {LLAMA_CPP_PATH} && make clean && make -j CUDA=1"
-process = subprocess.run(build_command, shell=True, capture_output=True, text=True)
+# Build llama.cpp using CMake
+print(f"Attempting to build llama.cpp in {LLAMA_CPP_PATH} using CMake...")
+build_dir = os.path.join(LLAMA_CPP_PATH, "build")
+os.makedirs(build_dir, exist_ok=True)
+cmake_configure_command = f"cd {build_dir} && cmake .. -DLLAMA_CUBLAS=on"
+cmake_build_command = f"cd {build_dir} && cmake --build . --config Release"
+
+process = subprocess.run(cmake_configure_command, shell=True, capture_output=True, text=True)
 print(process.stdout)
 print(process.stderr)
 if process.returncode != 0:
-    raise RuntimeError("Building llama.cpp failed.")
-print("✅ llama.cpp built.")
+    raise RuntimeError("CMake configuration for llama.cpp failed.")
+
+process = subprocess.run(cmake_build_command, shell=True, capture_output=True, text=True)
+print(process.stdout)
+print(process.stderr)
+if process.returncode != 0:
+    raise RuntimeError("CMake build for llama.cpp failed.")
+print("✅ llama.cpp built using CMake.")
+
+# Update paths to executables after building with CMake
+quantize_script = os.path.join(build_dir, "bin", "llama-quantize")
 
 
 # Check if conversion script exists after potential cloning/building
