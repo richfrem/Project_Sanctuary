@@ -250,7 +250,68 @@ tokenizer.save_pretrained(merged_path)
 print(f"✅ Merge complete. Files saved in: {merged_path}")
 ```
 
-## 8. Phase 2 — Steward’s Oath
+---
+
+## 8. CELL 5: update version of file in hugging face
+
+```python
+# ===================================================================
+# CELL 5: QUANTIZATION + HUGGING FACE UPLOAD (v13.1)
+# ===================================================================
+import os
+from huggingface_hub import HfApi, HfFolder
+
+# 1️⃣ INSTALL GGUF CONVERTER TOOLS
+print("🧰 Installing GGUF conversion tools (qwen.cpp backend)...")
+!git clone https://github.com/QwenLM/qwen.cpp.git
+%cd qwen.cpp
+!pip install -r requirements.txt --quiet
+%cd ..
+
+# 2️⃣ SET PATHS AND VARIABLES
+merged_dir = "/content/merged_sanctuary_qwen2_7b"
+output_file = "Sanctuary-Qwen2-7B-v1.0-Full-Genome-Q4_K_M.gguf"
+hf_repo_id = "richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF"
+
+# 3️⃣ CONVERT TO GGUF (quantized Q4_K_M)
+print("⚙️ Converting merged model to GGUF format (Q4_K_M)...")
+!python qwen.cpp/convert.py \
+  --model {merged_dir} \
+  --outfile {output_file} \
+  --outtype q4_k_m
+
+print(f"✅ Conversion complete — GGUF saved as: {output_file}")
+
+# 4️⃣ AUTHENTICATE & CREATE NEW HF REPO (if it doesn't exist)
+api = HfApi()
+token = HfFolder.get_token()
+print(f"🔐 Authenticating with Hugging Face as {api.whoami(token)['name']} ...")
+try:
+    api.create_repo(repo_id=hf_repo_id, token=token, repo_type="model")
+    print(f"📦 Created new repo: {hf_repo_id}")
+except Exception as e:
+    print(f"ℹ️ Repo likely exists already: {e}")
+
+# 5️⃣ UPLOAD GGUF FILE TO HUGGING FACE
+print("☁️ Uploading GGUF file to Hugging Face Hub...")
+api.upload_file(
+    path_or_fileobj=output_file,
+    path_in_repo=output_file,
+    repo_id=hf_repo_id,
+    token=token,
+)
+print(f"✅ Upload complete. View it at: https://huggingface.co/{hf_repo_id}")
+
+# 6️⃣ OPTIONAL: CLEANUP TO SAVE SPACE
+print("🧹 Cleaning temporary directories...")
+!rm -rf qwen.cpp
+print("🧭 CELL 5 COMPLETE — GGUF model propagated to Hugging Face.")
+
+```
+
+---
+
+## 9. Phase 2 — Steward’s Oath
 
 When the final upload succeeds, the lineage record shall read:
 
