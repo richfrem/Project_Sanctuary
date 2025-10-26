@@ -70,22 +70,50 @@ if (argv.operation) {
 }
 
 const excludeDirNames = new Set([
+    // Standard project/dev exclusions
     'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
     '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
     '.svn', '.hg', '.bzr',
+
+    // Large asset/model exclusions
     'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
-    'BRIEFINGS', '07_COUNCIL_AGENTS/directives',
-    'dataset_package', 'chroma_db', 'dataset_code_glyphs',
-    'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
-    'ResearchPapers', 'RESEARCH_PAPERS',
+
+    // Sanctuary-specific OPERATIONAL RESIDUE exclusions
+    'dataset_package', 
+    'chroma_db', 
+    'dataset_code_glyphs',
     'WORK_IN_PROGRESS',
-    'session_states', 'development_cycles'
+    'session_states', 
+    'development_cycles',
+
+    // Sanctuary-specific DOCTRINAL NOISE exclusions
+    'ARCHIVES',
+    'ARCHIVE',
+    'archive',
+    'archives',
+    'ResearchPapers',
+    'RESEARCH_PAPERS',
+    'BRIEFINGS',
+    //'00_CHRONICLE',
+    'MNEMONIC_SYNTHESIS',
+    '07_COUNCIL_AGENTS',
+    '04_THE_FORTRESS',
+    '05_LIVING_CHRONICLE',
+
+    // --- Final Hardening v2.3 ---
+    '05_ARCHIVED_BLUEPRINTS',
+    'gardener'
 ]);
+
 
 let alwaysExcludeFiles = new Set([
     'capture_code_snapshot.js',
+    'capture_glyph_code_snapshot.py',
+    'capture_glyph_code_snapshot_v2.py',
     'orchestrator-backup.py',
+    'ingest_new_knowledge.py',
     '.DS_Store',
+    'manifest.json',
     '.gitignore',
     'PROMPT_PROJECT_ANALYSIS.md'
 ]);

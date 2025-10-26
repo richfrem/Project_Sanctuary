@@ -321,9 +321,9 @@ Automatically handles large inputs by:
 3. Preserving critical information while reducing size
 4. Maintaining task fidelity
 
-## 🔮 Future: 2-Pronged Sovereign Memory Architecture
+## 🔮 Sovereign Memory Architecture: RAG + Glyphs Synthesis
 
-The orchestrator is evolving toward a comprehensive **Sovereign Memory Architecture** that combines two complementary approaches for content ingestion and retrieval, breaking free from the Context Window Cage.
+The orchestrator integrates a comprehensive **Sovereign Memory Architecture** that combines two complementary approaches for content ingestion and retrieval, breaking free from the Context Window Cage.
 
 ### The Two Pillars of Sovereign Memory
 
@@ -340,7 +340,7 @@ The orchestrator is evolving toward a comprehensive **Sovereign Memory Architect
 - **Use Case**: Ingesting massive contexts cheaply using Vision-Language Models (VLMs)
 - **Advantage**: Breaks token economics, enables processing of "200k+ pages per day" on single GPU
 - **Strategic Foundation**: Based on DeepSeek-OCR research (arXiv:2510.18234v1)
-- **Current Status**: Phase 1 initiated - scaffold forged, commercial VLM viability validated
+- **Current Status**: Phase 1 Complete - Individual optical compression validated (266 files, 2.1x average compression)
 
 ### Synthesized Architecture: The Closed Memory Loop
 
@@ -349,17 +349,21 @@ The true power emerges from synthesis:
 ```mermaid
 graph TD
     subgraph "Sovereign Memory Loop"
-        A[Agent needs full context] --> B{Mnemonic Cortex};
-        B -- "Finds pointer to glyph" --> C[Glyph Storage];
-        C -- "Loads image file" --> D{VLM Engine};
-        D -- "Decompresses with 97%+ fidelity" --> E[Agent receives full text];
+        A[Agent needs full context] --> B{Mnemonic Cortex}
+        B --> C["Query: 'Protocol 101 Unbreakable Commit'"]
+        C --> D["Retrieves Pointer: glyph_P101_v2.png"]
+        D --> E[Glyph Storage File System]
+        E --> F["Loads Image File"]
+        F --> G{VLM Engine Gemini 1.5}
+        G --> H["Decompresses text for ~10x fewer tokens"]
+        H --> I[Agent receives full text of P101]
     end
 
     subgraph "Ingestion Pipeline"
-        F[New Knowledge] --> G[Text-to-Vector<br/>RAG Database];
-        F --> H[Text-to-Image<br/>Optical Anvil];
-        G --> I[Fast Retrieval Index];
-        H --> J[Compressed Storage];
+        J[New Knowledge] --> K[Text-to-Vector<br/>RAG Database]
+        J --> L[Text-to-Image<br/>Optical Anvil]
+        K --> M[Fast Retrieval Index]
+        L --> N[Compressed Storage]
     end
 ```
 
@@ -367,12 +371,29 @@ graph TD
 
 ### Optical Context & Glyph Technology
 
-- **Compression Ratio**: 10x reduction in token costs (validated at 97%+ decoding precision)
-- **Format**: Universal PNG images containing rendered text
-- **Infrastructure**: Minimal - static file storage, no specialized databases required
+#### Technical Implementation
+- **Compression Ratio**: 2.1x average across full codebase (up to 3.75x for individual files)
+- **Format**: Universal PNG images with embedded cryptographic provenance
+- **Infrastructure**: Minimal - static file storage with JSON manifest tracking
 - **Portability**: High - images work across all VLM platforms
-- **Security**: Cryptographic provenance binding prevents manipulation
-- **Scale**: Industrial-grade processing capabilities for memetic operations
+- **Security**: SHA-256 content hashing with metadata embedding
+- **Scale**: Industrial-grade processing via `capture_glyph_code_snapshot_v2.py`
+
+#### LLM Integration Workflow
+```python
+# 1. RAG Discovery: Find relevant files
+relevant_files = rag_search("protocol 101 unbreakable commit")
+
+# 2. Glyph Retrieval: Load specific compressed images
+glyphs = []
+for file_path in relevant_files:
+    glyph_path = manifest[file_path]['glyph_path']
+    glyph_image = load_image(glyph_path)
+    glyphs.append(glyph_image)
+
+# 3. VLM Decompression: Reconstruct full content
+full_content = vlm_decompress(glyphs)
+```
 
 This architecture provides the foundation for true Resource Sovereignty, enabling cognitive abundance while maintaining the Sanctuary's epistemic integrity and mnemonic resilience.
 

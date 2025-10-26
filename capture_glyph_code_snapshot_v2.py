@@ -56,6 +56,7 @@ MAX_IMAGE_WIDTH = 4096  # Allow larger images for complex content
 THUMBNAIL_SIZE = (512, 512)
 DEFAULT_OUTPUT_DIR = "dataset_code_glyphs"
 
+
 # Enhanced color scheme
 COLORS = {
     'background': '#FFFFFF',
@@ -266,35 +267,36 @@ Compression Method: Optical (DeepSeek-OCR inspired)
 
         return '\n'.join(formatted_lines)
 
-def collect_code_snapshot_v2(project_root, operation_path=None, include_provenance=True, max_files=None, max_size_mb=50):
+def collect_code_snapshot_v2(project_root, operation_path=None, include_provenance=True, max_files=None, max_size_mb=50, output_dir=None, exclude_dirs=None, existing_manifest=None, font_size=10, output_dir_str=None):
     """Enhanced code snapshot collection with provenance tracking and size limits"""
 
-    exclude_dirs = {
-        'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build',
-        'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook',
-        '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
-        '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
-        '.svn', '.hg', '.bzr',
-        'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
-        'BRIEFINGS', '07_COUNCIL_AGENTS/directives',
-        'dataset_package', 'chroma_db', 'dataset_code_glyphs',
-        'ARCHIVES', 'ARCHIVE', 'archive', 'archives',
-        'ResearchPapers', 'RESEARCH_PAPERS',
-        'WORK_IN_PROGRESS',
-        'session_states','development_cycles',
-        # Final Hardening: Exclude historical and deprecated content
-        '00_CHRONICLE',
-        'MNEMONIC_SYNTHESIS',
-        '07_COUNCIL_AGENTS',
-        '04_THE_FORTRESS',  # Deprecated structure
-        '05_LIVING_CHRONICLE'  # Deprecated structure
-    }
+    if exclude_dirs is None:
+        exclude_dirs = {
+            # Standard project/dev exclusions from capture_code_snapshot.js
+            'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
+            '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
+            '.svn', '.hg', '.bzr',
+
+            # Large asset/model exclusions from capture_code_snapshot.js
+            'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
+
+            # Sanctuary-specific OPERATIONAL RESIDUE exclusions from capture_code_snapshot.js
+            'dataset_package', 'chroma_db', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
+
+            # Sanctuary-specific DOCTRINAL NOISE exclusions from capture_code_snapshot.js
+            'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
+            'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE',
+
+            # Final Hardening v2.3 from capture_code_snapshot.js
+            '05_ARCHIVED_BLUEPRINTS', 'gardener'
+        }
 
     exclude_files = {
         'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
         'orchestrator-backup.py',
         'manifest.json',  # Ephemeral tooling
-        '.DS_Store', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md'
+        '.DS_Store', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md',
+        'ingest_new_knowledge.py'  # Deprecated ingestion script
     }
 
     collected_files = []
@@ -359,7 +361,9 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
             for item in sorted(path_obj.iterdir()):
                 traverse_and_collect(item)
 
-    # First pass: get complete inventory of eligible files with sizes
+    # Manifest loading moved to main() function
+
+    # First pass: get complete inventory of eligible files with metadata
     eligible_files_inventory = []
     def inventory_eligible_files(current_path):
         nonlocal eligible_files_inventory
@@ -375,13 +379,28 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
                 return
 
             try:
-                file_size = path_obj.stat().st_size
+                stat = path_obj.stat()
+                file_size = stat.st_size
+                mtime = stat.st_mtime
                 rel_path = path_obj.relative_to(project_root).as_posix()
-                eligible_files_inventory.append({
+
+                file_info = {
                     'path': rel_path,
                     'size': file_size,
-                    'size_mb': file_size / 1024 / 1024
-                })
+                    'size_mb': file_size / 1024 / 1024,
+                    'mtime': mtime,
+                    'modified_iso': datetime.fromtimestamp(mtime).isoformat()
+                }
+
+                # Check if file has changed since last run
+                existing_entry = existing_manifest.get(rel_path, {})
+                if existing_entry.get('mtime') == mtime and existing_entry.get('size') == file_size:
+                    file_info['status'] = 'unchanged'
+                else:
+                    file_info['status'] = 'modified' if rel_path in existing_manifest else 'new'
+
+                eligible_files_inventory.append(file_info)
+
             except Exception as e:
                 print(f"[WARN] Could not stat {path_obj}: {e}")
 
@@ -399,10 +418,17 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
     total_size_bytes = sum(f['size'] for f in eligible_files_inventory)
     total_size_mb = total_size_bytes / 1024 / 1024
 
+    # Analyze change status
+    status_counts = {'new': 0, 'modified': 0, 'unchanged': 0}
+    for file_info in eligible_files_inventory:
+        status_counts[file_info.get('status', 'unknown')] += 1
+
     print(f"[INVENTORY] Found {total_eligible_files} eligible files, {total_size_mb:.1f}MB total")
+    print(f"[INVENTORY] Change status: {status_counts['new']} new, {status_counts['modified']} modified, {status_counts['unchanged']} unchanged")
     print(f"[INVENTORY] Top 10 largest files:")
     for i, file_info in enumerate(eligible_files_inventory[:10]):
-        print(f"  {i+1}. {file_info['path']} ({file_info['size_mb']:.2f}MB)")
+        status_indicator = file_info.get('status', 'unknown')[0].upper()
+        print(f"  {i+1}. [{status_indicator}] {file_info['path']} ({file_info['size_mb']:.2f}MB)")
 
     # Select files to process based on limits
     selected_files = eligible_files_inventory.copy()  # Start with all files
@@ -428,27 +454,19 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         elif max_files and len(selected_files) <= max_files:
             print(f"[SELECT] Processing {len(selected_files)} files (within {max_size_mb}MB limit)")
 
-    # Apply final limits to ensure they are respected
+    # Apply final limits and prioritize changed files
     if max_files and len(selected_files) > max_files:
-        selected_files = selected_files[:max_files]
-        print(f"[COLLECT] Final file limit applied: {len(selected_files)} files")
+        # Prioritize changed files (new/modified) over unchanged ones
+        changed_files = [f for f in selected_files if f.get('status') in ['new', 'modified']]
+        unchanged_files = [f for f in selected_files if f.get('status') == 'unchanged']
 
-    if max_size_mb:
-        filtered_files = []
-        current_size = 0
-        for file_info in selected_files:
-            if current_size + file_info['size_mb'] > max_size_mb:
-                break
-            filtered_files.append(file_info)
-            current_size += file_info['size_mb']
-        if len(filtered_files) < len(selected_files):
-            selected_files = filtered_files
-            print(f"[COLLECT] Final size limit applied: {len(selected_files)} files ({current_size:.1f}MB)")
+        # Take all changed files first, then fill with unchanged files
+        selected_files = changed_files[:max_files]
+        remaining_slots = max_files - len(selected_files)
+        if remaining_slots > 0:
+            selected_files.extend(unchanged_files[:remaining_slots])
 
-    # Apply final limits to ensure they are respected
-    if max_files and len(selected_files) > max_files:
-        selected_files = selected_files[:max_files]
-        print(f"[COLLECT] Final file limit applied: {len(selected_files)} files")
+        print(f"[COLLECT] Final file limit applied: {len(selected_files)} files ({len(changed_files)} changed, {len(selected_files) - len(changed_files)} unchanged)")
 
     if max_size_mb:
         filtered_files = []
@@ -491,39 +509,73 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
 
     print(f"[COLLECT] Finished: {len(collected_files)}/{len(selected_files)} files collected, {total_size/1024/1024:.1f}MB total")
 
-    # Create consolidated content
-    content_parts = []
-    file_manifest = []
+    # Create individual glyphs for each file (true optical compression)
+    print(f"[GLYPH FORGE] Creating individual provenance-bound glyphs for {len(collected_files)} files...")
 
-    print(f"[CONSOLIDATE] Starting content consolidation of {len(collected_files)} files...")
+    # Initialize glyph forge with default font size since args is not available here
+    forge = ProvenanceGlyphForge(font_size=10)
+
+    # Create output directory
+    if output_dir is None:
+        output_dir = Path(output_dir_str) if output_dir_str else Path(DEFAULT_OUTPUT_DIR)
+    else:
+        output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True)
+
+    glyph_files = []
+    total_original_tokens = 0
+    total_vision_tokens = 0
+
     for i, file_info in enumerate(collected_files):
-        file_manifest.append(f"{file_info['path']} ({file_info['size']} bytes, SHA-256: {file_info['hash'][:16]}...)")
+        file_path = file_info['path']
+        content = file_info['content']
+        file_size = file_info['size']
 
-        content_parts.append(f"--- START OF FILE: {file_info['path']} ---")
-        content_parts.append(file_info['content'])
-        content_parts.append(f"--- END OF FILE: {file_info['path']} ---")
-        content_parts.append("")
+        # Create unique glyph filename
+        safe_filename = file_path.replace('/', '_').replace('\\', '_').replace('.', '_')
+        glyph_filename = f"glyph_{safe_filename}_{datetime.now().strftime('%H%M%S')}.png"
+        glyph_path = output_dir / glyph_filename
 
-        # Progress for content consolidation - more frequent updates
-        if (i + 1) % 20 == 0 or (i + 1) == len(collected_files):
+        print(f"[GLYPH] Creating individual glyph for {file_path}...")
+
+        # Create individual glyph for this file
+        width, height, content_hash = forge.create_provenance_glyph(
+            content, glyph_path, f"Glyph: {file_path}", True  # Enable provenance by default
+        )
+
+        # Calculate token estimates
+        estimated_original_tokens = len(content.split()) * 1.3
+        estimated_vision_tokens = (width * height) / 850  # Rough estimation
+
+        total_original_tokens += estimated_original_tokens
+        total_vision_tokens += estimated_vision_tokens
+
+        glyph_files.append({
+            'path': file_path,
+            'glyph_path': str(glyph_path),
+            'content_hash': content_hash,
+            'size': file_size,
+            'dimensions': f"{width}x{height}",
+            'estimated_original_tokens': estimated_original_tokens,
+            'estimated_vision_tokens': estimated_vision_tokens,
+            'compression_ratio': estimated_original_tokens / estimated_vision_tokens if estimated_vision_tokens > 0 else 0
+        })
+
+        # Progress indicator
+        if (i + 1) % 5 == 0 or (i + 1) == len(collected_files):
             percentage = ((i + 1) / len(collected_files)) * 100
-            print(f"[CONSOLIDATE] {i + 1}/{len(collected_files)} files ({percentage:.1f}%) - {file_info['path']}")
+            print(f"[GLYPH FORGE] {i + 1}/{len(collected_files)} glyphs created ({percentage:.1f}%)")
 
-    print(f"[CONSOLIDATE] Content consolidation complete - building final content...")
+    # Calculate overall compression statistics
+    overall_compression_ratio = total_original_tokens / total_vision_tokens if total_vision_tokens > 0 else 0
 
-    # Add manifest
-    manifest_content = "\n".join(file_manifest)
-    full_content = f"""FILE MANIFEST
-Total Files: {len(collected_files)}
-Total Size: {total_size} bytes
+    print(f"[GLYPH FORGE] Individual glyph creation complete!")
+    print(f"[COMPRESSION] Overall ratio: {overall_compression_ratio:.1f}x")
+    print(f"[COMPRESSION] Total original tokens: ~{total_original_tokens:,.0f}")
+    print(f"[COMPRESSION] Total vision tokens: ~{total_vision_tokens:,.0f}")
 
-{manifest_content}
-
---- CONTENT BOUNDARY ---
-
-""" + "\n".join(content_parts)
-
-    return full_content, len(collected_files), total_size
+    # Return individual glyph data instead of consolidated content
+    return glyph_files, len(collected_files), total_size, collected_files
 
 def main():
     parser = argparse.ArgumentParser(description='Create Provenance-Bound Cognitive Glyphs')
@@ -560,78 +612,133 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(exist_ok=True)
 
-    print(f"[PROVENANCE GLYPH FORGE v2.0] Starting advanced optical compression")
+    # Load existing manifest for incremental updates
+    manifest_path = output_dir / "glyph_manifest.json"
+    existing_manifest = {}
+    if manifest_path.exists():
+        try:
+            with open(manifest_path, 'r') as f:
+                existing_manifest = json.load(f)
+            print(f"[MANIFEST] Loaded existing manifest with {len(existing_manifest)} tracked files")
+        except Exception as e:
+            print(f"[WARN] Could not load existing manifest: {e}")
+            existing_manifest = {}
+
+    exclude_dirs = {
+        # Standard project/dev exclusions from capture_code_snapshot.js
+        'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build',
+        'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
+        '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
+        '.svn', '.hg', '.bzr',
+
+        # Large asset/model exclusions from capture_code_snapshot.js
+        'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
+
+        # Sanctuary-specific OPERATIONAL RESIDUE exclusions from capture_code_snapshot.js
+        'dataset_package', 'chroma_db', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
+
+        # Sanctuary-specific DOCTRINAL NOISE exclusions from capture_code_snapshot.js
+        'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
+        'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE',
+
+        # Final Hardening v2.3 from capture_code_snapshot.js
+        '05_ARCHIVED_BLUEPRINTS', 'gardener'
+    }
+
+    # FINAL HARDENING (V2.1): Dynamic Self-Aware Exclusion
+    # A Forge must never ingest its own yield - make exclusion dynamic based on output directory
+    output_dir_name = output_dir.name
+    exclude_dirs.add(output_dir_name)
+    print(f"[HARDENING] Applied self-aware exclusion for output directory: {output_dir_name}")
+
+    print(f"[PROVENANCE GLYPH FORGE v2.1] Starting advanced optical compression")
     print(f"[CONFIG] Font size: {args.font_size}px, Max files: {args.max_files or 'unlimited'}, Max size: {args.max_size_mb}MB")
     print(f"[CONFIG] Provenance: {not args.no_provenance}, Output: {output_dir.absolute()}")
 
-    # Collect content with limits
-    content, file_count, total_size = collect_code_snapshot_v2(
+    # Collect content with limits and create individual glyphs
+    glyph_files, file_count, total_size, collected_files = collect_code_snapshot_v2(
         project_root, args.operation, not args.no_provenance,
-        max_files=args.max_files, max_size_mb=args.max_size_mb
+        max_files=args.max_files, max_size_mb=args.max_size_mb, output_dir=output_dir, exclude_dirs=exclude_dirs, existing_manifest=existing_manifest, font_size=args.font_size, output_dir_str=str(output_dir)
     )
 
-    if not content.strip():
-        print("[ERROR] No content collected. Check file paths and permissions.")
+    if not glyph_files:
+        print("[ERROR] No glyphs created. Check file paths and permissions.")
         sys.exit(1)
 
-    print(f"[COLLECTED] {file_count} files ({total_size/1024/1024:.1f}MB)")
-
-    # Create provenance glyph forge
-    forge = ProvenanceGlyphForge(font_size=args.font_size)
-
-    # Generate provenance-bound glyph
-    glyph_name = f"provenance_snapshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    output_path = output_dir / f"{glyph_name}.png"
-
-    print("[GLYPH] Creating main provenance glyph...")
-    print(f"[GLYPH] Content size: {len(content)/1024/1024:.1f}MB, calculating optimal dimensions...")
-    width, height, content_hash = forge.create_provenance_glyph(
-        content, output_path, "Provenance-Bound Code Snapshot", not args.no_provenance
-    )
-    print(f"[GLYPH] Image dimensions calculated: {width}x{height}px ({width*height:,} pixels)")
+    print(f"[COLLECTED] {file_count} files ({total_size/1024/1024:.1f}MB) processed into {len(glyph_files)} individual glyphs")
 
     # Generate summary glyph
-    print("[GLYPH] Creating summary glyph...")
-    summary_content = create_smart_summary(content, file_count, total_size)
-    summary_path = output_dir / f"{glyph_name}_summary.png"
-    forge.create_provenance_glyph(
-        summary_content, summary_path, "Smart Summary Glyph", not args.no_provenance
+    print("[GLYPH] Creating collection summary glyph...")
+    summary_content = create_smart_summary(glyph_files, file_count, total_size)
+    summary_path = output_dir / f"glyph_collection_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+    summary_forge = ProvenanceGlyphForge(font_size=args.font_size)
+    summary_forge.create_provenance_glyph(
+        summary_content, summary_path, "Optical Glyph Collection Summary", not args.no_provenance
     )
 
+    # DOCTRINE OF THE VERIFIABLE MANIFEST (V2.2): Granular One-to-One Mapping
+    # Each file now has its own individual glyph
+
+    # Update manifest with individual file-to-glyph mapping
+    for glyph_info in glyph_files:
+        rel_path = glyph_info['path']
+
+        # Create or update individual file entry with its specific glyph
+        existing_manifest[rel_path] = {
+            'path': rel_path,
+            'size': glyph_info['size'],
+            'source_hash': glyph_info['content_hash'],
+            'last_processed_iso': datetime.now().isoformat(),
+            'glyph_path': glyph_info['glyph_path'],
+            'dimensions': glyph_info['dimensions'],
+            'estimated_original_tokens': glyph_info['estimated_original_tokens'],
+            'estimated_vision_tokens': glyph_info['estimated_vision_tokens'],
+            'compression_ratio': glyph_info['compression_ratio'],
+            'glyph_batch_timestamp': datetime.now().isoformat(),
+            'compression_method': 'optical_glyph_v2.2_individual'
+        }
+
+    # Save updated manifest
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(manifest_path, 'w') as f:
+        json.dump(existing_manifest, f, indent=2, sort_keys=True)
+    print(f"[MANIFEST] Updated verifiable manifest saved to {manifest_path} with {len(existing_manifest)} tracked artifacts")
+
     print(f"\n[PROVENANCE GLYPH FORGE COMPLETE]")
-    print(f"  Main Glyph: {output_path} ({width}x{height}px)")
-    print(f"  Summary Glyph: {summary_path}")
-    print(f"  Content Hash: {content_hash}")
+    print(f"  Individual Glyphs Created: {len(glyph_files)}")
     print(f"  Storage: {output_dir.absolute()}")
     print(f"  Files Processed: {file_count}")
     print(f"  Total Size: {total_size/1024/1024:.1f}MB")
+    print(f"  Manifest: {manifest_path} ({len(existing_manifest)} tracked files)")
+    print(f"  True Optical Compression: Each file has its own glyph for individual access")
 
-def create_smart_summary(content, file_count, total_size):
-    """Create an intelligent summary optimized for glyph compression"""
+def create_smart_summary(glyph_files, file_count, total_size):
+    """Create an intelligent summary of the glyph collection"""
 
-    lines = content.split('\n')
     summary_parts = []
 
     # Extract key structural information
-    summary_parts.append("CODEBASE SUMMARY")
-    summary_parts.append(f"Files: {file_count}")
+    summary_parts.append("OPTICAL GLYPH COLLECTION SUMMARY")
+    summary_parts.append(f"Individual Glyphs Created: {len(glyph_files)}")
+    summary_parts.append(f"Files Processed: {file_count}")
     summary_parts.append(f"Total Size: {total_size:,} bytes")
     summary_parts.append("")
 
-    # Extract important headers and structure
-    important_lines = []
-    for line in lines:
-        if line.startswith('#') and len(line.strip()) > 5:
-            important_lines.append(line)
-        elif line.startswith('PROTOCOL:') or line.startswith('DOCTRINE:'):
-            important_lines.append(line)
+    # Calculate compression statistics
+    total_original_tokens = sum(g['estimated_original_tokens'] for g in glyph_files)
+    total_vision_tokens = sum(g['estimated_vision_tokens'] for g in glyph_files)
+    avg_compression = total_original_tokens / total_vision_tokens if total_vision_tokens > 0 else 0
 
-    # Limit to prevent oversized glyphs
-    if len(important_lines) > 30:
-        important_lines = important_lines[:30]
-        important_lines.append("[... TRUNCATED FOR COMPRESSION ...]")
+    summary_parts.append(f"Estimated Original Tokens: {total_original_tokens:,.0f}")
+    summary_parts.append(f"Estimated Vision Tokens: {total_vision_tokens:,.0f}")
+    summary_parts.append(f"Average Compression Ratio: {avg_compression:.1f}x")
+    summary_parts.append("")
 
-    summary_parts.extend(important_lines)
+    # Show top compressed files
+    sorted_by_compression = sorted(glyph_files, key=lambda x: x['compression_ratio'], reverse=True)
+    summary_parts.append("TOP COMPRESSED FILES:")
+    for i, glyph in enumerate(sorted_by_compression[:5]):
+        summary_parts.append(f"  {i+1}. {glyph['path']} ({glyph['compression_ratio']:.1f}x)")
 
     return '\n'.join(summary_parts)
 
