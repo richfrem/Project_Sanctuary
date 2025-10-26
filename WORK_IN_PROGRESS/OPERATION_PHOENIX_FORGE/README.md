@@ -230,24 +230,42 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ## 7. CELL 4: Convert format of model to consume in ollama
 
 ```python
-# ===================================================================
-# CELL 4: MERGE FOR OLLAMA (GGUF PREPARATION)
-# ===================================================================
+# ===============================================================
+# CELL 4: DIRECT GGUF EXPORT (Unsloth 2025.10.9+)
+# ===============================================================
 from unsloth import FastLanguageModel
-from transformers import AutoModelForCausalLM
 
 base = "Qwen/Qwen2-7B-Instruct"
 lora = "richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome"
-merged_path = "merged_sanctuary_qwen2_7b"
 
-print("🧬 Merging LoRA adapters into base model...")
-model, tokenizer = FastLanguageModel.from_pretrained(base, load_in_4bit=False)
-model = FastLanguageModel.merge_lora(model, lora)
+print("🧬 Loading and merging model for direct GGUF export...")
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name=base,
+    max_seq_length=4096,
+    load_in_4bit=False,
+)
 
-print("💾 Saving merged model locally...")
-model.save_pretrained(merged_path)
-tokenizer.save_pretrained(merged_path)
-print(f"✅ Merge complete. Files saved in: {merged_path}")
+# Apply LoRA adapter
+model = FastLanguageModel.get_peft_model(model)
+model.load_adapter(lora)
+model = model.merge_and_unload()
+
+# 🚀 Export to GGUF in one step
+print("⚙️ Converting and saving as GGUF (q4_k_m)...")
+model.save_pretrained_gguf(
+    "gguf_model",
+    tokenizer,
+    quantization_method="q4_k_m"
+)
+print("✅ GGUF model ready in ./gguf_model")
+
+# Optional: download from Colab
+from google.colab import files
+import os
+for f in os.listdir("gguf_model"):
+    if f.endswith(".gguf"):
+        files.download(os.path.join("gguf_model", f))
+
 ```
 
 ---
