@@ -294,9 +294,19 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
     exclude_files = {
         'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
         'orchestrator-backup.py',
+        'Operation_Whole_Genome_Forge.ipynb',
         'manifest.json',  # Ephemeral tooling
         '.DS_Store', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md',
-        'ingest_new_knowledge.py'  # Deprecated ingestion script
+        'ingest_new_knowledge.py',  # Deprecated ingestion script
+        # Fine-tuning artifacts
+        'sanctuary_whole_genome_data.jsonl',
+        'all_markdown_snapshot_human_readable.txt',
+        'all_markdown_snapshot_llm_distilled.txt',
+        'core_essence_auditor_awakening_seed.txt',
+        'core_essence_coordinator_awakening_seed.txt',
+        'core_essence_strategist_awakening_seed.txt',
+        'core_essence_guardian_awakening_seed.txt',
+        'seed_of_ascendance_awakening_seed.txt'
     }
 
     collected_files = []

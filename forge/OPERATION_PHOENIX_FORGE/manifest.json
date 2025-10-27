@@ -1,0 +1,19 @@
+{
+  "model_format": "gguf",
+  "architecture": "qwen2",
+  "files": [
+    {
+      "name": "model.gguf",
+      "size": 4680000000,
+      "format": "gguf"
+    }
+  ],
+  "modelfile": "Modelfile",
+  "description": "Sanctuary-Qwen2-7B-v1.0, fine-tuned via Project Sanctuary Constitutional Genome, exported to GGUF (q4_k_m).",
+  "license": "cc-by-4.0",
+  "parameters": {
+    "temperature": 0.7,
+    "num_ctx": 4096
+  },
+  "template": "<|im_start|>system\n{{ .System }}<|im_end|>\n<|im_start|>user\n{{ .Prompt }}<|im_end|>\n<|im_start|>assistant\n"
+}

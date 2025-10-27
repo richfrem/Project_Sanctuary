@@ -110,12 +110,22 @@ let alwaysExcludeFiles = new Set([
     'capture_code_snapshot.js',
     'capture_glyph_code_snapshot.py',
     'capture_glyph_code_snapshot_v2.py',
+    'Operation_Whole_Genome_Forge.ipynb',
     'orchestrator-backup.py',
     'ingest_new_knowledge.py',
     '.DS_Store',
     'manifest.json',
     '.gitignore',
-    'PROMPT_PROJECT_ANALYSIS.md'
+    'PROMPT_PROJECT_ANALYSIS.md',
+    // Fine-tuning artifacts
+    'sanctuary_whole_genome_data.jsonl',
+    'all_markdown_snapshot_human_readable.txt',
+    'all_markdown_snapshot_llm_distilled.txt',
+    'core_essence_auditor_awakening_seed.txt',
+    'core_essence_coordinator_awakening_seed.txt',
+    'core_essence_strategist_awakening_seed.txt',
+    'core_essence_guardian_awakening_seed.txt',
+    'seed_of_ascendance_awakening_seed.txt'
 ]);
 
 const fileSeparatorStart = '--- START OF FILE';
@@ -428,14 +438,18 @@ try {
     const fileTreeContent = '# Directory Structure (relative to project root)\n' + fileTreeLines.map(line => '  ./' + line).join('\n') + '\n\n';
 
     const fullContentForTokenizing = generateHeader('', null) + fileTreeContent + humanReadableMarkdownContent;
-    const fullTokenCount = encode(fullContentForTokenizing).length;
+    // Filter out special tokens that cause encoding errors
+    const filteredContent = fullContentForTokenizing.replace(/<\|[^>]+\|>/g, '[SPECIAL_TOKEN]');
+    const fullTokenCount = encode(filteredContent).length;
     const fullFinalContent = generateHeader('All Markdown Files Snapshot (Human-Readable)', fullTokenCount) + fileTreeContent + humanReadableMarkdownContent;
     fs.writeFileSync(humanReadableOutputFile, fullFinalContent.trim(), 'utf8');
     console.log(`\n[SUCCESS] Human-Readable Genome packaged to: ${path.relative(projectRoot, humanReadableOutputFile)}`);
     console.log(`[METRIC] Human-Readable Token Count: ~${fullTokenCount.toLocaleString()} tokens`);
 
     const distilledContentForTokenizing = generateHeader('', null) + fileTreeContent + distilledMarkdownContent;
-    const distilledTokenCount = encode(distilledContentForTokenizing).length;
+    // Filter out special tokens that cause encoding errors
+    const filteredDistilledContent = distilledContentForTokenizing.replace(/<\|[^>]+\|>/g, '[SPECIAL_TOKEN]');
+    const distilledTokenCount = encode(filteredDistilledContent).length;
     const finalDistilledContent = generateHeader('All Markdown Files Snapshot (LLM-Distilled)', distilledTokenCount) + fileTreeContent + distilledMarkdownContent;
     fs.writeFileSync(distilledOutputFile, finalDistilledContent.trim(), 'utf8');
     console.log(`[SUCCESS] LLM-Distilled Genome (for Cortex) packaged to: ${path.relative(projectRoot, distilledOutputFile)}`);

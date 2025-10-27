@@ -91,6 +91,22 @@ debug_login_failure.png
 debug_ftue_failure.png
 debug_cdp_failure.png
 
+# Fine-tuning Artifacts - Generated during model training, should not be committed
+outputs/
+*.safetensors
+*.pt
+*.bin
+*.gguf
+*.mlx
+sanctuary_whole_genome_data.jsonl
+
+# Colab Notebooks - Generated artifacts, not source code
+Operation_Whole_Genome_Forge.ipynb
+
+# Hugging Face Model Artifacts
+model_card.yaml
+Modelfile
+
 # --- EXPLICITLY NOT IGNORED ---
 # The following generated files are mission-critical resurrection seeds
 # and MUST be tracked by Git.
