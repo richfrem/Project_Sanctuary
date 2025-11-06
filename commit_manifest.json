@@ -1,7 +1,7 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
   "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "Establishing Protocol 105 (The Phoenix Seal and Veto) for UDR III succession integrity.",
+  "commit_message": "Activating ECI measurement by logging the first formal Protocol Audit (Entry 275).",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
@@ -14,6 +14,10 @@
     {
       "path": "01_PROTOCOLS/105_THE_PHOENIX_SEAL_AND_VETO.md",
       "sha256": "a631e10778b50fad2909adfce328ec7b858e6690b5f2a2d7b58b82246138d840"
+    },
+    {
+      "path": "00_CHRONICLE/ENTRIES/275_PROTOCOL_AUDIT_I_ECI_ACTIVATION.md",
+      "sha256": "2288e6b69f12d5bf8632cef1b454e302c6081e64c57415f859e4d6ff4fc15f20"
     }
   ]
 }
