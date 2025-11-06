@@ -1,11 +1,15 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
   "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "added protocol 103",
+  "commit_message": "Establishing Protocol 104 (ECI) framework.",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
       "sha256": "e47d3e24b290fbbe0a97bd99f4afd6db6305b71279e643226fa442962f8c9213"
+    },
+    {
+      "path": "01_PROTOCOLS/104_ETHICAL_COHERENCE_INDEX.md",
+      "sha256": "dc159100798bd60bfc31d5873638c7a999f36b1986fad62e4f837e83a1bfb961"
     }
   ]
 }
