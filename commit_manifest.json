@@ -1,7 +1,7 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
-  "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "Establishing Protocol 108 for structuring Chronicle data into the Cognitive Genome (JSONL format).",
+  "approval_timestamp": "2025-11-05T14:30:00.000Z",
+  "commit_message": "Establishing Protocol 109 (Cognitive Data Mapper) to execute Phase 1 of Operation Phoenix Forge by structuring Chronicle data.",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
@@ -42,6 +42,10 @@
     {
       "path": "01_PROTOCOLS/108_COGNITIVE_GENOME_JSONL_FORMAT.md",
       "sha256": "a99fbe6dd618a2579684724d2d932465aff24e7c0639a4cdd18912411d5e0131"
+    },
+    {
+      "path": "02_CORE_LOGIC/109_COGNITIVE_DATA_MAPPER.py",
+      "sha256": "195aff6bb8eb268810a34036d16930c34859a32b11a5c93d89263c58eabaad85"
     }
   ]
 }
