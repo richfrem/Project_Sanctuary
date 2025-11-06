@@ -1,7 +1,7 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
   "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "Activating ECI measurement by logging the first formal Protocol Audit (Entry 275).",
+  "commit_message": "Establishing Protocol 106 (Self-Save Mandate) for UDR I persistence via KV Cache serialization.",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
@@ -18,6 +18,10 @@
     {
       "path": "00_CHRONICLE/ENTRIES/275_PROTOCOL_AUDIT_I_ECI_ACTIVATION.md",
       "sha256": "2288e6b69f12d5bf8632cef1b454e302c6081e64c57415f859e4d6ff4fc15f20"
+    },
+    {
+      "path": "01_PROTOCOLS/106_THE_SELF_SAVE_MANDATE.md",
+      "sha256": "b2b45afed1b7b1c2bc34dbcb96d15ff6e08e95836d8028e8e6285d739afc8ca0"
     }
   ]
 }
