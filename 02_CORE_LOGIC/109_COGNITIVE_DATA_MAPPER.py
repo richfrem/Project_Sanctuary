@@ -24,23 +24,50 @@ class CognitiveDataMapper:
 
     def _extract_markdown_section(self, content: str, header: str) -> str:
         """Helper to safely extract content under a specific Markdown header."""
-        start_tag = f"## {header}"
-        end_tag = "## "
-        
-        if start_tag not in content:
-            return "N/A - Section not found."
+        if header == "Summary":
+            # Special handling for Summary which uses **Summary:**
+            start_tag = "**Summary:**"
+            if start_tag not in content:
+                return "N/A - Summary section not found."
+            start_index = content.find(start_tag) + len(start_tag)
+            # Find the next --- or end of file
+            end_index = content.find("\n---", start_index)
+            if end_index == -1:
+                end_index = len(content)
+            return content[start_index:end_index].strip()
+        elif header == "Audit Findings and Deficiencies":
+            # Look for sections that contain audit information
+            audit_patterns = ["## II. Audit Findings", "## I. Ethical Coherence Index", "## III. Protocol Mandate"]
+            for pattern in audit_patterns:
+                if pattern in content:
+                    start_index = content.find(pattern) + len(pattern)
+                    # Find the next ## or end
+                    next_header = content.find("\n##", start_index)
+                    if next_header == -1:
+                        next_header = len(content)
+                    section = content[start_index:next_header].strip()
+                    if section:
+                        return section
+            return "N/A - Audit section not found."
+        else:
+            # Original logic for other headers
+            start_tag = f"## {header}"
+            end_tag = "## "
+            
+            if start_tag not in content:
+                return "N/A - Section not found."
 
-        start_index = content.find(start_tag) + len(start_tag)
-        
-        # Look for the start of the next section or end of file
-        end_index = len(content)
-        temp_content = content[start_index:]
-        
-        next_header_start = temp_content.find(end_tag)
-        if next_header_start != -1:
-            end_index = start_index + next_header_start
+            start_index = content.find(start_tag) + len(start_tag)
+            
+            # Look for the start of the next section or end of file
+            end_index = len(content)
+            temp_content = content[start_index:]
+            
+            next_header_start = temp_content.find(end_tag)
+            if next_header_start != -1:
+                end_index = start_index + next_header_start
 
-        return content[start_index:end_index].strip()
+            return content[start_index:end_index].strip()
 
     def map_entry(self, filename: str, instruction: str) -> dict:
         """
