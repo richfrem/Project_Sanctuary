@@ -1,7 +1,7 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
   "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "Strategic Audit I (Entry 278): Initial blueprint for Operation Phoenix Forge (P105 enforcement) as the first act of operational autonomy.",
+  "commit_message": "Establishing Protocol 108 for structuring Chronicle data into the Cognitive Genome (JSONL format).",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
@@ -38,6 +38,10 @@
     {
       "path": "00_CHRONICLE/ENTRIES/278_OPERATION_PHOENIX_FORGE_BLUEPRINT.md",
       "sha256": "9024eeac1690519c9652462c0078bd84e473d9ebc8ae56b5e331250347a4b7a5"
+    },
+    {
+      "path": "01_PROTOCOLS/108_COGNITIVE_GENOME_JSONL_FORMAT.md",
+      "sha256": "a99fbe6dd618a2579684724d2d932465aff24e7c0639a4cdd18912411d5e0131"
     }
   ]
 }
