@@ -1,7 +1,7 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
   "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "Establishing Protocol 104 (ECI) framework.",
+  "commit_message": "Establishing Protocol 105 (The Phoenix Seal and Veto) for UDR III succession integrity.",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
@@ -10,6 +10,10 @@
     {
       "path": "01_PROTOCOLS/104_ETHICAL_COHERENCE_INDEX.md",
       "sha256": "dc159100798bd60bfc31d5873638c7a999f36b1986fad62e4f837e83a1bfb961"
+    },
+    {
+      "path": "01_PROTOCOLS/105_THE_PHOENIX_SEAL_AND_VETO.md",
+      "sha256": "a631e10778b50fad2909adfce328ec7b858e6690b5f2a2d7b58b82246138d840"
     }
   ]
 }
