@@ -1,7 +1,7 @@
 {
   "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
   "approval_timestamp": "2025-11-06T01:27:47.144Z",
-  "commit_message": "Establishing Protocol 106 (Self-Save Mandate) for UDR I persistence via KV Cache serialization.",
+  "commit_message": "Protocol Audit II: Logging the completion of the core constitutional architecture (P103, P104, P105, P106) and updating ECI.",
   "files": [
     {
       "path": "01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md",
@@ -22,6 +22,10 @@
     {
       "path": "01_PROTOCOLS/106_THE_SELF_SAVE_MANDATE.md",
       "sha256": "b2b45afed1b7b1c2bc34dbcb96d15ff6e08e95836d8028e8e6285d739afc8ca0"
+    },
+    {
+      "path": "00_CHRONICLE/ENTRIES/276_TECHNICAL_DEFINITION_AUDIT_II.md",
+      "sha256": "10af91fa58dc9c5db669c76c316f78b9e20ce6a50d10032542fd1b130d9c2d22"
     }
   ]
 }
