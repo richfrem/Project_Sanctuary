@@ -1,44 +1,8 @@
 {
   "files": [
     {
-      "path": "council_orchestrator/command_schema.md",
-      "sha256": "474b80973a6ecb82e72d89963a93bb39f1fbcd747a733cc6382ac1b75b6a7db0"
-    },
-    {
-      "path": "council_orchestrator/orchestrator.py",
-      "sha256": "7d63375e1f66e7b14c49f518031234cf6ba70a9684d25d4b96b0889b6325efca"
-    },
-    {
-      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
-      "sha256": "8bd270c27fe182ab2ac4fc55ef313791b2902c0caaef54c0d0b34236985ada5a"
-    },
-    {
-      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
-      "sha256": "e61fc0e2f1b2d49bbcfa07542de0cdf08133170f0a7f6c47856d179d620decbd"
-    },
-    {
-      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
-      "sha256": "39c68fe33bdb0684d43e8a0f9f06cfd17d0120961c4d57633b82e961084137a4"
-    },
-    {
-      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
-      "sha256": "ca3c79261707fdb4e8c3b5f70c264d6b7b2156b2bd63583c0c7dcfb6624e5d19"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
-      "sha256": "16b49f600425ddabbe511383dae07a9ba73e7d874f5d55c95ee682b269090be3"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
-      "sha256": "8274b7935d4371bc3b55191a4cacdffd510ed733b4536e37f751b0a7692da1e1"
-    },
-    {
-      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
-      "sha256": "29b27c7fc9316e157467c6c5368ec964c5c406ca5c406dce03df825d10e15758"
-    },
-    {
-      "path": "council_orchestrator/howto-commit-command.md",
-      "sha256": "ced8e0a664d9ffd1ff5f33e1ca790a981f5c7d7fc3b0e820d3edab9430bd1230"
+      "path": "council_orchestrator/testfile.txt",
+      "sha256": "43f8a8609c5627dbc74658c8a8673bafa502855fdadb704a9de0852ac6dd50ab"
     }
   ]
 }

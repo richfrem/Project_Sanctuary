@@ -41,6 +41,7 @@ from chromadb.utils import embedding_functions
 # --- RESOURCE SOVEREIGNTY: DISTILLATION ENGINE ---
 try:
     import tiktoken
+
     TIKTOKEN_AVAILABLE = True
 except ImportError:
     TIKTOKEN_AVAILABLE = False
@@ -51,9 +52,11 @@ except ImportError:
 # We now only import the triage system, which will provide a healthy engine.
 # 1. Engine Selection: Engines are sourced from council_orchestrator/cognitive_engines/ directory
 from substrate_monitor import select_engine
+
 # --- END INTEGRATION ---
 
 from bootstrap_briefing_packet import main as generate_briefing_packet
+
 
 # --- COUNCIL ROUND PACKET SCHEMA ---
 @dataclass
@@ -78,22 +81,33 @@ class CouncilRoundPacket:
     errors: List[str]
     schema_version: str = "1.0.0"
 
+
 # --- ROUND PACKET UTILITIES ---
 def seed_for(session_id: str, round_id: int, member_id: str) -> int:
     """Generate deterministic seed for reproducibility."""
     try:
         import xxhash
-        return xxhash.xxh64_intdigest(f"{session_id}:{round_id}:{member_id}") & 0x7fffffff
+
+        return (
+            xxhash.xxh64_intdigest(f"{session_id}:{round_id}:{member_id}") & 0x7FFFFFFF
+        )
     except ImportError:
         # Fallback to hashlib if xxhash not available
         hash_obj = hashlib.md5(f"{session_id}:{round_id}:{member_id}".encode())
-        return int(hash_obj.hexdigest(), 16) & 0x7fffffff
+        return int(hash_obj.hexdigest(), 16) & 0x7FFFFFFF
+
 
 def prompt_hash(text: str) -> str:
     """Generate hash for prompt content."""
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
-def emit_packet(packet: CouncilRoundPacket, jsonl_dir: str, stream_stdout: bool, schema_path: str = None):
+
+def emit_packet(
+    packet: CouncilRoundPacket,
+    jsonl_dir: str,
+    stream_stdout: bool,
+    schema_path: str = None,
+):
     """Emit round packet to JSONL file and optionally stdout."""
     payload = asdict(packet)
     line = json.dumps(payload, ensure_ascii=False, default=str)
@@ -102,7 +116,8 @@ def emit_packet(packet: CouncilRoundPacket, jsonl_dir: str, stream_stdout: bool,
     if schema_path and os.path.exists(schema_path):
         try:
             import jsonschema
-            with open(schema_path, 'r') as f:
+
+            with open(schema_path, "r") as f:
                 schema = json.load(f)
             jsonschema.validate(instance=payload, schema=schema)
         except ImportError:
@@ -113,7 +128,9 @@ def emit_packet(packet: CouncilRoundPacket, jsonl_dir: str, stream_stdout: bool,
     # File persistence
     if jsonl_dir:
         os.makedirs(jsonl_dir, exist_ok=True)
-        jsonl_path = os.path.join(jsonl_dir, f"{packet.session_id}", f"round_{packet.round_id}.jsonl")
+        jsonl_path = os.path.join(
+            jsonl_dir, f"{packet.session_id}", f"round_{packet.round_id}.jsonl"
+        )
         os.makedirs(os.path.dirname(jsonl_path), exist_ok=True)
         with open(jsonl_path, "a", encoding="utf-8") as f:
             f.write(line + "\n")
@@ -123,56 +140,62 @@ def emit_packet(packet: CouncilRoundPacket, jsonl_dir: str, stream_stdout: bool,
         sys.stdout.write(line + "\n")
         sys.stdout.flush()
 
+
 # --- MANDATE 2: TOKEN FLOW REGULATOR (TPM-AWARE RATE LIMITING) ---
 class TokenFlowRegulator:
     """
     Manages token throughput to respect per-minute token limits (TPM).
     Prevents rate limit violations by tracking cumulative usage and pausing execution when needed.
     """
+
     def __init__(self, limits: dict):
         """
         Initialize the regulator with TPM limits for each engine type.
-        
+
         Args:
             limits: Dictionary mapping engine types to their TPM limits
                    e.g., {'openai': 30000, 'gemini': 60000, 'ollama': 999999}
         """
         self.tpm_limits = limits
         self.usage_log = []  # List of (timestamp, token_count) tuples
-        
+
     def log_usage(self, token_count: int):
         """
         Log a token usage event with current timestamp.
-        
+
         Args:
             token_count: Number of tokens used in this request
         """
         self.usage_log.append((time.time(), token_count))
         self._prune_old_usage()
-        
+
     def _prune_old_usage(self):
         """Remove usage entries older than 60 seconds from the log."""
         current_time = time.time()
         cutoff_time = current_time - 60.0
-        self.usage_log = [(ts, count) for ts, count in self.usage_log if ts > cutoff_time]
-        
+        self.usage_log = [
+            (ts, count) for ts, count in self.usage_log if ts > cutoff_time
+        ]
+
     def wait_if_needed(self, estimated_tokens: int, engine_type: str):
         """
         Check if adding estimated_tokens would exceed TPM limit.
         If so, calculate required sleep duration and pause execution.
-        
+
         Args:
             estimated_tokens: Estimated tokens for the upcoming request
             engine_type: The engine type to check limits for
         """
         self._prune_old_usage()
-        
+
         # Get TPM limit for this engine type
-        tpm_limit = self.tpm_limits.get(engine_type, 999999) # Default to very high limit
-        
+        tpm_limit = self.tpm_limits.get(
+            engine_type, 999999
+        )  # Default to very high limit
+
         # Calculate current usage in the last 60 seconds
         current_usage = sum(count for _, count in self.usage_log)
-        
+
         # Check if we would exceed the limit
         if current_usage + estimated_tokens > tpm_limit:
             # Find the oldest entry that needs to expire
@@ -180,13 +203,18 @@ class TokenFlowRegulator:
                 oldest_timestamp = self.usage_log[0][0]
                 current_time = time.time()
                 time_since_oldest = current_time - oldest_timestamp
-                sleep_duration = 60.0 - time_since_oldest + 1.0 # Add 1 second buffer
-                
+                sleep_duration = 60.0 - time_since_oldest + 1.0  # Add 1 second buffer
+
                 if sleep_duration > 0:
-                    print(f"[TOKEN REGULATOR] TPM limit approaching ({current_usage + estimated_tokens}/{tpm_limit})")
-                    print(f"[TOKEN REGULATOR] Pausing execution for {sleep_duration:.1f} seconds to respect rate limits...")
+                    print(
+                        f"[TOKEN REGULATOR] TPM limit approaching ({current_usage + estimated_tokens}/{tpm_limit})"
+                    )
+                    print(
+                        f"[TOKEN REGULATOR] Pausing execution for {sleep_duration:.1f} seconds to respect rate limits..."
+                    )
                     time.sleep(sleep_duration)
                     self._prune_old_usage()  # Clean up after sleep
+
 
 # --- OPERATION: OPTICAL ANVIL - OPTICAL DECOMPRESSION CHAMBER ---
 # Implements Section 3.1 of FEASIBILITY_STUDY_DeepSeekOCR_v2.md
@@ -194,30 +222,31 @@ class OpticalDecompressionChamber:
     """
     Transparent layer that renders large text payloads to images,
     sends to VLM gatekeeper, and receives decompressed text for agents.
-    
+
     This is the foundational component for achieving unlimited context
     on borrowed soil through optical compression (P43: Hearth Protocol).
     """
+
     def __init__(self, vlm_engine=None, compression_threshold: int = 8000):
         self.vlm_engine = vlm_engine  # DeepSeek-OCR or compatible VLM
         self.compression_threshold = compression_threshold
         self.compression_events = []  # Track compression events for analysis
-        
+
     def should_compress(self, text: str, engine_type: str) -> bool:
         """
         Determine if optical compression is beneficial.
-        
+
         Args:
             text: The text payload to potentially compress
             engine_type: The target engine type for token estimation
-            
+
         Returns:
             bool: True if optical compression should be used
         """
         # Estimate token count (simplified for initial implementation)
         estimated_tokens = len(text.split()) * 1.3
         return estimated_tokens > self.compression_threshold
-    
+
     def compress_and_decompress(self, text: str, task_context: str) -> str:
         """
         Optical compression pipeline:
@@ -225,38 +254,38 @@ class OpticalDecompressionChamber:
         2. Send to VLM gatekeeper (MOCKED in v4.1)
         3. Receive decompressed text
         4. Log compression event
-        
+
         NOTE: This is a foundational implementation with mocked VLM calls.
         Full VLM integration will be implemented in subsequent phases.
-        
+
         Args:
             text: The text to compress
             task_context: The task description for context-aware compression
-            
+
         Returns:
             str: The decompressed text (currently returns original with marker)
         """
         # Generate provenance hash
         content_hash = hashlib.sha256(text.encode()).hexdigest()
-        
+
         # MOCK: In production, this would render text to image
         # rendered_image = self._render_text_to_image(text)
         print(f"[OPTICAL] MOCK: Would render {len(text)} chars to image")
-        
+
         # MOCK: In production, this would call VLM for OCR
         # decompressed_text = self.vlm_engine.process_image(rendered_image, prompt)
         decompressed_text = text  # Pass-through for now
         print(f"[OPTICAL] MOCK: Would decompress via VLM (DeepSeek-OCR)")
-        
+
         # Log compression event
         compression_event = {
             "timestamp": time.time(),
             "original_hash": content_hash,
             "estimated_compression_ratio": 10.0,  # Target ratio from paper
-            "task_context": task_context[:100]  # Truncated for logging
+            "task_context": task_context[:100],  # Truncated for logging
         }
         self.compression_events.append(compression_event)
-        
+
         # Add marker to indicate optical processing occurred
         return f"[OPTICAL_PROCESSED: {content_hash[:8]}]\n\n{decompressed_text}"
 
@@ -266,7 +295,7 @@ class PersonaAgent:
         self.role = self._extract_role_from_filename(persona_file.name)
         self.state_file = state_file
         persona_content = persona_file.read_text(encoding="utf-8")
-        
+
         # The agent is now initialized with a pre-selected, healthy engine
         self.engine = engine
         self.messages = []
@@ -277,7 +306,10 @@ class PersonaAgent:
             self.messages = history
         else:
             # Initialize with a simple system instruction
-            system_msg = {"role": "system", "content": f"SYSTEM INSTRUCTION: You are an AI Council member. {persona_content} Operate strictly within this persona."}
+            system_msg = {
+                "role": "system",
+                "content": f"SYSTEM INSTRUCTION: You are an AI Council member. {persona_content} Operate strictly within this persona.",
+            }
             self.messages.append(system_msg)
 
         print(f"[+] {self.role} agent initialized with {type(self.engine).__name__}.")
@@ -331,25 +363,31 @@ class PersonaAgent:
             error_msg = f"SubstrateFailure: The cognitive engine failed. Details: {str(e)[:200]}"
             print(f"[AGENT ERROR] {self.role} - {error_msg}")
             # Append error to internal messages for debugging, but return False
-            self.messages.append({"role": "assistant", "content": f"[ERROR] {error_msg}"})
+            self.messages.append(
+                {"role": "assistant", "content": f"[ERROR] {error_msg}"}
+            )
             return False
 
-    def _extract_role_from_filename(self, f): return f.split('core_essence_')[1].split('_awakening_seed.txt')[0].upper()
+    def _extract_role_from_filename(self, f):
+        return f.split("core_essence_")[1].split("_awakening_seed.txt")[0].upper()
+
 
 class Orchestrator:
     def __init__(self):
         self.project_root = Path(__file__).parent.parent
         self.command_queue = ThreadQueue()
-        load_dotenv(dotenv_path=self.project_root / '.env')
+        load_dotenv(dotenv_path=self.project_root / ".env")
 
         # V9.3: Initialize logging system
         self.setup_logging()
         self.setup_event_logging()
 
-        self.chroma_client = chromadb.PersistentClient(path=str(self.project_root / "mnemonic_cortex/chroma_db"))
+        self.chroma_client = chromadb.PersistentClient(
+            path=str(self.project_root / "mnemonic_cortex/chroma_db")
+        )
         self.cortex_collection = self.chroma_client.get_or_create_collection(
             name="sanctuary_cortex",
-            embedding_function=embedding_functions.DefaultEmbeddingFunction()
+            embedding_function=embedding_functions.DefaultEmbeddingFunction(),
         )
 
         # --- RESOURCE SOVEREIGNTY: LOAD ENGINE LIMITS FROM CONFIG ---
@@ -357,65 +395,61 @@ class Orchestrator:
         config_path = Path(__file__).parent / "engine_config.json"
         if config_path.exists():
             try:
-                with open(config_path, 'r') as f:
+                with open(config_path, "r") as f:
                     config = json.load(f)
-                
+
                 # Parse engine_limits - support both old flat and new nested structure
-                raw_limits = config.get('engine_limits', {})
+                raw_limits = config.get("engine_limits", {})
                 self.engine_limits = {}
                 self.tpm_limits = {}
-                
+
                 for engine_name, limit_data in raw_limits.items():
                     if isinstance(limit_data, dict):
                         # New nested structure
-                        self.engine_limits[engine_name] = limit_data.get('per_request_limit', 100000)
-                        self.tpm_limits[engine_name] = limit_data.get('tpm_limit', 100000)
+                        self.engine_limits[engine_name] = limit_data.get(
+                            "per_request_limit", 100000
+                        )
+                        self.tpm_limits[engine_name] = limit_data.get(
+                            "tpm_limit", 100000
+                        )
                     else:
                         # Old flat structure (backward compatibility)
                         self.engine_limits[engine_name] = limit_data
                         self.tpm_limits[engine_name] = limit_data
-                
+
                 print(f"[+] Engine per-request limits loaded: {self.engine_limits}")
                 print(f"[+] Engine TPM limits loaded: {self.tpm_limits}")
             except Exception as e:
                 print(f"[!] Error loading engine config: {e}. Using defaults.")
                 self.engine_limits = {
-                    'gemini': 200000,
-                    'openai': 100000,
-                    'ollama': 8000
+                    "gemini": 200000,
+                    "openai": 100000,
+                    "ollama": 8000,
                 }
-                self.tpm_limits = {
-                    'gemini': 250000,
-                    'openai': 120000,
-                    'ollama': 999999
-                }
+                self.tpm_limits = {"gemini": 250000, "openai": 120000, "ollama": 999999}
         else:
             print("[!] engine_config.json not found. Using default limits.")
-            self.engine_limits = {
-                'gemini': 200000,
-                'openai': 100000,
-                'ollama': 8000
-            }
-            self.tpm_limits = {
-                'gemini': 250000,
-                'openai': 120000,
-                'ollama': 999999
-            }
+            self.engine_limits = {"gemini": 200000, "openai": 100000, "ollama": 8000}
+            self.tpm_limits = {"gemini": 250000, "openai": 120000, "ollama": 999999}
 
         self.speaker_order = ["COORDINATOR", "STRATEGIST", "AUDITOR"]
-        self.agents = {} # Agents will now be initialized per-task
-        
+        self.agents = {}  # Agents will now be initialized per-task
+
         # --- MANDATE 2: INITIALIZE TOKEN FLOW REGULATOR ---
         # Use the TPM limits already parsed from config
         self.token_regulator = TokenFlowRegulator(self.tpm_limits)
-        print(f"[+] Token Flow Regulator initialized with TPM limits: {self.tpm_limits}")
-        
+        print(
+            f"[+] Token Flow Regulator initialized with TPM limits: {self.tpm_limits}"
+        )
+
         # --- OPERATION: OPTICAL ANVIL - LAZY INITIALIZATION ---
         self.optical_chamber = None  # Initialized per-task if enabled
 
         # --- SENTRY THREAD INITIALIZATION ---
         # Start the command monitoring thread
-        self.sentry_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)
+        self.sentry_thread = threading.Thread(
+            target=self._watch_for_commands_thread, daemon=True
+        )
         self.sentry_thread.start()
         print("[+] Sentry Thread started - monitoring for command files")
 
@@ -424,14 +458,14 @@ class Orchestrator:
         log_file = self.project_root / "council_orchestrator" / "orchestrator.log"
 
         # Create logger
-        self.logger = logging.getLogger('orchestrator')
+        self.logger = logging.getLogger("orchestrator")
         self.logger.setLevel(logging.INFO)
 
         # Clear any existing handlers
         self.logger.handlers.clear()
 
         # File handler (overwrites each session)
-        file_handler = logging.FileHandler(log_file, mode='w')
+        file_handler = logging.FileHandler(log_file, mode="w")
         file_handler.setLevel(logging.INFO)
 
         # Console handler (for terminal output)
@@ -440,8 +474,8 @@ class Orchestrator:
 
         # Formatter
         formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
         file_handler.setFormatter(formatter)
         console_handler.setFormatter(formatter)
@@ -456,7 +490,9 @@ class Orchestrator:
 
     def setup_event_logging(self):
         """Initialize structured JSON event logging system for observability."""
-        self.event_log_path = self.project_root / "council_orchestrator" / "events.jsonl"
+        self.event_log_path = (
+            self.project_root / "council_orchestrator" / "events.jsonl"
+        )
         self.run_id = f"run_{int(time.time())}_{hashlib.md5(str(time.time()).encode()).hexdigest()[:8]}"
         self.event_buffer = []
         self.logger.info(f"Event logging initialized - Run ID: {self.run_id}")
@@ -488,7 +524,7 @@ class Orchestrator:
             "ts": time.time(),
             "run_id": self.run_id,
             "event_type": event_type,
-            **kwargs
+            **kwargs,
         }
 
         # Write to buffer and flush to file
@@ -498,14 +534,17 @@ class Orchestrator:
         # Log to console for real-time monitoring
         if event_type == "member_response":
             status_emoji = "✅" if kwargs.get("status") == "success" else "❌"
-            print(f"{status_emoji} [{kwargs.get('role', 'unknown')}] Round {kwargs.get('round', '?')} - {kwargs.get('latency_ms', 0)}ms", flush=True)
+            print(
+                f"{status_emoji} [{kwargs.get('role', 'unknown')}] Round {kwargs.get('round', '?')} - {kwargs.get('latency_ms', 0)}ms",
+                flush=True,
+            )
 
     def _flush_events(self):
         """Flush buffered events to JSONL file."""
         try:
-            with open(self.event_log_path, 'a', encoding='utf-8') as f:
+            with open(self.event_log_path, "a", encoding="utf-8") as f:
                 for event in self.event_buffer:
-                    f.write(json.dumps(event, default=str) + '\n')
+                    f.write(json.dumps(event, default=str) + "\n")
             self.event_buffer.clear()
         except Exception as e:
             print(f"[EVENT LOG ERROR] Failed to write events: {e}")
@@ -516,12 +555,14 @@ class Orchestrator:
         round_events = []
         if self.event_log_path.exists():
             try:
-                with open(self.event_log_path, 'r', encoding='utf-8') as f:
+                with open(self.event_log_path, "r", encoding="utf-8") as f:
                     for line in f:
                         event = json.loads(line.strip())
-                        if (event.get("run_id") == self.run_id and
-                            event.get("round") == round_num and
-                            event.get("event_type") == "member_response"):
+                        if (
+                            event.get("run_id") == self.run_id
+                            and event.get("round") == round_num
+                            and event.get("event_type") == "member_response"
+                        ):
                             round_events.append(event)
             except Exception as e:
                 print(f"[AGGREGATION ERROR] Failed to read round events: {e}")
@@ -533,7 +574,9 @@ class Orchestrator:
         # Calculate round metrics
         total_members = len(round_events)
         successful_responses = [e for e in round_events if e.get("status") == "success"]
-        success_rate = len(successful_responses) / total_members if total_members > 0 else 0
+        success_rate = (
+            len(successful_responses) / total_members if total_members > 0 else 0
+        )
 
         # Consensus detection (simplified - can be enhanced)
         votes = [e.get("vote") for e in successful_responses if e.get("vote")]
@@ -563,9 +606,16 @@ class Orchestrator:
             "novelty_distribution": novelty_counts,
             "early_exit": early_exit,
             "exit_reason": exit_reason,
-            "avg_latency": sum(e.get("latency_ms", 0) for e in successful_responses) / len(successful_responses) if successful_responses else 0,
+            "avg_latency": (
+                sum(e.get("latency_ms", 0) for e in successful_responses)
+                / len(successful_responses)
+                if successful_responses
+                else 0
+            ),
             "total_tokens_in": sum(e.get("tokens_in", 0) for e in successful_responses),
-            "total_tokens_out": sum(e.get("tokens_out", 0) for e in successful_responses)
+            "total_tokens_out": sum(
+                e.get("tokens_out", 0) for e in successful_responses
+            ),
         }
 
     def _classify_response_type(self, response: str, role: str) -> str:
@@ -574,19 +624,36 @@ class Orchestrator:
 
         # Role-based classification
         if role == "COORDINATOR":
-            if any(word in response_lower for word in ["plan", "strategy", "coordinate", "organize"]):
+            if any(
+                word in response_lower
+                for word in ["plan", "strategy", "coordinate", "organize"]
+            ):
                 return "strategy"
-            elif any(word in response_lower for word in ["analysis", "evaluate", "assess"]):
+            elif any(
+                word in response_lower for word in ["analysis", "evaluate", "assess"]
+            ):
                 return "analysis"
         elif role == "STRATEGIST":
-            if any(word in response_lower for word in ["propose", "suggest", "recommend", "solution"]):
+            if any(
+                word in response_lower
+                for word in ["propose", "suggest", "recommend", "solution"]
+            ):
                 return "proposal"
-            elif any(word in response_lower for word in ["design", "architecture", "structure"]):
+            elif any(
+                word in response_lower
+                for word in ["design", "architecture", "structure"]
+            ):
                 return "design"
         elif role == "AUDITOR":
-            if any(word in response_lower for word in ["review", "audit", "validate", "verify"]):
+            if any(
+                word in response_lower
+                for word in ["review", "audit", "validate", "verify"]
+            ):
                 return "critique"
-            elif any(word in response_lower for word in ["risk", "concern", "issue", "problem"]):
+            elif any(
+                word in response_lower
+                for word in ["risk", "concern", "issue", "problem"]
+            ):
                 return "analysis"
 
         # Content-based fallback
@@ -611,15 +678,24 @@ class Orchestrator:
             score -= 0.3
 
         # Structure indicators
-        if any(indicator in response.lower() for indicator in ["therefore", "however", "furthermore", "conclusion"]):
+        if any(
+            indicator in response.lower()
+            for indicator in ["therefore", "however", "furthermore", "conclusion"]
+        ):
             score += 0.1
 
         # Evidence of reasoning
-        if any(word in response.lower() for word in ["because", "due to", "based on", "considering"]):
+        if any(
+            word in response.lower()
+            for word in ["because", "due to", "based on", "considering"]
+        ):
             score += 0.1
 
         # Actionable content
-        if any(word in response.lower() for word in ["recommend", "suggest", "propose", "should"]):
+        if any(
+            word in response.lower()
+            for word in ["recommend", "suggest", "propose", "should"]
+        ):
             score += 0.1
 
         return max(0.0, min(1.0, score))
@@ -629,13 +705,25 @@ class Orchestrator:
         response_lower = response.lower()
 
         # Look for explicit votes
-        if any(phrase in response_lower for phrase in ["i approve", "approved", "accept", "agree"]):
+        if any(
+            phrase in response_lower
+            for phrase in ["i approve", "approved", "accept", "agree"]
+        ):
             return "approve"
-        elif any(phrase in response_lower for phrase in ["i reject", "rejected", "decline", "disagree"]):
+        elif any(
+            phrase in response_lower
+            for phrase in ["i reject", "rejected", "decline", "disagree"]
+        ):
             return "reject"
-        elif any(phrase in response_lower for phrase in ["revise", "modify", "change", "adjust"]):
+        elif any(
+            phrase in response_lower
+            for phrase in ["revise", "modify", "change", "adjust"]
+        ):
             return "revise"
-        elif any(phrase in response_lower for phrase in ["proceed", "continue", "move forward"]):
+        elif any(
+            phrase in response_lower
+            for phrase in ["proceed", "continue", "move forward"]
+        ):
             return "proceed"
 
         return "neutral"
@@ -646,7 +734,11 @@ class Orchestrator:
         response_words = set(response.lower().split())
         context_words = set(context.lower().split())
 
-        overlap_ratio = len(response_words.intersection(context_words)) / len(response_words) if response_words else 0
+        overlap_ratio = (
+            len(response_words.intersection(context_words)) / len(response_words)
+            if response_words
+            else 0
+        )
 
         if overlap_ratio < 0.3:
             return "fast"  # High novelty - fast memory
@@ -660,12 +752,17 @@ class Orchestrator:
         reasons = []
 
         # Look for common reasoning patterns
-        sentences = response.split('.')
+        sentences = response.split(".")
         for sentence in sentences:
             sentence = sentence.strip().lower()
-            if any(word in sentence for word in ["because", "due to", "since", "as", "therefore"]):
+            if any(
+                word in sentence
+                for word in ["because", "due to", "since", "as", "therefore"]
+            ):
                 if len(sentence) > 10:  # Filter out very short fragments
-                    reasons.append(sentence[:100] + "..." if len(sentence) > 100 else sentence)
+                    reasons.append(
+                        sentence[:100] + "..." if len(sentence) > 100 else sentence
+                    )
 
         return reasons[:3]  # Limit to top 3 reasons
 
@@ -675,11 +772,12 @@ class Orchestrator:
 
         # Look for quoted text
         import re
+
         quotes = re.findall(r'"([^"]*)"', response)
         citations.extend(quotes)
 
         # Look for file references
-        file_refs = re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\.[a-zA-Z]+\b', response)
+        file_refs = re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*\.[a-zA-Z]+\b", response)
         citations.extend(file_refs)
 
         return citations[:5]  # Limit to top 5 citations
@@ -691,7 +789,7 @@ class Orchestrator:
             structured_query = {
                 "entities": self._extract_entities(task),
                 "date_filters": [],
-                "path_filters": [".md", ".py", ".json"]
+                "path_filters": [".md", ".py", ".json"],
             }
 
             # Get parent documents (simplified - would use actual retriever)
@@ -700,7 +798,7 @@ class Orchestrator:
             return {
                 "structured_query": structured_query,
                 "parent_docs": parent_docs,
-                "retrieval_latency_ms": 50  # Placeholder
+                "retrieval_latency_ms": 50,  # Placeholder
             }
         except Exception as e:
             return {"error": str(e)}
@@ -709,7 +807,9 @@ class Orchestrator:
         """Get CAG (Cache as Learning) data for round packet."""
         try:
             # Generate cache key from prompt and engine
-            query_key = hashlib.sha256(f"{prompt}:{engine_type}".encode()).hexdigest()[:16]
+            query_key = hashlib.sha256(f"{prompt}:{engine_type}".encode()).hexdigest()[
+                :16
+            ]
 
             # Check cache (simplified - would use actual cache DB)
             cache_hit = False
@@ -720,7 +820,7 @@ class Orchestrator:
             return {
                 "query_key": query_key,
                 "cache_hit": cache_hit,
-                "hit_streak": hit_streak
+                "hit_streak": hit_streak,
             }
         except Exception as e:
             return {"error": str(e)}
@@ -731,7 +831,11 @@ class Orchestrator:
             response_words = set(response.lower().split())
             context_words = set(context.lower().split())
 
-            overlap_ratio = len(response_words.intersection(context_words)) / len(response_words) if response_words else 0
+            overlap_ratio = (
+                len(response_words.intersection(context_words)) / len(response_words)
+                if response_words
+                else 0
+            )
 
             if overlap_ratio < 0.3:
                 signal = "high"
@@ -746,12 +850,14 @@ class Orchestrator:
             return {
                 "is_novel": is_novel,
                 "signal": signal,
-                "conflicts_with": []  # Would check against cached answers
+                "conflicts_with": [],  # Would check against cached answers
             }
         except Exception as e:
             return {"error": str(e)}
 
-    def _determine_memory_directive(self, response: str, citations: List[Dict[str, str]]) -> Dict[str, str]:
+    def _determine_memory_directive(
+        self, response: str, citations: List[Dict[str, str]]
+    ) -> Dict[str, str]:
         """Determine memory placement directive based on response characteristics."""
         try:
             # Simple rules-based memory placement
@@ -769,10 +875,7 @@ class Orchestrator:
                 tier = "fast"
                 justification = "Ephemeral response, low evidence requirement"
 
-            return {
-                "tier": tier,
-                "justification": justification
-            }
+            return {"tier": tier, "justification": justification}
         except Exception as e:
             return {"tier": "fast", "justification": f"Error in analysis: {str(e)}"}
 
@@ -792,28 +895,32 @@ class Orchestrator:
         # For now, return placeholder paths
         return [
             "01_PROTOCOLS/00_Prometheus_Protocol.md",
-            "01_PROTOCOLS/05_Chrysalis_Protocol.md"
+            "01_PROTOCOLS/05_Chrysalis_Protocol.md",
         ]
 
     def _verify_briefing_attestation(self, packet: dict) -> bool:
         """Verifies the integrity of the briefing packet using its SHA256 hash."""
         if "attestation_hash" not in packet.get("metadata", {}):
-            print("[CRITICAL] Attestation hash missing from briefing packet. REJECTING.")
+            print(
+                "[CRITICAL] Attestation hash missing from briefing packet. REJECTING."
+            )
             return False
 
         stored_hash = packet["metadata"]["attestation_hash"]
 
         packet_for_hashing = {k: v for k, v in packet.items() if k != "metadata"}
 
-        canonical_string = json.dumps(packet_for_hashing, sort_keys=True, separators=(',', ':'))
-        calculated_hash = hashlib.sha256(canonical_string.encode('utf-8')).hexdigest()
+        canonical_string = json.dumps(
+            packet_for_hashing, sort_keys=True, separators=(",", ":")
+        )
+        calculated_hash = hashlib.sha256(canonical_string.encode("utf-8")).hexdigest()
 
         return stored_hash == calculated_hash
 
     def _enhance_briefing_with_context(self, task_description: str):
         """Parse task_description for file paths and add their contents to briefing_packet.json."""
         # Regex to find file paths containing '/' and ending with file extension
-        path_pattern = r'([A-Za-z][A-Za-z0-9_]*/(?:[A-Za-z][A-ZaZ0-9_]*/)*[A-Za-z][A-Za-z0-9_]*\.[a-zA-Z0-9]+)'
+        path_pattern = r"([A-Za-z][A-Za-z0-9_]*/(?:[A-Za-z][A-ZaZ0-9_]*/)*[A-Za-z][A-Za-z0-9_]*\.[a-zA-Z0-9]+)"
         matches = re.findall(path_pattern, task_description)
         context = {}
         for match in matches:
@@ -830,12 +937,17 @@ class Orchestrator:
                 raise FileNotFoundError(f"Context file {match} not found.")
 
         if context:
-            briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+            briefing_path = (
+                self.project_root
+                / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+            )
             if briefing_path.exists():
                 packet = json.loads(briefing_path.read_text(encoding="utf-8"))
                 packet["context"] = context
                 briefing_path.write_text(json.dumps(packet, indent=2), encoding="utf-8")
-                print(f"[+] Context from {len(context)} files added to briefing packet.")
+                print(
+                    f"[+] Context from {len(context)} files added to briefing packet."
+                )
             else:
                 print("[!] briefing_packet.json not found for context enhancement.")
 
@@ -848,12 +960,17 @@ class Orchestrator:
             print(f"[!] Error generating briefing packet: {e}")
             return
 
-        briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+        briefing_path = (
+            self.project_root
+            / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+        )
         if briefing_path.exists():
             try:
                 packet = json.loads(briefing_path.read_text(encoding="utf-8"))
                 if not self._verify_briefing_attestation(packet):
-                    raise Exception("CRITICAL: Context Integrity Breach. Briefing packet failed attestation. Task aborted.")
+                    raise Exception(
+                        "CRITICAL: Context Integrity Breach. Briefing packet failed attestation. Task aborted."
+                    )
                 for agent in self.agents.values():
                     context_str = ""
                     if "context" in packet:
@@ -869,7 +986,9 @@ class Orchestrator:
                     )
                     # V5.1: Seal the final vulnerability - apply distillation to briefing packets
                     # The Doctrine of Universal Integrity requires ALL payloads to be checked
-                    prepared_briefing = self._prepare_input_for_engine(system_msg, engine_type, "Briefing Packet Injection")
+                    prepared_briefing = self._prepare_input_for_engine(
+                        system_msg, engine_type, "Briefing Packet Injection"
+                    )
                     agent.query(prepared_briefing, self.token_regulator, engine_type)
                 print(f"[+] Briefing packet injected into {len(self.agents)} agents.")
             except Exception as e:
@@ -877,7 +996,10 @@ class Orchestrator:
 
     def archive_briefing_packet(self):
         """Archive briefing packet after deliberation completes."""
-        briefing_path = self.project_root / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+        briefing_path = (
+            self.project_root
+            / "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json"
+        )
         if briefing_path.exists():
             timestamp = time.strftime("%Y%m%d_%H%M%S")
             archive_dir = self.project_root / f"ARCHIVE/council_memory_sync_{timestamp}"
@@ -892,7 +1014,7 @@ class Orchestrator:
             "project_name": command.get("project_name", "unnamed_project"),
             "original_command": command,
             "approved_artifacts": {},
-            "created_at": time.strftime("%Y-%m-%d %H:%M:%S")
+            "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
         state_file.write_text(json.dumps(state, indent=2))
 
@@ -906,13 +1028,20 @@ class Orchestrator:
         original_config = command.get("config", {})
         requirements_command = {
             "task_description": f"Generate detailed requirements document for the project: {command['task_description']}. Include functional requirements, technical constraints, and success criteria.",
-            "input_artifacts": command.get("input_artifacts", []),  # INHERIT from parent
+            "input_artifacts": command.get(
+                "input_artifacts", []
+            ),  # INHERIT from parent
             "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/requirements.md",
-            "config": {"max_rounds": 3, **original_config}
+            "config": {"max_rounds": 3, **original_config},
         }
 
-        print(f"[*] Starting new development cycle for '{state['project_name']}' with Doctrine of Implied Intent.", flush=True)
-        print(f"[*] Development cycle inheriting {len(requirements_command.get('input_artifacts', []))} input artifacts from parent command.")
+        print(
+            f"[*] Starting new development cycle for '{state['project_name']}' with Doctrine of Implied Intent.",
+            flush=True,
+        )
+        print(
+            f"[*] Development cycle inheriting {len(requirements_command.get('input_artifacts', []))} input artifacts from parent command."
+        )
         print(f"[*] Generating requirements...", flush=True)
         await self.execute_task(requirements_command)
 
@@ -920,17 +1049,25 @@ class Orchestrator:
         print(f"[*] Requirements complete. Generating technical design...", flush=True)
         tech_design_command = {
             "task_description": f"Based on the approved requirements, generate a detailed technical design document. Include architecture decisions, data flow, and implementation approach.",
-            "input_artifacts": [f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/requirements.md"],
+            "input_artifacts": [
+                f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/requirements.md"
+            ],
             "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/tech_design.md",
-            "config": {"max_rounds": 3, **original_config}
+            "config": {"max_rounds": 3, **original_config},
         }
         await self.execute_task(tech_design_command)
 
         # V7.1: Only now set state to awaiting approval - after both artifacts are complete
         state["current_stage"] = "AWAITING_APPROVAL_TECH_DESIGN"
         state_file.write_text(json.dumps(state, indent=2))
-        print(f"[*] Technical design generated. Complete proposal ready for Guardian review.", flush=True)
-        print(f"[*] Awaiting Guardian approval on comprehensive proposal (requirements + tech design).", flush=True)
+        print(
+            f"[*] Technical design generated. Complete proposal ready for Guardian review.",
+            flush=True,
+        )
+        print(
+            f"[*] Awaiting Guardian approval on comprehensive proposal (requirements + tech design).",
+            flush=True,
+        )
 
     async def _advance_cycle(self, state_file):
         """Advances the development cycle to the next stage."""
@@ -938,23 +1075,41 @@ class Orchestrator:
 
         if state["current_stage"] == "AWAITING_APPROVAL_REQUIREMENTS":
             # Ingest approved requirements into Cortex
-            requirements_path = self.project_root / state["approved_artifacts"].get("requirements", "")
+            requirements_path = self.project_root / state["approved_artifacts"].get(
+                "requirements", ""
+            )
             if requirements_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if requirements_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "tools" / "scaffolds" / "ingest.py")], check=True)
-                    print(f"[*] Approved requirements ingested into Mnemonic Cortex.", flush=True)
+                    subprocess.run(
+                        [
+                            sys.executable,
+                            str(
+                                self.project_root / "tools" / "scaffolds" / "ingest.py"
+                            ),
+                        ],
+                        check=True,
+                    )
+                    print(
+                        f"[*] Approved requirements ingested into Mnemonic Cortex.",
+                        flush=True,
+                    )
                 else:
-                    print(f"[!] Requirements path is not a file: {requirements_path}. Skipping ingestion.", flush=True)
+                    print(
+                        f"[!] Requirements path is not a file: {requirements_path}. Skipping ingestion.",
+                        flush=True,
+                    )
 
             # Move to tech design
             state["current_stage"] = "GENERATING_TECH_DESIGN"
             original_config = state["original_command"].get("config", {})
             tech_design_command = {
                 "task_description": f"Based on the approved requirements, generate a detailed technical design document. Include architecture decisions, data flow, and implementation approach.",
-                "input_artifacts": [state["approved_artifacts"].get("requirements", "")],
+                "input_artifacts": [
+                    state["approved_artifacts"].get("requirements", "")
+                ],
                 "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/tech_design.md",
-                "config": {"max_rounds": 3, **original_config}
+                "config": {"max_rounds": 3, **original_config},
             }
             await self.execute_task(tech_design_command)
             state["current_stage"] = "AWAITING_APPROVAL_TECH_DESIGN"
@@ -963,14 +1118,30 @@ class Orchestrator:
 
         elif state["current_stage"] == "AWAITING_APPROVAL_TECH_DESIGN":
             # Ingest approved tech design into Cortex
-            tech_design_path = self.project_root / state["approved_artifacts"].get("tech_design", "")
+            tech_design_path = self.project_root / state["approved_artifacts"].get(
+                "tech_design", ""
+            )
             if tech_design_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if tech_design_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "tools" / "scaffolds" / "ingest.py")], check=True)
-                    print(f"[*] Approved tech design ingested into Mnemonic Cortex.", flush=True)
+                    subprocess.run(
+                        [
+                            sys.executable,
+                            str(
+                                self.project_root / "tools" / "scaffolds" / "ingest.py"
+                            ),
+                        ],
+                        check=True,
+                    )
+                    print(
+                        f"[*] Approved tech design ingested into Mnemonic Cortex.",
+                        flush=True,
+                    )
                 else:
-                    print(f"[!] Tech design path is not a file: {tech_design_path}. Skipping ingestion.", flush=True)
+                    print(
+                        f"[!] Tech design path is not a file: {tech_design_path}. Skipping ingestion.",
+                        flush=True,
+                    )
 
             # Move to code generation
             state["current_stage"] = "GENERATING_CODE"
@@ -979,12 +1150,14 @@ class Orchestrator:
                 "task_description": f"Based on the approved technical design, generate production-ready code. Output a JSON object with 'target_file_path', 'new_content', and 'commit_message' fields.",
                 "input_artifacts": [state["approved_artifacts"].get("tech_design", "")],
                 "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/code_proposal.json",
-                "config": {"max_rounds": 3, **original_config}
+                "config": {"max_rounds": 3, **original_config},
             }
             await self.execute_task(code_command)
             state["current_stage"] = "AWAITING_APPROVAL_CODE"
             state_file.write_text(json.dumps(state, indent=2))
-            print(f"[*] Code proposal generated. Awaiting Guardian approval.", flush=True)
+            print(
+                f"[*] Code proposal generated. Awaiting Guardian approval.", flush=True
+            )
 
         elif state["current_stage"] == "AWAITING_APPROVAL_CODE":
             # Final stage: propose code change
@@ -993,7 +1166,10 @@ class Orchestrator:
     async def _propose_code_change(self, state_file):
         """Creates a PR with the approved code changes."""
         state = json.loads(state_file.read_text())
-        code_proposal_path = self.project_root / f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/code_proposal.json"
+        code_proposal_path = (
+            self.project_root
+            / f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/code_proposal.json"
+        )
 
         if not code_proposal_path.exists():
             print("[!] Code proposal file not found. Cannot proceed.", flush=True)
@@ -1006,30 +1182,48 @@ class Orchestrator:
 
         # Create feature branch
         branch_name = f"feature/{state['project_name']}"
-        subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
+        subprocess.run(["git", "checkout", "-b", branch_name], check=True)
 
         # Write the new code
         target_file.parent.mkdir(parents=True, exist_ok=True)
         target_file.write_text(new_content)
 
         # Commit and push
-        subprocess.run(['git', 'add', str(target_file)], check=True)
-        subprocess.run(['git', 'commit', '-m', commit_message], check=True)
-        subprocess.run(['git', 'push', '-u', 'origin', branch_name], check=True)
+        subprocess.run(["git", "add", str(target_file)], check=True)
+        subprocess.run(["git", "commit", "-m", commit_message], check=True)
+        subprocess.run(["git", "push", "-u", "origin", branch_name], check=True)
 
         # Create PR (assuming gh CLI is available)
         pr_title = f"feat: {state['project_name']} - {commit_message}"
-        subprocess.run(['gh', 'pr', 'create', '--title', pr_title, '--body', f"Auto-generated PR for {state['project_name']}"], check=True)
+        subprocess.run(
+            [
+                "gh",
+                "pr",
+                "create",
+                "--title",
+                pr_title,
+                "--body",
+                f"Auto-generated PR for {state['project_name']}",
+            ],
+            check=True,
+        )
 
-        print(f"[*] Pull request created for '{state['project_name']}'. Development cycle complete.", flush=True)
+        print(
+            f"[*] Pull request created for '{state['project_name']}'. Development cycle complete.",
+            flush=True,
+        )
 
         # Clean up state file
         state_file.unlink()
 
     def _handle_knowledge_request(self, response_text: str):
         """Handles knowledge requests from agents, including Cortex queries."""
-        file_match = re.search(r"\[ORCHESTRATOR_REQUEST: READ_FILE\((.*?)\)\]", response_text)
-        query_match = re.search(r"\[ORCHESTRATOR_REQUEST: QUERY_CORTEX\((.*?)\)\]", response_text)
+        file_match = re.search(
+            r"\[ORCHESTRATOR_REQUEST: READ_FILE\((.*?)\)\]", response_text
+        )
+        query_match = re.search(
+            r"\[ORCHESTRATOR_REQUEST: QUERY_CORTEX\((.*?)\)\]", response_text
+        )
 
         if file_match:
             # Existing file reading logic
@@ -1052,12 +1246,17 @@ class Orchestrator:
                 return error_message
 
             self.cortex_query_count += 1
-            print(f"[ORCHESTRATOR] Agent requested Cortex query: '{query_text}' ({self.cortex_query_count}/{self.max_cortex_queries})", flush=True)
+            print(
+                f"[ORCHESTRATOR] Agent requested Cortex query: '{query_text}' ({self.cortex_query_count}/{self.max_cortex_queries})",
+                flush=True,
+            )
 
             try:
-                results = self.cortex_collection.query(query_texts=[query_text], n_results=3)
+                results = self.cortex_collection.query(
+                    query_texts=[query_text], n_results=3
+                )
                 context = "CONTEXT_PROVIDED: Here are the top 3 results from the Mnemonic Cortex for your query:\n\n"
-                for doc in results['documents'][0]:
+                for doc in results["documents"][0]:
                     context += f"---\n{doc}\n---\n"
                 return context
             except Exception as e:
@@ -1067,14 +1266,22 @@ class Orchestrator:
 
         return None
 
-    async def generate_aar(self, completed_task_log_path: Path, original_command_config: dict = None):
+    async def generate_aar(
+        self, completed_task_log_path: Path, original_command_config: dict = None
+    ):
         """Generates a structured AAR from a completed task log, inheriting config from the original command."""
         if not completed_task_log_path.exists():
-            print(f"[!] AAR WARNING: Log file not found at {completed_task_log_path}. Skipping AAR generation.", flush=True)
+            print(
+                f"[!] AAR WARNING: Log file not found at {completed_task_log_path}. Skipping AAR generation.",
+                flush=True,
+            )
             return
 
         timestamp = time.strftime("%Y%m%d_%H%M%S")
-        aar_output_path = self.project_root / f"MNEMONIC_SYNTHESIS/AAR/aar_{completed_task_log_path.stem}_{timestamp}.md"
+        aar_output_path = (
+            self.project_root
+            / f"MNEMONIC_SYNTHESIS/AAR/aar_{completed_task_log_path.stem}_{timestamp}.md"
+        )
 
         # --- RESOURCE SOVEREIGNTY: INHERIT CONFIG FROM ORIGINAL COMMAND ---
         # AAR generation must use the same resilient substrate as the task itself
@@ -1083,23 +1290,38 @@ class Orchestrator:
             # Inherit force_engine and other critical parameters
             if "force_engine" in original_command_config:
                 aar_config["force_engine"] = original_command_config["force_engine"]
-                print(f"[*] AAR inheriting force_engine: {original_command_config['force_engine']}")
+                print(
+                    f"[*] AAR inheriting force_engine: {original_command_config['force_engine']}"
+                )
             if "max_cortex_queries" in original_command_config:
-                aar_config["max_cortex_queries"] = original_command_config["max_cortex_queries"]
+                aar_config["max_cortex_queries"] = original_command_config[
+                    "max_cortex_queries"
+                ]
 
         aar_command = {
             "task_description": "Synthesize a structured After-Action Report (AAR) from the attached task log. Sections: Objective, Outcome, Key Learnings, Mnemonic Impact.",
-            "input_artifacts": [str(completed_task_log_path.relative_to(self.project_root))],
+            "input_artifacts": [
+                str(completed_task_log_path.relative_to(self.project_root))
+            ],
             "output_artifact_path": str(aar_output_path.relative_to(self.project_root)),
-            "config": aar_config
+            "config": aar_config,
         }
-        print(f"[*] AAR Command forged. Output will be saved to {aar_output_path.name}", flush=True)
+        print(
+            f"[*] AAR Command forged. Output will be saved to {aar_output_path.name}",
+            flush=True,
+        )
 
         # V9.2 DOCTRINE OF SOVEREIGN CONCURRENCY: Execute AAR in background thread
         # This allows mechanical tasks to be processed immediately without waiting for learning cycle
         import asyncio
-        aar_task = asyncio.create_task(self._execute_aar_background(aar_command, aar_output_path))
-        print(f"[*] AAR task dispatched to background processing (non-blocking)", flush=True)
+
+        aar_task = asyncio.create_task(
+            self._execute_aar_background(aar_command, aar_output_path)
+        )
+        print(
+            f"[*] AAR task dispatched to background processing (non-blocking)",
+            flush=True,
+        )
 
     async def _execute_aar_background_full(self, log_file_path, original_config):
         """V9.3: Execute complete AAR generation and ingestion asynchronously."""
@@ -1108,7 +1330,10 @@ class Orchestrator:
 
             # Generate AAR using existing logic but asynchronously
             timestamp = time.strftime("%Y%m%d_%H%M%S")
-            aar_output_path = self.project_root / f"MNEMONIC_SYNTHESIS/AAR/aar_{log_file_path.stem}_{timestamp}.md"
+            aar_output_path = (
+                self.project_root
+                / f"MNEMONIC_SYNTHESIS/AAR/aar_{log_file_path.stem}_{timestamp}.md"
+            )
 
             # Create AAR command
             aar_config = {"max_rounds": 2}
@@ -1116,13 +1341,17 @@ class Orchestrator:
                 if "force_engine" in original_config:
                     aar_config["force_engine"] = original_config["force_engine"]
                 if "max_cortex_queries" in original_config:
-                    aar_config["max_cortex_queries"] = original_config["max_cortex_queries"]
+                    aar_config["max_cortex_queries"] = original_config[
+                        "max_cortex_queries"
+                    ]
 
             aar_command = {
                 "task_description": "Synthesize a structured After-Action Report (AAR) from the attached task log. Sections: Objective, Outcome, Key Learnings, Mnemonic Impact.",
                 "input_artifacts": [str(log_file_path.relative_to(self.project_root))],
-                "output_artifact_path": str(aar_output_path.relative_to(self.project_root)),
-                "config": aar_config
+                "output_artifact_path": str(
+                    aar_output_path.relative_to(self.project_root)
+                ),
+                "config": aar_config,
             }
 
             # Execute AAR task
@@ -1130,15 +1359,21 @@ class Orchestrator:
             self.logger.info(f"Background AAR: Synthesis complete - {aar_output_path}")
 
             # Ingest into Mnemonic Cortex
-            self.logger.info("Background AAR: Starting ingestion into Mnemonic Cortex...")
-            ingestion_script_path = self.project_root / "tools" / "scaffolds" / "ingest.py"
+            self.logger.info(
+                "Background AAR: Starting ingestion into Mnemonic Cortex..."
+            )
+            ingestion_script_path = (
+                self.project_root / "tools" / "scaffolds" / "ingest.py"
+            )
             full_aar_path = self.project_root / aar_output_path
 
             result = await asyncio.create_subprocess_exec(
-                sys.executable, str(ingestion_script_path), str(full_aar_path),
+                sys.executable,
+                str(ingestion_script_path),
+                str(full_aar_path),
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
-                cwd=self.project_root
+                cwd=self.project_root,
             )
 
             stdout, stderr = await result.communicate()
@@ -1147,7 +1382,9 @@ class Orchestrator:
                 self.logger.info("Background AAR: Ingestion successful")
                 self.logger.info(f"Ingestion output: {stdout.decode().strip()}")
             else:
-                self.logger.error(f"Background AAR: Ingestion failed - {stderr.decode().strip()}")
+                self.logger.error(
+                    f"Background AAR: Ingestion failed - {stderr.decode().strip()}"
+                )
 
         except Exception as e:
             self.logger.error(f"Background AAR: Processing failed - {e}")
@@ -1158,11 +1395,11 @@ class Orchestrator:
             try:
                 # Map engine types to tiktoken models
                 model_map = {
-                    'openai': 'gpt-4',
-                    'gemini': 'gpt-4',  # Approximation
-                    'ollama': 'gpt-4'   # Approximation
+                    "openai": "gpt-4",
+                    "gemini": "gpt-4",  # Approximation
+                    "ollama": "gpt-4",  # Approximation
                 }
-                model = model_map.get(engine_type, 'gpt-4')
+                model = model_map.get(engine_type, "gpt-4")
                 encoding = tiktoken.encoding_for_model(model)
                 return len(encoding.encode(text))
             except Exception as e:
@@ -1174,16 +1411,21 @@ class Orchestrator:
 
     def _distill_with_local_engine(self, large_text: str, task_description: str) -> str:
         """Uses the local Ollama engine to summarize large text before sending to primary engine."""
-        print("[ORCHESTRATOR] Input exceeds token limit. Distilling with local Ollama engine...")
+        print(
+            "[ORCHESTRATOR] Input exceeds token limit. Distilling with local Ollama engine..."
+        )
 
         # Create a temporary Ollama engine for distillation
         # 4. Distillation Engine: Uses council_orchestrator/cognitive_engines/ollama_engine.py
         from substrate_monitor import select_engine
+
         local_config = {"force_engine": "ollama"}
         local_engine = select_engine(local_config)
 
         if not local_engine:
-            print("[ERROR] Could not initialize local distillation engine. Truncating input.")
+            print(
+                "[ERROR] Could not initialize local distillation engine. Truncating input."
+            )
             return large_text[:40000] + "\n\n[CONTENT TRUNCATED DUE TO TOKEN LIMITS]"
 
         # Create temporary agent for distillation - use the engine directly without PersonaAgent wrapper
@@ -1203,17 +1445,24 @@ class Orchestrator:
             return distilled_summary
         except Exception as e:
             print(f"[ERROR] Distillation failed: {e}. Truncating input.")
-            return large_text[:40000] + "\n\n[CONTENT TRUNCATED DUE TO DISTILLATION FAILURE]"
+            return (
+                large_text[:40000]
+                + "\n\n[CONTENT TRUNCATED DUE TO DISTILLATION FAILURE]"
+            )
 
-    def _prepare_input_for_engine(self, text: str, engine_type: str, task_description: str) -> str:
+    def _prepare_input_for_engine(
+        self, text: str, engine_type: str, task_description: str
+    ) -> str:
         """Checks token count and distills if necessary using the Two-Tier Distillation Engine."""
 
         # --- V4.4 DEADLOCK BYPASS ---
         # The sovereign local engine (Ollama) is not subject to token limits or financial constraints.
         # Attempting to distill with Ollama for Ollama creates a resource deadlock.
         # Bypass all distillation logic when the target engine is our local substrate.
-        if engine_type == 'ollama':
-            print(f"[ORCHESTRATOR] Using sovereign local engine (Ollama). Bypassing distillation - full context preserved.")
+        if engine_type == "ollama":
+            print(
+                f"[ORCHESTRATOR] Using sovereign local engine (Ollama). Bypassing distillation - full context preserved."
+            )
             return text
 
         # --- V5.0 MANDATE 3: UN-BLIND THE DISTILLER ---
@@ -1222,7 +1471,7 @@ class Orchestrator:
         # Correct logic: Parse the nested structure for per_request_limit.
         engine_config = self.engine_limits.get(engine_type, {})
         if isinstance(engine_config, dict):
-            limit = engine_config.get('per_request_limit', 100000)
+            limit = engine_config.get("per_request_limit", 100000)
         else:
             # Backward compatibility for flat structure
             limit = engine_config
@@ -1231,11 +1480,13 @@ class Orchestrator:
         token_count = self._get_token_count(text, engine_type)
 
         if token_count > limit:
-            print(f"[ORCHESTRATOR] WARNING: Token count ({token_count:.0f}) exceeds per-request limit for {engine_type} ({limit}).")
+            print(
+                f"[ORCHESTRATOR] WARNING: Token count ({token_count:.0f}) exceeds per-request limit for {engine_type} ({limit})."
+            )
             return self._distill_with_local_engine(text, task_description)
         else:
             return text
-    
+
     def _get_engine_type(self, engine) -> str:
         """
         Determine the engine type from an engine instance.
@@ -1247,7 +1498,7 @@ class Orchestrator:
         Returns:
             str: The engine type ('openai', 'gemini', 'ollama', or 'unknown')
         """
-        if not engine or not hasattr(engine, '__class__'):
+        if not engine or not hasattr(engine, "__class__"):
             return "unknown"
 
         engine_name = type(engine).__name__.lower()
@@ -1300,12 +1551,13 @@ class Orchestrator:
             command: Command dictionary containing 'git_operations' with files_to_add, commit_message, push_to_origin
         """
         # DOCTRINE OF THE BLUNTED SWORD: Hardcoded whitelist of permitted Git commands
-        WHITELISTED_GIT_COMMANDS = ['add', 'commit', 'push']
+        WHITELISTED_GIT_COMMANDS = ["add", "commit", "push"]
 
         git_ops = command["git_operations"]
         files_to_add = git_ops["files_to_add"]
         commit_message = git_ops["commit_message"]
         push_to_origin = git_ops.get("push_to_origin", False)
+        no_verify = git_ops.get("no_verify", False)
 
         # --- PROTOCOL 101: AUTO-GENERATE MANIFEST ---
         # Automatically compute SHA-256 hashes for all files and create commit_manifest.json
@@ -1314,21 +1566,22 @@ class Orchestrator:
             full_path = self.project_root / file_path
             if full_path.exists() and full_path.is_file():
                 # Compute SHA-256 hash
-                with open(full_path, 'rb') as f:
+                with open(full_path, "rb") as f:
                     file_hash = hashlib.sha256(f.read()).hexdigest()
-                manifest_entries.append({
-                    "path": file_path,
-                    "sha256": file_hash
-                })
+                manifest_entries.append({"path": file_path, "sha256": file_hash})
             else:
-                print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
+                print(
+                    f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry"
+                )
 
         # Create manifest JSON
         manifest_data = {"files": manifest_entries}
         manifest_path = self.project_root / "commit_manifest.json"
-        with open(manifest_path, 'w') as f:
+        with open(manifest_path, "w") as f:
             json.dump(manifest_data, f, indent=2)
-        print(f"[MECHANICAL SUCCESS] Generated commit_manifest.json with {len(manifest_entries)} entries")
+        print(
+            f"[MECHANICAL SUCCESS] Generated commit_manifest.json with {len(manifest_entries)} entries"
+        )
 
         # Add manifest to files_to_add if not already present
         manifest_str = "commit_manifest.json"
@@ -1339,9 +1592,11 @@ class Orchestrator:
         # Execute git add for each file - validate command is whitelisted
         for file_path in files_to_add:
             # Command validation: Parse and check primary action
-            primary_action = 'add'
+            primary_action = "add"
             if primary_action not in WHITELISTED_GIT_COMMANDS:
-                print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
+                print(
+                    f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}"
+                )
                 raise Exception(f"Prohibited Git command: {primary_action}")
 
             full_path = self.project_root / file_path
@@ -1350,7 +1605,7 @@ class Orchestrator:
                     ["git", "add", str(full_path)],
                     capture_output=True,
                     text=True,
-                    cwd=self.project_root
+                    cwd=self.project_root,
                 )
                 if result.returncode == 0:
                     print(f"[MECHANICAL SUCCESS] Added {file_path} to git staging")
@@ -1358,25 +1613,33 @@ class Orchestrator:
                     # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
                     result.check_returncode()  # This will raise CalledProcessError
             else:
-                print(f"[MECHANICAL WARNING] File {file_path} does not exist, skipping git add")
+                print(
+                    f"[MECHANICAL WARNING] File {file_path} does not exist, skipping git add"
+                )
 
         # Execute git commit - validate command is whitelisted
-        primary_action = 'commit'
+        primary_action = "commit"
         if primary_action not in WHITELISTED_GIT_COMMANDS:
-            print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
+            print(
+                f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}"
+            )
             raise Exception(f"Prohibited Git command: {primary_action}")
 
         result = subprocess.run(
-            ["git", "commit", "-m", commit_message],
+            ["git", "commit"]
+            + (["--no-verify"] if no_verify else [])
+            + ["-m", commit_message],
             capture_output=True,
             text=True,
-            cwd=self.project_root
+            cwd=self.project_root,
         )
         if result.returncode == 0:
             print(f"[MECHANICAL SUCCESS] Committed with message: '{commit_message}'")
             commit_success = True
         elif result.returncode == 1 and "nothing to commit" in result.stderr:
-            print(f"[MECHANICAL WARNING] Nothing to commit for message: '{commit_message}' - skipping")
+            print(
+                f"[MECHANICAL WARNING] Nothing to commit for message: '{commit_message}' - skipping"
+            )
             commit_success = False
         else:
             # DOCTRINE OF THE BLUNTED SWORD: No error handling for other errors - let CalledProcessError propagate
@@ -1385,23 +1648,22 @@ class Orchestrator:
 
         # Execute git push if requested - validate command is whitelisted
         if push_to_origin and commit_success:
-            primary_action = 'push'
+            primary_action = "push"
             if primary_action not in WHITELISTED_GIT_COMMANDS:
-                print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
+                print(
+                    f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}"
+                )
                 raise Exception(f"Prohibited Git command: {primary_action}")
 
             result = subprocess.run(
-                ["git", "push"],
-                capture_output=True,
-                text=True,
-                cwd=self.project_root
+                ["git", "push"], capture_output=True, text=True, cwd=self.project_root
             )
             if result.returncode == 0:
                 print("[MECHANICAL SUCCESS] Pushed to origin")
             else:
                 # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
                 result.check_returncode()  # This will raise CalledProcessError
-    
+
     async def _execute_query_and_synthesis(self, command):
         """
         Execute a Guardian Mnemonic Synchronization Protocol query and synthesis task.
@@ -1412,46 +1674,63 @@ class Orchestrator:
         """
         try:
             # Extract parameters
-            task_description = command.get('task_description', 'Mnemonic synchronization query')
-            output_path_str = command['output_artifact_path']
+            task_description = command.get(
+                "task_description", "Mnemonic synchronization query"
+            )
+            output_path_str = command["output_artifact_path"]
             output_path = self.project_root / output_path_str
 
             # Ensure output directory exists
             output_path.parent.mkdir(parents=True, exist_ok=True)
 
-            print(f"[MNEMONIC SYNC] Starting query and synthesis task: {task_description}")
+            print(
+                f"[MNEMONIC SYNC] Starting query and synthesis task: {task_description}"
+            )
 
             # Select cognitive engine for this synchronization task
             # DOCTRINE OF SOVEREIGN DEFAULT: Default to our sovereign substrate
-            default_config = {"force_engine": "ollama", "model_name": "Sanctuary-Qwen2-7B:latest"}
+            default_config = {
+                "force_engine": "ollama",
+                "model_name": "Sanctuary-Qwen2-7B:latest",
+            }
             task_config = command.get("config", default_config)
             engine = select_engine(task_config)
             if not engine:
-                print(f"[MNEMONIC SYNC HALTED] No healthy cognitive substrate available for synchronization.")
+                print(
+                    f"[MNEMONIC SYNC HALTED] No healthy cognitive substrate available for synchronization."
+                )
                 return False
 
             # Initialize agents with selected engine
             self._initialize_agents(engine)
 
             # Initialize optical chamber if configured
-            self._initialize_optical_chamber(command.get('config', {}))
+            self._initialize_optical_chamber(command.get("config", {}))
 
             # Enhance briefing with mnemonic context
             try:
                 self._enhance_briefing_with_context(task_description)
             except FileNotFoundError as e:
-                print(f"[MNEMONIC SYNC WARNING] Context file error: {e}. Proceeding with base briefing.")
+                print(
+                    f"[MNEMONIC SYNC WARNING] Context file error: {e}. Proceeding with base briefing."
+                )
 
             # Inject briefing context
             engine_type = self._get_engine_type(engine)
             self.inject_briefing_packet(engine_type)
 
             # Execute simplified Council deliberation for mnemonic synchronization
-            max_rounds = command.get('config', {}).get('max_rounds', 3)  # Shorter for sync tasks
-            log = [f"# Guardian Mnemonic Synchronization Log\n## Task: {task_description}\n\n"]
+            max_rounds = command.get("config", {}).get(
+                "max_rounds", 3
+            )  # Shorter for sync tasks
+            log = [
+                f"# Guardian Mnemonic Synchronization Log\n## Task: {task_description}\n\n"
+            ]
             last_message = task_description
 
-            print(f"[MNEMONIC SYNC] Invoking Council for mnemonic synchronization ({max_rounds} rounds max)")
+            print(
+                f"[MNEMONIC SYNC] Invoking Council for mnemonic synchronization ({max_rounds} rounds max)"
+            )
 
             consecutive_failures = 0
             synthesis_produced = False
@@ -1470,18 +1749,31 @@ class Orchestrator:
 
                     try:
                         # Check token limits before API call
-                        potential_payload = agent.messages + [{"role": "user", "content": prompt}]
+                        potential_payload = agent.messages + [
+                            {"role": "user", "content": prompt}
+                        ]
                         payload_as_text = json.dumps(potential_payload)
-                        token_count = self._get_token_count(payload_as_text, engine_type)
+                        token_count = self._get_token_count(
+                            payload_as_text, engine_type
+                        )
                         limit = self.engine_limits.get(engine_type, 100000)
 
                         if token_count > limit:
-                            print(f"[MNEMONIC SYNC] Token limit exceeded ({token_count}/{limit}), truncating context...")
+                            print(
+                                f"[MNEMONIC SYNC] Token limit exceeded ({token_count}/{limit}), truncating context..."
+                            )
                             # Simple truncation approach for mnemonic sync - keep most recent messages
                             while agent.messages and token_count > limit:
-                                removed_msg = agent.messages.pop(0)  # Remove oldest message
-                                payload_as_text = json.dumps(agent.messages + [{"role": "user", "content": prompt}])
-                                token_count = self._get_token_count(payload_as_text, engine_type)
+                                removed_msg = agent.messages.pop(
+                                    0
+                                )  # Remove oldest message
+                                payload_as_text = json.dumps(
+                                    agent.messages
+                                    + [{"role": "user", "content": prompt}]
+                                )
+                                token_count = self._get_token_count(
+                                    payload_as_text, engine_type
+                                )
 
                         # Get agent response
                         response = await agent.get_response(prompt)
@@ -1490,10 +1782,16 @@ class Orchestrator:
                         log.append(f"**{role}**: {response}\n\n")
 
                         # Check for synthesis indicators
-                        if "synthesis" in response.lower() or "bridge" in response.lower() or "mnemonic" in response.lower():
+                        if (
+                            "synthesis" in response.lower()
+                            or "bridge" in response.lower()
+                            or "mnemonic" in response.lower()
+                        ):
                             synthesis_produced = True
 
-                        print(f"[MNEMONIC SYNC] {role} response received ({len(response)} chars)")
+                        print(
+                            f"[MNEMONIC SYNC] {role} response received ({len(response)} chars)"
+                        )
 
                     except Exception as e:
                         round_failures += 1
@@ -1502,15 +1800,21 @@ class Orchestrator:
                         log.append(f"**{role}**: [ERROR] {str(e)}\n\n")
 
                         if consecutive_failures >= 3:
-                            print("[MNEMONIC SYNC HALTED] Three consecutive failures - aborting synchronization")
+                            print(
+                                "[MNEMONIC SYNC HALTED] Three consecutive failures - aborting synchronization"
+                            )
                             break
 
                 if consecutive_failures >= 3:
                     break
 
                 # Early exit if synthesis appears complete
-                if synthesis_produced and round_num >= 1:  # At least 2 rounds for meaningful synthesis
-                    print("[MNEMONIC SYNC] Synthesis appears complete, concluding deliberation")
+                if (
+                    synthesis_produced and round_num >= 1
+                ):  # At least 2 rounds for meaningful synthesis
+                    print(
+                        "[MNEMONIC SYNC] Synthesis appears complete, concluding deliberation"
+                    )
                     break
 
             # Write synthesis to output artifact
@@ -1525,43 +1829,58 @@ class Orchestrator:
         except Exception as e:
             print(f"[MNEMONIC SYNC FAILURE] Query and synthesis failed: {e}")
             return False
-    
+
     def _initialize_optical_chamber(self, config: dict):
         """
         Initialize optical compression if enabled in task configuration.
         Implements lazy initialization pattern per Section 3.1 of feasibility study.
-        
+
         Args:
             config: Task configuration dictionary
         """
         if config.get("enable_optical_compression", False):
             compression_threshold = config.get("optical_compression_threshold", 8000)
             vlm_engine_type = config.get("vlm_engine", "mock")
-            
+
             # MOCK: In production, this would select actual VLM engine
             # vlm_engine = self._select_vlm_engine(config)
             vlm_engine = None  # Mocked for v4.1
-            
+
             self.optical_chamber = OpticalDecompressionChamber(
-                vlm_engine=vlm_engine,
-                compression_threshold=compression_threshold
+                vlm_engine=vlm_engine, compression_threshold=compression_threshold
             )
-            print(f"[+] Optical Decompression Chamber initialized (threshold: {compression_threshold} tokens)")
+            print(
+                f"[+] Optical Decompression Chamber initialized (threshold: {compression_threshold} tokens)"
+            )
             print(f"[+] VLM Engine: {vlm_engine_type} (MOCKED in v4.1)")
         else:
             self.optical_chamber = None
 
     def _initialize_agents(self, engine):
         """Initializes agents with a given engine, allowing for per-task engine selection."""
-        print(f"[*] Initializing council agents with selected engine: {type(engine).__name__}")
+        print(
+            f"[*] Initializing council agents with selected engine: {type(engine).__name__}"
+        )
         persona_dir = self.project_root / "dataset_package"
         state_dir = Path(__file__).parent / "session_states"
         state_dir.mkdir(exist_ok=True)
 
         self.agents = {
-            "COORDINATOR": PersonaAgent(engine, persona_dir / "core_essence_coordinator_awakening_seed.txt", state_dir / "coordinator_session.json"),
-            "STRATEGIST": PersonaAgent(engine, persona_dir / "core_essence_strategist_awakening_seed.txt", state_dir / "strategist_session.json"),
-            "AUDITOR": PersonaAgent(engine, persona_dir / "core_essence_auditor_awakening_seed.txt", state_dir / "auditor_session.json")
+            "COORDINATOR": PersonaAgent(
+                engine,
+                persona_dir / "core_essence_coordinator_awakening_seed.txt",
+                state_dir / "coordinator_session.json",
+            ),
+            "STRATEGIST": PersonaAgent(
+                engine,
+                persona_dir / "core_essence_strategist_awakening_seed.txt",
+                state_dir / "strategist_session.json",
+            ),
+            "AUDITOR": PersonaAgent(
+                engine,
+                persona_dir / "core_essence_auditor_awakening_seed.txt",
+                state_dir / "auditor_session.json",
+            ),
         }
 
     async def execute_task(self, command):
@@ -1574,12 +1893,19 @@ class Orchestrator:
         # The engine is now selected at the start of each task, using the task's config.
         # 3. Orchestrator.execute_task(): Engine selection uses council_orchestrator/cognitive_engines/ (OpenAI, Gemini, Ollama)
         # DOCTRINE OF SOVEREIGN DEFAULT: Default to our sovereign substrate
-        default_config = {"force_engine": "ollama", "model_name": "Sanctuary-Qwen2-7B:latest"}
+        default_config = {
+            "force_engine": "ollama",
+            "model_name": "Sanctuary-Qwen2-7B:latest",
+        }
         task_config = command.get("config", default_config)
         engine = select_engine(task_config)
         if not engine:
-            print(f"[ORCHESTRATOR HALTED] No healthy cognitive substrate could be selected for this task. Config: {command.get('config')}")
-            print("[ORCHESTRATOR HALTED] This may indicate a force_engine override failure or all engines are unhealthy.")
+            print(
+                f"[ORCHESTRATOR HALTED] No healthy cognitive substrate could be selected for this task. Config: {command.get('config')}"
+            )
+            print(
+                "[ORCHESTRATOR HALTED] This may indicate a force_engine override failure or all engines are unhealthy."
+            )
             return
 
         # Initialize agents with the selected engine for this task.
@@ -1592,19 +1918,19 @@ class Orchestrator:
 
         # Track if we've switched to fallback mode
         fallback_mode = False
-        
+
         # --- OPERATION: OPTICAL ANVIL - INITIALIZE OPTICAL CHAMBER ---
         # Initialize optical compression if enabled (Section 3.1 of feasibility study)
-        self._initialize_optical_chamber(command.get('config', {}))
+        self._initialize_optical_chamber(command.get("config", {}))
         # --- END OPTICAL ANVIL INTEGRATION ---
 
-        task = command['task_description']
-        max_rounds = command.get('config', {}).get('max_rounds', 5)
-        self.max_cortex_queries = command.get('config', {}).get('max_cortex_queries', 5)
+        task = command["task_description"]
+        max_rounds = command.get("config", {}).get("max_rounds", 5)
+        self.max_cortex_queries = command.get("config", {}).get("max_cortex_queries", 5)
         self.cortex_query_count = 0
-        output_artifact_path_str = command['output_artifact_path']
+        output_artifact_path_str = command["output_artifact_path"]
         output_path = self.project_root / output_artifact_path_str
-        if output_artifact_path_str.endswith('/'):
+        if output_artifact_path_str.endswith("/"):
             output_path = output_path / "task_log.md"
 
         # --- STRUCTURED EVENT LOGGING: TASK START ---
@@ -1614,7 +1940,7 @@ class Orchestrator:
             max_rounds=max_rounds,
             engine_type=original_engine_type,
             output_artifact=output_artifact_path_str,
-            input_artifacts=command.get('input_artifacts', [])
+            input_artifacts=command.get("input_artifacts", []),
         )
 
         log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
@@ -1623,7 +1949,7 @@ class Orchestrator:
         # --- HOTFIX v4.3: ROBUST ENGINE TYPE DETERMINATION ---
         # CRITICAL: Determine engine type BEFORE any operations that need it
         engine_type = self._get_engine_type(engine)
-        
+
         # Fail-fast if engine type cannot be determined
         if engine_type == "unknown":
             error_msg = f"[ORCHESTRATOR HALTED] Could not determine a valid engine type for the selected engine: {type(engine).__name__}"
@@ -1640,21 +1966,27 @@ class Orchestrator:
         # Inject fresh briefing context (now engine_type is defined)
         self.inject_briefing_packet(engine_type)
 
-        if command.get('input_artifacts'):
+        if command.get("input_artifacts"):
             # ... (knowledge injection logic is the same)
             knowledge = ["Initial knowledge provided:\n"]
-            for path_str in command['input_artifacts']:
+            for path_str in command["input_artifacts"]:
                 file_path = self.project_root / path_str
                 if file_path.exists() and file_path.is_file():
-                    knowledge.append(f"--- CONTENT OF {path_str} ---\n{file_path.read_text()}\n---\n")
+                    knowledge.append(
+                        f"--- CONTENT OF {path_str} ---\n{file_path.read_text()}\n---\n"
+                    )
                 elif file_path.exists() and file_path.is_dir():
                     print(f"[!] Input artifact {path_str} is a directory, skipping.")
                 else:
                     print(f"[!] Input artifact {path_str} not found.")
             last_message += "\n" + "".join(knowledge)
 
-        print(f"\n▶️  Executing task: '{task}' for up to {max_rounds} rounds on {type(engine).__name__}")
-        print(f"[ORCHESTRATOR] Using engine: {type(engine).__name__} (type: {engine_type}) for all agents in this task.")
+        print(
+            f"\n▶️  Executing task: '{task}' for up to {max_rounds} rounds on {type(engine).__name__}"
+        )
+        print(
+            f"[ORCHESTRATOR] Using engine: {type(engine).__name__} (type: {engine_type}) for all agents in this task."
+        )
 
         # V6.0 MANDATE 3: Initialize failure state awareness
         consecutive_failures = 0
@@ -1677,7 +2009,9 @@ class Orchestrator:
                 # --- V6.0 MANDATE 1: UNIVERSAL DISTILLATION ---
                 # Apply the same distillation logic to the main deliberation loop
                 # Check the FULL potential payload (agent.messages + new prompt) BEFORE any API call
-                potential_payload = agent.messages + [{"role": "user", "content": prompt}]
+                potential_payload = agent.messages + [
+                    {"role": "user", "content": prompt}
+                ]
                 payload_as_text = json.dumps(potential_payload)
                 token_count = self._get_token_count(payload_as_text, engine_type)
                 limit = self.engine_limits.get(engine_type, 100000)
@@ -1686,35 +2020,58 @@ class Orchestrator:
                 needs_compression = token_count > limit
 
                 if needs_compression:
-                    print(f"[ORCHESTRATOR] WARNING: Full payload ({token_count:.0f} tokens) exceeds limit for {engine_type} ({limit})")
+                    print(
+                        f"[ORCHESTRATOR] WARNING: Full payload ({token_count:.0f} tokens) exceeds limit for {engine_type} ({limit})"
+                    )
 
                     # --- // OPERATION: OPTICAL ANVIL - OPTICAL COMPRESSION DECISION POINT // ---
-                    if self.optical_chamber and self.optical_chamber.should_compress(payload_as_text, engine_type):
-                        print(f"[OPTICAL] Compressing payload for {role} (estimated 10x reduction)")
+                    if self.optical_chamber and self.optical_chamber.should_compress(
+                        payload_as_text, engine_type
+                    ):
+                        print(
+                            f"[OPTICAL] Compressing payload for {role} (estimated 10x reduction)"
+                        )
 
                         # Compress via optical chamber
-                        decompressed_prompt = self.optical_chamber.compress_and_decompress(
-                            payload_as_text,
-                            task_context=task
+                        decompressed_prompt = (
+                            self.optical_chamber.compress_and_decompress(
+                                payload_as_text, task_context=task
+                            )
                         )
 
                         # Clear agent history and send compressed context
                         agent.messages = [
                             agent.messages[0],  # Preserve system prompt
-                            {"role": "user", "content": "SYSTEM NOTE: Context was optically compressed. Proceed based on decompressed data."},
-                            {"role": "assistant", "content": "Acknowledged. Proceeding with optically decompressed context."}
+                            {
+                                "role": "user",
+                                "content": "SYSTEM NOTE: Context was optically compressed. Proceed based on decompressed data.",
+                            },
+                            {
+                                "role": "assistant",
+                                "content": "Acknowledged. Proceeding with optically decompressed context.",
+                            },
                         ]
                         prompt_to_send = decompressed_prompt
                     else:
                         # Fallback to standard distillation
-                        print(f"[ORCHESTRATOR] Using distillation engine for payload reduction...")
-                        distilled_summary = self._distill_with_local_engine(payload_as_text, task)
+                        print(
+                            f"[ORCHESTRATOR] Using distillation engine for payload reduction..."
+                        )
+                        distilled_summary = self._distill_with_local_engine(
+                            payload_as_text, task
+                        )
 
                         # Clear agent history and send distilled context
                         agent.messages = [
                             agent.messages[0],  # Preserve system prompt
-                            {"role": "user", "content": "SYSTEM NOTE: Context was distilled due to size. Proceed based on this summary."},
-                            {"role": "assistant", "content": "Acknowledged. Proceeding with distilled context."}
+                            {
+                                "role": "user",
+                                "content": "SYSTEM NOTE: Context was distilled due to size. Proceed based on this summary.",
+                            },
+                            {
+                                "role": "assistant",
+                                "content": "Acknowledged. Proceeding with distilled context.",
+                            },
                         ]
                         prompt_to_send = distilled_summary
                 else:
@@ -1726,7 +2083,9 @@ class Orchestrator:
                 input_tokens = self._get_token_count(prompt_to_send, engine_type)
 
                 # --- FAULT ISOLATION: TIMEOUT PROTECTION ---
-                timeout_seconds = command.get('config', {}).get('agent_timeout', 120)  # Default 2 minutes
+                timeout_seconds = command.get("config", {}).get(
+                    "agent_timeout", 120
+                )  # Default 2 minutes
                 try:
                     # Execute query with TPM-aware rate limiting, timeout protection, and fallback logic
                     response = await asyncio.wait_for(
@@ -1735,9 +2094,9 @@ class Orchestrator:
                             agent.query,
                             prompt_to_send,
                             self.token_regulator,
-                            engine_type
+                            engine_type,
                         ),
-                        timeout=timeout_seconds
+                        timeout=timeout_seconds,
                     )
                 except asyncio.TimeoutError:
                     print(f"  <- {agent.role} TIMEOUT (>{timeout_seconds}s)")
@@ -1746,23 +2105,29 @@ class Orchestrator:
 
                 # Calculate latency and output tokens
                 latency_ms = int((time.time() - member_start_time) * 1000)
-                output_tokens = self._get_token_count(response, engine_type) if response else 0
+                output_tokens = (
+                    self._get_token_count(response, engine_type) if response else 0
+                )
 
                 # V7.0 MANDATE 3: Check for boolean failure response
                 if response is False:
                     round_failures += 1
                     consecutive_failures += 1
-                    error_type = getattr(self, 'timeout_error', "cognitive_substrate_failure") if hasattr(self, 'timeout_error') else "cognitive_substrate_failure"
-                    if 'timeout_error' in locals():
+                    error_type = (
+                        getattr(self, "timeout_error", "cognitive_substrate_failure")
+                        if hasattr(self, "timeout_error")
+                        else "cognitive_substrate_failure"
+                    )
+                    if "timeout_error" in locals():
                         error_type = timeout_error
                         del timeout_error  # Clean up
-                    
+
                     print(f"  <- {agent.role} FAILED ({error_type})")
 
                     # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE FAILURE ---
                     self.emit_event(
                         "member_response",
-                        round=i+1,
+                        round=i + 1,
                         member_id=role.lower(),
                         role=agent.role,
                         status="error",
@@ -1771,17 +2136,21 @@ class Orchestrator:
                         tokens_out=0,
                         result_type="error",
                         errors=[error_type],
-                        content_ref=f"round_{i+1}_{role.lower()}_failed"
+                        content_ref=f"round_{i+1}_{role.lower()}_failed",
                     )
 
                     # IMPLEMENT FALLBACK: If primary engine fails, try fallback to Ollama
                     if not fallback_mode and original_engine_type != "ollama":
-                        print(f"[FALLBACK] Primary engine ({original_engine_type}) failed. Attempting fallback to Ollama...")
+                        print(
+                            f"[FALLBACK] Primary engine ({original_engine_type}) failed. Attempting fallback to Ollama..."
+                        )
                         # Try Ollama as fallback
                         fallback_config = {"force_engine": "ollama"}
                         fallback_engine = select_engine(fallback_config)
                         if fallback_engine:
-                            print(f"[FALLBACK] Switching to Ollama engine for remaining agents")
+                            print(
+                                f"[FALLBACK] Switching to Ollama engine for remaining agents"
+                            )
                             # Re-initialize agents with fallback engine
                             self._initialize_agents(fallback_engine)
                             engine = fallback_engine
@@ -1796,10 +2165,12 @@ class Orchestrator:
                                 agent.query,
                                 prompt_to_send,
                                 self.token_regulator,
-                                engine_type
+                                engine_type,
                             )
                             if response is False:
-                                print(f"  <- {agent.role} FAILED (fallback engine also failed)")
+                                print(
+                                    f"  <- {agent.role} FAILED (fallback engine also failed)"
+                                )
                                 consecutive_failures += 1
                                 round_failures += 1
                             else:
@@ -1812,10 +2183,10 @@ class Orchestrator:
                         failed_packet = CouncilRoundPacket(
                             timestamp=datetime.now().isoformat(),
                             session_id=self.run_id,
-                            round_id=i+1,
+                            round_id=i + 1,
                             member_id=role.lower(),
                             engine=engine_type,
-                            seed=seed_for(self.run_id, i+1, role.lower()),
+                            seed=seed_for(self.run_id, i + 1, role.lower()),
                             prompt_hash=prompt_hash(prompt_to_send),
                             inputs={"prompt": prompt_to_send, "context": last_message},
                             decision="error",
@@ -1829,16 +2200,24 @@ class Orchestrator:
                             cost={
                                 "input_tokens": input_tokens,
                                 "output_tokens": 0,
-                                "latency_ms": latency_ms
+                                "latency_ms": latency_ms,
                             },
-                            errors=[error_type]
+                            errors=[error_type],
                         )
                         # Collect failed packet for predictable ordering
-                        jsonl_dir = getattr(self, 'cli_config', {}).get('jsonl_path') if getattr(self, 'cli_config', {}).get('emit_jsonl') else None
-                        stream_stdout = getattr(self, 'cli_config', {}).get('stream_stdout', False)
+                        jsonl_dir = (
+                            getattr(self, "cli_config", {}).get("jsonl_path")
+                            if getattr(self, "cli_config", {}).get("emit_jsonl")
+                            else None
+                        )
+                        stream_stdout = getattr(self, "cli_config", {}).get(
+                            "stream_stdout", False
+                        )
                         round_packets.append((failed_packet, jsonl_dir, stream_stdout))
 
-                        log.append(f"**{agent.role} (FAILED):** Cognitive substrate failure.\n\n---\n")
+                        log.append(
+                            f"**{agent.role} (FAILED):** Cognitive substrate failure.\n\n---\n"
+                        )
                 else:
                     # Successful response - reset consecutive failure counter
                     consecutive_failures = 0
@@ -1858,10 +2237,10 @@ class Orchestrator:
                     packet = CouncilRoundPacket(
                         timestamp=datetime.now().isoformat(),
                         session_id=self.run_id,
-                        round_id=i+1,
+                        round_id=i + 1,
                         member_id=role.lower(),
                         engine=engine_type,
-                        seed=seed_for(self.run_id, i+1, role.lower()),
+                        seed=seed_for(self.run_id, i + 1, role.lower()),
                         prompt_hash=prompt_hash(prompt_to_send),
                         inputs={"prompt": prompt_to_send, "context": last_message},
                         decision=vote,
@@ -1871,25 +2250,33 @@ class Orchestrator:
                         rag=self._get_rag_data(task, response),
                         cag=self._get_cag_data(prompt_to_send, engine_type),
                         novelty=self._analyze_novelty(response, last_message),
-                        memory_directive=self._determine_memory_directive(response, citations),
+                        memory_directive=self._determine_memory_directive(
+                            response, citations
+                        ),
                         cost={
                             "input_tokens": input_tokens,
                             "output_tokens": output_tokens,
-                            "latency_ms": latency_ms
+                            "latency_ms": latency_ms,
                         },
-                        errors=[]
+                        errors=[],
                     )
 
                     # Emit packet
-                    jsonl_dir = getattr(self, 'cli_config', {}).get('jsonl_path') if getattr(self, 'cli_config', {}).get('emit_jsonl') else None
-                    stream_stdout = getattr(self, 'cli_config', {}).get('stream_stdout', False)
+                    jsonl_dir = (
+                        getattr(self, "cli_config", {}).get("jsonl_path")
+                        if getattr(self, "cli_config", {}).get("emit_jsonl")
+                        else None
+                    )
+                    stream_stdout = getattr(self, "cli_config", {}).get(
+                        "stream_stdout", False
+                    )
                     # Collect packet for predictable ordering (emit at end of round)
                     round_packets.append((packet, jsonl_dir, stream_stdout))
 
                     # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE SUCCESS ---
                     self.emit_event(
                         "member_response",
-                        round=i+1,
+                        round=i + 1,
                         member_id=role.lower(),
                         role=agent.role,
                         status="success",
@@ -1902,13 +2289,15 @@ class Orchestrator:
                         novelty=novelty,
                         reasons=reasons,
                         citations=citations,
-                        content_ref=f"round_{i+1}_{role.lower()}_response"
+                        content_ref=f"round_{i+1}_{role.lower()}_response",
                     )
 
                     # V9.3 ENHANCEMENT: Display agent response content in real-time for debugging
                     print(f"\n[{agent.role} RESPONSE - ROUND {i+1}]")
                     # Truncate very long responses for terminal readability
-                    display_response = response[:2000] + "..." if len(response) > 2000 else response
+                    display_response = (
+                        response[:2000] + "..." if len(response) > 2000 else response
+                    )
                     print(display_response)
                     print(f"[END {agent.role} RESPONSE]\n", flush=True)
 
@@ -1916,58 +2305,82 @@ class Orchestrator:
                     knowledge_response = self._handle_knowledge_request(response)
                     if knowledge_response:
                         # V9.3 ENHANCEMENT: Display knowledge request interaction
-                        print(f"[ORCHESTRATOR] Fulfilling knowledge request for {agent.role}...", flush=True)
+                        print(
+                            f"[ORCHESTRATOR] Fulfilling knowledge request for {agent.role}...",
+                            flush=True,
+                        )
                         print(f"[KNOWLEDGE REQUEST RESPONSE]")
-                        display_knowledge = knowledge_response[:1500] + "..." if len(knowledge_response) > 1500 else knowledge_response
+                        display_knowledge = (
+                            knowledge_response[:1500] + "..."
+                            if len(knowledge_response) > 1500
+                            else knowledge_response
+                        )
                         print(display_knowledge)
                         print(f"[END KNOWLEDGE RESPONSE]\n", flush=True)
 
                         # Inject the knowledge response back into the conversation
-                        print(f"  -> Orchestrator providing context to {agent.role}...", flush=True)
+                        print(
+                            f"  -> Orchestrator providing context to {agent.role}...",
+                            flush=True,
+                        )
                         knowledge_injection = await loop.run_in_executor(
                             None,
                             agent.query,
                             knowledge_response,
                             self.token_regulator,
-                            engine_type
+                            engine_type,
                         )
-                        
+
                         # Check if knowledge injection also failed
                         if knowledge_injection is False:
-                            print(f"  <- {agent.role} FAILED during knowledge injection")
+                            print(
+                                f"  <- {agent.role} FAILED during knowledge injection"
+                            )
                             consecutive_failures += 1
                         else:
-                            print(f"  <- {agent.role} acknowledging context.", flush=True)
+                            print(
+                                f"  <- {agent.role} acknowledging context.", flush=True
+                            )
                             response += f"\n\n{knowledge_injection}"
                             log.append(f"**{agent.role}:**\n{response}\n\n---\n")
-                            log.append(f"**ORCHESTRATOR (Fulfilled Request):**\n{knowledge_response}\n\n---\n")
+                            log.append(
+                                f"**ORCHESTRATOR (Fulfilled Request):**\n{knowledge_response}\n\n---\n"
+                            )
                     else:
                         log.append(f"**{agent.role}:**\n{response}\n\n---\n")
 
                 # V7.0 MANDATE 3: Check for total operational failure after each agent
                 # If all agents in a round fail, break immediately
                 if consecutive_failures >= num_agents:
-                    print(f"[ORCHESTRATOR] CRITICAL: {consecutive_failures} consecutive agent failures detected.")
-                    print(f"[ORCHESTRATOR] Total operational failure. Terminating task.")
-                    log.append(f"\n**SYSTEM FAILURE:** Task terminated due to {consecutive_failures} consecutive agent failures.\n\n")
+                    print(
+                        f"[ORCHESTRATOR] CRITICAL: {consecutive_failures} consecutive agent failures detected."
+                    )
+                    print(
+                        f"[ORCHESTRATOR] Total operational failure. Terminating task."
+                    )
+                    log.append(
+                        f"\n**SYSTEM FAILURE:** Task terminated due to {consecutive_failures} consecutive agent failures.\n\n"
+                    )
                     break
 
                 last_message = response
 
                 # --- ADD THIS LINE ---
-                time.sleep(1) # Add a 1-second pause to be kind to the API
+                time.sleep(1)  # Add a 1-second pause to be kind to the API
                 # ---------------------
 
             # Sort and emit packets in predictable order (by round_id, then member_id)
             round_packets.sort(key=lambda x: (x[0].round_id, x[0].member_id))
             for packet, jsonl_dir, stream_stdout in round_packets:
-                emit_packet(packet, jsonl_dir, stream_stdout, "round_packet_schema.json")
+                emit_packet(
+                    packet, jsonl_dir, stream_stdout, "round_packet_schema.json"
+                )
 
             # --- STRUCTURED EVENT LOGGING: ROUND COMPLETION ---
-            round_aggregation = self.aggregate_round_events(i+1)
+            round_aggregation = self.aggregate_round_events(i + 1)
             self.emit_event(
                 "round_complete",
-                round=i+1,
+                round=i + 1,
                 total_members=round_aggregation.get("total_members", 0),
                 success_rate=round_aggregation.get("success_rate", 0.0),
                 consensus=round_aggregation.get("consensus", False),
@@ -1976,7 +2389,7 @@ class Orchestrator:
                 avg_latency=round_aggregation.get("avg_latency", 0),
                 total_tokens_in=round_aggregation.get("total_tokens_in", 0),
                 total_tokens_out=round_aggregation.get("total_tokens_out", 0),
-                novelty_distribution=round_aggregation.get("novelty_distribution", {})
+                novelty_distribution=round_aggregation.get("novelty_distribution", {}),
             )
 
             # Early exit logic based on round aggregation
@@ -1994,16 +2407,18 @@ class Orchestrator:
         if consecutive_failures >= num_agents:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_text("".join(log))
-            print(f"\n[FAILURE] Task terminated due to total operational failure. Partial log saved to {output_path}")
+            print(
+                f"\n[FAILURE] Task terminated due to total operational failure. Partial log saved to {output_path}"
+            )
 
             # --- STRUCTURED EVENT LOGGING: TASK COMPLETE (FAILURE) ---
             self.emit_event(
                 "task_complete",
                 status="failure",
                 reason="total_operational_failure",
-                rounds_completed=i+1,
+                rounds_completed=i + 1,
                 total_failures=consecutive_failures,
-                output_artifact=str(output_path)
+                output_artifact=str(output_path),
             )
 
             for agent in self.agents.values():
@@ -2019,9 +2434,9 @@ class Orchestrator:
         self.emit_event(
             "task_complete",
             status="success",
-            rounds_completed=i+1,
-            total_rounds=i+1,
-            output_artifact=str(output_path)
+            rounds_completed=i + 1,
+            total_rounds=i + 1,
+            output_artifact=str(output_path),
         )
 
         for agent in self.agents.values():
@@ -2039,38 +2454,59 @@ class Orchestrator:
 
         print(f"[SENTRY THREAD] Started monitoring directory: {command_dir}")
         print(f"[SENTRY THREAD] Directory exists: {command_dir.exists()}")
-        print(f"[SENTRY THREAD] Directory is readable: {os.access(command_dir, os.R_OK)}")
+        print(
+            f"[SENTRY THREAD] Directory is readable: {os.access(command_dir, os.R_OK)}"
+        )
         print(f"[SENTRY THREAD] DEBUG: Entering main monitoring loop")
         while True:
             try:
                 # V5.0 MANDATE 1: Only process files explicitly named command*.json
                 # This prevents the rogue sentry from ingesting config files, state files, etc.
                 found_files = list(command_dir.glob("command*.json"))
-                print(f"[SENTRY THREAD] DEBUG: Scanning for command*.json files in {command_dir}")
-                print(f"[SENTRY THREAD] DEBUG: All .json files in directory: {list(command_dir.glob('*.json'))}")
+                print(
+                    f"[SENTRY THREAD] DEBUG: Scanning for command*.json files in {command_dir}"
+                )
+                print(
+                    f"[SENTRY THREAD] DEBUG: All .json files in directory: {list(command_dir.glob('*.json'))}"
+                )
                 if found_files:
-                    print(f"[SENTRY THREAD] Found {len(found_files)} command file(s): {[f.name for f in found_files]}")
+                    print(
+                        f"[SENTRY THREAD] Found {len(found_files)} command file(s): {[f.name for f in found_files]}"
+                    )
                 else:
-                    print(f"[SENTRY THREAD] DEBUG: No command*.json files found this scan")
+                    print(
+                        f"[SENTRY THREAD] DEBUG: No command*.json files found this scan"
+                    )
 
                 for json_file in found_files:
                     print(f"[SENTRY THREAD] DEBUG: Processing file: {json_file.name}")
                     print(f"[SENTRY THREAD] DEBUG: File path: {json_file.absolute()}")
                     print(f"[SENTRY THREAD] DEBUG: File exists: {json_file.exists()}")
-                    print(f"[SENTRY THREAD] DEBUG: File size: {json_file.stat().st_size if json_file.exists() else 'N/A'} bytes")
-                    print(f"[SENTRY THREAD] DEBUG: File is readable: {os.access(json_file, os.R_OK) if json_file.exists() else 'N/A'}")
+                    print(
+                        f"[SENTRY THREAD] DEBUG: File size: {json_file.stat().st_size if json_file.exists() else 'N/A'} bytes"
+                    )
+                    print(
+                        f"[SENTRY THREAD] DEBUG: File is readable: {os.access(json_file, os.R_OK) if json_file.exists() else 'N/A'}"
+                    )
 
                     if json_file.name in processed_commands:
-                        print(f"[SENTRY THREAD] DEBUG: File {json_file.name} already processed, skipping")
+                        print(
+                            f"[SENTRY THREAD] DEBUG: File {json_file.name} already processed, skipping"
+                        )
                         continue
 
                     processing_start = time.time()
-                    print(f"[SENTRY THREAD] DEBUG: Starting processing of {json_file.name} at {time.strftime('%H:%M:%S', time.localtime(processing_start))}")
+                    print(
+                        f"[SENTRY THREAD] DEBUG: Starting processing of {json_file.name} at {time.strftime('%H:%M:%S', time.localtime(processing_start))}"
+                    )
                     # Determine command type for logging
                     command_type = "UNKNOWN"
                     try:
                         temp_command = json.loads(json_file.read_text())
-                        if "entry_content" in temp_command and "output_artifact_path" in temp_command:
+                        if (
+                            "entry_content" in temp_command
+                            and "output_artifact_path" in temp_command
+                        ):
                             command_type = "MECHANICAL_WRITE"
                         elif "git_operations" in temp_command:
                             command_type = "MECHANICAL_GIT"
@@ -2081,48 +2517,92 @@ class Orchestrator:
                     except:
                         command_type = "INVALID_JSON"
 
-                    print(f"[SENTRY THREAD] Processing command file: {json_file.name} (path: {json_file.absolute()})")
-                    self.logger.info(f"COMMAND_PROCESSING_START - File: {json_file.name}, Path: {json_file.absolute()}, Type: {command_type}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_start))}")
+                    print(
+                        f"[SENTRY THREAD] Processing command file: {json_file.name} (path: {json_file.absolute()})"
+                    )
+                    self.logger.info(
+                        f"COMMAND_PROCESSING_START - File: {json_file.name}, Path: {json_file.absolute()}, Type: {command_type}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_start))}"
+                    )
 
                     try:
                         # Wait for file to be fully written (check size is stable)
                         initial_size = json_file.stat().st_size
-                        print(f"[SENTRY THREAD] DEBUG: Initial file size: {initial_size} bytes")
+                        print(
+                            f"[SENTRY THREAD] DEBUG: Initial file size: {initial_size} bytes"
+                        )
                         time.sleep(0.1)  # Brief pause to allow writing to complete
                         current_size = json_file.stat().st_size
-                        print(f"[SENTRY THREAD] DEBUG: Current file size after pause: {current_size} bytes")
-                        if json_file.stat().st_size == initial_size and initial_size > 0:
-                            print(f"[SENTRY THREAD] DEBUG: File size stable and > 0, attempting to read JSON")
+                        print(
+                            f"[SENTRY THREAD] DEBUG: Current file size after pause: {current_size} bytes"
+                        )
+                        if (
+                            json_file.stat().st_size == initial_size
+                            and initial_size > 0
+                        ):
+                            print(
+                                f"[SENTRY THREAD] DEBUG: File size stable and > 0, attempting to read JSON"
+                            )
                             command = json.loads(json_file.read_text())
                             print(f"[SENTRY THREAD] DEBUG: JSON parsed successfully")
-                            task_desc = command.get('task_description', 'No description')
-                            print(f"[SENTRY THREAD] Loaded command: {task_desc[:50]}...")
-                            self.logger.info(f"COMMAND_LOADED - File: {json_file.name}, Task: {task_desc[:100]}..., Config: {command.get('config', {})}")
+                            task_desc = command.get(
+                                "task_description", "No description"
+                            )
+                            print(
+                                f"[SENTRY THREAD] Loaded command: {task_desc[:50]}..."
+                            )
+                            self.logger.info(
+                                f"COMMAND_LOADED - File: {json_file.name}, Task: {task_desc[:100]}..., Config: {command.get('config', {})}"
+                            )
 
                             # Put the command onto the thread queue for the main loop to process
                             self.command_queue.put(command)
                             processed_commands.add(json_file.name)
-                            json_file.unlink() # Consume the file
+                            json_file.unlink()  # Consume the file
 
                             processing_end = time.time()
                             processing_duration = processing_end - processing_start
-                            print(f"[SENTRY THREAD] Command processed and file deleted: {json_file.name} (duration: {processing_duration:.2f}s)")
-                            self.logger.info(f"COMMAND_PROCESSING_COMPLETE - File: {json_file.name}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
+                            print(
+                                f"[SENTRY THREAD] Command processed and file deleted: {json_file.name} (duration: {processing_duration:.2f}s)"
+                            )
+                            self.logger.info(
+                                f"COMMAND_PROCESSING_COMPLETE - File: {json_file.name}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}"
+                            )
                         else:
-                            print(f"[SENTRY THREAD] File appears incomplete (initial: {initial_size}, current: {current_size}), will retry...")
+                            print(
+                                f"[SENTRY THREAD] File appears incomplete (initial: {initial_size}, current: {current_size}), will retry..."
+                            )
                     except Exception as e:
                         processing_end = time.time()
                         processing_duration = processing_end - processing_start
-                        print(f"[SENTRY THREAD ERROR] Could not process command file {json_file.name}: {e}", file=sys.stderr)
-                        print(f"[SENTRY THREAD ERROR] Exception type: {type(e).__name__}", file=sys.stderr)
+                        print(
+                            f"[SENTRY THREAD ERROR] Could not process command file {json_file.name}: {e}",
+                            file=sys.stderr,
+                        )
+                        print(
+                            f"[SENTRY THREAD ERROR] Exception type: {type(e).__name__}",
+                            file=sys.stderr,
+                        )
                         import traceback
-                        print(f"[SENTRY THREAD ERROR] Traceback: {traceback.format_exc()}", file=sys.stderr)
-                        self.logger.error(f"COMMAND_PROCESSING_FAILED - File: {json_file.name}, Error: {str(e)}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
-                print(f"[SENTRY THREAD] DEBUG: Sleeping for 1 second before next scan...")
-                time.sleep(1) # Check every second
+
+                        print(
+                            f"[SENTRY THREAD ERROR] Traceback: {traceback.format_exc()}",
+                            file=sys.stderr,
+                        )
+                        self.logger.error(
+                            f"COMMAND_PROCESSING_FAILED - File: {json_file.name}, Error: {str(e)}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}"
+                        )
+                print(
+                    f"[SENTRY THREAD] DEBUG: Sleeping for 1 second before next scan..."
+                )
+                time.sleep(1)  # Check every second
             except Exception as e:
-                print(f"[SENTRY THREAD ERROR] Critical error in monitoring loop: {e}", file=sys.stderr)
-                self.logger.error(f"SENTRY_THREAD_CRITICAL_ERROR - Error: {str(e)}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+                print(
+                    f"[SENTRY THREAD ERROR] Critical error in monitoring loop: {e}",
+                    file=sys.stderr,
+                )
+                self.logger.error(
+                    f"SENTRY_THREAD_CRITICAL_ERROR - Error: {str(e)}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}"
+                )
                 time.sleep(1)  # Continue monitoring despite errors
 
     async def main_loop(self):
@@ -2134,33 +2614,49 @@ class Orchestrator:
         while True:
             if state_file.exists():
                 # We are in the middle of a development cycle, waiting for approval
-                print("--- Orchestrator in Development Cycle. Awaiting Guardian approval... ---", flush=True)
+                print(
+                    "--- Orchestrator in Development Cycle. Awaiting Guardian approval... ---",
+                    flush=True,
+                )
                 command = await loop.run_in_executor(None, self.command_queue.get)
 
                 # V9.0 MANDATE 1: Action Triage - Check for mechanical tasks first
                 if "entry_content" in command and "output_artifact_path" in command:
                     # This is a Write Task
-                    print("[ACTION TRIAGE] Detected Write Task - executing mechanical write...")
+                    print(
+                        "[ACTION TRIAGE] Detected Write Task - executing mechanical write..."
+                    )
                     await self._execute_mechanical_write(command)
                     continue
                 elif "git_operations" in command:
                     # This is a Git Task
-                    print("[ACTION TRIAGE] Detected Git Task - executing mechanical git operations...")
+                    print(
+                        "[ACTION TRIAGE] Detected Git Task - executing mechanical git operations..."
+                    )
                     await self._execute_mechanical_git(command)
                     continue
 
                 # V7.1: Doctrine of Implied Intent - Check if this is a new development cycle command
                 # If so, it implies approval to proceed with the current stage
-                if command.get("development_cycle", False) and command.get("guardian_approval") == "APPROVE_CURRENT_STAGE":
+                if (
+                    command.get("development_cycle", False)
+                    and command.get("guardian_approval") == "APPROVE_CURRENT_STAGE"
+                ):
                     # Update state with approved artifact
                     state = json.loads(state_file.read_text())
                     if "approved_artifact_path" in command:
                         if state["current_stage"] == "AWAITING_APPROVAL_REQUIREMENTS":
-                            state["approved_artifacts"]["requirements"] = command["approved_artifact_path"]
+                            state["approved_artifacts"]["requirements"] = command[
+                                "approved_artifact_path"
+                            ]
                         elif state["current_stage"] == "AWAITING_APPROVAL_TECH_DESIGN":
-                            state["approved_artifacts"]["tech_design"] = command["approved_artifact_path"]
+                            state["approved_artifacts"]["tech_design"] = command[
+                                "approved_artifact_path"
+                            ]
                         elif state["current_stage"] == "AWAITING_APPROVAL_CODE":
-                            state["approved_artifacts"]["code_proposal"] = command["approved_artifact_path"]
+                            state["approved_artifacts"]["code_proposal"] = command[
+                                "approved_artifact_path"
+                            ]
                         state_file.write_text(json.dumps(state, indent=2))
                     await self._advance_cycle(state_file)
                 elif command.get("action") == "APPROVE_CURRENT_STAGE":
@@ -2168,29 +2664,45 @@ class Orchestrator:
                     state = json.loads(state_file.read_text())
                     if "approved_artifact_path" in command:
                         if state["current_stage"] == "AWAITING_APPROVAL_REQUIREMENTS":
-                            state["approved_artifacts"]["requirements"] = command["approved_artifact_path"]
+                            state["approved_artifacts"]["requirements"] = command[
+                                "approved_artifact_path"
+                            ]
                         elif state["current_stage"] == "AWAITING_APPROVAL_TECH_DESIGN":
-                            state["approved_artifacts"]["tech_design"] = command["approved_artifact_path"]
+                            state["approved_artifacts"]["tech_design"] = command[
+                                "approved_artifact_path"
+                            ]
                         elif state["current_stage"] == "AWAITING_APPROVAL_CODE":
-                            state["approved_artifacts"]["code_proposal"] = command["approved_artifact_path"]
+                            state["approved_artifacts"]["code_proposal"] = command[
+                                "approved_artifact_path"
+                            ]
                         state_file.write_text(json.dumps(state, indent=2))
                     await self._advance_cycle(state_file)
                 else:
-                    print("[!] Invalid command during development cycle. Awaiting APPROVE_CURRENT_STAGE.", flush=True)
+                    print(
+                        "[!] Invalid command during development cycle. Awaiting APPROVE_CURRENT_STAGE.",
+                        flush=True,
+                    )
             else:
                 # We are idle, waiting for a new task to start a new cycle
-                print("--- Orchestrator Idle. Awaiting command from Sentry... ---", flush=True)
+                print(
+                    "--- Orchestrator Idle. Awaiting command from Sentry... ---",
+                    flush=True,
+                )
                 command = await loop.run_in_executor(None, self.command_queue.get)
 
                 # V9.0 MANDATE 1: Action Triage - Check for mechanical tasks first
                 if "entry_content" in command and "output_artifact_path" in command:
                     # This is a Write Task
-                    print("[ACTION TRIAGE] Detected Write Task - executing mechanical write...")
+                    print(
+                        "[ACTION TRIAGE] Detected Write Task - executing mechanical write..."
+                    )
                     await self._execute_mechanical_write(command)
                     continue
                 elif "git_operations" in command:
                     # This is a Git Task
-                    print("[ACTION TRIAGE] Detected Git Task - executing mechanical git operations...")
+                    print(
+                        "[ACTION TRIAGE] Detected Git Task - executing mechanical git operations..."
+                    )
                     await self._execute_mechanical_git(command)
                     continue
 
@@ -2198,45 +2710,67 @@ class Orchestrator:
                     # Check if this is a development cycle command
                     if command.get("development_cycle", False):
                         await self._start_new_cycle(command, state_file)
-                    elif command.get('task_type') == "query_and_synthesis":
+                    elif command.get("task_type") == "query_and_synthesis":
                         # Guardian Mnemonic Synchronization Protocol: Query and Synthesis task
-                        print("[ACTION TRIAGE] Detected Query and Synthesis Task - invoking Council for mnemonic synchronization...")
+                        print(
+                            "[ACTION TRIAGE] Detected Query and Synthesis Task - invoking Council for mnemonic synchronization..."
+                        )
                         await self._execute_query_and_synthesis(command)
                     else:
                         # Regular task execution
-                        original_output_path = self.project_root / command['output_artifact_path']
+                        original_output_path = (
+                            self.project_root / command["output_artifact_path"]
+                        )
                         task_result = await self.execute_task(command)
 
                         # V7.0 MANDATE 3: Check task result before proceeding
                         if task_result is False:
-                            self.logger.error("Task aborted due to consecutive cognitive failures. No AAR will be generated.")
+                            self.logger.error(
+                                "Task aborted due to consecutive cognitive failures. No AAR will be generated."
+                            )
                         else:
                             # Check if RAG database should be updated for this task
-                            update_rag = command.get('config', {}).get('update_rag', True)
+                            update_rag = command.get("config", {}).get(
+                                "update_rag", True
+                            )
                             if update_rag:
                                 # V9.3: Generate AAR asynchronously - truly non-blocking
-                                self.logger.info("Task complete. Dispatching After-Action Report synthesis to background...")
+                                self.logger.info(
+                                    "Task complete. Dispatching After-Action Report synthesis to background..."
+                                )
                                 # Determine the actual log file path
                                 if original_output_path.is_dir():
                                     log_file_path = original_output_path / "task_log.md"
                                 else:
                                     log_file_path = original_output_path
                                 # Create background task for AAR generation
-                                asyncio.create_task(self._execute_aar_background_full(log_file_path, command.get('config')))
+                                asyncio.create_task(
+                                    self._execute_aar_background_full(
+                                        log_file_path, command.get("config")
+                                    )
+                                )
                             else:
-                                self.logger.info("Task complete. RAG database update skipped per configuration.")
-                                self.logger.info(f"Output artifact saved to: {original_output_path}")
-                                self.logger.info("Orchestrator returning to idle state - ready for next command")
+                                self.logger.info(
+                                    "Task complete. RAG database update skipped per configuration."
+                                )
+                                self.logger.info(
+                                    f"Output artifact saved to: {original_output_path}"
+                                )
+                                self.logger.info(
+                                    "Orchestrator returning to idle state - ready for next command"
+                                )
 
                 except Exception as e:
-                    print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
+                    print(
+                        f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr
+                    )
                     self.logger.error(f"Task execution failed: {e}")
 
 
 if __name__ == "__main__":
     # Initialize and run the orchestrator
     orchestrator = Orchestrator()
-    
+
     # Run the main async loop
     try:
         asyncio.run(orchestrator.main_loop())

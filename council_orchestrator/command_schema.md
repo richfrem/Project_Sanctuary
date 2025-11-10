@@ -95,7 +95,8 @@ See [How to Commit Using command.json](howto-commit-command.md) for detailed ins
   "git_operations": {
     "files_to_add": ["string (required)"],
     "commit_message": "string (required)",
-    "push_to_origin": "boolean (optional, default: false)"  // Set to true to push after committing
+    "push_to_origin": "boolean (optional, default: false)",  // Set to true to push after committing
+    "no_verify": "boolean (optional, default: false)"  // Set to true to bypass pre-commit hooks
   },
   "config": {
     "update_rag": "boolean (optional, default: false) - Mechanical tasks skip RAG updates by default"
