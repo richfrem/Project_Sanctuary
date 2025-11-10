@@ -1,1 +1,2 @@
-here is my first line testing.
+Test content for Protocol 101 commit test.
+This file is used to demonstrate committing with integrity checks.
