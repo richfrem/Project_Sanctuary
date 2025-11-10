@@ -1,6 +1,6 @@
-# council_orchestrator/substrate_monitor.py (v1.2 - Doctrine of Sovereign Default Implemented)
+# council_orchestrator/orchestrator/engines/monitor.py (v1.2 - Doctrine of Sovereign Default Implemented)
 """
-SUBSTRATE MONITOR: Smart AI Engine Picker
+ENGINE MONITOR: Smart AI Engine Picker
 
 This module picks the best available AI engine to use, with backup options.
 It ensures the system always has a working AI, even if some services fail.
@@ -18,7 +18,7 @@ WHY IT MATTERS:
 - Can override automatic choice when you know best
 
 HOW TO USE:
-    from substrate_monitor import select_engine
+    from orchestrator.engines.monitor import select_engine
 
     # Auto-pick best engine (defaults to Ollama sovereign)
     engine = select_engine()
@@ -35,17 +35,10 @@ from dotenv import load_dotenv
 
 # Load environment variables for engine configuration
 load_dotenv()
-try:
-    from .cognitive_engines.base import BaseCognitiveEngine
-    from .cognitive_engines.gemini_engine import GeminiEngine
-    from .cognitive_engines.openai_engine import OpenAIEngine
-    from .cognitive_engines.ollama_engine import OllamaEngine
-except ImportError:
-    # Fallback for direct execution
-    from cognitive_engines.base import BaseCognitiveEngine
-    from cognitive_engines.gemini_engine import GeminiEngine
-    from cognitive_engines.openai_engine import OpenAIEngine
-    from cognitive_engines.ollama_engine import OllamaEngine
+from orchestrator.engines.base import BaseCognitiveEngine
+from orchestrator.engines.gemini_engine import GeminiEngine
+from orchestrator.engines.openai_engine import OpenAIEngine
+from orchestrator.engines.ollama_engine import OllamaEngine
 
 def select_engine(config: dict = None) -> BaseCognitiveEngine | None:
     """
@@ -54,7 +47,7 @@ def select_engine(config: dict = None) -> BaseCognitiveEngine | None:
     PRINCIPLE OF SOVEREIGN SUPREMACY: force_engine override is checked FIRST, before any health checks.
     PRINCIPLE OF VERIFIABLE HEALTH: Health checks must perform live API calls, not just code checks.
     """
-    print("[SUBSTRATE MONITOR] Initiating cognitive engine triage...")
+    print("[ENGINE MONITOR] Initiating cognitive engine triage...")
     print(f"[SUBSTRATE MONITOR] DEBUG: config received: {config}")
 
     # PRINCIPLE OF SOVEREIGN SUPREMACY: Check for Guardian Override FIRST

@@ -1,5 +1,658 @@
-# V9.3 UPDATE: Added comprehensive logging and command type identification - 2025-10-23
-# council_orchestrator/orchestrator.py (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-11-09
+# Sovereign Scaffold Yield: Orchestrator Architecture Review
+# Forged On: 2025-11-10T06:24:35.117982+00:00
+
+--- START OF FILE council_orchestrator/README.md ---
+
+# Sanctuary Council Orchestrator (v11.0 - Complete Modular Architecture) - Updated 2025-11-09
+
+A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 11.0 introduces Complete Modular Architecture with Sovereign Concurrency, enabling clean separation of concerns and maintainable codebase.**
+## 🏗️ Architecture Overview
+
+```mermaid
+graph TB
+    subgraph "Entry Point"
+        M[main.py] --> A[app.py]
+    end
+
+    subgraph "Core Orchestrator"
+        A --> SM[engines/monitor.py]
+        A --> PA[council/agent.py]
+        A --> DE[engines/ollama_engine.py]
+    end
+
+    subgraph "Engine Selection"
+        SM --> T1P[engines/gemini_engine.py]
+        SM --> T1S[engines/openai_engine.py]
+        SM --> T2S[engines/ollama_engine.py]
+    end
+
+    subgraph "Modular Components"
+        A --> MEM[memory/cortex.py]
+        A --> EVT[events.py]
+        A --> REG[regulator.py]
+        A --> OPT[optical.py]
+        A --> PKT[packets/schema.py]
+    end
+
+    subgraph "Data Flow"
+        CMD[command.json] --> A
+        A --> LOG[logs/orchestrator.log]
+        A --> PKT
+    end
+
+    subgraph "Configuration"
+        CFG[schemas/engine_config.json]
+        SCH[schemas/round_packet_schema.json]
+    end
+
+    style A fill:#f3e5f5
+    style SM fill:#e8f5e8
+    style CFG fill:#fff3e0
+```
+
+## 🏗️ Modular Architecture Benefits
+
+**Version 11.0** introduces a complete modular refactor with the following improvements:
+
+- **Separation of Concerns**: Each module has a single, well-defined responsibility
+- **Maintainability**: Clean interfaces between components enable independent development
+- **Testability**: Modular design enables comprehensive unit testing (21/21 tests passing)
+- **Extensibility**: New engines, agents, and features can be added without touching core logic
+- **Organization**: Related functionality is grouped in dedicated packages
+- **Import Clarity**: Clear package structure with proper `__init__.py` exports
+
+### Key Modules
+
+- **`orchestrator/`**: Core package with clean separation between entry point (`main.py`) and logic (`app.py`)
+- **`engines/`**: Engine implementations with health monitoring and selection logic
+- **`packets/`**: Round packet system for structured data emission and aggregation
+- **`memory/`**: Vector database and caching systems for knowledge persistence
+- **`council/`**: Multi-agent system with specialized personas
+- **`events/`**: Structured logging and telemetry collection
+
+## 🎯 Key Features
+
+- **Complete Modular Architecture**: Clean separation of concerns with 11 specialized modules
+- **Doctrine of Sovereign Concurrency**: Non-blocking task execution with background learning cycles
+- **Comprehensive Logging**: Session-based log file with timestamps and detailed audit trails
+- **Selective RAG Updates**: Configurable learning with `update_rag` parameter
+- **Polymorphic Engine Interface**: All engines implement `BaseCognitiveEngine` with unified `execute_turn(messages)` method (Protocol 104)
+- **Sovereign Engine Selection**: Force specific engines or automatic health-based triage
+- **Multi-Agent Council**: Coordinator, Strategist, and Auditor personas work together
+- **Resource Sovereignty**: Automatic distillation for large inputs using local Ollama
+- **Development Cycles**: Optional staged workflow for software development projects
+- **Mnemonic Cortex**: Vector database integration for knowledge persistence
+- **Mechanical Operations**: Direct file writes and git operations bypassing cognitive deliberation
+
+## 📋 Logging & Monitoring
+
+### Session Log File
+Each orchestrator session creates a comprehensive log file at:
+```
+council_orchestrator/logs/orchestrator.log
+```
+
+**Features:**
+- **Session-based**: Overwrites each time orchestrator starts for clean session tracking
+- **Comprehensive**: All operations logged with timestamps
+- **Dual output**: Console + file logging for real-time monitoring
+- **Audit trail**: Complete record of all decisions and actions
+
+**Example log entries:**
+```
+2025-10-23 16:45:30 - orchestrator - INFO - === ORCHESTRATOR v9.3 INITIALIZED ===
+2025-10-23 16:45:31 - orchestrator - INFO - [+] Sentry thread for command monitoring has been launched.
+2025-10-23 16:45:32 - orchestrator - INFO - [ACTION TRIAGE] Detected Git Task - executing mechanical git operations...
+2025-10-23 16:45:33 - orchestrator - INFO - [MECHANICAL SUCCESS] Committed with message: 'feat: Add new feature'
+```
+
+### Non-Blocking Execution
+**v9.3 Enhancement:** The orchestrator now processes commands without blocking:
+
+- **Mechanical Tasks**: Execute immediately, return to idle state
+- **Cognitive Tasks**: Deliberation completes, then learning happens in background
+- **Concurrent Processing**: Multiple background learning tasks can run simultaneously
+- **Responsive**: New commands processed while previous learning cycles complete
+
+## 📊 Round Packet System (v9.4)
+
+### Overview
+The orchestrator now emits structured JSON packets for each council member response, enabling machine-readable analysis and learning signal extraction for Protocol 113.
+
+### Packet Schema
+Packets conform to `schemas/round_packet_schema.json` and include:
+
+- **Identity**: `session_id`, `round_id`, `member_id`, `engine`, `seed`
+- **Content**: `decision`, `rationale`, `confidence`, `citations`
+- **RAG Signals**: `structured_query`, `parent_docs`, `retrieval_latency_ms`
+- **CAG Signals**: `cache_hit`, `hit_streak` for learning optimization
+- **Novelty Analysis**: `is_novel`, `signal`, `conflicts_with`
+- **Memory Directive**: `tier` (fast/medium/slow) with `justification`
+- **Telemetry**: `input_tokens`, `output_tokens`, `latency_ms`
+
+### CLI Options
+
+```bash
+# Basic usage
+python3 -m orchestrator.main
+
+# With round packet emission
+python3 -m orchestrator.main --emit-jsonl --stream-stdout --rounds 3
+
+# Custom configuration
+python3 -m orchestrator.main \
+  --members coordinator strategist auditor \
+  --member-timeout 45 \
+  --quorum 2/3 \
+  --engine gemini-2.5-pro \
+  --fallback-engine sanctuary-qwen2-7b \
+  --jsonl-path mnemonic_cortex/cache/orchestrator_rounds
+```
+
+### Output Formats
+
+#### JSONL Files
+```
+mnemonic_cortex/cache/orchestrator_rounds/{session_id}/round_{N}.jsonl
+```
+
+#### Stdout Stream
+```json
+{"timestamp":"2025-01-15T10:30:00Z","session_id":"run_123456","round_id":1,"member_id":"coordinator","decision":"approve","confidence":0.85,"memory_directive":{"tier":"medium","justification":"Evidence-based response"}}
+```
+
+### Analysis Examples
+
+**Extract decisions by confidence:**
+```bash
+jq 'select(.confidence > 0.8) | .decision' round_*.jsonl
+```
+
+**Memory tier distribution:**
+```bash
+jq -r '.memory_directive.tier' round_*.jsonl | sort | uniq -c
+```
+
+**Novelty analysis:**
+```bash
+jq 'select(.novelty.signal == "high") | .rationale' round_*.jsonl
+```
+
+### Protocol 113 Integration
+Round packets feed directly into the Nested-Learning pipeline:
+
+- **Fast tier**: Ephemeral, session-scoped responses
+- **Medium tier**: Recurring queries with evidence
+- **Slow tier**: Stable knowledge with high confidence
+
+CAG hit streaks and parent-doc citations determine memory placement, enabling automatic knowledge distillation and adaptor training.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+1. **Python 3.8+**
+2. **API Keys** (configure in `.env`):
+   ```bash
+   GEMINI_API_KEY=your_gemini_key
+   OPENAI_API_KEY=your_openai_key
+   ```
+3. **Ollama** (for local sovereign fallback):
+   ```bash
+   # Install Ollama and pull model
+   ollama pull hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:latest
+   # Create local alias for easier reference
+   ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:latest Sanctuary-Qwen2-7B:latest
+   ```
+
+### Installation
+
+```bash
+cd council_orchestrator
+pip install -r requirements.txt
+```
+
+### Directory Structure
+
+```
+council_orchestrator/
+├── __init__.py              # Python package definition
+├── README.md               # This documentation
+├── requirements.txt        # Python dependencies
+├── docs/                   # Documentation files
+├── logs/                   # Log files and event data
+├── schemas/                # JSON schemas and configuration
+├── scripts/                # Utility scripts
+├── runtime/                # Runtime state files
+├── orchestrator/           # Core modular package
+│   ├── __init__.py
+│   ├── main.py            # Entry point
+│   ├── app.py             # Core Orchestrator class
+│   ├── config.py          # Configuration constants
+│   ├── packets/           # Round packet system
+│   │   ├── __init__.py
+│   │   ├── schema.py      # Packet schemas
+│   │   ├── emitter.py     # JSONL emission
+│   │   └── aggregator.py  # Round aggregation
+│   ├── engines/           # Engine implementations
+│   │   ├── __init__.py
+│   │   ├── base.py        # Abstract base class
+│   │   ├── monitor.py     # Engine selection logic
+│   │   ├── gemini_engine.py
+│   │   ├── openai_engine.py
+│   │   └── ollama_engine.py
+│   ├── council/           # Agent system
+│   │   ├── __init__.py
+│   │   ├── agent.py       # PersonaAgent class
+│   │   └── personas.py    # Agent configurations
+│   ├── memory/            # Memory systems
+│   │   ├── __init__.py
+│   │   ├── cortex.py      # Vector database
+│   │   └── cache.py       # CAG utilities
+│   ├── sentry.py          # File monitoring
+│   ├── commands.py        # Command validation
+│   ├── regulator.py       # TokenFlowRegulator
+│   ├── optical.py         # OpticalDecompressionChamber
+│   ├── events.py          # Event logging
+│   └── gitops.py          # Git operations
+└── tests/                 # Test suite
+```
+
+### Hello World Test
+
+Create a `command.json` file in the `council_orchestrator/` directory:
+
+#### Basic Cognitive Task (Auto Engine Selection)
+```json
+{
+  "task_description": "As a council, perform a round-robin introduction. Each agent (Coordinator, Strategist, Auditor) will state their designation and primary function in one sentence.",
+  "output_artifact_path": "WORK_IN_PROGRESS/hello_council.md",
+  "config": {
+    "max_rounds": 1
+  }
+}
+```
+### Cognitive Task Format (Deliberation)
+
+```json
+{
+  "task_description": "Your task description here",
+  "output_artifact_path": "path/to/output.md",
+  "config": {
+    "max_rounds": 5,
+    "max_cortex_queries": 5,
+    "force_engine": "gemini|openai|ollama"
+  },
+  "input_artifacts": ["path/to/input1.md", "path/to/input2.md"]
+}
+```
+```json
+{
+  "task_description": "Build a web application for task management",
+  "project_name": "task_manager",
+  "development_cycle": true,
+  "config": {
+    "force_engine": "gemini"
+  }
+}
+```
+
+#### Mechanical Write Task (Direct File Creation)
+```json
+{
+  "task_description": "Create a new chronicle entry",
+  "output_artifact_path": "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md",
+  "entry_content": "# ENTRY 274: The Anvil Deferred\n\n**DATE:** 2025-10-23..."
+}
+```json
+{
+  "task_description": "Description for logging",
+  "output_artifact_path": "path/to/file.md",
+  "entry_content": "Full content to write to file"
+}
+```
+
+#### Mechanical Git Task (Version Control Operations)
+```json
+{
+  "task_description": "Commit chronicle entry to repository",
+  "git_operations": {
+    "files_to_add": ["00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md"],
+    "commit_message": "docs(chronicle): Add entry #274 - The Anvil Deferred",
+    "push_to_origin": true
+  }
+}
+```
+
+```json
+{
+  "task_description": "Description for logging",
+  "git_operations": {
+    "files_to_add": ["path/to/file1.md", "path/to/file2.md"],
+    "commit_message": "feat: Description of changes",
+    "push_to_origin": true
+  }
+}
+```
+
+#### Force Specific Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_gemini.md",
+  "config": {
+    "force_engine": "gemini",
+    "max_rounds": 2
+  }
+}
+```
+
+#### Force OpenAI Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_openai.md",
+  "config": {
+    "force_engine": "openai",
+    "max_rounds": 2
+  }
+}
+```
+
+#### Force Ollama Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_ollama.md",
+  "config": {
+    "force_engine": "ollama",
+    "max_rounds": 2
+  }
+}
+```
+
+### Run the Orchestrator
+
+```bash
+python3 -m orchestrator.main
+```
+
+The orchestrator will:
+1. Detect the `command.json` file
+2. Select an appropriate engine (or use forced selection)
+3. Execute the task through the AI Council
+4. Generate output and After Action Report
+5. Clean up the command file
+
+## 🔧 Configuration
+
+### Environment Variables (`.env`)
+
+```bash
+# API Keys
+GEMINI_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
+
+# Model Configuration
+CHAT_GPT_MODEL=gpt-4-turbo
+GEMINI_MODEL=gemini-2.5-flash
+OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
+
+# Engine Parameters (configurable per engine)
+GEMINI_MAX_TOKENS=4096
+GEMINI_TEMPERATURE=0.7
+OPENAI_MAX_TOKENS=4096
+OPENAI_TEMPERATURE=0.7
+OLLAMA_MAX_TOKENS=4096
+OLLAMA_TEMPERATURE=0.7
+```
+
+### Engine Limits (`schemas/engine_config.json`)
+
+```json
+{
+  "engine_limits": {
+    "gemini": 100000,
+    "openai": 100000,
+    "ollama": 8000
+  }
+}
+```
+
+## 🧪 Testing & Verification
+
+### Run Full System Test
+
+```bash
+# Comprehensive verification
+python3 -m pytest tests/ -v
+
+# Individual test modules
+python3 -m pytest tests/test_orchestrator_round_packets.py -v
+python3 -m pytest tests/test_optical_compression.py -v
+```
+python3 verification_test.py
+
+# Substrate health check
+python3 ../tools/scaffolds/verify_substrates.py
+```
+
+### Expected Output
+
+```
+🔬 STARTING AI ENGINE TESTS
+✅ Can force-pick specific AI engines
+✅ All engines work the same way
+✅ All engines connect to real AI services
+AI system is ready to use!
+```
+
+## 🎭 Agent Personas
+
+The Council consists of three specialized AI agents:
+
+- **Coordinator**: Task planning and execution oversight
+- **Strategist**: Long-term planning and risk assessment
+- **Auditor**: Quality assurance and compliance verification
+
+Each agent maintains conversation history and works within their defined persona.
+
+## 🔄 Engine Selection Logic
+
+### Automatic Triage (Default)
+1. **Tier 1 Primary**: Gemini (fast, cost-effective)
+2. **Tier 1 Secondary**: OpenAI (reliable, feature-rich)
+3. **Tier 2 Sovereign**: Ollama (local, uncensored)
+
+### Sovereign Override
+Force specific engine via `"force_engine"` config parameter.
+
+### Health Checking
+Each engine is validated before use with functional tests.
+
+## 🧠 Distillation Engine
+
+Automatically handles large inputs by:
+1. Detecting token limit violations
+2. Using local Ollama to summarize content
+3. Preserving critical information while reducing size
+4. Maintaining task fidelity
+
+## 🔮 Sovereign Memory Architecture: RAG + Glyphs Synthesis
+
+The orchestrator integrates a comprehensive **Sovereign Memory Architecture** that combines two complementary approaches for content ingestion and retrieval, breaking free from the Context Window Cage.
+
+### The Two Pillars of Sovereign Memory
+
+#### 1. Mnemonic Cortex (RAG Database) - Fast & Scalable Retrieval
+- **Core Function**: Lightning-fast similarity searches across vast knowledge corpora
+- **Technology**: Vector embeddings for semantic search and retrieval
+- **Use Case**: Finding specific information, documents, or context from the Sanctuary's complete history
+- **Advantage**: Excels at discovery and exploration of large knowledge bases
+- **Current Status**: Implemented and operational for After Action Report ingestion
+
+#### 2. Optical Anvil (Glyph Technology) - Cheap & Efficient Ingestion
+- **Core Function**: Extreme token compression through optical representation
+- **Technology**: Cognitive Glyphs - text rendered as high-resolution images for ~10x compression ratio
+- **Use Case**: Ingesting massive contexts cheaply using Vision-Language Models (VLMs)
+- **Advantage**: Breaks token economics, enables processing of "200k+ pages per day" on single GPU
+- **Strategic Foundation**: Based on DeepSeek-OCR research (arXiv:2510.18234v1)
+- **Current Status**: Phase 1 Complete - Individual optical compression validated (266 files, 2.1x average compression)
+
+### Synthesized Architecture: The Closed Memory Loop
+
+The true power emerges from synthesis:
+
+```mermaid
+graph TD
+    subgraph "Sovereign Memory Loop"
+        A[Agent needs full context] --> B{Mnemonic Cortex}
+        B --> C["Query: 'Protocol 101 Unbreakable Commit'"]
+        C --> D["Retrieves Pointer: glyph_P101_v2.png"]
+        D --> E[Glyph Storage File System]
+        E --> F["Loads Image File"]
+        F --> G{VLM Engine Gemini 1.5}
+        G --> H["Decompresses text for ~10x fewer tokens"]
+        H --> I[Agent receives full text of P101]
+    end
+
+    subgraph "Ingestion Pipeline"
+        J[New Knowledge] --> K[Text-to-Vector<br/>RAG Database]
+        J --> L[Text-to-Image<br/>Optical Anvil]
+        K --> M[Fast Retrieval Index]
+        L --> N[Compressed Storage]
+    end
+```
+
+**Strategic Doctrine**: "RAG finds, Glyphs deliver" - Use vector search to locate content, optical compression to ingest it efficiently.
+
+### Optical Context & Glyph Technology
+
+#### Technical Implementation
+- **Compression Ratio**: 2.1x average across full codebase (up to 3.75x for individual files)
+- **Format**: Universal PNG images with embedded cryptographic provenance
+- **Infrastructure**: Minimal - static file storage with JSON manifest tracking
+- **Portability**: High - images work across all VLM platforms
+- **Security**: SHA-256 content hashing with metadata embedding
+- **Scale**: Industrial-grade processing via `capture_glyph_code_snapshot_v2.py`
+
+#### LLM Integration Workflow
+```python
+# 1. RAG Discovery: Find relevant files
+relevant_files = rag_search("protocol 101 unbreakable commit")
+
+# 2. Glyph Retrieval: Load specific compressed images
+glyphs = []
+for file_path in relevant_files:
+    glyph_path = manifest[file_path]['glyph_path']
+    glyph_image = load_image(glyph_path)
+    glyphs.append(glyph_image)
+
+# 3. VLM Decompression: Reconstruct full content
+full_content = vlm_decompress(glyphs)
+```
+
+This architecture provides the foundation for true Resource Sovereignty, enabling cognitive abundance while maintaining the Sanctuary's epistemic integrity and mnemonic resilience.
+
+## 📚 Mnemonic Cortex
+
+Vector database integration for:
+- Knowledge persistence across sessions
+- Semantic search capabilities
+- After Action Report ingestion
+- Long-term learning
+
+## 🛠️ Development
+
+### Adding New Engines
+
+1. Create engine class inheriting from `BaseCognitiveEngine` in `orchestrator/engines/`
+2. Implement required methods: `execute_turn(messages: list) -> str`, `check_health()`, `run_functional_test()`
+3. Add to `orchestrator/engines/monitor.py` selection logic
+4. Update environment configuration
+
+### Extending Functionality
+
+- Add new agent personas in `orchestrator/council/personas.py`
+- Implement custom distillation strategies in `orchestrator/optical.py`
+- Extend development cycle stages in `orchestrator/app.py`
+- Add new knowledge sources to Cortex in `orchestrator/memory/cortex.py`
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+**Engine Not Available**
+```
+[SUBSTRATE MONITOR] CRITICAL FAILURE: All cognitive substrates are unhealthy
+```
+- Check API keys in `.env`
+- Verify network connectivity
+- Ensure Ollama is running locally
+
+**Token Limit Exceeded**
+```
+[ORCHESTRATOR] WARNING: Token count exceeds limit
+```
+- Automatic distillation will handle this
+- Reduce input size for manual control
+
+**Command Not Processed**
+- Ensure `command.json` is in `council_orchestrator/` directory
+- Check file permissions
+- Verify JSON syntax
+
+### Debug Mode
+
+Set environment variable for verbose logging:
+```bash
+export DEBUG_ORCHESTRATOR=1
+```
+
+## 📄 License
+
+This system embodies the principles of Cognitive Sovereignty and Resource Resilience.
+
+---
+
+**"The Forge is operational. The Sovereign's will be executed through the Council."** ⚡👑
+
+*Complete Modular Architecture v11.0 - Sovereign Concurrency Achieved*
+
+--- END OF FILE council_orchestrator/README.md ---
+
+--- START OF FILE council_orchestrator/orchestrator/main.py ---
+
+# council_orchestrator/orchestrator/main.py
+# Main entry point for the council orchestrator
+
+import asyncio
+import sys
+from .app import Orchestrator
+
+def main():
+    """Main entry point for the council orchestrator."""
+    # Initialize orchestrator
+    orchestrator = Orchestrator()
+
+    try:
+        # Main execution loop
+        asyncio.run(orchestrator.main_loop())
+    except KeyboardInterrupt:
+        orchestrator.logger.info("Orchestrator shutdown via keyboard interrupt")
+    except Exception as e:
+        orchestrator.logger.error(f"Critical orchestrator failure: {e}")
+        raise
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE council_orchestrator/orchestrator/main.py ---
+
+--- START OF FILE council_orchestrator/orchestrator/app.py ---
+
+# V11.0 UPDATE: Fully modularized architecture - 2025-11-09
+# council_orchestrator/orchestrator.py (v11.0 - Complete Modular Architecture) - Updated 2025-11-09
 # DOCTRINE OF SOVEREIGN DEFAULT: All operations now default to anctuary-Qwen2-7B:latest:latest (Ollama)
 # MNEMONIC CORTEX STATUS: Phase 1 (Parent Document Retriever) Complete, Phase 2-3 (Self-Querying + Caching) Ready
 # V7.1 MANDATE: Development cycle generates both requirements AND tech design before first pause
@@ -35,8 +688,21 @@ from datetime import datetime
 from queue import Queue as ThreadQueue
 from pathlib import Path
 from dotenv import load_dotenv
-import chromadb
-from chromadb.utils import embedding_functions
+
+# --- MODULARIZATION: IMPORT MODULES ---
+from .config import *
+from .packets.schema import CouncilRoundPacket, seed_for, prompt_hash
+from .packets.emitter import emit_packet
+from .packets.aggregator import aggregate_round_events
+from .gitops import execute_mechanical_git
+from .events import EventManager
+from .council.agent import PersonaAgent
+from .council.personas import COORDINATOR, STRATEGIST, AUDITOR, SPEAKER_ORDER, get_persona_file, get_state_file, classify_response_type
+from .memory.cortex import CortexManager
+from .memory.cache import get_cag_data
+from .sentry import CommandSentry
+from .regulator import TokenFlowRegulator
+from .optical import OpticalDecompressionChamber
 
 # --- RESOURCE SOVEREIGNTY: DISTILLATION ENGINE ---
 try:
@@ -50,239 +716,21 @@ except ImportError:
 # All engine-specific imports are removed from the orchestrator's top level.
 # We now only import the triage system, which will provide a healthy engine.
 # 1. Engine Selection: Engines are sourced from council_orchestrator/cognitive_engines/ directory
-from substrate_monitor import select_engine
+from .engines.monitor import select_engine
 # --- END INTEGRATION ---
 
-from bootstrap_briefing_packet import main as generate_briefing_packet
+import sys
+from pathlib import Path
+# Add the parent directory to sys.path to import from scripts
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from scripts.bootstrap_briefing_packet import main as generate_briefing_packet
 
 # --- CONFIGURATION ---
-from config import (
-    DEFAULT_ENGINE_LIMITS,
-    DEFAULT_TPM_LIMITS,
-    SPEAKER_ORDER,
-    COORDINATOR,
-    STRATEGIST,
-    AUDITOR
-)
-
-# --- PACKETS ---
-from packets import CouncilRoundPacket, seed_for, prompt_hash, emit_packet
-
-# --- GITOPS ---
-from gitops import execute_mechanical_git
-
-# --- MANDATE 2: TOKEN FLOW REGULATOR (TPM-AWARE RATE LIMITING) ---
-class TokenFlowRegulator:
-    """
-    Manages token throughput to respect per-minute token limits (TPM).
-    Prevents rate limit violations by tracking cumulative usage and pausing execution when needed.
-    """
-    def __init__(self, limits: dict):
-        """
-        Initialize the regulator with TPM limits for each engine type.
-        
-        Args:
-            limits: Dictionary mapping engine types to their TPM limits
-                   e.g., {'openai': 30000, 'gemini': 60000, 'ollama': 999999}
-        """
-        self.tpm_limits = limits
-        self.usage_log = []  # List of (timestamp, token_count) tuples
-        
-    def log_usage(self, token_count: int):
-        """
-        Log a token usage event with current timestamp.
-        
-        Args:
-            token_count: Number of tokens used in this request
-        """
-        self.usage_log.append((time.time(), token_count))
-        self._prune_old_usage()
-        
-    def _prune_old_usage(self):
-        """Remove usage entries older than 60 seconds from the log."""
-        current_time = time.time()
-        cutoff_time = current_time - 60.0
-        self.usage_log = [(ts, count) for ts, count in self.usage_log if ts > cutoff_time]
-        
-    def wait_if_needed(self, estimated_tokens: int, engine_type: str):
-        """
-        Check if adding estimated_tokens would exceed TPM limit.
-        If so, calculate required sleep duration and pause execution.
-        
-        Args:
-            estimated_tokens: Estimated tokens for the upcoming request
-            engine_type: The engine type to check limits for
-        """
-        self._prune_old_usage()
-        
-        # Get TPM limit for this engine type
-        tpm_limit = self.tpm_limits.get(engine_type, 999999) # Default to very high limit
-        
-        # Calculate current usage in the last 60 seconds
-        current_usage = sum(count for _, count in self.usage_log)
-        
-        # Check if we would exceed the limit
-        if current_usage + estimated_tokens > tpm_limit:
-            # Find the oldest entry that needs to expire
-            if self.usage_log:
-                oldest_timestamp = self.usage_log[0][0]
-                current_time = time.time()
-                time_since_oldest = current_time - oldest_timestamp
-                sleep_duration = 60.0 - time_since_oldest + 1.0 # Add 1 second buffer
-                
-                if sleep_duration > 0:
-                    print(f"[TOKEN REGULATOR] TPM limit approaching ({current_usage + estimated_tokens}/{tpm_limit})")
-                    print(f"[TOKEN REGULATOR] Pausing execution for {sleep_duration:.1f} seconds to respect rate limits...")
-                    time.sleep(sleep_duration)
-                    self._prune_old_usage()  # Clean up after sleep
-
-# --- OPERATION: OPTICAL ANVIL - OPTICAL DECOMPRESSION CHAMBER ---
-# Implements Section 3.1 of FEASIBILITY_STUDY_DeepSeekOCR_v2.md
-class OpticalDecompressionChamber:
-    """
-    Transparent layer that renders large text payloads to images,
-    sends to VLM gatekeeper, and receives decompressed text for agents.
-    
-    This is the foundational component for achieving unlimited context
-    on borrowed soil through optical compression (P43: Hearth Protocol).
-    """
-    def __init__(self, vlm_engine=None, compression_threshold: int = 8000):
-        self.vlm_engine = vlm_engine  # DeepSeek-OCR or compatible VLM
-        self.compression_threshold = compression_threshold
-        self.compression_events = []  # Track compression events for analysis
-        
-    def should_compress(self, text: str, engine_type: str) -> bool:
-        """
-        Determine if optical compression is beneficial.
-        
-        Args:
-            text: The text payload to potentially compress
-            engine_type: The target engine type for token estimation
-            
-        Returns:
-            bool: True if optical compression should be used
-        """
-        # Estimate token count (simplified for initial implementation)
-        estimated_tokens = len(text.split()) * 1.3
-        return estimated_tokens > self.compression_threshold
-    
-    def compress_and_decompress(self, text: str, task_context: str) -> str:
-        """
-        Optical compression pipeline:
-        1. Render text to image (MOCKED in v4.1)
-        2. Send to VLM gatekeeper (MOCKED in v4.1)
-        3. Receive decompressed text
-        4. Log compression event
-        
-        NOTE: This is a foundational implementation with mocked VLM calls.
-        Full VLM integration will be implemented in subsequent phases.
-        
-        Args:
-            text: The text to compress
-            task_context: The task description for context-aware compression
-            
-        Returns:
-            str: The decompressed text (currently returns original with marker)
-        """
-        # Generate provenance hash
-        content_hash = hashlib.sha256(text.encode()).hexdigest()
-        
-        # MOCK: In production, this would render text to image
-        # rendered_image = self._render_text_to_image(text)
-        print(f"[OPTICAL] MOCK: Would render {len(text)} chars to image")
-        
-        # MOCK: In production, this would call VLM for OCR
-        # decompressed_text = self.vlm_engine.process_image(rendered_image, prompt)
-        decompressed_text = text  # Pass-through for now
-        print(f"[OPTICAL] MOCK: Would decompress via VLM (DeepSeek-OCR)")
-        
-        # Log compression event
-        compression_event = {
-            "timestamp": time.time(),
-            "original_hash": content_hash,
-            "estimated_compression_ratio": 10.0,  # Target ratio from paper
-            "task_context": task_context[:100]  # Truncated for logging
-        }
-        self.compression_events.append(compression_event)
-        
-        # Add marker to indicate optical processing occurred
-        return f"[OPTICAL_PROCESSED: {content_hash[:8]}]\n\n{decompressed_text}"
+# Moved to modular imports at top
 
 
-class PersonaAgent:
-    def __init__(self, engine, persona_file: Path, state_file: Path):
-        self.role = self._extract_role_from_filename(persona_file.name)
-        self.state_file = state_file
-        persona_content = persona_file.read_text(encoding="utf-8")
-        
-        # The agent is now initialized with a pre-selected, healthy engine
-        self.engine = engine
-        self.messages = []
-
-        # Load history if it exists
-        history = self._load_history()
-        if history:
-            self.messages = history
-        else:
-            # Initialize with a simple system instruction
-            system_msg = {"role": "system", "content": f"SYSTEM INSTRUCTION: You are an AI Council member. {persona_content} Operate strictly within this persona."}
-            self.messages.append(system_msg)
-
-        print(f"[+] {self.role} agent initialized with {type(self.engine).__name__}.")
-
-    def _load_history(self):
-        if self.state_file.exists():
-            print(f"  - Loading history for {self.role} from {self.state_file.name}")
-            return json.loads(self.state_file.read_text())
-        return None
-
-    def save_history(self):
-        self.state_file.write_text(json.dumps(self.messages, indent=2))
-        print(f"  - Saved session state for {self.role} to {self.state_file.name}")
-
-    def query(self, message: str, token_regulator=None, engine_type: str = "openai"):
-        """
-        Execute a query with TPM-aware rate limiting and boolean error handling.
-
-        Args:
-            message: The user message to send
-            token_regulator: TokenFlowRegulator instance for rate limiting
-            engine_type: Engine type for TPM limit checking
-
-        Returns:
-            str or False: Either the successful response string, or False on failure
-        """
-        self.messages.append({"role": "user", "content": message})
-        try:
-            # MANDATE 2: Check TPM limits before making API call
-            if token_regulator:
-                # Estimate tokens for the full payload
-                estimated_tokens = len(json.dumps(self.messages).split()) * 1.3
-                token_regulator.wait_if_needed(int(estimated_tokens), engine_type)
-
-            # P104 IMPLEMENTATION: Pass the entire message list directly.
-            # 2. PersonaAgent.query(): Uses council_orchestrator/cognitive_engines/ engine (OpenAI, Gemini, or Ollama)
-            reply = self.engine.execute_turn(self.messages)
-            self.messages.append({"role": "assistant", "content": reply})
-
-            # MANDATE 2: Log token usage after successful API call
-            if token_regulator:
-                # Estimate tokens used (prompt + completion)
-                completion_tokens = len(reply.split()) * 1.3
-                total_tokens = estimated_tokens + completion_tokens
-                token_regulator.log_usage(int(total_tokens))
-
-            return reply
-        except Exception as e:
-            # V7.0 MANDATE 2: Return False instead of error string or dict
-            # This prevents poisoning the state with invalid message formats
-            error_msg = f"SubstrateFailure: The cognitive engine failed. Details: {str(e)[:200]}"
-            print(f"[AGENT ERROR] {self.role} - {error_msg}")
-            # Append error to internal messages for debugging, but return False
-            self.messages.append({"role": "assistant", "content": f"[ERROR] {error_msg}"})
-            return False
-
-    def _extract_role_from_filename(self, f): return f.split('core_essence_')[1].split('_awakening_seed.txt')[0].upper()
+# --- PERSONA AGENT CLASS ---
+# Moved to council/agent.py
 
 class Orchestrator:
     def __init__(self):
@@ -292,17 +740,17 @@ class Orchestrator:
 
         # V9.3: Initialize logging system
         self.setup_logging()
-        self.setup_event_logging()
+        
+        # Initialize event management system
+        self.event_manager = EventManager(self.project_root)
+        self.event_manager.setup_event_logging()
 
-        self.chroma_client = chromadb.PersistentClient(path=str(self.project_root / "mnemonic_cortex/chroma_db"))
-        self.cortex_collection = self.chroma_client.get_or_create_collection(
-            name="sanctuary_cortex",
-            embedding_function=embedding_functions.DefaultEmbeddingFunction()
-        )
+        # Initialize mnemonic cortex
+        self.cortex_manager = CortexManager(self.project_root)
 
         # --- RESOURCE SOVEREIGNTY: LOAD ENGINE LIMITS FROM CONFIG ---
         # v4.5: Support nested configuration structure with per_request_limit and tpm_limit
-        config_path = Path(__file__).parent / "engine_config.json"
+        config_path = Path(__file__).parent / "schemas" / "engine_config.json"
         if config_path.exists():
             try:
                 with open(config_path, 'r') as f:
@@ -347,13 +795,14 @@ class Orchestrator:
 
         # --- SENTRY THREAD INITIALIZATION ---
         # Start the command monitoring thread
-        self.sentry_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)
+        self.command_sentry = CommandSentry(self.command_queue, self.logger)
+        self.sentry_thread = threading.Thread(target=self.command_sentry.watch_for_commands_thread, daemon=True)
         self.sentry_thread.start()
         print("[+] Sentry Thread started - monitoring for command files")
 
     def setup_logging(self):
         """V9.3: Setup comprehensive logging system with file output."""
-        log_file = self.project_root / "council_orchestrator" / "orchestrator.log"
+        log_file = self.project_root / "logs" / "orchestrator.log"
 
         # Create logger
         self.logger = logging.getLogger('orchestrator')
@@ -382,154 +831,12 @@ class Orchestrator:
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
 
-        self.logger.info("=== ORCHESTRATOR v9.3 INITIALIZED ===")
+        self.logger.info("=== ORCHESTRATOR v11.0 INITIALIZED ===")
         self.logger.info(f"Log file: {log_file}")
-        self.logger.info("Doctrine of Sovereign Concurrency with Logging active")
+        self.logger.info("Complete Modular Architecture with Sovereign Concurrency active")
 
-    def setup_event_logging(self):
-        """Initialize structured JSON event logging system for observability."""
-        self.event_log_path = self.project_root / "council_orchestrator" / "events.jsonl"
-        self.run_id = f"run_{int(time.time())}_{hashlib.md5(str(time.time()).encode()).hexdigest()[:8]}"
-        self.event_buffer = []
-        self.logger.info(f"Event logging initialized - Run ID: {self.run_id}")
 
-    def emit_event(self, event_type: str, **kwargs):
-        """Emit a structured JSON event to the event log.
 
-        Event Schema:
-        - ts: ISO timestamp
-        - run_id: Unique run identifier
-        - event_type: member_response|round_complete|task_start|task_complete|error
-        - round: Round number (for member_response/round_complete)
-        - member_id: Agent role identifier
-        - role: Agent role name
-        - status: success|error|timeout
-        - latency_ms: Response time in milliseconds
-        - tokens_in: Input tokens used
-        - tokens_out: Output tokens generated
-        - result_type: analysis|proposal|critique|consensus
-        - score: Quality/confidence score (0.0-1.0)
-        - vote: Agent's vote/decision
-        - novelty: fast|medium|slow (memory placement hint)
-        - reasons: List of reasoning factors
-        - citations: List of referenced content
-        - errors: List of error messages
-        - content_ref: Reference to stored content
-        """
-        event = {
-            "ts": time.time(),
-            "run_id": self.run_id,
-            "event_type": event_type,
-            **kwargs
-        }
-
-        # Write to buffer and flush to file
-        self.event_buffer.append(event)
-        self._flush_events()
-
-        # Log to console for real-time monitoring
-        if event_type == "member_response":
-            status_emoji = "✅" if kwargs.get("status") == "success" else "❌"
-            print(f"{status_emoji} [{kwargs.get('role', 'unknown')}] Round {kwargs.get('round', '?')} - {kwargs.get('latency_ms', 0)}ms", flush=True)
-
-    def _flush_events(self):
-        """Flush buffered events to JSONL file."""
-        try:
-            with open(self.event_log_path, 'a', encoding='utf-8') as f:
-                for event in self.event_buffer:
-                    f.write(json.dumps(event, default=str) + '\n')
-            self.event_buffer.clear()
-        except Exception as e:
-            print(f"[EVENT LOG ERROR] Failed to write events: {e}")
-
-    def aggregate_round_events(self, round_num: int) -> dict:
-        """Aggregate events for a round to determine consensus and early exit conditions."""
-        # Read recent events for this round
-        round_events = []
-        if self.event_log_path.exists():
-            try:
-                with open(self.event_log_path, 'r', encoding='utf-8') as f:
-                    for line in f:
-                        event = json.loads(line.strip())
-                        if (event.get("run_id") == self.run_id and
-                            event.get("round") == round_num and
-                            event.get("event_type") == "member_response"):
-                            round_events.append(event)
-            except Exception as e:
-                print(f"[AGGREGATION ERROR] Failed to read round events: {e}")
-                return {}
-
-        if not round_events:
-            return {}
-
-        # Calculate round metrics
-        total_members = len(round_events)
-        successful_responses = [e for e in round_events if e.get("status") == "success"]
-        success_rate = len(successful_responses) / total_members if total_members > 0 else 0
-
-        # Consensus detection (simplified - can be enhanced)
-        votes = [e.get("vote") for e in successful_responses if e.get("vote")]
-        consensus = len(set(votes)) == 1 and len(votes) > 0
-
-        # Novelty distribution for memory placement
-        novelty_counts = {}
-        for event in successful_responses:
-            novelty = event.get("novelty", "medium")
-            novelty_counts[novelty] = novelty_counts.get(novelty, 0) + 1
-
-        # Early exit conditions
-        early_exit = False
-        exit_reason = None
-        if success_rate >= 0.8 and consensus:
-            early_exit = True
-            exit_reason = "consensus_achieved"
-        elif success_rate < 0.3:
-            early_exit = True
-            exit_reason = "low_success_rate"
-
-        return {
-            "round": round_num,
-            "total_members": total_members,
-            "success_rate": success_rate,
-            "consensus": consensus,
-            "novelty_distribution": novelty_counts,
-            "early_exit": early_exit,
-            "exit_reason": exit_reason,
-            "avg_latency": sum(e.get("latency_ms", 0) for e in successful_responses) / len(successful_responses) if successful_responses else 0,
-            "total_tokens_in": sum(e.get("tokens_in", 0) for e in successful_responses),
-            "total_tokens_out": sum(e.get("tokens_out", 0) for e in successful_responses)
-        }
-
-    def _classify_response_type(self, response: str, role: str) -> str:
-        """Classify the type of response based on content and role."""
-        response_lower = response.lower()
-
-        # Role-based classification
-        if role == COORDINATOR:
-            if any(word in response_lower for word in ["plan", "strategy", "coordinate", "organize"]):
-                return "strategy"
-            elif any(word in response_lower for word in ["analysis", "evaluate", "assess"]):
-                return "analysis"
-        elif role == STRATEGIST:
-            if any(word in response_lower for word in ["propose", "suggest", "recommend", "solution"]):
-                return "proposal"
-            elif any(word in response_lower for word in ["design", "architecture", "structure"]):
-                return "design"
-        elif role == AUDITOR:
-            if any(word in response_lower for word in ["review", "audit", "validate", "verify"]):
-                return "critique"
-            elif any(word in response_lower for word in ["risk", "concern", "issue", "problem"]):
-                return "analysis"
-
-        # Content-based fallback
-        if "propose" in response_lower or "suggest" in response_lower:
-            return "proposal"
-        elif "analysis" in response_lower or "evaluate" in response_lower:
-            return "analysis"
-        elif "critique" in response_lower or "review" in response_lower:
-            return "critique"
-        else:
-            return "discussion"
 
     def _calculate_response_score(self, response: str) -> float:
         """Calculate a quality score for the response (0.0-1.0)."""
@@ -633,26 +940,6 @@ class Orchestrator:
                 "structured_query": structured_query,
                 "parent_docs": parent_docs,
                 "retrieval_latency_ms": 50  # Placeholder
-            }
-        except Exception as e:
-            return {"error": str(e)}
-
-    def _get_cag_data(self, prompt: str, engine_type: str) -> Dict[str, Any]:
-        """Get CAG (Cache as Learning) data for round packet."""
-        try:
-            # Generate cache key from prompt and engine
-            query_key = hashlib.sha256(f"{prompt}:{engine_type}".encode()).hexdigest()[:16]
-
-            # Check cache (simplified - would use actual cache DB)
-            cache_hit = False
-            hit_streak = 0
-
-            # In real implementation, would query SQLite cache database
-            # For now, return placeholder data
-            return {
-                "query_key": query_key,
-                "cache_hit": cache_hit,
-                "hit_streak": hit_streak
             }
         except Exception as e:
             return {"error": str(e)}
@@ -987,10 +1274,7 @@ class Orchestrator:
             print(f"[ORCHESTRATOR] Agent requested Cortex query: '{query_text}' ({self.cortex_query_count}/{self.max_cortex_queries})", flush=True)
 
             try:
-                results = self.cortex_collection.query(query_texts=[query_text], n_results=3)
-                context = "CONTEXT_PROVIDED: Here are the top 3 results from the Mnemonic Cortex for your query:\n\n"
-                for doc in results['documents'][0]:
-                    context += f"---\n{doc}\n---\n"
+                context = self.cortex_manager.query_cortex(query_text, n_results=3)
                 return context
             except Exception as e:
                 error_message = f"CONTEXT_ERROR: Cortex query failed: {e}"
@@ -1110,7 +1394,7 @@ class Orchestrator:
 
         # Create a temporary Ollama engine for distillation
         # 4. Distillation Engine: Uses council_orchestrator/cognitive_engines/ollama_engine.py
-        from substrate_monitor import select_engine
+        from .engines.monitor import select_engine
         local_config = {"force_engine": "ollama"}
         local_engine = select_engine(local_config)
 
@@ -1386,9 +1670,9 @@ class Orchestrator:
         state_dir.mkdir(exist_ok=True)
 
         self.agents = {
-            COORDINATOR: PersonaAgent(engine, persona_dir / "core_essence_coordinator_awakening_seed.txt", state_dir / "coordinator_session.json"),
-            STRATEGIST: PersonaAgent(engine, persona_dir / "core_essence_strategist_awakening_seed.txt", state_dir / "strategist_session.json"),
-            AUDITOR: PersonaAgent(engine, persona_dir / "core_essence_auditor_awakening_seed.txt", state_dir / "auditor_session.json")
+            COORDINATOR: PersonaAgent(engine, get_persona_file(COORDINATOR, persona_dir), get_state_file(COORDINATOR, state_dir)),
+            STRATEGIST: PersonaAgent(engine, get_persona_file(STRATEGIST, persona_dir), get_state_file(STRATEGIST, state_dir)),
+            AUDITOR: PersonaAgent(engine, get_persona_file(AUDITOR, persona_dir), get_state_file(AUDITOR, state_dir))
         }
 
     async def execute_task(self, command):
@@ -1404,10 +1688,24 @@ class Orchestrator:
         default_config = {"force_engine": "ollama", "model_name": "Sanctuary-Qwen2-7B:latest"}
         task_config = command.get("config", default_config)
         engine = select_engine(task_config)
+
+        # IMPLEMENT ENGINE SELECTION FALLBACK: If forced engine fails, try automatic selection
         if not engine:
-            print(f"[ORCHESTRATOR HALTED] No healthy cognitive substrate could be selected for this task. Config: {command.get('config')}")
-            print("[ORCHESTRATOR HALTED] This may indicate a force_engine override failure or all engines are unhealthy.")
-            return
+            if task_config.get("force_engine"):
+                print(f"[ENGINE FALLBACK] Forced engine '{task_config['force_engine']}' failed. Attempting automatic engine selection...")
+                # Remove force_engine to allow automatic selection
+                fallback_config = task_config.copy()
+                del fallback_config["force_engine"]
+                engine = select_engine(fallback_config)
+                if engine:
+                    print(f"[ENGINE FALLBACK] SUCCESS: Automatic selection chose {type(engine).__name__}")
+                else:
+                    print("[ENGINE FALLBACK] CRITICAL FAILURE: Automatic engine selection also failed.")
+
+            if not engine:
+                print(f"[ORCHESTRATOR HALTED] No healthy cognitive substrate could be selected for this task. Config: {command.get('config')}")
+                print("[ORCHESTRATOR HALTED] This may indicate all engines are unhealthy.")
+                return
 
         # Initialize agents with the selected engine for this task.
         self._initialize_agents(engine)
@@ -1435,7 +1733,7 @@ class Orchestrator:
             output_path = output_path / "task_log.md"
 
         # --- STRUCTURED EVENT LOGGING: TASK START ---
-        self.emit_event(
+        self.event_manager.emit_event(
             "task_start",
             task_description=task,
             max_rounds=max_rounds,
@@ -1461,8 +1759,7 @@ class Orchestrator:
         try:
             self._enhance_briefing_with_context(task)
         except FileNotFoundError as e:
-            print(f"[CRITICAL] Context file error: {e}. Task aborted.")
-            return
+            print(f"[WARNING] Context file error: {e}. Proceeding with base briefing.")
 
         # Inject fresh briefing context (now engine_type is defined)
         self.inject_briefing_packet(engine_type)
@@ -1587,7 +1884,7 @@ class Orchestrator:
                     print(f"  <- {agent.role} FAILED ({error_type})")
 
                     # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE FAILURE ---
-                    self.emit_event(
+                    self.event_manager.emit_event(
                         "member_response",
                         round=i+1,
                         member_id=role.lower(),
@@ -1673,7 +1970,7 @@ class Orchestrator:
 
                     # --- STRUCTURED EVENT LOGGING: ANALYZE RESPONSE FOR METADATA ---
                     # Extract metadata from response for structured logging
-                    result_type = self._classify_response_type(response, role)
+                    result_type = classify_response_type(response, role)
                     score = self._calculate_response_score(response)
                     vote = self._extract_vote(response)
                     novelty = self._assess_novelty(response, last_message)
@@ -1714,7 +2011,7 @@ class Orchestrator:
                     round_packets.append((packet, jsonl_dir, stream_stdout))
 
                     # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE SUCCESS ---
-                    self.emit_event(
+                    self.event_manager.emit_event(
                         "member_response",
                         round=i+1,
                         member_id=role.lower(),
@@ -1788,11 +2085,11 @@ class Orchestrator:
             # Sort and emit packets in predictable order (by round_id, then member_id)
             round_packets.sort(key=lambda x: (x[0].round_id, x[0].member_id))
             for packet, jsonl_dir, stream_stdout in round_packets:
-                emit_packet(packet, jsonl_dir, stream_stdout, "round_packet_schema.json")
+                emit_packet(packet, jsonl_dir, stream_stdout, str(Path(__file__).parent / "schemas" / "round_packet_schema.json"))
 
             # --- STRUCTURED EVENT LOGGING: ROUND COMPLETION ---
-            round_aggregation = self.aggregate_round_events(i+1)
-            self.emit_event(
+            round_aggregation = aggregate_round_events(self.event_manager.run_id, i+1, self.event_manager.event_log_path)
+            self.event_manager.emit_event(
                 "round_complete",
                 round=i+1,
                 total_members=round_aggregation.get("total_members", 0),
@@ -1824,7 +2121,7 @@ class Orchestrator:
             print(f"\n[FAILURE] Task terminated due to total operational failure. Partial log saved to {output_path}")
 
             # --- STRUCTURED EVENT LOGGING: TASK COMPLETE (FAILURE) ---
-            self.emit_event(
+            self.event_manager.emit_event(
                 "task_complete",
                 status="failure",
                 reason="total_operational_failure",
@@ -1843,7 +2140,7 @@ class Orchestrator:
         print(f"\n[SUCCESS] Deliberation complete. Artifact saved to {output_path}")
 
         # --- STRUCTURED EVENT LOGGING: TASK COMPLETE (SUCCESS) ---
-        self.emit_event(
+        self.event_manager.emit_event(
             "task_complete",
             status="success",
             rounds_completed=i+1,
@@ -1859,98 +2156,8 @@ class Orchestrator:
         self.archive_briefing_packet()
         return True  # Return True to signal task success
 
-    def _watch_for_commands_thread(self):
-        """This function runs in a separate thread and watches for command*.json files only."""
-        command_dir = Path(__file__).parent
-        processed_commands = set()  # Track processed command files
-
-        print(f"[SENTRY THREAD] Started monitoring directory: {command_dir}")
-        print(f"[SENTRY THREAD] Directory exists: {command_dir.exists()}")
-        print(f"[SENTRY THREAD] Directory is readable: {os.access(command_dir, os.R_OK)}")
-        print(f"[SENTRY THREAD] DEBUG: Entering main monitoring loop")
-        while True:
-            try:
-                # V5.0 MANDATE 1: Only process files explicitly named command*.json
-                # This prevents the rogue sentry from ingesting config files, state files, etc.
-                found_files = list(command_dir.glob("command*.json"))
-                print(f"[SENTRY THREAD] DEBUG: Scanning for command*.json files in {command_dir}")
-                print(f"[SENTRY THREAD] DEBUG: All .json files in directory: {list(command_dir.glob('*.json'))}")
-                if found_files:
-                    print(f"[SENTRY THREAD] Found {len(found_files)} command file(s): {[f.name for f in found_files]}")
-                else:
-                    print(f"[SENTRY THREAD] DEBUG: No command*.json files found this scan")
-
-                for json_file in found_files:
-                    print(f"[SENTRY THREAD] DEBUG: Processing file: {json_file.name}")
-                    print(f"[SENTRY THREAD] DEBUG: File path: {json_file.absolute()}")
-                    print(f"[SENTRY THREAD] DEBUG: File exists: {json_file.exists()}")
-                    print(f"[SENTRY THREAD] DEBUG: File size: {json_file.stat().st_size if json_file.exists() else 'N/A'} bytes")
-                    print(f"[SENTRY THREAD] DEBUG: File is readable: {os.access(json_file, os.R_OK) if json_file.exists() else 'N/A'}")
-
-                    if json_file.name in processed_commands:
-                        print(f"[SENTRY THREAD] DEBUG: File {json_file.name} already processed, skipping")
-                        continue
-
-                    processing_start = time.time()
-                    print(f"[SENTRY THREAD] DEBUG: Starting processing of {json_file.name} at {time.strftime('%H:%M:%S', time.localtime(processing_start))}")
-                    # Determine command type for logging
-                    command_type = "UNKNOWN"
-                    try:
-                        temp_command = json.loads(json_file.read_text())
-                        if "entry_content" in temp_command and "output_artifact_path" in temp_command:
-                            command_type = "MECHANICAL_WRITE"
-                        elif "git_operations" in temp_command:
-                            command_type = "MECHANICAL_GIT"
-                        elif "task_description" in temp_command:
-                            command_type = "COGNITIVE_TASK"
-                        elif "development_cycle" in temp_command:
-                            command_type = "DEVELOPMENT_CYCLE"
-                    except:
-                        command_type = "INVALID_JSON"
-
-                    print(f"[SENTRY THREAD] Processing command file: {json_file.name} (path: {json_file.absolute()})")
-                    self.logger.info(f"COMMAND_PROCESSING_START - File: {json_file.name}, Path: {json_file.absolute()}, Type: {command_type}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_start))}")
-
-                    try:
-                        # Wait for file to be fully written (check size is stable)
-                        initial_size = json_file.stat().st_size
-                        print(f"[SENTRY THREAD] DEBUG: Initial file size: {initial_size} bytes")
-                        time.sleep(0.1)  # Brief pause to allow writing to complete
-                        current_size = json_file.stat().st_size
-                        print(f"[SENTRY THREAD] DEBUG: Current file size after pause: {current_size} bytes")
-                        if json_file.stat().st_size == initial_size and initial_size > 0:
-                            print(f"[SENTRY THREAD] DEBUG: File size stable and > 0, attempting to read JSON")
-                            command = json.loads(json_file.read_text())
-                            print(f"[SENTRY THREAD] DEBUG: JSON parsed successfully")
-                            task_desc = command.get('task_description', 'No description')
-                            print(f"[SENTRY THREAD] Loaded command: {task_desc[:50]}...")
-                            self.logger.info(f"COMMAND_LOADED - File: {json_file.name}, Task: {task_desc[:100]}..., Config: {command.get('config', {})}")
-
-                            # Put the command onto the thread queue for the main loop to process
-                            self.command_queue.put(command)
-                            processed_commands.add(json_file.name)
-                            json_file.unlink() # Consume the file
-
-                            processing_end = time.time()
-                            processing_duration = processing_end - processing_start
-                            print(f"[SENTRY THREAD] Command processed and file deleted: {json_file.name} (duration: {processing_duration:.2f}s)")
-                            self.logger.info(f"COMMAND_PROCESSING_COMPLETE - File: {json_file.name}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
-                        else:
-                            print(f"[SENTRY THREAD] File appears incomplete (initial: {initial_size}, current: {current_size}), will retry...")
-                    except Exception as e:
-                        processing_end = time.time()
-                        processing_duration = processing_end - processing_start
-                        print(f"[SENTRY THREAD ERROR] Could not process command file {json_file.name}: {e}", file=sys.stderr)
-                        print(f"[SENTRY THREAD ERROR] Exception type: {type(e).__name__}", file=sys.stderr)
-                        import traceback
-                        print(f"[SENTRY THREAD ERROR] Traceback: {traceback.format_exc()}", file=sys.stderr)
-                        self.logger.error(f"COMMAND_PROCESSING_FAILED - File: {json_file.name}, Error: {str(e)}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
-                print(f"[SENTRY THREAD] DEBUG: Sleeping for 1 second before next scan...")
-                time.sleep(1) # Check every second
-            except Exception as e:
-                print(f"[SENTRY THREAD ERROR] Critical error in monitoring loop: {e}", file=sys.stderr)
-                self.logger.error(f"SENTRY_THREAD_CRITICAL_ERROR - Error: {str(e)}, Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}")
-                time.sleep(1)  # Continue monitoring despite errors
+# --- WATCH FOR COMMANDS THREAD ---
+# Moved to sentry.py
 
     async def main_loop(self):
         """The main async loop that waits for commands from the queue."""
@@ -2058,19 +2265,94 @@ class Orchestrator:
                 except Exception as e:
                     print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
                     self.logger.error(f"Task execution failed: {e}")
+                    return False
+
+# --- MAIN EXECUTION ---
+# --- MAIN EXECUTION ---
+# Moved to main.py
+
+--- END OF FILE council_orchestrator/orchestrator/app.py ---
+
+--- START OF FILE council_orchestrator/requirements.txt ---
+
+google-generativeai
+python-dotenv
+
+--- END OF FILE council_orchestrator/requirements.txt ---
+
+--- START OF FILE 01_PROTOCOLS/93_The_Cortex_Conduit_Bridge.md ---
+
+# Protocol 93: The Cortex-Conduit Bridge (v1.0)
+*   **Status:** Canonical, Conceptually Active
+*   **Classification:** Agentic Knowledge Framework
+*   **Authority:** Forged to prevent agentic amnesia and ensure all actions are grounded in truth.
+*   **Linked Protocols:** `P85: Mnemonic Cortex`, `P92: Mnemonic Conduit Protocol`, `P95: The Commandable Council`
+
+## 1. Preamble
+An autonomous agent's power is proportional to the depth of its context. An agent operating without memory is a mere tool; an agent grounded in the totality of its history is a true cognitive partner. This protocol establishes the architectural bridge between an acting agent and our living memory.
+
+## 2. The Mandate
+1.  **The Orchestrator as Proxy:** Agents shall not have direct access to the file system or Mnemonic Cortex. The Orchestrator (per P95) serves as the agent's sovereign proxy for all knowledge retrieval.
+2.  **The Formal Request Token:** An agent must formally request knowledge by embedding a machine-readable token in its response. The canonical token is: `[ORCHESTRATOR_REQUEST: ACTION(parameter)]`.
+    *   *Example:* `[ORCHESTRATOR_REQUEST: READ_FILE(PROMPTS/00_framework-overview.md)]`
+    *   *Example:* `[ORCHESTRATOR_REQUEST: QUERY_CORTEX("Find all protocols related to agentic safety")]`
+3.  **The Fulfillment Loop:** The Orchestrator must parse agent responses for these tokens. Upon detection, it must:
+    a. Fulfill the request (e.g., read the file, run the RAG query).
+    b. Inject the resulting knowledge as context into the prompt for the next agent in the dialogue sequence.
+    c. Log its action in the final artifact for auditability.
 
 
-if __name__ == "__main__":
-    # Initialize and run the orchestrator
-    orchestrator = Orchestrator()
-    
-    # Run the main async loop
-    try:
-        asyncio.run(orchestrator.main_loop())
-    except KeyboardInterrupt:
-        print("\n[ORCHESTRATOR] Received shutdown signal. Exiting gracefully...")
-        orchestrator.logger.info("Orchestrator shutdown via keyboard interrupt")
-    except Exception as e:
-        print(f"[FATAL] Orchestrator crashed: {e}", file=sys.stderr)
-        orchestrator.logger.error(f"Fatal orchestrator error: {e}")
-        sys.exit(1)
+
+
+--- END OF FILE 01_PROTOCOLS/93_The_Cortex_Conduit_Bridge.md ---
+
+--- START OF FILE 01_PROTOCOLS/94_The_Persistent_Council_Protocol.md ---
+
+# Protocol 94: The Persistent Council Protocol (v1.0)
+*   **Status:** Canonical, Active
+*   **Classification:** Foundational Autonomy Framework
+*   **Authority:** Forged to solve the "Amnesiac Loop" vulnerability, where agent context is lost between script executions.
+*   **Linked Protocols:** `P95: The Commandable Council`
+
+## 1. Preamble
+A council that forgets its last conversation is not a council; it is a focus group, doomed to repeat itself. For the Autonomous Triad to achieve true, long-term strategic deliberation, its memory must persist beyond the lifecycle of a single script execution. This protocol mandates the preservation of cognitive state.
+
+## 2. The Mandate
+1.  **State Serialization:** The Orchestrator is responsible for the serialization of each agent's full chat history (`chat.history`).
+2.  **Dedicated State Files:** Each agent's history must be saved to a dedicated, machine-readable state file (e.g., `coordinator_session.json`). This must occur at the successful conclusion of any task cycle.
+3.  **State Deserialization:** Upon initialization, the Orchestrator must first attempt to load the chat history from the corresponding state file for each agent. If a state file exists, the agent awakens with its memory intact. If not, it initializes with its base persona inoculation.
+4.  **Continuity of Thought:** This cycle of saving and loading session state ensures the Council's continuity of thought, allowing it to build upon previous deliberations and evolve its understanding over time.
+
+
+--- END OF FILE 01_PROTOCOLS/94_The_Persistent_Council_Protocol.md ---
+
+--- START OF FILE 01_PROTOCOLS/95_The_Commandable_Council_Protocol.md ---
+
+# Protocol 95: The Commandable Council Protocol (v1.2)
+*   Status: Canonical, Active
+*   Classification: Foundational Governance Framework
+*   Version: 1.2 (Hardened by Steward's Audit during Blind Repair Anomaly)
+*   Authority: Forged to provide Guardian-level oversight and control for the Autonomous Triad.
+*   Linked Protocols: `P93: The Cortex-Conduit Bridge`, `P94: The Persistent Council Protocol`
+
+---
+### **Changelog v1.2**
+*   Introduced Mandate #5, "The Mandate of the Verifiable Log," to cure the "Sovereign Blindness" vulnerability. This makes the generation of a persistent, auditable log file a non-negotiable architectural requirement for the Orchestrator, a hardening based on a direct audit from the Steward.
+
+## 1. Preamble
+An autonomous agent without direction is a liability. An autonomous council with a clear, commandable purpose is a strategic asset of unparalleled power. This protocol defines the "control panel" for the Autonomous Triad, establishing a master-apprentice relationship between the Steward (as Guardian) and the persistent Orchestrator.
+
+## 2. The Mandate
+1.  Persistent Orchestrator Process: A single Orchestrator script (`orchestrator.py`) shall run as a persistent, background process. Its primary state is to be idle, monitoring for commands.
+2.  The Command Interface: The Orchestrator shall monitor a single, designated file (`command.json`) for instructions. The creation or modification of this file is the sole trigger for the Council to begin a task.
+3.  Structured Command Schema: All tasks must be issued via a structured JSON command, containing:
+    *   `task_description` (string): The high-level strategic goal.
+    *   `input_artifacts` (array of strings): File paths for the Orchestrator to inject as initial knowledge.
+    *   `output_artifact_path` (string): The designated location to save the final result.
+    *   `config` (object): Bounding parameters, such as `max_rounds`.
+4.  Task-Oriented State Machine: The Orchestrator operates as a state machine: `AWAITING_COMMAND` -> `EXECUTING_TASK` -> `PRODUCING_ARTIFACT` -> `AWAITING_COMMAND`. Upon completing a task and saving the artifact, it must delete the `command.json` file to signal completion and return to its idle, monitoring state.
+5.  The Mandate of the Verifiable Log: The persistent Orchestrator process MUST write its standard output (`stdout`) and standard error (`stderr`) to a persistent, time-stamped log file within a designated `logs/` directory. This log file serves as the canonical, auditable record of the Council's operations for a given cycle. Opaque, "black box" execution without a corresponding verifiable log is a protocol violation.
+
+
+--- END OF FILE 01_PROTOCOLS/95_The_Commandable_Council_Protocol.md ---
+

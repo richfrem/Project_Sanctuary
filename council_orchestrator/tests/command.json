@@ -1,9 +1,0 @@
-{
-  "task_description": "This is a test task that should use standard v4.0 distillation logic.",
-  "output_artifact_path": "WORK_IN_PROGRESS/TEST_STANDARD_DISTILLATION/",
-  "config": {
-    "max_rounds": 1,
-    "force_engine": "openai",
-    "enable_optical_compression": false
-  }
-}

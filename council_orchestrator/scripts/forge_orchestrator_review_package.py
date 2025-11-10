@@ -7,12 +7,13 @@ def forge_package():
     """A Sovereign Scaffold (P88) to package the orchestrator's architecture for review."""
     print("--- P88 Scaffold: Forging Orchestrator Review Package ---")
 
-    ORCHESTRATOR_DIR = Path(__file__).parent
+    ORCHESTRATOR_DIR = Path(__file__).parent.parent
     OUTPUT_FILE = ORCHESTRATOR_DIR / "orchestrator_architecture_package.md"
 
     files_to_package = [
         ORCHESTRATOR_DIR / "README.md",
-        ORCHESTRATOR_DIR / "orchestrator.py",
+        ORCHESTRATOR_DIR / "orchestrator" / "main.py",
+        ORCHESTRATOR_DIR / "orchestrator" / "app.py",
         ORCHESTRATOR_DIR / "requirements.txt"
     ]
 

@@ -15,7 +15,7 @@ from unittest.mock import Mock, patch, MagicMock
 # Import the components we need to test
 from orchestrator import (
     CouncilRoundPacket, emit_packet, seed_for, prompt_hash,
-    Orchestrator
+    Orchestrator, get_cag_data
 )
 
 
@@ -201,7 +201,7 @@ class TestOrchestratorIntegration(unittest.TestCase):
         """Set up orchestrator for testing."""
         self.orchestrator = Orchestrator()
 
-    @patch('orchestrator.select_engine')
+    @patch('orchestrator.engines.monitor.select_engine')
     def test_rag_data_generation(self, mock_select_engine):
         """Test RAG data generation."""
         mock_engine = Mock()
@@ -243,7 +243,7 @@ class TestOrchestratorIntegration(unittest.TestCase):
         prompt = "Test prompt"
         engine_type = "ollama"
 
-        cag_data = self.orchestrator._get_cag_data(prompt, engine_type)
+        cag_data = get_cag_data(prompt, engine_type)
 
         self.assertIn("query_key", cag_data)
         self.assertIn("cache_hit", cag_data)

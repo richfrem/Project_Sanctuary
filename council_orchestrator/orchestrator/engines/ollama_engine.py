@@ -3,7 +3,7 @@ import os
 import ollama
 # --- IMPORT HARDENED ---
 try:
-    from council_orchestrator.cognitive_engines.base import BaseCognitiveEngine
+    from council_orchestrator.orchestrator.engines.base import BaseCognitiveEngine
 except ImportError:
     from .base import BaseCognitiveEngine
 

@@ -76,6 +76,11 @@ Just include all file paths in `files_to_add`. The orchestrator will generate th
 }
 ```
 
+## how to start orchestrator
+```bash
+python3 -m orchestrator.main
+```
+
 ## Common pitfalls
 
 - **Wrong location:** commit_manifest.json is auto-generated in the repo root (the same directory your git commit runs from).

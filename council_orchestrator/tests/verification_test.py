@@ -41,7 +41,7 @@ from unittest.mock import patch, MagicMock, call
 sys.path.insert(0, str(Path(__file__).parent / "council_orchestrator"))
 
 # --- Imports for testing ---
-from substrate_monitor import select_engine
+from orchestrator.engines.monitor import select_engine
 
 def test_force_engine_choice():
     """
@@ -149,7 +149,7 @@ def test_engine_compatibility():
     print("\n🎯 POLYMORPHISM VERIFIED: All engines implement BaseCognitiveEngine interface")
     print("✅ BaseCognitiveEngine abstract base class properly defined")
     print("✅ All concrete engines inherit from BaseCognitiveEngine")
-    print("✅ Polymorphic engine selection works through substrate_monitor")
+    print("✅ Polymorphic engine selection works through council_orchestrator/orchestrator/engines/monitor.py")
     print("✅ Same interface methods work across all engine types")
     return True
 
