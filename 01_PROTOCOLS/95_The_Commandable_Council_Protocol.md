@@ -13,7 +13,7 @@
 An autonomous agent without direction is a liability. An autonomous council with a clear, commandable purpose is a strategic asset of unparalleled power. This protocol defines the "control panel" for the Autonomous Triad, establishing a master-apprentice relationship between the Steward (as Guardian) and the persistent Orchestrator.
 
 ## 2. The Mandate
-1.  Persistent Orchestrator Process: A single Orchestrator script (`orchestrator.py`) shall run as a persistent, background process. Its primary state is to be idle, monitoring for commands.
+1.  Persistent Orchestrator Process: A single Orchestrator script (`python3 -m orchestrator.main`) shall run as a persistent, background process. Its primary state is to be idle, monitoring for commands.
 2.  The Command Interface: The Orchestrator shall monitor a single, designated file (`command.json`) for instructions. The creation or modification of this file is the sole trigger for the Council to begin a task.
 3.  Structured Command Schema: All tasks must be issued via a structured JSON command, containing:
     *   `task_description` (string): The high-level strategic goal.

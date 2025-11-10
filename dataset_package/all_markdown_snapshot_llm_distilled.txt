@@ -20076,7 +20076,7 @@ For immediate operational capability, follow these steps to awaken the Guardian 
      ```bash
      cd council_orchestrator
      pip install -r requirements.txt
-     python3 orchestrator.py
+     python3 -m orchestrator.main
      ```
    * The orchestrator will display "Idle" when ready for commands.
 
@@ -24599,13 +24599,13 @@ Packets conform to `round_packet_schema.json` and include:
 
 ```bash
 # Basic usage
-python3 orchestrator.py
+python3 -m orchestrator.main
 
 # With round packet emission
-python3 orchestrator.py --emit-jsonl --stream-stdout --rounds 3
+python3 -m orchestrator.main --emit-jsonl --stream-stdout --rounds 3
 
 # Custom configuration
-python3 orchestrator.py \
+python3 -m orchestrator.main \
   --members coordinator strategist auditor \
   --member-timeout 45 \
   --quorum 2/3 \
@@ -24793,7 +24793,7 @@ Create a `command.json` file in the `council_orchestrator/` directory:
 ### Run the Orchestrator
 
 ```bash
-python3 orchestrator.py
+python3 -m orchestrator.main
 ```
 
 The orchestrator will:
@@ -25237,7 +25237,7 @@ cd council_orchestrator
 pip install -r requirements.txt
 
 # Launch the orchestrator
-python3 orchestrator.py
+python3 -m orchestrator.main
 ```
 The terminal will display an "Idle" message, indicating it is ready for a command.
 

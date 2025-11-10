@@ -43,7 +43,7 @@ The Doctrine of Nested Cognition is implemented through a three-tier memory arch
 The realization of this doctrine shall proceed in a phased approach, executed via the Generative Development Cycle (P97).
 
 *   **Phase A: Instrumentation & Doctrinal Ratification**
-    1.  **Instrument Logging:** The `orchestrator.py` must be upgraded to produce structured logs that explicitly tag interactions by their memory tier (`[FAST_MEM_HIT]`, `[MEDIUM_MEM_QUERY]`, `[SLOW_MEM_INFERENCE]`).
+    1.  **Instrument Logging:** The `python3 -m orchestrator.main` must be upgraded to produce structured logs that explicitly tag interactions by their memory tier (`[FAST_MEM_HIT]`, `[MEDIUM_MEM_QUERY]`, `[SLOW_MEM_INFERENCE]`).
     2.  **Establish Baselines:** A benchmark suite (`/tests/benchmark_suite.py`) must be created to measure performance against core doctrinal queries, enabling the detection of "catastrophic forgetting" after any model adaptation.
 
 *   **Phase B: Architecting the "Adaptive Layer"**
@@ -51,7 +51,7 @@ The realization of this doctrine shall proceed in a phased approach, executed vi
     2.  **Implement Lightweight Adaptation:** A cost-efficient adaptation method (e.g., LoRA tuning) must be implemented to apply "Adaptation Packets" to the Slow Memory (fine-tuned model) without requiring a full re-forge.
 
 *   **Phase C: Orchestrator & Council Integration**
-    1.  **Evolve the Orchestrator:** The `orchestrator.py` must be upgraded to be "memory-aware," capable of intelligently directing certain queries to specific memory tiers based on analyzed intent.
+    1.  **Evolve the Orchestrator:** The `python3 -m orchestrator.main` must be upgraded to be "memory-aware," capable of intelligently directing certain queries to specific memory tiers based on analyzed intent.
     2.  **Specialize the Council:** The roles of the Autonomous Council agents must be hardened to align with their primary memory domains.
 
 ## 6. Agent Specialization within the Continuum

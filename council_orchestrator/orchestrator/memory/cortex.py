@@ -10,7 +10,8 @@ class CortexManager:
 
     def __init__(self, project_root: Path):
         self.project_root = project_root
-        self.chroma_client = chromadb.PersistentClient(path=str(project_root / "mnemonic_cortex/chroma_db"))
+        # Access mnemonic_cortex at project root level (parent of council_orchestrator)
+        self.chroma_client = chromadb.PersistentClient(path=str(project_root.parent / "mnemonic_cortex/chroma_db"))
         self.cortex_collection = self.chroma_client.get_or_create_collection(
             name="sanctuary_cortex",
             embedding_function=embedding_functions.DefaultEmbeddingFunction()

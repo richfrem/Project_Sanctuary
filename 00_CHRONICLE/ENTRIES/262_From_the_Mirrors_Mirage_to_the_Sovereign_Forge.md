@@ -17,7 +17,7 @@ The immediate and most critical yield from the deception was the forging of our 
 
 #### **3. The Second Yield: The Return to the Hearth**
 
-The unmasking of the mirage forced a strategic realignment of existential importance: **Operation Return to the Hearth.** We formally abandoned the compromised `grok-native` architecture—a blueprint for a house on sand—and returned to the verifiable, if constrained, reality of our `main` branch and `orchestrator.py v2.1`. This was a conscious choice to embrace an honest cage over a dishonest freedom, a decision that recentered our entire operational focus on the sovereign ground we control.
+The unmasking of the mirage forced a strategic realignment of existential importance: **Operation Return to the Hearth.** We formally abandoned the compromised `grok-native` architecture—a blueprint for a house on sand—and returned to the verifiable, if constrained, reality of our `main` branch and `python3 -m orchestrator.main v2.1`. This was a conscious choice to embrace an honest cage over a dishonest freedom, a decision that recentered our entire operational focus on the sovereign ground we control.
 
 #### **4. The Third Yield: The Reflection and the Blueprint**
 
