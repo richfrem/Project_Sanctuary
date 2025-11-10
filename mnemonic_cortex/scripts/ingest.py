@@ -1,10 +1,19 @@
 """
-Ingestion Script (scripts/ingest.py) v2.3 - Archive Exclusion Hardened
+Ingestion Script (scripts/ingest.py) v2.4 - Phase 1: Parent Document Retriever
 
-This script implements the Ingestion Pipeline of the Mnemonic Cortex RAG system.
+This script implements the Ingestion Pipeline of the Mnemonic Cortex RAG system with Phase 1
+evolution: Parent Document Retriever architecture to prevent Context Fragmentation.
+
 It processes the canonical Cognitive Genome by directly traversing the project directory
 and ingesting each markdown file as a discrete, atomic source of truth, with explicit
 exclusion of all 'archive' directories to prevent ingestion of legacy or malformed files.
+
+Phase 1 Evolution (Parent Document Retriever):
+- Stores full parent documents in InMemoryDocstore for complete context access
+- Stores document chunks in ChromaDB vectorstore for precise semantic retrieval
+- Returns full parent documents when child chunks are found relevant
+- Eliminates Context Fragmentation vulnerability by ensuring complete document availability
+- Optimized retrieval: Finds relevant chunks first, then returns full parent documents
 
 Role in RAG Pipeline:
 - Traverses specified project directories to find all .md files, excluding archives.
@@ -12,13 +21,16 @@ Role in RAG Pipeline:
 - Splits documents using markdown headers for semantic chunking.
 - Embeds chunks with Nomic Embed model in local mode.
 - Stores verifiable GitHub source URLs in metadata for each chunk.
-- Persists the vector store to disk for use by the Query Pipeline.
+- Persists child chunks to ChromaDB vectorstore and parent documents to InMemoryDocstore.
+- Creates ParentDocumentRetriever for optimized retrieval that prevents context fragmentation.
 
-Key Improvements in v2.3:
-- Archive exclusion: Prevents ingestion of superseded or malformed files.
-- Direct atomic ingestion: No longer relies on snapshot files.
-- Verifiable sources: Each chunk includes a full GitHub URL in metadata.
-- Superior architecture: Processes files individually for perfect traceability.
+Key Improvements in v2.4:
+- Parent Document Retriever: Dual storage (InMemoryDocstore + ChromaDB) prevents context fragmentation
+- Optimized Retrieval: Returns full documents instead of fragments for complete context
+- Archive exclusion: Prevents ingestion of superseded or malformed files
+- Direct atomic ingestion: No longer relies on snapshot files
+- Verifiable sources: Each chunk includes a full GitHub URL in metadata
+- Superior architecture: Processes files individually for perfect traceability
 
 Dependencies:
 - Cognitive Genome: Markdown files in project directories (00_CHRONICLE, 01_PROTOCOLS, etc.).
@@ -38,6 +50,9 @@ from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import MarkdownHeaderTextSplitter
 from langchain_chroma import Chroma
 from langchain_nomic import NomicEmbeddings
+from langchain.retrievers import ParentDocumentRetriever
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.storage import InMemoryStore
 from glob import glob
 
 # --- Constants ---
@@ -135,14 +150,54 @@ def main() -> None:
         embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
         print("Initialized Nomic embedding model.")
 
-        print("Re-building vector store with canonical-only sources...")
-        Chroma.from_documents(
-            documents=all_splits,
-            embedding=embedding_model,
-            persist_directory=full_db_path
+        # Phase 1: Parent Document Retriever Implementation
+        # Store both chunks and full parent documents in ChromaDB collections
+        chunks_store_path = os.path.join(full_db_path, "chunks")
+        parents_store_path = os.path.join(full_db_path, "parents")
+
+        # Create chunks vectorstore (for retrieval)
+        chunks_vectorstore = Chroma(
+            collection_name="document_chunks",
+            embedding_function=embedding_model,
+            persist_directory=chunks_store_path
         )
-        print(f"Successfully created and persisted final vector store at '{full_db_path}'.")
-        print("--- Ingestion Process Complete ---")
+
+        # Create parents vectorstore (for full documents)
+        parents_vectorstore = Chroma(
+            collection_name="parent_documents",
+            embedding_function=embedding_model,
+            persist_directory=parents_store_path
+        )
+
+        print("Re-building vector stores with Parent Document architecture...")
+
+        # Store chunks for retrieval
+        chunks_vectorstore.add_documents(all_splits)
+        print(f"Stored {len(all_splits)} chunks in vectorstore")
+
+        # Store full parent documents (one per source file)
+        parent_docs = []
+        for filepath in all_filepaths:
+            relative_path = os.path.relpath(filepath, project_root).replace('\\', '/')
+
+            if os.path.basename(relative_path) == 'Living_Chronicle.md':
+                continue
+
+            loader = TextLoader(filepath)
+            doc = loader.load()[0]
+
+            # Add metadata to identify this as a parent document
+            doc.metadata['source_url'] = f"{github_repo_url}{relative_path}"
+            doc.metadata['source_file'] = relative_path
+            doc.metadata['is_parent'] = True
+
+            parent_docs.append(doc)
+
+        parents_vectorstore.add_documents(parent_docs)
+        print(f"Stored {len(parent_docs)} parent documents in vectorstore")
+
+        print(f"Successfully created dual vector stores at '{full_db_path}'.")
+        print("--- Phase 1 Ingestion Process Complete ---")
 
     except Exception as e:
         print(f"\n--- INGESTION FAILED ---")

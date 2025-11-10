@@ -84,6 +84,79 @@ council_orchestrator/orchestrator.log
 - **Concurrent Processing**: Multiple background learning tasks can run simultaneously
 - **Responsive**: New commands processed while previous learning cycles complete
 
+## 📊 Round Packet System (v9.4)
+
+### Overview
+The orchestrator now emits structured JSON packets for each council member response, enabling machine-readable analysis and learning signal extraction for Protocol 113.
+
+### Packet Schema
+Packets conform to `round_packet_schema.json` and include:
+
+- **Identity**: `session_id`, `round_id`, `member_id`, `engine`, `seed`
+- **Content**: `decision`, `rationale`, `confidence`, `citations`
+- **RAG Signals**: `structured_query`, `parent_docs`, `retrieval_latency_ms`
+- **CAG Signals**: `cache_hit`, `hit_streak` for learning optimization
+- **Novelty Analysis**: `is_novel`, `signal`, `conflicts_with`
+- **Memory Directive**: `tier` (fast/medium/slow) with `justification`
+- **Telemetry**: `input_tokens`, `output_tokens`, `latency_ms`
+
+### CLI Options
+
+```bash
+# Basic usage
+python3 orchestrator.py
+
+# With round packet emission
+python3 orchestrator.py --emit-jsonl --stream-stdout --rounds 3
+
+# Custom configuration
+python3 orchestrator.py \
+  --members coordinator strategist auditor \
+  --member-timeout 45 \
+  --quorum 2/3 \
+  --engine gemini-2.5-pro \
+  --fallback-engine sanctuary-qwen2-7b \
+  --jsonl-path mnemonic_cortex/cache/orchestrator_rounds
+```
+
+### Output Formats
+
+#### JSONL Files
+```
+mnemonic_cortex/cache/orchestrator_rounds/{session_id}/round_{N}.jsonl
+```
+
+#### Stdout Stream
+```json
+{"timestamp":"2025-01-15T10:30:00Z","session_id":"run_123456","round_id":1,"member_id":"coordinator","decision":"approve","confidence":0.85,"memory_directive":{"tier":"medium","justification":"Evidence-based response"}}
+```
+
+### Analysis Examples
+
+**Extract decisions by confidence:**
+```bash
+jq 'select(.confidence > 0.8) | .decision' round_*.jsonl
+```
+
+**Memory tier distribution:**
+```bash
+jq -r '.memory_directive.tier' round_*.jsonl | sort | uniq -c
+```
+
+**Novelty analysis:**
+```bash
+jq 'select(.novelty.signal == "high") | .rationale' round_*.jsonl
+```
+
+### Protocol 113 Integration
+Round packets feed directly into the Nested-Learning pipeline:
+
+- **Fast tier**: Ephemeral, session-scoped responses
+- **Medium tier**: Recurring queries with evidence
+- **Slow tier**: Stable knowledge with high confidence
+
+CAG hit streaks and parent-doc citations determine memory placement, enabling automatic knowledge distillation and adaptor training.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -97,7 +170,9 @@ council_orchestrator/orchestrator.log
 3. **Ollama** (for local sovereign fallback):
    ```bash
    # Install Ollama and pull model
-   ollama pull qwen2:7b
+   ollama pull hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:latest
+   # Create local alias for easier reference
+   ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:latest Sanctuary-Qwen2-7B:latest
    ```
 
 ### Installation
@@ -245,7 +320,7 @@ OPENAI_API_KEY=your_key_here
 # Model Configuration
 CHAT_GPT_MODEL=gpt-4-turbo
 GEMINI_MODEL=gemini-2.5-flash
-OLLAMA_MODEL=qwen2:7b
+OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 
 # Engine Parameters (configurable per engine)
 GEMINI_MAX_TOKENS=4096

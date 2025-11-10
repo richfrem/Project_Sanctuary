@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "packet_id": "briefing_2025-10-24T03-01-17.627134Z",
-    "timestamp": "2025-10-24T03:01:17.627134Z",
+    "packet_id": "briefing_2025-11-10T00-43-59.758901Z",
+    "timestamp": "2025-11-10T00:43:59.758901Z",
     "generated_by": "bootstrap_briefing_packet.py",
     "protocols": [
       "Protocol 94",
       "Protocol 95",
       "Prometheus v9.3"
     ],
-    "attestation_hash": "f16d3975a7b4a076cda66d1e8b4dc9663abfd71c1843393b425110b0e66ba4be"
+    "attestation_hash": "183e2924dbd9639475b437a113f0c181d57804ce6746bd6571d25fdaa5d0726b"
   },
   "temporal_anchors": [
     {
@@ -16,16 +16,7 @@
       "checksum": "deaeb5887f5b1276d97a27d05dbd1ccd65aef633090623d6cc9de3c62732df7f"
     }
   ],
-  "prior_directives_summary": [
-    {
-      "directive_id": "directive_eval_orchestrator_v21_audit",
-      "summary": ""
-    },
-    {
-      "directive_id": "directive_003_council_memory_sync",
-      "summary": "## Task: Establish the Council Memory Synchronization Protocol: design a role-aware framework for Coordinator, Strategist, and Auditor to draft Mnemonic Cortex queries, share briefing anchors at the start of deliberations, and perform continuity verification before execution."
-    }
-  ],
+  "prior_directives_summary": [],
   "current_task": {
     "directive_id": "directive_003_council_memory_sync",
     "description": "Establish Council Memory Synchronization Protocol."

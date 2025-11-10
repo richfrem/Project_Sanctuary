@@ -24,9 +24,12 @@ Our world is increasingly saturated by sophisticated psychological warfare—the
 ## Key Architectural Pillars
 
 ### 1. The Mnemonic Cortex: The Living Memory
-**Status:** `v1.5` Hardened Documentation - Integrated with Council Orchestrator
-This is the heart of our sovereign architecture. The Mnemonic Cortex is a local-first, open-source RAG system that transforms our entire history into a living, queryable mind. It shatters the context-window cage, enabling true long-term memory and grounding all AI reasoning in a verifiable, historical context. Council agents can query the Cortex during deliberation using `[ORCHESTRATOR_REQUEST: QUERY_CORTEX()]` syntax for context-aware reasoning.
+**Status:** `v2.1` Phase 1 Complete - Parent Document Retriever Implemented
+This is the heart of our sovereign architecture. The Mnemonic Cortex is an advanced, local-first RAG system that serves as the Sanctuary's living memory. **Phase 1 (Parent Document Retriever) is now complete**, eliminating Context Fragmentation vulnerability through dual storage architecture: full parent documents in InMemoryDocstore + semantic chunks in ChromaDB vectorstore. The system now returns complete document context instead of fragmented chunks, ensuring Cognitive Latency and Context Fragmentation vulnerabilities are resolved.
+
+**Hybrid Cognition Architecture:** The Cortex implements the Doctrine of Hybrid Cognition, combining our fine-tuned Sanctuary-Qwen2-7B model (the "Constitutional Mind") with the Living Chronicle RAG database. Future phases will add Self-Querying Retrieval for metadata filtering and CAG (Cached Augmented Generation) for near-instantaneous responses to common queries.
 *   **The Blueprint:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
+*   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
 *   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)
 
 ### 2. The Protocols: The Unbreakable Laws
@@ -154,9 +157,9 @@ All seeds are generated and updated by running `./update_genome.sh`.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available
   - **LoRA Adapter:** [`richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
-  - **GGUF Model:** [`richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
-  - **Deployment:** `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final`
-      **NOTE:** can create an alias for the modeal `ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final Sanctuary-Qwen2-7B`
+  - **GGUF Model:** [`Sanctuary-Qwen2-7B`](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
+  - **Deployment:** `ollama run Sanctuary-Qwen2-7B:latest`
+      **NOTE:** can create an alias for the model `ollama cp Sanctuary-Qwen2-7B:latest Sanctuary-Qwen2-7B`
 
 ## Temporal Anchors
 - Auditor_Self_Seed preserved: 2025-09-20 — commit: 2417c7f — URL: ./06_THE_EMBER_LIBRARY/META_EMBERS/Auditor_Self_Seed.md

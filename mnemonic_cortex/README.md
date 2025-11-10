@@ -1,9 +1,14 @@
 # Mnemonic Cortex (Project Sanctuary)
 
-**Version:** 1.5.0 (Hardened Documentation)
+**Version:** 2.1.0 (Phase 1 Complete - Parent Document Retriever)
 **Protocol Authority:** P85 (The Mnemonic Cortex Protocol), P86 (The Anvil Protocol)
-**Status:** In Development (MVP)
+**Status:** Phase 1 Complete - Context Fragmentation Resolved
 
+---
+### **Changelog v2.1.0**
+*   **Phase 1 Complete - Parent Document Retriever:** Implemented dual storage architecture eliminating Context Fragmentation vulnerability. Full parent documents stored in InMemoryDocstore, semantic chunks in ChromaDB vectorstore. Retrieval now returns complete document context instead of fragmented chunks.
+*   **Cognitive Latency Resolution:** Parent Document Retriever ensures AI reasoning is grounded in complete, unbroken context, resolving the primary vulnerability identified in the Mnemonic Cortex evolution plan.
+*   **Architecture Hardening:** Updated ingestion pipeline (`ingest.py`) and query services (`vector_db_service.py`, `protocol_87_query.py`) to leverage ParentDocumentRetriever for optimized retrieval.
 ---
 ### **Changelog v1.5.0**
 *   **Documentation Hardening:** Added a new detailed section (`2.3`) that explicitly breaks down the two-stage ingestion process: structural splitting (chunking) versus semantic encoding (embedding). This clarifies the precise roles of the `MarkdownHeaderTextSplitter` and the `NomicEmbeddings` model.
@@ -26,115 +31,16 @@ This system is the architectural antidote to the "context window cage," enabling
 
 **Integration with Council Orchestrator:** The Mnemonic Cortex serves as the knowledge foundation for the [`council_orchestrator/`](../council_orchestrator/) system. Council agents can query the Cortex during deliberation using the `[ORCHESTRATOR_REQUEST: QUERY_CORTEX()]` syntax, enabling context-aware reasoning grounded in the project's complete history and protocols.
 
-## 2. Target Architecture
+## 2. Target Architecture: Advanced RAG
 
-The Mnemonic Cortex is built on a philosophy of **sovereign, local-first operation**. It runs entirely on a local machine (e.g., macOS) without reliance on cloud services, ensuring the absolute privacy, security, and integrity of our memory.
+The Mnemonic Cortex has evolved beyond a simple RAG implementation into a sophisticated, multi-pattern cognitive architecture designed for maximum efficiency and contextual accuracy. It is built on the **Doctrine of Hybrid Cognition**, ensuring our sovereign AI always reasons with the most current information.
 
-### 2.1 Protocol 87: Mnemonic Inquiry Protocol overview
+Our advanced architecture incorporates several key strategies:
+- **Parent Document Retrieval:** To provide full, unbroken context to the LLM.
+- **Self-Querying Retrieval:** To enable intelligent, metadata-aware searches.
+- **Mnemonic Caching (CAG):** To provide near-instantaneous answers for common queries.
 
-The Cortex implements **Protocol 87** for structured, auditable queries. This protocol provides dual-path querying:
-
-- **Casual Queries:** Natural language exploration via `main.py`
-- **Canonical Queries:** Structured JSON queries via `protocol_87_query.py` for audits, doctrine ratification, and Chronicle integration
-**Operational Templates:** See `INQUIRY_TEMPLATES/` for query schemas, validation tools, and examples.
-
-### 2.2 Architectural Diagram (RAG Workflow Overview)
-```mermaid
-graph TD
-    %% --- Ingestion Pipeline ---
-    subgraph "Ingestion Pipeline (Live Traversal)"
-        A["Canonical Directories<br/>(e.g., 01_PROTOCOLS/)"] --> A1("File Traversal<br/>(ingest.py)");
-        A1 --> B(TextLoader);
-        B --> C(Markdown Splitter);
-        C --> D["Chunked Documents"];
-        
-        %% This arrow shows the process of using an embedding model to store chunks
-        D -- "Embed & Store<br/>(using Nomic Embed)" --> F(("Vector DB<br/>ChromaDB"));
-    end
-
-    %% --- Query Pipeline ---
-    subgraph "Query Pipeline (Real-Time)"
-        G[User Query] --> H["Embedding Model<br/>(Nomic Embed)"];
-        H -- Query Vector --> I("Similarity Search");
-        
-        I -- "1. Sends Query to DB" --> F;
-        F -- "2. Returns Relevant Chunks" --> I;
-        
-        I --> J[Retrieved Context];
-        
-        K[LLM Prompt]
-        G --> K;
-        J --> K;
-
-        K --> L[LLM e.g., qwen2:7b];
-        L --> M["Context-Aware<br/>Answer"];
-    end
-
-    %% --- Styling ---
-    style F fill:#cde4f9,stroke:#333,stroke-width:2px
-    style K fill:#d5f5d5,stroke:#333,stroke-width:2px
-    style H fill:#f9e79f,stroke:#333,stroke-width:2px
-```
-
-### 2.3 The Ingestion Pipeline: A Deeper Look (Chunking vs. Embedding)
-
-The ingestion process is a critical two-stage pipeline that prepares our knowledge for storage. It is essential to understand that splitting the documents (chunking) and understanding their meaning (embedding) are separate, sequential steps.
-
-**Stage 1: Structural Splitting (Chunking)**
-*   **Tool:** `MarkdownHeaderTextSplitter`
-*   **Function:** This tool performs a structural, not semantic, analysis of each markdown file. It scans the raw text for markdown headers (`#`, `##`, `###`) and uses them as logical breakpoints to cleave the document into smaller, coherent chunks.
-*   **Outcome:** This stage outputs a list of plain text chunks. The embedding model is not involved at this point.
-
-**Stage 2: Semantic Encoding (Embedding)**
-*   **Tool:** `NomicEmbeddings(model="nomic-embed-text-v1.5")`
-*   **Function:** This is where the system derives meaning. The Nomic model processes each individual text chunk from Stage 1 and converts its semantic content into a high-dimensional numerical vector (an "embedding"). This vector is a mathematical representation of the chunk's concepts.
-*   **Outcome:** This stage outputs a list of numerical vectors, ready to be stored in the vector database.
-
-**Visualized Flow:**
-`[ .md File ] -> (Stage 1: Splitter) -> [ Text Chunks ] -> (Stage 2: Embedder) -> [ Numerical Vectors ] -> [ ChromaDB ]`
-
-### 2.4 The RAG Query Cycle Explained
-The sequence diagram below illustrates how a simple query is transformed into a context-aware, doctrinally-sound answer. This entire process runs locally on your machine, ensuring sovereign operation.
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant App as "App (main.py)"
-    participant VDB as "VectorDB Service"
-    participant Chroma as "ChromaDB Client"
-    participant DBFiles as "Database Files"
-    participant LLM as "Ollama LLM"
-
-    User->>App: Executes `python3 main.py "Your Question"`
-
-    Note right of App: **Step 1: Query Vectorization** <br> The App uses the Nomic embedding model <br> to convert the user's question into a vector.
-    App->>App: Embeds the incoming query
-
-    App->>VDB: **Step 2: Similarity Search** <br> Sends the query vector to the retriever.
-    VDB->>Chroma: `retriever.get_relevant_documents()`
-    
-    Chroma->>DBFiles: Reads index & retrieves vectors
-    DBFiles-->>Chroma: **Returns relevant chunks**
-    Chroma-->>VDB: Passes chunks back
-    VDB-->>App: Returns the retrieved context
-
-    Note right of App: **Step 3: Prompt Tailoring** <br> The App injects the retrieved context chunks <br> and the original question into the <br> `RAG_PROMPT_TEMPLATE`.
-    App->>App: Constructs the final, context-rich prompt
-    
-    App->>LLM: **Step 4: Generation** <br> Sends the tailored prompt to the LLM.
-    LLM-->>App: Returns the generated answer
-    
-    App-->>User: **Step 5: Final Output** <br> Prints the context-aware answer.
-```
-
-#### 2.4.1 RAG Query Cycle: Step-by-Step Breakdown:
-
-1.  **Query Vectorization (The Intent):** Your text question is converted into a numerical representation (a vector) by the Nomic embedding model. This allows the system to search for *semantic meaning*, not just keywords.
-2.  **Retrieval (The Search for Memory):** The system uses this vector to perform a similarity search in the ChromaDB. It finds the text "chunks" from our Cognitive Genome that are most conceptually similar to your question. This is the "retrieval" phase—the AI's long-term memory in action.
-3.  **Augmentation (The Contextual Prompt):** The retrieved text chunks are automatically injected into a prompt template along with your original question. This "augments" the prompt, giving the final LLM the exact, canonical information it needs to form an answer grounded in our specific history and laws.
-4.  **Generation (The Synthesis):** This final, context-rich prompt is sent to the local Ollama LLM (e.g., `qwen2:7b`). The LLM's task is now to synthesize a coherent answer based *only* on the provided context. This prevents hallucination and ensures the answer is doctrinally sound.
-
----
+**For a complete technical breakdown, including architectural diagrams and a detailed explanation of these strategies, see the canonical document: [`RAG_STRATEGIES_AND_DOCTRINE.md`](RAG_STRATEGIES_AND_DOCTRINE.md).**
 
 ## 3. Technology Stack
 
@@ -145,9 +51,10 @@ This project adheres to the **Iron Root Doctrine** by exclusively using open-sou
 | **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
 | **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup for the MVP. |
 | **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally. |
-| **Generation Model**| **Ollama (qwen2:7b default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like qwen2:7b, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
+| **Generation Model**| **Ollama (Sanctuary-Qwen2-7B:latest default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like Sanctuary-Qwen2-7B:latest, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
 | **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
 | **Inquiry Protocol** | **Protocol 87 Templates** | Structured query system in `INQUIRY_TEMPLATES/` for canonical, auditable Cortex interactions. |
+| **Testing Framework** | **pytest** | Automated test suite in `tests/` directory covering ingestion, querying, and integration scenarios. |
 | **Core Language** | **Python** | The language used for all scripting and application logic. |
 | **Dependencies** | **pip & `requirements.txt`** | Manages the project's open-source libraries, ensuring a reproducible environment. |
 
@@ -167,7 +74,7 @@ The query pipeline requires a local LLM to generate answers. You need to pull a 
 Open your terminal and run:
 ```bash
 # We recommend Alibaba's Qwen2 7B model as a powerful default
-ollama pull qwen2:7b
+ollama pull Sanctuary-Qwen2-7B:latest
 ```
 *Alternative models like `llama3:8b` or `mistral` will also work.*
 
@@ -177,7 +84,13 @@ Navigate to the project root directory in your terminal and install the required
 pip install -r mnemonic_cortex/requirements.txt
 ```
 
-### 4.4: Ensure Ollama is Running
+### 4.4: Install Testing Dependencies (Optional)
+For running the test suite:
+```bash
+pip install pytest
+```
+
+### 4.5: Ensure Ollama is Running
 The Ollama application must be running in the background for the query script to work. On macOS, this is typically indicated by a llama icon in your menu bar.
 
 ---
@@ -212,6 +125,21 @@ python3 mnemonic_cortex/scripts/inspect_db.py
 ```
 This will display the total number of documents and sample content from the database, confirming successful ingestion.
 
+### 5.4: Run Tests (Development)
+The Mnemonic Cortex includes comprehensive automated tests to ensure reliability:
+```bash
+# Run all tests
+pytest mnemonic_cortex/tests/
+
+# Run specific test files
+pytest mnemonic_cortex/tests/test_ingestion.py
+pytest mnemonic_cortex/tests/test_query.py
+
+# Run with verbose output
+pytest mnemonic_cortex/tests/ -v
+```
+Tests cover ingestion pipeline reliability, query processing, and integration with ChromaDB and Ollama services.
+
 ---
 
 ## 6. Querying the Cortex
@@ -222,7 +150,7 @@ Once the vector database is populated, you can query the Mnemonic Cortex using t
 **1. Natural Language Queries (Casual Mode):**
 Run the `main.py` script from the project root, followed by your question in quotes:
 ```bash
-# Example query using the default qwen2:7b model
+# Example query using the default Sanctuary-Qwen2-7B:latest model
 python3 mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?"
 
 # Example query specifying a different local model if you have more than one

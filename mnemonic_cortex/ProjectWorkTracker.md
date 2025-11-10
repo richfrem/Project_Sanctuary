@@ -25,7 +25,7 @@
 | **#6** | **The Living Mind (Part 1):** Implement application shell & services. | ✅ **Complete** | Successful test run of `main.py` (stubbed). |
 | **#7** | **The Architect's Record:** Forge foundational ADRs. | ✅ **Complete** | Verified `adr/` directory and files. |
 | **#8** | **The Living Mind (Part 2):** Implement full RAG chain logic. | ✅ **Complete** | Successful live query test. |
-| **#9** | **Architect's Final Record:** Synchronize code & docs with `qwen2:7b`. | ✅ **Complete** | Verified `main.py` default & `README.md`. |
+| **#9** | **Architect's Final Record:** Synchronize code & docs with `Sanctuary-Qwen2-7B:latest`. | ✅ **Complete** | Verified `main.py` default & `README.md`. |
 
 ---
 

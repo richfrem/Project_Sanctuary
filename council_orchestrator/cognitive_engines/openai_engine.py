@@ -16,9 +16,9 @@ class OpenAIEngine(BaseCognitiveEngine):
     Cognitive engine driver for the OpenAI API (e.g., GPT models).
     This is a secondary Tier 1 Performance Substrate, providing redundancy.
     """
-    def __init__(self):
+    def __init__(self, model_name: str = None):
         DEFAULT_MODEL = "gpt-5-nano"
-        self.model_name = os.getenv("CHAT_GPT_MODEL", DEFAULT_MODEL)
+        self.model_name = model_name or os.getenv("CHAT_GPT_MODEL", DEFAULT_MODEL)
         self.api_key = os.getenv("OPENAI_API_KEY")
         if not self.api_key:
             self.client = None

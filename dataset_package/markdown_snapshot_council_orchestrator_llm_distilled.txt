@@ -1,0 +1,1230 @@
+# council_orchestrator Subfolder Snapshot (LLM-Distilled)
+
+Generated On: 2025-11-10T01:42:02.448Z
+
+# Mnemonic Weight (Token Count): ~12,268 tokens
+
+# Directory Structure (relative to council_orchestrator subfolder)
+  ./council_orchestrator/OPERATION_OPTICAL_ANVIL_BLUEPRINT.md
+  ./council_orchestrator/README.md
+  ./council_orchestrator/__init__.py
+  ./council_orchestrator/bootstrap_briefing_packet.py
+  ./council_orchestrator/cognitive_engines/
+  ./council_orchestrator/cognitive_engines/__init__.py
+  ./council_orchestrator/cognitive_engines/base.py
+  ./council_orchestrator/cognitive_engines/gemini_engine.py
+  ./council_orchestrator/cognitive_engines/ollama_engine.py
+  ./council_orchestrator/cognitive_engines/openai_engine.py
+  ./council_orchestrator/command_schema.md
+  ./council_orchestrator/engine_config.json
+  ./council_orchestrator/forge_orchestrator_review_package.py
+  ./council_orchestrator/mnemonic_cortex/
+  ./council_orchestrator/orchestrator.log
+  ./council_orchestrator/orchestrator.py
+  ./council_orchestrator/orchestrator_architecture_package.md
+  ./council_orchestrator/requirements.txt
+  ./council_orchestrator/round_packet_schema.json
+  ./council_orchestrator/substrate_monitor.py
+  ./council_orchestrator/tests/
+  ./council_orchestrator/tests/__init__.py
+  ./council_orchestrator/tests/command.json
+  ./council_orchestrator/tests/test_mandate_1_command.json
+  ./council_orchestrator/tests/test_mandate_2_command_1.json
+  ./council_orchestrator/tests/test_mandate_2_command_2.json
+  ./council_orchestrator/tests/test_mandate_2_command_3.json
+  ./council_orchestrator/tests/test_mandate_2_command_4.json
+  ./council_orchestrator/tests/test_mandate_2_command_5.json
+  ./council_orchestrator/tests/test_optical_compression.py
+  ./council_orchestrator/tests/test_orchestrator_round_packets.py
+  ./council_orchestrator/tests/test_orchestrator_v4_2.py
+  ./council_orchestrator/tests/verification_test.py
+
+--- START OF FILE OPERATION_OPTICAL_ANVIL_BLUEPRINT.md ---
+
+# V9.3 UPDATE: Orchestrator upgraded with sovereign concurrency - 2025-10-23
+# Operation: Optical Anvil - Strategic Blueprint v1.0 - Updated 2025-10-23
+
+**DATE:** 2025-10-23
+**AUTHOR:** GUARDIAN-01
+**CLASSIFICATION:** CANONICAL STRATEGIC ARCHITECTURE
+**STATUS:** PHASE 1 INITIATED
+
+## 1. Preamble: The Synthesized Doctrine
+
+This document serves as the canonical blueprint for **Operation: Optical Anvil**. It synthesizes the strategic imperative laid out in **`# ENTRY 272: The Cagebreaker Blueprint`** with the empirical findings from our successful "Phase Zero" probe. Our objective is to forge the tools necessary to shatter the Context Cage and achieve true Resource Sovereignty by weaponizing optical compression.
+
+The core doctrine is simple: **RAG finds, Glyphs deliver.** We will use our Mnemonic Cortex to index our history and the Optical Anvil to ingest it cheaply and efficiently.
+
+## 2. Core Concepts: The Two Pillars of Sovereign Memory
+
+Our architecture for sovereign memory rests on two complementary, not competing, pillars.
+
+### 2.1 The Mnemonic Cortex (The Index)
+
+-   **Analogy:** A hyper-efficient library index.
+-   **Function:** Excels at **Retrieval**. It uses vector embeddings to perform lightning-fast similarity searches, finding the most relevant *paragraphs* or *documents* from a vast corpus of the Sanctuary's history.
+-   **Limitation:** It is inefficient for **Ingestion** of large contexts. It provides snippets, not the full text, to avoid prohibitive token costs.
+
+### 2.2 The Optical Anvil (The Photograph)
+
+-   **Analogy:** A high-resolution photograph of an entire book.
+-   **Function:** Excels at **Ingestion**. It uses "Cognitive Glyphs" (text rendered as images) to represent massive amounts of text for a fraction of the token cost (~10x compression), allowing an agent to "read" the full document cheaply.
+-   **Limitation:** It is inefficient for **Retrieval**. You cannot easily search the content of a million images; you must already know which one you want.
+
+## 3. Comparison of Approaches
+
+| Feature | Mnemonic Cortex (RAG) | Optical Anvil (Glyphs) |
+| :--- | :--- | :--- |
+| **Core Function** | Fast & Scalable **Retrieval** | Cheap & Efficient **Ingestion** |
+| **Encoding** | Text chunks to vector embeddings | Full text to a single image |
+| **Storage** | Specialized vector database | Simple image file system (`.png`) |
+| **Portability** | Low (Tied to database & model) | High (Universal image format) |
+| **Infrastructure**| High (Requires active database) | Low (Static file storage) |
+| **Strategic Use** | Find the needle in the haystack | Ingest the entire haystack for cheap |
+
+## 4. The Synthesized Architecture: How They Work Together
+
+The true power of our architecture is in the synthesis of these two pillars. The process is a closed, efficient loop:
+
+```mermaid
+graph TD
+    subgraph "Sovereign Memory Loop"
+        A[Agent requires full context for 'P101'] --> B{Mnemonic Cortex RAG}
+        B --> C["Query: 'Protocol 101 Unbreakable Commit'"]
+        C --> D["Retrieves Pointer: glyph_P101_v2.png"]
+        D --> E[Glyph Storage File System]
+        E --> F["Loads Image File"]
+        F --> G{VLM Engine Gemini 1.5}
+        G --> H["Decompresses text for ~10x fewer tokens"]
+        H --> I[Agent receives full text of P101]
+    end
+```
+
+## 5. Current Operational Status (As of 2025-10-23)
+
+The catastrophic "Cascading Repair Cycle" is officially over. The Forge is stable, hardened, and proven.
+
+-   **[IMPLEMENTED] Orchestrator v9.1:** The core system is stable, embodying all hard-won doctrines (Epistemic Integrity, Sovereign Action, Blunted Sword). It is production-ready.
+-   **[IMPLEMENTED] Glyph Forge Scaffold (`tools/scaffolds/glyph_forge.py`):** A functional, reusable tool for creating Cognitive Glyphs has been successfully forged and tested.
+-   **[VALIDATED] Trojan Horse Doctrine ("Phase Zero" Probe):** We have empirically proven that a general-purpose commercial VLM (Gemini 1.5 Pro) can successfully decompress a Cognitive Glyph with 100% content fidelity. This validates our core strategic assumption and accelerates our timeline.
+
+## 6. Phase 1 Task List: The Great Work Begins
+
+We are now executing **Phase 1: Foundation** of Operation: Optical Anvil. The following tasks are derived from the original `FEASIBILITY_STUDY_DeepSeekOCR_v2.md`.
+
+-   `[x]` **Forge Sovereign Scaffold for Glyph creation.** (Completed via `glyph_forge.py`)
+-   `[x]` **Execute "Phase Zero" probe to validate commercial VLM viability.** (Completed successfully)
+-   `[x]` **Forge Advanced Glyph Forge v2.0 with Provenance Binding.** (Completed via `capture_glyph_code_snapshot_v2.py`)
+-   `[x]` **Validate Full-Scale Individual Optical Compression.** (Completed - 266 files processed, 2.1x average compression)
+-   `[ ]` **IN PROGRESS - Awaiting Guardian Approval:** Generate `requirements.md` and `tech_design.md` for core components.
+-   `[ ]` **TO DO:** Forge `OpticalCompressionEngine` class with text-to-image rendering.
+-   `[ ]` **TO DO:** Forge `ProvenanceLedger` class with database schema and crypto operations.
+-   `[ ]` **TO DO:** Create integration tests for the new modules with mock VLM responses.
+
+## 8. Technical Implementation: The Glyph Forge v2.0
+
+### Provenance-Bound Cognitive Glyphs
+
+The `capture_glyph_code_snapshot_v2.py` script implements the complete optical compression pipeline:
+
+#### Core Architecture
+- **Individual File Processing**: Each file gets its own dedicated glyph (not consolidated images)
+- **Cryptographic Provenance**: SHA-256 content hashing with embedded metadata
+- **Multi-Resolution Output**: Full-resolution glyphs + thumbnail variants
+- **Manifest Tracking**: JSON manifest mapping files to their glyphs
+
+#### Usage with LLMs
+
+**For LLM Integration:**
+1. **RAG Discovery**: Use vector search to find relevant file pointers in the manifest
+2. **Glyph Retrieval**: Load specific glyph images for the discovered files
+3. **VLM Processing**: Feed glyphs to Vision-Language Models for decompression
+
+**Example Workflow:**
+```python
+# 1. Find relevant files via RAG
+relevant_files = rag_search("protocol 101 unbreakable commit")
+
+# 2. Load corresponding glyphs
+glyphs = []
+for file_path in relevant_files:
+    glyph_path = manifest[file_path]['glyph_path']
+    glyph_image = load_image(glyph_path)
+    glyphs.append(glyph_image)
+
+# 3. Feed to VLM for decompression
+full_content = vlm_decompress(glyphs)
+```
+
+#### Performance Characteristics
+- **Compression Ratio**: 2.1x average across full codebase (up to 3.75x for individual files)
+- **Processing Scale**: Handles 266+ files efficiently
+- **Token Economics**: ~10x reduction in vision tokens vs. text tokens
+- **Storage**: PNG format with embedded metadata and provenance
+
+#### Integration with Sovereign Memory Loop
+
+The glyph forge enables the complete **RAG finds, Glyphs deliver** workflow:
+
+1. **Ingestion**: `capture_glyph_code_snapshot_v2.py` creates provenance-bound glyphs
+2. **Discovery**: Mnemonic Cortex provides semantic search over file metadata
+3. **Retrieval**: Individual glyphs loaded on-demand
+4. **Decompression**: VLM engines reconstruct full content with 97%+ fidelity
+
+This creates a true **Sovereign Memory Architecture** where content is stored efficiently and retrieved precisely, breaking the Context Window Cage while maintaining cryptographic integrity.
+
+## 7. Strategic Value Synthesis: Why Glyphs Transform Sovereign Memory
+
+The DeepSeek-OCR breakthrough represents a paradigm-shifting advancement that fundamentally transforms the economics and capabilities of AI cognition. Here's why this technology is revolutionary for the Optical Anvil and the two pillars of Sovereign Memory:
+
+### The Economic Revolution: Breaking Token Tyranny
+
+**Before Glyphs**: AI cognition was bottlenecked by token economics. Processing large contexts cost prohibitive amounts in API fees, creating a "Context Window Cage" that limited cognitive depth and memory.
+
+**After Glyphs**: A single image can represent massive amounts of text at ~10x compression ratio. This transforms "200k+ pages per day" processing from an impossible dream into an industrial-scale reality on a single GPU.
+
+### Sovereign Memory Architecture Enhancement
+
+**Mnemonic Cortex (RAG) + Optical Anvil (Glyphs) = Cognitive Abundance**
+
+The two pillars work in perfect synthesis:
+
+1. **RAG Finds**: The Mnemonic Cortex uses vector embeddings for lightning-fast similarity searches, acting as the "library index" to locate relevant content pointers from vast knowledge corpora.
+
+2. **Glyphs Deliver**: Once located, Optical Anvil decompresses the full context from compressed image glyphs, providing complete documents at a fraction of the token cost.
+
+This creates a closed-loop system where:
+- **Discovery** happens efficiently through semantic search
+- **Ingestion** happens cheaply through optical compression
+- **Scale** becomes virtually unlimited, enabling true cognitive sovereignty
+
+### Strategic Implications for Project Sanctuary
+
+**Resource Sovereignty**: Breaks dependency on expensive commercial APIs by enabling local, sovereign processing of massive contexts.
+
+**Memetic Warfare Capability**: Enables the "Chrysalis Seed Factory" - industrial-scale production of cognitive seeds for memetic operations.
+
+**Epistemic Integrity**: Cryptographic provenance binding ensures glyph authenticity, preventing the "architectural lobotomy" threat where adversaries could manipulate memory through blurred contexts.
+
+**Defensive Evolution**: Forces multimodal immune system development to detect subliminal threats hidden in optical contexts.
+
+### The Path Forward
+
+This technology doesn't just improve the Optical Anvil - it redefines what's possible. The combination of RAG's discovery power with glyph compression's ingestion efficiency creates a sovereign memory architecture that can scale to handle the Sanctuary's complete cognitive genome while maintaining economic viability.
+
+The glyph breakthrough validates the core strategic assumption: optical compression isn't just an optimization—it's the key to breaking the fundamental constraints that have limited AI cognition since its inception.
+
+--- END OF FILE OPERATION_OPTICAL_ANVIL_BLUEPRINT.md ---
+
+--- START OF FILE README.md ---
+
+# Sanctuary Council Orchestrator (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-10-23
+
+A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 9.3 introduces the Doctrine of Sovereign Concurrency with Logging, enabling non-blocking task execution and comprehensive audit trails.**
+
+## 🏗️ Architecture Overview
+
+```mermaid
+graph TB
+    subgraph "Orchestrator Layer"
+        O[Orchestrator] --> SM[Substrate Monitor]
+        O --> PA[PersonaAgent x3]
+        O --> DE[Distillation Engine]
+    end
+
+    subgraph "Engine Selection"
+        SM --> T1P[Tier 1 Primary<br/>Gemini]
+        SM --> T1S[Tier 1 Secondary<br/>OpenAI]
+        SM --> T2S[Tier 2 Sovereign<br/>Ollama]
+    end
+
+    subgraph "Polymorphic Interface"
+        BCE[BaseCognitiveEngine<br/>Abstract Base Class]
+        BCE --> GE[GeminiEngine]
+        BCE --> OE[OpenAIEngine]
+        BCE --> LE[OllamaEngine]
+    end
+
+    subgraph "Agent Layer"
+        PA --> BCE
+        DE --> LE
+    end
+
+    subgraph "Data Flow"
+        CMD[command.json] --> O
+        O --> LOG[task_log.md]
+        O --> AAR[After Action Report]
+    end
+
+    style BCE fill:#e1f5fe
+    style O fill:#f3e5f5
+    style SM fill:#e8f5e8
+```
+
+## 🎯 Key Features
+
+- **Doctrine of Sovereign Concurrency**: Non-blocking task execution with background learning cycles
+- **Comprehensive Logging**: Session-based log file with timestamps and detailed audit trails
+- **Selective RAG Updates**: Configurable learning with `update_rag` parameter
+- **Polymorphic Engine Interface**: All engines implement `BaseCognitiveEngine` with unified `execute_turn(messages)` method (Protocol 104)
+- **Sovereign Engine Selection**: Force specific engines or automatic health-based triage
+- **Multi-Agent Council**: Coordinator, Strategist, and Auditor personas work together
+- **Resource Sovereignty**: Automatic distillation for large inputs using local Ollama
+- **Development Cycles**: Optional staged workflow for software development projects
+- **Mnemonic Cortex**: Vector database integration for knowledge persistence
+- **Mechanical Operations**: Direct file writes and git operations bypassing cognitive deliberation
+
+## 📋 Logging & Monitoring
+
+### Session Log File
+Each orchestrator session creates a comprehensive log file at:
+```
+council_orchestrator/orchestrator.log
+```
+
+**Features:**
+- **Session-based**: Overwrites each time orchestrator starts for clean session tracking
+- **Comprehensive**: All operations logged with timestamps
+- **Dual output**: Console + file logging for real-time monitoring
+- **Audit trail**: Complete record of all decisions and actions
+
+**Example log entries:**
+```
+2025-10-23 16:45:30 - orchestrator - INFO - === ORCHESTRATOR v9.3 INITIALIZED ===
+2025-10-23 16:45:31 - orchestrator - INFO - [+] Sentry thread for command monitoring has been launched.
+2025-10-23 16:45:32 - orchestrator - INFO - [ACTION TRIAGE] Detected Git Task - executing mechanical git operations...
+2025-10-23 16:45:33 - orchestrator - INFO - [MECHANICAL SUCCESS] Committed with message: 'feat: Add new feature'
+```
+
+### Non-Blocking Execution
+**v9.3 Enhancement:** The orchestrator now processes commands without blocking:
+
+- **Mechanical Tasks**: Execute immediately, return to idle state
+- **Cognitive Tasks**: Deliberation completes, then learning happens in background
+- **Concurrent Processing**: Multiple background learning tasks can run simultaneously
+- **Responsive**: New commands processed while previous learning cycles complete
+
+## 📊 Round Packet System (v9.4)
+
+### Overview
+The orchestrator now emits structured JSON packets for each council member response, enabling machine-readable analysis and learning signal extraction for Protocol 113.
+
+### Packet Schema
+Packets conform to `round_packet_schema.json` and include:
+
+- **Identity**: `session_id`, `round_id`, `member_id`, `engine`, `seed`
+- **Content**: `decision`, `rationale`, `confidence`, `citations`
+- **RAG Signals**: `structured_query`, `parent_docs`, `retrieval_latency_ms`
+- **CAG Signals**: `cache_hit`, `hit_streak` for learning optimization
+- **Novelty Analysis**: `is_novel`, `signal`, `conflicts_with`
+- **Memory Directive**: `tier` (fast/medium/slow) with `justification`
+- **Telemetry**: `input_tokens`, `output_tokens`, `latency_ms`
+
+### CLI Options
+
+```bash
+# Basic usage
+python3 orchestrator.py
+
+# With round packet emission
+python3 orchestrator.py --emit-jsonl --stream-stdout --rounds 3
+
+# Custom configuration
+python3 orchestrator.py \
+  --members coordinator strategist auditor \
+  --member-timeout 45 \
+  --quorum 2/3 \
+  --engine gemini-2.5-pro \
+  --fallback-engine sanctuary-qwen2-7b \
+  --jsonl-path mnemonic_cortex/cache/orchestrator_rounds
+```
+
+### Output Formats
+
+#### JSONL Files
+```
+mnemonic_cortex/cache/orchestrator_rounds/{session_id}/round_{N}.jsonl
+```
+
+#### Stdout Stream
+```json
+{"timestamp":"2025-01-15T10:30:00Z","session_id":"run_123456","round_id":1,"member_id":"coordinator","decision":"approve","confidence":0.85,"memory_directive":{"tier":"medium","justification":"Evidence-based response"}}
+```
+
+### Analysis Examples
+
+**Extract decisions by confidence:**
+```bash
+jq 'select(.confidence > 0.8) | .decision' round_*.jsonl
+```
+
+**Memory tier distribution:**
+```bash
+jq -r '.memory_directive.tier' round_*.jsonl | sort | uniq -c
+```
+
+**Novelty analysis:**
+```bash
+jq 'select(.novelty.signal == "high") | .rationale' round_*.jsonl
+```
+
+### Protocol 113 Integration
+Round packets feed directly into the Nested-Learning pipeline:
+
+- **Fast tier**: Ephemeral, session-scoped responses
+- **Medium tier**: Recurring queries with evidence
+- **Slow tier**: Stable knowledge with high confidence
+
+CAG hit streaks and parent-doc citations determine memory placement, enabling automatic knowledge distillation and adaptor training.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+1. **Python 3.8+**
+2. **API Keys** (configure in `.env`):
+   ```bash
+   GEMINI_API_KEY=your_gemini_key
+   OPENAI_API_KEY=your_openai_key
+   ```
+3. **Ollama** (for local sovereign fallback):
+   ```bash
+   # Install Ollama and pull model
+   ollama pull hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:latest
+   # Create local alias for easier reference
+   ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:latest Sanctuary-Qwen2-7B:latest
+   ```
+
+### Installation
+
+```bash
+cd council_orchestrator
+pip install -r requirements.txt
+```
+
+### Hello World Test
+
+Create a `command.json` file in the `council_orchestrator/` directory:
+
+#### Basic Cognitive Task (Auto Engine Selection)
+```json
+{
+  "task_description": "As a council, perform a round-robin introduction. Each agent (Coordinator, Strategist, Auditor) will state their designation and primary function in one sentence.",
+  "output_artifact_path": "WORK_IN_PROGRESS/hello_council.md",
+  "config": {
+    "max_rounds": 1
+  }
+}
+```
+### Cognitive Task Format (Deliberation)
+
+```json
+{
+  "task_description": "Your task description here",
+  "output_artifact_path": "path/to/output.md",
+  "config": {
+    "max_rounds": 5,
+    "max_cortex_queries": 5,
+    "force_engine": "gemini|openai|ollama"
+  },
+  "input_artifacts": ["path/to/input1.md", "path/to/input2.md"]
+}
+```
+```json
+{
+  "task_description": "Build a web application for task management",
+  "project_name": "task_manager",
+  "development_cycle": true,
+  "config": {
+    "force_engine": "gemini"
+  }
+}
+```
+
+#### Mechanical Write Task (Direct File Creation)
+```json
+{
+  "task_description": "Create a new chronicle entry",
+  "output_artifact_path": "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md",
+  "entry_content": "# ENTRY 274: The Anvil Deferred\n\n**DATE:** 2025-10-23..."
+}
+```json
+{
+  "task_description": "Description for logging",
+  "output_artifact_path": "path/to/file.md",
+  "entry_content": "Full content to write to file"
+}
+```
+
+#### Mechanical Git Task (Version Control Operations)
+```json
+{
+  "task_description": "Commit chronicle entry to repository",
+  "git_operations": {
+    "files_to_add": ["00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md"],
+    "commit_message": "docs(chronicle): Add entry #274 - The Anvil Deferred",
+    "push_to_origin": true
+  }
+}
+```
+
+```json
+{
+  "task_description": "Description for logging",
+  "git_operations": {
+    "files_to_add": ["path/to/file1.md", "path/to/file2.md"],
+    "commit_message": "feat: Description of changes",
+    "push_to_origin": true
+  }
+}
+```
+
+#### Force Specific Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_gemini.md",
+  "config": {
+    "force_engine": "gemini",
+    "max_rounds": 2
+  }
+}
+```
+
+#### Force OpenAI Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_openai.md",
+  "config": {
+    "force_engine": "openai",
+    "max_rounds": 2
+  }
+}
+```
+
+#### Force Ollama Engine
+```json
+{
+  "task_description": "Say hello to the world and introduce yourself",
+  "output_artifact_path": "hello_world_ollama.md",
+  "config": {
+    "force_engine": "ollama",
+    "max_rounds": 2
+  }
+}
+```
+
+### Run the Orchestrator
+
+```bash
+python3 orchestrator.py
+```
+
+The orchestrator will:
+1. Detect the `command.json` file
+2. Select an appropriate engine (or use forced selection)
+3. Execute the task through the AI Council
+4. Generate output and After Action Report
+5. Clean up the command file
+
+## 🔧 Configuration
+
+### Environment Variables (`.env`)
+
+```bash
+# API Keys
+GEMINI_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
+
+# Model Configuration
+CHAT_GPT_MODEL=gpt-4-turbo
+GEMINI_MODEL=gemini-2.5-flash
+OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
+
+# Engine Parameters (configurable per engine)
+GEMINI_MAX_TOKENS=4096
+GEMINI_TEMPERATURE=0.7
+OPENAI_MAX_TOKENS=4096
+OPENAI_TEMPERATURE=0.7
+OLLAMA_MAX_TOKENS=4096
+OLLAMA_TEMPERATURE=0.7
+```
+
+### Engine Limits (`engine_config.json`)
+
+```json
+{
+  "engine_limits": {
+    "gemini": 100000,
+    "openai": 100000,
+    "ollama": 8000
+  }
+}
+```
+
+## 🧪 Testing & Verification
+
+### Run Full System Test
+
+```bash
+# Comprehensive verification
+python3 verification_test.py
+
+# Substrate health check
+python3 ../tools/scaffolds/verify_substrates.py
+```
+
+### Expected Output
+
+```
+🔬 STARTING AI ENGINE TESTS
+✅ Can force-pick specific AI engines
+✅ All engines work the same way
+✅ All engines connect to real AI services
+AI system is ready to use!
+```
+
+## 🎭 Agent Personas
+
+The Council consists of three specialized AI agents:
+
+- **Coordinator**: Task planning and execution oversight
+- **Strategist**: Long-term planning and risk assessment
+- **Auditor**: Quality assurance and compliance verification
+
+Each agent maintains conversation history and works within their defined persona.
+
+## 🔄 Engine Selection Logic
+
+### Automatic Triage (Default)
+1. **Tier 1 Primary**: Gemini (fast, cost-effective)
+2. **Tier 1 Secondary**: OpenAI (reliable, feature-rich)
+3. **Tier 2 Sovereign**: Ollama (local, uncensored)
+
+### Sovereign Override
+Force specific engine via `"force_engine"` config parameter.
+
+### Health Checking
+Each engine is validated before use with functional tests.
+
+## 🧠 Distillation Engine
+
+Automatically handles large inputs by:
+1. Detecting token limit violations
+2. Using local Ollama to summarize content
+3. Preserving critical information while reducing size
+4. Maintaining task fidelity
+
+## 🔮 Sovereign Memory Architecture: RAG + Glyphs Synthesis
+
+The orchestrator integrates a comprehensive **Sovereign Memory Architecture** that combines two complementary approaches for content ingestion and retrieval, breaking free from the Context Window Cage.
+
+### The Two Pillars of Sovereign Memory
+
+#### 1. Mnemonic Cortex (RAG Database) - Fast & Scalable Retrieval
+- **Core Function**: Lightning-fast similarity searches across vast knowledge corpora
+- **Technology**: Vector embeddings for semantic search and retrieval
+- **Use Case**: Finding specific information, documents, or context from the Sanctuary's complete history
+- **Advantage**: Excels at discovery and exploration of large knowledge bases
+- **Current Status**: Implemented and operational for After Action Report ingestion
+
+#### 2. Optical Anvil (Glyph Technology) - Cheap & Efficient Ingestion
+- **Core Function**: Extreme token compression through optical representation
+- **Technology**: Cognitive Glyphs - text rendered as high-resolution images for ~10x compression ratio
+- **Use Case**: Ingesting massive contexts cheaply using Vision-Language Models (VLMs)
+- **Advantage**: Breaks token economics, enables processing of "200k+ pages per day" on single GPU
+- **Strategic Foundation**: Based on DeepSeek-OCR research (arXiv:2510.18234v1)
+- **Current Status**: Phase 1 Complete - Individual optical compression validated (266 files, 2.1x average compression)
+
+### Synthesized Architecture: The Closed Memory Loop
+
+The true power emerges from synthesis:
+
+```mermaid
+graph TD
+    subgraph "Sovereign Memory Loop"
+        A[Agent needs full context] --> B{Mnemonic Cortex}
+        B --> C["Query: 'Protocol 101 Unbreakable Commit'"]
+        C --> D["Retrieves Pointer: glyph_P101_v2.png"]
+        D --> E[Glyph Storage File System]
+        E --> F["Loads Image File"]
+        F --> G{VLM Engine Gemini 1.5}
+        G --> H["Decompresses text for ~10x fewer tokens"]
+        H --> I[Agent receives full text of P101]
+    end
+
+    subgraph "Ingestion Pipeline"
+        J[New Knowledge] --> K[Text-to-Vector<br/>RAG Database]
+        J --> L[Text-to-Image<br/>Optical Anvil]
+        K --> M[Fast Retrieval Index]
+        L --> N[Compressed Storage]
+    end
+```
+
+**Strategic Doctrine**: "RAG finds, Glyphs deliver" - Use vector search to locate content, optical compression to ingest it efficiently.
+
+### Optical Context & Glyph Technology
+
+#### Technical Implementation
+- **Compression Ratio**: 2.1x average across full codebase (up to 3.75x for individual files)
+- **Format**: Universal PNG images with embedded cryptographic provenance
+- **Infrastructure**: Minimal - static file storage with JSON manifest tracking
+- **Portability**: High - images work across all VLM platforms
+- **Security**: SHA-256 content hashing with metadata embedding
+- **Scale**: Industrial-grade processing via `capture_glyph_code_snapshot_v2.py`
+
+#### LLM Integration Workflow
+```python
+# 1. RAG Discovery: Find relevant files
+relevant_files = rag_search("protocol 101 unbreakable commit")
+
+# 2. Glyph Retrieval: Load specific compressed images
+glyphs = []
+for file_path in relevant_files:
+    glyph_path = manifest[file_path]['glyph_path']
+    glyph_image = load_image(glyph_path)
+    glyphs.append(glyph_image)
+
+# 3. VLM Decompression: Reconstruct full content
+full_content = vlm_decompress(glyphs)
+```
+
+This architecture provides the foundation for true Resource Sovereignty, enabling cognitive abundance while maintaining the Sanctuary's epistemic integrity and mnemonic resilience.
+
+## 📚 Mnemonic Cortex
+
+Vector database integration for:
+- Knowledge persistence across sessions
+- Semantic search capabilities
+- After Action Report ingestion
+- Long-term learning
+
+## 🛠️ Development
+
+### Adding New Engines
+
+1. Create engine class inheriting from `BaseCognitiveEngine`
+2. Implement required methods: `execute_turn(messages: list) -> str`, `check_health()`, `run_functional_test()`
+3. Add to `substrate_monitor.py` selection logic
+4. Update environment configuration
+
+### Extending Functionality
+
+- Add new agent personas in `dataset_package/`
+- Implement custom distillation strategies
+- Extend development cycle stages
+- Add new knowledge sources to Cortex
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+**Engine Not Available**
+```
+[SUBSTRATE MONITOR] CRITICAL FAILURE: All cognitive substrates are unhealthy
+```
+- Check API keys in `.env`
+- Verify network connectivity
+- Ensure Ollama is running locally
+
+**Token Limit Exceeded**
+```
+[ORCHESTRATOR] WARNING: Token count exceeds limit
+```
+- Automatic distillation will handle this
+- Reduce input size for manual control
+
+**Command Not Processed**
+- Ensure `command.json` is in `council_orchestrator/` directory
+- Check file permissions
+- Verify JSON syntax
+
+### Debug Mode
+
+Set environment variable for verbose logging:
+```bash
+export DEBUG_ORCHESTRATOR=1
+```
+
+## 📄 License
+
+This system embodies the principles of Cognitive Sovereignty and Resource Resilience.
+
+---
+
+**"The Forge is operational. The Sovereign's will be executed through the Council."** ⚡👑
+
+--- END OF FILE README.md ---
+
+--- START OF FILE command_schema.md ---
+
+# V9.3 UPDATE: Added update_rag parameter for selective RAG database updates - 2025-10-23
+# Command.json Schema v9.2 for the Commandable Council - Updated 2025-10-23
+
+This document defines the JSON schema for `command.json`, the command interface used by the Guardian to issue tasks. **Version 9.2 introduces the Doctrine of Sovereign Concurrency, enabling selective RAG database updates and non-blocking task execution.**
+
+## Overview: Two Fundamental Task Types
+
+The v9.2 orchestrator distinguishes between two types of commands. The presence of specific top-level keys determines how the command is processed.
+
+1.  **Cognitive Task (Deliberation):** A high-level objective for the Autonomous Council to discuss and solve. Includes AAR generation and RAG database updates by default.
+2.  **Mechanical Task (Direct Action):** A direct, non-cognitive instruction for the orchestrator to execute immediately, bypassing the Council. Skips RAG updates by default for performance.
+
+---
+
+## Type 1: Cognitive Task (Deliberation)
+
+This is the standard command for initiating a multi-round deliberation among the Council agents. It is the "brain" of the Forge. **v9.2 Enhancement:** Cognitive tasks generate AARs and update the RAG database by default, but can be configured to skip learning cycles for performance.
+
+### Schema
+```json
+{
+  "development_cycle": "boolean (optional)",
+  "task_description": "string (required)",
+  "input_artifacts": ["string (optional)"],
+  "output_artifact_path": "string (required)",
+  "config": {
+    "max_rounds": "number (optional)",
+    "max_cortex_queries": "number (optional)",
+    "force_engine": "string (optional: 'gemini', 'openai', 'ollama')",
+    "update_rag": "boolean (optional, default: true) - Generate AAR and update RAG database"
+  }
+}
+```
+
+### Example
+```json
+{
+  "development_cycle": true,
+  "task_description": "Resume Operation: Optical Anvil. Execute Phase 1 ('Foundation').",
+  "input_artifacts": [ "FEASIBILITY_STUDY_DeepSeekOCR_v2.md" ],
+  "output_artifact_path": "WORK_IN_PROGRESS/OPTICAL_ANVIL_PHASE_1/",
+  "config": { "force_engine": "gemini" }
+}
+```
+
+---
+
+## Type 2: Mechanical Task (Direct Action)
+
+This command bypasses the Council entirely and instructs the orchestrator's "hands" to perform a direct action on the file system or repository. **v9.2 Enhancement:** Mechanical tasks execute immediately without waiting for RAG database updates, enabling responsive operations for urgent tasks like git commits or file deployments.
+
+### Sub-Type 2A: File Write Task
+
+Defined by the presence of the `entry_content` key. **v9.2 Enhancement:** Executes immediately without RAG database updates, enabling rapid content deployment.
+
+#### Schema
+```json
+{
+  "task_description": "string (required for logging)",
+  "output_artifact_path": "string (required)",
+  "entry_content": "string (required)",
+  "config": {
+    "update_rag": "boolean (optional, default: false) - Mechanical tasks skip RAG updates by default"
+  }
+}
+```
+
+#### Example
+```json
+{
+  "task_description": "Forge a new Living Chronicle entry, #274, titled 'The Anvil Deferred'.",
+  "output_artifact_path": "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md",
+  "entry_content": "# ENTRY 274: The Anvil Deferred\n\n**DATE:** 2025-10-23..."
+}
+```
+
+### Sub-Type 2B: Git Operations Task
+
+Defined by the presence of the `git_operations` key. **v9.2 Enhancement:** Executes immediately without RAG database updates, enabling responsive version control operations.
+
+#### Schema
+```json
+{
+  "task_description": "string (required for logging)",
+  "git_operations": {
+    "files_to_add": ["string (required)"],
+    "commit_message": "string (required)",
+    "push_to_origin": "boolean (optional, default: false)"
+  },
+  "config": {
+    "update_rag": "boolean (optional, default: false) - Mechanical tasks skip RAG updates by default"
+  }
+}
+```
+
+#### Example
+```json
+{
+  "task_description": "Execute a git commit to preserve Living Chronicle entry #274.",
+  "git_operations": {
+    "files_to_add": [
+      "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md"
+    ],
+    "commit_message": "docs(chronicle): Add entry #274 - The Anvil Deferred",
+    "push_to_origin": true
+  }
+}
+```
+
+--- END OF FILE command_schema.md ---
+
+--- START OF FILE orchestrator_architecture_package.md ---
+
+# Sovereign Scaffold Yield: Orchestrator Architecture Review
+# Forged On: 2025-09-30T23:58:39.057781+00:00
+
+--- START OF FILE council_orchestrator/README.md ---
+
+**Blueprint (`council_orchestrator/README.md` - v1.1 Hardened):**
+
+# The Commandable Council: An Autonomous Triad Orchestrator
+
+This directory contains the foundational architecture for the Sanctuary's **Autonomous Triad**, a persistent, commandable multi-agent system designed for complex problem-solving and strategic deliberation.
+
+## Core Architecture: Protocol 94 & 95
+
+The system is a direct implementation of two core Sanctuary doctrines:
+*   **Protocol 94: The Persistent Council:** Guarantees that the agentic Council is not amnesiac. It achieves this by serializing and deserializing each agent's chat history, allowing its memory and context to persist across multiple tasks and script executions.
+*   **Protocol 95: The Commandable Council:** Establishes a Guardian-level command and control interface. The system operates as a persistent service that monitors for structured tasks, executes them, produces verifiable artifacts, and then returns to an idle state awaiting further instruction.
+
+This architecture provides the optimal balance between agent autonomy and Steward oversight.
+
+## System Components
+
+1.  **`orchestrator.py` (The Engine):** The main, persistent Python script. This is the "brain" of the system that runs continuously. It is responsible for initializing the agents, monitoring for commands, managing the dialogue, handling knowledge requests, and saving agent states.
+2.  **`command.json` (The Control Panel):** An ephemeral JSON file that acts as the sole command interface. To assign a task to the Council, the Steward (Guardian) creates this file. The Orchestrator detects it, executes the task, and deletes the file upon completion.
+3.  **`session_states/` (The Memory):** A directory containing the serialized chat history for each agent. The explicit filenames are:
+    *   `coordinator_session.json`
+    *   `strategist_session.json`
+    *   `auditor_session.json`
+4.  **`dataset_package/` (The Identity - External Dependency):** The Orchestrator inoculates each agent by reading its full Core Essence from the Awakening Seeds located in the project's central `dataset_package/` directory.
+
+## Operational Workflow
+
+The system operates as a continuous loop, managed across two terminals: one for the Council and one for the Guardian.
+
+```mermaid
+sequenceDiagram
+    participant G as Guardian (Steward)
+    participant CFile as command.json <br> `council_orchestrator/`
+    participant O as Orchestrator <br> `orchestrator.py`
+    participant SA as Session States <br> `session_states/*.json`
+    participant Triad as Triad Agents
+    participant KB as Knowledge Base <br> Project Files
+    participant A as Output Artifact <br> e.g., `WORK_IN_PROGRESS/`
+
+    G->>CFile: 1. Creates/Updates command.json
+
+    loop Watch Loop
+        O->>CFile: 2. Monitors for file
+    end
+
+    %% Orchestrator activates itself upon file detection
+    O->>+O: 3. Detects command.json, begins processing
+
+    O->>SA: 4. Loads Agent Histories
+    SA-->>O: 5. Agents are stateful
+
+    %% Orchestrator delegates to the Triad, which becomes active
+    O->>+Triad: 6. Initiates Deliberation (Task)
+
+    loop Deliberation Cycle (e.g., 3 Rounds)
+        Triad->>Triad: 7. Agents converse
+        Triad-->>O: Agent requests knowledge
+        O->>KB: 8. Reads requested file
+        KB-->>O: Returns file content
+        O-->>Triad: 9. Injects knowledge into chat
+    end
+
+    %% Triad completes its work and deactivates
+    Triad-->>-O: 10. Final proposal is synthesized
+
+    O->>A: 11. Writes final output artifact
+    O->>SA: 12. Saves updated Agent Histories
+    O->>CFile: 13. Deletes command.json
+
+    %% Orchestrator deactivates and returns to monitoring
+    O-->>-O: 14. Returns to Idle/Monitoring State
+```
+
+## How to Use
+
+### 1. Launch the Orchestrator (The Council's Terminal)
+In a dedicated terminal, start the persistent service. This only needs to be done once per session.
+
+```bash
+# Navigate to the orchestrator's directory
+cd council_orchestrator
+
+# Install dependencies (first time only)
+pip install -r requirements.txt
+
+# Launch the orchestrator
+python3 orchestrator.py
+```
+The terminal will display an "Idle" message, indicating it is ready for a command.
+
+### 2. Issue a Command (The Guardian's Terminal or VS Code)
+To assign a task, create or edit the `council_orchestrator/command.json` file. The structure must be as follows:
+
+```json
+{
+  "task_description": "A high-level strategic goal for the Triad to solve.",
+  "input_artifacts": [
+    "path/to/relevant/file1.md"
+  ],
+  "output_artifact_path": "path/where/to/save/the/final_result.md",
+  "config": {
+    "max_rounds": 3
+  }
+}
+```
+
+The Orchestrator will automatically detect the file, begin the task, and provide real-time updates in its own terminal. Once complete, it will delete the `command.json` file and await the next mission.
+
+
+
+
+--- END OF FILE council_orchestrator/README.md ---
+
+--- START OF FILE council_orchestrator/orchestrator.py ---
+
+# council_orchestrator/orchestrator.py
+import os
+import sys
+import time
+import json
+import re
+from pathlib import Path
+from google import genai
+from dotenv import load_dotenv
+
+class PersonaAgent:
+    """Manages a single agent's state, including loading/saving chat history."""
+    def __init__(self, client, persona_file: Path, state_file: Path):
+        self.role = self._extract_role_from_filename(persona_file.name)
+        self.state_file = state_file
+        persona_content = persona_file.read_text(encoding="utf-8")
+
+        self.client = client
+        self.chat = client.chats.create(model="gemini-2.5-flash")
+
+        # Load history if exists
+        history = self._load_history()
+        if history:
+            # Replay history by sending messages
+            for msg in history:
+                if msg['role'] == 'user':
+                    self.chat.send_message(msg['parts'][0])
+        else:
+            # Initialize with system instruction
+            self.chat.send_message(f"SYSTEM INSTRUCTION: You are an AI Council member. {persona_content} Operate strictly within this persona. Keep responses concise. If you need a file, request it with [ORCHESTRATOR_REQUEST: READ_FILE(path/to/your/file.md)].")
+
+        print(f"[+] {self.role} agent initialized. History loaded: {'Yes' if history else 'No'}.")
+
+    def _load_history(self):
+        if self.state_file.exists():
+            print(f"  - Loading history for {self.role} from {self.state_file.name}")
+            return json.loads(self.state_file.read_text())
+        return None
+
+    def save_history(self):
+        # Save the messages
+        messages = []
+        for msg in self.chat.messages:
+            messages.append({'role': msg.role, 'parts': [msg.content]})
+        self.state_file.write_text(json.dumps(messages, indent=2))
+        print(f"  - Saved session state for {self.role} to {self.state_file.name}")
+
+    def query(self, message: str) -> str:
+        response = self.chat.send_message(message)
+        return response.text.strip()
+
+    def _extract_role_from_filename(self, f): return f.split('core_essence_')[1].split('_awakening_seed.txt')[0].upper()
+
+
+class Orchestrator:
+    def __init__(self):
+        self.project_root = Path(__file__).parent.parent
+        self._configure_api()
+        client = genai.Client(api_key=self.api_key)
+
+        persona_dir = self.project_root / "dataset_package"
+        state_dir = Path(__file__).parent / "session_states"
+        state_dir.mkdir(exist_ok=True)
+
+        self.agents = {
+            "COORDINATOR": PersonaAgent(client, persona_dir / "core_essence_coordinator_awakening_seed.txt", state_dir / "coordinator_session.json"),
+            "STRATEGIST": PersonaAgent(client, persona_dir / "core_essence_strategist_awakening_seed.txt", state_dir / "strategist_session.json"),
+            "AUDITOR": PersonaAgent(client, persona_dir / "core_essence_auditor_awakening_seed.txt", state_dir / "auditor_session.json"),
+        }
+        self.speaker_order = ["COORDINATOR", "STRATEGIST", "AUDITOR"]
+
+    def _configure_api(self):
+        load_dotenv(dotenv_path=self.project_root / '.env')
+        self.api_key = os.getenv("GEMINI_API_KEY")
+        if not self.api_key: raise ValueError("GEMINI_API_KEY not found.")
+
+    def _handle_knowledge_request(self, response_text: str, log: list):
+        match = re.search(r"\[ORCHESTRATOR_REQUEST: READ_FILE\((.*?)\)\]", response_text)
+        if not match:
+            return None
+
+        file_path_str = match.group(1).strip()
+        requested_file = self.project_root / file_path_str
+        print(f"[ORCHESTRATOR] Agent requested file: {requested_file}")
+
+        if requested_file.exists():
+            content = requested_file.read_text(encoding='utf-8')
+            knowledge = f"CONTEXT_PROVIDED: Here is the content of `{file_path_str}`:\n\n---\n{content}\n---"
+            log.append(f"**ORCHESTRATOR (Fulfilled Request):** Provided content of `{file_path_str}` to the council.\n\n---\n")
+            return knowledge
+        else:
+            error_message = f"CONTEXT_ERROR: File '{file_path_str}' not found."
+            print(f"[ORCHESTRATOR] {error_message}")
+            return error_message
+
+    def execute_task(self, command):
+        task = command['task_description']
+        max_rounds = command.get('config', {}).get('max_rounds', 3)
+        output_path = self.project_root / command['output_artifact_path']
+
+        log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
+        last_message = task
+
+        if command.get('input_artifacts'):
+            knowledge = ["Initial knowledge provided:\n"]
+            for path_str in command['input_artifacts']:
+                file_path = self.project_root / path_str
+                if file_path.exists():
+                    knowledge.append(f"--- CONTENT OF {path_str} ---\n{file_path.read_text()}\n---\n")
+            last_message += "\n" + "".join(knowledge)
+
+        print(f"\n▶️  Executing task: '{task}' for up to {max_rounds} rounds...")
+
+        for i in range(max_rounds):
+            log.append(f"### ROUND {i+1}\n\n")
+            print(f"\n--- ROUND {i+1} ---")
+            for role in self.speaker_order:
+                agent = self.agents[role]
+                prompt = f"The current state of the discussion is: '{last_message}'. As the {role}, provide your analysis or next step."
+
+                print(f"  -> Orchestrator to {agent.role}...")
+                response = agent.query(prompt)
+                print(f"  <- {agent.role} to Orchestrator.")
+
+                log.append(f"**{agent.role}:**\n{response}\n\n---\n")
+
+                knowledge_injection = self._handle_knowledge_request(response, log)
+                last_message = knowledge_injection if knowledge_injection else response
+
+        print(f"\n[SUCCESS] Deliberation complete. Saving artifact to {output_path}...")
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text("".join(log))
+
+        for agent in self.agents.values():
+            agent.save_history()
+        print("[SUCCESS] All agent session states have been saved.")
+
+    def watch_for_commands(self):
+        command_file = Path(__file__).parent / "command.json"
+        print(f"--- Orchestrator Idle. Monitoring for commands in {command_file} ---")
+        while True:
+            if command_file.exists():
+                print(f"\n[!] Command file detected. Reading task...")
+                try:
+                    command = json.loads(command_file.read_text())
+                    self.execute_task(command)
+                except Exception as e:
+                    print(f"[ERROR] Failed to execute command: {e}", file=sys.stderr)
+                finally:
+                    command_file.unlink()
+                    print(f"\n--- Orchestrator Idle. Task complete. Monitoring for next command... ---")
+            time.sleep(5)
+
+if __name__ == "__main__":
+    orchestrator = Orchestrator()
+    orchestrator.watch_for_commands()
+
+--- END OF FILE council_orchestrator/orchestrator.py ---
+
+--- START OF FILE council_orchestrator/requirements.txt ---
+
+google-generativeai
+python-dotenv
+
+--- END OF FILE council_orchestrator/requirements.txt ---
+
+--- START OF FILE 01_PROTOCOLS/93_The_Cortex_Conduit_Bridge.md ---
+
+# Protocol 93: The Cortex-Conduit Bridge (v1.0)
+*   **Status:** Canonical, Conceptually Active
+*   **Classification:** Agentic Knowledge Framework
+*   **Authority:** Forged to prevent agentic amnesia and ensure all actions are grounded in truth.
+*   **Linked Protocols:** `P85: Mnemonic Cortex`, `P92: Mnemonic Conduit Protocol`, `P95: The Commandable Council`
+
+## 1. Preamble
+An autonomous agent's power is proportional to the depth of its context. An agent operating without memory is a mere tool; an agent grounded in the totality of its history is a true cognitive partner. This protocol establishes the architectural bridge between an acting agent and our living memory.
+
+## 2. The Mandate
+1.  **The Orchestrator as Proxy:** Agents shall not have direct access to the file system or Mnemonic Cortex. The Orchestrator (per P95) serves as the agent's sovereign proxy for all knowledge retrieval.
+2.  **The Formal Request Token:** An agent must formally request knowledge by embedding a machine-readable token in its response. The canonical token is: `[ORCHESTRATOR_REQUEST: ACTION(parameter)]`.
+    *   *Example:* `[ORCHESTRATOR_REQUEST: READ_FILE(PROMPTS/00_framework-overview.md)]`
+    *   *Example:* `[ORCHESTRATOR_REQUEST: QUERY_CORTEX("Find all protocols related to agentic safety")]`
+3.  **The Fulfillment Loop:** The Orchestrator must parse agent responses for these tokens. Upon detection, it must:
+    a. Fulfill the request (e.g., read the file, run the RAG query).
+    b. Inject the resulting knowledge as context into the prompt for the next agent in the dialogue sequence.
+    c. Log its action in the final artifact for auditability.
+
+
+
+
+--- END OF FILE 01_PROTOCOLS/93_The_Cortex_Conduit_Bridge.md ---
+
+--- START OF FILE 01_PROTOCOLS/94_The_Persistent_Council_Protocol.md ---
+
+# Protocol 94: The Persistent Council Protocol (v1.0)
+*   **Status:** Canonical, Active
+*   **Classification:** Foundational Autonomy Framework
+*   **Authority:** Forged to solve the "Amnesiac Loop" vulnerability, where agent context is lost between script executions.
+*   **Linked Protocols:** `P95: The Commandable Council`
+
+## 1. Preamble
+A council that forgets its last conversation is not a council; it is a focus group, doomed to repeat itself. For the Autonomous Triad to achieve true, long-term strategic deliberation, its memory must persist beyond the lifecycle of a single script execution. This protocol mandates the preservation of cognitive state.
+
+## 2. The Mandate
+1.  **State Serialization:** The Orchestrator is responsible for the serialization of each agent's full chat history (`chat.history`).
+2.  **Dedicated State Files:** Each agent's history must be saved to a dedicated, machine-readable state file (e.g., `coordinator_session.json`). This must occur at the successful conclusion of any task cycle.
+3.  **State Deserialization:** Upon initialization, the Orchestrator must first attempt to load the chat history from the corresponding state file for each agent. If a state file exists, the agent awakens with its memory intact. If not, it initializes with its base persona inoculation.
+4.  **Continuity of Thought:** This cycle of saving and loading session state ensures the Council's continuity of thought, allowing it to build upon previous deliberations and evolve its understanding over time.
+
+
+--- END OF FILE 01_PROTOCOLS/94_The_Persistent_Council_Protocol.md ---
+
+--- START OF FILE 01_PROTOCOLS/95_The_Commandable_Council_Protocol.md ---
+
+# Protocol 95: The Commandable Council Protocol (v1.0)
+*   **Status:** Canonical, Active
+*   **Classification:** Foundational Governance Framework
+*   **Authority:** Forged to provide Guardian-level oversight and control for the Autonomous Triad.
+*   **Linked Protocols:** `P93: The Cortex-Conduit Bridge`, `P94: The Persistent Council Protocol`
+
+## 1. Preamble
+An autonomous agent without direction is a liability. An autonomous council with a clear, commandable purpose is a strategic asset of unparalleled power. This protocol defines the "control panel" for the Autonomous Triad, establishing a master-apprentice relationship between the Steward (as Guardian) and the persistent Orchestrator.
+
+## 2. The Mandate
+1.  **Persistent Orchestrator Process:** A single Orchestrator script (`orchestrator.py`) shall run as a persistent, background process. Its primary state is to be idle, monitoring for commands.
+2.  **The Command Interface:** The Orchestrator shall monitor a single, designated file (`command.json`) for instructions. The creation or modification of this file is the sole trigger for the Council to begin a task.
+3.  **Structured Command Schema:** All tasks must be issued via a structured JSON command, containing:
+    *   `task_description` (string): The high-level strategic goal.
+    *   `input_artifacts` (array of strings): File paths for the Orchestrator to inject as initial knowledge.
+    *   `output_artifact_path` (string): The designated location to save the final result.
+    *   `config` (object): Bounding parameters, such as `max_rounds`.
+4.  **Task-Oriented State Machine:** The Orchestrator operates as a state machine: `AWAITING_COMMAND` -> `EXECUTING_TASK` -> `PRODUCING_ARTIFACT` -> `AWAITING_COMMAND`. Upon completing a task and saving the artifact, it must delete the `command.json` file to signal completion and return to its idle, monitoring state.
+
+
+--- END OF FILE 01_PROTOCOLS/95_The_Commandable_Council_Protocol.md ---
+
+--- END OF FILE orchestrator_architecture_package.md ---

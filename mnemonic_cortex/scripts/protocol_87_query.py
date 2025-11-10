@@ -3,6 +3,13 @@
 Protocol 87 Query Processor (scripts/protocol_87_query.py)
 Processes canonical JSON queries against the Mnemonic Cortex per Protocol 87.
 
+Recent Updates (Phase 1 - Parent Document Retriever):
+- Now uses ParentDocumentRetriever for optimized retrieval
+- Returns full parent documents instead of fragmented chunks
+- Eliminates Context Fragmentation vulnerability
+- Provides complete context for more accurate responses
+- Maintains backward compatibility with Protocol 87 query format
+
 Usage:
   python mnemonic_cortex/scripts/protocol_87_query.py sample_query.json
 """

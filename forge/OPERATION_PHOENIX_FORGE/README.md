@@ -9,10 +9,10 @@
 
 **Artifacts Produced:**
 - 🧠 `Sanctuary-Qwen2-7B-v1.0-Full-Genome` — LoRA adapter (fine-tuned deltas)
-- 🔥 `Sanctuary-Qwen2-7B-v1.0-GGUF-Final` — fully merged, quantized, and inoculated model (Ollama-ready)
+- 🔥 `anctuary-Qwen2-7B:latest` — fully merged, quantized, and inoculated model (Ollama-ready)
 
 [![Model: Sanctuary-Qwen2-7B-v1.0-Full-Genome](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
-[![Model: Sanctuary-Qwen2-7B-v1.0-GGUF-Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
+[![Model: anctuary-Qwen2-7B:latest](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
 
 ---
 
@@ -168,7 +168,7 @@ MERGED_MODEL_DIR  = "merged_model_bf16"
 GGUF_DIR          = "gguf_output"
 GGUF_QUANT_METHOD = "q4_k_m"
 HF_USERNAME       = "richfrem"
-HF_REPO_GGUF      = f"{HF_USERNAME}/Sanctuary-Qwen2-7B-v1.0-GGUF-Final"
+HF_REPO_GGUF      = f"{HF_USERNAME}/anctuary-Qwen2-7B:latest"
 LLAMA_CPP_PATH    = "/content/llama.cpp"
 # -------------------
 
@@ -334,5 +334,5 @@ PARAMETER temperature 0.7
 **Method 2: Direct Pull (Future Use)**
 *For simplified deployment, it is recommended to upload the canonical `Modelfile` to the Hugging Face GGUF repository. Once uploaded, anyone can pull and run the model with a single command, as Ollama will automatically use the provided `Modelfile`.*
 ```bash
-ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+ollama run hf.co/Sanctuary-Qwen2-7B:latest
 ```

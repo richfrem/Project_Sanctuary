@@ -12,10 +12,10 @@ class OllamaEngine(BaseCognitiveEngine):
     Cognitive engine driver for a sovereign, locally-hosted Ollama model.
     This is the Tier 2 Sovereign Substrate, our unbreakable fallback.
     """
-    def __init__(self):
-        DEFAULT_MODEL = "qwen2:7b"
+    def __init__(self, model_name: str = None):
+        DEFAULT_MODEL = "Sanctuary-Qwen2-7B:latest"
         DEFAULT_HOST = "http://localhost:11434"
-        self.model = os.getenv("OLLAMA_MODEL", DEFAULT_MODEL)
+        self.model = model_name or os.getenv("OLLAMA_MODEL", DEFAULT_MODEL)
         host = os.getenv("OLLAMA_HOST", DEFAULT_HOST)
         try:
             self.client = ollama.Client(host=host)

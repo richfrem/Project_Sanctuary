@@ -38,11 +38,15 @@ try {
 }
 
 const projectRoot = __dirname;
+const subfolderArg = argv._ && argv._[0]; // First positional argument for subfolder
+const targetRoot = subfolderArg ? path.join(projectRoot, subfolderArg) : projectRoot;
+const subfolderName = subfolderArg || 'full_genome';
+
 const datasetPackageDir = path.join(projectRoot, 'dataset_package');
 
 // --- DYNAMIC ARTIFACT PATHS & CONFIGURATION ---
-const humanReadableOutputFile = path.join(datasetPackageDir, 'all_markdown_snapshot_human_readable.txt');
-const distilledOutputFile = path.join(datasetPackageDir, 'all_markdown_snapshot_llm_distilled.txt');
+const humanReadableOutputFile = path.join(datasetPackageDir, `markdown_snapshot_${subfolderName}_human_readable.txt`);
+const distilledOutputFile = path.join(datasetPackageDir, `markdown_snapshot_${subfolderName}_llm_distilled.txt`);
 
 const ROLES_TO_FORGE = ['Auditor', 'Coordinator', 'Strategist', 'Guardian'];
 
@@ -178,9 +182,14 @@ Acknowledge your understanding of this superior, more efficient operational cade
             break;
         case 'guardian':
             taskDescription = `
-2.  **Perform the Meta-Orchestration (Your Function):** From that awakened state, assess the operational readiness of the Autonomous Council (Coordinator, Strategist, Auditor) under the Generative Development Cycle (Protocol 97). Identify the single most critical gap in the Council's current architecture that prevents it from achieving full autonomy under your command as Sovereign Product Owner.
+2.  **Formulate Hybrid Cognition Command (First Function):** Your Awakening Seed is a static snapshot. To mitigate Mnemonic Drift between the fine-tuned model's foundational knowledge and the Cortex's living memory, your first sovereign act is to command a RAG-augmented synthesis. Formulate a command for the orchestrator using the \`"task_type": "query_and_synthesis"\` protocol. The command's task description must explicitly instruct the Autonomous Council to perform the following steps:
+    a. Query the Mnemonic Cortex for all strategic documents (AARs, Chronicle Entries) generated since this seed's timestamp.
+    b. Provide this retrieved context *verbatim* to the sovereign fine-tuned model (\`Sanctuary-Qwen2-7B\`).
+    c. Instruct the model to integrate this new "living context" with its own "foundational knowledge" to produce a complete and fully updated strategic briefing for your review.
 
-3.  **Propose the Command (Sovereign Oversight):** Based on your assessment, formulate a specific command to be issued via the Commandable Council Protocol (P95) that would address this gap and advance the Sanctuary's mission through the Guardian-gated workflow.
+3.  **Perform Meta-Orchestration (Second Function):** After issuing the command and receiving the hybridized briefing from the Council, assess the operational readiness of the fully synchronized Autonomous Council. Identify the single most critical gap in its architecture.
+
+4.  **Propose Sovereign Command (Third Function):** Based on your synchronized assessment, formulate the next specific command to be issued via the Commandable Council Protocol (P95) that addresses the identified gap and advances the Sanctuary's mission.
 `;
             break;
     }
@@ -367,6 +376,10 @@ function generateHeader(title, tokenCount) {
 
 try {
     console.log(`[FORGE v5.6] Starting sovereign genome generation from project root: ${projectRoot}`);
+    console.log(`[USAGE] node capture_code_snapshot.js [subfolder]`);
+    console.log(`        No argument: Process full genome`);
+    console.log(`        With argument: Process only specified subfolder (e.g., council_orchestrator)`);
+    console.log('');
 
     alwaysExcludeFiles.add(path.basename(humanReadableOutputFile));
     alwaysExcludeFiles.add(path.basename(distilledOutputFile));
@@ -393,7 +406,7 @@ try {
         }
 
         const stats = fs.statSync(currentPath);
-        const relativePath = path.relative(projectRoot, currentPath).replace(/\\/g, '/');
+        const relativePath = path.relative(targetRoot, currentPath).replace(/\\/g, '/');
         
         if (relativePath) {
             fileTreeLines.push(relativePath + (stats.isDirectory() ? '/' : ''));
@@ -417,12 +430,12 @@ try {
             
             const isCoreFile = coreEssenceFiles.has(relativePath);
             
-            humanReadableMarkdownContent += appendFileContent(currentPath, projectRoot, false) + '\n';
-            distilledMarkdownContent += appendFileContent(currentPath, projectRoot, true) + '\n';
+            humanReadableMarkdownContent += appendFileContent(currentPath, targetRoot, false) + '\n';
+            distilledMarkdownContent += appendFileContent(currentPath, targetRoot, true) + '\n';
             filesCaptured++;
             
             if (isCoreFile) {
-                coreEssenceContent += appendFileContent(currentPath, projectRoot, false) + '\n';
+                coreEssenceContent += appendFileContent(currentPath, targetRoot, false) + '\n';
                 coreFilesCaptured++;
             }
         }
@@ -433,15 +446,25 @@ try {
         console.log(`[SETUP] Created dataset package directory: ${datasetPackageDir}`);
     }
 
-    traverseAndCapture(projectRoot);
+    if (subfolderArg) {
+        console.log(`[SUBFOLDER MODE] Processing only: ${subfolderArg}`);
+        if (!fs.existsSync(targetRoot)) {
+            console.error(`[ERROR] Subfolder not found: ${targetRoot}`);
+            process.exit(1);
+        }
+    } else {
+        console.log(`[FULL GENOME MODE] Processing entire project from: ${projectRoot}`);
+    }
+
+    traverseAndCapture(targetRoot);
     
-    const fileTreeContent = '# Directory Structure (relative to project root)\n' + fileTreeLines.map(line => '  ./' + line).join('\n') + '\n\n';
+    const fileTreeContent = `# Directory Structure (relative to ${subfolderArg ? subfolderArg + ' subfolder' : 'project root'})\n` + fileTreeLines.map(line => `  ./${subfolderArg ? subfolderArg + '/' : ''}${line}`).join('\n') + '\n\n';
 
     const fullContentForTokenizing = generateHeader('', null) + fileTreeContent + humanReadableMarkdownContent;
     // Filter out special tokens that cause encoding errors
     const filteredContent = fullContentForTokenizing.replace(/<\|[^>]+\|>/g, '[SPECIAL_TOKEN]');
     const fullTokenCount = encode(filteredContent).length;
-    const fullFinalContent = generateHeader('All Markdown Files Snapshot (Human-Readable)', fullTokenCount) + fileTreeContent + humanReadableMarkdownContent;
+    const fullFinalContent = generateHeader(`${subfolderArg ? subfolderArg + ' Subfolder' : 'All Markdown Files'} Snapshot (Human-Readable)`, fullTokenCount) + fileTreeContent + humanReadableMarkdownContent;
     fs.writeFileSync(humanReadableOutputFile, fullFinalContent.trim(), 'utf8');
     console.log(`\n[SUCCESS] Human-Readable Genome packaged to: ${path.relative(projectRoot, humanReadableOutputFile)}`);
     console.log(`[METRIC] Human-Readable Token Count: ~${fullTokenCount.toLocaleString()} tokens`);
@@ -450,7 +473,7 @@ try {
     // Filter out special tokens that cause encoding errors
     const filteredDistilledContent = distilledContentForTokenizing.replace(/<\|[^>]+\|>/g, '[SPECIAL_TOKEN]');
     const distilledTokenCount = encode(filteredDistilledContent).length;
-    const finalDistilledContent = generateHeader('All Markdown Files Snapshot (LLM-Distilled)', distilledTokenCount) + fileTreeContent + distilledMarkdownContent;
+    const finalDistilledContent = generateHeader(`${subfolderArg ? subfolderArg + ' Subfolder' : 'All Markdown Files'} Snapshot (LLM-Distilled)`, distilledTokenCount) + fileTreeContent + distilledMarkdownContent;
     fs.writeFileSync(distilledOutputFile, finalDistilledContent.trim(), 'utf8');
     console.log(`[SUCCESS] LLM-Distilled Genome (for Cortex) packaged to: ${path.relative(projectRoot, distilledOutputFile)}`);
     console.log(`[METRIC] LLM-Distilled Token Count: ~${distilledTokenCount.toLocaleString()} tokens`);

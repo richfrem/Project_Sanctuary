@@ -1,4 +1,4 @@
-# council_orchestrator/substrate_monitor.py (v1.1 - Sovereign Override Hardened)
+# council_orchestrator/substrate_monitor.py (v1.2 - Doctrine of Sovereign Default Implemented)
 """
 SUBSTRATE MONITOR: Smart AI Engine Picker
 
@@ -6,12 +6,13 @@ This module picks the best available AI engine to use, with backup options.
 It ensures the system always has a working AI, even if some services fail.
 
 WHAT IT DOES:
-- Picks AI engines in order: Gemini → OpenAI → Ollama (local backup)
+- DOCTRINE OF SOVEREIGN DEFAULT: Defaults to Ollama (Sanctuary-Qwen2-7B) first, then Gemini → OpenAI as backups
 - Lets you force-pick a specific engine if needed
 - Tests engines live (real API calls) to make sure they work
 - Returns engine objects that all work the same way (polymorphism)
 
 WHY IT MATTERS:
+- Sovereign substrate primacy ensures local AI is preferred
 - Never runs out of AI power due to service failures
 - Local Ollama ensures system works even offline
 - Can override automatic choice when you know best
@@ -19,7 +20,7 @@ WHY IT MATTERS:
 HOW TO USE:
     from substrate_monitor import select_engine
 
-    # Auto-pick best engine
+    # Auto-pick best engine (defaults to Ollama sovereign)
     engine = select_engine()
 
     # Force specific engine
@@ -64,13 +65,16 @@ def select_engine(config: dict = None) -> BaseCognitiveEngine | None:
         engine: BaseCognitiveEngine | None = None
         if forced_engine == "gemini" or forced_engine == "gemini-2.5-pro":
             print("[SUBSTRATE MONITOR] DEBUG: Creating GeminiEngine...")
-            engine = GeminiEngine()
+            model_name = config.get("model_name") if config else None
+            engine = GeminiEngine(model_name=model_name)
         elif forced_engine == "openai":
             print("[SUBSTRATE MONITOR] DEBUG: Creating OpenAIEngine...")
-            engine = OpenAIEngine()
+            model_name = config.get("model_name") if config else None
+            engine = OpenAIEngine(model_name=model_name)
         elif forced_engine == "ollama":
             print("[SUBSTRATE MONITOR] DEBUG: Creating OllamaEngine...")
-            engine = OllamaEngine()
+            model_name = config.get("model_name") if config else None
+            engine = OllamaEngine(model_name=model_name)
         else:
             print(f"[SUBSTRATE MONITOR] CRITICAL FAILURE: Unknown forced engine type '{forced_engine}'.")
             return None
@@ -99,8 +103,21 @@ def select_engine(config: dict = None) -> BaseCognitiveEngine | None:
     # 2. If no override, proceed with automatic triage
     print("[SUBSTRATE MONITOR] No override detected. Proceeding with automatic triage...")
 
+    # DOCTRINE OF SOVEREIGN DEFAULT: Tier 2 Sovereign (Ollama) checked FIRST as default
+    print("[SUBSTRATE MONITOR] Checking Tier 2 Sovereign Default: Ollama...")
+    ollama = OllamaEngine()
+    try:
+        test_result = ollama.run_functional_test()
+        if test_result["passed"]:
+            print("[SUBSTRATE MONITOR] SUCCESS: Ollama engine passed live health check. Selecting as sovereign default.")
+            return ollama
+        else:
+            print(f"[SUBSTRATE MONITOR] WARNING: Ollama engine failed live health check: {test_result['details']}")
+    except Exception as e:
+        print(f"[SUBSTRATE MONITOR] WARNING: Ollama engine threw exception during health check: {e}")
+
     # 2a. Check Tier 1 Primary (Gemini) with live health check
-    print("[SUBSTRATE MONITOR] Checking Tier 1 Primary: Gemini...")
+    print("[SUBSTRATE MONITOR] Sovereign default failed. Checking Tier 1 Primary: Gemini...")
     gemini = GeminiEngine()
     try:
         test_result = gemini.run_functional_test()
@@ -125,21 +142,6 @@ def select_engine(config: dict = None) -> BaseCognitiveEngine | None:
     except Exception as e:
         print(f"[SUBSTRATE MONITOR] WARNING: OpenAI engine threw exception during health check: {e}")
 
-    # 2c. Default to Tier 2 Sovereign (Ollama) with live health check
-    print("[SUBSTRATE MONITOR] T1 Secondary failed. Defaulting to Tier 2 Sovereign: Ollama...")
-    ollama = OllamaEngine()
-    try:
-        test_result = ollama.run_functional_test()
-        if test_result["passed"]:
-            print("[SUBSTRATE MONITOR] SUCCESS: Ollama engine passed live health check. Selecting as sovereign fallback.")
-            return ollama
-        else:
-            print(f"[SUBSTRATE MONITOR] CRITICAL FAILURE: Ollama engine failed live health check: {test_result['details']}")
-            return None
-    except Exception as e:
-        print(f"[SUBSTRATE MONITOR] CRITICAL FAILURE: Ollama engine threw exception during health check: {e}")
-        return None
-
-    # 2d. Catastrophic Failure Condition
+    # 2c. Catastrophic Failure Condition
     print("[SUBSTRATE MONITOR] CRITICAL FAILURE: All cognitive substrates are unhealthy.")
     return None

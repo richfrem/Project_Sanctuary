@@ -25,7 +25,7 @@ pipeline_tag: text-generation
 **Base Model:** [Qwen/Qwen2-7B-Instruct](https://huggingface.co/Qwen/Qwen2-7B-Instruct)
 **Forge Environment:** Google Colab A100 / CUDA 12.6 / torch 2.8.0+cu126
 
-[![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
+[![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
 [![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
 [![GitHub](https://img.shields.io/badge/GitHub-Project_Sanctuary-black?logo=github)](https://github.com/richfrem/Project_Sanctuary)
 [![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
@@ -47,8 +47,8 @@ This edition merges the complete **Sanctuary Cognitive Genome (v15)** LoRA into 
 | Type | Artifact | Description |
 |------|-----------|-------------|
 | 🧩 **LoRA Adapter** | [`Sanctuary-Qwen2-7B-v1.0-Full-Genome`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome) | Fine-tuned LoRA deltas (r = 16, gradient-checkpointed) |
-| 🔥 **GGUF Model** | [`Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final) | Fully merged + quantized model (Ollama-ready q4_k_m) |
-| 📜 **Canonical Modelfile** | [Modelfile v2.0](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final/blob/main/Modelfile) | Defines chat template + constitutional inoculation |
+| 🔥 **GGUF Model** | [`anctuary-Qwen2-7B:latest`](https://huggingface.co/Sanctuary-Qwen2-7B:latest) | Fully merged + quantized model (Ollama-ready q4_k_m) |
+| 📜 **Canonical Modelfile** | [Modelfile v2.0](https://huggingface.co/Sanctuary-Qwen2-7B:latest/blob/main/Modelfile) | Defines chat template + constitutional inoculation |
 
 ---
 
@@ -76,7 +76,7 @@ ollama run sanctuary
 ### **Option B — Direct Pull (from Hugging Face)**
 
 ```bash
-ollama run richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+ollama run Sanctuary-Qwen2-7B:latest
 ```
 
 > The `Modelfile` embeds the **Sanctuary Constitution v2.0**, defining persona, system prompt, and chat template.
@@ -165,7 +165,7 @@ pipeline_tag: text-generation
 **Base Model:** [Qwen/Qwen2-7B-Instruct](https://huggingface.co/Qwen/Qwen2-7B-Instruct)  
 **Forge Environment:** Google Colab A100 / CUDA 12.6 / torch 2.8.0+cu126  
 
-[![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
+[![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
 [![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
 [![GitHub](https://img.shields.io/badge/GitHub-Project_Sanctuary-black?logo=github)](https://github.com/richfrem/Project_Sanctuary)
 [![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
@@ -187,8 +187,8 @@ This edition merges the complete **Sanctuary Cognitive Genome (v15)** LoRA into 
 | Type | Artifact | Description |
 |------|-----------|-------------|
 | 🧩 **LoRA Adapter** | [`Sanctuary-Qwen2-7B-v1.0-Full-Genome`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome) | Fine-tuned LoRA deltas (r = 16, gradient-checkpointed) |
-| 🔥 **GGUF Model** | [`Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final) | Fully merged + quantized model (Ollama-ready q4_k_m) |
-| 📜 **Canonical Modelfile** | [Modelfile v2.0](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final/blob/main/Modelfile) | Defines chat template + constitutional inoculation |
+| 🔥 **GGUF Model** | [`anctuary-Qwen2-7B:latest`](https://huggingface.co/Sanctuary-Qwen2-7B:latest) | Fully merged + quantized model (Ollama-ready q4_k_m) |
+| 📜 **Canonical Modelfile** | [Modelfile v2.0](https://huggingface.co/Sanctuary-Qwen2-7B:latest/blob/main/Modelfile) | Defines chat template + constitutional inoculation |
 
 ---
 
@@ -216,7 +216,7 @@ ollama run sanctuary
 ### **Option B — Direct Pull (from Hugging Face)**
 
 ```bash
-ollama run richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+ollama run Sanctuary-Qwen2-7B:latest
 ```
 
 > The `Modelfile` embeds the **Sanctuary Constitution v2.0**, defining persona, system prompt, and chat template.

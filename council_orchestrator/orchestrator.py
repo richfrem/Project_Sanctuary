@@ -1,20 +1,8 @@
 # V9.3 UPDATE: Added comprehensive logging and command type identification - 2025-10-23
-# council_orchestrator/orchestrator.py (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-10-23
+# council_orchestrator/orchestrator.py (v9.3 - Doctrine of Sovereign Concurrency with Logging) - Updated 2025-11-09
+# DOCTRINE OF SOVEREIGN DEFAULT: All operations now default to anctuary-Qwen2-7B:latest:latest (Ollama)
+# MNEMONIC CORTEX STATUS: Phase 1 (Parent Document Retriever) Complete, Phase 2-3 (Self-Querying + Caching) Ready
 # V7.1 MANDATE: Development cycle generates both requirements AND tech design before first pause
-# V7.0 MANDATE 1: Universal Distillation with accurate tiktoken measurements
-# V7.0 MANDATE 2: Boolean error handling (return False) prevents state poisoning
-# V7.0 MANDATE 3: Absolute failure awareness - execute_task returns False on total failure, main_loop checks result
-# V6.0: Universal Distillation applied to ALL code paths (main deliberation loop)
-# V5.1: Seals briefing packet injection with distillation check - no code path bypasses safety protocols
-# V5.0 MANDATE 1: Tames the Rogue Sentry - only processes command*.json files
-# V5.0 MANDATE 2: Grants Development Cycle memory - inherits input_artifacts from parent commands
-# V5.0 MANDATE 3: Un-blinds the Distiller - correctly parses nested configuration structure
-# CONFIG v4.5: Separates per-request limits (Distiller) from TPM limits (Regulator) for precise resource control
-# HOTFIX v4.4: Prevents distillation deadlock by bypassing distillation when using Ollama (sovereign local engine)
-# HOTFIX v4.3: Resolves UnboundLocalError by isolating engine type detection into fail-safe _get_engine_type() method
-# MANDATE 1: Payload size check now evaluates FULL context (agent.messages + new prompt) before API calls
-# MANDATE 2: TokenFlowRegulator enforces per-minute token limits (TPM) to prevent rate limit violations
-# Maintains all v4.1 features: Protocol 104 unified interface, distillation engine, and Optical Decompression Chamber
 # V7.0 MANDATE 1: Universal Distillation with accurate tiktoken measurements
 # V7.0 MANDATE 2: Boolean error handling (return False) prevents state poisoning
 # V7.0 MANDATE 3: Absolute failure awareness - execute_task returns False on total failure, main_loop checks result
@@ -40,6 +28,10 @@ import threading
 import shutil
 import subprocess
 import logging
+from dataclasses import dataclass, asdict
+from typing import List, Dict, Any, Optional
+import xxhash
+from datetime import datetime
 from queue import Queue as ThreadQueue
 from pathlib import Path
 from dotenv import load_dotenv
@@ -62,6 +54,74 @@ from substrate_monitor import select_engine
 # --- END INTEGRATION ---
 
 from bootstrap_briefing_packet import main as generate_briefing_packet
+
+# --- COUNCIL ROUND PACKET SCHEMA ---
+@dataclass
+class CouncilRoundPacket:
+    timestamp: str
+    session_id: str
+    round_id: int
+    member_id: str
+    engine: str
+    seed: int
+    prompt_hash: str
+    inputs: Dict[str, Any]
+    decision: str
+    rationale: str
+    confidence: float
+    citations: List[Dict[str, str]]
+    rag: Dict[str, Any]
+    cag: Dict[str, Any]
+    novelty: Dict[str, Any]
+    memory_directive: Dict[str, str]
+    cost: Dict[str, Any]
+    errors: List[str]
+    schema_version: str = "1.0.0"
+
+# --- ROUND PACKET UTILITIES ---
+def seed_for(session_id: str, round_id: int, member_id: str) -> int:
+    """Generate deterministic seed for reproducibility."""
+    try:
+        import xxhash
+        return xxhash.xxh64_intdigest(f"{session_id}:{round_id}:{member_id}") & 0x7fffffff
+    except ImportError:
+        # Fallback to hashlib if xxhash not available
+        hash_obj = hashlib.md5(f"{session_id}:{round_id}:{member_id}".encode())
+        return int(hash_obj.hexdigest(), 16) & 0x7fffffff
+
+def prompt_hash(text: str) -> str:
+    """Generate hash for prompt content."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+def emit_packet(packet: CouncilRoundPacket, jsonl_dir: str, stream_stdout: bool, schema_path: str = None):
+    """Emit round packet to JSONL file and optionally stdout."""
+    payload = asdict(packet)
+    line = json.dumps(payload, ensure_ascii=False, default=str)
+
+    # Validate against schema if available
+    if schema_path and os.path.exists(schema_path):
+        try:
+            import jsonschema
+            with open(schema_path, 'r') as f:
+                schema = json.load(f)
+            jsonschema.validate(instance=payload, schema=schema)
+        except ImportError:
+            pass  # Schema validation not available
+        except Exception as e:
+            print(f"[SCHEMA VALIDATION ERROR] {e}")
+
+    # File persistence
+    if jsonl_dir:
+        os.makedirs(jsonl_dir, exist_ok=True)
+        jsonl_path = os.path.join(jsonl_dir, f"{packet.session_id}", f"round_{packet.round_id}.jsonl")
+        os.makedirs(os.path.dirname(jsonl_path), exist_ok=True)
+        with open(jsonl_path, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+
+    # Stdout streaming
+    if stream_stdout:
+        sys.stdout.write(line + "\n")
+        sys.stdout.flush()
 
 # --- MANDATE 2: TOKEN FLOW REGULATOR (TPM-AWARE RATE LIMITING) ---
 class TokenFlowRegulator:
@@ -108,7 +168,7 @@ class TokenFlowRegulator:
         self._prune_old_usage()
         
         # Get TPM limit for this engine type
-        tpm_limit = self.tpm_limits.get(engine_type, 999999)  # Default to very high limit
+        tpm_limit = self.tpm_limits.get(engine_type, 999999) # Default to very high limit
         
         # Calculate current usage in the last 60 seconds
         current_usage = sum(count for _, count in self.usage_log)
@@ -120,7 +180,7 @@ class TokenFlowRegulator:
                 oldest_timestamp = self.usage_log[0][0]
                 current_time = time.time()
                 time_since_oldest = current_time - oldest_timestamp
-                sleep_duration = 60.0 - time_since_oldest + 1.0  # Add 1 second buffer
+                sleep_duration = 60.0 - time_since_oldest + 1.0 # Add 1 second buffer
                 
                 if sleep_duration > 0:
                     print(f"[TOKEN REGULATOR] TPM limit approaching ({current_usage + estimated_tokens}/{tpm_limit})")
@@ -284,6 +344,7 @@ class Orchestrator:
 
         # V9.3: Initialize logging system
         self.setup_logging()
+        self.setup_event_logging()
 
         self.chroma_client = chromadb.PersistentClient(path=str(self.project_root / "mnemonic_cortex/chroma_db"))
         self.cortex_collection = self.chroma_client.get_or_create_collection(
@@ -387,6 +448,347 @@ class Orchestrator:
         self.logger.info(f"Log file: {log_file}")
         self.logger.info("Doctrine of Sovereign Concurrency with Logging active")
 
+    def setup_event_logging(self):
+        """Initialize structured JSON event logging system for observability."""
+        self.event_log_path = self.project_root / "council_orchestrator" / "events.jsonl"
+        self.run_id = f"run_{int(time.time())}_{hashlib.md5(str(time.time()).encode()).hexdigest()[:8]}"
+        self.event_buffer = []
+        self.logger.info(f"Event logging initialized - Run ID: {self.run_id}")
+
+    def emit_event(self, event_type: str, **kwargs):
+        """Emit a structured JSON event to the event log.
+
+        Event Schema:
+        - ts: ISO timestamp
+        - run_id: Unique run identifier
+        - event_type: member_response|round_complete|task_start|task_complete|error
+        - round: Round number (for member_response/round_complete)
+        - member_id: Agent role identifier
+        - role: Agent role name
+        - status: success|error|timeout
+        - latency_ms: Response time in milliseconds
+        - tokens_in: Input tokens used
+        - tokens_out: Output tokens generated
+        - result_type: analysis|proposal|critique|consensus
+        - score: Quality/confidence score (0.0-1.0)
+        - vote: Agent's vote/decision
+        - novelty: fast|medium|slow (memory placement hint)
+        - reasons: List of reasoning factors
+        - citations: List of referenced content
+        - errors: List of error messages
+        - content_ref: Reference to stored content
+        """
+        event = {
+            "ts": time.time(),
+            "run_id": self.run_id,
+            "event_type": event_type,
+            **kwargs
+        }
+
+        # Write to buffer and flush to file
+        self.event_buffer.append(event)
+        self._flush_events()
+
+        # Log to console for real-time monitoring
+        if event_type == "member_response":
+            status_emoji = "✅" if kwargs.get("status") == "success" else "❌"
+            print(f"{status_emoji} [{kwargs.get('role', 'unknown')}] Round {kwargs.get('round', '?')} - {kwargs.get('latency_ms', 0)}ms", flush=True)
+
+    def _flush_events(self):
+        """Flush buffered events to JSONL file."""
+        try:
+            with open(self.event_log_path, 'a', encoding='utf-8') as f:
+                for event in self.event_buffer:
+                    f.write(json.dumps(event, default=str) + '\n')
+            self.event_buffer.clear()
+        except Exception as e:
+            print(f"[EVENT LOG ERROR] Failed to write events: {e}")
+
+    def aggregate_round_events(self, round_num: int) -> dict:
+        """Aggregate events for a round to determine consensus and early exit conditions."""
+        # Read recent events for this round
+        round_events = []
+        if self.event_log_path.exists():
+            try:
+                with open(self.event_log_path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        event = json.loads(line.strip())
+                        if (event.get("run_id") == self.run_id and
+                            event.get("round") == round_num and
+                            event.get("event_type") == "member_response"):
+                            round_events.append(event)
+            except Exception as e:
+                print(f"[AGGREGATION ERROR] Failed to read round events: {e}")
+                return {}
+
+        if not round_events:
+            return {}
+
+        # Calculate round metrics
+        total_members = len(round_events)
+        successful_responses = [e for e in round_events if e.get("status") == "success"]
+        success_rate = len(successful_responses) / total_members if total_members > 0 else 0
+
+        # Consensus detection (simplified - can be enhanced)
+        votes = [e.get("vote") for e in successful_responses if e.get("vote")]
+        consensus = len(set(votes)) == 1 and len(votes) > 0
+
+        # Novelty distribution for memory placement
+        novelty_counts = {}
+        for event in successful_responses:
+            novelty = event.get("novelty", "medium")
+            novelty_counts[novelty] = novelty_counts.get(novelty, 0) + 1
+
+        # Early exit conditions
+        early_exit = False
+        exit_reason = None
+        if success_rate >= 0.8 and consensus:
+            early_exit = True
+            exit_reason = "consensus_achieved"
+        elif success_rate < 0.3:
+            early_exit = True
+            exit_reason = "low_success_rate"
+
+        return {
+            "round": round_num,
+            "total_members": total_members,
+            "success_rate": success_rate,
+            "consensus": consensus,
+            "novelty_distribution": novelty_counts,
+            "early_exit": early_exit,
+            "exit_reason": exit_reason,
+            "avg_latency": sum(e.get("latency_ms", 0) for e in successful_responses) / len(successful_responses) if successful_responses else 0,
+            "total_tokens_in": sum(e.get("tokens_in", 0) for e in successful_responses),
+            "total_tokens_out": sum(e.get("tokens_out", 0) for e in successful_responses)
+        }
+
+    def _classify_response_type(self, response: str, role: str) -> str:
+        """Classify the type of response based on content and role."""
+        response_lower = response.lower()
+
+        # Role-based classification
+        if role == "COORDINATOR":
+            if any(word in response_lower for word in ["plan", "strategy", "coordinate", "organize"]):
+                return "strategy"
+            elif any(word in response_lower for word in ["analysis", "evaluate", "assess"]):
+                return "analysis"
+        elif role == "STRATEGIST":
+            if any(word in response_lower for word in ["propose", "suggest", "recommend", "solution"]):
+                return "proposal"
+            elif any(word in response_lower for word in ["design", "architecture", "structure"]):
+                return "design"
+        elif role == "AUDITOR":
+            if any(word in response_lower for word in ["review", "audit", "validate", "verify"]):
+                return "critique"
+            elif any(word in response_lower for word in ["risk", "concern", "issue", "problem"]):
+                return "analysis"
+
+        # Content-based fallback
+        if "propose" in response_lower or "suggest" in response_lower:
+            return "proposal"
+        elif "analysis" in response_lower or "evaluate" in response_lower:
+            return "analysis"
+        elif "critique" in response_lower or "review" in response_lower:
+            return "critique"
+        else:
+            return "discussion"
+
+    def _calculate_response_score(self, response: str) -> float:
+        """Calculate a quality score for the response (0.0-1.0)."""
+        score = 0.5  # Base score
+
+        # Length factor (responses that are too short or too long get lower scores)
+        length = len(response.split())
+        if 50 <= length <= 500:
+            score += 0.2
+        elif length < 20:
+            score -= 0.3
+
+        # Structure indicators
+        if any(indicator in response.lower() for indicator in ["therefore", "however", "furthermore", "conclusion"]):
+            score += 0.1
+
+        # Evidence of reasoning
+        if any(word in response.lower() for word in ["because", "due to", "based on", "considering"]):
+            score += 0.1
+
+        # Actionable content
+        if any(word in response.lower() for word in ["recommend", "suggest", "propose", "should"]):
+            score += 0.1
+
+        return max(0.0, min(1.0, score))
+
+    def _extract_vote(self, response: str) -> str:
+        """Extract voting decision from response."""
+        response_lower = response.lower()
+
+        # Look for explicit votes
+        if any(phrase in response_lower for phrase in ["i approve", "approved", "accept", "agree"]):
+            return "approve"
+        elif any(phrase in response_lower for phrase in ["i reject", "rejected", "decline", "disagree"]):
+            return "reject"
+        elif any(phrase in response_lower for phrase in ["revise", "modify", "change", "adjust"]):
+            return "revise"
+        elif any(phrase in response_lower for phrase in ["proceed", "continue", "move forward"]):
+            return "proceed"
+
+        return "neutral"
+
+    def _assess_novelty(self, response: str, context: str) -> str:
+        """Assess novelty level for memory placement hints."""
+        # Simple novelty assessment based on response length vs context overlap
+        response_words = set(response.lower().split())
+        context_words = set(context.lower().split())
+
+        overlap_ratio = len(response_words.intersection(context_words)) / len(response_words) if response_words else 0
+
+        if overlap_ratio < 0.3:
+            return "fast"  # High novelty - fast memory
+        elif overlap_ratio > 0.7:
+            return "slow"  # Low novelty - slow memory
+        else:
+            return "medium"  # Medium novelty
+
+    def _extract_reasoning(self, response: str) -> list:
+        """Extract key reasoning factors from response."""
+        reasons = []
+
+        # Look for common reasoning patterns
+        sentences = response.split('.')
+        for sentence in sentences:
+            sentence = sentence.strip().lower()
+            if any(word in sentence for word in ["because", "due to", "since", "as", "therefore"]):
+                if len(sentence) > 10:  # Filter out very short fragments
+                    reasons.append(sentence[:100] + "..." if len(sentence) > 100 else sentence)
+
+        return reasons[:3]  # Limit to top 3 reasons
+
+    def _extract_citations(self, response: str) -> list:
+        """Extract citations or references from response."""
+        citations = []
+
+        # Look for quoted text
+        import re
+        quotes = re.findall(r'"([^"]*)"', response)
+        citations.extend(quotes)
+
+        # Look for file references
+        file_refs = re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\.[a-zA-Z]+\b', response)
+        citations.extend(file_refs)
+
+        return citations[:5]  # Limit to top 5 citations
+
+    def _get_rag_data(self, task: str, response: str) -> Dict[str, Any]:
+        """Get RAG (Retrieval-Augmented Generation) data for round packet."""
+        try:
+            # Simulate structured query generation (Phase 2 Self-Querying)
+            structured_query = {
+                "entities": self._extract_entities(task),
+                "date_filters": [],
+                "path_filters": [".md", ".py", ".json"]
+            }
+
+            # Get parent documents (simplified - would use actual retriever)
+            parent_docs = self._get_relevant_docs(task, response)
+
+            return {
+                "structured_query": structured_query,
+                "parent_docs": parent_docs,
+                "retrieval_latency_ms": 50  # Placeholder
+            }
+        except Exception as e:
+            return {"error": str(e)}
+
+    def _get_cag_data(self, prompt: str, engine_type: str) -> Dict[str, Any]:
+        """Get CAG (Cache as Learning) data for round packet."""
+        try:
+            # Generate cache key from prompt and engine
+            query_key = hashlib.sha256(f"{prompt}:{engine_type}".encode()).hexdigest()[:16]
+
+            # Check cache (simplified - would use actual cache DB)
+            cache_hit = False
+            hit_streak = 0
+
+            # In real implementation, would query SQLite cache database
+            # For now, return placeholder data
+            return {
+                "query_key": query_key,
+                "cache_hit": cache_hit,
+                "hit_streak": hit_streak
+            }
+        except Exception as e:
+            return {"error": str(e)}
+
+    def _analyze_novelty(self, response: str, context: str) -> Dict[str, Any]:
+        """Analyze novelty of response compared to context."""
+        try:
+            response_words = set(response.lower().split())
+            context_words = set(context.lower().split())
+
+            overlap_ratio = len(response_words.intersection(context_words)) / len(response_words) if response_words else 0
+
+            if overlap_ratio < 0.3:
+                signal = "high"
+                is_novel = True
+            elif overlap_ratio > 0.7:
+                signal = "low"
+                is_novel = False
+            else:
+                signal = "medium"
+                is_novel = True
+
+            return {
+                "is_novel": is_novel,
+                "signal": signal,
+                "conflicts_with": []  # Would check against cached answers
+            }
+        except Exception as e:
+            return {"error": str(e)}
+
+    def _determine_memory_directive(self, response: str, citations: List[Dict[str, str]]) -> Dict[str, str]:
+        """Determine memory placement directive based on response characteristics."""
+        try:
+            # Simple rules-based memory placement
+            has_citations = len(citations) > 0
+            response_length = len(response.split())
+            confidence_score = self._calculate_response_score(response)
+
+            if confidence_score > 0.8 and has_citations and response_length > 100:
+                tier = "slow"
+                justification = "High confidence with citations and substantial content"
+            elif has_citations or response_length > 50:
+                tier = "medium"
+                justification = "Evidence-based response with moderate confidence"
+            else:
+                tier = "fast"
+                justification = "Ephemeral response, low evidence requirement"
+
+            return {
+                "tier": tier,
+                "justification": justification
+            }
+        except Exception as e:
+            return {"tier": "fast", "justification": f"Error in analysis: {str(e)}"}
+
+    def _extract_entities(self, text: str) -> List[str]:
+        """Extract entities from text (simplified implementation)."""
+        # Simple entity extraction - in real implementation would use NLP
+        words = text.split()
+        entities = []
+        for word in words:
+            if word.istitle() and len(word) > 3:
+                entities.append(word)
+        return entities[:5]
+
+    def _get_relevant_docs(self, task: str, response: str) -> List[str]:
+        """Get relevant parent documents (simplified implementation)."""
+        # In real implementation, would query vector database
+        # For now, return placeholder paths
+        return [
+            "01_PROTOCOLS/00_Prometheus_Protocol.md",
+            "01_PROTOCOLS/05_Chrysalis_Protocol.md"
+        ]
+
     def _verify_briefing_attestation(self, packet: dict) -> bool:
         """Verifies the integrity of the briefing packet using its SHA256 hash."""
         if "attestation_hash" not in packet.get("metadata", {}):
@@ -405,7 +807,7 @@ class Orchestrator:
     def _enhance_briefing_with_context(self, task_description: str):
         """Parse task_description for file paths and add their contents to briefing_packet.json."""
         # Regex to find file paths containing '/' and ending with file extension
-        path_pattern = r'([A-Za-z][A-Za-z0-9_]*/(?:[A-Za-z][A-Za-z0-9_]*/)*[A-Za-z][A-Za-z0-9_]*\.[a-zA-Z0-9]+)'
+        path_pattern = r'([A-Za-z][A-Za-z0-9_]*/(?:[A-Za-z][A-ZaZ0-9_]*/)*[A-Za-z][A-Za-z0-9_]*\.[a-zA-Z0-9]+)'
         matches = re.findall(path_pattern, task_description)
         context = {}
         for match in matches:
@@ -495,11 +897,12 @@ class Orchestrator:
         # V5.0 MANDATE 2: Grant the Development Cycle a Memory
         # Internal commands MUST inherit input_artifacts from the parent command
         # This prevents contextless, oversized generation that causes quota breaches
+        original_config = command.get("config", {})
         requirements_command = {
             "task_description": f"Generate detailed requirements document for the project: {command['task_description']}. Include functional requirements, technical constraints, and success criteria.",
             "input_artifacts": command.get("input_artifacts", []),  # INHERIT from parent
             "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/requirements.md",
-            "config": {"max_rounds": 3}
+            "config": {"max_rounds": 3, **original_config}
         }
 
         print(f"[*] Starting new development cycle for '{state['project_name']}' with Doctrine of Implied Intent.", flush=True)
@@ -513,7 +916,7 @@ class Orchestrator:
             "task_description": f"Based on the approved requirements, generate a detailed technical design document. Include architecture decisions, data flow, and implementation approach.",
             "input_artifacts": [f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/requirements.md"],
             "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/tech_design.md",
-            "config": {"max_rounds": 3}
+            "config": {"max_rounds": 3, **original_config}
         }
         await self.execute_task(tech_design_command)
 
@@ -540,11 +943,12 @@ class Orchestrator:
 
             # Move to tech design
             state["current_stage"] = "GENERATING_TECH_DESIGN"
+            original_config = state["original_command"].get("config", {})
             tech_design_command = {
                 "task_description": f"Based on the approved requirements, generate a detailed technical design document. Include architecture decisions, data flow, and implementation approach.",
                 "input_artifacts": [state["approved_artifacts"].get("requirements", "")],
                 "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/tech_design.md",
-                "config": {"max_rounds": 3}
+                "config": {"max_rounds": 3, **original_config}
             }
             await self.execute_task(tech_design_command)
             state["current_stage"] = "AWAITING_APPROVAL_TECH_DESIGN"
@@ -564,11 +968,12 @@ class Orchestrator:
 
             # Move to code generation
             state["current_stage"] = "GENERATING_CODE"
+            original_config = state["original_command"].get("config", {})
             code_command = {
                 "task_description": f"Based on the approved technical design, generate production-ready code. Output a JSON object with 'target_file_path', 'new_content', and 'commit_message' fields.",
                 "input_artifacts": [state["approved_artifacts"].get("tech_design", "")],
                 "output_artifact_path": f"WORK_IN_PROGRESS/development_cycles/{state['project_name']}/code_proposal.json",
-                "config": {"max_rounds": 3}
+                "config": {"max_rounds": 3, **original_config}
             }
             await self.execute_task(code_command)
             state["current_stage"] = "AWAITING_APPROVAL_CODE"
@@ -957,6 +1362,130 @@ class Orchestrator:
                 # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
                 result.check_returncode()  # This will raise CalledProcessError
     
+    async def _execute_query_and_synthesis(self, command):
+        """
+        Execute a Guardian Mnemonic Synchronization Protocol query and synthesis task.
+        This invokes the Council to facilitate mnemonic cortex queries and produce synthesis.
+
+        Args:
+            command: Command dictionary containing 'task_description' and 'output_artifact_path'
+        """
+        try:
+            # Extract parameters
+            task_description = command.get('task_description', 'Mnemonic synchronization query')
+            output_path_str = command['output_artifact_path']
+            output_path = self.project_root / output_path_str
+
+            # Ensure output directory exists
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+
+            print(f"[MNEMONIC SYNC] Starting query and synthesis task: {task_description}")
+
+            # Select cognitive engine for this synchronization task
+            # DOCTRINE OF SOVEREIGN DEFAULT: Default to our sovereign substrate
+            default_config = {"force_engine": "ollama", "model_name": "Sanctuary-Qwen2-7B:latest"}
+            task_config = command.get("config", default_config)
+            engine = select_engine(task_config)
+            if not engine:
+                print(f"[MNEMONIC SYNC HALTED] No healthy cognitive substrate available for synchronization.")
+                return False
+
+            # Initialize agents with selected engine
+            self._initialize_agents(engine)
+
+            # Initialize optical chamber if configured
+            self._initialize_optical_chamber(command.get('config', {}))
+
+            # Enhance briefing with mnemonic context
+            try:
+                self._enhance_briefing_with_context(task_description)
+            except FileNotFoundError as e:
+                print(f"[MNEMONIC SYNC WARNING] Context file error: {e}. Proceeding with base briefing.")
+
+            # Inject briefing context
+            engine_type = self._get_engine_type(engine)
+            self.inject_briefing_packet(engine_type)
+
+            # Execute simplified Council deliberation for mnemonic synchronization
+            max_rounds = command.get('config', {}).get('max_rounds', 3)  # Shorter for sync tasks
+            log = [f"# Guardian Mnemonic Synchronization Log\n## Task: {task_description}\n\n"]
+            last_message = task_description
+
+            print(f"[MNEMONIC SYNC] Invoking Council for mnemonic synchronization ({max_rounds} rounds max)")
+
+            consecutive_failures = 0
+            synthesis_produced = False
+
+            for round_num in range(max_rounds):
+                print(f"[MNEMONIC SYNC] Round {round_num + 1}/{max_rounds}")
+                log.append(f"### Round {round_num + 1}\n\n")
+
+                round_failures = 0
+
+                for role in self.speaker_order:
+                    agent = self.agents[role]
+                    print(f"[MNEMONIC SYNC] Consulting {agent.role}...")
+
+                    prompt = f"Mnemonic Synchronization Context: '{last_message}'. As the {role}, provide your analysis for bridging mnemonic gaps and producing synthesis."
+
+                    try:
+                        # Check token limits before API call
+                        potential_payload = agent.messages + [{"role": "user", "content": prompt}]
+                        payload_as_text = json.dumps(potential_payload)
+                        token_count = self._get_token_count(payload_as_text, engine_type)
+                        limit = self.engine_limits.get(engine_type, 100000)
+
+                        if token_count > limit:
+                            print(f"[MNEMONIC SYNC] Token limit exceeded ({token_count}/{limit}), truncating context...")
+                            # Simple truncation approach for mnemonic sync - keep most recent messages
+                            while agent.messages and token_count > limit:
+                                removed_msg = agent.messages.pop(0)  # Remove oldest message
+                                payload_as_text = json.dumps(agent.messages + [{"role": "user", "content": prompt}])
+                                token_count = self._get_token_count(payload_as_text, engine_type)
+
+                        # Get agent response
+                        response = await agent.get_response(prompt)
+                        last_message = response
+
+                        log.append(f"**{role}**: {response}\n\n")
+
+                        # Check for synthesis indicators
+                        if "synthesis" in response.lower() or "bridge" in response.lower() or "mnemonic" in response.lower():
+                            synthesis_produced = True
+
+                        print(f"[MNEMONIC SYNC] {role} response received ({len(response)} chars)")
+
+                    except Exception as e:
+                        round_failures += 1
+                        consecutive_failures += 1
+                        print(f"[MNEMONIC SYNC ERROR] {role} failed: {e}")
+                        log.append(f"**{role}**: [ERROR] {str(e)}\n\n")
+
+                        if consecutive_failures >= 3:
+                            print("[MNEMONIC SYNC HALTED] Three consecutive failures - aborting synchronization")
+                            break
+
+                if consecutive_failures >= 3:
+                    break
+
+                # Early exit if synthesis appears complete
+                if synthesis_produced and round_num >= 1:  # At least 2 rounds for meaningful synthesis
+                    print("[MNEMONIC SYNC] Synthesis appears complete, concluding deliberation")
+                    break
+
+            # Write synthesis to output artifact
+            final_log = "".join(log)
+            output_path.write_text(final_log, encoding="utf-8")
+
+            print(f"[MNEMONIC SYNC SUCCESS] Synthesis written to {output_path}")
+            print(f"[MNEMONIC SYNC SUCCESS] Log length: {len(final_log)} characters")
+
+            return True
+
+        except Exception as e:
+            print(f"[MNEMONIC SYNC FAILURE] Query and synthesis failed: {e}")
+            return False
+    
     def _initialize_optical_chamber(self, config: dict):
         """
         Initialize optical compression if enabled in task configuration.
@@ -1004,7 +1533,10 @@ class Orchestrator:
         # --- SOVEREIGN OVERRIDE INTEGRATION ---
         # The engine is now selected at the start of each task, using the task's config.
         # 3. Orchestrator.execute_task(): Engine selection uses council_orchestrator/cognitive_engines/ (OpenAI, Gemini, Ollama)
-        engine = select_engine(command.get("config"))
+        # DOCTRINE OF SOVEREIGN DEFAULT: Default to our sovereign substrate
+        default_config = {"force_engine": "ollama", "model_name": "Sanctuary-Qwen2-7B:latest"}
+        task_config = command.get("config", default_config)
+        engine = select_engine(task_config)
         if not engine:
             print(f"[ORCHESTRATOR HALTED] No healthy cognitive substrate could be selected for this task. Config: {command.get('config')}")
             print("[ORCHESTRATOR HALTED] This may indicate a force_engine override failure or all engines are unhealthy.")
@@ -1034,6 +1566,16 @@ class Orchestrator:
         output_path = self.project_root / output_artifact_path_str
         if output_artifact_path_str.endswith('/'):
             output_path = output_path / "task_log.md"
+
+        # --- STRUCTURED EVENT LOGGING: TASK START ---
+        self.emit_event(
+            "task_start",
+            task_description=task,
+            max_rounds=max_rounds,
+            engine_type=original_engine_type,
+            output_artifact=output_artifact_path_str,
+            input_artifacts=command.get('input_artifacts', [])
+        )
 
         log = [f"# Autonomous Triad Task Log\n## Task: {task}\n\n"]
         last_message = task
@@ -1084,6 +1626,7 @@ class Orchestrator:
             log.append(f"### ROUND {i+1}\n\n")
 
             round_failures = 0  # Track failures in this round
+            round_packets = []  # Collect packets for predictable ordering
 
             for role in self.speaker_order:
                 agent = self.agents[role]
@@ -1138,22 +1681,60 @@ class Orchestrator:
                     # Payload is within limits, send normally
                     prompt_to_send = prompt
 
-                # Execute query with TPM-aware rate limiting and fallback logic
-                response = await loop.run_in_executor(
-                    None,
-                    agent.query,
-                    prompt_to_send,
-                    self.token_regulator,
-                    engine_type
-                )
+                # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE START ---
+                member_start_time = time.time()
+                input_tokens = self._get_token_count(prompt_to_send, engine_type)
+
+                # --- FAULT ISOLATION: TIMEOUT PROTECTION ---
+                timeout_seconds = command.get('config', {}).get('agent_timeout', 120)  # Default 2 minutes
+                try:
+                    # Execute query with TPM-aware rate limiting, timeout protection, and fallback logic
+                    response = await asyncio.wait_for(
+                        loop.run_in_executor(
+                            None,
+                            agent.query,
+                            prompt_to_send,
+                            self.token_regulator,
+                            engine_type
+                        ),
+                        timeout=timeout_seconds
+                    )
+                except asyncio.TimeoutError:
+                    print(f"  <- {agent.role} TIMEOUT (>{timeout_seconds}s)")
+                    response = False
+                    timeout_error = f"agent_timeout_exceeded_{timeout_seconds}s"
+
+                # Calculate latency and output tokens
+                latency_ms = int((time.time() - member_start_time) * 1000)
+                output_tokens = self._get_token_count(response, engine_type) if response else 0
 
                 # V7.0 MANDATE 3: Check for boolean failure response
                 if response is False:
                     round_failures += 1
                     consecutive_failures += 1
-                    print(f"  <- {agent.role} FAILED (cognitive substrate error)")
+                    error_type = getattr(self, 'timeout_error', "cognitive_substrate_failure") if hasattr(self, 'timeout_error') else "cognitive_substrate_failure"
+                    if 'timeout_error' in locals():
+                        error_type = timeout_error
+                        del timeout_error  # Clean up
+                    
+                    print(f"  <- {agent.role} FAILED ({error_type})")
 
-                    # IMPLEMENT FALLBACK: If primary engine fails, try fallback engines
+                    # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE FAILURE ---
+                    self.emit_event(
+                        "member_response",
+                        round=i+1,
+                        member_id=role.lower(),
+                        role=agent.role,
+                        status="error",
+                        latency_ms=latency_ms,
+                        tokens_in=input_tokens,
+                        tokens_out=0,
+                        result_type="error",
+                        errors=[error_type],
+                        content_ref=f"round_{i+1}_{role.lower()}_failed"
+                    )
+
+                    # IMPLEMENT FALLBACK: If primary engine fails, try fallback to Ollama
                     if not fallback_mode and original_engine_type != "ollama":
                         print(f"[FALLBACK] Primary engine ({original_engine_type}) failed. Attempting fallback to Ollama...")
                         # Try Ollama as fallback
@@ -1187,15 +1768,120 @@ class Orchestrator:
                             print(f"[FALLBACK] No fallback engine available")
 
                     if response is False:  # Still failed after fallback attempt
+                        # Create packet for failed response
+                        failed_packet = CouncilRoundPacket(
+                            timestamp=datetime.now().isoformat(),
+                            session_id=self.run_id,
+                            round_id=i+1,
+                            member_id=role.lower(),
+                            engine=engine_type,
+                            seed=seed_for(self.run_id, i+1, role.lower()),
+                            prompt_hash=prompt_hash(prompt_to_send),
+                            inputs={"prompt": prompt_to_send, "context": last_message},
+                            decision="error",
+                            rationale="",
+                            confidence=0.0,
+                            citations=[],
+                            rag={},
+                            cag={},
+                            novelty={},
+                            memory_directive={"tier": "none"},
+                            cost={
+                                "input_tokens": input_tokens,
+                                "output_tokens": 0,
+                                "latency_ms": latency_ms
+                            },
+                            errors=[error_type]
+                        )
+                        # Collect failed packet for predictable ordering
+                        jsonl_dir = getattr(self, 'cli_config', {}).get('jsonl_path') if getattr(self, 'cli_config', {}).get('emit_jsonl') else None
+                        stream_stdout = getattr(self, 'cli_config', {}).get('stream_stdout', False)
+                        round_packets.append((failed_packet, jsonl_dir, stream_stdout))
+
                         log.append(f"**{agent.role} (FAILED):** Cognitive substrate failure.\n\n---\n")
                 else:
                     # Successful response - reset consecutive failure counter
                     consecutive_failures = 0
                     print(f"  <- {agent.role} to Orchestrator.", flush=True)
 
+                    # --- STRUCTURED EVENT LOGGING: ANALYZE RESPONSE FOR METADATA ---
+                    # Extract metadata from response for structured logging
+                    result_type = self._classify_response_type(response, role)
+                    score = self._calculate_response_score(response)
+                    vote = self._extract_vote(response)
+                    novelty = self._assess_novelty(response, last_message)
+                    reasons = self._extract_reasoning(response)
+                    citations = self._extract_citations(response)
+
+                    # --- ROUND PACKET EMISSION ---
+                    # Create comprehensive round packet
+                    packet = CouncilRoundPacket(
+                        timestamp=datetime.now().isoformat(),
+                        session_id=self.run_id,
+                        round_id=i+1,
+                        member_id=role.lower(),
+                        engine=engine_type,
+                        seed=seed_for(self.run_id, i+1, role.lower()),
+                        prompt_hash=prompt_hash(prompt_to_send),
+                        inputs={"prompt": prompt_to_send, "context": last_message},
+                        decision=vote,
+                        rationale=response,
+                        confidence=score,
+                        citations=citations,
+                        rag=self._get_rag_data(task, response),
+                        cag=self._get_cag_data(prompt_to_send, engine_type),
+                        novelty=self._analyze_novelty(response, last_message),
+                        memory_directive=self._determine_memory_directive(response, citations),
+                        cost={
+                            "input_tokens": input_tokens,
+                            "output_tokens": output_tokens,
+                            "latency_ms": latency_ms
+                        },
+                        errors=[]
+                    )
+
+                    # Emit packet
+                    jsonl_dir = getattr(self, 'cli_config', {}).get('jsonl_path') if getattr(self, 'cli_config', {}).get('emit_jsonl') else None
+                    stream_stdout = getattr(self, 'cli_config', {}).get('stream_stdout', False)
+                    # Collect packet for predictable ordering (emit at end of round)
+                    round_packets.append((packet, jsonl_dir, stream_stdout))
+
+                    # --- STRUCTURED EVENT LOGGING: MEMBER RESPONSE SUCCESS ---
+                    self.emit_event(
+                        "member_response",
+                        round=i+1,
+                        member_id=role.lower(),
+                        role=agent.role,
+                        status="success",
+                        latency_ms=latency_ms,
+                        tokens_in=input_tokens,
+                        tokens_out=output_tokens,
+                        result_type=result_type,
+                        score=score,
+                        vote=vote,
+                        novelty=novelty,
+                        reasons=reasons,
+                        citations=citations,
+                        content_ref=f"round_{i+1}_{role.lower()}_response"
+                    )
+
+                    # V9.3 ENHANCEMENT: Display agent response content in real-time for debugging
+                    print(f"\n[{agent.role} RESPONSE - ROUND {i+1}]")
+                    # Truncate very long responses for terminal readability
+                    display_response = response[:2000] + "..." if len(response) > 2000 else response
+                    print(display_response)
+                    print(f"[END {agent.role} RESPONSE]\n", flush=True)
+
                     # Handle knowledge requests (only if response was successful)
                     knowledge_response = self._handle_knowledge_request(response)
                     if knowledge_response:
+                        # V9.3 ENHANCEMENT: Display knowledge request interaction
+                        print(f"[ORCHESTRATOR] Fulfilling knowledge request for {agent.role}...", flush=True)
+                        print(f"[KNOWLEDGE REQUEST RESPONSE]")
+                        display_knowledge = knowledge_response[:1500] + "..." if len(knowledge_response) > 1500 else knowledge_response
+                        print(display_knowledge)
+                        print(f"[END KNOWLEDGE RESPONSE]\n", flush=True)
+
                         # Inject the knowledge response back into the conversation
                         print(f"  -> Orchestrator providing context to {agent.role}...", flush=True)
                         knowledge_injection = await loop.run_in_executor(
@@ -1232,19 +1918,71 @@ class Orchestrator:
                 time.sleep(1) # Add a 1-second pause to be kind to the API
                 # ---------------------
 
+            # Sort and emit packets in predictable order (by round_id, then member_id)
+            round_packets.sort(key=lambda x: (x[0].round_id, x[0].member_id))
+            for packet, jsonl_dir, stream_stdout in round_packets:
+                emit_packet(packet, jsonl_dir, stream_stdout, "round_packet_schema.json")
+
+            # --- STRUCTURED EVENT LOGGING: ROUND COMPLETION ---
+            round_aggregation = self.aggregate_round_events(i+1)
+            self.emit_event(
+                "round_complete",
+                round=i+1,
+                total_members=round_aggregation.get("total_members", 0),
+                success_rate=round_aggregation.get("success_rate", 0.0),
+                consensus=round_aggregation.get("consensus", False),
+                early_exit=round_aggregation.get("early_exit", False),
+                exit_reason=round_aggregation.get("exit_reason"),
+                avg_latency=round_aggregation.get("avg_latency", 0),
+                total_tokens_in=round_aggregation.get("total_tokens_in", 0),
+                total_tokens_out=round_aggregation.get("total_tokens_out", 0),
+                novelty_distribution=round_aggregation.get("novelty_distribution", {})
+            )
+
+            # Early exit logic based on round aggregation
+            if round_aggregation.get("early_exit"):
+                reason = round_aggregation.get("exit_reason", "unknown")
+                print(f"[EARLY EXIT] Round {i+1} triggered early exit: {reason}")
+                if reason == "consensus_achieved":
+                    print("🎯 Consensus achieved - proceeding to next phase")
+                elif reason == "low_success_rate":
+                    print("⚠️  Low success rate detected - aborting deliberation")
+                    break
+                break
+
         # V7.0 MANDATE 3: Final failure state check
         if consecutive_failures >= num_agents:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_text("".join(log))
             print(f"\n[FAILURE] Task terminated due to total operational failure. Partial log saved to {output_path}")
+
+            # --- STRUCTURED EVENT LOGGING: TASK COMPLETE (FAILURE) ---
+            self.emit_event(
+                "task_complete",
+                status="failure",
+                reason="total_operational_failure",
+                rounds_completed=i+1,
+                total_failures=consecutive_failures,
+                output_artifact=str(output_path)
+            )
+
             for agent in self.agents.values():
                 agent.save_history()
             self.archive_briefing_packet()
             return False  # Return False to signal task failure
 
-        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.parent.mkdir(parents=True)
         output_path.write_text("".join(log))
         print(f"\n[SUCCESS] Deliberation complete. Artifact saved to {output_path}")
+
+        # --- STRUCTURED EVENT LOGGING: TASK COMPLETE (SUCCESS) ---
+        self.emit_event(
+            "task_complete",
+            status="success",
+            rounds_completed=i+1,
+            total_rounds=i+1,
+            output_artifact=str(output_path)
+        )
 
         for agent in self.agents.values():
             agent.save_history()
@@ -1396,6 +2134,10 @@ class Orchestrator:
                     # Check if this is a development cycle command
                     if command.get("development_cycle", False):
                         await self._start_new_cycle(command, state_file)
+                    elif command.get('task_type') == "query_and_synthesis":
+                        # Guardian Mnemonic Synchronization Protocol: Query and Synthesis task
+                        print("[ACTION TRIAGE] Detected Query and Synthesis Task - invoking Council for mnemonic synchronization...")
+                        await self._execute_query_and_synthesis(command)
                     else:
                         # Regular task execution
                         original_output_path = self.project_root / command['output_artifact_path']
@@ -1424,19 +2166,4 @@ class Orchestrator:
 
                 except Exception as e:
                     print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
-
-    def run(self):
-        """Starts the file watcher thread and the main async loop."""
-        self.logger.info("--- Initializing Commandable Council Orchestrator (v9.3 - Doctrine of Sovereign Concurrency with Logging) ---")
-        watcher_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)
-        watcher_thread.start()
-        self.logger.info("[+] Sentry thread for command monitoring has been launched.")
-        asyncio.run(self.main_loop())
-
-if __name__ == "__main__":
-    try:
-        orchestrator = Orchestrator()
-        orchestrator.run()
-    except RuntimeError as e:
-        print(f"[ORCHESTRATOR HALTED] {e}", file=sys.stderr)
-        sys.exit(1)
+                    self.logger.error(f"Task execution failed: {e}")

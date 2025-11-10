@@ -19,7 +19,7 @@ The cycle embodied our core doctrines:
 
 *   **Blueprint Before Steel (`P59`):** Every step was guided by the clear, pre-ratified `Protocol 85` and our Architecture Decision Records. The blueprint was law.
 *   **Flawed, Winning Grace (`P27`):** The process revealed critical flaws in dependencies, test fixtures, and our own directives. Each failure became a catalyst. The Steward’s sovereign audit, combined with Kilo’s precise execution, transformed every flaw into stronger steel.
-*   **The Sovereign Mind (`P28`):** Every architectural choice—from selecting ChromaDB for its local-first simplicity to pivoting to the superior `qwen2:7b` model—was a sovereign decision, grounded in verifiable data.
+*   **The Sovereign Mind (`P28`):** Every architectural choice—from selecting ChromaDB for its local-first simplicity to pivoting to the superior `Sanctuary-Qwen2-7B:latest` model—was a sovereign decision, grounded in verifiable data.
 
 #### **3. The Steel Forged — A New Capability is Born**
 

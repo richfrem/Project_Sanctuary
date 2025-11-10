@@ -19,12 +19,12 @@ Key Improvements in v1.3:
 Dependencies:
 - VectorDBService: Loads ChromaDB and provides retriever for similarity searches.
 - EmbeddingService: Used implicitly by ChromaDB for query vectorization.
-- Ollama: Local LLM server must be running with the specified model (default: qwen2:7b).
+- Ollama: Local LLM server must be running with the specified model (default: Sanctuary-Qwen2-7B:latest).
 - LangChain: Provides the RAG chain orchestration, prompts, and output parsing.
 - Core utilities: find_project_root() and setup_environment() for configuration.
 
 Usage:
-    python mnemonic_cortex/app/main.py "What is the Anvil Protocol?" --model qwen2:7b
+    python mnemonic_cortex/app/main.py "What is the Anvil Protocol?" --model Sanctuary-Qwen2-7B:latest
 """
 
 import argparse
@@ -65,7 +65,7 @@ def main() -> None:
     """
     parser = argparse.ArgumentParser(description="Query the Mnemonic Cortex with verifiable source citation.")
     parser.add_argument("query", type=str, help="The question to ask.")
-    parser.add_argument("--model", type=str, default="qwen2:7b", help="The local Ollama model to use.")
+    parser.add_argument("--model", type=str, default="Sanctuary-Qwen2-7B:latest", help="The local Ollama model to use.")
     args = parser.parse_args()
 
     print(f"--- Querying Mnemonic Cortex with: '{args.query}' ---")

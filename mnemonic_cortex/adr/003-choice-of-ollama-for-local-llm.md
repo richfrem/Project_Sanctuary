@@ -17,7 +17,7 @@ We will use **Ollama** as the exclusive engine for local LLM inference. All inte
 - **Positive:**
     -   **Simplicity & Hearth Protocol:** Ollama provides a single, unified command (`ollama pull <model>`) and a running server to manage multiple local models. This is vastly simpler than managing individual model weights and configurations, perfectly aligning with the `Hearth Protocol`.
     -   **Sovereignty & Iron Root:** Ollama is open-source and runs entirely on-device, ensuring our generation step remains 100% sovereign and free from external dependencies, fulfilling the `Iron Root Doctrine`.
-    -   **Flexibility:** It allows us to easily switch between different open-source models (e.g., `qwen2:7b`, `llama3:8b`) with a simple command-line argument, enabling rapid testing and validation.
+    -   **Flexibility:** It allows us to easily switch between different open-source models (e.g., `Sanctuary-Qwen2-7B:latest`, `llama3:8b`) with a simple command-line argument, enabling rapid testing and validation.
 
 - **Negative:**
     -   **Resource Management:** Ollama runs as a background application, consuming system resources (RAM). This is an accepted trade-off for its ease of use.
