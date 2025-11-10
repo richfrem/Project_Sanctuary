@@ -63,7 +63,7 @@ except ImportError:
 # All engine-specific imports are removed from the orchestrator's top level.
 # We now only import the triage system, which will provide a healthy engine.
 # 1. Engine Selection: Engines are sourced from council_orchestrator/cognitive_engines/ directory
-from .engines.monitor import select_engine
+from .substrate_monitor import select_engine
 # --- END INTEGRATION ---
 
 import sys
@@ -741,7 +741,7 @@ class Orchestrator:
 
         # Create a temporary Ollama engine for distillation
         # 4. Distillation Engine: Uses council_orchestrator/cognitive_engines/ollama_engine.py
-        from .engines.monitor import select_engine
+        from .substrate_monitor import select_engine
         local_config = {"force_engine": "ollama"}
         local_engine = select_engine(local_config)
 

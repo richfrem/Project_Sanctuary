@@ -253,6 +253,16 @@ council_orchestrator/
 └── tests/                 # Test suite
 ```
 
+## 📚 Documentation
+
+### Council Evolution Roadmap
+- **[Evolution Plan Phases](docs/EVOLUTION_PLAN_PHASES.md)** - Official roadmap for Sanctuary Council cognitive architecture evolution (Phases 2-3 + Protocol 113)
+
+### Architecture Documentation
+- **[Optical Anvil Blueprint](docs/OPERATION_OPTICAL_ANVIL_BLUEPRINT.md)** - Revolutionary optical compression system for unlimited context
+- **[Command Schema](docs/command_schema.md)** - Complete command format reference
+- **[How to Commit](docs/howto-commit-command.md)** - Git operations and P101 integrity verification
+
 ### Hello World Test
 
 Create a `command.json` file in the `council_orchestrator/` directory:
