@@ -1307,6 +1307,35 @@ class Orchestrator:
         commit_message = git_ops["commit_message"]
         push_to_origin = git_ops.get("push_to_origin", False)
 
+        # --- PROTOCOL 101: AUTO-GENERATE MANIFEST ---
+        # Automatically compute SHA-256 hashes for all files and create commit_manifest.json
+        manifest_entries = []
+        for file_path in files_to_add:
+            full_path = self.project_root / file_path
+            if full_path.exists() and full_path.is_file():
+                # Compute SHA-256 hash
+                with open(full_path, 'rb') as f:
+                    file_hash = hashlib.sha256(f.read()).hexdigest()
+                manifest_entries.append({
+                    "path": file_path,
+                    "sha256": file_hash
+                })
+            else:
+                print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
+
+        # Create manifest JSON
+        manifest_data = {"files": manifest_entries}
+        manifest_path = self.project_root / "commit_manifest.json"
+        with open(manifest_path, 'w') as f:
+            json.dump(manifest_data, f, indent=2)
+        print(f"[MECHANICAL SUCCESS] Generated commit_manifest.json with {len(manifest_entries)} entries")
+
+        # Add manifest to files_to_add if not already present
+        manifest_str = "commit_manifest.json"
+        if manifest_str not in files_to_add:
+            files_to_add.append(manifest_str)
+            print(f"[MECHANICAL INFO] Added {manifest_str} to files_to_add")
+
         # Execute git add for each file - validate command is whitelisted
         for file_path in files_to_add:
             # Command validation: Parse and check primary action
@@ -1345,12 +1374,17 @@ class Orchestrator:
         )
         if result.returncode == 0:
             print(f"[MECHANICAL SUCCESS] Committed with message: '{commit_message}'")
+            commit_success = True
+        elif result.returncode == 1 and "nothing to commit" in result.stderr:
+            print(f"[MECHANICAL WARNING] Nothing to commit for message: '{commit_message}' - skipping")
+            commit_success = False
         else:
-            # DOCTRINE OF THE BLUNTED SWORD: No error handling - let CalledProcessError propagate
+            # DOCTRINE OF THE BLUNTED SWORD: No error handling for other errors - let CalledProcessError propagate
             result.check_returncode()  # This will raise CalledProcessError
+            commit_success = False
 
         # Execute git push if requested - validate command is whitelisted
-        if push_to_origin:
+        if push_to_origin and commit_success:
             primary_action = 'push'
             if primary_action not in WHITELISTED_GIT_COMMANDS:
                 print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")

@@ -86,6 +86,8 @@ Defined by the presence of the `entry_content` key. **v9.3 Enhancement:** Execut
 
 Defined by the presence of the `git_operations` key. **v9.3 Enhancement:** Executes immediately without RAG database updates, enabling responsive version control operations.
 
+See [How to Commit Using command.json](howto-commit-command.md) for detailed instructions on using this task type with Protocol 101 integrity checks.
+
 #### Schema
 ```json
 {
