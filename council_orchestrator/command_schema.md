@@ -93,7 +93,7 @@ Defined by the presence of the `git_operations` key. **v9.3 Enhancement:** Execu
   "git_operations": {
     "files_to_add": ["string (required)"],
     "commit_message": "string (required)",
-    "push_to_origin": "boolean (optional, default: false)"
+    "push_to_origin": "boolean (optional, default: false)"  // Set to true to push after committing
   },
   "config": {
     "update_rag": "boolean (optional, default: false) - Mechanical tasks skip RAG updates by default"
