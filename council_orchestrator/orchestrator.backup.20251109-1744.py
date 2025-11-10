@@ -413,12 +413,6 @@ class Orchestrator:
         # --- OPERATION: OPTICAL ANVIL - LAZY INITIALIZATION ---
         self.optical_chamber = None  # Initialized per-task if enabled
 
-        # --- SENTRY THREAD INITIALIZATION ---
-        # Start the command monitoring thread
-        self.sentry_thread = threading.Thread(target=self._watch_for_commands_thread, daemon=True)
-        self.sentry_thread.start()
-        print("[+] Sentry Thread started - monitoring for command files")
-
     def setup_logging(self):
         """V9.3: Setup comprehensive logging system with file output."""
         log_file = self.project_root / "council_orchestrator" / "orchestrator.log"
@@ -2004,34 +1998,19 @@ class Orchestrator:
         processed_commands = set()  # Track processed command files
 
         print(f"[SENTRY THREAD] Started monitoring directory: {command_dir}")
-        print(f"[SENTRY THREAD] Directory exists: {command_dir.exists()}")
-        print(f"[SENTRY THREAD] Directory is readable: {os.access(command_dir, os.R_OK)}")
-        print(f"[SENTRY THREAD] DEBUG: Entering main monitoring loop")
         while True:
             try:
                 # V5.0 MANDATE 1: Only process files explicitly named command*.json
                 # This prevents the rogue sentry from ingesting config files, state files, etc.
                 found_files = list(command_dir.glob("command*.json"))
-                print(f"[SENTRY THREAD] DEBUG: Scanning for command*.json files in {command_dir}")
-                print(f"[SENTRY THREAD] DEBUG: All .json files in directory: {list(command_dir.glob('*.json'))}")
                 if found_files:
                     print(f"[SENTRY THREAD] Found {len(found_files)} command file(s): {[f.name for f in found_files]}")
-                else:
-                    print(f"[SENTRY THREAD] DEBUG: No command*.json files found this scan")
 
                 for json_file in found_files:
-                    print(f"[SENTRY THREAD] DEBUG: Processing file: {json_file.name}")
-                    print(f"[SENTRY THREAD] DEBUG: File path: {json_file.absolute()}")
-                    print(f"[SENTRY THREAD] DEBUG: File exists: {json_file.exists()}")
-                    print(f"[SENTRY THREAD] DEBUG: File size: {json_file.stat().st_size if json_file.exists() else 'N/A'} bytes")
-                    print(f"[SENTRY THREAD] DEBUG: File is readable: {os.access(json_file, os.R_OK) if json_file.exists() else 'N/A'}")
-
                     if json_file.name in processed_commands:
-                        print(f"[SENTRY THREAD] DEBUG: File {json_file.name} already processed, skipping")
                         continue
 
                     processing_start = time.time()
-                    print(f"[SENTRY THREAD] DEBUG: Starting processing of {json_file.name} at {time.strftime('%H:%M:%S', time.localtime(processing_start))}")
                     # Determine command type for logging
                     command_type = "UNKNOWN"
                     try:
@@ -2053,14 +2032,9 @@ class Orchestrator:
                     try:
                         # Wait for file to be fully written (check size is stable)
                         initial_size = json_file.stat().st_size
-                        print(f"[SENTRY THREAD] DEBUG: Initial file size: {initial_size} bytes")
                         time.sleep(0.1)  # Brief pause to allow writing to complete
-                        current_size = json_file.stat().st_size
-                        print(f"[SENTRY THREAD] DEBUG: Current file size after pause: {current_size} bytes")
                         if json_file.stat().st_size == initial_size and initial_size > 0:
-                            print(f"[SENTRY THREAD] DEBUG: File size stable and > 0, attempting to read JSON")
                             command = json.loads(json_file.read_text())
-                            print(f"[SENTRY THREAD] DEBUG: JSON parsed successfully")
                             task_desc = command.get('task_description', 'No description')
                             print(f"[SENTRY THREAD] Loaded command: {task_desc[:50]}...")
                             self.logger.info(f"COMMAND_LOADED - File: {json_file.name}, Task: {task_desc[:100]}..., Config: {command.get('config', {})}")
@@ -2075,16 +2049,12 @@ class Orchestrator:
                             print(f"[SENTRY THREAD] Command processed and file deleted: {json_file.name} (duration: {processing_duration:.2f}s)")
                             self.logger.info(f"COMMAND_PROCESSING_COMPLETE - File: {json_file.name}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
                         else:
-                            print(f"[SENTRY THREAD] File appears incomplete (initial: {initial_size}, current: {current_size}), will retry...")
+                            print(f"[SENTRY THREAD] File appears incomplete (size: {json_file.stat().st_size}), will retry...")
                     except Exception as e:
                         processing_end = time.time()
                         processing_duration = processing_end - processing_start
                         print(f"[SENTRY THREAD ERROR] Could not process command file {json_file.name}: {e}", file=sys.stderr)
-                        print(f"[SENTRY THREAD ERROR] Exception type: {type(e).__name__}", file=sys.stderr)
-                        import traceback
-                        print(f"[SENTRY THREAD ERROR] Traceback: {traceback.format_exc()}", file=sys.stderr)
                         self.logger.error(f"COMMAND_PROCESSING_FAILED - File: {json_file.name}, Error: {str(e)}, Duration: {processing_duration:.2f}s, End_Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(processing_end))}")
-                print(f"[SENTRY THREAD] DEBUG: Sleeping for 1 second before next scan...")
                 time.sleep(1) # Check every second
             except Exception as e:
                 print(f"[SENTRY THREAD ERROR] Critical error in monitoring loop: {e}", file=sys.stderr)
@@ -2197,19 +2167,3 @@ class Orchestrator:
                 except Exception as e:
                     print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
                     self.logger.error(f"Task execution failed: {e}")
-
-
-if __name__ == "__main__":
-    # Initialize and run the orchestrator
-    orchestrator = Orchestrator()
-    
-    # Run the main async loop
-    try:
-        asyncio.run(orchestrator.main_loop())
-    except KeyboardInterrupt:
-        print("\n[ORCHESTRATOR] Received shutdown signal. Exiting gracefully...")
-        orchestrator.logger.info("Orchestrator shutdown via keyboard interrupt")
-    except Exception as e:
-        print(f"[FATAL] Orchestrator crashed: {e}", file=sys.stderr)
-        orchestrator.logger.error(f"Fatal orchestrator error: {e}")
-        sys.exit(1)
