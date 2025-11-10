@@ -1,8 +1,3 @@
 {
-  "files": [
-    {
-      "path": "council_orchestrator/testfile.txt",
-      "sha256": "cacb1363cf86c64fc15f23bb6dd707682b0508dd6f9ff1cf0ec7cc790d43e901"
-    }
-  ]
+  "files": []
 }
