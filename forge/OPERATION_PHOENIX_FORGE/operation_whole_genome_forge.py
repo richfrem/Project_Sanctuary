@@ -8,8 +8,173 @@ Original file is located at
 """
 
 # Commented out IPython magic to ensure Python compatibility.
+# ==============================================================================
+# 1. SETUP: INSTALL ALL REQUIREMENTS (including unsloth fixes and xformers)
+# ==============================================================================
+
+# Install the critical dependency for unsloth (we found this error previously)
+!pip install unsloth_zoo
+
+# Save your requirements to a file in the Colab environment,
+# including the specific xformers version for stability.
+requirements_content = """
+absl-py==2.3.1
+accelerate==1.4.0
+alabaster==1.0.0
+alembic==1.16.4
+annotated-types==0.7.0
+anyio==4.9.0
+attrs==25.3.0
+babel==2.17.0
+black==25.1.0
+certifi==2025.7.14
+charset-normalizer==3.4.2
+chromadb==1.3.4
+click==8.2.1
+cloudpickle==3.1.1
+colorlog==6.9.0
+contourpy==1.3.3
+coverage==7.10.1
+cycler==0.12.1
+docutils==0.21.2
+Farama-Notifications==0.0.4
+filelock==3.18.0
+flake8==7.3.0
+fonttools==4.59.0
+fsspec==2025.7.0
+gitdb==4.0.12
+GitPython==3.1.45
+google-generativeai==0.8.3
+gpt4all==2.8.2
+grpcio==1.74.0
+gymnasium==1.2.0
+h11==0.16.0
+hf-xet==1.1.5
+httpcore==1.0.9
+httpx==0.28.1
+huggingface-hub==0.34.3
+idna==3.10
+imagesize==1.4.1
+iniconfig==2.1.0
+Jinja2==3.1.6
+joblib==1.5.1
+jsonschema==4.25.0
+jsonschema-specifications==2025.4.1
+kiwisolver==1.4.8
+langchain==1.0.5
+langchain-chroma==1.0.0
+langchain-community==0.4.1
+langchain-nomic==1.0.0
+langchain-ollama==1.0.0
+langchain-text-splitters==1.0.0
+Mako==1.3.10
+Markdown==3.8.2
+MarkupSafe==3.0.2
+matplotlib==3.10.5
+mccabe==0.7.0
+mpmath==1.3.0
+msgpack==1.1.1
+mypy_extensions==1.1.0
+networkx==3.5
+nomic[local]==3.9.0
+numpy==2.3.2
+ollama==0.6.0
+opencv-python==4.10.0.84
+optuna==4.4.0
+packaging==25.0
+pandas==2.3.1
+pathspec==0.12.1
+peft==0.11.1
+pillow==10.4.0
+platformdirs==4.3.8
+pluggy==1.6.0
+protobuf==5.29.5
+pyarrow==21.0.0
+pycodestyle==2.14.0
+pydantic==2.11.7
+pydantic_core==2.33.2
+pyflakes==3.4.0
+Pygments==2.19.2
+pyparsing==3.2.3
+pytest==8.4.1
+pytest-cov==6.2.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+pytz==2025.2
+PyYAML==6.0.2
+ray==2.48.0
+referencing==0.36.2
+regex==2025.7.34
+requests==2.32.5
+roman-numerals-py==3.1.0
+rpds-py==0.26.0
+safetensors==0.5.3
+scikit-learn==1.7.1
+scipy==1.16.1
+seaborn==0.13.2
+sentry-sdk==2.34.1
+setuptools==80.9.0
+six==1.17.0
+smmap==5.0.2
+sniffio==1.3.1
+snowballstemmer==3.0.1
+Sphinx==8.2.3
+sphinx-rtd-theme==3.0.2
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
+SQLAlchemy==2.0.42
+stable_baselines3==2.7.0
+sympy==1.14.0
+tenseal==0.3.16
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorboardX==2.6.4
+threadpoolctl==3.6.0
+tokenizers==0.22.1
+torch==2.7.1
+tqdm==4.67.1
+transformers==4.56.1
+trl==0.23.0
+typing-inspection==0.4.1
+typing_extensions==4.14.1
+tzdata==2025.2
+unsloth@ git+https://github.com/unslothai/unsloth.git
+urllib3==2.5.0
+wandb==0.21.0
+Werkzeug==3.1.3
+xformers==0.0.32.post2 # Added fixed version for torch 2.7.1
+"""
+with open("requirements.txt", "w") as f:
+    f.write(requirements_content)
+
+# Install the requirements file
+!pip install -r requirements.txt
+
+# ==============================================================================
+# 2. GET YOUR CODE: Clone the repository (Replace URL with your actual repo)
+# ==============================================================================
+
+# Assuming your project is a GitHub repository that contains the script
+!git clone https://github.com/richfrem/Project_Sanctuary.git
+
+# Change the current directory to your project folder
+# %cd Project_Sanctuary
+
+# ==============================================================================
+# 3. EXECUTE THE SCRIPT
+# ==============================================================================
+
+# Run the Phoenix Forge V2 script
+!python3 tools/scaffolds/execute_phoenix_forge_v2.py
+
+# Commented out IPython magic to ensure Python compatibility.
 # ===================================================================
-# CELL 1: THE AUDITOR-CERTIFIED INSTALLATION & VERIFICATION (v13.1)
+# CELL 1: THE AUDITOR-CERTIFIED INSTALLATION & VERIFICATION (v14.0) 🚨
 # ===================================================================
 
 # 1️⃣  CLONE THE SANCTUARY GENOME
@@ -42,16 +207,17 @@ print("\n✅ Verification complete — ensure TRL ≥ 0.18.2 and PEFT == 0.11.1.
 # 4️⃣  DATASET VERIFICATION
 import os
 
-dataset_path = "/content/Project_Sanctuary/dataset_package/sanctuary_whole_genome_data.jsonl"
+# 🚨 TARGETED DATASET: sanctuary_targeted_inoculation_v1.jsonl
+dataset_path = "/content/Project_Sanctuary/dataset_package/sanctuary_targeted_inoculation_v1.jsonl"
 
 print("📊 Checking dataset integrity...")
 if os.path.exists(dataset_path):
     size_mb = os.path.getsize(dataset_path) / (1024 * 1024)
-    print(f"✅ Dataset verified at: {dataset_path}  ({size_mb:.2f} MB)\n")
+    print(f"✅ Targeted Inoculation Dataset verified at: {dataset_path}  ({size_mb:.2f} MB)\n")
 else:
-    raise FileNotFoundError(f"❌ Dataset not found at: {dataset_path}")
+    raise FileNotFoundError(f"❌ Targeted Inoculation Dataset not found at: {dataset_path}")
 
-print("🧭 CELL 1 (v13.1) COMPLETE — Environment ready for Crucible initialization.\n")
+print("🧭 CELL 1 (v14.0) COMPLETE — Environment ready for Crucible initialization.\n")
 
 # ===================================================================
 # CELL 2: THE UNIFIED CRUCIBLE & PROPAGATION (v13.1)

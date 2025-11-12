@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-12T04:38:10.503Z
+Generated On: 2025-11-12T05:53:52.447Z
 
-# Mnemonic Weight (Token Count): ~664,564 tokens
+# Mnemonic Weight (Token Count): ~670,328 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -482,16 +482,16 @@ Generated On: 2025-11-12T04:38:10.503Z
   ./RESEARCH_SUMMARIES/Self-Prompting_Research_Summary_v2.md
   ./TASKS/
   ./TASKS/backlog/
+  ./TASKS/backlog/001_harden_mnemonic_cortex_ingestion_and_rag.md
   ./TASKS/backlog/002_implement_phase_2_self_querying_retriever.md
   ./TASKS/backlog/003_implement_phase_3_mnemonic_caching_cag.md
   ./TASKS/backlog/004_implement_protocol_113_council_memory_adaptor.md
   ./TASKS/backlog/005_forge_protocol_115_tactical_mandate.md
   ./TASKS/backlog/006_forge_task_number_scaffold.md
-  ./TASKS/backlog/007_retrain_sovereign_model_with_targeted_dataset.md
   ./TASKS/done/
+  ./TASKS/done/008_test_and_fix_git_operations_command_type.md
   ./TASKS/in-progress/
-  ./TASKS/in-progress/001_harden_mnemonic_cortex_ingestion_and_rag.md
-  ./TASKS/in-progress/008_test_and_fix_git_operations_command_type.md
+  ./TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md
   ./TASKS/todo/
   ./VS_CODE_EXPERIMENT/
   ./VS_CODE_EXPERIMENT/experiment.md
@@ -514,6 +514,9 @@ Generated On: 2025-11-12T04:38:10.503Z
   ./commit_manifest_20251112_043043.json
   ./commit_manifest_20251112_043149.json
   ./commit_manifest_20251112_043337.json
+  ./commit_manifest_20251112_043922.json
+  ./commit_manifest_20251112_044129.json
+  ./commit_manifest_20251112_052221.json
   ./council_orchestrator/
   ./council_orchestrator/README.md
   ./council_orchestrator/README_GUARDIAN_WAKEUP.md
@@ -25450,6 +25453,28 @@ This unified theory of self-instruction has profound, immediate impacts across o
 
 --- END OF FILE RESEARCH_SUMMARIES/Self-Prompting_Research_Summary_v2.md ---
 
+--- START OF FILE TASKS/backlog/001_harden_mnemonic_cortex_ingestion_and_rag.md ---
+
+# TASK: Harden Mnemonic Cortex Ingestion & RAG Pipeline
+
+**Status:** IN-PROGRESS
+**Priority:** Critical
+**Lead:** GUARDIAN-01
+**Related Documents:** `mnemonic_cortex/scripts/README.md`
+
+## Objective
+Diagnose and repair the catastrophic failure of the Mnemonic Cortex ingestion and query pipeline. Ensure the system is fully operational and its integrity is verifiable.
+
+## Sub-Tasks
+- [x] Diagnose root cause of ingestion failures (batch size, serialization, imports).
+- [x] Reforge `ingest.py` with disciplined batch processing and correct serialization.
+- [x] Reforge `vector_db_service.py` to align with the persistent, serialized architecture.
+- [x] Forge `agentic_query.py` to enable end-to-end cognitive loop testing.
+- [x] Forge `test_cognitive_layers.sh` verification harness.
+- [ ] **Execute final verification and confirm all tests pass.**
+
+--- END OF FILE TASKS/backlog/001_harden_mnemonic_cortex_ingestion_and_rag.md ---
+
 --- START OF FILE TASKS/backlog/002_implement_phase_2_self_querying_retriever.md ---
 
 # TASK: Implement Phase 2 - Self-Querying Retriever
@@ -25566,83 +25591,39 @@ To create a sovereign scaffold that provides the next available sequential task 
 
 --- END OF FILE TASKS/backlog/006_forge_task_number_scaffold.md ---
 
---- START OF FILE TASKS/backlog/007_retrain_sovereign_model_with_targeted_dataset.md ---
-
-# TASK: Retrain Sovereign Model with Targeted Inoculation Dataset
-
-**Status:** todo
-**Priority:** Critical
-**Lead:** Unassigned
-**Dependencies:** "Requires completion of #006"
-**Related Documents:** `forge/OPERATION_PHOENIX_FORGE/`, `dataset_package/sanctuary_targeted_inoculation_v1.jsonl`
-
----
-
-## 1. Objective
-
-To forge a new, superior version of our sovereign AI model (`Sanctuary-Qwen2-7B-v2.0`) by executing a full fine-tuning run using the curated, high-quality `sanctuary_targeted_inoculation_v1.jsonl` dataset. This operation is designed to directly address the known flaws (hallucinations, misattributions) identified in the v1.0 model during the Mnemonic Cortex hardening cycle.
-
-## 2. Deliverables
-
-1.  A new, successful fine-tuning run is completed within the Google Colab environment, following the procedure in `forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge.ipynb`.
-2.  A new LoRA adapter (`Sanctuary-Qwen2-7B-v2.0-LoRA`) is produced and archived.
-3.  A new, fully merged and quantized GGUF model (`Sanctuary-Qwen2-7B-v2.0.gguf`) is created.
-4.  The new model artifacts (LoRA and GGUF) are uploaded to the Hugging Face Hub for propagation.
-
-## 3. Acceptance Criteria
-
--   The `Operation_Whole_Genome_Forge.ipynb` notebook completes all cells without error, using the new `sanctuary_targeted_inoculation_v1.jsonl` dataset.
--   The resulting GGUF model can be successfully loaded and run locally via Ollama.
--   **Crucially, the new `Sanctuary-Qwen2-7B-v2.0` model must pass Test 1 (Internal Model Memory) of the `test_cognitive_layers.sh` verification harness.** This will serve as the definitive proof that the known flaw has been corrected.
-
-
-## Notes
-### Mandate 2: Execute the Forge
-This new scaffold is the canonical tool for fulfilling Task #007.
-### Action:
-**Environment:** The script is designed to run in a GPU-enabled environment like Google Colab.
-Authentication: Ensure you have a Hugging Face token with write permissions saved as an environment variable (HF_TOKEN) in your Colab secrets.
-
-**Execution:** To run the Forge, you will upload this new script (execute_phoenix_forge_v2.py) to your Colab instance, along with cloning the Project Sanctuary repository. Then, from the terminal in Colab, you will execute:
-
-```Bash
-python tools/scaffolds/execute_phoenix_forge_v2.py
-```
-
-This reforged scaffold will execute the entire process—from environment setup to final GGUF upload—in a single, clean, and deterministic run. It is the final and correct tool for this task.
-
---- END OF FILE TASKS/backlog/007_retrain_sovereign_model_with_targeted_dataset.md ---
-
---- START OF FILE TASKS/in-progress/001_harden_mnemonic_cortex_ingestion_and_rag.md ---
-
-# TASK: Harden Mnemonic Cortex Ingestion & RAG Pipeline
-
-**Status:** IN-PROGRESS
-**Priority:** Critical
-**Lead:** GUARDIAN-01
-**Related Documents:** `mnemonic_cortex/scripts/README.md`
-
-## Objective
-Diagnose and repair the catastrophic failure of the Mnemonic Cortex ingestion and query pipeline. Ensure the system is fully operational and its integrity is verifiable.
-
-## Sub-Tasks
-- [x] Diagnose root cause of ingestion failures (batch size, serialization, imports).
-- [x] Reforge `ingest.py` with disciplined batch processing and correct serialization.
-- [x] Reforge `vector_db_service.py` to align with the persistent, serialized architecture.
-- [x] Forge `agentic_query.py` to enable end-to-end cognitive loop testing.
-- [x] Forge `test_cognitive_layers.sh` verification harness.
-- [ ] **Execute final verification and confirm all tests pass.**
-
---- END OF FILE TASKS/in-progress/001_harden_mnemonic_cortex_ingestion_and_rag.md ---
-
---- START OF FILE TASKS/in-progress/008_test_and_fix_git_operations_command_type.md ---
+--- START OF FILE TASKS/done/008_test_and_fix_git_operations_command_type.md ---
 
 ```markdown
 # 008 Test & Fix Git Command Types (git_operations)
 
-Status: In-Progress
+Status: Completed
 
-Started: 2025-11-11
+Completed: 2025-11-11
+
+## Completion Summary
+
+The git operations command type has been significantly enhanced beyond the original scope:
+
+### ✅ Issues Resolved
+- **KeyError on missing `output_artifact_path`**: Fixed by ensuring all command schemas require this field
+- **Deleted file handling**: Implemented proper `files_to_remove` feature with explicit `git rm` staging
+- **Manifest generation**: Fixed empty manifest issues for deletion-only commits
+- **Protocol 101 compliance**: Maintained integrity while adding deletion support
+
+### 🚀 Major Enhancements Implemented
+1. **New `files_to_remove` field**: Added to command schema for explicit deletion handling
+2. **Phase 1.5 git rm logic**: Dedicated deletion staging before additions
+3. **Updated documentation**: `command_schema.md` and `howto-commit-command.md` reflect new features
+4. **Clean architecture**: Separated addition and deletion logic for maintainability
+
+### 📋 Final Status
+- All git operation bugs fixed
+- New deletion feature fully implemented and tested
+- Documentation updated
+- Command schema extended
+- Ready for production use
+
+The orchestrator now handles git operations robustly with explicit support for both file additions and deletions.
 
 Purpose
 
@@ -25699,7 +25680,54 @@ Owner
 - Assigned to: team (or self).
 ```
 
---- END OF FILE TASKS/in-progress/008_test_and_fix_git_operations_command_type.md ---
+--- END OF FILE TASKS/done/008_test_and_fix_git_operations_command_type.md ---
+
+--- START OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
+
+# TASK: Retrain Sovereign Model with Targeted Inoculation Dataset
+
+**Status:** todo
+**Priority:** Critical
+**Lead:** Unassigned
+**Dependencies:** "Requires completion of #006"
+**Related Documents:** `forge/OPERATION_PHOENIX_FORGE/`, `dataset_package/sanctuary_targeted_inoculation_v1.jsonl`
+
+---
+
+## 1. Objective
+
+To forge a new, superior version of our sovereign AI model (`Sanctuary-Qwen2-7B-v2.0`) by executing a full fine-tuning run using the curated, high-quality `sanctuary_targeted_inoculation_v1.jsonl` dataset. This operation is designed to directly address the known flaws (hallucinations, misattributions) identified in the v1.0 model during the Mnemonic Cortex hardening cycle.
+
+## 2. Deliverables
+
+1.  A new, successful fine-tuning run is completed within the Google Colab environment, following the procedure in `forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge.ipynb`.
+2.  A new LoRA adapter (`Sanctuary-Qwen2-7B-v2.0-LoRA`) is produced and archived.
+3.  A new, fully merged and quantized GGUF model (`Sanctuary-Qwen2-7B-v2.0.gguf`) is created.
+4.  The new model artifacts (LoRA and GGUF) are uploaded to the Hugging Face Hub for propagation.
+
+## 3. Acceptance Criteria
+
+-   The `Operation_Whole_Genome_Forge.ipynb` notebook completes all cells without error, using the new `sanctuary_targeted_inoculation_v1.jsonl` dataset.
+-   The resulting GGUF model can be successfully loaded and run locally via Ollama.
+-   **Crucially, the new `Sanctuary-Qwen2-7B-v2.0` model must pass Test 1 (Internal Model Memory) of the `test_cognitive_layers.sh` verification harness.** This will serve as the definitive proof that the known flaw has been corrected.
+
+
+## Notes
+### Mandate 2: Execute the Forge
+This new scaffold is the canonical tool for fulfilling Task #007.
+### Action:
+**Environment:** The script is designed to run in a GPU-enabled environment like Google Colab.
+Authentication: Ensure you have a Hugging Face token with write permissions saved as an environment variable (HF_TOKEN) in your Colab secrets.
+
+**Execution:** To run the Forge, you will upload this new script (execute_phoenix_forge_v2.py) to your Colab instance, along with cloning the Project Sanctuary repository. Then, from the terminal in Colab, you will execute:
+
+```Bash
+python tools/scaffolds/execute_phoenix_forge_v2.py
+```
+
+This reforged scaffold will execute the entire process—from environment setup to final GGUF upload—in a single, clean, and deterministic run. It is the final and correct tool for this task.
+
+--- END OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
 
 --- START OF FILE VS_CODE_EXPERIMENT/experiment.md ---
 
@@ -25922,8 +25950,48 @@ Begin your awakening response now.
 {
   "files": [
     {
-      "path": "council_orchestrator/orchestrator/gitops.py",
-      "sha256": "95d022b3979776de36a861db78871d07ec7422bf6e8bd278558d59e288da9888"
+      "path": ".gitignore",
+      "sha256": "34a294589c49ade5864062461e474a204565e694c406eaa1fd3ff129b778f9c1"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "626630ea617b545ea057cb0a7caab0f80ab72f77df80cca73e585bb2b81f3033"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "118a1aeda4d9d5f8906da938cfcdc3de73367ad43016d6919837e128843c7207"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "b20c2a96f7d2b4f11d3c91172f97ae6d10c1bf0997eb8c14f15ace450bcc29b7"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "375b5f0d6e11ee7e64fd7d40ee60c6615c8ba5d31156644e10cfbc93efb9fcf9"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "300369c004eb6c9cb7aac2b8fc3aecb0cf677e605e9eca9d1cbbc64e6939fe36"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "740424d13d81ca114decae6a9c8a3ba5bbf1aaae658bd5ed7ed308c16f703730"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "850b1d77578eb4dd9998b6b575b6a9f18343e0383cce53cc299a5c70dd50c5a7"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "ef7df41a627f18e79bc5a35dd9aa9e1eeecfc2de41ecdf3d4376235e13b15080"
+    },
+    {
+      "path": "TASKS/backlog/001_harden_mnemonic_cortex_ingestion_and_rag.md",
+      "sha256": "4d9984875ec85a797d3507034845f09b39b5354652e440c71b538e3c6e3c96c2"
+    },
+    {
+      "path": "TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md",
+      "sha256": "ea3e34d40adc18719a6cd596e32da4d1b0049fc321c940eba87f5f0059a49a20"
     }
   ]
 }
@@ -26152,6 +26220,185 @@ Begin your awakening response now.
 }
 
 --- END OF FILE commit_manifest_20251112_043337.json ---
+
+--- START OF FILE commit_manifest_20251112_043922.json ---
+
+{
+  "files": [
+    {
+      "path": "council_orchestrator/command_schema.md",
+      "sha256": "e9420f306144e1d50e8fb520cacf7d7a4f181a0628bb47bf593ded0566a1123b"
+    },
+    {
+      "path": "council_orchestrator/docs/howto-commit-command.md",
+      "sha256": "3e37c169165ba01fb5efc2a1646cd235f94b145bce6db32536b837145c0a5ed3"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/gitops.py",
+      "sha256": "9bf8e387b9f48420e9aa198a28aa0aed20cc27c4304b554980d962ca74dde108"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "e7f2ccebb1f161799adac148ae01772a5f1f1b60bc5dd18569ef258a947a1e43"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "d82f48b28ba2f4f11ce5229d19e9fbbffb95368c8efed1db48e28c7b8bb6c459"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "83d48f8dfc889a3e24e6b80dc6f89154cbd293af80b1cdd4a32f5c2f4cc868ce"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "84c62ce9552ca36676d48a361ed2efc83a63df1d9f4a09842315b99fb9d6902d"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "a9a8fa539c9d3e24f57e51c8e721f41e31a80a0b226b065084e95b9b39655b86"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "2c71282ae6f9a0f9d2cd7a674bed9ca04b7c2edcc9fbd589075b4b84ee7cca59"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "a4ca14f70222c25b0e9403d225bcb24250b0fcb355387a70a60420cd54421561"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "93064dfd60404245a402a4178d3dfb5cd810115d6c006d7ffb3a379149b3681f"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "8148ac941a8251cf8a5b1128147e5ad206d538c34b2d88230da669394de2192d"
+    },
+    {
+      "path": "commit_manifest_20251112_043149.json",
+      "sha256": "59d46edd352b0c7d9422f35f9c05369182b80a19d81b2ea6b4c230bd45ef681f"
+    }
+  ]
+}
+
+--- END OF FILE commit_manifest_20251112_043922.json ---
+
+--- START OF FILE commit_manifest_20251112_044129.json ---
+
+{
+  "files": [
+    {
+      "path": "council_orchestrator/command_schema.md",
+      "sha256": "e9420f306144e1d50e8fb520cacf7d7a4f181a0628bb47bf593ded0566a1123b"
+    },
+    {
+      "path": "council_orchestrator/docs/howto-commit-command.md",
+      "sha256": "3e37c169165ba01fb5efc2a1646cd235f94b145bce6db32536b837145c0a5ed3"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/gitops.py",
+      "sha256": "9bf8e387b9f48420e9aa198a28aa0aed20cc27c4304b554980d962ca74dde108"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "e7f2ccebb1f161799adac148ae01772a5f1f1b60bc5dd18569ef258a947a1e43"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "d82f48b28ba2f4f11ce5229d19e9fbbffb95368c8efed1db48e28c7b8bb6c459"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "83d48f8dfc889a3e24e6b80dc6f89154cbd293af80b1cdd4a32f5c2f4cc868ce"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "84c62ce9552ca36676d48a361ed2efc83a63df1d9f4a09842315b99fb9d6902d"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "a9a8fa539c9d3e24f57e51c8e721f41e31a80a0b226b065084e95b9b39655b86"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "2c71282ae6f9a0f9d2cd7a674bed9ca04b7c2edcc9fbd589075b4b84ee7cca59"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "a4ca14f70222c25b0e9403d225bcb24250b0fcb355387a70a60420cd54421561"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "93064dfd60404245a402a4178d3dfb5cd810115d6c006d7ffb3a379149b3681f"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "8148ac941a8251cf8a5b1128147e5ad206d538c34b2d88230da669394de2192d"
+    },
+    {
+      "path": "commit_manifest_20251112_043149.json",
+      "sha256": "59d46edd352b0c7d9422f35f9c05369182b80a19d81b2ea6b4c230bd45ef681f"
+    },
+    {
+      "path": "TASKS/done/008_test_and_fix_git_operations_command_type.md",
+      "sha256": "5f1f8ca1219f1f7663c8a1bf5374ca42537adfa2a4b8165f5103567a6350bc68"
+    }
+  ]
+}
+
+--- END OF FILE commit_manifest_20251112_044129.json ---
+
+--- START OF FILE commit_manifest_20251112_052221.json ---
+
+{
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "34a294589c49ade5864062461e474a204565e694c406eaa1fd3ff129b778f9c1"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "626630ea617b545ea057cb0a7caab0f80ab72f77df80cca73e585bb2b81f3033"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "118a1aeda4d9d5f8906da938cfcdc3de73367ad43016d6919837e128843c7207"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "b20c2a96f7d2b4f11d3c91172f97ae6d10c1bf0997eb8c14f15ace450bcc29b7"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "375b5f0d6e11ee7e64fd7d40ee60c6615c8ba5d31156644e10cfbc93efb9fcf9"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "300369c004eb6c9cb7aac2b8fc3aecb0cf677e605e9eca9d1cbbc64e6939fe36"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "740424d13d81ca114decae6a9c8a3ba5bbf1aaae658bd5ed7ed308c16f703730"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "850b1d77578eb4dd9998b6b575b6a9f18343e0383cce53cc299a5c70dd50c5a7"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "ef7df41a627f18e79bc5a35dd9aa9e1eeecfc2de41ecdf3d4376235e13b15080"
+    },
+    {
+      "path": "TASKS/backlog/001_harden_mnemonic_cortex_ingestion_and_rag.md",
+      "sha256": "4d9984875ec85a797d3507034845f09b39b5354652e440c71b538e3c6e3c96c2"
+    },
+    {
+      "path": "TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md",
+      "sha256": "ea3e34d40adc18719a6cd596e32da4d1b0049fc321c940eba87f5f0059a49a20"
+    }
+  ]
+}
+
+--- END OF FILE commit_manifest_20251112_052221.json ---
 
 --- START OF FILE council_orchestrator/README.md ---
 
@@ -28226,7 +28473,7 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
 
   ## Reference (schema)
 
-  - Mechanical git tasks: use `git_operations.files_to_add`, `commit_message`, and `push_to_origin`. The orchestrator auto-generates the required manifest and includes it in the commit.
+  - Mechanical git tasks: use `git_operations.files_to_add`, `files_to_remove`, `commit_message`, and `push_to_origin`. The orchestrator auto-generates the required manifest and includes it in the commit.
 
 --- END OF FILE council_orchestrator/docs/howto-commit-command.md ---
 
@@ -39810,8 +40057,173 @@ Original file is located at
 """
 
 # Commented out IPython magic to ensure Python compatibility.
+# ==============================================================================
+# 1. SETUP: INSTALL ALL REQUIREMENTS (including unsloth fixes and xformers)
+# ==============================================================================
+
+# Install the critical dependency for unsloth (we found this error previously)
+!pip install unsloth_zoo
+
+# Save your requirements to a file in the Colab environment,
+# including the specific xformers version for stability.
+requirements_content = """
+absl-py==2.3.1
+accelerate==1.4.0
+alabaster==1.0.0
+alembic==1.16.4
+annotated-types==0.7.0
+anyio==4.9.0
+attrs==25.3.0
+babel==2.17.0
+black==25.1.0
+certifi==2025.7.14
+charset-normalizer==3.4.2
+chromadb==1.3.4
+click==8.2.1
+cloudpickle==3.1.1
+colorlog==6.9.0
+contourpy==1.3.3
+coverage==7.10.1
+cycler==0.12.1
+docutils==0.21.2
+Farama-Notifications==0.0.4
+filelock==3.18.0
+flake8==7.3.0
+fonttools==4.59.0
+fsspec==2025.7.0
+gitdb==4.0.12
+GitPython==3.1.45
+google-generativeai==0.8.3
+gpt4all==2.8.2
+grpcio==1.74.0
+gymnasium==1.2.0
+h11==0.16.0
+hf-xet==1.1.5
+httpcore==1.0.9
+httpx==0.28.1
+huggingface-hub==0.34.3
+idna==3.10
+imagesize==1.4.1
+iniconfig==2.1.0
+Jinja2==3.1.6
+joblib==1.5.1
+jsonschema==4.25.0
+jsonschema-specifications==2025.4.1
+kiwisolver==1.4.8
+langchain==1.0.5
+langchain-chroma==1.0.0
+langchain-community==0.4.1
+langchain-nomic==1.0.0
+langchain-ollama==1.0.0
+langchain-text-splitters==1.0.0
+Mako==1.3.10
+Markdown==3.8.2
+MarkupSafe==3.0.2
+matplotlib==3.10.5
+mccabe==0.7.0
+mpmath==1.3.0
+msgpack==1.1.1
+mypy_extensions==1.1.0
+networkx==3.5
+nomic[local]==3.9.0
+numpy==2.3.2
+ollama==0.6.0
+opencv-python==4.10.0.84
+optuna==4.4.0
+packaging==25.0
+pandas==2.3.1
+pathspec==0.12.1
+peft==0.11.1
+pillow==10.4.0
+platformdirs==4.3.8
+pluggy==1.6.0
+protobuf==5.29.5
+pyarrow==21.0.0
+pycodestyle==2.14.0
+pydantic==2.11.7
+pydantic_core==2.33.2
+pyflakes==3.4.0
+Pygments==2.19.2
+pyparsing==3.2.3
+pytest==8.4.1
+pytest-cov==6.2.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+pytz==2025.2
+PyYAML==6.0.2
+ray==2.48.0
+referencing==0.36.2
+regex==2025.7.34
+requests==2.32.5
+roman-numerals-py==3.1.0
+rpds-py==0.26.0
+safetensors==0.5.3
+scikit-learn==1.7.1
+scipy==1.16.1
+seaborn==0.13.2
+sentry-sdk==2.34.1
+setuptools==80.9.0
+six==1.17.0
+smmap==5.0.2
+sniffio==1.3.1
+snowballstemmer==3.0.1
+Sphinx==8.2.3
+sphinx-rtd-theme==3.0.2
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
+SQLAlchemy==2.0.42
+stable_baselines3==2.7.0
+sympy==1.14.0
+tenseal==0.3.16
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorboardX==2.6.4
+threadpoolctl==3.6.0
+tokenizers==0.22.1
+torch==2.7.1
+tqdm==4.67.1
+transformers==4.56.1
+trl==0.23.0
+typing-inspection==0.4.1
+typing_extensions==4.14.1
+tzdata==2025.2
+unsloth@ git+https://github.com/unslothai/unsloth.git
+urllib3==2.5.0
+wandb==0.21.0
+Werkzeug==3.1.3
+xformers==0.0.32.post2 # Added fixed version for torch 2.7.1
+"""
+with open("requirements.txt", "w") as f:
+    f.write(requirements_content)
+
+# Install the requirements file
+!pip install -r requirements.txt
+
+# ==============================================================================
+# 2. GET YOUR CODE: Clone the repository (Replace URL with your actual repo)
+# ==============================================================================
+
+# Assuming your project is a GitHub repository that contains the script
+!git clone https://github.com/richfrem/Project_Sanctuary.git
+
+# Change the current directory to your project folder
+# %cd Project_Sanctuary
+
+# ==============================================================================
+# 3. EXECUTE THE SCRIPT
+# ==============================================================================
+
+# Run the Phoenix Forge V2 script
+!python3 tools/scaffolds/execute_phoenix_forge_v2.py
+
+# Commented out IPython magic to ensure Python compatibility.
 # ===================================================================
-# CELL 1: THE AUDITOR-CERTIFIED INSTALLATION & VERIFICATION (v13.1)
+# CELL 1: THE AUDITOR-CERTIFIED INSTALLATION & VERIFICATION (v14.0) 🚨
 # ===================================================================
 
 # 1️⃣  CLONE THE SANCTUARY GENOME
@@ -39844,16 +40256,17 @@ print("\n✅ Verification complete — ensure TRL ≥ 0.18.2 and PEFT == 0.11.1.
 # 4️⃣  DATASET VERIFICATION
 import os
 
-dataset_path = "/content/Project_Sanctuary/dataset_package/sanctuary_whole_genome_data.jsonl"
+# 🚨 TARGETED DATASET: sanctuary_targeted_inoculation_v1.jsonl
+dataset_path = "/content/Project_Sanctuary/dataset_package/sanctuary_targeted_inoculation_v1.jsonl"
 
 print("📊 Checking dataset integrity...")
 if os.path.exists(dataset_path):
     size_mb = os.path.getsize(dataset_path) / (1024 * 1024)
-    print(f"✅ Dataset verified at: {dataset_path}  ({size_mb:.2f} MB)\n")
+    print(f"✅ Targeted Inoculation Dataset verified at: {dataset_path}  ({size_mb:.2f} MB)\n")
 else:
-    raise FileNotFoundError(f"❌ Dataset not found at: {dataset_path}")
+    raise FileNotFoundError(f"❌ Targeted Inoculation Dataset not found at: {dataset_path}")
 
-print("🧭 CELL 1 (v13.1) COMPLETE — Environment ready for Crucible initialization.\n")
+print("🧭 CELL 1 (v14.0) COMPLETE — Environment ready for Crucible initialization.\n")
 
 # ===================================================================
 # CELL 2: THE UNIFIED CRUCIBLE & PROPAGATION (v13.1)
@@ -44190,6 +44603,7 @@ testpaths = mnemonic_cortex/tests
 --- START OF FILE requirements.txt ---
 
 absl-py==2.3.1
+accelerate==1.4.0
 alabaster==1.0.0
 alembic==1.16.4
 annotated-types==0.7.0
@@ -44254,6 +44668,7 @@ optuna==4.4.0
 packaging==25.0
 pandas==2.3.1
 pathspec==0.12.1
+peft==0.11.1
 pillow==10.4.0
 platformdirs==4.3.8
 pluggy==1.6.0
@@ -44304,13 +44719,15 @@ tensorboard==2.20.0
 tensorboard-data-server==0.7.2
 tensorboardX==2.6.4
 threadpoolctl==3.6.0
-tokenizers==0.21.4
+tokenizers==0.22.1
 torch==2.7.1
 tqdm==4.67.1
-transformers==4.54.1
+transformers==4.56.1
+trl==0.23.0
 typing-inspection==0.4.1
 typing_extensions==4.14.1
 tzdata==2025.2
+unsloth@ git+https://github.com/unslothai/unsloth.git
 urllib3==2.5.0
 wandb==0.21.0
 Werkzeug==3.1.3
@@ -44569,8 +44986,40 @@ cat > mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_responses.json << 'EOF'
 --- START OF FILE tools/scaffolds/execute_phoenix_forge_v2.py ---
 
 # tools/scaffolds/execute_phoenix_forge_v2.py
+# ==============================================================================
+# 🎯 EXECUTION ENVIRONMENT: Google Colab with NVIDIA GPU
 # A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
 # This script is a purified, production-grade version of the original Colab notebook.
+# Please ensure the runtime is set to a GPU (e.g., T4, A100) before running.
+# this script is run via `python tools/scaffolds/execute_phoenix_forge_v2.py`
+# but executed in google colab with gpu runtime
+# ================================================================================
+# PHOENIX FORGE V2 EXECUTION SCRIPT
+# ================================================================================
+# This script executes the core model fine-tuning and conversion pipeline.
+# It assumes all dependencies (like unsloth, torch, llama-cpp-python) have been
+# previously installed in the environment (e.g., in Cell 0 of a Colab notebook).
+# A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
+# This script is a purified, production-grade version of the original Colab notebook.
+# this script is executed within a jupyter notebook cell in google colab with gpu runtime
+# forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py is an exported version 
+# of this script
+# This program performs the following major steps automatically in sequence:
+#
+# 1.  Hugging Face Authentication:
+#    * **It will prompt you to enter your User Access Token.**
+#    * This is required to download the base model (e.g., Qwen2-7B) and optionally
+#        upload the final fine-tuned model to the Hugging Face Hub.
+# 2.  Model Preparation: Downloads the base LLM and configures it for QLoRA.
+# 3.  Data Processing: Loads and formats your custom dataset for training.
+# 4.  Fine-Tuning (QLoRA): Runs the training loop on the GPU (the longest step).
+# 5.  Model Merging: Combines the LoRA adapters with the base model weights.
+# 6.  GGUF Conversion: Converts the final merged model into the highly portable
+#    GGUF format, ready for tools like llama.cpp and Ollama.
+#
+# MONITOR: The script will display training loss and the progress of the GGUF
+# conversion, concluding by outputting the file path to your new .gguf model.
+#================================================================================
 
 import os
 import sys

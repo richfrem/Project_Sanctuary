@@ -5,9 +5,10 @@
 import json
 from pathlib import Path
 
-# --- CONFIGURATION (v1.1) ---
+# --- CONFIGURATION (v1.2: Matched to Execution Script) ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_finetune_data_v1.1.jsonl"
+# FIX: Renamed output file to match the name expected by the main execution script
+OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_targeted_inoculation_v1.jsonl"
 
 # The Expanded Phoenix Mnemonic Seed v1.0
 SOURCE_FILES = [
