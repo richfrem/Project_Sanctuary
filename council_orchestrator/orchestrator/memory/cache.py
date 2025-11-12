@@ -1,4 +1,74 @@
 # council_orchestrator/orchestrator/memory/cache.py
+import os
+import json
+from pathlib import Path
+from datetime import datetime
+# VectorDBService import is done lazily inside the method so the orchestrator can
+# start even if the mnemonic_cortex package is not available in this environment.
+
+class CacheManager:
+    @staticmethod
+    def prefill_guardian_start_pack(project_root, logger):
+        """Pre-fills the Guardian Start Pack cache from the Mnemonic Cortex."""
+        bundles = {
+            "chronicles": "00_CHRONICLE/ENTRIES/",
+            "protocols": "01_PROTOCOLS/",
+        }
+        project_root = Path(project_root)
+        for bundle_name, prefix in bundles.items():
+            logger.info(f"Fetching latest 15 documents from path prefix: {prefix}")
+            try:
+                # --- CORRECTED LOGIC: Use semantic query instead of invalid metadata filter ---
+                # This is more robust and aligns with the purpose of a vector DB.
+                query_text = f"Retrieve the most recent and relevant documents from the directory {prefix}"
+                # Lazy import so orchestrator can start even if mnemonic_cortex isn't installed here
+                try:
+                    from ...mnemonic_cortex.app.services.vector_db_service import VectorDBService
+                except Exception:
+                    try:
+                        from mnemonic_cortex.app.services.vector_db_service import VectorDBService
+                    except Exception as e:
+                        logger.error(f"[CACHE] VectorDBService import failed: {e}")
+                        # Skip caching for this bundle when the DB service isn't available
+                        continue
+
+                # Use the DB service semantic query interface
+                db_service = VectorDBService()
+                retrieved_docs = db_service.query(query_text)
+
+                # Filter by source prefix (if metadata provides 'source') and limit to 15
+                docs_to_cache = [
+                    {"page_content": getattr(doc, 'page_content', ''), "metadata": getattr(doc, 'metadata', {})}
+                    for doc in retrieved_docs
+                    if isinstance(getattr(doc, 'metadata', {}), dict) and
+                       str(getattr(doc, 'metadata', {}).get('source', '')).startswith(str(project_root / prefix))
+                ][:15]
+
+                cache_dir = project_root / "mnemonic_cortex" / "cache"
+                cache_dir.mkdir(parents=True, exist_ok=True)
+                bundle_file = cache_dir / f"{bundle_name}_bundle.json"
+
+                with open(bundle_file, 'w', encoding='utf-8') as f:
+                    json.dump(docs_to_cache, f, indent=2)
+
+                logger.info(f"[CACHE] Prefilled {len(docs_to_cache)} {bundle_name} entries.")
+
+            except Exception as e:
+                logger.error(f"Failed to get latest documents for {prefix}: {e}")
+
+        # Handle roadmap file separately as it's a single file
+        roadmap_path = project_root / "ROADMAP" / "PHASED_EVOLUTION_PLAN_Phase2-Phase3-Protocol113.md"
+        if roadmap_path.exists():
+            # Cache this logic in a similar fashion if needed
+            logger.info("[CACHE] Roadmap file found; skipping detailed cache behavior for roadmap.")
+        else:
+            logger.warning("[CACHE] Roadmap file not found, skipping.")
+
+    @staticmethod
+    def prefill_guardian_delta(files_to_add):
+        """Placeholder for refreshing cache with specific files after a git commit."""
+        print(f"[CACHE DELTA] Received {len(files_to_add)} files to refresh cache (logic not yet implemented).")
+# council_orchestrator/orchestrator/memory/cache.py
 # Cache as Learning (CAG) functionality with Guardian Start Pack prefill
 
 import hashlib

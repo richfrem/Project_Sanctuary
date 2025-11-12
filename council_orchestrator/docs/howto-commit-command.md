@@ -24,6 +24,12 @@ flowchart TD
     H --> J[End: Files committed and pushed]
 ```
 
+## initial
+```bash
+cd council_orchestrator
+python3 -m orchestrator.main
+```
+
 ## 1) Create command.json (mechanical git)
 
 The orchestrator will automatically handle the manifest generation when processing git operations.
