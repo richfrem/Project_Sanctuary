@@ -66,9 +66,9 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
   Create a `command.json` with:
   - A top-level `task` or `task_description` (human-readable),
   - An `output_artifact_path` where the orchestrator will write the execution result, and
-  - A `git_operations` object containing `files_to_add`, `commit_message`, and `push_to_origin`.
+  - A `git_operations` object containing `files_to_add`, `files_to_remove`, `commit_message`, and `push_to_origin`.
 
-  When the orchestrator processes the command it computes SHA-256 hashes for each file listed, writes a timestamped manifest (e.g. `commit_manifest_YYYYMMDD_HHMMSS.json`) into the repo root, includes that manifest in the commit, and then runs `git add`/`git commit` (and `git push` if requested).
+  When the orchestrator processes the command it computes SHA-256 hashes for each file listed in `files_to_add`, uses `git rm` to stage deletions from `files_to_remove`, writes a timestamped manifest (e.g. `commit_manifest_YYYYMMDD_HHMMSS.json`) into the repo root, includes that manifest in the commit, and then runs `git add`/`git commit` (and `git push` if requested).
 
   ## Process overview diagram
 
@@ -92,18 +92,20 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
 
   **Key points:**
   - The manifest is generated from the files listed in `git_operations.files_to_add` at the time the orchestrator runs.
+  - Files listed in `files_to_remove` are staged for deletion using `git rm` and are not included in the manifest.
   - The manifest filename is timestamped (e.g. `commit_manifest_20251111_182812.json`) to avoid overwriting any canonical manifest and to provide an auditable artifact for each run.
 
   ## 2) Run the orchestrator
 
   Execute the orchestrator to process the `command.json`. It will:
+  - use `git rm` to stage deletions for files in `git_operations.files_to_remove`,
   - compute SHA-256 hashes for each existing file in `git_operations.files_to_add`,
   - write a timestamped manifest file to the git repo root and add it to the commit list,
   - run `git add` on all files (including the manifest),
   - run `git commit` with your provided message, and
   - optionally `git push` if `push_to_origin` is true.
 
-  **Important:** Mechanical tasks are supported by the orchestrator schema under `git_operations` (add/commit/push). The orchestrator will include the generated manifest in the same commit so the pre-commit hook can validate it.
+  **Important:** Mechanical tasks are supported by the orchestrator schema under `git_operations` (add/remove/commit/push). The orchestrator will include the generated manifest in the same commit so the pre-commit hook can validate it.
 
   ## Minimal safe command JSON (dry-run)
 
@@ -117,7 +119,10 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
         "council_orchestrator/command_git_ops.json",
         "../capture_code_snapshot.js"
       ],
-      "commit_message": "orchestrator: add snapshot and command artifacts (dry-run)",
+      "files_to_remove": [
+        "old_temp_file.txt"
+      ],
+      "commit_message": "orchestrator: add snapshot and command artifacts, remove temp file (dry-run)",
       "push_to_origin": false
     },
     "output_artifact_path": "council_orchestrator/command_results/commit_results.json",
@@ -133,7 +138,7 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
 
   - File changes after command creation: If files change between creating `command.json` and running the orchestrator, the generated manifest's hashes will mismatch and the pre-commit hook (Protocol 101) will reject the commit. Recreate the command JSON immediately before running the orchestrator and avoid editing files listed in `files_to_add` until the commit completes.
 
-  - Missing files: Ensure all files in `files_to_add` exist and are accessible by the orchestrator process.
+  - Missing files: Ensure all files in `files_to_add` exist and are accessible by the orchestrator process. Files in `files_to_remove` should exist in the repository (or the `git rm` will be skipped).
 
   - Manifest mismatch (Protocol 101 rejection): Inspect the generated manifest in the repo root and compare the SHA values for the offending path(s). If the change was intended, accept the new content by re-running an orchestrator command that includes the changed file (the newly generated manifest will reflect the new hash). If the change was accidental, revert the file to the version that matches the expected hash.
 
@@ -146,4 +151,4 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
 
   ## Reference (schema)
 
-  - Mechanical git tasks: use `git_operations.files_to_add`, `commit_message`, and `push_to_origin`. The orchestrator auto-generates the required manifest and includes it in the commit.
+  - Mechanical git tasks: use `git_operations.files_to_add`, `files_to_remove`, `commit_message`, and `push_to_origin`. The orchestrator auto-generates the required manifest and includes it in the commit.

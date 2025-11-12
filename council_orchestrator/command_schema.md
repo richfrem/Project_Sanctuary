@@ -32,6 +32,7 @@ Defined by presence of `git_operations` field.
   "output_artifact_path": "string (required)",
   "git_operations": {
     "files_to_add": ["string (required)"],
+    "files_to_remove": ["string (optional)"],
     "commit_message": "string (required)",
     "push_to_origin": "boolean (optional, default: false)"
   },
@@ -43,7 +44,7 @@ Defined by presence of `git_operations` field.
 
 Notes:
 - `output_artifact_path` is required to provide a place for the orchestrator to write result artifacts and to avoid runtime KeyError in handlers.
-- `git_operations` is an object (not an array); use `files_to_add`, `commit_message`, and `push_to_origin`.
+- `git_operations` is an object (not an array); use `files_to_add`, `files_to_remove`, `commit_message`, and `push_to_origin`.
 - The orchestrator will write a timestamped manifest into the repo root (for example `commit_manifest_YYYYMMDD_HHMMSS.json`) and include it in the same commit so Protocol 101 pre-commit hooks can validate file hashes.
 - Use `push_to_origin: false` for local validation / dry-runs.
 

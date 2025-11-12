@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-11-12T04:25:08.366Z
+Generated On: 2025-11-12T04:38:10.260Z
 
-# Mnemonic Weight (Token Count): ~685,936 tokens
+# Mnemonic Weight (Token Count): ~688,255 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -508,6 +508,12 @@ Generated On: 2025-11-12T04:25:08.366Z
   ./commit_manifest_20251112_041652.json
   ./commit_manifest_20251112_041851.json
   ./commit_manifest_20251112_042413.json
+  ./commit_manifest_20251112_042653.json
+  ./commit_manifest_20251112_042749.json
+  ./commit_manifest_20251112_042841.json
+  ./commit_manifest_20251112_043043.json
+  ./commit_manifest_20251112_043149.json
+  ./commit_manifest_20251112_043337.json
   ./council_orchestrator/
   ./council_orchestrator/README.md
   ./council_orchestrator/README_GUARDIAN_WAKEUP.md
@@ -26473,11 +26479,7 @@ Begin your awakening response now.
   "files": [
     {
       "path": "council_orchestrator/orchestrator/gitops.py",
-      "sha256": "018b88a15bf70729c0e3a9fe710214b31656d7a60724fcec72c85e1d266e1352"
-    },
-    {
-      "path": "council_orchestrator/command_schema.md",
-      "sha256": "625e93f9cdea5e4d3edeb5f910d4c3f619b7938bc96fad94f4cd904c61dc9c1c"
+      "sha256": "95d022b3979776de36a861db78871d07ec7422bf6e8bd278558d59e288da9888"
     }
   ]
 }
@@ -26555,6 +26557,157 @@ Begin your awakening response now.
 }
 
 --- END OF FILE commit_manifest_20251112_042413.json ---
+
+--- START OF FILE commit_manifest_20251112_042653.json ---
+
+{
+  "files": [
+    {
+      "path": "TASKS/backlog/007_retrain_sovereign_model_with_targeted_dataset.md",
+      "sha256": "ea3e34d40adc18719a6cd596e32da4d1b0049fc321c940eba87f5f0059a49a20"
+    },
+    {
+      "path": "tools/scaffolds/execute_phoenix_forge_v2.py",
+      "sha256": "3aba8fbe4c3f1dc20d428144a6f8d83d1b1281d97cd46563fa81599ace5fa905"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "340293f2a4171312dae6d7de420a4268651d4a16dee5b7670190a66bcd25bd87"
+    },
+    {
+      "path": "council_orchestrator/docs/howto-commit-command.md",
+      "sha256": "534242f9965c3eaf66ec78fac5486e11f4639f2e266fa080d9148cfa326d0fe3"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/memory/cache.py",
+      "sha256": "ead7e214cff4a08a6820b18e6cf6ee7dbfd3e6bb05897b8fe6d5e75ef2d7f23f"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "c450815abba5b7adec671f8abe3c2a18e8f21503572467d5260cf4749fb944ac"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "9752334a8b4f873ab69085d1ffa97dbf07585c8c138d31d98667d89897437229"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "fbb5d0b3cedf6939101a6cdc6fd2cadcbf5e95cc68c951a96ab419bcb7ccf780"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "ea2ae5e5d37cd8c6ce4954904aa2b590079e0102c7d63d97368166bdc3d2b8d7"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "c86f7b0c7d42bcf19807e61be96cb5be71be43490591bb0e13f40e977df9a096"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "242d25f45c24886f50164f2b8d46c8f154a5603622e7e67b515e4e50e2e761bd"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "f9fd571517f77c8fe65e13cae4047655234530e270e4ed33ddcdef152d736a27"
+    }
+  ]
+}
+
+--- END OF FILE commit_manifest_20251112_042653.json ---
+
+--- START OF FILE commit_manifest_20251112_042749.json ---
+
+{
+  "files": [
+    {
+      "path": "TASKS/backlog/007_retrain_sovereign_model_with_targeted_dataset.md",
+      "sha256": "ea3e34d40adc18719a6cd596e32da4d1b0049fc321c940eba87f5f0059a49a20"
+    },
+    {
+      "path": "tools/scaffolds/execute_phoenix_forge_v2.py",
+      "sha256": "3aba8fbe4c3f1dc20d428144a6f8d83d1b1281d97cd46563fa81599ace5fa905"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "340293f2a4171312dae6d7de420a4268651d4a16dee5b7670190a66bcd25bd87"
+    },
+    {
+      "path": "council_orchestrator/docs/howto-commit-command.md",
+      "sha256": "534242f9965c3eaf66ec78fac5486e11f4639f2e266fa080d9148cfa326d0fe3"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/memory/cache.py",
+      "sha256": "ead7e214cff4a08a6820b18e6cf6ee7dbfd3e6bb05897b8fe6d5e75ef2d7f23f"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "c450815abba5b7adec671f8abe3c2a18e8f21503572467d5260cf4749fb944ac"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "9752334a8b4f873ab69085d1ffa97dbf07585c8c138d31d98667d89897437229"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "fbb5d0b3cedf6939101a6cdc6fd2cadcbf5e95cc68c951a96ab419bcb7ccf780"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "ea2ae5e5d37cd8c6ce4954904aa2b590079e0102c7d63d97368166bdc3d2b8d7"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "c86f7b0c7d42bcf19807e61be96cb5be71be43490591bb0e13f40e977df9a096"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "242d25f45c24886f50164f2b8d46c8f154a5603622e7e67b515e4e50e2e761bd"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "f9fd571517f77c8fe65e13cae4047655234530e270e4ed33ddcdef152d736a27"
+    }
+  ]
+}
+
+--- END OF FILE commit_manifest_20251112_042749.json ---
+
+--- START OF FILE commit_manifest_20251112_042841.json ---
+
+{
+  "files": []
+}
+
+--- END OF FILE commit_manifest_20251112_042841.json ---
+
+--- START OF FILE commit_manifest_20251112_043043.json ---
+
+{
+  "files": []
+}
+
+--- END OF FILE commit_manifest_20251112_043043.json ---
+
+--- START OF FILE commit_manifest_20251112_043149.json ---
+
+{
+  "files": []
+}
+
+--- END OF FILE commit_manifest_20251112_043149.json ---
+
+--- START OF FILE commit_manifest_20251112_043337.json ---
+
+{
+  "files": [
+    {
+      "path": "council_orchestrator/orchestrator/gitops.py",
+      "sha256": "95d022b3979776de36a861db78871d07ec7422bf6e8bd278558d59e288da9888"
+    }
+  ]
+}
+
+--- END OF FILE commit_manifest_20251112_043337.json ---
 
 --- START OF FILE council_orchestrator/README.md ---
 
@@ -27719,6 +27872,7 @@ Defined by presence of `git_operations` field.
   "output_artifact_path": "string (required)",
   "git_operations": {
     "files_to_add": ["string (required)"],
+    "files_to_remove": ["string (optional)"],
     "commit_message": "string (required)",
     "push_to_origin": "boolean (optional, default: false)"
   },
@@ -27730,7 +27884,7 @@ Defined by presence of `git_operations` field.
 
 Notes:
 - `output_artifact_path` is required to provide a place for the orchestrator to write result artifacts and to avoid runtime KeyError in handlers.
-- `git_operations` is an object (not an array); use `files_to_add`, `commit_message`, and `push_to_origin`.
+- `git_operations` is an object (not an array); use `files_to_add`, `files_to_remove`, `commit_message`, and `push_to_origin`.
 - The orchestrator will write a timestamped manifest into the repo root (for example `commit_manifest_YYYYMMDD_HHMMSS.json`) and include it in the same commit so Protocol 101 pre-commit hooks can validate file hashes.
 - Use `push_to_origin: false` for local validation / dry-runs.
 
@@ -28543,9 +28697,9 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
   Create a `command.json` with:
   - A top-level `task` or `task_description` (human-readable),
   - An `output_artifact_path` where the orchestrator will write the execution result, and
-  - A `git_operations` object containing `files_to_add`, `commit_message`, and `push_to_origin`.
+  - A `git_operations` object containing `files_to_add`, `files_to_remove`, `commit_message`, and `push_to_origin`.
 
-  When the orchestrator processes the command it computes SHA-256 hashes for each file listed, writes a timestamped manifest (e.g. `commit_manifest_YYYYMMDD_HHMMSS.json`) into the repo root, includes that manifest in the commit, and then runs `git add`/`git commit` (and `git push` if requested).
+  When the orchestrator processes the command it computes SHA-256 hashes for each file listed in `files_to_add`, uses `git rm` to stage deletions from `files_to_remove`, writes a timestamped manifest (e.g. `commit_manifest_YYYYMMDD_HHMMSS.json`) into the repo root, includes that manifest in the commit, and then runs `git add`/`git commit` (and `git push` if requested).
 
   ## Process overview diagram
 
@@ -28569,18 +28723,20 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
 
   **Key points:**
   - The manifest is generated from the files listed in `git_operations.files_to_add` at the time the orchestrator runs.
+  - Files listed in `files_to_remove` are staged for deletion using `git rm` and are not included in the manifest.
   - The manifest filename is timestamped (e.g. `commit_manifest_20251111_182812.json`) to avoid overwriting any canonical manifest and to provide an auditable artifact for each run.
 
   ## 2) Run the orchestrator
 
   Execute the orchestrator to process the `command.json`. It will:
+  - use `git rm` to stage deletions for files in `git_operations.files_to_remove`,
   - compute SHA-256 hashes for each existing file in `git_operations.files_to_add`,
   - write a timestamped manifest file to the git repo root and add it to the commit list,
   - run `git add` on all files (including the manifest),
   - run `git commit` with your provided message, and
   - optionally `git push` if `push_to_origin` is true.
 
-  **Important:** Mechanical tasks are supported by the orchestrator schema under `git_operations` (add/commit/push). The orchestrator will include the generated manifest in the same commit so the pre-commit hook can validate it.
+  **Important:** Mechanical tasks are supported by the orchestrator schema under `git_operations` (add/remove/commit/push). The orchestrator will include the generated manifest in the same commit so the pre-commit hook can validate it.
 
   ## Minimal safe command JSON (dry-run)
 
@@ -28594,7 +28750,10 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
         "council_orchestrator/command_git_ops.json",
         "../capture_code_snapshot.js"
       ],
-      "commit_message": "orchestrator: add snapshot and command artifacts (dry-run)",
+      "files_to_remove": [
+        "old_temp_file.txt"
+      ],
+      "commit_message": "orchestrator: add snapshot and command artifacts, remove temp file (dry-run)",
       "push_to_origin": false
     },
     "output_artifact_path": "council_orchestrator/command_results/commit_results.json",
@@ -28610,7 +28769,7 @@ Save as `command_git_testfile.json` (next to orchestrator.py):
 
   - File changes after command creation: If files change between creating `command.json` and running the orchestrator, the generated manifest's hashes will mismatch and the pre-commit hook (Protocol 101) will reject the commit. Recreate the command JSON immediately before running the orchestrator and avoid editing files listed in `files_to_add` until the commit completes.
 
-  - Missing files: Ensure all files in `files_to_add` exist and are accessible by the orchestrator process.
+  - Missing files: Ensure all files in `files_to_add` exist and are accessible by the orchestrator process. Files in `files_to_remove` should exist in the repository (or the `git rm` will be skipped).
 
   - Manifest mismatch (Protocol 101 rejection): Inspect the generated manifest in the repo root and compare the SHA values for the offending path(s). If the change was intended, accept the new content by re-running an orchestrator command that includes the changed file (the newly generated manifest will reflect the new hash). If the change was accidental, revert the file to the version that matches the expected hash.
 
@@ -33967,6 +34126,7 @@ def execute_mechanical_git(command, project_root):
 
         git_ops = command["git_operations"]
         files_to_add = git_ops["files_to_add"]
+        files_to_remove = git_ops.get("files_to_remove", [])
         commit_message = git_ops["commit_message"]
         push_to_origin = git_ops.get("push_to_origin", False)
 
@@ -34019,7 +34179,7 @@ def execute_mechanical_git(command, project_root):
                 found = False
                 for cand in candidates:
                     if cand.exists() and cand.is_file():
-                        resolved_file_paths.append(cand) # Add to resolved list for git add later
+                        resolved_file_paths.append(cand)  # Add to resolved list for git add later
                         found = True
                         break
                 if not found:
@@ -34044,11 +34204,14 @@ def execute_mechanical_git(command, project_root):
 
             found = False
             for cand in candidates:
+                try:
+                    repo_relative_path = cand.relative_to(git_repo_root)
+                except ValueError:
+                    continue
                 if cand.exists() and cand.is_file():
                     try:
                         with open(cand, 'rb') as f:
                             file_hash = hashlib.sha256(f.read()).hexdigest()
-                        repo_relative_path = cand.relative_to(git_repo_root)
                         manifest_entries.append({
                             "path": str(repo_relative_path),
                             "sha256": file_hash
@@ -34058,9 +34221,8 @@ def execute_mechanical_git(command, project_root):
                         break
                     except (OSError, IOError) as e:
                         print(f"[MECHANICAL ERROR] Failed to read file {file_path} for manifest: {e}")
-                        raise
-            if not found:
-                print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
+                if not found:
+                    print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
 
         # Create manifest JSON in git repository root.
         # Use a timestamped manifest filename to avoid stomping an authoritative manifest
@@ -34085,6 +34247,28 @@ def execute_mechanical_git(command, project_root):
         except (OSError, IOError) as e:
             print(f"[MECHANICAL ERROR] Failed to write commit manifest: {e}")
             raise
+
+        # Phase 1.5: Handle Deletions (git rm)
+        if files_to_remove:
+            print(f"[MECHANICAL INFO] Deleting {len(files_to_remove)} files...")
+            for file_path in files_to_remove:
+                # Use git rm to stage the deletion
+                try:
+                    subprocess.run(
+                        ["git", "rm", "--", file_path],  # Use -- to handle paths that look like arguments
+                        check=True,
+                        cwd=git_repo_root,
+                        capture_output=True,
+                        timeout=5
+                    )
+                    print(f"[MECHANICAL SUCCESS] Removed {file_path}")
+                except subprocess.CalledProcessError as e:
+                    # Allow git rm to fail if the file is already deleted or not tracked
+                    if "did not match any files" in e.stderr.decode():
+                        print(f"[MECHANICAL WARNING] git rm skipped {file_path}: not found or not tracked. Staging deletion might be redundant.")
+                    else:
+                        print(f"[MECHANICAL ERROR] git rm failed for {file_path}: {e.stderr.decode().strip()}")
+                        # Do NOT raise here, as we want to continue with the commit
 
         # --- CORRECTED LOGIC: SEPARATE HASHING FROM COMMITTING ---
         # The files to be committed will include the manifest itself.

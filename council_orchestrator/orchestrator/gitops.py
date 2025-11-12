@@ -27,6 +27,7 @@ def execute_mechanical_git(command, project_root):
 
         git_ops = command["git_operations"]
         files_to_add = git_ops["files_to_add"]
+        files_to_remove = git_ops.get("files_to_remove", [])
         commit_message = git_ops["commit_message"]
         push_to_origin = git_ops.get("push_to_origin", False)
 
@@ -78,15 +79,12 @@ def execute_mechanical_git(command, project_root):
                 
                 found = False
                 for cand in candidates:
-                    try:
-                        repo_relative = cand.relative_to(git_repo_root)
-                        resolved_file_paths.append(cand)  # Add to resolved list for git add later, even if deleted
+                    if cand.exists() and cand.is_file():
+                        resolved_file_paths.append(cand)  # Add to resolved list for git add later
                         found = True
                         break
-                    except ValueError:
-                        pass
                 if not found:
-                    print(f"[MECHANICAL WARNING] Excluded artifact {file_path} cannot be resolved for staging.")
+                    print(f"[MECHANICAL WARNING] Excluded artifact {file_path} does not exist for staging.")
                 
                 continue # Skip the hash calculation and manifest_entries.append()
 
@@ -119,14 +117,13 @@ def execute_mechanical_git(command, project_root):
                             "path": str(repo_relative_path),
                             "sha256": file_hash
                         })
+                        resolved_file_paths.append(cand)
+                        found = True
+                        break
                     except (OSError, IOError) as e:
                         print(f"[MECHANICAL ERROR] Failed to read file {file_path} for manifest: {e}")
-                # Always append to resolved_file_paths for staging, whether exists or not
-                resolved_file_paths.append(cand)
-                found = True
-                break
-            if not found:
-                print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
+                if not found:
+                    print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
 
         # Create manifest JSON in git repository root.
         # Use a timestamped manifest filename to avoid stomping an authoritative manifest
@@ -151,6 +148,28 @@ def execute_mechanical_git(command, project_root):
         except (OSError, IOError) as e:
             print(f"[MECHANICAL ERROR] Failed to write commit manifest: {e}")
             raise
+
+        # Phase 1.5: Handle Deletions (git rm)
+        if files_to_remove:
+            print(f"[MECHANICAL INFO] Deleting {len(files_to_remove)} files...")
+            for file_path in files_to_remove:
+                # Use git rm to stage the deletion
+                try:
+                    subprocess.run(
+                        ["git", "rm", "--", file_path],  # Use -- to handle paths that look like arguments
+                        check=True,
+                        cwd=git_repo_root,
+                        capture_output=True,
+                        timeout=5
+                    )
+                    print(f"[MECHANICAL SUCCESS] Removed {file_path}")
+                except subprocess.CalledProcessError as e:
+                    # Allow git rm to fail if the file is already deleted or not tracked
+                    if "did not match any files" in e.stderr.decode():
+                        print(f"[MECHANICAL WARNING] git rm skipped {file_path}: not found or not tracked. Staging deletion might be redundant.")
+                    else:
+                        print(f"[MECHANICAL ERROR] git rm failed for {file_path}: {e.stderr.decode().strip()}")
+                        # Do NOT raise here, as we want to continue with the commit
 
         # --- CORRECTED LOGIC: SEPARATE HASHING FROM COMMITTING ---
         # The files to be committed will include the manifest itself.
@@ -218,12 +237,8 @@ def execute_mechanical_git(command, project_root):
             raise Exception(f"Prohibited Git command: {primary_action}")
 
         try:
-            commit_cmd = ["git", "commit", "-m", commit_message]
-            if len(manifest_entries) == 0:
-                commit_cmd.insert(1, "--no-verify")
-                print(f"[MECHANICAL INFO] Bypassing pre-commit hooks due to empty manifest (Protocol 101 deletion commit)")
             result = subprocess.run(
-                commit_cmd,
+                ["git", "commit", "-m", commit_message],
                 capture_output=True,
                 text=True,
                 cwd=git_repo_root,
