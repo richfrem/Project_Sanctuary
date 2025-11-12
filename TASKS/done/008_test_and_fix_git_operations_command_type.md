@@ -1,9 +1,34 @@
 ```markdown
 # 008 Test & Fix Git Command Types (git_operations)
 
-Status: In-Progress
+Status: Completed
 
-Started: 2025-11-11
+Completed: 2025-11-11
+
+## Completion Summary
+
+The git operations command type has been significantly enhanced beyond the original scope:
+
+### ✅ Issues Resolved
+- **KeyError on missing `output_artifact_path`**: Fixed by ensuring all command schemas require this field
+- **Deleted file handling**: Implemented proper `files_to_remove` feature with explicit `git rm` staging
+- **Manifest generation**: Fixed empty manifest issues for deletion-only commits
+- **Protocol 101 compliance**: Maintained integrity while adding deletion support
+
+### 🚀 Major Enhancements Implemented
+1. **New `files_to_remove` field**: Added to command schema for explicit deletion handling
+2. **Phase 1.5 git rm logic**: Dedicated deletion staging before additions
+3. **Updated documentation**: `command_schema.md` and `howto-commit-command.md` reflect new features
+4. **Clean architecture**: Separated addition and deletion logic for maintainability
+
+### 📋 Final Status
+- All git operation bugs fixed
+- New deletion feature fully implemented and tested
+- Documentation updated
+- Command schema extended
+- Ready for production use
+
+The orchestrator now handles git operations robustly with explicit support for both file additions and deletions.
 
 Purpose
 
