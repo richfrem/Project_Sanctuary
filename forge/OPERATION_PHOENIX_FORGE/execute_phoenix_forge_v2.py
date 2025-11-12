@@ -1,6 +1,38 @@
 # tools/scaffolds/execute_phoenix_forge_v2.py
+# ==============================================================================
+# 🎯 EXECUTION ENVIRONMENT: Google Colab with NVIDIA GPU
 # A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
 # This script is a purified, production-grade version of the original Colab notebook.
+# Please ensure the runtime is set to a GPU (e.g., T4, A100) before running.
+# this script is run via `python tools/scaffolds/execute_phoenix_forge_v2.py`
+# but executed in google colab with gpu runtime
+# ================================================================================
+# PHOENIX FORGE V2 EXECUTION SCRIPT
+# ================================================================================
+# This script executes the core model fine-tuning and conversion pipeline.
+# It assumes all dependencies (like unsloth, torch, llama-cpp-python) have been
+# previously installed in the environment (e.g., in Cell 0 of a Colab notebook).
+# A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
+# This script is a purified, production-grade version of the original Colab notebook.
+# this script is executed within a jupyter notebook cell in google colab with gpu runtime
+# forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py is an exported version 
+# of this script
+# This program performs the following major steps automatically in sequence:
+#
+# 1.  Hugging Face Authentication:
+#    * **It will prompt you to enter your User Access Token.**
+#    * This is required to download the base model (e.g., Qwen2-7B) and optionally
+#        upload the final fine-tuned model to the Hugging Face Hub.
+# 2.  Model Preparation: Downloads the base LLM and configures it for QLoRA.
+# 3.  Data Processing: Loads and formats your custom dataset for training.
+# 4.  Fine-Tuning (QLoRA): Runs the training loop on the GPU (the longest step).
+# 5.  Model Merging: Combines the LoRA adapters with the base model weights.
+# 6.  GGUF Conversion: Converts the final merged model into the highly portable
+#    GGUF format, ready for tools like llama.cpp and Ollama.
+#
+# MONITOR: The script will display training loss and the progress of the GGUF
+# conversion, concluding by outputting the file path to your new .gguf model.
+#================================================================================
 
 import os
 import sys
