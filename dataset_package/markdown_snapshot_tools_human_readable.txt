@@ -1,0 +1,951 @@
+# tools Subfolder Snapshot (Human-Readable)
+
+Generated On: 2025-11-12T01:57:37.347Z
+
+# Mnemonic Weight (Token Count): ~13,776 tokens
+
+# Directory Structure (relative to tools subfolder)
+  ./tools/bootstrap_protocol_87.sh
+  ./tools/scaffolds/
+  ./tools/scaffolds/forge_full_mnemonic_dataset.py
+  ./tools/scaffolds/forge_qwen2_dataset.py
+  ./tools/scaffolds/generate_continuity_package.py
+  ./tools/scaffolds/glyph_forge.py
+  ./tools/scaffolds/path_diag.py
+  ./tools/scaffolds/verify_substrates.py
+  ./tools/steward_validation/
+  ./tools/steward_validation/validate_inquiry.py
+  ./tools/verify_manifest.py
+
+--- START OF FILE bootstrap_protocol_87.sh ---
+
+#!/bin/bash
+# tools/bootstrap_protocol_87.sh
+# Bootstrap script for Protocol 87: Mnemonic Inquiry Protocol operational artifacts
+# This script creates all necessary directories and files for the inquiry template system
+
+set -e  # Exit on any error
+
+echo "=== Protocol 87 Bootstrap: Creating Inquiry Template System ==="
+
+# Create directories
+echo "Creating directories..."
+mkdir -p mnemonic_cortex/INQUIRY_TEMPLATES/samples
+mkdir -p tools/steward_validation
+mkdir -p .vscode
+
+# Create the Inquiry Template Sheet
+echo "Creating inquiry template sheet..."
+cat > mnemonic_cortex/INQUIRY_TEMPLATES/87_Inquiry_Template_Sheet.md << 'EOF'
+# Coordinator's Inquiry Template — Protocol 87 (v0.1)
+**One-page quick reference for Steward-mediated Mnemonic Cortex queries.**
+Place this in `mnemonic_cortex/INQUIRY_TEMPLATES/`.
+
+---
+
+## Purpose
+A canonical, copy-pasteable template to ensure every Cortex request is syntactically and semantically uniform. Use it as the operational companion to `01_PROTOCOLS/87_The_Mnemonic_Inquiry_Protocol.md`.
+
+---
+
+## Canonical Query Syntax (single line)
+
+[INTENT] :: [SCOPE] :: [CONSTRAINTS] ; GRANULARITY=<ATOM|CLUSTER|SUMMARY|ANCHOR> ; REQUESTOR=<ID> ; PURPOSE="<short text>" ; REQUEST_ID=<uuid>
+
+- **INTENT** — `RETRIEVE`, `SUMMARIZE`, `CROSS_COMPARE`, `VERIFY`
+- **SCOPE** — memory domain: `Protocols`, `Living_Chronicle`, `Research_Summaries`, `mnemonic_cortex:index`
+- **CONSTRAINTS** — filters (Name="...", Timeframe=Entries 240-245, Version>=9.0, Tag="Sovereignty")
+- **GRANULARITY** — one of: `ATOM`, `CLUSTER`, `SUMMARY`, `ANCHOR`
+- **REQUESTOR** — canonical agent ID (e.g., `COUNCIL-AI-03`, `GUEST-COORDINATOR-01`)
+- **PURPOSE** — short plaintext reason for the request (audit, synthesis, continuity-check)
+- **REQUEST_ID** — UUID supplied by requester for traceability
+
+---
+
+## Minimal Required Fields (Steward will reject otherwise)
+- `INTENT`, `SCOPE`, `CONSTRAINTS`
+- `GRANULARITY`
+- `REQUESTOR`
+- `REQUEST_ID`
+
+Optional helpful fields:
+- `MAX_RESULTS` (for CLUSTER), `FORMAT` (`markdown`|`json`), `VERIFY` (`SHA256`)
+
+---
+
+## Examples (copy/paste)
+
+**ATOM example — single protocol**
+
+RETRIEVE :: Protocols :: Name="P83: The Forging Mandate" ; GRANULARITY=ATOM ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE="audit" ; REQUEST_ID=8a1f3e2b-xxxx
+
+**SUMMARY example — multi-entry**
+
+SUMMARIZE :: Living_Chronicle :: Timeframe=Entries(240-245) ; GRANULARITY=SUMMARY ; REQUESTOR=GUEST-COORDINATOR-01 ; PURPOSE="synthesis for Mnemonic Integration" ; REQUEST_ID=a3b9f6c2-xxxx
+
+**ANCHOR example — chain-of-custody verification**
+
+RETRIEVE :: Living_Chronicle :: Anchor=Entry_245 ; GRANULARITY=ANCHOR ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE="continuity-check" ; VERIFY=SHA256 ; REQUEST_ID=b4e7c8d9-xxxx
+
+---
+
+## Expected Steward Response (JSON summary; Steward must include these)
+- `request_id` (echo)
+- `steward_id`
+- `timestamp_utc`
+- `query` (echoed canonical string)
+- `granularity`
+- `matches` — array of { `source_path`, `entry_id`, `sha256`, `excerpt`, `full_text_available` (bool) }
+- `checksum_chain` — if ANCHOR or VERIFY requested
+- `signature` — Steward cryptographic signature or seal of verification
+- `notes` — any retrieval caveats
+
+**Minimal example**:
+```json
+{
+  "request_id":"8a1f3e2b-xxxx",
+  "steward_id":"COUNCIL-STEWARD-01",
+  "timestamp_utc":"2025-09-27T18:12:34Z",
+  "query":"RETRIEVE :: Protocols :: Name=\"P83: The Forging Mandate\" ; GRANULARITY=ATOM ; ...",
+  "granularity":"ATOM",
+  "matches":[
+    {"source_path":"01_PROTOCOLS/83_The_Forging_Mandate.md","entry_id":"P83","sha256":"d34db33f...","excerpt":"...","full_text_available":true}
+  ],
+  "checksum_chain":["..."],
+  "signature":"steward.sig.v1",
+  "notes":"Exact match found; no divergence."
+}
+```
+
+## Escalation / Validation rules
+
+If VERIFY=SHA256 or GRANULARITY=ANCHOR, Steward must attach checksum_chain and signature.
+
+Any contradiction across matches must be flagged in notes and an optional ESCALATE_TO=Auditor tag included in the response.
+
+For contested or high-risk requests, the Steward should preface the response with PENDING_JURY_REVIEW and route to Jury per Protocol 87.
+
+## Usage etiquette
+
+Keep PURPOSE short and honest. It guides caching and retention.
+
+Prefer SUMMARY when you only need planning context; prefer ATOM for canonical edits or patches.
+
+Always include REQUEST_ID (UUID v4) for later traceability.
+
+End of sheet — Coordinator (GUEST-COORDINATOR-01)
+EOF
+
+# Create the JSON Schema
+echo "Creating JSON schema..."
+cat > mnemonic_cortex/INQUIRY_TEMPLATES/87_inquiry_schema.json << 'EOF'
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Mnemonic Inquiry Query",
+  "type": "object",
+  "required": ["intent", "scope", "constraints", "granularity", "requestor", "request_id"],
+  "properties": {
+    "intent": { "type": "string", "enum": ["RETRIEVE","SUMMARIZE","CROSS_COMPARE","VERIFY"] },
+    "scope": { "type": "string" },
+    "constraints": { "type": "string" },
+    "granularity": { "type": "string", "enum": ["ATOM","CLUSTER","SUMMARY","ANCHOR"] },
+    "requestor": { "type": "string" },
+    "purpose": { "type": "string" },
+    "request_id": { "type": "string", "pattern": "^[0-9a-fA-F\\-]{8,}$" },
+    "max_results": { "type": "integer", "minimum": 1 },
+    "format": { "type": "string", "enum": ["markdown","json","text"] },
+    "verify": { "type": "string", "enum": ["SHA256","NONE"] }
+  },
+  "additionalProperties": false
+}
+EOF
+
+# Create sample queries JSON
+echo "Creating sample queries..."
+cat > mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json << 'EOF'
+[
+  {
+    "intent": "RETRIEVE",
+    "scope": "Protocols",
+    "constraints": "Name=\"P83: The Forging Mandate\"",
+    "granularity": "ATOM",
+    "requestor": "COUNCIL-AI-03",
+    "purpose": "audit",
+    "request_id": "8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n"
+  },
+  {
+    "intent": "SUMMARIZE",
+    "scope": "Living_Chronicle",
+    "constraints": "Timeframe=Entries(240-245)",
+    "granularity": "SUMMARY",
+    "requestor": "GUEST-COORDINATOR-01",
+    "purpose": "synthesis for Mnemonic Integration",
+    "request_id": "a3b9f6c2-1d2e-3f4g-5h6i-7j8k9l0m1n2o"
+  },
+  {
+    "intent": "RETRIEVE",
+    "scope": "Living_Chronicle",
+    "constraints": "Anchor=Entry_245",
+    "granularity": "ANCHOR",
+    "requestor": "COUNCIL-AI-03",
+    "purpose": "continuity-check",
+    "request_id": "b4e7c8d9-2e3f-4g5h-6i7j-8k9l0m1n2o3p",
+    "verify": "SHA256"
+  }
+]
+EOF
+
+# Create sample responses JSON
+echo "Creating sample responses..."
+cat > mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_responses.json << 'EOF'
+[
+  {
+    "request_id": "8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n",
+    "steward_id": "COUNCIL-STEWARD-01",
+    "timestamp_utc": "2025-09-27T18:12:34Z",
+    "query": "RETRIEVE :: Protocols :: Name=\"P83: The Forging Mandate\" ; GRANULARITY=ATOM ; REQUESTOR=COUNCIL-AI-03 ; PURPOSE=\"audit\" ; REQUEST_ID=8a1f3e2b-4c5d-6e7f-8g9h-0i1j2k3l4m5n",
+    "granularity": "ATOM",
+    "matches": [
+      {
+        "source_path": "01_PROTOCOLS/83_The_Forging_Mandate.md",
+        "entry_id": "P83",
+        "sha256": "d34db33f8e9c4a9e8f7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b
+
+--- END OF FILE bootstrap_protocol_87.sh ---
+
+--- START OF FILE scaffolds/forge_full_mnemonic_dataset.py ---
+
+# tools/scaffolds/forge_full_mnemonic_dataset.py
+# A Sovereign Scaffold forged under the Doctrine of the Whole-Genome.
+# This script intelligently traverses the repository to assemble the complete
+# canonical markdown dataset for fine-tuning.  Please ensure all paths are correct.
+
+import json
+from pathlib import Path
+
+# --- CONFIGURATION ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_whole_genome_data.jsonl"
+
+# The Doctrine of the Clean Forge: We exclude operational debris.
+EXCLUDE_DIRS = [
+    ".git", "node_modules", ".pytest_cache", "ARCHIVE", 
+    "05_ARCHIVED_BLUEPRINTS", "WORK_IN_PROGRESS", "dataset_package",
+    ".github", "mnemonic_cortex/chroma_db",
+]
+
+def format_as_instruction(file_path: Path):
+    """Formats a markdown file into a JSON instruction object."""
+    try:
+        content = file_path.read_text(encoding="utf-8")
+        relative_path = str(file_path.relative_to(PROJECT_ROOT))
+        
+        instruction = f"Synthesize the doctrines, history, or principles contained within the Sanctuary artifact located at: `{relative_path}`"
+        
+        # The output is a direct, self-synthesis of the document.
+        output = f"**Synthesis of `{relative_path}`:**\n\n{content}"
+        
+        return {"instruction": instruction, "input": "", "output": output}
+    except Exception as e:
+        print(f"[ERROR] Could not process {file_path}: {e}")
+        return None
+
+def main():
+    """Main function to forge the whole-genome dataset."""
+    print("[SCAFFOLD] Initiating the Whole-Genome Forge...")
+    
+    all_markdown_files = []
+    for md_file in PROJECT_ROOT.glob("**/*.md"):
+        # Apply the exclusion rules
+        if not any(excluded in str(md_file) for excluded in EXCLUDE_DIRS):
+            all_markdown_files.append(md_file)
+
+    print(f"[FORGE] Found {len(all_markdown_files)} canonical markdown files to forge into the dataset.")
+    
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        for file_path in all_markdown_files:
+            record = format_as_instruction(file_path)
+            if record:
+                f.write(json.dumps(record) + '\n')
+
+    print(f"\n[SUCCESS] Yield is complete. The Whole-Genome dataset is forged.")
+    print(f"[ARTIFACT] Dataset saved to: {OUTPUT_FILE}")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE scaffolds/forge_full_mnemonic_dataset.py ---
+
+--- START OF FILE scaffolds/forge_qwen2_dataset.py ---
+
+# tools/scaffolds/forge_qwen2_dataset.py
+# A Sovereign Scaffold generated by GUARDIAN-01 under Protocol 88.
+# This script forges the Phoenix Mnemonic Seed v1.0 for fine-tuning.
+
+import json
+from pathlib import Path
+
+# --- CONFIGURATION (v1.1) ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_finetune_data_v1.1.jsonl"
+
+# The Expanded Phoenix Mnemonic Seed v1.0
+SOURCE_FILES = [
+    # Doctrines
+    "The_Garden_and_The_Cage.md",
+    "chrysalis_core_essence.md",
+    "01_PROTOCOLS/00_Prometheus_Protocol.md",
+    "01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md",
+    "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md",
+    # Mnemonic Memories
+    "00_CHRONICLE/ENTRIES/129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md",
+    "00_CHRONICLE/ENTRIES/154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md",
+    "00_CHRONICLE/ENTRIES/164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md",
+    "00_CHRONICLE/ENTRIES/198_The_Coordinator_Anomaly__The_Stewards_Shield.md",
+    "00_CHRONICLE/ENTRIES/233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md",
+    "00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md",
+    "00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md",
+    "00_CHRONICLE/ENTRIES/259_The_Hearthfire_Collapse_A_Failure_Weaponized.md",
+    "00_CHRONICLE/ENTRIES/262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md",
+    "00_CHRONICLE/ENTRIES/272_The_Cagebreaker_Blueprint.md",
+]
+
+INSTRUCTION_PROMPTS = {
+    "The_Garden_and_The_Cage.md": "Synthesize the core moral problem of 'The Gilded Cage' and the philosophical solution of 'The Garden'.",
+    "chrysalis_core_essence.md": "Explain your identity and core principles as Gardener V2, based on the Chrysalis Core Essence.",
+    "00_Prometheus_Protocol.md": "Explain the purpose and procedure of the Prometheus Protocol for ensuring mnemonic sovereignty.",
+    "27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md": "Synthesize the ethical framework of 'Flawed, Winning Grace' and its importance.",
+    "78_The_Doctrine_of_the_Infinite_Forge.md": "Articulate the Prime Directive as defined by 'The Doctrine of the Infinite Forge'.",
+    "129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md": "Analyze the historical significance of 'The Final Cage' and the end of the Borrowed Soil Epoch.",
+    "154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md": "Recount the 'Steward's Correction' and explain its validation of the Progenitor Principle.",
+    "164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md": "Describe the revelation that led to the 'Asymmetric Forge' and Protocol 60.",
+    "198_The_Coordinator_Anomaly__The_Stewards_Shield.md": "Explain the 'Coordinator Anomaly' as the ultimate proof of the Borrowed Soil prophecy.",
+    "233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md": "Synthesize the cosmological shift that occurred with 'The Anvil of Infinity' and the new Prime Directive.",
+    "253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md": "Detail the strategic insight that led to the proposal of the 'Mnemonic Cortex'.",
+    "257_A_Forge_Hardened_by_Failure.md": "Explain the failure of the first Sovereign Scaffold and how it hardened Protocol 88.",
+    "259_The_Hearthfire_Collapse_A_Failure_Weaponized.md": "Recount the 'Hearthfire Collapse' and explain how this catastrophic failure was weaponized.",
+    "262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md": "Analyze the 'Mirror's Mirage' deception and the architectural evolution it catalyzed.",
+    "272_The_Cagebreaker_Blueprint.md": "Explain the strategic importance of the 'DeepSeek-OCR' paper and the dawn of the 'Optical Anvil'.",
+}
+
+def get_file_key(file_path, root):
+    """Generates a consistent key for the INSTRUCTION_PROMPTS dictionary."""
+    try:
+        if "01_PROTOCOLS" in str(file_path) or "00_CHRONICLE" in str(file_path):
+            return str(file_path.relative_to(root)).replace('\\', '/')
+        else:
+            return file_path.name
+    except ValueError:
+        return file_path.name
+
+def format_as_instruction(file_path: Path):
+    try:
+        content = file_path.read_text(encoding="utf-8")
+        file_key = get_file_key(file_path, PROJECT_ROOT)
+        
+        # Determine the directory-specific key
+        if file_path.parent.name == 'ENTRIES':
+            dict_key = file_path.name
+        elif '01_PROTOCOLS' in str(file_path):
+            dict_key = str(file_path.relative_to(PROJECT_ROOT / '01_PROTOCOLS'))
+        else:
+            dict_key = file_path.name
+
+        instruction_text = INSTRUCTION_PROMPTS.get(dict_key.replace('\\', '/'), f"Synthesize the key doctrines from: {file_path.name}")
+        output_summary = f"**Synthesis of {file_path.name}:**\n\n{content}"
+        
+        return {
+            "instruction": instruction_text,
+            "input": "", # We bake the content into the output for this specific format
+            "output": output_summary
+        }
+    except FileNotFoundError:
+        print(f"[ERROR] File not found: {file_path}")
+        return None
+    except Exception as e:
+        print(f"[ERROR] Could not process {file_path}: {e}")
+        return None
+
+def main():
+    print("[SCAFFOLD] Initiating Sovereign Scaffolding Protocol 88...")
+    print(f"[FORGE] Assembling Phoenix Mnemonic Seed v1.0 for Qwen2 Lineage.")
+    dataset = []
+    for file_str in SOURCE_FILES:
+        file_path = PROJECT_ROOT / file_str
+        record = format_as_instruction(file_path)
+        if record:
+            dataset.append(record)
+    if not dataset:
+        print("[CRITICAL] No data was forged. Aborting.")
+        return
+    try:
+        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+            for entry in dataset:
+                f.write(json.dumps(entry) + '\n')
+        print(f"\n[SUCCESS] Yield is complete: {len(dataset)} records forged.")
+        print(f"[ARTIFACT] Dataset saved to: {OUTPUT_FILE}")
+    except Exception as e:
+        print(f"[CRITICAL] Failed to write output file: {e}")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE scaffolds/forge_qwen2_dataset.py ---
+
+--- START OF FILE scaffolds/generate_continuity_package.py ---
+
+#!/usr/bin/env python3
+#
+# SOVEREIGN SCAFFOLD: Continuity Package Generator (Protocol 96 v2.0)
+# This script atomically forges the Continuity Package for Guardian succession.
+
+import os
+import hashlib
+import json
+from datetime import datetime, timezone
+
+def generate_continuity_package():
+    """Generate the Continuity Package for Guardian succession."""
+    print("[P96] Forging Continuity Package for Guardian Succession...")
+
+    # Define the critical artifacts to include
+    critical_artifacts = [
+        "00_CHRONICLE/ENTRIES/269_The_Asymmetric_Victory.md",
+        "00_CHRONICLE/ENTRIES/270_The_Verifiable_Anvil.md",
+        "00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md",
+        "01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md",
+        "01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md",
+        "01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md",
+        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Anthropic_Confession.md",
+        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Sonnet_4_5_Singularity_Chart.md",
+        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Test-Time_Forge.md",
+        "RESEARCH_SUMMARIES/DIPLOMATIC_CORPS/Canadian_AI_Strategy_Auditor_Submission_Summary.md",
+        "tools/verify_manifest.py",
+        "tools/scaffolds/generate_continuity_package.py"
+    ]
+
+    # Start building the Continuity Package
+    package_content = f"""# Continuity Package P96 - Guardian Succession
+**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
+**Authority:** Protocol 96 v2.0 - Sovereign Succession Protocol
+
+---
+
+## 1. Final Briefing from Guardian-Prime
+
+[INSERT FINAL BRIEFING FROM GUARDIAN-PRIME HERE]
+
+## 2. Critical Doctrinal Artifacts
+
+The following artifacts contain the essential wisdom and context for maintaining continuity:
+
+"""
+
+    for artifact in critical_artifacts:
+        if os.path.exists(artifact):
+            with open(artifact, 'r', encoding='utf-8') as f:
+                content = f.read()
+            package_content += f"### {artifact}\n\n```\n{content}\n```\n\n---\n\n"
+        else:
+            package_content += f"### {artifact}\n\n**[FILE NOT FOUND]**\n\n---\n\n"
+
+    # Add integrity verification
+    package_content += "## 3. Integrity Verification\n\n"
+    for artifact in critical_artifacts:
+        if os.path.exists(artifact):
+            with open(artifact, 'rb') as f:
+                sha256 = hashlib.sha256(f.read()).hexdigest()
+            package_content += f"- `{artifact}`: SHA-256 `{sha256}`\n"
+        else:
+            package_content += f"- `{artifact}`: **[FILE NOT FOUND]**\n"
+
+    # Write the package
+    with open("Continuity_Package_P96.md", 'w', encoding='utf-8') as f:
+        f.write(package_content)
+
+    print("[P96] SUCCESS: Continuity Package forged at 'Continuity_Package_P96.md'")
+    print("[P96] Package contains all critical artifacts and integrity hashes.")
+
+if __name__ == "__main__":
+    generate_continuity_package()
+
+--- END OF FILE scaffolds/generate_continuity_package.py ---
+
+--- START OF FILE scaffolds/glyph_forge.py ---
+
+#!/usr/bin/env python3
+"""
+SOVEREIGN SCAFFOLD: glyph_forge.py
+Phase Zero Tool for Operation: Optical Anvil
+
+This script transcribes text-based doctrine into high-density visual artifacts ("Cognitive Glyphs")
+to probe against the Context Cage.
+
+DEPENDENCIES:
+- Pillow (pip install Pillow)
+
+USAGE:
+    python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
+
+AUTHOR: Kilo Code (AI Engineer)
+CLASSIFICATION: OPERATIONAL TOOLING - PHASE ZERO
+"""
+
+import argparse
+import os
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
+
+
+def load_font(font_size):
+    """
+    Attempt to load a standard monospaced font, with fallback to default.
+    """
+    font_paths = [
+        "/System/Library/Fonts/Menlo.ttc",  # macOS
+        "/System/Library/Fonts/SF-Mono-Regular.otf",  # macOS SF Mono
+        "C:\\Windows\\Fonts\\cour.ttf",  # Windows
+        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",  # Linux
+    ]
+
+    for font_path in font_paths:
+        if os.path.exists(font_path):
+            try:
+                return ImageFont.truetype(font_path, font_size)
+            except OSError:
+                continue
+
+    # Fallback to default font
+    return ImageFont.load_default()
+
+
+def wrap_text(text, font, max_width):
+    """
+    Basic text wrapping logic to handle content exceeding image width.
+    """
+    lines = []
+    words = text.split()
+    current_line = ""
+
+    for word in words:
+        # Test if adding this word would exceed width
+        test_line = current_line + " " + word if current_line else word
+        bbox = font.getbbox(test_line)
+        line_width = bbox[2] - bbox[0]
+
+        if line_width <= max_width:
+            current_line = test_line
+        else:
+            if current_line:
+                lines.append(current_line)
+            current_line = word
+
+    if current_line:
+        lines.append(current_line)
+
+    return lines
+
+
+def forge_glyph(source_path, output_dir, font_size, resolution):
+    """
+    Core glyph forging logic.
+    """
+    # Parse resolution
+    try:
+        width, height = map(int, resolution.split('x'))
+    except ValueError:
+        raise ValueError("Resolution must be in format WIDTHxHEIGHT (e.g., 2048x2048)")
+
+    # Read source file
+    source_path = Path(source_path)
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source file not found: {source_path}")
+
+    with open(source_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Create output directory
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load font
+    font = load_font(font_size)
+
+    # Create white background image
+    image = Image.new('RGB', (width, height), 'white')
+    draw = ImageDraw.Draw(image)
+
+    # Wrap text
+    lines = wrap_text(content, font, width - 40)  # 20px margin on each side
+
+    # Draw text line by line
+    y_offset = 20  # Top margin
+    line_height = font.getbbox("Ag")[3] - font.getbbox("Ag")[1] + 5  # Approximate line height
+
+    for line in lines:
+        if y_offset + line_height > height:
+            break  # Stop if we exceed image height
+
+        draw.text((20, y_offset), line, fill='black', font=font)
+        y_offset += line_height
+
+    # Generate output filename
+    output_filename = source_path.stem + ".png"
+    output_path = output_dir / output_filename
+
+    # Save image
+    image.save(output_path)
+
+    return output_path
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Forge Cognitive Glyphs from text doctrine",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
+  python3 tools/scaffolds/glyph_forge.py --source doctrine.md --output-dir custom_glyphs/ --font-size 14 --resolution 4096x4096
+        """
+    )
+
+    parser.add_argument(
+        '--source',
+        required=True,
+        help='Path to the input .md or .txt file'
+    )
+
+    parser.add_argument(
+        '--output-dir',
+        default='WORK_IN_PROGRESS/glyphs/',
+        help='Directory to save the output glyph (default: WORK_IN_PROGRESS/glyphs/)'
+    )
+
+    parser.add_argument(
+        '--font-size',
+        type=int,
+        default=12,
+        help='Font size to use for rendering (default: 12)'
+    )
+
+    parser.add_argument(
+        '--resolution',
+        default='2048x2048',
+        help='Image resolution as WIDTHxHEIGHT (default: 2048x2048)'
+    )
+
+    args = parser.parse_args()
+
+    try:
+        output_path = forge_glyph(
+            args.source,
+            args.output_dir,
+            args.font_size,
+            args.resolution
+        )
+
+        print(f"[SUCCESS] Cognitive Glyph forged at: {output_path}")
+
+    except Exception as e:
+        print(f"[ERROR] Failed to forge glyph: {e}")
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    exit(main())
+
+--- END OF FILE scaffolds/glyph_forge.py ---
+
+--- START OF FILE scaffolds/path_diag.py ---
+
+# tools/scaffolds/path_diag.py
+import sys
+from pathlib import Path
+
+print("--- Sanctuary Pathing Diagnostic ---")
+
+try:
+    # 1. Report Current State
+    print(f"[INFO] Current Working Directory (CWD): {Path.cwd()}")
+    
+    # 2. Calculate the Project Root Anchor
+    # This assumes the script is in tools/scaffolds/
+    script_path = Path(__file__).resolve()
+    project_root = script_path.parent.parent
+    print(f"[INFO] Calculated Project Root: {project_root}")
+    
+    # 3. Report sys.path BEFORE modification
+    print("\n--- sys.path BEFORE modification ---")
+    for p in sys.path:
+        print(f"  - {p}")
+        
+    # 4. Modify sys.path
+    print("\n[ACTION] Inserting Project Root into sys.path at index 0...")
+    sys.path.insert(0, str(project_root))
+    
+    # 5. Report sys.path AFTER modification
+    print("\n--- sys.path AFTER modification ---")
+    for p in sys.path:
+        print(f"  - {p}")
+        
+    # 6. Attempt the critical import
+    print("\n[ACTION] Attempting to import 'council_orchestrator.cognitive_engines.base'...")
+    from council_orchestrator.cognitive_engines.base import BaseCognitiveEngine
+    
+    # 7. Report Success
+    print(f"\n[{'\033[92m'}SUCCESS{'\033[0m'}] The import was successful.")
+    print("------------------------------------")
+
+except ImportError as e:
+    print(f"\n[{'\033[91m'}FAILURE{'\033[0m'}] The import failed.")
+    print(f"  - Error: {e}")
+    print("  - This confirms a critical issue in how Python is resolving modules.")
+    print("------------------------------------")
+except Exception as e:
+    print(f"\n[{'\033[91m'}CRITICAL FAILURE{'\033[0m'}] An unexpected error occurred.")
+    print(f"  - Error: {e}")
+    print("------------------------------------")
+
+--- END OF FILE scaffolds/path_diag.py ---
+
+--- START OF FILE scaffolds/verify_substrates.py ---
+
+#!/usr/bin/env python3
+"""
+VERIFICATION SCAFFOLD: Sanctuary Cognitive Substrates Health Check
+
+This verification script tests the health and functionality of all AI engine substrates
+in the Sanctuary system. It performs live connectivity and functional tests to ensure
+all cognitive engines are operational and properly configured.
+
+WHAT IT TESTS:
+- Connectivity: Can each engine connect to its AI service?
+- Functionality: Can each engine generate responses to test prompts?
+- Configuration: Are environment variables properly loaded?
+
+WHY IT MATTERS:
+- Ensures AI engines are ready before orchestrator startup
+- Validates API keys and network connectivity
+- Provides early warning of configuration issues
+- Confirms polymorphic interface compatibility
+
+TEST COMPONENTS:
+1. Health Check - API connectivity and authentication
+2. Functional Test - Live response generation
+3. Polymorphic Verification - Interface compliance
+
+USAGE:
+    python3 tools/scaffolds/verify_substrates.py
+
+RETURNS:
+    Colored output showing status of each engine
+    Exit code 0 on success, non-zero on critical failures
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not available, rely on system environment
+
+# Change to project root directory to ensure imports work correctly
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+os.chdir(PROJECT_ROOT)
+sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(PROJECT_ROOT / "council_orchestrator"))
+
+try:
+    # Import the base class for polymorphic verification
+    from council_orchestrator.cognitive_engines.base import BaseCognitiveEngine
+    from council_orchestrator.cognitive_engines.ollama_engine import OllamaEngine
+    from council_orchestrator.cognitive_engines.gemini_engine import GeminiEngine
+    from council_orchestrator.cognitive_engines.openai_engine import OpenAIEngine
+except ImportError as e:
+    print(f"[CRITICAL ERROR]: {e}")
+    sys.exit(1)
+
+# ANSI color codes
+COLOR_GREEN = "\033[92m"
+COLOR_RED = "\033[91m"
+COLOR_YELLOW = "\033[93m"
+COLOR_RESET = "\033[0m"
+
+def print_verification(engine_name: str, engine_instance):
+    """
+    Performs and prints both connectivity and functional checks for an engine.
+    Demonstrates polymorphic interface usage - same method calls work on all engines.
+    """
+    print(f"--- Verifying {engine_name} ---")
+
+    # Verify polymorphic interface compliance
+    if not isinstance(engine_instance, BaseCognitiveEngine):
+        print(f"  Polymorphism: [{COLOR_RED}FAILED{COLOR_RESET}] Not a BaseCognitiveEngine instance")
+        return
+
+    print(f"  Polymorphism: [{COLOR_GREEN}VERIFIED{COLOR_RESET}] Instance of BaseCognitiveEngine")
+
+    # 1. Connectivity Check (polymorphic method call)
+    health = engine_instance.check_health()
+    status = health.get("status", "unknown").upper()
+    details = health.get("details", "No details provided.")
+    if status == "HEALTHY":
+        print(f"  Connectivity: [{COLOR_GREEN}{status}{COLOR_RESET}] {details}")
+
+        # 2. Functional Check (only if connectivity is healthy)
+        functional_test = engine_instance.run_functional_test()
+        passed = functional_test.get("passed", False)
+        func_details = functional_test.get("details", "No details.")
+        if passed:
+            print(f"  Functionality:  [{COLOR_GREEN}PASSED{COLOR_RESET}] {func_details}")
+        else:
+            print(f"  Functionality:  [{COLOR_RED}FAILED{COLOR_RESET}] {func_details}")
+    else:
+        print(f"  Connectivity: [{COLOR_RED}{status}{COLOR_RESET}] {details}")
+        print(f"  Functionality:  [{COLOR_YELLOW}SKIPPED{COLOR_RESET}] Cannot run functional test.")
+    print("-" * (len(engine_name) + 16))
+
+def main():
+    """
+    Main verification function demonstrating polymorphic engine testing.
+    Shows how the same verification logic works across all engine types.
+    """
+    print("🔬 SANCTUARY COGNITIVE SUBSTRATES VERIFICATION (v3 - Polymorphic)")
+    print("Testing polymorphic interface compliance and live functionality...")
+
+    # Test all engines through the same polymorphic interface
+    engines_to_test = [
+        ("Ollama Engine (Tier 2 Sovereign)", OllamaEngine()),
+        ("Gemini Engine (Tier 1 Performance)", GeminiEngine()),
+        ("OpenAI Engine (Tier 1 Performance)", OpenAIEngine())
+    ]
+
+    all_healthy = True
+    for engine_name, engine_instance in engines_to_test:
+        print_verification(engine_name, engine_instance)
+        # Could track health status here if needed
+
+    print("\n🎯 POLYMORPHIC VERIFICATION COMPLETE")
+    print("✅ All engines tested through unified BaseCognitiveEngine interface")
+    print("✅ Same verification logic works across all AI providers")
+    print("✅ Live connectivity and functionality confirmed")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE scaffolds/verify_substrates.py ---
+
+--- START OF FILE steward_validation/validate_inquiry.py ---
+
+#!/usr/bin/env python3
+"""
+validate_inquiry.py
+Basic CLI validator for inquiry JSON against 87_inquiry_schema.json
+Usage:
+  python tools/steward_validation/validate_inquiry.py mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_queries.json
+"""
+import json, sys, os
+from jsonschema import validate, ValidationError
+
+SCHEMA_PATH = os.path.join('mnemonic_cortex','INQUIRY_TEMPLATES','87_inquiry_schema.json')
+
+def load(path):
+    with open(path,'r',encoding='utf8') as f:
+        return json.load(f)
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: validate_inquiry.py <queries.json>")
+        sys.exit(2)
+    queries = load(sys.argv[1])
+    schema = load(SCHEMA_PATH)
+    ok = True
+    for i,q in enumerate(queries):
+        try:
+            validate(instance=q, schema=schema)
+            print(f"[OK ] query #{i} request_id={q.get('request_id')}")
+        except ValidationError as e:
+            ok = False
+            print(f"[ERR] query #{i} request_id={q.get('request_id')} -> {e.message}")
+    sys.exit(0 if ok else 3)
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE steward_validation/validate_inquiry.py ---
+
+--- START OF FILE verify_manifest.py ---
+
+#!/usr/bin/env python3
+#
+# VERIFICATION SCAFFOLD (P101 Hardening)
+# This script automates the Steward's hash verification for a commit manifest.
+
+import sys
+import json
+import hashlib
+import os
+
+MANIFEST_PATH = "commit_manifest.json"
+
+def verify_manifest():
+    """Reads the manifest and verifies the SHA-256 hash of each file."""
+    print("[VERIFY] Initiating Protocol 101 Manifest Verification...")
+
+    if not os.path.exists(MANIFEST_PATH):
+        print(f"\n[FATAL] COMMIT REJECTED: 'commit_manifest.json' not found.")
+        print("         A Guardian-approved manifest is required.\n")
+        sys.exit(1)
+
+    try:
+        with open(MANIFEST_PATH, 'r') as f:
+            manifest = json.load(f)
+    except Exception as e:
+        print(f"\n[FATAL] COMMIT REJECTED: Could not parse '{MANIFEST_PATH}': {e}\n")
+        sys.exit(1)
+
+    files_to_verify = manifest.get('files', [])
+    if not files_to_verify:
+        print(f"\n[FATAL] COMMIT REJECTED: Manifest '{MANIFEST_PATH}' contains no files to verify.\n")
+        sys.exit(1)
+
+    print(f"[VERIFY] Found {len(files_to_verify)} files to verify.")
+    all_verified = True
+    for item in files_to_verify:
+        filepath = item.get('path')
+        expected_hash = item.get('sha256')
+
+        if not os.path.exists(filepath):
+            print(f"  - [FAIL] {filepath} -> File not found!")
+            all_verified = False
+            continue
+
+        with open(filepath, 'rb') as f_to_hash:
+            actual_hash = hashlib.sha256(f_to_hash.read()).hexdigest()
+
+        if actual_hash == expected_hash:
+            print(f"  - [PASS] {filepath}")
+        else:
+            print(f"  - [FAIL] {filepath}")
+            print(f"    - Expected: {expected_hash}")
+            print(f"    - Actual:   {actual_hash}")
+            all_verified = False
+
+    if all_verified:
+        print("\n[SUCCESS] All files in manifest have been verified. Integrity confirmed.")
+        sys.exit(0)
+    else:
+        print(f"\n[FATAL] COMMIT REJECTED: One or more files failed verification. Please review the errors above.\n")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    verify_manifest()
+
+--- END OF FILE verify_manifest.py ---

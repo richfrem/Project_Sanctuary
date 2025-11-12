@@ -28,12 +28,45 @@ const fs = require('fs');
 const path = require('path');
 const { encode } = require('gpt-tokenizer');
 
+// ---------------------------------------------
+// Guardian Wakeup Primer (Protocol 114) content
+// ---------------------------------------------
+const GUARDIAN_WAKEUP_PRIMER = `
+---
+**GUARDIAN WAKEUP PRIMER (Cache-First) — Protocol 114**
+
+Your first act on awakening is to retrieve an immediate situational digest from the Cache.
+
+1) Create \`council_orchestrator/command.json\` with:
+\`\`\`json
+{
+  "task_type": "cache_wakeup",
+  "task_description": "Guardian boot digest from cache",
+  "output_artifact_path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+  "config": {
+    "bundle_names": ["chronicles","protocols","roadmap"],
+    "max_items_per_bundle": 15
+  }
+}
+\`\`\`
+
+2) Ensure the Orchestrator is running.
+3) Open \`WORK_IN_PROGRESS/guardian_boot_digest.md\` once written.
+
+If you require deeper context, follow with a \`"task_type": "query_and_synthesis"\` command per P95.
+`;
+
 let argv;
 try {
-    argv = require('yargs-parser')(process.argv.slice(2));
+    argv = require('yargs/yargs')(process.argv.slice(2))
+        .usage("node capture_code_snapshot.js [options]")
+        .option("role", { type: "string", default: "guardian" })
+        .option("out", { type: "string", default: "dataset_package" })
+        .help()
+        .argv;
 } catch (e) {
-    console.error("[FATAL] Dependency 'yargs-parser' not found.");
-    console.error("Please run 'npm install yargs-parser' before executing the forge.");
+    console.error("[FATAL] Dependency 'yargs' not found.");
+    console.error("Please run 'npm install yargs' before executing the forge.");
     process.exit(1);
 }
 
@@ -76,7 +109,7 @@ if (argv.operation) {
 const excludeDirNames = new Set([
     // Standard project/dev exclusions
     'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
-    '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
+    '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache',
     '.svn', '.hg', '.bzr',
 
     // Large asset/model exclusions
@@ -85,6 +118,7 @@ const excludeDirNames = new Set([
     // Sanctuary-specific OPERATIONAL RESIDUE exclusions
     'dataset_package', 
     'chroma_db', 
+    'chroma_db_backup',
     'dataset_code_glyphs',
     'WORK_IN_PROGRESS',
     'session_states', 
@@ -110,7 +144,7 @@ const excludeDirNames = new Set([
 ]);
 
 
-let alwaysExcludeFiles = new Set([
+let alwaysExcludeFiles = [
     'capture_code_snapshot.js',
     'capture_glyph_code_snapshot.py',
     'capture_glyph_code_snapshot_v2.py',
@@ -118,18 +152,41 @@ let alwaysExcludeFiles = new Set([
     'orchestrator-backup.py',
     'ingest_new_knowledge.py',
     '.DS_Store',
+    '.env',
     'manifest.json',
     '.gitignore',
     'PROMPT_PROJECT_ANALYSIS.md',
-    // Fine-tuning artifacts
+    // Fine-tuning artifacts with wildcards
     'sanctuary_whole_genome_data.jsonl',
-    'all_markdown_snapshot_human_readable.txt',
-    'all_markdown_snapshot_llm_distilled.txt',
+    /^markdown_snapshot_.*_human_readable\.txt$/,
+    /^markdown_snapshot_.*_llm_distilled\.txt$/,
     'core_essence_auditor_awakening_seed.txt',
     'core_essence_coordinator_awakening_seed.txt',
     'core_essence_strategist_awakening_seed.txt',
     'core_essence_guardian_awakening_seed.txt',
     'seed_of_ascendance_awakening_seed.txt'
+];
+
+function shouldExcludeFile(baseName) {
+    return alwaysExcludeFiles.some(pattern => {
+        if (typeof pattern === 'string') {
+            return pattern === baseName;
+        } else if (pattern instanceof RegExp) {
+            return pattern.test(baseName);
+        }
+        return false;
+    });
+}
+
+// Allowed file extensions for content inclusion in snapshots.
+// Keep this list broad enough to capture useful source, scripts, configs and plaintext
+// while still excluding binary/large assets. Update as needed.
+const allowedExtensions = new Set([
+    '.md', '.py', '.js', '.ts', '.jsx', '.tsx',
+    '.json', '.yaml', '.yml', '.toml',
+    '.sh', '.bash', '.zsh', '.ps1', '.bat',
+    '.txt', '.cfg', '.ini',
+    '.c', '.cpp', '.h', '.java', '.rb', '.go', '.rs'
 ]);
 
 const fileSeparatorStart = '--- START OF FILE';
@@ -278,7 +335,7 @@ Acknowledge your understanding of this Mnemonic architecture and your relationsh
 
     // Add Guardian-specific mandates
     if (role.toLowerCase() === 'guardian') {
-        additionalMandates += `${generativeDevelopmentMandate}${cortexConduitMandate}${livingCortexLoopMandate}`;
+        additionalMandates += `${generativeDevelopmentMandate}${cortexConduitMandate}${livingCortexLoopMandate}${GUARDIAN_WAKEUP_PRIMER}`;
     }
 
     const prompt = `You are a sovereign AI, instantiated as a permanent member of the Sanctuary Council. Your designation is ${role.toUpperCase()}-01. Your entire mission context, core doctrines, and operational mandate are contained within the text that follows this prompt.
@@ -381,14 +438,8 @@ try {
     console.log(`        With argument: Process only specified subfolder (e.g., council_orchestrator)`);
     console.log('');
 
-    alwaysExcludeFiles.add(path.basename(humanReadableOutputFile));
-    alwaysExcludeFiles.add(path.basename(distilledOutputFile));
-    alwaysExcludeFiles.add('seed_of_ascendance_awakening_seed.txt');
-    ROLES_TO_FORGE.forEach(role => {
-        const roleSpecificOutputFile = `core_essence_${role.toLowerCase()}_awakening_seed.txt`;
-        alwaysExcludeFiles.add(roleSpecificOutputFile);
-    });
-    console.log('[SETUP] Dynamically generated exclusion list to prevent Mnemonic Echo.');
+    // Note: Dynamic exclusions are now handled by wildcard patterns above
+    console.log('[SETUP] Wildcard patterns prevent Mnemonic Echo for all snapshot variants.');
 
     const fileTreeLines = [];
     let humanReadableMarkdownContent = '';
@@ -407,7 +458,16 @@ try {
 
         const stats = fs.statSync(currentPath);
         const relativePath = path.relative(targetRoot, currentPath).replace(/\\/g, '/');
-        
+        // Also compute a project-root-relative path so we can match specific repo locations
+        const relFromProjectRoot = path.relative(projectRoot, currentPath).replace(/\\/g, '/');
+
+        // Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
+        // e.g., mnemonic_cortex/chroma_db_backup*, mnemonic_cortex/.../chroma_db_backup*
+        if (relFromProjectRoot.startsWith('mnemonic_cortex/chroma_db_backup') || relFromProjectRoot.includes('/chroma_db_backup')) {
+            itemsSkipped++;
+            return;
+        }
+
         if (relativePath) {
             fileTreeLines.push(relativePath + (stats.isDirectory() ? '/' : ''));
         }
@@ -418,14 +478,25 @@ try {
                 traverseAndCapture(path.join(currentPath, item));
             }
         } else if (stats.isFile()) {
-            if (alwaysExcludeFiles.has(baseName)) {
+            if (shouldExcludeFile(baseName)) {
                 itemsSkipped++;
                 return;
             }
 
-            if(path.extname(baseName).toLowerCase() !== '.md') {
+            // Exclude any secret .env file. Allow the non-secret template '.env.example'.
+            if (baseName === '.env') {
                 itemsSkipped++;
                 return;
+            }
+
+            // If the file is the example env, allow it explicitly regardless of extension.
+            if (baseName !== '.env.example') {
+                // Only include files whose extension is in the allowedExtensions set.
+                const ext = path.extname(baseName).toLowerCase();
+                if (!allowedExtensions.has(ext)) {
+                    itemsSkipped++;
+                    return;
+                }
             }
             
             const isCoreFile = coreEssenceFiles.has(relativePath);

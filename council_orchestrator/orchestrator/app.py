@@ -38,15 +38,61 @@ from dotenv import load_dotenv
 
 # --- MODULARIZATION: IMPORT MODULES ---
 from .config import *
-from .packets.schema import CouncilRoundPacket, seed_for, prompt_hash
-from .packets.emitter import emit_packet
-from .packets.aggregator import aggregate_round_events
+from .packets import CouncilRoundPacket, seed_for, prompt_hash, emit_packet, aggregate_round_events, RetrievalField, NoveltyField, ConflictField, MemoryDirectiveField
 from .gitops import execute_mechanical_git
 from .events import EventManager
 from .council.agent import PersonaAgent
 from .council.personas import COORDINATOR, STRATEGIST, AUDITOR, SPEAKER_ORDER, get_persona_file, get_state_file, classify_response_type
-from .memory.cortex import CortexManager
+from .memory.cortex import CortexManager, SelfQueryingRetriever
 from .memory.cache import get_cag_data
+
+# --- Phase 2: Cache Adapter for SelfQueryingRetriever ---
+class CacheAdapter:
+    """Adapter to make get_cag_data compatible with SelfQueryingRetriever interface."""
+
+    def __init__(self):
+        self.ema_cache = {}  # key -> {"ema_7d": float, "last_hit_at": float, "hit_count": int}
+
+    def peek(self, key: str) -> Dict[str, Any] | None:
+        # For Phase 2, we don't have stable entries yet, so always return None
+        # Phase 3 will implement actual cache peeking
+        return None
+
+    def hit_streak(self, key: str) -> int:
+        # For Phase 2, return 0 (no hit streaks yet)
+        # Phase 3 will implement actual hit streak tracking
+        return 0
+
+    def update_ema(self, key: str, current_time: float = None) -> Dict[str, Any]:
+        """Update EMA with half-life decay for Phase 3 readiness."""
+        import math
+        current_time = current_time or time.time()
+
+        if key not in self.ema_cache:
+            self.ema_cache[key] = {"ema_7d": 1.0, "last_hit_at": current_time, "hit_count": 1}
+        else:
+            entry = self.ema_cache[key]
+            time_diff_days = (current_time - entry["last_hit_at"]) / (24 * 3600)
+            # EMA with 7-day half-life: decay_factor = 0.5^(time_diff/7)
+            decay_factor = math.pow(0.5, time_diff_days / 7.0)
+            entry["ema_7d"] = entry["ema_7d"] * decay_factor + 1.0  # Add current hit
+            entry["last_hit_at"] = current_time
+            entry["hit_count"] += 1
+
+        return self.ema_cache[key]
+
+    def get_cag_data(self, prompt: str, engine_type: str) -> Dict[str, Any]:
+        """Generate CAG data for packet emission - Phase 2 placeholder."""
+        import xxhash
+        query_key = xxhash.xxh64(prompt).hexdigest()[:16]
+        
+        # Phase 2: No actual caching yet, so always cache miss
+        return {
+            "query_key": query_key,
+            "cache_hit": False,
+            "hit_streak": 0
+        }
+
 from .sentry import CommandSentry
 from .regulator import TokenFlowRegulator
 from .optical import OpticalDecompressionChamber
@@ -80,8 +126,9 @@ from scripts.bootstrap_briefing_packet import main as generate_briefing_packet
 # Moved to council/agent.py
 
 class Orchestrator:
-    def __init__(self):
-        self.project_root = Path(__file__).parent.parent
+    def __init__(self, one_shot: bool = False):  # <-- MODIFY CONSTRUCTOR
+        # This correctly navigates up from orchestrator/app.py -> orchestrator -> council_orchestrator -> Project_Sanctuary root
+        self.project_root = Path(__file__).resolve().parents[2]
         self.command_queue = ThreadQueue()
         load_dotenv(dotenv_path=self.project_root / '.env')
 
@@ -92,8 +139,29 @@ class Orchestrator:
         self.event_manager = EventManager(self.project_root)
         self.event_manager.setup_event_logging()
 
-        # Initialize mnemonic cortex
-        self.cortex_manager = CortexManager(self.project_root)
+        # --- PROTOCOL 115: DOCTRINE OF OPERATIONAL INTENT ---
+        self.one_shot = one_shot  # <-- ADD THIS ATTRIBUTE
+        if self.one_shot:
+            self.logger.info("Orchestrator started in --one-shot mode. Will exit after first command.")
+            # Skip cortex initialization in one-shot mode to avoid ChromaDB issues
+            self.cortex_manager = None
+            self.cache_adapter = None
+            self.retriever = None
+        else:
+            # Initialize mnemonic cortex
+            self.cortex_manager = CortexManager(self.project_root, self.logger)
+
+            # --- GUARDIAN WAKEUP: CACHE PREFILL ON BOOT ---
+            # Execute Guardian Start Pack cache prefill for immediate cache_wakeup availability
+            self.cortex_manager.cache_manager.prefill_guardian_start_pack(self.cortex_manager)
+
+            # --- Phase 2: Initialize Self-Querying Retriever ---
+            self.cache_adapter = CacheAdapter()
+            self.retriever = SelfQueryingRetriever(
+                cortex_idx=self.cortex_manager,  # adapter for parent-doc search
+                cache=self.cache_adapter,        # Phase 3-ready cache adapter
+                prompt_hasher=lambda s: xxhash.xxh64(s).hexdigest()[:16]  # stable hash for cache keys
+            )
 
         # --- RESOURCE SOVEREIGNTY: LOAD ENGINE LIMITS FROM CONFIG ---
         # v4.5: Support nested configuration structure with per_request_limit and tpm_limit
@@ -139,6 +207,11 @@ class Orchestrator:
         
         # --- OPERATION: OPTICAL ANVIL - LAZY INITIALIZATION ---
         self.optical_chamber = None  # Initialized per-task if enabled
+
+        # --- PROTOCOL 115: DOCTRINE OF OPERATIONAL INTENT ---
+        self.one_shot = one_shot  # <-- ADD THIS ATTRIBUTE
+        if self.one_shot:
+            self.logger.info("Orchestrator started in --one-shot mode. Will exit after first command.")
 
         # --- SENTRY THREAD INITIALIZATION ---
         # Start the command monitoring thread
@@ -255,20 +328,54 @@ class Orchestrator:
 
         return reasons[:3]  # Limit to top 3 reasons
 
-    def _extract_citations(self, response: str) -> list:
-        """Extract citations or references from response."""
+    def _extract_citations(self, response: str, parent_docs: List[Dict[str, Any]] = None) -> List[Dict[str, str]]:
+        """
+        Extract citations with enforced doc-ID + byte-range/hash-span integrity.
+        Returns list of citation dicts with required fields.
+        """
         citations = []
+        parent_docs = parent_docs or []
 
-        # Look for quoted text
+        # Look for quoted text with context
         import re
         quotes = re.findall(r'"([^"]*)"', response)
-        citations.extend(quotes)
 
-        # Look for file references
-        file_refs = re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\.[a-zA-Z]+\b', response)
-        citations.extend(file_refs)
+        for quote in quotes[:3]:  # Limit to top 3 citations
+            # Find matching parent doc and byte range
+            citation = self._find_citation_in_docs(quote, parent_docs)
+            if citation:
+                citations.append(citation)
 
-        return citations[:5]  # Limit to top 5 citations
+        return citations
+
+    def _find_citation_in_docs(self, quote: str, parent_docs: List[Dict[str, Any]]) -> Dict[str, str]:
+        """
+        Find citation in parent docs and return with doc-ID and byte-range.
+        Returns None if no valid grounding found.
+        """
+        quote_lower = quote.lower().strip()
+
+        for doc in parent_docs:
+            doc_text = doc.get("snippet", "").lower()
+            if quote_lower in doc_text:
+                # Find byte positions
+                start_byte = doc_text.find(quote_lower)
+                end_byte = start_byte + len(quote_lower)
+
+                # Create hash-span for integrity
+                import hashlib
+                hash_span = hashlib.sha256(quote.encode()).hexdigest()[:16]
+
+                return {
+                    "doc_id": doc.get("doc_id", "unknown"),
+                    "text": quote,
+                    "start_byte": start_byte,
+                    "end_byte": end_byte,
+                    "hash_span": hash_span,
+                    "path": doc.get("path", "")
+                }
+
+        return None  # No grounding found - citation invalid
 
     def _get_rag_data(self, task: str, response: str) -> Dict[str, Any]:
         """Get RAG (Retrieval-Augmented Generation) data for round packet."""
@@ -508,7 +615,7 @@ class Orchestrator:
             if requirements_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if requirements_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "tools" / "scaffolds" / "ingest.py")], check=True)
+                    subprocess.run([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
                     print(f"[*] Approved requirements ingested into Mnemonic Cortex.", flush=True)
                 else:
                     print(f"[!] Requirements path is not a file: {requirements_path}. Skipping ingestion.", flush=True)
@@ -533,7 +640,7 @@ class Orchestrator:
             if tech_design_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if tech_design_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "tools" / "scaffolds" / "ingest.py")], check=True)
+                    subprocess.run([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
                     print(f"[*] Approved tech design ingested into Mnemonic Cortex.", flush=True)
                 else:
                     print(f"[!] Tech design path is not a file: {tech_design_path}. Skipping ingestion.", flush=True)
@@ -694,7 +801,7 @@ class Orchestrator:
 
             # Ingest into Mnemonic Cortex
             self.logger.info("Background AAR: Starting ingestion into Mnemonic Cortex...")
-            ingestion_script_path = self.project_root / "tools" / "scaffolds" / "ingest.py"
+            ingestion_script_path = self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py"
             full_aar_path = self.project_root / aar_output_path
 
             result = await asyncio.create_subprocess_exec(
@@ -722,8 +829,7 @@ class Orchestrator:
                 # Map engine types to tiktoken models
                 model_map = {
                     'openai': 'gpt-4',
-                    'gemini': 'gpt-4',  # Approximation
-                    'ollama': 'gpt-4'   # Approximation
+                    'gemini': 'gpt-4'  # Approximation
                 }
                 model = model_map.get(engine_type, 'gpt-4')
                 encoding = tiktoken.encoding_for_model(model)
@@ -878,6 +984,7 @@ class Orchestrator:
             output_path.parent.mkdir(parents=True, exist_ok=True)
 
             print(f"[MNEMONIC SYNC] Starting query and synthesis task: {task_description}")
+            print("[QUERY] planning structured query for mnemonic synchronization...")
 
             # Select cognitive engine for this synchronization task
             # DOCTRINE OF SOVEREIGN DEFAULT: Default to our sovereign substrate
@@ -887,6 +994,8 @@ class Orchestrator:
             if not engine:
                 print(f"[MNEMONIC SYNC HALTED] No healthy cognitive substrate available for synchronization.")
                 return False
+
+            print(f"[RAG] retrieving parent docs from mnemonic cortex...")
 
             # Initialize agents with selected engine
             self._initialize_agents(engine)
@@ -906,6 +1015,8 @@ class Orchestrator:
 
             # Execute simplified Council deliberation for mnemonic synchronization
             max_rounds = command.get('config', {}).get('max_rounds', 3)  # Shorter for sync tasks
+            print(f"[SYNTH] model invoked for Council deliberation ({max_rounds} rounds max)")
+
             log = [f"# Guardian Mnemonic Synchronization Log\n## Task: {task_description}\n\n"]
             last_message = task_description
 
@@ -916,6 +1027,7 @@ class Orchestrator:
 
             for round_num in range(max_rounds):
                 print(f"[MNEMONIC SYNC] Round {round_num + 1}/{max_rounds}")
+                print(f"[SYNTH] Round {round_num + 1}: consulting Council agents...")
                 log.append(f"### Round {round_num + 1}\n\n")
 
                 round_failures = 0
@@ -976,6 +1088,7 @@ class Orchestrator:
             output_path.write_text(final_log, encoding="utf-8")
 
             print(f"[MNEMONIC SYNC SUCCESS] Synthesis written to {output_path}")
+            print(f"[CACHE] storing synthesis artifact: {len(final_log)} characters written")
             print(f"[MNEMONIC SYNC SUCCESS] Log length: {len(final_log)} characters")
 
             return True
@@ -1286,7 +1399,7 @@ class Orchestrator:
                             round_id=i+1,
                             member_id=role.lower(),
                             engine=engine_type,
-                            seed=seed_for(self.run_id, i+1, role.lower()),
+                            seed=seed_for(self.run_id, i+1, role.lower(), prompt_hash(prompt_to_send)),
                             prompt_hash=prompt_hash(prompt_to_send),
                             inputs={"prompt": prompt_to_send, "context": last_message},
                             decision="error",
@@ -1322,7 +1435,15 @@ class Orchestrator:
                     vote = self._extract_vote(response)
                     novelty = self._assess_novelty(response, last_message)
                     reasons = self._extract_reasoning(response)
-                    citations = self._extract_citations(response)
+                    citations = self._extract_citations(response, signals.retrieval.parent_docs)
+
+                    # --- Phase 2: Run Self-Querying Retriever ---
+                    signals = self.retriever.run(
+                        prompt=prompt_to_send,
+                        council_role=role.lower(),
+                        confidence=score,
+                        citations=citations
+                    )
 
                     # --- ROUND PACKET EMISSION ---
                     # Create comprehensive round packet
@@ -1332,7 +1453,7 @@ class Orchestrator:
                         round_id=i+1,
                         member_id=role.lower(),
                         engine=engine_type,
-                        seed=seed_for(self.run_id, i+1, role.lower()),
+                        seed=seed_for(self.run_id, i+1, role.lower(), prompt_hash(prompt_to_send)),
                         prompt_hash=prompt_hash(prompt_to_send),
                         inputs={"prompt": prompt_to_send, "context": last_message},
                         decision=vote,
@@ -1340,15 +1461,38 @@ class Orchestrator:
                         confidence=score,
                         citations=citations,
                         rag=self._get_rag_data(task, response),
-                        cag=self._get_cag_data(prompt_to_send, engine_type),
-                        novelty=self._analyze_novelty(response, last_message),
-                        memory_directive=self._determine_memory_directive(response, citations),
+                        cag=get_cag_data(prompt_to_send, engine_type, self.cache_adapter),
+                        novelty=NoveltyField(
+                            is_novel=signals.novelty.is_novel,
+                            signal=signals.novelty.signal or "none",  # Never empty
+                            basis=signals.novelty.basis or {}
+                        ),
+                        memory_directive=MemoryDirectiveField(
+                            tier=signals.memory_directive.tier,
+                            justification=signals.memory_directive.justification or "default_fallback"  # Never empty
+                        ),
                         cost={
                             "input_tokens": input_tokens,
                             "output_tokens": output_tokens,
                             "latency_ms": latency_ms
                         },
-                        errors=[]
+                        errors=[],
+                        retrieval=RetrievalField(
+                            structured_query=signals.retrieval.structured_query.__dict__,
+                            parent_docs=[pd.__dict__ for pd in signals.retrieval.parent_docs],
+                            retrieval_latency_ms=signals.retrieval.retrieval_latency_ms,
+                        ),
+                        conflict=ConflictField(
+                            conflicts_with=signals.conflict.conflicts_with,
+                            basis=signals.conflict.basis
+                        ),
+                        seed_chain={
+                            "session_seed": getattr(self, 'session_seed', 0),
+                            "round_seed": seed_for(self.run_id, i+1, role.lower(), prompt_hash(prompt_to_send)),
+                            "member_seed": seed_for(self.run_id, i+1, role.lower(), prompt_hash(prompt_to_send)),
+                            "engine_seed": 0,  # TODO: populate from engine instance
+                            "retrieval_seed": 0  # TODO: populate from retriever
+                        }
                     )
 
                     # Emit packet
@@ -1523,11 +1667,21 @@ class Orchestrator:
                     # This is a Write Task
                     print("[ACTION TRIAGE] Detected Write Task - executing mechanical write...")
                     await loop.run_in_executor(None, self._execute_mechanical_write, command)
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'write' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
                     continue
                 elif "git_operations" in command:
                     # This is a Git Task
                     print("[ACTION TRIAGE] Detected Git Task - executing mechanical git operations...")
                     await loop.run_in_executor(None, lambda: execute_mechanical_git(command, self.project_root))
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'git' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
                     continue
 
                 # V7.1: Doctrine of Implied Intent - Check if this is a new development cycle command
@@ -1544,6 +1698,11 @@ class Orchestrator:
                             state["approved_artifacts"]["code_proposal"] = command["approved_artifact_path"]
                         state_file.write_text(json.dumps(state, indent=2))
                     await self._advance_cycle(state_file)
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'development_cycle_approval' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
                 elif command.get("action") == "APPROVE_CURRENT_STAGE":
                     # Legacy approval mechanism for backward compatibility
                     state = json.loads(state_file.read_text())
@@ -1556,6 +1715,11 @@ class Orchestrator:
                             state["approved_artifacts"]["code_proposal"] = command["approved_artifact_path"]
                         state_file.write_text(json.dumps(state, indent=2))
                     await self._advance_cycle(state_file)
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'approve_current_stage' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
                 else:
                     print("[!] Invalid command during development cycle. Awaiting APPROVE_CURRENT_STAGE.", flush=True)
             else:
@@ -1568,21 +1732,72 @@ class Orchestrator:
                     # This is a Write Task
                     print("[ACTION TRIAGE] Detected Write Task - executing mechanical write...")
                     await loop.run_in_executor(None, self._execute_mechanical_write, command)
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'write' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
                     continue
                 elif "git_operations" in command:
                     # This is a Git Task
                     print("[ACTION TRIAGE] Detected Git Task - executing mechanical git operations...")
                     await loop.run_in_executor(None, lambda: execute_mechanical_git(command, self.project_root))
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'git' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
+                    continue
+
+                elif command.get("task_type") == "cache_request":
+                    # This is a Cache Request Task
+                    print("[ACTION TRIAGE] Detected Cache Request Task - fetching cache bundle...")
+                    from .commands import handle_cache_request
+                    report_md = handle_cache_request(command)
+                    # Write the artifact
+                    output_path = self.project_root / command["output_artifact_path"]
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
+                    output_path.write_text(report_md, encoding="utf-8")
+                    print(f"[CACHE REQUEST] Verification artifact written to: {output_path}")
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'cache_request' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
+                    continue
+
+                elif command.get("task_type") == "cache_wakeup":
+                    # This is a Cache Wakeup Task (Guardian Boot Digest)
+                    print("[ACTION TRIAGE] Detected Cache Wakeup Task - generating Guardian boot digest...")
+                    from .handlers.cache_wakeup_handler import handle_cache_wakeup
+
+                    # Generate digest using new handler
+                    await loop.run_in_executor(None, lambda: handle_cache_wakeup(command, self))
+                    # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                    if self.one_shot:
+                        self.logger.info(f"One-shot mode: Task 'cache_wakeup' complete. Shutting down orchestrator.")
+                        break
+                    # --- END ONE-SHOT LOGIC ---
                     continue
 
                 try:
                     # Check if this is a development cycle command
                     if command.get("development_cycle", False):
                         await self._start_new_cycle(command, state_file)
+                        # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                        if self.one_shot:
+                            self.logger.info(f"One-shot mode: Task 'development_cycle' complete. Shutting down orchestrator.")
+                            break
+                        # --- END ONE-SHOT LOGIC ---
                     elif command.get('task_type') == "query_and_synthesis":
                         # Guardian Mnemonic Synchronization Protocol: Query and Synthesis task
                         print("[ACTION TRIAGE] Detected Query and Synthesis Task - invoking Council for mnemonic synchronization...")
                         await self._execute_query_and_synthesis(command)
+                        # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                        if self.one_shot:
+                            self.logger.info(f"One-shot mode: Task 'query_and_synthesis' complete. Shutting down orchestrator.")
+                            break
+                        # --- END ONE-SHOT LOGIC ---
                     else:
                         # Regular task execution
                         original_output_path = self.project_root / command['output_artifact_path']
@@ -1609,11 +1824,13 @@ class Orchestrator:
                                 self.logger.info(f"Output artifact saved to: {original_output_path}")
                                 self.logger.info("Orchestrator returning to idle state - ready for next command")
 
+                        # --- PROTOCOL 115: ONE-SHOT EXIT LOGIC ---
+                        if self.one_shot:
+                            self.logger.info(f"One-shot mode: Task 'regular' complete. Shutting down orchestrator.")
+                            break
+                        # --- END ONE-SHOT LOGIC ---
+
                 except Exception as e:
                     print(f"[MAIN LOOP ERROR] Task execution failed: {e}", file=sys.stderr)
                     self.logger.error(f"Task execution failed: {e}")
                     return False
-
-# --- MAIN EXECUTION ---
-# --- MAIN EXECUTION ---
-# Moved to main.py

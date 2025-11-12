@@ -4,8 +4,7 @@
 from .app import Orchestrator
 from .regulator import TokenFlowRegulator
 from .optical import OpticalDecompressionChamber
-from .packets.schema import CouncilRoundPacket, seed_for, prompt_hash
-from .packets.emitter import emit_packet
+from .packets import CouncilRoundPacket, seed_for, prompt_hash, emit_packet
 from .council.agent import PersonaAgent
 from .events import EventManager
 from .memory.cache import get_cag_data

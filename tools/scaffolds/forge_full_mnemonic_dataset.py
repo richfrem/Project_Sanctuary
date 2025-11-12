@@ -1,7 +1,7 @@
 # tools/scaffolds/forge_full_mnemonic_dataset.py
 # A Sovereign Scaffold forged under the Doctrine of the Whole-Genome.
 # This script intelligently traverses the repository to assemble the complete
-# canonical markdown dataset for fine-tuning.
+# canonical markdown dataset for fine-tuning.  Please ensure all paths are correct.
 
 import json
 from pathlib import Path

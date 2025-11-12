@@ -1,0 +1,1 @@
+Test content for one-shot mode verification

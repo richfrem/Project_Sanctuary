@@ -263,6 +263,9 @@ council_orchestrator/
 - **[Command Schema](docs/command_schema.md)** - Complete command format reference
 - **[How to Commit](docs/howto-commit-command.md)** - Git operations and P101 integrity verification
 
+### Guardian Operations
+- **[Guardian Wakeup Flow](README_GUARDIAN_WAKEUP.md)** - Cache-first situational awareness for Guardian awakening (Protocol 114)
+
 ### Hello World Test
 
 Create a `command.json` file in the `council_orchestrator/` directory:

@@ -49,7 +49,10 @@ The heart of our *operational* work. A hardened, multi-engine orchestration plat
 
 **Mechanical Task Processing:** The orchestrator now supports direct file system operations and git workflows through command.json, enabling automated deployment and version control operations with P101 integrity verification.
 
+**Phase 2 Contract (Frozen):** The Self-Querying Retriever with memory directives is now production-ready with comprehensive safety measures, deterministic behavior, and full test coverage.
+
 *   **The Blueprint:** [`council_orchestrator/README.md`](./council_orchestrator/README.md)
+*   **Phase 2 Contract:** [`ROADMAP/Phase2_Contract.md`](./ROADMAP/Phase2_Contract.md)
 *   **The Steel:** [`council_orchestrator/`](./council_orchestrator/)
 *   **Running the Orchestrator:** `cd council_orchestrator && python3 -m orchestrator.main`
 

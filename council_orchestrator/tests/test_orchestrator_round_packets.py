@@ -11,12 +11,15 @@ import tempfile
 import shutil
 from datetime import datetime
 from unittest.mock import Mock, patch, MagicMock
+from dataclasses import asdict
 
 # Import the components we need to test
-from orchestrator import (
-    CouncilRoundPacket, emit_packet, seed_for, prompt_hash,
-    Orchestrator, get_cag_data
+from council_orchestrator.orchestrator.packets.schema import (
+    CouncilRoundPacket, seed_for, prompt_hash,
+    MemoryDirectiveField, NoveltyField, ConflictField, RetrievalField
 )
+from council_orchestrator.orchestrator.packets.emitter import emit_packet
+from council_orchestrator.orchestrator.app import Orchestrator, CacheAdapter
 
 
 class TestCouncilRoundPacket(unittest.TestCase):
@@ -201,7 +204,7 @@ class TestOrchestratorIntegration(unittest.TestCase):
         """Set up orchestrator for testing."""
         self.orchestrator = Orchestrator()
 
-    @patch('orchestrator.engines.monitor.select_engine')
+    @patch('orchestrator.substrate_monitor.select_engine')
     def test_rag_data_generation(self, mock_select_engine):
         """Test RAG data generation."""
         mock_engine = Mock()
@@ -243,7 +246,8 @@ class TestOrchestratorIntegration(unittest.TestCase):
         prompt = "Test prompt"
         engine_type = "ollama"
 
-        cag_data = get_cag_data(prompt, engine_type)
+        cache_adapter = CacheAdapter()
+        cag_data = cache_adapter.get_cag_data(prompt, engine_type)
 
         self.assertIn("query_key", cag_data)
         self.assertIn("cache_hit", cag_data)
@@ -258,7 +262,7 @@ class TestSchemaValidation(unittest.TestCase):
         self.schema = {
             "$schema": "http://json-schema.org/draft-07/schema#",
             "type": "object",
-            "required": ["timestamp", "session_id", "round_id", "member_id", "engine", "prompt_hash", "decision", "confidence", "citations", "rag", "cag", "memory_directive", "errors"],
+            "required": ["timestamp", "session_id", "round_id", "member_id", "engine", "seed", "prompt_hash", "inputs", "decision", "rationale", "confidence", "citations", "rag", "cag", "novelty", "memory_directive", "cost", "errors", "schema_version", "retrieval", "conflict", "seed_chain"],
             "properties": {
                 "schema_version": {"type": "string", "description": "Schema version for future compatibility"},
                 "timestamp": {"type": "string", "format": "date-time"},
@@ -278,7 +282,11 @@ class TestSchemaValidation(unittest.TestCase):
                 "novelty": {"type": "object"},
                 "memory_directive": {"type": "object", "properties": {"tier": {"type": "string", "enum": ["fast", "medium", "slow", "none"]}}},
                 "cost": {"type": "object"},
-                "errors": {"type": "array", "items": {"type": "string"}}
+                "errors": {"type": "array", "items": {"type": "string"}},
+                # --- Phase 2 additions ---
+                "retrieval": {"type": "object"},
+                "conflict": {"type": "object"},
+                "seed_chain": {"type": "object"}
             }
         }
 
@@ -310,7 +318,7 @@ class TestSchemaValidation(unittest.TestCase):
             errors=[]
         )
 
-        payload = packet.__dict__
+        payload = asdict(packet)
         # Should not raise an exception
         jsonschema.validate(instance=payload, schema=self.schema)
 
@@ -364,11 +372,15 @@ class TestSchemaValidation(unittest.TestCase):
             citations=[],
             rag={},
             cag={},
-            novelty={},
-            memory_directive={"tier": "medium", "justification": "test"},
+            novelty=NoveltyField(False, "none", {}),
+            memory_directive=MemoryDirectiveField("medium", "test"),
             cost={},
             errors=[],
-            schema_version="1.0.0"
+            schema_version="1.0.0",
+            # Phase 2 fields
+            retrieval=RetrievalField(),
+            conflict=ConflictField(),
+            seed_chain={}
         )
 
         payload = packet.__dict__

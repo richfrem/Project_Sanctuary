@@ -1161,7 +1161,7 @@ class Orchestrator:
             if requirements_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if requirements_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "tools" / "scaffolds" / "ingest.py")], check=True)
+                    subprocess.run([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
                     print(f"[*] Approved requirements ingested into Mnemonic Cortex.", flush=True)
                 else:
                     print(f"[!] Requirements path is not a file: {requirements_path}. Skipping ingestion.", flush=True)
@@ -1186,7 +1186,7 @@ class Orchestrator:
             if tech_design_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if tech_design_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "tools" / "scaffolds" / "ingest.py")], check=True)
+                    subprocess.run([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
                     print(f"[*] Approved tech design ingested into Mnemonic Cortex.", flush=True)
                 else:
                     print(f"[!] Tech design path is not a file: {tech_design_path}. Skipping ingestion.", flush=True)
@@ -1347,7 +1347,7 @@ class Orchestrator:
 
             # Ingest into Mnemonic Cortex
             self.logger.info("Background AAR: Starting ingestion into Mnemonic Cortex...")
-            ingestion_script_path = self.project_root / "tools" / "scaffolds" / "ingest.py"
+            ingestion_script_path = self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py"
             full_aar_path = self.project_root / aar_output_path
 
             result = await asyncio.create_subprocess_exec(

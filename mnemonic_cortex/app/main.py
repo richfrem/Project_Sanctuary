@@ -31,7 +31,6 @@ import argparse
 import os
 import sys
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import ChatOllama
 
@@ -63,54 +62,64 @@ def main() -> None:
     (v1.3) Main application entry point for querying the Mnemonic Cortex,
     now with verifiable source citation.
     """
-    parser = argparse.ArgumentParser(description="Query the Mnemonic Cortex with verifiable source citation.")
-    parser.add_argument("query", type=str, help="The question to ask.")
-    parser.add_argument("--model", type=str, default="Sanctuary-Qwen2-7B:latest", help="The local Ollama model to use.")
+    parser = argparse.ArgumentParser(description="Query the Mnemonic Cortex.")
+    parser.add_argument("query", type=str, help="The query to process.")
+    parser.add_argument("--model", type=str, default="Sanctuary-Qwen2-7B:latest", help="The Ollama model to use for generation.")
+    parser.add_argument("--retrieve-only", action="store_true", help="Run retrieval but skip LLM generation. Prints retrieved documents.")
+    parser.add_argument("--no-rag", action="store_true", help="Run LLM generation without RAG. Tests internal model knowledge.")
     args = parser.parse_args()
-
-    print(f"--- Querying Mnemonic Cortex with: '{args.query}' ---")
-    print(f"--- Using generation model: {args.model} ---")
 
     try:
         project_root = find_project_root()
         setup_environment(project_root)
-        db_service = VectorDBService()
-        retriever = db_service.get_retriever()
-        
+
+        # --- CONDITIONAL EXECUTION LOGIC ---
+        if args.retrieve_only:
+            print(f"--- [RETRIEVE-ONLY MODE] Fetching documents for query: '{args.query}' ---")
+            db_service = VectorDBService()
+            retrieved_docs = db_service.query(args.query)
+            print(f"\n--- Retrieved {len(retrieved_docs)} Parent Documents ---")
+            for i, doc in enumerate(retrieved_docs):
+                source = doc.metadata.get('source', 'Unknown')
+                print(f"\n--- DOC {i+1}: {source} ---")
+                print(doc.page_content[:1000] + "...")
+            return
+
+        print(f"--- Querying Mnemonic Cortex with: '{args.query}' ---")
+        print(f"--- Using generation model: {args.model} ---")
+
         llm = ChatOllama(model=args.model)
-        prompt = ChatPromptTemplate.from_template(RAG_PROMPT_TEMPLATE)
 
-        # --- RE-FORGED RAG CHAIN (v1.3) ---
-        # This more complex chain allows us to pass the retrieved docs through
-        def retrieve_and_pass_docs(query):
-            docs = retriever.invoke(query)
-            return {"context": format_docs(docs), "question": query, "source_docs": docs}
+        if args.no_rag:
+            print(f"--- [NO-RAG MODE] Querying internal model knowledge: '{args.query}' ---")
+            prompt = ChatPromptTemplate.from_template("Question: {question}\n\nAnswer:")
+            chain = prompt | llm | StrOutputParser()
+            response = chain.invoke({"question": args.query})
+            print("\n--- Model Response (Internal Knowledge Only) ---")
+            print(response)
+            return
 
-        rag_chain = (
-            RunnableLambda(retrieve_and_pass_docs)
-            | {
-                "answer": prompt | llm | StrOutputParser(),
-                "source_docs": lambda x: x["source_docs"]
-              }
-        )
+        # --- DEFAULT RAG PIPELINE ---
+        db_service = VectorDBService()
+        retrieved_docs = db_service.query(args.query)
+        context = "\n\n".join([doc.page_content for doc in retrieved_docs])
 
-        print("\n--- Generating Answer ---")
-        result = rag_chain.invoke(args.query)
-        
-        print("\n--- Answer ---")
-        print(result["answer"])
-        
-        # --- NEW: SOURCE CITATION ---
-        print("\n--- Verifiable Sources ---")
-        # Use a set to only show unique source URLs
-        unique_sources = {doc.metadata.get('source_url', 'Source not found') for doc in result["source_docs"]}
-        if unique_sources:
-            for source in sorted(list(unique_sources)):
-                print(f"- {source}")
-        else:
-            print("No specific sources were retrieved for this query.")
-        
-        print("\n--- Query Complete ---")
+        template = """
+        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.
+        If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
+
+        Question: {question} 
+
+        Context: {context} 
+
+        Answer:
+        """
+        prompt = ChatPromptTemplate.from_template(template)
+        chain = prompt | llm | StrOutputParser()
+
+        print("\n--- Generating Final Answer (RAG Augmented) ---")
+        response = chain.invoke({"question": args.query, "context": context})
+        print(response)
 
     except Exception as e:
         print(f"\n--- AN UNEXPECTED ERROR OCCURRED ---")

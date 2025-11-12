@@ -41,7 +41,7 @@ from unittest.mock import patch, MagicMock, call
 sys.path.insert(0, str(Path(__file__).parent / "council_orchestrator"))
 
 # --- Imports for testing ---
-from orchestrator.engines.monitor import select_engine
+from orchestrator.substrate_monitor import select_engine
 
 def test_force_engine_choice():
     """

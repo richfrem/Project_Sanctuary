@@ -378,13 +378,13 @@ The Parent Document Retriever implements a **hierarchical retrieval architecture
 ```python
 # From ingest.py - Dual ChromaDB Collections
 chunks_vectorstore = Chroma(
-    collection_name="document_chunks",
+    collection_name="child_chunks_v5",
     embedding_function=embedding_model,
     persist_directory=chunks_store_path  # mnemonic_cortex/chroma_db/chunks/
 )
 
 parents_vectorstore = Chroma(
-    collection_name="parent_documents", 
+    collection_name="parent_documents_v5", 
     embedding_function=embedding_model,
     persist_directory=parents_store_path  # mnemonic_cortex/chroma_db/parents/
 )

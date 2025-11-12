@@ -3,12 +3,23 @@
 
 import asyncio
 import sys
+import argparse
 from .app import Orchestrator
 
 def main():
     """Main entry point for the council orchestrator."""
-    # Initialize orchestrator
-    orchestrator = Orchestrator()
+    # --- NEW: Add argument parser for --one-shot flag ---
+    parser = argparse.ArgumentParser(description="Sanctuary Council Orchestrator")
+    parser.add_argument(
+        '--one-shot',
+        action='store_true',
+        help='Run the orchestrator for a single command and then exit.'
+    )
+    args = parser.parse_args()
+    # --- END NEW ---
+
+    # Initialize orchestrator, passing the one_shot flag
+    orchestrator = Orchestrator(one_shot=args.one_shot)
 
     try:
         # Main execution loop

@@ -1,0 +1,328 @@
+{
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "887f2eba0ac5ebd604edba93c5c4ba663b8b4a11881dad89ab9ad0377f7d4c77"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "c386fdbec84865b7fc3e8b9cdb0dae7b22ba2335630bfbbde22876c08853fdcc"
+    },
+    {
+      "path": "01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md",
+      "sha256": "6c81f11e9500f4d951afa47ff0fd992ad982c10f04279d3e48cf220ea235d776"
+    },
+    {
+      "path": "01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md",
+      "sha256": "dc0475b1bc537bd4deae1f8e0a5f108e0ac7e7a849cee8f8759579f35629b94c"
+    },
+    {
+      "path": "DEPENDENCY_MANIFEST.md",
+      "sha256": "a1fce0d7ce585ebdef5f336195af5aa760dfd336d04d51d0c08519df55b5a597"
+    },
+    {
+      "path": "README.md",
+      "sha256": "b816daa3d21f6338240b8d83dc80542bf3a01d3aa5eeb4847315963729f8df42"
+    },
+    {
+      "path": "RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md",
+      "sha256": "01ea0ce6dd3d5c001edc9ee2f7769965545c0a3e57a1e397dbccf672609843bd"
+    },
+    {
+      "path": "TASKS/backlog/002_implement_phase_2_self_querying_retriever.md",
+      "sha256": "df33728560bbf0885ce88be4486233f4d1bcf7c60d576d785037777f2f53136e"
+    },
+    {
+      "path": "TASKS/backlog/003_implement_phase_3_mnemonic_caching_cag.md",
+      "sha256": "a0e89405ec74f8247eb3bb10eda60567f0873297641cb516f6a5019d86c19aad"
+    },
+    {
+      "path": "TASKS/backlog/004_implement_protocol_113_council_memory_adaptor.md",
+      "sha256": "85cca0ea9243e50caeabc3599c516450a48ab0add63e10060ae193c391594e39"
+    },
+    {
+      "path": "TASKS/backlog/005_forge_protocol_115_tactical_mandate.md",
+      "sha256": "e5adfb79c529aed4243284d97f891c7493ed241641d43697eaa27f6358d5d3df"
+    },
+    {
+      "path": "TASKS/backlog/006_forge_task_number_scaffold.md",
+      "sha256": "35ba8cb0b26c9453a96b86505d22843642341313e27191b9d27f61524aa6c3a2"
+    },
+    {
+      "path": "TASKS/in-progress/001_harden_mnemonic_cortex_ingestion_and_rag.md",
+      "sha256": "4d9984875ec85a797d3507034845f09b39b5354652e440c71b538e3c6e3c96c2"
+    },
+    {
+      "path": "TASKS/todo/007_retrain_sovereign_model_with_targeted_dataset.md",
+      "sha256": "9cba69c2d6fac4d8452f200d9223ca8b40d03b09cd870ed29ad02d6cd96800a8"
+    },
+    {
+      "path": "TASKS/backlog/008_test_and_fix_git_operations_command_type.md",
+      "sha256": "a4e20380494337eee45ce9fb227e501521e064c2000ea2acd49b29287e56c235"
+    },
+    {
+      "path": "TASKS/in-progress/008_test_and_fix_git_operations_command_type.md",
+      "sha256": "0cb5f45148017fc774f7da9c2f5289dd28089687a2f759f21dd22c58e6451cb4"
+    },
+    {
+      "path": "WORK_IN_PROGRESS/council_memory_sync/briefing_packet.json",
+      "sha256": "08595124e4e6de9e9095fddf0fceb5cf2132e790580a8f7fd897fea15bf2460b"
+    },
+    {
+      "path": "WORK_IN_PROGRESS/example_cache_wakeup_command.json",
+      "sha256": "bb8eddaffcfb5f9a6fad6c3807e684e0fc183063b4f4a5f6a9ee9d5db543deaf"
+    },
+    {
+      "path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+      "sha256": "9930a8bdf7aa2f8dec1ca70d7942dc817bc8ffc26482c5cf3217a67c96808213"
+    },
+    {
+      "path": "capture_code_snapshot.js",
+      "sha256": "97d7baf12922b3563b9babad013e4598903694cb120e7dbb2960aa5d891910cf"
+    },
+    {
+      "path": "commit_manifest.json",
+      "sha256": "7163c005a1932f3d2aaf80fd5230e2a8fb02ecfe4e19a6263fb33c8aebc68dd7"
+    },
+    {
+      "path": "council_orchestrator/README.md",
+      "sha256": "4c4aced90157cb032d7fa7b399b448116075aa438b701cb42dd3cdbf37c4f754"
+    },
+    {
+      "path": "council_orchestrator/README_GUARDIAN_WAKEUP.md",
+      "sha256": "d69392f86bded1fe5e4a93eba35ef322b7ef04d9e89281fe78abb7ee31bcf35c"
+    },
+    {
+      "path": "council_orchestrator/command_schema.md",
+      "sha256": "625e93f9cdea5e4d3edeb5f910d4c3f619b7938bc96fad94f4cd904c61dc9c1c"
+    },
+    {
+      "path": "council_orchestrator/docs/howto-commit-command.md",
+      "sha256": "c8ff7ad9aba1df81581f03dec5a9959034b5919f8ab88209c1f2299452132deb"
+    },
+    {
+      "path": "council_orchestrator/docs/orchestrator_architecture_package.md",
+      "sha256": "09641afa6da5e23456fd6f82bc1340de2b925a7fa47ba1dae2a62bbb2b85cb10"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/__init__.py",
+      "sha256": "6a4985fddf89e983c0fa516463b2a4742a8995d722713d77459a7a981465e34f"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/adaptation_packets.py",
+      "sha256": "64f09b5d88d8293999d56467432ba41b2da7a48d9e1787e9c52339b17961e332"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/app.py",
+      "sha256": "3c8e665bcdf47d973075b5d8f5de7e20083f177e949d5d5de9b9285c68fe633a"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/commands.py",
+      "sha256": "df379f4538964141ec45a0996bf761dd1294ae72d8908ee2406ddfd892c5c697"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/config/__init__.py",
+      "sha256": "dde362204adf9737110876bde55b3d42c3b0c52b1192572116bb288507683b62"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/config/safety.py",
+      "sha256": "2259ad5ca269d5889fe8c17213a34e991ba34fe3200919e56ab93898c48e5cec"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/gitops.py",
+      "sha256": "122aa23ba17392365b32d6231ee10f4bf33c9c2711871f784ed4413a2fd31aa4"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/handlers/cache_wakeup_handler.py",
+      "sha256": "296b617c8cedfc475bc752d27f1cdae5a2dfed4813cef147af5d23f852f480e5"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/main.py",
+      "sha256": "c457ecfd0a9554959a8f652fc2dd0d27e1a8d9b30fe2df4a717ef1fbe0fdd22c"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/memory/cache.py",
+      "sha256": "988feb80c93c33e09f4750cf96904675bb118a31385b93106fa552dbbe833e5c"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/memory/cortex.py",
+      "sha256": "5fb775c16b2e3d8a040cf35e5c59c606c9d18374ea56f0225a10662bed5619c5"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/packets/__init__.py",
+      "sha256": "37169e9152b2fe1763d7951e61bdb1d6e1b6a6046ca528c166d6dc643cf4ed2b"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/packets/schema.py",
+      "sha256": "56655201db97464fd78902b64ee5403c12eb2926fa6d48bd2d25584d77f70e90"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/sentry.py",
+      "sha256": "730e93397d903f1847507c0e95b36db2507ff160d5f1db6529f4490481eea15e"
+    },
+    {
+      "path": "council_orchestrator/schemas/council-round-packet-v1.0.0.json",
+      "sha256": "278c3b843cacaaf0dbaeaee2dc13bc26a8b61e81ac53a05ee25962f41068d00a"
+    },
+    {
+      "path": "council_orchestrator/scripts/dashboard/jq_dashboard.sh",
+      "sha256": "bf8e9d3107c7c0c62f21f3e3fc54a40216fe0b22685450c9897d6e10efea2391"
+    },
+    {
+      "path": "council_orchestrator/scripts/test_cache_standalone.py",
+      "sha256": "f0ee87ec38f9706c1a9cb84c8e9750a87f1e413bd2b7e839e68cdf3e67c8347b"
+    },
+    {
+      "path": "council_orchestrator/tests/test_boot_prefill_runs_once.py",
+      "sha256": "6207cc09c1d158f9be81e34ab397ea0c08df47e811d9a98d7402b81fa68d3bb2"
+    },
+    {
+      "path": "council_orchestrator/tests/test_cache_prefill.py",
+      "sha256": "55fe5fd74e89d5ac664530696163c027a43e419a65a17b80a02044118fe26e1e"
+    },
+    {
+      "path": "council_orchestrator/tests/test_cache_request_command.py",
+      "sha256": "8f9cb37e0a9b7917f3b4c20adff52f891b1c6f7a8061f80cdd157e0d89cf004f"
+    },
+    {
+      "path": "council_orchestrator/tests/test_cache_wakeup_flow.py",
+      "sha256": "cb0c6f851da1b217879503eebde58415caadf771cc8593cf204b0eb93e797b59"
+    },
+    {
+      "path": "council_orchestrator/tests/test_command_schema_cache_wakeup.py",
+      "sha256": "47a85ee776c511ecb154b651b588cfc41717932decafc52fcafa36a4acf10ab7"
+    },
+    {
+      "path": "council_orchestrator/tests/test_delta_refresh_on_ingest_and_gitops.py",
+      "sha256": "83989ea4d0216be7dd0e9b1966cce66d4aaee6912c36adf9652d8d12a6693aa6"
+    },
+    {
+      "path": "council_orchestrator/tests/test_emitter_jsonl_shape.py",
+      "sha256": "ed0f987c913d529f58638dfe78b4a7bdcfa524f5d8b558fa784b8284488e99f3"
+    },
+    {
+      "path": "council_orchestrator/tests/test_golden_packet.py",
+      "sha256": "7a4fad9f6ffc4916b8ec3cec4e5879dfd081791cd00d232af37c2d26d2fceb41"
+    },
+    {
+      "path": "council_orchestrator/tests/test_guardian_seed_contains_primer.py",
+      "sha256": "287a63abdc428939a881a2a10fd408693f5d26d185b5a571fb0f1004500b1893"
+    },
+    {
+      "path": "council_orchestrator/tests/test_orchestrator_round_packets.py",
+      "sha256": "ce30163d97721c1522e1725b3c061871c0e9f5b85310ee86f03968e3a80359da"
+    },
+    {
+      "path": "council_orchestrator/tests/test_packets_phase2_fields.py",
+      "sha256": "56547a3b92cac6f9ba5d4de08d1a667db512d328d830815e76ef78c5142b3a24"
+    },
+    {
+      "path": "council_orchestrator/tests/test_self_querying_retriever.py",
+      "sha256": "0007cff5aa4a5a16ee307f416075b999ceebca04545330d687464af277cad636"
+    },
+    {
+      "path": "council_orchestrator/tests/verification_test.py",
+      "sha256": "c217a5466751d422887e1fff352d120cea78b1985dbf974196fef0d1ae3dd8a4"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "d75b85fa6fd791347eceed2b73a48a1f0e4edb02894b4a4fc4c3fa7c04efc402"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "f5e3e3b98ca1d96bcdf351fd9af838b45198e17f28f68e3342e5a6abd186426e"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_forge_human_readable.txt",
+      "sha256": "b351565d3d970a9afe12ea9b135980f267906a5363949ab522d1356268a33ffc"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_forge_llm_distilled.txt",
+      "sha256": "dbffc26e11772094173c2cbe385cef89ad55e1460c941518474a4c6388c916f9"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "9aad96c273837a3ba30134a5bd0b9e5c80c9a6b474b06b6c023b89de9acf3ddb"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "dbc8837adc1eefdf56b097c8b1103a07f2c5f9248317080da59d50c269b47767"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_mnemonic_cortex_human_readable.txt",
+      "sha256": "f4bf4c138814c5bcb93eb45924cf6e91c44d3215744ae098f5124abcdc9ac081"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_mnemonic_cortex_llm_distilled.txt",
+      "sha256": "ce820dcd449a78d3772cc12d1d5fa956933f99e418464788493a4afd6e0ded0e"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_tools_human_readable.txt",
+      "sha256": "fb4d41c6b8a4d82caceee1565b49984aae52615057414c1823eed92bb7598682"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_tools_llm_distilled.txt",
+      "sha256": "73b064665fc54ebc3230e98a48e50d8f340fbfac7a1718dd4c1fd15f17d27fde"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "b9ba79a3ff17bf77c53181c7ac826ef4a021a35cb65af756c70c9ae5cf83dec3"
+    },
+    {
+      "path": "forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py",
+      "sha256": "bee5ca1eb456d54f1d1022690f6005faa0b070bf7a4b841df94441fd4a72ffd3"
+    },
+    {
+      "path": "mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md",
+      "sha256": "b05646c6672ba02b09543e10bef3873175b1d46d1ea4a5b28b4e3ae256aa1ed9"
+    },
+    {
+      "path": "mnemonic_cortex/app/main.py",
+      "sha256": "46879dae631bbe788b2cff86ed5aa54d98e79ea4adf412c84fa9ab740225fac4"
+    },
+    {
+      "path": "mnemonic_cortex/app/services/vector_db_service.py",
+      "sha256": "28f9d85a292d99f2c22e8a07b4f3e65a507ef99aacc085a7e67c25a1964f8ae3"
+    },
+    {
+      "path": "mnemonic_cortex/scripts/agentic_query.py",
+      "sha256": "3de9b2cb8493f0a204ccfeab679a93dc9af4979ca7211c376c6a7743b103b351"
+    },
+    {
+      "path": "mnemonic_cortex/scripts/ingest.py",
+      "sha256": "94a9ccfd2f280edbe8c8c412a8831d4530a95c4cacdd103ffe55e4f9e0c82079"
+    },
+    {
+      "path": "mnemonic_cortex/scripts/inspect_db.py",
+      "sha256": "c6996a0d4f8b33dc1290ea9a1ff5061973ca02d8d4bf9ef7e0bc2458f29adee9"
+    },
+    {
+      "path": "mnemonic_cortex/tests/smoke_tests/test_cognitive_layers.sh",
+      "sha256": "7aabe4b4e1e8d6b8b12becb4dba3deaa4bed6fbc7f6210cbaee282d130b21645"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "1a593d436c81ee06e4e84681bd10d15c6315557d46ee261f75050ce5ac9d175f"
+    },
+    {
+      "path": "package.json",
+      "sha256": "48bad2c5d0533fc0bc3bffd0b9b66b88b228e53f5d07514612ee9d219cbaee98"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "d0c8b439a1393ce7ff7546e288d6eace8749caaf238f6ba2f7440e55c253ecb6"
+    },
+    {
+      "path": "tools/scaffolds/forge_full_mnemonic_dataset.py",
+      "sha256": "bf39fb2dd31cbe0d3c7595bb6f86258c0bf612765f18deab3d5ac2b743219d0e"
+    },
+    {
+      "path": "tools/scaffolds/get_next_task_number.py",
+      "sha256": "9abcea67c333f86a170d209d8fefc904c86b42ee8315f05a46fd0673804410e7"
+    },
+    {
+      "path": "council_orchestrator/command_results/README.md",
+      "sha256": "4b8eb901e5c8432c00e8df2c64b6ee0800e7cd149169019efb22a6471f943479"
+    }
+  ]
+}

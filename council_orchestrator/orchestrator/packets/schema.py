@@ -3,8 +3,34 @@
 
 import json
 import hashlib
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from typing import List, Dict, Any
+
+# --- Phase 2 additions ---
+@dataclass
+class MemoryDirectiveField:
+    tier: str                      # "fast" | "medium" | "slow"
+    justification: str
+
+@dataclass
+class NoveltyField:
+    is_novel: bool
+    signal: str                    # "none"|"low"|"medium"|"high"
+    basis: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
+class ConflictField:
+    conflicts_with: List[str] = field(default_factory=list)
+    basis: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
+class RetrievalField:
+    structured_query: Dict[str, Any] = field(default_factory=dict)
+    parent_docs: List[Dict[str, Any]] = field(default_factory=list)
+    retrieval_latency_ms: int = 0
+    plan_latency_ms: int = 0
+    analyze_latency_ms: int = 0
+    emit_latency_ms: int = 0
 
 # --- COUNCIL ROUND PACKET SCHEMA ---
 @dataclass
@@ -23,21 +49,29 @@ class CouncilRoundPacket:
     citations: List[Dict[str, str]]
     rag: Dict[str, Any]
     cag: Dict[str, Any]
-    novelty: Dict[str, Any]
-    memory_directive: Dict[str, str]
-    cost: Dict[str, Any]
-    errors: List[str]
+    novelty: NoveltyField = field(default_factory=lambda: NoveltyField(False,"none",{}))
+    memory_directive: MemoryDirectiveField = field(default_factory=lambda: MemoryDirectiveField("fast","initial default"))
+    cost: Dict[str, Any] = field(default_factory=dict)
+    errors: List[str] = field(default_factory=list)
     schema_version: str = "1.0.0"
+    # --- Phase 2 additions ---
+    retrieval: RetrievalField = field(default_factory=RetrievalField)
+    conflict: ConflictField = field(default_factory=ConflictField)
+    seed_chain: Dict[str, Any] = field(default_factory=dict)  # Provenance for deterministic replay
 
 # --- ROUND PACKET UTILITIES ---
-def seed_for(session_id: str, round_id: int, member_id: str) -> int:
+def seed_for(session_id: str, round_id: int, member_id: str, prompt_hash: str = None) -> int:
     """Generate deterministic seed for reproducibility."""
+    seed_input = f"{session_id}:{round_id}:{member_id}"
+    if prompt_hash:
+        seed_input += f":{prompt_hash}"
+
     try:
         import xxhash
-        return xxhash.xxh64_intdigest(f"{session_id}:{round_id}:{member_id}") & 0x7fffffff
+        return xxhash.xxh64_intdigest(seed_input) & 0x7fffffff
     except ImportError:
         # Fallback to hashlib if xxhash not available
-        hash_obj = hashlib.md5(f"{session_id}:{round_id}:{member_id}".encode())
+        hash_obj = hashlib.md5(seed_input.encode())
         return int(hash_obj.hexdigest(), 16) & 0x7fffffff
 
 def prompt_hash(text: str) -> str:

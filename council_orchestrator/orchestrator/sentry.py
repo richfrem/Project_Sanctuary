@@ -30,7 +30,8 @@ class CommandSentry:
             try:
                 # V5.0 MANDATE 1: Only process files explicitly named command*.json
                 # This prevents the rogue sentry from ingesting config files, state files, etc.
-                found_files = list(command_dir.glob("command*.json"))
+                # Updated to match any .json file containing "command" in the name
+                found_files = [f for f in command_dir.glob("*.json") if "command" in f.name.lower()]
                 print(f"[SENTRY THREAD] DEBUG: Scanning for command*.json files in {command_dir}")
                 print(f"[SENTRY THREAD] DEBUG: All .json files in directory: {list(command_dir.glob('*.json'))}")
                 if found_files:

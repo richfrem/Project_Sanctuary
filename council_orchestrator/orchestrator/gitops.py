@@ -6,6 +6,8 @@ import json
 import hashlib
 import subprocess
 from pathlib import Path
+from datetime import datetime
+from .memory.cache import CacheManager
 
 def execute_mechanical_git(command, project_root):
     """
@@ -29,87 +31,142 @@ def execute_mechanical_git(command, project_root):
         push_to_origin = git_ops.get("push_to_origin", False)
 
         # --- PROTOCOL 101: AUTO-GENERATE MANIFEST ---
-        # Automatically compute SHA-256 hashes for all files and create commit_manifest.json
-        # Paths in manifest must be relative to git repository root, not project_root
-        git_repo_root = project_root.parent  # Git repo root is parent of council_orchestrator
-        
-        manifest_entries = []
-        for file_path in files_to_add:
-            full_path = project_root / file_path
-            if full_path.exists() and full_path.is_file():
-                try:
-                    # Compute SHA-256 hash
-                    with open(full_path, 'rb') as f:
-                        file_hash = hashlib.sha256(f.read()).hexdigest()
-                    # Store path relative to git repository root
-                    repo_relative_path = full_path.relative_to(git_repo_root)
-                    manifest_entries.append({
-                        "path": str(repo_relative_path),
-                        "sha256": file_hash
-                    })
-                except (OSError, IOError) as e:
-                    print(f"[MECHANICAL ERROR] Failed to read file {file_path} for manifest: {e}")
-                    raise
+        # Compute git repository root robustly (use git if available), then compute SHA-256
+        # for each file. Support both repo-root paths and project_root-relative paths.
+        try:
+            git_top = subprocess.run(
+                ["git", "rev-parse", "--show-toplevel"],
+                capture_output=True,
+                text=True,
+                cwd=project_root
+            )
+            if git_top.returncode == 0:
+                git_repo_root = Path(git_top.stdout.strip())
             else:
+                git_repo_root = project_root.parent
+        except Exception:
+            git_repo_root = project_root.parent
+
+        manifest_entries = []
+        resolved_file_paths = []  # keep full Path objects for later git add
+        for file_path in files_to_add:
+            # Try a few resolution strategies: project_root/file_path, git_repo_root/file_path,
+            # and if file_path looks like a repo-relative path starting with '../', resolve
+            candidates = []
+            p = Path(file_path)
+            if p.is_absolute():
+                candidates.append(p)
+            else:
+                candidates.append(project_root / file_path)
+                candidates.append(git_repo_root / file_path)
+                # also try resolving relative paths from project_root
+                try:
+                    candidates.append((project_root / file_path).resolve())
+                except Exception:
+                    pass
+
+            found = False
+            for cand in candidates:
+                if cand.exists() and cand.is_file():
+                    try:
+                        with open(cand, 'rb') as f:
+                            file_hash = hashlib.sha256(f.read()).hexdigest()
+                        repo_relative_path = cand.relative_to(git_repo_root)
+                        manifest_entries.append({
+                            "path": str(repo_relative_path),
+                            "sha256": file_hash
+                        })
+                        resolved_file_paths.append(cand)
+                        found = True
+                        break
+                    except (OSError, IOError) as e:
+                        print(f"[MECHANICAL ERROR] Failed to read file {file_path} for manifest: {e}")
+                        raise
+            if not found:
                 print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
 
-        # Create manifest JSON in git repository root
+        # Create manifest JSON in git repository root.
+        # Use a timestamped manifest filename to avoid stomping an authoritative manifest
         try:
             manifest_data = {"files": manifest_entries}
-            manifest_path = git_repo_root / "commit_manifest.json"
+            ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+            manifest_name = f"commit_manifest_{ts}.json"
+            manifest_path = git_repo_root / manifest_name
             with open(manifest_path, 'w') as f:
                 json.dump(manifest_data, f, indent=2)
-            print(f"[MECHANICAL SUCCESS] Generated commit_manifest.json with {len(manifest_entries)} entries")
+            # Also write canonical commit_manifest.json at repo root so pre-commit hook (Protocol 101)
+            # validates the exact manifest the orchestrator generated.
+            canonical_manifest_path = git_repo_root / "commit_manifest.json"
+            try:
+                with open(canonical_manifest_path, 'w') as f2:
+                    json.dump(manifest_data, f2, indent=2)
+                print(f"[MECHANICAL SUCCESS] Wrote canonical commit_manifest.json with {len(manifest_entries)} entries")
+            except (OSError, IOError) as e:
+                print(f"[MECHANICAL WARNING] Failed to write canonical commit_manifest.json: {e}")
+
+            print(f"[MECHANICAL SUCCESS] Generated {manifest_name} with {len(manifest_entries)} entries")
         except (OSError, IOError) as e:
             print(f"[MECHANICAL ERROR] Failed to write commit manifest: {e}")
             raise
 
-        # Add manifest to files_to_add if not already present
-        manifest_str = "commit_manifest.json"
-        if manifest_str not in files_to_add:
-            files_to_add.append(manifest_str)
-            print(f"[MECHANICAL INFO] Added {manifest_str} to files_to_add")
+        # --- CORRECTED LOGIC: SEPARATE HASHING FROM COMMITTING ---
+        # The files to be committed will include the manifest itself.
+        # The manifest's content, however, will only contain hashes of the original target files.
+        files_to_commit = [p for p in resolved_file_paths]
 
-        # Execute git add for each file - validate command is whitelisted
-        for file_path in files_to_add:
-            # Command validation: Parse and check primary action
+        # ensure manifest_path is a Path under git_repo_root (manifest_name is defined above)
+        # manifest will live in git_repo_root, so add the manifest file object to the commit list
+        files_to_commit.append(manifest_path)
+
+        # Also add the canonical manifest path to the commit if it exists
+        canonical_manifest_path = git_repo_root / "commit_manifest.json"
+        if canonical_manifest_path.exists():
+            files_to_commit.append(canonical_manifest_path)
+
+        print(f"[MECHANICAL INFO] Staging {len(resolved_file_paths)} target files + {2 if canonical_manifest_path.exists() else 1} manifest files for commit.")
+        # The `manifest_entries` list is now correct and does NOT include the manifest itself.
+
+        # Execute git add for each resolved file from the git repo root
+        for full_path in files_to_commit:
             primary_action = 'add'
             if primary_action not in WHITELISTED_GIT_COMMANDS:
                 print(f"[CRITICAL] Prohibited Git command attempted and blocked: {primary_action}")
                 raise Exception(f"Prohibited Git command: {primary_action}")
 
-            full_path = project_root / file_path
-            if full_path.exists():
-                try:
-                    result = subprocess.run(
-                        ["git", "add", str(full_path)],
-                        capture_output=True,
-                        text=True,
-                        cwd=project_root,
-                        timeout=30  # Add timeout to prevent hanging
-                    )
-                    if result.returncode == 0:
-                        print(f"[MECHANICAL SUCCESS] Added {file_path} to git staging")
-                    else:
-                        # Enhanced error handling for git add
-                        error_msg = f"Git add failed for {file_path}"
-                        if "fatal: pathspec" in result.stderr:
-                            error_msg += ": Invalid path or file not found"
-                        elif "fatal: Not a git repository" in result.stderr:
-                            error_msg += ": Not in a git repository"
-                        elif "error: insufficient permission" in result.stderr:
-                            error_msg += ": Permission denied"
-                        print(f"[MECHANICAL ERROR] {error_msg}")
-                        print(f"[MECHANICAL ERROR] stderr: {result.stderr}")
-                        raise subprocess.CalledProcessError(result.returncode, result.args, result.stdout, result.stderr)
-                except subprocess.TimeoutExpired:
-                    print(f"[MECHANICAL ERROR] Git add timed out for {file_path}")
-                    raise
-                except FileNotFoundError:
-                    print(f"[MECHANICAL ERROR] Git command not found - ensure git is installed")
-                    raise
-            else:
-                print(f"[MECHANICAL WARNING] File {file_path} does not exist, skipping git add")
+            try:
+                repo_relative_path = Path(full_path).relative_to(git_repo_root)
+            except Exception:
+                # If we cannot make it repo-relative, skip
+                print(f"[MECHANICAL WARNING] File {full_path} is outside repo root, skipping git add")
+                continue
+
+            try:
+                result = subprocess.run(
+                    ["git", "add", str(repo_relative_path)],
+                    capture_output=True,
+                    text=True,
+                    cwd=git_repo_root,
+                    timeout=30
+                )
+                if result.returncode == 0:
+                    print(f"[MECHANICAL SUCCESS] Added {repo_relative_path} to git staging")
+                else:
+                    error_msg = f"Git add failed for {repo_relative_path}"
+                    if "fatal: pathspec" in result.stderr:
+                        error_msg += ": Invalid path or file not found"
+                    elif "fatal: Not a git repository" in result.stderr:
+                        error_msg += ": Not in a git repository"
+                    elif "error: insufficient permission" in result.stderr:
+                        error_msg += ": Permission denied"
+                    print(f"[MECHANICAL ERROR] {error_msg}")
+                    print(f"[MECHANICAL ERROR] stderr: {result.stderr}")
+                    raise subprocess.CalledProcessError(result.returncode, result.args, result.stdout, result.stderr)
+            except subprocess.TimeoutExpired:
+                print(f"[MECHANICAL ERROR] Git add timed out for {repo_relative_path}")
+                raise
+            except FileNotFoundError:
+                print(f"[MECHANICAL ERROR] Git command not found - ensure git is installed")
+                raise
 
         # Execute git commit - validate command is whitelisted
         primary_action = 'commit'
@@ -122,7 +179,7 @@ def execute_mechanical_git(command, project_root):
                 ["git", "commit", "-m", commit_message],
                 capture_output=True,
                 text=True,
-                cwd=project_root,
+                cwd=git_repo_root,
                 timeout=60  # Add timeout for commit operation
             )
             if result.returncode == 0:
@@ -202,3 +259,7 @@ def execute_mechanical_git(command, project_root):
     except Exception as e:
         print(f"[MECHANICAL FAILURE] Unexpected error in git operations: {e}")
         raise
+
+    # Phase 3: Refresh cache for committed files
+    if commit_success:
+        CacheManager.prefill_guardian_delta(files_to_add)

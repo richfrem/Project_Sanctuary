@@ -35,10 +35,10 @@ from dotenv import load_dotenv
 
 # Load environment variables for engine configuration
 load_dotenv()
-from orchestrator.engines.base import BaseCognitiveEngine
-from orchestrator.engines.gemini_engine import GeminiEngine
-from orchestrator.engines.openai_engine import OpenAIEngine
-from orchestrator.engines.ollama_engine import OllamaEngine
+from .engines.base import BaseCognitiveEngine
+from .engines.gemini_engine import GeminiEngine
+from .engines.openai_engine import OpenAIEngine
+from .engines.ollama_engine import OllamaEngine
 
 def select_engine(config: dict = None) -> BaseCognitiveEngine | None:
     """

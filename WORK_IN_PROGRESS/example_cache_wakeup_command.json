@@ -1,0 +1,9 @@
+{
+  "task_type": "cache_wakeup",
+  "task_description": "Guardian boot digest from cache",
+  "output_artifact_path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+  "config": {
+    "bundle_names": ["chronicles","protocols","roadmap"],
+    "max_items_per_bundle": 15
+  }
+}

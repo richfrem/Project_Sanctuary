@@ -1,7 +1,7 @@
 # council_orchestrator/orchestrator/packets/__init__.py
 # Import façade for stable packet API
 
-from .schema import CouncilRoundPacket, validate_packet, seed_for, prompt_hash
+from .schema import CouncilRoundPacket, validate_packet, seed_for, prompt_hash, RetrievalField, NoveltyField, ConflictField, MemoryDirectiveField
 from .emitter import emit_packet
 from .aggregator import aggregate_round_events, calculate_round_telemetry
 
@@ -12,5 +12,9 @@ __all__ = [
     "prompt_hash",
     "emit_packet",
     "aggregate_round_events",
-    "calculate_round_telemetry"
+    "calculate_round_telemetry",
+    "RetrievalField",
+    "NoveltyField",
+    "ConflictField",
+    "MemoryDirectiveField"
 ]
