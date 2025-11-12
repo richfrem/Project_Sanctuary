@@ -1,0 +1,52 @@
+{
+  "files": [
+    {
+      "path": "TASKS/backlog/007_retrain_sovereign_model_with_targeted_dataset.md",
+      "sha256": "ea3e34d40adc18719a6cd596e32da4d1b0049fc321c940eba87f5f0059a49a20"
+    },
+    {
+      "path": "tools/scaffolds/execute_phoenix_forge_v2.py",
+      "sha256": "3aba8fbe4c3f1dc20d428144a6f8d83d1b1281d97cd46563fa81599ace5fa905"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "340293f2a4171312dae6d7de420a4268651d4a16dee5b7670190a66bcd25bd87"
+    },
+    {
+      "path": "council_orchestrator/docs/howto-commit-command.md",
+      "sha256": "534242f9965c3eaf66ec78fac5486e11f4639f2e266fa080d9148cfa326d0fe3"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/memory/cache.py",
+      "sha256": "ead7e214cff4a08a6820b18e6cf6ee7dbfd3e6bb05897b8fe6d5e75ef2d7f23f"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "c450815abba5b7adec671f8abe3c2a18e8f21503572467d5260cf4749fb944ac"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "9752334a8b4f873ab69085d1ffa97dbf07585c8c138d31d98667d89897437229"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "fbb5d0b3cedf6939101a6cdc6fd2cadcbf5e95cc68c951a96ab419bcb7ccf780"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "ea2ae5e5d37cd8c6ce4954904aa2b590079e0102c7d63d97368166bdc3d2b8d7"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "c86f7b0c7d42bcf19807e61be96cb5be71be43490591bb0e13f40e977df9a096"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "242d25f45c24886f50164f2b8d46c8f154a5603622e7e67b515e4e50e2e761bd"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "f9fd571517f77c8fe65e13cae4047655234530e270e4ed33ddcdef152d736a27"
+    }
+  ]
+}
