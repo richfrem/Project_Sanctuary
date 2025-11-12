@@ -2,11 +2,15 @@
   "files": [
     {
       "path": "council_orchestrator/orchestrator/gitops.py",
-      "sha256": "018b88a15bf70729c0e3a9fe710214b31656d7a60724fcec72c85e1d266e1352"
+      "sha256": "21e4642a6bf0b21c09533517c1ca8311105a5e582d3e9baf23b8f5212e3e645b"
     },
     {
       "path": "council_orchestrator/command_schema.md",
       "sha256": "625e93f9cdea5e4d3edeb5f910d4c3f619b7938bc96fad94f4cd904c61dc9c1c"
+    },
+    {
+      "path": "commit_manifest.json",
+      "sha256": "61f67fa4735e11eac3410f09149b372f0a849e2ad1eb6f93a0f0e88944a09164"
     }
   ]
 }
