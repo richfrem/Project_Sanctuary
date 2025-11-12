@@ -99,7 +99,7 @@ outputs/
 *.bin
 *.gguf
 *.mlx
-sanctuary_whole_genome_data.jsonl
+#sanctuary_whole_genome_data.jsonl
 
 # Colab Notebooks - Generated artifacts, not source code
 Operation_Whole_Genome_Forge.ipynb
