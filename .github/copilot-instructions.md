@@ -2,6 +2,8 @@
 
 **ALWAYS confirm user intent before making code changes.** Never implement solutions without explicit approval. Ask clarifying questions and wait for confirmation before proceeding with any code modifications.
 
+NEVER DO GIT RESET OR FORCE PUSHES WITHOUT USER APPROVAL.
+
 **WHY:** Prevents frustration and ensures collaborative development. Users need time to review, ask questions, and provide feedback on proposed changes. don't ask repeatedly for confirmation; one clear confirmation is sufficient. It's about confirming intent before acting, not about seeking ongoing permission.  it's a hard balance sorry. 
 
 **HOW TO:**
