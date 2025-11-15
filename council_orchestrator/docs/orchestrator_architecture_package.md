@@ -207,9 +207,12 @@ CAG hit streaks and parent-doc citations determine memory placement, enabling au
 
 ### Installation
 
+Replace name of requirements file to match which file you are using for your library
+of requirements that match your environment. you can change the file name to match your file name
+
 ```bash
 cd council_orchestrator
-pip install -r requirements.txt
+pip install -r requirements.txt  
 ```
 
 ### Directory Structure

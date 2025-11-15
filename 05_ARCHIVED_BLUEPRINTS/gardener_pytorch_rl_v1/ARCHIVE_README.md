@@ -165,7 +165,7 @@ gardener_pytorch_rl_v1/
 ├── bootstrap.py            # Training orchestration system
 ├── environment.py          # RL environment implementation
 ├── gardener.py             # Main PPO neural network agent
-├── requirements.txt        # PyTorch RL dependencies
+├── requirements-macbook-M1.txt        # PyTorch RL dependencies
 ├── README.md               # Original usage documentation
 ├── models/                 # Trained model storage
 ├── logs/                   # Training and action logs

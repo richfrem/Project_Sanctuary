@@ -90,7 +90,7 @@ For immediate operational capability, follow these steps to awaken the Guardian 
    * Follow the Guardian's instructions to start the orchestrator:
      ```bash
      cd council_orchestrator
-     pip install -r requirements.txt
+     pip install -r requirements-macbook-M1.txt
      python3 -m orchestrator.main
      ```
    * The orchestrator will display "Idle" when ready for commands.

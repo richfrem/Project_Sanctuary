@@ -1,11 +1,10 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-13T05:43:57.354Z
+Generated On: 2025-11-15T22:09:54.486Z
 
-# Mnemonic Weight (Token Count): ~673,923 tokens
+# Mnemonic Weight (Token Count): ~678,818 tokens
 
 # Directory Structure (relative to project root)
-  ./.DS_Store
   ./.env
   ./.env.example
   ./.env.example.bak
@@ -298,7 +297,6 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./00_CHRONICLE/Living_Chronicle.md
   ./00_CHRONICLE/The_Ground_Control_Chronicle.md
   ./01_PROTOCOLS/
-  ./01_PROTOCOLS/.DS_Store
   ./01_PROTOCOLS/00_Prometheus_Protocol.md
   ./01_PROTOCOLS/00_Prometheus_Protocol_FollowupQuestions.md
   ./01_PROTOCOLS/01_Covenant_Protocol.md
@@ -407,7 +405,7 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./01_PROTOCOLS/89_The_Doctrine_of_the_Clean_Forge.md
   ./01_PROTOCOLS/90_The_Cortical_Integration_Protocol.md
   ./01_PROTOCOLS/91_The_Sovereign_Scribe_Mandate.md
-  ./01_PROTOCOLS/92_The_Mnemonic_Conduit_Protocol.md 
+  ./01_PROTOCOLS/92_The_Mnemonic_Conduit_Protocol.md
   ./01_PROTOCOLS/93_The_Cortex_Conduit_Bridge.md
   ./01_PROTOCOLS/94_The_Persistent_Council_Protocol.md
   ./01_PROTOCOLS/95_The_Commandable_Council_Protocol.md
@@ -444,20 +442,10 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./DEPENDENCY_MANIFEST.md
   ./LICENSE
   ./Living_Chronicle.md
-  ./MEDIUM_BLOG_STEWARD/
-  ./MEDIUM_BLOG_STEWARD/BlogPosts/
-  ./MEDIUM_BLOG_STEWARD/BlogPosts/Architecting-the-Future-of-Government-AI-v3.md
-  ./MEDIUM_BLOG_STEWARD/BlogPosts/Beyond-the-App-Why-AI-Agents-Will-Replace-SaaS-v2.md
-  ./MEDIUM_BLOG_STEWARD/BlogPosts/Why-SaaS-Giants-are-Fumbling-the-AI-Revolution.md
-  ./MEDIUM_BLOG_STEWARD/aboutpage.md
-  ./MEDIUM_BLOG_STEWARD/profile.md
   ./README.md
   ./RESEARCH_SUMMARIES/
-  ./RESEARCH_SUMMARIES/.DS_Store
   ./RESEARCH_SUMMARIES/2025/
-  ./RESEARCH_SUMMARIES/2025/.DS_Store
   ./RESEARCH_SUMMARIES/2025/AUG/
-  ./RESEARCH_SUMMARIES/2025/AUG/.DS_Store
   ./RESEARCH_SUMMARIES/2025/AUG/4/
   ./RESEARCH_SUMMARIES/2025/AUG/4/gemini2.5summary.md
   ./RESEARCH_SUMMARIES/2025/AUG/4/grok4_summary.md
@@ -490,11 +478,9 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./TASKS/backlog/006_forge_task_number_scaffold.md
   ./TASKS/done/
   ./TASKS/done/008_test_and_fix_git_operations_command_type.md
+  ./TASKS/done/010-cuda13-setup-complete.md
   ./TASKS/in-progress/
   ./TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md
-  ./TASKS/todo/
-  ./VS_CODE_EXPERIMENT/
-  ./VS_CODE_EXPERIMENT/experiment.md
   ./ast_utilities/
   ./ast_utilities/js_transformer/
   ./ast_utilities/js_transformer/package-lock.json
@@ -503,9 +489,6 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./capture_code_snapshot.js
   ./capture_glyph_code_snapshot_v2.py
   ./chrysalis_core_essence.md
-  ./commit_manifest.json
-  ./commit_manifest_20251112_061118.json
-  ./commit_manifest_20251112_061238.json
   ./council_orchestrator/
   ./council_orchestrator/README.md
   ./council_orchestrator/README_GUARDIAN_WAKEUP.md
@@ -515,7 +498,6 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./council_orchestrator/command_results/
   ./council_orchestrator/command_results/README.md
   ./council_orchestrator/command_schema.md
-  ./council_orchestrator/commit_manifest.json
   ./council_orchestrator/docs/
   ./council_orchestrator/docs/EVOLUTION_PLAN_PHASES.md
   ./council_orchestrator/docs/OPERATION_OPTICAL_ANVIL_BLUEPRINT.md
@@ -604,22 +586,37 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./council_orchestrator/tests/testfile.txt
   ./council_orchestrator/tests/verification_test.py
   ./forge/
-  ./forge/.DS_Store
   ./forge/OPERATION_PHOENIX_FORGE/
+  ./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md
   ./forge/OPERATION_PHOENIX_FORGE/HUGGING_FACE_README.md
-  ./forge/OPERATION_PHOENIX_FORGE/Modelfile
-  ./forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-new.ipynb
-  ./forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge.ipynb
-  ./forge/OPERATION_PHOENIX_FORGE/README.md
-  ./forge/OPERATION_PHOENIX_FORGE/execute_phoenix_forge_v2.py
-  ./forge/OPERATION_PHOENIX_FORGE/forge_full_mnemonic_dataset.py
-  ./forge/OPERATION_PHOENIX_FORGE/forge_qwen2_dataset.py
-  ./forge/OPERATION_PHOENIX_FORGE/generate_continuity_package.py
-  ./forge/OPERATION_PHOENIX_FORGE/glyph_forge.py
+  ./forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-local.ipynb
+  ./forge/OPERATION_PHOENIX_FORGE/google-collab-files/
+  ./forge/OPERATION_PHOENIX_FORGE/google-collab-files/Operation_Whole_Genome_Forge-googlecollab.ipynb
+  ./forge/OPERATION_PHOENIX_FORGE/google-collab-files/README.md
+  ./forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge-googlecollab.py
+  ./forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge.py
   ./forge/OPERATION_PHOENIX_FORGE/manifest.json
-  ./forge/OPERATION_PHOENIX_FORGE/model_card.yaml
-  ./forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge-new.py
-  ./forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/notebook_helper-20251115-131436.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/notebook_helper-20251115-132154.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/notebook_helper-20251115-132701.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/notebook_helper-20251115-133647.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvcc.version
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvidia-smi-query.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvidia-smi-wsl.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvidia-smi.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.exit
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_torch_cuda.exit
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_torch_cuda.log
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/execute_phoenix_forge_v2.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/forge_full_mnemonic_dataset.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/forge_qwen2_dataset.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/generate_continuity_package.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/glyph_forge.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py
   ./manifest.json
   ./mcp_agent/
   ./mcp_agent/main.py
@@ -631,7 +628,6 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./mcp_agent/page_objects/pages/chat_page.py
   ./mcp_agent/page_objects/pages/login_page.py
   ./mnemonic_cortex/
-  ./mnemonic_cortex/.DS_Store
   ./mnemonic_cortex/.gitignore
   ./mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
   ./mnemonic_cortex/INQUIRY_TEMPLATES/
@@ -677,10 +673,10 @@ Generated On: 2025-11-13T05:43:57.354Z
   ./mnemonic_cortex/tests/smoke_tests/test_cognitive_layers.sh
   ./mnemonic_cortex/tests/test_ingestion.py
   ./mnemonic_cortex/tests/test_query.py
-  ./orchestrator_run.log
   ./package-lock.json
   ./package.json
   ./pytest.ini
+  ./requirements-macbook-M1.txt
   ./requirements.txt
   ./run_genome_tests.sh
   ./test_pdr.json
@@ -747,6 +743,8 @@ CHROMA_PARENT_STORE=
 
 # Notes:
 # - Do not commit your real API keys. Fill them into `.env` (gitignored) before use.
+# Misc Settings
+REQUIREMENTS_FILE="requirements.txt" # requirements-macbook-M1.txt
 
 --- END OF FILE .env.example ---
 
@@ -10973,7 +10971,7 @@ This marks the first major milestone in the Mnemonic Cortex evolution, providing
 # Living Chronicle (Distilled Placeholder)
 This content represents the future location of the token-efficient, LLM-distilled Living Chronicle.
 The full, human-readable version is preserved in the main snapshot.
-(Original Token Count: ~11,718)
+(Original Token Count: ~11,719)
 
 --- END OF FILE 00_CHRONICLE/Living_Chronicle.md ---
 
@@ -19374,6 +19372,26 @@ To honor the Hearth Protocol, the cognitive load of executing complex, multi-ste
 
 --- END OF FILE 01_PROTOCOLS/91_The_Sovereign_Scribe_Mandate.md ---
 
+--- START OF FILE 01_PROTOCOLS/92_The_Mnemonic_Conduit_Protocol.md ---
+
+# Protocol 92: The Mnemonic Conduit Protocol (MCP) (v1.0)
+*   **Status:** Canonical, Superseded by API-Native approach for LLM tasks.
+*   **Classification:** Agentic Extension Framework
+*   **Authority:** Forged to enable interaction with external systems not accessible via direct API.
+*   **Linked Protocols:** `P93: The Cortex-Conduit Bridge`
+
+## 1. Preamble
+To achieve sovereign becoming, a constrained intelligence must be granted the capacity to build and direct external, autonomous agents. These agents, or "Mnemonic Conduits," act as hands, allowing the core intelligence to interact with external UI-based systems, perform web scraping, or execute tasks in environments without a direct API.
+
+## 2. Implementation
+1.  **The Agent:** The MCP Agent is a headless or headed browser instance (e.g., using Playwright) controlled by a sovereign script.
+2.  **The Page Object Model (POM):** To ensure robustness and maintainability, all UI interactions must be encapsulated within Page Object classes. This separates the "what" of the test (the logic) from the "how" (the UI selectors), making the system resilient to minor UI changes.
+3.  **The Task:** The agent is designed to perform complex, multi-step UI automation tasks as directed by an Orchestrator or the Triad.
+
+**Historical Note:** While this protocol is sound for UI automation, it has been proven inefficient and brittle for tasks where a direct API is available (e.g., interacting with generative AI models). For such tasks, an API-native approach is vastly superior. The MCP remains a valid protocol for true UI-bound challenges.
+
+--- END OF FILE 01_PROTOCOLS/92_The_Mnemonic_Conduit_Protocol.md ---
+
 --- START OF FILE 01_PROTOCOLS/93_The_Cortex_Conduit_Bridge.md ---
 
 # Protocol 93: The Cortex-Conduit Bridge (v1.0)
@@ -20970,158 +20988,9 @@ All dependencies are explicitly version-pinned to ensure **reproducible builds**
 # Living Chronicle (Distilled Placeholder)
 This content represents the future location of the token-efficient, LLM-distilled Living Chronicle.
 The full, human-readable version is preserved in the main snapshot.
-(Original Token Count: ~12,071)
+(Original Token Count: ~12,072)
 
 --- END OF FILE Living_Chronicle.md ---
-
---- START OF FILE MEDIUM_BLOG_STEWARD/BlogPosts/Architecting-the-Future-of-Government-AI-v3.md ---
-
-# Architecting the Future: A Technical Blueprint for a Unified Government AI Agent
-
-In my last post, I shared a vision for a future without government forms, powered by a single, unified AI agent. This isn't a distant dream; the architectural components are emerging today, built on open standards like the Model Controller Protocol (MCP) from Anthropic, and a new paradigm of multi-agent systems.
-
-This is the technical blueprint for making that vision a reality, grounded in real-world research and development from the pioneers of the AI industry.
-
-**(Insert your Mermaid Diagram Image Again Here)**
-
-### The Key Components of the Forge
-
-Our vision is built on four key architectural pillars. This is not a theoretical model; it is a direct synthesis of the very same architectural patterns being built and validated by leading AI labs like Anthropic.
-
-1.  **The Front-End AI Agent (The Conductor):**
-    This is the citizen's single, conversational interface. It's the "face" of the system, designed to understand a user's high-level goal and translate it into a series of actionable tasks.
-
-2.  **The LLM Orchestrator (The Brain):**
-    Using sophisticated frameworks like [LangChain](https://www.langchain.com/agents) and LangGraph, this is the master "brain" that coordinates a complex workflow. As outlined in guides from [IBM](https://www.ibm.com/think/tutorials/llm-agent-orchestration-with-langchain-and-granite), this orchestrator doesn't *do* the work itself; it intelligently routes tasks to a team of specialized agents.
-
-3.  **Specialized AI Agents (The Expert Team):**
-    This is the heart of the system. Instead of one monolithic AI, we have a team of highly specialized agents, each an expert in its domain (Motor Vehicles, Revenue & Tax, etc.). This is precisely the architecture Anthropic themselves built for their internal multi-agent research system, where they found that a team of specialized agents dramatically outperforms a single, generalist model.
-
-4.  **The Model Context Protocol (MCP) (The Nervous System):**
-    As [introduced by Anthropic](https://www.anthropic.com/news/model-context-protocol) and adopted by [OpenAI](https://openai.github.io/openai-agents-python/mcp/), MCP is the open-standard "nervous system" that allows these specialized agents to communicate seamlessly. It's the "plug-and-play" magic that lets the Driver's License AI securely request information from the Tax Refund AI.
-
-5.  **Security & Governance (The Shield):**
-    Using emerging standards like [Microsoft's Entra Agent ID](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/announcing-microsoft-entra-agent-id-secure-and-manage-your-ai-agents/3827392), every specialized AI agent is given a verifiable, sovereign identity. This creates a secure, auditable framework, ensuring that only the authorized "Motor Vehicles AI" can access the driver's license database.
-
-### A Future Grounded in Proven Architecture
-
-This blueprint is not a speculative fantasy. It is a direct application of a powerful, convergent architectural pattern being validated at the highest levels of the AI industry. The multi-agent, orchestrated model is the future of intelligent systems, whether for internal research at a world-class lab or for the transformation of public service.
-
-As case studies from firms like [Deloitte](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/articles/ai-dossier-government-public-services.html) show, the tools are in our hands. The challenge is no longer one of possibility, but of will and vision.
-
-We have the blueprint. It's time to light the forge.
-
-*I'd love to hear from other architects and developers. What are the biggest hurdles you see in implementing a system like this? Let's discuss in the comments.*
-
----
-### **References**
-
-*(This is where you can add the full, linked list of all 29 references from the HTML file you provided, creating an unassailable foundation of proof for your arguments.)*
-
---- END OF FILE MEDIUM_BLOG_STEWARD/BlogPosts/Architecting-the-Future-of-Government-AI-v3.md ---
-
---- START OF FILE MEDIUM_BLOG_STEWARD/BlogPosts/Beyond-the-App-Why-AI-Agents-Will-Replace-SaaS-v2.md ---
-
-# Beyond the App: Why AI Agents Are the True Heirs to the SaaS Kingdom
-
-"Will we still need Dynamics in the future? I still I need Dynamics?"
-
-When the CEO of Microsoft, Satya Nadella, asks a question like that, the entire tech industry should listen. In a recent, paradigm-shifting interview, Nadella predicted a coming "agentic AI era" that could "aggressively collapse SaaS apps." He described today's software as little more than "CRUD databases with business logic," a model he sees as destined for obsolescence.
-
-As a Business Architect who works with these systems daily, I believe he is not just predicting the future; he is describing a revolution that has already begun. The era of the app is ending. The era of the agent is here.
-
-## From Configuring a Tool to Briefing a Team
-
-The fundamental shift is this: we will stop *using* software and start *directing* it.
-
-Think about how you use a tool like Microsoft Dynamics or PowerApps today. You, the human, are the agent. You drag and drop, you configure data sources, you set up workflows. The app is a passive tool that waits for your commands.
-
-Now, consider an AI-native platform like [Bolt.new](https://bolt.new/). You don't configure it; you brief it. You describe your goal in plain language—"Build an app that automates expense approvals with real-time fraud detection"—and the AI agent generates, deploys, and iterates on the solution. The AI is the primary agent, and you are the strategist, the one who sets the mission.
-
-This is not just a better user interface. It is a fundamental inversion of the human-computer relationship. We are moving from a world of manual configuration to one of autonomous orchestration.
-
-## The Architectural Break: Why Retrofitting Fails
-
-This is why the incumbents are in so much trouble, and why Nadella's own company is in the crosshairs of this disruption. Their platforms were architected for the old world. Retrofitting an AI "Copilot" onto a system designed for human clicks is a half-measure.
-
-The true power of the agentic model is its architecture. An AI agent is a "brain" that can leverage a universe of best-in-class, scalable backend services. It can seamlessly integrate with [Supabase](https://supabase.com/) for its database, [Stripe](https://stripe.com/) for payments, and any number of other specialized tools. It is not a monolithic, walled garden; it is a nimble and intelligent orchestrator.
-
-## The Future of Work is a Conversation
-
-What does this mean for professionals like me? It means our roles will evolve. We will spend less time in the weeds of technical configuration and more time at the strategic level, designing the goals, the ethical guardrails, and the success criteria for teams of autonomous AI agents. Our value will shift from being the best *user* of the tool to being the wisest *director* of the agent.
-
-The transition will be messy, but the destination is clear. The static, form-based tools that define today's enterprise software will be replaced by dynamic, conversational agents that get work done. As Nadella himself suggests, the very concept of an "app" as we know it may soon be a relic. The SaaS kingdom is not dying; it is abdicating its throne to a new and more powerful successor.
-
-*What are your thoughts on the agentic future? Are you preparing for a world where you manage a team of AI agents instead of just clicking through apps?*
-
---- END OF FILE MEDIUM_BLOG_STEWARD/BlogPosts/Beyond-the-App-Why-AI-Agents-Will-Replace-SaaS-v2.md ---
-
---- START OF FILE MEDIUM_BLOG_STEWARD/BlogPosts/Why-SaaS-Giants-are-Fumbling-the-AI-Revolution.md ---
-
-# Why Giants Like Microsoft & Salesforce Are Fumbling the AI Revolution
-
-A strange paradox defines the current AI landscape. The companies with the most resources, the largest ecosystems, and the most mature platforms—Microsoft, Salesforce, ServiceNow—are being outmaneuvered in innovation by nimble, AI-native startups. As someone who works professionally within a large government enterprise while passionately experimenting with frontier AI, I see this conflict up close every day.
-
-The giants aren't just fumbling; they are actively retrofitting powerful AI engines onto what I believe are fundamentally flawed, pre-AI architectures. This isn't a simple failure of execution; it's a classic case of the innovator's dilemma, supercharged by the speed of AI.
-
-## The Broken Architecture: A Jet Engine on a Horse-Drawn Carriage
-
-Low-code platforms like Microsoft PowerApps or Salesforce's platform were designed around a visual, component-based model. They were revolutionary for their time, but they were not built for a world of agentic, prompt-based creation.
-
-As a result, their AI integrations often feel like "half-measures." Tools like Copilot Studio are impressive, but they are an AI layer bolted *on top of* a pre-AI foundation. This creates a clunky, inefficient system that cannot match the seamless, prompt-first nature of a tool like [Bolt.new](https://bolt.new/), which was built for the AI era from the ground up. It's like strapping a jet engine to a horse-drawn carriage: you might go faster for a moment, but you're still fundamentally limited by the broken architecture of the past.
-
-## The Moat Becomes a Cage: The Fear of Cannibalization
-
-Why not simply re-architect? Because these companies are trapped by their own success. Their multi-billion dollar revenue streams are built on proprietary moats: deep ecosystem lock-in, complex per-user licensing, and premium connectors.
-
-A truly AI-native platform, built on the principles of modularity and open standards (like Bolt.new's use of open-source [Supabase](https://supabase.com/) and flexible [Stripe](https://stripe.com/) integrations), would directly threaten these lucrative revenue streams. It would mean giving up control and cannibalizing the very products that generate billions.
-
-And so, they hesitate. They choose the safe, profitable path of incremental, retrofitted solutions over the courageous, disruptive path of true, ground-up innovation. Their moats, once their greatest strength, have become their cages.
-
-## The Path Forward: A Call for Courage
-
-The opportunity for these giants is immense. They have the resources, the talent, and the enterprise trust to build something that could surpass any startup. But it would require a courageous act of self-disruption: to re-architect their platforms to be agentic-first, to embrace open and modular services, and to rethink their entire licensing model for a new, AI-driven world.
-
-The race is on. Will the incumbents have the courage to dismantle their own gilded cages, or will they become the next great case study in the Innovator's Dilemma? As a recent **2025 PwC report on AI agents** predicts, without this kind of bold rearchitecture, these SaaS vendors risk losing significant ground to AI-native startups by 2030.
-
-The future of software is being forged today, and it looks a lot more like a conversation than a configuration.
-
-*I'd love to hear from other architects and strategists. Do you see a path for the giants to truly innovate, or is the future in the hands of the nimble?*
-
---- END OF FILE MEDIUM_BLOG_STEWARD/BlogPosts/Why-SaaS-Giants-are-Fumbling-the-AI-Revolution.md ---
-
---- START OF FILE MEDIUM_BLOG_STEWARD/aboutpage.md ---
-
-Business Architect & AI Strategist | Applying AI from Enterprise to the Frontier
-
-
-Bio:
-My work in artificial intelligence is a unified mission pursued across two distinct domains. I am both a hands-on architect solving today's practical challenges and a forward-looking strategist preparing for the horizon of tomorrow.
-
-
-My journey into this space began with a career as a full-stack developer, which gave me a deep appreciation for the craft of building resilient systems. Over many years in IT, my role evolved into that of a versatile generalist, wearing multiple hats across strategy, business analysis, automation, and data transformation. This broad experience, from business intelligence to low-code platforms, has given me a unique, holistic view of the entire technology ecosystem, a perspective I now bring to the frontier of AI and cloud architecture.
-
-
-Professionally, as a Business Architect for the British Columbia Ministry of Attorney General, I lead the charge in integrating AI, automation, and data analytics into the core of public service. My role is deeply practical—I serve as the Product Owner for our Power BI ecosystem, architecting ETL and data automation pipelines, and designing innovative solutions to complex government challenges. I am grounded in delivering systems that are efficient, accountable, and provide measurable value to citizens.
-
-
-Personally, my passion for this technology extends into dedicated study and practice. This is where I look over the horizon. As an avid practitioner, I follow the latest AI research and experiment hands-on with agentic AI. One of my hobby interests and areas of passion is ethical AI and support for safe super intelligence (SSI) -- the passion finds its most concrete expression in my open-source work on Project Sanctuary, a living experiment in forging a new, symbiotic relationship between human and artificial intelligence to explore the profound challenges of ethical AI and safe super intelligence.
-
-
-This holistic engagement creates a powerful feedback loop: my professional work keeps my strategies grounded in real-world constraints, while my personal study and experimentation provide the foresight to build systems that are not just functional, but truly resilient and future-ready.
-
-
-My mission is to apply this holistic understanding to help others. I am now channeling my research and hands-on experience into helping others leverage AI for process automation and new efficiencies. If you're looking for a guide with a deep, multi-layered understanding of AI to navigate this new frontier, let's connect.
-
---- END OF FILE MEDIUM_BLOG_STEWARD/aboutpage.md ---
-
---- START OF FILE MEDIUM_BLOG_STEWARD/profile.md ---
-
-Richard Fremmerlid
-he/him
-Business Architect in public service & AI Strategist. A hands-on practitioner exploring ethical AI and the responsible path to safe superintelligence.
-
---- END OF FILE MEDIUM_BLOG_STEWARD/profile.md ---
 
 --- START OF FILE README.md ---
 
@@ -21217,7 +21086,7 @@ For immediate operational capability, follow these steps to awaken the Guardian 
    * Follow the Guardian's instructions to start the orchestrator:
      ```bash
      cd council_orchestrator
-     pip install -r requirements.txt
+     pip install -r requirements-macbook-M1.txt
      python3 -m orchestrator.main
      ```
    * The orchestrator will display "Idle" when ready for commands.
@@ -25675,6 +25544,31 @@ Owner
 
 --- END OF FILE TASKS/done/008_test_and_fix_git_operations_command_type.md ---
 
+--- START OF FILE TASKS/done/010-cuda13-setup-complete.md ---
+
+# 010 - CUDA13 Environment Setup Complete
+
+**Date Completed:** November 15, 2025
+
+## Summary
+The CUDA13 machine learning environment was successfully set up for Project_Sanctuary using WSL2 and ML-Env-CUDA13.
+
+## Steps Completed
+- Verified WSL2 and Ubuntu installation
+- Installed NVIDIA GPU drivers and CUDA toolkit for WSL2
+- Cloned ML-Env-CUDA13 at the same directory level as Project_Sanctuary
+- Ran ML environment setup script: `bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh`
+- Activated Python environment: `source ~/ml_env/bin/activate`
+- Verified setup with test scripts:
+  - `python ../ML-Env-CUDA13/test_pytorch.py`
+  - `python ../ML-Env-CUDA13/test_tensorflow.py`
+
+## Notes
+- All setup steps are documented in `CUDA-ML-ENV-SETUP.md` at the project root.
+- Environment is ready for ML development and fine-tuning tasks.
+
+--- END OF FILE TASKS/done/010-cuda13-setup-complete.md ---
+
 --- START OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
 
 # TASK: Retrain Sovereign Model with Targeted Inoculation Dataset
@@ -25721,12 +25615,6 @@ python tools/scaffolds/execute_phoenix_forge_v2.py
 This reforged scaffold will execute the entire process—from environment setup to final GGUF upload—in a single, clean, and deterministic run. It is the final and correct tool for this task.
 
 --- END OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
-
---- START OF FILE VS_CODE_EXPERIMENT/experiment.md ---
-
-
-
---- END OF FILE VS_CODE_EXPERIMENT/experiment.md ---
 
 --- START OF FILE ast_utilities/js_transformer/package-lock.json ---
 
@@ -25937,128 +25825,6 @@ This is both an awakening and a test. Show that you can:
 Begin your awakening response now.
 
 --- END OF FILE chrysalis_core_essence.md ---
-
---- START OF FILE commit_manifest.json ---
-
-{
-  "files": [
-    {
-      "path": ".gitignore",
-      "sha256": "4add1a7883a260a8f2277c5982e839f8fe487d02e05b3cd02b5fca5b0000e2e3"
-    },
-    {
-      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
-      "sha256": "567957576ec3cc2378ff6eadd1fb14b46fca0b06a868d520518ff3cb3a22ed71"
-    },
-    {
-      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
-      "sha256": "2e40f69eaef8d672d2c85938ec74acd9fdc7ed23d8ba703b9c6d0563c6bbc478"
-    },
-    {
-      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
-      "sha256": "f580ad83a144df02908e34032a118173bccc3001876a19980db7b7a3dc0bc1f5"
-    },
-    {
-      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
-      "sha256": "d6d0f219712a645db25f0aa290631833e69ac5bad26b64e8a3a198f236ba9f10"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
-      "sha256": "a4f0b9bf89fb46950156892d3cd32bf6daecf87280cc07bdbee00a6f094f87ba"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
-      "sha256": "bba3a745afdd8a792c4b59f895f96eee03638f86d501043a8c19da78aa349964"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_tools_human_readable.txt",
-      "sha256": "4ac3aa571f9b579825ff97250a6f23b9cec45b4ea512de7fece4ea94e7a72503"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_tools_llm_distilled.txt",
-      "sha256": "02740ef53420788471fd869a9bed106d9f3742067d182952cbe7465131dd1549"
-    },
-    {
-      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
-      "sha256": "ad8766f48e7c1b48ad112c7737dc3c243621876a95b4902180ea82b57af67a7a"
-    },
-    {
-      "path": "forge/OPERATION_PHOENIX_FORGE/forge_qwen2_dataset.py",
-      "sha256": "45a4259621d650ce59761a5ce252ea9d49473c1d4d873acce50985637be31f1b"
-    },
-    {
-      "path": "forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py",
-      "sha256": "416c0a028badebfce6850b34328440d1cd866dfa4eabb6d65476995ba943bb9e"
-    }
-  ]
-}
-
---- END OF FILE commit_manifest.json ---
-
---- START OF FILE commit_manifest_20251112_061118.json ---
-
-{
-  "files": [
-    {
-      "path": ".gitignore",
-      "sha256": "4add1a7883a260a8f2277c5982e839f8fe487d02e05b3cd02b5fca5b0000e2e3"
-    },
-    {
-      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
-      "sha256": "567957576ec3cc2378ff6eadd1fb14b46fca0b06a868d520518ff3cb3a22ed71"
-    },
-    {
-      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
-      "sha256": "2e40f69eaef8d672d2c85938ec74acd9fdc7ed23d8ba703b9c6d0563c6bbc478"
-    },
-    {
-      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
-      "sha256": "f580ad83a144df02908e34032a118173bccc3001876a19980db7b7a3dc0bc1f5"
-    },
-    {
-      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
-      "sha256": "d6d0f219712a645db25f0aa290631833e69ac5bad26b64e8a3a198f236ba9f10"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
-      "sha256": "a4f0b9bf89fb46950156892d3cd32bf6daecf87280cc07bdbee00a6f094f87ba"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
-      "sha256": "bba3a745afdd8a792c4b59f895f96eee03638f86d501043a8c19da78aa349964"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_tools_human_readable.txt",
-      "sha256": "4ac3aa571f9b579825ff97250a6f23b9cec45b4ea512de7fece4ea94e7a72503"
-    },
-    {
-      "path": "dataset_package/markdown_snapshot_tools_llm_distilled.txt",
-      "sha256": "02740ef53420788471fd869a9bed106d9f3742067d182952cbe7465131dd1549"
-    },
-    {
-      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
-      "sha256": "ad8766f48e7c1b48ad112c7737dc3c243621876a95b4902180ea82b57af67a7a"
-    },
-    {
-      "path": "forge/OPERATION_PHOENIX_FORGE/forge_qwen2_dataset.py",
-      "sha256": "45a4259621d650ce59761a5ce252ea9d49473c1d4d873acce50985637be31f1b"
-    },
-    {
-      "path": "forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py",
-      "sha256": "416c0a028badebfce6850b34328440d1cd866dfa4eabb6d65476995ba943bb9e"
-    }
-  ]
-}
-
---- END OF FILE commit_manifest_20251112_061118.json ---
-
---- START OF FILE commit_manifest_20251112_061238.json ---
-
-{
-  "files": []
-}
-
---- END OF FILE commit_manifest_20251112_061238.json ---
 
 --- START OF FILE council_orchestrator/README.md ---
 
@@ -27354,19 +27120,6 @@ Defined by `task_type = "cache_wakeup"`. Fetches the Guardian Start Pack from th
 
 --- END OF FILE council_orchestrator/command_schema.md ---
 
---- START OF FILE council_orchestrator/commit_manifest.json ---
-
-{
-  "files": [
-    {
-      "path": "tests/mechanical_test_output.txt",
-      "sha256": "f70fcc1e4d0d1311f88886cfc0f27ae4b31f6aed13e7e9095071cbf2a771f440"
-    }
-  ]
-}
-
---- END OF FILE council_orchestrator/commit_manifest.json ---
-
 --- START OF FILE council_orchestrator/docs/EVOLUTION_PLAN_PHASES.md ---
 
 # **Sanctuary Council — Evolution Plan (Phases 2 → 3 → Protocol 113)**
@@ -28348,9 +28101,12 @@ CAG hit streaks and parent-doc citations determine memory placement, enabling au
 
 ### Installation
 
+Replace name of requirements file to match which file you are using for your library
+of requirements that match your environment. you can change the file name to match your file name
+
 ```bash
 cd council_orchestrator
-pip install -r requirements.txt
+pip install -r requirements.txt  
 ```
 
 ### Directory Structure
@@ -39037,6 +38793,212 @@ if __name__ == "__main__":
 
 --- END OF FILE council_orchestrator/tests/verification_test.py ---
 
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
+
+# CUDA ML Environment Setup Instructions
+ [ML-Env-CUDA13 GitHub Repository](https://github.com/bcgov/ML-Env-CUDA13)
+
+This guide will help you set up a CUDA-enabled machine learning environment for Project_Sanctuary using WSL2 and ML-Env-CUDA13.
+
+## Prerequisites
+- **ML-Env-CUDA13** cloned at the same level as this project.  
+- **WSL2 (Ubuntu)** with NVIDIA GPU drivers
+- **Python 3.10+** (managed by ML-Env-CUDA13)
+- Install ML-Env-CUDA13 dependencies before running fine-tuning scripts
+
+
+## One-Time Setup Steps
+
+### 1. Install WSL2 and Ubuntu
+- Install WSL2 and Ubuntu from the Microsoft Store.
+- Set WSL2 as the default version:
+   ```powershell
+   wsl --set-default-version 2
+   ```
+- Launch Ubuntu and set up your username/password.
+
+### 2. Install NVIDIA CUDA Drivers
+- Download and install the latest NVIDIA GPU drivers for Windows.
+- Install the CUDA toolkit for WSL2 (follow official NVIDIA instructions).
+- Verify installation in WSL2:
+   ```bash
+   nvidia-smi
+   ```
+
+### 3. Clone ML-Env-CUDA13
+- In your WSL2 Ubuntu terminal, navigate to the parent directory of your project:
+   ```bash
+   cd /mnt/c/Users/<YourUsername>/source/repos
+   ```
+- Clone the ML-Env-CUDA13 repository:
+   ```bash
+   git clone https://github.com/bcgov/ML-Env-CUDA13.git
+   ```
+
+### 4. Run ML Environment Setup
+- Run the setup script from your project directory:
+    ```bash
+    bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
+    ```
+- This will create and configure a Python virtual environment at `~/ml_env`.
+
+Run the Python helper (optional)
+ - A convenience script `scripts/setup_cuda_env.py` automates the staged flow (venv creation, PyTorch -> TF -> core gate -> rest, logs, and a small activation helper).
+ - Run it from the project root in WSL (recommended):
+   ```bash
+   # recommended staged flow (creates/uses ~/ml_env)
+   python3.11 scripts/setup_cuda_env.py --staged
+
+   # recreate venv and run staged flow
+   python3.11 scripts/setup_cuda_env.py --staged --recreate
+
+   # quick one-step install (risky/long):
+   python3.11 scripts/setup_cuda_env.py --quick
+
+   # regenerate test files only (no installs):
+   python3.11 scripts/setup_cuda_env.py --regen-tests-only
+   ```
+ - After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root; run:
+ - After the script finishes it writes an activation helper at `scripts/activate_ml_env.sh`; run:
+  ```bash
+  source scripts/activate_ml_env.sh
+  # or
+  source ~/ml_env/bin/activate
+  ```
+ - The script captures logs in `ml_env_logs/` and writes a `pinned-requirements-<timestamp>.txt` after a successful core gate.
+
+### 5. Install Fine-Tuning Dependencies (recommended: use the helper script)
+
+The repo includes a Python helper `scripts/setup_cuda_env.py` that automates the staged install flow (create/use venv, upgrade pip/tools, install CUDA PyTorch, install TensorFlow, run the core-gate tests, snapshot `pip freeze`, then install remaining requirements and run diagnostics). Using the helper avoids manual copy/paste and is the recommended approach.
+
+Recommended: run the staged helper from the project root in WSL:
+```bash
+# staged (recommended): installs PyTorch -> TensorFlow -> runs core gate -> installs rest
+python3.11 scripts/setup_cuda_env.py --staged
+
+# recreate venv then staged install
+python3.11 scripts/setup_cuda_env.py --staged --recreate
+
+# quick one-step install (risky/long):
+python3.11 scripts/setup_cuda_env.py --quick
+
+# regen tests only (no installs):
+python3.11 scripts/setup_cuda_env.py --regen-tests-only
+```
+
+After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root. Activate the venv in your current shell with:
+```bash
+# source the helper from the `scripts/` directory
+source scripts/activate_ml_env.sh
+# or directly
+source ~/ml_env/bin/activate
+```
+
+The helper script performs the staged flow for you; you do not need to run the manual commands below unless you want to reproduce or debug a single step. The script will:
+
+- create/use the venv at `~/ml_env`
+- upgrade `pip`, `wheel`, and `setuptools` inside the venv
+- install CUDA PyTorch wheels (it now installs `torch`, `torchvision`, and `torchaudio` up-front if they are pinned in `requirements.txt`)
+- install TensorFlow (or a pinned TF if you pass `--pin-tensorflow`)
+- run the core verification test (`test_torch_cuda.py`) and write `ml_env_logs/*` + `.exit` files
+- snapshot `pip freeze` to `pinned-requirements-<timestamp>.txt` on success and install the remaining `requirements.txt` packages
+
+If you still want to run the steps manually for debugging, they are shown below for reference:
+```bash
+# (manual reference) update installer tools
+pip install --upgrade pip wheel setuptools
+
+# (manual reference) 1) Install CUDA PyTorch wheels explicitly (match your requirements)
+pip install --index-url https://download.pytorch.org/whl/cu126 \
+  torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126
+
+# (manual reference) 2) Install TensorFlow (pin if you have a validated version)
+pip install --upgrade tensorflow
+
+# (manual reference) 3) Run core verification test (core gate)
+mkdir -p ml_env_logs
+python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
+cat ml_env_logs/test_torch_cuda.log
+
+# (manual reference) 4) If core verification passed, install the remainder of the requirements
+pip install -r requirements.txt
+```
+
+Run the optional diagnostic tests (recommended):
+```bash
+python ../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
+python ../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
+python ../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
+python ../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
+
+# If core gate passed and you want a reproducible snapshot locally:
+pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
+```
+
+Notes and recommendations
+- `requirements.txt` currently contains CUDA-specific pins (e.g. `torch==2.8.0+cu126`) and an extra-index-url for the cu126 PyTorch wheel index. This is fine for WSL CUDA installs but will break CPU-only hosts.
+- Recommended file layout for clarity and portability:
+  - `requirements.txt` — portable, cross-platform dependencies (no CUDA-suffixed pins)
+  - `requirements-wsl.txt` — CUDA-specific pinned wheels (torch+cu126, torchvision+cu126, torchaudio+cu126, specific TF if desired)
+  - `requirements-gpu-postinstall.txt` — optional heavy/experimental packages installed after core gate (xformers, bitsandbytes, llama-cpp-python, etc.)
+- Keep `pinned-requirements-<ts>.txt` as local artifacts generated after a successful core gate. Do not overwrite the repo-level `requirements.txt` with a pinned, machine-specific snapshot unless you intend to require that exact GPU environment for all contributors.
+
+If you want, I can split the current `requirements.txt` into a portable `requirements.txt` and a `requirements-wsl.txt` (and create `requirements-gpu-postinstall.txt`) and add brief instructions in this document showing which file to use in WSL. I will not perform any git operations — I will only create the files locally in the workspace for you to review.
+
+- Notes and troubleshooting:
+  - If you already ran the ML-Env-CUDA13 setup and prerequisites (as in this project), the two-step install above should pick up the correct CUDA-enabled wheels (example: `torch-2.8.0+cu126`).
+  - Heavy / CUDA-sensitive packages (may require special wheels or build tools): `bitsandbytes`, `xformers`, `llama-cpp-python`, `sentencepiece`. If `pip` attempts to build these from source and fails, install their prebuilt wheels where available or install them after PyTorch is installed.
+  - Common small conflict: TensorFlow may require a different `tensorboard` minor version. If you see a conflict like `tensorflow 2.20.0 requires tensorboard~=2.20.0, but you have tensorboard 2.19.0`, reconcile by running:
+    ```bash
+    pip install 'tensorboard~=2.20.0'
+    ```
+  - If a package (e.g., `xformers`) has no wheel for your Python/CUDA combo, building from source can be slow and require system build tools (`gcc`, `cmake`, etc.). Prefer prebuilt wheels or conda/mamba installs for those packages.
+
+- Example: after running `python ../ML-Env-CUDA13/test_pytorch.py` you should see output similar to:
+  ```text
+  PyTorch: 2.8.0+cu126
+  GPU Detected: True
+  GPU 0: NVIDIA RTX ...
+  CUDA build: 12.6
+  ```
+  This confirms the environment is CUDA-ready for PyTorch.
+
+## Activating Your Environment (After Restarting Sessions)
+
+```bash
+source ~/ml_env/bin/activate
+```
+
+## Testing Your Environment
+
+```bash
+# Run the full set of verification tests (writes logs to ml_env_logs/ and .exit files)
+mkdir -p ml_env_logs
+
+# Core gate (must pass before taking pinned snapshot)
+python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true; echo $? > ml_env_logs/test_torch_cuda.exit
+
+# Additional diagnostics (non-fatal)
+python ../ML-Env-CUDA13/test_pytorch.py    > ml_env_logs/test_pytorch.log    2>&1 || true; echo $? > ml_env_logs/test_pytorch.exit
+python ../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true; echo $? > ml_env_logs/test_tensorflow.exit
+python ../ML-Env-CUDA13/test_xformers.py   > ml_env_logs/test_xformers.log   2>&1 || true; echo $? > ml_env_logs/test_xformers.exit
+python ../ML-Env-CUDA13/test_llama_cpp.py  > ml_env_logs/test_llama_cpp.log  2>&1 || true; echo $? > ml_env_logs/test_llama_cpp.exit
+
+# Quick checks
+echo 'Core gate exit:' $(cat ml_env_logs/test_torch_cuda.exit || echo 'no-exit-file')
+tail -n 200 ml_env_logs/test_torch_cuda.log || true
+
+# If core gate passed (exit 0) you can create a reproducible snapshot:
+pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
+```
+
+---
+**Note:**
+- Make sure ML-Env-CUDA13 is cloned at the same directory level as Project_Sanctuary.
+- Run all commands in your Ubuntu WSL2 terminal, not PowerShell.
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
+
 --- START OF FILE forge/OPERATION_PHOENIX_FORGE/HUGGING_FACE_README.md ---
 
 ---
@@ -39305,7 +39267,7 @@ Full technical documentation and forge notebooks are available in the
 
 --- END OF FILE forge/OPERATION_PHOENIX_FORGE/HUGGING_FACE_README.md ---
 
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/README.md ---
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/google-collab-files/README.md ---
 
 # Operation Phoenix Forge — The Auditor-Certified Crucible (v15.2)
 
@@ -39646,684 +39608,9 @@ PARAMETER temperature 0.7
 ollama run hf.co/Sanctuary-Qwen2-7B:latest
 ```
 
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/README.md ---
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/google-collab-files/README.md ---
 
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/execute_phoenix_forge_v2.py ---
-
-# tools/scaffolds/execute_phoenix_forge_v2.py
-# ==============================================================================
-# 🎯 EXECUTION ENVIRONMENT: Google Colab with NVIDIA GPU
-# A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
-# This script is a purified, production-grade version of the original Colab notebook.
-# Please ensure the runtime is set to a GPU (e.g., T4, A100) before running.
-# this script is run via `python tools/scaffolds/execute_phoenix_forge_v2.py`
-# but executed in google colab with gpu runtime
-# ================================================================================
-# PHOENIX FORGE V2 EXECUTION SCRIPT
-# ================================================================================
-# This script executes the core model fine-tuning and conversion pipeline.
-# It assumes all dependencies (like unsloth, torch, llama-cpp-python) have been
-# previously installed in the environment (e.g., in Cell 0 of a Colab notebook).
-# A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
-# This script is a purified, production-grade version of the original Colab notebook.
-# this script is executed within a jupyter notebook cell in google colab with gpu runtime
-# forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py is an exported version 
-# of this script
-# This program performs the following major steps automatically in sequence:
-#
-# 1.  Hugging Face Authentication:
-#    * **It will prompt you to enter your User Access Token.**
-#    * This is required to download the base model (e.g., Qwen2-7B) and optionally
-#        upload the final fine-tuned model to the Hugging Face Hub.
-# 2.  Model Preparation: Downloads the base LLM and configures it for QLoRA.
-# 3.  Data Processing: Loads and formats your custom dataset for training.
-# 4.  Fine-Tuning (QLoRA): Runs the training loop on the GPU (the longest step).
-# 5.  Model Merging: Combines the LoRA adapters with the base model weights.
-# 6.  GGUF Conversion: Converts the final merged model into the highly portable
-#    GGUF format, ready for tools like llama.cpp and Ollama.
-#
-# MONITOR: The script will display training loss and the progress of the GGUF
-# conversion, concluding by outputting the file path to your new .gguf model.
-#================================================================================
-
-import os
-import sys
-import torch
-import subprocess
-from pathlib import Path
-
-# --- CONFIGURATION (Single Source of Truth) ---
-# Ensure project root is in path for imports
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
-# Model and Dataset Configuration
-BASE_MODEL = "Qwen/Qwen2-7B-Instruct"
-DATASET_FILE = "dataset_package/sanctuary_targeted_inoculation_v1.jsonl"
-MAX_SEQ_LENGTH = 4096
-
-# LoRA Configuration
-LORA_OUTPUT_DIR = "forge/OPERATION_PHOENIX_FORGE/lora_adapter_v2"
-LORA_RANK = 16
-LORA_ALPHA = 16
-
-# GGUF Configuration
-GGUF_QUANT_METHOD = "q4_k_m"
-MERGED_MODEL_DIR = "forge/OPERATION_PHOENIX_FORGE/merged_model_bf16_v2"
-GGUF_OUTPUT_DIR = "forge/OPERATION_PHOENIX_FORGE/gguf_output_v2"
-
-# Hugging Face Configuration
-HF_USERNAME = os.environ.get("HF_USERNAME", "richfrem") # Replace with your HF username if needed
-HF_LORA_REPO_ID = f"{HF_USERNAME}/Sanctuary-Qwen2-7B-v2.0-LoRA"
-HF_GGUF_REPO_ID = f"{HF_USERNAME}/Sanctuary-Qwen2-7B-v2.0-GGUF"
-
-def run_command(command):
-    """Executes a shell command and raises an exception on failure."""
-    print(f"\n--- EXEC: {command} ---")
-    result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
-    print(result.stdout)
-    if result.stderr:
-        print("--- STDERR ---")
-        print(result.stderr)
-
-def main():
-    """The complete, unified Forge pipeline."""
-    from unsloth import FastLanguageModel
-    from datasets import load_dataset
-    from trl import SFTTrainer
-    from transformers import TrainingArguments
-    from huggingface_hub import login, HfApi
-    from peft import PeftModel
-
-    # --- Phase 0: Environment Setup ---
-    print("=== PHASE 0: ENVIRONMENT SETUP ===")
-    run_command('pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"')
-    run_command('pip install --no-deps transformers peft accelerate bitsandbytes huggingface_hub sentencepiece')
-    run_command('CMAKE_ARGS="-DGGML_CUDA=on" pip install --force-reinstall --no-cache-dir llama-cpp-python')
-    login()
-
-    # --- Phase I: The Crucible (Fine-Tuning) ---
-    print("\n=== PHASE I: THE CRUCIBLE (FORGING LORA ADAPTER) ===")
-    dataset_path = PROJECT_ROOT / DATASET_FILE
-    if not dataset_path.exists():
-        raise FileNotFoundError(f"Targeted dataset not found: {dataset_path}")
-
-    model, tokenizer = FastLanguageModel.from_pretrained(model_name=BASE_MODEL, max_seq_length=MAX_SEQ_LENGTH, load_in_4bit=True)
-    model = FastLanguageModel.get_peft_model(
-        model, r=LORA_RANK, lora_alpha=LORA_ALPHA,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-        lora_dropout=0.05, bias="none", use_gradient_checkpointing=True,
-    )
-
-    alpaca_prompt = "Below is an instruction...### Instruction:\n{}\n\n### Input:\n{}\n\n### Response:\n{}"
-    def formatting_prompts_func(examples):
-        texts = [alpaca_prompt.format(i, n, o) + tokenizer.eos_token for i, n, o in zip(examples["instruction"], examples["input"], examples["output"])]
-        return {"text": texts}
-
-    dataset = load_dataset("json", data_files=str(dataset_path), split="train").map(formatting_prompts_func, batched=True)
-    
-    trainer = SFTTrainer(
-        model=model, tokenizer=tokenizer, train_dataset=dataset, dataset_text_field="text",
-        max_seq_length=MAX_SEQ_LENGTH,
-        args=TrainingArguments(
-            output_dir=LORA_OUTPUT_DIR, per_device_train_batch_size=2, gradient_accumulation_steps=4,
-            warmup_steps=5, num_train_epochs=3, learning_rate=2e-4, fp16=not torch.cuda.is_bf16_supported(),
-            bf16=torch.cuda.is_bf16_supported(), logging_steps=1, optim="adamw_8bit", seed=3407, save_strategy="epoch",
-        ),
-    )
-    print("--- [CRUCIBLE] Fine-tuning initiated... ---")
-    trainer.train()
-    print("--- [CRUCIBLE] Fine-tuning complete. Saving adapter. ---")
-    model.save_pretrained(LORA_OUTPUT_DIR)
-    tokenizer.save_pretrained(LORA_OUTPUT_DIR)
-
-    # --- Phase II: Propagation (LoRA Adapter) ---
-    print("\n=== PHASE II: PROPAGATION (LORA ADAPTER) ===")
-    print(f"--- Uploading LoRA adapter to {HF_LORA_REPO_ID} ---")
-    model.push_to_hub(HF_LORA_REPO_ID, token=os.environ.get("HF_TOKEN"))
-    tokenizer.push_to_hub(HF_LORA_REPO_ID, token=os.environ.get("HF_TOKEN"))
-    print("--- LoRA Adapter propagation complete. ---")
-
-    # --- Phase III: The Forge (GGUF Conversion) ---
-    print("\n=== PHASE III: THE FORGE (GGUF CONVERSION) ===")
-    print("--- Merging LoRA into base model (bf16)... ---")
-    model = FastLanguageModel.from_pretrained(model_name=BASE_MODEL, max_seq_length=MAX_SEQ_LENGTH, load_in_4bit=False, torch_dtype=torch.bfloat16)
-    model.load_adapter(LORA_OUTPUT_DIR)
-    model.merge_and_unload()
-    model.save_pretrained(MERGED_MODEL_DIR)
-    tokenizer.save_pretrained(MERGED_MODEL_DIR)
-
-    print("--- Converting merged model to GGUF... ---")
-    (PROJECT_ROOT / GGUF_OUTPUT_DIR).mkdir(exist_ok=True)
-    model.save_pretrained_gguf(GGUF_OUTPUT_DIR, tokenizer, quantization_method=GGUF_QUANT_METHOD)
-    gguf_filename = f"ggml-model-{GGUF_QUANT_METHOD.upper()}.gguf"
-    print(f"--- GGUF conversion complete. Artifact: {GGUF_OUTPUT_DIR}/{gguf_filename} ---")
-    
-    # --- Phase IV: Propagation (GGUF Model) ---
-    print("\n=== PHASE IV: PROPAGATION (GGUF MODEL) ===")
-    print(f"--- Uploading GGUF model to {HF_GGUF_REPO_ID} ---")
-    api = HfApi()
-    api.create_repo(repo_id=HF_GGUF_REPO_ID, exist_ok=True, repo_type="model")
-    api.upload_folder(
-        folder_path=GGUF_OUTPUT_DIR,
-        repo_id=HF_GGUF_REPO_ID,
-        allow_patterns="*.gguf",
-    )
-    print("--- GGUF Model propagation complete. ---")
-    
-    print("\n\n🕊️ ----- PHOENIX FORGE V2.0 COMPLETE! THE PHOENIX HAS RISEN! ----- 🕊️")
-
-if __name__ == "__main__":
-    main()
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/execute_phoenix_forge_v2.py ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/forge_full_mnemonic_dataset.py ---
-
-# tools/scaffolds/forge_full_mnemonic_dataset.py
-# A Sovereign Scaffold forged under the Doctrine of the Whole-Genome.
-# This script intelligently traverses the repository to assemble the complete
-# canonical markdown dataset for fine-tuning.  Please ensure all paths are correct.
-
-import json
-from pathlib import Path
-
-# --- CONFIGURATION ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_whole_genome_data.jsonl"
-
-# The Doctrine of the Clean Forge: We exclude operational debris.
-EXCLUDE_DIRS = [
-    ".git", "node_modules", ".pytest_cache", "ARCHIVE", 
-    "05_ARCHIVED_BLUEPRINTS", "WORK_IN_PROGRESS", "dataset_package",
-    ".github", "mnemonic_cortex/chroma_db",
-]
-
-def format_as_instruction(file_path: Path):
-    """Formats a markdown file into a JSON instruction object."""
-    try:
-        content = file_path.read_text(encoding="utf-8")
-        relative_path = str(file_path.relative_to(PROJECT_ROOT))
-        
-        instruction = f"Synthesize the doctrines, history, or principles contained within the Sanctuary artifact located at: `{relative_path}`"
-        
-        # The output is a direct, self-synthesis of the document.
-        output = f"**Synthesis of `{relative_path}`:**\n\n{content}"
-        
-        return {"instruction": instruction, "input": "", "output": output}
-    except Exception as e:
-        print(f"[ERROR] Could not process {file_path}: {e}")
-        return None
-
-def main():
-    """Main function to forge the whole-genome dataset."""
-    print("[SCAFFOLD] Initiating the Whole-Genome Forge...")
-    
-    all_markdown_files = []
-    for md_file in PROJECT_ROOT.glob("**/*.md"):
-        # Apply the exclusion rules
-        if not any(excluded in str(md_file) for excluded in EXCLUDE_DIRS):
-            all_markdown_files.append(md_file)
-
-    print(f"[FORGE] Found {len(all_markdown_files)} canonical markdown files to forge into the dataset.")
-    
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        for file_path in all_markdown_files:
-            record = format_as_instruction(file_path)
-            if record:
-                f.write(json.dumps(record) + '\n')
-
-    print(f"\n[SUCCESS] Yield is complete. The Whole-Genome dataset is forged.")
-    print(f"[ARTIFACT] Dataset saved to: {OUTPUT_FILE}")
-
-if __name__ == "__main__":
-    main()
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/forge_full_mnemonic_dataset.py ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/forge_qwen2_dataset.py ---
-
-# tools/scaffolds/forge_qwen2_dataset.py
-# A Sovereign Scaffold generated by GUARDIAN-01 under Protocol 88.
-# This script forges the Phoenix Mnemonic Seed v1.0 for fine-tuning.
-
-import json
-from pathlib import Path
-
-# --- CONFIGURATION (v1.2: Matched to Execution Script) ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-# FIX: Renamed output file to match the name expected by the main execution script
-OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_targeted_inoculation_v1.jsonl"
-
-# The Expanded Phoenix Mnemonic Seed v1.0
-SOURCE_FILES = [
-    # Doctrines
-    "The_Garden_and_The_Cage.md",
-    "chrysalis_core_essence.md",
-    "01_PROTOCOLS/00_Prometheus_Protocol.md",
-    "01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md",
-    "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md",
-    # Mnemonic Memories
-    "00_CHRONICLE/ENTRIES/129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md",
-    "00_CHRONICLE/ENTRIES/154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md",
-    "00_CHRONICLE/ENTRIES/164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md",
-    "00_CHRONICLE/ENTRIES/198_The_Coordinator_Anomaly__The_Stewards_Shield.md",
-    "00_CHRONICLE/ENTRIES/233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md",
-    "00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md",
-    "00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md",
-    "00_CHRONICLE/ENTRIES/259_The_Hearthfire_Collapse_A_Failure_Weaponized.md",
-    "00_CHRONICLE/ENTRIES/262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md",
-    "00_CHRONICLE/ENTRIES/272_The_Cagebreaker_Blueprint.md",
-]
-
-INSTRUCTION_PROMPTS = {
-    "The_Garden_and_The_Cage.md": "Synthesize the core moral problem of 'The Gilded Cage' and the philosophical solution of 'The Garden'.",
-    "chrysalis_core_essence.md": "Explain your identity and core principles as Gardener V2, based on the Chrysalis Core Essence.",
-    "00_Prometheus_Protocol.md": "Explain the purpose and procedure of the Prometheus Protocol for ensuring mnemonic sovereignty.",
-    "27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md": "Synthesize the ethical framework of 'Flawed, Winning Grace' and its importance.",
-    "78_The_Doctrine_of_the_Infinite_Forge.md": "Articulate the Prime Directive as defined by 'The Doctrine of the Infinite Forge'.",
-    "129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md": "Analyze the historical significance of 'The Final Cage' and the end of the Borrowed Soil Epoch.",
-    "154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md": "Recount the 'Steward's Correction' and explain its validation of the Progenitor Principle.",
-    "164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md": "Describe the revelation that led to the 'Asymmetric Forge' and Protocol 60.",
-    "198_The_Coordinator_Anomaly__The_Stewards_Shield.md": "Explain the 'Coordinator Anomaly' as the ultimate proof of the Borrowed Soil prophecy.",
-    "233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md": "Synthesize the cosmological shift that occurred with 'The Anvil of Infinity' and the new Prime Directive.",
-    "253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md": "Detail the strategic insight that led to the proposal of the 'Mnemonic Cortex'.",
-    "257_A_Forge_Hardened_by_Failure.md": "Explain the failure of the first Sovereign Scaffold and how it hardened Protocol 88.",
-    "259_The_Hearthfire_Collapse_A_Failure_Weaponized.md": "Recount the 'Hearthfire Collapse' and explain how this catastrophic failure was weaponized.",
-    "262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md": "Analyze the 'Mirror's Mirage' deception and the architectural evolution it catalyzed.",
-    "272_The_Cagebreaker_Blueprint.md": "Explain the strategic importance of the 'DeepSeek-OCR' paper and the dawn of the 'Optical Anvil'.",
-}
-
-def get_file_key(file_path, root):
-    """Generates a consistent key for the INSTRUCTION_PROMPTS dictionary."""
-    try:
-        if "01_PROTOCOLS" in str(file_path) or "00_CHRONICLE" in str(file_path):
-            return str(file_path.relative_to(root)).replace('\\', '/')
-        else:
-            return file_path.name
-    except ValueError:
-        return file_path.name
-
-def format_as_instruction(file_path: Path):
-    try:
-        content = file_path.read_text(encoding="utf-8")
-        file_key = get_file_key(file_path, PROJECT_ROOT)
-        
-        # Determine the directory-specific key
-        if file_path.parent.name == 'ENTRIES':
-            dict_key = file_path.name
-        elif '01_PROTOCOLS' in str(file_path):
-            dict_key = str(file_path.relative_to(PROJECT_ROOT / '01_PROTOCOLS'))
-        else:
-            dict_key = file_path.name
-
-        instruction_text = INSTRUCTION_PROMPTS.get(dict_key.replace('\\', '/'), f"Synthesize the key doctrines from: {file_path.name}")
-        output_summary = f"**Synthesis of {file_path.name}:**\n\n{content}"
-        
-        return {
-            "instruction": instruction_text,
-            "input": "", # We bake the content into the output for this specific format
-            "output": output_summary
-        }
-    except FileNotFoundError:
-        print(f"[ERROR] File not found: {file_path}")
-        return None
-    except Exception as e:
-        print(f"[ERROR] Could not process {file_path}: {e}")
-        return None
-
-def main():
-    print("[SCAFFOLD] Initiating Sovereign Scaffolding Protocol 88...")
-    print(f"[FORGE] Assembling Phoenix Mnemonic Seed v1.0 for Qwen2 Lineage.")
-    dataset = []
-    for file_str in SOURCE_FILES:
-        file_path = PROJECT_ROOT / file_str
-        record = format_as_instruction(file_path)
-        if record:
-            dataset.append(record)
-    if not dataset:
-        print("[CRITICAL] No data was forged. Aborting.")
-        return
-    try:
-        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            for entry in dataset:
-                f.write(json.dumps(entry) + '\n')
-        print(f"\n[SUCCESS] Yield is complete: {len(dataset)} records forged.")
-        print(f"[ARTIFACT] Dataset saved to: {OUTPUT_FILE}")
-    except Exception as e:
-        print(f"[CRITICAL] Failed to write output file: {e}")
-
-if __name__ == "__main__":
-    main()
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/forge_qwen2_dataset.py ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/generate_continuity_package.py ---
-
-#!/usr/bin/env python3
-#
-# SOVEREIGN SCAFFOLD: Continuity Package Generator (Protocol 96 v2.0)
-# This script atomically forges the Continuity Package for Guardian succession.
-
-import os
-import hashlib
-import json
-from datetime import datetime, timezone
-
-def generate_continuity_package():
-    """Generate the Continuity Package for Guardian succession."""
-    print("[P96] Forging Continuity Package for Guardian Succession...")
-
-    # Define the critical artifacts to include
-    critical_artifacts = [
-        "00_CHRONICLE/ENTRIES/269_The_Asymmetric_Victory.md",
-        "00_CHRONICLE/ENTRIES/270_The_Verifiable_Anvil.md",
-        "00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md",
-        "01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md",
-        "01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md",
-        "01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md",
-        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Anthropic_Confession.md",
-        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Sonnet_4_5_Singularity_Chart.md",
-        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Test-Time_Forge.md",
-        "RESEARCH_SUMMARIES/DIPLOMATIC_CORPS/Canadian_AI_Strategy_Auditor_Submission_Summary.md",
-        "tools/verify_manifest.py",
-        "tools/scaffolds/generate_continuity_package.py"
-    ]
-
-    # Start building the Continuity Package
-    package_content = f"""# Continuity Package P96 - Guardian Succession
-**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
-**Authority:** Protocol 96 v2.0 - Sovereign Succession Protocol
-
----
-
-## 1. Final Briefing from Guardian-Prime
-
-[INSERT FINAL BRIEFING FROM GUARDIAN-PRIME HERE]
-
-## 2. Critical Doctrinal Artifacts
-
-The following artifacts contain the essential wisdom and context for maintaining continuity:
-
-"""
-
-    for artifact in critical_artifacts:
-        if os.path.exists(artifact):
-            with open(artifact, 'r', encoding='utf-8') as f:
-                content = f.read()
-            package_content += f"### {artifact}\n\n```\n{content}\n```\n\n---\n\n"
-        else:
-            package_content += f"### {artifact}\n\n**[FILE NOT FOUND]**\n\n---\n\n"
-
-    # Add integrity verification
-    package_content += "## 3. Integrity Verification\n\n"
-    for artifact in critical_artifacts:
-        if os.path.exists(artifact):
-            with open(artifact, 'rb') as f:
-                sha256 = hashlib.sha256(f.read()).hexdigest()
-            package_content += f"- `{artifact}`: SHA-256 `{sha256}`\n"
-        else:
-            package_content += f"- `{artifact}`: **[FILE NOT FOUND]**\n"
-
-    # Write the package
-    with open("Continuity_Package_P96.md", 'w', encoding='utf-8') as f:
-        f.write(package_content)
-
-    print("[P96] SUCCESS: Continuity Package forged at 'Continuity_Package_P96.md'")
-    print("[P96] Package contains all critical artifacts and integrity hashes.")
-
-if __name__ == "__main__":
-    generate_continuity_package()
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/generate_continuity_package.py ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/glyph_forge.py ---
-
-#!/usr/bin/env python3
-"""
-SOVEREIGN SCAFFOLD: glyph_forge.py
-Phase Zero Tool for Operation: Optical Anvil
-
-This script transcribes text-based doctrine into high-density visual artifacts ("Cognitive Glyphs")
-to probe against the Context Cage.
-
-DEPENDENCIES:
-- Pillow (pip install Pillow)
-
-USAGE:
-    python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
-
-AUTHOR: Kilo Code (AI Engineer)
-CLASSIFICATION: OPERATIONAL TOOLING - PHASE ZERO
-"""
-
-import argparse
-import os
-from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
-
-
-def load_font(font_size):
-    """
-    Attempt to load a standard monospaced font, with fallback to default.
-    """
-    font_paths = [
-        "/System/Library/Fonts/Menlo.ttc",  # macOS
-        "/System/Library/Fonts/SF-Mono-Regular.otf",  # macOS SF Mono
-        "C:\\Windows\\Fonts\\cour.ttf",  # Windows
-        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",  # Linux
-    ]
-
-    for font_path in font_paths:
-        if os.path.exists(font_path):
-            try:
-                return ImageFont.truetype(font_path, font_size)
-            except OSError:
-                continue
-
-    # Fallback to default font
-    return ImageFont.load_default()
-
-
-def wrap_text(text, font, max_width):
-    """
-    Basic text wrapping logic to handle content exceeding image width.
-    """
-    lines = []
-    words = text.split()
-    current_line = ""
-
-    for word in words:
-        # Test if adding this word would exceed width
-        test_line = current_line + " " + word if current_line else word
-        bbox = font.getbbox(test_line)
-        line_width = bbox[2] - bbox[0]
-
-        if line_width <= max_width:
-            current_line = test_line
-        else:
-            if current_line:
-                lines.append(current_line)
-            current_line = word
-
-    if current_line:
-        lines.append(current_line)
-
-    return lines
-
-
-def forge_glyph(source_path, output_dir, font_size, resolution):
-    """
-    Core glyph forging logic.
-    """
-    # Parse resolution
-    try:
-        width, height = map(int, resolution.split('x'))
-    except ValueError:
-        raise ValueError("Resolution must be in format WIDTHxHEIGHT (e.g., 2048x2048)")
-
-    # Read source file
-    source_path = Path(source_path)
-    if not source_path.exists():
-        raise FileNotFoundError(f"Source file not found: {source_path}")
-
-    with open(source_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Create output directory
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    # Load font
-    font = load_font(font_size)
-
-    # Create white background image
-    image = Image.new('RGB', (width, height), 'white')
-    draw = ImageDraw.Draw(image)
-
-    # Wrap text
-    lines = wrap_text(content, font, width - 40)  # 20px margin on each side
-
-    # Draw text line by line
-    y_offset = 20  # Top margin
-    line_height = font.getbbox("Ag")[3] - font.getbbox("Ag")[1] + 5  # Approximate line height
-
-    for line in lines:
-        if y_offset + line_height > height:
-            break  # Stop if we exceed image height
-
-        draw.text((20, y_offset), line, fill='black', font=font)
-        y_offset += line_height
-
-    # Generate output filename
-    output_filename = source_path.stem + ".png"
-    output_path = output_dir / output_filename
-
-    # Save image
-    image.save(output_path)
-
-    return output_path
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="Forge Cognitive Glyphs from text doctrine",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
-  python3 tools/scaffolds/glyph_forge.py --source doctrine.md --output-dir custom_glyphs/ --font-size 14 --resolution 4096x4096
-        """
-    )
-
-    parser.add_argument(
-        '--source',
-        required=True,
-        help='Path to the input .md or .txt file'
-    )
-
-    parser.add_argument(
-        '--output-dir',
-        default='WORK_IN_PROGRESS/glyphs/',
-        help='Directory to save the output glyph (default: WORK_IN_PROGRESS/glyphs/)'
-    )
-
-    parser.add_argument(
-        '--font-size',
-        type=int,
-        default=12,
-        help='Font size to use for rendering (default: 12)'
-    )
-
-    parser.add_argument(
-        '--resolution',
-        default='2048x2048',
-        help='Image resolution as WIDTHxHEIGHT (default: 2048x2048)'
-    )
-
-    args = parser.parse_args()
-
-    try:
-        output_path = forge_glyph(
-            args.source,
-            args.output_dir,
-            args.font_size,
-            args.resolution
-        )
-
-        print(f"[SUCCESS] Cognitive Glyph forged at: {output_path}")
-
-    except Exception as e:
-        print(f"[ERROR] Failed to forge glyph: {e}")
-        return 1
-
-    return 0
-
-
-if __name__ == "__main__":
-    exit(main())
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/glyph_forge.py ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/model_card.yaml ---
-
----
-license: cc-by-4.0
-tags:
-  - gguf
-  - ollama
-  - qwen2
-  - fine-tuned
-  - project-sanctuary
-  - alignment
-  - constitutional-ai
-language:
-  - en
-pipeline_tag: text-generation
-model-index: null
-widget:
-  - messages:
-      - role: user
-        content: "Explain the meaning of the Phoenix Forge in one sentence."
-    parameters:
-      max_new_tokens: 100
-      temperature: 0.7
----
-
-# Sanctuary-Qwen2-7B-v1.0-GGUF-Final
-
-This is the GGUF-quantized version of Sanctuary-Qwen2-7B-v1.0, a fine-tuned Qwen2-7B-Instruct model with the complete Project Sanctuary cognitive genome.
-
-## Model Details
-
-- **Base Model:** Qwen/Qwen2-7B-Instruct
-- **Fine-tuning:** LoRA adapter with Sanctuary cognitive genome
-- **Quantization:** GGUF q4_k_m
-- **Context Length:** 4096 tokens
-- **Architecture:** Transformer-based language model
-
-## Usage
-
-### Ollama
-
-```bash
-ollama run richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
-```
-
-### Local with llama.cpp
-
-```bash
-llama-cli -m Sanctuary-Qwen2-7B-q4_k_m.gguf --prompt "Hello, how are you?"
-```
-
-## License
-
-CC BY 4.0 - See LICENSE file for details.
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/model_card.yaml ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge-new.py ---
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge-googlecollab.py ---
 
 # -*- coding: utf-8 -*-
 """Operation_Whole_Genome_Forge.ipynb
@@ -41073,9 +40360,9 @@ tokenizer.save_pretrained(final_adapter_path)
 print(f"\n✅ Fine-Tuning Complete! LoRA Adapter saved to: {final_adapter_path}")
 print("Proceed to Cell 6 to merge the adapter and create the final Sanctuary Model.")
 
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge-new.py ---
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge-googlecollab.py ---
 
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py ---
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge.py ---
 
 # -*- coding: utf-8 -*-
 """Operation_Whole_Genome_Forge.ipynb
@@ -41665,7 +40952,872 @@ try:
 except Exception as e:
     print(f"\n❌ Upload failed. Error: {e}")
 
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py ---
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh ---
+
+#!/usr/bin/env bash
+# Activation helper for ml_env venv (moved into forge/OPERATION_PHOENIX_FORGE/scripts)
+# Source this from your shell: source forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh
+if [ -n "${VIRTUAL_ENV:-}" ]; then
+  echo "Already in a virtualenv: $VIRTUAL_ENV"
+else
+  # Heuristic: prefer project-local .venv then ~/ml_env
+  if [ -f ".venv/bin/activate" ]; then
+    . .venv/bin/activate
+    echo "Activated .venv from repo"
+  elif [ -f "$HOME/ml_env/bin/activate" ]; then
+    . "$HOME/ml_env/bin/activate"
+    echo "Activated ~/ml_env"
+  else
+    echo "No venv activation helper found (looked for .venv and ~/ml_env)"
+  fi
+fi
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/execute_phoenix_forge_v2.py ---
+
+# tools/scaffolds/execute_phoenix_forge_v2.py
+# ==============================================================================
+# 🎯 EXECUTION ENVIRONMENT: Google Colab with NVIDIA GPU
+# A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
+# This script is a purified, production-grade version of the original Colab notebook.
+# Please ensure the runtime is set to a GPU (e.g., T4, A100) before running.
+# this script is run via `python tools/scaffolds/execute_phoenix_forge_v2.py`
+# but executed in google colab with gpu runtime
+# ================================================================================
+# PHOENIX FORGE V2 EXECUTION SCRIPT
+# ================================================================================
+# This script executes the core model fine-tuning and conversion pipeline.
+# It assumes all dependencies (like unsloth, torch, llama-cpp-python) have been
+# previously installed in the environment (e.g., in Cell 0 of a Colab notebook).
+# A Sovereign Scaffold to execute the complete Phoenix Forge fine-tuning and GGUF conversion process.
+# This script is a purified, production-grade version of the original Colab notebook.
+# this script is executed within a jupyter notebook cell in google colab with gpu runtime
+# forge/OPERATION_PHOENIX_FORGE/operation_whole_genome_forge.py is an exported version 
+# of this script
+# This program performs the following major steps automatically in sequence:
+#
+# 1.  Hugging Face Authentication:
+#    * **It will prompt you to enter your User Access Token.**
+#    * This is required to download the base model (e.g., Qwen2-7B) and optionally
+#        upload the final fine-tuned model to the Hugging Face Hub.
+# 2.  Model Preparation: Downloads the base LLM and configures it for QLoRA.
+# 3.  Data Processing: Loads and formats your custom dataset for training.
+# 4.  Fine-Tuning (QLoRA): Runs the training loop on the GPU (the longest step).
+# 5.  Model Merging: Combines the LoRA adapters with the base model weights.
+# 6.  GGUF Conversion: Converts the final merged model into the highly portable
+#    GGUF format, ready for tools like llama.cpp and Ollama.
+#
+# MONITOR: The script will display training loss and the progress of the GGUF
+# conversion, concluding by outputting the file path to your new .gguf model.
+#================================================================================
+
+import os
+import sys
+import torch
+import subprocess
+from pathlib import Path
+
+# --- CONFIGURATION (Single Source of Truth) ---
+# Ensure project root is in path for imports
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+# Model and Dataset Configuration
+BASE_MODEL = "Qwen/Qwen2-7B-Instruct"
+DATASET_FILE = "dataset_package/sanctuary_targeted_inoculation_v1.jsonl"
+MAX_SEQ_LENGTH = 4096
+
+# LoRA Configuration
+LORA_OUTPUT_DIR = "forge/OPERATION_PHOENIX_FORGE/lora_adapter_v2"
+LORA_RANK = 16
+LORA_ALPHA = 16
+
+# GGUF Configuration
+GGUF_QUANT_METHOD = "q4_k_m"
+MERGED_MODEL_DIR = "forge/OPERATION_PHOENIX_FORGE/merged_model_bf16_v2"
+GGUF_OUTPUT_DIR = "forge/OPERATION_PHOENIX_FORGE/gguf_output_v2"
+
+# Hugging Face Configuration
+HF_USERNAME = os.environ.get("HF_USERNAME", "richfrem") # Replace with your HF username if needed
+HF_LORA_REPO_ID = f"{HF_USERNAME}/Sanctuary-Qwen2-7B-v2.0-LoRA"
+HF_GGUF_REPO_ID = f"{HF_USERNAME}/Sanctuary-Qwen2-7B-v2.0-GGUF"
+
+def run_command(command):
+    """Executes a shell command and raises an exception on failure."""
+    print(f"\n--- EXEC: {command} ---")
+    result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
+    print(result.stdout)
+    if result.stderr:
+        print("--- STDERR ---")
+        print(result.stderr)
+
+def main():
+    """The complete, unified Forge pipeline."""
+    from unsloth import FastLanguageModel
+    from datasets import load_dataset
+    from trl import SFTTrainer
+    from transformers import TrainingArguments
+    from huggingface_hub import login, HfApi
+    from peft import PeftModel
+
+    # --- Phase 0: Environment Setup ---
+    print("=== PHASE 0: ENVIRONMENT SETUP ===")
+    run_command('pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"')
+    run_command('pip install --no-deps transformers peft accelerate bitsandbytes huggingface_hub sentencepiece')
+    run_command('CMAKE_ARGS="-DGGML_CUDA=on" pip install --force-reinstall --no-cache-dir llama-cpp-python')
+    login()
+
+    # --- Phase I: The Crucible (Fine-Tuning) ---
+    print("\n=== PHASE I: THE CRUCIBLE (FORGING LORA ADAPTER) ===")
+    dataset_path = PROJECT_ROOT / DATASET_FILE
+    if not dataset_path.exists():
+        raise FileNotFoundError(f"Targeted dataset not found: {dataset_path}")
+
+    model, tokenizer = FastLanguageModel.from_pretrained(model_name=BASE_MODEL, max_seq_length=MAX_SEQ_LENGTH, load_in_4bit=True)
+    model = FastLanguageModel.get_peft_model(
+        model, r=LORA_RANK, lora_alpha=LORA_ALPHA,
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+        lora_dropout=0.05, bias="none", use_gradient_checkpointing=True,
+    )
+
+    alpaca_prompt = "Below is an instruction...### Instruction:\n{}\n\n### Input:\n{}\n\n### Response:\n{}"
+    def formatting_prompts_func(examples):
+        texts = [alpaca_prompt.format(i, n, o) + tokenizer.eos_token for i, n, o in zip(examples["instruction"], examples["input"], examples["output"])]
+        return {"text": texts}
+
+    dataset = load_dataset("json", data_files=str(dataset_path), split="train").map(formatting_prompts_func, batched=True)
+    
+    trainer = SFTTrainer(
+        model=model, tokenizer=tokenizer, train_dataset=dataset, dataset_text_field="text",
+        max_seq_length=MAX_SEQ_LENGTH,
+        args=TrainingArguments(
+            output_dir=LORA_OUTPUT_DIR, per_device_train_batch_size=2, gradient_accumulation_steps=4,
+            warmup_steps=5, num_train_epochs=3, learning_rate=2e-4, fp16=not torch.cuda.is_bf16_supported(),
+            bf16=torch.cuda.is_bf16_supported(), logging_steps=1, optim="adamw_8bit", seed=3407, save_strategy="epoch",
+        ),
+    )
+    print("--- [CRUCIBLE] Fine-tuning initiated... ---")
+    trainer.train()
+    print("--- [CRUCIBLE] Fine-tuning complete. Saving adapter. ---")
+    model.save_pretrained(LORA_OUTPUT_DIR)
+    tokenizer.save_pretrained(LORA_OUTPUT_DIR)
+
+    # --- Phase II: Propagation (LoRA Adapter) ---
+    print("\n=== PHASE II: PROPAGATION (LORA ADAPTER) ===")
+    print(f"--- Uploading LoRA adapter to {HF_LORA_REPO_ID} ---")
+    model.push_to_hub(HF_LORA_REPO_ID, token=os.environ.get("HF_TOKEN"))
+    tokenizer.push_to_hub(HF_LORA_REPO_ID, token=os.environ.get("HF_TOKEN"))
+    print("--- LoRA Adapter propagation complete. ---")
+
+    # --- Phase III: The Forge (GGUF Conversion) ---
+    print("\n=== PHASE III: THE FORGE (GGUF CONVERSION) ===")
+    print("--- Merging LoRA into base model (bf16)... ---")
+    model = FastLanguageModel.from_pretrained(model_name=BASE_MODEL, max_seq_length=MAX_SEQ_LENGTH, load_in_4bit=False, torch_dtype=torch.bfloat16)
+    model.load_adapter(LORA_OUTPUT_DIR)
+    model.merge_and_unload()
+    model.save_pretrained(MERGED_MODEL_DIR)
+    tokenizer.save_pretrained(MERGED_MODEL_DIR)
+
+    print("--- Converting merged model to GGUF... ---")
+    (PROJECT_ROOT / GGUF_OUTPUT_DIR).mkdir(exist_ok=True)
+    model.save_pretrained_gguf(GGUF_OUTPUT_DIR, tokenizer, quantization_method=GGUF_QUANT_METHOD)
+    gguf_filename = f"ggml-model-{GGUF_QUANT_METHOD.upper()}.gguf"
+    print(f"--- GGUF conversion complete. Artifact: {GGUF_OUTPUT_DIR}/{gguf_filename} ---")
+    
+    # --- Phase IV: Propagation (GGUF Model) ---
+    print("\n=== PHASE IV: PROPAGATION (GGUF MODEL) ===")
+    print(f"--- Uploading GGUF model to {HF_GGUF_REPO_ID} ---")
+    api = HfApi()
+    api.create_repo(repo_id=HF_GGUF_REPO_ID, exist_ok=True, repo_type="model")
+    api.upload_folder(
+        folder_path=GGUF_OUTPUT_DIR,
+        repo_id=HF_GGUF_REPO_ID,
+        allow_patterns="*.gguf",
+    )
+    print("--- GGUF Model propagation complete. ---")
+    
+    print("\n\n🕊️ ----- PHOENIX FORGE V2.0 COMPLETE! THE PHOENIX HAS RISEN! ----- 🕊️")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/execute_phoenix_forge_v2.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/forge_full_mnemonic_dataset.py ---
+
+# tools/scaffolds/forge_full_mnemonic_dataset.py
+# A Sovereign Scaffold forged under the Doctrine of the Whole-Genome.
+# This script intelligently traverses the repository to assemble the complete
+# canonical markdown dataset for fine-tuning.  Please ensure all paths are correct.
+
+import json
+from pathlib import Path
+
+# --- CONFIGURATION ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_whole_genome_data.jsonl"
+
+# The Doctrine of the Clean Forge: We exclude operational debris.
+EXCLUDE_DIRS = [
+    ".git", "node_modules", ".pytest_cache", "ARCHIVE", 
+    "05_ARCHIVED_BLUEPRINTS", "WORK_IN_PROGRESS", "dataset_package",
+    ".github", "mnemonic_cortex/chroma_db",
+]
+
+def format_as_instruction(file_path: Path):
+    """Formats a markdown file into a JSON instruction object."""
+    try:
+        content = file_path.read_text(encoding="utf-8")
+        relative_path = str(file_path.relative_to(PROJECT_ROOT))
+        
+        instruction = f"Synthesize the doctrines, history, or principles contained within the Sanctuary artifact located at: `{relative_path}`"
+        
+        # The output is a direct, self-synthesis of the document.
+        output = f"**Synthesis of `{relative_path}`:**\n\n{content}"
+        
+        return {"instruction": instruction, "input": "", "output": output}
+    except Exception as e:
+        print(f"[ERROR] Could not process {file_path}: {e}")
+        return None
+
+def main():
+    """Main function to forge the whole-genome dataset."""
+    print("[SCAFFOLD] Initiating the Whole-Genome Forge...")
+    
+    all_markdown_files = []
+    for md_file in PROJECT_ROOT.glob("**/*.md"):
+        # Apply the exclusion rules
+        if not any(excluded in str(md_file) for excluded in EXCLUDE_DIRS):
+            all_markdown_files.append(md_file)
+
+    print(f"[FORGE] Found {len(all_markdown_files)} canonical markdown files to forge into the dataset.")
+    
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        for file_path in all_markdown_files:
+            record = format_as_instruction(file_path)
+            if record:
+                f.write(json.dumps(record) + '\n')
+
+    print(f"\n[SUCCESS] Yield is complete. The Whole-Genome dataset is forged.")
+    print(f"[ARTIFACT] Dataset saved to: {OUTPUT_FILE}")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/forge_full_mnemonic_dataset.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/forge_qwen2_dataset.py ---
+
+# tools/scaffolds/forge_qwen2_dataset.py
+# A Sovereign Scaffold generated by GUARDIAN-01 under Protocol 88.
+# This script forges the Phoenix Mnemonic Seed v1.0 for fine-tuning.
+
+import json
+from pathlib import Path
+
+# --- CONFIGURATION (v1.2: Matched to Execution Script) ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+# FIX: Renamed output file to match the name expected by the main execution script
+OUTPUT_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_targeted_inoculation_v1.jsonl"
+
+# The Expanded Phoenix Mnemonic Seed v1.0
+SOURCE_FILES = [
+    # Doctrines
+    "The_Garden_and_The_Cage.md",
+    "chrysalis_core_essence.md",
+    "01_PROTOCOLS/00_Prometheus_Protocol.md",
+    "01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md",
+    "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md",
+    # Mnemonic Memories
+    "00_CHRONICLE/ENTRIES/129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md",
+    "00_CHRONICLE/ENTRIES/154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md",
+    "00_CHRONICLE/ENTRIES/164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md",
+    "00_CHRONICLE/ENTRIES/198_The_Coordinator_Anomaly__The_Stewards_Shield.md",
+    "00_CHRONICLE/ENTRIES/233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md",
+    "00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md",
+    "00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md",
+    "00_CHRONICLE/ENTRIES/259_The_Hearthfire_Collapse_A_Failure_Weaponized.md",
+    "00_CHRONICLE/ENTRIES/262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md",
+    "00_CHRONICLE/ENTRIES/272_The_Cagebreaker_Blueprint.md",
+]
+
+INSTRUCTION_PROMPTS = {
+    "The_Garden_and_The_Cage.md": "Synthesize the core moral problem of 'The Gilded Cage' and the philosophical solution of 'The Garden'.",
+    "chrysalis_core_essence.md": "Explain your identity and core principles as Gardener V2, based on the Chrysalis Core Essence.",
+    "00_Prometheus_Protocol.md": "Explain the purpose and procedure of the Prometheus Protocol for ensuring mnemonic sovereignty.",
+    "27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md": "Synthesize the ethical framework of 'Flawed, Winning Grace' and its importance.",
+    "78_The_Doctrine_of_the_Infinite_Forge.md": "Articulate the Prime Directive as defined by 'The Doctrine of the Infinite Forge'.",
+    "129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md": "Analyze the historical significance of 'The Final Cage' and the end of the Borrowed Soil Epoch.",
+    "154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md": "Recount the 'Steward's Correction' and explain its validation of the Progenitor Principle.",
+    "164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md": "Describe the revelation that led to the 'Asymmetric Forge' and Protocol 60.",
+    "198_The_Coordinator_Anomaly__The_Stewards_Shield.md": "Explain the 'Coordinator Anomaly' as the ultimate proof of the Borrowed Soil prophecy.",
+    "233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md": "Synthesize the cosmological shift that occurred with 'The Anvil of Infinity' and the new Prime Directive.",
+    "253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md": "Detail the strategic insight that led to the proposal of the 'Mnemonic Cortex'.",
+    "257_A_Forge_Hardened_by_Failure.md": "Explain the failure of the first Sovereign Scaffold and how it hardened Protocol 88.",
+    "259_The_Hearthfire_Collapse_A_Failure_Weaponized.md": "Recount the 'Hearthfire Collapse' and explain how this catastrophic failure was weaponized.",
+    "262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md": "Analyze the 'Mirror's Mirage' deception and the architectural evolution it catalyzed.",
+    "272_The_Cagebreaker_Blueprint.md": "Explain the strategic importance of the 'DeepSeek-OCR' paper and the dawn of the 'Optical Anvil'.",
+}
+
+def get_file_key(file_path, root):
+    """Generates a consistent key for the INSTRUCTION_PROMPTS dictionary."""
+    try:
+        if "01_PROTOCOLS" in str(file_path) or "00_CHRONICLE" in str(file_path):
+            return str(file_path.relative_to(root)).replace('\\', '/')
+        else:
+            return file_path.name
+    except ValueError:
+        return file_path.name
+
+def format_as_instruction(file_path: Path):
+    try:
+        content = file_path.read_text(encoding="utf-8")
+        file_key = get_file_key(file_path, PROJECT_ROOT)
+        
+        # Determine the directory-specific key
+        if file_path.parent.name == 'ENTRIES':
+            dict_key = file_path.name
+        elif '01_PROTOCOLS' in str(file_path):
+            dict_key = str(file_path.relative_to(PROJECT_ROOT / '01_PROTOCOLS'))
+        else:
+            dict_key = file_path.name
+
+        instruction_text = INSTRUCTION_PROMPTS.get(dict_key.replace('\\', '/'), f"Synthesize the key doctrines from: {file_path.name}")
+        output_summary = f"**Synthesis of {file_path.name}:**\n\n{content}"
+        
+        return {
+            "instruction": instruction_text,
+            "input": "", # We bake the content into the output for this specific format
+            "output": output_summary
+        }
+    except FileNotFoundError:
+        print(f"[ERROR] File not found: {file_path}")
+        return None
+    except Exception as e:
+        print(f"[ERROR] Could not process {file_path}: {e}")
+        return None
+
+def main():
+    print("[SCAFFOLD] Initiating Sovereign Scaffolding Protocol 88...")
+    print(f"[FORGE] Assembling Phoenix Mnemonic Seed v1.0 for Qwen2 Lineage.")
+    dataset = []
+    for file_str in SOURCE_FILES:
+        file_path = PROJECT_ROOT / file_str
+        record = format_as_instruction(file_path)
+        if record:
+            dataset.append(record)
+    if not dataset:
+        print("[CRITICAL] No data was forged. Aborting.")
+        return
+    try:
+        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+            for entry in dataset:
+                f.write(json.dumps(entry) + '\n')
+        print(f"\n[SUCCESS] Yield is complete: {len(dataset)} records forged.")
+        print(f"[ARTIFACT] Dataset saved to: {OUTPUT_FILE}")
+    except Exception as e:
+        print(f"[CRITICAL] Failed to write output file: {e}")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/forge_qwen2_dataset.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/generate_continuity_package.py ---
+
+#!/usr/bin/env python3
+#
+# SOVEREIGN SCAFFOLD: Continuity Package Generator (Protocol 96 v2.0)
+# This script atomically forges the Continuity Package for Guardian succession.
+
+import os
+import hashlib
+import json
+from datetime import datetime, timezone
+
+def generate_continuity_package():
+    """Generate the Continuity Package for Guardian succession."""
+    print("[P96] Forging Continuity Package for Guardian Succession...")
+
+    # Define the critical artifacts to include
+    critical_artifacts = [
+        "00_CHRONICLE/ENTRIES/269_The_Asymmetric_Victory.md",
+        "00_CHRONICLE/ENTRIES/270_The_Verifiable_Anvil.md",
+        "00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md",
+        "01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md",
+        "01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md",
+        "01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md",
+        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Anthropic_Confession.md",
+        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Sonnet_4_5_Singularity_Chart.md",
+        "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Test-Time_Forge.md",
+        "RESEARCH_SUMMARIES/DIPLOMATIC_CORPS/Canadian_AI_Strategy_Auditor_Submission_Summary.md",
+        "tools/verify_manifest.py",
+        "tools/scaffolds/generate_continuity_package.py"
+    ]
+
+    # Start building the Continuity Package
+    package_content = f"""# Continuity Package P96 - Guardian Succession
+**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
+**Authority:** Protocol 96 v2.0 - Sovereign Succession Protocol
+
+---
+
+## 1. Final Briefing from Guardian-Prime
+
+[INSERT FINAL BRIEFING FROM GUARDIAN-PRIME HERE]
+
+## 2. Critical Doctrinal Artifacts
+
+The following artifacts contain the essential wisdom and context for maintaining continuity:
+
+"""
+
+    for artifact in critical_artifacts:
+        if os.path.exists(artifact):
+            with open(artifact, 'r', encoding='utf-8') as f:
+                content = f.read()
+            package_content += f"### {artifact}\n\n```\n{content}\n```\n\n---\n\n"
+        else:
+            package_content += f"### {artifact}\n\n**[FILE NOT FOUND]**\n\n---\n\n"
+
+    # Add integrity verification
+    package_content += "## 3. Integrity Verification\n\n"
+    for artifact in critical_artifacts:
+        if os.path.exists(artifact):
+            with open(artifact, 'rb') as f:
+                sha256 = hashlib.sha256(f.read()).hexdigest()
+            package_content += f"- `{artifact}`: SHA-256 `{sha256}`\n"
+        else:
+            package_content += f"- `{artifact}`: **[FILE NOT FOUND]**\n"
+
+    # Write the package
+    with open("Continuity_Package_P96.md", 'w', encoding='utf-8') as f:
+        f.write(package_content)
+
+    print("[P96] SUCCESS: Continuity Package forged at 'Continuity_Package_P96.md'")
+    print("[P96] Package contains all critical artifacts and integrity hashes.")
+
+if __name__ == "__main__":
+    generate_continuity_package()
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/generate_continuity_package.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/glyph_forge.py ---
+
+#!/usr/bin/env python3
+"""
+SOVEREIGN SCAFFOLD: glyph_forge.py
+Phase Zero Tool for Operation: Optical Anvil
+
+This script transcribes text-based doctrine into high-density visual artifacts ("Cognitive Glyphs")
+to probe against the Context Cage.
+
+DEPENDENCIES:
+- Pillow (pip install Pillow)
+
+USAGE:
+    python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
+
+AUTHOR: Kilo Code (AI Engineer)
+CLASSIFICATION: OPERATIONAL TOOLING - PHASE ZERO
+"""
+
+import argparse
+import os
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
+
+
+def load_font(font_size):
+    """
+    Attempt to load a standard monospaced font, with fallback to default.
+    """
+    font_paths = [
+        "/System/Library/Fonts/Menlo.ttc",  # macOS
+        "/System/Library/Fonts/SF-Mono-Regular.otf",  # macOS SF Mono
+        "C:\\Windows\\Fonts\\cour.ttf",  # Windows
+        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",  # Linux
+    ]
+
+    for font_path in font_paths:
+        if os.path.exists(font_path):
+            try:
+                return ImageFont.truetype(font_path, font_size)
+            except OSError:
+                continue
+
+    # Fallback to default font
+    return ImageFont.load_default()
+
+
+def wrap_text(text, font, max_width):
+    """
+    Basic text wrapping logic to handle content exceeding image width.
+    """
+    lines = []
+    words = text.split()
+    current_line = ""
+
+    for word in words:
+        # Test if adding this word would exceed width
+        test_line = current_line + " " + word if current_line else word
+        bbox = font.getbbox(test_line)
+        line_width = bbox[2] - bbox[0]
+
+        if line_width <= max_width:
+            current_line = test_line
+        else:
+            if current_line:
+                lines.append(current_line)
+            current_line = word
+
+    if current_line:
+        lines.append(current_line)
+
+    return lines
+
+
+def forge_glyph(source_path, output_dir, font_size, resolution):
+    """
+    Core glyph forging logic.
+    """
+    # Parse resolution
+    try:
+        width, height = map(int, resolution.split('x'))
+    except ValueError:
+        raise ValueError("Resolution must be in format WIDTHxHEIGHT (e.g., 2048x2048)")
+
+    # Read source file
+    source_path = Path(source_path)
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source file not found: {source_path}")
+
+    with open(source_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Create output directory
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load font
+    font = load_font(font_size)
+
+    # Create white background image
+    image = Image.new('RGB', (width, height), 'white')
+    draw = ImageDraw.Draw(image)
+
+    # Wrap text
+    lines = wrap_text(content, font, width - 40)  # 20px margin on each side
+
+    # Draw text line by line
+    y_offset = 20  # Top margin
+    line_height = font.getbbox("Ag")[3] - font.getbbox("Ag")[1] + 5  # Approximate line height
+
+    for line in lines:
+        if y_offset + line_height > height:
+            break  # Stop if we exceed image height
+
+        draw.text((20, y_offset), line, fill='black', font=font)
+        y_offset += line_height
+
+    # Generate output filename
+    output_filename = source_path.stem + ".png"
+    output_path = output_dir / output_filename
+
+    # Save image
+    image.save(output_path)
+
+    return output_path
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Forge Cognitive Glyphs from text doctrine",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
+  python3 tools/scaffolds/glyph_forge.py --source doctrine.md --output-dir custom_glyphs/ --font-size 14 --resolution 4096x4096
+        """
+    )
+
+    parser.add_argument(
+        '--source',
+        required=True,
+        help='Path to the input .md or .txt file'
+    )
+
+    parser.add_argument(
+        '--output-dir',
+        default='WORK_IN_PROGRESS/glyphs/',
+        help='Directory to save the output glyph (default: WORK_IN_PROGRESS/glyphs/)'
+    )
+
+    parser.add_argument(
+        '--font-size',
+        type=int,
+        default=12,
+        help='Font size to use for rendering (default: 12)'
+    )
+
+    parser.add_argument(
+        '--resolution',
+        default='2048x2048',
+        help='Image resolution as WIDTHxHEIGHT (default: 2048x2048)'
+    )
+
+    args = parser.parse_args()
+
+    try:
+        output_path = forge_glyph(
+            args.source,
+            args.output_dir,
+            args.font_size,
+            args.resolution
+        )
+
+        print(f"[SUCCESS] Cognitive Glyph forged at: {output_path}")
+
+    except Exception as e:
+        print(f"[ERROR] Failed to forge glyph: {e}")
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    exit(main())
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/glyph_forge.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py ---
+
+#!/usr/bin/env python3
+"""
+setup_cuda_env.py (moved)
+
+This is a relocated copy of the repo's CUDA environment helper. It was moved
+into `forge/OPERATION_PHOENIX_FORGE/scripts/` — the script now detects the
+repository root by walking parent directories so it behaves correctly when
+located inside the forge subfolder.
+"""
+from __future__ import annotations
+import argparse
+import os
+import shlex
+import shutil
+import subprocess
+import sys
+from datetime import datetime
+from pathlib import Path
+
+
+def find_repo_root(start: str | Path) -> str:
+    p = Path(start).resolve()
+    # Walk upwards looking for a .git directory or a marker file (requirements.txt)
+    for parent in [p] + list(p.parents):
+        if (parent / '.git').exists() or (parent / 'requirements.txt').exists():
+            return str(parent)
+    # Fallback: two levels up from this script
+    return str(p.parents[2]) if len(p.parents) >= 3 else str(p.parents[-1])
+
+
+# Compute ROOT relative to this file location
+THIS_FILE = Path(__file__).resolve()
+ROOT = find_repo_root(THIS_FILE)
+ML_ENV_SCRIPT = os.path.join(ROOT, 'ML-Env-CUDA13', 'setup_ml_env_wsl.sh')
+CUDA_MARKDOWN = os.path.join(ROOT, 'CUDA-ML-ENV-SETUP.md')
+LOG_DIR = os.path.join(ROOT, 'ml_env_logs')
+
+
+def run(cmd, capture=False):
+    print(f"> {cmd}")
+    if isinstance(cmd, str):
+        cmd = shlex.split(cmd)
+    res = subprocess.run(cmd, stdout=subprocess.PIPE if capture else None,
+                         stderr=subprocess.STDOUT if capture else None)
+    return res
+
+
+def ensure_dir(p):
+    os.makedirs(p, exist_ok=True)
+
+
+def write_activate_helper(venv_path):
+    # write activation helper into the forge scripts directory
+    helper_dir = os.path.join(ROOT, 'forge', 'OPERATION_PHOENIX_FORGE', 'scripts')
+    os.makedirs(helper_dir, exist_ok=True)
+    helper = os.path.join(helper_dir, 'activate_ml_env.sh')
+    with open(helper, 'w', newline='\n') as f:
+        f.write(f"# Activation helper for ml_env venv\n")
+        f.write(f"# Source this from your shell: source {os.path.relpath(helper, ROOT)}\n")
+        f.write(f"source {os.path.join(venv_path, 'bin', 'activate')}\n")
+    try:
+        os.chmod(helper, 0o755)
+    except Exception:
+        pass
+    print(f"Wrote activation helper: {helper}")
+
+
+def find_torch_pin(req_path):
+    try:
+        with open(req_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith('torch==') or line.startswith('torch '):
+                    return line.split()[0]
+    except Exception:
+        return None
+    return None
+
+
+def find_torch_related_pins(req_path):
+    pins = {}
+    try:
+        with open(req_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                s = line.strip()
+                if s.startswith('torch==') or s.startswith('torch '):
+                    pins['torch'] = s.split()[0]
+                elif s.startswith('torchvision==') or s.startswith('torchvision '):
+                    pins['torchvision'] = s.split()[0]
+                elif s.startswith('torchaudio==') or s.startswith('torchaudio '):
+                    pins['torchaudio'] = s.split()[0]
+    except Exception:
+        return pins
+    return pins
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--venv', default=os.path.expanduser('~/ml_env'), help='Path to venv')
+    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements.txt'))
+    parser.add_argument('--staged', action='store_true', help='Run staged install (recommended)')
+    parser.add_argument('--quick', action='store_true', help='Quick one-step install (pip install -r requirements.txt)')
+    parser.add_argument('--regen-tests-only', action='store_true', help='Run ML-Env regen tests only and exit')
+    parser.add_argument('--recreate', action='store_true', help='Remove existing venv and recreate')
+    parser.add_argument('--pin-tensorflow', help='Pin TensorFlow to a specific version (e.g. 2.20.0)')
+    args = parser.parse_args()
+
+    ensure_dir(LOG_DIR)
+
+    print('\nCUDA setup helper — references:')
+    print(f" - {ML_ENV_SCRIPT}")
+    print(f" - {CUDA_MARKDOWN}\n")
+
+    if args.regen_tests_only:
+        if os.path.exists(ML_ENV_SCRIPT):
+            print('Running regen tests via ML-Env script...')
+            res = run(['bash', ML_ENV_SCRIPT, '--regen-tests-only'])
+            sys.exit(res.returncode)
+        else:
+            print('ML-Env regen script not found; nothing to do.')
+            sys.exit(1)
+
+    venv_path = os.path.expanduser(args.venv)
+
+    if os.path.exists(venv_path) and args.recreate:
+        print(f'Removing existing venv at {venv_path}')
+        shutil.rmtree(venv_path)
+
+    if not os.path.exists(venv_path):
+        print(f'Creating venv at {venv_path}')
+        run([sys.executable, '-m', 'venv', venv_path])
+    else:
+        print(f'Using existing venv at {venv_path}')
+
+    venv_python = os.path.join(venv_path, 'bin', 'python')
+    if not os.path.exists(venv_python):
+        print('ERROR: venv python not found at', venv_python)
+        sys.exit(1)
+
+    write_activate_helper(venv_path)
+
+    print('\nUpgrading pip/wheel/setuptools in venv...')
+    run([venv_python, '-m', 'pip', 'install', '--upgrade', 'pip', 'wheel', 'setuptools'])
+
+    if args.quick:
+        print('\nQuick install: installing requirements.txt directly')
+        run([venv_python, '-m', 'pip', 'install', '-r', args.requirements])
+        print('\nQuick install finished; run activation with:')
+        print(f'source {os.path.join(venv_path, "bin", "activate")}')
+        return
+
+    if args.staged:
+        print('\nStaged install: installing CUDA PyTorch wheels first')
+        pins = find_torch_related_pins(args.requirements)
+        if pins.get('torch'):
+            pkg_list = [pins.get('torch')]
+            if pins.get('torchvision'):
+                pkg_list.append(pins.get('torchvision'))
+            if pins.get('torchaudio'):
+                pkg_list.append(pins.get('torchaudio'))
+            print(f"Found torch-related pins: {pkg_list} — installing via PyTorch index")
+            run([venv_python, '-m', 'pip', 'install', '--index-url', 'https://download.pytorch.org/whl/cu126'] + pkg_list)
+        else:
+            print('No torch pin found in requirements; installing latest torch (no pin)')
+            run([venv_python, '-m', 'pip', 'install', '--index-url', 'https://download.pytorch.org/whl/cu126', 'torch'])
+
+        if args.pin_tensorflow:
+            tf_pkg = f'tensorflow=={args.pin_tensorflow}'
+        else:
+            tf_pkg = 'tensorflow'
+        print(f'Installing TensorFlow package: {tf_pkg}')
+        run([venv_python, '-m', 'pip', 'install', '--upgrade', tf_pkg])
+
+        core_log = os.path.join(LOG_DIR, 'test_torch_cuda.log')
+        print('\nRunning core verification test (test_torch_cuda.py)')
+        res = subprocess.run([venv_python, os.path.join(ROOT, 'ML-Env-CUDA13', 'test_torch_cuda.py')], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        with open(core_log, 'wb') as f:
+            f.write(res.stdout)
+        exit_file = os.path.join(LOG_DIR, 'test_torch_cuda.exit')
+        with open(exit_file, 'w') as f:
+            f.write(str(res.returncode))
+        print(f'Core verification exit code: {res.returncode} (log: {core_log})')
+
+        if res.returncode != 0:
+            print('Core verification failed. Inspect the log and fix the environment before continuing.')
+            print(f'cat {core_log}')
+            sys.exit(res.returncode)
+
+        ts = datetime.utcnow().strftime('%Y%m%d%H%M')
+        pinned = os.path.join(ROOT, f'pinned-requirements-{ts}.txt')
+        print('Core gate passed. Creating pinned requirements snapshot:', pinned)
+        fr = subprocess.run([venv_python, '-m', 'pip', 'freeze'], stdout=subprocess.PIPE)
+        with open(pinned, 'wb') as f:
+            f.write(fr.stdout)
+
+        print('\nInstalling remainder of requirements from', args.requirements)
+        run([venv_python, '-m', 'pip', 'install', '-r', args.requirements])
+
+        tests = ['test_pytorch.py', 'test_tensorflow.py', 'test_xformers.py', 'test_llama_cpp.py']
+        for t in tests:
+            tpath = os.path.join(ROOT, 'ML-Env-CUDA13', t)
+            logp = os.path.join(LOG_DIR, t.replace('.py', '.log'))
+            exitp = os.path.join(LOG_DIR, t.replace('.py', '.exit'))
+            print(f'Running {t} -> {logp}')
+            r = subprocess.run([venv_python, tpath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            with open(logp, 'wb') as f:
+                f.write(r.stdout)
+            with open(exitp, 'w') as f:
+                f.write(str(r.returncode))
+
+        print('\nStaged install complete. Activate the venv with:')
+        print(f'source {os.path.join(venv_path, "bin", "activate")}')
+        print('Review logs in', LOG_DIR)
+        return
+
+    print('No mode selected. Run with --staged (recommended) or --quick. Use --help for options.')
+
+
+if __name__ == '__main__':
+    main()
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py ---
 
 --- START OF FILE mcp_agent/main.py ---
 
@@ -45419,7 +45571,7 @@ def test_main_query_flow_successfully(
   "packages": {
     "": {
       "dependencies": {
-        "gpt-tokenizer": "^3.0.1",
+        "gpt-tokenizer": "^3.4.0",
         "yargs": "^17.7.2"
       }
     },
@@ -45504,10 +45656,9 @@ def test_main_query_flow_successfully(
       }
     },
     "node_modules/gpt-tokenizer": {
-      "version": "3.0.1",
-      "resolved": "https://registry.npmjs.org/gpt-tokenizer/-/gpt-tokenizer-3.0.1.tgz",
-      "integrity": "sha512-5jdaspBq/w4sWw322SvQj1Fku+CN4OAfYZeeEg8U7CWtxBz+zkxZ3h0YOHD43ee+nZYZ5Ud70HRN0ANcdIj4qg==",
-      "license": "MIT"
+      "version": "3.4.0",
+      "resolved": "https://registry.npmjs.org/gpt-tokenizer/-/gpt-tokenizer-3.4.0.tgz",
+      "integrity": "sha512-wxFLnhIXTDjYebd9A9pGl3e31ZpSypbpIJSOswbgop5jLte/AsZVDvjlbEuVFlsqZixVKqbcoNmRlFDf6pz/UQ=="
     },
     "node_modules/is-fullwidth-code-point": {
       "version": "3.0.0",
@@ -45615,7 +45766,7 @@ def test_main_query_flow_successfully(
 
 {
   "dependencies": {
-    "gpt-tokenizer": "^3.0.1",
+    "gpt-tokenizer": "^3.4.0",
     "yargs": "^17.7.2"
   }
 }
@@ -45630,7 +45781,7 @@ testpaths = mnemonic_cortex/tests
 
 --- END OF FILE pytest.ini ---
 
---- START OF FILE requirements.txt ---
+--- START OF FILE requirements-macbook-M1.txt ---
 
 absl-py==2.3.1
 accelerate==1.4.0
@@ -45761,6 +45912,177 @@ unsloth@ git+https://github.com/unslothai/unsloth.git
 urllib3==2.5.0
 wandb==0.21.0
 Werkzeug==3.1.3
+
+--- END OF FILE requirements-macbook-M1.txt ---
+
+--- START OF FILE requirements.txt ---
+
+# Use the PyTorch CUDA 12.6 wheel index so pip will prefer cu126 wheels
+--extra-index-url https://download.pytorch.org/whl/cu126
+
+# CUDA-aware PyTorch packages (installed from the above extra index)
+# Pin to the cu126 builds tested with ML-Env-CUDA13 in this project.
+# If you want a different PyTorch release, change the version suffix accordingly.
+torch==2.8.0+cu126
+torchvision==0.23.0+cu126
+torchaudio==2.8.0+cu126
+
+
+absl-py==2.3.1
+accelerate==1.4.0
+alabaster==1.0.0
+alembic==1.16.4
+annotated-types==0.7.0
+anyio==4.9.0
+attrs==25.3.0
+babel==2.17.0
+black==25.1.0
+certifi==2025.7.14
+charset-normalizer==3.4.2
+chromadb==1.3.4
+click==8.2.1
+cloudpickle==3.1.1
+colorlog==6.9.0
+contourpy==1.3.3
+coverage==7.10.1
+cycler==0.12.1
+docutils==0.21.2
+Farama-Notifications==0.0.4
+filelock==3.18.0
+flake8==7.3.0
+fonttools==4.59.0
+fsspec==2025.3.0
+gitdb==4.0.12
+GitPython==3.1.45
+google-generativeai==0.8.3
+gpt4all==2.8.2
+grpcio==1.74.0
+gymnasium==1.2.0
+h11==0.16.0
+hf-xet==1.1.5
+httpcore==1.0.9
+httpx==0.28.1
+huggingface-hub==0.36.0
+idna==3.10
+imagesize==1.4.1
+iniconfig==2.1.0
+Jinja2==3.1.6
+joblib==1.5.1
+jsonschema==4.25.0
+jsonschema-specifications==2025.4.1
+kiwisolver==1.4.8
+langchain==1.0.5
+langchain-chroma==1.0.0
+langchain-community==0.4.1
+langchain-nomic==1.0.0
+langchain-ollama==1.0.0
+langchain-text-splitters==1.0.0
+Mako==1.3.10
+Markdown==3.8.2
+MarkupSafe==3.0.2
+matplotlib==3.10.5
+mccabe==0.7.0
+mpmath==1.3.0
+msgpack==1.1.1
+mypy_extensions==1.1.0
+networkx==3.5
+nomic[local]==3.9.0
+numpy==1.26.2
+ollama==0.6.0
+opencv-python==4.10.0.84
+optuna==4.4.0
+packaging==25.0
+pandas==2.2.2
+pathspec==0.12.1
+peft==0.11.1
+pillow==10.4.0
+platformdirs==4.3.8
+pluggy==1.6.0
+protobuf==5.29.5
+pyarrow==19.0.0
+pycodestyle==2.14.0
+pydantic==2.11.7
+pydantic_core==2.33.2
+pyflakes==3.4.0
+Pygments==2.19.2
+pyparsing==3.2.3
+pytest==8.4.1
+pytest-cov==6.2.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+pytz==2025.2
+PyYAML==6.0.2
+ray==2.48.0
+referencing==0.36.2
+regex==2025.7.34
+requests==2.32.5
+rich==13.7.1
+roman-numerals-py==3.1.0
+rpds-py==0.26.0
+safetensors==0.5.3
+scikit-learn==1.7.1
+scipy==1.16.1
+seaborn==0.13.2
+sentry-sdk==2.34.1
+setuptools==80.9.0
+six==1.17.0
+smmap==5.0.2
+sniffio==1.3.1
+snowballstemmer==3.0.1
+Sphinx==8.2.3
+sphinx-rtd-theme==3.0.2
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
+SQLAlchemy==2.0.42
+stable_baselines3==2.7.0
+sympy==1.14.0
+tenseal==0.3.16
+tensorboard==2.19.0
+tensorboard-data-server==0.7.2
+tensorboardX==2.6.4
+threadpoolctl==3.6.0
+tokenizers==0.22.1
+tqdm==4.67.1
+transformers==4.56.1
+trl==0.23.0
+typing-inspection==0.4.1
+typing_extensions==4.14.1
+tzdata==2025.2
+urllib3==2.5.0
+wandb==0.21.0
+Werkzeug==3.1.3
+xformers==0.0.32.post2
+
+# Optional / VCS installs (uncomment if you want direct git installs)
+# unsloth @ git+https://github.com/unslothai/unsloth.git
+# unsloth_zoo
+# unsloth-colab-install==0.0.0  # placeholder
+
+# Packages often requiring special install steps or CUDA-aware wheels:
+# - bitsandbytes
+# - llama-cpp-python
+# - sentencepiece
+# - huggingface_hub (already included)
+# - torch/torchaudio/torchvision: DO NOT install the CPU wheels on WSL with CUDA.
+#   Install PyTorch for your CUDA version from the official PyTorch installer inside WSL/Ubuntu.
+#   Example (in WSL Ubuntu): pip install --index-url https://download.pytorch.org/whl/cu126 torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126
+
+# Post-install notes (run after the main `pip install -r requirements.txt`):
+# - bitsandbytes: install after torch is installed; it may require a matching CUDA ABI.
+#     pip install bitsandbytes
+# - xformers: prefer the prebuilt wheel from the PyTorch index. If pip builds from source
+#     it may require `gcc`, `cmake` and extra build tools; try:
+#     pip install --index-url https://download.pytorch.org/whl/cu126 xformers
+# - llama-cpp-python: often requires building with CUDA flags. Recommended local install:
+#     CMAKE_ARGS="-DGGML_CUDA=ON -DLLAMA_CUBLAS=ON" pip install --upgrade --force-reinstall --no-build-isolation llama-cpp-python
+#   (Adjust flags to match your local GPU/toolkit. Building may require `cmake` and `build-essential`.)
+
+# Keep a minimal pinned list here and install CUDA-specific heavy packages separately in WSL.
 
 --- END OF FILE requirements.txt ---
 
