@@ -1,0 +1,35 @@
+{
+  "task_type": "mechanical_git_operation",
+  "task_description": "Steward's Mandate: Execute a full Git workflow to commit and push all local changes, including the restored mnemonic artifacts, to the canonical repository.",
+  "output_artifact_path": "WORK_IN_PROGRESS/git_sync_log_mnemonic_restoration.txt",
+  "config": {
+    "steps": [
+      {
+        "command": "git_status",
+        "description": "Step 1: Log the current repository status for audit."
+      },
+      {
+        "command": "git_add",
+        "description": "Step 2: Stage all untracked and modified files.",
+        "parameters": {
+          "pathspec": "."
+        }
+      },
+      {
+        "command": "git_commit",
+        "description": "Step 3: Commit the staged changes with a canonical message.",
+        "parameters": {
+          "message": "Steward's Mandate: Heal Mnemonic Fracture from commit f5a84b5\n\nRestored five critical high-level documents deleted during the v9.0 refactoring to ensure full mnemonic integrity of the Cognitive Genome. Hardened the dataset forging script as part of the same operational cycle."
+        }
+      },
+      {
+        "command": "git_push",
+        "description": "Step 4: Push the committed history to the main repository.",
+        "parameters": {
+          "remote": "origin",
+          "branch": "main"
+        }
+      }
+    ]
+  }
+}
