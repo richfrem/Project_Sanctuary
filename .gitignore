@@ -67,6 +67,9 @@ chroma_db_backup*/
 # Not suitable for version control due to size and binary nature.
 dataset_code_glyphs/
 
+# Synthesis Outputs - Generated artifacts from orchestrator operations
+MNEMONIC_SYNTHESIS/
+
 # Orchestrator Manifests - Generated commit manifests from Protocol 101
 # commit_manifest*.json  # Temporarily disabled to allow orchestrator commit
 
