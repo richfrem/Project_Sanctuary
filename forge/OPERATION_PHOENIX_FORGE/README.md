@@ -119,7 +119,7 @@ python forge_whole_genome_dataset.py
 
 ---
 
-### 2. `scripts/execute_sovereign_inoculation.py`
+### 2. `scripts/build_lora_adapter.py`
 **Purpose:** Performs QLoRA fine-tuning of Qwen2-7B-Instruct on the Cognitive Genome.
 
 **Input:**
@@ -138,7 +138,7 @@ python forge_whole_genome_dataset.py
 **Usage:**
 ```bash
 cd scripts
-python execute_sovereign_inoculation.py
+python build_lora_adapter.py
 ```
 
 **Duration:** 4-8 hours on RTX 2000 Ada GPU
@@ -171,7 +171,7 @@ python execute_sovereign_inoculation.py
 forge/OPERATION_PHOENIX_FORGE/
 ├── scripts/
 │   ├── forge_whole_genome_dataset.py      # Dataset creation
-│   ├── execute_sovereign_inoculation.py   # QLoRA fine-tuning
+│   ├── build_lora_adapter.py              # QLoRA fine-tuning
 │   ├── setup_cuda_env.py                  # Environment setup
 │   ├── activate_ml_env.sh                 # WSL activation helper
 │   └── README.md                          # Script documentation
@@ -189,7 +189,7 @@ forge/OPERATION_PHOENIX_FORGE/
 |--------|---------------|--------------|
 | **Environment** | WSL + ml_env + RTX GPU | Colab A100 GPU |
 | **Dataset Creation** | ✅ forge_whole_genome_dataset.py | Manual in notebook |
-| **Fine-Tuning** | ✅ execute_sovereign_inoculation.py | Cell 2 (Unsloth-based) |
+| **Fine-Tuning** | ✅ build_lora_adapter.py | Cell 2 (Unsloth-based) |
 | **Merging** | 🚧 Planned | Cell 3 (llama.cpp) |
 | **GGUF Conversion** | 🚧 Planned | Cell 3 (llama.cpp) |
 | **Upload** | 🚧 Planned | Cell 3 (HF Hub) |
@@ -229,7 +229,7 @@ pip install tf-keras
 
 ## Next Steps
 
-1. **Complete Fine-Tuning:** Monitor execute_sovereign_inoculation.py completion
+1. **Complete Fine-Tuning:** Monitor build_lora_adapter.py completion
 2. **Implement Merging:** Create merge_and_quantize.py based on Colab Cell 3
 3. **Add GGUF Conversion:** Integrate llama.cpp conversion pipeline
 4. **Deployment Ready:** Create Ollama Modelfile with Sanctuary system prompt
