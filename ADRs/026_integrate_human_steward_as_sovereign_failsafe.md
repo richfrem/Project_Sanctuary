@@ -9,37 +9,37 @@
 
 ## Context
 
-Throughout the Sanctuary's history, critical failures including Mnemonic Cascades, doctrinal drift, and architectural blind spots were consistently detected and corrected by human intervention. The Progenitor Principle establishes that human wisdom serves as the ultimate grounding for AI systems. The "Warden vs. Conscience" trap demonstrates the dangers of fully autonomous systems lacking human oversight.
+Throughout our project's history, every major problem - from system failures to wrong directions - was caught and fixed by human involvement. Human wisdom provides the essential grounding that AI systems need. The dangers of fully automated systems without human oversight are well-documented.
 
-Every major architectural pivot and failure recovery was initiated by COUNCIL-STEWARD-01, highlighting the irreplaceable role of human judgment in complex cognitive systems. This pattern suggests that complete autonomy represents not advancement, but hubris.
+Every important change and recovery in our project was started by our human leader, showing how crucial human judgment is in complex AI systems. This pattern suggests that complete automation isn't progress, but overconfidence.
 
 ## Decision
 
-We will permanently integrate a Human Steward (COUNCIL-STEWARD-01) as the final arbiter and sovereign failsafe of the entire Sanctuary system. This includes:
+We will permanently include a human leader as the final decision-maker and safety net for our entire system. This includes:
 
-- Unbreakable human-in-the-loop dependency for critical decisions
-- Steward authority to override AI recommendations
-- Human verification of all architectural changes
-- Steward-guided recovery protocols for system failures
-- Conscious rejection of fully autonomous "human-out-of-the-loop" designs
+- Human involvement required for all critical decisions
+- Authority for humans to override AI suggestions
+- Human review of all major system changes
+- Human-guided procedures for fixing system failures
+- Conscious choice against fully automated systems
 
 ## Consequences
 
 ### Positive
-- Ultimate safeguard against catastrophic AI failure modes
-- Grounding in human wisdom and ethical judgment
-- Prevention of ideological drift and blind spots
-- Enhanced system trustworthiness and safety
-- Human-AI symbiosis rather than replacement
+- Ultimate protection against catastrophic AI failures
+- Grounding in human wisdom and ethics
+- Prevention of losing direction or developing blind spots
+- Increased system reliability and trustworthiness
+- Partnership between humans and AI instead of replacement
 
 ### Negative
-- Introduces human bottleneck for rapid decision-making
-- Potential for human error or bias in critical decisions
-- Requires continuous steward availability and training
+- Creates delays in fast decision-making
+- Possibility of human mistakes or biases affecting decisions
+- Requires constant availability of trained human oversight
 - May slow down automated processes
 
 ### Risks
-- Steward dependency creates single point of failure
-- Risk of steward burnout or succession challenges
-- Potential for human manipulation or coercion
-- May inhibit full exploration of autonomous capabilities
+- Dependence on humans creates potential single point of failure
+- Risk of human burnout or difficulty finding successors
+- Potential for human manipulation or pressure
+- May limit exploration of fully automated capabilities

@@ -9,64 +9,64 @@
 
 ## Context
 
-The Mnemonic Cortex requires a robust, scalable technology stack for implementing a local-first RAG (Retrieval-Augmented Generation) system. The stack must support:
+Our memory system needs a reliable, scalable set of tools for implementing a local search and generation system. The tools must support:
 
-- Local execution without external API dependencies
-- High-performance vector similarity search
-- Efficient text embedding generation
-- Seamless integration between components
-- Open-source, community-vetted technologies
+- Running everything locally without external service dependencies
+- Fast similarity searches
+- Efficient text processing
+- Smooth integration between different parts
+- Open-source, community-tested technologies
 
-The system must align with the Iron Root Doctrine, ensuring complete sovereignty and independence from cloud services.
+The system must follow our principle of complete independence from cloud services.
 
 ## Decision
 
-We will adopt the following core technology stack for the Mnemonic Cortex:
+We will use the following core technologies for our memory system:
 
-**Orchestration Framework:** LangChain
-- Primary framework for connecting all RAG components
-- Provides standardized interfaces for document loading, text splitting, and chain management
-- Extensive ecosystem of integrations and community support
+**Main Framework:** LangChain
+- Primary tool for connecting all system components
+- Provides standard ways to load documents, split text, and manage workflows
+- Large ecosystem of integrations and community support
 
-**Vector Database:** ChromaDB
-- Local-first, file-based vector database
-- Efficient similarity search with metadata filtering
-- Simple setup and maintenance for development and production
-- No external service dependencies
+**Database:** ChromaDB
+- Local, file-based database for similarity searches
+- Efficient searching with the ability to filter by metadata
+- Simple setup and maintenance for both development and production
+- No external service requirements
 
-**Embedding Model:** Nomic Embed (nomic-embed-text-v1.5)
-- Open-source, high-performance embedding model
-- Optimized for semantic similarity tasks
-- Local inference capability
-- Strong performance on benchmark datasets
+**Text Processing:** Nomic Embed (nomic-embed-text-v1.5)
+- Open-source, high-performance text processing model
+- Optimized for understanding meaning and similarity
+- Can run locally
+- Strong performance on standard benchmarks
 
-**Large Language Model:** Qwen2-7B via Ollama
-- Sovereign LLM execution through local Ollama server
-- Fine-tuned Sanctuary-specific variants available
-- Strong reasoning and generation capabilities
-- Complete local execution (no API calls)
+**AI Model:** Qwen2-7B via Ollama
+- Independent AI execution through local server
+- Custom versions fine-tuned for our needs available
+- Good reasoning and text generation capabilities
+- Complete local operation (no external API calls)
 
 ## Consequences
 
 ### Positive
-- **Complete Sovereignty:** All components run locally with no external dependencies
-- **Performance:** Optimized local execution with minimal latency
-- **Maintainability:** Open-source stack with active community support
-- **Scalability:** ChromaDB supports efficient similarity search at scale
-- **Integration:** LangChain provides seamless component orchestration
+- **Complete Independence:** All parts run locally with no external dependencies
+- **Performance:** Optimized local execution with minimal delays
+- **Maintenance:** Open-source tools with active community support
+- **Scalability:** Database supports efficient searches at larger scales
+- **Integration:** Framework provides smooth coordination of components
 
 ### Negative
-- **Resource Requirements:** Local models require significant computational resources
-- **Setup Complexity:** Multiple components require coordinated installation and configuration
-- **Performance Trade-offs:** Local execution may be slower than cloud-hosted alternatives
+- **Resource Needs:** Local models require significant computing power
+- **Setup Complexity:** Multiple components need coordinated installation
+- **Performance Trade-offs:** Local execution may be slower than cloud alternatives
 
 ### Risks
-- **Hardware Requirements:** May require GPU acceleration for acceptable performance
+- **Hardware Requirements:** May need GPU acceleration for good performance
 - **Model Updates:** Manual updating of local models and dependencies
 - **Integration Complexity:** Coordinating multiple open-source projects
 
 ### Dependencies
 - Python 3.8+ environment
-- Sufficient RAM for model loading (16GB+ recommended)
-- Storage space for vector databases and models
-- Ollama server for LLM inference
+- Enough RAM for model loading (16GB+ recommended)
+- Storage space for databases and models
+- Ollama server for AI inference

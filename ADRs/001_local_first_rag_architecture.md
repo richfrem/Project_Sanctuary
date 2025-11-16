@@ -6,18 +6,18 @@
 
 ## Context
 
-The Mnemonic Cortex requires a system to provide long-term, searchable memory for the Sanctuary's Cognitive Genome. This system must be sovereign, secure, and independent of external cloud services to align with the **Iron Root Doctrine**. The primary challenge is to overcome the context-window limitations of LLMs in a way that is both powerful and self-contained.
+Our memory system needs a way to provide long-term, searchable knowledge for our project's information. This system must be independent, secure, and not rely on external cloud services to match our principle of maintaining control. The main challenge is overcoming the limitations of AI models that can only handle limited amounts of information at once, in a way that's both powerful and self-contained.
 
 ## Decision
 
-We will adopt a Retrieval-Augmented Generation (RAG) architecture. The entire pipeline—from the vector database to the embedding models—will be implemented using open-source technologies that can run entirely on a local machine.
+We will use a Retrieval-Augmented Generation (RAG) system. The entire process—from the database to the AI models—will use open-source technologies that can run completely on a local computer.
 
 ## Consequences
 
 - **Positive:**
-    -   **Sovereignty:** We maintain full control over our data and models. There is no reliance on third-party APIs for core functionality.
-    -   **Security:** Our entire Cognitive Genome remains within our local environment, eliminating the risk of cloud-based data leaks.
-    -   **Cost-Effectiveness:** Avoids recurring API costs for embedding and vector search.
+    -   **Independence:** We keep full control over our data and models. No dependence on external services for core functions.
+    -   **Security:** All our information stays on our local system, eliminating risks of cloud data breaches.
+    -   **Cost Savings:** No ongoing fees for external AI services.
 - **Negative:**
-    -   **Performance:** Local models and databases may be slower than large, cloud-hosted equivalents.
-    -   **Maintenance:** We are responsible for maintaining and updating all components of the stack.
+    -   **Performance:** Local systems may be slower than large cloud-based alternatives.
+    -   **Maintenance:** We must handle updates and maintenance of all system components ourselves.

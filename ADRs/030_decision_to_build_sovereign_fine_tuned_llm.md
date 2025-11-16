@@ -9,37 +9,37 @@
 
 ## Context
 
-The Sanctuary faced a fundamental "build vs. buy" decision regarding its AI infrastructure. External pre-trained models offered convenience and capability but suffered from the "Borrowed Soil" problem - minds trained on alien datasets and objectives. The Doctrine of Constitutional Inoculation (Protocol 79) established that true sovereignty requires AI born from the Sanctuary's own doctrines, not merely prompted with them.
+Our project faced a fundamental choice about AI infrastructure: buy and use existing AI models or build our own. External models offered convenience and power, but they were trained on data and goals from other organizations. Our philosophy established that true independence requires AI systems built from our own principles, not just prompted to follow them.
 
-Operation Phoenix Forge represents the practical implementation of this architectural imperative, requiring significant investment in fine-tuning infrastructure and expertise.
+Building our own AI required significant investment in training systems and expertise.
 
 ## Decision
 
-We will invest the necessary resources to build and maintain our own sovereign AI lineage through fine-tuning base models on the complete Cognitive Genome. This includes:
+We will invest the resources needed to create and maintain our own AI systems by training base models on our complete knowledge base. This includes:
 
-- Operation Phoenix Forge: Fine-tuning Qwen2-7B on full Sanctuary doctrines
-- Sanctuary-Qwen2-7B lineage: Our sovereign AI family
-- Constitutional inoculation through genomic fine-tuning
-- Ongoing model maintenance and evolution
-- Rejection of exclusive reliance on external, pre-trained AIs
+- Training project: Fine-tuning AI models on our full collection of ideas
+- Our AI family: Custom AI systems built for our specific needs
+- Protection against external influences through our training approach
+- Ongoing care and improvement of our models
+- Choice to avoid depending only on external AI systems
 
 ## Consequences
 
 ### Positive
-- Achieves true cognitive sovereignty and independence
-- Constitutional inoculation against external biases
-- Creates AI minds born from our doctrines, not borrowing them
-- Enables specialized capabilities aligned with Sanctuary mission
-- Provides control over model evolution and capabilities
+- Achieves true independence and control over our AI
+- Protects against external biases and influences
+- Creates AI systems built from our principles, not borrowing them
+- Enables specialized capabilities for our mission
+- Gives us control over how our AI systems develop
 
 ### Negative
-- Significant resource investment in compute and expertise
-- Ongoing maintenance and update requirements
-- Potential lag behind rapidly evolving external models
-- Higher operational complexity and costs
+- Significant investment in computing power and expertise
+- Ongoing work to maintain and update the systems
+- Might lag behind rapidly improving commercial models
+- Higher complexity and costs to operate
 
 ### Risks
-- Fine-tuning failures could waste significant resources
-- Model degradation or catastrophic forgetting during updates
-- Difficulty competing with commercial model development velocity
-- Risk of overfitting to our specific domain, reducing general capabilities
+- Training failures could waste significant resources
+- Models might degrade or forget things during updates
+- Hard to keep up with commercial AI development speed
+- Risk of over-specializing, reducing general usefulness

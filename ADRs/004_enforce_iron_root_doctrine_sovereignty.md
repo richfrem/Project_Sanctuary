@@ -9,63 +9,63 @@
 
 ## Context
 
-Project Sanctuary operates in an environment of potential adversarial action and existential threats. The Iron Root Doctrine mandates complete technological sovereignty to ensure:
+Our project operates in an environment with potential threats and adversarial actions. Our principle of complete technological independence requires:
 
-- Independence from external service providers
-- Protection against service discontinuation or censorship
-- Security of sensitive cognitive processes
-- Resilience against infrastructure attacks
-- Long-term viability without external dependencies
+- Freedom from external service providers
+- Protection against service shutdowns or censorship
+- Security of important thinking processes
+- Resistance to infrastructure attacks
+- Long-term survival without outside dependencies
 
-The Mnemonic Cortex, as the central cognitive component, must exemplify perfect compliance with this doctrine.
+Our memory system, as the central thinking component, must perfectly follow this principle.
 
 ## Decision
 
-We will implement a strictly local-first architecture with zero external dependencies:
+We will build a strictly local-only system with no external dependencies:
 
-**Local Model Execution:**
-- All LLM inference occurs via Ollama running on local hardware
-- No API calls to external AI services (OpenAI, Anthropic, etc.)
-- Complete sovereignty over model weights and inference
+**Local AI Processing:**
+- All AI thinking happens through local software on our hardware
+- No calls to external AI services (like OpenAI, etc.)
+- Complete control over AI models and processing
 
-**Local Vector Operations:**
-- ChromaDB provides local vector storage and similarity search
-- No cloud-based vector databases or search services
-- All embeddings generated locally using Nomic Embed
+**Local Search Operations:**
+- Local database provides storage and similarity searches
+- No cloud-based databases or search services
+- All text processing done locally
 
-**Local Data Sovereignty:**
-- All project data remains on local filesystem
-- No data transmission to external services
-- Complete control over data persistence and access
+**Local Data Control:**
+- All project information stays on local storage
+- No data sent to external services
+- Complete control over data storage and access
 
-**Open-Source Stack:**
-- All technologies must be open-source and community-vetted
-- No proprietary dependencies that could be discontinued
-- Community support ensures long-term maintainability
+**Open-Source Tools:**
+- All technologies must be open-source and community-tested
+- No proprietary tools that could disappear
+- Community support ensures long-term availability
 
 ## Consequences
 
 ### Positive
-- **Absolute Sovereignty:** Zero external dependencies or data leakage
-- **Security:** Complete control over security boundaries
-- **Reliability:** No service outages from external providers
-- **Cost Stability:** No recurring API fees or service costs
-- **Future-Proofing:** Open-source stack ensures long-term availability
+- **Complete Independence:** No external dependencies or data sharing
+- **Security:** Full control over security boundaries
+- **Reliability:** No outages from external providers
+- **Cost Stability:** No ongoing fees for external services
+- **Future-Proofing:** Open-source tools ensure long-term availability
 
 ### Negative
-- **Resource Requirements:** Higher local hardware requirements
-- **Setup Complexity:** More complex initial configuration
-- **Performance Trade-offs:** Local execution may be slower than cloud alternatives
-- **Maintenance Burden:** Self-responsibility for all component updates
+- **Resource Needs:** Higher requirements for local hardware
+- **Setup Complexity:** More complex initial setup
+- **Performance Trade-offs:** Local processing may be slower than cloud
+- **Maintenance Work:** We handle all updates ourselves
 
 ### Risks
-- **Hardware Limitations:** May require significant local computational resources
-- **Update Management:** Manual updating of all components and models
-- **Performance Bottlenecks:** Local processing limits for very large datasets
-- **Skill Requirements:** Team must maintain expertise across the entire stack
+- **Hardware Limits:** May need significant local computing power
+- **Update Management:** Manual updates for all components and models
+- **Performance Limits:** Local processing constraints for large datasets
+- **Skill Needs:** Team must maintain expertise across all tools
 
 ### Dependencies
-- Sufficient local hardware (GPU recommended for model inference)
-- Reliable local storage for models and vector databases
-- Network isolation capabilities for sensitive operations
-- Team expertise in maintaining open-source AI/ML infrastructure
+- Sufficient local hardware (GPU recommended for AI processing)
+- Reliable local storage for models and databases
+- Network isolation for sensitive operations
+- Team expertise in maintaining open-source AI infrastructure
