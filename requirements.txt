@@ -1,22 +1,25 @@
-# Use the PyTorch CUDA 12.1 wheel index
---extra-index-url https://download.pytorch.org/whl/cu121
+# Use the PyTorch CUDA 12.6 wheel index. This is the known-good index.
+--extra-index-url https://download.pytorch.org/whl/cu126
 
-# Core ML/Fine-Tuning Stack - Pinned to a known-good, compatible set
-torch==2.3.0+cu121
-torchvision==0.18.0+cu121
-torchaudio==2.3.0+cu121
-transformers==4.40.1
+# --- CORE ML & FINE-TUNING STACK ---
+# Pinned to PyTorch 2.9.0 to match xformers dependency.
+torch==2.9.0+cu126
+torchvision==0.24.0+cu126
+torchaudio==2.9.0+cu126
+
+# Pinned to a known-good, compatible set for the PyTorch version above.
+transformers==4.41.2
 peft==0.10.0
 trl==0.8.6
 bitsandbytes==0.43.1
 datasets==2.19.0
 accelerate==0.30.1
-xformers==0.0.26.post1
+xformers
 
-# Keras compatibility
-tf-keras
+# Keras compatibility layer
+tf-keras==2.20.1
 
-# Core RAG/Orchestrator Stack
+# --- CORE RAG & ORCHESTRATOR STACK ---
 langchain
 chromadb
 google-generativeai

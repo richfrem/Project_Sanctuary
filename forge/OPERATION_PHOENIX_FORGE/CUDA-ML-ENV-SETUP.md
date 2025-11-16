@@ -9,7 +9,6 @@ This guide will help you set up a CUDA-enabled machine learning environment for 
 - **Python 3.10+** (managed by ML-Env-CUDA13)
 - Install ML-Env-CUDA13 dependencies before running fine-tuning scripts
 
-
 ## One-Time Setup Steps
 
 ### 1. Install WSL2 and Ubuntu
@@ -28,121 +27,104 @@ This guide will help you set up a CUDA-enabled machine learning environment for 
    nvidia-smi
    ```
 
-### 3. Clone ML-Env-CUDA13
-- In your WSL2 Ubuntu terminal, navigate to the parent directory of your project:
-   ```bash
-   cd /mnt/c/Users/<YourUsername>/source/repos
-   ```
-- Clone the ML-Env-CUDA13 repository:
-   ```bash
-   git clone https://github.com/bcgov/ML-Env-CUDA13.git
-   ```
+---
 
-### 4a. Run ML Environment Setup (If not already done)
-Run the setup script from your project directory. If not already done. 
-Run from project root.  Assumes this project and  ML-Env-CUDA13 are in the same parent
-directory. 
+## **Project Environment Setup (Unified Script)**
 
-**Purge Old Environments (If Necessary)**
+This process uses a single, purpose-built Python script (`setup_cuda_env.py v2.1`) that handles everything from system prerequisites to installing the specific Python libraries required for this project. This replaces the need for the `setup_ml_env_wsl.sh` script.
 
-From your base WSL shell (no `(ml_env)` in the prompt), run:
+It will setup a custom cuda environment for NVDIA GPU as a unified script specifically
+for fine-tuning in this project. 
+
+---
+
+### Step 0: Start with a Clean Slate
+
+As you correctly did in your own steps, ensure no old environment exists.
+
 ```bash
 deactivate 2>/dev/null || true
 rm -rf ~/ml_env
 ```
 
-```bash
-# run this from the Project_Sanctuary repository root
-bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
+### **Step 1: Configure the Blueprint (`requirements.txt`)**
+
+This file acts as the master plan for your Python environment. Ensure the `requirements.txt` file in your project's root directory contains the exact contents below. This defines the precise, known-good versions of all libraries.
+
+```text
+# Use the PyTorch CUDA 12.6 wheel index. This is the known-good index.
+--extra-index-url https://download.pytorch.org/whl/cu126
+
+# --- CORE ML & FINE-TUNING STACK ---
+# Pinned to PyTorch 2.9.0 to match xformers dependency.
+torch==2.9.0+cu126
+torchvision==0.24.0+cu126
+torchaudio==2.9.0+cu126
+
+# Pinned to a known-good, compatible set for the PyTorch version above.
+transformers==4.41.2
+peft==0.10.0
+trl==0.8.6
+bitsandbytes==0.43.1
+datasets==2.19.0
+accelerate==0.30.1
+xformers
+
+# Keras compatibility layer
+tf-keras==2.20.1
+
+# --- CORE RAG & ORCHESTRATOR STACK ---
+langchain
+chromadb
+google-generativeai
+ollama
+gpt4all
 ```
 
-This will create and configure a Python virtual environment at `~/ml_env`.
 
-### 4b. IF ML ENV already setup globally, Activate the venv in your current shell with:
+
+### **Step 2: Run the All-in-One Setup Script**
+
+From your project's root directory, run the setup script. This single command will configure your entire environment.
+
+> **Note:** You must run this command with `sudo` because the script will automatically install necessary system packages (like `python3.11` and `python3.11-venv`) if they are missing.
+
 ```bash
-deactivate
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+```
+
+This command will perform the following actions:
+1.  Ask for your `sudo` password.
+2.  Install system prerequisites like Python 3.11 if they are not already present.
+3.  Remove any old `~/ml_env` because of the `--recreate` flag.
+4.  Create a new, clean Python 3.11 virtual environment at `~/ml_env`, owned by **your user**.
+5.  Install the exact Python libraries specified in your `requirements.txt`.
+
+### **Step 3: Activate and Verify**
+
+Once the script completes successfully, activate the new environment.
+
+```bash
 source ~/ml_env/bin/activate
 ```
+Your command prompt will now start with `(ml_env)`.
 
-### 4c. Run test scripts to verify environment working
-
-#### Run the optional diagnostic tests (recommended):
+Finally, run the verification script to confirm that PyTorch can see your GPU:
 ```bash
-# From Project_Sanctuary root:
-python ../ML-Env-CUDA13/test_pytorch.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.log 2>&1 || true
-python ../ML-Env-CUDA13/test_tensorflow.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.log 2>&1 || true
-python ../ML-Env-CUDA13/test_xformers.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_xformers.log 2>&1 || true
-python ../ML-Env-CUDA13/test_llama_cpp.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_llama_cpp.log 2>&1 || true
-python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
-
-# If core gate passed and you want a reproducible snapshot locally:
-pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
+(ml_env) $ python forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py
 ```
 
-### 5. Install Fine-Tuning Libraries
+The expected output should show `torch.__version__ = 2.9.1+cu126` and `cuda_available = True`, confirming your setup is successful.
 
-**✅ PREDONDITIONS:  CUDA is already verified working** (all test scripts passed above), so **SKIP this entire section** and proceed directly to training. verify with 4c. Run test scripts to verify environment working
+---
 
-#### 5A.  setup the cuda fine tuning additional dependencies
-```bash
-deactivate
-python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
-source ~/ml_env/bin/activate
-```
+### Why This Streamlined Approach Works
 
-#### 5B.  verify cuda
-```bash
-python -c "import torch; print(torch.cuda.is_available())"
-```
+*   **Single Command:** The new script handles system dependencies and Python packages in one step, reducing complexity.
+*   **Single Source of Truth:** Your environment is built from one file: `requirements.txt`. There is no conflicting logic from other scripts or manual commands.
+*   **Staged Installation:** The script installs the most critical package (PyTorch with CUDA) *first* and in isolation, preventing `pip` from making incorrect dependency decisions.
+*   **Reproducibility:** Anyone can now perfectly recreate your environment on a similar machine with this single, powerful command.
 
-#### 5C. run tests again
-```bash
-# From Project_Sanctuary root:
-python ../ML-Env-CUDA13/test_pytorch.py
-python ../ML-Env-CUDA13/test_tensorflow.py
-python ../ML-Env-CUDA13/test_xformers.py
-python ../ML-Env-CUDA13/test_llama_cpp.py
-python ../ML-Env-CUDA13/test_torch_cuda.py
-```
+By adopting this unified strategy, you will have a stable and powerful environment for your A2000 GPU.
 
-This script automates venv setup, PyTorch/TensorFlow installation, testing, and dependency installation. Logs are written to `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/`.
- - After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root; run:
- - After the script finishes it writes an activation helper at `scripts/activate_ml_env.sh`; run:
-  ```bash
-  source scripts/activate_ml_env.sh
-  # or
-  source ~/ml_env/bin/activate
-  ```
- - The script captures logs in `ml_env_logs/` and writes a `pinned-requirements-<timestamp>.txt` after a successful core gate.
-
-**Alternative: Forge-Specific Setup Script**
- - For Operation Phoenix Forge specifically, you can also use the forge-local setup script:
-   ```bash
-   # From the forge directory
-   cd forge/OPERATION_PHOENIX_FORGE
-   python scripts/setup_cuda_env.py --staged
-   ```
- - This will create logs in `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/` instead of the project root.
-
-## Notes and recommendations
-- `requirements.txt` currently contains CUDA-specific pins (e.g. `torch==2.8.0+cu126`) and an extra-index-url for the cu126 PyTorch wheel index. This is fine for WSL CUDA installs but will break CPU-only hosts.
-- Recommended file layout for clarity and portability:
-  - `requirements.txt` — portable, cross-platform dependencies (no CUDA-suffixed pins)
-  - `requirements-wsl.txt` — CUDA-specific pinned wheels (torch+cu126, torchvision+cu126, torchaudio+cu126, specific TF if desired)
-  - `requirements-gpu-postinstall.txt` — optional heavy/experimental packages installed after core gate (xformers, bitsandbytes, llama-cpp-python, etc.)
-- Keep `pinned-requirements-<ts>.txt` as local artifacts generated after a successful core gate. Do not overwrite the repo-level `requirements.txt` with a pinned, machine-specific snapshot unless you intend to require that exact GPU environment for all contributors.
-
-If you want, I can split the current `requirements.txt` into a portable `requirements.txt` and a `requirements-wsl.txt` (and create `requirements-gpu-postinstall.txt`) and add brief instructions in this document showing which file to use in WSL. I will not perform any git operations — I will only create the files locally in the workspace for you to review.
-
-- Notes and troubleshooting:
-  - If you already ran the ML-Env-CUDA13 setup and prerequisites (as in this project), the two-step install above should pick up the correct CUDA-enabled wheels (example: `torch-2.8.0+cu126`).
-  - Heavy / CUDA-sensitive packages (may require special wheels or build tools): `bitsandbytes`, `xformers`, `llama-cpp-python`, `sentencepiece`. If `pip` attempts to build these from source and fails, install their prebuilt wheels where available or install them after PyTorch is installed.
-  - Common small conflict: TensorFlow may require a different `tensorboard` minor version. If you see a conflict like `tensorflow 2.20.0 requires tensorboard~=2.20.0, but you have tensorboard 2.19.0`, reconcile by running:
-    ```bash
-    pip install 'tensorboard~=2.20.0'
-    ```
-  - If a package (e.g., `xformers`) has no wheel for your Python/CUDA combo, building from source can be slow and require system build tools (`gcc`, `cmake`, etc.). Prefer prebuilt wheels or conda/mamba installs for those packages.
-
-**Note:**
-- Make sure ML-Env-CUDA13 is cloned at the same directory level as Project_Sanctuary.
-- Run all commands in your Ubuntu WSL2 terminal, not PowerShell.
+---

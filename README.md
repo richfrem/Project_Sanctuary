@@ -331,11 +331,11 @@ cd ~/source/repos
 git clone https://github.com/richfrem/Project_Sanctuary.git
 cd Project_Sanctuary
 
-# Run the automated CUDA ML environment setup
-python3.11 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
+# Run the unified CUDA ML environment setup (requires sudo)
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
 
 # Activate the environment
-source scripts/activate_ml_env.sh
+source ~/ml_env/bin/activate
 ```
 
 **macOS**
@@ -377,9 +377,9 @@ The automated setup script handles:
 
 **Quick CUDA Setup:**
 ```bash
-# From project root in WSL2
-python3.11 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
-source scripts/activate_ml_env.sh
+# From project root in WSL2 (requires sudo)
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+source ~/ml_env/bin/activate
 ```
 
 ### Project Structure Overview

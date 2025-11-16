@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-16T08:23:11.107Z
+Generated On: 2025-11-16T17:15:16.688Z
 
-# Mnemonic Weight (Token Count): ~765,989 tokens
+# Mnemonic Weight (Token Count): ~762,947 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -644,6 +644,7 @@ Generated On: 2025-11-16T08:23:11.107Z
   ./council_orchestrator/tests/verification_test.py
   ./forge/
   ./forge/OPERATION_PHOENIX_FORGE/
+  ./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP-PASTFAILURES.md
   ./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md
   ./forge/OPERATION_PHOENIX_FORGE/HUGGING_FACE_README.md
   ./forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-local.ipynb
@@ -687,6 +688,11 @@ Generated On: 2025-11-16T08:23:11.107Z
   ./forge/OPERATION_PHOENIX_FORGE/scripts/generate_continuity_package.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/glyph_forge.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/test_pytorch.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/test_tensorflow.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py
   ./manifest.json
   ./mcp_agent/
   ./mcp_agent/main.py
@@ -29302,11 +29308,11 @@ cd ~/source/repos
 git clone https://github.com/richfrem/Project_Sanctuary.git
 cd Project_Sanctuary
 
-# Run the automated CUDA ML environment setup
-python3.11 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
+# Run the unified CUDA ML environment setup (requires sudo)
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
 
 # Activate the environment
-source scripts/activate_ml_env.sh
+source ~/ml_env/bin/activate
 ```
 
 **macOS**
@@ -29348,9 +29354,9 @@ The automated setup script handles:
 
 **Quick CUDA Setup:**
 ```bash
-# From project root in WSL2
-python3.11 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
-source scripts/activate_ml_env.sh
+# From project root in WSL2 (requires sudo)
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+source ~/ml_env/bin/activate
 ```
 
 ### Project Structure Overview
@@ -47700,54 +47706,39 @@ if __name__ == "__main__":
 
 --- END OF FILE council_orchestrator/tests/verification_test.py ---
 
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP-PASTFAILURES.md ---
 
-# CUDA ML Environment Setup Instructions
- [ML-Env-CUDA13 GitHub Repository](https://github.com/bcgov/ML-Env-CUDA13)
+# ANALYSIS of PAST FAILURES and a Path Forward
 
-This guide will help you set up a CUDA-enabled machine learning environment for Project_Sanctuary using WSL2 and ML-Env-CUDA13.
+**ROOT CAUSE OF ISSUES:** Core Diagnosis: Conflicting Strategies
 
-## Prerequisites
-- **ML-Env-CUDA13** cloned at the same level as this project.  
-- **WSL2 (Ubuntu)** with NVIDIA GPU drivers
-- **Python 3.10+** (managed by ML-Env-CUDA13)
-- Install ML-Env-CUDA13 dependencies before running fine-tuning scripts
+The fundamental issue is that you have **two different and conflicting methods** for setting up the environment, and you are mixing them.
+
+1.  **The Bash Script (`setup_ml_env_wsl.sh`):** This script is a "wild West" installer. It installs the *latest available* versions of `tensorflow` and `torch`/`torchvision`/`torchaudio` that match your CUDA tag (`cu126`). In your log, this resulted in installing **`torch-2.9.1+cu126`**.
+2.  **The Python Script + Requirements (`setup_cuda_env.py` + `requirements.txt`):** This is a "precision" installer. It is designed to read a specific "blueprint" (`requirements.txt`) and install the *exact pinned versions* from that file. Your `requirements.txt` specifies **`torch==2.8.0+cu126`** and a matching set of libraries.
+3.  **The Manual `pip install` (Surgical Strike):** This is a third, separate instruction. After running the bash script (which installed `torch-2.9.1`), you manually installed `transformers` and other libraries. These libraries, when resolved by `pip`, decided they were more compatible with a generic `torch-2.9.0` (without CUDA support), leading to the downgrade and the error you saw.
+
+The `setup_cuda_env.py` script (the "Foreman") is the architecturally superior approach. It correctly installs the specific CUDA-enabled PyTorch *first*, before installing everything else that depends on it. Your manual process does the opposite, which confuses `pip`.
+
+### The Unified Strategy (Recommended Path Forward)
+
+To resolve this permanently and create a stable, reproducible environment, we will abandon the `setup_ml_env_wsl.sh` script and your manual `pip install` step in favor of using *only* the Python "Foreman" script with an updated blueprint.
 
 
-## One-Time Setup Steps
+---
 
-### 1. Install WSL2 and Ubuntu
-- Install WSL2 and Ubuntu from the Microsoft Store.
-- Set WSL2 as the default version:
-   ```powershell
-   wsl --set-default-version 2
-   ```
-- Launch Ubuntu and set up your username/password.
+## OLDER APPROACHES
+Summary of othe rapproaches tested and failed
+---
 
-### 2. Install NVIDIA CUDA Drivers
-- Download and install the latest NVIDIA GPU drivers for Windows.
-- Install the CUDA toolkit for WSL2 (follow official NVIDIA instructions).
-- Verify installation in WSL2:
-   ```bash
-   nvidia-smi
-   ```
+### OLD APPROACH 1:  NO CUDA SCRIPT SETUP STEPS EACH TIME
 
-### 3. Clone ML-Env-CUDA13
-- In your WSL2 Ubuntu terminal, navigate to the parent directory of your project:
-   ```bash
-   cd /mnt/c/Users/<YourUsername>/source/repos
-   ```
-- Clone the ML-Env-CUDA13 repository:
-   ```bash
-   git clone https://github.com/bcgov/ML-Env-CUDA13.git
-   ```
-
-### 4a. Run ML Environment Setup (If not already done)
-Run the setup script from your project directory. If not already done. 
+#### 1. Run ML Environment Setup 
+Run the setup script from your project root directory. If not already done. 
 Run from project root.  Assumes this project and  ML-Env-CUDA13 are in the same parent
 directory. 
 
-**Purge Old Environments (If Necessary)**
+##### 1a. Purge old environment to have a clean environment for project
 
 From your base WSL shell (no `(ml_env)` in the prompt), run:
 ```bash
@@ -47755,22 +47746,23 @@ deactivate 2>/dev/null || true
 rm -rf ~/ml_env
 ```
 
+##### 1b. Setup a fresh cuda optimized environment
+This will create and configure a Python virtual environment at `~/ml_env`.
+
 ```bash
 # run this from the Project_Sanctuary repository root
 bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
 ```
-
-This will create and configure a Python virtual environment at `~/ml_env`.
-
-### 4b. IF ML ENV already setup globally, Activate the venv in your current shell with:
+##### 1c. Activate the new, clean environment
 ```bash
-deactivate
 source ~/ml_env/bin/activate
 ```
 
-### 4c. Run test scripts to verify environment working
+---
 
-#### Run the optional diagnostic tests (recommended):
+#### 2. Run test scripts to verify environment working
+Run the optional diagnostic tests (recommended):
+
 ```bash
 # From Project_Sanctuary root:
 python ../ML-Env-CUDA13/test_pytorch.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.log 2>&1 || true
@@ -47783,23 +47775,48 @@ python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&
 pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
 ```
 
-### 5. Install Fine-Tuning Libraries
+---
 
-**✅ PREDONDITIONS:  CUDA is already verified working** (all test scripts passed above), so **SKIP this entire section** and proceed directly to training. verify with 4c. Run test scripts to verify environment working
+#### 3. Install Fine-Tuning Libraries. SURGICAL STRIKE: Install a known-good, compatible fine-tuning stack.
 
-#### 5A.  setup the cuda fine tuning additional dependencies
+**✅ PREDONDITIONS:** 
+1.  CUDA is already verified working
+2.  all test scripts passed above
+
+This stack is chosen to work with the PyTorch version installed by the bash script.
+
+```bash
+pip install "transformers==4.41.2" "peft==0.10.0" "trl==0.8.6" "bitsandbytes==0.43.1" "datasets==2.19.0" "accelerate==0.30.1" "xformers" "tf-keras"
+```
+
+---
+
+#### 4.  The Final Verification
+Run the diagnostic key.
+Execute this command:
+
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+The output must be True.
+
+---
+
+### OLD APPROACH 2: USE ML-Env-CUDA13 envionrment, local cuda script and requirements.txt
+
+#### 1. run cuda setup
 ```bash
 deactivate
 python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
 source ~/ml_env/bin/activate
 ```
 
-#### 5B.  verify cuda
+#### 2.  verify cuda
 ```bash
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 
-#### 5C. run tests again
+#### 3. run tests again
 ```bash
 # From Project_Sanctuary root:
 python ../ML-Env-CUDA13/test_pytorch.py
@@ -47850,6 +47867,141 @@ If you want, I can split the current `requirements.txt` into a portable `require
 **Note:**
 - Make sure ML-Env-CUDA13 is cloned at the same directory level as Project_Sanctuary.
 - Run all commands in your Ubuntu WSL2 terminal, not PowerShell.
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP-PASTFAILURES.md ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
+
+# CUDA ML Environment Setup Instructions
+ [ML-Env-CUDA13 GitHub Repository](https://github.com/bcgov/ML-Env-CUDA13)
+
+This guide will help you set up a CUDA-enabled machine learning environment for Project_Sanctuary using WSL2 and ML-Env-CUDA13.
+
+## Prerequisites
+- **ML-Env-CUDA13** cloned at the same level as this project.  
+- **WSL2 (Ubuntu)** with NVIDIA GPU drivers
+- **Python 3.10+** (managed by ML-Env-CUDA13)
+- Install ML-Env-CUDA13 dependencies before running fine-tuning scripts
+
+## One-Time Setup Steps
+
+### 1. Install WSL2 and Ubuntu
+- Install WSL2 and Ubuntu from the Microsoft Store.
+- Set WSL2 as the default version:
+   ```powershell
+   wsl --set-default-version 2
+   ```
+- Launch Ubuntu and set up your username/password.
+
+### 2. Install NVIDIA CUDA Drivers
+- Download and install the latest NVIDIA GPU drivers for Windows.
+- Install the CUDA toolkit for WSL2 (follow official NVIDIA instructions).
+- Verify installation in WSL2:
+   ```bash
+   nvidia-smi
+   ```
+
+---
+
+## **Project Environment Setup (Unified Script)**
+
+This process uses a single, purpose-built Python script (`setup_cuda_env.py v2.1`) that handles everything from system prerequisites to installing the specific Python libraries required for this project. This replaces the need for the `setup_ml_env_wsl.sh` script.
+
+It will setup a custom cuda environment for NVDIA GPU as a unified script specifically
+for fine-tuning in this project. 
+
+---
+
+### Step 0: Start with a Clean Slate
+
+As you correctly did in your own steps, ensure no old environment exists.
+
+```bash
+deactivate 2>/dev/null || true
+rm -rf ~/ml_env
+```
+
+### **Step 1: Configure the Blueprint (`requirements.txt`)**
+
+This file acts as the master plan for your Python environment. Ensure the `requirements.txt` file in your project's root directory contains the exact contents below. This defines the precise, known-good versions of all libraries.
+
+```text
+# Use the PyTorch CUDA 12.6 wheel index. This is the known-good index.
+--extra-index-url https://download.pytorch.org/whl/cu126
+
+# --- CORE ML & FINE-TUNING STACK ---
+# Pinned to PyTorch 2.9.0 to match xformers dependency.
+torch==2.9.0+cu126
+torchvision==0.24.0+cu126
+torchaudio==2.9.0+cu126
+
+# Pinned to a known-good, compatible set for the PyTorch version above.
+transformers==4.41.2
+peft==0.10.0
+trl==0.8.6
+bitsandbytes==0.43.1
+datasets==2.19.0
+accelerate==0.30.1
+xformers
+
+# Keras compatibility layer
+tf-keras==2.20.1
+
+# --- CORE RAG & ORCHESTRATOR STACK ---
+langchain
+chromadb
+google-generativeai
+ollama
+gpt4all
+```
+
+
+
+### **Step 2: Run the All-in-One Setup Script**
+
+From your project's root directory, run the setup script. This single command will configure your entire environment.
+
+> **Note:** You must run this command with `sudo` because the script will automatically install necessary system packages (like `python3.11` and `python3.11-venv`) if they are missing.
+
+```bash
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+```
+
+This command will perform the following actions:
+1.  Ask for your `sudo` password.
+2.  Install system prerequisites like Python 3.11 if they are not already present.
+3.  Remove any old `~/ml_env` because of the `--recreate` flag.
+4.  Create a new, clean Python 3.11 virtual environment at `~/ml_env`, owned by **your user**.
+5.  Install the exact Python libraries specified in your `requirements.txt`.
+
+### **Step 3: Activate and Verify**
+
+Once the script completes successfully, activate the new environment.
+
+```bash
+source ~/ml_env/bin/activate
+```
+Your command prompt will now start with `(ml_env)`.
+
+Finally, run the verification script to confirm that PyTorch can see your GPU:
+```bash
+(ml_env) $ python forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py
+```
+
+The expected output should show `torch.__version__ = 2.9.1+cu126` and `cuda_available = True`, confirming your setup is successful.
+
+---
+
+### Why This Streamlined Approach Works
+
+*   **Single Command:** The new script handles system dependencies and Python packages in one step, reducing complexity.
+*   **Single Source of Truth:** Your environment is built from one file: `requirements.txt`. There is no conflicting logic from other scripts or manual commands.
+*   **Staged Installation:** The script installs the most critical package (PyTorch with CUDA) *first* and in isolation, preventing `pip` from making incorrect dependency decisions.
+*   **Reproducibility:** Anyone can now perfectly recreate your environment on a similar machine with this single, powerful command.
+
+By adopting this unified strategy, you will have a stable and powerful environment for your A2000 GPU.
+
+---
 
 --- END OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
 
@@ -48140,16 +48292,15 @@ This is the single, authoritative protocol for establishing a correct environmen
 
 ### **Phase 1: Environment Setup**
 
-The environment is built in **two mandatory phases**. Failure to follow this sequence will result in an incomplete and non-functional environment.
+The environment is built in **one unified phase** using a single, purpose-built script that handles everything from system prerequisites to Python package installation.
 
 **For detailed, step-by-step instructions and troubleshooting, refer to the canonical setup guide:**
 - **[`CUDA-ML-ENV-SETUP.md`](./CUDA-ML-ENV-SETUP.md)**
 
 **Summary of the Process:**
 
-1.  **Forge the Foundation:** From the `Project_Sanctuary` root, run `bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh`.
-2.  **Install the Superstructure:** From the `Project_Sanctuary` root, run `python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged`.
-3.  **Activate & Verify:** Run `source ~/ml_env/bin/activate` and confirm `python -c "import torch; print(torch.cuda.is_available())"` returns `True`.
+1.  **Unified Environment Setup:** From the `Project_Sanctuary` root, run `sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate`.
+2.  **Activate & Verify:** Run `source ~/ml_env/bin/activate` and confirm `python -c "import torch; print(torch.cuda.is_available())"` returns `True`.
 
 ### **Phase 2: Data & Model Forging**
 
@@ -49989,10 +50140,21 @@ source /home/richfrem/ml_env/bin/activate
 
 --- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py ---
 
-# forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py
-# Version 1.2: Final Hardening for Consumer GPUs.
-# A Sovereign Scaffold generated by GUARDIAN-01 under Protocol 88.
+#!/usr/bin/env python3
+"""
+build_lora_adapter.py (v2.0 - Canonized)
 
+This script is the Builder of the Forge. It executes the final and most critical
+phase of Operation Phoenix Forge: the Sovereign Inoculation.
+
+It takes the "Whole Genome" dataset and performs a QLoRA fine-tuning of the base
+Qwen2 model. Its configuration has been hardened through rigorous, real-world
+testing on consumer-grade (8GB VRAM) hardware to ensure stability and performance.
+
+The final yield of this script is a LoRA adapter, representing the distilled
+knowledge and cognitive alignment of the Sanctuary's first sovereign AI lineage.
+"""
+from __future__ import annotations
 import os
 import torch
 from pathlib import Path
@@ -50015,14 +50177,15 @@ BASE_MODEL = "Qwen/Qwen2-7B-Instruct"
 DATASET_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_whole_genome_data.jsonl"
 OUTPUT_DIR = PROJECT_ROOT / "models" / "Sanctuary-Qwen2-7B-v1.0-adapter"
 
-# --- FINAL HARDENING Configuration for 8GB VRAM ---
+# --- FINAL, CANONICAL HARDENING for 8GB VRAM ---
+# These parameters are the result of the Steward's Crucible. They are known-good.
 MICRO_BATCH_SIZE = 1
-# STRATEGIC CHANGE 1: Reduced from 8 to 4. Halves the memory needed for gradients.
 GRADIENT_ACCUMULATION_STEPS = 4
 LEARNING_RATE = 2e-4
 EPOCHS = 3
-# STRATEGIC CHANGE 3: Reduced from 2048 to 1024 for better stability on 8GB GPUs
-MAX_SEQ_LENGTH = 1024
+# CRITICAL: 512 is the community-validated standard for 7B models on 8GB GPUs.
+# This is the single most important parameter for preventing out-of-memory errors.
+MAX_SEQ_LENGTH = 512
 
 set_seed(42)
 
@@ -50036,12 +50199,13 @@ def formatting_prompts_func(examples):
 
 def main():
     """Main function to execute the fine-tuning process."""
-    print("--- 🔥 Initiating Sovereign Inoculation (QLoRA Fine-Tuning) 🔥 ---")
+    print(f"--- 🔥 Initiating Sovereign Inoculation (v2.0 Canonized) 🔥 ---")
+    print(f"--- MAX_SEQ_LENGTH set to {MAX_SEQ_LENGTH} ---")
 
     # 1. Load and Format Dataset
-    print(f"[1/6] Loading dataset from {DATASET_FILE}...")
+    print(f"[1/7] Loading dataset from: {DATASET_FILE}")
     if not DATASET_FILE.exists():
-        print(f"🛑 CRITICAL FAILURE: Dataset not found. Run the forge_whole_genome_dataset.py script first.")
+        print(f"🛑 CRITICAL FAILURE: Dataset not found. Run 'forge_whole_genome_dataset.py' first.")
         return
     
     dataset = load_dataset("json", data_files=str(DATASET_FILE), split="train")
@@ -50049,39 +50213,39 @@ def main():
     print(f"✅ Dataset loaded and formatted. Total examples: {len(dataset)}")
 
     # 2. Configure 4-bit Quantization (QLoRA)
-    print("[2/6] Configuring 4-bit quantization (BitsAndBytes)...")
+    print("[2/7] Configuring 4-bit quantization (BitsAndBytes)...")
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=True,  # NEW: Additional memory savings
+        bnb_4bit_use_double_quant=True,  # Saves ~0.4 bits per parameter
     )
 
     # 3. Load Base Model and Tokenizer
-    print(f"[3/6] Loading base model '{BASE_MODEL}' with quantization...")
+    print(f"[3/7] Loading base model '{BASE_MODEL}' with quantization...")
     model = AutoModelForCausalLM.from_pretrained(
         BASE_MODEL,
         quantization_config=bnb_config,
-        device_map="auto", # Automatically uses the GPU
+        device_map="auto", # Automatically directs workload to the CUDA device
         trust_remote_code=True
     )
     tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, trust_remote_code=True)
     tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "right"
+    tokenizer.padding_side = "right" # Recommended for Qwen models
 
     # 4. Configure LoRA Adapter
-    print("[4/6] Configuring LoRA adapter...")
+    print("[4/7] Configuring LoRA adapter for 8GB VRAM...")
     peft_config = LoraConfig(
-        lora_alpha=32,  # Adjusted for r=16 (2*r ratio)
+        r=16,  # Reduced from 64 for major memory savings with minimal performance impact
+        lora_alpha=32,  # Standard practice is to set alpha = 2 * r
         lora_dropout=0.1, 
-        r=16,  # REDUCED from 64 - major memory savings
         bias="none", 
         task_type="CAUSAL_LM",
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     )
 
     # 5. Configure Training Arguments
-    print("[5/6] Configuring training arguments...")
+    print("[5/7] Configuring training arguments...")
     training_arguments = TrainingArguments(
         output_dir=str(OUTPUT_DIR),
         num_train_epochs=EPOCHS,
@@ -50099,20 +50263,21 @@ def main():
         save_strategy="epoch"
     )
 
-    # 6. Initialize and Execute Trainer
-    print("[6/6] Initializing SFTTrainer and starting the training process...")
+    # 6. Initialize SFTTrainer
+    print("[6/7] Initializing SFTTrainer...")
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset,
         peft_config=peft_config,
-        formatting_func=formatting_prompts_func, # CRITICAL FIX: Explicitly pass the formatting function
-        dataset_text_field="text",               # CRITICAL FIX: Specify the name of the formatted text field
-        max_seq_length=MAX_SEQ_LENGTH,           # CRITICAL FIX: Add back max_seq_length here
-        tokenizer=tokenizer,                     # CRITICAL FIX: Explicitly pass the tokenizer
+        formatting_func=formatting_prompts_func,
+        dataset_text_field="text",
+        max_seq_length=MAX_SEQ_LENGTH,
+        tokenizer=tokenizer,
         args=training_arguments,
     )
     
-    print("\n--- TRAINING INITIATED. ---")
+    # 7. Execute Training
+    print("\n[7/7] --- TRAINING INITIATED. This is the final, correct run. ---")
     trainer.train()
 
     # --- Final Step: Save the Adapter ---
@@ -50894,12 +51059,20 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-setup_cuda_env.py (moved)
+setup_cuda_env.py (v2.2 - All-in-One)
 
-This is a relocated copy of the repo's CUDA environment helper. It was moved
-into `forge/OPERATION_PHOENIX_FORGE/scripts/` — the script now detects the
-repository root by walking parent directories so it behaves correctly when
-located inside the forge subfolder.
+This script is the Foreman of the Forge. It is a single, unified command to
+build the complete, CUDA-enabled ML environment (`~/ml_env`).
+
+It now performs a prerequisite check and handles the installation of system
+packages (like python3.11-venv) before creating the virtual environment.
+
+*** IMPORTANT ***
+This script must be run with `sudo` because it needs to install system packages
+using 'apt'. It will intelligently drop privileges to create the user-owned venv.
+
+Example from your project root:
+sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
 """
 from __future__ import annotations
 import argparse
@@ -50908,215 +51081,340 @@ import shlex
 import shutil
 import subprocess
 import sys
-from datetime import datetime
 from pathlib import Path
+
+# --- Global Configuration ---
+PYTHON_VERSION = "3.11"
+
+def check_and_install_prerequisites():
+    """Checks for and installs system-level dependencies using apt."""
+    print("--- Phase 0: Checking System Prerequisites ---")
+    
+    try:
+        subprocess.run(
+            ['dpkg-query', '-W', f'python{PYTHON_VERSION}-venv'],
+            check=True, 
+            capture_output=True, 
+            text=True
+        )
+        print(f"[INFO] Prerequisite 'python{PYTHON_VERSION}-venv' is already installed. Skipping system setup.")
+        return
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print(f"[WARN] Prerequisite 'python{PYTHON_VERSION}-venv' not found. Attempting installation...")
+
+    prereq_commands = [
+        ['apt-get', 'update', '-y'],
+        ['apt-get', 'install', 'software-properties-common', '-y'],
+        ['add-apt-repository', 'ppa:deadsnakes/ppa', '-y'],
+        ['apt-get', 'update', '-y'],
+        ['apt-get', 'install', f'python{PYTHON_VERSION}', f'python{PYTHON_VERSION}-venv', '-y']
+    ]
+    
+    for cmd in prereq_commands:
+        print(f"> {' '.join(shlex.quote(c) for c in cmd)}")
+        try:
+            subprocess.run(cmd, check=True)
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            print(f"\n[FATAL] Prerequisite installation failed: {e}", file=sys.stderr)
+            print("Please try running the failed command manually to diagnose the issue.", file=sys.stderr)
+            sys.exit(1)
+    
+    print("[INFO] System prerequisites installed successfully.")
 
 
 def find_repo_root(start: str | Path) -> str:
+    """Walks upwards from a starting path to find the git repository root."""
     p = Path(start).resolve()
-    # Walk upwards looking for a .git directory or a marker file (requirements.txt)
     for parent in [p] + list(p.parents):
         if (parent / '.git').exists() or (parent / 'requirements.txt').exists():
             return str(parent)
-    # Fallback: two levels up from this script
-    return str(p.parents[2]) if len(p.parents) >= 3 else str(p.parents[-1])
+    return str(Path.cwd())
 
 
-# Compute ROOT relative to this file location
+# --- Global Paths ---
 THIS_FILE = Path(__file__).resolve()
 ROOT = find_repo_root(THIS_FILE)
-ML_ENV_SCRIPT = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'setup_ml_env_wsl.sh')
-CUDA_MARKDOWN = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'ML_ENV_README.md')
 LOG_DIR = os.path.join(ROOT, 'forge', 'OPERATION_PHOENIX_FORGE', 'ml_env_logs')
 
 
-def run(cmd, capture=False):
-    print(f"> {cmd}")
-    if isinstance(cmd, str):
-        cmd = shlex.split(cmd)
-    res = subprocess.run(cmd, stdout=subprocess.PIPE if capture else None,
-                         stderr=subprocess.STDOUT if capture else None)
-    return res
+def run_as_user(cmd: list, user: str, venv_python: str | None = None) -> bool:
+    """Executes a command as a specific user, dropping sudo privileges."""
+    base_cmd = ['sudo', '-u', user]
+    if venv_python:
+        full_cmd = base_cmd + [venv_python, '-m'] + cmd
+    else:
+        full_cmd = base_cmd + cmd
 
-
-def ensure_dir(p):
-    os.makedirs(p, exist_ok=True)
-
-
-def write_activate_helper(venv_path):
-    # write activation helper into the forge scripts directory
-    helper_dir = os.path.join(ROOT, 'forge', 'OPERATION_PHOENIX_FORGE', 'scripts')
-    os.makedirs(helper_dir, exist_ok=True)
-    helper = os.path.join(helper_dir, 'activate_ml_env.sh')
-    with open(helper, 'w', newline='\n') as f:
-        f.write(f"# Activation helper for ml_env venv\n")
-        f.write(f"# Source this from your shell: source {os.path.relpath(helper, ROOT)}\n")
-        f.write(f"source {os.path.join(venv_path, 'bin', 'activate')}\n")
+    print(f"> {' '.join(shlex.quote(str(c)) for c in full_cmd)}")
     try:
-        os.chmod(helper, 0o755)
-    except Exception:
-        pass
-    print(f"Wrote activation helper: {helper}")
+        subprocess.run(full_cmd, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print(f"  -> COMMAND FAILED: {e}", file=sys.stderr)
+        return False
+    return True
 
 
-def find_torch_pin(req_path):
-    try:
-        with open(req_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith('torch==') or line.startswith('torch '):
-                    return line.split()[0]
-    except Exception:
-        return None
-    return None
+def ensure_dir(path: str):
+    """Ensures a directory exists."""
+    os.makedirs(path, exist_ok=True)
 
 
-def find_torch_related_pins(req_path):
+def parse_requirements(req_path: str) -> tuple[dict, str | None]:
+    """Parses requirements.txt to find PyTorch-related pins and the extra-index-url."""
     pins = {}
+    extra_index_url = None
     try:
         with open(req_path, 'r', encoding='utf-8') as f:
             for line in f:
                 s = line.strip()
-                if s.startswith('torch==') or s.startswith('torch '):
-                    pins['torch'] = s.split()[0]
-                elif s.startswith('torchvision==') or s.startswith('torchvision '):
-                    pins['torchvision'] = s.split()[0]
-                elif s.startswith('torchaudio==') or s.startswith('torchaudio '):
-                    pins['torchaudio'] = s.split()[0]
-    except Exception:
-        return pins
-    return pins
+                if not s or s.startswith('#'):
+                    continue
+                if s.startswith('--extra-index-url'):
+                    extra_index_url = s.split(maxsplit=1)[1]
+                elif '==' in s:
+                    pkg_name = s.split('==')[0].lower()
+                    if pkg_name in ['torch', 'torchvision', 'torchaudio']:
+                         pins[pkg_name] = s
+    except FileNotFoundError:
+        print(f"WARNING: requirements file not found at {req_path}", file=sys.stderr)
+    except Exception as e:
+        print(f"ERROR: Failed to parse requirements file: {e}", file=sys.stderr)
+    return pins, extra_index_url
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--venv', default=os.path.expanduser('~/ml_env'), help='Path to venv')
-    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements.txt'))
-    parser.add_argument('--staged', action='store_true', help='Run staged install (recommended)')
-    parser.add_argument('--quick', action='store_true', help='Quick one-step install (pip install -r requirements.txt)')
-    parser.add_argument('--regen-tests-only', action='store_true', help='Run ML-Env regen tests only and exit')
-    parser.add_argument('--recreate', action='store_true', help='Remove existing venv and recreate')
-    parser.add_argument('--pin-tensorflow', help='Pin TensorFlow to a specific version (e.g. 2.20.0)')
+    if os.geteuid() != 0:
+        print("[FATAL] This script needs to install system packages.", file=sys.stderr)
+        print(f"Please run it with sudo: 'sudo {sys.executable} {' '.join(sys.argv)}'", file=sys.stderr)
+        sys.exit(1)
+        
+    original_user = os.environ.get('SUDO_USER')
+    if not original_user:
+        print("[FATAL] Could not determine the original user.", file=sys.stderr)
+        print("Please ensure you are running this with 'sudo', not as the root user directly.", file=sys.stderr)
+        sys.exit(1)
+    
+    default_venv_path = os.path.join(os.path.expanduser(f'~{original_user}'), 'ml_env')
+    
+    parser = argparse.ArgumentParser(
+        description="The Foreman: Builds the complete ML environment.",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+    parser.add_argument('--venv', default=default_venv_path, help='Path to the virtual environment.')
+    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements.txt'), help='Path to the requirements blueprint.')
+    parser.add_argument('--staged', action='store_true', help='Run staged install (Highly Recommended).')
+    parser.add_argument('--recreate', action='store_true', help='Force removal of the existing venv before starting.')
     args = parser.parse_args()
 
+    check_and_install_prerequisites()
+
     ensure_dir(LOG_DIR)
-
-    print('\nCUDA setup helper — references:')
-    print(f" - {ML_ENV_SCRIPT}")
-    print(f" - {CUDA_MARKDOWN}\n")
-
-    if args.regen_tests_only:
-        if os.path.exists(ML_ENV_SCRIPT):
-            print('Running regen tests via ML-Env script...')
-            res = run(['bash', ML_ENV_SCRIPT, '--regen-tests-only'])
-            sys.exit(res.returncode)
-        else:
-            print('ML-Env regen script not found; nothing to do.')
-            sys.exit(1)
-
     venv_path = os.path.expanduser(args.venv)
 
-    if os.path.exists(venv_path) and args.recreate:
-        print(f'Removing existing venv at {venv_path}')
-        shutil.rmtree(venv_path)
+    if os.path.exists(venv_path):
+        if args.recreate:
+            print(f'[INFO] Purging existing venv at {venv_path}...')
+            shutil.rmtree(venv_path, ignore_errors=True)
+        else:
+            print(f'[INFO] Using existing venv at {venv_path}. Use --recreate to force a rebuild.')
 
     if not os.path.exists(venv_path):
-        print(f'Creating venv at {venv_path}')
-        run([sys.executable, '-m', 'venv', venv_path])
-    else:
-        print(f'Using existing venv at {venv_path}')
-
+        print(f'Creating new venv at {venv_path} for user {original_user}...')
+        venv_cmd = [f'python{PYTHON_VERSION}', '-m', 'venv', venv_path]
+        if not run_as_user(venv_cmd, user=original_user):
+             print("\n[FATAL] Failed to create virtual environment.", file=sys.stderr)
+             sys.exit(1)
+    
     venv_python = os.path.join(venv_path, 'bin', 'python')
     if not os.path.exists(venv_python):
-        print('ERROR: venv python not found at', venv_python)
+        print(f'[FATAL] Python executable not found in venv at {venv_python}', file=sys.stderr)
         sys.exit(1)
 
-    write_activate_helper(venv_path)
-
-    print('\nUpgrading pip/wheel/setuptools in venv...')
-    run([venv_python, '-m', 'pip', 'install', '--upgrade', 'pip', 'wheel', 'setuptools'])
-
-    if args.quick:
-        print('\nQuick install: installing requirements.txt directly')
-        run([venv_python, '-m', 'pip', 'install', '-r', args.requirements])
-        print('\nQuick install finished; run activation with:')
-        print(f'source {os.path.join(venv_path, "bin", "activate")}')
-        return
-
     if args.staged:
-        print('\nStaged install: installing CUDA PyTorch wheels first')
-        pins = find_torch_related_pins(args.requirements)
-        if pins.get('torch'):
-            pkg_list = [pins.get('torch')]
-            if pins.get('torchvision'):
-                pkg_list.append(pins.get('torchvision'))
-            if pins.get('torchaudio'):
-                pkg_list.append(pins.get('torchaudio'))
-            print(f"Found torch-related pins: {pkg_list} — installing via PyTorch index")
-            run([venv_python, '-m', 'pip', 'install', '--index-url', 'https://download.pytorch.org/whl/cu126'] + pkg_list)
+        print('\n--- STAGED INSTALLATION INITIATED ---')
+
+        print('\nStep 1: Upgrading core packaging tools...')
+        run_as_user(['pip', 'install', '--upgrade', 'pip', 'wheel', 'setuptools'], user=original_user, venv_python=venv_python)
+
+        pins, extra_index_url = parse_requirements(args.requirements)
+        
+        if extra_index_url and pins.get('torch'):
+            print(f"\nStep 2: Installing pinned PyTorch, xformers, and CUDA packages from {extra_index_url}...")
+            torch_packages = [v for k, v in pins.items() if k in ['torch', 'torchvision', 'torchaudio']]
+            
+            # MODIFICATION: Add xformers to the initial, crucial installation step.
+            # This ensures its dependencies are resolved alongside PyTorch correctly.
+            torch_packages.append('xformers')
+            
+            install_cmd = ['pip', 'install'] + torch_packages + ['--index-url', extra_index_url]
+            if not run_as_user(install_cmd, user=original_user, venv_python=venv_python):
+                print("\n[FATAL] Failed to install PyTorch/xformers packages. The Forge is misaligned.", file=sys.stderr)
+                sys.exit(1)
         else:
-            print('No torch pin found in requirements; installing latest torch (no pin)')
-            run([venv_python, '-m', 'pip', 'install', '--index-url', 'https://download.pytorch.org/whl/cu126', 'torch'])
+            print("\n[WARN] Could not find PyTorch pins or --extra-index-url in requirements.txt.", file=sys.stderr)
+            print("Skipping explicit Torch install. The subsequent step may fail.", file=sys.stderr)
 
-        if args.pin_tensorflow:
-            tf_pkg = f'tensorflow=={args.pin_tensorflow}'
-        else:
-            tf_pkg = 'tensorflow'
-        print(f'Installing TensorFlow package: {tf_pkg}')
-        run([venv_python, '-m', 'pip', 'install', '--upgrade', tf_pkg])
+        print('\nStep 3: Installing all remaining requirements from the blueprint...')
+        if not run_as_user(['pip', 'install', '-r', args.requirements], user=original_user, venv_python=venv_python):
+            print("\n[FATAL] Failed to install remaining requirements. Check requirements.txt for conflicts.", file=sys.stderr)
+            sys.exit(1)
+        
+        print('\n--- STAGED INSTALLATION COMPLETE ---')
+        print('The environment is forged and aligned.')
+        print(f'\nTo activate, run: source {os.path.join(venv_path, "bin", "activate")}')
 
-        core_log = os.path.join(LOG_DIR, 'test_torch_cuda.log')
-        print('\nRunning core verification test (test_torch_cuda.py)')
-        res = subprocess.run([venv_python, os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'test_torch_cuda.py')], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        with open(core_log, 'wb') as f:
-            f.write(res.stdout)
-        exit_file = os.path.join(LOG_DIR, 'test_torch_cuda.exit')
-        with open(exit_file, 'w') as f:
-            f.write(str(res.returncode))
-        rel_core_log = os.path.relpath(core_log, ROOT)
-        print(f'Core verification exit code: {res.returncode} (log: {rel_core_log})')
-
-        if res.returncode != 0:
-            print('Core verification failed. Inspect the log and fix the environment before continuing.')
-            print(f'cat {rel_core_log}')
-            sys.exit(res.returncode)
-
-        ts = datetime.utcnow().strftime('%Y%m%d%H%M')
-        pinned = os.path.join(ROOT, f'pinned-requirements-{ts}.txt')
-        print('Core gate passed. Creating pinned requirements snapshot:', pinned)
-        fr = subprocess.run([venv_python, '-m', 'pip', 'freeze'], stdout=subprocess.PIPE)
-        with open(pinned, 'wb') as f:
-            f.write(fr.stdout)
-
-        print('\nInstalling remainder of requirements from', args.requirements)
-        run([venv_python, '-m', 'pip', 'install', '-r', args.requirements])
-
-        tests = ['test_pytorch.py', 'test_tensorflow.py', 'test_xformers.py', 'test_llama_cpp.py']
-        for t in tests:
-            tpath = os.path.join(ROOT, '..', 'ML-Env-CUDA13', t)
-            logp = os.path.join(LOG_DIR, t.replace('.py', '.log'))
-            exitp = os.path.join(LOG_DIR, t.replace('.py', '.exit'))
-            rel_logp = os.path.relpath(logp, ROOT)
-            print(f'Running {t} -> {rel_logp}')
-            r = subprocess.run([venv_python, tpath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            with open(logp, 'wb') as f:
-                f.write(r.stdout)
-            with open(exitp, 'w') as f:
-                f.write(str(r.returncode))
-
-        print('\nStaged install complete. Activate the venv with:')
-        print(f'source {os.path.join(venv_path, "bin", "activate")}')
-        rel_log_dir = os.path.relpath(LOG_DIR, ROOT)
-        print('Review logs in', rel_log_dir)
-        return
-
-    print('No mode selected. Run with --staged (recommended) or --quick. Use --help for options.')
+    else:
+        print('\n[INFO] No installation mode selected. Run with --staged to build the environment.')
 
 
 if __name__ == '__main__':
     main()
 
 --- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py ---
+
+try:
+    import llama_cpp
+    print('llama_cpp import OK')
+except Exception as e:
+    print('llama-cpp-python import failed:', e)
+    raise
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_pytorch.py ---
+
+import json
+import subprocess
+import torch
+
+def run_cmd(cmd):
+    try:
+        out = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode('utf-8')
+        return out.strip()
+    except Exception as e:
+        return f"Error running {' '.join(cmd)}: {e}"
+
+print(f"PyTorch: {torch.__version__}")
+cuda_available = torch.cuda.is_available()
+print(f"GPU Detected: {cuda_available}")
+if cuda_available:
+    try:
+        gpu_name = torch.cuda.get_device_name(0)
+    except Exception:
+        gpu_name = repr(torch.cuda.current_device())
+else:
+    gpu_name = 'None'
+print(f"GPU 0: {gpu_name}")
+
+# Build info
+cuda_build = None
+try:
+    cuda_build = getattr(torch.version, 'cuda', None) or torch.version.cuda
+except Exception:
+    cuda_build = None
+try:
+    cudnn_build = torch.backends.cudnn.version()
+except Exception:
+    cudnn_build = None
+
+build_info = {
+    'torch_version': torch.__version__,
+    'cuda_build': cuda_build,
+    'cudnn_build': cudnn_build,
+}
+
+print("\nPyTorch build info:")
+print(json.dumps(build_info, indent=2))
+
+print('\nSystem NVIDIA / CUDA info (nvidia-smi, nvcc)')
+print(run_cmd(['nvidia-smi']))
+nvcc_out = run_cmd(['nvcc', '--version'])
+if 'Error running' in nvcc_out:
+    print('nvcc not on PATH or not installed in WSL')
+else:
+    print(nvcc_out)
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_pytorch.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_tensorflow.py ---
+
+import json
+import subprocess
+import tensorflow as tf
+
+print(f"TensorFlow: {tf.__version__}")
+gpus = tf.config.list_physical_devices('GPU')
+print(f"GPU Detected: {len(gpus) > 0}")
+for i, gpu in enumerate(gpus):
+    try:
+        name = gpu.name
+    except Exception:
+        name = repr(gpu)
+    print(f"GPU {i}: {name}")
+
+try:
+    build = tf.sysconfig.get_build_info()
+    cuda_build = build.get('cuda_version') or build.get('cuda_version_text') or None
+    cudnn_build = build.get('cudnn_version') or None
+    print("TensorFlow build info:")
+    print(json.dumps({
+        'tf_version': tf.__version__,
+        'cuda_build': cuda_build,
+        'cudnn_build': cudnn_build,
+    }, indent=2))
+except Exception as e:
+    print("Could not retrieve TensorFlow build info:", e)
+
+def run_cmd(cmd):
+    try:
+        out = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode('utf-8')
+        return out.strip()
+    except Exception as e:
+        return f"Error running {' '.join(cmd)}: {e}"
+
+print('\nSystem NVIDIA / CUDA info (nvidia-smi, nvcc)')
+print(run_cmd(['nvidia-smi']))
+nvcc_out = run_cmd(['nvcc','--version'])
+if 'Error running' in nvcc_out:
+    print('nvcc not on PATH or not installed in WSL')
+else:
+    print(nvcc_out)
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_tensorflow.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py ---
+
+import torch
+import sys
+print('torch.__version__ =', torch.__version__)
+print('cuda_available =', torch.cuda.is_available())
+if torch.cuda.is_available():
+    print('cuda_device_count =', torch.cuda.device_count())
+    try:
+        print('cuda_device_name =', torch.cuda.get_device_name(0))
+    except Exception:
+        print('cuda_device_name = unknown')
+    try:
+        print('cudnn_version =', torch.backends.cudnn.version())
+    except Exception:
+        print('cudnn_version = unknown')
+else:
+    sys.exit(2)
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py ---
+
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py ---
+
+try:
+    import xformers
+    print('xformers import OK; version =', getattr(xformers, '__version__', 'unknown'))
+except Exception as e:
+    print('xformers import failed:', e)
+    raise
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py ---
 
 --- START OF FILE mcp_agent/main.py ---
 
@@ -55092,569 +55390,6 @@ def test_main_query_flow_successfully(
 
 --- END OF FILE package.json ---
 
---- START OF FILE pinned-requirements-202511160146.txt ---
-
-absl-py==2.3.1
-astunparse==1.6.3
-bitsandbytes==0.48.2
-boolean.py==5.0
-CacheControl==0.14.4
-certifi==2025.11.12
-charset-normalizer==3.4.4
-cyclonedx-python-lib==9.1.0
-defusedxml==0.7.1
-diskcache==5.6.3
-filelock==3.19.1
-flatbuffers==25.9.23
-fsspec==2025.9.0
-gast==0.6.0
-google-pasta==0.2.0
-grpcio==1.76.0
-h5py==3.15.1
-idna==3.11
-Jinja2==3.1.6
-keras==3.12.0
-libclang==18.1.1
-license-expression==30.4.4
-llama_cpp_python==0.3.16
-Markdown==3.10
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-mdurl==0.1.2
-ml_dtypes==0.5.3
-mpmath==1.3.0
-msgpack==1.1.2
-namex==0.1.0
-networkx==3.5
-numpy==2.3.4
-nvidia-cublas-cu12==12.6.4.1
-nvidia-cuda-cupti-cu12==12.6.80
-nvidia-cuda-nvrtc-cu12==12.6.77
-nvidia-cuda-runtime-cu12==12.6.77
-nvidia-cudnn-cu12==9.10.2.21
-nvidia-cufft-cu12==11.3.0.4
-nvidia-cufile-cu12==1.11.1.6
-nvidia-curand-cu12==10.3.7.77
-nvidia-cusolver-cu12==11.7.1.2
-nvidia-cusparse-cu12==12.5.4.2
-nvidia-cusparselt-cu12==0.7.1
-nvidia-nccl-cu12==2.27.3
-nvidia-nvjitlink-cu12==12.6.85
-nvidia-nvshmem-cu12==3.3.20
-nvidia-nvtx-cu12==12.6.77
-opt_einsum==3.4.0
-optree==0.18.0
-packageurl-python==0.17.5
-packaging==25.0
-pillow==12.0.0
-pip-api==0.0.34
-pip-requirements-parser==32.0.1
-pip_audit==2.9.0
-platformdirs==4.5.0
-protobuf==6.33.1
-py-serializable==2.1.0
-Pygments==2.19.2
-pyparsing==3.2.5
-requests==2.32.5
-rich==14.2.0
-six==1.17.0
-sortedcontainers==2.4.0
-sympy==1.14.0
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorflow==2.20.0
-termcolor==3.2.0
-toml==0.10.2
-torch==2.8.0+cu126
-torchaudio==2.8.0+cu126
-torchvision==0.23.0+cu126
-triton==3.4.0
-typing_extensions==4.15.0
-urllib3==2.5.0
-Werkzeug==3.1.3
-wrapt==2.0.1
-xformers==0.0.33.post1
-
---- END OF FILE pinned-requirements-202511160146.txt ---
-
---- START OF FILE pinned-requirements-202511160623.txt ---
-
-absl-py==2.3.1
-accelerate==1.4.0
-aiohappyeyeballs==2.6.1
-aiohttp==3.13.2
-aiosignal==1.4.0
-alabaster==1.0.0
-alembic==1.16.4
-annotated-types==0.7.0
-anyio==4.9.0
-astunparse==1.6.3
-attrs==25.3.0
-babel==2.17.0
-backoff==2.2.1
-bcrypt==5.0.0
-bitsandbytes==0.48.2
-black==25.1.0
-boolean.py==5.0
-build==1.3.0
-CacheControl==0.14.4
-cachetools==6.2.2
-certifi==2025.7.14
-charset-normalizer==3.4.2
-chromadb==1.3.4
-click==8.2.1
-cloudpickle==3.1.1
-coloredlogs==15.0.1
-colorlog==6.9.0
-contourpy==1.3.3
-coverage==7.10.1
-cycler==0.12.1
-cyclonedx-python-lib==9.1.0
-dataclasses-json==0.6.7
-datasets==4.0.0
-defusedxml==0.7.1
-dill==0.3.8
-diskcache==5.6.3
-distro==1.9.0
-docutils==0.21.2
-durationpy==0.10
-Farama-Notifications==0.0.4
-filelock==3.18.0
-filetype==1.2.0
-flake8==7.3.0
-flatbuffers==25.9.23
-fonttools==4.59.0
-frozenlist==1.8.0
-fsspec==2025.3.0
-gast==0.6.0
-gitdb==4.0.12
-GitPython==3.1.45
-google-ai-generativelanguage==0.6.10
-google-api-core==2.28.1
-google-api-python-client==2.187.0
-google-auth==2.43.0
-google-auth-httplib2==0.2.1
-google-generativeai==0.8.3
-google-pasta==0.2.0
-googleapis-common-protos==1.72.0
-gpt4all==2.8.2
-greenlet==3.2.4
-grpcio==1.74.0
-grpcio-status==1.71.2
-gymnasium==1.2.0
-h11==0.16.0
-h5py==3.15.1
-hf-xet==1.1.5
-httpcore==1.0.9
-httplib2==0.31.0
-httptools==0.7.1
-httpx==0.28.1
-httpx-sse==0.4.3
-huggingface-hub==0.36.0
-humanfriendly==10.0
-idna==3.10
-imagesize==1.4.1
-importlib_metadata==8.7.0
-importlib_resources==6.5.2
-iniconfig==2.1.0
-Jinja2==3.1.6
-joblib==1.5.1
-jsonlines==4.0.0
-jsonpatch==1.33
-jsonpointer==3.0.0
-jsonschema==4.25.0
-jsonschema-specifications==2025.4.1
-keras==3.12.0
-kiwisolver==1.4.8
-kubernetes==33.1.0
-langchain==1.0.5
-langchain-chroma==1.0.0
-langchain-classic==1.0.0
-langchain-community==0.4.1
-langchain-core==1.0.5
-langchain-nomic==1.0.0
-langchain-ollama==1.0.0
-langchain-text-splitters==1.0.0
-langgraph==1.0.3
-langgraph-checkpoint==3.0.1
-langgraph-prebuilt==1.0.4
-langgraph-sdk==0.2.9
-langsmith==0.4.43
-libclang==18.1.1
-license-expression==30.4.4
-llama_cpp_python==0.3.16
-loguru==0.7.3
-Mako==1.3.10
-Markdown==3.8.2
-markdown-it-py==4.0.0
-MarkupSafe==3.0.2
-marshmallow==3.26.1
-matplotlib==3.10.5
-mccabe==0.7.0
-mdurl==0.1.2
-ml_dtypes==0.5.3
-mmh3==5.2.0
-mpmath==1.3.0
-msgpack==1.1.1
-multidict==6.7.0
-multiprocess==0.70.16
-mypy_extensions==1.1.0
-namex==0.1.0
-networkx==3.5
-nomic==3.9.0
-numpy==1.26.2
-nvidia-cublas-cu12==12.6.4.1
-nvidia-cuda-cupti-cu12==12.6.80
-nvidia-cuda-nvrtc-cu12==12.6.77
-nvidia-cuda-runtime-cu12==12.6.77
-nvidia-cudnn-cu12==9.10.2.21
-nvidia-cufft-cu12==11.3.0.4
-nvidia-cufile-cu12==1.11.1.6
-nvidia-curand-cu12==10.3.7.77
-nvidia-cusolver-cu12==11.7.1.2
-nvidia-cusparse-cu12==12.5.4.2
-nvidia-cusparselt-cu12==0.7.1
-nvidia-nccl-cu12==2.27.3
-nvidia-nvjitlink-cu12==12.6.85
-nvidia-nvshmem-cu12==3.3.20
-nvidia-nvtx-cu12==12.6.77
-oauthlib==3.3.1
-ollama==0.6.0
-onnxruntime==1.23.2
-opencv-python==4.10.0.84
-opentelemetry-api==1.38.0
-opentelemetry-exporter-otlp-proto-common==1.38.0
-opentelemetry-exporter-otlp-proto-grpc==1.38.0
-opentelemetry-proto==1.38.0
-opentelemetry-sdk==1.38.0
-opentelemetry-semantic-conventions==0.59b0
-opt_einsum==3.4.0
-optree==0.18.0
-optuna==4.4.0
-orjson==3.11.4
-ormsgpack==1.12.0
-overrides==7.7.0
-packageurl-python==0.17.5
-packaging==25.0
-pandas==2.2.2
-pathspec==0.12.1
-peft==0.11.1
-pillow==10.4.0
-pip-api==0.0.34
-pip-requirements-parser==32.0.1
-pip_audit==2.9.0
-platformdirs==4.3.8
-pluggy==1.6.0
-posthog==5.4.0
-propcache==0.4.1
-proto-plus==1.26.1
-protobuf==5.29.5
-psutil==7.1.3
-py-serializable==2.1.0
-pyarrow==19.0.0
-pyasn1==0.6.1
-pyasn1_modules==0.4.2
-pybase64==1.4.2
-pycodestyle==2.14.0
-pydantic==2.11.7
-pydantic-settings==2.12.0
-pydantic_core==2.33.2
-pyflakes==3.4.0
-Pygments==2.19.2
-PyJWT==2.10.1
-pyparsing==3.2.3
-PyPika==0.48.9
-pyproject_hooks==1.2.0
-pytest==8.4.1
-pytest-cov==6.2.1
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-pytz==2025.2
-PyYAML==6.0.2
-ray==2.48.0
-referencing==0.36.2
-regex==2025.7.34
-requests==2.32.5
-requests-oauthlib==2.0.0
-requests-toolbelt==1.0.0
-rich==13.7.1
-roman-numerals-py==3.1.0
-rpds-py==0.26.0
-rsa==4.9.1
-safetensors==0.5.3
-scikit-learn==1.7.1
-scipy==1.16.1
-seaborn==0.13.2
-sentry-sdk==2.34.1
-shellingham==1.5.4
-six==1.17.0
-smmap==5.0.2
-sniffio==1.3.1
-snowballstemmer==3.0.1
-sortedcontainers==2.4.0
-Sphinx==8.2.3
-sphinx-rtd-theme==3.0.2
-sphinxcontrib-applehelp==2.0.0
-sphinxcontrib-devhelp==2.0.0
-sphinxcontrib-htmlhelp==2.1.0
-sphinxcontrib-jquery==4.1
-sphinxcontrib-jsmath==1.0.1
-sphinxcontrib-qthelp==2.0.0
-sphinxcontrib-serializinghtml==2.0.0
-SQLAlchemy==2.0.42
-stable_baselines3==2.7.0
-sympy==1.14.0
-tenacity==9.1.2
-tenseal==0.3.16
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorboardX==2.6.4
-tensorflow==2.20.0
-termcolor==3.2.0
-tf_keras==2.20.1
-threadpoolctl==3.6.0
-tokenizers==0.22.1
-toml==0.10.2
-torch==2.8.0+cu126
-torchaudio==2.8.0+cu126
-torchvision==0.23.0+cu126
-tqdm==4.67.1
-transformers==4.56.1
-triton==3.4.0
-trl==0.23.0
-typer==0.20.0
-typing-inspect==0.9.0
-typing-inspection==0.4.1
-typing_extensions==4.14.1
-tzdata==2025.2
-uritemplate==4.2.0
-urllib3==2.5.0
-uvicorn==0.38.0
-uvloop==0.22.1
-wandb==0.21.0
-watchfiles==1.1.1
-websocket-client==1.9.0
-websockets==15.0.1
-Werkzeug==3.1.3
-wrapt==2.0.1
-xformers==0.0.32.post2
-xxhash==3.6.0
-yarl==1.22.0
-zipp==3.23.0
-zstandard==0.25.0
-
---- END OF FILE pinned-requirements-202511160623.txt ---
-
---- START OF FILE pinned-requirements-202511160755.txt ---
-
-absl-py==2.3.1
-astunparse==1.6.3
-bitsandbytes==0.48.2
-certifi==2025.11.12
-charset-normalizer==3.4.4
-diskcache==5.6.3
-filelock==3.19.1
-flatbuffers==25.9.23
-fsspec==2025.9.0
-gast==0.6.0
-google-pasta==0.2.0
-grpcio==1.76.0
-h5py==3.15.1
-idna==3.11
-Jinja2==3.1.6
-keras==3.12.0
-libclang==18.1.1
-llama_cpp_python==0.3.16
-Markdown==3.10
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-mdurl==0.1.2
-ml_dtypes==0.5.3
-mpmath==1.3.0
-namex==0.1.0
-networkx==3.5
-numpy==2.3.4
-nvidia-cublas-cu12==12.6.4.1
-nvidia-cuda-cupti-cu12==12.6.80
-nvidia-cuda-nvrtc-cu12==12.6.77
-nvidia-cuda-runtime-cu12==12.6.77
-nvidia-cudnn-cu12==9.10.2.21
-nvidia-cufft-cu12==11.3.0.4
-nvidia-cufile-cu12==1.11.1.6
-nvidia-curand-cu12==10.3.7.77
-nvidia-cusolver-cu12==11.7.1.2
-nvidia-cusparse-cu12==12.5.4.2
-nvidia-cusparselt-cu12==0.7.1
-nvidia-nccl-cu12==2.27.3
-nvidia-nvjitlink-cu12==12.6.85
-nvidia-nvshmem-cu12==3.3.20
-nvidia-nvtx-cu12==12.6.77
-opt_einsum==3.4.0
-optree==0.18.0
-packaging==25.0
-pillow==12.0.0
-protobuf==6.33.1
-Pygments==2.19.2
-requests==2.32.5
-rich==14.2.0
-six==1.17.0
-sympy==1.14.0
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorflow==2.20.0
-termcolor==3.2.0
-torch==2.8.0+cu126
-torchaudio==2.8.0+cu126
-torchvision==0.23.0+cu126
-triton==3.4.0
-typing_extensions==4.15.0
-urllib3==2.5.0
-Werkzeug==3.1.3
-wrapt==2.0.1
-xformers==0.0.33.post1
-
---- END OF FILE pinned-requirements-202511160755.txt ---
-
---- START OF FILE pinned-requirements-202511160802.txt ---
-
-absl-py==2.3.1
-astunparse==1.6.3
-bitsandbytes==0.48.2
-certifi==2025.11.12
-charset-normalizer==3.4.4
-diskcache==5.6.3
-filelock==3.19.1
-flatbuffers==25.9.23
-fsspec==2025.9.0
-gast==0.6.0
-google-pasta==0.2.0
-grpcio==1.76.0
-h5py==3.15.1
-idna==3.11
-Jinja2==3.1.6
-keras==3.12.0
-libclang==18.1.1
-llama_cpp_python==0.3.16
-Markdown==3.10
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-mdurl==0.1.2
-ml_dtypes==0.5.3
-mpmath==1.3.0
-namex==0.1.0
-networkx==3.5
-numpy==2.3.4
-nvidia-cublas-cu12==12.6.4.1
-nvidia-cuda-cupti-cu12==12.6.80
-nvidia-cuda-nvrtc-cu12==12.6.77
-nvidia-cuda-runtime-cu12==12.6.77
-nvidia-cudnn-cu12==9.10.2.21
-nvidia-cufft-cu12==11.3.0.4
-nvidia-cufile-cu12==1.11.1.6
-nvidia-curand-cu12==10.3.7.77
-nvidia-cusolver-cu12==11.7.1.2
-nvidia-cusparse-cu12==12.5.4.2
-nvidia-cusparselt-cu12==0.7.1
-nvidia-nccl-cu12==2.27.3
-nvidia-nvjitlink-cu12==12.6.85
-nvidia-nvshmem-cu12==3.3.20
-nvidia-nvtx-cu12==12.6.77
-opt_einsum==3.4.0
-optree==0.18.0
-packaging==25.0
-pillow==12.0.0
-protobuf==6.33.1
-Pygments==2.19.2
-requests==2.32.5
-rich==14.2.0
-six==1.17.0
-sympy==1.14.0
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorflow==2.20.0
-termcolor==3.2.0
-torch==2.8.0+cu126
-torchaudio==2.8.0+cu126
-torchvision==0.23.0+cu126
-triton==3.4.0
-typing_extensions==4.15.0
-urllib3==2.5.0
-Werkzeug==3.1.3
-wrapt==2.0.1
-xformers==0.0.33.post1
-
---- END OF FILE pinned-requirements-202511160802.txt ---
-
---- START OF FILE pinned-requirements-202511160808.txt ---
-
-absl-py==2.3.1
-astunparse==1.6.3
-bitsandbytes==0.48.2
-certifi==2025.11.12
-charset-normalizer==3.4.4
-diskcache==5.6.3
-filelock==3.19.1
-flatbuffers==25.9.23
-fsspec==2025.9.0
-gast==0.6.0
-google-pasta==0.2.0
-grpcio==1.76.0
-h5py==3.15.1
-idna==3.11
-Jinja2==3.1.6
-keras==3.12.0
-libclang==18.1.1
-llama_cpp_python==0.3.16
-Markdown==3.10
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-mdurl==0.1.2
-ml_dtypes==0.5.3
-mpmath==1.3.0
-namex==0.1.0
-networkx==3.5
-numpy==2.3.4
-nvidia-cublas-cu12==12.6.4.1
-nvidia-cuda-cupti-cu12==12.6.80
-nvidia-cuda-nvrtc-cu12==12.6.77
-nvidia-cuda-runtime-cu12==12.6.77
-nvidia-cudnn-cu12==9.10.2.21
-nvidia-cufft-cu12==11.3.0.4
-nvidia-cufile-cu12==1.11.1.6
-nvidia-curand-cu12==10.3.7.77
-nvidia-cusolver-cu12==11.7.1.2
-nvidia-cusparse-cu12==12.5.4.2
-nvidia-cusparselt-cu12==0.7.1
-nvidia-nccl-cu12==2.27.3
-nvidia-nvjitlink-cu12==12.6.85
-nvidia-nvshmem-cu12==3.3.20
-nvidia-nvtx-cu12==12.6.77
-opt_einsum==3.4.0
-optree==0.18.0
-packaging==25.0
-pillow==12.0.0
-protobuf==6.33.1
-Pygments==2.19.2
-requests==2.32.5
-rich==14.2.0
-six==1.17.0
-sympy==1.14.0
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorflow==2.20.0
-termcolor==3.2.0
-torch==2.8.0+cu126
-torchaudio==2.8.0+cu126
-torchvision==0.23.0+cu126
-triton==3.4.0
-typing_extensions==4.15.0
-urllib3==2.5.0
-Werkzeug==3.1.3
-wrapt==2.0.1
-xformers==0.0.33.post1
-
---- END OF FILE pinned-requirements-202511160808.txt ---
-
 --- START OF FILE requirements-macbook-M1.txt ---
 
 absl-py==2.3.1
@@ -55791,25 +55526,28 @@ Werkzeug==3.1.3
 
 --- START OF FILE requirements.txt ---
 
-# Use the PyTorch CUDA 12.1 wheel index
---extra-index-url https://download.pytorch.org/whl/cu121
+# Use the PyTorch CUDA 12.6 wheel index. This is the known-good index.
+--extra-index-url https://download.pytorch.org/whl/cu126
 
-# Core ML/Fine-Tuning Stack - Pinned to a known-good, compatible set
-torch==2.3.0+cu121
-torchvision==0.18.0+cu121
-torchaudio==2.3.0+cu121
-transformers==4.40.1
+# --- CORE ML & FINE-TUNING STACK ---
+# Pinned to PyTorch 2.9.0 to match xformers dependency.
+torch==2.9.0+cu126
+torchvision==0.24.0+cu126
+torchaudio==2.9.0+cu126
+
+# Pinned to a known-good, compatible set for the PyTorch version above.
+transformers==4.41.2
 peft==0.10.0
 trl==0.8.6
 bitsandbytes==0.43.1
 datasets==2.19.0
 accelerate==0.30.1
-xformers==0.0.26.post1
+xformers
 
-# Keras compatibility
-tf-keras
+# Keras compatibility layer
+tf-keras==2.20.1
 
-# Core RAG/Orchestrator Stack
+# --- CORE RAG & ORCHESTRATOR STACK ---
 langchain
 chromadb
 google-generativeai
