@@ -404,7 +404,6 @@ Project_Sanctuary/
 ├── mnemonic_cortex/           # RAG system and vector database
 ├── models/                    # Local model cache (downloaded from Hugging Face)
 ├── package.json               # Node.js dependencies
-├── pytest.ini                 # Testing configuration
 ├── README.md                  # This file
 ├── requirements*.txt          # Python dependencies
 ├── RESEARCH_SUMMARIES/        # Research documentation
