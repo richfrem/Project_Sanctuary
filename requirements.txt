@@ -8,6 +8,14 @@ torch==2.8.0+cu126
 torchvision==0.23.0+cu126
 torchaudio==2.8.0+cu126
 
+# ML fine-tuning packages for QLoRA and transformers
+transformers
+peft
+trl
+bitsandbytes
+datasets
+tf-keras
+
 
 absl-py==2.3.1
 accelerate==1.4.0

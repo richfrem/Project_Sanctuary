@@ -31,8 +31,8 @@ def find_repo_root(start: str | Path) -> str:
 # Compute ROOT relative to this file location
 THIS_FILE = Path(__file__).resolve()
 ROOT = find_repo_root(THIS_FILE)
-ML_ENV_SCRIPT = os.path.join(ROOT, 'ML-Env-CUDA13', 'setup_ml_env_wsl.sh')
-CUDA_MARKDOWN = os.path.join(ROOT, 'CUDA-ML-ENV-SETUP.md')
+ML_ENV_SCRIPT = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'setup_ml_env_wsl.sh')
+CUDA_MARKDOWN = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'ML_ENV_README.md')
 LOG_DIR = os.path.join(ROOT, 'ml_env_logs')
 
 
@@ -173,7 +173,7 @@ def main():
 
         core_log = os.path.join(LOG_DIR, 'test_torch_cuda.log')
         print('\nRunning core verification test (test_torch_cuda.py)')
-        res = subprocess.run([venv_python, os.path.join(ROOT, 'ML-Env-CUDA13', 'test_torch_cuda.py')], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        res = subprocess.run([venv_python, os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'test_torch_cuda.py')], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         with open(core_log, 'wb') as f:
             f.write(res.stdout)
         exit_file = os.path.join(LOG_DIR, 'test_torch_cuda.exit')
