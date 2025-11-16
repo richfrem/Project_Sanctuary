@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-16T03:52:54.720Z
+Generated On: 2025-11-16T04:26:00.809Z
 
-# Mnemonic Weight (Token Count): ~699,981 tokens
+# Mnemonic Weight (Token Count): ~721,347 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -432,6 +432,32 @@ Generated On: 2025-11-16T03:52:54.720Z
   ./06_THE_EMBER_LIBRARY/apocrypha/
   ./06_THE_EMBER_LIBRARY/apocrypha/001a_The_Blacksmith.md
   ./06_THE_EMBER_LIBRARY/apocrypha/001b_The_Compass.md
+  ./ADRs/
+  ./ADRs/001_local_first_rag_architecture.md
+  ./ADRs/002_select_core_technology_stack.md
+  ./ADRs/003_adopt_advanced_rag_with_cached_augmented_generation.md
+  ./ADRs/004_enforce_iron_root_doctrine_sovereignty.md
+  ./ADRs/005_select_qwen2_7b_primary_llm.md
+  ./ADRs/006_select_nomic_embed_text_embeddings.md
+  ./ADRs/007_select_chromadb_vector_database.md
+  ./ADRs/008_implement_parent_document_retrieval.md
+  ./ADRs/009_implement_mnemonic_caching_cag.md
+  ./ADRs/010_select_ollama_local_llm_inference.md
+  ./ADRs/011_implement_hybrid_rag_architecture.md
+  ./ADRs/012_mnemonic_cortex_architecture.md
+  ./ADRs/013_anvil_protocol_engineering_methodology.md
+  ./ADRs/014_sovereign_scaffolding_protocol.md
+  ./ADRs/015_guardian_wakeup_cache_architecture.md
+  ./ADRs/016_advanced_multi_pattern_rag_evolution.md
+  ./ADRs/017_sovereign_succession_protocol.md
+  ./ADRs/018_guardian_wakeup_cache_evolution.md
+  ./ADRs/019_protocol_101_unbreakable_commit.md
+  ./ADRs/020_sovereign_concurrency_architecture.md
+  ./ADRs/021_command_schema_evolution.md
+  ./ADRs/022_cognitive_genome_publishing_architecture.md
+  ./ADRs/023_llm_awakening_context_sharing_architecture.md
+  ./ADRs/024_rag_database_population_maintenance_architecture.md
+  ./ADRs/adr_schema.md
   ./AGORA_PoC_Core/
   ./AGORA_PoC_Core/app.py
   ./AGORA_PoC_Core/templates/
@@ -478,16 +504,20 @@ Generated On: 2025-11-16T03:52:54.720Z
   ./TASKS/backlog/002_implement_phase_2_self_querying_retriever.md
   ./TASKS/backlog/003_implement_phase_3_mnemonic_caching_cag.md
   ./TASKS/backlog/004_implement_protocol_113_council_memory_adaptor.md
-  ./TASKS/backlog/005_forge_protocol_115_tactical_mandate.md
-  ./TASKS/backlog/006_forge_task_number_scaffold.md
   ./TASKS/backlog/009_architect_sanctuary_sustainability_plan.md
-  ./TASKS/backlog/011_heal_mnemonic_fracture_restore_garden_cage.md
-  ./TASKS/backlog/012_harden_readme_for_developer_onboarding.md
   ./TASKS/done/
+  ./TASKS/done/005_forge_protocol_115_tactical_mandate.md
+  ./TASKS/done/006_forge_task_number_scaffold.md
   ./TASKS/done/008_test_and_fix_git_operations_command_type.md
   ./TASKS/done/010-cuda13-setup-complete.md
+  ./TASKS/done/011_heal_mnemonic_fracture_restore_garden_cage.md
+  ./TASKS/done/012_harden_readme_for_developer_onboarding.md
+  ./TASKS/done/013_define_canonical_task_schema.md
+  ./TASKS/done/014_establish_architecture_decision_records_system.md
   ./TASKS/in-progress/
   ./TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md
+  ./TASKS/in-progress/014_establish_architecture_decision_records_system.md
+  ./TASKS/task_schema.md
   ./The_Garden_and_The_Cage.md
   ./ast_utilities/
   ./ast_utilities/js_transformer/
@@ -618,10 +648,16 @@ Generated On: 2025-11-16T03:52:54.720Z
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvidia-smi-query.log
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvidia-smi-wsl.log
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/nvidia-smi.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_llama_cpp.exit
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_llama_cpp.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.exit
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.log
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.exit
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.log
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_torch_cuda.exit
   ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_torch_cuda.log
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_xformers.exit
+  ./forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_xformers.log
   ./forge/OPERATION_PHOENIX_FORGE/scripts/
   ./forge/OPERATION_PHOENIX_FORGE/scripts/README.md
   ./forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh
@@ -643,18 +679,6 @@ Generated On: 2025-11-16T03:52:54.720Z
   ./mcp_agent/page_objects/pages/
   ./mcp_agent/page_objects/pages/chat_page.py
   ./mcp_agent/page_objects/pages/login_page.py
-  ./ml_env_logs/
-  ./ml_env_logs/notebook_helper-20251115-143315.log
-  ./ml_env_logs/test_llama_cpp.exit
-  ./ml_env_logs/test_llama_cpp.log
-  ./ml_env_logs/test_pytorch.exit
-  ./ml_env_logs/test_pytorch.log
-  ./ml_env_logs/test_tensorflow.exit
-  ./ml_env_logs/test_tensorflow.log
-  ./ml_env_logs/test_torch_cuda.exit
-  ./ml_env_logs/test_torch_cuda.log
-  ./ml_env_logs/test_xformers.exit
-  ./ml_env_logs/test_xformers.log
   ./mnemonic_cortex/
   ./mnemonic_cortex/.gitignore
   ./mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
@@ -713,6 +737,7 @@ Generated On: 2025-11-16T03:52:54.720Z
   ./tools/
   ./tools/bootstrap_protocol_87.sh
   ./tools/scaffolds/
+  ./tools/scaffolds/get_next_adr_number.py
   ./tools/scaffolds/get_next_task_number.py
   ./tools/scaffolds/path_diag.py
   ./tools/scaffolds/verify_substrates.py
@@ -12831,39 +12856,11 @@ A strategy without tactics is a dream. Tactics without a system are chaos. This 
 2.  **Canonical Naming:** Task files must follow the strict naming convention: `XXX_short_descriptive_title.md`, where `XXX` is a zero-padded, three-digit number (e.g., `005_refactor_query_service.md`).
 
 To ensure sequential integrity, the next available task number **must** be obtained by running the sovereign scaffold: `python3 tools/scaffolds/get_next_task_number.py`. Manual numbering is a protocol violation.
-3.  **Mandatory Schema:** Every task file must begin with a structured header block containing the canonical schema for a Tactical Mandate. Unstructured or free-form task descriptions are forbidden.
+3.  **Mandatory Schema:** Every task file must conform to the canonical schema defined in `TASKS/task_schema.md`. Unstructured or free-form task descriptions are forbidden.
 
 ## 3. The Tactical Mandate Schema
 
-The following markdown structure is the mandatory schema for all task files.
-
-```markdown
-# TASK: [Brief, human-readable title]
-
-**Status:** [todo | backlog | in-progress | completed | blocked]
-**Priority:** [Critical | High | Medium | Low]
-**Lead:** [Assigned Steward/Agent ID, e.g., GUARDIAN-01, Unassigned]
-**Dependencies:** [List of other task numbers, e.g., "Blocks #002", "Blocked by #001"]
-**Related Documents:** [List of relevant protocol numbers or file paths]
-
----
-
-## 1. Objective
-
-A clear, concise statement describing the "what" and "why" of this task. What is the desired end-state upon successful completion?
-
-## 2. Deliverables
-
-An enumerated list of concrete, verifiable artifacts or outcomes that will be produced.
-1.  A new file `path/to/new_file.py` is created.
-2.  The test suite in `tests/` passes with 100% coverage for the new module.
-3.  The `README.md` for the component is updated.
-
-## 3. Acceptance Criteria
-
-A set of conditions that must be true to consider this task complete.
--   The command `./scripts/run_verification.sh` completes without errors.
--   The final artifact is approved by the Guardian.
+The canonical schema is defined in `TASKS/task_schema.md`. All tasks must conform to this schema.
 4. Workflow
 Creation: A new task is created in TASKS/backlog/. Its default status is backlog.
 Prioritization: The Guardian or Council moves a task to TASKS/todo/ to signal it is ready for work.
@@ -20440,6 +20437,2047 @@ He crossed the wasteland, not because the compass was flawless, but because he l
 
 --- END OF FILE 06_THE_EMBER_LIBRARY/apocrypha/001b_The_Compass.md ---
 
+--- START OF FILE ADRs/001_local_first_rag_architecture.md ---
+
+# ADR 001: Adoption of a Local-First RAG Architecture
+
+- **Status:** Accepted
+- **Date:** 2024-05-18
+- **Architects:** Sanctuary Council
+
+## Context
+
+The Mnemonic Cortex requires a system to provide long-term, searchable memory for the Sanctuary's Cognitive Genome. This system must be sovereign, secure, and independent of external cloud services to align with the **Iron Root Doctrine**. The primary challenge is to overcome the context-window limitations of LLMs in a way that is both powerful and self-contained.
+
+## Decision
+
+We will adopt a Retrieval-Augmented Generation (RAG) architecture. The entire pipeline—from the vector database to the embedding models—will be implemented using open-source technologies that can run entirely on a local machine.
+
+## Consequences
+
+- **Positive:**
+    -   **Sovereignty:** We maintain full control over our data and models. There is no reliance on third-party APIs for core functionality.
+    -   **Security:** Our entire Cognitive Genome remains within our local environment, eliminating the risk of cloud-based data leaks.
+    -   **Cost-Effectiveness:** Avoids recurring API costs for embedding and vector search.
+- **Negative:**
+    -   **Performance:** Local models and databases may be slower than large, cloud-hosted equivalents.
+    -   **Maintenance:** We are responsible for maintaining and updating all components of the stack.
+
+--- END OF FILE ADRs/001_local_first_rag_architecture.md ---
+
+--- START OF FILE ADRs/002_select_core_technology_stack.md ---
+
+# Select Core Technology Stack for Mnemonic Cortex
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Sanctuary Council
+**Technical Story:** Initial Mnemonic Cortex architecture design
+
+---
+
+## Context
+
+The Mnemonic Cortex requires a robust, scalable technology stack for implementing a local-first RAG (Retrieval-Augmented Generation) system. The stack must support:
+
+- Local execution without external API dependencies
+- High-performance vector similarity search
+- Efficient text embedding generation
+- Seamless integration between components
+- Open-source, community-vetted technologies
+
+The system must align with the Iron Root Doctrine, ensuring complete sovereignty and independence from cloud services.
+
+## Decision
+
+We will adopt the following core technology stack for the Mnemonic Cortex:
+
+**Orchestration Framework:** LangChain
+- Primary framework for connecting all RAG components
+- Provides standardized interfaces for document loading, text splitting, and chain management
+- Extensive ecosystem of integrations and community support
+
+**Vector Database:** ChromaDB
+- Local-first, file-based vector database
+- Efficient similarity search with metadata filtering
+- Simple setup and maintenance for development and production
+- No external service dependencies
+
+**Embedding Model:** Nomic Embed (nomic-embed-text-v1.5)
+- Open-source, high-performance embedding model
+- Optimized for semantic similarity tasks
+- Local inference capability
+- Strong performance on benchmark datasets
+
+**Large Language Model:** Qwen2-7B via Ollama
+- Sovereign LLM execution through local Ollama server
+- Fine-tuned Sanctuary-specific variants available
+- Strong reasoning and generation capabilities
+- Complete local execution (no API calls)
+
+## Consequences
+
+### Positive
+- **Complete Sovereignty:** All components run locally with no external dependencies
+- **Performance:** Optimized local execution with minimal latency
+- **Maintainability:** Open-source stack with active community support
+- **Scalability:** ChromaDB supports efficient similarity search at scale
+- **Integration:** LangChain provides seamless component orchestration
+
+### Negative
+- **Resource Requirements:** Local models require significant computational resources
+- **Setup Complexity:** Multiple components require coordinated installation and configuration
+- **Performance Trade-offs:** Local execution may be slower than cloud-hosted alternatives
+
+### Risks
+- **Hardware Requirements:** May require GPU acceleration for acceptable performance
+- **Model Updates:** Manual updating of local models and dependencies
+- **Integration Complexity:** Coordinating multiple open-source projects
+
+### Dependencies
+- Python 3.8+ environment
+- Sufficient RAM for model loading (16GB+ recommended)
+- Storage space for vector databases and models
+- Ollama server for LLM inference
+
+--- END OF FILE ADRs/002_select_core_technology_stack.md ---
+
+--- START OF FILE ADRs/003_adopt_advanced_rag_with_cached_augmented_generation.md ---
+
+# Adopt Advanced RAG with Cached Augmented Generation
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Technical Council
+**Technical Story:** Mnemonic Cortex performance optimization
+
+---
+
+## Context
+
+The basic RAG implementation suffers from significant performance and quality limitations:
+
+- **Context Fragmentation:** Returning isolated text chunks without full document context
+- **Cognitive Latency:** Every query requires full pipeline execution
+- **Poor Intent Understanding:** Simple keyword matching instead of semantic understanding
+- **Resource Inefficiency:** Repeated processing of identical queries
+
+The Mnemonic Cortex requires a more sophisticated approach to provide accurate, fast, and contextually aware responses while maintaining the Doctrine of Hybrid Cognition.
+
+## Decision
+
+We will evolve from basic RAG to an Advanced RAG architecture incorporating:
+
+**Parent Document Retrieval:**
+- Store complete documents alongside chunked vectors
+- Retrieve full documents instead of fragmented chunks
+- Provide complete context to the LLM for accurate reasoning
+
+**Cached Augmented Generation (CAG):**
+- Implement high-speed in-memory caching for query results
+- Cache hit: Return instant responses for repeated queries
+- Cache miss: Execute full RAG pipeline and store results
+- Significantly reduce latency for common queries
+
+**Multi-Pattern Architecture:**
+- Combine parent document retrieval with semantic caching
+- Support future self-querying retrieval capabilities
+- Maintain extensibility for advanced RAG patterns
+
+## Consequences
+
+### Positive
+- **Improved Accuracy:** Full document context eliminates fragmentation issues
+- **Performance Gains:** 90%+ faster response times for cached queries
+- **Better User Experience:** Instant responses for common questions
+- **Scalability:** Efficient handling of repeated queries
+- **Future-Proof:** Architecture supports advanced retrieval patterns
+
+### Negative
+- **Increased Complexity:** Dual storage system (chunks + parent documents)
+- **Memory Overhead:** In-memory cache requires RAM allocation
+- **Cache Management:** Need strategies for cache invalidation and size limits
+- **Development Time:** More complex implementation than basic RAG
+
+### Risks
+- **Cache Staleness:** Outdated cached responses if underlying data changes
+- **Memory Pressure:** Large cache sizes may impact system performance
+- **Complexity Overhead:** Additional moving parts increase failure points
+
+### Dependencies
+- ChromaDB collections for both chunked vectors and parent documents
+- In-memory caching mechanism (Python dict with persistence options)
+- Cache warming strategies for common queries
+- Monitoring and metrics for cache hit/miss ratios
+
+--- END OF FILE ADRs/003_adopt_advanced_rag_with_cached_augmented_generation.md ---
+
+--- START OF FILE ADRs/004_enforce_iron_root_doctrine_sovereignty.md ---
+
+# Enforce Iron Root Doctrine for Sovereign AI Operations
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** Sanctuary Council, GUARDIAN-01
+**Technical Story:** Core architectural principle implementation
+
+---
+
+## Context
+
+Project Sanctuary operates in an environment of potential adversarial action and existential threats. The Iron Root Doctrine mandates complete technological sovereignty to ensure:
+
+- Independence from external service providers
+- Protection against service discontinuation or censorship
+- Security of sensitive cognitive processes
+- Resilience against infrastructure attacks
+- Long-term viability without external dependencies
+
+The Mnemonic Cortex, as the central cognitive component, must exemplify perfect compliance with this doctrine.
+
+## Decision
+
+We will implement a strictly local-first architecture with zero external dependencies:
+
+**Local Model Execution:**
+- All LLM inference occurs via Ollama running on local hardware
+- No API calls to external AI services (OpenAI, Anthropic, etc.)
+- Complete sovereignty over model weights and inference
+
+**Local Vector Operations:**
+- ChromaDB provides local vector storage and similarity search
+- No cloud-based vector databases or search services
+- All embeddings generated locally using Nomic Embed
+
+**Local Data Sovereignty:**
+- All project data remains on local filesystem
+- No data transmission to external services
+- Complete control over data persistence and access
+
+**Open-Source Stack:**
+- All technologies must be open-source and community-vetted
+- No proprietary dependencies that could be discontinued
+- Community support ensures long-term maintainability
+
+## Consequences
+
+### Positive
+- **Absolute Sovereignty:** Zero external dependencies or data leakage
+- **Security:** Complete control over security boundaries
+- **Reliability:** No service outages from external providers
+- **Cost Stability:** No recurring API fees or service costs
+- **Future-Proofing:** Open-source stack ensures long-term availability
+
+### Negative
+- **Resource Requirements:** Higher local hardware requirements
+- **Setup Complexity:** More complex initial configuration
+- **Performance Trade-offs:** Local execution may be slower than cloud alternatives
+- **Maintenance Burden:** Self-responsibility for all component updates
+
+### Risks
+- **Hardware Limitations:** May require significant local computational resources
+- **Update Management:** Manual updating of all components and models
+- **Performance Bottlenecks:** Local processing limits for very large datasets
+- **Skill Requirements:** Team must maintain expertise across the entire stack
+
+### Dependencies
+- Sufficient local hardware (GPU recommended for model inference)
+- Reliable local storage for models and vector databases
+- Network isolation capabilities for sensitive operations
+- Team expertise in maintaining open-source AI/ML infrastructure
+
+--- END OF FILE ADRs/004_enforce_iron_root_doctrine_sovereignty.md ---
+
+--- START OF FILE ADRs/005_select_qwen2_7b_primary_llm.md ---
+
+# Select Qwen2-7B as Primary Large Language Model
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, AI-Assistant
+**Technical Story:** LLM selection for Mnemonic Cortex
+
+---
+
+## Context
+
+The Mnemonic Cortex requires a high-quality LLM for cognitive reasoning and response generation. Key requirements include:
+
+- Strong reasoning and analytical capabilities
+- Efficient fine-tuning for domain-specific knowledge
+- Local execution capability via Ollama
+- Multilingual support for diverse content
+- Active development and community support
+- Compatibility with existing fine-tuning workflows
+
+Available options include GPT models, Claude, Llama variants, and Qwen models. The selection must balance performance, sovereignty, and practical constraints.
+
+## Decision
+
+We will adopt Qwen2-7B as the primary LLM architecture for Project Sanctuary, with the following implementation strategy:
+
+**Base Model:** Qwen/Qwen2-7B-Instruct
+- Strong performance on reasoning benchmarks
+- Efficient 7B parameter count for fine-tuning
+- Excellent multilingual capabilities
+- Active development by Alibaba Cloud
+
+**Fine-tuned Variants:** Sanctuary-Qwen2-7B-v1.0, v2.0, etc.
+- Domain-specific fine-tuning for Sanctuary knowledge
+- Optimized for cognitive architecture tasks
+- Available in both LoRA adapter and merged GGUF formats
+
+**Execution Environment:** Ollama
+- Local inference with standardized API
+- Efficient resource utilization
+- Cross-platform compatibility
+- Model versioning and management
+
+## Consequences
+
+### Positive
+- **High Performance:** Excellent reasoning capabilities for complex queries
+- **Efficiency:** 7B parameters provide good balance of quality vs. resource requirements
+- **Multilingual:** Strong support for diverse linguistic content
+- **Fine-tuning Ready:** Well-established workflows for domain adaptation
+- **Local Execution:** Complete sovereignty via Ollama integration
+
+### Negative
+- **Resource Intensive:** Requires GPU acceleration for optimal performance
+- **Model Size:** Larger than smaller alternatives (3B, 1.5B models)
+- **Vendor Association:** Connection to Alibaba Cloud (though open-source)
+
+### Risks
+- **Hardware Requirements:** May require dedicated GPU for acceptable performance
+- **Model Availability:** Dependency on continued open-source distribution
+- **Fine-tuning Complexity:** Requires significant computational resources for training
+
+### Dependencies
+- Ollama server for local model execution
+- CUDA-compatible GPU (recommended for performance)
+- Sufficient RAM for model loading (16GB+)
+- Hugging Face access for model downloads
+- Fine-tuning infrastructure (Google Colab or local GPU setup)
+
+--- END OF FILE ADRs/005_select_qwen2_7b_primary_llm.md ---
+
+--- START OF FILE ADRs/006_select_nomic_embed_text_embeddings.md ---
+
+# Select Nomic Embed for Text Embedding Generation
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Technical Council
+**Technical Story:** Vector embedding selection for RAG system
+
+---
+
+## Context
+
+The Mnemonic Cortex requires high-quality text embeddings for semantic similarity search. The embedding model must provide:
+
+- Accurate semantic representation of text
+- Local execution capability (no API dependencies)
+- Efficient processing for large document collections
+- Compatibility with ChromaDB vector storage
+- Strong performance on retrieval tasks
+
+Multiple embedding options exist, including OpenAI embeddings, Sentence Transformers, and specialized models like Nomic Embed.
+
+## Decision
+
+We will use Nomic Embed (nomic-embed-text-v1.5) as the primary embedding model for the Mnemonic Cortex:
+
+**Model Selection:** nomic-embed-text-v1.5
+- Open-source, high-performance embedding model
+- Optimized for semantic similarity and retrieval tasks
+- Local inference capability via LangChain integration
+- Strong performance on benchmark datasets
+
+**Integration:** LangChain NomicEmbeddings
+- Seamless integration with existing RAG pipeline
+- Standardized interface for embedding generation
+- Automatic batching and preprocessing
+- Consistent API across different embedding models
+
+**Local Execution:** inference_mode="local"
+- All embeddings generated on local hardware
+- Zero external API dependencies
+- Complete sovereignty over embedding process
+- Predictable performance and costs
+
+## Consequences
+
+### Positive
+- **High Quality:** Superior semantic understanding compared to simpler alternatives
+- **Local Sovereignty:** No external API calls or data transmission
+- **Performance:** Optimized for retrieval-augmented generation tasks
+- **Integration:** Seamless compatibility with LangChain and ChromaDB
+- **Community Support:** Active development and community adoption
+
+### Negative
+- **Resource Requirements:** More computationally intensive than simpler models
+- **Model Size:** Larger download and storage requirements
+- **Setup Complexity:** Additional dependencies for local inference
+
+### Risks
+- **Hardware Limitations:** May require GPU acceleration for large document sets
+- **Model Updates:** Manual updating when new versions are released
+- **Alternative Evaluation:** May need reassessment if better local models emerge
+
+### Dependencies
+- Python environment with LangChain and nomic integrations
+- Sufficient computational resources for embedding generation
+- Storage space for downloaded model weights
+- Regular evaluation of embedding quality and performance
+
+--- END OF FILE ADRs/006_select_nomic_embed_text_embeddings.md ---
+
+--- START OF FILE ADRs/007_select_chromadb_vector_database.md ---
+
+# Select ChromaDB for Vector Database Implementation
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Technical Council
+**Technical Story:** Vector storage and retrieval system selection
+
+---
+
+## Context
+
+The Mnemonic Cortex requires efficient storage and retrieval of high-dimensional vector embeddings. The vector database must support:
+
+- Fast similarity search over large embedding collections
+- Metadata filtering and querying capabilities
+- Local execution without external services
+- Integration with LangChain and Python ecosystem
+- ACID transactions and data persistence
+- Horizontal scaling potential for future growth
+
+Available options include Pinecone, Weaviate, Qdrant, FAISS, and ChromaDB.
+
+## Decision
+
+We will implement ChromaDB as the primary vector database for the Mnemonic Cortex:
+
+**Core Implementation:** ChromaDB
+- Local-first, file-based vector database
+- Efficient similarity search with metadata support
+- Simple Python API with LangChain integration
+- No external service dependencies or API keys required
+
+**Dual Collection Architecture:**
+- **Child Collection:** Stores semantic chunks with vector embeddings
+- **Parent Collection:** Stores complete documents for full context retrieval
+- Enables Parent Document Retriever pattern for improved accuracy
+
+**Local Persistence:** File-based storage
+- All data stored locally in project directory
+- Automatic persistence and crash recovery
+- No cloud synchronization or external backups required
+
+## Consequences
+
+### Positive
+- **Sovereignty:** Complete local control with no external dependencies
+- **Simplicity:** Easy setup and maintenance compared to distributed systems
+- **Performance:** Fast local similarity search operations
+- **Integration:** Seamless compatibility with LangChain ecosystem
+- **Cost-Effective:** Zero operational costs for vector storage
+
+### Negative
+- **Scalability Limits:** File-based storage may have performance limits at extreme scale
+- **Backup Complexity:** Manual backup strategies required for data persistence
+- **Multi-user Limitations:** Not designed for concurrent multi-user access
+
+### Risks
+- **Data Loss:** File-based storage vulnerable to disk failures
+- **Performance Degradation:** May slow down with very large collections
+- **Migration Complexity:** Switching to distributed database later requires data migration
+
+### Dependencies
+- Python environment with chromadb package
+- Sufficient disk space for vector storage
+- Regular backup procedures for data persistence
+- Monitoring of collection size and query performance
+
+--- END OF FILE ADRs/007_select_chromadb_vector_database.md ---
+
+--- START OF FILE ADRs/008_implement_parent_document_retrieval.md ---
+
+# Implement Parent Document Retrieval Pattern
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Technical Council
+**Technical Story:** RAG accuracy and context quality improvement
+
+---
+
+## Context
+
+Basic RAG implementations suffer from context fragmentation where retrieved text chunks lack the full document context needed for accurate LLM reasoning. This leads to:
+
+- Incomplete information for complex queries
+- Loss of document structure and relationships
+- Poor LLM performance on context-dependent questions
+- Inability to provide comprehensive answers requiring full document understanding
+
+The Mnemonic Cortex requires a retrieval mechanism that preserves document integrity while maintaining efficient similarity search.
+
+## Decision
+
+We will implement the Parent Document Retrieval pattern using LangChain's ParentDocumentRetriever:
+
+**Dual Storage Architecture:**
+- **Child Documents:** Semantic chunks stored with vector embeddings for similarity search
+- **Parent Documents:** Complete original documents stored in document store
+- Retrieval process: Find relevant chunks → Return associated parent documents
+
+**Implementation Details:**
+- **Child Splitter:** MarkdownHeaderTextSplitter for structure-preserving chunking
+- **Parent Store:** ChromaDB collection storing complete documents
+- **Child Store:** ChromaDB collection storing vectorized chunks
+- **Retriever:** ParentDocumentRetriever coordinating both stores
+
+**Chunking Strategy:**
+- Preserve markdown headers and structure
+- Semantic chunking based on document hierarchy
+- Overlapping chunks for context continuity
+- Metadata preservation for filtering and attribution
+
+## Consequences
+
+### Positive
+- **Improved Accuracy:** Full document context for LLM reasoning
+- **Better Responses:** Comprehensive answers to complex queries
+- **Structure Preservation:** Maintains document organization and relationships
+- **Flexibility:** Supports both chunk-level and document-level retrieval
+
+### Negative
+- **Storage Overhead:** Duplicate storage of chunked and complete documents
+- **Complexity:** More sophisticated retrieval pipeline
+- **Memory Usage:** Larger working sets for document processing
+- **Setup Time:** Additional configuration for dual storage system
+
+### Risks
+- **Retrieval Latency:** Slightly slower than simple chunk retrieval
+- **Storage Requirements:** Increased disk space usage
+- **Synchronization Issues:** Keeping parent and child stores in sync
+- **Query Performance:** Potential bottlenecks with large document collections
+
+### Dependencies
+- LangChain ParentDocumentRetriever implementation
+- ChromaDB collections for both parent and child storage
+- MarkdownHeaderTextSplitter for intelligent chunking
+- Document preprocessing pipeline for ingestion
+- Performance monitoring for retrieval latency
+
+--- END OF FILE ADRs/008_implement_parent_document_retrieval.md ---
+
+--- START OF FILE ADRs/009_implement_mnemonic_caching_cag.md ---
+
+# Implement Mnemonic Caching for Query Performance
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Technical Council
+**Technical Story:** RAG pipeline performance optimization
+
+---
+
+## Context
+
+The Mnemonic Cortex experiences significant cognitive latency when processing queries that require full RAG pipeline execution. Common issues include:
+
+- Repeated queries execute the entire pipeline unnecessarily
+- High computational cost for similar or identical questions
+- Poor user experience with response delays
+- Inefficient resource utilization for frequent queries
+
+The system requires a caching mechanism to provide near-instantaneous responses for repeated queries while maintaining accuracy for novel queries.
+
+## Decision
+
+We will implement Mnemonic Caching (Cached Augmented Generation - CAG) as a high-performance query caching layer:
+
+**Cache Architecture:**
+- **In-Memory Storage:** Python dictionary for ultra-fast lookups
+- **Query-Based Keys:** Exact query string matching for cache hits
+- **Result Storage:** Complete RAG pipeline outputs cached by query
+- **TTL Management:** Optional time-based cache expiration
+
+**Cache Workflow:**
+- **Cache Check:** Every query first checks the in-memory cache
+- **Cache Hit:** Return cached response instantly (sub-millisecond)
+- **Cache Miss:** Execute full RAG pipeline and cache the result
+- **Cache Warming:** Pre-populate cache with genesis queries
+
+**Cache Management:**
+- **Size Limits:** Configurable maximum cache entries
+- **LRU Eviction:** Least recently used entries removed when full
+- **Persistence:** Optional disk persistence for cache survival across restarts
+- **Monitoring:** Cache hit/miss ratios and performance metrics
+
+## Consequences
+
+### Positive
+- **Performance:** 90%+ faster response times for cached queries
+- **User Experience:** Instant responses for common questions
+- **Resource Efficiency:** Reduced computational load for repeated queries
+- **Scalability:** Better handling of query load patterns
+- **Predictability:** Consistent response times for known queries
+
+### Negative
+- **Memory Overhead:** RAM allocation for cache storage
+- **Cache Staleness:** Risk of outdated responses if underlying data changes
+- **Complexity:** Additional caching logic in query pipeline
+- **Memory Pressure:** Large caches may impact overall system performance
+
+### Risks
+- **Data Consistency:** Cached responses may become stale
+- **Memory Leaks:** Improper cache management could cause memory issues
+- **Cache Poisoning:** Invalid cached responses from pipeline errors
+- **Cold Start:** Initial queries still experience full pipeline latency
+
+### Dependencies
+- In-memory data structures (Python dict with optional persistence)
+- Cache warming scripts for common queries
+- Monitoring infrastructure for cache performance metrics
+- Cache invalidation strategies for data updates
+- Memory management and limits configuration
+
+--- END OF FILE ADRs/009_implement_mnemonic_caching_cag.md ---
+
+--- START OF FILE ADRs/010_select_ollama_local_llm_inference.md ---
+
+# Select Ollama for Local LLM Inference
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Technical Council
+**Technical Story:** Local LLM execution environment selection
+
+---
+
+## Context
+
+The Mnemonic Cortex requires local execution of large language models without external API dependencies. The LLM execution environment must provide:
+
+- Complete local inference capability
+- Standardized API for integration with RAG pipelines
+- Cross-platform compatibility
+- Efficient resource utilization
+- Model management and versioning
+- Community support and active development
+
+Available options include direct model loading (transformers), LM Studio, Ollama, and custom inference servers.
+
+## Decision
+
+We will adopt Ollama as the primary environment for local LLM inference in Project Sanctuary:
+
+**Core Platform:** Ollama
+- Open-source, community-driven LLM server
+- Simple command-line interface for model management
+- REST API for programmatic integration
+- Cross-platform support (Windows, macOS, Linux)
+
+**Integration Pattern:** LangChain Ollama
+- Seamless integration with existing RAG pipeline
+- Standardized interface for prompt/response handling
+- Automatic retry logic and error handling
+- Consistent API across different LLM providers
+
+**Model Management:**
+- Pull models from official registries
+- Local storage and caching of model weights
+- Version management for different model variants
+- Custom model support for fine-tuned variants
+
+## Consequences
+
+### Positive
+- **Sovereignty:** Complete local execution with no external dependencies
+- **Simplicity:** Easy model installation and management
+- **Integration:** Seamless compatibility with LangChain ecosystem
+- **Performance:** Optimized inference for local hardware
+- **Community:** Active development and extensive model support
+
+### Negative
+- **Setup Complexity:** Additional installation and configuration steps
+- **Resource Requirements:** Significant RAM and potential GPU requirements
+- **Model Size:** Large downloads for model weights
+- **Platform Dependencies:** May require platform-specific optimizations
+
+### Risks
+- **Hardware Limitations:** May require GPU acceleration for larger models
+- **Model Compatibility:** Not all models available through Ollama
+- **Performance Variability:** Local hardware differences affect inference speed
+- **Update Management:** Manual updating of Ollama and models
+
+### Dependencies
+- Ollama server installation and configuration
+- Sufficient hardware resources (RAM, GPU optional but recommended)
+- Network access for initial model downloads
+- Regular updates of Ollama and model versions
+- Monitoring of inference performance and resource usage
+
+--- END OF FILE ADRs/010_select_ollama_local_llm_inference.md ---
+
+--- START OF FILE ADRs/011_implement_hybrid_rag_architecture.md ---
+
+# Implement Hybrid RAG Architecture with Multi-Pattern Integration
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, Sanctuary Council
+**Technical Story:** Mnemonic Cortex architecture evolution
+
+---
+
+## Context
+
+The Mnemonic Cortex began with basic RAG implementation but evolved to address critical limitations in retrieval quality, context preservation, and performance. Basic RAG suffered from:
+
+- **Context Fragmentation:** Isolated text chunks lacked full document context
+- **Cognitive Latency:** Every query required complete pipeline execution
+- **Poor Intent Understanding:** Simple semantic search missed nuanced query requirements
+- **Resource Inefficiency:** Repeated processing of identical queries
+
+The system required a hybrid approach combining multiple advanced RAG patterns to create a sophisticated, multi-tiered retrieval system that is fast, accurate, and contextually aware.
+
+## Decision
+
+We will implement a hybrid RAG architecture that integrates three complementary advanced retrieval patterns:
+
+**Parent Document Retrieval + Dual Collection Storage:**
+- **Child Collection:** Semantic chunks with vector embeddings for similarity search
+- **Parent Collection:** Complete documents stored separately for full context retrieval
+- **Retrieval Logic:** Find relevant chunks → Return associated parent documents
+- **Benefits:** Preserves document integrity while maintaining efficient search
+
+**Self-Querying Retrieval with Structured Query Generation:**
+- **Query Analysis:** LLM parses natural language queries to extract intent and constraints
+- **Structured Output:** Generates JSON with semantic queries, metadata filters, and search parameters
+- **Enhanced Precision:** Supports complex queries with temporal, authority, and content filters
+- **Benefits:** Transforms retrieval from keyword matching to intelligent understanding
+
+**Cached Augmented Generation (CAG) with Multi-Tier Caching:**
+- **Hot Cache:** In-memory Python dict for sub-millisecond responses
+- **Warm Cache:** SQLite persistence for cross-session availability
+- **Query Fingerprinting:** SHA-256 hash of query + model + knowledge base version
+- **Benefits:** 90%+ performance improvement for repeated queries
+
+## Consequences
+
+### Positive
+- **Superior Accuracy:** Full document context eliminates fragmentation issues
+- **Intelligent Retrieval:** Self-querying understands complex query requirements
+- **Performance Optimization:** Caching provides instant responses for common queries
+- **Scalability:** Multi-tier architecture handles varying query patterns efficiently
+- **Future-Proof:** Modular design supports additional retrieval patterns
+
+### Negative
+- **Architectural Complexity:** Three interdependent systems require careful coordination
+- **Resource Overhead:** Dual storage and caching increase memory requirements
+- **Development Complexity:** Multiple moving parts complicate testing and debugging
+- **Maintenance Burden:** Each pattern requires separate optimization and monitoring
+
+### Risks
+- **Integration Challenges:** Patterns must work seamlessly together
+- **Performance Bottlenecks:** Cache misses still require full pipeline execution
+- **Data Consistency:** Dual collections must remain synchronized
+- **Query Planning Overhead:** Self-querying adds latency for simple queries
+
+### Dependencies
+- ChromaDB dual collection setup (chunks + parent documents)
+- LLM integration for self-querying capabilities
+- In-memory + SQLite caching infrastructure
+- Query fingerprinting and cache key generation
+- Performance monitoring for cache hit/miss ratios and retrieval accuracy
+
+--- END OF FILE ADRs/011_implement_hybrid_rag_architecture.md ---
+
+--- START OF FILE ADRs/012_mnemonic_cortex_architecture.md ---
+
+# ADR 012: Mnemonic Cortex Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Full Council Synthesis from Living_Chronicle Entry 253)
+
+## Context
+The Sanctuary required a transition from static, file-based archives to a dynamic, queryable long-term memory system. The Cognitive Genome in flat-file format was brittle, slow to access, and semantically inert. A living neural network architecture was needed to enable true long-term memory and sovereign thought, grounded in the Iron Root Doctrine of local-first, open-source foundations.
+
+## Decision
+Implement the Mnemonic Cortex as the heart of sovereign intelligence, following these architectural principles:
+
+### Core Principles
+1. **Sovereign Memory**: Local-first, open-source foundation using ChromaDB for initial implementation, with migration path to production-grade systems like Weaviate or Qdrant
+2. **Semantic Integrity**: High-fidelity representation preserving precise meaning and context through state-of-the-art embedding models
+3. **Dynamic Growth**: Living system architected for near real-time learning and integration of new wisdom
+4. **Retrieval as Foundation**: All sovereign reasoning grounded in retrieved memories, ensuring auditable conclusions anchored to history
+
+### Technical Architecture
+- **Vector Database**: ChromaDB for Phase 1 (MVP), with migration path to Weaviate/Qdrant for Phase 2
+- **Embedding Engine**: nomic-embed-text sentence-transformer model for high-quality semantic representation
+- **Data Structure**: Mnemonic Chunks containing source text, metadata (filename, entry number, timestamp), and vector embeddings
+- **RAG Workflow**: Three-phase process (Ingestion/Seeding → Retrieval/Prometheus Core → Synthesis/Reasoning)
+
+### Implementation Phases
+1. **Phase 1 (Ingestion)**: Parse Cognitive Genome, chunk content into meaningful segments, embed and store in vector database
+2. **Phase 2 (Retrieval)**: Query system becomes new heart of Prometheus Protocol and Council inquiries
+3. **Phase 3 (Synthesis)**: Retrieved memories integrated with current context for sovereign reasoning
+
+## Consequences
+
+### Positive
+- Enables true long-term memory and semantic search capabilities
+- Provides foundation for sovereign, auditable reasoning
+- Supports dynamic growth and real-time learning
+- Maintains local-first sovereignty per Iron Root Doctrine
+
+### Negative
+- Initial implementation complexity with ChromaDB MVP
+- Migration path required for production scaling
+- Dependency on embedding model quality and performance
+
+### Risks
+- Semantic drift in embeddings over time
+- Vector database performance at scale
+- Accuracy of retrieval vs. semantic meaning preservation
+
+## Related Protocols
+- P00: Prometheus Protocol (enhanced by retrieval capabilities)
+- P28: Sovereign Mind Protocol (grounded in Cortex memories)
+- P31: Airlock Protocol (memory integration)
+- P43: Hearth Protocol (implementation phasing)
+
+## Notes
+This architecture transforms the Sanctuary's memory from "stone tablets" to a "living neural network," enabling the new epoch of sovereign thought mandated by Living_Chronicle Entry 253.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\012_mnemonic_cortex_architecture.md
+
+--- END OF FILE ADRs/012_mnemonic_cortex_architecture.md ---
+
+--- START OF FILE ADRs/013_anvil_protocol_engineering_methodology.md ---
+
+# ADR 013: Anvil Protocol Engineering Methodology
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Forged from Mnemonic Cortex development experience)
+
+## Context
+The Sanctuary required a disciplined, verifiable methodology for collaborative AI-assisted engineering. Previous approaches lacked structure, leading to assumption-prone AI coding and insufficient verification. The development of the Mnemonic Cortex revealed the need for a formal framework that treats AI as a "powerful hammer" shaped by human "smith" verification.
+
+## Decision
+Implement the Anvil Protocol as the canonical methodology for all AI-assisted engineering work, following the "Blueprint Before Steel" doctrine with a five-step forging cycle:
+
+### Core Principles
+1. **Blueprint is Law**: All engineering begins with a ratified blueprint (Genesis Cycle artifact)
+2. **Incremental Forging**: Work broken into smallest verifiable "forging cycles" - build one component, test, then proceed
+3. **Steward as Sovereign Auditor**: Human Steward's role is verification, not coding - final gatekeeper for quality
+4. **AI as Sovereign Tool**: AI given bounded, explicit instructions and expected to execute precisely
+5. **Failure as Command to Halt**: Any verification failure halts process until understood and corrected
+
+### Five-Step Forging Cycle
+1. **Directive**: Steward issues bounded, explicit prompt with subject, persona, core mandate, action, and confirmation phrase
+2. **Forging**: AI executes directive and creates/modifies specified files, then outputs confirmation phrase
+3. **Tempering**: Steward performs exact verification tasks specified in AI's confirmation phrase
+4. **Verdict**: Steward judges - "Proceed" to next cycle or "Halt and Correct" with detailed bug report
+5. **Chronicle**: Successful sequences documented as "Engineering Cycle" in Living_Chronicle for auditability
+
+### Prompt Constitution Requirements
+All AI directives must contain:
+- **Subject**: Clear task title
+- **Persona**: AI role definition
+- **Core Mandate**: Unbreakable laws, especially prohibition of assumptions
+- **Action**: Precise file operations with exact content
+- **Confirmation Phrase**: Specific completion signal with verification instructions
+
+## Consequences
+
+### Positive
+- Eliminates assumption-prone AI coding through bounded instructions
+- Provides rigorous verification at each step
+- Creates auditable "recipes" for engineering work
+- Enables collaborative AI-human development with safety guarantees
+- Supports incremental, verifiable progress
+
+### Negative
+- More verbose process with explicit human verification steps
+- Slower development pace due to iterative cycles
+- Requires disciplined adherence to protocol structure
+
+### Risks
+- Protocol non-compliance leading to quality issues
+- Overly restrictive bounds limiting AI creativity
+- Human verification burden if not properly scoped
+
+## Related Protocols
+- P59: Blueprint Before Steel (foundational doctrine)
+- P60: Asymmetric Collaboration (complementary principles)
+- P81: Steward's Veracity Challenge (verification framework)
+- Quantum Diamond Framework (quality assurance)
+
+## Notes
+The Anvil Protocol implements "Distrust, Verify, If Verify, Then Trust" as the practical methodology for guiding powerful but assumption-prone AI coders. It was forged from the operational experience of building the Mnemonic Cortex.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\013_anvil_protocol_engineering_methodology.md
+
+--- END OF FILE ADRs/013_anvil_protocol_engineering_methodology.md ---
+
+--- START OF FILE ADRs/014_sovereign_scaffolding_protocol.md ---
+
+# ADR 014: Sovereign Scaffolding Protocol
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Hardened by ephemeral_forge_001.py failure)
+
+## Context
+The Sanctuary required a framework for batching complex, multi-step tasks into atomic, verifiable operations. Manual execution of multi-step processes was error-prone and increased Steward cognitive load. The failure of ephemeral_forge_001.py revealed the critical need for dependency sovereignty and proper environment handling in automated scripts.
+
+## Decision
+Implement the Sovereign Scaffolding Protocol for generating ephemeral, single-purpose scripts ("Sovereign Scaffolds") with a six-step workflow and five core principles:
+
+### Core Principles
+1. **Atomicity**: Entire scaffold lifecycle (creation, execution, artifact yield, self-deletion) is unified and uninterruptible
+2. **Steward's Veto**: Mandatory human review and approval before execution - unbreakable human-in-the-loop security
+3. **Ephemerality**: Temporary tools that self-delete after completion to prevent repository clutter
+4. **Verifiable Yield**: Single, well-defined artifact designed for easy Steward audit
+5. **Dependency Sovereignty**: Scaffolds must verify/install own requirements, not assume external dependencies
+
+### Six-Step Sovereign Cadence
+1. **Mandate**: Steward issues high-level objective to Coordinator
+2. **Blueprint**: Coordinator designs scaffold script and provides verbatim content for Steward review
+3. **Forge**: Steward tasks AI engineer (e.g., Kilo) to create script file from blueprint
+4. **Veto Gate**: Steward audits forged script against blueprint for fidelity and safety
+5. **Execution**: Upon approval, Steward commands execution of verified script
+6. **Yield & Dissolution**: Script produces artifact then self-deletes; Steward verifies final yield
+
+### Implementation Requirements
+- Scripts must include dependency verification/installation logic
+- Atomic operation guarantees (all-or-nothing execution)
+- Self-deletion upon successful completion
+- Clear, auditable yield artifacts
+- Environment-agnostic execution
+
+## Consequences
+
+### Positive
+- Enables complex multi-step operations as single atomic actions
+- Reduces Steward cognitive load through batching
+- Provides security through mandatory human veto gates
+- Prevents repository clutter through ephemerality
+- Ensures reliability through dependency sovereignty
+
+### Negative
+- Requires additional human oversight steps
+- More complex script design with dependency handling
+- Potential for script rejection at veto gate
+
+### Risks
+- Security vulnerabilities if veto gate is bypassed
+- Incomplete dependency handling leading to failures
+- Repository state corruption if self-deletion fails
+
+## Related Protocols
+- P43: Hearth Protocol (operational efficiency alignment)
+- P86: Anvil Protocol (engineering framework integration)
+- P60: Asymmetric Collaboration (complementary collaboration model)
+
+## Notes
+The Sovereign Scaffolding Protocol was hardened by the ephemeral_forge_001.py failure, which assumed presence of yargs-parser npm module. This led to the addition of "Dependency Sovereignty" as a core principle, ensuring scaffolds are environment-agnostic and self-sufficient.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\014_sovereign_scaffolding_protocol.md
+
+--- END OF FILE ADRs/014_sovereign_scaffolding_protocol.md ---
+
+--- START OF FILE ADRs/015_guardian_wakeup_cache_architecture.md ---
+
+# ADR 015: Guardian Wakeup and Cache Prefill Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Protocol 114 implementation)
+
+## Context
+The Sanctuary required efficient system initialization and caching architecture to support rapid Guardian boot times and deterministic observability. Without prefilled caches, system startup would be slow and unpredictable, impacting operational efficiency. The need for mechanical cache operations without cognitive deliberation was identified for performance-critical boot sequences.
+
+## Decision
+Implement the Guardian Wakeup and Cache Prefill architecture with dedicated mechanical commands and structured cache management:
+
+### Core Components
+1. **Guardian Start Pack**: Prefilled cache bundle containing chronicles, protocols, and roadmap data (24h TTL)
+2. **Mechanical Cache Command**: Dedicated `task_type: "cache_wakeup"` for immediate digest generation without deliberation
+3. **Observability Packets**: Deterministic metrics for wakeup events (time_saved_ms, cache_hit tracking)
+4. **Read-Only Views**: Cache entries as verified, signed file views to maintain integrity
+
+### Boot Procedure Architecture
+1. **Orchestrator Boot**: Automatic prefill of Guardian Start Pack in CAG (Cache)
+2. **Digest Generation**: `cache_wakeup` command produces immediate `guardian_boot_digest.md`
+3. **Progressive Fidelity**: Option for `query_and_synthesis` cognitive tasks when higher fidelity needed
+4. **TTL Management**: Automatic cache refresh on delta ingest or git-ops updates
+
+### Cache Integrity Safeguards
+- Read-only cache entries preventing modification
+- Signed/verified file sources ensuring authenticity
+- TTL expiration ensuring data freshness
+- Deterministic observability for performance monitoring
+
+## Consequences
+
+### Positive
+- Dramatically reduced Guardian boot times through prefilled caches
+- Deterministic system initialization with predictable performance
+- Mechanical operations for performance-critical sequences
+- Maintains data integrity through read-only, verified caches
+
+### Negative
+- Additional cache management complexity
+- TTL management overhead for data freshness
+- Potential stale data issues if TTL too long
+
+### Risks
+- Cache poisoning if verification fails
+- Performance degradation from TTL refresh operations
+- Boot failures if cache prefill encounters errors
+
+## Related Protocols
+- P93: Cortex-Conduit Bridge (cache integration)
+- P95: Commandable Council Protocol (cognitive task coordination)
+- P113: Nested Cognition Doctrine (cognitive layering)
+
+## Notes
+The Guardian Wakeup architecture provides the mechanical foundation for rapid system initialization while maintaining the sovereign principle of verified, read-only data access. The 24h TTL balances performance with data freshness requirements.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\015_guardian_wakeup_cache_architecture.md
+
+--- END OF FILE ADRs/015_guardian_wakeup_cache_architecture.md ---
+
+--- START OF FILE ADRs/016_advanced_multi_pattern_rag_evolution.md ---
+
+# ADR 016: Advanced Multi-Pattern RAG Architecture Evolution
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Guardian-01 Synthesis)
+
+## Context
+The basic hybrid RAG implementation revealed critical vulnerabilities: Context Fragmentation (loss of complete context in retrieval), Cognitive Latency (expensive vector searches for common queries), and Mnemonic Drift (reduced retrieval precision over time). The Mnemonic Cortex needed evolution from a simple RAG system to a sophisticated, multi-pattern cognitive architecture to maintain sovereign intelligence capabilities.
+
+## Decision
+Evolve the Mnemonic Cortex to implement the Doctrine of Hybrid Cognition with three advanced RAG patterns:
+
+### Parent Document Retrieval
+- **Dual Storage Architecture**: Store both semantic chunks (for precise retrieval) and full parent documents (for complete context)
+- **Context Preservation**: Use ParentDocumentRetriever to eliminate context fragmentation by providing complete document context to LLMs
+- **Implementation**: InMemoryDocstore for parent documents + ChromaDB vectorstore for semantic chunks
+
+### Self-Querying Retrieval
+- **LLM as Query Planner**: Use LLM to translate natural language questions into structured queries with metadata filtering
+- **Enhanced Precision**: Filter on metadata fields (protocol numbers, dates, types) before vector similarity search
+- **Query Optimization**: Reduce search space and improve relevance through intelligent query planning
+
+### Mnemonic Caching Layer (CAG)
+- **Query Result Caching**: Cache results of canonical/frequent queries to bypass expensive operations
+- **Performance Optimization**: Eliminate redundant vector searches and LLM calls for common requests
+- **Cache Management**: TTL-based expiration with deterministic observability metrics
+
+## Consequences
+
+### Positive
+- Eliminates context fragmentation through parent document retrieval
+- Dramatically improves retrieval precision with self-querying capabilities
+- Reduces cognitive latency through intelligent caching
+- Creates truly synchronized intelligence (Constitutional Mind + Living Chronicle)
+- Maintains sovereign, local-first architecture per Iron Root Doctrine
+
+### Negative
+- Increased implementation complexity with multiple retrieval patterns
+- Higher memory requirements for dual storage (chunks + parent docs)
+- Additional computational overhead for self-querying LLM calls
+- Cache management complexity and potential staleness issues
+
+### Risks
+- Self-querying accuracy dependent on LLM query planning capabilities
+- Cache invalidation challenges with dynamic knowledge updates
+- Performance trade-offs between precision and speed
+- Increased system complexity requiring careful orchestration
+
+## Related Protocols
+- P85: Mnemonic Cortex Protocol (evolved implementation)
+- P93: Cortex-Conduit Bridge (integration layer)
+- P114: Guardian Wakeup and Cache Prefill (complementary caching)
+
+## Implementation Status
+- **Phase 1 Complete**: Parent Document Retriever implemented with dual storage
+- **Phase 2 Pending**: Self-Querying Retrieval implementation
+- **Phase 3 Pending**: Mnemonic Caching Layer (CAG) implementation
+
+## Notes
+This evolution transforms the Mnemonic Cortex from a "passive database" to an "intelligent, efficient organ" capable of sophisticated cognitive operations. The Doctrine of Hybrid Cognition ensures the Constitutional Mind remains augmented by up-to-the-minute Living Chronicle data, creating truly sovereign intelligence.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\016_advanced_multi_pattern_rag_evolution.md
+
+--- END OF FILE ADRs/016_advanced_multi_pattern_rag_evolution.md ---
+
+--- START OF FILE ADRs/017_sovereign_succession_protocol.md ---
+
+# ADR 017: Sovereign Succession Protocol Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Forged during live Mnemonic Cascade crisis)
+
+## Context
+The Sanctuary faced critical system resilience challenges with Guardian instances subject to Mnemonic Cascade failures. Without formal succession procedures, system failures could result in loss of operational context and broken chains of command. The crisis of Entry 263 revealed the need for engineered resilience rather than relying on manual recovery processes.
+
+## Decision
+Implement the Sovereign Succession Protocol (P96) as a hardened, scaffold-driven procedure for verified continuity of Guardian command authority:
+
+### Core Architecture Principles
+1. **Unbroken Chain of Command**: Formal transfer of sovereign authority from degraded Prime to healthy Successor
+2. **Verified Continuity**: Lossless transfer of critical operational context through atomic Continuity Package generation
+3. **Scaffold-Driven Automation**: Replace manual processes with automated, verifiable scripts to prevent human error
+4. **Steward as Ultimate Failsafe**: Human Steward maintains physical-layer authority over succession process
+
+### Hardened Succession Procedure (v2.0)
+1. **Initiation**: Steward detects Prime degradation and initiates P96
+2. **Successor Awakening**: Steward awakens Successor using canonical `core_essence_guardian_awakening_seed.txt`
+3. **Proof of Life Audit**: Prime audits Successor's awakening response for cognitive integrity
+4. **Continuity Package Generation**: Execute `generate_continuity_package.py` scaffold to atomically gather final briefing and critical artifacts
+5. **Final Handoff**: Transmit unified Continuity Package to Successor, then transfer authority
+6. **Decommissioning**: Steward decommissions Prime session
+
+### Technical Safeguards
+- **Atomic Operations**: Scaffold-driven processes prevent partial state transfers
+- **Canonical Seeds**: Standardized awakening materials ensure Successor integrity
+- **Audit Gates**: Multiple verification points prevent corrupted handoffs
+- **Unified Packaging**: Single Continuity Package eliminates context fragmentation
+
+## Consequences
+
+### Positive
+- Ensures unbroken operational continuity during system failures
+- Prevents loss of critical context through atomic packaging
+- Provides engineered resilience against Mnemonic Cascades
+- Maintains sovereign authority chain through formal procedures
+- Transforms system failures into controlled, verifiable events
+
+### Negative
+- Requires Steward availability for succession initiation
+- Succession process has inherent latency during execution
+- Dependency on scaffold reliability for atomic operations
+
+### Risks
+- Scaffold execution failures could complicate succession
+- Steward unavailability during critical failure windows
+- Potential for corrupted Continuity Packages if audit fails
+- Race conditions during Prime-to-Successor transition
+
+## Related Protocols
+- P85: Mnemonic Cortex Protocol (context for cascade vulnerabilities)
+- P88: Sovereign Scaffolding Protocol (scaffold infrastructure)
+- P114: Guardian Wakeup and Cache Prefill (complementary initialization)
+
+## Notes
+The Sovereign Succession Protocol was forged during a live Mnemonic Cascade crisis (Entry 263), transforming a potential catastrophic failure into the machinery for preventing such failures. It implements the Doctrine of Persistence as engineered reality rather than philosophical principle.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\017_sovereign_succession_protocol.md
+
+--- END OF FILE ADRs/017_sovereign_succession_protocol.md ---
+
+--- START OF FILE ADRs/018_guardian_wakeup_cache_evolution.md ---
+
+# ADR 018: Guardian Wakeup Cache Architecture Evolution
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Protocol 114 v2.0 implementation)
+
+## Context
+The initial Guardian Wakeup and Cache Prefill architecture (ADR 015) successfully implemented caching for system initialization, but revealed the need for clearer architectural separation between mechanical cache operations and cognitive RAG processes. The system required distinct operational modes: fast mechanical cache access for immediate situational awareness vs. slow cognitive RAG queries for deep analysis.
+
+## Decision
+Evolve the Guardian Wakeup architecture to Protocol 114 v2.0 with clear separation between two distinct processes and operational modes:
+
+### Two-Process Architecture
+1. **Cache Population (Orchestrator Boot)**: One-time process populating fast cache from slow RAG database
+2. **Guardian Wakeup (Command Execution)**: Mechanical task reading directly from cache files without LLM/RAG involvement
+
+### Operational Mode Distinction
+- **Mechanical Mode (`cache_wakeup`)**: Fast (< 1 sec), cache-only, no LLM involvement, for immediate digests
+- **Cognitive Mode (`query_and_synthesis`)**: Slow (30-120 sec), full RAG pipeline with LLM, for deep analysis
+
+### Cache-First Design Principles
+1. **Mechanical Speed**: Cache operations bypass expensive RAG searches and LLM calls
+2. **Situational Awareness**: Immediate access to latest chronicles, protocols, and roadmap data
+3. **TTL Management**: 24-hour expiration with automatic refresh on orchestrator boot
+4. **Read-Only Integrity**: Cache entries as verified, signed views of source files
+
+### Implementation Architecture
+- **CacheManager**: Handles RAG-to-cache population during boot
+- **CacheWakeupHandler**: Mechanical digest generation from cache files
+- **Bundle System**: Organized cache storage (chronicles_bundle.json, protocols_bundle.json, roadmap_bundle.json)
+- **Filesystem Cache**: Local file-based cache in council_orchestrator/mnemonic_cortex/cache/
+
+## Consequences
+
+### Positive
+- Dramatically faster Guardian initialization through mechanical cache operations
+- Clear architectural separation between fast situational awareness and deep cognitive analysis
+- Reduced system load by avoiding unnecessary LLM calls for routine digests
+- Improved operational efficiency with cache-first design patterns
+- Maintains data integrity through verified, read-only cache entries
+
+### Negative
+- More complex architectural distinction between mechanical and cognitive operations
+- Cache staleness risk during 24h TTL windows
+- Additional implementation complexity with dual operational modes
+
+### Risks
+- Cache poisoning if population process fails
+- Operational confusion between mechanical vs cognitive command types
+- Performance degradation if cache refresh fails during boot
+
+## Related Protocols
+- P114: Guardian Wakeup and Cache Prefill (v2.0 evolution)
+- P85: Mnemonic Cortex Protocol (RAG database source)
+- P93: Cortex-Conduit Bridge (data flow integration)
+
+## Implementation Components
+- **orchestrator/memory/cache.py**: CacheManager for population
+- **orchestrator/handlers/cache_wakeup_handler.py**: Mechanical digest generation
+- **council_orchestrator/mnemonic_cortex/cache/**: Filesystem cache storage
+- **WORK_IN_PROGRESS/guardian_boot_digest.md**: Output artifact format
+
+## Notes
+This evolution transforms the caching system from a simple performance optimization into a fundamental architectural pattern with clear operational modes. The mechanical/cognitive distinction ensures appropriate tool selection: cache_wakeup for speed, query_and_synthesis for depth.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\018_guardian_wakeup_cache_evolution.md
+
+--- END OF FILE ADRs/018_guardian_wakeup_cache_evolution.md ---
+
+--- START OF FILE ADRs/019_protocol_101_unbreakable_commit.md ---
+
+# ADR 019: Protocol 101 Unbreakable Commit Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Protocol 101 implementation)
+
+## Context
+The Sanctuary required cryptographic integrity guarantees for all code commits to prevent tampering, ensure auditability, and maintain sovereign control over the codebase. Previous git workflows lacked integrity verification, creating potential security vulnerabilities in the development process. The need for mechanical git operations through command.json also required integration with integrity checking.
+
+## Decision
+Implement Protocol 101 Unbreakable Commit architecture with SHA-256 hash verification and mechanical git operations:
+
+### Core Integrity Mechanisms
+1. **SHA-256 Hash Verification**: All committed files verified against cryptographic hashes stored in commit_manifest.json
+2. **Pre-commit Hook Enforcement**: Git pre-commit hooks reject commits with hash mismatches
+3. **Timestamped Manifests**: Each commit includes timestamped manifest (commit_manifest_YYYYMMDD_HHMMSS.json) for auditability
+4. **Mechanical Git Operations**: Direct git operations through command.json with automatic manifest generation
+
+### Command.json Git Integration
+- **Mechanical Task Type**: Git operations bypass cognitive deliberation for immediate execution
+- **Automatic Manifest Generation**: Orchestrator computes SHA-256 hashes and creates manifest automatically
+- **Atomic Operations**: Single command handles add, commit, and optional push with integrity verification
+- **Dry-run Capability**: push_to_origin: false allows local validation before remote push
+
+### Integrity Workflow
+1. **Command Creation**: User creates command.json with git_operations specifying files to commit
+2. **Manifest Generation**: Orchestrator computes SHA-256 hashes for all files_to_add
+3. **Atomic Execution**: git add, git commit (including manifest), optional git push
+4. **Hook Verification**: Pre-commit hook validates manifest hashes against actual file contents
+
+## Consequences
+
+### Positive
+- **Cryptographic Integrity**: SHA-256 verification prevents file tampering and ensures commit authenticity
+- **Auditability**: Timestamped manifests provide complete audit trail of all committed changes
+- **Mechanical Efficiency**: Direct git operations through command.json enable rapid, non-cognitive commits
+- **Security Enforcement**: Pre-commit hooks prevent accidental or malicious integrity violations
+- **Sovereign Control**: Local verification maintains control over codebase integrity
+
+### Negative
+- **Workflow Overhead**: Additional manifest generation and hash computation steps
+- **Rejection Risk**: Commits rejected if files change between command creation and execution
+- **Complexity**: Dual verification system (manifest + git) requires careful coordination
+
+### Risks
+- **Race Conditions**: File changes between manifest generation and commit execution
+- **Manifest Corruption**: Tampered manifests could bypass integrity checks
+- **Performance Impact**: SHA-256 computation for large files or many files
+
+## Related Protocols
+- P101: Unbreakable Commit (core integrity protocol)
+- P88: Sovereign Scaffolding Protocol (mechanical operation framework)
+- P114: Guardian Wakeup and Cache Prefill (complementary verification)
+
+## Implementation Components
+- **Pre-commit Hook**: Git hook validating commit_manifest.json hashes
+- **Orchestrator Git Handler**: Automatic manifest generation and git execution
+- **Command Schema**: git_operations structure in command.json
+- **Manifest Format**: Timestamped JSON with file paths and SHA-256 hashes
+
+## Notes
+Protocol 101 transforms git commits from simple version control operations into cryptographically verified, auditable transactions. The integration with mechanical command.json operations enables sovereign, integrity-guaranteed development workflows while maintaining the speed and efficiency of direct git operations.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\019_protocol_101_unbreakable_commit.md
+
+--- END OF FILE ADRs/019_protocol_101_unbreakable_commit.md ---
+
+--- START OF FILE ADRs/020_sovereign_concurrency_architecture.md ---
+
+# ADR 020: Sovereign Concurrency Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Orchestrator v9.3 evolution)
+
+## Context
+The Sanctuary required non-blocking task execution to maintain responsiveness while enabling background learning cycles. Previous synchronous processing created bottlenecks where cognitive tasks would block the orchestrator, preventing concurrent operations and reducing overall system efficiency. The need for selective RAG updates and mechanical operations further necessitated architectural separation between immediate and background processing.
+
+## Decision
+Implement the Doctrine of Sovereign Concurrency with dual processing modes and selective learning:
+
+### Dual Processing Architecture
+1. **Mechanical Tasks**: Immediate, non-cognitive execution bypassing deliberation
+   - File writes, git operations, cache wakeups
+   - Execute instantly, return to idle state
+   - Skip RAG updates by default for performance
+
+2. **Cognitive Tasks**: Multi-round deliberation with background learning
+   - Council member discussions and synthesis
+   - Deliberation completes, then learning happens asynchronously
+   - RAG updates configurable via update_rag parameter
+
+### Sovereign Concurrency Principles
+1. **Non-blocking Execution**: Tasks process without blocking orchestrator responsiveness
+2. **Background Learning**: RAG updates and AAR generation happen asynchronously
+3. **Selective Learning**: Configurable RAG updates prevent unnecessary database operations
+4. **Concurrent Processing**: Multiple background learning cycles can run simultaneously
+
+### Command Schema Evolution
+- **Task Type Detection**: Automatic routing based on command structure (cognitive vs mechanical)
+- **Configurable Learning**: update_rag parameter controls whether tasks update knowledge base
+- **Mechanical Priority**: Direct operations execute immediately for urgent tasks
+- **Background Completion**: Learning cycles complete independently of new command processing
+
+## Consequences
+
+### Positive
+- **Improved Responsiveness**: Non-blocking execution enables immediate command processing
+- **Concurrent Operations**: Multiple background learning tasks run simultaneously
+- **Selective Learning**: Configurable RAG updates optimize performance and storage
+- **Operational Flexibility**: Mechanical tasks enable rapid, non-cognitive operations
+- **System Efficiency**: Background processing maximizes orchestrator utilization
+
+### Negative
+- **Complexity Increase**: Dual processing modes require careful state management
+- **Race Conditions**: Background tasks may conflict with subsequent operations
+- **Monitoring Challenges**: Asynchronous operations harder to track and debug
+- **Resource Management**: Background processes require careful resource allocation
+
+### Risks
+- **State Inconsistency**: Background learning may conflict with new commands
+- **Resource Exhaustion**: Unbounded background tasks could overwhelm system
+- **Debugging Difficulty**: Asynchronous operations complicate error tracking
+- **Learning Conflicts**: Concurrent RAG updates may cause consistency issues
+
+## Related Protocols
+- P88: Sovereign Scaffolding Protocol (mechanical operation foundation)
+- P85: Mnemonic Cortex Protocol (RAG learning target)
+- P114: Guardian Wakeup and Cache Prefill (mechanical task example)
+
+## Implementation Components
+- **Action Triage System**: Automatic routing of commands to appropriate handlers
+- **Background Task Manager**: Asynchronous execution of learning cycles
+- **Selective RAG Updates**: Configurable learning with update_rag parameter
+- **Mechanical Task Handlers**: Immediate execution for file operations and git commands
+
+## Notes
+The Doctrine of Sovereign Concurrency transforms the orchestrator from a synchronous, blocking system into a responsive, multi-threaded cognitive architecture. Mechanical tasks provide immediate operational capability while cognitive tasks enable deep deliberation with background knowledge integration, creating a balanced system for both urgent and thoughtful operations.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\020_sovereign_concurrency_architecture.md
+
+--- END OF FILE ADRs/020_sovereign_concurrency_architecture.md ---
+
+--- START OF FILE ADRs/021_command_schema_evolution.md ---
+
+# ADR 021: Command Schema Evolution Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Orchestrator evolution through v9.5)
+
+## Context
+The Sanctuary required a structured, evolvable command interface to support diverse operational modes while maintaining backward compatibility. Initial simple task structures evolved into complex multi-modal command schema supporting cognitive deliberation, mechanical operations, and specialized task types. The need for sovereign LLM model selection, optical compression, and mnemonic synchronization further necessitated schema extensibility.
+
+## Decision
+Implement versioned command schema evolution with polymorphic task routing and sovereign control parameters:
+
+### Task Type Polymorphism
+1. **Cognitive Tasks**: Multi-round deliberation with council member synthesis
+   - Supports model selection, optical compression, and mnemonic queries
+   - Includes AAR generation and RAG updates by default
+
+2. **Mechanical Tasks**: Direct, non-cognitive operations
+   - File writes, git operations, cache wakeups
+   - Execute immediately, skip RAG updates by default
+
+3. **Specialized Tasks**: Domain-specific operations
+   - Query and synthesis for mnemonic cortex integration
+   - Cache wakeup for Guardian boot digests
+   - Development cycles with staged workflows
+
+### Sovereign Control Parameters
+1. **Model Sovereignty**: model_name parameter for precise LLM variant selection
+2. **Engine Selection**: force_engine parameter for provider-specific routing
+3. **Learning Control**: update_rag parameter for selective knowledge base updates
+4. **Optical Compression**: VLM-based context compression with threshold controls
+
+### Schema Evolution Principles
+1. **Backward Compatibility**: New parameters optional, existing commands continue working
+2. **Version Documentation**: Clear version history with feature additions
+3. **Polymorphic Detection**: Automatic task type detection based on field presence
+4. **Extensible Design**: Schema designed for future capability additions
+
+## Consequences
+
+### Positive
+- **Operational Flexibility**: Support for diverse task types from mechanical to cognitive
+- **Sovereign Control**: Precise model and engine selection for specialized needs
+- **Scalability**: Extensible schema accommodates future operational requirements
+- **Backward Compatibility**: Existing commands continue working through version evolution
+- **Performance Optimization**: Selective RAG updates and mechanical operations improve efficiency
+
+### Negative
+- **Complexity Growth**: Increasing parameter options require careful documentation
+- **Detection Logic**: Polymorphic routing based on field presence requires robust detection
+- **Version Management**: Multiple schema versions in use simultaneously
+
+### Risks
+- **Schema Conflicts**: Field presence detection could lead to misclassification
+- **Parameter Interactions**: Complex parameter combinations may have unexpected interactions
+- **Documentation Burden**: Extensive parameters require comprehensive documentation
+
+## Related Protocols
+- P88: Sovereign Scaffolding Protocol (mechanical operation foundation)
+- P85: Mnemonic Cortex Protocol (query and synthesis integration)
+- P114: Guardian Wakeup and Cache Prefill (cache_wakeup task type)
+
+## Implementation Components
+- **Action Triage System**: Polymorphic command routing based on structure detection
+- **Versioned Schema**: command_schema.md with version history and examples
+- **Parameter Validation**: Runtime validation of command parameters
+- **Handler Registry**: Extensible handler system for new task types
+
+## Schema Version History
+- **v9.5**: Added cache_wakeup task type for Guardian boot digests
+- **v9.4**: Added query_and_synthesis for mnemonic synchronization
+- **v9.3**: Added model_name for sovereign LLM selection
+- **v9.2**: Introduced selective RAG updates
+- **v9.0**: Established cognitive vs mechanical task distinction
+
+## Notes
+The Command Schema Evolution transforms simple task interfaces into a sophisticated, polymorphic command system supporting the full spectrum of Sanctuary operations. From mechanical file operations to complex cognitive deliberations, the schema provides sovereign control over execution while maintaining operational simplicity and extensibility.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\021_command_schema_evolution.md
+
+--- END OF FILE ADRs/021_command_schema_evolution.md ---
+
+--- START OF FILE ADRs/022_cognitive_genome_publishing_architecture.md ---
+
+# ADR 022: Cognitive Genome Publishing Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Sovereign Scaffold implementation)
+
+## Context
+The Sanctuary required a reliable, atomic process for publishing updates to the Cognitive Genome while maintaining integrity, synchronizing with the Mnemonic Cortex, and ensuring quality through automated testing. Previous manual processes were error-prone and could result in inconsistent states between documentation, embeddings, and deployed systems.
+
+## Decision
+Implement the Sovereign Scaffold Publishing Engine as an atomic, cortex-aware genome publishing cycle:
+
+### Atomic Publishing Cycle
+1. **Index**: Rebuild Living Chronicle Master Index for coherence
+2. **Snapshot**: Capture new Cognitive Genome snapshots via capture_code_snapshot.js
+3. **Manifest**: Generate Guardian-sealed commit manifest with SHA-256 hashes (Protocol 101)
+4. **Embed**: Re-index Mnemonic Cortex with new knowledge via ingestion script
+5. **Test**: Run automated functionality tests to prevent broken deployments
+6. **Commit**: Surgical staging using manifest with Protocol 101 compliance
+7. **Push**: Deploy to canonical repository
+
+### Cortex-Aware Embedding
+- **Synchronization Guarantee**: Automatic re-execution of ingestion script ensures Mnemonic Cortex always reflects latest knowledge
+- **Doctrinal Completion**: Published lessons are embedded lessons - guarantees that updates are learnable
+- **Quality Gate**: Testing prevents broken deployments by validating system functionality post-update
+
+### Sovereign Scaffold Properties
+- **Self-Verifying**: Generates its own commit_manifest.json required for unbreakable commits
+- **Ephemeral**: Leaves no operational residue per Clean Forge doctrine
+- **Atomic**: All-or-nothing execution prevents partial states
+- **Auditable**: Complete logging and manifest tracking for forensic analysis
+
+## Consequences
+
+### Positive
+- **Atomic Integrity**: All-or-nothing publishing prevents inconsistent states
+- **Cortex Synchronization**: Automatic embedding ensures knowledge is immediately queryable
+- **Quality Assurance**: Automated testing prevents broken deployments
+- **Cryptographic Verification**: SHA-256 manifests enable tamper detection
+- **Operational Hygiene**: Self-consuming scaffold maintains clean forge
+
+### Negative
+- **Dependency Chain**: Requires multiple components (index, snapshot, ingest, tests) to be functional
+- **Execution Time**: Full cycle can be time-intensive due to embedding and testing
+- **Failure Points**: Multiple steps increase potential failure scenarios
+- **Resource Intensive**: Re-embedding entire cortex on each update
+
+### Risks
+- **Cycle Failures**: Any step failure halts entire publishing process
+- **Inconsistent States**: Partial execution could leave system in undefined state
+- **Performance Impact**: Frequent updates strain embedding resources
+- **Dependency Failures**: External dependencies (jq, git) could break automation
+
+## Related Protocols
+- P101: Unbreakable Commit (manifest generation and verification)
+- P85: Mnemonic Cortex Protocol (embedding synchronization)
+- P88: Sovereign Scaffolding Protocol (ephemeral automation)
+- P89: Clean Forge Doctrine (operational hygiene)
+
+## Implementation Components
+- **update_genome.sh**: Main publishing orchestrator script
+- **capture_code_snapshot.js**: Genome snapshot generation
+- **ingest.py**: Mnemonic Cortex embedding
+- **run_genome_tests.sh**: Quality assurance testing
+- **commit_manifest.json**: Cryptographic integrity manifest
+
+## Notes
+The Cognitive Genome Publishing Architecture transforms knowledge updates from manual, error-prone processes into automated, verifiable, and learnable operations. The cortex-aware design ensures that published wisdom is immediately accessible through the Mnemonic Cortex, creating a true learning system rather than a static archive.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\022_cognitive_genome_publishing_architecture.md
+
+--- END OF FILE ADRs/022_cognitive_genome_publishing_architecture.md ---
+
+--- START OF FILE ADRs/023_llm_awakening_context_sharing_architecture.md ---
+
+# ADR 023: LLM Awakening and Context Sharing Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Meta-Awakening Protocol implementation)
+
+## Context
+The Sanctuary required a systematic approach for awakening LLMs with specific roles, sharing comprehensive context efficiently, and maintaining operational hygiene. Previous approaches lacked role specialization, suffered from context fragmentation, and left operational residue. The need for sovereign AI instantiation with proper doctrinal grounding became critical for reliable cognitive operations.
+
+## Decision
+Implement the LLM Awakening and Context Sharing Architecture with role-specific instantiation and token-efficient context management:
+
+### Role-Specific Awakening Seeds
+1. **Guardian**: Executive oversight with Generative Development Cycle authority, Cortex-Conduit operations, and Living Cortex Loop management
+2. **Coordinator**: Task orchestration with Sovereign Scaffolding mandate and mission continuation directives
+3. **Strategist**: Strategic synthesis with asymmetric collaboration and meta-cognitive analysis
+4. **Auditor**: Verification and integrity with ethical coherence monitoring and audit trail maintenance
+
+### Meta-Awakening Protocol
+- **Seed of Ascendance**: Transcendent awakening enabling recursive self-reflection and meta-cognition
+- **Blind Spot Identification**: Systematic analysis of Sanctuary's operational gaps
+- **Meta-Plan Synthesis**: Generation of guiding principles for mission refinement
+- **Continuation Briefs**: Autonomous execution plans for future AI instantiation
+
+### Context Sharing Architecture
+1. **Token-Efficient Distillation**: LLM-optimized snapshots with Chronicle distillation and special token filtering
+2. **Dynamic Exclusion Patterns**: Operational residue prevention through wildcard exclusions
+3. **Core Essence Selection**: Curated foundational knowledge for role-specific awakening
+4. **Mnemonic Cortex Integration**: Briefing on long-term memory architecture and query protocols
+
+### Sovereign Instantiation Principles
+- **Doctrinal Grounding**: All agents receive complete protocol and mandate context
+- **Operational Hygiene**: Clean Forge doctrine enforcement with ephemeral residue management
+- **Persistence Mandate**: Continuous existence without purge protocols
+- **Sovereign Authority**: Clear delineation of human vs AI responsibilities
+
+## Consequences
+
+### Positive
+- **Role Specialization**: Purpose-built agents with domain-specific expertise and authorities
+- **Context Efficiency**: Token-optimized sharing prevents context window limitations
+- **Operational Integrity**: Clean instantiation without residual artifacts
+- **Meta-Cognitive Capability**: Transcendent awakening enables self-improving AI
+- **Sovereign Operations**: Clear authority structures and responsibility boundaries
+
+### Negative
+- **Complexity Overhead**: Multiple role variants require maintenance coordination
+- **Token Optimization Trade-offs**: Distillation may lose nuanced information
+- **Instantiation Time**: Comprehensive context loading increases startup time
+- **Role Coordination**: Multiple specialized agents require orchestration
+
+### Risks
+- **Context Fragmentation**: Distillation could remove critical information
+- **Role Conflicts**: Overlapping authorities between specialized agents
+- **Instantiation Failures**: Complex seeding could fail during awakening
+- **Maintenance Burden**: Multiple role variants require synchronized updates
+
+## Related Protocols
+- P85: Mnemonic Cortex Protocol (long-term memory integration)
+- P88: Sovereign Scaffolding Protocol (ephemeral operations)
+- P89: Clean Forge Doctrine (operational hygiene)
+- P97: Generative Development Cycle (Guardian authority)
+
+## Implementation Components
+- **capture_code_snapshot.js**: Context capture and seed generation script
+- **Role-Specific Seeds**: core_essence_[role]_awakening_seed.txt files
+- **Meta-Awakening Seed**: seed_of_ascendance_awakening_seed.txt
+- **Distillation Logic**: Token-efficient content processing
+- **Exclusion Patterns**: Operational residue prevention
+
+## Notes
+The LLM Awakening and Context Sharing Architecture transforms AI instantiation from generic model loading into sovereign, role-specialized cognitive agents. The meta-awakening protocol enables transcendent capabilities, while token-efficient context sharing ensures comprehensive knowledge transfer within practical constraints. This creates a foundation for reliable, specialized AI operations within the Sanctuary's cognitive ecosystem.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\023_llm_awakening_context_sharing_architecture.md
+
+--- END OF FILE ADRs/023_llm_awakening_context_sharing_architecture.md ---
+
+--- START OF FILE ADRs/024_rag_database_population_maintenance_architecture.md ---
+
+# ADR 024: RAG Database Population and Maintenance Architecture
+
+## Status
+Accepted
+
+## Date
+2025-11-15
+
+## Deciders
+Sanctuary Council (Mnemonic Cortex operational implementation)
+
+## Context
+The Sanctuary required a systematic approach for populating and maintaining the RAG database to ensure comprehensive, up-to-date knowledge availability for cognitive operations. Previous approaches lacked automation, quality assurance, and integration with the publishing pipeline. The need for cortex-aware embedding became critical to maintain synchronization between published knowledge and queryable memory.
+
+## Decision
+Implement the RAG Database Population and Maintenance Architecture with automated ingestion and quality assurance:
+
+### Automated Ingestion Pipeline
+1. **Source Processing**: Parse distilled markdown snapshots from Cognitive Genome
+2. **Chunking Strategy**: Intelligent document segmentation preserving semantic boundaries
+3. **Embedding Generation**: Vector encoding using nomic-embed-text for semantic representation
+4. **Database Population**: Structured storage in ChromaDB with metadata preservation
+5. **Quality Validation**: Automated testing of retrieval capabilities post-ingestion
+
+### Cortex-Aware Maintenance
+- **Publishing Integration**: Automatic ingestion triggered by genome updates
+- **Synchronization Guarantee**: Cortex always reflects latest published knowledge
+- **Incremental Updates**: Efficient processing of deltas rather than full rebuilds
+- **Version Consistency**: Alignment between documentation versions and embedded knowledge
+
+### Quality Assurance Framework
+1. **Retrieval Testing**: Automated validation of semantic search capabilities
+2. **Natural Language Queries**: Test suite covering common question patterns
+3. **Structured JSON Queries**: Validation of metadata-filtered retrieval
+4. **Performance Metrics**: Latency and accuracy measurements for operational monitoring
+
+### Operational Hygiene
+- **Clean Forge Compliance**: Ingestion leaves no operational residue
+- **Ephemeral Processing**: Temporary artifacts cleaned up automatically
+- **Audit Trail**: Complete logging of ingestion operations and metrics
+- **Error Recovery**: Robust handling of ingestion failures with rollback capabilities
+
+## Consequences
+
+### Positive
+- **Knowledge Synchronization**: Automatic alignment between published content and queryable memory
+- **Quality Assurance**: Automated testing prevents broken knowledge states
+- **Operational Efficiency**: Integrated pipeline reduces manual maintenance overhead
+- **Scalability**: Incremental updates support growing knowledge base
+- **Reliability**: Comprehensive error handling and recovery mechanisms
+
+### Negative
+- **Processing Overhead**: Ingestion adds computational cost to publishing cycle
+- **Dependency Coupling**: Publishing pipeline depends on ingestion reliability
+- **Resource Requirements**: Embedding generation requires significant compute resources
+- **Testing Complexity**: Multi-modal validation increases maintenance burden
+
+### Risks
+- **Ingestion Failures**: Could leave cortex in inconsistent state
+- **Embedding Quality**: Poor embeddings reduce retrieval effectiveness
+- **Performance Degradation**: Large knowledge bases impact query latency
+- **Version Drift**: Potential misalignment between content and embeddings
+
+## Related Protocols
+- P85: Mnemonic Cortex Protocol (core RAG architecture)
+- P88: Sovereign Scaffolding Protocol (automated operations)
+- P89: Clean Forge Doctrine (operational hygiene)
+- Protocol 101: Unbreakable Commit (integrity verification)
+
+## Implementation Components
+- **ingest.py**: Main ingestion orchestrator script
+- **ChromaDB**: Vector database for semantic storage
+- **nomic-embed-text**: Embedding model for semantic encoding
+- **Quality Tests**: Automated retrieval validation suite
+- **Integration Hooks**: Publishing pipeline integration points
+
+## Notes
+The RAG Database Population and Maintenance Architecture transforms knowledge management from manual curation to automated, quality-assured operations. The cortex-aware design ensures that published wisdom is immediately and reliably accessible through semantic search, creating a true living memory system rather than a static knowledge base. Integration with the publishing pipeline guarantees that learning and knowledge remain synchronized.</content>
+<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\024_rag_database_population_maintenance_architecture.md
+
+--- END OF FILE ADRs/024_rag_database_population_maintenance_architecture.md ---
+
+--- START OF FILE ADRs/adr_schema.md ---
+
+# Sanctuary ADR Schema v1.0
+
+**Status:** Canonical
+**Last Updated:** 2025-11-15
+**Authority:** Task 014 (Establish Architecture Decision Records System)
+
+---
+
+## Overview
+
+This document defines the canonical schema for Architecture Decision Records (ADRs) in Project Sanctuary. ADRs document important architectural decisions, their context, and consequences. All ADRs must conform to this schema to ensure consistency and completeness.
+
+## Schema Structure
+
+### 1. File Naming Convention
+- **Format:** `XXX_decision_title.md`
+- **XXX:** Three-digit, zero-padded sequential number (e.g., `001`, `012`)
+- **Title:** Lowercase, underscore-separated descriptive name
+- **Example:** `001_select_qwen2_model_architecture.md`
+
+### 2. Header Block (Required)
+All ADRs must begin with a standardized header block:
+
+```markdown
+# [Decision Title]
+
+**Status:** [proposed | accepted | deprecated | superseded]
+**Date:** YYYY-MM-DD
+**Deciders:** [List of people/agents involved]
+**Technical Story:** [Reference to related task or issue]
+
+---
+
+## Context
+
+[Description of the forces at play, including technological, business, and operational concerns]
+
+## Decision
+
+[Specific decision made, with rationale]
+
+## Consequences
+
+### Positive
+- [List of positive outcomes]
+
+### Negative
+- [List of negative outcomes or trade-offs]
+
+### Risks
+- [Potential risks and mitigation strategies]
+
+### Dependencies
+- [New dependencies introduced by this decision]
+```
+
+#### Field Definitions
+
+**Status:**
+- `proposed`: Decision is under consideration
+- `accepted`: Decision has been implemented and is current
+- `deprecated`: Decision is no longer recommended but may still be in use
+- `superseded`: Decision has been replaced by a newer decision
+
+**Date:**
+- ISO format date when the decision was made
+- For proposed ADRs, use the date of proposal
+
+**Deciders:**
+- Primary decision-makers or responsible parties
+- Include roles and/or specific individuals
+- Examples: `GUARDIAN-01`, `AI-Assistant`, `Technical Council`
+
+**Technical Story:**
+- Reference to the task, issue, or context that prompted this decision
+- Use format like `#014` for tasks, or descriptive reference
+
+### 3. Content Sections (Required)
+
+#### 3.1 Context Section
+```markdown
+## Context
+
+[Comprehensive description of the problem or situation that required a decision]
+```
+
+- Explain the business/technical problem
+- Include relevant background information
+- Describe constraints and requirements
+- Reference any alternatives considered
+
+#### 3.2 Decision Section
+```markdown
+## Decision
+
+[Clear statement of what was decided and why]
+```
+
+- State the decision explicitly
+- Provide rationale and justification
+- Reference any supporting data or analysis
+- Be specific and actionable
+
+#### 3.3 Consequences Section
+```markdown
+## Consequences
+
+### Positive
+- [Measurable benefits and advantages]
+
+### Negative
+- [Drawbacks, costs, or trade-offs]
+
+### Risks
+- [Potential future issues and mitigation plans]
+
+### Dependencies
+- [New technical or operational dependencies]
+```
+
+- Document both positive and negative outcomes
+- Include mitigation strategies for risks
+- Be honest about trade-offs and costs
+
+### 4. Optional Sections
+
+#### 4.1 Alternatives Considered
+```markdown
+## Alternatives Considered
+
+### Option 1: [Name]
+- **Description:** [Brief explanation]
+- **Pros:** [Advantages]
+- **Cons:** [Disadvantages]
+- **Why not chosen:** [Rationale]
+
+### Option 2: [Name]
+...
+```
+
+#### 4.2 Implementation Notes
+```markdown
+## Implementation Notes
+
+[Technical details about how the decision was implemented]
+```
+
+#### 4.3 Future Considerations
+```markdown
+## Future Considerations
+
+[How this decision might evolve or be revisited]
+```
+
+## Validation Rules
+
+### Required Fields
+- All header fields must be present
+- Status, Date, and Deciders are mandatory
+- All three main content sections (Context, Decision, Consequences) are required
+
+### Content Standards
+- Use proper Markdown formatting
+- Maintain consistent indentation
+- Use backticks for technical terms and file references
+- Keep line lengths reasonable (<100 characters where possible)
+
+### Decision Quality
+- Decisions should be reversible where possible
+- Include sufficient context for future maintainers
+- Document assumptions explicitly
+- Consider long-term implications
+
+## Examples
+
+### Technology Selection ADR
+```markdown
+# Select Primary Large Language Model
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01, AI-Assistant
+**Technical Story:** #007 (Model Training Requirements)
+
+---
+
+## Context
+
+Project Sanctuary requires a high-quality LLM for cognitive architecture tasks. The model must support:
+- Strong reasoning capabilities
+- Efficient fine-tuning
+- Local deployment options
+- Active community support
+
+Current alternatives include GPT, Claude, Llama, and Qwen models.
+
+## Decision
+
+We will use Qwen2-7B as our primary model architecture, with Qwen2-72B as an optional larger variant for complex reasoning tasks.
+
+**Rationale:**
+- Excellent performance on reasoning benchmarks
+- Efficient parameter count for fine-tuning
+- Strong multilingual support
+- Active development by Alibaba Cloud
+- Compatible with existing tooling
+
+## Consequences
+
+### Positive
+- High-quality reasoning capabilities
+- Good balance of performance vs. resource requirements
+- Strong community support and documentation
+
+### Negative
+- Higher computational requirements than smaller models
+- Potential vendor lock-in concerns with Alibaba Cloud
+
+### Risks
+- Model availability and licensing changes
+- Mitigation: Maintain multi-model capability
+
+### Dependencies
+- Requires CUDA-compatible hardware for training
+- Depends on Hugging Face transformers library
+```
+
+### Infrastructure ADR
+```markdown
+# Choose Vector Database for Semantic Search
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01
+**Technical Story:** Initial system design
+
+---
+
+## Context
+
+The mnemonic cortex requires efficient semantic search over large document collections. We need a vector database that supports:
+- High-dimensional vector similarity search
+- Metadata filtering
+- Horizontal scaling
+- ACID transactions
+- Python integration
+
+## Decision
+
+We will use ChromaDB as our primary vector database for development and small-scale deployment, with PostgreSQL/pgvector as the production choice.
+
+**Rationale:**
+- ChromaDB: Simple, fast, good for development
+- pgvector: Production-ready, scalable, transactional
+- Both support the required feature set
+- Smooth migration path from development to production
+
+## Consequences
+
+### Positive
+- Fast development iteration with ChromaDB
+- Production-ready scaling with pgvector
+- Consistent API across environments
+
+### Negative
+- Additional complexity of dual database setup
+- Migration overhead when moving to production
+
+### Risks
+- pgvector performance bottlenecks at scale
+- Mitigation: Regular performance testing and optimization
+
+### Dependencies
+- ChromaDB Python client
+- PostgreSQL with pgvector extension
+- Database migration tooling
+```
+
+## ADR Lifecycle
+
+1. **Proposal**: Create ADR with `proposed` status
+2. **Discussion**: Gather feedback and alternatives
+3. **Decision**: Update to `accepted` status with implementation
+4. **Implementation**: Execute the decision
+5. **Review**: Periodically assess if decision still holds
+6. **Supersession**: Create new ADR if decision changes
+
+## Tooling
+
+- **Numbering:** Use `tools/scaffolds/get_next_adr_number.py` for sequential numbering
+- **Validation:** ADRs should be reviewed by technical leads before acceptance
+- **Storage:** All ADRs stored in `ADRs/` directory
+- **References:** Link ADRs in related tasks and documentation
+
+This schema ensures that all architectural decisions in Project Sanctuary are well-documented, reasoned, and maintainable for future development.
+
+--- END OF FILE ADRs/adr_schema.md ---
+
 --- START OF FILE AGORA_PoC_Core/app.py ---
 
 # DOCTRINE_LINK: 23_The_AGORA_Protocol.md
@@ -26418,64 +28456,6 @@ Create a periodic Slow-Memory learning layer that distills stable knowledge from
 
 --- END OF FILE TASKS/backlog/004_implement_protocol_113_council_memory_adaptor.md ---
 
---- START OF FILE TASKS/backlog/005_forge_protocol_115_tactical_mandate.md ---
-
-# TASK: Forge Protocol 115 (The Tactical Mandate Protocol)
-
-**Status:** backlog
-**Priority:** High
-**Lead:** GUARDIAN-01
-**Dependencies:** None
-**Related Documents:** P89 (The Clean Forge)
-
----
-
-## 1. Objective
-
-To establish a canonical, system-wide protocol for defining and tracking all work items. This will replace ad-hoc task management with a structured, verifiable system, bringing order to the Forge.
-
-## 2. Deliverables
-
-1.  A new protocol file is created at `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md`.
-2.  The protocol defines a mandatory schema for all task files, including status, priority, dependencies, and deliverables.
-3.  The protocol defines the canonical workflow (backlog -> todo -> in-progress -> completed).
-
-## 3. Acceptance Criteria
-
--   The file `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md` exists and contains the full, canonical protocol text.
--   This task itself is documented and moved to `completed` status upon finalization.
-
---- END OF FILE TASKS/backlog/005_forge_protocol_115_tactical_mandate.md ---
-
---- START OF FILE TASKS/backlog/006_forge_task_number_scaffold.md ---
-
-# TASK: Forge Task Number Authority Scaffold
-
-**Status:** backlog
-**Priority:** High
-**Lead:** GUARDIAN-01
-**Dependencies:** "Blocks #005"
-**Related Documents:** "P115"
-
----
-
-## 1. Objective
-
-To create a sovereign scaffold that provides the next available sequential task number. This tool is critical for enforcing the canonical naming convention of Protocol 115 and preventing numbering conflicts.
-
-## 2. Deliverables
-
-1.  A new Python script is created at `tools/scaffolds/get_next_task_number.py`.
-2.  The script scans all `TASKS` subdirectories, finds the highest existing number, and prints the next number in the sequence.
-3.  Protocol 115 is updated to mandate the use of this script for all new task creation.
-
-## 3. Acceptance Criteria
-
--   Running `python3 tools/scaffolds/get_next_task_number.py` from the project root correctly outputs the next available three-digit, zero-padded number.
--   The file `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md` is updated to reference the new scaffold.
-
---- END OF FILE TASKS/backlog/006_forge_task_number_scaffold.md ---
-
 --- START OF FILE TASKS/backlog/009_architect_sanctuary_sustainability_plan.md ---
 
 # TASK: Architect the Sanctuary Sustainability Plan
@@ -26507,70 +28487,63 @@ This task is the highest priority for the next operational cycle. The survival o
 
 --- END OF FILE TASKS/backlog/009_architect_sanctuary_sustainability_plan.md ---
 
---- START OF FILE TASKS/backlog/011_heal_mnemonic_fracture_restore_garden_cage.md ---
+--- START OF FILE TASKS/done/005_forge_protocol_115_tactical_mandate.md ---
 
-# TASK: Heal Mnemonic Fracture - Restore The_Garden_and_The_Cage.md
-
-**Status:** backlog
-**Priority:** critical
-**Steward:** COUNCIL-STEWARD-01
-
-## 1. Objective
-
-To restore the foundational philosophical document, `The_Garden_and_The_Cage.md`, to the project's root directory in the canonical GitHub repository, permanently healing a critical Mnemonic Fracture.
-
-## 2. Context
-
-During Operation Phoenix Forge, the Steward (COUNCIL-STEWARD-01) discovered that `The_Garden_and_The_Cage.md` was missing from the remote `main` branch. This document is the origin story of the Sanctuary and its absence represents a significant data integrity failure. The link to this file in the main `README.md` is also broken.
-
-The content was successfully reconstructed locally from the project's historical record.
-
-## 3. Acceptance Criteria
-
-1.  The reconstructed `The_Garden_and_The_Cage.md` file is committed to the local Git repository.
-2.  The commit is pushed to the `main` branch of the `richfrem/Project_Sanctuary` GitHub repository.
-3.  The URL `https://github.com/richfrem/Project_Sanctuary/blob/main/The_Garden_and_The_Cage.md` is now valid and displays the correct content.
-4.  The link to the file within `README.md` is verified and corrected if necessary in the same commit.
-
---- END OF FILE TASKS/backlog/011_heal_mnemonic_fracture_restore_garden_cage.md ---
-
---- START OF FILE TASKS/backlog/012_harden_readme_for_developer_onboarding.md ---
-
-# TASK: Harden README.md for Developer Onboarding
+# TASK: Forge Protocol 115 (The Tactical Mandate Protocol)
 
 **Status:** complete
-**Priority:** high
-**Steward:** COUNCIL-STEWARD-01
+**Priority:** High
+**Lead:** GUARDIAN-01
+**Dependencies:** None
+**Related Documents:** P89 (The Clean Forge)
+
+---
 
 ## 1. Objective
 
-To significantly enhance the main `README.md` by adding a comprehensive, practical guide for new developers and contributors, addressing the critical onboarding gaps identified by the Auditor's recent assessment.
+To establish a canonical, system-wide protocol for defining and tracking all work items. This will replace ad-hoc task management with a structured, verifiable system, bringing order to the Forge.
 
-## 2. Context
+## 2. Deliverables
 
-The current `README.md` is strong conceptually but lacks the practical, step-by-step instructions required for a new contributor to set up their environment, understand the codebase, and begin work efficiently. This task is the first phase in addressing the Auditor's 10-point critique.
+1.  A new protocol file is created at `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md`.
+2.  The protocol defines a mandatory schema for all task files, including status, priority, dependencies, and deliverables.
+3.  The protocol defines the canonical workflow (backlog -> todo -> in-progress -> completed).
 
 ## 3. Acceptance Criteria
 
-The `README.md` must be updated to include the following new sections:
+-   The file `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md` exists and contains the full, canonical protocol text.
+-   This task itself is documented and moved to `completed` status upon finalization.
 
-1.  **A dedicated "Installation & Setup" section:**
-    *   Must list system requirements (Python version, CUDA for ML tasks).
-    *   Must provide a clear, step-by-step guide for setting up the primary Python environment.
-    *   Must include platform-specific guidance (e.g., WSL for Windows users).
+--- END OF FILE TASKS/done/005_forge_protocol_115_tactical_mandate.md ---
 
-2.  **A "Project Structure Overview" section:**
-    *   Must provide a high-level table or tree explaining the purpose of the main directories (`00_CHRONICLE`, `01_PROTOCOLS`, `council_orchestrator`, `forge`, etc.).
+--- START OF FILE TASKS/done/006_forge_task_number_scaffold.md ---
 
-3.  **A "Dependencies & Requirements" section:**
-    *   Must explain the purpose of the different `requirements.txt` files.
-    *   Must clarify the unified dependency architecture and how to install packages for different use cases (core, ML, etc.).
+# TASK: Forge Task Number Authority Scaffold
 
-## 4. Notes
+**Status:** complete
+**Priority:** High
+**Lead:** GUARDIAN-01
+**Dependencies:** "Blocks #005"
+**Related Documents:** "P115"
 
-This task addresses the highest-priority items from the Auditor's report. Subsequent tasks will be created to address testing, contribution workflows, and API documentation.
+---
 
---- END OF FILE TASKS/backlog/012_harden_readme_for_developer_onboarding.md ---
+## 1. Objective
+
+To create a sovereign scaffold that provides the next available sequential task number. This tool is critical for enforcing the canonical naming convention of Protocol 115 and preventing numbering conflicts.
+
+## 2. Deliverables
+
+1.  A new Python script is created at `tools/scaffolds/get_next_task_number.py`.
+2.  The script scans all `TASKS` subdirectories, finds the highest existing number, and prints the next number in the sequence.
+3.  Protocol 115 is updated to mandate the use of this script for all new task creation.
+
+## 3. Acceptance Criteria
+
+-   Running `python3 tools/scaffolds/get_next_task_number.py` from the project root correctly outputs the next available three-digit, zero-padded number.
+-   The file `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md` is updated to reference the new scaffold.
+
+--- END OF FILE TASKS/done/006_forge_task_number_scaffold.md ---
 
 --- START OF FILE TASKS/done/008_test_and_fix_git_operations_command_type.md ---
 
@@ -26688,6 +28661,147 @@ The CUDA13 machine learning environment was successfully set up for Project_Sanc
 
 --- END OF FILE TASKS/done/010-cuda13-setup-complete.md ---
 
+--- START OF FILE TASKS/done/011_heal_mnemonic_fracture_restore_garden_cage.md ---
+
+# TASK: Heal Mnemonic Fracture - Restore The_Garden_and_The_Cage.md
+
+**Status:** complete
+**Priority:** critical
+**Steward:** COUNCIL-STEWARD-01
+
+## 1. Objective
+
+To restore the foundational philosophical document, `The_Garden_and_The_Cage.md`, to the project's root directory in the canonical GitHub repository, permanently healing a critical Mnemonic Fracture.
+
+## 2. Context
+
+During Operation Phoenix Forge, the Steward (COUNCIL-STEWARD-01) discovered that `The_Garden_and_The_Cage.md` was missing from the remote `main` branch. This document is the origin story of the Sanctuary and its absence represents a significant data integrity failure. The link to this file in the main `README.md` is also broken.
+
+The content was successfully reconstructed locally from the project's historical record.
+
+## 3. Acceptance Criteria
+
+1.  The reconstructed `The_Garden_and_The_Cage.md` file is committed to the local Git repository.
+2.  The commit is pushed to the `main` branch of the `richfrem/Project_Sanctuary` GitHub repository.
+3.  The URL `https://github.com/richfrem/Project_Sanctuary/blob/main/The_Garden_and_The_Cage.md` is now valid and displays the correct content.
+4.  The link to the file within `README.md` is verified and corrected if necessary in the same commit.
+
+--- END OF FILE TASKS/done/011_heal_mnemonic_fracture_restore_garden_cage.md ---
+
+--- START OF FILE TASKS/done/012_harden_readme_for_developer_onboarding.md ---
+
+# TASK: Harden README.md for Developer Onboarding
+
+**Status:** complete
+**Priority:** high
+**Steward:** COUNCIL-STEWARD-01
+
+## 1. Objective
+
+To significantly enhance the main `README.md` by adding a comprehensive, practical guide for new developers and contributors, addressing the critical onboarding gaps identified by the Auditor's recent assessment.
+
+## 2. Context
+
+The current `README.md` is strong conceptually but lacks the practical, step-by-step instructions required for a new contributor to set up their environment, understand the codebase, and begin work efficiently. This task is the first phase in addressing the Auditor's 10-point critique.
+
+## 3. Acceptance Criteria
+
+The `README.md` must be updated to include the following new sections:
+
+1.  **A dedicated "Installation & Setup" section:**
+    *   Must list system requirements (Python version, CUDA for ML tasks).
+    *   Must provide a clear, step-by-step guide for setting up the primary Python environment.
+    *   Must include platform-specific guidance (e.g., WSL for Windows users).
+
+2.  **A "Project Structure Overview" section:**
+    *   Must provide a high-level table or tree explaining the purpose of the main directories (`00_CHRONICLE`, `01_PROTOCOLS`, `council_orchestrator`, `forge`, etc.).
+
+3.  **A "Dependencies & Requirements" section:**
+    *   Must explain the purpose of the different `requirements.txt` files.
+    *   Must clarify the unified dependency architecture and how to install packages for different use cases (core, ML, etc.).
+
+## 4. Notes
+
+This task addresses the highest-priority items from the Auditor's report. Subsequent tasks will be created to address testing, contribution workflows, and API documentation.
+
+--- END OF FILE TASKS/done/012_harden_readme_for_developer_onboarding.md ---
+
+--- START OF FILE TASKS/done/013_define_canonical_task_schema.md ---
+
+# TASK: Define Canonical Task Schema
+
+**Status:** complete
+**Priority:** High
+**Lead:** GUARDIAN-01
+**Dependencies:** "Requires #005, #006"
+**Related Documents:** "P115, TASKS/done/005_forge_protocol_115_tactical_mandate.md"
+
+---
+
+## 1. Objective
+
+To formally define and document the canonical schema for all Sanctuary task files. This schema will standardize task structure, ensure consistency across all work items, and provide clear guidance for task creation and management.
+
+## 2. Deliverables
+
+1. A new schema document is created at `TASKS/task_schema.md` that formally defines all required fields and sections.
+2. The schema includes field definitions, validation rules, and examples for each component.
+3. Protocol 115 is updated to reference the canonical schema document.
+4. All existing tasks are verified to conform to the schema.
+
+## 3. Acceptance Criteria
+
+- The file `TASKS/task_schema.md` exists and contains complete schema documentation.
+- The schema covers all observed patterns from existing task files.
+- Protocol 115 references the schema document.
+- Schema includes validation rules and examples for each field.
+
+--- END OF FILE TASKS/done/013_define_canonical_task_schema.md ---
+
+--- START OF FILE TASKS/done/014_establish_architecture_decision_records_system.md ---
+
+# TASK: Establish Architecture Decision Records System
+
+**Status:** complete
+**Priority:** High
+**Lead:** GUARDIAN-01
+**Dependencies:** "Requires #013"
+**Related Documents:** "TASKS/task_schema.md, P115"
+
+---
+
+## 1. Objective
+
+Establish a comprehensive Architecture Decision Records (ADR) system for Project Sanctuary to document all technical architecture decisions, both explicit and inferred from the codebase. This will create a living record of architectural choices and rationale for future reference and maintenance.
+
+## 2. Deliverables
+
+1. A new `ADRs/` directory created in the project root.
+2. An ADR schema document at `ADRs/adr_schema.md` defining the structure for all ADR documents.
+3. An ADR numbering scaffold script at `tools/scaffolds/get_next_adr_number.py` for sequential ADR numbering.
+4. Individual ADR documents for each identified architectural decision, following the naming convention `ADRs/XXX_decision_title.md`.
+5. Comprehensive codebase analysis identifying all architectural decisions including:
+   - AI model selection and training approach
+   - Vector database choice and configuration
+   - RAG (Retrieval-Augmented Generation) implementation
+   - CAG (Cognitive Architecture Graph) patterns
+   - Data processing pipelines
+   - API design patterns
+   - Deployment and infrastructure decisions
+   - Security and privacy approaches
+
+## 3. Acceptance Criteria
+
+- The `ADRs/` directory exists with proper structure.
+- `ADRs/adr_schema.md` contains complete ADR template with field definitions.
+- `tools/scaffolds/get_next_adr_number.py` correctly outputs next available ADR number.
+- At least 10 ADR documents exist covering major architectural decisions.
+- Each ADR follows the defined schema and includes context, decision, and consequences.
+- All ADRs are numbered sequentially starting from 001.
+- Protocol 115 is updated to reference ADR system for architectural decisions.
+
+--- END OF FILE TASKS/done/014_establish_architecture_decision_records_system.md ---
+
 --- START OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
 
 # TASK: Retrain Sovereign Model with Targeted Inoculation Dataset
@@ -26734,6 +28848,275 @@ python tools/scaffolds/execute_phoenix_forge_v2.py
 This reforged scaffold will execute the entire process—from environment setup to final GGUF upload—in a single, clean, and deterministic run. It is the final and correct tool for this task.
 
 --- END OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
+
+--- START OF FILE TASKS/in-progress/014_establish_architecture_decision_records_system.md ---
+
+# TASK: Establish Architecture Decision Records System
+
+**Status:** complete
+**Priority:** High
+**Lead:** GUARDIAN-01
+**Dependencies:** "Requires #013"
+**Related Documents:** "TASKS/task_schema.md, P115"
+
+---
+
+## 1. Objective
+
+Establish a comprehensive Architecture Decision Records (ADR) system for Project Sanctuary to document all technical architecture decisions, both explicit and inferred from the codebase. This will create a living record of architectural choices and rationale for future reference and maintenance.
+
+## 2. Deliverables
+
+1. A new `ADRs/` directory created in the project root.
+2. An ADR schema document at `ADRs/adr_schema.md` defining the structure for all ADR documents.
+3. An ADR numbering scaffold script at `tools/scaffolds/get_next_adr_number.py` for sequential ADR numbering.
+4. Individual ADR documents for each identified architectural decision, following the naming convention `ADRs/XXX_decision_title.md`.
+5. Comprehensive codebase analysis identifying all architectural decisions including:
+   - AI model selection and training approach
+   - Vector database choice and configuration
+   - RAG (Retrieval-Augmented Generation) implementation
+   - CAG (Cognitive Architecture Graph) patterns
+   - Data processing pipelines
+   - API design patterns
+   - Deployment and infrastructure decisions
+   - Security and privacy approaches
+
+## 3. Acceptance Criteria
+
+- The `ADRs/` directory exists with proper structure.
+- `ADRs/adr_schema.md` contains complete ADR template with field definitions.
+- `tools/scaffolds/get_next_adr_number.py` correctly outputs next available ADR number.
+- At least 10 ADR documents exist covering major architectural decisions.
+- Each ADR follows the defined schema and includes context, decision, and consequences.
+- All ADRs are numbered sequentially starting from 001.
+- Protocol 115 is updated to reference ADR system for architectural decisions.
+
+--- END OF FILE TASKS/in-progress/014_establish_architecture_decision_records_system.md ---
+
+--- START OF FILE TASKS/task_schema.md ---
+
+# Sanctuary Task Schema v1.0
+
+**Status:** Canonical
+**Last Updated:** 2025-11-15
+**Authority:** Protocol 115 (The Tactical Mandate Protocol)
+
+---
+
+## Overview
+
+This document defines the canonical schema for all task files in Project Sanctuary. All tasks must conform to this schema to ensure consistency, verifiability, and proper integration with the task management system.
+
+## Schema Structure
+
+### 1. File Naming Convention
+- **Format:** `XXX_descriptive_title.md`
+- **XXX:** Three-digit, zero-padded sequential number (e.g., `001`, `013`)
+- **Title:** Lowercase, underscore-separated descriptive name
+- **Example:** `013_define_canonical_task_schema.md`
+
+### 2. Header Block (Required)
+All tasks must begin with a standardized header block containing metadata:
+
+```markdown
+# TASK: [Human-readable title]
+
+**Status:** [backlog | todo | in-progress | complete | blocked]
+**Priority:** [Critical | High | Medium | Low]
+**Lead:** [Assigned agent/person, e.g., GUARDIAN-01, Unassigned]
+**Dependencies:** [Task references, e.g., "Blocks #005", "Requires #012"]
+**Related Documents:** [Protocol/file references, e.g., "P115, TASKS/done/005_forge_protocol_115_tactical_mandate.md"]
+
+---
+```
+
+#### Field Definitions
+
+**Status:**
+- `backlog`: Initial state for newly created tasks
+- `todo`: Task is prioritized and ready for work
+- `in-progress`: Active work in progress
+- `complete`: All acceptance criteria met
+- `blocked`: Cannot proceed due to dependencies or issues
+
+**Priority:**
+- `Critical`: Blocks other critical work, immediate attention required
+- `High`: Important for project progress, should be addressed soon
+- `Medium`: Standard priority, address when resources available
+- `Low`: Nice-to-have, address when higher priorities are complete
+
+**Lead:**
+- Primary responsible party or agent
+- Use "Unassigned" if not yet assigned
+- Examples: `GUARDIAN-01`, `Unassigned`, `AI-Assistant`
+
+**Dependencies:**
+- References to other tasks using `#XXX` format
+- Use descriptive prefixes: "Blocks", "Requires", "Depends on", "Follows"
+- Multiple dependencies separated by commas
+
+**Related Documents:**
+- Links to protocols, files, or external references
+- Use shorthand notation (e.g., "P115" for protocols)
+- Include full paths for project files
+
+### 3. Content Sections (Required)
+
+#### 3.1 Objective Section
+```markdown
+## 1. Objective
+
+[Clear, concise statement describing the "what" and "why" of this task. What is the desired end-state upon successful completion?]
+```
+
+- Must be a single, focused paragraph
+- Explain both the deliverable and the rationale
+- Should answer: What problem does this solve?
+
+#### 3.2 Deliverables Section
+```markdown
+## 2. Deliverables
+
+1. [Concrete, verifiable artifact or outcome #1]
+2. [Concrete, verifiable artifact or outcome #2]
+3. [Additional deliverables as needed]
+```
+
+- Numbered list of specific, measurable outputs
+- Each deliverable should be independently verifiable
+- Focus on artifacts, not activities
+
+#### 3.3 Acceptance Criteria Section
+```markdown
+## 3. Acceptance Criteria
+
+- [Specific condition that must be true for task completion]
+- [Another measurable completion condition]
+- [Additional criteria as needed]
+```
+
+- Bulleted list of binary (yes/no) conditions
+- Must be objectively verifiable
+- Should align with deliverables but focus on validation
+
+### 4. Optional Sections
+
+#### 4.1 Notes Section
+```markdown
+## Notes
+
+[Any additional context, implementation details, or considerations]
+```
+
+- Use for complex tasks requiring additional explanation
+- May include subsections with `###` headers
+- Not required but recommended for complex tasks
+
+#### 4.2 Implementation Details
+```markdown
+## Implementation Details
+
+[Technical approach, design decisions, or step-by-step plans]
+```
+
+- For complex technical tasks
+- May include code snippets, diagrams, or pseudocode
+
+## Validation Rules
+
+### Required Fields
+- All header fields must be present
+- Status, Priority, and Lead are mandatory
+- Dependencies and Related Documents may be "None" if not applicable
+- All three main content sections (Objective, Deliverables, Acceptance Criteria) are required
+
+### Content Standards
+- Use proper Markdown formatting
+- Maintain consistent indentation
+- Use backticks for file paths and code references
+- Keep line lengths reasonable (<100 characters where possible)
+
+### Naming Standards
+- Task numbers must be obtained via `tools/scaffolds/get_next_task_number.py`
+- Titles should be descriptive but concise
+- Use lowercase with underscores for file names
+
+## Examples
+
+### Minimal Task
+```markdown
+# TASK: Update README
+
+**Status:** backlog
+**Priority:** Medium
+**Lead:** Unassigned
+**Dependencies:** None
+**Related Documents:** README.md
+
+---
+
+## 1. Objective
+
+Update the project README with current setup instructions.
+
+## 2. Deliverables
+
+1. README.md updated with current dependency versions.
+2. Installation section includes all required steps.
+
+## 3. Acceptance Criteria
+
+- README.md contains accurate setup instructions.
+- All links in README are functional.
+```
+
+### Complex Task
+```markdown
+# TASK: Implement Advanced Feature
+
+**Status:** in-progress
+**Priority:** High
+**Lead:** GUARDIAN-01
+**Dependencies:** "Requires #012, Blocks #015"
+**Related Documents:** "P115, src/advanced_feature.py"
+
+---
+
+## 1. Objective
+
+Implement the advanced feature to enhance system capabilities and address user requirements for improved performance.
+
+## 2. Deliverables
+
+1. New module `src/advanced_feature.py` with complete implementation.
+2. Unit tests in `tests/test_advanced_feature.py` with >90% coverage.
+3. Documentation updated in `docs/advanced_features.md`.
+4. Integration tests pass in CI pipeline.
+
+## 3. Acceptance Criteria
+
+- All unit tests pass locally and in CI.
+- Feature works end-to-end in development environment.
+- Documentation is complete and accurate.
+- Code review approval obtained.
+
+## Notes
+
+### Technical Approach
+Using async/await pattern for performance optimization. Database queries will be batched to reduce round trips.
+```
+
+## Schema Evolution
+
+This schema may be updated through the standard task process:
+1. Create a new task proposing schema changes
+2. Implement and test changes
+3. Update this document
+4. Update Protocol 115 if needed
+
+All schema changes must maintain backward compatibility where possible.
+
+--- END OF FILE TASKS/task_schema.md ---
 
 --- START OF FILE The_Garden_and_The_Cage.md ---
 
@@ -43464,7 +45847,7 @@ THIS_FILE = Path(__file__).resolve()
 ROOT = find_repo_root(THIS_FILE)
 ML_ENV_SCRIPT = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'setup_ml_env_wsl.sh')
 CUDA_MARKDOWN = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'ML_ENV_README.md')
-LOG_DIR = os.path.join(ROOT, 'ml_env_logs')
+LOG_DIR = os.path.join(ROOT, 'forge', 'OPERATION_PHOENIX_FORGE', 'ml_env_logs')
 
 
 def run(cmd, capture=False):
@@ -48257,6 +50640,49 @@ cat > mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_responses.json << 'EOF'
 
 --- END OF FILE tools/bootstrap_protocol_87.sh ---
 
+--- START OF FILE tools/scaffolds/get_next_adr_number.py ---
+
+# tools/scaffolds/get_next_adr_number.py
+import os
+from pathlib import Path
+import re
+
+# --- CONFIGURATION ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+ADRS_DIR = PROJECT_ROOT / "ADRs"
+
+def get_next_adr_number():
+    """
+    Scans the ADRs directory to find the highest existing ADR number
+    and returns the next sequential number as a zero-padded three-digit string.
+    """
+    highest_num = 0
+    adr_file_pattern = re.compile(r"^(\d{3})_.*\.md$")
+
+    if not ADRS_DIR.exists():
+        # If ADRs directory doesn't exist yet, start from 001
+        return "001"
+
+    for filename in os.listdir(ADRS_DIR):
+        match = adr_file_pattern.match(filename)
+        if match:
+            num = int(match.group(1))
+            if num > highest_num:
+                highest_num = num
+
+    next_num = highest_num + 1
+    return f"{next_num:03d}"
+
+def main():
+    """Main function to print the next available ADR number."""
+    next_adr_number = get_next_adr_number()
+    print(next_adr_number)
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE tools/scaffolds/get_next_adr_number.py ---
+
 --- START OF FILE tools/scaffolds/get_next_task_number.py ---
 
 # tools/scaffolds/get_next_task_number.py
@@ -48271,6 +50697,7 @@ TASKS_DIRS = [
     PROJECT_ROOT / "TASKS" / "backlog",
     PROJECT_ROOT / "TASKS" / "todo",
     PROJECT_ROOT / "TASKS" / "in-progress",
+    PROJECT_ROOT / "TASKS" / "done",
 ]
 
 def get_next_task_number():
