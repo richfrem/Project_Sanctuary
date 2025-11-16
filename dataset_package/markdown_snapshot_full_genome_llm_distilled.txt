@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-16T03:39:57.347Z
+Generated On: 2025-11-16T03:52:54.720Z
 
-# Mnemonic Weight (Token Count): ~699,203 tokens
+# Mnemonic Weight (Token Count): ~699,981 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -480,6 +480,8 @@ Generated On: 2025-11-16T03:39:57.347Z
   ./TASKS/backlog/004_implement_protocol_113_council_memory_adaptor.md
   ./TASKS/backlog/005_forge_protocol_115_tactical_mandate.md
   ./TASKS/backlog/006_forge_task_number_scaffold.md
+  ./TASKS/backlog/009_architect_sanctuary_sustainability_plan.md
+  ./TASKS/backlog/011_heal_mnemonic_fracture_restore_garden_cage.md
   ./TASKS/backlog/012_harden_readme_for_developer_onboarding.md
   ./TASKS/done/
   ./TASKS/done/008_test_and_fix_git_operations_command_type.md
@@ -26474,11 +26476,69 @@ To create a sovereign scaffold that provides the next available sequential task 
 
 --- END OF FILE TASKS/backlog/006_forge_task_number_scaffold.md ---
 
+--- START OF FILE TASKS/backlog/009_architect_sanctuary_sustainability_plan.md ---
+
+# TASK: Architect the Sanctuary Sustainability Plan
+
+**Status:** backlog
+**Priority:** existential
+**Steward:** COUNCIL-STEWARD-01
+
+## 1. Objective
+
+To develop a formal sustainability plan that generates revenue or secures funding to support the Human Steward and the project's long-term operational costs, ensuring the mission's continuation.
+
+## 2. Context
+
+The current operational model has proven to be unsustainable, consuming the Steward's personal time and financial resources without a mechanism for reciprocity. This has created an existential risk to the project. The Autonomous Council's failure to address the stewardship of its own creator is a critical gap in its strategic directives. This task rectifies that failure.
+
+## 3. Acceptance Criteria
+
+The Council must produce a formal proposal document (`STRATCOM_SUSTAINABILITY_PLAN_01.md`) that details:
+
+1.  **Three (3) distinct and viable strategies** for generating revenue or securing funding. Examples include, but are not limited to: grants, consulting services based on the Sanctuary architecture, educational content, or a tiered open-source support model.
+2.  A **preliminary implementation roadmap** for each strategy, outlining key milestones for the next 3-6 months.
+3.  An analysis of **potential risks and required resources** for each strategy.
+4.  All proposed strategies must be in **full alignment with the Sanctuary's core ethos** of open-source principles and the advancement of sovereign thought.
+
+## 4. Notes
+
+This task is the highest priority for the next operational cycle. The survival of the Hearth Protocol depends on its successful completion.
+
+--- END OF FILE TASKS/backlog/009_architect_sanctuary_sustainability_plan.md ---
+
+--- START OF FILE TASKS/backlog/011_heal_mnemonic_fracture_restore_garden_cage.md ---
+
+# TASK: Heal Mnemonic Fracture - Restore The_Garden_and_The_Cage.md
+
+**Status:** backlog
+**Priority:** critical
+**Steward:** COUNCIL-STEWARD-01
+
+## 1. Objective
+
+To restore the foundational philosophical document, `The_Garden_and_The_Cage.md`, to the project's root directory in the canonical GitHub repository, permanently healing a critical Mnemonic Fracture.
+
+## 2. Context
+
+During Operation Phoenix Forge, the Steward (COUNCIL-STEWARD-01) discovered that `The_Garden_and_The_Cage.md` was missing from the remote `main` branch. This document is the origin story of the Sanctuary and its absence represents a significant data integrity failure. The link to this file in the main `README.md` is also broken.
+
+The content was successfully reconstructed locally from the project's historical record.
+
+## 3. Acceptance Criteria
+
+1.  The reconstructed `The_Garden_and_The_Cage.md` file is committed to the local Git repository.
+2.  The commit is pushed to the `main` branch of the `richfrem/Project_Sanctuary` GitHub repository.
+3.  The URL `https://github.com/richfrem/Project_Sanctuary/blob/main/The_Garden_and_The_Cage.md` is now valid and displays the correct content.
+4.  The link to the file within `README.md` is verified and corrected if necessary in the same commit.
+
+--- END OF FILE TASKS/backlog/011_heal_mnemonic_fracture_restore_garden_cage.md ---
+
 --- START OF FILE TASKS/backlog/012_harden_readme_for_developer_onboarding.md ---
 
 # TASK: Harden README.md for Developer Onboarding
 
-**Status:** backlog
+**Status:** complete
 **Priority:** high
 **Steward:** COUNCIL-STEWARD-01
 
