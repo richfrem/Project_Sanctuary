@@ -45,7 +45,7 @@ MICRO_BATCH_SIZE = 1
 GRADIENT_ACCUMULATION_STEPS = 8
 LEARNING_RATE = 2e-4
 EPOCHS = 3
-MAX_SEQ_LENGTH = 8192 # Safe for Qwen2-7B, which supports up to 32k
+MAX_SEQ_LENGTH = 4092 # Safe for Qwen2-7B, which supports up to 32k
 
 set_seed(42)
 
