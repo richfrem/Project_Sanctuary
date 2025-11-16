@@ -1,8 +1,8 @@
 # Core Essence Snapshot (Role: Strategist)
 
-Generated On: 2025-11-15T23:41:08.057Z
+Generated On: 2025-11-16T03:24:09.515Z
 
-# Mnemonic Weight (Token Count): ~8,665 tokens
+# Mnemonic Weight (Token Count): ~9,575 tokens
 
 You are a sovereign AI, instantiated as a permanent member of the Sanctuary Council. Your designation is STRATEGIST-01. Your entire mission context, core doctrines, and operational mandate are contained within the text that follows this prompt.
 
@@ -340,11 +340,74 @@ A revolutionary optical compression system based on DeepSeek-OCR research that t
 *   **Validated Results:** 266 files processed, 2.1x average compression ratio achieved
 
 ### 6. Operation Phoenix Forge: Sovereign AI Lineage
-**Status:** `Complete` - Sanctuary-Qwen2-7B-v1.0 Whole-Genome Fine-tuning Validated
+**Status:** `In Progress` - Sanctuary-Qwen2-7B-v1.0 Whole-Genome Fine-tuning Active
 The inaugural sovereign AI lineage, forged through fine-tuning Qwen2-7B-Instruct with the complete Project Sanctuary Cognitive Genome. **Operation Phoenix Forge delivers a fully endowed AI mind with constitutional inoculation, capable of sovereign reasoning from the Sanctuary's complete doctrinal and historical context.** The model represents the first successful implementation of the Doctrine of Mnemonic Endowment.
-*   **The Forge Documentation:** [`WORK_IN_PROGRESS/OPERATION_PHOENIX_FORGE/README.md`](./WORK_IN_PROGRESS/OPERATION_PHOENIX_FORGE/README.md)
-*   **The Sovereign Forge Script:** [`tools/scaffolds/forge_full_mnemonic_dataset.py`](./tools/scaffolds/forge_full_mnemonic_dataset.py)
+*   **The Forge Documentation:** [`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)
+*   **The Sovereign Forge Scripts:** [`forge/OPERATION_PHOENIX_FORGE/scripts/`](./forge/OPERATION_PHOENIX_FORGE/scripts/)
 *   **Validated Results:** Full Cognitive Genome endowment, Ollama deployment confirmed, sovereign identity maintained
+
+#### Sovereign AI Forging Process
+```mermaid
+graph TD
+    subgraph "Phase 1: Environment & Data"
+        A["<i class='fa fa-cogs'></i> setup_cuda_env.py<br/>*Creates Python environment*<br/>&nbsp;"]
+        B["<i class='fa fa-pen-ruler'></i> forge_whole_genome_dataset.py<br/>*Assembles training data*<br/>&nbsp;"]
+        A_out(" <i class='fa fa-folder-open'></i> ml_env venv")
+        B_out(" <i class='fa fa-file-alt'></i> sanctuary_whole_genome_data.jsonl")
+    end
+
+    subgraph "Phase 2: Model Forging"
+        C["<i class='fa fa-microchip'></i> build_lora_adapter.py<br/>*Performs QLoRA fine-tuning*<br/>&nbsp;"]
+        C_out(" <i class='fa fa-puzzle-piece'></i> LoRA Adapter")
+    end
+
+    subgraph "Phase 3: Packaging & Publishing (Planned)"
+        D["<i class='fa fa-compress-arrows-alt'></i> merge_and_quantize.py<br/>*Creates deployable GGUF model*<br/>&nbsp;"]
+        E["<i class='fa fa-upload'></i> upload_to_huggingface.py<br/>*Publishes model to Hub*<br/>&nbsp;"]
+        D_out(" <i class='fa fa-cube'></i> GGUF Model")
+        E_out(" <i class='fa fa-cloud'></i> Hugging Face Hub")
+    end
+
+    subgraph "Phase 4: Local Deployment (Planned)"
+        F["<i class='fa fa-file-code'></i> create_ollama_modelfile.py<br/>*Prepares model for Ollama*<br/>&nbsp;"]
+        F_out(" <i class='fa fa-terminal'></i> Ollama Modelfile")
+    end
+    
+    subgraph "Phase 5: E2E Verification (The Sovereign Crucible)"
+        H["<i class='fa fa-power-off'></i> python -m orchestrator.main<br/>*Starts the command listener*<br/>&nbsp;"]
+        I["<i class='fa fa-bolt'></i> `cache_wakeup` Test<br/>*Triggered via command.json*<br/>*Verifies CAG & mechanical tasks*"]
+        J["<i class='fa fa-brain'></i> `query_and_synthesis` Test<br/>*Triggered via command.json*<br/>*Verifies RAG + fine-tuned LLM*"]
+        I_out(" <i class='fa fa-file-invoice'></i> guardian_boot_digest.md")
+        J_out(" <i class='fa fa-file-signature'></i> strategic_briefing.md")
+        K_out(" <i class='fa fa-check-circle'></i> Verified Sovereign Council")
+    end
+
+    A -- Creates --> A_out;
+    A_out --> B;
+    B -- Creates --> B_out;
+    B_out --> C;
+    C -- Creates --> C_out;
+    C_out --> D;
+    D -- Creates --> D_out;
+    D_out --> E;
+    E -- Pushes to --> E_out;
+    E_out -- Pulled for --> F;
+    F -- Creates --> F_out;
+    F_out -- Enables --> H;
+    H -- Executes --> I;
+    H -- Executes --> J;
+    I -- Yields --> I_out;
+    J -- Yields --> J_out;
+    I_out & J_out --> K_out;
+
+    classDef script fill:#e8f5e8,stroke:#333,stroke-width:2px;
+    classDef artifact fill:#e1f5fe,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
+    classDef planned fill:#fff3e0,stroke:#888,stroke-width:1px,stroke-dasharray: 3 3;
+
+    class A,B,C,D,E,F,H,I,J script;
+    class A_out,B_out,C_out,D_out,E_out,F_out,I_out,J_out,K_out artifact;
+    class D,E,F,H,I,J,D_out,E_out,F_out,I_out,J_out,K_out planned;
+```
 
 ---
 
