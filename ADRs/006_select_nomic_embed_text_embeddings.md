@@ -2,66 +2,66 @@
 
 **Status:** accepted
 **Date:** 2025-11-15
-**Deciders:** GUARDIAN-01, Technical Council
-**Technical Story:** Vector embedding selection for RAG system
+**Deciders:** AI System Lead, Technical Team
+**Technical Story:** Choose text processing method for information search system
 
 ---
 
 ## Context
 
-The Mnemonic Cortex requires high-quality text embeddings for semantic similarity search. The embedding model must provide:
+Our AI system needs high-quality text processing to understand meaning and find similar content. The text processing method must provide:
 
-- Accurate semantic representation of text
-- Local execution capability (no API dependencies)
-- Efficient processing for large document collections
-- Compatibility with ChromaDB vector storage
-- Strong performance on retrieval tasks
+- Accurate understanding of text meaning
+- Can run locally on our computers (no external services)
+- Efficient handling of large amounts of documents
+- Works with our vector database storage
+- Good performance for finding relevant information
 
-Multiple embedding options exist, including OpenAI embeddings, Sentence Transformers, and specialized models like Nomic Embed.
+Several text processing options exist, including cloud services and different open-source models.
 
 ## Decision
 
-We will use Nomic Embed (nomic-embed-text-v1.5) as the primary embedding model for the Mnemonic Cortex:
+We will use Nomic Embed (nomic-embed-text-v1.5) as our main text processing model:
 
-**Model Selection:** nomic-embed-text-v1.5
-- Open-source, high-performance embedding model
-- Optimized for semantic similarity and retrieval tasks
-- Local inference capability via LangChain integration
-- Strong performance on benchmark datasets
+**Model Choice:** nomic-embed-text-v1.5
+- Open-source, high-performance text processing model
+- Optimized for understanding meaning and finding similar content
+- Can run locally using our software tools
+- Excellent results on standard test datasets
 
 **Integration:** LangChain NomicEmbeddings
-- Seamless integration with existing RAG pipeline
-- Standardized interface for embedding generation
-- Automatic batching and preprocessing
-- Consistent API across different embedding models
+- Smooth connection with our existing information pipeline
+- Standard interface for text processing
+- Automatic handling of multiple documents at once
+- Consistent approach across different processing methods
 
-**Local Execution:** inference_mode="local"
-- All embeddings generated on local hardware
-- Zero external API dependencies
-- Complete sovereignty over embedding process
-- Predictable performance and costs
+**Local Processing:** inference_mode="local"
+- All text processing done on our own hardware
+- No external service calls or data sharing
+- Complete control over the processing
+- Predictable performance and no ongoing costs
 
 ## Consequences
 
 ### Positive
-- **High Quality:** Superior semantic understanding compared to simpler alternatives
-- **Local Sovereignty:** No external API calls or data transmission
-- **Performance:** Optimized for retrieval-augmented generation tasks
-- **Integration:** Seamless compatibility with LangChain and ChromaDB
-- **Community Support:** Active development and community adoption
+- **High Quality:** Better understanding of text meaning than simpler methods
+- **Local Control:** No external services or data transmission
+- **Performance:** Optimized for information retrieval tasks
+- **Compatibility:** Works seamlessly with our tools and database
+- **Community Support:** Active development and widespread use
 
 ### Negative
-- **Resource Requirements:** More computationally intensive than simpler models
-- **Model Size:** Larger download and storage requirements
-- **Setup Complexity:** Additional dependencies for local inference
+- **Resource Needs:** More computing power than basic methods
+- **Model Size:** Larger files to download and store
+- **Setup Work:** Additional software requirements for local processing
 
 ### Risks
-- **Hardware Limitations:** May require GPU acceleration for large document sets
-- **Model Updates:** Manual updating when new versions are released
-- **Alternative Evaluation:** May need reassessment if better local models emerge
+- **Hardware Needs:** May need graphics card acceleration for large document collections
+- **Updates:** Manual updates when new versions become available
+- **Better Options:** May need to reconsider if superior local models appear
 
 ### Dependencies
-- Python environment with LangChain and nomic integrations
-- Sufficient computational resources for embedding generation
-- Storage space for downloaded model weights
-- Regular evaluation of embedding quality and performance
+- Python environment with required software libraries
+- Enough computing resources for text processing
+- Storage space for model files
+- Regular checking of processing quality and speed
