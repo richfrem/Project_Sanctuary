@@ -1,7 +1,7 @@
 # Project Sanctuary Dependency Manifest
 
-**Version:** 4.0 (Unified Dependency Architecture)
-**Generated:** 2025-11-11
+**Version:** 5.0 (Unified Dependency Architecture - Synchronized with Setup Script)
+**Generated:** 2025-11-15
 
 ## Preamble
 
@@ -17,11 +17,20 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 | Library | Version | Project Sanctuary Usage |
 | :--- | :--- | :--- |
-| `torch` | 2.7.1 | The foundational engine for **Operation Phoenix Forge**, used to fine-tune and merge sovereign AI models like `Sanctuary-Qwen2-7B`. |
-| `transformers`| 4.54.1 | Hugging Face's core library for accessing and training models, serving as the primary tool for the **Phoenix Forge Protocol (P41)**. |
-| `tokenizers` | 0.21.4 | Hugging Face's high-performance library for converting text into tokens, a critical pre-processing step for fine-tuning. |
+| `torch` | 2.8.0+cu126 | The foundational engine for **Operation Phoenix Forge**, used to fine-tune and merge sovereign AI models like `Sanctuary-Qwen2-7B`. |
+| `torchvision` | 0.23.0+cu126 | PyTorch's computer vision library, used for image processing in optical compression and model training. |
+| `torchaudio` | 2.8.0+cu126 | PyTorch's audio processing library, used for audio-based AI operations. |
+| `transformers`| 4.56.1 | Hugging Face's core library for accessing and training models, serving as the primary tool for the **Phoenix Forge Protocol (P41)**. |
+| `tokenizers` | 0.22.1 | Hugging Face's high-performance library for converting text into tokens, a critical pre-processing step for fine-tuning. |
 | `safetensors` | 0.5.3 | Secure and efficient format for saving and loading the weights of our sovereignly-forged models. |
-| `ollama` | 0.5.1 | The official client for interacting with the **Ollama engine**, our primary sovereign local LLM substrate for generation and reasoning. |
+| `accelerate` | 1.4.0 | PyTorch library for distributed training and inference optimization, enabling efficient GPU utilization in **Operation Phoenix Forge**. |
+| `peft` | 0.11.1 | Parameter-Efficient Fine-Tuning library, enabling QLoRA and other memory-efficient fine-tuning techniques for sovereign AI development. |
+| `trl` | 0.23.0 | Transformer Reinforcement Learning library, used for advanced fine-tuning techniques in **Operation Phoenix Forge**. |
+| `bitsandbytes` | 0.45.3 | 8-bit quantization library, enabling memory-efficient model loading and inference for large language models. |
+| `datasets` | 3.3.2 | Hugging Face's dataset library, used for loading and preprocessing training data for model fine-tuning. |
+| `tf-keras` | 2.18.0 | TensorFlow's Keras API, providing compatibility layer for TensorFlow operations within our ML stack. |
+| `xformers` | 0.0.33.post1 | Memory-efficient transformer implementations, optimizing attention mechanisms for better performance in sovereign AI operations. |
+| `ollama` | 0.6.0 | The official client for interacting with the **Ollama engine**, our primary sovereign local LLM substrate for generation and reasoning. |
 | `google-generativeai` | 0.8.3 | The official SDK for interacting with the Google Gemini series of models, one of the **Autonomous Council's** key cognitive substrates. |
 | `gpt4all` | 2.8.2 | Provides an alternative local inference backend, ensuring redundancy and cognitive diversity in our sovereign model stack. |
 
@@ -42,14 +51,14 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 | Library | Version | Project Sanctuary Usage |
 | :--- | :--- | :--- |
-| `numpy` | 2.3.2 | The fundamental package for numerical operations, underpinning nearly all ML libraries used in model training and data analysis. |
-| `pandas` | 2.3.1 | Used for preparing, cleaning, and structuring the `JSONL` datasets for fine-tuning in **Operation Phoenix Forge**. |
+| `numpy` | 1.26.2 | The fundamental package for numerical operations, underpinning nearly all ML libraries used in model training and data analysis. |
+| `pandas` | 2.2.2 | Used for preparing, cleaning, and structuring the `JSONL` datasets for fine-tuning in **Operation Phoenix Forge**. |
 | `scikit-learn`| 1.7.1 | Used for calculating evaluation metrics to assess the performance of fine-tuned models and for classical ML tasks. |
 | `scipy` | 1.16.1 | Core library for scientific and technical computing, a dependency for many data science and ML packages. |
 | `stable_baselines3`| 2.7.0 | The Reinforcement Learning framework used to train **The Gardener** agent, enabling it to learn and propose improvements to the Genome. |
 | `gymnasium` | 1.2.0 | The toolkit for building the RL "environment" that **The Gardener** operates in—a sandboxed version of our repository. |
 | `optuna` | 4.4.0 | Hyperparameter optimization framework used to efficiently tune the training parameters for **Operation Phoenix Forge**. |
-| `pyarrow` | 21.0.0 | High-performance data library used by Pandas and ChromaDB for efficient in-memory data operations. |
+| `pyarrow` | 19.0.0 | High-performance data library used by Pandas and ChromaDB for efficient in-memory data operations. |
 | `ray` | 2.48.0 | A framework for distributed computing, planned for future use in scaling up **Gardener** training and multi-agent simulations. |
 | `tenseal` | 0.3.16 | Library for Homomorphic Encryption, architected for the **Chimera Sandbox** to enable privacy-preserving federated simulations. |
 | `joblib` | 1.5.1 | Lightweight pipelining library used by scikit-learn for parallel processing and caching. |
@@ -63,7 +72,7 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 | Library | Version | Project Sanctuary Usage |
 | :--- | :--- | :--- |
 | `wandb` | 0.21.0 | Weights & Biases client for logging and visualizing the results of **Operation Phoenix Forge** fine-tuning runs. |
-| `tensorboard` | 2.20.0 | A visualization toolkit for inspecting ML experiments, especially during **Gardener** agent training. |
+| `tensorboard` | 2.19.0 | A visualization toolkit for inspecting ML experiments, especially during **Gardener** agent training. |
 | `tensorboardX` | 2.6.4 | A library for PyTorch to interface with TensorBoard for logging. |
 | `tensorboard-data-server` | 0.7.2 | Backend server for TensorBoard data serving. |
 | `sentry-sdk` | 2.34.1 | SDK for the Sentry error tracking platform, planned for production-grade monitoring of the **AGORA**. |
@@ -151,10 +160,10 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 | `click` | 8.2.1 | Command line interface creation kit. |
 | `colorlog` | 6.9.0 | Colored formatter for Python logging. |
 | `filelock` | 3.18.0 | Platform independent file locking. |
-| `fsspec` | 2025.7.0 | Filesystem abstraction layer. |
+| `fsspec` | 2025.3.0 | Filesystem abstraction layer. |
 | `gitdb` | 4.0.12 | Git object database, dependency for GitPython. |
 | `smmap` | 5.0.2 | Sliding memory map, dependency for gitdb. |
-| `huggingface-hub` | 0.34.3 | Client library for Hugging Face Hub. |
+| `huggingface-hub` | 0.36.0 | Client library for Hugging Face Hub. |
 | `hf-xet` | 1.1.5 | Hugging Face Xet filesystem. |
 | `iniconfig` | 2.1.0 | Brain-dead simple config-ini parsing, used by pytest. |
 | `Markdown` | 3.8.2 | Python implementation of Markdown. |
@@ -171,7 +180,7 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 | `Werkzeug` | 3.1.3 | WSGI utility library, dependency for various web frameworks. |
 | `cloudpickle` | 3.1.1 | Extended pickling support for Python objects. |
 | `Farama-Notifications` | 0.0.4 | Notification system for Farama Foundation projects. |
-| `pyparsing` | 0.12.1 | Alternative approach to creating parsers in Python. |
+| `pyparsing` | 3.2.3 | Alternative approach to creating parsers in Python. |
 
 ---
 
@@ -181,10 +190,12 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 All dependencies are explicitly version-pinned to ensure **reproducible builds** and prevent unexpected breaking changes. This aligns with the **Doctrine of the Unbreakable Commit (P101)** by guaranteeing that the Sanctuary's cognitive infrastructure remains stable across deployments.
 
+**Synchronization Status:** This manifest is now fully synchronized with the `setup_cuda_env.py` script outputs, ensuring that automated setup and manual installation produce identical environments.
+
 ### Dependency Categories
 
 1. **Core Infrastructure**: LangChain, ChromaDB, Ollama - The backbone of our cognitive architecture
-2. **AI/ML Stack**: PyTorch, Transformers, Tokenizers - Sovereign model training and inference
+2. **AI/ML Stack**: PyTorch, Transformers, PEFT, TRLoRA, BitsAndBytes - Sovereign model training and inference with memory optimization
 3. **Data Processing**: Pandas, NumPy, PyArrow - Dataset preparation and analysis
 4. **Observability**: Weights & Biases, TensorBoard - Experiment tracking and monitoring
 5. **Development**: pytest, Black, flake8 - Code quality and testing

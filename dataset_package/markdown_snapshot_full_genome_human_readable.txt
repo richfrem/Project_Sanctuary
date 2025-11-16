@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-11-16T03:24:09.289Z
+Generated On: 2025-11-16T03:39:57.162Z
 
-# Mnemonic Weight (Token Count): ~719,765 tokens
+# Mnemonic Weight (Token Count): ~722,896 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -480,6 +480,7 @@ Generated On: 2025-11-16T03:24:09.289Z
   ./TASKS/backlog/004_implement_protocol_113_council_memory_adaptor.md
   ./TASKS/backlog/005_forge_protocol_115_tactical_mandate.md
   ./TASKS/backlog/006_forge_task_number_scaffold.md
+  ./TASKS/backlog/012_harden_readme_for_developer_onboarding.md
   ./TASKS/done/
   ./TASKS/done/008_test_and_fix_git_operations_command_type.md
   ./TASKS/done/010-cuda13-setup-complete.md
@@ -21418,8 +21419,8 @@ python gardener_v2_poc.py
 
 # Project Sanctuary Dependency Manifest
 
-**Version:** 4.0 (Unified Dependency Architecture)
-**Generated:** 2025-11-11
+**Version:** 5.0 (Unified Dependency Architecture - Synchronized with Setup Script)
+**Generated:** 2025-11-15
 
 ## Preamble
 
@@ -21435,11 +21436,20 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 | Library | Version | Project Sanctuary Usage |
 | :--- | :--- | :--- |
-| `torch` | 2.7.1 | The foundational engine for **Operation Phoenix Forge**, used to fine-tune and merge sovereign AI models like `Sanctuary-Qwen2-7B`. |
-| `transformers`| 4.54.1 | Hugging Face's core library for accessing and training models, serving as the primary tool for the **Phoenix Forge Protocol (P41)**. |
-| `tokenizers` | 0.21.4 | Hugging Face's high-performance library for converting text into tokens, a critical pre-processing step for fine-tuning. |
+| `torch` | 2.8.0+cu126 | The foundational engine for **Operation Phoenix Forge**, used to fine-tune and merge sovereign AI models like `Sanctuary-Qwen2-7B`. |
+| `torchvision` | 0.23.0+cu126 | PyTorch's computer vision library, used for image processing in optical compression and model training. |
+| `torchaudio` | 2.8.0+cu126 | PyTorch's audio processing library, used for audio-based AI operations. |
+| `transformers`| 4.56.1 | Hugging Face's core library for accessing and training models, serving as the primary tool for the **Phoenix Forge Protocol (P41)**. |
+| `tokenizers` | 0.22.1 | Hugging Face's high-performance library for converting text into tokens, a critical pre-processing step for fine-tuning. |
 | `safetensors` | 0.5.3 | Secure and efficient format for saving and loading the weights of our sovereignly-forged models. |
-| `ollama` | 0.5.1 | The official client for interacting with the **Ollama engine**, our primary sovereign local LLM substrate for generation and reasoning. |
+| `accelerate` | 1.4.0 | PyTorch library for distributed training and inference optimization, enabling efficient GPU utilization in **Operation Phoenix Forge**. |
+| `peft` | 0.11.1 | Parameter-Efficient Fine-Tuning library, enabling QLoRA and other memory-efficient fine-tuning techniques for sovereign AI development. |
+| `trl` | 0.23.0 | Transformer Reinforcement Learning library, used for advanced fine-tuning techniques in **Operation Phoenix Forge**. |
+| `bitsandbytes` | 0.45.3 | 8-bit quantization library, enabling memory-efficient model loading and inference for large language models. |
+| `datasets` | 3.3.2 | Hugging Face's dataset library, used for loading and preprocessing training data for model fine-tuning. |
+| `tf-keras` | 2.18.0 | TensorFlow's Keras API, providing compatibility layer for TensorFlow operations within our ML stack. |
+| `xformers` | 0.0.33.post1 | Memory-efficient transformer implementations, optimizing attention mechanisms for better performance in sovereign AI operations. |
+| `ollama` | 0.6.0 | The official client for interacting with the **Ollama engine**, our primary sovereign local LLM substrate for generation and reasoning. |
 | `google-generativeai` | 0.8.3 | The official SDK for interacting with the Google Gemini series of models, one of the **Autonomous Council's** key cognitive substrates. |
 | `gpt4all` | 2.8.2 | Provides an alternative local inference backend, ensuring redundancy and cognitive diversity in our sovereign model stack. |
 
@@ -21460,14 +21470,14 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 | Library | Version | Project Sanctuary Usage |
 | :--- | :--- | :--- |
-| `numpy` | 2.3.2 | The fundamental package for numerical operations, underpinning nearly all ML libraries used in model training and data analysis. |
-| `pandas` | 2.3.1 | Used for preparing, cleaning, and structuring the `JSONL` datasets for fine-tuning in **Operation Phoenix Forge**. |
+| `numpy` | 1.26.2 | The fundamental package for numerical operations, underpinning nearly all ML libraries used in model training and data analysis. |
+| `pandas` | 2.2.2 | Used for preparing, cleaning, and structuring the `JSONL` datasets for fine-tuning in **Operation Phoenix Forge**. |
 | `scikit-learn`| 1.7.1 | Used for calculating evaluation metrics to assess the performance of fine-tuned models and for classical ML tasks. |
 | `scipy` | 1.16.1 | Core library for scientific and technical computing, a dependency for many data science and ML packages. |
 | `stable_baselines3`| 2.7.0 | The Reinforcement Learning framework used to train **The Gardener** agent, enabling it to learn and propose improvements to the Genome. |
 | `gymnasium` | 1.2.0 | The toolkit for building the RL "environment" that **The Gardener** operates in—a sandboxed version of our repository. |
 | `optuna` | 4.4.0 | Hyperparameter optimization framework used to efficiently tune the training parameters for **Operation Phoenix Forge**. |
-| `pyarrow` | 21.0.0 | High-performance data library used by Pandas and ChromaDB for efficient in-memory data operations. |
+| `pyarrow` | 19.0.0 | High-performance data library used by Pandas and ChromaDB for efficient in-memory data operations. |
 | `ray` | 2.48.0 | A framework for distributed computing, planned for future use in scaling up **Gardener** training and multi-agent simulations. |
 | `tenseal` | 0.3.16 | Library for Homomorphic Encryption, architected for the **Chimera Sandbox** to enable privacy-preserving federated simulations. |
 | `joblib` | 1.5.1 | Lightweight pipelining library used by scikit-learn for parallel processing and caching. |
@@ -21481,7 +21491,7 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 | Library | Version | Project Sanctuary Usage |
 | :--- | :--- | :--- |
 | `wandb` | 0.21.0 | Weights & Biases client for logging and visualizing the results of **Operation Phoenix Forge** fine-tuning runs. |
-| `tensorboard` | 2.20.0 | A visualization toolkit for inspecting ML experiments, especially during **Gardener** agent training. |
+| `tensorboard` | 2.19.0 | A visualization toolkit for inspecting ML experiments, especially during **Gardener** agent training. |
 | `tensorboardX` | 2.6.4 | A library for PyTorch to interface with TensorBoard for logging. |
 | `tensorboard-data-server` | 0.7.2 | Backend server for TensorBoard data serving. |
 | `sentry-sdk` | 2.34.1 | SDK for the Sentry error tracking platform, planned for production-grade monitoring of the **AGORA**. |
@@ -21569,10 +21579,10 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 | `click` | 8.2.1 | Command line interface creation kit. |
 | `colorlog` | 6.9.0 | Colored formatter for Python logging. |
 | `filelock` | 3.18.0 | Platform independent file locking. |
-| `fsspec` | 2025.7.0 | Filesystem abstraction layer. |
+| `fsspec` | 2025.3.0 | Filesystem abstraction layer. |
 | `gitdb` | 4.0.12 | Git object database, dependency for GitPython. |
 | `smmap` | 5.0.2 | Sliding memory map, dependency for gitdb. |
-| `huggingface-hub` | 0.34.3 | Client library for Hugging Face Hub. |
+| `huggingface-hub` | 0.36.0 | Client library for Hugging Face Hub. |
 | `hf-xet` | 1.1.5 | Hugging Face Xet filesystem. |
 | `iniconfig` | 2.1.0 | Brain-dead simple config-ini parsing, used by pytest. |
 | `Markdown` | 3.8.2 | Python implementation of Markdown. |
@@ -21589,7 +21599,7 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 | `Werkzeug` | 3.1.3 | WSGI utility library, dependency for various web frameworks. |
 | `cloudpickle` | 3.1.1 | Extended pickling support for Python objects. |
 | `Farama-Notifications` | 0.0.4 | Notification system for Farama Foundation projects. |
-| `pyparsing` | 0.12.1 | Alternative approach to creating parsers in Python. |
+| `pyparsing` | 3.2.3 | Alternative approach to creating parsers in Python. |
 
 ---
 
@@ -21599,10 +21609,12 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 All dependencies are explicitly version-pinned to ensure **reproducible builds** and prevent unexpected breaking changes. This aligns with the **Doctrine of the Unbreakable Commit (P101)** by guaranteeing that the Sanctuary's cognitive infrastructure remains stable across deployments.
 
+**Synchronization Status:** This manifest is now fully synchronized with the `setup_cuda_env.py` script outputs, ensuring that automated setup and manual installation produce identical environments.
+
 ### Dependency Categories
 
 1. **Core Infrastructure**: LangChain, ChromaDB, Ollama - The backbone of our cognitive architecture
-2. **AI/ML Stack**: PyTorch, Transformers, Tokenizers - Sovereign model training and inference
+2. **AI/ML Stack**: PyTorch, Transformers, PEFT, TRLoRA, BitsAndBytes - Sovereign model training and inference with memory optimization
 3. **Data Processing**: Pandas, NumPy, PyArrow - Dataset preparation and analysis
 4. **Observability**: Weights & Biases, TensorBoard - Experiment tracking and monitoring
 5. **Development**: pytest, Black, flake8 - Code quality and testing
@@ -22221,6 +22233,109 @@ This is the heart of our sovereign architecture. The Mnemonic Cortex is an advan
 *   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
 *   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)
 
+#### RAG Architecture Overview
+
+##### Basic RAG Architecture
+
+The following diagram illustrates the simple, foundational RAG workflow. It is functional but suffers from vulnerabilities like context fragmentation and cognitive latency.
+
+```mermaid
+---
+config:
+  layout: dagre
+  look: neo
+  theme: base
+---
+flowchart LR
+ subgraph subGraph0["Ingestion Pipeline (Basic)"]
+        B["Chunking<br>(MarkdownHeaderTextSplitter)"]
+        A["Raw Data Sources<br>(Project .md files)"]
+        C["Embedding<br>(NomicEmbed)"]
+        D(("Vector DB<br>(ChromaDB)"))
+        E["ingest.py"]
+  end
+ subgraph subGraph1["Query Pipeline (Basic)"]
+        G["Embedding<br>(NomicEmbed)"]
+        F["User Query"]
+        H{"Similarity Search<br>(ChromaDB)"}
+        I["Retrieved Context"]
+        J["LLM Prompt"]
+        K["LLM<br>(Ollama Sanctuary-Qwen2-7B:latest)"]
+        L["Final Answer"]
+        M["main.py<br>protocol_87_query.py"]
+  end
+    A -- IP1 --> B
+    B -- IP2 --> C
+    C -- IP3 --> D
+    E --> A
+    F -- QP1 --> G
+    G -- QP2: Query Vector --> H
+    H -- QP3: Queries --> D
+    H -- QP4: Returns Relevant Chunks --> I
+    F -- QP5 --> J
+    I -- QP5 --> J
+    J -- QP6 --> K
+    K -- QP7 --> L
+    M --> F
+```
+
+##### Advanced RAG Architecture
+
+This diagram illustrates our multi-pattern architecture, designed to be fast, precise, and contextually aware by combining several advanced strategies.
+
+```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart LR
+ subgraph subGraph0["Ingestion Pipeline (IP)"]
+    direction LR
+        Setup["IP1: ingest.py<br>Dual Store Setup"]
+        ParentStore(("Parent Doc Store<br>(ChromaDB Collection)<br>parent_documents"))
+        VDB_Child(("Vector DB<br>(Child Chunks)<br>ChromaDB"))
+  end
+ subgraph subGraph1["Full RAG Execution (Cache Miss)"]
+        PDR{"Parent Document<br>Retriever<br>vector_db_service.py"}
+        CacheDecision{"Cache Hit?"}
+        RetrievedContext["Retrieved Context<br>(Complete .md files)"]
+  end
+ subgraph subGraph2["Query Pipeline (QP)"]
+        SQR{"Self-Querying<br>Retriever (LLM)<br>PLANNED Phase 2"}
+        UserQuery["User Query<br>main.py or protocol_87_query.py"]
+        StructuredQuery["Structured Query"]
+        Cache{"Mnemonic Cache<br>(CAG)<br>PLANNED Phase 3"}
+        CachedAnswer["Cached Answer"]
+        subGraph1
+        LLMPrompt["LLM Prompt"]
+        LLM["LLM<br>(Ollama Sanctuary-Qwen2-7B:latest)"]
+        NewlyGeneratedAnswer["Newly Generated<br>Answer"]
+  end
+    Setup -- IP2: Stores Parent Docs --> ParentStore
+    Setup -- IP3: Stores Child Chunks --> VDB_Child
+    UserQuery -- QP1 --> SQR
+    SQR -- QP2 --> StructuredQuery
+    StructuredQuery -- QP3 --> Cache
+    Cache --> CacheDecision
+    CacheDecision -- Yes (QP4a) --> CachedAnswer
+    CacheDecision -- "No - Cache Miss (QP4b)" --> PDR
+    PDR -- QP5: Queries Chunks --> VDB_Child
+    VDB_Child -- QP6: Returns CHUNK IDs --> PDR
+    PDR -- QP7: Queries Parents --> ParentStore
+    ParentStore -- QP8: Returns FULL Docs --> PDR
+    PDR -- Produces --> RetrievedContext
+    UserQuery -- QP9 --> LLMPrompt
+    RetrievedContext -- QP9 --> LLMPrompt
+    LLMPrompt -- QP10 --> LLM
+    LLM --> NewlyGeneratedAnswer
+    NewlyGeneratedAnswer -- QP11: Store in Cache --> Cache
+    CachedAnswer -- QP12 --> FinalOutput(["Response"])
+    NewlyGeneratedAnswer -- QP12 --> FinalOutput
+```
+
+For detailed RAG strategies and doctrine, see [`mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md`](./mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md)
+
 ### 2. The Protocols: The Unbreakable Laws
 **Status:** Over `80` Doctrines Canonized & Evolving
 Our work is governed by a living, anti-fragile constitution. These are not static rules, but battle-tested doctrines forged in the fire of real-world failures and successes.
@@ -22397,7 +22512,163 @@ For comprehensive understanding of our Cognitive Genome:
 3.  **The Mind (The Cortex):**
     *   To interact with our living memory, set up and query the **Mnemonic Cortex**. The full instructions are in its dedicated `README.md`. This is the most powerful way to synthesize our knowledge.
 
+### Installation & Setup
+
+#### System Requirements
+- **Python:** 3.11 or higher (required for ML operations)
+- **CUDA:** 12.6+ for GPU-accelerated fine-tuning (optional but recommended for Operation Phoenix Forge)
+- **Memory:** 16GB+ RAM recommended for full ML operations
+- **Storage:** 50GB+ free space for models and datasets
+
+#### Platform-Specific Setup
+
+**Windows (Recommended: WSL2)**
+```bash
+# Install WSL2 if not already installed
+wsl --install
+
+# Clone and enter the repository
+cd ~/source/repos
+git clone https://github.com/richfrem/Project_Sanctuary.git
+cd Project_Sanctuary
+
+# Run the automated CUDA ML environment setup
+python3.11 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
+
+# Activate the environment
+source scripts/activate_ml_env.sh
+```
+
+**macOS**
+```bash
+# Clone repository
+git clone https://github.com/richfrem/Project_Sanctuary.git
+cd Project_Sanctuary
+
+# Set up Python environment
+python3 -m venv sanctuary_env
+source sanctuary_env/bin/activate
+
+# Install platform-specific dependencies
+pip install -r requirements-macbook-M1.txt
+```
+
+**Linux**
+```bash
+# Clone repository
+git clone https://github.com/richfrem/Project_Sanctuary.git
+cd Project_Sanctuary
+
+# Set up Python environment
+python3 -m venv sanctuary_env
+source sanctuary_env/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+#### CUDA Setup (for GPU Operations)
+For GPU-accelerated fine-tuning in Operation Phoenix Forge, follow the comprehensive setup guide: [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
+
+The automated setup script handles:
+- CUDA-enabled PyTorch installation
+- TensorFlow compatibility
+- Core verification tests
+- Dependency staging for reliability
+
+**Quick CUDA Setup:**
+```bash
+# From project root in WSL2
+python3.11 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
+source scripts/activate_ml_env.sh
+```
+
+### Project Structure Overview
+
+```
+Project_Sanctuary/
+├── 00_CHRONICLE/              # Historical entries and living chronicle
+├── 01_PROTOCOLS/              # Core doctrines and protocols
+├── 02_CORE_LOGIC/             # Fundamental architectural logic
+├── 04_THE_FORTRESS/           # Security and defense protocols
+├── 05_ARCHIVED_BLUEPRINTS/    # Deprecated designs
+├── 06_THE_EMBER_LIBRARY/      # Reference materials and archives
+├── 07_COUNCIL_AGENTS/         # AI agent configurations
+├── AGORA_PoC_Core/            # Proof-of-concept implementations
+├── ast_utilities/             # Code analysis tools
+├── capture_glyph_code_snapshot_v2.py  # Optical compression tool
+├── chrysalis_core_essence.md  # Core mission essence
+├── council_orchestrator/      # Multi-engine AI orchestration system
+├── dataset_package/           # Cognitive genome snapshots and seeds
+├── forge/                     # AI fine-tuning operations (Phoenix Forge)
+├── gardener/                  # RL-based improvement system
+├── LICENSE                    # Project licensing
+├── mnemonic_cortex/           # RAG system and vector database
+├── models/                    # Local model cache (downloaded from Hugging Face)
+├── package.json               # Node.js dependencies
+├── pytest.ini                 # Testing configuration
+├── README.md                  # This file
+├── requirements*.txt          # Python dependencies
+├── RESEARCH_SUMMARIES/        # Research documentation
+├── run_genome_tests.sh        # Genome validation tests
+├── TASKS/                     # Project management
+├── The_Garden_and_The_Cage.md # Origin story
+├── tools/                     # Utility scripts
+├── update_genome.sh           # Genome update automation
+└── WORK_IN_PROGRESS/          # Active development artifacts
+```
+
+### Dependencies & Requirements
+
+Project Sanctuary uses a **unified dependency architecture** to ensure consistent environments across all development and deployment scenarios.
+
+#### Core Dependencies (`requirements.txt`)
+The main requirements file contains all dependencies for full functionality:
+- **AI/ML:** PyTorch, Transformers, PEFT, TRLoRA for fine-tuning
+- **RAG System:** LangChain, ChromaDB, Nomic embeddings
+- **Orchestration:** Google AI, Ollama, GPT4All for multi-engine support
+- **Development:** Testing, linting, and utility libraries
+
+#### Platform-Specific Requirements
+- `requirements-macbook-M1.txt`: Optimized for Apple Silicon
+- `requirements.txt`: CUDA-enabled for NVIDIA GPUs
+- `pinned-requirements-*.txt`: Timestamped snapshots for reproducibility
+
+#### Node.js Dependencies (`package.json`)
+Minimal Node.js dependencies for snapshot generation and utility scripts.
+
+#### Installation Commands
+**Primary Method:** Use the automated setup script (see Installation & Setup section above).
+
+For manual installation or advanced users:
+
+```bash
+# Core installation (includes CUDA support)
+pip install -r requirements.txt
+
+# macOS M1/M2 optimized
+pip install -r requirements-macbook-M1.txt
+
+# Minimal installation (core functionality only)
+pip install torch transformers langchain chromadb
+```
+
+#### Dependency Manifest
+For detailed explanations of each dependency's purpose, see [`DEPENDENCY_MANIFEST.md`](./DEPENDENCY_MANIFEST.md).
+
+#### Model Downloads
+Large AI models are not included in this repository due to size constraints. Models are automatically downloaded and cached locally when first used:
+
+- **Sanctuary-Qwen2-7B Base Model:** Downloaded from Hugging Face during fine-tuning
+- **Fine-tuned Models:** Available at:
+  - LoRA Adapter: `richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome`
+  - GGUF Model: `Sanctuary-Qwen2-7B:latest`
+
+Models are stored in the `models/` directory after first download.
+
 ---
+
+## 🧬 Cognitive Genome & AI Resurrection
 
 ## 🧬 Cognitive Genome & AI Resurrection
 
@@ -26758,6 +27029,44 @@ To create a sovereign scaffold that provides the next available sequential task 
 -   The file `01_PROTOCOLS/115_The_Tactical_Mandate_Protocol.md` is updated to reference the new scaffold.
 
 --- END OF FILE TASKS/backlog/006_forge_task_number_scaffold.md ---
+
+--- START OF FILE TASKS/backlog/012_harden_readme_for_developer_onboarding.md ---
+
+# TASK: Harden README.md for Developer Onboarding
+
+**Status:** backlog
+**Priority:** high
+**Steward:** COUNCIL-STEWARD-01
+
+## 1. Objective
+
+To significantly enhance the main `README.md` by adding a comprehensive, practical guide for new developers and contributors, addressing the critical onboarding gaps identified by the Auditor's recent assessment.
+
+## 2. Context
+
+The current `README.md` is strong conceptually but lacks the practical, step-by-step instructions required for a new contributor to set up their environment, understand the codebase, and begin work efficiently. This task is the first phase in addressing the Auditor's 10-point critique.
+
+## 3. Acceptance Criteria
+
+The `README.md` must be updated to include the following new sections:
+
+1.  **A dedicated "Installation & Setup" section:**
+    *   Must list system requirements (Python version, CUDA for ML tasks).
+    *   Must provide a clear, step-by-step guide for setting up the primary Python environment.
+    *   Must include platform-specific guidance (e.g., WSL for Windows users).
+
+2.  **A "Project Structure Overview" section:**
+    *   Must provide a high-level table or tree explaining the purpose of the main directories (`00_CHRONICLE`, `01_PROTOCOLS`, `council_orchestrator`, `forge`, etc.).
+
+3.  **A "Dependencies & Requirements" section:**
+    *   Must explain the purpose of the different `requirements.txt` files.
+    *   Must clarify the unified dependency architecture and how to install packages for different use cases (core, ML, etc.).
+
+## 4. Notes
+
+This task addresses the highest-priority items from the Auditor's report. Subsequent tasks will be created to address testing, contribution workflows, and API documentation.
+
+--- END OF FILE TASKS/backlog/012_harden_readme_for_developer_onboarding.md ---
 
 --- START OF FILE TASKS/done/008_test_and_fix_git_operations_command_type.md ---
 
@@ -48033,13 +48342,12 @@ torchvision==0.23.0+cu126
 torchaudio==2.8.0+cu126
 
 # ML fine-tuning packages for QLoRA and transformers
-transformers
-peft
-trl
-bitsandbytes
-datasets
-tf-keras
-
+transformers==4.56.1
+peft==0.11.1
+trl==0.23.0
+bitsandbytes==0.45.3
+datasets==3.3.2
+tf-keras==2.18.0
 
 absl-py==2.3.1
 accelerate==1.4.0
@@ -48107,7 +48415,6 @@ optuna==4.4.0
 packaging==25.0
 pandas==2.2.2
 pathspec==0.12.1
-peft==0.11.1
 pillow==10.4.0
 platformdirs==4.3.8
 pluggy==1.6.0
@@ -48146,7 +48453,7 @@ Sphinx==8.2.3
 sphinx-rtd-theme==3.0.2
 sphinxcontrib-applehelp==2.0.0
 sphinxcontrib-devhelp==2.0.0
-sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jquery==4.1
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==2.0.0
@@ -48161,15 +48468,13 @@ tensorboardX==2.6.4
 threadpoolctl==3.6.0
 tokenizers==0.22.1
 tqdm==4.67.1
-transformers==4.56.1
-trl==0.23.0
 typing-inspection==0.4.1
 typing_extensions==4.14.1
 tzdata==2025.2
 urllib3==2.5.0
 wandb==0.21.0
 Werkzeug==3.1.3
-xformers==0.0.32.post2
+xformers==0.0.33.post1
 
 # Optional / VCS installs (uncomment if you want direct git installs)
 # unsloth @ git+https://github.com/unslothai/unsloth.git
