@@ -2,67 +2,67 @@
 
 **Status:** accepted
 **Date:** 2025-11-15
-**Deciders:** GUARDIAN-01, AI-Assistant
-**Technical Story:** LLM selection for Mnemonic Cortex
+**Deciders:** AI System Lead, AI Assistant
+**Technical Story:** Choose main AI language model for the project
 
 ---
 
 ## Context
 
-The Mnemonic Cortex requires a high-quality LLM for cognitive reasoning and response generation. Key requirements include:
+Our AI reasoning system needs a high-quality language model for understanding and generating responses. Key requirements include:
 
-- Strong reasoning and analytical capabilities
-- Efficient fine-tuning for domain-specific knowledge
-- Local execution capability via Ollama
-- Multilingual support for diverse content
+- Strong logical thinking and analysis skills
+- Easy to customize for our specific knowledge domain
+- Can run locally on our own computers
+- Support for multiple languages
 - Active development and community support
-- Compatibility with existing fine-tuning workflows
+- Works with our existing customization processes
 
-Available options include GPT models, Claude, Llama variants, and Qwen models. The selection must balance performance, sovereignty, and practical constraints.
+Available options include various AI models from different companies. We need to balance quality, independence, and practical limitations.
 
 ## Decision
 
-We will adopt Qwen2-7B as the primary LLM architecture for Project Sanctuary, with the following implementation strategy:
+We will use Qwen2-7B as our main language model, with this implementation approach:
 
 **Base Model:** Qwen/Qwen2-7B-Instruct
-- Strong performance on reasoning benchmarks
-- Efficient 7B parameter count for fine-tuning
-- Excellent multilingual capabilities
-- Active development by Alibaba Cloud
+- Excellent performance on reasoning tests
+- Efficient size (7 billion parameters) for customization
+- Strong multilingual capabilities
+- Actively developed by Alibaba Cloud
 
-**Fine-tuned Variants:** Sanctuary-Qwen2-7B-v1.0, v2.0, etc.
-- Domain-specific fine-tuning for Sanctuary knowledge
-- Optimized for cognitive architecture tasks
-- Available in both LoRA adapter and merged GGUF formats
+**Customized Versions:** Our-Qwen2-7B-v1.0, v2.0, etc.
+- Specialized training for our project's knowledge
+- Optimized for our AI architecture tasks
+- Available in different technical formats for flexibility
 
-**Execution Environment:** Ollama
-- Local inference with standardized API
-- Efficient resource utilization
-- Cross-platform compatibility
-- Model versioning and management
+**Running Environment:** Ollama software
+- Local processing with standard interface
+- Efficient use of computer resources
+- Works on different operating systems
+- Easy model management and updates
 
 ## Consequences
 
 ### Positive
-- **High Performance:** Excellent reasoning capabilities for complex queries
-- **Efficiency:** 7B parameters provide good balance of quality vs. resource requirements
-- **Multilingual:** Strong support for diverse linguistic content
-- **Fine-tuning Ready:** Well-established workflows for domain adaptation
-- **Local Execution:** Complete sovereignty via Ollama integration
+- **High Quality:** Excellent reasoning for complex questions
+- **Efficient Size:** Good balance between quality and resource needs
+- **Multilingual:** Strong support for different languages
+- **Customizable:** Well-established methods for specialization
+- **Local Control:** Complete independence through local processing
 
 ### Negative
-- **Resource Intensive:** Requires GPU acceleration for optimal performance
-- **Model Size:** Larger than smaller alternatives (3B, 1.5B models)
-- **Vendor Association:** Connection to Alibaba Cloud (though open-source)
+- **Resource Needs:** Requires graphics card acceleration for best performance
+- **Model Size:** Larger than smaller alternatives
+- **Company Connection:** Linked to Alibaba Cloud (though the code is open-source)
 
 ### Risks
-- **Hardware Requirements:** May require dedicated GPU for acceptable performance
-- **Model Availability:** Dependency on continued open-source distribution
-- **Fine-tuning Complexity:** Requires significant computational resources for training
+- **Hardware Needs:** May need dedicated graphics card for good performance
+- **Model Access:** Depends on continued open-source availability
+- **Customization Work:** Requires significant computing power for training
 
 ### Dependencies
-- Ollama server for local model execution
-- CUDA-compatible GPU (recommended for performance)
-- Sufficient RAM for model loading (16GB+)
-- Hugging Face access for model downloads
-- Fine-tuning infrastructure (Google Colab or local GPU setup)
+- Ollama software for local model running
+- CUDA-compatible graphics card (recommended)
+- Enough memory for model loading (16GB or more)
+- Access to download models
+- Training setup (cloud service or local graphics card)
