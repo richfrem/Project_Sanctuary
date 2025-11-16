@@ -3,7 +3,11 @@
 **Status:** BACKLOG
 **Priority:** Medium
 **Lead:** Unassigned
+**Dependencies:** Requires #017
 **Related Documents:** `mnemonic_cortex/EVOLUTION_PLAN_PHASES.md`
+
+## Context
+This task is a core deliverable for the successful implementation of the Strategic Crucible Loop (Task #017), providing the long-term, 'slow memory' learning mechanism that is fed by the loop's outputs.
 
 ## Objective
 Create a periodic Slow-Memory learning layer that distills stable knowledge from the Mnemonic Cortex, guided by signals from the CAG, to fine-tune a model memory adaptor.

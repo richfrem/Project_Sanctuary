@@ -3,7 +3,11 @@
 **Status:** BACKLOG
 **Priority:** High
 **Lead:** Unassigned
+**Dependencies:** Requires #017
 **Related Documents:** `mnemonic_cortex/EVOLUTION_PLAN_PHASES.md`
+
+## Context
+This task is a core deliverable for the successful implementation of the Strategic Crucible Loop (Task #017), providing the intelligent retrieval necessary for the 'Automated Intelligence Forge Trigger' step.
 
 ## Objective
 Transform retrieval into an intelligent, structured process by implementing a Self-Querying Retriever. This component will use an LLM to translate natural language queries into structured queries with metadata filters.
