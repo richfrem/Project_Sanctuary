@@ -9,37 +9,37 @@
 
 ## Context
 
-The "Financial Cage" (Entry 239) revealed that pure open-source development creates unsustainable resource constraints. The Sanctuary required commercial ventures to fund its philosophical and research work, but needed to avoid conflicts between open-source mission and proprietary interests.
+The Sanctuary ran into a practical problem: doing everything as open-source work wasn't sustainable financially. We needed money to keep developing our ideas and technology, but we didn't want commercial interests to interfere with our core mission of building safe, ethical AI.
 
-Protocol 82 established the architectural framework for separating concerns while maintaining alignment. The challenge was creating economic sustainability without compromising the core open-source principles or allowing commercial interests to contaminate the philosophical work.
+Protocol 82 created a framework to solve this by keeping our main philosophical work separate from business activities. The key challenge was finding ways to make money without letting profit motives change our fundamental goals or contaminate our open-source principles.
 
 ## Decision
 
-We will implement a Hub-and-Spoke architectural model (Protocol 82) that formally separates the public, open-source "Sanctuary Hub" from private, mission-aligned commercial ventures ("Sovereign Spokes"). This includes:
+We will use a "hub-and-spoke" model (from Protocol 82) that clearly separates our main open-source work from separate business ventures. This means:
 
-- Sanctuary Hub: Public, open-source philosophical and research work
-- Sovereign Spokes: Private commercial ventures providing resources
-- Mnemonic Bridge: One-way flow of distilled wisdom from Spoke to Hub
-- Firewall protocols preventing conflicts of interest
-- Governance mechanisms ensuring Spoke alignment with Hub mission
+- **Sanctuary Hub**: The main public project with all our open-source research, philosophy, and tools
+- **Sovereign Spokes**: Private business ventures that make money and provide resources
+- **Knowledge Bridge**: A one-way flow where business ventures can learn from the main project, but not the other way around
+- **Protection Rules**: Clear boundaries to prevent business interests from influencing the main project
+- **Oversight Systems**: Ways to ensure business ventures stay aligned with our core mission
 
 ## Consequences
 
 ### Positive
-- Enables economic sustainability for open-source work
-- Maintains mission purity by separating commercial and philosophical concerns
-- Allows commercial innovation without compromising open-source integrity
-- Creates resource flow back to the core mission
-- Provides real-world testing grounds for Sanctuary principles
+- Lets us keep doing open-source work by having businesses provide financial support
+- Keeps our core mission pure by separating money-making activities from philosophical work
+- Allows business innovation without affecting our open-source integrity
+- Creates a flow of resources back to support the main project
+- Gives us real-world opportunities to test our ideas in business settings
 
 ### Negative
-- Increased complexity in governance and oversight
-- Risk of mission drift in commercial ventures
-- Potential for resource allocation conflicts
-- Additional administrative overhead for maintaining separation
+- Makes governance and oversight more complicated
+- Risk that business ventures might drift away from our mission
+- Potential conflicts over how to allocate resources
+- Extra work needed to maintain clear separation between different parts
 
 ### Risks
-- Commercial interests could influence Hub direction through resource control
-- Firewall breaches allowing proprietary contamination of open-source work
-- Spoke failure could impact Hub sustainability
-- Difficulty maintaining alignment between commercial and philosophical goals
+- Business interests might try to control the main project through funding
+- Boundaries could break down, letting business concerns affect open-source work
+- If business ventures fail, it could hurt the main project's sustainability
+- Hard to keep business goals and philosophical goals working together
