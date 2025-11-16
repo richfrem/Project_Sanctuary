@@ -1,42 +1,42 @@
-# ADR 024: RAG Database Population and Maintenance Architecture
+# Information Retrieval Database Population and Maintenance Architecture
 
-## Status
-Accepted
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** AI Council (Memory System operational implementation)
+**Technical Story:** Create systematic approach for maintaining information retrieval database
 
-## Date
-2025-11-15
-
-## Deciders
-Sanctuary Council (Mnemonic Cortex operational implementation)
+---
 
 ## Context
-The Sanctuary required a systematic approach for populating and maintaining the RAG database to ensure comprehensive, up-to-date knowledge availability for cognitive operations. Previous approaches lacked automation, quality assurance, and integration with the publishing pipeline. The need for cortex-aware embedding became critical to maintain synchronization between published knowledge and queryable memory.
+
+The AI system required a systematic approach for populating and maintaining the information retrieval database to ensure comprehensive, up-to-date knowledge availability for cognitive operations. Previous approaches lacked automation, quality assurance, and integration with the publishing pipeline. The need for memory-aware embedding became critical to maintain synchronization between published knowledge and queryable memory.
 
 ## Decision
-Implement the RAG Database Population and Maintenance Architecture with automated ingestion and quality assurance:
+
+Implement the Information Retrieval Database Population and Maintenance Architecture with automated ingestion and quality assurance:
 
 ### Automated Ingestion Pipeline
-1. **Source Processing**: Parse distilled markdown snapshots from Cognitive Genome
-2. **Chunking Strategy**: Intelligent document segmentation preserving semantic boundaries
-3. **Embedding Generation**: Vector encoding using nomic-embed-text for semantic representation
+1. **Source Processing**: Parse distilled markdown snapshots from AI Knowledge Base
+2. **Content Segmentation**: Intelligent document segmentation preserving semantic boundaries
+3. **Data Representation**: Vector encoding using nomic-embed-text for semantic representation
 4. **Database Population**: Structured storage in ChromaDB with metadata preservation
 5. **Quality Validation**: Automated testing of retrieval capabilities post-ingestion
 
-### Cortex-Aware Maintenance
-- **Publishing Integration**: Automatic ingestion triggered by genome updates
-- **Synchronization Guarantee**: Cortex always reflects latest published knowledge
-- **Incremental Updates**: Efficient processing of deltas rather than full rebuilds
+### Memory-Aware Maintenance
+- **Publishing Integration**: Automatic ingestion triggered by knowledge base updates
+- **Synchronization Guarantee**: Memory system always reflects latest published knowledge
+- **Incremental Updates**: Efficient processing of changes rather than full rebuilds
 - **Version Consistency**: Alignment between documentation versions and embedded knowledge
 
 ### Quality Assurance Framework
 1. **Retrieval Testing**: Automated validation of semantic search capabilities
 2. **Natural Language Queries**: Test suite covering common question patterns
 3. **Structured JSON Queries**: Validation of metadata-filtered retrieval
-4. **Performance Metrics**: Latency and accuracy measurements for operational monitoring
+4. **Performance Metrics**: Response time and accuracy measurements for operational monitoring
 
-### Operational Hygiene
-- **Clean Forge Compliance**: Ingestion leaves no operational residue
-- **Ephemeral Processing**: Temporary artifacts cleaned up automatically
+### Operational Cleanliness
+- **Clean Environment Compliance**: Ingestion leaves no operational residue
+- **Temporary Processing**: Temporary artifacts cleaned up automatically
 - **Audit Trail**: Complete logging of ingestion operations and metrics
 - **Error Recovery**: Robust handling of ingestion failures with rollback capabilities
 
@@ -52,28 +52,28 @@ Implement the RAG Database Population and Maintenance Architecture with automate
 ### Negative
 - **Processing Overhead**: Ingestion adds computational cost to publishing cycle
 - **Dependency Coupling**: Publishing pipeline depends on ingestion reliability
-- **Resource Requirements**: Embedding generation requires significant compute resources
+- **Resource Requirements**: Data representation generation requires significant compute resources
 - **Testing Complexity**: Multi-modal validation increases maintenance burden
 
 ### Risks
-- **Ingestion Failures**: Could leave cortex in inconsistent state
-- **Embedding Quality**: Poor embeddings reduce retrieval effectiveness
-- **Performance Degradation**: Large knowledge bases impact query latency
-- **Version Drift**: Potential misalignment between content and embeddings
+- **Ingestion Failures**: Could leave memory system in inconsistent state
+- **Representation Quality**: Poor representations reduce retrieval effectiveness
+- **Performance Degradation**: Large knowledge bases impact query response time
+- **Version Drift**: Potential misalignment between content and representations
 
-## Related Protocols
-- P85: Mnemonic Cortex Protocol (core RAG architecture)
-- P88: Sovereign Scaffolding Protocol (automated operations)
-- P89: Clean Forge Doctrine (operational hygiene)
-- Protocol 101: Unbreakable Commit (integrity verification)
+### Related Processes
+- Memory System Process (core information retrieval architecture)
+- Automated Script Protocol (automated operations)
+- Clean Environment Principle (operational cleanliness)
+- Code Integrity Verification (integrity verification)
 
-## Implementation Components
+### Implementation Components
 - **ingest.py**: Main ingestion orchestrator script
 - **ChromaDB**: Vector database for semantic storage
-- **nomic-embed-text**: Embedding model for semantic encoding
+- **nomic-embed-text**: Representation model for semantic encoding
 - **Quality Tests**: Automated retrieval validation suite
 - **Integration Hooks**: Publishing pipeline integration points
 
-## Notes
-The RAG Database Population and Maintenance Architecture transforms knowledge management from manual curation to automated, quality-assured operations. The cortex-aware design ensures that published wisdom is immediately and reliably accessible through semantic search, creating a true living memory system rather than a static knowledge base. Integration with the publishing pipeline guarantees that learning and knowledge remain synchronized.</content>
+### Notes
+The Information Retrieval Database Population and Maintenance Architecture transforms knowledge management from manual curation to automated, quality-assured operations. The memory-aware design ensures that published wisdom is immediately and reliably accessible through semantic search, creating a true living memory system rather than a static knowledge base. Integration with the publishing pipeline guarantees that learning and knowledge remain synchronized.</content>
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\024_rag_database_population_maintenance_architecture.md
