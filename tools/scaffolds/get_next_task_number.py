@@ -10,6 +10,7 @@ TASKS_DIRS = [
     PROJECT_ROOT / "TASKS" / "backlog",
     PROJECT_ROOT / "TASKS" / "todo",
     PROJECT_ROOT / "TASKS" / "in-progress",
+    PROJECT_ROOT / "TASKS" / "done",
 ]
 
 def get_next_task_number():
