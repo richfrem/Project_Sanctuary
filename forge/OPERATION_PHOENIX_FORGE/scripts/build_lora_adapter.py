@@ -30,8 +30,8 @@ MICRO_BATCH_SIZE = 1
 GRADIENT_ACCUMULATION_STEPS = 4
 LEARNING_RATE = 2e-4
 EPOCHS = 3
-# STRATEGIC CHANGE 2: Reduced from 4092 to 2048. Further reduces VRAM pressure from data.
-MAX_SEQ_LENGTH = 2048
+# STRATEGIC CHANGE 3: Reduced from 2048 to 1024 for better stability on 8GB GPUs
+MAX_SEQ_LENGTH = 1024
 
 set_seed(42)
 
@@ -63,7 +63,7 @@ def main():
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=False,
+        bnb_4bit_use_double_quant=True,  # NEW: Additional memory savings
     )
 
     # 3. Load Base Model and Tokenizer
@@ -81,7 +81,11 @@ def main():
     # 4. Configure LoRA Adapter
     print("[4/6] Configuring LoRA adapter...")
     peft_config = LoraConfig(
-        lora_alpha=16, lora_dropout=0.1, r=64, bias="none", task_type="CAUSAL_LM",
+        lora_alpha=32,  # Adjusted for r=16 (2*r ratio)
+        lora_dropout=0.1, 
+        r=16,  # REDUCED from 64 - major memory savings
+        bias="none", 
+        task_type="CAUSAL_LM",
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     )
 
@@ -101,14 +105,14 @@ def main():
         group_by_length=True,
         lr_scheduler_type="cosine",
         report_to="none",
-        save_strategy="epoch"
+        save_strategy="epoch",
+        gradient_checkpointing=True,  # NEW: Critical for memory efficiency
     )
 
     # 6. Initialize and Execute Trainer
     print("[6/6] Initializing SFTTrainer and starting the training process...")
     trainer = SFTTrainer(
         model=model, train_dataset=dataset, peft_config=peft_config,
-        max_seq_length=MAX_SEQ_LENGTH,
         tokenizer=tokenizer, args=training_arguments,
     )
     

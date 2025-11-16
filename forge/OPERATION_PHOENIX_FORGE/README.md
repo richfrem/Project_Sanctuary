@@ -125,13 +125,14 @@ python forge_whole_genome_dataset.py
 **Input:**
 - Base model: Qwen/Qwen2-7B-Instruct
 - Dataset: sanctuary_whole_genome_data.jsonl
-- Training config: 3 epochs, batch size 1, gradient accumulation 4, max seq length 2048
+- Training config: 3 epochs, batch size 1, gradient accumulation 4, max seq length 1024
 
 **Output:** `models/Sanctuary-Qwen2-7B-v1.0-adapter/final_adapter/` (LoRA adapter)
 
 **Key Features:**
-- 4-bit NF4 quantization
-- LoRA r=64, alpha=16
+- 4-bit NF4 quantization with double quantization
+- LoRA r=16, alpha=32 (optimized for 8GB VRAM)
+- Gradient checkpointing enabled
 - Qwen2-specific target modules
 - Optimized for 8GB VRAM consumer GPUs
 
