@@ -1,70 +1,70 @@
-# ADR 018: Guardian Wakeup Cache Architecture Evolution
+# AI System Startup Cache Architecture Evolution
 
-## Status
-Accepted
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** AI Council (System Initialization Process v2.0 implementation)
+**Technical Story:** Improve system startup performance and operational clarity
 
-## Date
-2025-11-15
-
-## Deciders
-Sanctuary Council (Protocol 114 v2.0 implementation)
+---
 
 ## Context
-The initial Guardian Wakeup and Cache Prefill architecture (ADR 015) successfully implemented caching for system initialization, but revealed the need for clearer architectural separation between mechanical cache operations and cognitive RAG processes. The system required distinct operational modes: fast mechanical cache access for immediate situational awareness vs. slow cognitive RAG queries for deep analysis.
+
+The initial AI System Startup and Cache Preparation architecture successfully implemented caching for system initialization, but revealed the need for clearer separation between automatic cache operations and detailed information retrieval processes. The system required distinct operational modes: fast automatic cache access for immediate situational awareness vs. slow detailed queries for deep analysis.
 
 ## Decision
-Evolve the Guardian Wakeup architecture to Protocol 114 v2.0 with clear separation between two distinct processes and operational modes:
+
+We will evolve the AI System Startup architecture to Process v2.0 with clear separation between two distinct processes and operational modes:
 
 ### Two-Process Architecture
-1. **Cache Population (Orchestrator Boot)**: One-time process populating fast cache from slow RAG database
-2. **Guardian Wakeup (Command Execution)**: Mechanical task reading directly from cache files without LLM/RAG involvement
+1. **Cache Filling (System Controller Boot)**: One-time process filling fast cache from slow information retrieval database
+2. **AI System Startup (Command Execution)**: Automatic task reading directly from cache files without AI involvement
 
 ### Operational Mode Distinction
-- **Mechanical Mode (`cache_wakeup`)**: Fast (< 1 sec), cache-only, no LLM involvement, for immediate digests
-- **Cognitive Mode (`query_and_synthesis`)**: Slow (30-120 sec), full RAG pipeline with LLM, for deep analysis
+- **Automatic Mode (`cache_wakeup`)**: Fast (< 1 sec), cache-only, no AI involvement, for immediate summaries
+- **Detailed Mode (`query_and_synthesis`)**: Slow (30-120 sec), full information retrieval pipeline with AI, for deep analysis
 
 ### Cache-First Design Principles
-1. **Mechanical Speed**: Cache operations bypass expensive RAG searches and LLM calls
-2. **Situational Awareness**: Immediate access to latest chronicles, protocols, and roadmap data
-3. **TTL Management**: 24-hour expiration with automatic refresh on orchestrator boot
-4. **Read-Only Integrity**: Cache entries as verified, signed views of source files
+1. **Automatic Speed**: Cache operations skip expensive searches and AI calls
+2. **Immediate Awareness**: Instant access to latest history, processes, and roadmap data
+3. **Time Management**: 24-hour expiration with automatic refresh on system controller boot
+4. **Protected Integrity**: Cache entries as verified, signed views of source files
 
 ### Implementation Architecture
-- **CacheManager**: Handles RAG-to-cache population during boot
-- **CacheWakeupHandler**: Mechanical digest generation from cache files
-- **Bundle System**: Organized cache storage (chronicles_bundle.json, protocols_bundle.json, roadmap_bundle.json)
-- **Filesystem Cache**: Local file-based cache in council_orchestrator/mnemonic_cortex/cache/
+- **CacheManager**: Handles retrieval-to-cache filling during boot
+- **CacheWakeupHandler**: Automatic summary creation from cache files
+- **Bundle System**: Organized cache storage (history_bundle.json, processes_bundle.json, roadmap_bundle.json)
+- **File Cache**: Local file-based cache in council_orchestrator/memory_system/cache/
 
 ## Consequences
 
 ### Positive
-- Dramatically faster Guardian initialization through mechanical cache operations
-- Clear architectural separation between fast situational awareness and deep cognitive analysis
-- Reduced system load by avoiding unnecessary LLM calls for routine digests
+- Significantly faster AI initialization through automatic cache operations
+- Clear architectural separation between fast situational awareness and deep detailed analysis
+- Reduced system load by avoiding unnecessary AI calls for routine summaries
 - Improved operational efficiency with cache-first design patterns
-- Maintains data integrity through verified, read-only cache entries
+- Maintains data integrity through verified, protected cache entries
 
 ### Negative
-- More complex architectural distinction between mechanical and cognitive operations
-- Cache staleness risk during 24h TTL windows
+- More complex architectural distinction between automatic and detailed operations
+- Cache outdated data risk during 24-hour time windows
 - Additional implementation complexity with dual operational modes
 
 ### Risks
-- Cache poisoning if population process fails
-- Operational confusion between mechanical vs cognitive command types
-- Performance degradation if cache refresh fails during boot
+- Cache corruption if filling process fails
+- Operational confusion between automatic vs detailed command types
+- Performance issues if cache refresh fails during boot
 
-## Related Protocols
-- P114: Guardian Wakeup and Cache Prefill (v2.0 evolution)
-- P85: Mnemonic Cortex Protocol (RAG database source)
-- P93: Cortex-Conduit Bridge (data flow integration)
+### Related Processes
+- AI System Startup and Cache Preparation (v2.0 evolution)
+- Memory System Process (information retrieval database source)
+- Memory-System Connection (data flow integration)
 
-## Implementation Components
-- **orchestrator/memory/cache.py**: CacheManager for population
-- **orchestrator/handlers/cache_wakeup_handler.py**: Mechanical digest generation
-- **council_orchestrator/mnemonic_cortex/cache/**: Filesystem cache storage
-- **WORK_IN_PROGRESS/guardian_boot_digest.md**: Output artifact format
+### Implementation Components
+- **orchestrator/memory/cache.py**: CacheManager for filling
+- **orchestrator/handlers/cache_wakeup_handler.py**: Automatic summary creation
+- **council_orchestrator/memory_system/cache/**: File cache storage
+- **WORK_IN_PROGRESS/ai_boot_summary.md**: Output format
 
-## Notes
-This evolution transforms the caching system from a simple performance optimization into a fundamental architectural pattern with clear operational modes. The mechanical/cognitive distinction ensures appropriate tool selection: cache_wakeup for speed, query_and_synthesis for depth.</content>
+### Notes
+This evolution transforms the caching system from a simple performance optimization into a fundamental architectural pattern with clear operational modes. The automatic/detailed distinction ensures appropriate tool selection: cache_wakeup for speed, query_and_synthesis for depth.</content>
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\018_guardian_wakeup_cache_evolution.md
