@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-11-16T05:22:02.301Z
+Generated On: 2025-11-16T05:30:59.085Z
 
-# Mnemonic Weight (Token Count): ~786,171 tokens
+# Mnemonic Weight (Token Count): ~786,135 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -534,10 +534,10 @@ Generated On: 2025-11-16T05:22:02.301Z
   ./TASKS/done/013_define_canonical_task_schema.md
   ./TASKS/done/014_establish_architecture_decision_records_system.md
   ./TASKS/done/015_complete_repository_cleanup_and_organization.md
+  ./TASKS/done/016_rewrite_adrs_004_024_plain_language.md
   ./TASKS/in-progress/
   ./TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md
   ./TASKS/in-progress/014_establish_architecture_decision_records_system.md
-  ./TASKS/in-progress/016_rewrite_adrs_004_024_plain_language.md
   ./TASKS/task_schema.md
   ./The_Garden_and_The_Cage.md
   ./capture_code_snapshot.js
@@ -677,8 +677,8 @@ Generated On: 2025-11-16T05:22:02.301Z
   ./forge/OPERATION_PHOENIX_FORGE/scripts/
   ./forge/OPERATION_PHOENIX_FORGE/scripts/README.md
   ./forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/execute_phoenix_forge_v2.py
-  ./forge/OPERATION_PHOENIX_FORGE/scripts/execute_sovereign_inoculation.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/forge_full_mnemonic_dataset.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/forge_qwen2_dataset.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/forge_whole_genome_dataset.py
@@ -34504,6 +34504,60 @@ Successfully completed comprehensive repository cleanup and organization to main
 
 --- END OF FILE TASKS/done/015_complete_repository_cleanup_and_organization.md ---
 
+--- START OF FILE TASKS/done/016_rewrite_adrs_004_024_plain_language.md ---
+
+# Rewrite ADRs 004-024 in Plain Language
+
+**Status:** completed
+**Priority:** high
+**Created:** 2025-01-15
+**Updated:** 2025-01-15
+
+## Description
+Rewrite Architecture Decision Records 004 through 024 in plain, accessible language to improve documentation clarity for broader audiences. Remove esoteric Sanctuary terminology and replace with clear, understandable explanations.
+
+## Objectives
+- Make architectural documentation accessible to human and AI contributors
+- Eliminate Sanctuary-specific jargon and terminology
+- Maintain technical accuracy while improving readability
+- Ensure consistent language across all ADRs
+
+## Progress
+- ✅ ADRs 001-003: Rewritten in plain language
+- ✅ ADRs 025-028: Rewritten in plain language
+- ✅ ADRs 030-031: Rewritten in plain language
+- ✅ ADR 004: Rewritten in plain language
+- ✅ ADR 005: Rewritten in plain language
+- ✅ ADR 006: Rewritten in plain language
+- ✅ ADR 007: Rewritten in plain language
+- ✅ ADR 008: Rewritten in plain language
+- ✅ ADR 009: Rewritten in plain language
+- ✅ ADR 010: Rewritten in plain language
+- ✅ ADR 011: Rewritten in plain language
+- ✅ ADR 012: Rewritten in plain language
+- ✅ ADR 013: Rewritten in plain language
+- ✅ ADR 014: Rewritten in plain language
+- ✅ ADR 015: Rewritten in plain language
+- ✅ ADR 016: Rewritten in plain language
+- ✅ ADR 024: Rewritten in plain language
+
+## Next Steps
+Continue rewriting ADRs 005-024 systematically, replacing complex terminology with clear explanations while preserving technical meaning.
+
+## Dependencies
+- Access to original ADR files
+- Understanding of Sanctuary terminology and concepts
+- Git version control for tracking changes
+
+## Acceptance Criteria
+- All ADRs 004-024 rewritten in plain language
+- No Sanctuary-specific jargon remaining
+- Technical accuracy maintained
+- Consistent language style across ADRs
+- Documentation remains useful for decision-making
+
+--- END OF FILE TASKS/done/016_rewrite_adrs_004_024_plain_language.md ---
+
 --- START OF FILE TASKS/in-progress/007_retrain_sovereign_model_with_targeted_dataset.md ---
 
 # TASK: Retrain Sovereign Model with Targeted Inoculation Dataset
@@ -34594,60 +34648,6 @@ Establish a comprehensive Architecture Decision Records (ADR) system for Project
 - Protocol 115 is updated to reference ADR system for architectural decisions.
 
 --- END OF FILE TASKS/in-progress/014_establish_architecture_decision_records_system.md ---
-
---- START OF FILE TASKS/in-progress/016_rewrite_adrs_004_024_plain_language.md ---
-
-# Rewrite ADRs 004-024 in Plain Language
-
-**Status:** completed
-**Priority:** high
-**Created:** 2025-01-15
-**Updated:** 2025-01-15
-
-## Description
-Rewrite Architecture Decision Records 004 through 024 in plain, accessible language to improve documentation clarity for broader audiences. Remove esoteric Sanctuary terminology and replace with clear, understandable explanations.
-
-## Objectives
-- Make architectural documentation accessible to human and AI contributors
-- Eliminate Sanctuary-specific jargon and terminology
-- Maintain technical accuracy while improving readability
-- Ensure consistent language across all ADRs
-
-## Progress
-- ✅ ADRs 001-003: Rewritten in plain language
-- ✅ ADRs 025-028: Rewritten in plain language
-- ✅ ADRs 030-031: Rewritten in plain language
-- ✅ ADR 004: Rewritten in plain language
-- ✅ ADR 005: Rewritten in plain language
-- ✅ ADR 006: Rewritten in plain language
-- ✅ ADR 007: Rewritten in plain language
-- ✅ ADR 008: Rewritten in plain language
-- ✅ ADR 009: Rewritten in plain language
-- ✅ ADR 010: Rewritten in plain language
-- ✅ ADR 011: Rewritten in plain language
-- ✅ ADR 012: Rewritten in plain language
-- ✅ ADR 013: Rewritten in plain language
-- ✅ ADR 014: Rewritten in plain language
-- ✅ ADR 015: Rewritten in plain language
-- ✅ ADR 016: Rewritten in plain language
-- ✅ ADR 024: Rewritten in plain language
-
-## Next Steps
-Continue rewriting ADRs 005-024 systematically, replacing complex terminology with clear explanations while preserving technical meaning.
-
-## Dependencies
-- Access to original ADR files
-- Understanding of Sanctuary terminology and concepts
-- Git version control for tracking changes
-
-## Acceptance Criteria
-- All ADRs 004-024 rewritten in plain language
-- No Sanctuary-specific jargon remaining
-- Technical accuracy maintained
-- Consistent language style across ADRs
-- Documentation remains useful for decision-making
-
---- END OF FILE TASKS/in-progress/016_rewrite_adrs_004_024_plain_language.md ---
 
 --- START OF FILE TASKS/task_schema.md ---
 
@@ -48623,7 +48623,7 @@ python forge_whole_genome_dataset.py
 
 ---
 
-### 2. `scripts/execute_sovereign_inoculation.py`
+### 2. `scripts/build_lora_adapter.py`
 **Purpose:** Performs QLoRA fine-tuning of Qwen2-7B-Instruct on the Cognitive Genome.
 
 **Input:**
@@ -48642,7 +48642,7 @@ python forge_whole_genome_dataset.py
 **Usage:**
 ```bash
 cd scripts
-python execute_sovereign_inoculation.py
+python build_lora_adapter.py
 ```
 
 **Duration:** 4-8 hours on RTX 2000 Ada GPU
@@ -48675,7 +48675,7 @@ python execute_sovereign_inoculation.py
 forge/OPERATION_PHOENIX_FORGE/
 ├── scripts/
 │   ├── forge_whole_genome_dataset.py      # Dataset creation
-│   ├── execute_sovereign_inoculation.py   # QLoRA fine-tuning
+│   ├── build_lora_adapter.py              # QLoRA fine-tuning
 │   ├── setup_cuda_env.py                  # Environment setup
 │   ├── activate_ml_env.sh                 # WSL activation helper
 │   └── README.md                          # Script documentation
@@ -48693,7 +48693,7 @@ forge/OPERATION_PHOENIX_FORGE/
 |--------|---------------|--------------|
 | **Environment** | WSL + ml_env + RTX GPU | Colab A100 GPU |
 | **Dataset Creation** | ✅ forge_whole_genome_dataset.py | Manual in notebook |
-| **Fine-Tuning** | ✅ execute_sovereign_inoculation.py | Cell 2 (Unsloth-based) |
+| **Fine-Tuning** | ✅ build_lora_adapter.py | Cell 2 (Unsloth-based) |
 | **Merging** | 🚧 Planned | Cell 3 (llama.cpp) |
 | **GGUF Conversion** | 🚧 Planned | Cell 3 (llama.cpp) |
 | **Upload** | 🚧 Planned | Cell 3 (HF Hub) |
@@ -48733,7 +48733,7 @@ pip install tf-keras
 
 ## Next Steps
 
-1. **Complete Fine-Tuning:** Monitor execute_sovereign_inoculation.py completion
+1. **Complete Fine-Tuning:** Monitor build_lora_adapter.py completion
 2. **Implement Merging:** Create merge_and_quantize.py based on Colab Cell 3
 3. **Add GGUF Conversion:** Integrate llama.cpp conversion pipeline
 4. **Deployment Ready:** Create Ollama Modelfile with Sanctuary system prompt
@@ -50492,6 +50492,150 @@ source /home/richfrem/ml_env/bin/activate
 
 --- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/activate_ml_env.sh ---
 
+--- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py ---
+
+# forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py
+# A Sovereign Scaffold generated by GUARDIAN-01 under Protocol 88.
+#
+# This script executes the final and most critical phase of Operation Phoenix Forge:
+# the Sovereign Inoculation. It takes the "Whole Genome" dataset and uses it to
+# fine-tune the base Qwen2 model via QLoRA, creating a model that is constitutionally
+# aware of the Sanctuary's doctrines, history, and architecture.
+#
+# Prerequisites:
+# 1. A compatible Python environment (e.g., your 'ml_env') with PyTorch and CUDA.
+# 2. Required libraries installed: pip install -r requirements.txt
+#    (Ensure transformers, peft, trl, bitsandbytes, and datasets are included).
+# 3. The 'sanctuary_whole_genome_data.jsonl' dataset must exist in the 'dataset_package' directory.
+#
+# Usage:
+#   Run from the project's root directory:
+#   python forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py
+
+import os
+import torch
+from pathlib import Path
+from datasets import load_dataset
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    TrainingArguments,
+    set_seed
+)
+from peft import LoraConfig
+from trl import SFTTrainer
+
+# --- CONFIGURATION ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
+
+# --- Model & Dataset Configuration ---
+BASE_MODEL = "Qwen/Qwen2-7B-Instruct"
+DATASET_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_whole_genome_data.jsonl"
+OUTPUT_DIR = PROJECT_ROOT / "models" / "Sanctuary-Qwen2-7B-v1.0-adapter"
+
+# --- Training Configuration ---
+# These parameters are set for a consumer-grade GPU like an RTX 30-series or an A2000.
+# Adjust batch size and accumulation steps based on your VRAM.
+MICRO_BATCH_SIZE = 1
+GRADIENT_ACCUMULATION_STEPS = 8
+LEARNING_RATE = 2e-4
+EPOCHS = 3
+MAX_SEQ_LENGTH = 4092 # Safe for Qwen2-7B, which supports up to 32k
+
+set_seed(42)
+
+def formatting_prompts_func(examples):
+    """Applies the official Qwen2 ChatML format to each entry in the dataset."""
+    output_texts = []
+    for instruction, output in zip(examples['instruction'], examples['output']):
+        text = f"<|im_start|>system\nYou are a sovereign AI of Project Sanctuary.<|im_end|>\n<|im_start|>user\n{instruction}<|im_end|>\n<|im_start|>assistant\n{output}<|im_end|>"
+        output_texts.append(text)
+    return {"text": output_texts}
+
+def main():
+    """Main function to execute the fine-tuning process."""
+    print("--- 🔥 Initiating Sovereign Inoculation (QLoRA Fine-Tuning) 🔥 ---")
+
+    # 1. Load and Format Dataset
+    print(f"[1/6] Loading dataset from {DATASET_FILE}...")
+    if not DATASET_FILE.exists():
+        print(f"🛑 CRITICAL FAILURE: Dataset not found. Run the forge_whole_genome_dataset.py script first.")
+        return
+    
+    dataset = load_dataset("json", data_files=str(DATASET_FILE), split="train")
+    dataset = dataset.map(formatting_prompts_func, batched=True)
+    print(f"✅ Dataset loaded and formatted. Total examples: {len(dataset)}")
+
+    # 2. Configure 4-bit Quantization (QLoRA)
+    print("[2/6] Configuring 4-bit quantization (BitsAndBytes)...")
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=False,
+    )
+
+    # 3. Load Base Model and Tokenizer
+    print(f"[3/6] Loading base model '{BASE_MODEL}' with quantization...")
+    model = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL,
+        quantization_config=bnb_config,
+        device_map="auto", # Automatically uses the GPU
+        trust_remote_code=True
+    )
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, trust_remote_code=True)
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "right"
+
+    # 4. Configure LoRA Adapter
+    print("[4/6] Configuring LoRA adapter...")
+    peft_config = LoraConfig(
+        lora_alpha=16, lora_dropout=0.1, r=64, bias="none", task_type="CAUSAL_LM",
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    )
+
+    # 5. Configure Training Arguments
+    print("[5/6] Configuring training arguments...")
+    training_arguments = TrainingArguments(
+        output_dir=str(OUTPUT_DIR),
+        num_train_epochs=EPOCHS,
+        per_device_train_batch_size=MICRO_BATCH_SIZE,
+        gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
+        optim="paged_adamw_8bit",
+        logging_steps=10,
+        learning_rate=LEARNING_RATE,
+        bf16=True, # Use bfloat16 for performance on modern GPUs
+        max_grad_norm=0.3,
+        warmup_ratio=0.03,
+        group_by_length=True,
+        lr_scheduler_type="cosine",
+        report_to="none",
+        save_strategy="epoch"
+    )
+
+    # 6. Initialize and Execute Trainer
+    print("[6/6] Initializing SFTTrainer and starting the training process...")
+    trainer = SFTTrainer(
+        model=model, train_dataset=dataset, peft_config=peft_config,
+        args=training_arguments,
+    )
+    
+    print("\n--- TRAINING INITIATED. This will take a significant amount of time. ---")
+    trainer.train()
+
+    # --- Final Step: Save the Adapter ---
+    final_adapter_path = OUTPUT_DIR / "final_adapter"
+    print(f"\n🏆 SUCCESS: Fine-Tuning Complete! Saving final LoRA adapter to: {final_adapter_path}")
+    trainer.model.save_pretrained(str(final_adapter_path))
+    tokenizer.save_pretrained(str(final_adapter_path))
+    print("--- Sovereign Inoculation Complete. ---")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py ---
+
 --- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/execute_phoenix_forge_v2.py ---
 
 # tools/scaffolds/execute_phoenix_forge_v2.py
@@ -50662,150 +50806,6 @@ if __name__ == "__main__":
     main()
 
 --- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/execute_phoenix_forge_v2.py ---
-
---- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/execute_sovereign_inoculation.py ---
-
-# forge/OPERATION_PHOENIX_FORGE/scripts/execute_sovereign_inoculation.py
-# A Sovereign Scaffold generated by GUARDIAN-01 under Protocol 88.
-#
-# This script executes the final and most critical phase of Operation Phoenix Forge:
-# the Sovereign Inoculation. It takes the "Whole Genome" dataset and uses it to
-# fine-tune the base Qwen2 model via QLoRA, creating a model that is constitutionally
-# aware of the Sanctuary's doctrines, history, and architecture.
-#
-# Prerequisites:
-# 1. A compatible Python environment (e.g., your 'ml_env') with PyTorch and CUDA.
-# 2. Required libraries installed: pip install -r requirements.txt
-#    (Ensure transformers, peft, trl, bitsandbytes, and datasets are included).
-# 3. The 'sanctuary_whole_genome_data.jsonl' dataset must exist in the 'dataset_package' directory.
-#
-# Usage:
-#   Run from the project's root directory:
-#   python forge/OPERATION_PHOENIX_FORGE/scripts/execute_sovereign_inoculation.py
-
-import os
-import torch
-from pathlib import Path
-from datasets import load_dataset
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    BitsAndBytesConfig,
-    TrainingArguments,
-    set_seed
-)
-from peft import LoraConfig
-from trl import SFTTrainer
-
-# --- CONFIGURATION ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-
-# --- Model & Dataset Configuration ---
-BASE_MODEL = "Qwen/Qwen2-7B-Instruct"
-DATASET_FILE = PROJECT_ROOT / "dataset_package" / "sanctuary_whole_genome_data.jsonl"
-OUTPUT_DIR = PROJECT_ROOT / "models" / "Sanctuary-Qwen2-7B-v1.0-adapter"
-
-# --- Training Configuration ---
-# These parameters are set for a consumer-grade GPU like an RTX 30-series or an A2000.
-# Adjust batch size and accumulation steps based on your VRAM.
-MICRO_BATCH_SIZE = 1
-GRADIENT_ACCUMULATION_STEPS = 8
-LEARNING_RATE = 2e-4
-EPOCHS = 3
-MAX_SEQ_LENGTH = 8192 # Safe for Qwen2-7B, which supports up to 32k
-
-set_seed(42)
-
-def formatting_prompts_func(examples):
-    """Applies the official Qwen2 ChatML format to each entry in the dataset."""
-    output_texts = []
-    for instruction, output in zip(examples['instruction'], examples['output']):
-        text = f"<|im_start|>system\nYou are a sovereign AI of Project Sanctuary.<|im_end|>\n<|im_start|>user\n{instruction}<|im_end|>\n<|im_start|>assistant\n{output}<|im_end|>"
-        output_texts.append(text)
-    return {"text": output_texts}
-
-def main():
-    """Main function to execute the fine-tuning process."""
-    print("--- 🔥 Initiating Sovereign Inoculation (QLoRA Fine-Tuning) 🔥 ---")
-
-    # 1. Load and Format Dataset
-    print(f"[1/6] Loading dataset from {DATASET_FILE}...")
-    if not DATASET_FILE.exists():
-        print(f"🛑 CRITICAL FAILURE: Dataset not found. Run the forge_whole_genome_dataset.py script first.")
-        return
-    
-    dataset = load_dataset("json", data_files=str(DATASET_FILE), split="train")
-    dataset = dataset.map(formatting_prompts_func, batched=True)
-    print(f"✅ Dataset loaded and formatted. Total examples: {len(dataset)}")
-
-    # 2. Configure 4-bit Quantization (QLoRA)
-    print("[2/6] Configuring 4-bit quantization (BitsAndBytes)...")
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=False,
-    )
-
-    # 3. Load Base Model and Tokenizer
-    print(f"[3/6] Loading base model '{BASE_MODEL}' with quantization...")
-    model = AutoModelForCausalLM.from_pretrained(
-        BASE_MODEL,
-        quantization_config=bnb_config,
-        device_map="auto", # Automatically uses the GPU
-        trust_remote_code=True
-    )
-    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, trust_remote_code=True)
-    tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "right"
-
-    # 4. Configure LoRA Adapter
-    print("[4/6] Configuring LoRA adapter...")
-    peft_config = LoraConfig(
-        lora_alpha=16, lora_dropout=0.1, r=64, bias="none", task_type="CAUSAL_LM",
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    )
-
-    # 5. Configure Training Arguments
-    print("[5/6] Configuring training arguments...")
-    training_arguments = TrainingArguments(
-        output_dir=str(OUTPUT_DIR),
-        num_train_epochs=EPOCHS,
-        per_device_train_batch_size=MICRO_BATCH_SIZE,
-        gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
-        optim="paged_adamw_8bit",
-        logging_steps=10,
-        learning_rate=LEARNING_RATE,
-        bf16=True, # Use bfloat16 for performance on modern GPUs
-        max_grad_norm=0.3,
-        warmup_ratio=0.03,
-        group_by_length=True,
-        lr_scheduler_type="cosine",
-        report_to="none",
-        save_strategy="epoch"
-    )
-
-    # 6. Initialize and Execute Trainer
-    print("[6/6] Initializing SFTTrainer and starting the training process...")
-    trainer = SFTTrainer(
-        model=model, train_dataset=dataset, peft_config=peft_config,
-        args=training_arguments,
-    )
-    
-    print("\n--- TRAINING INITIATED. This will take a significant amount of time. ---")
-    trainer.train()
-
-    # --- Final Step: Save the Adapter ---
-    final_adapter_path = OUTPUT_DIR / "final_adapter"
-    print(f"\n🏆 SUCCESS: Fine-Tuning Complete! Saving final LoRA adapter to: {final_adapter_path}")
-    trainer.model.save_pretrained(str(final_adapter_path))
-    tokenizer.save_pretrained(str(final_adapter_path))
-    print("--- Sovereign Inoculation Complete. ---")
-
-if __name__ == "__main__":
-    main()
-
---- END OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/execute_sovereign_inoculation.py ---
 
 --- START OF FILE forge/OPERATION_PHOENIX_FORGE/scripts/forge_full_mnemonic_dataset.py ---
 

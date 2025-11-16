@@ -125,7 +125,7 @@ python forge_whole_genome_dataset.py
 **Input:**
 - Base model: Qwen/Qwen2-7B-Instruct
 - Dataset: sanctuary_whole_genome_data.jsonl
-- Training config: 3 epochs, batch size 1, gradient accumulation 8
+- Training config: 3 epochs, batch size 1, gradient accumulation 4, max seq length 2048
 
 **Output:** `models/Sanctuary-Qwen2-7B-v1.0-adapter/final_adapter/` (LoRA adapter)
 
@@ -133,7 +133,7 @@ python forge_whole_genome_dataset.py
 - 4-bit NF4 quantization
 - LoRA r=64, alpha=16
 - Qwen2-specific target modules
-- Automatic GPU utilization
+- Optimized for 8GB VRAM consumer GPUs
 
 **Usage:**
 ```bash
@@ -141,7 +141,7 @@ cd scripts
 python build_lora_adapter.py
 ```
 
-**Duration:** 4-8 hours on RTX 2000 Ada GPU
+**Duration:** 2-4 hours on RTX 2000 Ada GPU (60-90 seconds per step)
 
 **Status:** 🚧 In Progress - Currently loading model and initializing training
 
