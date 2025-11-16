@@ -339,7 +339,7 @@ class GardenerBootstrap:
         print("\n🔄 FALLBACK: LEGACY PYTORCH RL TRAINING")
         print("=" * 60)
         print("Using archived PyTorch RL implementation")
-        print("Location: 05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/")
+        print("Location: EXPERIMENTS/gardener_protocol37_experiment/")
         print("=" * 60)
         
         archived_path = self.repo_path / "05_ARCHIVED_BLUEPRINTS" / "gardener_pytorch_rl_v1"

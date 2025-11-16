@@ -46,7 +46,7 @@ python3 bootstrap.py --train-v1 --timesteps [TARGET_TIMESTEPS]
 - Model adapter checkpoint preservation
 
 **✅ ARCHITECTURAL TRANSITION COMPLETE (August 1, 2025):**  
-The Gardener V2 now uses LLM weight evolution architecture with LoRA fine-tuning via Phoenix Forge Protocol (41). The original PyTorch RL implementation remains archived in `05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/` for historical reference and fallback capabilities.
+The Gardener V2 now uses LLM weight evolution architecture with LoRA fine-tuning via Phoenix Forge Protocol (41). The original PyTorch RL implementation remains archived in `EXPERIMENTS/gardener_protocol37_experiment/` for historical reference and fallback capabilities.
 
 #### **Phase 4: Performance Evaluation**
 ```bash

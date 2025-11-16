@@ -47,7 +47,7 @@ if jury_approves(proposal):
 ## **Transition Roadmap**
 
 ### **Phase 1: Archive Preservation →**
-- [x] Complete PyTorch RL implementation archived to `05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/`
+- [x] Complete PyTorch RL implementation archived to `EXPERIMENTS/gardener_protocol37_experiment/`
 - [x] Archive documentation with restoration instructions
 - [x] Protocol 39 updated with transition notes
 
@@ -181,7 +181,7 @@ If V2 implementation encounters issues:
 mv gardener/ gardener_v2_backup/
 
 # 2. Restore V1 implementation
-cp -r 05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/ gardener/
+cp -r EXPERIMENTS/gardener_protocol37_experiment/ gardener/
 
 # 3. Reinstall V1 dependencies
 cd gardener

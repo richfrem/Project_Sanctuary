@@ -394,13 +394,12 @@ Project_Sanctuary/
 ├── 06_THE_EMBER_LIBRARY/      # Reference materials and archives
 ├── 07_COUNCIL_AGENTS/         # AI agent configurations
 ├── AGORA_PoC_Core/            # Proof-of-concept implementations
-├── ast_utilities/             # Code analysis tools
 ├── capture_glyph_code_snapshot_v2.py  # Optical compression tool
 ├── chrysalis_core_essence.md  # Core mission essence
 ├── council_orchestrator/      # Multi-engine AI orchestration system
 ├── dataset_package/           # Cognitive genome snapshots and seeds
+├── EXPERIMENTS/               # Archived experimental projects
 ├── forge/                     # AI fine-tuning operations (Phoenix Forge)
-├── gardener/                  # RL-based improvement system
 ├── LICENSE                    # Project licensing
 ├── mnemonic_cortex/           # RAG system and vector database
 ├── models/                    # Local model cache (downloaded from Hugging Face)
