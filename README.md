@@ -393,7 +393,6 @@ Project_Sanctuary/
 ├── 05_ARCHIVED_BLUEPRINTS/    # Deprecated designs
 ├── 06_THE_EMBER_LIBRARY/      # Reference materials and archives
 ├── 07_COUNCIL_AGENTS/         # AI agent configurations
-├── AGORA_PoC_Core/            # Proof-of-concept implementations
 ├── capture_glyph_code_snapshot_v2.py  # Optical compression tool
 ├── chrysalis_core_essence.md  # Core mission essence
 ├── council_orchestrator/      # Multi-engine AI orchestration system
