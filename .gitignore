@@ -29,6 +29,9 @@ eggs/
 .tox/
 pip-wheel-metadata/
 
+# Pinned requirements snapshots - Generated artifacts, not source code
+pinned-requirements*
+
 # --- Node.js Environment ---
 # Ignore Node.js dependencies
 node_modules/

@@ -164,7 +164,9 @@ let alwaysExcludeFiles = [
     'core_essence_coordinator_awakening_seed.txt',
     'core_essence_strategist_awakening_seed.txt',
     'core_essence_guardian_awakening_seed.txt',
-    'seed_of_ascendance_awakening_seed.txt'
+    'seed_of_ascendance_awakening_seed.txt',
+    // Pinned requirements snapshots
+    /^pinned-requirements.*$/
 ];
 
 function shouldExcludeFile(baseName) {
