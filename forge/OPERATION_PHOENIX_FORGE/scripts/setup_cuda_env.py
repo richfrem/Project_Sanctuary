@@ -33,7 +33,7 @@ THIS_FILE = Path(__file__).resolve()
 ROOT = find_repo_root(THIS_FILE)
 ML_ENV_SCRIPT = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'setup_ml_env_wsl.sh')
 CUDA_MARKDOWN = os.path.join(ROOT, '..', 'ML-Env-CUDA13', 'ML_ENV_README.md')
-LOG_DIR = os.path.join(ROOT, 'ml_env_logs')
+LOG_DIR = os.path.join(ROOT, 'forge', 'OPERATION_PHOENIX_FORGE', 'ml_env_logs')
 
 
 def run(cmd, capture=False):
