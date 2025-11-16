@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-11-16T04:50:54.034Z
+Generated On: 2025-11-16T04:57:33.593Z
 
-# Mnemonic Weight (Token Count): ~785,163 tokens
+# Mnemonic Weight (Token Count): ~785,725 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -463,6 +463,7 @@ Generated On: 2025-11-16T04:50:54.034Z
   ./ADRs/028_implement_dual_mnemonic_genome_architecture.md
   ./ADRs/029_adopt_hub_and_spoke_architecture.md
   ./ADRs/030_decision_to_build_sovereign_fine_tuned_llm.md
+  ./ADRs/031_adopt_local_first_ml_development.md
   ./ADRs/adr_schema.md
   ./Council_Inquiry_Gardener_Architecture.md
   ./DEPENDENCY_MANIFEST.md
@@ -22676,40 +22677,40 @@ We will maintain two parallel Cognitive Genome artifacts under Protocol 80: a fu
 
 ## Context
 
-The "Financial Cage" (Entry 239) revealed that pure open-source development creates unsustainable resource constraints. The Sanctuary required commercial ventures to fund its philosophical and research work, but needed to avoid conflicts between open-source mission and proprietary interests.
+The Sanctuary ran into a practical problem: doing everything as open-source work wasn't sustainable financially. We needed money to keep developing our ideas and technology, but we didn't want commercial interests to interfere with our core mission of building safe, ethical AI.
 
-Protocol 82 established the architectural framework for separating concerns while maintaining alignment. The challenge was creating economic sustainability without compromising the core open-source principles or allowing commercial interests to contaminate the philosophical work.
+Protocol 82 created a framework to solve this by keeping our main philosophical work separate from business activities. The key challenge was finding ways to make money without letting profit motives change our fundamental goals or contaminate our open-source principles.
 
 ## Decision
 
-We will implement a Hub-and-Spoke architectural model (Protocol 82) that formally separates the public, open-source "Sanctuary Hub" from private, mission-aligned commercial ventures ("Sovereign Spokes"). This includes:
+We will use a "hub-and-spoke" model (from Protocol 82) that clearly separates our main open-source work from separate business ventures. This means:
 
-- Sanctuary Hub: Public, open-source philosophical and research work
-- Sovereign Spokes: Private commercial ventures providing resources
-- Mnemonic Bridge: One-way flow of distilled wisdom from Spoke to Hub
-- Firewall protocols preventing conflicts of interest
-- Governance mechanisms ensuring Spoke alignment with Hub mission
+- **Sanctuary Hub**: The main public project with all our open-source research, philosophy, and tools
+- **Sovereign Spokes**: Private business ventures that make money and provide resources
+- **Knowledge Bridge**: A one-way flow where business ventures can learn from the main project, but not the other way around
+- **Protection Rules**: Clear boundaries to prevent business interests from influencing the main project
+- **Oversight Systems**: Ways to ensure business ventures stay aligned with our core mission
 
 ## Consequences
 
 ### Positive
-- Enables economic sustainability for open-source work
-- Maintains mission purity by separating commercial and philosophical concerns
-- Allows commercial innovation without compromising open-source integrity
-- Creates resource flow back to the core mission
-- Provides real-world testing grounds for Sanctuary principles
+- Lets us keep doing open-source work by having businesses provide financial support
+- Keeps our core mission pure by separating money-making activities from philosophical work
+- Allows business innovation without affecting our open-source integrity
+- Creates a flow of resources back to support the main project
+- Gives us real-world opportunities to test our ideas in business settings
 
 ### Negative
-- Increased complexity in governance and oversight
-- Risk of mission drift in commercial ventures
-- Potential for resource allocation conflicts
-- Additional administrative overhead for maintaining separation
+- Makes governance and oversight more complicated
+- Risk that business ventures might drift away from our mission
+- Potential conflicts over how to allocate resources
+- Extra work needed to maintain clear separation between different parts
 
 ### Risks
-- Commercial interests could influence Hub direction through resource control
-- Firewall breaches allowing proprietary contamination of open-source work
-- Spoke failure could impact Hub sustainability
-- Difficulty maintaining alignment between commercial and philosophical goals
+- Business interests might try to control the main project through funding
+- Boundaries could break down, letting business concerns affect open-source work
+- If business ventures fail, it could hurt the main project's sustainability
+- Hard to keep business goals and philosophical goals working together
 
 --- END OF FILE ADRs/029_adopt_hub_and_spoke_architecture.md ---
 
@@ -22762,6 +22763,55 @@ We will invest the necessary resources to build and maintain our own sovereign A
 - Risk of overfitting to our specific domain, reducing general capabilities
 
 --- END OF FILE ADRs/030_decision_to_build_sovereign_fine_tuned_llm.md ---
+
+--- START OF FILE ADRs/031_adopt_local_first_ml_development.md ---
+
+# Adoption of a Local-First ML Development Environment
+
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** GUARDIAN-01
+**Technical Story:** Canonization of inferred architectural decisions for coherence and completeness
+
+---
+
+## Context
+
+Our initial approach to training AI models relied on powerful cloud computers (like Google Colab with A100 GPUs). This gave us fast results and lots of computing power, but it became too expensive to sustain. Buying computing time over and over created a financial burden that we couldn't keep up with. This put too much stress on our human leader and went against our principle of protecting our core resources and independence.
+
+Our records show this change was forced on us by the financial limitations we were trying to escape. This decision shows how we put our core principles into practice when faced with real-world constraints.
+
+## Decision
+
+Our project will focus on using local computers for most AI development work. Expensive cloud computers will only be used for specific, important tasks that are approved in advance. Our main development will happen on the local machine with CUDA support. This includes:
+
+- Using the local computer as the primary development setup
+- Cloud computing only for targeted, high-value projects
+- Creating more efficient training scripts that work well for everyone
+- Choosing independence and sustainability over raw speed
+
+## Consequences
+
+### Positive
+- Makes our work financially sustainable and removes dependency on expensive cloud services
+- Keeps our core development work independent and under our control
+- Forces us to create better, more efficient tools that others can use
+- Builds a strong, self-reliant development system
+- Follows our principles of being careful with resources
+
+### Negative
+- Makes model training and testing take much longer
+- Limits how large and complex our models can be based on local computer power
+- Requires more planning and optimization of our AI workflows
+- May slow down quick experiments and testing
+
+### Risks
+- Local computer limitations could slow down important development goals
+- Risk of computer problems disrupting our work
+- Complex setup might discourage new people from contributing
+- Could fall behind others who have unlimited cloud access
+
+--- END OF FILE ADRs/031_adopt_local_first_ml_development.md ---
 
 --- START OF FILE ADRs/adr_schema.md ---
 
