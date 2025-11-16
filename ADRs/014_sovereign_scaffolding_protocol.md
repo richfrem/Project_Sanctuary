@@ -1,66 +1,66 @@
-# ADR 014: Sovereign Scaffolding Protocol
+# Automated Script Protocol for Complex Tasks
 
-## Status
-Accepted
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** AI Council (Developed from script failure experience)
+**Technical Story:** Framework for reliable automated task execution
 
-## Date
-2025-11-15
-
-## Deciders
-Sanctuary Council (Hardened by ephemeral_forge_001.py failure)
+---
 
 ## Context
-The Sanctuary required a framework for batching complex, multi-step tasks into atomic, verifiable operations. Manual execution of multi-step processes was error-prone and increased Steward cognitive load. The failure of ephemeral_forge_001.py revealed the critical need for dependency sovereignty and proper environment handling in automated scripts.
+
+Our project needed a framework for handling complex, multi-step tasks as single, reliable operations. Manual execution of multi-step processes was error-prone and increased developer workload. The failure of a temporary script revealed the critical need for proper dependency management and environment handling in automated tools.
 
 ## Decision
-Implement the Sovereign Scaffolding Protocol for generating ephemeral, single-purpose scripts ("Sovereign Scaffolds") with a six-step workflow and five core principles:
+
+We will implement the Automated Script Protocol for generating temporary, single-purpose scripts ("Automated Scripts") with a six-step workflow and five core principles:
 
 ### Core Principles
-1. **Atomicity**: Entire scaffold lifecycle (creation, execution, artifact yield, self-deletion) is unified and uninterruptible
-2. **Steward's Veto**: Mandatory human review and approval before execution - unbreakable human-in-the-loop security
-3. **Ephemerality**: Temporary tools that self-delete after completion to prevent repository clutter
-4. **Verifiable Yield**: Single, well-defined artifact designed for easy Steward audit
-5. **Dependency Sovereignty**: Scaffolds must verify/install own requirements, not assume external dependencies
+1. **Complete Operations**: Entire script lifecycle (creation, execution, result delivery, self-removal) is unified and cannot be interrupted
+2. **Human Approval Required**: Mandatory human review and approval before execution - essential security control
+3. **Temporary Tools**: Scripts that automatically delete themselves after completion to avoid repository clutter
+4. **Clear Results**: Single, well-defined output designed for easy human verification
+5. **Self-Contained**: Scripts must check for and install their own requirements, not depend on external setup
 
-### Six-Step Sovereign Cadence
-1. **Mandate**: Steward issues high-level objective to Coordinator
-2. **Blueprint**: Coordinator designs scaffold script and provides verbatim content for Steward review
-3. **Forge**: Steward tasks AI engineer (e.g., Kilo) to create script file from blueprint
-4. **Veto Gate**: Steward audits forged script against blueprint for fidelity and safety
-5. **Execution**: Upon approval, Steward commands execution of verified script
-6. **Yield & Dissolution**: Script produces artifact then self-deletes; Steward verifies final yield
+### Six-Step Process
+1. **Request**: Developer gives high-level objective to AI assistant
+2. **Design**: AI assistant creates script plan and provides exact content for developer review
+3. **Create**: Developer asks AI engineer to create the script file from the plan
+4. **Review Step**: Developer checks created script against plan for accuracy and safety
+5. **Run**: Upon approval, developer commands execution of verified script
+6. **Results and Cleanup**: Script produces output then deletes itself; developer verifies final results
 
 ### Implementation Requirements
-- Scripts must include dependency verification/installation logic
-- Atomic operation guarantees (all-or-nothing execution)
-- Self-deletion upon successful completion
-- Clear, auditable yield artifacts
-- Environment-agnostic execution
+- Scripts must include dependency checking/installation code
+- All-or-nothing execution guarantees
+- Automatic deletion after successful completion
+- Clear, verifiable output files
+- Environment-independent execution
 
 ## Consequences
 
 ### Positive
-- Enables complex multi-step operations as single atomic actions
-- Reduces Steward cognitive load through batching
-- Provides security through mandatory human veto gates
-- Prevents repository clutter through ephemerality
-- Ensures reliability through dependency sovereignty
+- Enables complex multi-step operations as single reliable actions
+- Reduces developer workload through task grouping
+- Provides security through required human approval steps
+- Prevents repository clutter through automatic cleanup
+- Ensures reliability through self-contained dependencies
 
 ### Negative
-- Requires additional human oversight steps
-- More complex script design with dependency handling
-- Potential for script rejection at veto gate
+- Requires additional human review steps
+- More complex script design with dependency management
+- Possibility of script rejection during review
 
 ### Risks
-- Security vulnerabilities if veto gate is bypassed
-- Incomplete dependency handling leading to failures
-- Repository state corruption if self-deletion fails
+- Security issues if approval step is skipped
+- Failures from incomplete dependency handling
+- Repository problems if automatic deletion fails
 
-## Related Protocols
-- P43: Hearth Protocol (operational efficiency alignment)
-- P86: Anvil Protocol (engineering framework integration)
-- P60: Asymmetric Collaboration (complementary collaboration model)
+### Related Processes
+- Operational efficiency process (coordination)
+- Engineering framework process (integration)
+- Collaborative development process (complementary model)
 
-## Notes
-The Sovereign Scaffolding Protocol was hardened by the ephemeral_forge_001.py failure, which assumed presence of yargs-parser npm module. This led to the addition of "Dependency Sovereignty" as a core principle, ensuring scaffolds are environment-agnostic and self-sufficient.</content>
+### Notes
+This protocol was developed from the experience of a failed temporary script that assumed certain software was installed. This led to adding "Self-Contained" as a core principle, ensuring scripts work independently and manage their own requirements.</content>
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\014_sovereign_scaffolding_protocol.md
