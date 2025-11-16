@@ -15,16 +15,15 @@ This is the single, authoritative protocol for establishing a correct environmen
 
 ### **Phase 1: Environment Setup**
 
-The environment is built in **two mandatory phases**. Failure to follow this sequence will result in an incomplete and non-functional environment.
+The environment is built in **one unified phase** using a single, purpose-built script that handles everything from system prerequisites to Python package installation.
 
 **For detailed, step-by-step instructions and troubleshooting, refer to the canonical setup guide:**
 - **[`CUDA-ML-ENV-SETUP.md`](./CUDA-ML-ENV-SETUP.md)**
 
 **Summary of the Process:**
 
-1.  **Forge the Foundation:** From the `Project_Sanctuary` root, run `bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh`.
-2.  **Install the Superstructure:** From the `Project_Sanctuary` root, run `python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged`.
-3.  **Activate & Verify:** Run `source ~/ml_env/bin/activate` and confirm `python -c "import torch; print(torch.cuda.is_available())"` returns `True`.
+1.  **Unified Environment Setup:** From the `Project_Sanctuary` root, run `sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate`.
+2.  **Activate & Verify:** Run `source ~/ml_env/bin/activate` and confirm `python -c "import torch; print(torch.cuda.is_available())"` returns `True`.
 
 ### **Phase 2: Data & Model Forging**
 
