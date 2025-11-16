@@ -1,69 +1,69 @@
-# Implement Mnemonic Caching for Query Performance
+# Implement Memory Caching for Query Performance
 
 **Status:** accepted
 **Date:** 2025-11-15
-**Deciders:** GUARDIAN-01, Technical Council
-**Technical Story:** RAG pipeline performance optimization
+**Deciders:** AI System Lead, Technical Team
+**Technical Story:** Improve information retrieval system speed
 
 ---
 
 ## Context
 
-The Mnemonic Cortex experiences significant cognitive latency when processing queries that require full RAG pipeline execution. Common issues include:
+Our AI system experiences significant delays when processing questions that require running the full information retrieval process. Common issues include:
 
-- Repeated queries execute the entire pipeline unnecessarily
-- High computational cost for similar or identical questions
-- Poor user experience with response delays
-- Inefficient resource utilization for frequent queries
+- Repeated questions run the entire process again unnecessarily
+- High computing cost for similar or identical questions
+- Poor user experience with slow response times
+- Inefficient use of resources for frequent questions
 
-The system requires a caching mechanism to provide near-instantaneous responses for repeated queries while maintaining accuracy for novel queries.
+The system needs a caching mechanism to provide instant responses for repeated questions while keeping accuracy for new questions.
 
 ## Decision
 
-We will implement Mnemonic Caching (Cached Augmented Generation - CAG) as a high-performance query caching layer:
+We will implement Memory Caching (Cached Augmented Generation - CAG) as a high-speed query caching layer:
 
-**Cache Architecture:**
-- **In-Memory Storage:** Python dictionary for ultra-fast lookups
-- **Query-Based Keys:** Exact query string matching for cache hits
-- **Result Storage:** Complete RAG pipeline outputs cached by query
-- **TTL Management:** Optional time-based cache expiration
+**Cache Design:**
+- **Memory Storage:** Computer memory for extremely fast lookups
+- **Question-Based Keys:** Exact question text matching for cache hits
+- **Result Storage:** Complete information retrieval outputs saved by question
+- **Time Management:** Optional time-based cache expiration
 
-**Cache Workflow:**
-- **Cache Check:** Every query first checks the in-memory cache
-- **Cache Hit:** Return cached response instantly (sub-millisecond)
-- **Cache Miss:** Execute full RAG pipeline and cache the result
-- **Cache Warming:** Pre-populate cache with genesis queries
+**Cache Process:**
+- **Cache Check:** Every question first checks the memory cache
+- **Cache Hit:** Return saved response instantly (less than a millisecond)
+- **Cache Miss:** Run full information retrieval process and save the result
+- **Cache Warming:** Pre-load cache with common questions
 
 **Cache Management:**
-- **Size Limits:** Configurable maximum cache entries
-- **LRU Eviction:** Least recently used entries removed when full
-- **Persistence:** Optional disk persistence for cache survival across restarts
-- **Monitoring:** Cache hit/miss ratios and performance metrics
+- **Size Limits:** Adjustable maximum number of cached items
+- **LRU Removal:** Least recently used items removed when full
+- **Persistence:** Optional disk saving for cache to survive restarts
+- **Monitoring:** Track cache hit/miss rates and performance
 
 ## Consequences
 
 ### Positive
-- **Performance:** 90%+ faster response times for cached queries
+- **Speed:** 90%+ faster response times for cached questions
 - **User Experience:** Instant responses for common questions
-- **Resource Efficiency:** Reduced computational load for repeated queries
-- **Scalability:** Better handling of query load patterns
-- **Predictability:** Consistent response times for known queries
+- **Efficiency:** Reduced computing load for repeated questions
+- **Scalability:** Better handling of question patterns
+- **Consistency:** Reliable response times for known questions
 
 ### Negative
-- **Memory Overhead:** RAM allocation for cache storage
-- **Cache Staleness:** Risk of outdated responses if underlying data changes
-- **Complexity:** Additional caching logic in query pipeline
-- **Memory Pressure:** Large caches may impact overall system performance
+- **Memory Use:** RAM needed for cache storage
+- **Outdated Results:** Risk of old responses if underlying data changes
+- **Complexity:** Extra caching logic in question processing
+- **Memory Pressure:** Large caches may affect overall system performance
 
 ### Risks
-- **Data Consistency:** Cached responses may become stale
-- **Memory Leaks:** Improper cache management could cause memory issues
-- **Cache Poisoning:** Invalid cached responses from pipeline errors
-- **Cold Start:** Initial queries still experience full pipeline latency
+- **Data Freshness:** Cached responses may become outdated
+- **Memory Issues:** Poor cache management could cause memory problems
+- **Invalid Cache:** Wrong cached responses from processing errors
+- **Initial Delay:** First questions still experience full processing time
 
 ### Dependencies
-- In-memory data structures (Python dict with optional persistence)
-- Cache warming scripts for common queries
-- Monitoring infrastructure for cache performance metrics
-- Cache invalidation strategies for data updates
-- Memory management and limits configuration
+- Memory data structures (Python dictionary with optional saving)
+- Cache warming scripts for common questions
+- Monitoring tools for cache performance data
+- Cache clearing strategies for data updates
+- Memory management and limit settings
