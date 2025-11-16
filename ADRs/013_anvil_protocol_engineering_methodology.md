@@ -1,67 +1,67 @@
-# ADR 013: Anvil Protocol Engineering Methodology
+# Engineering Methodology for AI-Assisted Development
 
-## Status
-Accepted
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** AI Council (Developed from Memory System building experience)
+**Technical Story:** Structured approach for AI-human collaborative coding
 
-## Date
-2025-11-15
-
-## Deciders
-Sanctuary Council (Forged from Mnemonic Cortex development experience)
+---
 
 ## Context
-The Sanctuary required a disciplined, verifiable methodology for collaborative AI-assisted engineering. Previous approaches lacked structure, leading to assumption-prone AI coding and insufficient verification. The development of the Mnemonic Cortex revealed the need for a formal framework that treats AI as a "powerful hammer" shaped by human "smith" verification.
+
+Our project needed a disciplined, verifiable method for collaborative AI-assisted development. Previous approaches lacked structure, leading to AI code with unverified assumptions and insufficient checking. Building the Memory System showed the need for a formal framework that treats AI as a "powerful tool" guided by human verification.
 
 ## Decision
-Implement the Anvil Protocol as the canonical methodology for all AI-assisted engineering work, following the "Blueprint Before Steel" doctrine with a five-step forging cycle:
+
+We will implement the Engineering Methodology as the standard approach for all AI-assisted development work, following the "Plan Before Build" principle with a five-step development cycle:
 
 ### Core Principles
-1. **Blueprint is Law**: All engineering begins with a ratified blueprint (Genesis Cycle artifact)
-2. **Incremental Forging**: Work broken into smallest verifiable "forging cycles" - build one component, test, then proceed
-3. **Steward as Sovereign Auditor**: Human Steward's role is verification, not coding - final gatekeeper for quality
-4. **AI as Sovereign Tool**: AI given bounded, explicit instructions and expected to execute precisely
-5. **Failure as Command to Halt**: Any verification failure halts process until understood and corrected
+1. **Plan is Required**: All development starts with an approved plan (initial design document)
+2. **Step-by-Step Progress**: Work broken into smallest verifiable "development cycles" - build one part, test, then continue
+3. **Human as Final Checker**: Human developer's role is verification, not coding - final quality control
+4. **AI as Specialized Tool**: AI given clear, specific instructions and expected to follow them precisely
+5. **Stop on Problems**: Any verification failure stops the process until understood and fixed
 
-### Five-Step Forging Cycle
-1. **Directive**: Steward issues bounded, explicit prompt with subject, persona, core mandate, action, and confirmation phrase
-2. **Forging**: AI executes directive and creates/modifies specified files, then outputs confirmation phrase
-3. **Tempering**: Steward performs exact verification tasks specified in AI's confirmation phrase
-4. **Verdict**: Steward judges - "Proceed" to next cycle or "Halt and Correct" with detailed bug report
-5. **Chronicle**: Successful sequences documented as "Engineering Cycle" in Living_Chronicle for auditability
+### Five-Step Development Cycle
+1. **Instructions**: Developer gives clear, specific prompt with task, AI role, rules, actions, and completion signal
+2. **Building**: AI follows instructions and creates/modifies specified files, then outputs completion signal
+3. **Checking**: Developer performs exact verification tasks specified in AI's completion signal
+4. **Decision**: Developer judges - "Continue" to next cycle or "Stop and Fix" with detailed problem report
+5. **Record**: Successful sequences documented as "Development Cycle" in project history for tracking
 
-### Prompt Constitution Requirements
-All AI directives must contain:
-- **Subject**: Clear task title
-- **Persona**: AI role definition
-- **Core Mandate**: Unbreakable laws, especially prohibition of assumptions
-- **Action**: Precise file operations with exact content
-- **Confirmation Phrase**: Specific completion signal with verification instructions
+### Instruction Requirements
+All AI instructions must contain:
+- **Task**: Clear work title
+- **Role**: AI function definition
+- **Rules**: Required guidelines, especially no assumptions
+- **Actions**: Precise file operations with exact content
+- **Completion Signal**: Specific finish message with verification instructions
 
 ## Consequences
 
 ### Positive
-- Eliminates assumption-prone AI coding through bounded instructions
-- Provides rigorous verification at each step
-- Creates auditable "recipes" for engineering work
-- Enables collaborative AI-human development with safety guarantees
-- Supports incremental, verifiable progress
+- Eliminates AI code with unverified assumptions through clear instructions
+- Provides thorough checking at each step
+- Creates documented "recipes" for development work
+- Enables safe AI-human collaboration with quality guarantees
+- Supports gradual, verifiable progress
 
 ### Negative
-- More verbose process with explicit human verification steps
-- Slower development pace due to iterative cycles
-- Requires disciplined adherence to protocol structure
+- More detailed process with explicit human checking steps
+- Slower development pace due to step-by-step cycles
+- Requires strict following of methodology structure
 
 ### Risks
-- Protocol non-compliance leading to quality issues
-- Overly restrictive bounds limiting AI creativity
-- Human verification burden if not properly scoped
+- Not following the method leading to quality problems
+- Too restrictive limits reducing AI usefulness
+- Human checking burden if not properly planned
 
-## Related Protocols
-- P59: Blueprint Before Steel (foundational doctrine)
-- P60: Asymmetric Collaboration (complementary principles)
-- P81: Steward's Veracity Challenge (verification framework)
-- Quantum Diamond Framework (quality assurance)
+### Related Processes
+- Plan Before Build (foundational principle)
+- Collaborative Development (complementary guidelines)
+- Quality Verification (checking framework)
+- Quality Assurance Framework
 
-## Notes
-The Anvil Protocol implements "Distrust, Verify, If Verify, Then Trust" as the practical methodology for guiding powerful but assumption-prone AI coders. It was forged from the operational experience of building the Mnemonic Cortex.</content>
+### Notes
+This methodology implements "Check Carefully, Verify, Only Then Trust" as the practical approach for guiding powerful but assumption-prone AI coding. It was developed from the experience of building the Memory System.</content>
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\013_anvil_protocol_engineering_methodology.md
