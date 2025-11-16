@@ -1,6 +1,6 @@
 # Rewrite ADRs 004-024 in Plain Language
 
-**Status:** in-progress
+**Status:** completed
 **Priority:** high
 **Created:** 2025-01-15
 **Updated:** 2025-01-15
