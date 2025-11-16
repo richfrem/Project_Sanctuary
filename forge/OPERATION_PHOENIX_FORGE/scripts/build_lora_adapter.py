@@ -111,7 +111,13 @@ def main():
     # 6. Initialize and Execute Trainer
     print("[6/6] Initializing SFTTrainer and starting the training process...")
     trainer = SFTTrainer(
-        model=model, train_dataset=dataset, peft_config=peft_config,
+        model=model,
+        train_dataset=dataset,
+        peft_config=peft_config,
+        formatting_func=formatting_prompts_func, # CRITICAL FIX: Explicitly pass the formatting function
+        dataset_text_field="text",               # CRITICAL FIX: Specify the name of the formatted text field
+        max_seq_length=MAX_SEQ_LENGTH,           # CRITICAL FIX: Add back max_seq_length here
+        tokenizer=tokenizer,                     # CRITICAL FIX: Explicitly pass the tokenizer
         args=training_arguments,
     )
     

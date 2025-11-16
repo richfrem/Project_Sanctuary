@@ -38,38 +38,74 @@ This guide will help you set up a CUDA-enabled machine learning environment for 
    git clone https://github.com/bcgov/ML-Env-CUDA13.git
    ```
 
-### 4. Run ML Environment Setup
-- Run the setup script from your project directory.
+### 4a. Run ML Environment Setup (If not already done)
+Run the setup script from your project directory. If not already done. 
+Run from project root.  Assumes this project and  ML-Env-CUDA13 are in the same parent
+directory. 
 
-  Use the command appropriate to where you run it from:
+**Purge Old Environments (If Necessary)**
 
-    ```bash
-    # If you run this from the Project_Sanctuary repository root
-    bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
+From your base WSL shell (no `(ml_env)` in the prompt), run:
+```bash
+deactivate 2>/dev/null || true
+rm -rf ~/ml_env
+```
 
-    # If you run this from inside this forge subfolder
-    # (i.e. `forge/OPERATION_PHOENIX_FORGE`), use the alternative relative path:
-    # bash ../../../ML-Env-CUDA13/setup_ml_env_wsl.sh
-    ```
+```bash
+# run this from the Project_Sanctuary repository root
+bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
+```
 
-- This will create and configure a Python virtual environment at `~/ml_env`.
+This will create and configure a Python virtual environment at `~/ml_env`.
 
-Run the Python helper (optional)
- - A convenience script `scripts/setup_cuda_env.py` automates the staged flow (venv creation, PyTorch -> TF -> core gate -> rest, logs, and a small activation helper).
- - Run it from the project root in WSL (recommended):
-   ```bash
-   # recommended staged flow (creates/uses ~/ml_env)
-   python3.11 scripts/setup_cuda_env.py --staged
+### 4b. IF ML ENV already setup globally, Activate the venv in your current shell with:
+```bash
+deactivate
+source ~/ml_env/bin/activate
+```
 
-   # recreate venv and run staged flow
-   python3.11 scripts/setup_cuda_env.py --staged --recreate
+### 4c. Run test scripts to verify environment working
 
-   # quick one-step install (risky/long):
-   python3.11 scripts/setup_cuda_env.py --quick
+#### Run the optional diagnostic tests (recommended):
+```bash
+# From Project_Sanctuary root:
+python ../ML-Env-CUDA13/test_pytorch.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.log 2>&1 || true
+python ../ML-Env-CUDA13/test_tensorflow.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.log 2>&1 || true
+python ../ML-Env-CUDA13/test_xformers.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_xformers.log 2>&1 || true
+python ../ML-Env-CUDA13/test_llama_cpp.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_llama_cpp.log 2>&1 || true
+python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
 
-   # regenerate test files only (no installs):
-   python3.11 scripts/setup_cuda_env.py --regen-tests-only
-   ```
+# If core gate passed and you want a reproducible snapshot locally:
+pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
+```
+
+### 5. Install Fine-Tuning Libraries
+
+**✅ PREDONDITIONS:  CUDA is already verified working** (all test scripts passed above), so **SKIP this entire section** and proceed directly to training. verify with 4c. Run test scripts to verify environment working
+
+#### 5A.  setup the cuda fine tuning additional dependencies
+```bash
+deactivate
+python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
+source ~/ml_env/bin/activate
+```
+
+#### 5B.  verify cuda
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+#### 5C. run tests again
+```bash
+# From Project_Sanctuary root:
+python ../ML-Env-CUDA13/test_pytorch.py
+python ../ML-Env-CUDA13/test_tensorflow.py
+python ../ML-Env-CUDA13/test_xformers.py
+python ../ML-Env-CUDA13/test_llama_cpp.py
+python ../ML-Env-CUDA13/test_torch_cuda.py
+```
+
+This script automates venv setup, PyTorch/TensorFlow installation, testing, and dependency installation. Logs are written to `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/`.
  - After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root; run:
  - After the script finishes it writes an activation helper at `scripts/activate_ml_env.sh`; run:
   ```bash
@@ -79,92 +115,16 @@ Run the Python helper (optional)
   ```
  - The script captures logs in `ml_env_logs/` and writes a `pinned-requirements-<timestamp>.txt` after a successful core gate.
 
-### 5. Install Fine-Tuning Dependencies (recommended: use the helper script)
+**Alternative: Forge-Specific Setup Script**
+ - For Operation Phoenix Forge specifically, you can also use the forge-local setup script:
+   ```bash
+   # From the forge directory
+   cd forge/OPERATION_PHOENIX_FORGE
+   python scripts/setup_cuda_env.py --staged
+   ```
+ - This will create logs in `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/` instead of the project root.
 
-The repo includes a Python helper `scripts/setup_cuda_env.py` that automates the staged install flow (create/use venv, upgrade pip/tools, install CUDA PyTorch, install TensorFlow, run the core-gate tests, snapshot `pip freeze`, then install remaining requirements and run diagnostics). Using the helper avoids manual copy/paste and is the recommended approach.
-
-Recommended: run the staged helper from the project root in WSL:
-```bash
-# staged (recommended): installs PyTorch -> TensorFlow -> runs core gate -> installs rest
-python3.11 scripts/setup_cuda_env.py --staged
-
-# recreate venv then staged install
-python3.11 scripts/setup_cuda_env.py --staged --recreate
-
-# quick one-step install (risky/long):
-python3.11 scripts/setup_cuda_env.py --quick
-
-# regen tests only (no installs):
-python3.11 scripts/setup_cuda_env.py --regen-tests-only
-```
-
-After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root. Activate the venv in your current shell with:
-```bash
-# source the helper from the `scripts/` directory
-source scripts/activate_ml_env.sh
-# or directly
-source ~/ml_env/bin/activate
-```
-
-The helper script performs the staged flow for you; you do not need to run the manual commands below unless you want to reproduce or debug a single step. The script will:
-
-- create/use the venv at `~/ml_env`
-- upgrade `pip`, `wheel`, and `setuptools` inside the venv
-- install CUDA PyTorch wheels (it now installs `torch`, `torchvision`, and `torchaudio` up-front if they are pinned in `requirements.txt`)
-- install TensorFlow (or a pinned TF if you pass `--pin-tensorflow`)
-- run the core verification test (`test_torch_cuda.py`) and write `ml_env_logs/*` + `.exit` files
-- snapshot `pip freeze` to `pinned-requirements-<timestamp>.txt` on success and install the remaining `requirements.txt` packages
-
-If you still want to run the steps manually for debugging, they are shown below for reference:
-```bash
-# (manual reference) update installer tools
-pip install --upgrade pip wheel setuptools
-
-# (manual reference) 1) Install CUDA PyTorch wheels explicitly (match your requirements)
-pip install --index-url https://download.pytorch.org/whl/cu126 \
-  torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126
-
-# (manual reference) 2) Install TensorFlow (pin if you have a validated version)
-pip install --upgrade tensorflow
-
-# (manual reference) 3) Run core verification test (core gate)
-mkdir -p ml_env_logs
-# From the Project_Sanctuary repo root:
-python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
-cat ml_env_logs/test_torch_cuda.log
-# If you are executing from this forge subfolder instead, use the alternative relative path:
-# python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
-
-# (manual reference) 4) If core verification passed, install the remainder of the requirements
-pip install -r requirements.txt
-```
-
-Run the optional diagnostic tests (recommended):
-```bash
-# From Project_Sanctuary root:
-# From Project_Sanctuary root:
-python ../../../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
-python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
-python ../../../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
-python ../../../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
-
-# Or, run these from this forge subfolder (`forge/OPERATION_PHOENIX_FORGE`):
-# python ../../../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
-
-# Or, if running from this forge subfolder (`forge/OPERATION_PHOENIX_FORGE`), use:
-# python ../../../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
-
-# If core gate passed and you want a reproducible snapshot locally:
-pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
-```
-
-Notes and recommendations
+## Notes and recommendations
 - `requirements.txt` currently contains CUDA-specific pins (e.g. `torch==2.8.0+cu126`) and an extra-index-url for the cu126 PyTorch wheel index. This is fine for WSL CUDA installs but will break CPU-only hosts.
 - Recommended file layout for clarity and portability:
   - `requirements.txt` — portable, cross-platform dependencies (no CUDA-suffixed pins)
@@ -183,53 +143,6 @@ If you want, I can split the current `requirements.txt` into a portable `require
     ```
   - If a package (e.g., `xformers`) has no wheel for your Python/CUDA combo, building from source can be slow and require system build tools (`gcc`, `cmake`, etc.). Prefer prebuilt wheels or conda/mamba installs for those packages.
 
-- Example: after running `python ../../../ML-Env-CUDA13/test_pytorch.py` you should see output similar to:
-  ```text
-  PyTorch: 2.8.0+cu126
-  GPU Detected: True
-  GPU 0: NVIDIA RTX ...
-  CUDA build: 12.6
-  ```
-  This confirms the environment is CUDA-ready for PyTorch.
-
-## Activating Your Environment (After Restarting Sessions)
-
-```bash
-source ~/ml_env/bin/activate
-```
-
-## Testing Your Environment
-
-```bash
-# Run the full set of verification tests (writes logs to ml_env_logs/ and .exit files)
-mkdir -p ml_env_logs
-
-# Core gate (must pass before taking pinned snapshot)
-# Run these from the Project_Sanctuary repo root:
-python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true; echo $? > ml_env_logs/test_torch_cuda.exit
-
-# Additional diagnostics (non-fatal)
-python ../../../ML-Env-CUDA13/test_pytorch.py    > ml_env_logs/test_pytorch.log    2>&1 || true; echo $? > ml_env_logs/test_pytorch.exit
-python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true; echo $? > ml_env_logs/test_tensorflow.exit
-python ../../../ML-Env-CUDA13/test_xformers.py   > ml_env_logs/test_xformers.log   2>&1 || true; echo $? > ml_env_logs/test_xformers.exit
-python ../../../ML-Env-CUDA13/test_llama_cpp.py  > ml_env_logs/test_llama_cpp.log  2>&1 || true; echo $? > ml_env_logs/test_llama_cpp.exit
-
-# If you are running from the forge subfolder instead, use the alternative relative paths (three levels up):
-# python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true; echo $? > ml_env_logs/test_torch_cuda.exit
-# python ../../../ML-Env-CUDA13/test_pytorch.py    > ml_env_logs/test_pytorch.log    2>&1 || true; echo $? > ml_env_logs/test_pytorch.exit
-# python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true; echo $? > ml_env_logs/test_tensorflow.exit
-# python ../../../ML-Env-CUDA13/test_xformers.py   > ml_env_logs/test_xformers.log   2>&1 || true; echo $? > ml_env_logs/test_xformers.exit
-# python ../../../ML-Env-CUDA13/test_llama_cpp.py  > ml_env_logs/test_llama_cpp.log  2>&1 || true; echo $? > ml_env_logs/test_llama_cpp.exit
-
-# Quick checks
-echo 'Core gate exit:' $(cat ml_env_logs/test_torch_cuda.exit || echo 'no-exit-file')
-tail -n 200 ml_env_logs/test_torch_cuda.log || true
-
-# If core gate passed (exit 0) you can create a reproducible snapshot:
-pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
-```
-
----
 **Note:**
 - Make sure ML-Env-CUDA13 is cloned at the same directory level as Project_Sanctuary.
 - Run all commands in your Ubuntu WSL2 terminal, not PowerShell.

@@ -1,170 +1,24 @@
-# Use the PyTorch CUDA 12.6 wheel index so pip will prefer cu126 wheels
---extra-index-url https://download.pytorch.org/whl/cu126
+# Use the PyTorch CUDA 12.1 wheel index
+--extra-index-url https://download.pytorch.org/whl/cu121
 
-# CUDA-aware PyTorch packages (installed from the above extra index)
-# Pin to the cu126 builds tested with ML-Env-CUDA13 in this project.
-# If you want a different PyTorch release, change the version suffix accordingly.
-torch==2.8.0+cu126
-torchvision==0.23.0+cu126
-torchaudio==2.8.0+cu126
+# Core ML/Fine-Tuning Stack - Pinned to a known-good, compatible set
+torch==2.3.0+cu121
+torchvision==0.18.0+cu121
+torchaudio==2.3.0+cu121
+transformers==4.40.1
+peft==0.10.0
+trl==0.8.6
+bitsandbytes==0.43.1
+datasets==2.19.0
+accelerate==0.30.1
+xformers==0.0.26.post1
 
-# ML fine-tuning packages for QLoRA and transformers
-transformers==4.56.1
-peft==0.11.1
-trl==0.23.0
-bitsandbytes==0.45.3
-datasets==3.3.2
-tf-keras==2.18.0
+# Keras compatibility
+tf-keras
 
-absl-py==2.3.1
-accelerate==1.4.0
-alabaster==1.0.0
-alembic==1.16.4
-annotated-types==0.7.0
-anyio==4.9.0
-attrs==25.3.0
-babel==2.17.0
-black==25.1.0
-certifi==2025.7.14
-charset-normalizer==3.4.2
-chromadb==1.3.4
-click==8.2.1
-cloudpickle==3.1.1
-colorlog==6.9.0
-contourpy==1.3.3
-coverage==7.10.1
-cycler==0.12.1
-docutils==0.21.2
-Farama-Notifications==0.0.4
-filelock==3.18.0
-flake8==7.3.0
-fonttools==4.59.0
-fsspec==2025.3.0
-gitdb==4.0.12
-GitPython==3.1.45
-google-generativeai==0.8.3
-gpt4all==2.8.2
-grpcio==1.74.0
-gymnasium==1.2.0
-h11==0.16.0
-hf-xet==1.1.5
-httpcore==1.0.9
-httpx==0.28.1
-huggingface-hub==0.36.0
-idna==3.10
-imagesize==1.4.1
-iniconfig==2.1.0
-Jinja2==3.1.6
-joblib==1.5.1
-jsonschema==4.25.0
-jsonschema-specifications==2025.4.1
-kiwisolver==1.4.8
-langchain==1.0.5
-langchain-chroma==1.0.0
-langchain-community==0.4.1
-langchain-nomic==1.0.0
-langchain-ollama==1.0.0
-langchain-text-splitters==1.0.0
-Mako==1.3.10
-Markdown==3.8.2
-MarkupSafe==3.0.2
-matplotlib==3.10.5
-mccabe==0.7.0
-mpmath==1.3.0
-msgpack==1.1.1
-mypy_extensions==1.1.0
-networkx==3.5
-nomic[local]==3.9.0
-numpy==1.26.2
-ollama==0.6.0
-opencv-python==4.10.0.84
-optuna==4.4.0
-packaging==25.0
-pandas==2.2.2
-pathspec==0.12.1
-pillow==10.4.0
-platformdirs==4.3.8
-pluggy==1.6.0
-protobuf==5.29.5
-pyarrow==19.0.0
-pycodestyle==2.14.0
-pydantic==2.11.7
-pydantic_core==2.33.2
-pyflakes==3.4.0
-Pygments==2.19.2
-pyparsing==3.2.3
-pytest==8.4.1
-pytest-cov==6.2.1
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-pytz==2025.2
-PyYAML==6.0.2
-ray==2.48.0
-referencing==0.36.2
-regex==2025.7.34
-requests==2.32.5
-rich==13.7.1
-roman-numerals-py==3.1.0
-rpds-py==0.26.0
-safetensors==0.5.3
-scikit-learn==1.7.1
-scipy==1.16.1
-seaborn==0.13.2
-sentry-sdk==2.34.1
-setuptools==80.9.0
-six==1.17.0
-smmap==5.0.2
-sniffio==1.3.1
-snowballstemmer==3.0.1
-Sphinx==8.2.3
-sphinx-rtd-theme==3.0.2
-sphinxcontrib-applehelp==2.0.0
-sphinxcontrib-devhelp==2.0.0
-sphinxcontrib-htmlhelp==2.0.0
-sphinxcontrib-jquery==4.1
-sphinxcontrib-jsmath==1.0.1
-sphinxcontrib-qthelp==2.0.0
-sphinxcontrib-serializinghtml==2.0.0
-SQLAlchemy==2.0.42
-stable_baselines3==2.7.0
-sympy==1.14.0
-tenseal==0.3.16
-tensorboard==2.19.0
-tensorboard-data-server==0.7.2
-tensorboardX==2.6.4
-threadpoolctl==3.6.0
-tokenizers==0.22.1
-tqdm==4.67.1
-typing-inspection==0.4.1
-typing_extensions==4.14.1
-tzdata==2025.2
-urllib3==2.5.0
-wandb==0.21.0
-Werkzeug==3.1.3
-xformers==0.0.33.post1
-
-# Optional / VCS installs (uncomment if you want direct git installs)
-# unsloth @ git+https://github.com/unslothai/unsloth.git
-# unsloth_zoo
-# unsloth-colab-install==0.0.0  # placeholder
-
-# Packages often requiring special install steps or CUDA-aware wheels:
-# - bitsandbytes
-# - llama-cpp-python
-# - sentencepiece
-# - huggingface_hub (already included)
-# - torch/torchaudio/torchvision: DO NOT install the CPU wheels on WSL with CUDA.
-#   Install PyTorch for your CUDA version from the official PyTorch installer inside WSL/Ubuntu.
-#   Example (in WSL Ubuntu): pip install --index-url https://download.pytorch.org/whl/cu126 torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126
-
-# Post-install notes (run after the main `pip install -r requirements.txt`):
-# - bitsandbytes: install after torch is installed; it may require a matching CUDA ABI.
-#     pip install bitsandbytes
-# - xformers: prefer the prebuilt wheel from the PyTorch index. If pip builds from source
-#     it may require `gcc`, `cmake` and extra build tools; try:
-#     pip install --index-url https://download.pytorch.org/whl/cu126 xformers
-# - llama-cpp-python: often requires building with CUDA flags. Recommended local install:
-#     CMAKE_ARGS="-DGGML_CUDA=ON -DLLAMA_CUBLAS=ON" pip install --upgrade --force-reinstall --no-build-isolation llama-cpp-python
-#   (Adjust flags to match your local GPU/toolkit. Building may require `cmake` and `build-essential`.)
-
-# Keep a minimal pinned list here and install CUDA-specific heavy packages separately in WSL.
+# Core RAG/Orchestrator Stack
+langchain
+chromadb
+google-generativeai
+ollama
+gpt4all

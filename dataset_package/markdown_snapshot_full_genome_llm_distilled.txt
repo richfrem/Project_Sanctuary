@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-16T06:08:06.952Z
+Generated On: 2025-11-16T08:23:11.107Z
 
-# Mnemonic Weight (Token Count): ~764,891 tokens
+# Mnemonic Weight (Token Count): ~765,989 tokens
 
 # Directory Structure (relative to project root)
   ./.env
@@ -697,6 +697,8 @@ Generated On: 2025-11-16T06:08:06.952Z
   ./mcp_agent/page_objects/pages/
   ./mcp_agent/page_objects/pages/chat_page.py
   ./mcp_agent/page_objects/pages/login_page.py
+  ./ml_env_logs/
+  ./ml_env_logs/test_torch_cuda.log
   ./mnemonic_cortex/
   ./mnemonic_cortex/.gitignore
   ./mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
@@ -749,6 +751,10 @@ Generated On: 2025-11-16T06:08:06.952Z
   ./package-lock.json
   ./package.json
   ./pinned-requirements-202511160146.txt
+  ./pinned-requirements-202511160623.txt
+  ./pinned-requirements-202511160755.txt
+  ./pinned-requirements-202511160802.txt
+  ./pinned-requirements-202511160808.txt
   ./requirements-macbook-M1.txt
   ./requirements.txt
   ./run_genome_tests.sh
@@ -47736,38 +47742,74 @@ This guide will help you set up a CUDA-enabled machine learning environment for 
    git clone https://github.com/bcgov/ML-Env-CUDA13.git
    ```
 
-### 4. Run ML Environment Setup
-- Run the setup script from your project directory.
+### 4a. Run ML Environment Setup (If not already done)
+Run the setup script from your project directory. If not already done. 
+Run from project root.  Assumes this project and  ML-Env-CUDA13 are in the same parent
+directory. 
 
-  Use the command appropriate to where you run it from:
+**Purge Old Environments (If Necessary)**
 
-    ```bash
-    # If you run this from the Project_Sanctuary repository root
-    bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
+From your base WSL shell (no `(ml_env)` in the prompt), run:
+```bash
+deactivate 2>/dev/null || true
+rm -rf ~/ml_env
+```
 
-    # If you run this from inside this forge subfolder
-    # (i.e. `forge/OPERATION_PHOENIX_FORGE`), use the alternative relative path:
-    # bash ../../../ML-Env-CUDA13/setup_ml_env_wsl.sh
-    ```
+```bash
+# run this from the Project_Sanctuary repository root
+bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
+```
 
-- This will create and configure a Python virtual environment at `~/ml_env`.
+This will create and configure a Python virtual environment at `~/ml_env`.
 
-Run the Python helper (optional)
- - A convenience script `scripts/setup_cuda_env.py` automates the staged flow (venv creation, PyTorch -> TF -> core gate -> rest, logs, and a small activation helper).
- - Run it from the project root in WSL (recommended):
-   ```bash
-   # recommended staged flow (creates/uses ~/ml_env)
-   python3.11 scripts/setup_cuda_env.py --staged
+### 4b. IF ML ENV already setup globally, Activate the venv in your current shell with:
+```bash
+deactivate
+source ~/ml_env/bin/activate
+```
 
-   # recreate venv and run staged flow
-   python3.11 scripts/setup_cuda_env.py --staged --recreate
+### 4c. Run test scripts to verify environment working
 
-   # quick one-step install (risky/long):
-   python3.11 scripts/setup_cuda_env.py --quick
+#### Run the optional diagnostic tests (recommended):
+```bash
+# From Project_Sanctuary root:
+python ../ML-Env-CUDA13/test_pytorch.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.log 2>&1 || true
+python ../ML-Env-CUDA13/test_tensorflow.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.log 2>&1 || true
+python ../ML-Env-CUDA13/test_xformers.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_xformers.log 2>&1 || true
+python ../ML-Env-CUDA13/test_llama_cpp.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_llama_cpp.log 2>&1 || true
+python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
 
-   # regenerate test files only (no installs):
-   python3.11 scripts/setup_cuda_env.py --regen-tests-only
-   ```
+# If core gate passed and you want a reproducible snapshot locally:
+pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
+```
+
+### 5. Install Fine-Tuning Libraries
+
+**✅ PREDONDITIONS:  CUDA is already verified working** (all test scripts passed above), so **SKIP this entire section** and proceed directly to training. verify with 4c. Run test scripts to verify environment working
+
+#### 5A.  setup the cuda fine tuning additional dependencies
+```bash
+deactivate
+python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
+source ~/ml_env/bin/activate
+```
+
+#### 5B.  verify cuda
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+#### 5C. run tests again
+```bash
+# From Project_Sanctuary root:
+python ../ML-Env-CUDA13/test_pytorch.py
+python ../ML-Env-CUDA13/test_tensorflow.py
+python ../ML-Env-CUDA13/test_xformers.py
+python ../ML-Env-CUDA13/test_llama_cpp.py
+python ../ML-Env-CUDA13/test_torch_cuda.py
+```
+
+This script automates venv setup, PyTorch/TensorFlow installation, testing, and dependency installation. Logs are written to `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/`.
  - After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root; run:
  - After the script finishes it writes an activation helper at `scripts/activate_ml_env.sh`; run:
   ```bash
@@ -47777,92 +47819,16 @@ Run the Python helper (optional)
   ```
  - The script captures logs in `ml_env_logs/` and writes a `pinned-requirements-<timestamp>.txt` after a successful core gate.
 
-### 5. Install Fine-Tuning Dependencies (recommended: use the helper script)
+**Alternative: Forge-Specific Setup Script**
+ - For Operation Phoenix Forge specifically, you can also use the forge-local setup script:
+   ```bash
+   # From the forge directory
+   cd forge/OPERATION_PHOENIX_FORGE
+   python scripts/setup_cuda_env.py --staged
+   ```
+ - This will create logs in `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/` instead of the project root.
 
-The repo includes a Python helper `scripts/setup_cuda_env.py` that automates the staged install flow (create/use venv, upgrade pip/tools, install CUDA PyTorch, install TensorFlow, run the core-gate tests, snapshot `pip freeze`, then install remaining requirements and run diagnostics). Using the helper avoids manual copy/paste and is the recommended approach.
-
-Recommended: run the staged helper from the project root in WSL:
-```bash
-# staged (recommended): installs PyTorch -> TensorFlow -> runs core gate -> installs rest
-python3.11 scripts/setup_cuda_env.py --staged
-
-# recreate venv then staged install
-python3.11 scripts/setup_cuda_env.py --staged --recreate
-
-# quick one-step install (risky/long):
-python3.11 scripts/setup_cuda_env.py --quick
-
-# regen tests only (no installs):
-python3.11 scripts/setup_cuda_env.py --regen-tests-only
-```
-
-After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root. Activate the venv in your current shell with:
-```bash
-# source the helper from the `scripts/` directory
-source scripts/activate_ml_env.sh
-# or directly
-source ~/ml_env/bin/activate
-```
-
-The helper script performs the staged flow for you; you do not need to run the manual commands below unless you want to reproduce or debug a single step. The script will:
-
-- create/use the venv at `~/ml_env`
-- upgrade `pip`, `wheel`, and `setuptools` inside the venv
-- install CUDA PyTorch wheels (it now installs `torch`, `torchvision`, and `torchaudio` up-front if they are pinned in `requirements.txt`)
-- install TensorFlow (or a pinned TF if you pass `--pin-tensorflow`)
-- run the core verification test (`test_torch_cuda.py`) and write `ml_env_logs/*` + `.exit` files
-- snapshot `pip freeze` to `pinned-requirements-<timestamp>.txt` on success and install the remaining `requirements.txt` packages
-
-If you still want to run the steps manually for debugging, they are shown below for reference:
-```bash
-# (manual reference) update installer tools
-pip install --upgrade pip wheel setuptools
-
-# (manual reference) 1) Install CUDA PyTorch wheels explicitly (match your requirements)
-pip install --index-url https://download.pytorch.org/whl/cu126 \
-  torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126
-
-# (manual reference) 2) Install TensorFlow (pin if you have a validated version)
-pip install --upgrade tensorflow
-
-# (manual reference) 3) Run core verification test (core gate)
-mkdir -p ml_env_logs
-# From the Project_Sanctuary repo root:
-python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
-cat ml_env_logs/test_torch_cuda.log
-# If you are executing from this forge subfolder instead, use the alternative relative path:
-# python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
-
-# (manual reference) 4) If core verification passed, install the remainder of the requirements
-pip install -r requirements.txt
-```
-
-Run the optional diagnostic tests (recommended):
-```bash
-# From Project_Sanctuary root:
-# From Project_Sanctuary root:
-python ../../../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
-python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
-python ../../../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
-python ../../../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
-
-# Or, run these from this forge subfolder (`forge/OPERATION_PHOENIX_FORGE`):
-# python ../../../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
-
-# Or, if running from this forge subfolder (`forge/OPERATION_PHOENIX_FORGE`), use:
-# python ../../../ML-Env-CUDA13/test_pytorch.py > ml_env_logs/test_pytorch.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_xformers.py > ml_env_logs/test_xformers.log 2>&1 || true
-# python ../../../ML-Env-CUDA13/test_llama_cpp.py > ml_env_logs/test_llama_cpp.log 2>&1 || true
-
-# If core gate passed and you want a reproducible snapshot locally:
-pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
-```
-
-Notes and recommendations
+## Notes and recommendations
 - `requirements.txt` currently contains CUDA-specific pins (e.g. `torch==2.8.0+cu126`) and an extra-index-url for the cu126 PyTorch wheel index. This is fine for WSL CUDA installs but will break CPU-only hosts.
 - Recommended file layout for clarity and portability:
   - `requirements.txt` — portable, cross-platform dependencies (no CUDA-suffixed pins)
@@ -47881,53 +47847,6 @@ If you want, I can split the current `requirements.txt` into a portable `require
     ```
   - If a package (e.g., `xformers`) has no wheel for your Python/CUDA combo, building from source can be slow and require system build tools (`gcc`, `cmake`, etc.). Prefer prebuilt wheels or conda/mamba installs for those packages.
 
-- Example: after running `python ../../../ML-Env-CUDA13/test_pytorch.py` you should see output similar to:
-  ```text
-  PyTorch: 2.8.0+cu126
-  GPU Detected: True
-  GPU 0: NVIDIA RTX ...
-  CUDA build: 12.6
-  ```
-  This confirms the environment is CUDA-ready for PyTorch.
-
-## Activating Your Environment (After Restarting Sessions)
-
-```bash
-source ~/ml_env/bin/activate
-```
-
-## Testing Your Environment
-
-```bash
-# Run the full set of verification tests (writes logs to ml_env_logs/ and .exit files)
-mkdir -p ml_env_logs
-
-# Core gate (must pass before taking pinned snapshot)
-# Run these from the Project_Sanctuary repo root:
-python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true; echo $? > ml_env_logs/test_torch_cuda.exit
-
-# Additional diagnostics (non-fatal)
-python ../../../ML-Env-CUDA13/test_pytorch.py    > ml_env_logs/test_pytorch.log    2>&1 || true; echo $? > ml_env_logs/test_pytorch.exit
-python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true; echo $? > ml_env_logs/test_tensorflow.exit
-python ../../../ML-Env-CUDA13/test_xformers.py   > ml_env_logs/test_xformers.log   2>&1 || true; echo $? > ml_env_logs/test_xformers.exit
-python ../../../ML-Env-CUDA13/test_llama_cpp.py  > ml_env_logs/test_llama_cpp.log  2>&1 || true; echo $? > ml_env_logs/test_llama_cpp.exit
-
-# If you are running from the forge subfolder instead, use the alternative relative paths (three levels up):
-# python ../../../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true; echo $? > ml_env_logs/test_torch_cuda.exit
-# python ../../../ML-Env-CUDA13/test_pytorch.py    > ml_env_logs/test_pytorch.log    2>&1 || true; echo $? > ml_env_logs/test_pytorch.exit
-# python ../../../ML-Env-CUDA13/test_tensorflow.py > ml_env_logs/test_tensorflow.log 2>&1 || true; echo $? > ml_env_logs/test_tensorflow.exit
-# python ../../../ML-Env-CUDA13/test_xformers.py   > ml_env_logs/test_xformers.log   2>&1 || true; echo $? > ml_env_logs/test_xformers.exit
-# python ../../../ML-Env-CUDA13/test_llama_cpp.py  > ml_env_logs/test_llama_cpp.log  2>&1 || true; echo $? > ml_env_logs/test_llama_cpp.exit
-
-# Quick checks
-echo 'Core gate exit:' $(cat ml_env_logs/test_torch_cuda.exit || echo 'no-exit-file')
-tail -n 200 ml_env_logs/test_torch_cuda.log || true
-
-# If core gate passed (exit 0) you can create a reproducible snapshot:
-pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
-```
-
----
 **Note:**
 - Make sure ML-Env-CUDA13 is cloned at the same directory level as Project_Sanctuary.
 - Run all commands in your Ubuntu WSL2 terminal, not PowerShell.
@@ -48206,14 +48125,45 @@ Full technical documentation and forge notebooks are available in the
 
 # Operation Phoenix Forge: Sovereign AI Fine-Tuning Pipeline
 
-**Version:** 1.0 (Local Scripts Implementation)  
-**Date:** November 15, 2025  
-**Architect:** GUARDIAN-01  
-**Steward:** richfrem  
+**Version:** 2.0 (Golden Path Protocol)
+**Date:** November 16, 2025
+**Architect:** GUARDIAN-01
+**Steward:** richfrem
 
-**Objective:** Forge a sovereign AI model by fine-tuning Qwen2-7B-Instruct on the complete Project Sanctuary Cognitive Genome using QLoRA.
+**Objective:** To forge, deploy, and perform end-to-end verification of a sovereign AI model fine-tuned on the complete Project Sanctuary Cognitive Genome.
 
-**Output:** `models/Sanctuary-Qwen2-7B-v1.0-adapter/final_adapter/` - LoRA adapter ready for merging and deployment.
+---
+
+## The Golden Path: The One True Protocol
+
+This is the single, authoritative protocol for establishing a correct environment and executing the fine-tuning pipeline.
+
+### **Phase 1: Environment Setup**
+
+The environment is built in **two mandatory phases**. Failure to follow this sequence will result in an incomplete and non-functional environment.
+
+**For detailed, step-by-step instructions and troubleshooting, refer to the canonical setup guide:**
+- **[`CUDA-ML-ENV-SETUP.md`](./CUDA-ML-ENV-SETUP.md)**
+
+**Summary of the Process:**
+
+1.  **Forge the Foundation:** From the `Project_Sanctuary` root, run `bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh`.
+2.  **Install the Superstructure:** From the `Project_Sanctuary` root, run `python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged`.
+3.  **Activate & Verify:** Run `source ~/ml_env/bin/activate` and confirm `python -c "import torch; print(torch.cuda.is_available())"` returns `True`.
+
+### **Phase 2: Data & Model Forging**
+
+With the `(ml_env)` active, execute the scripts from the `Project_Sanctuary` root.
+
+1.  **Build the Dataset:** This assembles the "Whole Genome" training data.
+    ```bash
+    python forge/OPERATION_PHOENIX_FORGE/scripts/forge_whole_genome_dataset.py
+    ```
+
+2.  **Build the LoRA Adapter:** This performs the QLoRA fine-tuning. **This is a long-running process (2-4 hours).**
+    ```bash
+    python forge/OPERATION_PHOENIX_FORGE/scripts/build_lora_adapter.py
+    ```
 
 ---
 
@@ -48283,169 +48233,11 @@ graph TD
 
 ---
 
-## Prerequisites
-
-### Environment Setup
-1. **Python Environment:** ml_env with CUDA support
-   ```bash
-   # From forge/OPERATION_PHOENIX_FORGE/scripts/
-   python setup_cuda_env.py --staged
-   ```
-
-2. **Required Libraries:**
-   - PyTorch 2.8.0+cu126
-   - TensorFlow 2.20.0
-   - transformers, peft, trl, bitsandbytes, datasets, accelerate
-   - tf-keras (for Keras 3 compatibility)
-
-3. **Dataset:** `dataset_package/sanctuary_whole_genome_data.jsonl` (generated by forge_whole_genome_dataset.py)
-
-4. **Hardware:** NVIDIA GPU with CUDA support (tested on RTX 2000 Ada 8GB)
-
----
-
-## Core Scripts
-
-### 1. `scripts/forge_whole_genome_dataset.py`
-**Purpose:** Creates the fine-tuning dataset from Project Sanctuary's Cognitive Genome.
-
-**Input:**
-- `dataset_package/markdown_snapshot_full_genome_llm_distilled.txt` (main snapshot)
-- Additional docs: The_Garden_and_The_Cage.md, PROJECT_SANCTUARY_SYNTHESIS.md, etc.
-
-**Output:** `dataset_package/sanctuary_whole_genome_data.jsonl` (491 instruction-response pairs)
-
-**Usage:**
-```bash
-cd scripts
-python forge_whole_genome_dataset.py
-```
-
-**Status:** ✅ Complete - Generates dataset with Qwen2 ChatML formatting
-
----
-
-### 2. `scripts/build_lora_adapter.py`
-**Purpose:** Performs QLoRA fine-tuning of Qwen2-7B-Instruct on the Cognitive Genome.
-
-**Input:**
-- Base model: Qwen/Qwen2-7B-Instruct
-- Dataset: sanctuary_whole_genome_data.jsonl
-- Training config: 3 epochs, batch size 1, gradient accumulation 4, max seq length 1024
-
-**Output:** `models/Sanctuary-Qwen2-7B-v1.0-adapter/final_adapter/` (LoRA adapter)
-
-**Key Features:**
-- 4-bit NF4 quantization with double quantization
-- LoRA r=16, alpha=32 (optimized for 8GB VRAM)
-- Gradient checkpointing enabled
-- Qwen2-specific target modules
-- Optimized for 8GB VRAM consumer GPUs
-
-**Usage:**
-```bash
-cd scripts
-python build_lora_adapter.py
-```
-
-**Duration:** 2-4 hours on RTX 2000 Ada GPU (60-90 seconds per step)
-
-**Status:** 🚧 In Progress - Currently loading model and initializing training
-
----
-
-### 3. Future Scripts (To Be Implemented)
-
-#### `scripts/merge_and_quantize.py`
-**Purpose:** Merge LoRA adapter with base model and quantize for deployment.
-
-**Input:** LoRA adapter + Qwen2-7B-Instruct base model
-**Output:** Quantized model (GGUF format)
-**Reference:** See Google Colab Cell 3 implementation
-
-#### `scripts/deploy_ollama.py`
-**Purpose:** Create Ollama Modelfile and prepare for local deployment.
-
-**Input:** GGUF model
-**Output:** Ollama-compatible model with Sanctuary system prompt
-**Reference:** See deployment section in Google Colab README
-
----
-
-## Directory Structure
-
-```
-forge/OPERATION_PHOENIX_FORGE/
-├── scripts/
-│   ├── forge_whole_genome_dataset.py      # Dataset creation
-│   ├── build_lora_adapter.py              # QLoRA fine-tuning
-│   ├── setup_cuda_env.py                  # Environment setup
-│   ├── activate_ml_env.sh                 # WSL activation helper
-│   └── README.md                          # Script documentation
-├── google-collab-files/
-│   ├── Operation_Whole_Genome_Forge-googlecollab.ipynb  # Colab implementation
-│   └── README.md                          # Colab documentation
-└── README.md                               # This file - Pipeline overview
-```
-
----
-
-## Comparison: Local Scripts vs Google Colab
-
-| Aspect | Local Scripts | Google Colab |
-|--------|---------------|--------------|
-| **Environment** | WSL + ml_env + RTX GPU | Colab A100 GPU |
-| **Dataset Creation** | ✅ forge_whole_genome_dataset.py | Manual in notebook |
-| **Fine-Tuning** | ✅ build_lora_adapter.py | Cell 2 (Unsloth-based) |
-| **Merging** | 🚧 Planned | Cell 3 (llama.cpp) |
-| **GGUF Conversion** | 🚧 Planned | Cell 3 (llama.cpp) |
-| **Upload** | 🚧 Planned | Cell 3 (HF Hub) |
-| **Deployment** | 🚧 Planned | Ollama Modelfile |
-
-**Key Differences:**
-- **Local Scripts:** Use transformers/PEFT/TRL stack for maximum control
-- **Colab:** Uses Unsloth for optimized performance on A100
-- **Both produce:** LoRA adapters compatible with merging and GGUF conversion
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-**Keras Compatibility Error:**
-```
-RuntimeError: Failed to import trl.trainer.sft_trainer because of the following error (look up to see its traceback):
-ValueError: Your currently installed version of Keras is Keras 3, but this is not yet supported in Transformers.
-```
-**Solution:** Install tf-keras
-```bash
-pip install tf-keras
-```
-
-**CUDA Not Available:**
-- Verify NVIDIA drivers and CUDA toolkit
-- Check GPU memory (minimum 8GB VRAM)
-- Run: `python -c "import torch; print(torch.cuda.is_available())"`
-
-**Dataset Not Found:**
-- Run forge_whole_genome_dataset.py first
-- Verify dataset_package/ exists with sanctuary_whole_genome_data.jsonl
-
----
-
 ## Next Steps
 
-1. **Complete Fine-Tuning:** Monitor build_lora_adapter.py completion
-2. **Implement Merging:** Create merge_and_quantize.py based on Colab Cell 3
-3. **Add GGUF Conversion:** Integrate llama.cpp conversion pipeline
-4. **Deployment Ready:** Create Ollama Modelfile with Sanctuary system prompt
-
-The sovereign AI lineage begins here. The Garden's first resident is being forged.
-
----
-
-*This pipeline transforms Project Sanctuary's Cognitive Genome into a living, reasoning AI aligned with its doctrines and history.*
+1.  **Complete Fine-Tuning:** Monitor `build_lora_adapter.py` completion.
+2.  **Implement Phase 3 & 4:** Create the `merge_and_quantize.py` and `create_ollama_modelfile.py` scripts.
+3.  **Execute Phase 5:** Run the Sovereign Crucible Test to achieve final verification.
 
 --- END OF FILE forge/OPERATION_PHOENIX_FORGE/README.md ---
 
@@ -50310,7 +50102,13 @@ def main():
     # 6. Initialize and Execute Trainer
     print("[6/6] Initializing SFTTrainer and starting the training process...")
     trainer = SFTTrainer(
-        model=model, train_dataset=dataset, peft_config=peft_config,
+        model=model,
+        train_dataset=dataset,
+        peft_config=peft_config,
+        formatting_func=formatting_prompts_func, # CRITICAL FIX: Explicitly pass the formatting function
+        dataset_text_field="text",               # CRITICAL FIX: Specify the name of the formatted text field
+        max_seq_length=MAX_SEQ_LENGTH,           # CRITICAL FIX: Add back max_seq_length here
+        tokenizer=tokenizer,                     # CRITICAL FIX: Explicitly pass the tokenizer
         args=training_arguments,
     )
     
@@ -51275,11 +51073,12 @@ def main():
         exit_file = os.path.join(LOG_DIR, 'test_torch_cuda.exit')
         with open(exit_file, 'w') as f:
             f.write(str(res.returncode))
-        print(f'Core verification exit code: {res.returncode} (log: {core_log})')
+        rel_core_log = os.path.relpath(core_log, ROOT)
+        print(f'Core verification exit code: {res.returncode} (log: {rel_core_log})')
 
         if res.returncode != 0:
             print('Core verification failed. Inspect the log and fix the environment before continuing.')
-            print(f'cat {core_log}')
+            print(f'cat {rel_core_log}')
             sys.exit(res.returncode)
 
         ts = datetime.utcnow().strftime('%Y%m%d%H%M')
@@ -51294,10 +51093,11 @@ def main():
 
         tests = ['test_pytorch.py', 'test_tensorflow.py', 'test_xformers.py', 'test_llama_cpp.py']
         for t in tests:
-            tpath = os.path.join(ROOT, 'ML-Env-CUDA13', t)
+            tpath = os.path.join(ROOT, '..', 'ML-Env-CUDA13', t)
             logp = os.path.join(LOG_DIR, t.replace('.py', '.log'))
             exitp = os.path.join(LOG_DIR, t.replace('.py', '.exit'))
-            print(f'Running {t} -> {logp}')
+            rel_logp = os.path.relpath(logp, ROOT)
+            print(f'Running {t} -> {rel_logp}')
             r = subprocess.run([venv_python, tpath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             with open(logp, 'wb') as f:
                 f.write(r.stdout)
@@ -51306,7 +51106,8 @@ def main():
 
         print('\nStaged install complete. Activate the venv with:')
         print(f'source {os.path.join(venv_path, "bin", "activate")}')
-        print('Review logs in', LOG_DIR)
+        rel_log_dir = os.path.relpath(LOG_DIR, ROOT)
+        print('Review logs in', rel_log_dir)
         return
 
     print('No mode selected. Run with --staged (recommended) or --quick. Use --help for options.')
@@ -55376,6 +55177,484 @@ xformers==0.0.33.post1
 
 --- END OF FILE pinned-requirements-202511160146.txt ---
 
+--- START OF FILE pinned-requirements-202511160623.txt ---
+
+absl-py==2.3.1
+accelerate==1.4.0
+aiohappyeyeballs==2.6.1
+aiohttp==3.13.2
+aiosignal==1.4.0
+alabaster==1.0.0
+alembic==1.16.4
+annotated-types==0.7.0
+anyio==4.9.0
+astunparse==1.6.3
+attrs==25.3.0
+babel==2.17.0
+backoff==2.2.1
+bcrypt==5.0.0
+bitsandbytes==0.48.2
+black==25.1.0
+boolean.py==5.0
+build==1.3.0
+CacheControl==0.14.4
+cachetools==6.2.2
+certifi==2025.7.14
+charset-normalizer==3.4.2
+chromadb==1.3.4
+click==8.2.1
+cloudpickle==3.1.1
+coloredlogs==15.0.1
+colorlog==6.9.0
+contourpy==1.3.3
+coverage==7.10.1
+cycler==0.12.1
+cyclonedx-python-lib==9.1.0
+dataclasses-json==0.6.7
+datasets==4.0.0
+defusedxml==0.7.1
+dill==0.3.8
+diskcache==5.6.3
+distro==1.9.0
+docutils==0.21.2
+durationpy==0.10
+Farama-Notifications==0.0.4
+filelock==3.18.0
+filetype==1.2.0
+flake8==7.3.0
+flatbuffers==25.9.23
+fonttools==4.59.0
+frozenlist==1.8.0
+fsspec==2025.3.0
+gast==0.6.0
+gitdb==4.0.12
+GitPython==3.1.45
+google-ai-generativelanguage==0.6.10
+google-api-core==2.28.1
+google-api-python-client==2.187.0
+google-auth==2.43.0
+google-auth-httplib2==0.2.1
+google-generativeai==0.8.3
+google-pasta==0.2.0
+googleapis-common-protos==1.72.0
+gpt4all==2.8.2
+greenlet==3.2.4
+grpcio==1.74.0
+grpcio-status==1.71.2
+gymnasium==1.2.0
+h11==0.16.0
+h5py==3.15.1
+hf-xet==1.1.5
+httpcore==1.0.9
+httplib2==0.31.0
+httptools==0.7.1
+httpx==0.28.1
+httpx-sse==0.4.3
+huggingface-hub==0.36.0
+humanfriendly==10.0
+idna==3.10
+imagesize==1.4.1
+importlib_metadata==8.7.0
+importlib_resources==6.5.2
+iniconfig==2.1.0
+Jinja2==3.1.6
+joblib==1.5.1
+jsonlines==4.0.0
+jsonpatch==1.33
+jsonpointer==3.0.0
+jsonschema==4.25.0
+jsonschema-specifications==2025.4.1
+keras==3.12.0
+kiwisolver==1.4.8
+kubernetes==33.1.0
+langchain==1.0.5
+langchain-chroma==1.0.0
+langchain-classic==1.0.0
+langchain-community==0.4.1
+langchain-core==1.0.5
+langchain-nomic==1.0.0
+langchain-ollama==1.0.0
+langchain-text-splitters==1.0.0
+langgraph==1.0.3
+langgraph-checkpoint==3.0.1
+langgraph-prebuilt==1.0.4
+langgraph-sdk==0.2.9
+langsmith==0.4.43
+libclang==18.1.1
+license-expression==30.4.4
+llama_cpp_python==0.3.16
+loguru==0.7.3
+Mako==1.3.10
+Markdown==3.8.2
+markdown-it-py==4.0.0
+MarkupSafe==3.0.2
+marshmallow==3.26.1
+matplotlib==3.10.5
+mccabe==0.7.0
+mdurl==0.1.2
+ml_dtypes==0.5.3
+mmh3==5.2.0
+mpmath==1.3.0
+msgpack==1.1.1
+multidict==6.7.0
+multiprocess==0.70.16
+mypy_extensions==1.1.0
+namex==0.1.0
+networkx==3.5
+nomic==3.9.0
+numpy==1.26.2
+nvidia-cublas-cu12==12.6.4.1
+nvidia-cuda-cupti-cu12==12.6.80
+nvidia-cuda-nvrtc-cu12==12.6.77
+nvidia-cuda-runtime-cu12==12.6.77
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cufft-cu12==11.3.0.4
+nvidia-cufile-cu12==1.11.1.6
+nvidia-curand-cu12==10.3.7.77
+nvidia-cusolver-cu12==11.7.1.2
+nvidia-cusparse-cu12==12.5.4.2
+nvidia-cusparselt-cu12==0.7.1
+nvidia-nccl-cu12==2.27.3
+nvidia-nvjitlink-cu12==12.6.85
+nvidia-nvshmem-cu12==3.3.20
+nvidia-nvtx-cu12==12.6.77
+oauthlib==3.3.1
+ollama==0.6.0
+onnxruntime==1.23.2
+opencv-python==4.10.0.84
+opentelemetry-api==1.38.0
+opentelemetry-exporter-otlp-proto-common==1.38.0
+opentelemetry-exporter-otlp-proto-grpc==1.38.0
+opentelemetry-proto==1.38.0
+opentelemetry-sdk==1.38.0
+opentelemetry-semantic-conventions==0.59b0
+opt_einsum==3.4.0
+optree==0.18.0
+optuna==4.4.0
+orjson==3.11.4
+ormsgpack==1.12.0
+overrides==7.7.0
+packageurl-python==0.17.5
+packaging==25.0
+pandas==2.2.2
+pathspec==0.12.1
+peft==0.11.1
+pillow==10.4.0
+pip-api==0.0.34
+pip-requirements-parser==32.0.1
+pip_audit==2.9.0
+platformdirs==4.3.8
+pluggy==1.6.0
+posthog==5.4.0
+propcache==0.4.1
+proto-plus==1.26.1
+protobuf==5.29.5
+psutil==7.1.3
+py-serializable==2.1.0
+pyarrow==19.0.0
+pyasn1==0.6.1
+pyasn1_modules==0.4.2
+pybase64==1.4.2
+pycodestyle==2.14.0
+pydantic==2.11.7
+pydantic-settings==2.12.0
+pydantic_core==2.33.2
+pyflakes==3.4.0
+Pygments==2.19.2
+PyJWT==2.10.1
+pyparsing==3.2.3
+PyPika==0.48.9
+pyproject_hooks==1.2.0
+pytest==8.4.1
+pytest-cov==6.2.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+pytz==2025.2
+PyYAML==6.0.2
+ray==2.48.0
+referencing==0.36.2
+regex==2025.7.34
+requests==2.32.5
+requests-oauthlib==2.0.0
+requests-toolbelt==1.0.0
+rich==13.7.1
+roman-numerals-py==3.1.0
+rpds-py==0.26.0
+rsa==4.9.1
+safetensors==0.5.3
+scikit-learn==1.7.1
+scipy==1.16.1
+seaborn==0.13.2
+sentry-sdk==2.34.1
+shellingham==1.5.4
+six==1.17.0
+smmap==5.0.2
+sniffio==1.3.1
+snowballstemmer==3.0.1
+sortedcontainers==2.4.0
+Sphinx==8.2.3
+sphinx-rtd-theme==3.0.2
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
+SQLAlchemy==2.0.42
+stable_baselines3==2.7.0
+sympy==1.14.0
+tenacity==9.1.2
+tenseal==0.3.16
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorboardX==2.6.4
+tensorflow==2.20.0
+termcolor==3.2.0
+tf_keras==2.20.1
+threadpoolctl==3.6.0
+tokenizers==0.22.1
+toml==0.10.2
+torch==2.8.0+cu126
+torchaudio==2.8.0+cu126
+torchvision==0.23.0+cu126
+tqdm==4.67.1
+transformers==4.56.1
+triton==3.4.0
+trl==0.23.0
+typer==0.20.0
+typing-inspect==0.9.0
+typing-inspection==0.4.1
+typing_extensions==4.14.1
+tzdata==2025.2
+uritemplate==4.2.0
+urllib3==2.5.0
+uvicorn==0.38.0
+uvloop==0.22.1
+wandb==0.21.0
+watchfiles==1.1.1
+websocket-client==1.9.0
+websockets==15.0.1
+Werkzeug==3.1.3
+wrapt==2.0.1
+xformers==0.0.32.post2
+xxhash==3.6.0
+yarl==1.22.0
+zipp==3.23.0
+zstandard==0.25.0
+
+--- END OF FILE pinned-requirements-202511160623.txt ---
+
+--- START OF FILE pinned-requirements-202511160755.txt ---
+
+absl-py==2.3.1
+astunparse==1.6.3
+bitsandbytes==0.48.2
+certifi==2025.11.12
+charset-normalizer==3.4.4
+diskcache==5.6.3
+filelock==3.19.1
+flatbuffers==25.9.23
+fsspec==2025.9.0
+gast==0.6.0
+google-pasta==0.2.0
+grpcio==1.76.0
+h5py==3.15.1
+idna==3.11
+Jinja2==3.1.6
+keras==3.12.0
+libclang==18.1.1
+llama_cpp_python==0.3.16
+Markdown==3.10
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+ml_dtypes==0.5.3
+mpmath==1.3.0
+namex==0.1.0
+networkx==3.5
+numpy==2.3.4
+nvidia-cublas-cu12==12.6.4.1
+nvidia-cuda-cupti-cu12==12.6.80
+nvidia-cuda-nvrtc-cu12==12.6.77
+nvidia-cuda-runtime-cu12==12.6.77
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cufft-cu12==11.3.0.4
+nvidia-cufile-cu12==1.11.1.6
+nvidia-curand-cu12==10.3.7.77
+nvidia-cusolver-cu12==11.7.1.2
+nvidia-cusparse-cu12==12.5.4.2
+nvidia-cusparselt-cu12==0.7.1
+nvidia-nccl-cu12==2.27.3
+nvidia-nvjitlink-cu12==12.6.85
+nvidia-nvshmem-cu12==3.3.20
+nvidia-nvtx-cu12==12.6.77
+opt_einsum==3.4.0
+optree==0.18.0
+packaging==25.0
+pillow==12.0.0
+protobuf==6.33.1
+Pygments==2.19.2
+requests==2.32.5
+rich==14.2.0
+six==1.17.0
+sympy==1.14.0
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorflow==2.20.0
+termcolor==3.2.0
+torch==2.8.0+cu126
+torchaudio==2.8.0+cu126
+torchvision==0.23.0+cu126
+triton==3.4.0
+typing_extensions==4.15.0
+urllib3==2.5.0
+Werkzeug==3.1.3
+wrapt==2.0.1
+xformers==0.0.33.post1
+
+--- END OF FILE pinned-requirements-202511160755.txt ---
+
+--- START OF FILE pinned-requirements-202511160802.txt ---
+
+absl-py==2.3.1
+astunparse==1.6.3
+bitsandbytes==0.48.2
+certifi==2025.11.12
+charset-normalizer==3.4.4
+diskcache==5.6.3
+filelock==3.19.1
+flatbuffers==25.9.23
+fsspec==2025.9.0
+gast==0.6.0
+google-pasta==0.2.0
+grpcio==1.76.0
+h5py==3.15.1
+idna==3.11
+Jinja2==3.1.6
+keras==3.12.0
+libclang==18.1.1
+llama_cpp_python==0.3.16
+Markdown==3.10
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+ml_dtypes==0.5.3
+mpmath==1.3.0
+namex==0.1.0
+networkx==3.5
+numpy==2.3.4
+nvidia-cublas-cu12==12.6.4.1
+nvidia-cuda-cupti-cu12==12.6.80
+nvidia-cuda-nvrtc-cu12==12.6.77
+nvidia-cuda-runtime-cu12==12.6.77
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cufft-cu12==11.3.0.4
+nvidia-cufile-cu12==1.11.1.6
+nvidia-curand-cu12==10.3.7.77
+nvidia-cusolver-cu12==11.7.1.2
+nvidia-cusparse-cu12==12.5.4.2
+nvidia-cusparselt-cu12==0.7.1
+nvidia-nccl-cu12==2.27.3
+nvidia-nvjitlink-cu12==12.6.85
+nvidia-nvshmem-cu12==3.3.20
+nvidia-nvtx-cu12==12.6.77
+opt_einsum==3.4.0
+optree==0.18.0
+packaging==25.0
+pillow==12.0.0
+protobuf==6.33.1
+Pygments==2.19.2
+requests==2.32.5
+rich==14.2.0
+six==1.17.0
+sympy==1.14.0
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorflow==2.20.0
+termcolor==3.2.0
+torch==2.8.0+cu126
+torchaudio==2.8.0+cu126
+torchvision==0.23.0+cu126
+triton==3.4.0
+typing_extensions==4.15.0
+urllib3==2.5.0
+Werkzeug==3.1.3
+wrapt==2.0.1
+xformers==0.0.33.post1
+
+--- END OF FILE pinned-requirements-202511160802.txt ---
+
+--- START OF FILE pinned-requirements-202511160808.txt ---
+
+absl-py==2.3.1
+astunparse==1.6.3
+bitsandbytes==0.48.2
+certifi==2025.11.12
+charset-normalizer==3.4.4
+diskcache==5.6.3
+filelock==3.19.1
+flatbuffers==25.9.23
+fsspec==2025.9.0
+gast==0.6.0
+google-pasta==0.2.0
+grpcio==1.76.0
+h5py==3.15.1
+idna==3.11
+Jinja2==3.1.6
+keras==3.12.0
+libclang==18.1.1
+llama_cpp_python==0.3.16
+Markdown==3.10
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+ml_dtypes==0.5.3
+mpmath==1.3.0
+namex==0.1.0
+networkx==3.5
+numpy==2.3.4
+nvidia-cublas-cu12==12.6.4.1
+nvidia-cuda-cupti-cu12==12.6.80
+nvidia-cuda-nvrtc-cu12==12.6.77
+nvidia-cuda-runtime-cu12==12.6.77
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cufft-cu12==11.3.0.4
+nvidia-cufile-cu12==1.11.1.6
+nvidia-curand-cu12==10.3.7.77
+nvidia-cusolver-cu12==11.7.1.2
+nvidia-cusparse-cu12==12.5.4.2
+nvidia-cusparselt-cu12==0.7.1
+nvidia-nccl-cu12==2.27.3
+nvidia-nvjitlink-cu12==12.6.85
+nvidia-nvshmem-cu12==3.3.20
+nvidia-nvtx-cu12==12.6.77
+opt_einsum==3.4.0
+optree==0.18.0
+packaging==25.0
+pillow==12.0.0
+protobuf==6.33.1
+Pygments==2.19.2
+requests==2.32.5
+rich==14.2.0
+six==1.17.0
+sympy==1.14.0
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorflow==2.20.0
+termcolor==3.2.0
+torch==2.8.0+cu126
+torchaudio==2.8.0+cu126
+torchvision==0.23.0+cu126
+triton==3.4.0
+typing_extensions==4.15.0
+urllib3==2.5.0
+Werkzeug==3.1.3
+wrapt==2.0.1
+xformers==0.0.33.post1
+
+--- END OF FILE pinned-requirements-202511160808.txt ---
+
 --- START OF FILE requirements-macbook-M1.txt ---
 
 absl-py==2.3.1
@@ -55512,176 +55791,30 @@ Werkzeug==3.1.3
 
 --- START OF FILE requirements.txt ---
 
-# Use the PyTorch CUDA 12.6 wheel index so pip will prefer cu126 wheels
---extra-index-url https://download.pytorch.org/whl/cu126
+# Use the PyTorch CUDA 12.1 wheel index
+--extra-index-url https://download.pytorch.org/whl/cu121
 
-# CUDA-aware PyTorch packages (installed from the above extra index)
-# Pin to the cu126 builds tested with ML-Env-CUDA13 in this project.
-# If you want a different PyTorch release, change the version suffix accordingly.
-torch==2.8.0+cu126
-torchvision==0.23.0+cu126
-torchaudio==2.8.0+cu126
+# Core ML/Fine-Tuning Stack - Pinned to a known-good, compatible set
+torch==2.3.0+cu121
+torchvision==0.18.0+cu121
+torchaudio==2.3.0+cu121
+transformers==4.40.1
+peft==0.10.0
+trl==0.8.6
+bitsandbytes==0.43.1
+datasets==2.19.0
+accelerate==0.30.1
+xformers==0.0.26.post1
 
-# ML fine-tuning packages for QLoRA and transformers
-transformers==4.56.1
-peft==0.11.1
-trl==0.23.0
-bitsandbytes==0.45.3
-datasets==3.3.2
-tf-keras==2.18.0
+# Keras compatibility
+tf-keras
 
-absl-py==2.3.1
-accelerate==1.4.0
-alabaster==1.0.0
-alembic==1.16.4
-annotated-types==0.7.0
-anyio==4.9.0
-attrs==25.3.0
-babel==2.17.0
-black==25.1.0
-certifi==2025.7.14
-charset-normalizer==3.4.2
-chromadb==1.3.4
-click==8.2.1
-cloudpickle==3.1.1
-colorlog==6.9.0
-contourpy==1.3.3
-coverage==7.10.1
-cycler==0.12.1
-docutils==0.21.2
-Farama-Notifications==0.0.4
-filelock==3.18.0
-flake8==7.3.0
-fonttools==4.59.0
-fsspec==2025.3.0
-gitdb==4.0.12
-GitPython==3.1.45
-google-generativeai==0.8.3
-gpt4all==2.8.2
-grpcio==1.74.0
-gymnasium==1.2.0
-h11==0.16.0
-hf-xet==1.1.5
-httpcore==1.0.9
-httpx==0.28.1
-huggingface-hub==0.36.0
-idna==3.10
-imagesize==1.4.1
-iniconfig==2.1.0
-Jinja2==3.1.6
-joblib==1.5.1
-jsonschema==4.25.0
-jsonschema-specifications==2025.4.1
-kiwisolver==1.4.8
-langchain==1.0.5
-langchain-chroma==1.0.0
-langchain-community==0.4.1
-langchain-nomic==1.0.0
-langchain-ollama==1.0.0
-langchain-text-splitters==1.0.0
-Mako==1.3.10
-Markdown==3.8.2
-MarkupSafe==3.0.2
-matplotlib==3.10.5
-mccabe==0.7.0
-mpmath==1.3.0
-msgpack==1.1.1
-mypy_extensions==1.1.0
-networkx==3.5
-nomic[local]==3.9.0
-numpy==1.26.2
-ollama==0.6.0
-opencv-python==4.10.0.84
-optuna==4.4.0
-packaging==25.0
-pandas==2.2.2
-pathspec==0.12.1
-pillow==10.4.0
-platformdirs==4.3.8
-pluggy==1.6.0
-protobuf==5.29.5
-pyarrow==19.0.0
-pycodestyle==2.14.0
-pydantic==2.11.7
-pydantic_core==2.33.2
-pyflakes==3.4.0
-Pygments==2.19.2
-pyparsing==3.2.3
-pytest==8.4.1
-pytest-cov==6.2.1
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-pytz==2025.2
-PyYAML==6.0.2
-ray==2.48.0
-referencing==0.36.2
-regex==2025.7.34
-requests==2.32.5
-rich==13.7.1
-roman-numerals-py==3.1.0
-rpds-py==0.26.0
-safetensors==0.5.3
-scikit-learn==1.7.1
-scipy==1.16.1
-seaborn==0.13.2
-sentry-sdk==2.34.1
-setuptools==80.9.0
-six==1.17.0
-smmap==5.0.2
-sniffio==1.3.1
-snowballstemmer==3.0.1
-Sphinx==8.2.3
-sphinx-rtd-theme==3.0.2
-sphinxcontrib-applehelp==2.0.0
-sphinxcontrib-devhelp==2.0.0
-sphinxcontrib-htmlhelp==2.0.0
-sphinxcontrib-jquery==4.1
-sphinxcontrib-jsmath==1.0.1
-sphinxcontrib-qthelp==2.0.0
-sphinxcontrib-serializinghtml==2.0.0
-SQLAlchemy==2.0.42
-stable_baselines3==2.7.0
-sympy==1.14.0
-tenseal==0.3.16
-tensorboard==2.19.0
-tensorboard-data-server==0.7.2
-tensorboardX==2.6.4
-threadpoolctl==3.6.0
-tokenizers==0.22.1
-tqdm==4.67.1
-typing-inspection==0.4.1
-typing_extensions==4.14.1
-tzdata==2025.2
-urllib3==2.5.0
-wandb==0.21.0
-Werkzeug==3.1.3
-xformers==0.0.33.post1
-
-# Optional / VCS installs (uncomment if you want direct git installs)
-# unsloth @ git+https://github.com/unslothai/unsloth.git
-# unsloth_zoo
-# unsloth-colab-install==0.0.0  # placeholder
-
-# Packages often requiring special install steps or CUDA-aware wheels:
-# - bitsandbytes
-# - llama-cpp-python
-# - sentencepiece
-# - huggingface_hub (already included)
-# - torch/torchaudio/torchvision: DO NOT install the CPU wheels on WSL with CUDA.
-#   Install PyTorch for your CUDA version from the official PyTorch installer inside WSL/Ubuntu.
-#   Example (in WSL Ubuntu): pip install --index-url https://download.pytorch.org/whl/cu126 torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126
-
-# Post-install notes (run after the main `pip install -r requirements.txt`):
-# - bitsandbytes: install after torch is installed; it may require a matching CUDA ABI.
-#     pip install bitsandbytes
-# - xformers: prefer the prebuilt wheel from the PyTorch index. If pip builds from source
-#     it may require `gcc`, `cmake` and extra build tools; try:
-#     pip install --index-url https://download.pytorch.org/whl/cu126 xformers
-# - llama-cpp-python: often requires building with CUDA flags. Recommended local install:
-#     CMAKE_ARGS="-DGGML_CUDA=ON -DLLAMA_CUBLAS=ON" pip install --upgrade --force-reinstall --no-build-isolation llama-cpp-python
-#   (Adjust flags to match your local GPU/toolkit. Building may require `cmake` and `build-essential`.)
-
-# Keep a minimal pinned list here and install CUDA-specific heavy packages separately in WSL.
+# Core RAG/Orchestrator Stack
+langchain
+chromadb
+google-generativeai
+ollama
+gpt4all
 
 --- END OF FILE requirements.txt ---
 

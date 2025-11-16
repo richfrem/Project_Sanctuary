@@ -179,11 +179,12 @@ def main():
         exit_file = os.path.join(LOG_DIR, 'test_torch_cuda.exit')
         with open(exit_file, 'w') as f:
             f.write(str(res.returncode))
-        print(f'Core verification exit code: {res.returncode} (log: {core_log})')
+        rel_core_log = os.path.relpath(core_log, ROOT)
+        print(f'Core verification exit code: {res.returncode} (log: {rel_core_log})')
 
         if res.returncode != 0:
             print('Core verification failed. Inspect the log and fix the environment before continuing.')
-            print(f'cat {core_log}')
+            print(f'cat {rel_core_log}')
             sys.exit(res.returncode)
 
         ts = datetime.utcnow().strftime('%Y%m%d%H%M')
@@ -198,10 +199,11 @@ def main():
 
         tests = ['test_pytorch.py', 'test_tensorflow.py', 'test_xformers.py', 'test_llama_cpp.py']
         for t in tests:
-            tpath = os.path.join(ROOT, 'ML-Env-CUDA13', t)
+            tpath = os.path.join(ROOT, '..', 'ML-Env-CUDA13', t)
             logp = os.path.join(LOG_DIR, t.replace('.py', '.log'))
             exitp = os.path.join(LOG_DIR, t.replace('.py', '.exit'))
-            print(f'Running {t} -> {logp}')
+            rel_logp = os.path.relpath(logp, ROOT)
+            print(f'Running {t} -> {rel_logp}')
             r = subprocess.run([venv_python, tpath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             with open(logp, 'wb') as f:
                 f.write(r.stdout)
@@ -210,7 +212,8 @@ def main():
 
         print('\nStaged install complete. Activate the venv with:')
         print(f'source {os.path.join(venv_path, "bin", "activate")}')
-        print('Review logs in', LOG_DIR)
+        rel_log_dir = os.path.relpath(LOG_DIR, ROOT)
+        print('Review logs in', rel_log_dir)
         return
 
     print('No mode selected. Run with --staged (recommended) or --quick. Use --help for options.')
