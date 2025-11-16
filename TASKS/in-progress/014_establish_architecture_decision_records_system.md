@@ -1,6 +1,6 @@
 # TASK: Establish Architecture Decision Records System
 
-**Status:** backlog
+**Status:** in-progress
 **Priority:** High
 **Lead:** GUARDIAN-01
 **Dependencies:** "Requires #013"
