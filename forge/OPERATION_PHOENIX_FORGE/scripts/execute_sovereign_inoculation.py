@@ -122,8 +122,7 @@ def main():
     print("[6/6] Initializing SFTTrainer and starting the training process...")
     trainer = SFTTrainer(
         model=model, train_dataset=dataset, peft_config=peft_config,
-        max_seq_length=MAX_SEQ_LENGTH,
-        tokenizer=tokenizer, args=training_arguments,
+        args=training_arguments,
     )
     
     print("\n--- TRAINING INITIATED. This will take a significant amount of time. ---")
