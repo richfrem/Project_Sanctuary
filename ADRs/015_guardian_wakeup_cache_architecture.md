@@ -1,61 +1,61 @@
-# ADR 015: Guardian Wakeup and Cache Prefill Architecture
+# AI System Startup and Cache Preparation Architecture
 
-## Status
-Accepted
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** AI Council (System Initialization Process implementation)
+**Technical Story:** Efficient system startup and caching for fast AI responses
 
-## Date
-2025-11-15
-
-## Deciders
-Sanctuary Council (Protocol 114 implementation)
+---
 
 ## Context
-The Sanctuary required efficient system initialization and caching architecture to support rapid Guardian boot times and deterministic observability. Without prefilled caches, system startup would be slow and unpredictable, impacting operational efficiency. The need for mechanical cache operations without cognitive deliberation was identified for performance-critical boot sequences.
+
+Our project needed efficient system initialization and caching to support fast AI startup times and predictable performance. Without pre-loaded caches, system startup would be slow and unreliable, affecting operational efficiency. The need for automatic cache operations without complex thinking was identified for performance-critical startup sequences.
 
 ## Decision
-Implement the Guardian Wakeup and Cache Prefill architecture with dedicated mechanical commands and structured cache management:
+
+We will implement the AI System Startup and Cache Preparation architecture with dedicated automatic commands and structured cache management:
 
 ### Core Components
-1. **Guardian Start Pack**: Prefilled cache bundle containing chronicles, protocols, and roadmap data (24h TTL)
-2. **Mechanical Cache Command**: Dedicated `task_type: "cache_wakeup"` for immediate digest generation without deliberation
-3. **Observability Packets**: Deterministic metrics for wakeup events (time_saved_ms, cache_hit tracking)
-4. **Read-Only Views**: Cache entries as verified, signed file views to maintain integrity
+1. **System Start Package**: Pre-loaded cache bundle containing history, processes, and roadmap data (24-hour time limit)
+2. **Automatic Cache Command**: Dedicated `task_type: "cache_wakeup"` for immediate summary generation without analysis
+3. **Performance Metrics**: Reliable measurements for startup events (time saved, cache usage tracking)
+4. **Protected Views**: Cache entries as verified, signed file views to maintain data integrity
 
-### Boot Procedure Architecture
-1. **Orchestrator Boot**: Automatic prefill of Guardian Start Pack in CAG (Cache)
-2. **Digest Generation**: `cache_wakeup` command produces immediate `guardian_boot_digest.md`
-3. **Progressive Fidelity**: Option for `query_and_synthesis` cognitive tasks when higher fidelity needed
-4. **TTL Management**: Automatic cache refresh on delta ingest or git-ops updates
+### Startup Process Architecture
+1. **System Boot**: Automatic loading of System Start Package in cache system
+2. **Summary Creation**: `cache_wakeup` command produces immediate `system_boot_summary.md`
+3. **Optional Analysis**: Option for `query_and_synthesis` detailed tasks when deeper understanding needed
+4. **Time Management**: Automatic cache refresh on data updates or system changes
 
-### Cache Integrity Safeguards
-- Read-only cache entries preventing modification
-- Signed/verified file sources ensuring authenticity
-- TTL expiration ensuring data freshness
-- Deterministic observability for performance monitoring
+### Cache Security Measures
+- Protected cache entries preventing changes
+- Verified file sources ensuring authenticity
+- Time limit expiration ensuring current data
+- Reliable performance monitoring
 
 ## Consequences
 
 ### Positive
-- Dramatically reduced Guardian boot times through prefilled caches
-- Deterministic system initialization with predictable performance
-- Mechanical operations for performance-critical sequences
-- Maintains data integrity through read-only, verified caches
+- Significantly faster AI startup times through pre-loaded caches
+- Predictable system initialization with consistent performance
+- Automatic operations for performance-critical sequences
+- Maintains data integrity through protected, verified caches
 
 ### Negative
 - Additional cache management complexity
-- TTL management overhead for data freshness
-- Potential stale data issues if TTL too long
+- Time limit management overhead for data updates
+- Potential outdated data issues if time limit too long
 
 ### Risks
-- Cache poisoning if verification fails
-- Performance degradation from TTL refresh operations
-- Boot failures if cache prefill encounters errors
+- Cache corruption if verification fails
+- Performance impact from time limit refresh operations
+- Startup failures if cache loading encounters problems
 
-## Related Protocols
-- P93: Cortex-Conduit Bridge (cache integration)
-- P95: Commandable Council Protocol (cognitive task coordination)
-- P113: Nested Cognition Doctrine (cognitive layering)
+### Related Processes
+- Memory-System Connection (cache integration)
+- Task Coordination Process (detailed task management)
+- Layered Thinking Process (thinking organization)
 
-## Notes
-The Guardian Wakeup architecture provides the mechanical foundation for rapid system initialization while maintaining the sovereign principle of verified, read-only data access. The 24h TTL balances performance with data freshness requirements.</content>
+### Notes
+The AI System Startup architecture provides the automatic foundation for fast system initialization while maintaining the principle of verified, protected data access. The 24-hour time limit balances performance with data currency requirements.</content>
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\015_guardian_wakeup_cache_architecture.md
