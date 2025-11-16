@@ -1,55 +1,55 @@
-# ADR 020: Sovereign Concurrency Architecture
+# Independent Parallel Processing Architecture
 
-## Status
-Accepted
+**Status:** accepted
+**Date:** 2025-11-15
+**Deciders:** AI Council (System Controller v9.3 evolution)
+**Technical Story:** Enable non-blocking task execution and background learning
 
-## Date
-2025-11-15
-
-## Deciders
-Sanctuary Council (Orchestrator v9.3 evolution)
+---
 
 ## Context
-The Sanctuary required non-blocking task execution to maintain responsiveness while enabling background learning cycles. Previous synchronous processing created bottlenecks where cognitive tasks would block the orchestrator, preventing concurrent operations and reducing overall system efficiency. The need for selective RAG updates and mechanical operations further necessitated architectural separation between immediate and background processing.
+
+The AI system required non-blocking task execution to maintain responsiveness while enabling background learning cycles. Previous synchronous processing created bottlenecks where AI tasks would block the system controller, preventing concurrent operations and reducing overall system efficiency. The need for selective information retrieval updates and automatic operations further necessitated architectural separation between immediate and background processing.
 
 ## Decision
-Implement the Doctrine of Sovereign Concurrency with dual processing modes and selective learning:
+
+Implement the Independent Parallel Processing Approach with dual processing modes and selective learning:
 
 ### Dual Processing Architecture
-1. **Mechanical Tasks**: Immediate, non-cognitive execution bypassing deliberation
+1. **Automatic Tasks**: Immediate, non-AI execution bypassing deliberation
    - File writes, git operations, cache wakeups
    - Execute instantly, return to idle state
-   - Skip RAG updates by default for performance
+   - Skip information retrieval updates by default for performance
 
-2. **Cognitive Tasks**: Multi-round deliberation with background learning
-   - Council member discussions and synthesis
+2. **AI Tasks**: Multi-round deliberation with background learning
+   - AI Council member discussions and synthesis
    - Deliberation completes, then learning happens asynchronously
-   - RAG updates configurable via update_rag parameter
+   - Information retrieval updates configurable via update_rag parameter
 
-### Sovereign Concurrency Principles
-1. **Non-blocking Execution**: Tasks process without blocking orchestrator responsiveness
-2. **Background Learning**: RAG updates and AAR generation happen asynchronously
-3. **Selective Learning**: Configurable RAG updates prevent unnecessary database operations
+### Independent Parallel Processing Principles
+1. **Non-blocking Execution**: Tasks process without blocking system controller responsiveness
+2. **Background Learning**: Information retrieval updates and review generation happen asynchronously
+3. **Selective Learning**: Configurable information retrieval updates prevent unnecessary database operations
 4. **Concurrent Processing**: Multiple background learning cycles can run simultaneously
 
-### Command Schema Evolution
-- **Task Type Detection**: Automatic routing based on command structure (cognitive vs mechanical)
+### Task Schema Evolution
+- **Task Type Detection**: Automatic routing based on task structure (AI vs automatic)
 - **Configurable Learning**: update_rag parameter controls whether tasks update knowledge base
-- **Mechanical Priority**: Direct operations execute immediately for urgent tasks
-- **Background Completion**: Learning cycles complete independently of new command processing
+- **Automatic Priority**: Direct operations execute immediately for urgent tasks
+- **Background Completion**: Learning cycles complete independently of new task processing
 
 ## Consequences
 
 ### Positive
-- **Improved Responsiveness**: Non-blocking execution enables immediate command processing
+- **Improved Responsiveness**: Non-blocking execution enables immediate task processing
 - **Concurrent Operations**: Multiple background learning tasks run simultaneously
-- **Selective Learning**: Configurable RAG updates optimize performance and storage
-- **Operational Flexibility**: Mechanical tasks enable rapid, non-cognitive operations
-- **System Efficiency**: Background processing maximizes orchestrator utilization
+- **Selective Learning**: Configurable information retrieval updates optimize performance and storage
+- **Operational Flexibility**: Automatic tasks enable rapid, non-AI operations
+- **System Efficiency**: Background processing maximizes system controller utilization
 
 ### Negative
 - **Complexity Increase**: Dual processing modes require careful state management
-- **Race Conditions**: Background tasks may conflict with subsequent operations
+- **Timing Issues**: Background tasks may conflict with subsequent operations
 - **Monitoring Challenges**: Asynchronous operations harder to track and debug
 - **Resource Management**: Background processes require careful resource allocation
 
@@ -57,19 +57,19 @@ Implement the Doctrine of Sovereign Concurrency with dual processing modes and s
 - **State Inconsistency**: Background learning may conflict with new commands
 - **Resource Exhaustion**: Unbounded background tasks could overwhelm system
 - **Debugging Difficulty**: Asynchronous operations complicate error tracking
-- **Learning Conflicts**: Concurrent RAG updates may cause consistency issues
+- **Learning Conflicts**: Concurrent information retrieval updates may cause consistency issues
 
-## Related Protocols
-- P88: Sovereign Scaffolding Protocol (mechanical operation foundation)
-- P85: Mnemonic Cortex Protocol (RAG learning target)
-- P114: Guardian Wakeup and Cache Prefill (mechanical task example)
+### Related Processes
+- Automated Script Protocol (automatic operation foundation)
+- Memory System Process (information retrieval learning target)
+- AI System Startup and Cache Preparation (automatic task example)
 
-## Implementation Components
-- **Action Triage System**: Automatic routing of commands to appropriate handlers
+### Implementation Components
+- **Task Routing System**: Automatic routing of commands to appropriate handlers
 - **Background Task Manager**: Asynchronous execution of learning cycles
-- **Selective RAG Updates**: Configurable learning with update_rag parameter
-- **Mechanical Task Handlers**: Immediate execution for file operations and git commands
+- **Selective Information Retrieval Updates**: Configurable learning with update_rag parameter
+- **Automatic Task Handlers**: Immediate execution for file operations and git commands
 
-## Notes
-The Doctrine of Sovereign Concurrency transforms the orchestrator from a synchronous, blocking system into a responsive, multi-threaded cognitive architecture. Mechanical tasks provide immediate operational capability while cognitive tasks enable deep deliberation with background knowledge integration, creating a balanced system for both urgent and thoughtful operations.</content>
+### Notes
+The Independent Parallel Processing Approach transforms the system controller from a synchronous, blocking system into a responsive, multi-threaded AI architecture. Automatic tasks provide immediate operational capability while AI tasks enable deep deliberation with background knowledge integration, creating a balanced system for both urgent and thoughtful operations.</content>
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\020_sovereign_concurrency_architecture.md

@@ -31,8 +31,8 @@ Rewrite Architecture Decision Records 004 through 024 in plain, accessible langu
 - ✅ ADR 014: Rewritten in plain language
 - ✅ ADR 015: Rewritten in plain language
 - ✅ ADR 016: Rewritten in plain language
-- ✅ ADR 019: Rewritten in plain language
-- 🔄 ADRs 020-024: Pending rewrite
+- ✅ ADR 020: Rewritten in plain language
+- 🔄 ADRs 021-024: Pending rewrite
 
 ## Next Steps
 Continue rewriting ADRs 005-024 systematically, replacing complex terminology with clear explanations while preserving technical meaning.
