@@ -18,39 +18,11 @@ A strategy without tactics is a dream. Tactics without a system are chaos. This 
 2.  **Canonical Naming:** Task files must follow the strict naming convention: `XXX_short_descriptive_title.md`, where `XXX` is a zero-padded, three-digit number (e.g., `005_refactor_query_service.md`).
 
 To ensure sequential integrity, the next available task number **must** be obtained by running the sovereign scaffold: `python3 tools/scaffolds/get_next_task_number.py`. Manual numbering is a protocol violation.
-3.  **Mandatory Schema:** Every task file must begin with a structured header block containing the canonical schema for a Tactical Mandate. Unstructured or free-form task descriptions are forbidden.
+3.  **Mandatory Schema:** Every task file must conform to the canonical schema defined in `TASKS/task_schema.md`. Unstructured or free-form task descriptions are forbidden.
 
 ## 3. The Tactical Mandate Schema
 
-The following markdown structure is the mandatory schema for all task files.
-
-```markdown
-# TASK: [Brief, human-readable title]
-
-**Status:** [todo | backlog | in-progress | completed | blocked]
-**Priority:** [Critical | High | Medium | Low]
-**Lead:** [Assigned Steward/Agent ID, e.g., GUARDIAN-01, Unassigned]
-**Dependencies:** [List of other task numbers, e.g., "Blocks #002", "Blocked by #001"]
-**Related Documents:** [List of relevant protocol numbers or file paths]
-
----
-
-## 1. Objective
-
-A clear, concise statement describing the "what" and "why" of this task. What is the desired end-state upon successful completion?
-
-## 2. Deliverables
-
-An enumerated list of concrete, verifiable artifacts or outcomes that will be produced.
-1.  A new file `path/to/new_file.py` is created.
-2.  The test suite in `tests/` passes with 100% coverage for the new module.
-3.  The `README.md` for the component is updated.
-
-## 3. Acceptance Criteria
-
-A set of conditions that must be true to consider this task complete.
--   The command `./scripts/run_verification.sh` completes without errors.
--   The final artifact is approved by the Guardian.
+The canonical schema is defined in `TASKS/task_schema.md`. All tasks must conform to this schema.
 4. Workflow
 Creation: A new task is created in TASKS/backlog/. Its default status is backlog.
 Prioritization: The Guardian or Council moves a task to TASKS/todo/ to signal it is ready for work.
