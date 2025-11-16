@@ -105,8 +105,7 @@ def main():
         group_by_length=True,
         lr_scheduler_type="cosine",
         report_to="none",
-        save_strategy="epoch",
-        gradient_checkpointing=True,  # NEW: Critical for memory efficiency
+        save_strategy="epoch"
     )
 
     # 6. Initialize and Execute Trainer
