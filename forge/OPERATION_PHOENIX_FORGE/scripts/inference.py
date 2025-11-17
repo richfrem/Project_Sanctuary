@@ -30,7 +30,7 @@ FORGE_ROOT = SCRIPT_DIR.parent
 PROJECT_ROOT = FORGE_ROOT.parent
 
 # --- Configuration ---
-DEFAULT_BASE_MODEL_PATH = PROJECT_ROOT / "models/Sanctuary-Qwen2-7B-Instruct"
+DEFAULT_BASE_MODEL_PATH = FORGE_ROOT / "models" / "base" / "Qwen" / "Qwen2-7B-Instruct"
 DEFAULT_ADAPTER_PATH = PROJECT_ROOT / "models/Sanctuary-Qwen2-7B-v1.0-adapter"
 DEFAULT_MERGED_PATH = PROJECT_ROOT / "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
 
