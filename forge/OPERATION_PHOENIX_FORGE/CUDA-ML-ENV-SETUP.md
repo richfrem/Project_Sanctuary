@@ -297,11 +297,9 @@ The final LoRA adapter will be saved to `models/Sanctuary-Qwen2-7B-v1.0-adapter/
 ```bash
 ls -la models/Sanctuary-Qwen2-7B-v1.0-adapter/
 ```
-Ensure `adapter_model.safetensors` and `adapter_config.json` are present. For a quick integrity test, run one of these commands to verify the fine-tuned knowledge:
+Ensure `adapter_model.safetensors` and `adapter_config.json` are present. For a quick integrity test, run:
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "What is the Doctrine of the Clean Forge?"
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "What is the Guardian's role in the Sanctuary?"
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Summarize the primary objective of the Sovereign Crucible."
+python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Test prompt"
 ```
 If it loads and generates output without errors, the adapter is valid.
 

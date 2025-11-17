@@ -27,7 +27,7 @@ from peft import PeftModel
 # --- Determine Paths ---
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent
+PROJECT_ROOT = FORGE_ROOT.parent.parent
 
 # --- Configuration ---
 DEFAULT_BASE_MODEL_PATH = FORGE_ROOT / "models" / "base" / "Qwen" / "Qwen2-7B-Instruct"
