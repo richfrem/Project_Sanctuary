@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 """
-setup_cuda_env.py (v2.2 - All-in-One)
+setup_cuda_env.py (v2.5 - Stable)
 
 This script is the Foreman of the Forge. It is a single, unified command to
 build the complete, CUDA-enabled ML environment (`~/ml_env`).
 
-It now performs a prerequisite check and handles the installation of system
-packages (like python3.11-venv) before creating the virtual environment.
-
-*** IMPORTANT ***
-This script must be run with `sudo` because it needs to install system packages
-using 'apt'. It will intelligently drop privileges to create the user-owned venv.
-
-Example from your project root:
-sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+It correctly handles system prerequisites and staged installation from a
+requirements.txt file with multiple package indexes.
 """
 from __future__ import annotations
 import argparse
@@ -23,6 +16,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 # --- Global Configuration ---
 PYTHON_VERSION = "3.11"
@@ -101,26 +95,38 @@ def ensure_dir(path: str):
 
 
 def parse_requirements(req_path: str) -> tuple[dict, str | None]:
-    """Parses requirements.txt to find PyTorch-related pins and the extra-index-url."""
+    """
+    Parses requirements.txt to find PyTorch-related pins and the SPECIFIC
+    PyTorch extra-index-url using secure URL parsing.
+    """
     pins = {}
-    extra_index_url = None
+    pytorch_index_url = None
     try:
         with open(req_path, 'r', encoding='utf-8') as f:
             for line in f:
                 s = line.strip()
                 if not s or s.startswith('#'):
                     continue
+                
                 if s.startswith('--extra-index-url'):
-                    extra_index_url = s.split(maxsplit=1)[1]
-                elif '==' in s:
-                    pkg_name = s.split('==')[0].lower()
+                    url_string = s.split(maxsplit=1)[1]
+                    try:
+                        parsed_url = urlparse(url_string)
+                        if parsed_url.netloc == 'download.pytorch.org':
+                            pytorch_index_url = url_string
+                    except Exception:
+                        continue
+                
+                elif '==' in s or '>=' in s:
+                    # Handle both pinned and ranged dependencies
+                    pkg_name = re.split(r'[=><]', s)[0].strip().lower()
                     if pkg_name in ['torch', 'torchvision', 'torchaudio']:
                          pins[pkg_name] = s
     except FileNotFoundError:
         print(f"WARNING: requirements file not found at {req_path}", file=sys.stderr)
     except Exception as e:
         print(f"ERROR: Failed to parse requirements file: {e}", file=sys.stderr)
-    return pins, extra_index_url
+    return pins, pytorch_index_url
 
 
 def main():
@@ -151,7 +157,7 @@ def main():
 
     ensure_dir(LOG_DIR)
     venv_path = os.path.expanduser(args.venv)
-
+    
     if os.path.exists(venv_path):
         if args.recreate:
             print(f'[INFO] Purging existing venv at {venv_path}...')
@@ -170,30 +176,26 @@ def main():
     if not os.path.exists(venv_python):
         print(f'[FATAL] Python executable not found in venv at {venv_python}', file=sys.stderr)
         sys.exit(1)
-
+        
     if args.staged:
         print('\n--- STAGED INSTALLATION INITIATED ---')
 
         print('\nStep 1: Upgrading core packaging tools...')
         run_as_user(['pip', 'install', '--upgrade', 'pip', 'wheel', 'setuptools'], user=original_user, venv_python=venv_python)
-
-        pins, extra_index_url = parse_requirements(args.requirements)
         
-        if extra_index_url and pins.get('torch'):
-            print(f"\nStep 2: Installing pinned PyTorch, xformers, and CUDA packages from {extra_index_url}...")
+        pins, pytorch_index_url = parse_requirements(args.requirements)
+        
+        if pytorch_index_url and pins.get('torch'):
+            print(f"\nStep 2: Installing pinned PyTorch packages from {pytorch_index_url}...")
             torch_packages = [v for k, v in pins.items() if k in ['torch', 'torchvision', 'torchaudio']]
             
-            # MODIFICATION: Add xformers to the initial, crucial installation step.
-            # This ensures its dependencies are resolved alongside PyTorch correctly.
-            torch_packages.append('xformers')
-            
-            install_cmd = ['pip', 'install'] + torch_packages + ['--index-url', extra_index_url]
+            install_cmd = ['pip', 'install'] + torch_packages + ['--index-url', pytorch_index_url]
             if not run_as_user(install_cmd, user=original_user, venv_python=venv_python):
-                print("\n[FATAL] Failed to install PyTorch/xformers packages. The Forge is misaligned.", file=sys.stderr)
+                print("\n[FATAL] Failed to install PyTorch packages. The Forge is misaligned.", file=sys.stderr)
                 sys.exit(1)
         else:
-            print("\n[WARN] Could not find PyTorch pins or --extra-index-url in requirements.txt.", file=sys.stderr)
-            print("Skipping explicit Torch install. The subsequent step may fail.", file=sys.stderr)
+            print("\n[WARN] Could not find PyTorch pins or pytorch.org index-url in requirements.txt.", file=sys.stderr)
+            sys.exit(1)
 
         print('\nStep 3: Installing all remaining requirements from the blueprint...')
         if not run_as_user(['pip', 'install', '-r', args.requirements], user=original_user, venv_python=venv_python):
@@ -209,4 +211,5 @@ def main():
 
 
 if __name__ == '__main__':
+    import re
     main()
