@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# INFERENCE.PY (v1.0)
+# INFERENCE.PY (v2.0)
 #
 # This script runs inference using the fine-tuned Project Sanctuary model.
-# It can take input from the command line, a file, or stdin. It's designed for
-# quick checks and qualitative evaluation of the model's performance.
-#
-# It loads the merged model by default, which is the recommended way to test
-# the final artifact before GGUF conversion.
+# It supports loading either the LoRA adapter (post-fine-tune) or the merged model (post-merge).
+# Uses 4-bit quantization for compatibility with 8GB GPUs.
 #
 # Usage examples:
-#   # Test with a direct question
+#   # Test adapter after fine-tune
 #   python .../inference.py --input "What is the Doctrine of Flawed Winning Grace?"
+#
+#   # Test merged model after merge
+#   python .../inference.py --model-type merged --input "Test prompt"
 #
 #   # Test with a full document
 #   python .../inference.py --file path/to/some_document.md
@@ -21,7 +21,8 @@ import argparse
 import sys
 import torch
 from pathlib import Path
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from peft import PeftModel
 
 # --- Determine Paths ---
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -29,25 +30,63 @@ FORGE_ROOT = SCRIPT_DIR.parent
 PROJECT_ROOT = FORGE_ROOT.parent
 
 # --- Configuration ---
-# By default, we test the fully merged model as it's the final artifact before GGUF.
-DEFAULT_MODEL_PATH = PROJECT_ROOT / "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
+DEFAULT_BASE_MODEL_PATH = PROJECT_ROOT / "models/Sanctuary-Qwen2-7B-Instruct"
+DEFAULT_ADAPTER_PATH = PROJECT_ROOT / "models/Sanctuary-Qwen2-7B-v1.0-adapter"
+DEFAULT_MERGED_PATH = PROJECT_ROOT / "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
 
-def load_model_and_tokenizer(model_path_str):
-    """Loads a Hugging Face model and tokenizer from a local path."""
-    model_path = Path(model_path_str)
-    if not model_path.exists():
-        print(f"🛑 CRITICAL FAILURE: Model not found at '{model_path}'.")
-        print("Please ensure you have run the 'merge_adapter.py' script first.")
-        sys.exit(1)
+# 4-bit quantization config for 8GB GPU compatibility
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_quant_type="nf4"
+)
+
+def load_model_and_tokenizer(model_type):
+    """Loads the model and tokenizer based on type (adapter or merged)."""
+    if model_type == "adapter":
+        base_path = DEFAULT_BASE_MODEL_PATH
+        adapter_path = DEFAULT_ADAPTER_PATH
+        if not base_path.exists():
+            print(f"🛑 CRITICAL FAILURE: Base model not found at '{base_path}'.")
+            print("Please run the download script first.")
+            sys.exit(1)
+        if not adapter_path.exists():
+            print(f"🛑 CRITICAL FAILURE: Adapter not found at '{adapter_path}'.")
+            print("Please run fine_tune.py first.")
+            sys.exit(1)
         
-    print(f"🧠 Loading model from: {model_path}...")
-    model = AutoModelForCausalLM.from_pretrained(
-        model_path,
-        torch_dtype=torch.bfloat16,
-        device_map="auto",
-        trust_remote_code=True,
-    )
-    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+        print(f"🧠 Loading base model from: {base_path}...")
+        model = AutoModelForCausalLM.from_pretrained(
+            base_path,
+            quantization_config=bnb_config,
+            device_map="auto",
+            trust_remote_code=True,
+        )
+        print(f"🔧 Applying adapter from: {adapter_path}...")
+        model = PeftModel.from_pretrained(model, adapter_path)
+        tokenizer = AutoTokenizer.from_pretrained(base_path, trust_remote_code=True)
+    
+    elif model_type == "merged":
+        model_path = DEFAULT_MERGED_PATH
+        if not model_path.exists():
+            print(f"🛑 CRITICAL FAILURE: Merged model not found at '{model_path}'.")
+            print("Please run merge_adapter.py first.")
+            sys.exit(1)
+        
+        print(f"🧠 Loading merged model from: {model_path}...")
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            quantization_config=bnb_config,
+            device_map="auto",
+            trust_remote_code=True,
+        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+    
+    else:
+        print(f"🛑 ERROR: Invalid model_type '{model_type}'. Use 'adapter' or 'merged'.")
+        sys.exit(1)
+    
     print("✅ Model and tokenizer loaded successfully.")
     return model, tokenizer
 
@@ -86,13 +125,14 @@ def run_inference(model, tokenizer, instruction, max_new_tokens):
 
 def main():
     parser = argparse.ArgumentParser(description="Run inference with the fine-tuned Project Sanctuary model.")
-    parser.add_argument('--model', default=str(DEFAULT_MODEL_PATH), help='Path to the merged model directory.')
+    parser.add_argument('--model-type', choices=['adapter', 'merged'], default='adapter', 
+                        help='Type of model to load: adapter (post-fine-tune) or merged (post-merge).')
     parser.add_argument('--input', help='A direct question or instruction to ask the model.')
     parser.add_argument('--file', help='Path to a file to use as the input instruction.')
     parser.add_argument('--max-new-tokens', type=int, default=512, help='Maximum number of new tokens to generate.')
     args = parser.parse_args()
 
-    model, tokenizer = load_model_and_tokenizer(args.model)
+    model, tokenizer = load_model_and_tokenizer(args.model_type)
 
     instruction_text = ""
     source_name = ""
