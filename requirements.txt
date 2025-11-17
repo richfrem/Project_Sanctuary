@@ -13,7 +13,7 @@ torchaudio==2.9.0+cu126
 # Updated transformers to a patched version to resolve all Dependabot alerts.
 transformers>=4.53.0
 peft==0.10.0
-trl==0.8.6
+trl==0.25.1
 bitsandbytes==0.43.1
 triton>=2.3.0
 datasets==2.19.0
