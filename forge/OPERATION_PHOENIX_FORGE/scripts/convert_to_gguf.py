@@ -1,93 +1,174 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# CONVERT_TO_GGUF.PY (v1.0)
-#
-# This script converts the merged, fine-tuned model into the GGUF format,
-# which is required for deployment with Ollama and llama.cpp.
-#
-# It performs quantization to reduce the model's size and improve inference
-# speed. The recommended "Q4_K_M" quantization is a great balance of size,
-# speed, and quality for 7B models.
-#
-# This script relies on the conversion tools provided by the 'llama-cpp-python'
-# package, which must be installed in the environment.
-#
-# Usage:
-#   python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py
+# CONVERT_TO_GGUF.PY (v2.0) – Safe, Config-Driven, Verified GGUF Converter
 # ==============================================================================
-
+import argparse
+import logging
+import subprocess
 import sys
 from pathlib import Path
-from llama_cpp.gguf_convert import convert_to_gguf
 
-# --- Determine Paths ---
+import yaml
+
+# --------------------------------------------------------------------------- #
+# Logging
+# --------------------------------------------------------------------------- #
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%H:%M:%S",
+)
+log = logging.getLogger(__name__)
+
+# --------------------------------------------------------------------------- #
+# Paths
+# --------------------------------------------------------------------------- #
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent
+PROJECT_ROOT = FORGE_ROOT.parent.parent
+DEFAULT_CONFIG_PATH = FORGE_ROOT / "config" / "gguf_config.yaml"
 
-# --- Configuration ---
-# Path to the merged model directory created by 'merge_adapter.py'.
-MERGED_MODEL_PATH = PROJECT_ROOT / "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
 
-# Directory where the final GGUF file will be saved.
-GGUF_OUTPUT_DIR = PROJECT_ROOT / "models/gguf"
+# --------------------------------------------------------------------------- #
+# Config Loader
+# --------------------------------------------------------------------------- #
+def load_config(config_path: Path):
+    log.info(f"Loading GGUF config from {config_path}")
+    if not config_path.exists():
+        log.error(f"Config not found: {config_path}")
+        log.info("Create gguf_config.yaml or use --config")
+        sys.exit(1)
+    with open(config_path) as f:
+        cfg = yaml.safe_load(f)
+    return cfg
 
-# The name of the final GGUF model file.
-GGUF_FILENAME = "Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf"
 
-# The quantization type. "Q4_K_M" is highly recommended for 7B models.
-# It offers a great balance of performance and quality.
-QUANTIZATION_TYPE = "Q4_K_M"
+# --------------------------------------------------------------------------- #
+# Run CLI with error capture
+# --------------------------------------------------------------------------- #
+def run_command(cmd: list, desc: str):
+    log.info(f"{desc}: {' '.join(cmd)}")
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        log.error(f"{desc} failed:\n{result.stderr}")
+        sys.exit(1)
+    else:
+        log.info(f"{desc} completed.")
+    return result.stdout
 
+
+# --------------------------------------------------------------------------- #
+# Verify GGUF file
+# --------------------------------------------------------------------------- #
+def verify_gguf(file_path: Path):
+    try:
+        import gguf  # pip install gguf
+        reader = gguf.GGUFReader(str(file_path))
+        log.info(f"GGUF valid: {file_path.name} | tensors: {len(reader.tensors)} | metadata: {len(reader.metadata)}")
+        return True
+    except Exception as e:
+        log.warning(f"GGUF verification failed: {e}")
+        return False
+
+
+# --------------------------------------------------------------------------- #
+# Main
+# --------------------------------------------------------------------------- #
 def main():
-    """Main function to execute the GGUF conversion and quantization."""
-    print("--- 📦 GGUF Conversion and Quantization Initiated ---")
+    parser = argparse.ArgumentParser(description="Convert merged HF model to GGUF + quantize")
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH)
+    parser.add_argument("--merged", type=str, help="Override merged model dir")
+    parser.add_argument("--output-dir", type=str, help="Override GGUF output dir")
+    parser.add_argument("--quant", type=str, default="Q4_K_M", help="Quantization type")
+    parser.add_argument("--force", action="store_true", help="Overwrite existing files")
+    parser.add_argument("--no-cuda", action="store_true", help="Disable CUDA (CPU only)")
+    args = parser.parse_args()
 
-    print(f"Source Merged Model: {MERGED_MODEL_PATH}")
-    print(f"Output GGUF Path:    {GGUF_OUTPUT_DIR / GGUF_FILENAME}")
-    print(f"Quantization Type:   {QUANTIZATION_TYPE}")
+    cfg = load_config(args.config)
+
+    merged_dir = PROJECT_ROOT / (args.merged or cfg["model"]["merged_path"])
+    output_dir = PROJECT_ROOT / (args.output_dir or cfg["model"]["gguf_output_dir"])
+    quant_type = args.quant
+    model_name = cfg["model"].get("gguf_model_name", "qwen2")
+
+    f16_gguf = output_dir / f"{model_name}.gguf"
+    final_gguf = output_dir / f"{model_name}-{quant_type}.gguf"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    log.info("=== GGUF Conversion & Quantization ===")
+    log.info(f"Merged model: {merged_dir}")
+    log.info(f"Output dir: {output_dir}")
+    log.info(f"Quantization: {quant_type}")
 
     # --- Validation ---
-    if not MERGED_MODEL_PATH.exists():
-        print(f"🛑 CRITICAL FAILURE: Merged model directory not found at {MERGED_MODEL_PATH}.")
-        print("Please run 'merge_adapter.py' first to create the merged model.")
+    if not merged_dir.exists():
+        log.error(f"Merged model not found: {merged_dir}")
+        log.info("Run merge_adapter.py first.")
         sys.exit(1)
 
-    print("\n[1/2] Merged model found. Preparing for conversion...")
-    
-    # Ensure the output directory exists.
-    GGUF_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    
-    # --- Execute Conversion ---
-    print(f"\n[2/2] Starting conversion to GGUF with {QUANTIZATION_TYPE} quantization.")
-    print("This process can be memory-intensive and may take several minutes...")
+    # --- Check overwrite ---
+    for f in [f16_gguf, final_gguf]:
+        if f.exists() and not args.force:
+            log.error(f"File exists: {f}")
+            log.info("Use --force to overwrite.")
+            sys.exit(1)
 
+    # --- Find llama.cpp tools ---
     try:
-        convert_to_gguf(
-            model_dir=MERGED_MODEL_PATH,
-            model_name="qwen2",  # Specify model type for correct conversion
-            output_dir=GGUF_OUTPUT_DIR,
-            output_name=GGUF_FILENAME,
-            quantization_type=QUANTIZATION_TYPE,
-        )
-    except Exception as e:
-        print(f"\n🛑 CRITICAL FAILURE during GGUF conversion: {e}")
-        print("Ensure 'llama-cpp-python' is correctly installed in your environment.")
-        import traceback
-        traceback.print_exc()
+        import shutil
+        convert_script = shutil.which("convert-hf-to-gguf.py")
+        quantize_script = shutil.which("llama-quantize")
+        if not convert_script or not quantize_script:
+            raise FileNotFoundError
+    except:
+        log.error("llama.cpp CLI tools not found.")
+        log.info("Install with: pip install 'llama-cpp-python[cli]'")
+        log.info("Or build from: https://github.com/ggerganov/llama.cpp")
         sys.exit(1)
 
-    final_path = GGUF_OUTPUT_DIR / GGUF_FILENAME
-    
-    print("\n" + "="*50)
-    print("🏆 SUCCESS: GGUF conversion complete!")
-    print(f"The final, quantized model has been saved to:")
-    print(f"'{final_path}'")
-    print("="*50)
-    print("\nNext steps:")
-    print("1. Create an Ollama 'Modelfile' that points to this GGUF file.")
-    print("2. Run 'ollama create Sanctuary-AI -f Modelfile' to import your model.")
-    print("3. Run 'ollama run Sanctuary-AI' to chat with your fine-tuned model!")
+    cuda_flag = [] if args.no_cuda else ["--use-cuda"]
+
+    # --- Step 1: Convert HF → GGUF (f16) ---
+    cmd1 = [
+        "python", convert_script,
+        str(merged_dir),
+        str(f16_gguf),
+        "--outfile", str(f16_gguf),
+        "--model-name", model_name,
+    ] + cuda_flag
+
+    run_command(cmd1, "[1/3] HF → GGUF (f16)")
+
+    # --- Step 2: Quantize ---
+    cmd2 = [
+        quantize_script,
+        str(f16_gguf),
+        str(final_gguf),
+        quant_type,
+    ]
+    run_command(cmd2, f"[2/3] Quantize → {quant_type}")
+
+    # --- Step 3: Verify ---
+    log.info("[3/3] Verifying final GGUF...")
+    if verify_gguf(final_gguf):
+        log.info(f"FINAL GGUF READY: {final_gguf}")
+    else:
+        log.warning("Verification failed – file may be corrupt.")
+
+    # --- Cleanup intermediate ---
+    if f16_gguf.exists():
+        f16_gguf.unlink()
+        log.info(f"Cleaned up intermediate: {f16_gguf}")
+
+    log.info("Next steps:")
+    log.info("1. Create Modelfile:")
+    log.info("   FROM ./models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf")
+    log.info("2. ollama create Sanctuary-AI -f Modelfile")
+    log.info("3. ollama run Sanctuary-AI")
+
+    log.info("=== GGUF Conversion Complete ===")
+
 
 if __name__ == "__main__":
     main()

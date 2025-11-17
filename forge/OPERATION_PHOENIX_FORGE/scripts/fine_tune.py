@@ -31,7 +31,7 @@ from peft import LoraConfig
 from trl import SFTTrainer
 
 # Disable tokenizers parallelism warning
-os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+os.environ['TOKENIZERS_PARALLELISM'] = 'true'
 
 # --- Logging Setup ---
 logging.basicConfig(
@@ -300,7 +300,9 @@ def main():
     logger.info("Fine-Tuning Complete! Saving final LoRA adapter to: %s", final_adapter_path)
     trainer.model.save_pretrained(str(final_adapter_path))
     tokenizer.save_pretrained(str(final_adapter_path))
+    torch.cuda.empty_cache()
     logger.info("--- ✅ Sovereign Inoculation Complete. ---")
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

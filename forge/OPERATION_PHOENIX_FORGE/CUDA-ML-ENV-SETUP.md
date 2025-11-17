@@ -293,6 +293,16 @@ python forge/OPERATION_PHOENIX_FORGE/scripts/fine_tune.py
 ```
 The final LoRA adapter will be saved to `models/Sanctuary-Qwen2-7B-v1.0-adapter/`.
 
+**Verification:** After completion, verify the adapter is saved correctly by checking the directory contents:
+```bash
+ls -la models/Sanctuary-Qwen2-7B-v1.0-adapter/
+```
+Ensure `adapter_model.safetensors` and `adapter_config.json` are present. For a quick integrity test, run:
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Test prompt"
+```
+If it loads and generates output without errors, the adapter is valid.
+
 ### 5. Merge the Adapter
 
 Combine the trained adapter with the base model to create a full, standalone fine-tuned model.

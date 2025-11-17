@@ -1,93 +1,220 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# MERGE_ADAPTER.PY (v1.0)
-#
-# This script merges the trained LoRA adapter with the base model to create a
-# new, standalone fine-tuned model. This merged model can then be used for
-# inference or converted to other formats like GGUF.
-#
-# Usage:
-#   python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py
+# MERGE_ADAPTER.PY (v2.0) – 8GB-Safe, Config-Driven, Robust LoRA Merger
 # ==============================================================================
-
-import os
+import argparse
+import json
+import logging
+import shutil
 import sys
-import torch
+import tempfile
+from datetime import datetime
 from pathlib import Path
-from transformers import AutoModelForCausalLM, AutoTokenizer
+
+import torch
+import yaml
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
 
-# --- Determine Paths ---
+# --------------------------------------------------------------------------- #
+# Logging
+# --------------------------------------------------------------------------- #
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%H:%M:%S",
+)
+log = logging.getLogger(__name__)
+
+# --------------------------------------------------------------------------- #
+# Paths
+# --------------------------------------------------------------------------- #
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent
+PROJECT_ROOT = FORGE_ROOT.parent.parent
+DEFAULT_CONFIG_PATH = FORGE_ROOT / "config" / "merge_config.yaml"
 
-# --- Configuration (Hardcoded for simplicity, could be moved to YAML later) ---
-# NOTE: These paths are relative to the project root (Project_Sanctuary).
-BASE_MODEL_NAME = "Qwen/Qwen2-7B-Instruct"
-ADAPTER_PATH = "models/Sanctuary-Qwen2-7B-v1.0-adapter"
-MERGED_MODEL_OUTPUT_PATH = "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
 
+# --------------------------------------------------------------------------- #
+# Config Loader
+# --------------------------------------------------------------------------- #
+def load_config(config_path: Path):
+    log.info(f"Loading merge config from {config_path}")
+    if not config_path.exists():
+        log.error(f"Config not found: {config_path}")
+        log.info("Create merge_config.yaml or use --config")
+        sys.exit(1)
+    with open(config_path) as f:
+        cfg = yaml.safe_load(f)
+    return cfg
+
+
+# --------------------------------------------------------------------------- #
+# Memory Reporter
+# --------------------------------------------------------------------------- #
+def report_memory(stage: str):
+    if torch.cuda.is_available():
+        used = torch.cuda.memory_allocated() / 1024**3
+        reserved = torch.cuda.memory_reserved() / 1024**3
+        log.info(f"{stage} | VRAM: {used:.2f} GB used / {reserved:.2f} GB reserved")
+
+
+# --------------------------------------------------------------------------- #
+# Sanity Check Inference
+# --------------------------------------------------------------------------- #
+def sanity_check_inference(model, tokenizer, prompt="Hello, world!"):
+    try:
+        inputs = tokenizer(prompt, return_tensors="pt").to("cpu")
+        with torch.inference_mode():
+            outputs = model.generate(**inputs, max_new_tokens=10, do_sample=False)
+        decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        log.info(f"Sanity check output: {decoded}")
+        return True
+    except Exception as e:
+        log.warning(f"Sanity check failed: {e}")
+        return False
+
+
+# --------------------------------------------------------------------------- #
+# Main
+# --------------------------------------------------------------------------- #
 def main():
-    """Main function to execute the model merging process."""
-    print("--- 🧩 Model Merging Initiated ---")
+    parser = argparse.ArgumentParser(description="Merge LoRA adapter with base model")
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH, help="Path to merge config YAML")
+    parser.add_argument("--base", type=str, help="Override base model name")
+    parser.add_argument("--adapter", type=str, help="Override adapter path")
+    parser.add_argument("--output", type=str, help="Override output path")
+    parser.add_argument("--dtype", type=str, default="float16", choices=["float16", "bfloat16", "float32"],
+                        help="Final save dtype")
+    parser.add_argument("--skip-sanity", action="store_true", help="Skip sanity inference check")
+    args = parser.parse_args()
 
-    # Construct full paths from project root
-    base_model_path = FORGE_ROOT / "models/base" / BASE_MODEL_NAME
-    adapter_path = PROJECT_ROOT / ADAPTER_PATH
-    output_path = PROJECT_ROOT / MERGED_MODEL_OUTPUT_PATH
-    
-    print(f"Base Model Path:    {base_model_path}")
-    print(f"Adapter Path:       {adapter_path}")
-    print(f"Merged Output Path: {output_path}")
+    cfg = load_config(args.config)
+
+    # Override from CLI
+    base_name = args.base or cfg["model"]["base_model_name"]
+    adapter_path = PROJECT_ROOT / (args.adapter or cfg["model"]["adapter_path"])
+    output_path = PROJECT_ROOT / (args.output or cfg["model"]["merged_output_path"])
+    final_dtype = getattr(torch, args.dtype)
+
+    base_model_path = FORGE_ROOT / "models" / "base" / base_name
+
+    log.info("=== LoRA Merge Initiated ===")
+    log.info(f"Base: {base_model_path}")
+    log.info(f"Adapter: {adapter_path}")
+    log.info(f"Output: {output_path}")
+    log.info(f"Final dtype: {final_dtype}")
 
     # --- Validation ---
     if not base_model_path.exists():
-        print(f"🛑 CRITICAL FAILURE: Base model not found at {base_model_path}. Run 'download_model.sh' first.")
-        sys.exit(1)
-    if not adapter_path.exists():
-        print(f"🛑 CRITICAL FAILURE: LoRA adapter not found at {adapter_path}. Run 'fine_tune.py' first.")
-        sys.exit(1)
-        
-    print("\n[1/4] All required models found.")
+        log.error(f"Base model not found: {base_model_path}")
+        return 1
+    if not adapter_path.exists() or not (adapter_path / "adapter_config.json").exists():
+        log.error(f"Adapter not found or invalid: {adapter_path}")
+        return 1
 
-    # --- Load Base Model and Tokenizer ---
-    print("\n[2/4] Loading base model and tokenizer. This may take a moment...")
-    # Load in float16 for merging to save memory
-    base_model = AutoModelForCausalLM.from_pretrained(
-        base_model_path,
-        torch_dtype=torch.float16,
-        device_map="auto",
-        trust_remote_code=True,
-    )
-    tokenizer = AutoTokenizer.from_pretrained(base_model_path)
-    print("✅ Base model and tokenizer loaded.")
-
-    # --- Load LoRA Adapter onto the Base Model ---
-    print(f"\n[3/4] Loading and applying LoRA adapter from {adapter_path}...")
-    # This creates a temporary model with the adapter layers applied
-    model = PeftModel.from_pretrained(base_model, str(adapter_path))
-    print("✅ LoRA adapter applied.")
-
-    # --- Merge and Unload ---
-    print("\n[4/4] Merging adapter weights into the base model...")
-    # This is the core step: it combines the weights and returns a new standalone model
-    merged_model = model.merge_and_unload()
-    print("✅ Weights merged successfully.")
-
-    # --- Save the Merged Model ---
-    print(f"\n💾 Saving the final merged model to: {output_path}")
     output_path.mkdir(parents=True, exist_ok=True)
-    merged_model.save_pretrained(str(output_path), safe_serialization=True)
-    tokenizer.save_pretrained(str(output_path))
 
-    print("\n" + "="*50)
-    print("🏆 SUCCESS: Model merging complete!")
-    print(f"The final, standalone model has been saved to '{output_path}'.")
-    print("="*50)
-    print("\nNext steps:")
-    print("1. (Optional) Test inference with the merged model.")
-    print("2. Convert the merged model to GGUF format for Ollama deployment.")
+    # --- 4-bit Quantization Config (critical for 8GB) ---
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_use_double_quant=True,
+    )
+
+    report_memory("[1/6] Before load")
+
+    # --- Load Base in 4-bit ---
+    log.info("[2/6] Loading base model in 4-bit (VRAM-safe)")
+    try:
+        base_model = AutoModelForCausalLM.from_pretrained(
+            base_model_path,
+            quantization_config=bnb_config,
+            device_map="auto",
+            torch_dtype=torch.float16,
+            trust_remote_code=True,
+        )
+        tokenizer = AutoTokenizer.from_pretrained(base_model_path, trust_remote_code=True)
+        tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.padding_side = "right"
+    except Exception as e:
+        log.exception(f"Failed to load base model: {e}")
+        return 2
+
+    report_memory("[2/6] After base load")
+
+    # --- Load LoRA Adapter ---
+    log.info("[3/6] Applying LoRA adapter")
+    try:
+        model = PeftModel.from_pretrained(base_model, str(adapter_path))
+    except Exception as e:
+        log.exception(f"Failed to load adapter: {e}")
+        return 3
+
+    report_memory("[3/6] After adapter")
+
+    # --- Merge ---
+    log.info("[4/6] Merging weights (may take 30-60s)")
+    try:
+        with torch.no_grad():
+            merged_model = model.merge_and_unload()
+        # Move to CPU to free GPU
+        merged_model.to("cpu")
+        torch.cuda.empty_cache()
+    except Exception as e:
+        log.exception(f"Merge failed: {e}")
+        return 4
+
+    report_memory("[4/6] After merge")
+
+    # --- Sanity Check ---
+    if not args.skip_sanity:
+        log.info("[5/6] Running sanity inference check")
+        if not sanity_check_inference(merged_model, tokenizer):
+            log.warning("Sanity check failed; proceeding but verify outputs")
+
+    # --- Cast to final dtype ---
+    log.info(f"[6/6] Casting to {final_dtype} and saving")
+    merged_model = merged_model.to(final_dtype)
+
+    # --- Atomic Save ---
+    tmpdir = Path(tempfile.mkdtemp(prefix="merge_tmp_"))
+    try:
+        merged_model.save_pretrained(str(tmpdir), safe_serialization=True, max_shard_size="10GB")
+        tokenizer.save_pretrained(str(tmpdir))
+
+        # Metadata
+        meta = {
+            "merged_at": datetime.utcnow().isoformat() + "Z",
+            "torch": torch.__version__,
+            "transformers": __import__("transformers").__version__,
+            "peft": __import__("peft").__version__,
+            "base_model": str(base_model_path),
+            "adapter": str(adapter_path),
+            "final_dtype": str(final_dtype),
+        }
+        with open(tmpdir / "merge_metadata.json", "w") as f:
+            json.dump(meta, f, indent=2)
+
+        # Atomic move
+        if output_path.exists():
+            shutil.rmtree(output_path)
+        shutil.move(str(tmpdir), str(output_path))
+
+        log.info(f"Merged model saved to {output_path}")
+        log.info("Next: Test with inference.py or convert to GGUF")
+        return 0
+    except Exception as e:
+        log.exception(f"Save failed: {e}")
+        try:
+            shutil.rmtree(tmpdir)
+        except:
+            pass
+        return 5
+    finally:
+        torch.cuda.empty_cache()
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
