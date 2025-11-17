@@ -6,7 +6,7 @@
 # --- CORE ML & FINE-TUNING STACK ---
 # Pinned to PyTorch 2.9.0 to match xformers dependency.
 torch==2.9.0+cu126
-torchvision==0.24.0+cu126
+torchvision==0.24.1+cu126
 torchaudio==2.9.0+cu126
 
 # Pinned to a known-good, compatible set.
