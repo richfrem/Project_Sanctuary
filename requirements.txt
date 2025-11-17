@@ -17,7 +17,7 @@ trl==0.8.6
 bitsandbytes==0.43.1
 triton>=2.3.0
 datasets==2.19.0
-accelerate==0.30.1
+accelerate==1.11.0
 xformers
 llama-cpp-python
 
