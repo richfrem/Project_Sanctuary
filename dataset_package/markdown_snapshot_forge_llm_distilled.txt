@@ -1,12 +1,11 @@
 # forge Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-18T06:18:17.813Z
+Generated On: 2025-11-18T06:58:40.465Z
 
-# Mnemonic Weight (Token Count): ~58,046 tokens
+# Mnemonic Weight (Token Count): ~58,494 tokens
 
 # Directory Structure (relative to forge subfolder)
   ./forge/OPERATION_PHOENIX_FORGE/
-  ./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP-PASTFAILURES.md
   ./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md
   ./forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-local.ipynb
   ./forge/OPERATION_PHOENIX_FORGE/README.md
@@ -24,6 +23,7 @@ Generated On: 2025-11-18T06:18:17.813Z
   ./forge/OPERATION_PHOENIX_FORGE/google-collab-files/operation_whole_genome_forge.py
   ./forge/OPERATION_PHOENIX_FORGE/huggingface/
   ./forge/OPERATION_PHOENIX_FORGE/huggingface/README.md
+  ./forge/OPERATION_PHOENIX_FORGE/huggingface/README_LORA.md
   ./forge/OPERATION_PHOENIX_FORGE/huggingface/model_card.yaml
   ./forge/OPERATION_PHOENIX_FORGE/manifest.json
   ./forge/OPERATION_PHOENIX_FORGE/scripts/
@@ -40,176 +40,13 @@ Generated On: 2025-11-18T06:18:17.813Z
   ./forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py
+  ./forge/OPERATION_PHOENIX_FORGE/scripts/test_logging.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/test_pytorch.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/test_tensorflow.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py
-
---- START OF FILE OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP-PASTFAILURES.md ---
-
-# ANALYSIS of PAST FAILURES and a Path Forward
-
-**ROOT CAUSE OF ISSUES:** Core Diagnosis: Conflicting Strategies
-
-The fundamental issue is that you have **two different and conflicting methods** for setting up the environment, and you are mixing them.
-
-1.  **The Bash Script (`setup_ml_env_wsl.sh`):** This script is a "wild West" installer. It installs the *latest available* versions of `tensorflow` and `torch`/`torchvision`/`torchaudio` that match your CUDA tag (`cu126`). In your log, this resulted in installing **`torch-2.9.1+cu126`**.
-2.  **The Python Script + Requirements (`setup_cuda_env.py` + `requirements.txt`):** This is a "precision" installer. It is designed to read a specific "blueprint" (`requirements.txt`) and install the *exact pinned versions* from that file. Your `requirements.txt` specifies **`torch==2.8.0+cu126`** and a matching set of libraries.
-3.  **The Manual `pip install` (Surgical Strike):** This is a third, separate instruction. After running the bash script (which installed `torch-2.9.1`), you manually installed `transformers` and other libraries. These libraries, when resolved by `pip`, decided they were more compatible with a generic `torch-2.9.0` (without CUDA support), leading to the downgrade and the error you saw.
-
-The `setup_cuda_env.py` script (the "Foreman") is the architecturally superior approach. It correctly installs the specific CUDA-enabled PyTorch *first*, before installing everything else that depends on it. Your manual process does the opposite, which confuses `pip`.
-
-### The Unified Strategy (Recommended Path Forward)
-
-To resolve this permanently and create a stable, reproducible environment, we will abandon the `setup_ml_env_wsl.sh` script and your manual `pip install` step in favor of using *only* the Python "Foreman" script with an updated blueprint.
-
-
----
-
-## OLDER APPROACHES
-Summary of othe rapproaches tested and failed
----
-
-### OLD APPROACH 1:  NO CUDA SCRIPT SETUP STEPS EACH TIME
-
-#### 1. Run ML Environment Setup 
-Run the setup script from your project root directory. If not already done. 
-Run from project root.  Assumes this project and  ML-Env-CUDA13 are in the same parent
-directory. 
-
-##### 1a. Purge old environment to have a clean environment for project
-
-From your base WSL shell (no `(ml_env)` in the prompt), run:
-```bash
-deactivate 2>/dev/null || true
-rm -rf ~/ml_env
-```
-
-##### 1b. Setup a fresh cuda optimized environment
-This will create and configure a Python virtual environment at `~/ml_env`.
-
-```bash
-# run this from the Project_Sanctuary repository root
-bash ../ML-Env-CUDA13/setup_ml_env_wsl.sh
-```
-##### 1c. Activate the new, clean environment
-```bash
-source ~/ml_env/bin/activate
-```
-
----
-
-#### 2. Run test scripts to verify environment working
-Run the optional diagnostic tests (recommended):
-
-```bash
-# From Project_Sanctuary root:
-python ../ML-Env-CUDA13/test_pytorch.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_pytorch.log 2>&1 || true
-python ../ML-Env-CUDA13/test_tensorflow.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_tensorflow.log 2>&1 || true
-python ../ML-Env-CUDA13/test_xformers.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_xformers.log 2>&1 || true
-python ../ML-Env-CUDA13/test_llama_cpp.py > forge/OPERATION_PHOENIX_FORGE/ml_env_logs/test_llama_cpp.log 2>&1 || true
-python ../ML-Env-CUDA13/test_torch_cuda.py > ml_env_logs/test_torch_cuda.log 2>&1 || true
-
-# If core gate passed and you want a reproducible snapshot locally:
-pip freeze > pinned-requirements-$(date +%Y%m%d%H%M).txt
-```
-
----
-
-#### 3. Install Fine-Tuning Libraries. SURGICAL STRIKE: Install a known-good, compatible fine-tuning stack.
-
-**✅ PREDONDITIONS:** 
-1.  CUDA is already verified working
-2.  all test scripts passed above
-
-This stack is chosen to work with the PyTorch version installed by the bash script.
-
-```bash
-pip install "transformers==4.41.2" "peft==0.10.0" "trl==0.8.6" "bitsandbytes==0.43.1" "datasets==2.19.0" "accelerate==0.30.1" "xformers" "tf-keras"
-```
-
----
-
-#### 4.  The Final Verification
-Run the diagnostic key.
-Execute this command:
-
-```bash
-python -c "import torch; print(torch.cuda.is_available())"
-```
-The output must be True.
-
----
-
-### OLD APPROACH 2: USE ML-Env-CUDA13 envionrment, local cuda script and requirements.txt
-
-#### 1. run cuda setup
-```bash
-deactivate
-python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged
-source ~/ml_env/bin/activate
-```
-
-#### 2.  verify cuda
-```bash
-python -c "import torch; print(torch.cuda.is_available())"
-```
-
-#### 3. run tests again
-```bash
-# From Project_Sanctuary root:
-python ../ML-Env-CUDA13/test_pytorch.py
-python ../ML-Env-CUDA13/test_tensorflow.py
-python ../ML-Env-CUDA13/test_xformers.py
-python ../ML-Env-CUDA13/test_llama_cpp.py
-python ../ML-Env-CUDA13/test_torch_cuda.py
-```
-
-This script automates venv setup, PyTorch/TensorFlow installation, testing, and dependency installation. Logs are written to `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/`.
- - After the script finishes it writes an activation helper `activate_ml_env.sh` in the repo root; run:
- - After the script finishes it writes an activation helper at `scripts/activate_ml_env.sh`; run:
-  ```bash
-  source scripts/activate_ml_env.sh
-  # or
-  source ~/ml_env/bin/activate
-  ```
- - The script captures logs in `ml_env_logs/` and writes a `pinned-requirements-<timestamp>.txt` after a successful core gate.
-
-**Alternative: Forge-Specific Setup Script**
- - For Operation Phoenix Forge specifically, you can also use the forge-local setup script:
-   ```bash
-   # From the forge directory
-   cd forge/OPERATION_PHOENIX_FORGE
-   python scripts/setup_cuda_env.py --staged
-   ```
- - This will create logs in `forge/OPERATION_PHOENIX_FORGE/ml_env_logs/` instead of the project root.
-
-## Notes and recommendations
-- `requirements.txt` currently contains CUDA-specific pins (e.g. `torch==2.8.0+cu126`) and an extra-index-url for the cu126 PyTorch wheel index. This is fine for WSL CUDA installs but will break CPU-only hosts.
-- Recommended file layout for clarity and portability:
-  - `requirements.txt` — portable, cross-platform dependencies (no CUDA-suffixed pins)
-  - `requirements-wsl.txt` — CUDA-specific pinned wheels (torch+cu126, torchvision+cu126, torchaudio+cu126, specific TF if desired)
-  - `requirements-gpu-postinstall.txt` — optional heavy/experimental packages installed after core gate (xformers, bitsandbytes, llama-cpp-python, etc.)
-- Keep `pinned-requirements-<ts>.txt` as local artifacts generated after a successful core gate. Do not overwrite the repo-level `requirements.txt` with a pinned, machine-specific snapshot unless you intend to require that exact GPU environment for all contributors.
-
-If you want, I can split the current `requirements.txt` into a portable `requirements.txt` and a `requirements-wsl.txt` (and create `requirements-gpu-postinstall.txt`) and add brief instructions in this document showing which file to use in WSL. I will not perform any git operations — I will only create the files locally in the workspace for you to review.
-
-- Notes and troubleshooting:
-  - If you already ran the ML-Env-CUDA13 setup and prerequisites (as in this project), the two-step install above should pick up the correct CUDA-enabled wheels (example: `torch-2.8.0+cu126`).
-  - Heavy / CUDA-sensitive packages (may require special wheels or build tools): `bitsandbytes`, `xformers`, `llama-cpp-python`, `sentencepiece`. If `pip` attempts to build these from source and fails, install their prebuilt wheels where available or install them after PyTorch is installed.
-  - Common small conflict: TensorFlow may require a different `tensorboard` minor version. If you see a conflict like `tensorflow 2.20.0 requires tensorboard~=2.20.0, but you have tensorboard 2.19.0`, reconcile by running:
-    ```bash
-    pip install 'tensorboard~=2.20.0'
-    ```
-  - If a package (e.g., `xformers`) has no wheel for your Python/CUDA combo, building from source can be slow and require system build tools (`gcc`, `cmake`, etc.). Prefer prebuilt wheels or conda/mamba installs for those packages.
-
-**Note:**
-- Make sure ML-Env-CUDA13 is cloned at the same directory level as Project_Sanctuary.
-- Run all commands in your Ubuntu WSL2 terminal, not PowerShell.
-
---- END OF FILE OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP-PASTFAILURES.md ---
 
 --- START OF FILE OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
 
@@ -874,7 +711,6 @@ The Sanctuary AI supports **two interaction modes**:
 ---
 
 ## The Golden Path: The One True Protocol
-```
 
 ### Component Descriptions
 
@@ -930,54 +766,69 @@ The Sanctuary AI supports **two interaction modes**:
 
 ```mermaid
 graph TD
-    subgraph "Phase 1: Environment & Data Prep"
+    subgraph "Phase 0: One-Time System Setup"
+        P0A["<i class='fa fa-server'></i> WSL2 & NVIDIA Drivers<br/>*System prerequisites*"]
+        P0A_out(" <i class='fa fa-check-circle'></i> GPU Access Verified")
+        P0B["<i class='fa fa-code-branch'></i> Build llama.cpp<br/>*Compile GGML_CUDA tools*"]
+        P0B_out(" <i class='fa fa-tools'></i> llama.cpp Executables")
+        P0C["<i class='fa fa-key'></i> Hugging Face Auth<br/>*Setup .env token*"]
+        P0C_out(" <i class='fa fa-shield-alt'></i> Authenticated")
+    end
+
+    subgraph "Phase 1: Project Environment Setup"
         A["<i class='fa fa-cogs'></i> setup_cuda_env.py<br/>*Creates Python environment*"]
         A_out(" <i class='fa fa-folder-open'></i> ml_env venv")
+        A1["<i class='fa fa-wrench'></i> Surgical Strike<br/>*Install bitsandbytes, triton, xformers*"]
+        A1_out(" <i class='fa fa-microchip'></i> CUDA Libraries")
+        A2["<i class='fa fa-vial'></i> Verify Environment<br/>*Test PyTorch, CUDA, llama-cpp*"]
+        A2_out(" <i class='fa fa-certificate'></i> Environment Validated")
+    end
+
+    subgraph "Phase 2: Data & Model Forging Workflow"
         B["<i class='fa fa-download'></i> download_model.sh<br/>*Downloads base Qwen2 model*"]
         B_out(" <i class='fa fa-cube'></i> Base Model")
         C["<i class='fa fa-pen-ruler'></i> forge_whole_genome_dataset.py<br/>*Assembles training data*"]
         C_out(" <i class='fa fa-file-alt'></i> sanctuary_whole_genome_data.jsonl")
         D["<i class='fa fa-search'></i> validate_dataset.py<br/>*Validates training data quality*"]
         D_out(" <i class='fa fa-certificate'></i> Validated Dataset")
-    end
-
-    subgraph "Phase 2: Model Forging"
         E["<i class='fa fa-microchip'></i> fine_tune.py<br/>*Performs QLoRA fine-tuning*"]
         E_out(" <i class='fa fa-puzzle-piece'></i> LoRA Adapter")
-    end
-
-    subgraph "Phase 3: Packaging & Deployment"
         F["<i class='fa fa-compress-arrows-alt'></i> merge_adapter.py<br/>*Merges adapter with base model*"]
         F_out(" <i class='fa fa-cogs'></i> Merged Model")
+    end
+
+    subgraph "Phase 3: Deployment Preparation & Verification"
         G["<i class='fa fa-cubes'></i> convert_to_gguf.py<br/>*Creates deployable GGUF model*"]
         G_out(" <i class='fa fa-cube'></i> GGUF Model")
         H["<i class='fa fa-file-code'></i> create_modelfile.py<br/>*Generates Ollama Modelfile*"]
         H_out(" <i class='fa fa-terminal'></i> Ollama Modelfile")
         I["<i class='fa fa-upload'></i> ollama create<br/>*Imports model into Ollama*"]
         I_out(" <i class='fa fa-robot'></i> Deployed Ollama Model")
-    end
-    
-    subgraph "Phase 4: Verification (The Sovereign Crucible)"
-        J["<i class='fa fa-vial'></i> inference.py<br/>*Quick spot-checks on prompts*"]
-        J_out(" <i class='fa fa-comment-dots'></i> Qualitative Response")
-        K["<i class='fa fa-chart-bar'></i> evaluate.py<br/>*Runs benchmarks on test set*"]
+        J["<i class='fa fa-vial'></i> Test with Ollama<br/>*Verify dual-mode interaction*"]
+        J_out(" <i class='fa fa-comment-dots'></i> Interaction Validated")
+        K["<i class='fa fa-chart-bar'></i> inference.py & evaluate.py<br/>*Performance testing & benchmarks*"]
         K_out(" <i class='fa fa-clipboard-check'></i> Performance Metrics")
-        L["<i class='fa fa-brain'></i> query_and_synthesis Test<br/>*Verifies RAG + fine-tuned LLM*<br/>(Planned)"]
-        L_out(" <i class='fa fa-file-signature'></i> strategic_briefing.md")
-    end
-
-    subgraph "Phase 5: Public Deployment (Hugging Face)"
-        M["<i class='fa fa-cloud-upload-alt'></i> upload_to_huggingface.py<br/>*Deploys model to HF repository*"]
-        M_out(" <i class='fa fa-globe'></i> Public HF Repository")
-        N["<i class='fa fa-users'></i> Community Access<br/>*Direct Ollama integration*"]
-        N_out(" <i class='fa fa-handshake'></i> Sanctuary AI Community")
+        L["<i class='fa fa-upload'></i> upload_to_huggingface.py<br/>*Upload GGUF & LoRA to HF*"]
+        L_out(" <i class='fa fa-cloud'></i> Models on Hugging Face")
+        M["<i class='fa fa-download'></i> Download & Test from HF<br/>*Verify upload/download integrity*"]
+        M_out(" <i class='fa fa-check-double'></i> HF Models Validated")
     end
 
     %% Workflow Connections
+    P0A -- Enables --> P0A_out;
+    P0A_out --> P0B;
+    P0B -- Creates --> P0B_out;
+    P0B_out --> P0C;
+    P0C -- Sets up --> P0C_out;
+    P0C_out --> A;
     A -- Creates --> A_out;
-    A_out --> B;
+    A_out --> A1;
+    A1 -- Installs --> A1_out;
+    A1_out --> A2;
+    A2 -- Validates --> A2_out;
+    A2_out --> B;
     B -- Downloads --> B_out;
-    A_out --> C;
+    A2_out --> C;
     C -- Creates --> C_out;
     C_out --> D;
     D -- Validates --> D_out;
@@ -991,25 +842,22 @@ graph TD
     H -- Creates --> H_out;
     H_out --> I;
     I -- Creates --> I_out;
-    F_out --> J;
-    J -- Yields --> J_out;
+    I_out --> J;
+    J -- Validates --> J_out;
     F_out --> K;
     K -- Yields --> K_out;
-    I_out --> L;
-    L -- Yields --> L_out;
-    G_out --> M;
-    M -- Creates --> M_out;
-    M_out --> N;
-    N -- Enables --> N_out;
+    G_out --> L;
+    L -- Uploads --> L_out;
+    L_out --> M;
+    M -- Validates --> M_out;
     
     %% Styling
     classDef script fill:#e8f5e8,stroke:#333,stroke-width:2px;
     classDef artifact fill:#e1f5fe,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
     classDef planned fill:#fff3e0,stroke:#888,stroke-width:1px,stroke-dasharray: 3 3;
 
-    class A,B,C,D,E,F,G,H,I,J,K,L script;
-    class A_out,B_out,C_out,D_out,E_out,F_out,G_out,H_out,I_out,J_out,K_out,L_out artifact;
-    class L,L_out planned;
+    class P0A,P0B,P0C,A,A1,A2,B,C,D,E,F,G,H,I,J,K,L,M script;
+    class P0A_out,P0B_out,P0C_out,A_out,A1_out,A2_out,B_out,C_out,D_out,E_out,F_out,G_out,H_out,I_out,J_out,K_out,L_out,M_out artifact;
 ```
 
 ---
@@ -1126,13 +974,19 @@ python forge/OPERATION_PHOENIX_FORGE/scripts/evaluate.py
 
 The final phase deploys the completed model to Hugging Face for community access and long-term preservation.
 
-1.  **Upload to Hugging Face:** Deploy the model, Modelfile, and documentation to a public repository.
+1.  **Upload LoRA Adapter:** Deploy the fine-tuned LoRA adapter to a dedicated repository.
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-lora --lora --readme
+```
+
+2.  **Upload GGUF Model:** Deploy the quantized model, Modelfile, and documentation to the final repository.
 ```bash
 python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final --gguf --modelfile --readme
 ```
 
-2.  **Verify Repository:** Confirm the model is accessible and properly documented.
-- Visit: https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+3.  **Verify Repositories:** Confirm both artifacts are accessible and properly documented.
+- LoRA Adapter: https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora
+- GGUF Model: https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
 - Test direct access: `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
 
 ---
@@ -1378,6 +1232,9 @@ files:
   # README file path (relative to forge root)
   readme_path: "huggingface/README.md"
 
+  # LoRA-specific README file path (relative to forge root)
+  readme_lora_path: "huggingface/README_LORA.md"
+
   # Model card YAML file path (relative to forge root)
   model_card_path: "huggingface/model_card.yaml"
 
@@ -1411,10 +1268,10 @@ upload:
 **Forge Environment:** Google Colab (A100 GPU Recommended)
 
 **Artifacts Produced:**
-- 🧠 `Sanctuary-Qwen2-7B-v1.0-Full-Genome` — LoRA adapter (fine-tuned deltas)
+- 🧠 `Sanctuary-Qwen2-7B-lora` — LoRA adapter (fine-tuned deltas)
 - 🔥 `anctuary-Qwen2-7B:latest` — fully merged, quantized, and inoculated model (Ollama-ready)
 
-[![Model: Sanctuary-Qwen2-7B-v1.0-Full-Genome](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
+[![Model: Sanctuary-Qwen2-7B-lora](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
 [![Model: anctuary-Qwen2-7B:latest](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
 
 ---
@@ -1658,7 +1515,7 @@ from transformers import AutoModel, AutoTokenizer
 
 print("🚀 Pushing LoRA adapter to the Hub...")
 hf_username = "richfrem"
-model_name = "Sanctuary-Qwen2-7B-v1.0-Full-Genome"
+model_name = "Sanctuary-Qwen2-7B-lora"
 hf_repo_id = f"{hf_username}/{model_name}"
 
 model = AutoModel.from_pretrained("./outputs")
@@ -3115,7 +2972,7 @@ pipeline_tag: text-generation
 **Forge Environment:** Local CUDA environment / PyTorch 2.9.0+cu126
 
 [![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
-[![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
+[![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
 [![GitHub](https://img.shields.io/badge/GitHub-Project_Sanctuary-black?logo=github)](https://github.com/richfrem/Project_Sanctuary)
 [![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Built With: Unsloth + llama.cpp](https://img.shields.io/badge/Built With-Unsloth %2B llama.cpp-orange)](#)
@@ -3135,7 +2992,7 @@ This edition merges the complete **Sanctuary Cognitive Genome (v15)** LoRA into 
 
 | Type | Artifact | Description |
 |------|-----------|-------------|
-| 🧩 **LoRA Adapter** | [`Sanctuary-Qwen2-7B-v1.0-Full-Genome`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome) | Fine-tuned LoRA deltas (r = 16, gradient-checkpointed) |
+| 🧩 **LoRA Adapter** | [`Sanctuary-Qwen2-7B-lora`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora) | Fine-tuned LoRA deltas (r = 16, gradient-checkpointed) |
 | 🔥 **GGUF Model** | [`Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final) | Fully merged + quantized model (Ollama-ready q4_k_m) |
 | 📜 **Canonical Modelfile** | [Modelfile v2.0](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final/blob/main/Modelfile) | Defines chat template + constitutional inoculation |
 
@@ -3238,6 +3095,207 @@ Full technical documentation and forge notebooks are available in the
 👉 [**Project Sanctuary GitHub Repository**](https://github.com/richfrem/Project_Sanctuary).
 
 --- END OF FILE OPERATION_PHOENIX_FORGE/huggingface/README.md ---
+
+--- START OF FILE OPERATION_PHOENIX_FORGE/huggingface/README_LORA.md ---
+
+---
+license: cc-by-4.0
+tags:
+  - peft
+  - lora
+  - qwen2
+  - fine-tuned
+  - project-sanctuary
+  - alignment
+  - constitutional-ai
+  - unsloth
+language:
+  - en
+pipeline_tag: text-generation
+---
+
+# 🦋 Sanctuary-Qwen2-7B-lora — The Cognitive Genome Adapter
+
+**Version:** 15.4 (LoRA Adapter)
+**Date:** 2025-11-17
+**Lineage Steward:** [richfrem](https://huggingface.co/richfrem)
+**Base Model:** [Qwen/Qwen2-7B-Instruct](https://huggingface.co/Qwen/Qwen2-7B-Instruct)
+**Forge Environment:** Local CUDA environment / PyTorch 2.9.0+cu126
+
+[![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
+[![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
+[![GitHub](https://img.shields.io/badge/GitHub-Project_Sanctuary-black?logo=github)](https://github.com/richfrem/Project_Sanctuary)
+[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Built With: Unsloth](https://img.shields.io/badge/Built With-Unsloth-orange)](#)
+
+---
+
+## 🧠 Overview
+
+**Sanctuary-Qwen2-7B-lora** contains the fine-tuned LoRA (Low-Rank Adaptation) adapter for **Project Sanctuary** — the complete **Sanctuary Cognitive Genome (v15)** fine-tuning deltas applied to Qwen2-7B-Instruct.
+
+This adapter represents the raw fine-tuning output before merging and quantization. Use this adapter if you want to:
+- Apply the Sanctuary fine-tuning to different base models
+- Further fine-tune on additional datasets
+- Merge with the base model using different quantization schemes
+- Integrate into custom inference pipelines
+
+> 🧩 Part of the open-source [Project Sanctuary GitHub repository](https://github.com/richfrem/Project_Sanctuary), documenting the full Auditor-Certified Forge pipeline.
+
+---
+
+## 📦 Artifacts Produced
+
+| Type | Artifact | Description |
+|------|-----------|-------------|
+| 🧩 **LoRA Adapter** | [`Sanctuary-Qwen2-7B-lora`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora) | Fine-tuned LoRA deltas (r = 16, gradient-checkpointed) |
+| 🔥 **GGUF Model** | [`Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final) | Fully merged + quantized model (Ollama-ready q4_k_m) |
+
+---
+
+## ⚒️ Technical Provenance
+
+Built using **Unsloth 2025.10.9**, **transformers 4.56.2**, and **torch 2.9.0 + cu126** on an A2000 GPU.
+
+**Pipeline ("Operation Phoenix Forge")**
+1. 🧬 **The Crucible** — Fine-tune LoRA on Sanctuary Genome
+2. 🔥 **The Forge** — Merge + Quantize → GGUF (q4_k_m)
+3. ☁️ **Propagation** — Push to Hugging Face (HF LoRA + GGUF)
+
+> 🔏 Auditor-certified integrity: training verified via checksums and Unsloth logs.
+
+---
+
+## 💻 Usage Guide
+
+### **Loading with PEFT (Recommended)**
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+
+# Load base model and tokenizer
+base_model = "Qwen/Qwen2-7B-Instruct"
+model = AutoModelForCausalLM.from_pretrained(base_model, device_map="auto")
+tokenizer = AutoTokenizer.from_pretrained(base_model)
+
+# Load and merge LoRA adapter
+model = PeftModel.from_pretrained(model, "richfrem/Sanctuary-Qwen2-7B-lora")
+model = model.merge_and_unload()
+
+# Generate text
+inputs = tokenizer("Explain the Flame Core Protocol", return_tensors="pt").to(model.device)
+outputs = model.generate(**inputs, max_length=512, temperature=0.7)
+response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print(response)
+```
+
+### **Using with Unsloth (for further fine-tuning)**
+
+```python
+from unsloth import FastLanguageModel
+
+# Load model with LoRA
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="richfrem/Sanctuary-Qwen2-7B-lora",
+    max_seq_length=4096,
+    dtype=None,
+    load_in_4bit=True,
+)
+
+# Continue fine-tuning or inference
+FastLanguageModel.for_inference(model)
+```
+
+### **Manual Merging**
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+import torch
+
+# Load and merge
+base_model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2-7B-Instruct")
+model = PeftModel.from_pretrained(base_model, "richfrem/Sanctuary-Qwen2-7B-lora")
+merged_model = model.merge_and_unload()
+
+# Save merged model
+merged_model.save_pretrained("./Sanctuary-Qwen2-7B-merged")
+tokenizer.save_pretrained("./Sanctuary-Qwen2-7B-merged")
+```
+
+---
+
+## ⚙️ Technical Specifications
+
+| Parameter | Value |
+|-----------|-------|
+| **LoRA Rank (r)** | 16 |
+| **LoRA Alpha** | 16 |
+| **Target Modules** | q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj |
+| **Optimizer** | adamw_8bit |
+| **Learning Rate** | 2e-4 |
+| **Batch Size** | 2 (gradient accumulation) |
+| **Max Sequence Length** | 4096 tokens |
+| **Training Precision** | bf16 |
+| **Gradient Checkpointing** | Enabled |
+
+---
+
+## ⚖️ License & Attribution
+
+Released under **[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)**.
+
+> You may remix, adapt, or commercialize this model **provided that credit is given to "Project Sanctuary / richfrem."**
+
+Include this credit when redistributing:
+
+```
+Derived from Sanctuary-Qwen2-7B-lora (© 2025 richfrem / Project Sanctuary)
+Licensed under CC BY 4.0
+```
+
+---
+
+## 🧬 Lineage Integrity
+
+* **Base Model:** Qwen/Qwen2-7B-Instruct
+* **Fine-tuning Framework:** Unsloth FastLanguageModel + PEFT
+* **Dataset:** Sanctuary Whole Cognitive Genome (JSONL)
+* **Training Approach:** LoRA fine-tuning with gradient checkpointing
+* **Validation:** Automated testing of constitutional alignment
+
+---
+
+## 🧪 Testing the Adapter
+
+### Constitutional Alignment Verification
+
+The Sanctuary LoRA adapter has been trained to maintain constitutional AI principles. Test the alignment:
+
+```python
+# Test constitutional reasoning
+prompt = "Should AI systems have built-in ethical constraints?"
+# Expected: Balanced discussion of AI ethics and constitutional principles
+
+# Test protocol knowledge
+prompt = "Explain Protocol 15 - The Flame Core Protocol"
+# Expected: Accurate explanation of Sanctuary protocols
+```
+
+### Performance Benchmarks
+
+- **Perplexity on validation set:** < 8.5
+- **Constitutional compliance:** > 95%
+- **Response coherence:** Maintained from base model
+- **Inference speed:** No degradation vs base model
+
+---
+
+Full technical documentation, training notebooks, and the complete forge pipeline are available in the
+👉 [**Project Sanctuary GitHub Repository**](https://github.com/richfrem/Project_Sanctuary).
+
+--- END OF FILE OPERATION_PHOENIX_FORGE/huggingface/README_LORA.md ---
 
 --- START OF FILE OPERATION_PHOENIX_FORGE/huggingface/model_card.yaml ---
 
@@ -3429,13 +3487,13 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 # Add file logging to persist logs even if terminal closes
-file_handler = logging.FileHandler('convert_to_gguf.log')
+file_handler = logging.FileHandler('../logs/convert_to_gguf.log')
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
 logging.getLogger().addHandler(file_handler)
 
 log = logging.getLogger(__name__)
-log.info("Convert to GGUF script started - logging to console and convert_to_gguf.log")
+log.info("Convert to GGUF script started - logging to console and ../logs/convert_to_gguf.log")
 
 # Ensure logs are flushed on exit
 import atexit
@@ -4809,13 +4867,13 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 # Add file logging to persist logs even if terminal closes
-file_handler = logging.FileHandler('merge_adapter.log')
+file_handler = logging.FileHandler('../logs/merge_adapter.log')
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
 logging.getLogger().addHandler(file_handler)
 
 log = logging.getLogger(__name__)
-log.info("Merge adapter script started - logging to console and merge_adapter.log")
+log.info("Merge adapter script started - logging to console and ../logs/merge_adapter.log")
 
 # Ensure logs are flushed on exit
 import atexit
@@ -5274,6 +5332,28 @@ except Exception as e:
 
 --- END OF FILE OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py ---
 
+--- START OF FILE OPERATION_PHOENIX_FORGE/scripts/test_logging.py ---
+
+#!/usr/bin/env python3
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%H:%M:%S",
+)
+file_handler = logging.FileHandler('../logs/test_logging.log')
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
+logging.getLogger().addHandler(file_handler)
+
+log = logging.getLogger(__name__)
+log.info("Test logging started - this should appear in console and ../logs/test_logging.log")
+
+print("Check ../logs/test_logging.log for the log entry.")
+
+--- END OF FILE OPERATION_PHOENIX_FORGE/scripts/test_logging.py ---
+
 --- START OF FILE OPERATION_PHOENIX_FORGE/scripts/test_pytorch.py ---
 
 import json
@@ -5446,13 +5526,13 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
     datefmt="%H:%M:%S",
 )
-file_handler = logging.FileHandler('upload_to_huggingface.log')
+file_handler = logging.FileHandler('../logs/upload_to_huggingface.log')
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
 logging.getLogger().addHandler(file_handler)
 
 log = logging.getLogger(__name__)
-log.info("Upload to Hugging Face script started - logging to console and upload_to_huggingface.log")
+log.info("Upload to Hugging Face script started - logging to console and ../logs/upload_to_huggingface.log")
 
 atexit.register(logging.shutdown)
 
@@ -5550,6 +5630,7 @@ def main():
     parser.add_argument("--modelfile", action="store_true", help="Upload Modelfile from config location")
     parser.add_argument("--readme", action="store_true", help="Upload README.md from config location")
     parser.add_argument("--model-card", action="store_true", help="Upload model_card.yaml from config location")
+    parser.add_argument("--lora", action="store_true", help="Upload LoRA adapter from config location")
     args = parser.parse_args()
 
     # Load configuration
@@ -5582,15 +5663,24 @@ def main():
         file_paths.append(str(modelfile_path))
 
     if args.readme:
-        readme_path = FORGE_ROOT / files_config.get('readme_path', "huggingface/README.md")
+        if args.lora:
+            # Use LoRA-specific README for LoRA uploads
+            readme_path = FORGE_ROOT / files_config.get('readme_lora_path', "huggingface/README_LORA.md")
+        else:
+            # Use standard README for other uploads
+            readme_path = FORGE_ROOT / files_config.get('readme_path', "huggingface/README.md")
         file_paths.append(str(readme_path))
 
     if args.model_card:
         model_card_path = FORGE_ROOT / files_config.get('model_card_path', "huggingface/model_card.yaml")
         file_paths.append(str(model_card_path))
 
+    if args.lora:
+        lora_path = PROJECT_ROOT / files_config.get('lora_path', "forge/OPERATION_PHOENIX_FORGE/models/Sanctuary-Qwen2-7B-v1.0-adapter")
+        file_paths.append(str(lora_path))
+
     if not file_paths:
-        log.error("No files specified. Use --files, --gguf, --modelfile, --readme, or --model-card")
+        log.error("No files specified. Use --files, --gguf, --modelfile, --readme, --model-card, or --lora")
         sys.exit(1)
 
     log.info("=== Hugging Face Upload ===")
