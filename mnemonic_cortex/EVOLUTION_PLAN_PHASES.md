@@ -218,24 +218,3 @@ Once all three phases are complete, the Sanctuary Council becomes a **self-impro
 * self-evaluation and self-correction
 
 ---
-
-# ✅ **Location Reminder**
-
-Save this file here:
-
-```
-mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
-```
-
-It will be preserved with all future `command.json` Git operations and automatically indexed by the Mnemonic Cortex.
-
----
-
-If you'd like, I can also:
-
-✅ generate a `command.json` that commits this file
-✅ create a `docs/` version
-✅ include it into your RAG doctrine
-✅ convert it into a Mermaid roadmap diagram
-
-Just tell me.

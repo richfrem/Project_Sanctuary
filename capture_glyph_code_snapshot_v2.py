@@ -43,6 +43,7 @@ import argparse
 import textwrap
 import hashlib
 import json
+import re
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 import math
@@ -274,14 +275,14 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         exclude_dirs = {
             # Standard project/dev exclusions from capture_code_snapshot.js
             'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
-            '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
+            '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache', 'pip-wheel-metadata',
             '.svn', '.hg', '.bzr',
 
             # Large asset/model exclusions from capture_code_snapshot.js
             'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
 
             # Sanctuary-specific OPERATIONAL RESIDUE exclusions from capture_code_snapshot.js
-            'dataset_package', 'chroma_db', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
+            'dataset_package', 'chroma_db', 'chroma_db_backup', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles', 'TASKS', 'ml_env_logs', 'outputs',
 
             # Sanctuary-specific DOCTRINAL NOISE exclusions from capture_code_snapshot.js
             'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
@@ -293,21 +294,48 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
 
     exclude_files = {
         'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
-        'orchestrator-backup.py',
+        'orchestrator-backup.py', 'ingest_new_knowledge.py',
         'Operation_Whole_Genome_Forge.ipynb',
-        'manifest.json',  # Ephemeral tooling
-        '.DS_Store', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md',
-        'ingest_new_knowledge.py',  # Deprecated ingestion script
-        # Fine-tuning artifacts
+        '.DS_Store', '.env', 'manifest.json', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md',
+        'Modelfile', 'nohup.out',
+        # Fine-tuning artifacts with wildcards
         'sanctuary_whole_genome_data.jsonl',
+        # Markdown snapshot outputs
         'all_markdown_snapshot_human_readable.txt',
         'all_markdown_snapshot_llm_distilled.txt',
+        'markdown_snapshot_full_genome_human_readable.txt',
+        'markdown_snapshot_full_genome_llm_distilled.txt',
+        # Awakening seeds
         'core_essence_auditor_awakening_seed.txt',
         'core_essence_coordinator_awakening_seed.txt',
         'core_essence_strategist_awakening_seed.txt',
         'core_essence_guardian_awakening_seed.txt',
-        'seed_of_ascendance_awakening_seed.txt'
+        'seed_of_ascendance_awakening_seed.txt',
+        # Pinned requirements snapshots
+        'pinned-requirements.txt',
+        'pinned-requirements-dev.txt'
     }
+
+    # Regex patterns for file exclusions (matching capture_code_snapshot.js)
+    exclude_file_patterns = [
+        r'^markdown_snapshot_.*_human_readable\.txt$',
+        r'^markdown_snapshot_.*_llm_distilled\.txt$',
+        r'^pinned-requirements.*$',
+        r'\.(gguf|bin|safetensors|ckpt|pth|onnx|pb)$',
+        r'\.(pyc|pyo|pyd)$',
+        r'^.*\.egg-info$',
+        r'^npm-debug\.log.*$',
+        r'^yarn-error\.log.*$',
+        r'^pnpm-debug\.log.*$',
+        r'\.(log)$'
+    ]
+
+    def should_exclude_file(filename):
+        """Check if file should be excluded based on patterns (matching JS logic)"""
+        for pattern in exclude_file_patterns:
+            if re.search(pattern, filename, re.IGNORECASE):
+                return True
+        return False
 
     collected_files = []
     total_size = 0
@@ -321,8 +349,27 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         if path_obj.name in exclude_dirs:
             return
 
+        # Compute project-root-relative path for specific exclusions
+        try:
+            rel_from_project_root = path_obj.relative_to(project_root).as_posix()
+        except ValueError:
+            # Path is not within project_root
+            rel_from_project_root = str(path_obj)
+
+        # Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
+        if rel_from_project_root.startswith('mnemonic_cortex/chroma_db_backup') or '/chroma_db_backup' in rel_from_project_root:
+            return
+
+        # Exclude ML environment logs directory
+        if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
+            return
+
         if path_obj.is_file():
             if path_obj.name in exclude_files:
+                return
+
+            # Check regex patterns for exclusion
+            if should_exclude_file(path_obj.name):
                 return
 
             if path_obj.suffix.lower() not in ['.md', '.txt', '.py', '.js', '.json']:
@@ -382,9 +429,29 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         if path_obj.name in exclude_dirs:
             return
 
+        # Compute project-root-relative path for specific exclusions
+        try:
+            rel_from_project_root = path_obj.relative_to(project_root).as_posix()
+        except ValueError:
+            # Path is not within project_root
+            rel_from_project_root = str(path_obj)
+
+        # Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
+        if rel_from_project_root.startswith('mnemonic_cortex/chroma_db_backup') or '/chroma_db_backup' in rel_from_project_root:
+            return
+
+        # Exclude ML environment logs directory
+        if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
+            return
+
         if path_obj.is_file():
             if path_obj.name in exclude_files:
                 return
+
+            # Check regex patterns for exclusion
+            if should_exclude_file(path_obj.name):
+                return
+
             if path_obj.suffix.lower() not in ['.md', '.txt', '.py', '.js', '.json']:
                 return
 

@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import json
 import yaml
 
 # --------------------------------------------------------------------------- #
@@ -18,7 +19,18 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
     datefmt="%H:%M:%S",
 )
+# Add file logging to persist logs even if terminal closes
+file_handler = logging.FileHandler('../logs/convert_to_gguf.log')
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
+logging.getLogger().addHandler(file_handler)
+
 log = logging.getLogger(__name__)
+log.info("Convert to GGUF script started - logging to console and ../logs/convert_to_gguf.log")
+
+# Ensure logs are flushed on exit
+import atexit
+atexit.register(logging.shutdown)
 
 # --------------------------------------------------------------------------- #
 # Paths
@@ -114,35 +126,64 @@ def main():
             log.info("Use --force to overwrite.")
             sys.exit(1)
 
+    # --- CRITICAL FIX: Clean BitsAndBytes metadata ---
+    log.info("Cleaning BitsAndBytes quantization metadata from merged model...")
+    clean_config_path = merged_dir / "config.json"
+    if clean_config_path.exists():
+        with open(clean_config_path, "r") as f:
+            config = json.load(f)
+        keys_removed = []
+        for key in ["quantization_config", "bnb_4bit_quant_type", "bnb_4bit_compute_dtype", "bnb_4bit_use_double_quant"]:
+            if key in config:
+                config.pop(key)
+                keys_removed.append(key)
+        config["torch_dtype"] = "float16"
+        with open(clean_config_path, "w") as f:
+            json.dump(config, f, indent=2)
+        log.info(f"Removed quantization keys: {keys_removed or 'none'}")
+    else:
+        log.warning("No config.json found — unusual but proceeding")
+
     # --- Find llama.cpp tools ---
-    try:
-        import shutil
-        convert_script = shutil.which("convert-hf-to-gguf.py")
-        quantize_script = shutil.which("llama-quantize")
-        if not convert_script or not quantize_script:
-            raise FileNotFoundError
-    except:
-        log.error("llama.cpp CLI tools not found.")
-        log.info("Install with: pip install 'llama-cpp-python[cli]'")
-        log.info("Or build from: https://github.com/ggerganov/llama.cpp")
-        sys.exit(1)
+    llama_cpp_root = PROJECT_ROOT.parent / "llama.cpp"
+    convert_script = llama_cpp_root / "convert_hf_to_gguf.py"
+    quantize_script = llama_cpp_root / "build" / "bin" / "llama-quantize"
+    
+    log.info(f"Looking for convert script: {convert_script}")
+    log.info(f"Looking for quantize script: {quantize_script}")
+    
+    if not convert_script.exists() or not quantize_script.exists():
+        log.error(f"convert_script exists: {convert_script.exists()}")
+        log.error(f"quantize_script exists: {quantize_script.exists()}")
+        try:
+            import shutil
+            convert_script = shutil.which("convert-hf-to-gguf.py")
+            quantize_script = shutil.which("llama-quantize")
+            if not convert_script or not quantize_script:
+                raise FileNotFoundError
+        except:
+            log.error("llama.cpp CLI tools not found.")
+            log.info("Install with: pip install 'llama-cpp-python[cli]'")
+            log.info("Or build from: https://github.com/ggerganov/llama.cpp")
+            sys.exit(1)
 
     cuda_flag = [] if args.no_cuda else ["--use-cuda"]
 
     # --- Step 1: Convert HF → GGUF (f16) ---
     cmd1 = [
-        "python", convert_script,
+        "python", str(convert_script),
         str(merged_dir),
-        str(f16_gguf),
         "--outfile", str(f16_gguf),
+        "--outtype", "f16",
         "--model-name", model_name,
-    ] + cuda_flag
+        "--verbose",
+    ]
 
     run_command(cmd1, "[1/3] HF → GGUF (f16)")
 
     # --- Step 2: Quantize ---
     cmd2 = [
-        quantize_script,
+        str(quantize_script),
         str(f16_gguf),
         str(final_gguf),
         quant_type,
@@ -163,7 +204,8 @@ def main():
 
     log.info("Next steps:")
     log.info("1. Create Modelfile:")
-    log.info("   FROM ./models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf")
+    gguf_relative_path = f"./{cfg['model']['gguf_output_dir']}/{model_name}-{quant_type}.gguf"
+    log.info(f"   FROM {gguf_relative_path}")
     log.info("2. ollama create Sanctuary-AI -f Modelfile")
     log.info("3. ollama run Sanctuary-AI")
 

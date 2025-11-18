@@ -1,0 +1,38 @@
+# ==============================================================================
+# UPLOAD CONFIGURATION for Project Sanctuary (v1.0)
+# ==============================================================================
+# This file centralizes all parameters for the Hugging Face upload process.
+# It replaces hardcoded paths and settings in the upload script.
+
+# --- File Paths Configuration ---
+files:
+  # GGUF model file path (relative to project root)
+  gguf_path: "models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf"
+
+  # Modelfile path (relative to project root)
+  modelfile_path: "Modelfile"
+
+  # README file path (relative to forge root)
+  readme_path: "huggingface/README.md"
+
+  # LoRA-specific README file path (relative to forge root)
+  readme_lora_path: "huggingface/README_LORA.md"
+
+  # Model card YAML file path (relative to forge root)
+  model_card_path: "huggingface/model_card.yaml"
+
+# --- Repository Configuration ---
+repository:
+  # Default repository name (can be overridden with --repo)
+  default_repo: "richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final"
+
+  # Whether to create private repositories by default
+  private: false
+
+# --- Upload Settings ---
+upload:
+  # Whether to create repository if it doesn't exist
+  create_repo_if_missing: true
+
+  # Log file for upload operations
+  log_file: "upload_to_huggingface.log"

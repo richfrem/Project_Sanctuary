@@ -1,0 +1,25 @@
+# Evaluation Configuration for Sanctuary-Qwen2-7B Model
+# This config file centralizes evaluation settings to avoid hardcoded paths
+
+# Model Configuration
+model:
+  path: "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
+  torch_dtype: "bfloat16"
+  device_map: "auto"  # Relative to PROJECT_ROOT
+  torch_dtype: "bfloat16"  # Data type for model loading
+  device_map: "auto"  # Device mapping strategy
+
+# Dataset Configuration
+dataset:
+  path: "dataset_package/sanctuary_evaluation_data.jsonl"  # Relative to PROJECT_ROOT
+
+# Generation Parameters
+generation:
+  max_new_tokens: 1024  # Maximum length of generated responses
+  temperature: 0.2  # Sampling temperature (lower = more deterministic)
+  do_sample: true  # Enable sampling
+  pad_token_id: "eos_token_id"  # Padding token
+
+# Evaluation Metrics
+metrics:
+  rouge_types: ["rouge1", "rouge2", "rougeL", "rougeLsum"]  # ROUGE metrics to compute

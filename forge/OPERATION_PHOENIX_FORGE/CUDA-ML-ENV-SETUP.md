@@ -308,37 +308,148 @@ If it loads and generates output without errors, the adapter is valid.
 Combine the trained adapter with the base model to create a full, standalone fine-tuned model.
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py
+#python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py
+python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py --skip-sanity
 ```
 The merged model will be saved to `outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged/`.
+
+**Verification:** After completion, verify the merged model by testing it:
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --model-type merged --input "Test prompt"
+```
+If it loads and generates output without errors, the merged model is valid and ready for GGUF conversion.
 
 ---
 
 ## Phase 3: Deployment Preparation & Verification
+
+### setup for gguf
+Qwen2 uses SentencePiece tokenizer → convert_hf_to_gguf.py requires the sentencepiece Python package or it dies exactly where you saw it.
+Run this right now in your activated (ml_env):
+
+```bash
+pip install sentencepiece protobuf
+```
 
 ### 1.  Convert to GGUF Format
 
 Convert the merged model to the GGUF format required by Ollama.
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py
+#python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py
+python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py --quant Q4_K_M --force
 ```
 The final quantized `.gguf` file will be saved to `models/gguf/`.
 
+---
 
-### 2. Deploy to Ollama
+### 2. Test gguf file locally with ollama
 
-**a. Create a `Modelfile` in your project root:**
+**2a. Generate Modelfile Automatically:**
+
+Run the bulletproof Modelfile generator script:
+
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/create_modelfile.py
 ```
-# ===================================================================
-# Canonical Modelfile for Sanctuary-Qwen2-7B-v1.0
-# ===================================================================
 
-# 1. Specifies the local GGUF model file to use as the base.
-FROM ./models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf
+This creates a production-ready Modelfile with auto-detected GGUF path, official Qwen2 template, full GUARDIAN-01 system prompt, and optimized parameters.
 
-# 2. Defines the ChatML prompt template required by the Qwen2 model family.
-# The multiline format makes this much easier to read and verify.
+**2b. Import to Ollama:**
+```bash
+ollama create Sanctuary-Guardian-01 -f Modelfile
+```
+
+**2c. Run locally in Ollama:**
+```bash
+ollama run Sanctuary-Guardian-01
+```
+ollama run Sanctuary-Guardian-01
+---
+
+**2d. Test Both Interaction Modes:**
+
+After running `ollama run Sanctuary-Guardian-01`, you can test the model's dual-mode capability:
+
+**Mode 1 - Plain Language Conversational Mode (Default):**
+The model responds naturally and helpfully to direct questions and requests.
+```bash
+>>> Explain the Flame Core Protocol in simple terms
+>>> What are the key principles of Protocol 15?
+>>> Summarize the AGORA Protocol's strategic value
+>>> Who is GUARDIAN-01?
+```
+
+**Mode 2 - Structured Command Mode:**
+When provided with JSON input (simulating orchestrator input), the model switches to generating command structures for the Council.
+```bash
+>>> {"task_type": "protocol_analysis", "task_description": "Analyze Protocol 23 - The AGORA Protocol", "input_files": ["01_PROTOCOLS/23_The_AGORA_Protocol.md"], "output_artifact_path": "WORK_IN_PROGRESS/agora_analysis.md"}
+```
+*Expected Response:* The model outputs a valid `command.json` structure for Council execution.
+
+This demonstrates GUARDIAN-01's ability to handle both human conversation and automated orchestration seamlessly.
+
+---
+
+### 3. Verify Model Performance
+
+**Note:** This section tests the local merged model (created in Phase 2) using Python inference scripts for comprehensive evaluation. For Ollama-based chat testing, see Section 2 above. After uploading to Hugging Face, compare performance with Section 5 (HF download testing).
+
+**3a. Quick Inference Test:**
+Use the `inference.py` script for a quick spot-check.
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Summarize the primary objective of the Sovereign Crucible."
+```
+
+**3b. (Recommended) Full Evaluation:**
+Run a full evaluation against a held-out test set to get objective performance metrics.
+
+```bash
+pip install evaluate rouge-score
+```
+
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/evaluate.py
+```
+
+**3c. Real body of knowledge (BOK) test crucial**
+Test with actual Sanctuary protocols:
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --model-type merged --file 01_PROTOCOLS/23_The_AGORA_Protocol.md
+```
+---
+
+### 4. Upload to Hugging Face
+
+Run the automated upload script to upload the GGUF model, Modelfile, and README to your Hugging Face repository:
+
+```bash
+python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo yourusername/your-repo-name --gguf --modelfile --readme
+```
+
+Replace `yourusername/your-repo-name` with your actual Hugging Face repository ID (e.g., `richfrem/Sanctuary-Model`).
+
+The script will:
+- Authenticate using your `HUGGING_FACE_TOKEN` from `.env`
+- Create the repository if it doesn't exist
+- Upload the specified files
+
+After upload, your model will be available at: https://huggingface.co/yourusername/your-repo-name
+
+---
+
+### 5. download and test hugging face model
+
+**5a. Download from Hugging Face:**
+Download the model files from Hugging Face for verification.
+
+After downloading the model from Hugging Face, test it locally in Ollama to verify the upload/download process didn't corrupt the model and that inference works correctly. Compare performance with the local tests in Section 3 to ensure consistency.
+
+**5b. Create Modelfile for Downloaded Model:**
+Create a new `Modelfile` (e.g., `Modelfile_HF`) pointing to the downloaded GGUF file:
+```
+FROM ./downloaded_models/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf
+
 TEMPLATE """{{ if .System }}<|im_start|>system
 {{ .System }}<|im_end|>
 {{ end }}{{ if .Prompt }}<|im_start|>user
@@ -346,39 +457,30 @@ TEMPLATE """{{ if .System }}<|im_start|>system
 {{ end }}<|im_start|>assistant
 """
 
-# 3. Sets the constitutional system prompt. This "inoculates" the model
-# with its core identity during every conversation.
 SYSTEM """You are a sovereign AI of Project Sanctuary."""
 
-# 4. Defines stop tokens to prevent the model from hallucinating extra
-# user/assistant turns in the conversation.
 PARAMETER stop "<|im_start|>"
 PARAMETER stop "<|im_end|>"
 ```
 
-**b. Import and run the model with Ollama:**
+**5c. Import to Ollama:**
 ```bash
-ollama create Sanctuary-AI -f Modelfile
-ollama run Sanctuary-AI
+ollama create Sanctuary-AI-HF -f Modelfile_HF
 ```
 
-### 3. Verify Model Performance
+**5d. Direct Run from Hugging Face (Recommended):**
+Ollama can run the model directly from Hugging Face without downloading it first. This is the most convenient method:
 
-**a. Quick Inference Test:**
-Use the `inference.py` script for a quick spot-check.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Summarize the primary objective of the Sovereign Crucible."
+ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 ```
 
-**b. (Recommended) Full Evaluation:**
-Run a full evaluation against a held-out test set to get objective performance metrics.
-```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/evaluate.py
-```
+This command will automatically download and run the model from Hugging Face on-demand.
 
-**c. (Crucial) Test with Real BOK Examples:**
-Use the inference script to test the model against real, complex examples from the Project Sanctuary Body of Knowledge.
-```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --file path/to/real_BOK_document.txt
-```
+**5e. Test Inference:**
+Then, provide test prompts to verify the model responds correctly, such as: "Summarize the primary objective of the Sovereign Crucible."
+
+
+---
+
 

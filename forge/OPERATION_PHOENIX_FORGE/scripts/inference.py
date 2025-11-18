@@ -1,6 +1,23 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# INFERENCE.PY (v2.0)
+# INFERENCE.PY (v2.0) - Plain Language Summary
+#
+# WHAT THIS SCRIPT DOES:
+# This is a quick test tool for your fine-tuned Project Sanctuary AI model.
+# It loads the original base model (Qwen2-7B) and applies your custom training changes (the "adapter") on top,
+# then generates responses to test prompts. Think of it as trying on your fine-tuned "brain upgrade" before making it permanent.
+# It's like testing a modded game character before saving the changes forever.
+#
+# VS. TESTING AFTER MERGE_ADAPTER.PY:
+# - This script (inference.py): Tests the base model + adapter separately (temporary combo, like a preview).
+#   Use this right after fine-tuning to check if your training worked without committing to a big merge.
+# - After merge_adapter.py: Tests the fully combined model (base + adapter merged into one file).
+#   This is the "final product" - permanent, standalone, and ready for conversion to GGUF/Ollama.
+#   Merging takes longer but gives you a clean, deployable model file.
+#
+# QUICK TEST WITH BASE MODEL + YOUR FINE-TUNED SETTINGS:
+# Just run: python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Your test question here"
+# It automatically loads base + adapter if available. No extra steps needed!
 #
 # This script runs inference using the fine-tuned Project Sanctuary model.
 # It supports loading either the LoRA adapter (post-fine-tune) or the merged model (post-merge).
@@ -20,26 +37,45 @@
 import argparse
 import sys
 import torch
+import yaml
+import os
 from pathlib import Path
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
+
+# --- Load environment variables from project root .env ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+env_path = PROJECT_ROOT / '.env'
+if env_path.exists():
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(env_path)
+    except ImportError:
+        pass  # python-dotenv not installed, rely on system environment
 
 # --- Determine Paths ---
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
 PROJECT_ROOT = FORGE_ROOT.parent.parent
 
-# --- Configuration ---
-DEFAULT_BASE_MODEL_PATH = FORGE_ROOT / "models" / "base" / "Qwen" / "Qwen2-7B-Instruct"
-DEFAULT_ADAPTER_PATH = PROJECT_ROOT / "models/Sanctuary-Qwen2-7B-v1.0-adapter"
-DEFAULT_MERGED_PATH = PROJECT_ROOT / "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
+# --- Load Configuration ---
+CONFIG_PATH = FORGE_ROOT / "config" / "inference_config.yaml"
+with open(CONFIG_PATH, 'r') as f:
+    config = yaml.safe_load(f)
+
+# --- Environment Variable Fallbacks ---
+# Model paths
+DEFAULT_BASE_MODEL_PATH = PROJECT_ROOT / os.environ.get('SANCTUARY_BASE_MODEL_PATH', config["model"]["base_path"])
+DEFAULT_ADAPTER_PATH = PROJECT_ROOT / os.environ.get('SANCTUARY_ADAPTER_PATH', config["model"]["adapter_path"])
+DEFAULT_MERGED_PATH = PROJECT_ROOT / os.environ.get('SANCTUARY_MERGED_MODEL_PATH', config["model"]["merged_path"])
 
 # 4-bit quantization config for 8GB GPU compatibility
+quant_config = config["quantization"]
 bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_compute_dtype=torch.bfloat16,
-    bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_type="nf4"
+    load_in_4bit=os.environ.get('SANCTUARY_LOAD_IN_4BIT', str(quant_config["load_in_4bit"])).lower() == 'true',
+    bnb_4bit_compute_dtype=torch.bfloat16 if os.environ.get('SANCTUARY_BNB_4BIT_COMPUTE_DTYPE', quant_config["bnb_4bit_compute_dtype"]) == "bfloat16" else torch.float16,
+    bnb_4bit_use_double_quant=os.environ.get('SANCTUARY_BNB_4BIT_USE_DOUBLE_QUANT', str(quant_config["bnb_4bit_use_double_quant"])).lower() == 'true',
+    bnb_4bit_quant_type=os.environ.get('SANCTUARY_BNB_4BIT_QUANT_TYPE', quant_config["bnb_4bit_quant_type"])
 )
 
 def load_model_and_tokenizer(model_type):
@@ -106,14 +142,17 @@ def run_inference(model, tokenizer, instruction, max_new_tokens):
     
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     
+    # Get generation config with environment variable fallbacks
+    gen_config = config["generation"]
+    
     # Generate the response
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
             max_new_tokens=max_new_tokens,
-            temperature=0.7,      # A balance between creativity and determinism.
-            top_p=0.9,            # Nucleus sampling.
-            do_sample=True,       # Enable sampling for more natural responses.
+            temperature=float(os.environ.get('SANCTUARY_TEMPERATURE', gen_config["temperature"])),
+            top_p=float(os.environ.get('SANCTUARY_TOP_P', gen_config["top_p"])),
+            do_sample=os.environ.get('SANCTUARY_DO_SAMPLE', str(gen_config["do_sample"])).lower() == 'true',
             pad_token_id=tokenizer.eos_token_id
         )
     
@@ -129,7 +168,7 @@ def main():
                         help='Type of model to load: adapter (post-fine-tune) or merged (post-merge).')
     parser.add_argument('--input', help='A direct question or instruction to ask the model.')
     parser.add_argument('--file', help='Path to a file to use as the input instruction.')
-    parser.add_argument('--max-new-tokens', type=int, default=512, help='Maximum number of new tokens to generate.')
+    parser.add_argument('--max-new-tokens', type=int, default=int(os.environ.get('SANCTUARY_MAX_NEW_TOKENS', config["generation"]["max_new_tokens"])), help='Maximum number of new tokens to generate.')
     args = parser.parse_args()
 
     model, tokenizer = load_model_and_tokenizer(args.model_type)

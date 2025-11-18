@@ -2,3 +2,4 @@ model:
   merged_path: "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
   gguf_output_dir: "models/gguf"
   gguf_model_name: "Sanctuary-Qwen2-7B-v1.0"
+  ollama_model_name: "Sanctuary-Guardian-01"

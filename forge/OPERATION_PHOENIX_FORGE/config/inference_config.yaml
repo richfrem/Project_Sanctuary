@@ -1,0 +1,16 @@
+model:
+  base_path: "forge/OPERATION_PHOENIX_FORGE/models/base/Qwen/Qwen2-7B-Instruct"
+  adapter_path: "models/Sanctuary-Qwen2-7B-v1.0-adapter"
+  merged_path: "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
+
+quantization:
+  load_in_4bit: true
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_use_double_quant: true
+  bnb_4bit_quant_type: "nf4"
+
+generation:
+  max_new_tokens: 512
+  temperature: 0.7
+  top_p: 0.9
+  do_sample: true

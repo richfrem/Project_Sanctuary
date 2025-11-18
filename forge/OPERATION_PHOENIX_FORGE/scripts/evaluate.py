@@ -20,6 +20,7 @@ import argparse
 import sys
 import torch
 import json
+import yaml
 from pathlib import Path
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
@@ -28,11 +29,16 @@ import evaluate as hf_evaluate # Use Hugging Face's evaluate library
 # --- Determine Paths ---
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent
+PROJECT_ROOT = FORGE_ROOT.parent.parent
+
+# --- Load Configuration ---
+CONFIG_PATH = FORGE_ROOT / "config" / "evaluation_config.yaml"
+with open(CONFIG_PATH, 'r') as f:
+    config = yaml.safe_load(f)
 
 # --- Configuration ---
-DEFAULT_MODEL_PATH = PROJECT_ROOT / "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
-DEFAULT_TESTSET_PATH = PROJECT_ROOT / "dataset_package/sanctuary_evaluation_data.jsonl"
+DEFAULT_MODEL_PATH = PROJECT_ROOT / config["model"]["path"]
+DEFAULT_TESTSET_PATH = PROJECT_ROOT / config["dataset"]["path"]
 
 def load_model_and_tokenizer(model_path_str):
     """Loads a Hugging Face model and tokenizer from a local path."""
@@ -43,8 +49,19 @@ def load_model_and_tokenizer(model_path_str):
         sys.exit(1)
         
     print(f"🧠 Loading model for evaluation from: {model_path}...")
+    
+    # Get torch dtype from config
+    dtype_str = config["model"]["torch_dtype"]
+    if dtype_str == "bfloat16":
+        torch_dtype = torch.bfloat16
+    else:
+        torch_dtype = torch.float16  # fallback
+    
     model = AutoModelForCausalLM.from_pretrained(
-        model_path, torch_dtype=torch.bfloat16, device_map="auto", trust_remote_code=True
+        model_path, 
+        torch_dtype=torch_dtype, 
+        device_map=config["model"]["device_map"], 
+        trust_remote_code=True
     )
     tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     print("✅ Model and tokenizer loaded.")
@@ -59,12 +76,16 @@ def generate_response(model, tokenizer, instruction):
     prompt = format_prompt(instruction)
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     
+    # Get generation config
+    gen_config = config["generation"]
+    
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
-            max_new_tokens=1024, # Allow for longer, more detailed synthesis
-            temperature=0.2,    # Low temperature for more deterministic, factual output
-            do_sample=True,
+            max_new_tokens=gen_config["max_new_tokens"],
+            temperature=gen_config["temperature"],
+            do_sample=gen_config["do_sample"],
+            top_p=gen_config["top_p"],
             pad_token_id=tokenizer.eos_token_id
         )
     

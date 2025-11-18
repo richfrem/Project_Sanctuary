@@ -109,7 +109,7 @@ if (argv.operation) {
 const excludeDirNames = new Set([
     // Standard project/dev exclusions
     'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
-    '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache',
+    '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache', 'pip-wheel-metadata',
     '.svn', '.hg', '.bzr',
 
     // Large asset/model exclusions
@@ -123,6 +123,9 @@ const excludeDirNames = new Set([
     'WORK_IN_PROGRESS',
     'session_states', 
     'development_cycles',
+    'TASKS',
+    'ml_env_logs',
+    'outputs',
 
     // Sanctuary-specific DOCTRINAL NOISE exclusions
     'ARCHIVES',
@@ -156,6 +159,8 @@ let alwaysExcludeFiles = [
     'manifest.json',
     '.gitignore',
     'PROMPT_PROJECT_ANALYSIS.md',
+    'Modelfile',
+    'nohup.out',
     // Fine-tuning artifacts with wildcards
     'sanctuary_whole_genome_data.jsonl',
     /^markdown_snapshot_.*_human_readable\.txt$/,
@@ -166,7 +171,18 @@ let alwaysExcludeFiles = [
     'core_essence_guardian_awakening_seed.txt',
     'seed_of_ascendance_awakening_seed.txt',
     // Pinned requirements snapshots
-    /^pinned-requirements.*$/
+    /^pinned-requirements.*$/,
+    // Large model files (GGUF, binary models, checkpoints, etc.)
+    /\.(gguf|bin|safetensors|ckpt|pth|onnx|pb)$/i,
+    // Python cache and compiled files
+    /\.(pyc|pyo|pyd)$/i,
+    // Python packaging artifacts
+    /^.*\.egg-info$/i,
+    // Log files
+    /^npm-debug\.log.*$/i,
+    /^yarn-error\.log.*$/i,
+    /^pnpm-debug\.log.*$/i,
+    /\.(log)$/i
 ];
 
 function shouldExcludeFile(baseName) {
@@ -466,6 +482,12 @@ try {
         // Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
         // e.g., mnemonic_cortex/chroma_db_backup*, mnemonic_cortex/.../chroma_db_backup*
         if (relFromProjectRoot.startsWith('mnemonic_cortex/chroma_db_backup') || relFromProjectRoot.includes('/chroma_db_backup')) {
+            itemsSkipped++;
+            return;
+        }
+
+        // Exclude ML environment logs directory
+        if (relFromProjectRoot.startsWith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') || relFromProjectRoot.includes('/ml_env_logs')) {
             itemsSkipped++;
             return;
         }

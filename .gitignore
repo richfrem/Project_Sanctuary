@@ -73,6 +73,12 @@ dataset_code_glyphs/
 # Synthesis Outputs - Generated artifacts from orchestrator operations
 MNEMONIC_SYNTHESIS/
 
+# Task Management - Operational task tracking files
+TASKS/
+
+# ML Environment Logs - Machine learning environment logging artifacts
+ml_env_logs/
+
 # Orchestrator Manifests - Generated commit manifests from Protocol 101
 # commit_manifest*.json  # Temporarily disabled to allow orchestrator commit
 
@@ -86,6 +92,7 @@ archive/
 archives/
 RESEARCH_PAPERS/
 *.log
+nohup.out
 
 ResearchPapers
 

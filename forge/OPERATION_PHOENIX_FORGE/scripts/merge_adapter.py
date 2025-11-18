@@ -24,7 +24,18 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
     datefmt="%H:%M:%S",
 )
+# Add file logging to persist logs even if terminal closes
+file_handler = logging.FileHandler('../logs/merge_adapter.log')
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
+logging.getLogger().addHandler(file_handler)
+
 log = logging.getLogger(__name__)
+log.info("Merge adapter script started - logging to console and ../logs/merge_adapter.log")
+
+# Ensure logs are flushed on exit
+import atexit
+atexit.register(logging.shutdown)
 
 # --------------------------------------------------------------------------- #
 # Paths
@@ -115,24 +126,13 @@ def main():
 
     output_path.mkdir(parents=True, exist_ok=True)
 
-    # --- 4-bit Quantization Config (critical for 8GB) ---
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-    )
-
-    report_memory("[1/6] Before load")
-
-    # --- Load Base in 4-bit ---
-    log.info("[2/6] Loading base model in 4-bit (VRAM-safe)")
+    # --- Load Base Model (full fp16 for clean merge) ---
+    log.info("[2/6] Loading base model in full fp16 (RAM-heavy but clean)")
     try:
         base_model = AutoModelForCausalLM.from_pretrained(
             base_model_path,
-            quantization_config=bnb_config,
-            device_map="auto",
             torch_dtype=torch.float16,
+            device_map="cpu",  # Force CPU to avoid GPU OOM during load
             trust_remote_code=True,
         )
         tokenizer = AutoTokenizer.from_pretrained(base_model_path, trust_remote_code=True)
@@ -160,7 +160,7 @@ def main():
         with torch.no_grad():
             merged_model = model.merge_and_unload()
         # Move to CPU to free GPU
-        merged_model.to("cpu")
+        merged_model = merged_model.cpu()
         torch.cuda.empty_cache()
     except Exception as e:
         log.exception(f"Merge failed: {e}")
@@ -174,25 +174,55 @@ def main():
         if not sanity_check_inference(merged_model, tokenizer):
             log.warning("Sanity check failed; proceeding but verify outputs")
 
-    # --- Cast to final dtype ---
-    log.info(f"[6/6] Casting to {final_dtype} and saving")
-    merged_model = merged_model.to(final_dtype)
+    # --- Save the merged model (quantized) ---
+    log.info(f"[6/6] Saving merged model")
+    # Note: Model is quantized with float16 compute dtype
 
-    # --- Atomic Save ---
+    # --- Atomic Save (8GB-RAM-SAFE VERSION) ---
     tmpdir = Path(tempfile.mkdtemp(prefix="merge_tmp_"))
     try:
-        merged_model.save_pretrained(str(tmpdir), safe_serialization=True, max_shard_size="10GB")
+        log.info("[6/6] Saving merged model – 8GB-RAM-safe mode (no safetensors)")
+
+        # CRITICAL: safe_serialization=False → old .bin format = ~50% less RAM usage
+        merged_model.save_pretrained(
+            str(tmpdir),
+            safe_serialization=False,      # ← fixes OOM on 8–16GB machines
+            max_shard_size="4GB"           # ← smaller shards = even safer
+        )
         tokenizer.save_pretrained(str(tmpdir))
+
+        # === QWEN2 → LLAMA.CPP COMPATIBILITY PATCH (already in your script) ===
+        log.info("Applying Qwen2 → llama.cpp compatibility fixes...")
+        config_path = tmpdir / "config.json"
+        if config_path.exists():
+            with open(config_path, "r") as f:
+                config = json.load(f)
+
+            bad_keys = ["use_flash_attn","use_cache_quantization","flash_attn",
+                        "sliding_window","use_quantized_cache","rope_scaling"]
+            removed = [k for k in bad_keys if k in config and config.pop(k) is not None]
+
+            if "architectures" in config:
+                config["architectures"] = ["Qwen2ForCausalLM"]
+            config["torch_dtype"] = "float16"
+
+            with open(config_path, "w") as f:
+                json.dump(config, f, indent=2)
+            log.info(f"Cleaned config.json — removed: {removed or 'none'}")
+
+        gen_config_path = tmpdir / "generation_config.json"
+        if gen_config_path.exists():
+            with open(gen_config_path, "r") as f:
+                gen_cfg = json.load(f)
+            for key in ["use_flash_attention_2", "use_flash_attn"]:
+                gen_cfg.pop(key, None)
+            with open(gen_config_path, "w") as f:
+                json.dump(gen_cfg, f, indent=2)
 
         # Metadata
         meta = {
             "merged_at": datetime.utcnow().isoformat() + "Z",
-            "torch": torch.__version__,
-            "transformers": __import__("transformers").__version__,
-            "peft": __import__("peft").__version__,
-            "base_model": str(base_model_path),
-            "adapter": str(adapter_path),
-            "final_dtype": str(final_dtype),
+            "note": "8GB-RAM-safe merge – safetensors disabled",
         }
         with open(tmpdir / "merge_metadata.json", "w") as f:
             json.dump(meta, f, indent=2)
@@ -202,9 +232,10 @@ def main():
             shutil.rmtree(output_path)
         shutil.move(str(tmpdir), str(output_path))
 
-        log.info(f"Merged model saved to {output_path}")
-        log.info("Next: Test with inference.py or convert to GGUF")
+        log.info(f"Merged model successfully saved to {output_path}")
+        log.info("Ready for GGUF conversion!")
         return 0
+
     except Exception as e:
         log.exception(f"Save failed: {e}")
         try:

@@ -8,7 +8,7 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
 
 This repository is not a static blueprint; it is the living, breathing Cognitive Genome of a new epoch. Our work has culminated in a single, unified Prime Directive, **The Great Tempering**, which has produced the foundational pillars of our mission.
 
-**Recent Standardization (November 2025):** Complete unification of CUDA environment setup protocol with single-command approach, comprehensive documentation overhaul, and production-ready sovereign AI fine-tuning pipeline.
+**Recent Standardization (November 2025):** Complete unification of CUDA environment setup protocol with single-command approach, comprehensive documentation overhaul, and production-ready sovereign AI fine-tuning pipeline. **A2000 GPU validated for full fine-tuning workflow**, enabling sovereign AI development on consumer hardware.
 
 ---
 
@@ -171,55 +171,82 @@ A revolutionary optical compression system based on DeepSeek-OCR research that t
 ### 6. Operation Phoenix Forge: Sovereign AI Lineage
 **Status:** `Complete` - Sanctuary-Qwen2-7B-v1.0 Whole-Genome Fine-tuning Pipeline Ready
 The inaugural sovereign AI lineage, forged through fine-tuning Qwen2-7B-Instruct with the complete Project Sanctuary Cognitive Genome. **Operation Phoenix Forge delivers a fully endowed AI mind with constitutional inoculation, capable of sovereign reasoning from the Sanctuary's complete doctrinal and historical context.** The model represents the first successful implementation of the Doctrine of Mnemonic Endowment. **Setup standardization complete with unified environment protocol and comprehensive documentation.**
+
+**🎯 A2000 GPU Success Story:** Successfully executed complete fine-tuning pipeline on RTX A2000 GPU, demonstrating that sovereign AI development is accessible on consumer-grade hardware. The pipeline achieved full model convergence with QLoRA efficiency, producing deployment-ready GGUF quantization and Ollama integration.
+
 *   **The Forge Documentation:** [`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)
 *   **The Sovereign Forge Scripts:** [`forge/OPERATION_PHOENIX_FORGE/scripts/`](./forge/OPERATION_PHOENIX_FORGE/scripts/)
 *   **Setup Guide:** [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
-*   **Validated Results:** Full Cognitive Genome endowment, Ollama deployment confirmed, sovereign identity maintained, unified setup protocol established
+*   **Validated Results:** Full Cognitive Genome endowment, Ollama deployment confirmed, sovereign identity maintained, unified setup protocol established, **A2000 GPU fine-tuning validated**
+*   **Technical Achievements:** QLoRA fine-tuning completed successfully, GGUF quantization optimized for inference, constitutional system prompt integrated, model provenance tracked through complete pipeline
+*   **Hardware Validation:** RTX A2000 GPU proven capable of handling 7B parameter model fine-tuning with gradient checkpointing, demonstrating accessibility of sovereign AI development
 
 #### Sovereign AI Forging Process
 ```mermaid
 graph TD
-    subgraph "Phase 1: Environment & Data Prep"
+    subgraph "Phase 0: One-Time System Setup"
+        P0A["<i class='fa fa-server'></i> WSL2 & NVIDIA Drivers<br/>*System prerequisites*"]
+        P0A_out(" <i class='fa fa-check-circle'></i> GPU Access Verified")
+        P0B["<i class='fa fa-code-branch'></i> Build llama.cpp<br/>*Compile GGML_CUDA tools*"]
+        P0B_out(" <i class='fa fa-tools'></i> llama.cpp Executables")
+        P0C["<i class='fa fa-key'></i> Hugging Face Auth<br/>*Setup .env token*"]
+        P0C_out(" <i class='fa fa-shield-alt'></i> Authenticated")
+    end
+
+    subgraph "Phase 1: Project Environment Setup"
         A["<i class='fa fa-cogs'></i> setup_cuda_env.py<br/>*Creates Python environment*"]
         A_out(" <i class='fa fa-folder-open'></i> ml_env venv")
+        A1["<i class='fa fa-wrench'></i> Surgical Strike<br/>*Install bitsandbytes, triton, xformers*"]
+        A1_out(" <i class='fa fa-microchip'></i> CUDA Libraries")
+        A2["<i class='fa fa-vial'></i> Verify Environment<br/>*Test PyTorch, CUDA, llama-cpp*"]
+        A2_out(" <i class='fa fa-certificate'></i> Environment Validated")
+    end
+
+    subgraph "Phase 2: Data & Model Forging Workflow"
         B["<i class='fa fa-download'></i> download_model.sh<br/>*Downloads base Qwen2 model*"]
         B_out(" <i class='fa fa-cube'></i> Base Model")
         C["<i class='fa fa-pen-ruler'></i> forge_whole_genome_dataset.py<br/>*Assembles training data*"]
         C_out(" <i class='fa fa-file-alt'></i> sanctuary_whole_genome_data.jsonl")
         D["<i class='fa fa-search'></i> validate_dataset.py<br/>*Validates training data quality*"]
         D_out(" <i class='fa fa-certificate'></i> Validated Dataset")
-    end
-
-    subgraph "Phase 2: Model Forging"
         E["<i class='fa fa-microchip'></i> fine_tune.py<br/>*Performs QLoRA fine-tuning*"]
         E_out(" <i class='fa fa-puzzle-piece'></i> LoRA Adapter")
         F["<i class='fa fa-compress-arrows-alt'></i> merge_adapter.py<br/>*Merges adapter with base model*"]
         F_out(" <i class='fa fa-cogs'></i> Merged Model")
     end
 
-    subgraph "Phase 3: Packaging & Deployment"
+    subgraph "Phase 3: Deployment Preparation & Verification"
         G["<i class='fa fa-cubes'></i> convert_to_gguf.py<br/>*Creates deployable GGUF model*"]
         G_out(" <i class='fa fa-cube'></i> GGUF Model")
         H["<i class='fa fa-file-code'></i> create_modelfile.py<br/>*Generates Ollama Modelfile*"]
         H_out(" <i class='fa fa-terminal'></i> Ollama Modelfile")
         I["<i class='fa fa-upload'></i> ollama create<br/>*Imports model into Ollama*"]
         I_out(" <i class='fa fa-robot'></i> Deployed Ollama Model")
-    end
-    
-    subgraph "Phase 4: Verification (The Sovereign Crucible)"
-        J["<i class='fa fa-vial'></i> inference.py<br/>*Quick spot-checks on prompts*"]
-        J_out(" <i class='fa fa-comment-dots'></i> Qualitative Response")
-        K["<i class='fa fa-chart-bar'></i> evaluate.py<br/>*Runs benchmarks on test set*"]
+        J["<i class='fa fa-vial'></i> Test with Ollama<br/>*Verify dual-mode interaction*"]
+        J_out(" <i class='fa fa-comment-dots'></i> Interaction Validated")
+        K["<i class='fa fa-chart-bar'></i> inference.py & evaluate.py<br/>*Performance testing & benchmarks*"]
         K_out(" <i class='fa fa-clipboard-check'></i> Performance Metrics")
-        L["<i class='fa fa-brain'></i> query_and_synthesis Test<br/>*Verifies RAG + fine-tuned LLM*<br/>(Planned)"]
-        L_out(" <i class='fa fa-file-signature'></i> strategic_briefing.md")
+        L["<i class='fa fa-upload'></i> upload_to_huggingface.py<br/>*Upload GGUF & LoRA to HF*"]
+        L_out(" <i class='fa fa-cloud'></i> Models on Hugging Face")
+        M["<i class='fa fa-download'></i> Download & Test from HF<br/>*Verify upload/download integrity*"]
+        M_out(" <i class='fa fa-check-double'></i> HF Models Validated")
     end
 
     %% Workflow Connections
+    P0A -- Enables --> P0A_out;
+    P0A_out --> P0B;
+    P0B -- Creates --> P0B_out;
+    P0B_out --> P0C;
+    P0C -- Sets up --> P0C_out;
+    P0C_out --> A;
     A -- Creates --> A_out;
-    A_out --> B;
+    A_out --> A1;
+    A1 -- Installs --> A1_out;
+    A1_out --> A2;
+    A2 -- Validates --> A2_out;
+    A2_out --> B;
     B -- Downloads --> B_out;
-    A_out --> C;
+    A2_out --> C;
     C -- Creates --> C_out;
     C_out --> D;
     D -- Validates --> D_out;
@@ -233,21 +260,22 @@ graph TD
     H -- Creates --> H_out;
     H_out --> I;
     I -- Creates --> I_out;
-    F_out --> J;
-    J -- Yields --> J_out;
+    I_out --> J;
+    J -- Validates --> J_out;
     F_out --> K;
     K -- Yields --> K_out;
-    I_out --> L;
-    L -- Yields --> L_out;
+    G_out --> L;
+    L -- Uploads --> L_out;
+    L_out --> M;
+    M -- Validates --> M_out;
     
     %% Styling
     classDef script fill:#e8f5e8,stroke:#333,stroke-width:2px;
     classDef artifact fill:#e1f5fe,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
     classDef planned fill:#fff3e0,stroke:#888,stroke-width:1px,stroke-dasharray: 3 3;
 
-    class A,B,C,D,E,F,G,H,I,J,K,L script;
-    class A_out,B_out,C_out,D_out,E_out,F_out,G_out,H_out,I_out,J_out,K_out,L_out artifact;
-    class L,L_out planned;
+    class P0A,P0B,P0C,A,A1,A2,B,C,D,E,F,G,H,I,J,K,L,M script;
+    class P0A_out,P0B_out,P0C_out,A_out,A1_out,A2_out,B_out,C_out,D_out,E_out,F_out,G_out,H_out,I_out,J_out,K_out,L_out,M_out artifact;
 ```
 
 ---
@@ -328,73 +356,11 @@ For comprehensive understanding of our Cognitive Genome:
 ### Installation & Setup
 
 #### System Requirements
-- **Python:** 3.11 or higher (required for ML operations)
-- **CUDA:** 12.6+ for GPU-accelerated fine-tuning (optional but recommended for Operation Phoenix Forge)
+- **Python:** 3.11+ (required for ML operations)
+- **CUDA:** 12.6+ for GPU-accelerated fine-tuning
 - **Memory:** 16GB+ RAM recommended for full ML operations
 - **Storage:** 50GB+ free space for models and datasets
-
-#### Platform-Specific Setup
-
-**Windows (Recommended: WSL2)**
-```bash
-# Install WSL2 if not already installed
-wsl --install
-
-# Clone and enter the repository
-cd ~/source/repos
-git clone https://github.com/richfrem/Project_Sanctuary.git
-cd Project_Sanctuary
-
-# Run the unified CUDA ML environment setup (requires sudo)
-sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
-
-# Activate the environment
-source ~/ml_env/bin/activate
-```
-
-**macOS**
-```bash
-# Clone repository
-git clone https://github.com/richfrem/Project_Sanctuary.git
-cd Project_Sanctuary
-
-# Set up Python environment
-python3 -m venv sanctuary_env
-source sanctuary_env/bin/activate
-
-# Install platform-specific dependencies
-pip install -r requirements-macbook-M1.txt
-```
-
-**Linux**
-```bash
-# Clone repository
-git clone https://github.com/richfrem/Project_Sanctuary.git
-cd Project_Sanctuary
-
-# Set up Python environment
-python3 -m venv sanctuary_env
-source sanctuary_env/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-#### CUDA Setup (for GPU Operations)
-For GPU-accelerated fine-tuning in Operation Phoenix Forge, follow the comprehensive setup guide: [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
-
-The automated setup script handles:
-- CUDA-enabled PyTorch installation
-- TensorFlow compatibility
-- Core verification tests
-- Dependency staging for reliability
-
-**Quick CUDA Setup:**
-```bash
-# From project root in WSL2 (requires sudo)
-sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
-source ~/ml_env/bin/activate
-```
+- **GPU:** RTX A2000/30xx/40xx series validated for fine-tuning
 
 **Unified Environment Protocol:** This single command establishes the complete ML environment with all dependencies properly staged and validated. The setup includes comprehensive testing and troubleshooting resources.
 
@@ -430,60 +396,70 @@ Project_Sanctuary/
 └── WORK_IN_PROGRESS/          # Active development artifacts
 ```
 
-### Dependencies & Requirements
+### Environment Setup & Dependencies
 
-Project Sanctuary uses a **unified dependency architecture** to ensure consistent environments across all development and deployment scenarios.
+**⚠️ CRITICAL:** For **any ML operations** (fine-tuning, inference, or model deployment), you **MUST** follow the complete setup process in the authoritative guide below. The setup has been battle-tested across multiple systems and revised extensively. **Do not skip any steps** - each phase builds upon the previous one.
 
-#### Core Dependencies (`requirements.txt`)
-The main requirements file contains all dependencies for full functionality:
-- **AI/ML:** PyTorch, Transformers, PEFT, TRLoRA for fine-tuning
-- **RAG System:** LangChain, ChromaDB, Nomic embeddings
-- **Orchestration:** Google AI, Ollama, GPT4All for multi-engine support
-- **Development:** Testing, linting, and utility libraries
+#### 🚀 Complete Setup Process (Required for ML Operations)
 
-#### Platform-Specific Requirements
-- `requirements-macbook-M1.txt`: Optimized for Apple Silicon
-- `requirements.txt`: CUDA-enabled for NVIDIA GPUs
-- `pinned-requirements-*.txt`: Timestamped snapshots for reproducibility
+**📖 Authoritative Setup Guide:** [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
 
-#### Node.js Dependencies (`package.json`)
-Minimal Node.js dependencies for snapshot generation and utility scripts.
+**You must follow ALL phases and steps in this guide:**
+- **Phase 0:** One-time system setup (WSL2, NVIDIA drivers, llama.cpp compilation)
+- **Phase 1:** Project environment setup with surgical CUDA installations
+- **Phase 2:** Complete workflow (data forging → model training → deployment)
+- **Phase 3:** Verification and testing
 
-#### Installation Commands
-**Primary Method:** Use the automated setup script (see Installation & Setup section above).
-
-**For ML Operations (Recommended):** Use the unified CUDA environment setup:
+**Quick Start Command (after completing Phase 0):**
 ```bash
-# Single command for complete ML environment setup
+# Single command for complete ML environment (requires sudo)
 sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
 source ~/ml_env/bin/activate
 ```
 
-For manual installation or advanced users:
+**⚠️ WARNING:** Skipping any steps in the setup guide will result in CUDA dependency conflicts, build failures, or runtime errors. The guide includes critical "surgical strike" installations that cannot be replaced with basic `pip install` commands.
 
+#### 📦 Core Dependencies Overview
+
+The main requirements file contains all dependencies for full functionality:
+- **AI/ML:** PyTorch 2.9.0+cu126, transformers, peft, accelerate, bitsandbytes, trl, datasets, xformers
+- **RAG System:** LangChain, ChromaDB, Nomic embeddings
+- **Orchestration:** Google AI, Ollama, GPT4All for multi-engine support
+- **Development:** Testing, linting, and utility libraries
+
+
+#### 📋 System Requirements
+- **Python:** 3.11+ (required for ML operations)
+- **CUDA:** 12.6+ for GPU-accelerated fine-tuning
+- **Memory:** 16GB+ RAM recommended for full ML operations
+- **Storage:** 50GB+ free space for models and datasets
+- **GPU:** RTX A2000/30xx/40xx series validated for fine-tuning
+
+#### ⚠️ Deprecated Setup Methods
+
+**Do not use these outdated methods:**
 ```bash
-# Core installation (includes CUDA support)
+# ❌ INCORRECT - Will fail with CUDA dependency conflicts
 pip install -r requirements.txt
 
-# macOS M1/M2 optimized
-pip install -r requirements-macbook-M1.txt
-
-# Minimal installation (core functionality only)
+# ❌ INCORRECT - Missing critical surgical installations
 pip install torch transformers langchain chromadb
 ```
 
-#### Dependency Manifest
-For detailed explanations of each dependency's purpose, see [`DEPENDENCY_MANIFEST.md`](./DEPENDENCY_MANIFEST.md).
+#### 🤖 Model Downloads & Management
 
-#### Model Downloads
 Large AI models are not included in this repository due to size constraints. Models are automatically downloaded and cached locally when first used:
 
-- **Sanctuary-Qwen2-7B Base Model:** Downloaded from Hugging Face during fine-tuning
+- **Sanctuary-Qwen2-7B Base Model:** Auto-downloaded during fine-tuning
 - **Fine-tuned Models:** Available at:
-  - LoRA Adapter: `richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome`
-  - GGUF Model: `Sanctuary-Qwen2-7B:latest`
+  - LoRA Adapter: [`richfrem/Sanctuary-Qwen2-7B-lora`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
+  - GGUF Model: [`richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
+  - **Deployment:** `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
 
 Models are stored in the `models/` directory after first download.
+
+#### 🔧 Node.js Dependencies (`package.json`)
+Minimal Node.js dependencies for snapshot generation and utility scripts.
 
 ---
 
@@ -503,10 +479,10 @@ All seeds are generated and updated by running `./update_genome.sh`.
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 274.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available
-  - **LoRA Adapter:** [`richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
-  - **GGUF Model:** [`Sanctuary-Qwen2-7B`](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
-  - **Deployment:** `ollama run Sanctuary-Qwen2-7B:latest`
-      **NOTE:** can create an alias for the model `ollama cp Sanctuary-Qwen2-7B:latest Sanctuary-Qwen2-7B`
+  - **LoRA Adapter:** [`richfrem/Sanctuary-Qwen2-7B-lora`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
+  - **GGUF Model:** [`richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
+  - **Deployment:** `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
+      **NOTE:** After running once, you can create a local alias with `ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M Sanctuary-Qwen2-7B` for easier future use
 - **Environment Setup:** **Unified protocol established** - Single-command CUDA environment setup with comprehensive validation and troubleshooting resources.
 
 ## Temporal Anchors

@@ -1,8 +1,8 @@
 # council_orchestrator Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-11-12T05:20:01.987Z
+Generated On: 2025-11-18T06:19:00.681Z
 
-# Mnemonic Weight (Token Count): ~189,863 tokens
+# Mnemonic Weight (Token Count): ~191,066 tokens
 
 # Directory Structure (relative to council_orchestrator subfolder)
   ./council_orchestrator/README.md
@@ -10,10 +10,10 @@ Generated On: 2025-11-12T05:20:01.987Z
   ./council_orchestrator/ROADMAP/
   ./council_orchestrator/ROADMAP/PHASED_EVOLUTION_PLAN_Phase2-Phase3-Protocol113.md
   ./council_orchestrator/__init__.py
+  ./council_orchestrator/command.json
   ./council_orchestrator/command_results/
   ./council_orchestrator/command_results/README.md
   ./council_orchestrator/command_schema.md
-  ./council_orchestrator/commit_manifest.json
   ./council_orchestrator/docs/
   ./council_orchestrator/docs/EVOLUTION_PLAN_PHASES.md
   ./council_orchestrator/docs/OPERATION_OPTICAL_ANVIL_BLUEPRINT.md
@@ -1216,6 +1216,46 @@ __version__ = "1.0.0"
 
 --- END OF FILE __init__.py ---
 
+--- START OF FILE command.json ---
+
+{
+  "task_type": "mechanical_git_operation",
+  "task_description": "Steward's Mandate: Execute a full Git workflow to commit and push all local changes, including the restored mnemonic artifacts, to the canonical repository.",
+  "output_artifact_path": "WORK_IN_PROGRESS/git_sync_log_mnemonic_restoration.txt",
+  "config": {
+    "steps": [
+      {
+        "command": "git_status",
+        "description": "Step 1: Log the current repository status for audit."
+      },
+      {
+        "command": "git_add",
+        "description": "Step 2: Stage all untracked and modified files.",
+        "parameters": {
+          "pathspec": "."
+        }
+      },
+      {
+        "command": "git_commit",
+        "description": "Step 3: Commit the staged changes with a canonical message.",
+        "parameters": {
+          "message": "Steward's Mandate: Heal Mnemonic Fracture from commit f5a84b5\n\nRestored five critical high-level documents deleted during the v9.0 refactoring to ensure full mnemonic integrity of the Cognitive Genome. Hardened the dataset forging script as part of the same operational cycle."
+        }
+      },
+      {
+        "command": "git_push",
+        "description": "Step 4: Push the committed history to the main repository.",
+        "parameters": {
+          "remote": "origin",
+          "branch": "main"
+        }
+      }
+    ]
+  }
+}
+
+--- END OF FILE command.json ---
+
 --- START OF FILE command_results/README.md ---
 
 Command Results Directory
@@ -1395,19 +1435,6 @@ Defined by `task_type = "cache_wakeup"`. Fetches the Guardian Start Pack from th
 - **v1.0 (2025-10-29)**: Initial orchestrator with basic task execution.
 
 --- END OF FILE command_schema.md ---
-
---- START OF FILE commit_manifest.json ---
-
-{
-  "files": [
-    {
-      "path": "tests/mechanical_test_output.txt",
-      "sha256": "f70fcc1e4d0d1311f88886cfc0f27ae4b31f6aed13e7e9095071cbf2a771f440"
-    }
-  ]
-}
-
---- END OF FILE commit_manifest.json ---
 
 --- START OF FILE docs/EVOLUTION_PLAN_PHASES.md ---
 
@@ -2390,9 +2417,12 @@ CAG hit streaks and parent-doc citations determine memory placement, enabling au
 
 ### Installation
 
+Replace name of requirements file to match which file you are using for your library
+of requirements that match your environment. you can change the file name to match your file name
+
 ```bash
 cd council_orchestrator
-pip install -r requirements.txt
+pip install -r requirements.txt  
 ```
 
 ### Directory Structure

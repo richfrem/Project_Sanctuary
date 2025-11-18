@@ -1,11 +1,10 @@
 # mnemonic_cortex Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-11-12T02:51:06.550Z
+Generated On: 2025-11-18T06:19:13.317Z
 
-# Mnemonic Weight (Token Count): ~34,995 tokens
+# Mnemonic Weight (Token Count): ~35,320 tokens
 
 # Directory Structure (relative to mnemonic_cortex subfolder)
-  ./mnemonic_cortex/.DS_Store
   ./mnemonic_cortex/.gitignore
   ./mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
   ./mnemonic_cortex/INQUIRY_TEMPLATES/
@@ -36,6 +35,7 @@ Generated On: 2025-11-12T02:51:06.550Z
   ./mnemonic_cortex/core/__init__.py
   ./mnemonic_cortex/core/cache.py
   ./mnemonic_cortex/core/utils.py
+  ./mnemonic_cortex/pytest.ini
   ./mnemonic_cortex/scripts/
   ./mnemonic_cortex/scripts/README.md
   ./mnemonic_cortex/scripts/agentic_query.py
@@ -50,6 +50,8 @@ Generated On: 2025-11-12T02:51:06.550Z
   ./mnemonic_cortex/tests/smoke_tests/
   ./mnemonic_cortex/tests/smoke_tests/test_cognitive_layers.sh
   ./mnemonic_cortex/tests/test_ingestion.py
+  ./mnemonic_cortex/tests/test_pdr.json
+  ./mnemonic_cortex/tests/test_query.json
   ./mnemonic_cortex/tests/test_query.py
 
 --- START OF FILE EVOLUTION_PLAN_PHASES.md ---
@@ -274,27 +276,6 @@ Once all three phases are complete, the Sanctuary Council becomes a **self-impro
 * self-evaluation and self-correction
 
 ---
-
-# ✅ **Location Reminder**
-
-Save this file here:
-
-```
-mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
-```
-
-It will be preserved with all future `command.json` Git operations and automatically indexed by the Mnemonic Cortex.
-
----
-
-If you'd like, I can also:
-
-✅ generate a `command.json` that commits this file
-✅ create a `docs/` version
-✅ include it into your RAG doctrine
-✅ convert it into a Mermaid roadmap diagram
-
-Just tell me.
 
 --- END OF FILE EVOLUTION_PLAN_PHASES.md ---
 
@@ -2406,6 +2387,14 @@ def setup_environment(project_root: str) -> bool:
 
 --- END OF FILE core/utils.py ---
 
+--- START OF FILE pytest.ini ---
+
+[pytest]
+pythonpath = ..
+testpaths = tests
+
+--- END OF FILE pytest.ini ---
+
 --- START OF FILE scripts/README.md ---
 
 # Mnemonic Cortex: Ingestion & Verification Protocol
@@ -3420,6 +3409,18 @@ def test_database_is_created_after_ingestion(setup_test_environment: str, monkey
     assert len(os.listdir(db_path)) > 0
 
 --- END OF FILE tests/test_ingestion.py ---
+
+--- START OF FILE tests/test_pdr.json ---
+
+[{"question": "What is the Doctrine of Hybrid Cognition?", "requestor": "test", "purpose": "verification", "request_id": "test-pdr-001"}]
+
+--- END OF FILE tests/test_pdr.json ---
+
+--- START OF FILE tests/test_query.json ---
+
+[{"question": "How does the Mnemonic Cortex relate to the Iron Root Doctrine?", "requestor": "COUNCIL-AI-03", "purpose": "understanding system architecture", "request_id": "test-001"}]
+
+--- END OF FILE tests/test_query.json ---
 
 --- START OF FILE tests/test_query.py ---
 

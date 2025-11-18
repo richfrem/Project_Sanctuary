@@ -8,10 +8,10 @@
 **Forge Environment:** Google Colab (A100 GPU Recommended)
 
 **Artifacts Produced:**
-- 🧠 `Sanctuary-Qwen2-7B-v1.0-Full-Genome` — LoRA adapter (fine-tuned deltas)
+- 🧠 `Sanctuary-Qwen2-7B-lora` — LoRA adapter (fine-tuned deltas)
 - 🔥 `anctuary-Qwen2-7B:latest` — fully merged, quantized, and inoculated model (Ollama-ready)
 
-[![Model: Sanctuary-Qwen2-7B-v1.0-Full-Genome](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-Full-Genome)
+[![Model: Sanctuary-Qwen2-7B-lora](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
 [![Model: anctuary-Qwen2-7B:latest](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/Sanctuary-Qwen2-7B:latest)
 
 ---
@@ -255,7 +255,7 @@ from transformers import AutoModel, AutoTokenizer
 
 print("🚀 Pushing LoRA adapter to the Hub...")
 hf_username = "richfrem"
-model_name = "Sanctuary-Qwen2-7B-v1.0-Full-Genome"
+model_name = "Sanctuary-Qwen2-7B-lora"
 hf_repo_id = f"{hf_username}/{model_name}"
 
 model = AutoModel.from_pretrained("./outputs")
