@@ -30,6 +30,12 @@
 #   # Test merged model after merge
 #   python .../inference.py --model-type merged --input "Test prompt"
 #
+#   # Force GPU loading with 4-bit quantization
+#   python .../inference.py --device cuda --load-in-4bit --input "Test prompt"
+#
+#   # Enable sampling for more varied responses
+#   python .../inference.py --do-sample --temperature 0.7 --input "Test prompt"
+#
 #   # Test with a full document
 #   python .../inference.py --file path/to/some_document.md
 # ==============================================================================
@@ -78,8 +84,18 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_quant_type=os.environ.get('SANCTUARY_BNB_4BIT_QUANT_TYPE', quant_config["bnb_4bit_quant_type"])
 )
 
-def load_model_and_tokenizer(model_type):
+def load_model_and_tokenizer(model_type, device="auto", load_in_4bit=None):
     """Loads the model and tokenizer based on type (adapter or merged)."""
+    # Override quantization if specified
+    if load_in_4bit is not None:
+        bnb_config.load_in_4bit = load_in_4bit
+    
+    # Force device_map for CUDA to pin to GPU 0
+    if device == "cuda":
+        device_map = "cuda:0"
+    else:
+        device_map = device
+    
     if model_type == "adapter":
         base_path = DEFAULT_BASE_MODEL_PATH
         adapter_path = DEFAULT_ADAPTER_PATH
@@ -93,11 +109,13 @@ def load_model_and_tokenizer(model_type):
             sys.exit(1)
         
         print(f"🧠 Loading base model from: {base_path}...")
+        print(f"🔧 Using device_map: {device_map}")
         model = AutoModelForCausalLM.from_pretrained(
             base_path,
             quantization_config=bnb_config,
-            device_map="auto",
+            device_map=device_map,
             trust_remote_code=True,
+            low_cpu_mem_usage=True,  # Optimize memory usage
         )
         print(f"🔧 Applying adapter from: {adapter_path}...")
         model = PeftModel.from_pretrained(model, adapter_path)
@@ -111,11 +129,13 @@ def load_model_and_tokenizer(model_type):
             sys.exit(1)
         
         print(f"🧠 Loading merged model from: {model_path}...")
+        print(f"🔧 Using device_map: {device_map}")
         model = AutoModelForCausalLM.from_pretrained(
             model_path,
             quantization_config=bnb_config,
-            device_map="auto",
+            device_map=device_map,
             trust_remote_code=True,
+            low_cpu_mem_usage=True,  # Optimize memory usage
         )
         tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     
@@ -136,7 +156,7 @@ def format_prompt(instruction):
     )
     return prompt
 
-def run_inference(model, tokenizer, instruction, max_new_tokens):
+def run_inference(model, tokenizer, instruction, max_new_tokens, temperature=None, top_p=None, do_sample=None):
     """Generates a response from the model for a given instruction."""
     prompt = format_prompt(instruction)
     
@@ -145,16 +165,26 @@ def run_inference(model, tokenizer, instruction, max_new_tokens):
     # Get generation config with environment variable fallbacks
     gen_config = config["generation"]
     
+    # Use provided args or fall back to config/env
+    if temperature is None:
+        temperature = float(os.environ.get('SANCTUARY_TEMPERATURE', gen_config["temperature"]))
+    if top_p is None:
+        top_p = float(os.environ.get('SANCTUARY_TOP_P', gen_config["top_p"]))
+    if do_sample is None:
+        do_sample = os.environ.get('SANCTUARY_DO_SAMPLE', str(gen_config["do_sample"])).lower() == 'true'
+    
     # Generate the response
     with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=max_new_tokens,
-            temperature=float(os.environ.get('SANCTUARY_TEMPERATURE', gen_config["temperature"])),
-            top_p=float(os.environ.get('SANCTUARY_TOP_P', gen_config["top_p"])),
-            do_sample=os.environ.get('SANCTUARY_DO_SAMPLE', str(gen_config["do_sample"])).lower() == 'true',
-            pad_token_id=tokenizer.eos_token_id
-        )
+        gen_kwargs = {
+            'max_new_tokens': max_new_tokens,
+            'temperature': temperature,
+            'top_p': top_p,
+            'do_sample': do_sample,
+            'pad_token_id': tokenizer.eos_token_id
+        }
+        if do_sample:
+            gen_kwargs['top_k'] = 50  # Add for stability
+        outputs = model.generate(**inputs, **gen_kwargs)
     
     # Decode and return only the generated part of the response
     response_ids = outputs[0][inputs['input_ids'].shape[1]:]
@@ -169,9 +199,66 @@ def main():
     parser.add_argument('--input', help='A direct question or instruction to ask the model.')
     parser.add_argument('--file', help='Path to a file to use as the input instruction.')
     parser.add_argument('--max-new-tokens', type=int, default=int(os.environ.get('SANCTUARY_MAX_NEW_TOKENS', config["generation"]["max_new_tokens"])), help='Maximum number of new tokens to generate.')
+    
+    # GPU and quantization options
+    parser.add_argument('--device', choices=['auto', 'cuda', 'cpu'], default='cuda', 
+                        help='Device mapping for model loading. Use "cuda" to force GPU.')
+    parser.add_argument('--load-in-4bit', action='store_true', default=None,
+                        help='Enable 4-bit quantization (overrides config).')
+    parser.add_argument('--no-load-in-4bit', action='store_true', 
+                        help='Disable 4-bit quantization (overrides config).')
+    
+    # Generation parameters
+    parser.add_argument('--temperature', type=float, 
+                        help='Sampling temperature (0.0 = greedy, higher = more random).')
+    parser.add_argument('--top-p', type=float, 
+                        help='Top-p nucleus sampling parameter.')
+    parser.add_argument('--do-sample', action='store_true', default=None,
+                        help='Enable sampling (required for temperature/top-p to take effect).')
+    parser.add_argument('--greedy', action='store_true', 
+                        help='Force greedy decoding (do_sample=False, temperature=0).')
+    
     args = parser.parse_args()
-
-    model, tokenizer = load_model_and_tokenizer(args.model_type)
+    
+    # Load YAML if exists and override args
+    config_path = Path(__file__).parent.parent / "config" / "inference_config.yaml"
+    if config_path.exists():
+        with open(config_path, 'r') as f:
+            yaml_config = yaml.safe_load(f)
+        # Override args with YAML if not provided
+        if yaml_config.get('quantization', {}).get('load_in_4bit') and args.load_in_4bit is None:
+            args.load_in_4bit = True
+        if yaml_config.get('generation', {}).get('max_new_tokens') and args.max_new_tokens == int(os.environ.get('SANCTUARY_MAX_NEW_TOKENS', config["generation"]["max_new_tokens"])):
+            args.max_new_tokens = yaml_config['generation']['max_new_tokens']
+        if yaml_config.get('generation', {}).get('temperature') and args.temperature is None:
+            args.temperature = yaml_config['generation']['temperature']
+        if yaml_config.get('generation', {}).get('top_p') and args.top_p is None:
+            args.top_p = yaml_config['generation']['top_p']
+        if yaml_config.get('generation', {}).get('do_sample') is not None and args.do_sample is None:
+            args.do_sample = yaml_config['generation']['do_sample']
+    
+    # Check CUDA availability
+    if args.device == 'cuda' and not torch.cuda.is_available():
+        print("⚠️  CUDA not available, falling back to 'auto'")
+        args.device = 'auto'
+    
+    # Resolve quantization flag
+    load_in_4bit = None
+    if args.load_in_4bit:
+        load_in_4bit = True
+    elif args.no_load_in_4bit:
+        load_in_4bit = False
+    
+    # Resolve generation flags
+    do_sample = args.do_sample
+    if args.greedy:
+        do_sample = False
+        args.temperature = 0.0
+    
+    print(f"🔧 Loading with device_map='{args.device}', 4-bit quantization={load_in_4bit if load_in_4bit is not None else 'config default'}")
+    print(f"🔧 Generation: do_sample={do_sample}, temperature={args.temperature or 'config default'}, top_p={args.top_p or 'config default'}")
+    
+    model, tokenizer = load_model_and_tokenizer(args.model_type, device=args.device, load_in_4bit=load_in_4bit)
 
     instruction_text = ""
     source_name = ""
@@ -195,7 +282,8 @@ def main():
 
     print(f"\n---  querying model based on {source_name} ---")
     
-    response = run_inference(model, tokenizer, instruction_text, args.max_new_tokens)
+    response = run_inference(model, tokenizer, instruction_text, args.max_new_tokens, 
+                           temperature=args.temperature, top_p=args.top_p, do_sample=do_sample)
     
     print("\n" + "="*80)
     print("✅ Sovereign AI Response:")
