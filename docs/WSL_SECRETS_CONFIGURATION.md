@@ -99,3 +99,62 @@ HUGGING_FACE_TOKEN=hf_123456789...
     *   Ensure the variable is in the **User variables** section, not System variables (though System works, User is safer for personal keys).
 *   **Path translation issues?**
     *   If you are sharing paths (like file locations), you may need flags like `/p` or `/l`. For simple API keys (strings), no flags are needed.
+
+## macOS Environment Configuration
+
+macOS users can store secrets securely in their shell profile and make them available to terminal sessions and GUI applications.
+
+### Step 1: Add Secrets to Your Shell Profile
+
+1. Open your preferred shell configuration file (most macOS users use `zsh`):
+   ```bash
+   nano ~/.zshrc   # or use your editor of choice
+   ```
+2. Append the secret variables:
+   ```bash
+   export HUGGING_FACE_TOKEN="your_token_here"
+   export OPENAI_API_KEY="your_key_here"
+   export GEMINI_API_KEY="your_key_here"
+   ```
+3. Save the file and reload the configuration:
+   ```bash
+   source ~/.zshrc
+   ```
+
+### Step 2: Make Variables Available to GUI Apps (Optional)
+
+Terminal sessions inherit environment variables from the shell, but GUI applications (e.g., VS Code, Docker Desktop) may not. To expose them system‑wide:
+
+```bash
+launchctl setenv HUGGING_FACE_TOKEN "$HUGGING_FACE_TOKEN"
+launchctl setenv OPENAI_API_KEY "$OPENAI_API_KEY"
+launchctl setenv GEMINI_API_KEY "$GEMINI_API_KEY"
+```
+
+You may add these commands to the end of `~/.zprofile` so they run at login.
+
+### Step 3: Verify the Variables
+
+Open a new terminal window and run:
+```bash
+printenv HUGGING_FACE_TOKEN
+printenv OPENAI_API_KEY
+printenv GEMINI_API_KEY
+```
+You should see the values you set.
+
+### Step 4: Remove Secrets from `.env` Files
+
+Just like the Windows guide, delete any hard‑coded secrets from your project's `.env` file and rely on the environment variables instead.
+
+```ini
+# HUGGING_FACE_TOKEN=Provided by macOS environment
+# OPENAI_API_KEY=Provided by macOS environment
+```
+
+### Troubleshooting (macOS)
+
+- **Variable not visible in VS Code?** Ensure you launched VS Code from the terminal (`code .`) after setting the variables, or use the `launchctl` method above.
+- **Changes not taking effect?** Restart the terminal or run `killall Dock` to refresh the launch services.
+
+---
