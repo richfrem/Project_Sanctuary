@@ -6,6 +6,11 @@ from pathlib import Path
 from unittest.mock import patch
 from council_orchestrator.orchestrator.memory.cache import CacheManager, CACHE
 
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_boot_prefill_runs_once.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 class TestBootPrefillIdempotency:
     """Test that boot prefill runs once and is idempotent."""
@@ -74,6 +79,7 @@ class TestBootPrefillIdempotency:
         """Test that prefill is called during orchestrator boot."""
         # This is tested by the fact that main.py calls cache_manager.prefill_guardian_start_pack()
         # We can verify this by checking that the call exists in main.py
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/main.py", "r") as f:
+        main_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "main.py"
+        with open(main_path, "r") as f:
             content = f.read()
             assert "cache_manager.prefill_guardian_start_pack()" in content

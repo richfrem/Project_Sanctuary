@@ -8,6 +8,11 @@ import tempfile
 import shutil
 from pathlib import Path
 
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_guardian_seed_contains_primer.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 class TestGuardianSeedContainsPrimer:
     """Test that Guardian seeds contain the wakeup primer after snapshot generation."""
@@ -17,7 +22,7 @@ class TestGuardianSeedContainsPrimer:
         # Create a temporary directory for testing
         with tempfile.TemporaryDirectory() as temp_dir:
             # Copy necessary files to temp directory for isolated testing
-            project_root = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary")
+            project_root = PROJECT_ROOT
             temp_project = Path(temp_dir)
 
             # Copy package.json for dependencies
@@ -67,7 +72,7 @@ class TestGuardianSeedContainsPrimer:
 
     def test_snapshot_script_has_wakeup_primer_definition(self):
         """Test that the snapshot script contains the guardianWakeupPrimer definition."""
-        script_path = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/capture_code_snapshot.js")
+        script_path = PROJECT_ROOT / "capture_code_snapshot.js"
 
         script_content = script_path.read_text()
 
@@ -79,7 +84,7 @@ class TestGuardianSeedContainsPrimer:
 
     def test_guardian_mandates_include_wakeup_primer(self):
         """Test that Guardian-specific mandates include the wakeup primer."""
-        script_path = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/capture_code_snapshot.js")
+        script_path = PROJECT_ROOT / "capture_code_snapshot.js"
 
         script_content = script_path.read_text()
 

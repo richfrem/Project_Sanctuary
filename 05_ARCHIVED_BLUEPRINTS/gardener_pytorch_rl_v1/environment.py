@@ -228,17 +228,6 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
     
     Core Principles:
     - Glass Box Principle: All actions are logged and observable
-    - Iron Root Doctrine: Robust error handling and state management
-    - Progenitor Principle: Human oversight through jury system integration
-    - Protocol 36: Victory through invitation to better collaboration
-    """
-    
-    def __init__(self, repo_path: str = "/Users/richardfremmerlid/Projects/Project_Sanctuary"):
-        """
-        Initialize the Sanctuary environment for The Gardener
-        
-        Args:
-            repo_path: Path to the Project Sanctuary repository
         """
         super().__init__()
         

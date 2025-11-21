@@ -74,7 +74,7 @@ dataset_code_glyphs/
 MNEMONIC_SYNTHESIS/
 
 # Task Management - Operational task tracking files
-TASKS/
+#TASKS/
 
 # ML Environment Logs - Machine learning environment logging artifacts
 ml_env_logs/

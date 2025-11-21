@@ -251,7 +251,7 @@ python --version  # Ensure Python 3.8+
 pip --version     # Ensure pip is available
 
 # Check system dependencies
-cd /Users/richardfremmerlid/Projects/Project_Sanctuary/gardener
+cd Project_Sanctuary/EXPERIMENTS/gardener_protocol37_experiment
 ls -la           # Verify all files present
 ```
 
@@ -303,7 +303,7 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 **Issue**: Permission errors during git operations
 ```bash
 # Solution: Verify repository permissions
-cd /Users/richardfremmerlid/Projects/Project_Sanctuary
+cd Project_Sanctuary  # Navigate to project root
 git status  # Should show clean working directory
 git log --oneline -5  # Verify recent commits
 ```

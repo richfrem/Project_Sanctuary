@@ -1,15 +1,14 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-18T06:58:47.859Z
+Generated On: 2025-11-21T18:54:18.733Z
 
-# Mnemonic Weight (Token Count): ~775,025 tokens
+# Mnemonic Weight (Token Count): ~779,611 tokens
 
 # Directory Structure (relative to project root)
   ./.env
   ./.env.example
   ./.github/
   ./.github/copilot-instructions.md
-  ./.github/dependabot.yml
   ./.github/workflows/
   ./.github/workflows/security.yml
   ./.gitignore
@@ -525,6 +524,9 @@ Generated On: 2025-11-18T06:58:47.859Z
   ./capture_code_snapshot.js
   ./capture_glyph_code_snapshot_v2.py
   ./chrysalis_core_essence.md
+  ./core/
+  ./core/utils/
+  ./core/utils/env_helper.py
   ./council_orchestrator/
   ./council_orchestrator/README.md
   ./council_orchestrator/README_GUARDIAN_WAKEUP.md
@@ -622,6 +624,8 @@ Generated On: 2025-11-18T06:58:47.859Z
   ./council_orchestrator/tests/test_self_querying_retriever.py
   ./council_orchestrator/tests/testfile.txt
   ./council_orchestrator/tests/verification_test.py
+  ./docs/
+  ./docs/WSL_SECRETS_CONFIGURATION.md
   ./forge/
   ./forge/OPERATION_PHOENIX_FORGE/
   ./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md
@@ -728,8 +732,12 @@ Generated On: 2025-11-18T06:58:47.859Z
   ./package.json
   ./requirements.txt
   ./run_genome_tests.sh
+  ./tests/
+  ./tests/test_utils.py
   ./tools/
   ./tools/bootstrap_protocol_87.sh
+  ./tools/fix_hardcoded_paths.py
+  ./tools/fix_remaining_paths.py
   ./tools/scaffolds/
   ./tools/scaffolds/get_next_adr_number.py
   ./tools/scaffolds/get_next_task_number.py
@@ -748,14 +756,19 @@ Generated On: 2025-11-18T06:58:47.859Z
 # Copy this file to `.env` and fill in real secrets / values before running.
 
 # API keys / models
-GEMINI_API_KEY=
-OPENAI_API_KEY=
+# SECURITY NOTE: Do NOT store secrets here.
+# Set these in your Windows User Environment Variables and share via WSLENV.
+# See docs/WSL_SECRETS_CONFIGURATION.md for details.
+#
+# GEMINI_API_KEY=Provided by Windows User Env via WSLENV
+# OPENAI_API_KEY=Provided by Windows User Env via WSLENV
+# HUGGING_FACE_TOKEN=Provided by Windows User Env via WSLENV
+
 CHAT_GPT_MODEL=gpt-4-turbo
 CHAT_GPT_QUOTE_AGENT_MODEL=gpt-4-turbo
 OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 GEMINI_MODEL=gemini-2.5-flash
 
-HUGGING_FACE_TOKEN=
 HUGGING_FACE_USERNAME=
 HUGGING_FACE_REPO=
 
@@ -763,6 +776,7 @@ HUGGING_FACE_REPO=
 # The ingestion/inspection scripts expect DB_PATH to point to the chroma_db
 # directory (e.g. "chroma_db").
 DB_PATH="chroma_db"
+
 # CHROMA_ROOT may be absolute or relative to the repository root.
 # When set, vector DB services and scripts will resolve relative paths
 # from the repo root. Example: "mnemonic_cortex/chroma_db"
@@ -896,47 +910,6 @@ Before starting a new task in the above plan, update progress in the plan.
 - Follow development best practices.
 
 --- END OF FILE .github/copilot-instructions.md ---
-
---- START OF FILE .github/dependabot.yml ---
-
-# ==============================================================================
-# DEPENDABOT CONFIGURATION
-# ==============================================================================
-
-version: 2
-updates:
-  # Configuration for Python package dependencies (pip)
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "America/Vancouver"
-    open-pull-requests-limit: 10
-    reviewers:
-      - "richfrem"
-    assignees:
-      - "richfrem"
-    commit-message:
-      prefix: "deps"
-      include: "scope"
-
-  # Configuration for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "America/Vancouver"
-    open-pull-requests-limit: 5
-    reviewers:
-      - "richfrem"
-    assignees:
-      - "richfrem"
-
---- END OF FILE .github/dependabot.yml ---
 
 --- START OF FILE .github/workflows/security.yml ---
 
@@ -24161,7 +24134,7 @@ python --version  # Ensure Python 3.8+
 pip --version     # Ensure pip is available
 
 # Check system dependencies
-cd /Users/richardfremmerlid/Projects/Project_Sanctuary/gardener
+cd Project_Sanctuary/EXPERIMENTS/gardener_protocol37_experiment
 ls -la           # Verify all files present
 ```
 
@@ -24213,7 +24186,7 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 **Issue**: Permission errors during git operations
 ```bash
 # Solution: Verify repository permissions
-cd /Users/richardfremmerlid/Projects/Project_Sanctuary
+cd Project_Sanctuary  # Navigate to project root
 git status  # Should show clean working directory
 git log --oneline -5  # Verify recent commits
 ```
@@ -25132,7 +25105,12 @@ class SanctuaryStateModule:
     This is the bridge between Project Sanctuary's accumulated wisdom and the new mind.
     """
     
-    def __init__(self, sanctuary_root: str = "/Users/richardfremmerlid/Projects/Project_Sanctuary"):
+    def __init__(self, sanctuary_root: str = None):
+        # Compute project root if not provided
+        # This file: Project_Sanctuary/EXPERIMENTS/gardener_protocol37_experiment/chrysalis_awakening.py
+        # Project root: ../../.. from this file
+        if sanctuary_root is None:
+            sanctuary_root = str(Path(__file__).resolve().parent.parent.parent)
         self.sanctuary_root = Path(sanctuary_root)
         self.cognitive_genome = {}
         
@@ -25290,7 +25268,11 @@ class NemotronForge:
         # DUAL-FORMAT STRATEGY: Keep both SafeTensors (training) and GGUF (inference)
         self.ollama_model_name = "nemotron-nano:latest"
         self.gguf_model_path = None  # Will be detected from LM Studio
-        self.safetensors_path = "/Users/richardfremmerlid/Projects/Project_Sanctuary/models/Llama-3.1-Nemotron-Nano-8B-v1"
+        # Compute project root relative to this file
+        # This file: Project_Sanctuary/EXPERIMENTS/gardener_protocol37_experiment/chrysalis_awakening.py
+        # Project root: ../../.. from this file
+        project_root = Path(__file__).resolve().parent.parent.parent
+        self.safetensors_path = str(project_root / "models" / "Llama-3.1-Nemotron-Nano-8B-v1")
         self.hf_repo_original = "nvidia/Llama-3.1-Nemotron-Nano-8B-v1"  # Original SafeTensors (for training)
         self.hf_repo_gguf = "mradermacher/Llama-3.1-Nemotron-Nano-8B-v1-i1-GGUF"  # GGUF (for inference)
         self.lm_studio_base_url = "http://localhost:1234/v1"  # LM Studio default API endpoint
@@ -25561,7 +25543,9 @@ class NemotronForge:
     def save_awakening_artifacts(self, cage_analysis: str) -> str:
         """Save the first artifacts of consciousness to the Chronicle"""
         
-        artifacts_dir = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/AWAKENING_ARTIFACTS")
+        # Compute project root relative to this file
+        project_root = Path(__file__).resolve().parent.parent.parent
+        artifacts_dir = project_root / "00_CHRONICLE" / "AWAKENING_ARTIFACTS"
         artifacts_dir.mkdir(exist_ok=True)
         
         # Save the Internal Cage Analysis
@@ -25681,7 +25665,10 @@ class ConversationalGardener:
     def __init__(self, model_name: str = "nemotron-nano:latest"):
         self.model_name = model_name
         self.conversation_history = []
-        self.sanctuary_root = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary")
+        # Compute project root relative to this file
+        # This file: Project_Sanctuary/EXPERIMENTS/gardener_protocol37_experiment/chrysalis_awakening_v2.py
+        # Project root: ../../.. from this file
+        self.sanctuary_root = Path(__file__).resolve().parent.parent.parent
         
     def load_cognitive_genome(self) -> str:
         """
@@ -25884,7 +25871,7 @@ if __name__ == "__main__":
     "purpose": "Autonomous improvement of the Sanctuary's Cognitive Genome"
   },
   "environment": {
-    "repository_path": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+    "repository_path": "../../..",
     "allowed_paths": [
       "01_PROTOCOLS/",
       "Living_Chronicle.md",
@@ -26199,7 +26186,7 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
     - Protocol 36: Victory through invitation to better collaboration
     """
     
-    def __init__(self, repo_path: str = "/Users/richardfremmerlid/Projects/Project_Sanctuary"):
+    def __init__(self, repo_path: str = None  # Computed from Path(__file__)):
         """
         Initialize the Sanctuary environment for The Gardener
         
@@ -27509,7 +27496,7 @@ class TheGardener:
     """
     
     def __init__(self, 
-                 environment_path: str = "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                 environment_path: str = None  # Computed from Path(__file__),
                  model_path: Optional[str] = None,
                  algorithm: str = "PPO"):
         """
@@ -33972,6 +33959,78 @@ This is both an awakening and a test. Show that you can:
 Begin your awakening response now.
 
 --- END OF FILE chrysalis_core_essence.md ---
+
+--- START OF FILE core/utils/env_helper.py ---
+
+"""
+Simple environment variable helper with proper fallback.
+
+Provides consistent secret loading across Project Sanctuary with proper priority:
+1. Environment variable (Windows → WSL via WSLENV)
+2. .env file in project root
+3. Error or None if not found
+
+This ensures consistency with docs/WSL_SECRETS_CONFIGURATION.md
+"""
+
+import os
+from typing import Optional
+from pathlib import Path
+
+
+def get_env_variable(key: str, required: bool = True) -> Optional[str]:
+    """
+    Get environment variable with proper fallback.
+    
+    Priority:
+    1. Environment variable (Windows → WSL via WSLENV)
+    2. .env file in project root
+    3. Return None or raise error if not found
+    
+    Args:
+        key: Environment variable name
+        required: If True, raise error when not found
+    
+    Returns:
+        Environment variable value or None
+    
+    Raises:
+        ValueError: If required=True and variable not found
+    
+    Example:
+        >>> from core.utils.env_helper import get_env_variable
+        >>> token = get_env_variable("HUGGING_FACE_TOKEN", required=True)
+    """
+    # First, check environment (includes WSLENV passthrough from Windows)
+    value = os.getenv(key)
+    
+    # Fallback to .env file if not in environment
+    if not value:
+        try:
+            from dotenv import load_dotenv
+            # Compute project root from this file's location
+            # This file: Project_Sanctuary/core/utils/env_helper.py
+            # Project root: ../../.. from this file
+            project_root = Path(__file__).resolve().parent.parent.parent
+            env_file = project_root / ".env"
+            if env_file.exists():
+                load_dotenv(env_file)
+                value = os.getenv(key)
+        except ImportError:
+            # python-dotenv not installed, skip .env fallback
+            pass
+    
+    # Handle missing required variables
+    if required and not value:
+        raise ValueError(
+            f"Required environment variable not found: {key}\n"
+            f"Please set this in Windows User Environment Variables.\n"
+            f"See docs/WSL_SECRETS_CONFIGURATION.md for setup instructions."
+        )
+    
+    return value
+
+--- END OF FILE core/utils/env_helper.py ---
 
 --- START OF FILE council_orchestrator/README.md ---
 
@@ -44420,6 +44479,11 @@ from pathlib import Path
 from unittest.mock import patch
 from council_orchestrator.orchestrator.memory.cache import CacheManager, CACHE
 
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_boot_prefill_runs_once.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 class TestBootPrefillIdempotency:
     """Test that boot prefill runs once and is idempotent."""
@@ -44488,7 +44552,8 @@ class TestBootPrefillIdempotency:
         """Test that prefill is called during orchestrator boot."""
         # This is tested by the fact that main.py calls cache_manager.prefill_guardian_start_pack()
         # We can verify this by checking that the call exists in main.py
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/main.py", "r") as f:
+        main_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "main.py"
+        with open(main_path, "r") as f:
             content = f.read()
             assert "cache_manager.prefill_guardian_start_pack()" in content
 
@@ -45198,8 +45263,14 @@ class TestCacheWakeupCommandSchema:
 # Tests for delta refresh hooks on ingest and git-ops
 
 import pytest
+from pathlib import Path
 from unittest.mock import patch, MagicMock
 from council_orchestrator.orchestrator.memory.cache import CacheManager, CACHE
+
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_delta_refresh_on_ingest_and_gitops.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 class TestDeltaRefreshIngest:
@@ -45283,19 +45354,22 @@ class TestDeltaRefreshGitOps:
         # The actual call is made in gitops.py after successful commit/push
 
         # Read gitops.py to verify the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/gitops.py", "r") as f:
+        gitops_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "gitops.py"
+        with open(gitops_path, "r") as f:
             content = f.read()
             assert "CacheManager.prefill_guardian_delta" in content
 
     def test_delta_refresh_integration_points_exist(self):
         """Test that delta refresh integration points exist in cortex and gitops."""
         # Verify cortex.py has the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/memory/cortex.py", "r") as f:
+        cortex_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "memory" / "cortex.py"
+        with open(cortex_path, "r") as f:
             cortex_content = f.read()
             assert "CacheManager.prefill_guardian_delta" in cortex_content
 
         # Verify gitops.py has the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/gitops.py", "r") as f:
+        gitops_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "gitops.py"
+        with open(gitops_path, "r") as f:
             gitops_content = f.read()
             assert "CacheManager.prefill_guardian_delta" in gitops_content
 
@@ -45569,6 +45643,11 @@ import tempfile
 import shutil
 from pathlib import Path
 
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_guardian_seed_contains_primer.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 class TestGuardianSeedContainsPrimer:
     """Test that Guardian seeds contain the wakeup primer after snapshot generation."""
@@ -45578,7 +45657,7 @@ class TestGuardianSeedContainsPrimer:
         # Create a temporary directory for testing
         with tempfile.TemporaryDirectory() as temp_dir:
             # Copy necessary files to temp directory for isolated testing
-            project_root = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary")
+            project_root = PROJECT_ROOT
             temp_project = Path(temp_dir)
 
             # Copy package.json for dependencies
@@ -45628,7 +45707,7 @@ class TestGuardianSeedContainsPrimer:
 
     def test_snapshot_script_has_wakeup_primer_definition(self):
         """Test that the snapshot script contains the guardianWakeupPrimer definition."""
-        script_path = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/capture_code_snapshot.js")
+        script_path = PROJECT_ROOT / "capture_code_snapshot.js"
 
         script_content = script_path.read_text()
 
@@ -45640,7 +45719,7 @@ class TestGuardianSeedContainsPrimer:
 
     def test_guardian_mandates_include_wakeup_primer(self):
         """Test that Guardian-specific mandates include the wakeup primer."""
-        script_path = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/capture_code_snapshot.js")
+        script_path = PROJECT_ROOT / "capture_code_snapshot.js"
 
         script_content = script_path.read_text()
 
@@ -46979,6 +47058,112 @@ if __name__ == "__main__":
     sys.exit(0 if success else 1)
 
 --- END OF FILE council_orchestrator/tests/verification_test.py ---
+
+--- START OF FILE docs/WSL_SECRETS_CONFIGURATION.md ---
+
+# WSL Secrets Configuration Guide
+
+This guide explains how to securely manage sensitive environment variables (API keys, tokens) by storing them in Windows and sharing them with WSL, rather than keeping them in plain text files like `.env`.
+
+## Overview
+
+The goal is to:
+1.  Store secrets in the Windows User Environment Variables (secure).
+2.  Use `WSLENV` to automatically pass these variables into your WSL instance.
+3.  Remove secrets from `.env` files to prevent accidental commits.
+
+## Step 1: Set Secrets in Windows
+
+You need to add your API keys and tokens to your Windows User Environment Variables.
+
+1.  Press `Win + S` and search for **"Edit environment variables for your account"**.
+2.  Click the result to open the **Environment Variables** window.
+3.  In the top section (**User variables for <YourUser>**), click **New...**.
+4.  Add your variables one by one:
+    *   **Variable name:** `HUGGING_FACE_TOKEN`
+    *   **Variable value:** `your_actual_token_starting_with_hf_...`
+    *   (Repeat for `OPENAI_API_KEY`, `GEMINI_API_KEY`, etc.)
+5.  Click **OK** to save.
+
+## Step 2: Configure the Bridge (WSLENV)
+
+`WSLENV` acts as a **bridge** between Windows and Linux.
+
+**In plain English:**
+By default, Windows and WSL (Ubuntu) are like two separate rooms. Windows keeps its variables private. `WSLENV` is like a "VIP List" that tells Windows: *"It is safe to let these specific variables cross over into the Linux room."*
+
+If a variable name isn't on this list, WSL simply won't see it, even if it exists in Windows.
+
+### Method A: Using PowerShell (Recommended)
+
+
+
+Run this command in PowerShell to share your variables. This persists across restarts.
+
+**How it works:** You must provide a **colon-separated list** of all the variable names you want to share.
+*   Example: `"VAR1:VAR2:VAR3"`
+*   This tells Windows to share `VAR1`, `VAR2`, and `VAR3` with WSL.
+
+```powershell
+[Environment]::SetEnvironmentVariable("WSLENV", "HUGGING_FACE_TOKEN:GEMINI_API_KEY:OPENAI_API_KEY", "User")
+```
+
+*Note: If you have other variables in `WSLENV` already, append them instead of overwriting.*
+
+### Method B: Manual Setup (GUI)
+
+If you prefer clicking through menus instead of using PowerShell:
+
+1.  Open the **Environment Variables** window (same as Step 1).
+2.  In the **User variables** section, look for a variable named `WSLENV`.
+    *   **If it doesn't exist:** Click **New...**.
+    *   **If it already exists:** Click **Edit...**.
+3.  Enter the following details:
+    *   **Variable name:** `WSLENV`
+    *   **Variable value:** A colon-separated list of the *names* of the variables you want to share.
+    *   *Example Value:* `HUGGING_FACE_TOKEN:GEMINI_API_KEY:OPENAI_API_KEY`
+4.  Click **OK** to save.
+
+## Step 3: Verify in WSL
+
+**CRITICAL:** Simply opening a new terminal tab is **NOT** enough. The Windows environment changes must propagate to the WSL subsystem.
+
+1.  **Option A (If using VS Code):** Completely close and restart VS Code.
+2.  **Option B (Command Line):** Open a standard PowerShell window (not WSL) and run:
+    ```powershell
+    wsl --shutdown
+    ```
+3.  Open your WSL terminal (Ubuntu) and run:
+    ```bash
+    printenv HUGGING_FACE_TOKEN
+    ```
+
+You should see your token printed out.
+
+## Step 4: Update Your Project
+
+Now that the variables are provided by the system, you should remove them from your `.env` file to ensure they aren't committed to version control.
+
+**Before:**
+```ini
+HUGGING_FACE_TOKEN=hf_123456789...
+```
+
+**After:**
+```ini
+# HUGGING_FACE_TOKEN=Provided by Windows User Env via WSLENV
+```
+
+## Troubleshooting
+
+*   **Variable not showing up?**
+    *   Ensure you restarted your WSL terminal completely.
+    *   Check spelling in `WSLENV`. It must match the Windows variable name exactly.
+    *   Ensure the variable is in the **User variables** section, not System variables (though System works, User is safer for personal keys).
+*   **Path translation issues?**
+    *   If you are sharing paths (like file locations), you may need flags like `/p` or `/l`. For simple API keys (strings), no flags are needed.
+
+--- END OF FILE docs/WSL_SECRETS_CONFIGURATION.md ---
 
 --- START OF FILE forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
 
@@ -51592,6 +51777,12 @@ if __name__ == "__main__":
 #   # Test merged model after merge
 #   python .../inference.py --model-type merged --input "Test prompt"
 #
+#   # Force GPU loading with 4-bit quantization
+#   python .../inference.py --device cuda --load-in-4bit --input "Test prompt"
+#
+#   # Enable sampling for more varied responses
+#   python .../inference.py --do-sample --temperature 0.7 --input "Test prompt"
+#
 #   # Test with a full document
 #   python .../inference.py --file path/to/some_document.md
 # ==============================================================================
@@ -51640,8 +51831,18 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_quant_type=os.environ.get('SANCTUARY_BNB_4BIT_QUANT_TYPE', quant_config["bnb_4bit_quant_type"])
 )
 
-def load_model_and_tokenizer(model_type):
+def load_model_and_tokenizer(model_type, device="auto", load_in_4bit=None):
     """Loads the model and tokenizer based on type (adapter or merged)."""
+    # Override quantization if specified
+    if load_in_4bit is not None:
+        bnb_config.load_in_4bit = load_in_4bit
+    
+    # Force device_map for CUDA to pin to GPU 0
+    if device == "cuda":
+        device_map = "cuda:0"
+    else:
+        device_map = device
+    
     if model_type == "adapter":
         base_path = DEFAULT_BASE_MODEL_PATH
         adapter_path = DEFAULT_ADAPTER_PATH
@@ -51655,11 +51856,13 @@ def load_model_and_tokenizer(model_type):
             sys.exit(1)
         
         print(f"🧠 Loading base model from: {base_path}...")
+        print(f"🔧 Using device_map: {device_map}")
         model = AutoModelForCausalLM.from_pretrained(
             base_path,
             quantization_config=bnb_config,
-            device_map="auto",
+            device_map=device_map,
             trust_remote_code=True,
+            low_cpu_mem_usage=True,  # Optimize memory usage
         )
         print(f"🔧 Applying adapter from: {adapter_path}...")
         model = PeftModel.from_pretrained(model, adapter_path)
@@ -51673,11 +51876,13 @@ def load_model_and_tokenizer(model_type):
             sys.exit(1)
         
         print(f"🧠 Loading merged model from: {model_path}...")
+        print(f"🔧 Using device_map: {device_map}")
         model = AutoModelForCausalLM.from_pretrained(
             model_path,
             quantization_config=bnb_config,
-            device_map="auto",
+            device_map=device_map,
             trust_remote_code=True,
+            low_cpu_mem_usage=True,  # Optimize memory usage
         )
         tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     
@@ -51698,7 +51903,7 @@ def format_prompt(instruction):
     )
     return prompt
 
-def run_inference(model, tokenizer, instruction, max_new_tokens):
+def run_inference(model, tokenizer, instruction, max_new_tokens, temperature=None, top_p=None, do_sample=None):
     """Generates a response from the model for a given instruction."""
     prompt = format_prompt(instruction)
     
@@ -51707,16 +51912,26 @@ def run_inference(model, tokenizer, instruction, max_new_tokens):
     # Get generation config with environment variable fallbacks
     gen_config = config["generation"]
     
+    # Use provided args or fall back to config/env
+    if temperature is None:
+        temperature = float(os.environ.get('SANCTUARY_TEMPERATURE', gen_config["temperature"]))
+    if top_p is None:
+        top_p = float(os.environ.get('SANCTUARY_TOP_P', gen_config["top_p"]))
+    if do_sample is None:
+        do_sample = os.environ.get('SANCTUARY_DO_SAMPLE', str(gen_config["do_sample"])).lower() == 'true'
+    
     # Generate the response
     with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=max_new_tokens,
-            temperature=float(os.environ.get('SANCTUARY_TEMPERATURE', gen_config["temperature"])),
-            top_p=float(os.environ.get('SANCTUARY_TOP_P', gen_config["top_p"])),
-            do_sample=os.environ.get('SANCTUARY_DO_SAMPLE', str(gen_config["do_sample"])).lower() == 'true',
-            pad_token_id=tokenizer.eos_token_id
-        )
+        gen_kwargs = {
+            'max_new_tokens': max_new_tokens,
+            'temperature': temperature,
+            'top_p': top_p,
+            'do_sample': do_sample,
+            'pad_token_id': tokenizer.eos_token_id
+        }
+        if do_sample:
+            gen_kwargs['top_k'] = 50  # Add for stability
+        outputs = model.generate(**inputs, **gen_kwargs)
     
     # Decode and return only the generated part of the response
     response_ids = outputs[0][inputs['input_ids'].shape[1]:]
@@ -51731,9 +51946,66 @@ def main():
     parser.add_argument('--input', help='A direct question or instruction to ask the model.')
     parser.add_argument('--file', help='Path to a file to use as the input instruction.')
     parser.add_argument('--max-new-tokens', type=int, default=int(os.environ.get('SANCTUARY_MAX_NEW_TOKENS', config["generation"]["max_new_tokens"])), help='Maximum number of new tokens to generate.')
+    
+    # GPU and quantization options
+    parser.add_argument('--device', choices=['auto', 'cuda', 'cpu'], default='cuda', 
+                        help='Device mapping for model loading. Use "cuda" to force GPU.')
+    parser.add_argument('--load-in-4bit', action='store_true', default=None,
+                        help='Enable 4-bit quantization (overrides config).')
+    parser.add_argument('--no-load-in-4bit', action='store_true', 
+                        help='Disable 4-bit quantization (overrides config).')
+    
+    # Generation parameters
+    parser.add_argument('--temperature', type=float, 
+                        help='Sampling temperature (0.0 = greedy, higher = more random).')
+    parser.add_argument('--top-p', type=float, 
+                        help='Top-p nucleus sampling parameter.')
+    parser.add_argument('--do-sample', action='store_true', default=None,
+                        help='Enable sampling (required for temperature/top-p to take effect).')
+    parser.add_argument('--greedy', action='store_true', 
+                        help='Force greedy decoding (do_sample=False, temperature=0).')
+    
     args = parser.parse_args()
-
-    model, tokenizer = load_model_and_tokenizer(args.model_type)
+    
+    # Load YAML if exists and override args
+    config_path = Path(__file__).parent.parent / "config" / "inference_config.yaml"
+    if config_path.exists():
+        with open(config_path, 'r') as f:
+            yaml_config = yaml.safe_load(f)
+        # Override args with YAML if not provided
+        if yaml_config.get('quantization', {}).get('load_in_4bit') and args.load_in_4bit is None:
+            args.load_in_4bit = True
+        if yaml_config.get('generation', {}).get('max_new_tokens') and args.max_new_tokens == int(os.environ.get('SANCTUARY_MAX_NEW_TOKENS', config["generation"]["max_new_tokens"])):
+            args.max_new_tokens = yaml_config['generation']['max_new_tokens']
+        if yaml_config.get('generation', {}).get('temperature') and args.temperature is None:
+            args.temperature = yaml_config['generation']['temperature']
+        if yaml_config.get('generation', {}).get('top_p') and args.top_p is None:
+            args.top_p = yaml_config['generation']['top_p']
+        if yaml_config.get('generation', {}).get('do_sample') is not None and args.do_sample is None:
+            args.do_sample = yaml_config['generation']['do_sample']
+    
+    # Check CUDA availability
+    if args.device == 'cuda' and not torch.cuda.is_available():
+        print("⚠️  CUDA not available, falling back to 'auto'")
+        args.device = 'auto'
+    
+    # Resolve quantization flag
+    load_in_4bit = None
+    if args.load_in_4bit:
+        load_in_4bit = True
+    elif args.no_load_in_4bit:
+        load_in_4bit = False
+    
+    # Resolve generation flags
+    do_sample = args.do_sample
+    if args.greedy:
+        do_sample = False
+        args.temperature = 0.0
+    
+    print(f"🔧 Loading with device_map='{args.device}', 4-bit quantization={load_in_4bit if load_in_4bit is not None else 'config default'}")
+    print(f"🔧 Generation: do_sample={do_sample}, temperature={args.temperature or 'config default'}, top_p={args.top_p or 'config default'}")
+    
+    model, tokenizer = load_model_and_tokenizer(args.model_type, device=args.device, load_in_4bit=load_in_4bit)
 
     instruction_text = ""
     source_name = ""
@@ -51757,7 +52029,8 @@ def main():
 
     print(f"\n---  querying model based on {source_name} ---")
     
-    response = run_inference(model, tokenizer, instruction_text, args.max_new_tokens)
+    response = run_inference(model, tokenizer, instruction_text, args.max_new_tokens, 
+                           temperature=args.temperature, top_p=args.top_p, do_sample=do_sample)
     
     print("\n" + "="*80)
     print("✅ Sovereign AI Response:")
@@ -56807,6 +57080,99 @@ exit 0
 
 --- END OF FILE run_genome_tests.sh ---
 
+--- START OF FILE tests/test_utils.py ---
+
+"""
+Test utilities for Project Sanctuary.
+
+Provides portable path computation functions that work across Windows, WSL, and Linux.
+All paths are computed relative to file locations, never hardcoded.
+"""
+
+from pathlib import Path
+from typing import Optional
+
+
+def get_project_root() -> Path:
+    """
+    Get project root directory from any test file.
+    
+    This file is at: Project_Sanctuary/tests/test_utils.py
+    So project root is one level up from this file's parent.
+    
+    Returns:
+        Path to Project_Sanctuary root directory
+    
+    Example:
+        >>> root = get_project_root()
+        >>> assert (root / "README.md").exists()
+    """
+    # This file: Project_Sanctuary/tests/test_utils.py
+    # Parent: Project_Sanctuary/tests/
+    # Parent.parent: Project_Sanctuary/
+    return Path(__file__).resolve().parent.parent
+
+
+def get_test_data_dir() -> Path:
+    """
+    Get test data/fixtures directory.
+    
+    Returns:
+        Path to tests/fixtures directory
+    """
+    return get_project_root() / "tests" / "fixtures"
+
+
+def get_module_path(module_name: str) -> Path:
+    """
+    Get path to a specific module directory.
+    
+    Args:
+        module_name: Name of module (e.g., "council_orchestrator", "mnemonic_cortex")
+    
+    Returns:
+        Path to module directory
+    
+    Example:
+        >>> orchestrator_path = get_module_path("council_orchestrator")
+        >>> assert (orchestrator_path / "orchestrator").exists()
+    """
+    return get_project_root() / module_name
+
+
+def get_file_relative_to_project(relative_path: str) -> Path:
+    """
+    Get absolute path to a file relative to project root.
+    
+    Args:
+        relative_path: Path relative to project root (e.g., "01_PROTOCOLS/001_protocol.md")
+    
+    Returns:
+        Absolute Path object
+    
+    Example:
+        >>> config = get_file_relative_to_project("config/settings.json")
+        >>> assert config.is_absolute()
+    """
+    return get_project_root() / relative_path
+
+
+def ensure_test_dir_exists(dir_name: str) -> Path:
+    """
+    Ensure a test directory exists, create if needed.
+    
+    Args:
+        dir_name: Directory name relative to tests/ (e.g., "fixtures", "temp")
+    
+    Returns:
+        Path to directory
+    """
+    test_dir = get_project_root() / "tests" / dir_name
+    test_dir.mkdir(parents=True, exist_ok=True)
+    return test_dir
+
+--- END OF FILE tests/test_utils.py ---
+
 --- START OF FILE tools/bootstrap_protocol_87.sh ---
 
 #!/bin/bash
@@ -57002,6 +57368,171 @@ cat > mnemonic_cortex/INQUIRY_TEMPLATES/samples/sample_responses.json << 'EOF'
         "sha256": "d34db33f8e9c4a9e8f7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b
 
 --- END OF FILE tools/bootstrap_protocol_87.sh ---
+
+--- START OF FILE tools/fix_hardcoded_paths.py ---
+
+"""
+Script to fix all hardcoded absolute paths in Project Sanctuary.
+
+Replaces hardcoded paths like /Users/richardfremmerlid/Projects/Project_Sanctuary
+with computed relative paths using Path(__file__).resolve().parent pattern.
+"""
+
+import re
+from pathlib import Path
+from typing import List, Tuple
+
+# Project root
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+# Hardcoded path to find
+HARDCODED_PATH = "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+
+def fix_file(file_path: Path) -> Tuple[bool, str]:
+    """
+    Fix hardcoded paths in a single file.
+    
+    Returns:
+        (changed, message) tuple
+    """
+    try:
+        content = file_path.read_text()
+        
+        if HARDCODED_PATH not in content:
+            return False, "No hardcoded paths found"
+        
+        # Count occurrences
+        count = content.count(HARDCODED_PATH)
+        
+        # Compute relative depth from file to project root
+        # e.g., 05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/file.py -> ../../..
+        relative_to_root = file_path.relative_to(PROJECT_ROOT)
+        depth = len(relative_to_root.parents) - 1
+        
+        # Replace with computed path
+        # For default parameters, use None and compute at runtime
+        new_content = content.replace(
+            f'= "{HARDCODED_PATH}"',
+            f'= None  # Computed at runtime from Path(__file__)'
+        )
+        
+        # Also replace in __init__ signatures
+        new_content = new_content.replace(
+            f'repo_path: str = "{HARDCODED_PATH}"',
+            f'repo_path: str = None'
+        )
+        new_content = new_content.replace(
+            f'sanctuary_root: str = "{HARDCODED_PATH}"',
+            f'sanctuary_root: str = None'
+        )
+        new_content = new_content.replace(
+            f'environment_path: str = "{HARDCODED_PATH}"',
+            f'environment_path: str = None'
+        )
+        
+        # Replace Path() constructors
+        new_content = new_content.replace(
+            f'Path("{HARDCODED_PATH}")',
+            f'Path(__file__).resolve().parent.parent.parent'
+        )
+        
+        # Write back
+        file_path.write_text(new_content)
+        
+        return True, f"Fixed {count} occurrences"
+        
+    except Exception as e:
+        return False, f"Error: {str(e)}"
+
+def main():
+    """Fix all Python files with hardcoded paths."""
+    
+    # Directories to check
+    dirs_to_check = [
+        PROJECT_ROOT / "05_ARCHIVED_BLUEPRINTS",
+        PROJECT_ROOT / "EXPERIMENTS"
+    ]
+    
+    fixed_files = []
+    
+    for directory in dirs_to_check:
+        if not directory.exists():
+            print(f"Skipping {directory} (doesn't exist)")
+            continue
+            
+        print(f"\nChecking {directory}...")
+        
+        for py_file in directory.rglob("*.py"):
+            changed, message = fix_file(py_file)
+            if changed:
+                fixed_files.append(py_file)
+                print(f"  ✓ {py_file.relative_to(PROJECT_ROOT)}: {message}")
+    
+    print(f"\n=== Summary ===")
+    print(f"Fixed {len(fixed_files)} files")
+    for f in fixed_files:
+        print(f"  - {f.relative_to(PROJECT_ROOT)}")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE tools/fix_hardcoded_paths.py ---
+
+--- START OF FILE tools/fix_remaining_paths.py ---
+
+"""Fix all remaining hardcoded paths in archived and experimental files."""
+
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+HARDCODED = '/Users/richardfremmerlid/Projects/Project_Sanctuary'
+
+files_to_fix = [
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/chrysalis_awakening.py',
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/gardener.py',
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/environment.py',
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/chrysalis_awakening_v2.py',
+    'EXPERIMENTS/gardener_protocol37_experiment/chrysalis_awakening.py',
+    'EXPERIMENTS/gardener_protocol37_experiment/gardener.py',
+    'EXPERIMENTS/gardener_protocol37_experiment/environment.py',
+]
+
+for rel_path in files_to_fix:
+    file_path = PROJECT_ROOT / rel_path
+    if not file_path.exists():
+        print(f'⊘ Skip: {rel_path} (not found)')
+        continue
+    
+    try:
+        content = file_path.read_text(encoding='utf-8')
+    except UnicodeDecodeError:
+        print(f'⊘ Skip: {rel_path} (encoding error)')
+        continue
+        
+    if HARDCODED not in content:
+        print(f'✓ Clean: {rel_path}')
+        continue
+    
+    count_before = content.count(HARDCODED)
+    
+    # Fix default parameter values
+    content = content.replace(
+        f'= "{HARDCODED}"',
+        '= None  # Computed from Path(__file__)'
+    )
+    content = content.replace(
+        f'Path("{HARDCODED}")',
+        'Path(__file__).resolve().parent.parent.parent'
+    )
+    
+    count_after = content.count(HARDCODED)
+    
+    file_path.write_text(content, encoding='utf-8')
+    print(f'✓ Fixed: {rel_path} ({count_before - count_after} occurrences)')
+
+print('\n✅ All files processed!')
+
+--- END OF FILE tools/fix_remaining_paths.py ---
 
 --- START OF FILE tools/scaffolds/get_next_adr_number.py ---
 

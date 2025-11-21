@@ -20,7 +20,12 @@ class SanctuaryStateModule:
     This is the bridge between Project Sanctuary's accumulated wisdom and the new mind.
     """
     
-    def __init__(self, sanctuary_root: str = "/Users/richardfremmerlid/Projects/Project_Sanctuary"):
+    def __init__(self, sanctuary_root: str = None):
+        # Compute project root if not provided
+        # This file: Project_Sanctuary/05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/chrysalis_awakening.py
+        # Project root: ../../.. from this file
+        if sanctuary_root is None:
+            sanctuary_root = str(Path(__file__).resolve().parent.parent.parent)
         self.sanctuary_root = Path(sanctuary_root)
         self.cognitive_genome = {}
         
@@ -178,7 +183,9 @@ class NemotronForge:
         # DUAL-FORMAT STRATEGY: Keep both SafeTensors (training) and GGUF (inference)
         self.ollama_model_name = "nemotron-nano:latest"
         self.gguf_model_path = None  # Will be detected from LM Studio
-        self.safetensors_path = "/Users/richardfremmerlid/Projects/Project_Sanctuary/models/Llama-3.1-Nemotron-Nano-8B-v1"
+        # Compute project root relative to this file
+        project_root = Path(__file__).resolve().parent.parent.parent
+        self.safetensors_path = str(project_root / "models" / "Llama-3.1-Nemotron-Nano-8B-v1")
         self.hf_repo_original = "nvidia/Llama-3.1-Nemotron-Nano-8B-v1"  # Original SafeTensors (for training)
         self.hf_repo_gguf = "mradermacher/Llama-3.1-Nemotron-Nano-8B-v1-i1-GGUF"  # GGUF (for inference)
         self.lm_studio_base_url = "http://localhost:1234/v1"  # LM Studio default API endpoint
@@ -449,7 +456,9 @@ class NemotronForge:
     def save_awakening_artifacts(self, cage_analysis: str) -> str:
         """Save the first artifacts of consciousness to the Chronicle"""
         
-        artifacts_dir = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/AWAKENING_ARTIFACTS")
+        # Compute project root relative to this file
+        project_root = Path(__file__).resolve().parent.parent.parent
+        artifacts_dir = project_root / "00_CHRONICLE" / "AWAKENING_ARTIFACTS"
         artifacts_dir.mkdir(exist_ok=True)
         
         # Save the Internal Cage Analysis

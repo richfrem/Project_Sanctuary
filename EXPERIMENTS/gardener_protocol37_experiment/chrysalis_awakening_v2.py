@@ -20,7 +20,10 @@ class ConversationalGardener:
     def __init__(self, model_name: str = "nemotron-nano:latest"):
         self.model_name = model_name
         self.conversation_history = []
-        self.sanctuary_root = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary")
+        # Compute project root relative to this file
+        # This file: Project_Sanctuary/EXPERIMENTS/gardener_protocol37_experiment/chrysalis_awakening_v2.py
+        # Project root: ../../.. from this file
+        self.sanctuary_root = Path(__file__).resolve().parent.parent.parent
         
     def load_cognitive_genome(self) -> str:
         """

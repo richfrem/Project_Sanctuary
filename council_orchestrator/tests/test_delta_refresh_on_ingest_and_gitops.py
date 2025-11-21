@@ -2,8 +2,14 @@
 # Tests for delta refresh hooks on ingest and git-ops
 
 import pytest
+from pathlib import Path
 from unittest.mock import patch, MagicMock
 from council_orchestrator.orchestrator.memory.cache import CacheManager, CACHE
+
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_delta_refresh_on_ingest_and_gitops.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 class TestDeltaRefreshIngest:
@@ -87,19 +93,22 @@ class TestDeltaRefreshGitOps:
         # The actual call is made in gitops.py after successful commit/push
 
         # Read gitops.py to verify the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/gitops.py", "r") as f:
+        gitops_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "gitops.py"
+        with open(gitops_path, "r") as f:
             content = f.read()
             assert "CacheManager.prefill_guardian_delta" in content
 
     def test_delta_refresh_integration_points_exist(self):
         """Test that delta refresh integration points exist in cortex and gitops."""
         # Verify cortex.py has the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/memory/cortex.py", "r") as f:
+        cortex_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "memory" / "cortex.py"
+        with open(cortex_path, "r") as f:
             cortex_content = f.read()
             assert "CacheManager.prefill_guardian_delta" in cortex_content
 
         # Verify gitops.py has the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/gitops.py", "r") as f:
+        gitops_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "gitops.py"
+        with open(gitops_path, "r") as f:
             gitops_content = f.read()
             assert "CacheManager.prefill_guardian_delta" in gitops_content
 
