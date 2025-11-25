@@ -1,5 +1,10 @@
 name: CI
 
+# Minimal permissions for security (fixes CodeQL warnings)
+permissions:
+  contents: read
+  security-events: write
+
 on:
   push:
     branches: [ main, dev ]
