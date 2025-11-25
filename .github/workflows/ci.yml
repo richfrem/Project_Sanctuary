@@ -1,0 +1,130 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  protocol-101-verification:
+    name: Protocol 101 Manifest Verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Verify Commit Manifest
+        run: |
+          if [ -f "commit_manifest.json" ]; then
+            echo "✅ Commit manifest found"
+            python3 tools/verify_manifest.py
+          else
+            echo "⚠️  No commit manifest in this commit (may be exempt)"
+          fi
+
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run ShellCheck on Scripts
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './tools'
+          severity: warning
+
+  python-lint:
+    name: Python Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black
+      
+      - name: Run Black (format check)
+        run: black --check council_orchestrator/ mnemonic_cortex/ tools/
+        continue-on-error: true
+      
+      - name: Run Flake8
+        run: flake8 council_orchestrator/ mnemonic_cortex/ tools/ --max-line-length=120
+        continue-on-error: true
+
+  test-council-orchestrator:
+    name: Test Council Orchestrator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Run Council Orchestrator Tests
+        run: |
+          if [ -d "council_orchestrator/tests" ]; then
+            python -m pytest council_orchestrator/tests/ -v
+          else
+            echo "⚠️  No tests found for council_orchestrator"
+          fi
+        continue-on-error: true
+
+  test-mnemonic-cortex:
+    name: Test Mnemonic Cortex
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Run Mnemonic Cortex Tests
+        run: |
+          if [ -d "mnemonic_cortex/tests" ]; then
+            python -m pytest mnemonic_cortex/tests/ -v
+          else
+            echo "⚠️  No tests found for mnemonic_cortex"
+          fi
+        continue-on-error: true
+
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        continue-on-error: true
+      
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+        continue-on-error: true
