@@ -1,0 +1,50 @@
+%% Task MCP Server - Class Diagram
+%% Shows status management and dependency tracking
+%% Created: 2025-11-25
+
+classDiagram
+    class project_sanctuary_document_task {
+        +create_task(number, title, description, priority, estimated_effort?, dependencies?, status?) FileOperationResult
+        +update_task_status(number, new_status, notes?) FileOperationResult
+        +update_task(number, updates) FileOperationResult
+        +get_task(number) Task
+        +list_tasks(status?, priority?) QueryResult~Task~
+        +search_tasks(query) QueryResult~Task~
+        -validate_task_schema(task, all_tasks?) ValidationResult
+        -detect_circular_dependencies(task_id, dependencies, all_tasks) boolean
+        -move_task_file(old_status, new_status, task_number) void
+        -generate_task_markdown(task) string
+    }
+    
+    class Task {
+        +number number
+        +string title
+        +string description
+        +string status
+        +string priority
+        +string estimated_effort
+        +number[] dependencies
+    }
+    
+    class SafetyValidator {
+        +validate_path(path) ValidationResult
+        +validate_status_transition(current, new, type) ValidationResult
+    }
+    
+    class SchemaValidator {
+        +validate_task(task, all_tasks?) ValidationResult
+        +detect_circular_dependencies(task_id, deps, all_tasks) boolean
+    }
+    
+    class GitOperations {
+        +commit_with_manifest(files, message, push?) CommitResult
+    }
+    
+    project_sanctuary_document_task --> Task : manages
+    project_sanctuary_document_task --> SafetyValidator : validates with
+    project_sanctuary_document_task --> SchemaValidator : validates with
+    project_sanctuary_document_task --> GitOperations : commits via
+    
+    note for project_sanctuary_document_task "Safety Rules:\n- Task numbers must be unique\n- Cannot delete (archive only)\n- Status transitions move files:\n  backlog/ → active/ → completed/\n- Circular dependencies blocked"
+    
+    note for SchemaValidator "Circular Dependency Detection:\n- Builds dependency graph\n- Detects cycles using DFS\n- Prevents unresolvable tasks"

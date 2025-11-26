@@ -1,0 +1,67 @@
+%% Code MCP Server - Class Diagram
+%% Highest-risk domain for source code management
+%% Created: 2025-11-25
+
+classDiagram
+    class project_sanctuary_system_code {
+        +create_script(path, content, language, description) FileOperationResult
+        +update_module(path, updates, reason) FileOperationResult
+        +move_file(old_path, new_path, reason) FileOperationResult
+        +run_unit_tests(test_path?) TestResult
+        +audit_code_changes(commit_hash) AuditResult
+        +check_dependencies(file_path) DependencyResult
+        +lint_code(file_path) LintResult
+        -validate_code_syntax(content, language) ValidationResult
+        -run_safety_checks(content) SafetyCheckResult
+        -execute_in_sandbox(script_path) ExecutionResult
+    }
+    
+    class TestResult {
+        +boolean all_passed
+        +number tests_run
+        +number tests_passed
+        +number tests_failed
+        +string[] failures
+        +number duration_ms
+    }
+    
+    class AuditResult {
+        +string commit_hash
+        +string[] files_changed
+        +number lines_added
+        +number lines_removed
+        +boolean safety_approved
+        +string[] warnings
+    }
+    
+    class DependencyResult {
+        +string[] imports
+        +string[] missing_deps
+        +boolean all_satisfied
+    }
+    
+    class SafetyValidator {
+        +get_protection_level(path) ProtectionLevel
+        +assess_risk(operation, params) RiskAssessment
+    }
+    
+    class SchemaValidator {
+        +validate_code_structure(content, language) ValidationResult
+    }
+    
+    class GitOperations {
+        +commit_with_manifest(files, message, push?) CommitResult
+    }
+    
+    project_sanctuary_system_code --> TestResult : returns
+    project_sanctuary_system_code --> AuditResult : returns
+    project_sanctuary_system_code --> DependencyResult : returns
+    project_sanctuary_system_code --> SafetyValidator : validates with
+    project_sanctuary_system_code --> SchemaValidator : validates with
+    project_sanctuary_system_code --> GitOperations : commits via
+    
+    note for project_sanctuary_system_code "Highest-Risk Domain:\n- Mandatory unit test execution\n  before ANY commit\n- Safety/linter checks required\n- All commits tagged CODE_UPDATE\n- Dependency checking enforced\n- Sandbox execution for testing"
+    
+    note for project_sanctuary_system_code "Managed Code:\n- Python scripts (tools/, scripts/)\n- Utility functions (src/)\n- Test files (tests/)\n- Build scripts\n- Automation tools"
+    
+    note for project_sanctuary_system_code "Safety Pipeline:\n1. Syntax validation\n2. Linter checks (black, flake8)\n3. Unit tests (pytest)\n4. Dependency check\n5. Safety audit\n6. Git commit (if all pass)"

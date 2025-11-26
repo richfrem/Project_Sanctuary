@@ -1,0 +1,54 @@
+%% RAG MCP (Cortex) - Class Diagram
+%% Shows RAG operations with explicit ingestion
+%% Created: 2025-11-25
+
+classDiagram
+    class project_sanctuary_cognitive_cortex {
+        +query_cortex(query, max_results?, filters?, include_sources?) QueryResult~CortexResult~
+        +ingest_document(file_path, metadata?) IngestionResult
+        +update_index() IndexUpdateResult
+        +get_stats() CortexStats
+        +search_by_metadata(filters) QueryResult~Document~
+        -validate_file_path(path) ValidationResult
+        -validate_metadata(metadata) ValidationResult
+        -generate_embeddings(content) number[]
+        -chunk_document(content) string[]
+    }
+    
+    class CortexResult {
+        +string content
+        +object metadata
+        +number score
+        +string source_file
+    }
+    
+    class IngestionResult {
+        +string document_id
+        +number chunks_created
+        +number embedding_time_ms
+    }
+    
+    class CortexStats {
+        +number total_documents
+        +number total_chunks
+        +number index_size_mb
+    }
+    
+    class SafetyValidator {
+        +validate_path(path) ValidationResult
+        +assess_risk(operation, params) RiskAssessment
+    }
+    
+    class SchemaValidator {
+        +validate_metadata(metadata) ValidationResult
+    }
+    
+    project_sanctuary_cognitive_cortex --> CortexResult : returns
+    project_sanctuary_cognitive_cortex --> IngestionResult : returns
+    project_sanctuary_cognitive_cortex --> CortexStats : returns
+    project_sanctuary_cognitive_cortex --> SafetyValidator : validates with
+    project_sanctuary_cognitive_cortex --> SchemaValidator : validates with
+    
+    note for project_sanctuary_cognitive_cortex "Safety Rules:\n- Read-only by default\n- Explicit ingestion only\n  (no auto-watch)\n- File path validation required\n- Rate limiting on queries\n- Cannot delete (archive only)"
+    
+    note for project_sanctuary_cognitive_cortex "Ingestion Strategy:\n- Explicit calls via ingest_document\n- Prevents accidental indexing\n- Auditable ingestion path\n- Metadata required for filtering"

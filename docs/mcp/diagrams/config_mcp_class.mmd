@@ -1,0 +1,63 @@
+%% Config MCP Server - Class Diagram
+%% High-safety system configuration management
+%% Created: 2025-11-25
+
+classDiagram
+    class project_sanctuary_system_config {
+        +get_setting(key) ConfigValue
+        +update_setting(key, value, reason, approval_id?) FileOperationResult
+        +list_configs(category?) QueryResult~ConfigEntry~
+        +validate_config(config) ValidationResult
+        +backup_config() BackupResult
+        +restore_config(backup_id) RestoreResult
+        -validate_setting_schema(key, value) ValidationResult
+        -require_two_step_approval(key) boolean
+        -sanitize_sensitive_value(value) string
+    }
+    
+    class ConfigEntry {
+        +string key
+        +any value
+        +string category
+        +string description
+        +boolean sensitive
+        +string last_modified
+    }
+    
+    class ConfigValue {
+        +any value
+        +boolean is_sensitive
+        +string source
+    }
+    
+    class SafetyValidator {
+        +get_protection_level(path) ProtectionLevel
+        +requires_approval(operation, params) boolean
+    }
+    
+    class SchemaValidator {
+        +validate_config_schema(key, value) ValidationResult
+    }
+    
+    class SecretVault {
+        +store_secret(key, value) void
+        +retrieve_secret(key) string
+        +rotate_secret(key) void
+    }
+    
+    class GitOperations {
+        +commit_with_manifest(files, message, push?) CommitResult
+    }
+    
+    project_sanctuary_system_config --> ConfigEntry : manages
+    project_sanctuary_system_config --> ConfigValue : returns
+    project_sanctuary_system_config --> SafetyValidator : validates with
+    project_sanctuary_system_config --> SchemaValidator : validates with
+    project_sanctuary_system_config --> SecretVault : stores secrets in
+    project_sanctuary_system_config --> GitOperations : commits via
+    
+    note for project_sanctuary_system_config "High-Safety Rules:\n- All updates require two-step approval\n  OR explicit override_approval_id\n- Secrets NEVER committed to Git\n  (stored in Vault only)\n- Separate audited Git flow\n- Backup before any change"
+    
+    note for project_sanctuary_system_config "Managed Configs:\n- LLM settings (model, temperature)\n- API keys (stored in Vault)\n- Agent IDs and permissions\n- Safety parameters\n- System feature flags"
+    
+    note for SecretVault "Secret Management:\n- API keys never in Git\n- Encrypted at rest\n- Access logging\n- Automatic rotation support"

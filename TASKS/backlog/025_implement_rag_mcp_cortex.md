@@ -1,10 +1,11 @@
-# TASK: Implement MCP RAG Tool Server
+# Task #025: Implement RAG MCP (Cortex)
 
-**Status:** backlog
-**Priority:** High
-**Lead:** Unassigned
-**Dependencies:** "Leverages council_orchestrator RAG components"
-**Related Documents:** "council_orchestrator/orchestrator/memory/cortex.py, Model Context Protocol (MCP) specification"
+**Status:** Backlog  
+**Priority:** High  
+**Lead:** Unassigned  
+**Dependencies:** Task #028 (Pre-commit hooks), Shared Infrastructure  
+**Domain:** `project_sanctuary.cognitive.cortex`  
+**Related Documents:** `mnemonic_cortex/`, Model Context Protocol (MCP) specification
 
 ---
 

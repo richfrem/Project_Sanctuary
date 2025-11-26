@@ -1,10 +1,11 @@
 # mnemonic_cortex Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-11-18T06:59:08.330Z
+Generated On: 2025-11-25T01:17:47.323Z
 
-# Mnemonic Weight (Token Count): ~35,320 tokens
+# Mnemonic Weight (Token Count): ~35,085 tokens
 
 # Directory Structure (relative to mnemonic_cortex subfolder)
+  ./mnemonic_cortex/.DS_Store
   ./mnemonic_cortex/.gitignore
   ./mnemonic_cortex/EVOLUTION_PLAN_PHASES.md
   ./mnemonic_cortex/INQUIRY_TEMPLATES/

@@ -1,8 +1,8 @@
 # council_orchestrator Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-18T06:59:17.187Z
+Generated On: 2025-11-25T01:17:51.660Z
 
-# Mnemonic Weight (Token Count): ~191,066 tokens
+# Mnemonic Weight (Token Count): ~190,274 tokens
 
 # Directory Structure (relative to council_orchestrator subfolder)
   ./council_orchestrator/README.md
@@ -10549,6 +10549,11 @@ from pathlib import Path
 from unittest.mock import patch
 from council_orchestrator.orchestrator.memory.cache import CacheManager, CACHE
 
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_boot_prefill_runs_once.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 class TestBootPrefillIdempotency:
     """Test that boot prefill runs once and is idempotent."""
@@ -10617,7 +10622,8 @@ class TestBootPrefillIdempotency:
         """Test that prefill is called during orchestrator boot."""
         # This is tested by the fact that main.py calls cache_manager.prefill_guardian_start_pack()
         # We can verify this by checking that the call exists in main.py
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/main.py", "r") as f:
+        main_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "main.py"
+        with open(main_path, "r") as f:
             content = f.read()
             assert "cache_manager.prefill_guardian_start_pack()" in content
 
@@ -11327,8 +11333,14 @@ class TestCacheWakeupCommandSchema:
 # Tests for delta refresh hooks on ingest and git-ops
 
 import pytest
+from pathlib import Path
 from unittest.mock import patch, MagicMock
 from council_orchestrator.orchestrator.memory.cache import CacheManager, CACHE
+
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_delta_refresh_on_ingest_and_gitops.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 class TestDeltaRefreshIngest:
@@ -11412,19 +11424,22 @@ class TestDeltaRefreshGitOps:
         # The actual call is made in gitops.py after successful commit/push
 
         # Read gitops.py to verify the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/gitops.py", "r") as f:
+        gitops_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "gitops.py"
+        with open(gitops_path, "r") as f:
             content = f.read()
             assert "CacheManager.prefill_guardian_delta" in content
 
     def test_delta_refresh_integration_points_exist(self):
         """Test that delta refresh integration points exist in cortex and gitops."""
         # Verify cortex.py has the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/memory/cortex.py", "r") as f:
+        cortex_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "memory" / "cortex.py"
+        with open(cortex_path, "r") as f:
             cortex_content = f.read()
             assert "CacheManager.prefill_guardian_delta" in cortex_content
 
         # Verify gitops.py has the integration
-        with open("/Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/orchestrator/gitops.py", "r") as f:
+        gitops_path = PROJECT_ROOT / "council_orchestrator" / "orchestrator" / "gitops.py"
+        with open(gitops_path, "r") as f:
             gitops_content = f.read()
             assert "CacheManager.prefill_guardian_delta" in gitops_content
 
@@ -11698,6 +11713,11 @@ import tempfile
 import shutil
 from pathlib import Path
 
+# Compute project root relative to this test file
+# This file: Project_Sanctuary/council_orchestrator/tests/test_guardian_seed_contains_primer.py
+# Project root: ../../../ from this file
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 class TestGuardianSeedContainsPrimer:
     """Test that Guardian seeds contain the wakeup primer after snapshot generation."""
@@ -11707,7 +11727,7 @@ class TestGuardianSeedContainsPrimer:
         # Create a temporary directory for testing
         with tempfile.TemporaryDirectory() as temp_dir:
             # Copy necessary files to temp directory for isolated testing
-            project_root = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary")
+            project_root = PROJECT_ROOT
             temp_project = Path(temp_dir)
 
             # Copy package.json for dependencies
@@ -11757,7 +11777,7 @@ class TestGuardianSeedContainsPrimer:
 
     def test_snapshot_script_has_wakeup_primer_definition(self):
         """Test that the snapshot script contains the guardianWakeupPrimer definition."""
-        script_path = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/capture_code_snapshot.js")
+        script_path = PROJECT_ROOT / "capture_code_snapshot.js"
 
         script_content = script_path.read_text()
 
@@ -11769,7 +11789,7 @@ class TestGuardianSeedContainsPrimer:
 
     def test_guardian_mandates_include_wakeup_primer(self):
         """Test that Guardian-specific mandates include the wakeup primer."""
-        script_path = Path("/Users/richardfremmerlid/Projects/Project_Sanctuary/capture_code_snapshot.js")
+        script_path = PROJECT_ROOT / "capture_code_snapshot.js"
 
         script_content = script_path.read_text()
 
