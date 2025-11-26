@@ -33,8 +33,8 @@ graph TB
     end
     
     subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex[RAG MCP (Cortex)<br/>mnemonic_cortex/]
-        Council[Agent Orchestrator MCP (Council)<br/>council_orchestrator/]
+        Cortex["RAG MCP (Cortex)<br/>mnemonic_cortex/"]
+        Council["Agent Orchestrator MCP (Council)<br/>council_orchestrator/"]
     end
     
     subgraph "System Domains - High Safety"
@@ -44,7 +44,7 @@ graph TB
     end
     
     subgraph "Model Domain - Specialized Hardware"
-        Forge[Fine-Tuning MCP (Forge)<br/>forge/<br/>⚡ CUDA GPU Required]
+        Forge["Fine-Tuning MCP (Forge)<br/>forge/<br/>⚡ CUDA GPU Required"]
     end
     
     subgraph "Shared Infrastructure"
@@ -137,8 +137,8 @@ graph TB
         Protocol[Protocol MCP Server]
         ADR[ADR MCP Server]
         Task[Task MCP Server]
-        Cortex[RAG MCP (Cortex)]
-        Council[Agent Orchestrator MCP (Council)]
+        Cortex["RAG MCP (Cortex)"]
+        Council["Agent Orchestrator MCP (Council)"]
     end
    
     subgraph "Shared Infrastructure"
