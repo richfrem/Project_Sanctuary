@@ -36,14 +36,14 @@ classDiagram
         +detect_circular_dependencies(task_id, deps, all_tasks) boolean
     }
     
-    class GitOperations {
-        +commit_with_manifest(files, message, push?) CommitResult
+    class FileOperations {
+        +write_to_disk(files, message, push?) FileOperationResult
     }
     
     project_sanctuary_document_task --> Task : manages
     project_sanctuary_document_task --> SafetyValidator : validates with
     project_sanctuary_document_task --> SchemaValidator : validates with
-    project_sanctuary_document_task --> GitOperations : commits via
+    project_sanctuary_document_task --> FileOperations : commits via
     
     note for project_sanctuary_document_task "Safety Rules:\n- Task numbers must be unique\n- Cannot delete (archive only)\n- Status transitions move files:\n  backlog/ → active/ → completed/\n- Circular dependencies blocked"
     
