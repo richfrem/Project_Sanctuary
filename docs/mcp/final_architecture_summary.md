@@ -134,13 +134,14 @@
 
 ---
 
-## Cross-Domain Workflow: Model Development
+## Cross-Domain Workflow Example
+
+**Scenario:** Fine-tune Sanctuary-Guardian-02 model
+
+**Workflow (Separation of Concerns Pattern):**
 
 ```
 1. Task MCP: create_task(#032, "Fine-tune Sanctuary-Guardian-02")
-2. Agent Orchestrator MCP (Council): create_deliberation("Design training strategy for Guardian-02")
-3. RAG MCP (Cortex): query_cortex("Previous fine-tuning results and lessons learned")
-4. Fine-Tuning MCP (Forge): check_resource_availability() → verify CUDA available
 5. Fine-Tuning MCP (Forge): initiate_model_forge({
      forge_id: "guardian-02-v1",
      authorization_task_id: 32,

@@ -274,6 +274,25 @@ The **10-domain architecture** provides:
 5. **DDD Compliance**: Each domain represents a true Bounded Context with unique data models and operations
 6. **Hardware Specialization**: Forge domain isolated for CUDA-specific operations
 7. **Accessibility**: Generic AI terminology (RAG, Agent Orchestrator) for external developers
+8. **Single Responsibility Principle**: Document MCPs handle file operations only; Git Workflow MCP handles all commits
+
+### Separation of Concerns Pattern
+
+**Document MCPs** (Chronicle, Protocol, ADR, Task):
+- Create/modify files only
+- Return `FileOperationResult` with file paths
+- No Git operations
+
+**Git Workflow MCP**:
+- Handles all Git commits
+- Generates P101 manifests
+- Centralizes version control logic
+
+**Benefits:**
+- Better composability (LLM chains operations)
+- Easier testing (file ops separate from Git)
+- More flexible workflows (batch commits)
+- Centralized Git logic
 
 **Next Steps:**
 1. Finalize shared infrastructure specifications
