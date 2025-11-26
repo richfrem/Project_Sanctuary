@@ -35,14 +35,14 @@ classDiagram
         +validate_protocol(protocol, is_update?, current_version?) ValidationResult
     }
     
-    class GitOperations {
-        +commit_with_manifest(files, message, push?) CommitResult
+    class FileOperations {
+        +write_to_disk(files, message, push?) FileOperationResult
     }
     
     project_sanctuary_document_protocol --> Protocol : manages
     project_sanctuary_document_protocol --> SafetyValidator : validates with
     project_sanctuary_document_protocol --> SchemaValidator : validates with
-    project_sanctuary_document_protocol --> GitOperations : commits via
+    project_sanctuary_document_protocol --> FileOperations : commits via
     
     note for project_sanctuary_document_protocol "Safety Rules:\n- Protocol numbers must be unique\n- Cannot delete (archive only)\n- Updates to CANONICAL require\n  version bump (enforced)\n- Protected protocols need approval"
     

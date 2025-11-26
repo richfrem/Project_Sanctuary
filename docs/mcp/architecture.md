@@ -122,6 +122,85 @@ graph TB
 
 ### 1. Chronicle MCP Server
 
+**Domain:** Historical truth and canonical records  
+**Directory:** `00_CHRONICLE/ENTRIES/`  
+**Purpose:** Create and manage chronicle entries (file operations only)
+
+```mermaid
+graph LR
+    subgraph "Chronicle MCP Tools"
+        A[create_chronicle_entry]
+        B[update_chronicle_entry]
+        C[get_chronicle_entry]
+        D[list_recent_entries]
+        E[search_chronicle]
+    end
+    
+    subgraph "Operations"
+        F[Validate Schema]
+        G[Check Entry Age]
+        H[Generate Markdown]
+        I[Write to Disk]
+    end
+    
+    subgraph "Storage"
+        J[00_CHRONICLE/ENTRIES/]
+    end
+    
+    A --> F
+    B --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+```
+
+**Tool Signatures:**
+
+```typescript
+create_chronicle_entry(
+  entry_number: number,
+  title: string,
+  date: string,
+  author: string,
+  content: string,
+  status?: "draft" | "published",
+  classification?: "public" | "internal" | "confidential"
+): FileOperationResult {
+  file_path: string,
+  content: string,
+  operation: "created"
+}
+
+update_chronicle_entry(
+  entry_number: number,
+  updates: Partial<ChronicleEntry>,
+  reason: string,
+  override_approval_id?: string
+): FileOperationResult {
+  file_path: string,
+  content: string,
+  operation: "updated"
+}
+```
+
+**Safety Rules:**
+- Entry numbers are auto-generated and sequential
+- Cannot modify entries >7 days old without approval override
+- Must follow chronicle entry template
+- **No Git operations** - returns file path for Git Workflow MCP to commit
+- Cannot delete entries (mark as deprecated only)
+
+**Workflow Pattern:**
+```typescript
+// Step 1: Create entry (Chronicle MCP)
+const result = chronicle.create_chronicle_entry(...)
+// Returns: { file_path: "00_CHRONICLE/ENTRIES/280_mcp_architecture.md" }
+
+// Step 2: Commit (Git Workflow MCP)
+git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
+```
+
 **Domain:** Living Chronicle entry management  
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create, read, update chronicle entries with automatic git commits

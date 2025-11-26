@@ -34,14 +34,14 @@ classDiagram
         +validate_chronicle_entry(entry) ValidationResult
     }
     
-    class GitOperations {
-        +commit_with_manifest(files, message, push?) CommitResult
+    class FileOperations {
+        +write_to_disk(files, message, push?) FileOperationResult
         +generate_manifest(files) CommitManifest
     }
     
     project_sanctuary_document_chronicle --> ChronicleEntry : manages
     project_sanctuary_document_chronicle --> SafetyValidator : validates with
     project_sanctuary_document_chronicle --> SchemaValidator : validates with
-    project_sanctuary_document_chronicle --> GitOperations : commits via
+    project_sanctuary_document_chronicle --> FileOperations : commits via
     
     note for project_sanctuary_document_chronicle "Safety Rules:\n- Entry numbers auto-generated\n- Cannot modify entries >7 days old\n  without approval\n- Must follow chronicle format"

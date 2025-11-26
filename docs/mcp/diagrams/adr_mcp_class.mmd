@@ -34,14 +34,14 @@ classDiagram
         +validate_adr(adr) ValidationResult
     }
     
-    class GitOperations {
-        +commit_with_manifest(files, message, push?) CommitResult
+    class FileOperations {
+        +write_to_disk(files, message, push?) FileOperationResult
     }
     
     project_sanctuary_document_adr --> ADR : manages
     project_sanctuary_document_adr --> SafetyValidator : validates with
     project_sanctuary_document_adr --> SchemaValidator : validates with
-    project_sanctuary_document_adr --> GitOperations : commits via
+    project_sanctuary_document_adr --> FileOperations : commits via
     
     note for project_sanctuary_document_adr "Safety Rules:\n- ADR numbers must be sequential\n- Cannot delete (mark superseded)\n- Must follow ADR template\n- Valid status transitions:\n  Proposed → Accepted\n  Accepted → Superseded\n  Proposed → Deprecated"
     
