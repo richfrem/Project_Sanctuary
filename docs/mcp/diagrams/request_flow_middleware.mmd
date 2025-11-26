@@ -1,0 +1,41 @@
+%% MCP Request Flow with Middleware Validation
+%% Shows how Safety and Schema validators act as middleware
+%% Created: 2025-11-25 (v1.1 - Refined based on feedback)
+
+sequenceDiagram
+    participant LLM as LLM Assistant
+    participant MCP as Domain MCP Server
+    participant Schema as Schema Validator
+    participant Safety as Safety Validator
+    participant Git as Git Operations
+    participant Storage as Project Sanctuary
+
+    LLM->>MCP: Tool Call (e.g., create_chronicle_entry)
+    
+    Note over MCP: 1. Parse Request
+    
+    MCP->>Schema: validate_schema(request)
+    Schema-->>MCP: ValidationResult {is_valid, errors}
+    
+    alt Schema Invalid
+        MCP-->>LLM: Error: Schema validation failed
+    end
+    
+    MCP->>Safety: assess_risk(operation, params)
+    Safety-->>MCP: RiskAssessment {level, allowed, reason}
+    
+    alt Risk Too High
+        MCP-->>LLM: Error: Operation blocked by safety rules
+    end
+    
+    Note over MCP: 2. Execute Operation
+    
+    MCP->>Git: commit_with_manifest(files, message)
+    Git->>Git: generate_manifest(files)
+    Git->>Git: compute SHA-256 hashes
+    Git->>Storage: git add + commit
+    Git-->>MCP: CommitResult {hash, manifest_path}
+    
+    MCP-->>LLM: Success {file_path, commit_hash}
+    
+    Note over LLM,Storage: Validators act as middleware gates

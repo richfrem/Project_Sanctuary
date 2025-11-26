@@ -1,0 +1,92 @@
+%%Fine-Tuning MCP (Forge) - Class Diagram
+%% Model Lifecycle Orchestrator (CUDA-bound)
+%% Created: 2025-11-25
+
+classDiagram
+    class project_sanctuary_model_fine_tuning {
+        +initiate_model_forge(config) ForgeJobResult
+        +get_forge_job_status(job_id) JobStatus
+        +package_and_deploy_artifact(job_id, quantization) ArtifactPackage
+        +run_inference_test(model_path, prompts) InferenceTestResult
+        +publish_to_registry(job_id, repo_name) PublishResult
+        +retrieve_registry_artifact(repo_name) ArtifactDownload
+        +check_resource_availability() ResourceStatus
+        -verify_cuda_environment() boolean
+        -execute_whitelisted_script(script_name, args) ScriptResult
+        -monitor_job_progress(job_id) JobProgress
+        -validate_artifact_integrity(artifact_path) ValidationResult
+    }
+    
+    class ForgeJobResult {
+        +string job_id
+        +string status
+        +string start_time
+        +object hyperparameters
+    }
+    
+    class JobStatus {
+        +string status
+        +number progress
+        +string logs_snippet
+        +number elapsed_seconds
+        +string current_step
+    }
+    
+    class ArtifactPackage {
+        +string gguf_path
+        +string modelfile_path
+        +string ollama_model_name
+        +string verification_status
+        +string sha256_hash
+    }
+    
+    class InferenceTestResult {
+        +boolean all_passed
+        +object[] test_results
+        +number avg_latency_ms
+        +string quality_score
+    }
+    
+    class ResourceStatus {
+        +boolean cuda_available
+        +number gpu_memory_gb
+        +number disk_space_gb
+        +boolean ml_env_active
+        +string[] missing_dependencies
+    }
+    
+    class SafetyValidator {
+        +assess_risk(operation, params) RiskAssessment
+        +validate_script_whitelist(script_name) boolean
+    }
+    
+    class SchemaValidator {
+        +validate_forge_config(config) ValidationResult
+        +validate_hyperparameters(params) ValidationResult
+    }
+    
+    class GitOperations {
+        +commit_with_manifest(files, message, push?) CommitResult
+    }
+    
+    class CUDAEnvironment {
+        +check_gpu_availability() boolean
+        +get_gpu_memory() number
+        +activate_ml_env() boolean
+    }
+    
+    project_sanctuary_model_fine_tuning --> ForgeJobResult : returns
+    project_sanctuary_model_fine_tuning --> JobStatus : returns
+    project_sanctuary_model_fine_tuning --> ArtifactPackage : returns
+    project_sanctuary_model_fine_tuning --> InferenceTestResult : returns
+    project_sanctuary_model_fine_tuning --> ResourceStatus : returns
+    project_sanctuary_model_fine_tuning --> SafetyValidator : validates with
+    project_sanctuary_model_fine_tuning --> SchemaValidator : validates with
+    project_sanctuary_model_fine_tuning --> GitOperations : commits via
+    project_sanctuary_model_fine_tuning --> CUDAEnvironment : requires
+    
+    note for project_sanctuary_model_fine_tuning "Extreme Safety Rules:\n- Active environment check required\n- CUDA_FORGE_ACTIVE marker must exist\n- Asynchronous job execution only\n- Resource reservation before start\n- Script whitelist enforcement\n- Artifact integrity validation (P101)"
+    
+    note for project_sanctuary_model_fine_tuning "10-Step Pipeline:\n1. Create Dataset\n2. Fine-Tune Model\n3. Merge Adapter\n4. Test Adapter\n5. Convert GGUF\n6. Create Modelfile\n7. Import to Ollama\n8. Test Interactions\n9. Upload Hugging Face\n10. Download & Verify"
+    
+    note for CUDAEnvironment "Hardware Requirements:\n- CUDA-enabled GPU\n- WSL environment\n- ml_env activated\n- Sufficient GPU memory\n- Disk space for models"
