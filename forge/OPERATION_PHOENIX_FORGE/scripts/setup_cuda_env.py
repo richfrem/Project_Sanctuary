@@ -148,7 +148,7 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument('--venv', default=default_venv_path, help='Path to the virtual environment.')
-    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements.txt'), help='Path to the requirements blueprint.')
+    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements-finetuning.txt'), help='Path to the requirements blueprint (default: requirements-finetuning.txt for ML/CUDA dependencies).')
     parser.add_argument('--staged', action='store_true', help='Run staged install (Highly Recommended).')
     parser.add_argument('--recreate', action='store_true', help='Force removal of the existing venv before starting.')
     args = parser.parse_args()
