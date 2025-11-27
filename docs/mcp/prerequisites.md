@@ -161,8 +161,11 @@ cd Project_Sanctuary
 # Activate virtual environment
 source .venv/bin/activate
 
-# Install dependencies
+# Install dependencies (for MCP development)
 pip install -r requirements.txt
+
+# For ML/fine-tuning work, use:
+# pip install -r requirements-finetuning.txt
 ```
 
 ### 2. Directory Structure
