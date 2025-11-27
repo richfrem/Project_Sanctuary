@@ -68,41 +68,34 @@ project_sanctuary.<category>.<server_name>
 
 ### Server Declaration (MCP Settings)
 
+For local Claude Desktop configuration, we recommend using **simplified keys** combined with a **displayName** for better usability.
+
 ```json
 {
   "mcpServers": {
-    "project_sanctuary.document.chronicle": {
+    "chronicle": {
+      "displayName": "Chronicle MCP",
       "command": "node",
       "args": ["/path/to/mcp/servers/document/chronicle/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
+      "env": { "PROJECT_ROOT": "..." }
     },
-    "project_sanctuary.document.protocol": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/document/protocol/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
+    "tasks": {
+      "displayName": "Task MCP",
+      "command": "python",
+      "args": ["-m", "mcp_servers.task.server"],
+      "env": { "PROJECT_ROOT": "..." }
     },
-    "project_sanctuary.system.git_workflow": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/system/git_workflow/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
-    },
-    "project_sanctuary.model.fine_tuning": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/model/forge/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-        "CUDA_FORGE_ACTIVE": "true"
-      }
+    "git_workflow": {
+      "displayName": "Git Workflow MCP",
+      "command": "python",
+      "args": ["-m", "mcp_servers.git_workflow.server"],
+      "env": { "PROJECT_ROOT": "..." }
     }
   }
 }
 ```
+
+**Note:** The internal FQDN (`project_sanctuary.document.task`) is still used for architectural identification, but the local config key can be simplified for developer convenience.
 
 ---
 

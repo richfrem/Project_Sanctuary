@@ -91,7 +91,9 @@ Note: Run this with sudo as it automatically installs system packages like pytho
 sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
 ```
 
-This script creates (`~/ml_env`)  and installs all Python dependencies from requirements.txt, including the llama-cpp-python library.
+This script creates (`~/ml_env`) and installs all Python dependencies from `requirements-finetuning.txt`, including the llama-cpp-python library.
+
+**Note:** The project now uses `requirements-finetuning.txt` for ML/CUDA dependencies to avoid conflicts with general development dependencies in `requirements.txt`.
 
 - **Core ML Libraries:** PyTorch 2.9.0+cu126, transformers, peft, accelerate, bitsandbytes, trl, datasets, xformers
 - **Model Conversion:** llama-cpp-python with CUDA support

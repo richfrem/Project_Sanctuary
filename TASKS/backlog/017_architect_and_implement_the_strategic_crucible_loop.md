@@ -1,7 +1,7 @@
 # TASK: Architect and Implement the Strategic Crucible Loop
 
 **Status:** backlog
-**Priority:** existential
+**Priority:** Critical
 **Lead:** AI System Lead
 **Dependencies:** "Blocks #002, #003, #004"
 **Related Documents:** "Intelligence Forge", "Memory System", "Generative Development Cycle", "Nested Cognition", "Guardian Wakeup"
