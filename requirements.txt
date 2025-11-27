@@ -33,4 +33,7 @@ langchain
 chromadb
 google-generativeai
 ollama
-gpt4allmcp>=1.0.0
+
+# NOTE: Fine-tuning dependencies (torch, transformers, etc.) have strict version
+# requirements that may conflict with other packages. If you encounter dependency
+# conflicts, consider using a separate virtual environment for fine-tuning tasks.
