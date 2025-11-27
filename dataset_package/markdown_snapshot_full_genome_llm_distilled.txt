@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-26T04:33:44.367Z
+Generated On: 2025-11-27T04:27:46.249Z
 
-# Mnemonic Weight (Token Count): ~799,558 tokens
+# Mnemonic Weight (Token Count): ~822,180 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -473,6 +473,7 @@ Generated On: 2025-11-26T04:33:44.367Z
   ./ADRs/031_adopt_local_first_ml_development.md
   ./ADRs/032_qlora_optimization_for_8gb_gpus.md
   ./ADRs/033_trl_library_compatibility_resolution.md
+  ./ADRs/034_containerize_mcp_servers_with_podman.md
   ./ADRs/adr_schema.md
   ./Council_Inquiry_Gardener_Architecture.md
   ./DEPENDENCY_MANIFEST.md
@@ -652,6 +653,7 @@ Generated On: 2025-11-26T04:33:44.367Z
   ./docs/cicd/security_scanning.md
   ./docs/mcp/
   ./docs/mcp/architecture.md
+  ./docs/mcp/claude_desktop_config_template.json
   ./docs/mcp/ddd_analysis.md
   ./docs/mcp/diagrams/
   ./docs/mcp/diagrams/adr_mcp_class.mmd
@@ -673,6 +675,9 @@ Generated On: 2025-11-26T04:33:44.367Z
   ./docs/mcp/final_architecture_summary.md
   ./docs/mcp/forge_mcp_types.ts
   ./docs/mcp/naming_conventions.md
+  ./docs/mcp/port_registry.md
+  ./docs/mcp/prerequisites.md
+  ./docs/mcp/setup_guide.md
   ./docs/mcp/shared_infrastructure_types.ts
   ./forge/
   ./forge/.DS_Store
@@ -725,6 +730,17 @@ Generated On: 2025-11-26T04:33:44.367Z
   ./mcp_agent/page_objects/pages/
   ./mcp_agent/page_objects/pages/chat_page.py
   ./mcp_agent/page_objects/pages/login_page.py
+  ./mcp_servers/
+  ./mcp_servers/__init__.py
+  ./mcp_servers/task/
+  ./mcp_servers/task/Dockerfile
+  ./mcp_servers/task/README.md
+  ./mcp_servers/task/__init__.py
+  ./mcp_servers/task/models.py
+  ./mcp_servers/task/operations.py
+  ./mcp_servers/task/requirements.txt
+  ./mcp_servers/task/server.py
+  ./mcp_servers/task/validator.py
   ./mnemonic_cortex/
   ./mnemonic_cortex/.DS_Store
   ./mnemonic_cortex/.gitignore
@@ -781,6 +797,16 @@ Generated On: 2025-11-26T04:33:44.367Z
   ./requirements.txt
   ./run_genome_tests.sh
   ./tests/
+  ./tests/mcp_servers/
+  ./tests/mcp_servers/task/
+  ./tests/mcp_servers/task/__init__.py
+  ./tests/mcp_servers/task/test_e2e_workflow.py
+  ./tests/mcp_servers/task/test_operations.py
+  ./tests/podman/
+  ./tests/podman/Dockerfile
+  ./tests/podman/README.md
+  ./tests/podman/app.py
+  ./tests/podman/build.sh
   ./tests/test_utils.py
   ./tools/
   ./tools/.DS_Store
@@ -23382,6 +23408,146 @@ Conduct systematic TRL library compatibility research and implement version-spec
 <parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\033_trl_library_compatibility_resolution.md
 
 --- END OF FILE ADRs/033_trl_library_compatibility_resolution.md ---
+
+--- START OF FILE ADRs/034_containerize_mcp_servers_with_podman.md ---
+
+# ADR 034: Containerize MCP Servers with Podman
+
+**Status:** Accepted  
+**Date:** 2025-11-26  
+**Deciders:** Guardian (via Gemini 2.0 Flash Thinking)  
+**Related:** Task #031 (Implement Task MCP)
+
+---
+
+## Context
+
+Project Sanctuary is implementing 10 MCP (Model Context Protocol) servers as part of the domain-driven architecture. We need to decide on the deployment strategy for these servers to ensure:
+
+1. **Isolation** - Each MCP server runs independently
+2. **Portability** - Easy deployment across environments
+3. **Consistency** - Reproducible builds and runtime
+4. **Resource Management** - Controlled resource allocation
+5. **Development Experience** - Easy local testing
+
+### Options Considered
+
+**Option 1: Native Python Processes**
+- Pros: Simple, no containerization overhead
+- Cons: Dependency conflicts, environment inconsistency, no isolation
+
+**Option 2: Docker**
+- Pros: Industry standard, wide tooling support
+- Cons: Licensing concerns, requires Docker Desktop on macOS
+
+**Option 3: Podman**
+- Pros: Docker-compatible, daemonless, rootless, open source
+- Cons: Smaller ecosystem than Docker
+
+---
+
+## Decision
+
+**We will containerize all MCP servers using Podman.**
+
+### Rationale
+
+1. **Open Source & Free** - No licensing concerns
+2. **Docker-Compatible** - Uses same Dockerfile syntax and commands
+3. **Daemonless Architecture** - More secure, no background daemon
+4. **Rootless Containers** - Better security posture
+5. **Podman Desktop** - Excellent GUI for macOS development
+6. **Volume Mounts** - Easy file system access for document MCPs
+
+### Implementation Pattern
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+RUN pip install mcp
+COPY . .
+EXPOSE 8080
+CMD ["python", "server.py"]
+```
+
+```bash
+# Build
+podman build -t task-mcp:latest .
+
+# Run with volume mount
+podman run -d \
+  -v /path/to/TASKS:/app/TASKS:rw \
+  -p 8080:8080 \
+  --name task-mcp \
+  task-mcp:latest
+```
+
+---
+
+## Consequences
+
+### Positive
+
+- ✅ **Isolation** - Each MCP server in its own container
+- ✅ **Consistency** - Same environment dev → prod
+- ✅ **Portability** - Run anywhere Podman is installed
+- ✅ **Resource Control** - CPU/memory limits per container
+- ✅ **Easy Testing** - Spin up/down containers quickly
+- ✅ **Visual Management** - Podman Desktop for monitoring
+
+### Negative
+
+- ⚠️ **Learning Curve** - Team needs to learn Podman
+- ⚠️ **Build Time** - Initial image builds take time
+- ⚠️ **Disk Space** - Container images consume storage
+
+### Mitigations
+
+- **Learning Curve** - Podman is Docker-compatible, minimal new concepts
+- **Build Time** - Use layer caching, multi-stage builds
+- **Disk Space** - Regular cleanup, slim base images
+
+---
+
+## Prerequisites
+
+### Installation (macOS)
+
+1. Download Podman Desktop: https://podman-desktop.io/downloads
+2. Install the `.dmg` file
+3. Initialize machine: `podman machine init`
+4. Start machine: `podman machine start`
+5. Verify: `podman ps`
+
+### Verification
+
+```bash
+# Test with hello-world
+podman run --rm hello-world
+
+# Build test container
+cd tests/podman
+./build.sh
+
+# Run test container in Podman Desktop
+# Visit http://localhost:5003
+```
+
+---
+
+## References
+
+- [Podman Documentation](https://docs.podman.io/)
+- [Podman Desktop](https://podman-desktop.io/)
+- [MCP Specification](https://modelcontextprotocol.io/)
+- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)
+
+---
+
+**Supersedes:** None  
+**Superseded By:** None
+
+--- END OF FILE ADRs/034_containerize_mcp_servers_with_podman.md ---
 
 --- START OF FILE ADRs/adr_schema.md ---
 
@@ -50250,6 +50416,85 @@ graph TB
 
 ### 1. Chronicle MCP Server
 
+**Domain:** Historical truth and canonical records  
+**Directory:** `00_CHRONICLE/ENTRIES/`  
+**Purpose:** Create and manage chronicle entries (file operations only)
+
+```mermaid
+graph LR
+    subgraph "Chronicle MCP Tools"
+        A[create_chronicle_entry]
+        B[update_chronicle_entry]
+        C[get_chronicle_entry]
+        D[list_recent_entries]
+        E[search_chronicle]
+    end
+    
+    subgraph "Operations"
+        F[Validate Schema]
+        G[Check Entry Age]
+        H[Generate Markdown]
+        I[Write to Disk]
+    end
+    
+    subgraph "Storage"
+        J[00_CHRONICLE/ENTRIES/]
+    end
+    
+    A --> F
+    B --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+```
+
+**Tool Signatures:**
+
+```typescript
+create_chronicle_entry(
+  entry_number: number,
+  title: string,
+  date: string,
+  author: string,
+  content: string,
+  status?: "draft" | "published",
+  classification?: "public" | "internal" | "confidential"
+): FileOperationResult {
+  file_path: string,
+  content: string,
+  operation: "created"
+}
+
+update_chronicle_entry(
+  entry_number: number,
+  updates: Partial<ChronicleEntry>,
+  reason: string,
+  override_approval_id?: string
+): FileOperationResult {
+  file_path: string,
+  content: string,
+  operation: "updated"
+}
+```
+
+**Safety Rules:**
+- Entry numbers are auto-generated and sequential
+- Cannot modify entries >7 days old without approval override
+- Must follow chronicle entry template
+- **No Git operations** - returns file path for Git Workflow MCP to commit
+- Cannot delete entries (mark as deprecated only)
+
+**Workflow Pattern:**
+```typescript
+// Step 1: Create entry (Chronicle MCP)
+const result = chronicle.create_chronicle_entry(...)
+// Returns: { file_path: "00_CHRONICLE/ENTRIES/280_mcp_architecture.md" }
+
+// Step 2: Commit (Git Workflow MCP)
+git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
+```
+
 **Domain:** Living Chronicle entry management  
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create, read, update chronicle entries with automatic git commits
@@ -51506,6 +51751,145 @@ sequenceDiagram
 
 --- END OF FILE docs/mcp/architecture.md ---
 
+--- START OF FILE docs/mcp/claude_desktop_config_template.json ---
+
+{
+    "mcpServers": {
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.chronicle.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.protocol.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.adr.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "tasks": {
+            "displayName": "Task MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.task.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "cortex": {
+            "displayName": "RAG MCP (Cortex)",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "council": {
+            "displayName": "Agent Orchestrator MCP (Council)",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.council.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.config.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.git_workflow.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "forge": {
+            "displayName": "Fine-Tuning MCP (Forge)",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.forge.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        }
+    }
+}
+
+--- END OF FILE docs/mcp/claude_desktop_config_template.json ---
+
 --- START OF FILE docs/mcp/ddd_analysis.md ---
 
 # MCP Ecosystem - 10 Domain Architecture (DDD Analysis)
@@ -51784,6 +52168,25 @@ The **10-domain architecture** provides:
 5. **DDD Compliance**: Each domain represents a true Bounded Context with unique data models and operations
 6. **Hardware Specialization**: Forge domain isolated for CUDA-specific operations
 7. **Accessibility**: Generic AI terminology (RAG, Agent Orchestrator) for external developers
+8. **Single Responsibility Principle**: Document MCPs handle file operations only; Git Workflow MCP handles all commits
+
+### Separation of Concerns Pattern
+
+**Document MCPs** (Chronicle, Protocol, ADR, Task):
+- Create/modify files only
+- Return `FileOperationResult` with file paths
+- No Git operations
+
+**Git Workflow MCP**:
+- Handles all Git commits
+- Generates P101 manifests
+- Centralizes version control logic
+
+**Benefits:**
+- Better composability (LLM chains operations)
+- Easier testing (file ops separate from Git)
+- More flexible workflows (batch commits)
+- Centralized Git logic
 
 **Next Steps:**
 1. Finalize shared infrastructure specifications
@@ -51937,13 +52340,14 @@ The **10-domain architecture** provides:
 
 ---
 
-## Cross-Domain Workflow: Model Development
+## Cross-Domain Workflow Example
+
+**Scenario:** Fine-tune Sanctuary-Guardian-02 model
+
+**Workflow (Separation of Concerns Pattern):**
 
 ```
 1. Task MCP: create_task(#032, "Fine-tune Sanctuary-Guardian-02")
-2. Agent Orchestrator MCP (Council): create_deliberation("Design training strategy for Guardian-02")
-3. RAG MCP (Cortex): query_cortex("Previous fine-tuning results and lessons learned")
-4. Fine-Tuning MCP (Forge): check_resource_availability() → verify CUDA available
 5. Fine-Tuning MCP (Forge): initiate_model_forge({
      forge_id: "guardian-02-v1",
      authorization_task_id: 32,
@@ -52378,41 +52782,34 @@ project_sanctuary.<category>.<server_name>
 
 ### Server Declaration (MCP Settings)
 
+For local Claude Desktop configuration, we recommend using **simplified keys** combined with a **displayName** for better usability.
+
 ```json
 {
   "mcpServers": {
-    "project_sanctuary.document.chronicle": {
+    "chronicle": {
+      "displayName": "Chronicle MCP",
       "command": "node",
       "args": ["/path/to/mcp/servers/document/chronicle/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
+      "env": { "PROJECT_ROOT": "..." }
     },
-    "project_sanctuary.document.protocol": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/document/protocol/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
+    "tasks": {
+      "displayName": "Task MCP",
+      "command": "python",
+      "args": ["-m", "mcp_servers.task.server"],
+      "env": { "PROJECT_ROOT": "..." }
     },
-    "project_sanctuary.system.git_workflow": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/system/git_workflow/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
-    },
-    "project_sanctuary.model.fine_tuning": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/model/forge/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-        "CUDA_FORGE_ACTIVE": "true"
-      }
+    "git_workflow": {
+      "displayName": "Git Workflow MCP",
+      "command": "python",
+      "args": ["-m", "mcp_servers.git_workflow.server"],
+      "env": { "PROJECT_ROOT": "..." }
     }
   }
 }
 ```
+
+**Note:** The internal FQDN (`project_sanctuary.document.task`) is still used for architectural identification, but the local config key can be simplified for developer convenience.
 
 ---
 
@@ -52568,6 +52965,504 @@ SANCTUARY_SYSTEM_CONFIG_VAULT_PATH=/path/to/vault
 **Owner:** Guardian (via Gemini 2.0 Flash Thinking Experimental)
 
 --- END OF FILE docs/mcp/naming_conventions.md ---
+
+--- START OF FILE docs/mcp/port_registry.md ---
+
+# MCP Port Registry
+
+**Version:** 1.0  
+**Status:** Active  
+**Purpose:** Centralized registry of port assignments for Project Sanctuary MCP servers to prevent conflicts.
+
+---
+
+## Port Allocation Strategy
+
+- **Range:** 3000-3099
+- **Protocol:** HTTP (SSE) / Stdio (No port needed)
+- **Container Mapping:** Host Port -> Container Port (8080)
+
+## Assigned Ports
+
+| Port | Server Name | Domain | Status |
+|------|-------------|--------|--------|
+| **3001** | Chronicle MCP | `project_sanctuary.document.chronicle` | Planned |
+| **3002** | Protocol MCP | `project_sanctuary.document.protocol` | Planned |
+| **3003** | ADR MCP | `project_sanctuary.document.adr` | Planned |
+| **3004** | **Task MCP** | `project_sanctuary.document.task` | **Active** |
+| **3005** | RAG MCP (Cortex) | `project_sanctuary.cognitive.cortex` | Planned |
+| **3006** | Council MCP | `project_sanctuary.cognitive.council` | Planned |
+| **3007** | Config MCP | `project_sanctuary.system.config` | Planned |
+| **3008** | Code MCP | `project_sanctuary.system.code` | Planned |
+| **3009** | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Planned |
+| **3010** | Forge MCP | `project_sanctuary.model.fine_tuning` | Planned |
+
+## Usage
+
+When running a container, map the assigned host port to the container's internal port (usually 8080).
+
+**Example (Task MCP):**
+```bash
+podman run -p 3004:8080 ...
+```
+
+--- END OF FILE docs/mcp/port_registry.md ---
+
+--- START OF FILE docs/mcp/prerequisites.md ---
+
+# MCP Server Prerequisites
+
+**Last Updated:** 2025-11-26  
+**Status:** Canonical
+
+---
+
+## Overview
+
+This document outlines all prerequisites for developing and deploying MCP (Model Context Protocol) servers in Project Sanctuary.
+
+---
+
+## System Requirements
+
+### Operating System
+- **macOS** (primary development environment)
+- **Linux** (production deployment)
+- **Windows** (via WSL2, not primary focus)
+
+### Hardware
+- **CPU:** 4+ cores recommended
+- **RAM:** 8GB minimum, 16GB recommended
+- **Disk:** 20GB free space for containers and images
+
+---
+
+## Required Software
+
+### 1. Podman (Containerization)
+
+**Purpose:** Run MCP servers in isolated containers
+
+**Installation (macOS):**
+
+```bash
+# Option 1: Podman Desktop (Recommended)
+# Download from: https://podman-desktop.io/downloads
+# Install the .dmg file
+
+# Option 2: Homebrew (CLI only)
+brew install podman
+```
+
+**Setup:**
+
+```bash
+# Initialize Podman machine
+podman machine init
+
+# Start Podman machine
+podman machine start
+
+# Verify installation
+podman --version
+# Expected: podman version 5.7.0 (or later)
+
+# Test with hello-world
+podman run --rm hello-world
+```
+
+**Configuration:**
+
+Add to `~/.zshrc` (if using Homebrew):
+```bash
+export PATH="/opt/podman/bin:$PATH"
+```
+
+Then reload:
+```bash
+source ~/.zshrc
+```
+
+**Verification:**
+
+```bash
+# Check machine status
+podman machine list
+# Should show: Currently running
+
+# Check containers
+podman ps
+# Should not error
+
+# Run test container
+cd tests/podman
+./build.sh
+# Visit http://localhost:5001 (or 5003)
+```
+
+---
+
+### 2. Python 3.11+
+
+**Purpose:** MCP SDK and server implementation
+
+**Installation:**
+
+```bash
+# macOS (Homebrew)
+brew install python@3.11
+
+# Verify
+python3 --version
+# Expected: Python 3.11.x
+```
+
+**Virtual Environment:**
+
+```bash
+# Create venv for MCP development
+python3 -m venv .venv
+
+# Activate
+source .venv/bin/activate
+
+# Install MCP SDK
+pip install mcp
+```
+
+---
+
+### 3. MCP SDK
+
+**Purpose:** Model Context Protocol implementation
+
+**Installation:**
+
+```bash
+# Python SDK
+pip install mcp
+
+# Verify
+python -c "import mcp; print(mcp.__version__)"
+```
+
+**Documentation:**
+- [MCP Specification](https://modelcontextprotocol.io/)
+- [Python SDK Docs](https://github.com/modelcontextprotocol/python-sdk)
+
+### 4. Claude Desktop
+**Purpose:** Primary interface for interacting with MCP servers
+
+**Installation:**
+- Download from [anthropic.com/claude](https://anthropic.com/claude)
+
+**Configuration:**
+- Requires `claude_desktop_config.json` setup (see [Setup Guide](setup_guide.md))
+
+---
+
+## Project-Specific Setup
+
+### 1. Project Sanctuary Repository
+
+```bash
+# Clone repository
+git clone https://github.com/richfrem/Project_Sanctuary.git
+cd Project_Sanctuary
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Directory Structure
+
+Ensure these directories exist:
+
+```
+Project_Sanctuary/
+├── TASKS/
+│   ├── backlog/
+│   ├── todo/
+│   ├── in-progress/
+│   └── done/
+├── mcp_servers/
+│   └── task/
+│       ├── __init__.py
+│       ├── models.py
+│       ├── validator.py
+│       ├── operations.py
+│       └── server.py
+└── tests/
+    └── podman/
+```
+
+### 3. Environment Variables
+
+Create `.env` file (if needed):
+
+```bash
+# MCP Server Configuration
+MCP_SERVER_HOST=0.0.0.0
+MCP_SERVER_PORT=8080
+
+# Project Paths
+PROJECT_ROOT=/Users/richardfremmerlid/Projects/Project_Sanctuary
+TASKS_DIR=${PROJECT_ROOT}/TASKS
+```
+
+---
+
+## Development Tools (Optional)
+
+### Podman Desktop
+
+**Purpose:** Visual container management
+
+**Features:**
+- View running containers
+- Monitor resource usage
+- View logs
+- Start/stop containers
+- Port mapping configuration
+
+**Installation:**
+Download from https://podman-desktop.io/downloads
+
+**Usage:**
+1. Open Podman Desktop
+2. Go to **Images** tab to see built images
+3. Go to **Containers** tab to manage running containers
+4. Click container name to view logs and details
+
+### VS Code Extensions
+
+**Recommended:**
+- **Podman** - Container management in VS Code
+- **Python** - Python language support
+- **Docker** - Dockerfile syntax (works with Podman)
+
+---
+
+## Verification Checklist
+
+Before implementing MCP servers, verify:
+
+- [ ] Podman installed: `podman --version`
+- [ ] Podman machine running: `podman machine list`
+- [ ] Can run containers: `podman run --rm hello-world`
+- [ ] Python 3.11+ installed: `python3 --version`
+- [ ] MCP SDK installed: `pip show mcp`
+- [ ] Test container works: `cd tests/podman && ./build.sh`
+- [ ] Can access test page: http://localhost:5001 or 5003
+- [ ] Podman Desktop installed (optional but recommended)
+
+---
+
+## Troubleshooting
+
+### Podman Issues
+
+**Problem:** `podman: command not found`
+
+**Solution:**
+```bash
+# Add to PATH
+echo 'export PATH="/opt/podman/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Problem:** `Cannot connect to Podman socket`
+
+**Solution:**
+```bash
+# Start Podman machine
+podman machine start
+
+# Verify
+podman machine list
+```
+
+**Problem:** Port already in use
+
+**Solution:**
+```bash
+# Use different port mapping
+podman run -p 5003:5001 ...
+# Access via http://localhost:5003
+```
+
+### Python Issues
+
+**Problem:** `ModuleNotFoundError: No module named 'mcp'`
+
+**Solution:**
+```bash
+# Activate venv
+source .venv/bin/activate
+
+# Install MCP SDK
+pip install mcp
+```
+
+---
+
+## Next Steps
+
+Once all prerequisites are met:
+
+1. ✅ Review [architecture.md](./architecture.md)
+2. ✅ Review [naming_conventions.md](./naming_conventions.md)
+3. ✅ Start with Task #031: Implement Task MCP
+4. Follow implementation tasks #029-#036
+
+---
+
+## References
+
+- [ADR 034: Containerize MCP Servers with Podman](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/034_containerize_mcp_servers_with_podman.md)
+- [Podman Documentation](https://docs.podman.io/)
+- [MCP Specification](https://modelcontextprotocol.io/)
+- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)
+
+--- END OF FILE docs/mcp/prerequisites.md ---
+
+--- START OF FILE docs/mcp/setup_guide.md ---
+
+# MCP Server Setup Guide
+
+This guide documents the standard process for creating, containerizing, and integrating MCP servers with Claude Desktop, based on the implementation of the Task MCP server.
+
+## 1. Project Structure
+
+Ensure your MCP server follows this structure to be importable as a module:
+
+```
+mcp_servers/
+├── __init__.py          # CRITICAL: Required for python -m execution
+└── server_name/
+    ├── __init__.py      # Package init
+    ├── server.py        # Main entry point (MCP server)
+    ├── models.py        # Data models
+    ├── operations.py    # Core logic (separation of concerns)
+    ├── validator.py     # Input validation
+    ├── Dockerfile       # Container definition
+    ├── requirements.txt # Dependencies
+    └── README.md        # Documentation
+```
+
+**Key Learning:** You MUST have an `__init__.py` in the root `mcp_servers/` directory, otherwise `python -m mcp_servers.task.server` will fail.
+
+---
+
+## 2. Configuration Template
+
+A template configuration file is available at [`docs/mcp/claude_desktop_config_template.json`](claude_desktop_config_template.json).
+
+**Important:** Claude Desktop **requires absolute paths**. You cannot use relative paths (like `./` or `../`) in the configuration file because Claude Desktop launches from its own application directory, not your project directory.
+
+**Template Usage:**
+1. Copy the content from the template.
+2. Replace `<ABSOLUTE_PATH_TO_PROJECT>` with your full project path (e.g., `/Users/username/Projects/Project_Sanctuary`).
+3. Paste into your `claude_desktop_config.json`.
+
+Create a `Dockerfile` in your server directory.
+
+**Build the Image:**
+```bash
+cd mcp_servers/task
+podman build -t task-mcp:latest .
+```
+
+**Run the Container (Production):**
+```bash
+podman run -d \
+  --name task-mcp \
+  -v $(pwd)/TASKS:/app/TASKS:rw \
+  -p 3004:8080 \
+  task-mcp:latest
+```
+
+**Verify Running:**
+```bash
+# Check status (should show Up or Exited(0))
+podman ps -a | grep task-mcp
+
+# View logs
+podman logs task-mcp
+```
+*Note: Stdio-based servers will exit immediately if no input is provided. This is normal behavior for stdio transport.*
+
+---
+
+## 3. Configuring Claude Desktop
+
+To use the server locally (development mode), configure Claude Desktop to run the Python script directly.
+
+**Config File Location:**
+```bash
+# Open in terminal editor
+nano ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+# Or open in VS Code (if installed)
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+**Configuration Format (CRITICAL):**
+You **MUST** use absolute paths to the virtual environment's Python executable.
+We recommend using **simplified keys** (e.g., `tasks`) combined with a `displayName` for a cleaner configuration.
+
+```json
+{
+  "mcpServers": {
+    "tasks": {
+      "displayName": "Task MCP",
+      "command": "/Users/username/Projects/Project_Sanctuary/.venv/bin/python",
+      "args": [
+        "-m",
+        "mcp_servers.task.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/username/Projects/Project_Sanctuary",
+        "PROJECT_ROOT": "/Users/username/Projects/Project_Sanctuary"
+      },
+      "cwd": "/Users/username/Projects/Project_Sanctuary"
+    }
+  }
+}
+```
+
+**Why Absolute Paths?**
+Claude Desktop does not load your shell's `.bashrc` or `.zshrc`, so it doesn't know where `python` is or what virtual environment to use. Using the full path `/path/to/.venv/bin/python` ensures it uses the correct environment with all installed dependencies.
+
+---
+
+## 4. Verification
+
+1.  **Restart Claude Desktop** (Quit completely via Cmd+Q).
+2.  **Check Connection:** Look for the 🔌 icon or ask "What tools are available?".
+3.  **Test with Natural Language:**
+    > "Create a test task #099 to verify MCP integration."
+
+---
+
+## Troubleshooting
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `spawn python ENOENT` | Claude can't find python executable | Use absolute path to `.venv/bin/python` |
+| `ModuleNotFoundError` | Python can't find the module | Ensure `PYTHONPATH` is set and `__init__.py` exists |
+| `Connection Refused` | Server crashed or not running | Check logs at `~/Library/Logs/Claude/` |
+
+---
+
+**Related Documentation:**
+- [Task MCP README](../../mcp_servers/task/README.md)
+- [Prerequisites](prerequisites.md)
+
+--- END OF FILE docs/mcp/setup_guide.md ---
 
 --- START OF FILE docs/mcp/shared_infrastructure_types.ts ---
 
@@ -57242,6 +58137,1835 @@ class LoginPage(BasePage):
 
 --- END OF FILE mcp_agent/page_objects/pages/login_page.py ---
 
+--- START OF FILE mcp_servers/__init__.py ---
+
+
+
+--- END OF FILE mcp_servers/__init__.py ---
+
+--- START OF FILE mcp_servers/task/README.md ---
+
+# Task MCP Server
+
+**Domain:** `project_sanctuary.document.task`  
+**Version:** 0.1.0  
+**Status:** In Development
+
+---
+
+## Overview
+
+The Task MCP server manages task files in the `TASKS/` directory structure. It provides tools for creating, updating, moving, reading, listing, and searching tasks following the canonical task schema.
+
+**Key Principle:** File operations only - No Git commits (follows separation of concerns)
+
+---
+
+## Quick Start
+
+### Start the MCP Server
+
+**Option 1: Run Locally (Development - No Container)**
+```bash
+cd mcp_servers/task
+source ../../.venv/bin/activate
+python server.py
+```
+*Use this for development, debugging, and quick testing. No Podman required.*
+
+**Option 2: Run in Podman Container (Production)**
+```bash
+# From project root
+podman run -d \
+  --name task-mcp \
+  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS:/app/TASKS:rw \
+  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/tools:/app/tools:ro \
+  -p 8080:8080 \
+  task-mcp:latest
+```
+*Use this for production deployment. Runs in isolated Podman container. View in **Podman Desktop** app.*
+
+**Verify Running:**
+```bash
+# Check status (should show Up or Exited(0))
+podman ps -a | grep task-mcp
+
+# View logs
+podman logs task-mcp
+```
+
+**Note:** Both options run the same MCP server code. The container version provides isolation and reproducibility.
+
+### Run Tests
+
+```bash
+# Activate virtual environment
+source .venv/bin/activate
+
+# Run all unit tests
+python -m pytest tests/mcp_servers/task/test_operations.py -v
+
+# Run end-to-end workflow test
+python tests/mcp_servers/task/test_e2e_workflow.py
+
+# Run specific test
+python -m pytest tests/mcp_servers/task/test_operations.py::TestCreateTask::test_create_task_success -v
+```
+
+### Create a Task
+
+```python
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.task.models import TaskPriority, TaskStatus
+from pathlib import Path
+
+# Initialize
+project_root = Path.cwd()
+task_ops = TaskOperations(project_root)
+
+# Create task
+result = task_ops.create_task(
+    title="Implement New Feature",
+    objective="Add feature X to improve user experience",
+    deliverables=[
+        "Feature implementation",
+        "Unit tests",
+        "Documentation"
+    ],
+    acceptance_criteria=[
+        "Feature works as expected",
+        "Tests pass",
+        "Docs updated"
+    ],
+    priority=TaskPriority.HIGH
+)
+
+print(f"Created: {result.file_path}")
+```
+
+### Update a Task
+
+```python
+# Update task priority
+result = task_ops.update_task(
+    task_number=37,
+    updates={"priority": TaskPriority.CRITICAL}
+)
+
+# Move task to in-progress
+result = task_ops.update_task_status(
+    task_number=37,
+    new_status=TaskStatus.IN_PROGRESS,
+    notes="Starting work on this task"
+)
+
+print(f"Updated: {result.file_path}")
+```
+
+### Search and List Tasks
+
+```python
+# Search for tasks
+results = task_ops.search_tasks("authentication")
+for task in results:
+    print(f"#{task['number']}: {task['title']}")
+
+# List in-progress tasks
+tasks = task_ops.list_tasks(status=TaskStatus.IN_PROGRESS)
+print(f"Found {len(tasks)} in-progress tasks")
+```
+
+---
+
+## Architecture
+
+```mermaid
+graph TB
+    subgraph "LLM Assistant"
+        LLM[Gemini/Claude/GPT]
+    end
+    
+    subgraph "Task MCP Server"
+        Server[MCP Server<br/>server.py]
+        Ops[File Operations<br/>operations.py]
+        Val[Validator<br/>validator.py]
+        Models[Data Models<br/>models.py]
+    end
+    
+    subgraph "File System"
+        Backlog[TASKS/backlog/]
+        Todo[TASKS/todo/]
+        InProgress[TASKS/in-progress/]
+        Done[TASKS/done/]
+    end
+    
+    subgraph "Shared Tools"
+        GetNext[get_next_task_number.py]
+        Schema[task_schema.md]
+    end
+    
+    LLM -->|MCP Protocol| Server
+    Server --> Ops
+    Ops --> Val
+    Ops --> Models
+    Ops --> GetNext
+    Val --> Schema
+    
+    Ops -->|create/update| Backlog
+    Ops -->|create/update| Todo
+    Ops -->|create/update| InProgress
+    Ops -->|create/update| Done
+    
+    style Server fill:#667eea
+    style Ops fill:#764ba2
+    style Val fill:#f093fb
+    style Models fill:#4facfe
+```
+
+**Related Diagrams:**
+- [Task MCP Class Diagram](../../docs/mcp/diagrams/task_mcp_class.mmd)
+- [MCP Ecosystem Overview](../../docs/mcp/diagrams/mcp_ecosystem_class.mmd)
+
+---
+
+## Operations
+
+### 1. create_task
+
+**Purpose:** Create a new task file
+
+**Preconditions:**
+- Task number must be unique (auto-generated if not provided)
+- Title, objective, deliverables, and acceptance criteria are required
+- Dependencies must reference existing tasks (if specified)
+
+**Input:**
+```python
+create_task(
+    title: str,                          # Required
+    objective: str,                      # Required
+    deliverables: List[str],             # Required (min 1)
+    acceptance_criteria: List[str],      # Required (min 1)
+    priority: TaskPriority = MEDIUM,     # Optional
+    status: TaskStatus = BACKLOG,        # Optional
+    lead: str = "Unassigned",            # Optional
+    dependencies: str = None,            # Optional
+    related_documents: str = None,       # Optional
+    notes: str = None,                   # Optional
+    task_number: int = None              # Optional (auto-generated)
+)
+```
+
+**Output:**
+```python
+FileOperationResult {
+    file_path: "TASKS/backlog/037_implement_feature.md",
+    content: "# TASK: Implement Feature\n...",
+    operation: "created",
+    task_number: 37,
+    status: "success",
+    message: "Task #037 created successfully"
+}
+```
+
+**Example:**
+```python
+result = task_mcp.create_task(
+    title="Implement User Authentication",
+    objective="Add secure user authentication to the application",
+    deliverables=[
+        "Login page with email/password",
+        "JWT token generation",
+        "Protected routes middleware"
+    ],
+    acceptance_criteria=[
+        "Users can log in with valid credentials",
+        "Invalid credentials show error message",
+        "Protected routes require authentication"
+    ],
+    priority=TaskPriority.HIGH,
+    dependencies="Requires #036"
+)
+# Returns: { file_path: "TASKS/backlog/037_implement_user_authentication.md", ... }
+```
+
+---
+
+### 2. update_task
+
+**Purpose:** Update an existing task's metadata or content
+
+**Preconditions:**
+- Task must exist
+- Updates must maintain schema validity
+
+**Input:**
+```python
+update_task(
+    task_number: int,        # Required
+    updates: Dict[str, any]  # Required
+)
+```
+
+**Output:**
+```python
+FileOperationResult {
+    file_path: "TASKS/backlog/037_implement_feature.md",
+    content: "# TASK: Implement Feature (Updated)\n...",
+    operation: "updated",
+    task_number: 37,
+    status: "success",
+    message: "Task #037 updated successfully"
+}
+```
+
+**Example:**
+```python
+result = task_mcp.update_task(
+    task_number=37,
+    updates={
+        "priority": TaskPriority.CRITICAL,
+        "lead": "GUARDIAN-02",
+        "deliverables": [
+            "Login page with email/password",
+            "JWT token generation",
+            "Protected routes middleware",
+            "Password reset functionality"  # Added
+        ]
+    }
+)
+```
+
+---
+
+### 3. update_task_status
+
+**Purpose:** Change task status (moves file between directories)
+
+**Preconditions:**
+- Task must exist
+- New status must be valid
+
+**Input:**
+```python
+update_task_status(
+    task_number: int,          # Required
+    new_status: TaskStatus,    # Required
+    notes: str = None          # Optional
+)
+```
+
+**Output:**
+```python
+FileOperationResult {
+    file_path: "TASKS/in-progress/037_implement_feature.md",
+    content: "# TASK: Implement Feature\n...",
+    operation: "moved",
+    task_number: 37,
+    status: "success",
+    message: "Task #037 moved to in-progress"
+}
+```
+
+**Status Transitions:**
+```
+backlog → todo → in-progress → done
+   ↓        ↓         ↓
+blocked (stays in in-progress dir)
+```
+
+**Example:**
+```python
+result = task_mcp.update_task_status(
+    task_number=37,
+    new_status=TaskStatus.IN_PROGRESS,
+    notes="Starting implementation. Assigned to GUARDIAN-02."
+)
+# File moves from TASKS/backlog/ to TASKS/in-progress/
+```
+
+---
+
+### 4. get_task
+
+**Purpose:** Retrieve a specific task by number
+
+**Preconditions:**
+- Task must exist
+
+**Input:**
+```python
+get_task(task_number: int)  # Required
+```
+
+**Output:**
+```python
+{
+    "number": 37,
+    "title": "Implement User Authentication",
+    "status": "in-progress",
+    "priority": "Critical",
+    "lead": "GUARDIAN-02",
+    "file_path": "TASKS/in-progress/037_implement_user_authentication.md",
+    "content": "# TASK: Implement User Authentication\n..."
+}
+```
+
+**Example:**
+```python
+task = task_mcp.get_task(37)
+print(task["title"])  # "Implement User Authentication"
+```
+
+---
+
+### 5. list_tasks
+
+**Purpose:** List tasks with optional filters
+
+**Preconditions:**
+- None (returns empty list if no tasks match)
+
+**Input:**
+```python
+list_tasks(
+    status: TaskStatus = None,      # Optional filter
+    priority: TaskPriority = None   # Optional filter
+)
+```
+
+**Output:**
+```python
+[
+    {
+        "number": 37,
+        "title": "Implement User Authentication",
+        "status": "in-progress",
+        "priority": "Critical",
+        "lead": "GUARDIAN-02",
+        "file_path": "TASKS/in-progress/037_implement_user_authentication.md"
+    },
+    {
+        "number": 38,
+        "title": "Add Unit Tests",
+        "status": "in-progress",
+        "priority": "High",
+        "lead": "Unassigned",
+        "file_path": "TASKS/in-progress/038_add_unit_tests.md"
+    }
+]
+```
+
+**Example:**
+```python
+# Get all tasks in progress
+in_progress = task_mcp.list_tasks(status=TaskStatus.IN_PROGRESS)
+
+# Get all critical priority tasks
+critical = task_mcp.list_tasks(priority=TaskPriority.CRITICAL)
+
+# Get all tasks (no filters)
+all_tasks = task_mcp.list_tasks()
+```
+
+---
+
+### 6. search_tasks
+
+**Purpose:** Search tasks by content (full-text search)
+
+**Preconditions:**
+- None (returns empty list if no matches)
+
+**Input:**
+```python
+search_tasks(query: str)  # Required
+```
+
+**Output:**
+```python
+[
+    {
+        "number": 37,
+        "title": "Implement User Authentication",
+        "status": "in-progress",
+        "priority": "Critical",
+        "file_path": "TASKS/in-progress/037_implement_user_authentication.md",
+        "matches": [
+            "Add secure user authentication to the application",
+            "JWT token generation",
+            "Protected routes require authentication"
+        ]
+    }
+]
+```
+
+**Example:**
+```python
+# Search for tasks mentioning "authentication"
+results = task_mcp.search_tasks("authentication")
+
+# Search for tasks mentioning "GUARDIAN-02"
+guardian_tasks = task_mcp.search_tasks("GUARDIAN-02")
+```
+
+---
+
+## Connecting to Claude Desktop
+
+To use the Task MCP server with Claude Desktop, you need to register it in Claude's MCP configuration.
+
+### Step 1: Locate Claude Desktop Config
+
+The config file is at:
+```bash
+cd ~/Library/Application\ Support/Claude/
+nano claude_desktop_config.json
+```
+
+### Step 2: Add Task MCP Server
+
+Edit the config file and add the Task MCP server:
+
+```json
+{
+  "mcpServers": {
+    "task-mcp": {
+      "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+      "args": [
+        "-m",
+        "mcp_servers.task.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+      },
+      "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+    }
+  }
+}
+```
+
+**Note:** We use absolute paths to the virtual environment python executable to avoid `ENOENT` errors.
+
+### Step 3: Restart Claude Desktop
+
+1. Quit Claude Desktop completely
+2. Reopen Claude Desktop
+3. The Task MCP server will be available
+
+### Step 4: Verify Connection
+
+In Claude Desktop, you should see the Task MCP server listed in the MCP servers panel. You can now use natural language:
+
+```
+"Create a high priority task to implement user authentication"
+"List all tasks in progress"
+"Move task #037 to done"
+"Search for tasks about authentication"
+```
+
+### Troubleshooting
+
+**Server not showing up:**
+- Check the config file syntax (valid JSON)
+- Ensure Python path is correct
+- Check Claude Desktop logs: `~/Library/Logs/Claude/`
+
+**Permission errors:**
+- Ensure the virtual environment is activated
+- Check file permissions on TASKS directory
+
+---
+
+## Safety Rules
+
+1. **Task Number Uniqueness** - Cannot create duplicate task numbers
+2. **Circular Dependencies** - Validates dependency references exist
+3. **Schema Compliance** - All tasks must follow `TASKS/task_schema.md`
+4. **File Path Safety** - All operations restricted to `TASKS/` directory
+5. **No Deletion** - Tasks cannot be deleted (archive by moving to done)
+6. **No Git Operations** - File operations only (separation of concerns)
+
+---
+
+## Running in Podman
+
+### Build the Image
+
+```bash
+cd mcp_servers/task
+podman build -t task-mcp:latest .
+```
+
+### Run the Container
+
+```bash
+podman run -d \
+  --name task-mcp \
+  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS:/app/TASKS:rw \
+  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/tools:/app/tools:ro \
+  -p 8080:8080 \
+  task-mcp:latest
+```
+
+**Volume Mounts:**
+- `TASKS/` - Read/write access for task file operations
+- `tools/` - Read-only access for `get_next_task_number.py`
+
+**Port Mapping:**
+- `8080:8080` - MCP protocol communication
+
+### Run in Podman Desktop
+
+1. Open **Podman Desktop**
+2. Go to **Images** tab
+3. Find `task-mcp:latest`
+4. Click **▶️ play button**
+5. Configure:
+   - **Port:** `8080:8080`
+   - **Volume 1:** `/path/to/TASKS:/app/TASKS:rw`
+   - **Volume 2:** `/path/to/tools:/app/tools:ro`
+   - **Name:** `task-mcp`
+6. Click **Start Container**
+
+### Verify Running
+
+```bash
+# Check container status
+podman ps | grep task-mcp
+
+# View logs
+podman logs task-mcp
+
+# Test health endpoint
+curl http://localhost:8080/health
+```
+
+---
+
+## Development
+
+### Project Structure
+
+```
+mcp_servers/task/
+├── __init__.py          # Package initialization
+├── models.py            # Data models (TaskSchema, FileOperationResult)
+├── validator.py         # Schema and safety validation
+├── operations.py        # File operations (create, update, move, etc.)
+├── server.py            # MCP server implementation
+├── Dockerfile           # Container definition
+└── README.md            # This file
+```
+
+### Local Testing (Without Container)
+
+```bash
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install dependencies
+pip install mcp
+
+# Run tests
+python -m pytest tests/mcp_servers/task/
+
+# Run server locally
+cd mcp_servers/task
+python server.py
+```
+
+---
+
+## Dependencies
+
+- **Python 3.11+**
+- **MCP SDK:** `pip install mcp`
+- **Project Tools:** `get_next_task_number.py`
+- **Task Schema:** `TASKS/task_schema.md`
+
+---
+
+## Related Documentation
+
+- [MCP Architecture](../../docs/mcp/architecture.md)
+- [MCP Setup Guide](../../docs/mcp/setup_guide.md)
+- [Task Schema](../../TASKS/task_schema.md)
+- [ADR 034: Containerize MCP Servers](../../ADRs/034_containerize_mcp_servers_with_podman.md)
+- [Prerequisites Guide](../../docs/mcp/prerequisites.md)
+- [Task #031: Implement Task MCP](../../TASKS/backlog/031_implement_task_mcp.md)
+
+---
+
+## Troubleshooting
+
+### Task Number Already Exists
+
+**Error:** `Task #037 already exists in backlog/`
+
+**Solution:** Use auto-generated task number (don't specify `task_number`)
+
+### Validation Failed
+
+**Error:** `Schema validation failed: At least one deliverable is required`
+
+**Solution:** Ensure all required fields are provided:
+- title
+- objective
+- deliverables (min 1)
+- acceptance_criteria (min 1)
+
+### File Not Found
+
+**Error:** `Task #037 not found`
+
+**Solution:** Verify task exists:
+```python
+task = task_mcp.get_task(37)
+if task is None:
+    print("Task does not exist")
+```
+
+---
+
+**Last Updated:** 2025-11-26  
+**Maintainer:** Project Sanctuary Team
+
+--- END OF FILE mcp_servers/task/README.md ---
+
+--- START OF FILE mcp_servers/task/__init__.py ---
+
+"""
+Task MCP Server
+Domain: project_sanctuary.document.task
+Purpose: Manage task files in TASKS/ directories (file operations only)
+"""
+
+__version__ = "0.1.0"
+__domain__ = "project_sanctuary.document.task"
+
+--- END OF FILE mcp_servers/task/__init__.py ---
+
+--- START OF FILE mcp_servers/task/models.py ---
+
+"""
+Task MCP Server - Data Models
+Defines schemas for tasks and operation results
+"""
+
+from dataclasses import dataclass
+from enum import Enum
+from typing import Optional, List
+from datetime import datetime
+
+
+class TaskStatus(str, Enum):
+    """Task status following task_schema.md"""
+    BACKLOG = "backlog"
+    TODO = "todo"
+    IN_PROGRESS = "in-progress"
+    COMPLETE = "complete"
+    BLOCKED = "blocked"
+
+
+class TaskPriority(str, Enum):
+    """Task priority levels"""
+    CRITICAL = "Critical"
+    HIGH = "High"
+    MEDIUM = "Medium"
+    LOW = "Low"
+
+
+@dataclass
+class TaskSchema:
+    """
+    Task schema following TASKS/task_schema.md
+    """
+    number: int
+    title: str
+    status: TaskStatus
+    priority: TaskPriority
+    lead: str
+    dependencies: Optional[str] = None
+    related_documents: Optional[str] = None
+    objective: str = ""
+    deliverables: List[str] = None
+    acceptance_criteria: List[str] = None
+    notes: Optional[str] = None
+    
+    def __post_init__(self):
+        if self.deliverables is None:
+            self.deliverables = []
+        if self.acceptance_criteria is None:
+            self.acceptance_criteria = []
+
+
+@dataclass
+class FileOperationResult:
+    """
+    Result of a file operation (following separation of concerns)
+    Returns file path for Git Workflow MCP to commit
+    """
+    file_path: str
+    content: str
+    operation: str  # "created", "updated", "moved"
+    task_number: int
+    status: str = "success"
+    message: str = ""
+    
+    def to_dict(self):
+        return {
+            "file_path": self.file_path,
+            "content": self.content,
+            "operation": self.operation,
+            "task_number": self.task_number,
+            "status": self.status,
+            "message": self.message
+        }
+
+--- END OF FILE mcp_servers/task/models.py ---
+
+--- START OF FILE mcp_servers/task/operations.py ---
+
+"""
+Task MCP Server - File Operations
+Handles all task file operations (create, update, move, read, list, search)
+Following separation of concerns: File operations only, no Git commits
+"""
+
+import re
+from pathlib import Path
+from typing import List, Optional, Dict, Tuple
+from datetime import datetime
+import sys
+import os
+
+# Add tools directory to path for get_next_task_number
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "tools" / "scaffolds"))
+from get_next_task_number import get_next_task_number
+
+from .models import TaskSchema, TaskStatus, TaskPriority, FileOperationResult
+from .validator import TaskValidator
+
+
+class TaskOperations:
+    """Handles all task file operations"""
+    
+    def __init__(self, project_root: Path):
+        self.project_root = project_root
+        self.tasks_dir = project_root / "TASKS"
+        self.validator = TaskValidator(project_root)
+        
+        # Status to directory mapping
+        self.status_dirs = {
+            TaskStatus.BACKLOG: self.tasks_dir / "backlog",
+            TaskStatus.TODO: self.tasks_dir / "todo",
+            TaskStatus.IN_PROGRESS: self.tasks_dir / "in-progress",
+            TaskStatus.COMPLETE: self.tasks_dir / "done",
+            TaskStatus.BLOCKED: self.tasks_dir / "in-progress"  # Blocked tasks stay in in-progress
+        }
+    
+    def create_task(
+        self,
+        title: str,
+        objective: str,
+        deliverables: List[str],
+        acceptance_criteria: List[str],
+        priority: TaskPriority = TaskPriority.MEDIUM,
+        status: TaskStatus = TaskStatus.BACKLOG,
+        lead: str = "Unassigned",
+        dependencies: Optional[str] = None,
+        related_documents: Optional[str] = None,
+        notes: Optional[str] = None,
+        task_number: Optional[int] = None
+    ) -> FileOperationResult:
+        """
+        Create a new task file
+        
+        Args:
+            title: Task title
+            objective: What and why
+            deliverables: List of concrete outputs
+            acceptance_criteria: List of completion conditions
+            priority: Task priority (default: MEDIUM)
+            status: Initial status (default: BACKLOG)
+            lead: Assigned person/agent (default: Unassigned)
+            dependencies: Task dependencies (e.g., "Requires #012")
+            related_documents: Related files/protocols
+            notes: Additional context
+            task_number: Specific task number (auto-generated if None)
+        
+        Returns:
+            FileOperationResult with file path and content
+        """
+        # Get next task number if not provided
+        if task_number is None:
+            task_number = int(get_next_task_number())
+        
+        # Validate task number is unique
+        is_valid, error_msg = self.validator.validate_task_number(task_number)
+        if not is_valid:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="create",
+                task_number=task_number,
+                status="error",
+                message=error_msg
+            )
+        
+        # Create task schema
+        task = TaskSchema(
+            number=task_number,
+            title=title,
+            status=status,
+            priority=priority,
+            lead=lead,
+            dependencies=dependencies or "None",
+            related_documents=related_documents or "None",
+            objective=objective,
+            deliverables=deliverables,
+            acceptance_criteria=acceptance_criteria,
+            notes=notes
+        )
+        
+        # Validate schema
+        is_valid, errors = self.validator.validate_task_schema(task)
+        if not is_valid:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="create",
+                task_number=task_number,
+                status="error",
+                message=f"Schema validation failed: {', '.join(errors)}"
+            )
+        
+        # Validate dependencies
+        if dependencies and dependencies.lower() != "none":
+            is_valid, error_msg = self.validator.validate_dependencies(dependencies)
+            if not is_valid:
+                return FileOperationResult(
+                    file_path="",
+                    content="",
+                    operation="create",
+                    task_number=task_number,
+                    status="error",
+                    message=error_msg
+                )
+        
+        # Generate file content
+        content = self._generate_task_markdown(task)
+        
+        # Determine file path
+        target_dir = self.status_dirs[status]
+        target_dir.mkdir(parents=True, exist_ok=True)
+        
+        filename = f"{task_number:03d}_{self._title_to_filename(title)}.md"
+        file_path = target_dir / filename
+        
+        # Write file
+        file_path.write_text(content, encoding='utf-8')
+        
+        return FileOperationResult(
+            file_path=str(file_path.relative_to(self.project_root)),
+            content=content,
+            operation="created",
+            task_number=task_number,
+            status="success",
+            message=f"Task #{task_number:03d} created successfully"
+        )
+    
+    def update_task(
+        self,
+        task_number: int,
+        updates: Dict[str, any]
+    ) -> FileOperationResult:
+        """
+        Update an existing task
+        
+        Args:
+            task_number: Task number to update
+            updates: Dictionary of fields to update
+        
+        Returns:
+            FileOperationResult with updated file path and content
+        """
+        # Find existing task
+        exists, current_dir = self.validator.task_exists(task_number)
+        if not exists:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="update",
+                task_number=task_number,
+                status="error",
+                message=f"Task #{task_number:03d} not found"
+            )
+        
+        # Read current task
+        current_path = self._find_task_file(task_number, Path(current_dir))
+        if not current_path:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="update",
+                task_number=task_number,
+                status="error",
+                message=f"Task file not found for #{task_number:03d}"
+            )
+        
+        current_content = current_path.read_text(encoding='utf-8')
+        
+        # Parse current task
+        task = self._parse_task_markdown(current_content, task_number)
+        
+        # Apply updates
+        for key, value in updates.items():
+            if hasattr(task, key):
+                setattr(task, key, value)
+        
+        # Validate updated task
+        is_valid, errors = self.validator.validate_task_schema(task)
+        if not is_valid:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="update",
+                task_number=task_number,
+                status="error",
+                message=f"Validation failed: {', '.join(errors)}"
+            )
+        
+        # Generate updated content
+        new_content = self._generate_task_markdown(task)
+        
+        # Write updated file
+        current_path.write_text(new_content, encoding='utf-8')
+        
+        return FileOperationResult(
+            file_path=str(current_path.relative_to(self.project_root)),
+            content=new_content,
+            operation="updated",
+            task_number=task_number,
+            status="success",
+            message=f"Task #{task_number:03d} updated successfully"
+        )
+    
+    def update_task_status(
+        self,
+        task_number: int,
+        new_status: TaskStatus,
+        notes: Optional[str] = None
+    ) -> FileOperationResult:
+        """
+        Update task status (moves file between directories)
+        
+        Args:
+            task_number: Task number
+            new_status: New status
+            notes: Optional notes about status change
+        
+        Returns:
+            FileOperationResult with new file path
+        """
+        # Find current task
+        exists, current_dir = self.validator.task_exists(task_number)
+        if not exists:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="move",
+                task_number=task_number,
+                status="error",
+                message=f"Task #{task_number:03d} not found"
+            )
+        
+        current_path = self._find_task_file(task_number, Path(current_dir))
+        if not current_path:
+            return FileOperationResult(
+                file_path="",
+                content="",
+                operation="move",
+                task_number=task_number,
+                status="error",
+                message=f"Task file not found"
+            )
+        
+        # Read and parse task
+        content = current_path.read_text(encoding='utf-8')
+        task = self._parse_task_markdown(content, task_number)
+        
+        # Update status
+        old_status = task.status
+        task.status = new_status
+        
+        # Add notes if provided
+        if notes:
+            if task.notes:
+                task.notes += f"\n\n**Status Change ({datetime.now().strftime('%Y-%m-%d')}):** {old_status.value} → {new_status.value}\n{notes}"
+            else:
+                task.notes = f"**Status Change ({datetime.now().strftime('%Y-%m-%d')}):** {old_status.value} → {new_status.value}\n{notes}"
+        
+        # Generate updated content
+        new_content = self._generate_task_markdown(task)
+        
+        # Determine new directory
+        new_dir = self.status_dirs[new_status]
+        new_dir.mkdir(parents=True, exist_ok=True)
+        
+        new_path = new_dir / current_path.name
+        
+        # Move file
+        current_path.rename(new_path)
+        
+        # Write updated content
+        new_path.write_text(new_content, encoding='utf-8')
+        
+        return FileOperationResult(
+            file_path=str(new_path.relative_to(self.project_root)),
+            content=new_content,
+            operation="moved",
+            task_number=task_number,
+            status="success",
+            message=f"Task #{task_number:03d} moved to {new_status.value}"
+        )
+    
+    def get_task(self, task_number: int) -> Optional[Dict]:
+        """Get task by number"""
+        exists, task_dir = self.validator.task_exists(task_number)
+        if not exists:
+            return None
+        
+        task_path = self._find_task_file(task_number, Path(task_dir))
+        if not task_path:
+            return None
+        
+        content = task_path.read_text(encoding='utf-8')
+        task = self._parse_task_markdown(content, task_number)
+        
+        return {
+            "number": task.number,
+            "title": task.title,
+            "status": task.status.value,
+            "priority": task.priority.value,
+            "lead": task.lead,
+            "file_path": str(task_path.relative_to(self.project_root)),
+            "content": content
+        }
+    
+    def list_tasks(
+        self,
+        status: Optional[TaskStatus] = None,
+        priority: Optional[TaskPriority] = None
+    ) -> List[Dict]:
+        """List tasks with optional filters"""
+        tasks = []
+        
+        # Determine which directories to search
+        if status:
+            dirs_to_search = [self.status_dirs[status]]
+        else:
+            dirs_to_search = list(self.status_dirs.values())
+        
+        # Search directories
+        for task_dir in dirs_to_search:
+            if not task_dir.exists():
+                continue
+            
+            for file_path in task_dir.glob("*.md"):
+                # Extract task number from filename
+                match = re.match(r"^(\d{3})_", file_path.name)
+                if not match:
+                    continue
+                
+                task_num = int(match.group(1))
+                content = file_path.read_text(encoding='utf-8')
+                task = self._parse_task_markdown(content, task_num)
+                
+                # Apply priority filter
+                if priority and task.priority != priority:
+                    continue
+                
+                tasks.append({
+                    "number": task.number,
+                    "title": task.title,
+                    "status": task.status.value,
+                    "priority": task.priority.value,
+                    "lead": task.lead,
+                    "file_path": str(file_path.relative_to(self.project_root))
+                })
+        
+        # Sort by task number
+        tasks.sort(key=lambda x: x["number"])
+        return tasks
+    
+    def search_tasks(self, query: str) -> List[Dict]:
+        """Search tasks by content"""
+        results = []
+        query_lower = query.lower()
+        
+        for task_dir in self.status_dirs.values():
+            if not task_dir.exists():
+                continue
+            
+            for file_path in task_dir.glob("*.md"):
+                content = file_path.read_text(encoding='utf-8')
+                
+                if query_lower in content.lower():
+                    match = re.match(r"^(\d{3})_", file_path.name)
+                    if match:
+                        task_num = int(match.group(1))
+                        task = self._parse_task_markdown(content, task_num)
+                        
+                        results.append({
+                            "number": task.number,
+                            "title": task.title,
+                            "status": task.status.value,
+                            "priority": task.priority.value,
+                            "file_path": str(file_path.relative_to(self.project_root)),
+                            "matches": self._find_matches(content, query)
+                        })
+        
+        return results
+    
+    # Helper methods
+    
+    def _generate_task_markdown(self, task: TaskSchema) -> str:
+        """Generate markdown content from task schema"""
+        # Handle both enum and string values for status/priority
+        status_value = task.status.value if isinstance(task.status, TaskStatus) else task.status
+        priority_value = task.priority.value if isinstance(task.priority, TaskPriority) else task.priority
+        
+        lines = [
+            f"# TASK: {task.title}",
+            "",
+            f"**Status:** {status_value}",
+            f"**Priority:** {priority_value}",
+            f"**Lead:** {task.lead}",
+            f"**Dependencies:** {task.dependencies}",
+            f"**Related Documents:** {task.related_documents}",
+            "",
+            "---",
+            "",
+            "## 1. Objective",
+            "",
+            task.objective,
+            "",
+            "## 2. Deliverables",
+            ""
+        ]
+        
+        for i, deliverable in enumerate(task.deliverables, 1):
+            lines.append(f"{i}. {deliverable}")
+        
+        lines.extend([
+            "",
+            "## 3. Acceptance Criteria",
+            ""
+        ])
+        
+        for criterion in task.acceptance_criteria:
+            lines.append(f"- {criterion}")
+        
+        if task.notes:
+            lines.extend([
+                "",
+                "## Notes",
+                "",
+                task.notes
+            ])
+        
+        lines.append("")  # Final newline
+        return "\n".join(lines)
+    
+    def _parse_task_markdown(self, content: str, task_number: int) -> TaskSchema:
+        """Parse markdown content into task schema"""
+        lines = content.split("\n")
+        
+        # Extract metadata
+        title = ""
+        status = TaskStatus.BACKLOG
+        priority = TaskPriority.MEDIUM
+        lead = "Unassigned"
+        dependencies = "None"
+        related_documents = "None"
+        objective = ""
+        deliverables = []
+        acceptance_criteria = []
+        notes = ""
+        
+        current_section = None
+        
+        for line in lines:
+            # Title
+            if line.startswith("# TASK:"):
+                title = line.replace("# TASK:", "").strip()
+            
+            # Metadata
+            elif line.startswith("**Status:**"):
+                status_str = line.split("**Status:**")[1].strip()
+                # Case-insensitive lookup
+                try:
+                    status = TaskStatus(status_str.lower())
+                except ValueError:
+                    # Try to match by value (case-insensitive)
+                    for s in TaskStatus:
+                        if s.value.lower() == status_str.lower():
+                            status = s
+                            break
+            elif line.startswith("**Priority:**"):
+                priority_str = line.split("**Priority:**")[1].strip()
+                # Case-insensitive lookup
+                try:
+                    priority = TaskPriority(priority_str)
+                except ValueError:
+                    # Try to match by value (case-insensitive)
+                    for p in TaskPriority:
+                        if p.value.lower() == priority_str.lower():
+                            priority = p
+                            break
+            elif line.startswith("**Lead:**"):
+                lead = line.split("**Lead:**")[1].strip()
+            elif line.startswith("**Dependencies:**"):
+                dependencies = line.split("**Dependencies:**")[1].strip()
+            elif line.startswith("**Related Documents:**"):
+                related_documents = line.split("**Related Documents:**")[1].strip()
+            
+            # Sections
+            elif line.startswith("## 1. Objective"):
+                current_section = "objective"
+            elif line.startswith("## 2. Deliverables"):
+                current_section = "deliverables"
+            elif line.startswith("## 3. Acceptance Criteria"):
+                current_section = "acceptance"
+            elif line.startswith("## Notes"):
+                current_section = "notes"
+            elif line.startswith("##"):
+                current_section = None
+            
+            # Content
+            elif current_section == "objective" and line.strip() and not line.startswith("---"):
+                objective += line + "\n"
+            elif current_section == "deliverables" and line.strip().startswith(("1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.")):
+                deliverables.append(line.split(".", 1)[1].strip())
+            elif current_section == "acceptance" and line.strip().startswith("-"):
+                acceptance_criteria.append(line.strip()[2:])
+            elif current_section == "notes" and line.strip():
+                notes += line + "\n"
+        
+        return TaskSchema(
+            number=task_number,
+            title=title,
+            status=status,
+            priority=priority,
+            lead=lead,
+            dependencies=dependencies,
+            related_documents=related_documents,
+            objective=objective.strip(),
+            deliverables=deliverables,
+            acceptance_criteria=acceptance_criteria,
+            notes=notes.strip() if notes else None
+        )
+    
+    def _title_to_filename(self, title: str) -> str:
+        """Convert title to filename-safe format"""
+        # Lowercase
+        filename = title.lower()
+        # Replace spaces with underscores
+        filename = filename.replace(" ", "_")
+        # Remove special characters
+        filename = re.sub(r'[^a-z0-9_]', '', filename)
+        # Limit length
+        return filename[:50]
+    
+    def _find_task_file(self, task_number: int, directory: Path) -> Optional[Path]:
+        """Find task file by number in directory"""
+        pattern = f"{task_number:03d}_*.md"
+        files = list(directory.glob(pattern))
+        return files[0] if files else None
+    
+    def _find_matches(self, content: str, query: str) -> List[str]:
+        """Find matching lines in content"""
+        matches = []
+        query_lower = query.lower()
+        
+        for line in content.split("\n"):
+            if query_lower in line.lower():
+                matches.append(line.strip())
+                if len(matches) >= 3:  # Limit to 3 matches
+                    break
+        
+        return matches
+
+--- END OF FILE mcp_servers/task/operations.py ---
+
+--- START OF FILE mcp_servers/task/requirements.txt ---
+
+mcp>=1.0.0
+
+--- END OF FILE mcp_servers/task/requirements.txt ---
+
+--- START OF FILE mcp_servers/task/server.py ---
+
+"""
+Task MCP Server - MCP Protocol Implementation
+Exposes task operations via Model Context Protocol
+"""
+
+from mcp.server import Server
+from mcp.types import Tool, TextContent
+import mcp.server.stdio
+from pathlib import Path
+import json
+import sys
+from typing import Any
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.task.models import TaskStatus, TaskPriority
+
+
+# Initialize server
+app = Server("task-mcp")
+
+# Initialize operations
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+task_ops = TaskOperations(PROJECT_ROOT)
+
+
+@app.list_tools()
+async def list_tools() -> list[Tool]:
+    """List available MCP tools"""
+    return [
+        Tool(
+            name="create_task",
+            description="Create a new task file in TASKS/ directory",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Task title"
+                    },
+                    "objective": {
+                        "type": "string",
+                        "description": "What and why of the task"
+                    },
+                    "deliverables": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "List of concrete outputs"
+                    },
+                    "acceptance_criteria": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "List of completion conditions"
+                    },
+                    "priority": {
+                        "type": "string",
+                        "enum": ["Critical", "High", "Medium", "Low"],
+                        "description": "Task priority (default: Medium)"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["backlog", "todo", "in-progress", "done", "blocked"],
+                        "description": "Initial status (default: backlog)"
+                    },
+                    "lead": {
+                        "type": "string",
+                        "description": "Assigned person/agent (default: Unassigned)"
+                    },
+                    "dependencies": {
+                        "type": "string",
+                        "description": "Task dependencies (e.g., 'Requires #012')"
+                    },
+                    "related_documents": {
+                        "type": "string",
+                        "description": "Related files/protocols"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "description": "Additional context"
+                    },
+                    "task_number": {
+                        "type": "integer",
+                        "description": "Specific task number (auto-generated if not provided)"
+                    }
+                },
+                "required": ["title", "objective", "deliverables", "acceptance_criteria"]
+            }
+        ),
+        Tool(
+            name="update_task",
+            description="Update an existing task's metadata or content",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "task_number": {
+                        "type": "integer",
+                        "description": "Task number to update"
+                    },
+                    "updates": {
+                        "type": "object",
+                        "description": "Dictionary of fields to update"
+                    }
+                },
+                "required": ["task_number", "updates"]
+            }
+        ),
+        Tool(
+            name="update_task_status",
+            description="Change task status (moves file between directories)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "task_number": {
+                        "type": "integer",
+                        "description": "Task number"
+                    },
+                    "new_status": {
+                        "type": "string",
+                        "enum": ["backlog", "todo", "in-progress", "done", "blocked"],
+                        "description": "New status"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "description": "Optional notes about status change"
+                    }
+                },
+                "required": ["task_number", "new_status"]
+            }
+        ),
+        Tool(
+            name="get_task",
+            description="Retrieve a specific task by number",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "task_number": {
+                        "type": "integer",
+                        "description": "Task number to retrieve"
+                    }
+                },
+                "required": ["task_number"]
+            }
+        ),
+        Tool(
+            name="list_tasks",
+            description="List tasks with optional filters",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": ["backlog", "todo", "in-progress", "done", "blocked"],
+                        "description": "Filter by status"
+                    },
+                    "priority": {
+                        "type": "string",
+                        "enum": ["Critical", "High", "Medium", "Low"],
+                        "description": "Filter by priority"
+                    }
+                }
+            }
+        ),
+        Tool(
+            name="search_tasks",
+            description="Search tasks by content (full-text search)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Search query"
+                    }
+                },
+                "required": ["query"]
+            }
+        )
+    ]
+
+
+@app.call_tool()
+async def call_tool(name: str, arguments: Any) -> list[TextContent]:
+    """Handle tool calls"""
+    
+    try:
+        if name == "create_task":
+            # Parse arguments
+            title = arguments["title"]
+            objective = arguments["objective"]
+            deliverables = arguments["deliverables"]
+            acceptance_criteria = arguments["acceptance_criteria"]
+            
+            priority = TaskPriority(arguments.get("priority", "Medium"))
+            status = TaskStatus(arguments.get("status", "backlog"))
+            lead = arguments.get("lead", "Unassigned")
+            dependencies = arguments.get("dependencies")
+            related_documents = arguments.get("related_documents")
+            notes = arguments.get("notes")
+            task_number = arguments.get("task_number")
+            
+            # Create task
+            result = task_ops.create_task(
+                title=title,
+                objective=objective,
+                deliverables=deliverables,
+                acceptance_criteria=acceptance_criteria,
+                priority=priority,
+                status=status,
+                lead=lead,
+                dependencies=dependencies,
+                related_documents=related_documents,
+                notes=notes,
+                task_number=task_number
+            )
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(result.to_dict(), indent=2)
+            )]
+        
+        elif name == "update_task":
+            task_number = arguments["task_number"]
+            updates = arguments["updates"]
+            
+            result = task_ops.update_task(task_number, updates)
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(result.to_dict(), indent=2)
+            )]
+        
+        elif name == "update_task_status":
+            task_number = arguments["task_number"]
+            new_status = TaskStatus(arguments["new_status"])
+            notes = arguments.get("notes")
+            
+            result = task_ops.update_task_status(task_number, new_status, notes)
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(result.to_dict(), indent=2)
+            )]
+        
+        elif name == "get_task":
+            task_number = arguments["task_number"]
+            
+            task = task_ops.get_task(task_number)
+            
+            if task is None:
+                return [TextContent(
+                    type="text",
+                    text=json.dumps({
+                        "status": "error",
+                        "message": f"Task #{task_number:03d} not found"
+                    }, indent=2)
+                )]
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(task, indent=2)
+            )]
+        
+        elif name == "list_tasks":
+            status = TaskStatus(arguments["status"]) if "status" in arguments else None
+            priority = TaskPriority(arguments["priority"]) if "priority" in arguments else None
+            
+            tasks = task_ops.list_tasks(status, priority)
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(tasks, indent=2)
+            )]
+        
+        elif name == "search_tasks":
+            query = arguments["query"]
+            
+            results = task_ops.search_tasks(query)
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(results, indent=2)
+            )]
+        
+        else:
+            return [TextContent(
+                type="text",
+                text=json.dumps({
+                    "status": "error",
+                    "message": f"Unknown tool: {name}"
+                }, indent=2)
+            )]
+    
+    except Exception as e:
+        return [TextContent(
+            type="text",
+            text=json.dumps({
+                "status": "error",
+                "message": str(e)
+            }, indent=2)
+        )]
+
+
+async def main():
+    """Run the MCP server"""
+    async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
+        await app.run(
+            read_stream,
+            write_stream,
+            app.create_initialization_options()
+        )
+
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
+
+--- END OF FILE mcp_servers/task/server.py ---
+
+--- START OF FILE mcp_servers/task/validator.py ---
+
+"""
+Task MCP Server - Schema Validator
+Validates tasks against TASKS/task_schema.md
+"""
+
+import re
+from pathlib import Path
+from typing import Dict, List, Tuple
+from .models import TaskSchema, TaskStatus, TaskPriority
+
+
+class TaskValidator:
+    """Validates task files against canonical schema"""
+    
+    def __init__(self, project_root: Path):
+        self.project_root = project_root
+        self.tasks_dir = project_root / "TASKS"
+        
+    def validate_task_number(self, number: int) -> Tuple[bool, str]:
+        """
+        Validate task number is unique across all task directories
+        Returns: (is_valid, error_message)
+        """
+        task_dirs = [
+            self.tasks_dir / "backlog",
+            self.tasks_dir / "todo", 
+            self.tasks_dir / "in-progress",
+            self.tasks_dir / "done"
+        ]
+        
+        task_pattern = re.compile(rf"^{number:03d}_.*\.md$")
+        
+        for task_dir in task_dirs:
+            if not task_dir.exists():
+                continue
+                
+            for file in task_dir.iterdir():
+                if task_pattern.match(file.name):
+                    return False, f"Task #{number:03d} already exists in {task_dir.name}/"
+        
+        return True, ""
+    
+    def validate_task_schema(self, task: TaskSchema) -> Tuple[bool, List[str]]:
+        """
+        Validate task follows required schema
+        Returns: (is_valid, list_of_errors)
+        """
+        errors = []
+        
+        # Required fields
+        if not task.title:
+            errors.append("Title is required")
+        
+        if not task.objective:
+            errors.append("Objective section is required")
+            
+        if not task.deliverables or len(task.deliverables) == 0:
+            errors.append("At least one deliverable is required")
+            
+        if not task.acceptance_criteria or len(task.acceptance_criteria) == 0:
+            errors.append("At least one acceptance criterion is required")
+        
+        # Validate status
+        if task.status not in TaskStatus:
+            errors.append(f"Invalid status: {task.status}")
+        
+        # Validate priority
+        if task.priority not in TaskPriority:
+            errors.append(f"Invalid priority: {task.priority}")
+        
+        # Validate task number format
+        if task.number < 1 or task.number > 999:
+            errors.append("Task number must be between 1 and 999")
+        
+        return len(errors) == 0, errors
+    
+    def validate_dependencies(self, dependencies_str: str) -> Tuple[bool, str]:
+        """
+        Validate task dependencies format and check for circular dependencies
+        Returns: (is_valid, error_message)
+        """
+        if not dependencies_str or dependencies_str.lower() == "none":
+            return True, ""
+        
+        # Extract task numbers from dependencies string
+        task_refs = re.findall(r'#(\d+)', dependencies_str)
+        
+        if not task_refs:
+            return True, ""  # No task references found, that's okay
+        
+        # Check if referenced tasks exist
+        for ref in task_refs:
+            task_num = int(ref)
+            exists, _ = self.task_exists(task_num)
+            if not exists:
+                return False, f"Referenced task #{task_num:03d} does not exist"
+        
+        return True, ""
+    
+    def task_exists(self, number: int) -> Tuple[bool, str]:
+        """
+        Check if a task exists in any directory
+        Returns: (exists, directory_path)
+        """
+        task_dirs = [
+            self.tasks_dir / "backlog",
+            self.tasks_dir / "todo",
+            self.tasks_dir / "in-progress", 
+            self.tasks_dir / "done"
+        ]
+        
+        task_pattern = re.compile(rf"^{number:03d}_.*\.md$")
+        
+        for task_dir in task_dirs:
+            if not task_dir.exists():
+                continue
+                
+            for file in task_dir.iterdir():
+                if task_pattern.match(file.name):
+                    return True, str(task_dir)
+        
+        return False, ""
+    
+    def validate_file_path(self, file_path: Path) -> Tuple[bool, str]:
+        """
+        Validate file path is within TASKS directory
+        Returns: (is_valid, error_message)
+        """
+        try:
+            file_path.resolve().relative_to(self.tasks_dir.resolve())
+            return True, ""
+        except ValueError:
+            return False, f"File path must be within TASKS directory: {file_path}"
+
+--- END OF FILE mcp_servers/task/validator.py ---
+
 --- START OF FILE mnemonic_cortex/EVOLUTION_PLAN_PHASES.md ---
 
 # **Sanctuary Council — Evolution Plan (Phases 2 → 3 → Protocol 113)**
@@ -60938,7 +63662,7 @@ langchain
 chromadb
 google-generativeai
 ollama
-gpt4all
+gpt4allmcp>=1.0.0
 
 --- END OF FILE requirements.txt ---
 
@@ -60982,6 +63706,772 @@ echo "[SUCCESS] All genome tests passed - system is functional"
 exit 0
 
 --- END OF FILE run_genome_tests.sh ---
+
+--- START OF FILE tests/mcp_servers/task/__init__.py ---
+
+
+
+--- END OF FILE tests/mcp_servers/task/__init__.py ---
+
+--- START OF FILE tests/mcp_servers/task/test_e2e_workflow.py ---
+
+"""
+End-to-end workflow test for Task MCP
+Tests the complete workflow: create → update → move → search
+"""
+
+from pathlib import Path
+import sys
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.task.models import TaskStatus, TaskPriority
+
+
+def test_complete_workflow():
+    """Test complete task workflow"""
+    
+    print("🧪 Starting End-to-End Workflow Test\n")
+    
+    # Initialize operations
+    task_ops = TaskOperations(project_root)
+    
+    # Step 1: Create a test task
+    print("Step 1: Creating test task...")
+    result = task_ops.create_task(
+        title="E2E Test Task - MCP Server Validation",
+        objective="Validate the Task MCP server end-to-end workflow",
+        deliverables=[
+            "Create task successfully",
+            "Update task metadata",
+            "Move task through statuses",
+            "Search and retrieve task"
+        ],
+        acceptance_criteria=[
+            "Task created in backlog",
+            "Task updated with new priority",
+            "Task moved to in-progress",
+            "Task searchable and retrievable"
+        ],
+        priority=TaskPriority.HIGH,
+        status=TaskStatus.BACKLOG,
+        lead="Antigravity Test Suite",
+        notes="This is an automated end-to-end test"
+    )
+    
+    assert result.status == "success", f"Create failed: {result.message}"
+    task_number = result.task_number
+    print(f"✅ Task #{task_number:03d} created successfully")
+    print(f"   File: {result.file_path}\n")
+    
+    # Step 2: Retrieve the task
+    print("Step 2: Retrieving task...")
+    task = task_ops.get_task(task_number)
+    assert task is not None, "Task not found"
+    assert task["title"] == "E2E Test Task - MCP Server Validation"
+    print(f"✅ Task retrieved: {task['title']}")
+    print(f"   Status: {task['status']}\n")
+    
+    # Step 3: Update task priority
+    print("Step 3: Updating task priority to CRITICAL...")
+    result = task_ops.update_task(
+        task_number=task_number,
+        updates={"priority": TaskPriority.CRITICAL}
+    )
+    assert result.status == "success", f"Update failed: {result.message}"
+    print(f"✅ Task updated successfully\n")
+    
+    # Step 4: Move task to in-progress
+    print("Step 4: Moving task to IN-PROGRESS...")
+    result = task_ops.update_task_status(
+        task_number=task_number,
+        new_status=TaskStatus.IN_PROGRESS,
+        notes="Starting E2E test validation"
+    )
+    assert result.status == "success", f"Status update failed: {result.message}"
+    assert "in-progress" in result.file_path
+    print(f"✅ Task moved to in-progress")
+    print(f"   New location: {result.file_path}\n")
+    
+    # Step 5: Search for the task
+    print("Step 5: Searching for task...")
+    results = task_ops.search_tasks("E2E Test Task")
+    assert len(results) > 0, "Task not found in search"
+    assert results[0]["number"] == task_number
+    print(f"✅ Task found in search")
+    print(f"   Matches: {len(results[0]['matches'])} lines\n")
+    
+    # Step 6: List tasks in progress
+    print("Step 6: Listing in-progress tasks...")
+    tasks = task_ops.list_tasks(status=TaskStatus.IN_PROGRESS)
+    task_numbers = [t["number"] for t in tasks]
+    assert task_number in task_numbers, "Task not in in-progress list"
+    print(f"✅ Task found in in-progress list")
+    print(f"   Total in-progress tasks: {len(tasks)}\n")
+    
+    # Step 7: Move to done
+    print("Step 7: Moving task to DONE...")
+    result = task_ops.update_task_status(
+        task_number=task_number,
+        new_status=TaskStatus.COMPLETE,
+        notes="E2E test completed successfully"
+    )
+    assert result.status == "success"
+    assert "done" in result.file_path
+    print(f"✅ Task completed and moved to done")
+    print(f"   Final location: {result.file_path}\n")
+    
+    # Final verification
+    print("Final Verification:")
+    final_task = task_ops.get_task(task_number)
+    assert final_task["status"] == "done"
+    assert final_task["priority"] == "Critical"
+    print(f"✅ All assertions passed!")
+    print(f"   Task #{task_number:03d}: {final_task['title']}")
+    print(f"   Status: {final_task['status']}")
+    print(f"   Priority: {final_task['priority']}")
+    
+    print("\n🎉 End-to-End Workflow Test PASSED!")
+    print(f"\nTask #{task_number:03d} can be found at:")
+    print(f"   {project_root / result.file_path}")
+    
+    return task_number
+
+
+if __name__ == "__main__":
+    try:
+        task_num = test_complete_workflow()
+        print(f"\n✅ SUCCESS: Task #{task_num:03d} created and validated")
+        sys.exit(0)
+    except AssertionError as e:
+        print(f"\n❌ FAILED: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n❌ ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+--- END OF FILE tests/mcp_servers/task/test_e2e_workflow.py ---
+
+--- START OF FILE tests/mcp_servers/task/test_operations.py ---
+
+"""
+Unit tests for Task MCP operations
+"""
+
+import pytest
+from pathlib import Path
+import tempfile
+import shutil
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.task.models import TaskStatus, TaskPriority
+
+
+@pytest.fixture
+def temp_project():
+    """Create temporary project directory"""
+    temp_dir = Path(tempfile.mkdtemp())
+    tasks_dir = temp_dir / "TASKS"
+    
+    # Create task directories
+    (tasks_dir / "backlog").mkdir(parents=True)
+    (tasks_dir / "todo").mkdir(parents=True)
+    (tasks_dir / "in-progress").mkdir(parents=True)
+    (tasks_dir / "done").mkdir(parents=True)
+    
+    # Create tools directory with get_next_task_number.py
+    tools_dir = temp_dir / "tools" / "scaffolds"
+    tools_dir.mkdir(parents=True)
+    
+    # Simple version of get_next_task_number
+    (tools_dir / "get_next_task_number.py").write_text("""
+def get_next_task_number():
+    return "001"
+""")
+    
+    yield temp_dir
+    
+    # Cleanup
+    shutil.rmtree(temp_dir)
+
+
+@pytest.fixture
+def task_ops(temp_project):
+    """Create TaskOperations instance"""
+    return TaskOperations(temp_project)
+
+
+class TestCreateTask:
+    """Test create_task operation"""
+    
+    def test_create_task_success(self, task_ops):
+        """Test successful task creation"""
+        result = task_ops.create_task(
+            title="Test Task",
+            objective="Test objective",
+            deliverables=["Deliverable 1", "Deliverable 2"],
+            acceptance_criteria=["Criterion 1", "Criterion 2"],
+            priority=TaskPriority.HIGH,
+            status=TaskStatus.BACKLOG
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "created"
+        assert result.task_number > 0  # Just verify a task number was assigned
+        assert "TASKS/backlog/" in result.file_path
+        assert "_test_task.md" in result.file_path
+        assert "# TASK: Test Task" in result.content
+    
+    def test_create_task_with_dependencies(self, task_ops):
+        """Test task creation with dependencies"""
+        # Create first task
+        task_ops.create_task(
+            title="First Task",
+            objective="First",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        # Create second task with dependency
+        result = task_ops.create_task(
+            title="Second Task",
+            objective="Second",
+            deliverables=["D2"],
+            acceptance_criteria=["C2"],
+            dependencies="Requires #001",
+            task_number=2
+        )
+        
+        assert result.status == "success"
+        assert "Requires #001" in result.content
+    
+    def test_create_task_duplicate_number(self, task_ops):
+        """Test creating task with duplicate number fails"""
+        # Create first task
+        task_ops.create_task(
+            title="First",
+            objective="First",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        # Try to create duplicate
+        result = task_ops.create_task(
+            title="Duplicate",
+            objective="Duplicate",
+            deliverables=["D2"],
+            acceptance_criteria=["C2"],
+            task_number=1
+        )
+        
+        assert result.status == "error"
+        assert "already exists" in result.message
+
+
+class TestUpdateTask:
+    """Test update_task operation"""
+    
+    def test_update_task_priority(self, task_ops):
+        """Test updating task priority"""
+        # Create task
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.MEDIUM,
+            task_number=1
+        )
+        
+        # Update priority
+        result = task_ops.update_task(
+            task_number=1,
+            updates={"priority": TaskPriority.CRITICAL}
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "updated"
+        assert "Critical" in result.content
+    
+    def test_update_nonexistent_task(self, task_ops):
+        """Test updating non-existent task fails"""
+        result = task_ops.update_task(
+            task_number=999,
+            updates={"priority": TaskPriority.HIGH}
+        )
+        
+        assert result.status == "error"
+        assert "not found" in result.message
+    
+    def test_update_task_with_string_values(self, task_ops):
+        """Test updating task with string values (as received from MCP)"""
+        # Create task
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.MEDIUM,
+            task_number=1
+        )
+        
+        # Update with string values (simulating MCP input)
+        result = task_ops.update_task(
+            task_number=1,
+            updates={
+                "priority": "High",
+                "lead": "Test User",
+                "notes": "Updated via MCP"
+            }
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "updated"
+        assert "High" in result.content
+        assert "Test User" in result.content
+        assert "Updated via MCP" in result.content
+    
+    def test_parse_capitalized_status(self, task_ops, temp_project):
+        """Test parsing task files with capitalized status values"""
+        # Create a task file with capitalized status
+        task_file = temp_project / "TASKS" / "backlog" / "001_test_capitalized.md"
+        task_file.write_text("""# TASK: Test Capitalized Status
+
+**Status:** Backlog
+**Priority:** High
+**Lead:** Test User
+**Dependencies:** None
+**Related Documents:** None
+
+---
+
+## 1. Objective
+
+Test objective
+
+## 2. Deliverables
+
+1. Deliverable 1
+
+## 3. Acceptance Criteria
+
+- Criterion 1
+""")
+        
+        # Should be able to read and list this task
+        tasks = task_ops.list_tasks(status=TaskStatus.BACKLOG)
+        assert len(tasks) >= 1
+        
+        # Should be able to get this task
+        task = task_ops.get_task(1)
+        assert task is not None
+        assert task["status"] == "backlog"
+
+
+class TestUpdateTaskStatus:
+    """Test update_task_status operation"""
+    
+    def test_move_task_to_in_progress(self, task_ops):
+        """Test moving task from backlog to in-progress"""
+        # Create task in backlog
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.BACKLOG,
+            task_number=1
+        )
+        
+        # Move to in-progress
+        result = task_ops.update_task_status(
+            task_number=1,
+            new_status=TaskStatus.IN_PROGRESS,
+            notes="Starting work"
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "moved"
+        assert "in-progress" in result.file_path
+        assert "Starting work" in result.content
+    
+    def test_move_task_to_done(self, task_ops):
+        """Test moving task to done"""
+        # Create and move task
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        result = task_ops.update_task_status(
+            task_number=1,
+            new_status=TaskStatus.COMPLETE
+        )
+        
+        assert result.status == "success"
+        assert "done" in result.file_path
+    
+    def test_move_task_to_todo(self, task_ops):
+        """Test moving task from backlog to todo (as tested in Claude)"""
+        # Create task in backlog
+        task_ops.create_task(
+            title="Test Todo Move",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.BACKLOG,
+            task_number=1
+        )
+        
+        # Move to todo
+        result = task_ops.update_task_status(
+            task_number=1,
+            new_status=TaskStatus.TODO
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "moved"
+        assert "todo" in result.file_path
+
+
+class TestGetTask:
+    """Test get_task operation"""
+    
+    def test_get_existing_task(self, task_ops):
+        """Test retrieving existing task"""
+        # Create task
+        task_ops.create_task(
+            title="Test Task",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        # Get task
+        task = task_ops.get_task(1)
+        
+        assert task is not None
+        assert task["number"] == 1
+        assert task["title"] == "Test Task"
+        assert task["status"] == "backlog"
+    
+    def test_get_nonexistent_task(self, task_ops):
+        """Test retrieving non-existent task returns None"""
+        task = task_ops.get_task(999)
+        assert task is None
+
+
+class TestListTasks:
+    """Test list_tasks operation"""
+    
+    def test_list_all_tasks(self, task_ops):
+        """Test listing all tasks"""
+        # Create multiple tasks
+        for i in range(1, 4):
+            task_ops.create_task(
+                title=f"Task {i}",
+                objective="Test",
+                deliverables=["D1"],
+                acceptance_criteria=["C1"],
+                task_number=i
+            )
+        
+        tasks = task_ops.list_tasks()
+        assert len(tasks) == 3
+    
+    def test_list_tasks_by_status(self, task_ops):
+        """Test filtering tasks by status"""
+        # Create tasks with different statuses
+        task_ops.create_task(
+            title="Backlog Task",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.BACKLOG,
+            task_number=1
+        )
+        
+        task_ops.create_task(
+            title="In Progress Task",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.IN_PROGRESS,
+            task_number=2
+        )
+        
+        # List only backlog tasks
+        backlog_tasks = task_ops.list_tasks(status=TaskStatus.BACKLOG)
+        assert len(backlog_tasks) == 1
+        assert backlog_tasks[0]["title"] == "Backlog Task"
+    
+    def test_list_tasks_by_priority(self, task_ops):
+        """Test filtering tasks by priority"""
+        # Create tasks with different priorities
+        task_ops.create_task(
+            title="High Priority",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.HIGH,
+            task_number=1
+        )
+        
+        task_ops.create_task(
+            title="Low Priority",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.LOW,
+            task_number=2
+        )
+        
+        # List only high priority tasks
+        high_tasks = task_ops.list_tasks(priority=TaskPriority.HIGH)
+        assert len(high_tasks) == 1
+        assert high_tasks[0]["title"] == "High Priority"
+
+
+class TestSearchTasks:
+    """Test search_tasks operation"""
+    
+    def test_search_by_title(self, task_ops):
+        """Test searching tasks by title"""
+        # Create tasks
+        task_ops.create_task(
+            title="Authentication Feature",
+            objective="Add auth",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        task_ops.create_task(
+            title="Database Migration",
+            objective="Migrate DB",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=2
+        )
+        
+        # Search for "authentication"
+        results = task_ops.search_tasks("authentication")
+        assert len(results) == 1
+        assert results[0]["title"] == "Authentication Feature"
+    
+    def test_search_no_results(self, task_ops):
+        """Test search with no matches"""
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        results = task_ops.search_tasks("nonexistent")
+        assert len(results) == 0
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE tests/mcp_servers/task/test_operations.py ---
+
+--- START OF FILE tests/podman/README.md ---
+
+# Podman Test Container
+
+This is a simple Flask web app to verify Podman is working correctly before implementing the Task MCP server.
+
+## Files
+
+- `app.py` - Simple Flask hello world web app
+- `Dockerfile` - Container definition
+- `build.sh` - Build script with instructions
+
+## Quick Start
+
+### Build the Image
+
+```bash
+cd tests/podman
+./build.sh
+```
+
+### Run in Podman Desktop (Visual)
+
+1. Open **Podman Desktop**
+2. Go to **Images** tab
+3. Find `sanctuary-podman-test:latest`
+4. Click the **▶️ play button**
+5. Configure:
+   - **Port mapping:** `5000:5000`
+   - **Container name:** `sanctuary-test`
+6. Click **Start Container**
+7. Go to **Containers** tab
+8. Click on `sanctuary-test`
+9. Click **Open Browser** or visit: http://localhost:5000
+
+### Run from Command Line
+
+```bash
+# Run container
+podman run -d -p 5000:5000 --name sanctuary-test sanctuary-podman-test:latest
+
+# View logs
+podman logs sanctuary-test
+
+# Stop container
+podman stop sanctuary-test
+
+# Remove container
+podman rm sanctuary-test
+```
+
+## What You Should See
+
+- **Browser:** A purple gradient page with "Podman Test Successful!" 🚀
+- **Health endpoint:** http://localhost:5000/health returns JSON
+
+## Verification Checklist
+
+- [x] Podman installed (v5.7.0)
+- [x] Podman machine running
+- [ ] Image builds successfully
+- [ ] Container runs in Podman Desktop
+- [ ] Web page loads in browser
+- [ ] Health endpoint responds
+
+Once all checks pass, Podman is ready for Task MCP deployment! ✅
+
+--- END OF FILE tests/podman/README.md ---
+
+--- START OF FILE tests/podman/app.py ---
+
+"""
+Simple Flask Hello World App for Podman Testing
+"""
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Podman Test - Project Sanctuary</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .container {
+                background: white;
+                padding: 3rem;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                text-align: center;
+                max-width: 500px;
+            }
+            h1 {
+                color: #667eea;
+                margin-bottom: 1rem;
+            }
+            .emoji {
+                font-size: 4rem;
+                margin: 1rem 0;
+            }
+            .info {
+                background: #f0f4ff;
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1rem;
+            }
+            .status {
+                color: #10b981;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="emoji">🚀</div>
+            <h1>Podman Test Successful!</h1>
+            <p>Project Sanctuary - Task MCP Server</p>
+            <div class="info">
+                <p><span class="status">✅ Container Running</span></p>
+                <p>Podman Desktop Integration: <strong>Working</strong></p>
+                <p>Ready for MCP Server Deployment</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    '''
+
+@app.route('/health')
+def health():
+    return {'status': 'healthy', 'service': 'podman-test'}
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001, debug=True)
+
+--- END OF FILE tests/podman/app.py ---
+
+--- START OF FILE tests/podman/build.sh ---
+
+#!/bin/bash
+# Build and run Podman test container
+# This verifies Podman is working before implementing Task MCP
+
+set -e
+
+echo "🚀 Building Podman Test Container..."
+cd "$(dirname "$0")"
+
+# Build the image
+podman build -t sanctuary-podman-test:latest .
+
+echo "✅ Image built successfully!"
+echo ""
+echo "📋 To run the container in Podman Desktop:"
+echo ""
+echo "1. Open Podman Desktop"
+echo "2. Go to 'Images' tab"
+echo "3. Find 'sanctuary-podman-test:latest'"
+echo "4. Click the ▶️ play button"
+echo "5. Configure:"
+echo "   - Port mapping: 5001:5001 (or use any available port like 5003:5001)"
+echo "   - Name: sanctuary-test"
+echo "6. Click 'Start Container'"
+echo "7. Open browser: http://localhost:5001 (or your chosen port)"
+echo ""
+echo "Or run from command line:"
+echo "  podman run -d -p 5001:5001 --name sanctuary-test sanctuary-podman-test:latest"
+echo "  # Or use a different host port:"
+echo "  podman run -d -p 5003:5001 --name sanctuary-test sanctuary-podman-test:latest"
+echo ""
+echo "To view in browser: http://localhost:5001 (or http://localhost:5003 if you used that port)"
+echo "To check health: http://localhost:5001/health"
+
+--- END OF FILE tests/podman/build.sh ---
 
 --- START OF FILE tests/test_utils.py ---
 

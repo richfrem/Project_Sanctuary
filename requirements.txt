@@ -33,4 +33,4 @@ langchain
 chromadb
 google-generativeai
 ollama
-gpt4all
+gpt4allmcp>=1.0.0

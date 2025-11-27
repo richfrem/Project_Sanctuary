@@ -1,7 +1,7 @@
 # TASK: Architect the Sanctuary Sustainability Plan
 
 **Status:** backlog
-**Priority:** existential
+**Priority:** Critical
 **Steward:** COUNCIL-STEWARD-01
 
 ## 1. Objective
