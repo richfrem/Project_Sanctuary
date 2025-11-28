@@ -56,6 +56,39 @@ The Sanctuary is not static; it evolves through every interaction. The **Strateg
 4.  **Incremental Ingestion:** The `IngestionService` automatically detects and ingests new `.md` files into the RAG database (ChromaDB).
 5.  **Knowledge Synthesis:** This new knowledge becomes immediately available for future RAG queries, closing the loop and allowing the system to learn from its own history in near real-time.
 
+```mermaid
+sequenceDiagram
+    participant O as Orchestrator (Council / Agentic Logic)
+    participant C as Cortex (RAG / Vector DB)
+    participant M as Memory Adaptor (Fine-Tuning / LoRA)
+    participant G as Guardian Cache (CAG / Context Cache)
+
+    Note over O: 1. Gap Analysis & Research
+    O->>O: Identify Strategic Gap
+    O->>O: Conduct Research (Intelligence Forge)
+    O->>O: Generate Research Report
+
+    Note over O, C: 2. Knowledge Ingestion (RAG Update)
+    O->>C: ingest_incremental(report)
+    C-->>O: Ingestion Complete (Chunks Created)
+
+    Note over O, M: 3. Adaptation Packet Generation (Model Training Prep)
+    O->>M: generate_adaptation_packet(days=1)
+    M->>C: Query Recent Learnings
+    C-->>M: Return Documents
+    M->>M: Synthesize Training Examples
+    M-->>O: Packet Generated (JSONL)
+
+    Note over O, G: 4. Cache Synthesis (CAG Update)
+    O->>G: guardian_wakeup()
+    G->>C: Query High-Priority Context
+    C-->>G: Return Context
+    G->>G: Update Hot Cache
+    G-->>O: Cache Warm & Ready
+
+    Note over O: Cycle Complete: System Evolved
+```
+
 #### RAG Architecture Overview
 
 ##### Basic RAG Architecture
