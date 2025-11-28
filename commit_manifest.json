@@ -1,34 +1,18 @@
 {
-  "timestamp": "2025-11-28T22:46:01.853422+00:00",
+  "timestamp": "2025-11-28T23:03:22.904345+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "mcp_servers/cognitive/cortex/server.py",
-      "sha256": "42dae18b9336105298ceacba46993a4e435d2064132536e4ce187833a53c23dc"
+      "path": "mcp_servers/orchestrator/server.py",
+      "sha256": "0032f86a887979dbc1a2c792aecd792c3bc95f774ecf2bfe1b007db13dcf8427"
     },
     {
-      "path": "mnemonic_cortex/app/synthesis/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md",
+      "sha256": "91c969de1338d64ca07a3555d352b23104287ba2928f7ecf3e01f98909f0d08e"
     },
     {
-      "path": "mnemonic_cortex/app/synthesis/generator.py",
-      "sha256": "f3efa5ea80dd58d82c356533fdf8ee7cecffde783bbbc894f70ff49a42729051"
-    },
-    {
-      "path": "mnemonic_cortex/app/synthesis/schema.py",
-      "sha256": "05edab527d6ce45a7b378bf190644151f4f7143ac1c497660ba6f1fb3ba8989b"
-    },
-    {
-      "path": "mnemonic_cortex/app/training/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mnemonic_cortex/app/training/versioning.py",
-      "sha256": "e1c96ebf3e59e4b2c942ad9b712873b1e7c8791a4cf0714fe7c1e56dc387a2d5"
-    },
-    {
-      "path": "mnemonic_cortex/scripts/train_lora.py",
-      "sha256": "fb40d84dabab4f9ac4f00837b8b2b85cb13842b7dcf5767c591e5090d82e1d48"
+      "path": "mnemonic_cortex/README.md",
+      "sha256": "38774c3e513076f9b6674f279068230ebd3af05f7ba89235fc71c831d537c690"
     }
   ]
 }

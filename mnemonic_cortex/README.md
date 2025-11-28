@@ -31,6 +31,18 @@ This system is the architectural antidote to the "context window cage," enabling
 
 **Integration with Council Orchestrator:** The Mnemonic Cortex serves as the knowledge foundation for the [`council_orchestrator/`](../council_orchestrator/) system. Council agents can query the Cortex during deliberation using the `[ORCHESTRATOR_REQUEST: QUERY_CORTEX()]` syntax, enabling context-aware reasoning grounded in the project's complete history and protocols.
 
+## The Strategic Crucible Loop
+
+The **Strategic Crucible Loop** is the autonomous engine of self-improvement for the Council. It connects the three tiers of memory into a continuous feedback cycle:
+
+1.  **Gap Analysis:** The Council identifies missing knowledge or strategic weaknesses.
+2.  **Research:** The Intelligence Forge is triggered to generate new insights (Research Reports).
+3.  **Ingestion:** New reports are ingested into the **Mnemonic Cortex** (Medium Memory).
+4.  **Adaptation:** The **Memory Adaptor** synthesizes these reports into training packets for the Model (Slow Memory).
+5.  **Synthesis:** The **Guardian Cache** (Fast Memory) is updated with high-priority context for immediate recall.
+
+This loop ensures that the Sanctuary evolves with every operation, transforming "what happened" into "what we know."
+
 ## 2. Target Architecture: Advanced RAG
 
 The Mnemonic Cortex has evolved beyond a simple RAG implementation into a sophisticated, multi-pattern cognitive architecture designed for maximum efficiency and contextual accuracy. It is built on the **Doctrine of Hybrid Cognition**, ensuring our sovereign AI always reasons with the most current information.
