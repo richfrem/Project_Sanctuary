@@ -832,7 +832,7 @@ This strategy will complete the transformation from a "per-query computational m
 
 ## 7. The Strategic Crucible Loop (Sequence Diagram)
 
-This diagram illustrates the autonomous learning cycle connecting the **Orchestrator** (Agentic Logic), **Cortex** (RAG / Vector DB), and **Memory Adaptor** (Fine-Tuning / LoRA).
+This diagram illustrates the autonomous learning cycle connecting the **Orchestrator** (Agentic Logic), **Cortex** (RAG / Vector DB), and **Memory Adaptor** (Fine-Tuning / LoRA). For deep-dive details on the model fine-tuning process, refer to **[Operation Phoenix Forge](../forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
 ```mermaid
 sequenceDiagram
