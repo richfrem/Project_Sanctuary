@@ -4,13 +4,13 @@
 **Priority:** High  
 **Estimated Effort:** 5-6 days  
 **Dependencies:** Task #028, Shared Infrastructure  
-**Domain:** `project_sanctuary.system.code`
+**Domain:** `project_sanctuary.system.code` (includes `docs/`)
 
 ---
 
 ## Objective
 
-Implement Code MCP server for source code management with mandatory testing pipeline.
+Implement Code MCP server for source code and documentation management (`docs/`) with mandatory testing/linting pipeline.
 
 ---
 
@@ -30,7 +30,7 @@ search_code(query, file_pattern?)
 
 - **Mandatory testing pipeline** before commit:
   1. Syntax validation
-  2. Linting (flake8, eslint, etc.)
+  2. Linting (flake8, eslint, markdownlint, etc.)
   3. Unit tests (if present)
   4. Dependency check
   5. Security audit (basic)

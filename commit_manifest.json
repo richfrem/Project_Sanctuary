@@ -1,0 +1,214 @@
+{
+  "timestamp": "2025-11-28T04:23:30.463163+00:00",
+  "author": "Guardian (Smart Git MCP)",
+  "files": [
+    {
+      "path": ".agent/git_safety_rules.md",
+      "sha256": "85835fa4dcabbfce7c84ee4ac7e555746ec6389ffd3f743d67c2af4a3cccc9aa"
+    },
+    {
+      "path": ".agent/mcp_commit_guide.md",
+      "sha256": "27b336398a5ac07e1f3edf4532853af881d07f01c6547aa6ca3a81d079850910"
+    },
+    {
+      "path": ".agent/mcp_config.json",
+      "sha256": "92ef97f077f98a87a24bc5f4a226a4b9d18a4ff5a224fe40aa4bf46494fcc930"
+    },
+    {
+      "path": ".agent/mcp_migration.conf",
+      "sha256": "4244cb048be470033d8d875914bc7a9ce9b9b55fd867558c3d7905d920722cc5"
+    },
+    {
+      "path": "ADRs/037_mcp_git_migration_strategy.md",
+      "sha256": "43a63396affdb4be5cb5852ee1aba7d9dd25c371575b3c9fed78e487c0f85689"
+    },
+    {
+      "path": "TASKS/backlog/034_implement_code_mcp.md",
+      "sha256": "c245d123440e38e4e80331d0e960411c698359c181ad9da0b16bb9d4d0b9d0a4"
+    },
+    {
+      "path": "TASKS/backlog/040_implement_protocol_117_orchestration_pattern_library.md",
+      "sha256": "f075e06819396c462cd962a60b3413a5a9dca7761099b37c67c9fa580287cd6f"
+    },
+    {
+      "path": "TASKS/backlog/041_implement_protocol_118_autonomous_triggers.md",
+      "sha256": "a85a1aeb82707eb65c8ecf754269369b46384b9253b527be972e26aeb7796739"
+    },
+    {
+      "path": "TASKS/backlog/042_implement_protocol_119_multi_model_abstraction.md",
+      "sha256": "5c09573a6744c9d2c04a08efcad0bbade06b95562eb5e232b8966e2cd3d559bb"
+    },
+    {
+      "path": "TASKS/backlog/043_implement_protocol_120_hybrid_orchestration.md",
+      "sha256": "f68c580dc4212d60fbc8912076edba002163ed462b82091fac49621ad9e9c15a"
+    },
+    {
+      "path": "TASKS/backlog/044_implement_protocol_121_mcp_composition.md",
+      "sha256": "cd7e86db151f4a3bf97c7145b33948adfd142bff435fe247a9c162c19d8bb56f"
+    },
+    {
+      "path": "TASKS/done/020B_PROGRESS.md",
+      "sha256": "8642ecbf67894bc6d58f7a1a0d59ad3147127d1ce1b75941239d2761097b0442"
+    },
+    {
+      "path": "TASKS/done/020B_WSLENV_VERIFICATION.md",
+      "sha256": "1dd466fa57f098eb67a9bdd8c82dd37b6866d79437aa31316984930081fe2d29"
+    },
+    {
+      "path": "TASKS/done/020B_inconsistent_secrets_handling_env_fallback.md",
+      "sha256": "e6c67f31d74cbdc10a10e13ac9abec1f3d52a787a8348dbffc15dec6a71f0b7d"
+    },
+    {
+      "path": "TASKS/done/028_precommit_hook_mcp_migration.md",
+      "sha256": "fbe71bfc5f819a9f15c63354db65ce65a2b1c4cbe64e9ffb9048f295a884c159"
+    },
+    {
+      "path": "TASKS/done/039_review_microsoft_custom_engine_agent_architecture_.md",
+      "sha256": "e8031f3f5ce15378397c4353762e162bc13a3cf823fe241c8227477ed0a5f499"
+    },
+    {
+      "path": "TASKS/in-progress/045_implement_smart_git_mcp.md",
+      "sha256": "f5ad210a82b69e28b7676df2db8a431a0e82d64af9b487a9003bfd30c08867f3"
+    },
+    {
+      "path": "TASKS/in-progress/046_configure_antigravity_mcp_client.md",
+      "sha256": "8ab9c229d009ad2a3eb4aadfe207cf04ad15aeca40dd8486e70e14fa2067ddb0"
+    },
+    {
+      "path": "TASKS/todo/030_implement_adr_mcp.md",
+      "sha256": "25fa05059c61ce622a94f380dde13c136010376c94fea1cd81f6cf2b9da3fec2"
+    },
+    {
+      "path": "TASKS/todo/035_implement_git_workflow_mcp.md",
+      "sha256": "cc6be334b81eebb8cc9d986327f336e3134ee38713c33401f6881138239750a4"
+    },
+    {
+      "path": "core/git/git_ops.py",
+      "sha256": "f26bd304a83a4ad8c374906b2c2eb6694b4b82ea0dc5545890c16e83e32ee576"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/engines/gemini_engine.py",
+      "sha256": "987e3ffd8f65be6bb46d03c1619cf3a1adf1d0d80815bd7e67362de1f73a7930"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/engines/openai_engine.py",
+      "sha256": "744beda3a4db4e0bb5913fea0df52af789c44cee8989fe7776c3f2ce6fb161ec"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "967c7407f0a09c94d0ef5d21be55970ec868689b11b6818f7cd82ff40e7715d0"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "dda140700ed780fadec12a1afc9d9c28cb46c2250182ed4ac91137ca53aa460d"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "be692286d48479627b0293b904300d8fe0f64eeecf0358055b7f56bede4be192"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "4d2b775e5402064df5f65f00ab20edfe2c0b18dc619a5a2eb97c2a4132d6d5c3"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "062870c8e9b7bd2073527345a1a5267574256c63fbcd501b939d7e2e38ecd065"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "9637580093db5a49fd2b426e18ec181a7ff36cae1c444f099ff1d796d2beb79a"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_docs_human_readable.txt",
+      "sha256": "35b1f209e66209fcd6427f8086f644680f5e48e707d190ed049aaa31c03f5001"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_docs_llm_distilled.txt",
+      "sha256": "d5b6112c895ec277221230944b7c2469a6c7363410b2e50c60c535b8f818d06b"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_forge_human_readable.txt",
+      "sha256": "632db3990a3d6f18bdffc79c4f3f26e28806ea589e0335cb0dd9fc772a3182bd"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_forge_llm_distilled.txt",
+      "sha256": "6fce77bcf876f2d9d5c4b8f64161bb4b22e42317a51e328f8b34784393f61bc4"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "764ca5a327712c685ac4749b13aef99699372d97188dabee2f112d4f75843eeb"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "762bf3fc2fad6b544f1988ff2cfda326b9a62e47b3b0a5987f2365a9b775b1d2"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_mnemonic_cortex_human_readable.txt",
+      "sha256": "0b004a9d2bdd698a8168cefbdfefc4b6bcd2f1ee96bafb5ba83c0007bce9c8d8"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_mnemonic_cortex_llm_distilled.txt",
+      "sha256": "da93abd5e99460393c2f68b087312529697d1303603742cfbe51abf8f800186d"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "ed488e3c184b270ce54d8b479a4c4219568861826f70d4142846e630415be93b"
+    },
+    {
+      "path": "docs/mcp/analysis/microsoft_agent_analysis.md",
+      "sha256": "c1e27f14ca0a20edf691517ea1d46bb64bb78e7a86d9a8ed4b4208f607b6acbb"
+    },
+    {
+      "path": "docs/mcp/analysis/pre_commit_hook_migration_analysis.md",
+      "sha256": "640bab316e5aa1c943e7e76ede5b570abfb7dcbdf7e091da0bc5e8dd2d1aa049"
+    },
+    {
+      "path": "docs/mcp/analysis/smart_git_mcp_analysis.md",
+      "sha256": "e002d0d8cf776e4a920e066aae9268e3ca7b16d65502791d8efcd46e3b29540d"
+    },
+    {
+      "path": "docs/mcp/architecture.md",
+      "sha256": "eaeef325d96b87b3f4534654007f9f156cfad9ef1263d46d23e2f86ae24c80ea"
+    },
+    {
+      "path": "forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py",
+      "sha256": "5d4b0dc597fabc3db0b872363b5211c1e1b98d2e24d97c9cc24fe0e56c506d90"
+    },
+    {
+      "path": "mcp_servers/system/git_workflow/Dockerfile",
+      "sha256": "e07d76a7689be2bec780424280affab0f96b418d40e9ca7bb9c6a765aa3999d4"
+    },
+    {
+      "path": "mcp_servers/system/git_workflow/README.md",
+      "sha256": "377f7b59fe0ac8e37baf1aa45dffee7ba7e0a1735ea964f031b3a80ffb7c201e"
+    },
+    {
+      "path": "mcp_servers/system/git_workflow/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mcp_servers/system/git_workflow/requirements.txt",
+      "sha256": "f4dbe1751992271c5fe624f3e7cad8c9e6b40ed4ec2a0bc640731165a6bb34de"
+    },
+    {
+      "path": "mcp_servers/system/git_workflow/server.py",
+      "sha256": "e30cccdc60a08f712e5238a860814d2fe3a51e513a7ea73b7b48f6319937fe28"
+    },
+    {
+      "path": "scripts/generate_mcp_config.py",
+      "sha256": "9a3361ca1b3b5f3e72451a1af1355d101f701f7a40661439d7e76e876104d85a"
+    },
+    {
+      "path": "scripts/verify_mcp_server.py",
+      "sha256": "2d78d1cbfe7d8013ba2aa8be536edb1e11a28de2d03c2bb1e015fd39f1bc946a"
+    },
+    {
+      "path": "tests/test_git_ops.py",
+      "sha256": "f57a6b39f1e4c5077012dbffd536a7a696e867f1387e17ce0cf28364226257a7"
+    },
+    {
+      "path": "tests/test_pre_commit_hook.sh",
+      "sha256": "df6c14c531507d6d4260be37444391b868b7e3a0874b7be6c8a84f7610ebfe9f"
+    }
+  ]
+}

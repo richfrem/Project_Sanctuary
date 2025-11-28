@@ -65,22 +65,21 @@ def load_config():
         config = yaml.safe_load(f)
         log.info(f"Loaded config from {config_path}")
         return config
-def load_environment():
-    env_path = PROJECT_ROOT / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
-        log.info(f"Loaded environment from {env_path}")
-    else:
-        log.warning(f"No .env file found at {env_path}")
 
-    token = os.getenv("HUGGING_FACE_TOKEN")
-    username = os.getenv("HUGGING_FACE_USERNAME")
-    repo_name = os.getenv("HUGGING_FACE_REPO")
-    
-    if not token:
-        log.error("HUGGING_FACE_TOKEN not found in environment variables.")
-        log.info("Please set HUGGING_FACE_TOKEN in your .env file.")
+def load_environment():
+    # Add project root to path to find core
+    sys.path.insert(0, str(PROJECT_ROOT))
+    from core.utils.env_helper import get_env_variable
+
+    # env_helper handles priority: Env Var -> .env -> Error
+    try:
+        token = get_env_variable("HUGGING_FACE_TOKEN", required=True)
+    except ValueError as e:
+        log.error(str(e))
         sys.exit(1)
+        
+    username = get_env_variable("HUGGING_FACE_USERNAME", required=False)
+    repo_name = get_env_variable("HUGGING_FACE_REPO", required=False)
     
     if not username or not repo_name:
         log.warning("HUGGING_FACE_USERNAME or HUGGING_FACE_REPO not set. Will require --repo argument.")

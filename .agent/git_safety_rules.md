@@ -13,6 +13,17 @@ This file defines strict rules for Git operations specific to **Project Sanctuar
 
 **CRITICAL:** This project uses a pre-commit hook that **blocks all commits** without a valid `commit_manifest.json`.
 
+### 3. Commit Message Format
+
+**Legacy Format (Human):**
+- Follow Conventional Commits
+- Must include `commit_manifest.json`
+
+**MCP Format (Agent):**
+- Format: `mcp(<domain>): <description>`
+- Domains: `chronicle`, `protocol`, `adr`, `task`, `cortex`, `council`, `config`, `code`, `git_workflow`, `forge`
+- Bypasses `commit_manifest.json` check if Migration Mode is active.
+
 ### Commit Workflow Options
 
 #### Option A: Use Council Orchestrator (Recommended)

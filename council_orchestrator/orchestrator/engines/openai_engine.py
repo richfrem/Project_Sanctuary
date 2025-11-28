@@ -1,7 +1,11 @@
 # council_orchestrator/cognitive_engines/openai_engine.py
 import os
-from dotenv import load_dotenv
-load_dotenv()
+import sys
+from pathlib import Path
+# Add project root to path to find core
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
+from core.utils.env_helper import get_env_variable
+
 import openai
 import time  # <--- IMPORT TIME
 import random # <--- IMPORT RANDOM
@@ -19,7 +23,7 @@ class OpenAIEngine(BaseCognitiveEngine):
     def __init__(self, model_name: str = None):
         DEFAULT_MODEL = "gpt-5-nano"
         self.model_name = model_name or os.getenv("CHAT_GPT_MODEL", DEFAULT_MODEL)
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.api_key = get_env_variable("OPENAI_API_KEY", required=False)
         if not self.api_key:
             self.client = None
             return

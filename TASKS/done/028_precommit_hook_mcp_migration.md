@@ -1,10 +1,12 @@
 # Task #028: Pre-Commit Hook Migration for MCP Architecture
 
-**Status:** Backlog  
+**Status:** In Progress  
 **Priority:** Critical (Blocks Phase 1)  
 **Estimated Effort:** 1-2 days  
 **Dependencies:** None (Phase 0 - Pre-Migration)  
 **Related Documents:** `docs/mcp/architecture.md`, `.agent/git_safety_rules.md`
+**Analysis:** [Pre-Commit Hook Migration Analysis](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/mcp/analysis/pre_commit_hook_migration_analysis.md)
+**Plan:** [Implementation Plan](file:///Users/richardfremmerlid/.gemini/antigravity/brain/8e7a3729-cc05-40ae-a5dd-38935c512229/implementation_plan.md)
 
 ---
 

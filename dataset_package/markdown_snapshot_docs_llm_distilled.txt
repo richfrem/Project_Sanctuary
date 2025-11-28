@@ -1,8 +1,8 @@
 # docs Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-26T04:03:20.248Z
+Generated On: 2025-11-27T15:00:11.143Z
 
-# Mnemonic Weight (Token Count): ~51,168 tokens
+# Mnemonic Weight (Token Count): ~43,064 tokens
 
 # Directory Structure (relative to docs subfolder)
   ./docs/WSL_SECRETS_CONFIGURATION.md
@@ -14,12 +14,8 @@ Generated On: 2025-11-26T04:03:20.248Z
   ./docs/cicd/overview.md
   ./docs/cicd/security_scanning.md
   ./docs/mcp/
-  ./docs/mcp/CLASS_DIAGRAM_NAMING_UPDATE.md
-  ./docs/mcp/FINAL_SUMMARY.md
-  ./docs/mcp/FINE_TUNING_NAMING_UPDATE.md
-  ./docs/mcp/IMPLEMENTATION_COMPLETE.md
-  ./docs/mcp/VERIFICATION_REPORT.md
   ./docs/mcp/architecture.md
+  ./docs/mcp/claude_desktop_config_template.json
   ./docs/mcp/ddd_analysis.md
   ./docs/mcp/diagrams/
   ./docs/mcp/diagrams/adr_mcp_class.mmd
@@ -40,10 +36,11 @@ Generated On: 2025-11-26T04:03:20.248Z
   ./docs/mcp/diagrams/task_mcp_class.mmd
   ./docs/mcp/final_architecture_summary.md
   ./docs/mcp/forge_mcp_types.ts
-  ./docs/mcp/implementation_tasks_summary.md
   ./docs/mcp/naming_conventions.md
+  ./docs/mcp/port_registry.md
+  ./docs/mcp/prerequisites.md
+  ./docs/mcp/setup_guide.md
   ./docs/mcp/shared_infrastructure_types.ts
-  ./docs/mcp/walkthrough.md
 
 --- START OF FILE WSL_SECRETS_CONFIGURATION.md ---
 
@@ -2430,758 +2427,6 @@ This shift-left approach catches vulnerabilities early, reduces security debt, a
 
 --- END OF FILE cicd/security_scanning.md ---
 
---- START OF FILE mcp/CLASS_DIAGRAM_NAMING_UPDATE.md ---
-
-# Class Diagram Naming Update - Action Required
-
-**Date:** 2025-11-25  
-**Priority:** High  
-**Scope:** All MCP class diagrams
-
----
-
-## Issue
-
-Current class diagrams use simple class names (e.g., `ADRMCP`, `CortexMCP`) instead of full domain names. This creates:
-- Potential tool name collisions
-- Unclear namespace ownership
-- Non-professional structure
-
----
-
-## Required Change
-
-**Current Pattern:**
-```mermaid
-class ADRMCP {
-    +create_adr() FileOperationResult
-}
-```
-
-**New Pattern:**
-```mermaid
-class project_sanctuary_document_adr {
-    +create_adr() FileOperationResult  
-}
-```
-
----
-
-## Complete Class Naming Reference
-
-| MCP Server | Current Class Name | New Class Name |
-|------------|-------------------|----------------|
-| Chronicle MCP | `ChronicleMCP` | `project_sanctuary_document_chronicle` |
-| Protocol MCP | `ProtocolMCP` | `project_sanctuary_document_protocol` |
-| ADR MCP | `ADRMCP` | `project_sanctuary_document_adr` |
-| Task MCP | `TaskMCP` | `project_sanctuary_document_task` |
-| RAG MCP (Cortex) | `CortexMCP` or `RAGMCP` | `project_sanctuary_cognitive_cortex` |
-| Agent Orchestrator (Council) | `CouncilMCP` | `project_sanctuary_cognitive_council` |
-| Config MCP | `ConfigMCP` | `project_sanctuary_system_config` |
-| Code MCP | `CodeMCP` | `project_sanctuary_system_code` |
-| Git Workflow MCP | `GitWorkflowMCP` | `project_sanctuary_system_git_workflow` |
-| Fine-Tuning MCP (Forge) | `ForgeMCP` | `project_sanctuary_model_forge` |
-
----
-
-## Files Requiring Updates
-
-All class diagram files in `docs/mcp/diagrams/`:
-- ✅ `chronicle_mcp_class.mmd`
-- ✅ `protocol_mcp_class.mmd`
-- ✅ `adr_mcp_class.mmd`
-- ✅ `task_mcp_class.mmd`
-- ✅ `rag_mcp_cortex_class.mmd`
-- ✅ `agent_orchestrator_mcp_council_class.mmd`
-- ✅ `config_mcp_class.mmd`
-- ✅ `code_mcp_class.mmd`
-- ✅ `git_workflow_mcp_class.mmd`
-- ✅ `fine_tuning_mcp_forge_class.mmd`
-- ✅ `mcp_ecosystem_class.mmd` (high-level diagram)
-
----
-
-## Example: ADR MCP Before/After
-
-### Before
-```mermaid
-classDiagram
-    class ADRMCP {
-        +create_adr(number, title, ...) FileOperationResult
-        +update_adr_status(number, new_status, reason) FileOperationResult
-    }
-```
-
-### After
-```mermaid
-classDiagram
-    class project_sanctuary_document_adr {
-        +create_adr(number, title, ...) FileOperationResult
-        +update_adr_status(number, new_status, reason) FileOperationResult
-    }
-```
-
----
-
-## Benefits
-
-1. **Namespace Isolation** - No tool name collisions across domains
-2. **Clear Ownership** - Explicit domain ownership of each class
-3. **Professional Structure** - Enterprise-grade naming conventions
-4. **Scalability** - Easy to add new domains without conflicts
-5. **Consistency** - Matches domain naming model throughout architecture
-
----
-
-## Implementation Notes
-
-- Update class names in all diagrams
-- Update relationship arrows (e.g., `ADRMCP --> ADR` becomes `project_sanctuary_document_adr --> ADR`)
-- Update notes referencing class names
-- Keep data model classes simple (e.g., `ADR`, `Entry`, `Task`) - only MCP server classes need full domain names
-
----
-
-**Status:** DOCUMENTED - Ready for Implementation  
-**Estimated Effort:** 1-2 hours to update all 11 diagrams  
-**Priority:** Should be done before creating implementation tasks
-
---- END OF FILE mcp/CLASS_DIAGRAM_NAMING_UPDATE.md ---
-
---- START OF FILE mcp/FINAL_SUMMARY.md ---
-
-# MCP Architecture - Final Summary
-
-**Version:** 4.0 (Final with Updated Naming)  
-**Date:** 2025-11-25  
-**Status:** ✅ Complete and Ready for Implementation
-
----
-
-## 🎯 Complete 10-Domain MCP Ecosystem
-
-### Finalized Naming Convention
-
-**Principle:** Generic AI terminology first, project names in parentheses
-
-| # | MCP Server | Domain | Generic AI Term | Key Operations |
-|---|------------|--------|-----------------|----------------|
-| 1 | Chronicle MCP | `project_sanctuary.document.chronicle` | Document Management | Create, update, search entries |
-| 2 | Protocol MCP | `project_sanctuary.document.protocol` | Document Management | Create, version, archive protocols |
-| 3 | ADR MCP | `project_sanctuary.document.adr` | Decision Records | Create, update status, track decisions |
-| 4 | Task MCP | `project_sanctuary.document.task` | Task Management | Create, move status, track dependencies |
-| 5 | **RAG MCP** (Cortex) | `project_sanctuary.cognitive.cortex` | **Retrieval-Augmented Generation** | **Incremental ingest, full ingest, semantic search** |
-| 6 | **Agent Orchestrator MCP** (Council) | `project_sanctuary.cognitive.council` | **Multi-Agent Orchestration** | **Create deliberations, manage workflows** |
-| 7 | Config MCP | `project_sanctuary.system.config` | Configuration Management | Request changes, manage secrets |
-| 8 | Code MCP | `project_sanctuary.system.code` | Code Management | Write code, execute, run tests |
-| 9 | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Git Operations | Create branches, switch, push (safe ops) |
-| 10 | Fine-Tuning MCP (Forge) | `project_sanctuary.model.fine_tuning` | Model Fine-Tuning | Train models, package, publish |
-
----
-
-## 🔑 Key Architectural Achievements
-
-### 1. Accessibility Through Generic Terminology
-- **RAG MCP** - Immediately understood by AI developers
-- **Agent Orchestrator MCP** - Standard multi-agent pattern
-- Project names (Cortex, Council) preserved in parentheses
-
-### 2. Forge State Machine Governance
-- `initialize_forge_environment()` mandatory first call
-- Two-layer state machine (Operational + Job states)
-- Prevents publishing untested artifacts
-- **Risk Level:** EXTREME → **Governance:** State Machine + Init
-
-### 3. Git Workflow MCP - Safe Operations Only
-- Create/switch branches, push to remote
-- NO delete, merge, rebase, force-push
-- User controls destructive operations via GitHub PR
-
-### 4. Domain Naming Model
-```
-project_sanctuary.<category>.<server_name>
-```
-- Professional namespace isolation
-- Clear hierarchy
-- Scalable structure
-
----
-
-## 📊 Risk Stratification
-
-| Risk Level | Domains | Governance Strategy |
-|------------|---------|---------------------|
-| SAFE | Agent Orchestrator (Council) | Read-only cognitive operations |
-| MODERATE | Chronicle, ADR, Task, RAG (Cortex), Git Workflow | P101 compliance, safety validation |
-| HIGH | Protocol, Code | Version control, mandatory testing |
-| CRITICAL | Config | Two-step approval, automatic backup |
-| EXTREME | Forge | State machine + initialization gating |
-
----
-
-## 🚀 Implementation Roadmap
-
-### Phase 0: Pre-Migration (Week 0)
-- **Task #028:** Pre-commit hook migration
-  - Disable `command.json` validation
-  - Add MCP commit message validation
-  - Maintain P101 compliance
-
-### Phase 1: Foundation (Week 1)
-- Shared infrastructure (Git, Safety, Schema, Vault)
-- MCP server boilerplate template
-
-### Phase 2: Document Domains (Week 2) - Easiest
-- **Task #029:** Chronicle MCP
-- **Task #030:** ADR MCP
-- **Task #031:** Task MCP
-- **Task #032:** Protocol MCP
-
-### Phase 3: Cognitive Domains (Week 3) - Moderate
-- **Task #025:** RAG MCP (Cortex) - refactor existing
-- **Task #026:** Agent Orchestrator MCP (Council) - refactor existing
-
-### Phase 4: System Domains (Week 4) - High Risk
-- **Task #033:** Config MCP
-- **Task #034:** Code MCP
-- **Task #035:** Git Workflow MCP
-
-### Phase 5: Model Domain (Week 5) - Hardest
-- **Task #036:** Fine-Tuning MCP (Forge)
-  - CUDA environment setup
-  - 10-step pipeline integration
-  - State machine implementation
-
----
-
-## 📁 Complete Documentation
-
-### Core Documents
-- `architecture.md` (v4.0) - Complete 10-domain specification
-- `final_architecture_summary.md` (v4.0) - Executive summary
-- `walkthrough.md` - Implementation walkthrough
-- `naming_conventions.md` - Domain naming model
-- `implementation_tasks_summary.md` - All 11 tasks outlined
-
-### Diagrams (14 total)
-- `mcp_ecosystem_class.mmd` - High-level class diagram (all 10)
-- `domain_architecture_v4.mmd` - 10-domain ecosystem
-- 10 individual MCP class diagrams
-- `request_flow_middleware.mmd` - Validator flow
-
-### Tasks Created
-- ✅ Task #028: Pre-commit hook migration (created)
-- 📋 Tasks #029-#036: Individual MCP servers (outlined)
-- 🔄 Tasks #025-#026: Cognitive MCPs (need refactoring)
-
----
-
-## ✨ What Makes This Architecture Special
-
-### For External AI Developers
-- **Familiar terminology:** RAG, Agent Orchestrator, Git Workflow
-- **Standard patterns:** ChromaDB, multi-agent coordination, state machines
-- **Clear operations:** Incremental ingest, semantic search, deliberation
-
-### For Project Sanctuary Team
-- **Preserved identity:** Cortex, Council, Forge
-- **Domain-driven design:** 10 cohesive, bounded contexts
-- **Safety-first:** Graduated risk levels with appropriate governance
-
-### For Implementation
-- **Clear roadmap:** 5 phases, easiest → hardest
-- **Proper dependencies:** Shared infrastructure first
-- **Testable:** Each MCP server independently testable
-
----
-
-## 🎯 Success Criteria
-
-### Functional
-- ✅ All 10 MCP servers operational
-- ✅ 100% schema validation coverage
-- ✅ P101 compliance for all file operations
-- ✅ RAG MCP supports incremental and full ingest
-- ✅ Agent Orchestrator MCP manages multi-agent workflows
-- ✅ Git Workflow MCP enables safe branch automation
-- ✅ Forge pipeline completes successfully on CUDA machine
-
-### Accessibility
-- ✅ Generic AI terminology used consistently
-- ✅ External developers understand immediately
-- ✅ Project identity preserved
-- ✅ Documentation clear for both audiences
-
-### Safety
-- ✅ Zero incidents of protected file modification
-- ✅ Zero incidents of destructive git operations
-- ✅ All operations auditable via git history
-- ✅ Forge jobs only run with proper authorization
-- ✅ CUDA environment properly gated
-
----
-
-## 📝 Next Steps
-
-1. ✅ **Architecture Complete** - All documentation finalized
-2. 🔄 **Update Tasks #025-#026** - Align with new naming
-3. 📋 **Create Tasks #029-#036** - Individual MCP server tasks
-4. 🚀 **Begin Phase 0** - Pre-commit hook migration (Task #028)
-5. 🏗️ **Phase 1** - Build shared infrastructure
-6. 🔨 **Phases 2-5** - Implement MCP servers (Document → Cognitive → System → Model)
-
----
-
-**Architecture Status:** ✅ COMPLETE  
-**Naming Convention:** ✅ FINALIZED (Generic AI terms + Project names)  
-**Documentation:** ✅ COMPREHENSIVE  
-**Ready for Implementation:** ✅ YES
-
----
-
-**Created:** 2025-11-25  
-**Final Version:** 4.0  
-**Total MCP Servers:** 10  
-**Total Tasks:** 11 (1 created, 10 outlined)
-
---- END OF FILE mcp/FINAL_SUMMARY.md ---
-
---- START OF FILE mcp/FINE_TUNING_NAMING_UPDATE.md ---
-
-# Fine-Tuning MCP Naming Update - Complete
-
-**Date:** 2025-11-25  
-**Status:** ✅ COMPLETE
-
----
-
-## Summary
-
-Successfully updated all MCP documentation to use **"Fine-Tuning MCP (Forge)"** instead of "Forge MCP".
-
----
-
-## Changes Made
-
-### Display Name
-- **Old:** Forge MCP
-- **New:** Fine-Tuning MCP (Forge)
-- **Rationale:** "Fine-Tuning" is the standard ML term, "Forge" is the project identity
-
-### Domain Name
-- **Old:** `project_sanctuary.model.forge`
-- **New:** `project_sanctuary.model.fine_tuning`
-
-### Class Name (in diagrams)
-- **Old:** `ForgeMCP`
-- **New:** `project_sanctuary_model_fine_tuning`
-
----
-
-## Files Updated
-
-### Documentation (8 files)
-- ✅ `architecture.md` - All references updated
-- ✅ `final_architecture_summary.md` - All references updated
-- ✅ `ddd_analysis.md` - All references updated
-- ✅ `implementation_tasks_summary.md` - All references updated
-- ✅ `FINAL_SUMMARY.md` - All references updated
-- ✅ `walkthrough.md` - All references updated
-- ✅ `naming_conventions.md` - All references updated
-- ✅ `VERIFICATION_REPORT.md` - All references updated
-- ✅ `CLASS_DIAGRAM_NAMING_UPDATE.md` - All references updated
-
-### Diagrams (3 files)
-- ✅ `fine_tuning_mcp_forge_class.mmd` - Renamed from `forge_mcp_class.mmd`
-- ✅ `domain_architecture_v4.mmd` - Label updated
-- ✅ `mcp_ecosystem_class.mmd` - Class name and domain updated
-
----
-
-## Final 10-Domain Architecture
-
-| # | MCP Server | Domain | Generic AI Term |
-|---|------------|--------|-----------------|
-| 1 | Chronicle MCP | `project_sanctuary.document.chronicle` | Document Management |
-| 2 | Protocol MCP | `project_sanctuary.document.protocol` | Document Management |
-| 3 | ADR MCP | `project_sanctuary.document.adr` | Decision Records |
-| 4 | Task MCP | `project_sanctuary.document.task` | Task Management |
-| 5 | **RAG MCP** (Cortex) | `project_sanctuary.cognitive.cortex` | **Retrieval-Augmented Generation** |
-| 6 | **Agent Orchestrator MCP** (Council) | `project_sanctuary.cognitive.council` | **Multi-Agent Orchestration** |
-| 7 | Config MCP | `project_sanctuary.system.config` | Configuration Management |
-| 8 | Code MCP | `project_sanctuary.system.code` | Code Management |
-| 9 | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Git Operations |
-| 10 | **Fine-Tuning MCP** (Forge) | `project_sanctuary.model.fine_tuning` | **LLM Fine-Tuning** |
-
----
-
-## Naming Pattern Summary
-
-All 10 MCP servers now follow consistent naming:
-
-**Pattern:** `<Generic AI Term> MCP` or `<Generic AI Term> MCP (<Project Name>)`
-
-**Examples:**
-- Chronicle MCP (no dual name needed)
-- **RAG MCP (Cortex)** - Generic term + Project name
-- **Agent Orchestrator MCP (Council)** - Generic term + Project name  
-- **Fine-Tuning MCP (Forge)** - Generic term + Project name
-
----
-
-## Verification
-
-- ✅ Zero instances of "Forge MCP" without "Fine-Tuning" prefix
-- ✅ Zero instances of `project_sanctuary.model.forge`
-- ✅ Diagram file renamed successfully
-- ✅ All class names updated to full domain names
-
----
-
-**Status:** ✅ COMPLETE  
-**Naming Convention:** FINALIZED (Generic AI + Project terms)  
-**Ready for:** Class diagram namespace updates
-
---- END OF FILE mcp/FINE_TUNING_NAMING_UPDATE.md ---
-
---- START OF FILE mcp/IMPLEMENTATION_COMPLETE.md ---
-
-# MCP Architecture - Final Implementation Summary
-
-**Date:** 2025-11-25  
-**Status:** ✅ COMPLETE AND READY FOR IMPLEMENTATION
-
----
-
-## ✅ All 3 Tasks Completed
-
-### 1. Class Diagrams Updated ✅
-**Updated all 11 class diagrams to use full domain naming:**
-
-| Diagram | Old Class Name | New Class Name |
-|---------|----------------|----------------|
-| `chronicle_mcp_class.mmd` | `ChronicleMCP` | `project_sanctuary_document_chronicle` |
-| `protocol_mcp_class.mmd` | `ProtocolMCP` | `project_sanctuary_document_protocol` |
-| `adr_mcp_class.mmd` | `ADRMCP` | `project_sanctuary_document_adr` |
-| `task_mcp_class.mmd` | `TaskMCP` | `project_sanctuary_document_task` |
-| `rag_mcp_cortex_class.mmd` | `CortexMCP` | `project_sanctuary_cognitive_cortex` |
-| `agent_orchestrator_mcp_council_class.mmd` | `CouncilMCP` | `project_sanctuary_cognitive_council` |
-| `config_mcp_class.mmd` | `ConfigMCP` | `project_sanctuary_system_config` |
-| `code_mcp_class.mmd` | `CodeMCP` | `project_sanctuary_system_code` |
-| `git_workflow_mcp_class.mmd` | `GitWorkflowMCP` | `project_sanctuary_system_git_workflow` |
-| `fine_tuning_mcp_forge_class.mmd` | `ForgeMCP` | `project_sanctuary_model_fine_tuning` |
-| `mcp_ecosystem_class.mmd` | All classes | All updated |
-
-**Benefits:**
-- ✅ Namespace isolation - No tool name collisions
-- ✅ Clear domain ownership
-- ✅ Professional enterprise structure
-- ✅ Scalable architecture
-
----
-
-### 2. Implementation Tasks Created ✅
-**Created 8 new MCP implementation tasks:**
-
-| Task # | MCP Server | Domain | Priority | Effort |
-|--------|------------|--------|----------|--------|
-| #029 | Chronicle MCP | `project_sanctuary.document.chronicle` | High | 3-4 days |
-| #030 | ADR MCP | `project_sanctuary.document.adr` | High | 2-3 days |
-| #031 | Task MCP | `project_sanctuary.document.task` | High | 3-4 days |
-| #032 | Protocol MCP | `project_sanctuary.document.protocol` | High | 3-4 days |
-| #033 | Config MCP | `project_sanctuary.system.config` | **Critical** | 4-5 days |
-| #034 | Code MCP | `project_sanctuary.system.code` | High | 5-6 days |
-| #035 | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Medium | 2-3 days |
-| #036 | Fine-Tuning MCP (Forge) | `project_sanctuary.model.fine_tuning` | High | 7-10 days |
-
-**Total:** 9 tasks (including #028 Pre-commit Hook Migration)
-
----
-
-### 3. Existing Tasks Updated ✅
-**Renamed and updated tasks #025-#026:**
-
-| Old Name | New Name | Domain |
-|----------|----------|--------|
-| `025_implement_mcp_rag_tool_server.md` | `025_implement_rag_mcp_cortex.md` | `project_sanctuary.cognitive.cortex` |
-| `026_implement_mcp_council_command_processor.md` | `026_implement_agent_orchestrator_mcp_council.md` | `project_sanctuary.cognitive.council` |
-
-**Updates:**
-- ✅ Titles updated to match architecture
-- ✅ Domain names added
-- ✅ Dependencies updated to reference Task #028
-
----
-
-## 📊 Final 10-Domain Architecture
-
-| # | MCP Server | Domain | Generic AI Term | Class Name |
-|---|------------|--------|-----------------|------------|
-| 1 | Chronicle MCP | `project_sanctuary.document.chronicle` | Document Management | `project_sanctuary_document_chronicle` |
-| 2 | Protocol MCP | `project_sanctuary.document.protocol` | Document Management | `project_sanctuary_document_protocol` |
-| 3 | ADR MCP | `project_sanctuary.document.adr` | Decision Records | `project_sanctuary_document_adr` |
-| 4 | Task MCP | `project_sanctuary.document.task` | Task Management | `project_sanctuary_document_task` |
-| 5 | **RAG MCP** (Cortex) | `project_sanctuary.cognitive.cortex` | **Retrieval-Augmented Generation** | `project_sanctuary_cognitive_cortex` |
-| 6 | **Agent Orchestrator MCP** (Council) | `project_sanctuary.cognitive.council` | **Multi-Agent Orchestration** | `project_sanctuary_cognitive_council` |
-| 7 | Config MCP | `project_sanctuary.system.config` | Configuration Management | `project_sanctuary_system_config` |
-| 8 | Code MCP | `project_sanctuary.system.code` | Code Management | `project_sanctuary_system_code` |
-| 9 | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Git Operations | `project_sanctuary_system_git_workflow` |
-| 10 | **Fine-Tuning MCP** (Forge) | `project_sanctuary.model.fine_tuning` | **LLM Fine-Tuning** | `project_sanctuary_model_fine_tuning` |
-
----
-
-## 🎯 Architecture Achievements
-
-### Naming Consistency ✅
-- **Generic AI terminology** for accessibility
-- **Project names in parentheses** for identity
-- **Full domain names** in class diagrams
-- **Professional namespace** isolation
-
-### Complete Documentation ✅
-- 17 markdown documents updated
-- 14 Mermaid diagrams created/updated
-- 11 implementation tasks defined
-- Comprehensive walkthrough created
-
-### Ready for Implementation ✅
-- Phase 0: Pre-commit hook migration (Task #028)
-- Phase 1: Shared infrastructure
-- Phases 2-5: All 10 MCP servers (Tasks #029-#036, #025-#026)
-
----
-
-## 📁 Complete Task Inventory
-
-### Backlog Tasks (11 total)
-```
-TASKS/backlog/
-├── 025_implement_rag_mcp_cortex.md ✅ UPDATED
-├── 026_implement_agent_orchestrator_mcp_council.md ✅ UPDATED
-├── 027_mcp_ecosystem_strategy.md (existing)
-├── 028_precommit_hook_mcp_migration.md ✅ CREATED
-├── 029_implement_chronicle_mcp.md ✅ CREATED
-├── 030_implement_adr_mcp.md ✅ CREATED
-├── 031_implement_task_mcp.md ✅ CREATED
-├── 032_implement_protocol_mcp.md ✅ CREATED
-├── 033_implement_config_mcp.md ✅ CREATED
-├── 034_implement_code_mcp.md ✅ CREATED
-├── 035_implement_git_workflow_mcp.md ✅ CREATED
-└── 036_implement_fine_tuning_mcp_forge.md ✅ CREATED
-```
-
----
-
-## 🚀 Next Steps
-
-### Immediate
-1. ✅ **Architecture Complete** - All documentation finalized
-2. ✅ **Tasks Created** - All 11 implementation tasks defined
-3. ✅ **Naming Finalized** - Generic AI + Project terms
-
-### Implementation Roadmap
-1. **Phase 0 (Week 0):** Task #028 - Pre-commit hook migration
-2. **Phase 1 (Week 1):** Shared infrastructure (Git, Safety, Schema, Vault)
-3. **Phase 2 (Week 2):** Document domains (Tasks #029-#032)
-4. **Phase 3 (Week 3):** Cognitive domains (Tasks #025-#026)
-5. **Phase 4 (Week 4):** System domains (Tasks #033-#035)
-6. **Phase 5 (Week 5):** Model domain (Task #036)
-
----
-
-## ✨ Key Highlights
-
-### Accessibility
-- External AI developers understand immediately (RAG, Agent Orchestrator, Fine-Tuning)
-- Project identity preserved (Cortex, Council, Forge)
-- Professional namespace conventions
-
-### Safety
-- Risk levels: SAFE → MODERATE → HIGH → CRITICAL → EXTREME
-- Appropriate governance for each level
-- State machine for highest-risk operations
-
-### Scalability
-- Full domain naming prevents collisions
-- Clear separation of concerns
-- Easy to add new domains
-
----
-
-**Architecture Status:** ✅ COMPLETE  
-**Tasks Status:** ✅ ALL CREATED  
-**Class Diagrams:** ✅ ALL UPDATED  
-**Ready for Implementation:** ✅ YES
-
-**Total Implementation Effort:** ~35-50 days (7-10 weeks)  
-**Total MCP Servers:** 10  
-**Total Tasks:** 11 (1 pre-migration + 10 implementations)
-
---- END OF FILE mcp/IMPLEMENTATION_COMPLETE.md ---
-
---- START OF FILE mcp/VERIFICATION_REPORT.md ---
-
-# MCP Architecture - Final Verification Report
-
-**Date:** 2025-11-25  
-**Status:** ✅ COMPLETE
-
----
-
-## ✅ Naming Convention Updates - VERIFIED
-
-### File Renaming Complete
-- ✅ `cortex_mcp_class.mmd` → `rag_mcp_cortex_class.mmd`
-- ✅ `council_mcp_class.mmd` → `agent_orchestrator_mcp_council_class.mmd`
-- ✅ Deleted outdated `dual_nomenclature_guide.md`
-
-### All Document References Updated
-- ✅ `architecture.md` - All 8 instances updated
-- ✅ `final_architecture_summary.md` - All instances updated
-- ✅ `ddd_analysis.md` - All instances updated
-- ✅ `naming_conventions.md` - Updated with new pattern
-- ✅ `implementation_tasks_summary.md` - All instances updated
-- ✅ `walkthrough.md` - All instances updated
-- ✅ `FINAL_SUMMARY.md` - All instances updated
-- ✅ `mcp_ecosystem_class.mmd` - Diagram links updated
-- ✅ `domain_architecture_v4.mmd` - Labels updated
-- ✅ `rag_mcp_cortex_class.mmd` - Title updated
-- ✅ `agent_orchestrator_mcp_council_class.mmd` - Title and notes updated
-
-### Remaining Legacy References (Historical Diagrams Only)
-- 6 instances in `domain_architecture_v1.mmd`, `v2.mmd`, `v3.mmd` (historical versions - intentionally preserved)
-
----
-
-## 📋 Task Status
-
-### Created Tasks
-- ✅ Task #028: Pre-commit Hook Migration (CREATED)
-
-### Tasks Needing Creation
-- ❌ Task #029: Chronicle MCP (NOT YET CREATED)
-- ❌ Task #030: ADR MCP (NOT YET CREATED)
-- ❌ Task #031: Task MCP (NOT YET CREATED)
-- ❌ Task #032: Protocol MCP (NOT YET CREATED)
-- ❌ Task #033: Config MCP (NOT YET CREATED)
-- ❌ Task #034: Code MCP (NOT YET CREATED)
-- ❌ Task #035: Git Workflow MCP (NOT YET CREATED)
-- ❌ Task #036: Fine-Tuning MCP (Forge) (NOT YET CREATED)
-
-### Tasks Needing Update
-- ⚠️ Task #025: Needs renaming to "RAG MCP (Cortex)"
-- ⚠️ Task #026: Needs renaming to "Agent Orchestrator MCP (Council)"
-
-**Note:** All task details are documented in `implementation_tasks_summary.md`
-
----
-
-## 📊 Final Architecture Summary
-
-### 10-Domain MCP Ecosystem
-
-| # | MCP Server | Domain | Generic AI Term |
-|---|------------|--------|-----------------|
-| 1 | Chronicle MCP | `project_sanctuary.document.chronicle` | Document Management |
-| 2 | Protocol MCP | `project_sanctuary.document.protocol` | Document Management |
-| 3 | ADR MCP | `project_sanctuary.document.adr` | Decision Records |
-| 4 | Task MCP | `project_sanctuary.document.task` | Task Management |
-| 5 | **RAG MCP** (Cortex) | `project_sanctuary.cognitive.cortex` | **Retrieval-Augmented Generation** |
-| 6 | **Agent Orchestrator MCP** (Council) | `project_sanctuary.cognitive.council` | **Multi-Agent Orchestration** |
-| 7 | Config MCP | `project_sanctuary.system.config` | Configuration Management |
-| 8 | Code MCP | `project_sanctuary.system.code` | Code Management |
-| 9 | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Git Operations |
-| 10 | Fine-Tuning MCP (Forge) | `project_sanctuary.model.fine_tuning` | Model Fine-Tuning |
-
----
-
-## 📁 Complete File Inventory
-
-### Core Documentation (7 files)
-- `architecture.md` (v4.0) ✅
-- `final_architecture_summary.md` (v4.0) ✅
-- `naming_conventions.md` ✅
-- `implementation_tasks_summary.md` ✅
-- `walkthrough.md` ✅
-- `FINAL_SUMMARY.md` ✅
-- `ddd_analysis.md` ✅
-
-### Diagrams (14 files)
-- `mcp_ecosystem_class.mmd` - High-level (all 10) ✅
-- `domain_architecture_v4.mmd` - Current version ✅
-- `domain_architecture_v1.mmd` - Historical
-- `domain_architecture_v2.mmd` - Historical
-- `domain_architecture_v3.mmd` - Historical
-- `request_flow_middleware.mmd` ✅
-- `chronicle_mcp_class.mmd` ✅
-- `protocol_mcp_class.mmd` ✅
-- `adr_mcp_class.mmd` ✅
-- `task_mcp_class.mmd` ✅
-- `rag_mcp_cortex_class.mmd` ✅ RENAMED
-- `agent_orchestrator_mcp_council_class.mmd` ✅ RENAMED
-- `config_mcp_class.mmd` ✅
-- `code_mcp_class.mmd` ✅
-- `git_workflow_mcp_class.mmd` ✅
-- `fine_tuning_mcp_forge_class.mmd` ✅
-
----
-
-## ✅ Verification Checklist
-
-### Naming Consistency
-- ✅ All current documents use "RAG MCP (Cortex)"
-- ✅ All current documents use "Agent Orchestrator MCP (Council)"
-- ✅ All diagram files properly named
-- ✅ All diagram references updated
-- ✅ Domain names consistent: `project_sanctuary.<category>.<server>`
-
-### Documentation Completeness
-- ✅ Architecture v4.0 complete with all 10 domains
-- ✅ Risk matrix includes all 10 domains
-- ✅ Implementation roadmap includes all phases
-- ✅ Naming conventions documented
-- ✅ Walkthrough complete
-- ✅ Final summary created
-
-### Accessibility
-- ✅ Generic AI terminology used (RAG, Agent Orchestrator)
-- ✅ Project terms preserved in parentheses
-- ✅ External developers can understand immediately
-- ✅ Project identity maintained
-
----
-
-## 🚀 Next Steps
-
-### Immediate (User Action Required)
-1. **Review architecture** - Validate all 10 domains
-2. **Create remaining tasks** - Tasks #029-#036 (8 new tasks)
-3. **Update existing tasks** - Tasks #025-#026 (rename to match architecture)
-
-### Phase 0 (Week 0)
-4. **Begin Task #028** - Pre-commit hook migration
-
-### Implementation (Weeks 1-5)
-5. **Phase 1:** Shared infrastructure
-6. **Phase 2:** Document domains (#029-#032)
-7. **Phase 3:** Cognitive domains (#025-#026)
-8. **Phase 4:** System domains (#033-#035)
-9. **Phase 5:** Model domain (#036)
-
----
-
-**Architecture Status:** ✅ COMPLETE AND VERIFIED  
-**Naming Convention:** ✅ FINALIZED (Generic AI + Project terms)  
-**Documentation:** ✅ COMPREHENSIVE AND CONSISTENT  
-**Ready for Implementation:** ✅ YES
-
-**Total Files Updated:** 17  
-**Total Diagrams:** 14  
-**Total MCP Servers:** 10  
-**Total Tasks Defined:** 11 (1 created, 10 outlined)
-
---- END OF FILE mcp/VERIFICATION_REPORT.md ---
-
 --- START OF FILE mcp/architecture.md ---
 
 # Project Sanctuary MCP Ecosystem Architecture
@@ -3219,8 +2464,8 @@ graph TB
     end
     
     subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex[RAG MCP (Cortex)<br/>mnemonic_cortex/]
-        Council[Agent Orchestrator MCP (Council)<br/>council_orchestrator/]
+        Cortex["RAG MCP (Cortex)<br/>mnemonic_cortex/"]
+        Council["Agent Orchestrator MCP (Council)<br/>council_orchestrator/"]
     end
     
     subgraph "System Domains - High Safety"
@@ -3230,7 +2475,7 @@ graph TB
     end
     
     subgraph "Model Domain - Specialized Hardware"
-        Forge[Fine-Tuning MCP (Forge)<br/>forge/<br/>⚡ CUDA GPU Required]
+        Forge["Fine-Tuning MCP (Forge)<br/>forge/<br/>⚡ CUDA GPU Required"]
     end
     
     subgraph "Shared Infrastructure"
@@ -3308,6 +2553,85 @@ graph TB
 
 ### 1. Chronicle MCP Server
 
+**Domain:** Historical truth and canonical records  
+**Directory:** `00_CHRONICLE/ENTRIES/`  
+**Purpose:** Create and manage chronicle entries (file operations only)
+
+```mermaid
+graph LR
+    subgraph "Chronicle MCP Tools"
+        A[create_chronicle_entry]
+        B[update_chronicle_entry]
+        C[get_chronicle_entry]
+        D[list_recent_entries]
+        E[search_chronicle]
+    end
+    
+    subgraph "Operations"
+        F[Validate Schema]
+        G[Check Entry Age]
+        H[Generate Markdown]
+        I[Write to Disk]
+    end
+    
+    subgraph "Storage"
+        J[00_CHRONICLE/ENTRIES/]
+    end
+    
+    A --> F
+    B --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+```
+
+**Tool Signatures:**
+
+```typescript
+create_chronicle_entry(
+  entry_number: number,
+  title: string,
+  date: string,
+  author: string,
+  content: string,
+  status?: "draft" | "published",
+  classification?: "public" | "internal" | "confidential"
+): FileOperationResult {
+  file_path: string,
+  content: string,
+  operation: "created"
+}
+
+update_chronicle_entry(
+  entry_number: number,
+  updates: Partial<ChronicleEntry>,
+  reason: string,
+  override_approval_id?: string
+): FileOperationResult {
+  file_path: string,
+  content: string,
+  operation: "updated"
+}
+```
+
+**Safety Rules:**
+- Entry numbers are auto-generated and sequential
+- Cannot modify entries >7 days old without approval override
+- Must follow chronicle entry template
+- **No Git operations** - returns file path for Git Workflow MCP to commit
+- Cannot delete entries (mark as deprecated only)
+
+**Workflow Pattern:**
+```typescript
+// Step 1: Create entry (Chronicle MCP)
+const result = chronicle.create_chronicle_entry(...)
+// Returns: { file_path: "00_CHRONICLE/ENTRIES/280_mcp_architecture.md" }
+
+// Step 2: Commit (Git Workflow MCP)
+git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
+```
+
 **Domain:** Living Chronicle entry management  
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create, read, update chronicle entries with automatic git commits
@@ -3323,8 +2647,8 @@ graph TB
         Protocol[Protocol MCP Server]
         ADR[ADR MCP Server]
         Task[Task MCP Server]
-        Cortex[RAG MCP (Cortex)]
-        Council[Agent Orchestrator MCP (Council)]
+        Cortex["RAG MCP (Cortex)"]
+        Council["Agent Orchestrator MCP (Council)"]
     end
    
     subgraph "Shared Infrastructure"
@@ -4564,6 +3888,145 @@ sequenceDiagram
 
 --- END OF FILE mcp/architecture.md ---
 
+--- START OF FILE mcp/claude_desktop_config_template.json ---
+
+{
+    "mcpServers": {
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.chronicle.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.protocol.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.adr.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "tasks": {
+            "displayName": "Task MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.task.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "cortex": {
+            "displayName": "RAG MCP (Cortex)",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "council": {
+            "displayName": "Agent Orchestrator MCP (Council)",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.council.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.config.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.git_workflow.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "forge": {
+            "displayName": "Fine-Tuning MCP (Forge)",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.forge.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        }
+    }
+}
+
+--- END OF FILE mcp/claude_desktop_config_template.json ---
+
 --- START OF FILE mcp/ddd_analysis.md ---
 
 # MCP Ecosystem - 10 Domain Architecture (DDD Analysis)
@@ -4842,6 +4305,25 @@ The **10-domain architecture** provides:
 5. **DDD Compliance**: Each domain represents a true Bounded Context with unique data models and operations
 6. **Hardware Specialization**: Forge domain isolated for CUDA-specific operations
 7. **Accessibility**: Generic AI terminology (RAG, Agent Orchestrator) for external developers
+8. **Single Responsibility Principle**: Document MCPs handle file operations only; Git Workflow MCP handles all commits
+
+### Separation of Concerns Pattern
+
+**Document MCPs** (Chronicle, Protocol, ADR, Task):
+- Create/modify files only
+- Return `FileOperationResult` with file paths
+- No Git operations
+
+**Git Workflow MCP**:
+- Handles all Git commits
+- Generates P101 manifests
+- Centralizes version control logic
+
+**Benefits:**
+- Better composability (LLM chains operations)
+- Easier testing (file ops separate from Git)
+- More flexible workflows (batch commits)
+- Centralized Git logic
 
 **Next Steps:**
 1. Finalize shared infrastructure specifications
@@ -4995,13 +4477,14 @@ The **10-domain architecture** provides:
 
 ---
 
-## Cross-Domain Workflow: Model Development
+## Cross-Domain Workflow Example
+
+**Scenario:** Fine-tune Sanctuary-Guardian-02 model
+
+**Workflow (Separation of Concerns Pattern):**
 
 ```
 1. Task MCP: create_task(#032, "Fine-tune Sanctuary-Guardian-02")
-2. Agent Orchestrator MCP (Council): create_deliberation("Design training strategy for Guardian-02")
-3. RAG MCP (Cortex): query_cortex("Previous fine-tuning results and lessons learned")
-4. Fine-Tuning MCP (Forge): check_resource_availability() → verify CUDA available
 5. Fine-Tuning MCP (Forge): initiate_model_forge({
      forge_id: "guardian-02-v1",
      authorization_task_id: 32,
@@ -5364,371 +4847,6 @@ export interface ForgeSafetyRules {
 
 --- END OF FILE mcp/forge_mcp_types.ts ---
 
---- START OF FILE mcp/implementation_tasks_summary.md ---
-
-# MCP Implementation Tasks Summary
-
-**Created:** 2025-11-25  
-**Purpose:** Outline of all MCP server implementation tasks (#028-#036)
-
----
-
-## Task #028: Pre-Commit Hook Migration ✅ CREATED
-**Status:** Backlog  
-**Priority:** Critical  
-**File:** `TASKS/backlog/028_precommit_hook_mcp_migration.md`
-
----
-
-## Task #029: Implement Chronicle MCP
-**Domain:** `project_sanctuary.document.chronicle`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 3-4 days  
-**Dependencies:** Task #028 (pre-commit hooks), Shared Infrastructure
-
-**Objective:** Implement Chronicle MCP server for managing historical truth entries in `00_CHRONICLE/ENTRIES/`.
-
-**Key Features:**
-- `create_chronicle_entry(entry_number, title, date, author, content, status?, classification?)`
-- `update_chronicle_entry(entry_number, updates, reason)`
-- `get_chronicle_entry(entry_number)`
-- `list_recent_entries(limit?)`
-- `search_chronicle(query)`
-
-**Safety Rules:**
-- Entry numbers must be sequential
-- 7-day modification window
-- Auto-generates P101 manifest
-- Cannot modify entries older than 7 days without approval
-
----
-
-## Task #030: Implement ADR MCP
-**Domain:** `project_sanctuary.document.adr`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 2-3 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Implement ADR MCP server for Architecture Decision Records in `ADRs/`.
-
-**Key Features:**
-- `create_adr(number, title, context, decision, consequences, date?, status?, supersedes?)`
-- `update_adr_status(number, new_status, reason)`
-- `get_adr(number)`
-- `list_adrs(status?)`
-- `search_adrs(query)`
-
-**Safety Rules:**
-- ADR numbers must be sequential
-- Cannot delete ADRs (mark as superseded)
-- Status transitions must be valid
-- Follows ADR template format
-
----
-
-## Task #031: Implement Task MCP
-**Domain:** `project_sanctuary.document.task`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 3-4 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Implement Task MCP server for workflow management in `TASKS/`.
-
-**Key Features:**
-- `create_task(number, title, description, priority, estimated_effort?, dependencies?, status?)`
-- `update_task_status(number, new_status, notes?)`
-- `update_task(number, updates)`
-- `get_task(number)`
-- `list_tasks(status?, priority?)`
-- `search_tasks(query)`
-
-**Safety Rules:**
-- Task numbers must be unique
-- Circular dependency detection
-- Status transitions move files between directories
-- Cannot delete tasks (archive only)
-
----
-
-## Task #032: Implement Protocol MCP
-**Domain:** `project_sanctuary.document.protocol`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 3-4 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Implement Protocol MCP server for governing rules in `01_PROTOCOLS/`.
-
-**Key Features:**
-- `create_protocol(number, title, classification, content, status?, version?, linked_protocols?)`
-- `update_protocol(number, updates, changelog)`
-- `get_protocol(number)`
-- `list_protocols(classification?, status?)`
-- `search_protocols(query)`
-- `archive_protocol(number, reason)`
-
-**Safety Rules:**
-- Protocol numbers must be unique
-- Cannot delete protocols (archive only)
-- Updates to canonical protocols require version bump
-- Must include changelog for updates
-- Protected protocols require explicit approval
-
----
-
-## Task #025: Implement RAG MCP (Cortex) - UPDATE NEEDED
-**Domain:** `project_sanctuary.cognitive.cortex`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 4-5 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Refactor existing MCP RAG Tool Server to align with RAG MCP (Cortex) architecture.
-
-**Key Features (Standard RAG Operations):**
-- `query_cortex(query, max_results?, filters?, include_sources?)`
-- `ingest_document(file_path, metadata?)`
-- `update_index()`
-- `get_stats()`
-- `search_by_metadata(filters)`
-
-**Safety Rules:**
-- Read-only operations by default
-- Ingest requires file validation
-- Cannot delete documents (archive only)
-- Rate limiting on queries
-- Explicit ingestion only (no auto-ingest)
-
-**Changes from Task #025:**
-- Rename to RAG MCP (Cortex)
-- Add domain naming: `project_sanctuary.cognitive.cortex`
-- Emphasize standard RAG operations (incremental ingest, search, etc.)
-- Align tool signatures with architecture
-- Remove mechanical operations (cognitive only)
-
----
-
-## Task #026: Implement Agent Orchestrator MCP (Council) - UPDATE NEEDED
-**Domain:** `project_sanctuary.cognitive.council`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 3-4 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Refactor MCP Council Command Processor to align with Agent Orchestrator MCP (Council) architecture.
-
-**Key Features (Multi-Agent Orchestration):**
-- `create_deliberation(description, output_path, max_rounds?, force_engine?, max_cortex_queries?, input_artifacts?)`
-- `create_dev_cycle(description, project_name, output_dir, force_engine?)`
-- `get_council_status()`
-- `get_result(task_id)`
-
-**Safety Rules:**
-- **NO file system modifications**
-- **NO git operations**
-- Read-only cognitive tasks
-- Results written to designated paths only
-- 90-day retention, high-value decisions moved to Chronicle/ADR
-
-**Changes from Task #026:**
-- Rename to Agent Orchestrator MCP (Council)
-- Add domain naming: `project_sanctuary.cognitive.council`
-- Emphasize multi-agent orchestration capabilities
-- Remove all mechanical operations (file writes, git commits)
-- Focus purely on cognitive command generation
-
----
-
-## Task #033: Implement Config MCP
-**Domain:** `project_sanctuary.system.config`  
-**Status:** Backlog  
-**Priority:** Critical  
-**Estimated Effort:** 4-5 days  
-**Dependencies:** Task #028, Shared Infrastructure, Secret Vault
-
-**Objective:** Implement Config MCP server for system configuration with extreme safety controls.
-
-**Key Features:**
-- `request_config_change(config_path, changes, reason, impact_assessment)`
-- `apply_config_change(approval_id)`
-- `set_secret(key, value, scope)`
-- `get_secret(key)`
-- `get_config(config_path)`
-- `list_config_files()`
-
-**Safety Rules:**
-- **Two-step approval** for all changes (request → approve)
-- **Automatic backup** before any modification
-- **Secret vault** for sensitive values (API keys, tokens)
-- **Audit trail** for all configuration changes
-- **Protected files** require explicit user confirmation
-- **No direct .env modification** - use secret vault
-
----
-
-## Task #034: Implement Code MCP
-**Domain:** `project_sanctuary.system.code`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 5-6 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Implement Code MCP server for source code management with mandatory testing pipeline.
-
-**Key Features:**
-- `write_code_file(file_path, content, language, description, run_tests)`
-- `execute_code(file_path, args?, timeout_seconds?, sandbox?)`
-- `refactor_code(file_path, refactor_type, params, preserve_tests)`
-- `get_code_file(file_path)`
-- `search_code(query, file_pattern?)`
-
-**Safety Rules:**
-- **Mandatory testing pipeline** before commit:
-  1. Syntax validation
-  2. Linting (flake8, eslint, etc.)
-  3. Unit tests (if present)
-  4. Dependency check
-  5. Security audit (basic)
-- **Automatic rollback** if tests fail
-- **Sandbox execution** for untrusted code
-- **Git commit only if all checks pass**
-
----
-
-## Task #035: Implement Git Workflow MCP
-**Domain:** `project_sanctuary.system.git_workflow`  
-**Status:** Backlog  
-**Priority:** Medium  
-**Estimated Effort:** 2-3 days  
-**Dependencies:** Task #028, Shared Infrastructure
-
-**Objective:** Implement Git Workflow MCP server for safe branch management and workflow automation.
-
-**Key Features:**
-- `create_feature_branch(branch_name, base_branch?)`
-- `switch_branch(branch_name, stash_changes?)`
-- `push_current_branch(set_upstream?)`
-- `get_repo_status()`
-- `list_branches()`
-- `compare_branches(source, target)`
-
-**Safety Rules:**
-- **Read-only by default** (most operations are status checks)
-- **Auto-stash** uncommitted changes before branch switching
-- **No destructive operations**: No delete_branch, merge, rebase, force_push
-- **User-controlled merges**: PR merges happen on GitHub, not via MCP
-- **No history rewriting**: No reset --hard, rebase, amend operations
-- **Branch protection**: Cannot switch to or modify protected branches
-
-**Excluded Operations (User Must Do Manually):**
-- Deleting branches (local or remote)
-- Merging branches
-- Rebasing
-- Pulling from remote (to avoid merge conflicts)
-- Force pushing
-- Resolving merge conflicts
-
----
-
-## Task #036: Implement Fine-Tuning MCP (Forge)
-**Domain:** `project_sanctuary.model.fine_tuning`  
-**Status:** Backlog  
-**Priority:** High  
-**Estimated Effort:** 7-10 days  
-**Dependencies:** Task #028, Task #031 (Task MCP for authorization), Shared Infrastructure, CUDA environment
-
-**Objective:** Implement Fine-Tuning MCP (Forge) server for model fine-tuning with state machine governance.
-
-**Hardware Requirements:**
-- CUDA-enabled GPU (validated on RTX A2000)
-- WSL environment with `ml_env` activated
-- Environment marker: `CUDA_FORGE_ACTIVE=true`
-
-**Key Features:**
-- `initialize_forge_environment()` - **CRITICAL: Must be called first**
-- `check_resource_availability()`
-- `initiate_model_forge(forge_id, base_model, authorization_task_id, hyperparameters, dataset_config?)`
-- `get_forge_job_status(job_id)`
-- `package_and_deploy_artifact(job_id, quantization)`
-- `run_inference_test(model_path, test_prompts, mode)`
-- `publish_to_registry(job_id, repo_name, private, model_card?)`
-- `retrieve_registry_artifact(repo_name, revision?)`
-
-**10-Step Pipeline:**
-1. Dataset creation (`forge_whole_genome_dataset.py`)
-2. Fine-tuning with QLoRA (`fine_tune.py`)
-3. Adapter merge (`merge_adapter.py`)
-4. Inference test (`inference.py`)
-5. GGUF conversion (`convert_to_gguf.py`)
-6. Modelfile generation (`create_modelfile.py`)
-7. Ollama import (`ollama create`)
-8. Ollama inference test (`ollama run`)
-9. Hugging Face upload (`upload_to_huggingface.py`)
-10. Registry verification (download from HF)
-
-**State Machine:**
-- **Operational State:** `INACTIVE_UNSAFE` → `ACTIVE` (via `initialize_forge_environment()`)
-- **Job State:** `QUEUED` → `RUNNING` → `COMPLETED_SUCCESS` → `PACKAGING_COMPLETE` → `TESTS_PASSED` → `PUBLISHED`
-
-**Safety Rules:**
-- **Environment gate**: Must check `CUDA_FORGE_ACTIVE` marker
-- **Resource reservation**: Check GPU memory and disk space before starting
-- **Task linkage**: All jobs must link to Task MCP entry for audit trail
-- **Script whitelist**: Only whitelisted scripts can execute (no arbitrary commands)
-- **Artifact integrity**: SHA-256 validation for all artifacts (P101-style)
-- **Asynchronous execution**: Long-running jobs run in background with status polling
-- **Automatic cleanup**: Failed jobs clean up partial artifacts
-- **No auto-commit**: Forge results require manual Chronicle/ADR documentation
-- **Sequencing enforcement**: Cannot publish without passing tests
-
----
-
-## Implementation Priority
-
-### Phase 0 (Week 0)
-1. Task #028: Pre-commit Hook Migration
-
-### Phase 1 (Week 1)
-- Shared Infrastructure (Git, Safety, Schema, Vault)
-
-### Phase 2 (Week 2) - Easiest
-2. Task #029: Chronicle MCP
-3. Task #030: ADR MCP
-4. Task #031: Task MCP
-5. Task #032: Protocol MCP
-
-### Phase 3 (Week 3) - Moderate
-6. Task #025: RAG MCP (Cortex) - refactor
-7. Task #026: Agent Orchestrator MCP (Council) - refactor
-
-### Phase 4 (Week 4) - High Risk
-8. Task #033: Config MCP
-9. Task #034: Code MCP
-10. Task #035: Git Workflow MCP
-
-### Phase 5 (Week 5) - Hardest
-11. Task #036: Fine-Tuning MCP (Forge)
-
----
-
-## Next Steps
-
-1. **Review this summary** with stakeholders
-2. **Create individual task files** for #029-#036
-3. **Update Tasks #025-#026** to align with architecture
-4. **Begin Phase 0** implementation (Task #028)
-
----
-
-**Status:** Task Summary Complete  
-**Individual Task Files:** 1/11 created (Task #028)  
-**Remaining:** Tasks #029-#036 (8 new), Tasks #025-#026 (2 updates)
-
---- END OF FILE mcp/implementation_tasks_summary.md ---
-
 --- START OF FILE mcp/naming_conventions.md ---
 
 # MCP Server Naming Conventions
@@ -5801,41 +4919,34 @@ project_sanctuary.<category>.<server_name>
 
 ### Server Declaration (MCP Settings)
 
+For local Claude Desktop configuration, we recommend using **simplified keys** combined with a **displayName** for better usability.
+
 ```json
 {
   "mcpServers": {
-    "project_sanctuary.document.chronicle": {
+    "chronicle": {
+      "displayName": "Chronicle MCP",
       "command": "node",
       "args": ["/path/to/mcp/servers/document/chronicle/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
+      "env": { "PROJECT_ROOT": "..." }
     },
-    "project_sanctuary.document.protocol": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/document/protocol/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
+    "tasks": {
+      "displayName": "Task MCP",
+      "command": "python",
+      "args": ["-m", "mcp_servers.task.server"],
+      "env": { "PROJECT_ROOT": "..." }
     },
-    "project_sanctuary.system.git_workflow": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/system/git_workflow/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      }
-    },
-    "project_sanctuary.model.fine_tuning": {
-      "command": "node",
-      "args": ["/path/to/mcp/servers/model/forge/index.js"],
-      "env": {
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-        "CUDA_FORGE_ACTIVE": "true"
-      }
+    "git_workflow": {
+      "displayName": "Git Workflow MCP",
+      "command": "python",
+      "args": ["-m", "mcp_servers.git_workflow.server"],
+      "env": { "PROJECT_ROOT": "..." }
     }
   }
 }
 ```
+
+**Note:** The internal FQDN (`project_sanctuary.document.task`) is still used for architectural identification, but the local config key can be simplified for developer convenience.
 
 ---
 
@@ -5991,6 +5102,507 @@ SANCTUARY_SYSTEM_CONFIG_VAULT_PATH=/path/to/vault
 **Owner:** Guardian (via Gemini 2.0 Flash Thinking Experimental)
 
 --- END OF FILE mcp/naming_conventions.md ---
+
+--- START OF FILE mcp/port_registry.md ---
+
+# MCP Port Registry
+
+**Version:** 1.0  
+**Status:** Active  
+**Purpose:** Centralized registry of port assignments for Project Sanctuary MCP servers to prevent conflicts.
+
+---
+
+## Port Allocation Strategy
+
+- **Range:** 3000-3099
+- **Protocol:** HTTP (SSE) / Stdio (No port needed)
+- **Container Mapping:** Host Port -> Container Port (8080)
+
+## Assigned Ports
+
+| Port | Server Name | Domain | Status |
+|------|-------------|--------|--------|
+| **3001** | Chronicle MCP | `project_sanctuary.document.chronicle` | Planned |
+| **3002** | Protocol MCP | `project_sanctuary.document.protocol` | Planned |
+| **3003** | ADR MCP | `project_sanctuary.document.adr` | Planned |
+| **3004** | **Task MCP** | `project_sanctuary.document.task` | **Active** |
+| **3005** | RAG MCP (Cortex) | `project_sanctuary.cognitive.cortex` | Planned |
+| **3006** | Council MCP | `project_sanctuary.cognitive.council` | Planned |
+| **3007** | Config MCP | `project_sanctuary.system.config` | Planned |
+| **3008** | Code MCP | `project_sanctuary.system.code` | Planned |
+| **3009** | Git Workflow MCP | `project_sanctuary.system.git_workflow` | Planned |
+| **3010** | Forge MCP | `project_sanctuary.model.fine_tuning` | Planned |
+
+## Usage
+
+When running a container, map the assigned host port to the container's internal port (usually 8080).
+
+**Example (Task MCP):**
+```bash
+podman run -p 3004:8080 ...
+```
+
+--- END OF FILE mcp/port_registry.md ---
+
+--- START OF FILE mcp/prerequisites.md ---
+
+# MCP Server Prerequisites
+
+**Last Updated:** 2025-11-26  
+**Status:** Canonical
+
+---
+
+## Overview
+
+This document outlines all prerequisites for developing and deploying MCP (Model Context Protocol) servers in Project Sanctuary.
+
+---
+
+## System Requirements
+
+### Operating System
+- **macOS** (primary development environment)
+- **Linux** (production deployment)
+- **Windows** (via WSL2, not primary focus)
+
+### Hardware
+- **CPU:** 4+ cores recommended
+- **RAM:** 8GB minimum, 16GB recommended
+- **Disk:** 20GB free space for containers and images
+
+---
+
+## Required Software
+
+### 1. Podman (Containerization)
+
+**Purpose:** Run MCP servers in isolated containers
+
+**Installation (macOS):**
+
+```bash
+# Option 1: Podman Desktop (Recommended)
+# Download from: https://podman-desktop.io/downloads
+# Install the .dmg file
+
+# Option 2: Homebrew (CLI only)
+brew install podman
+```
+
+**Setup:**
+
+```bash
+# Initialize Podman machine
+podman machine init
+
+# Start Podman machine
+podman machine start
+
+# Verify installation
+podman --version
+# Expected: podman version 5.7.0 (or later)
+
+# Test with hello-world
+podman run --rm hello-world
+```
+
+**Configuration:**
+
+Add to `~/.zshrc` (if using Homebrew):
+```bash
+export PATH="/opt/podman/bin:$PATH"
+```
+
+Then reload:
+```bash
+source ~/.zshrc
+```
+
+**Verification:**
+
+```bash
+# Check machine status
+podman machine list
+# Should show: Currently running
+
+# Check containers
+podman ps
+# Should not error
+
+# Run test container
+cd tests/podman
+./build.sh
+# Visit http://localhost:5001 (or 5003)
+```
+
+---
+
+### 2. Python 3.11+
+
+**Purpose:** MCP SDK and server implementation
+
+**Installation:**
+
+```bash
+# macOS (Homebrew)
+brew install python@3.11
+
+# Verify
+python3 --version
+# Expected: Python 3.11.x
+```
+
+**Virtual Environment:**
+
+```bash
+# Create venv for MCP development
+python3 -m venv .venv
+
+# Activate
+source .venv/bin/activate
+
+# Install MCP SDK
+pip install mcp
+```
+
+---
+
+### 3. MCP SDK
+
+**Purpose:** Model Context Protocol implementation
+
+**Installation:**
+
+```bash
+# Python SDK
+pip install mcp
+
+# Verify
+python -c "import mcp; print(mcp.__version__)"
+```
+
+**Documentation:**
+- [MCP Specification](https://modelcontextprotocol.io/)
+- [Python SDK Docs](https://github.com/modelcontextprotocol/python-sdk)
+
+### 4. Claude Desktop
+**Purpose:** Primary interface for interacting with MCP servers
+
+**Installation:**
+- Download from [anthropic.com/claude](https://anthropic.com/claude)
+
+**Configuration:**
+- Requires `claude_desktop_config.json` setup (see [Setup Guide](setup_guide.md))
+
+---
+
+## Project-Specific Setup
+
+### 1. Project Sanctuary Repository
+
+```bash
+# Clone repository
+git clone https://github.com/richfrem/Project_Sanctuary.git
+cd Project_Sanctuary
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install dependencies (for MCP development)
+pip install -r requirements.txt
+
+# For ML/fine-tuning work, use:
+# pip install -r requirements-finetuning.txt
+```
+
+### 2. Directory Structure
+
+Ensure these directories exist:
+
+```
+Project_Sanctuary/
+├── TASKS/
+│   ├── backlog/
+│   ├── todo/
+│   ├── in-progress/
+│   └── done/
+├── mcp_servers/
+│   └── task/
+│       ├── __init__.py
+│       ├── models.py
+│       ├── validator.py
+│       ├── operations.py
+│       └── server.py
+└── tests/
+    └── podman/
+```
+
+### 3. Environment Variables
+
+Create `.env` file (if needed):
+
+```bash
+# MCP Server Configuration
+MCP_SERVER_HOST=0.0.0.0
+MCP_SERVER_PORT=8080
+
+# Project Paths
+PROJECT_ROOT=/Users/richardfremmerlid/Projects/Project_Sanctuary
+TASKS_DIR=${PROJECT_ROOT}/TASKS
+```
+
+---
+
+## Development Tools (Optional)
+
+### Podman Desktop
+
+**Purpose:** Visual container management
+
+**Features:**
+- View running containers
+- Monitor resource usage
+- View logs
+- Start/stop containers
+- Port mapping configuration
+
+**Installation:**
+Download from https://podman-desktop.io/downloads
+
+**Usage:**
+1. Open Podman Desktop
+2. Go to **Images** tab to see built images
+3. Go to **Containers** tab to manage running containers
+4. Click container name to view logs and details
+
+### VS Code Extensions
+
+**Recommended:**
+- **Podman** - Container management in VS Code
+- **Python** - Python language support
+- **Docker** - Dockerfile syntax (works with Podman)
+
+---
+
+## Verification Checklist
+
+Before implementing MCP servers, verify:
+
+- [ ] Podman installed: `podman --version`
+- [ ] Podman machine running: `podman machine list`
+- [ ] Can run containers: `podman run --rm hello-world`
+- [ ] Python 3.11+ installed: `python3 --version`
+- [ ] MCP SDK installed: `pip show mcp`
+- [ ] Test container works: `cd tests/podman && ./build.sh`
+- [ ] Can access test page: http://localhost:5001 or 5003
+- [ ] Podman Desktop installed (optional but recommended)
+
+---
+
+## Troubleshooting
+
+### Podman Issues
+
+**Problem:** `podman: command not found`
+
+**Solution:**
+```bash
+# Add to PATH
+echo 'export PATH="/opt/podman/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Problem:** `Cannot connect to Podman socket`
+
+**Solution:**
+```bash
+# Start Podman machine
+podman machine start
+
+# Verify
+podman machine list
+```
+
+**Problem:** Port already in use
+
+**Solution:**
+```bash
+# Use different port mapping
+podman run -p 5003:5001 ...
+# Access via http://localhost:5003
+```
+
+### Python Issues
+
+**Problem:** `ModuleNotFoundError: No module named 'mcp'`
+
+**Solution:**
+```bash
+# Activate venv
+source .venv/bin/activate
+
+# Install MCP SDK
+pip install mcp
+```
+
+---
+
+## Next Steps
+
+Once all prerequisites are met:
+
+1. ✅ Review [architecture.md](./architecture.md)
+2. ✅ Review [naming_conventions.md](./naming_conventions.md)
+3. ✅ Start with Task #031: Implement Task MCP
+4. Follow implementation tasks #029-#036
+
+---
+
+## References
+
+- [ADR 034: Containerize MCP Servers with Podman](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/034_containerize_mcp_servers_with_podman.md)
+- [Podman Documentation](https://docs.podman.io/)
+- [MCP Specification](https://modelcontextprotocol.io/)
+- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)
+
+--- END OF FILE mcp/prerequisites.md ---
+
+--- START OF FILE mcp/setup_guide.md ---
+
+# MCP Server Setup Guide
+
+This guide documents the standard process for creating, containerizing, and integrating MCP servers with Claude Desktop, based on the implementation of the Task MCP server.
+
+## 1. Project Structure
+
+Ensure your MCP server follows this structure to be importable as a module:
+
+```
+mcp_servers/
+├── __init__.py          # CRITICAL: Required for python -m execution
+└── server_name/
+    ├── __init__.py      # Package init
+    ├── server.py        # Main entry point (MCP server)
+    ├── models.py        # Data models
+    ├── operations.py    # Core logic (separation of concerns)
+    ├── validator.py     # Input validation
+    ├── Dockerfile       # Container definition
+    ├── requirements.txt # Dependencies
+    └── README.md        # Documentation
+```
+
+**Key Learning:** You MUST have an `__init__.py` in the root `mcp_servers/` directory, otherwise `python -m mcp_servers.task.server` will fail.
+
+---
+
+## 2. Configuration Template
+
+A template configuration file is available at [`docs/mcp/claude_desktop_config_template.json`](claude_desktop_config_template.json).
+
+**Important:** Claude Desktop **requires absolute paths**. You cannot use relative paths (like `./` or `../`) in the configuration file because Claude Desktop launches from its own application directory, not your project directory.
+
+**Template Usage:**
+1. Copy the content from the template.
+2. Replace `<ABSOLUTE_PATH_TO_PROJECT>` with your full project path (e.g., `/Users/username/Projects/Project_Sanctuary`).
+3. Paste into your `claude_desktop_config.json`.
+
+Create a `Dockerfile` in your server directory.
+
+**Build the Image:**
+```bash
+cd mcp_servers/task
+podman build -t task-mcp:latest .
+```
+
+**Run the Container (Production):**
+```bash
+podman run -d \
+  --name task-mcp \
+  -v $(pwd)/TASKS:/app/TASKS:rw \
+  -p 3004:8080 \
+  task-mcp:latest
+```
+
+**Verify Running:**
+```bash
+# Check status (should show Up or Exited(0))
+podman ps -a | grep task-mcp
+
+# View logs
+podman logs task-mcp
+```
+*Note: Stdio-based servers will exit immediately if no input is provided. This is normal behavior for stdio transport.*
+
+---
+
+## 3. Configuring Claude Desktop
+
+To use the server locally (development mode), configure Claude Desktop to run the Python script directly.
+
+**Config File Location:**
+```bash
+# Open in terminal editor
+nano ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+# Or open in VS Code (if installed)
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+**Configuration Format (CRITICAL):**
+You **MUST** use absolute paths to the virtual environment's Python executable.
+We recommend using **simplified keys** (e.g., `tasks`) combined with a `displayName` for a cleaner configuration.
+
+```json
+{
+  "mcpServers": {
+    "tasks": {
+      "displayName": "Task MCP",
+      "command": "/Users/username/Projects/Project_Sanctuary/.venv/bin/python",
+      "args": [
+        "-m",
+        "mcp_servers.task.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/username/Projects/Project_Sanctuary",
+        "PROJECT_ROOT": "/Users/username/Projects/Project_Sanctuary"
+      },
+      "cwd": "/Users/username/Projects/Project_Sanctuary"
+    }
+  }
+}
+```
+
+**Why Absolute Paths?**
+Claude Desktop does not load your shell's `.bashrc` or `.zshrc`, so it doesn't know where `python` is or what virtual environment to use. Using the full path `/path/to/.venv/bin/python` ensures it uses the correct environment with all installed dependencies.
+
+---
+
+## 4. Verification
+
+1.  **Restart Claude Desktop** (Quit completely via Cmd+Q).
+2.  **Check Connection:** Look for the 🔌 icon or ask "What tools are available?".
+3.  **Test with Natural Language:**
+    > "Create a test task #099 to verify MCP integration."
+
+---
+
+## Troubleshooting
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `spawn python ENOENT` | Claude can't find python executable | Use absolute path to `.venv/bin/python` |
+| `ModuleNotFoundError` | Python can't find the module | Ensure `PYTHONPATH` is set and `__init__.py` exists |
+| `Connection Refused` | Server crashed or not running | Check logs at `~/Library/Logs/Claude/` |
+
+---
+
+**Related Documentation:**
+- [Task MCP README](../../mcp_servers/task/README.md)
+- [Prerequisites](prerequisites.md)
+
+--- END OF FILE mcp/setup_guide.md ---
 
 --- START OF FILE mcp/shared_infrastructure_types.ts ---
 
@@ -6231,296 +5843,3 @@ export interface QueryResult<T> {
 }
 
 --- END OF FILE mcp/shared_infrastructure_types.ts ---
-
---- START OF FILE mcp/walkthrough.md ---
-
-# MCP Architecture Design - Complete 10-Domain Ecosystem
-
-**Completed:** 2025-11-25  
-**Objective:** Design comprehensive MCP architecture for Project Sanctuary
-
----
-
-## Summary
-
-Successfully designed and documented a complete **10-domain MCP ecosystem** for Project Sanctuary, replacing manual `command.json` workflows with specialized, domain-specific MCP servers. The architecture follows Domain-Driven Design principles with proper safety validation, state machine governance, and hierarchical naming conventions.
-
----
-
-## What Was Accomplished
-
-### 1. Core Architecture Documents
-
-#### Created/Updated:
-- **`docs/mcp/architecture.md`** (v4.0) - Main architecture document with all 10 domains
-- **`docs/mcp/final_architecture_summary.md`** (v4.0) - Executive summary with implementation roadmap
-- **`docs/mcp/naming_conventions.md`** - Domain naming model (`project_sanctuary.*`)
-- **`docs/mcp/ddd_analysis.md`** - Domain-Driven Design rationale (needs update for Git + Forge)
-
-### 2. Type Definitions
-
-- **`docs/mcp/shared_infrastructure_types.ts`** - Shared infrastructure interfaces
-- **`docs/mcp/forge_mcp_types.ts`** - Fine-Tuning MCP (Forge)-specific types
-
-### 3. Architecture Diagrams
-
-#### High-Level:
-- **`docs/mcp/diagrams/mcp_ecosystem_class.mmd`** - Complete class diagram with all 10 servers
-- **`docs/mcp/diagrams/domain_architecture_v4.mmd`** - 10-domain ecosystem overview
-- **`docs/mcp/diagrams/request_flow_middleware.mmd`** - Validator middleware flow
-
-#### Individual MCP Server Diagrams:
-- `chronicle_mcp_class.mmd` - Chronicle MCP (Document Domain)
-- `protocol_mcp_class.mmd` - Protocol MCP (Document Domain)
-- `adr_mcp_class.mmd` - ADR MCP (Document Domain)
-- `task_mcp_class.mmd` - Task MCP (Document Domain)
-- `cortex_mcp_class.mmd` - Cortex MCP (Cognitive Domain)
-- `council_mcp_class.mmd` - Council MCP (Cognitive Domain)
-- `config_mcp_class.mmd` - Config MCP (System Domain)
-- `code_mcp_class.mmd` - Code MCP (System Domain)
-- **`git_workflow_mcp_class.mmd`** - Git Workflow MCP (System Domain) ✨ NEW
-- `fine_tuning_mcp_forge_class.mmd` - Fine-Tuning MCP (Forge) (Model Domain)
-
----
-
-## The 10 MCP Domains
-
-### Document Domains (4) - Content Management
-1. **Chronicle MCP** (`project_sanctuary.document.chronicle`)
-   - Historical truth, sequential entries
-   - 7-day modification window
-   - Risk: MODERATE
-
-2. **Protocol MCP** (`project_sanctuary.document.protocol`)
-   - Governing rules, version management
-   - Cannot delete (archive only)
-   - Risk: HIGH
-
-3. **ADR MCP** (`project_sanctuary.document.adr`)
-   - Decision history, status lifecycle
-   - Valid status transitions
-   - Risk: MODERATE
-
-4. **Task MCP** (`project_sanctuary.document.task`)
-   - Workflow management, dependency tracking
-   - Circular dependency detection
-   - Risk: MODERATE
-
-### Cognitive Domains (2) - Non-Mechanical
-5. **RAG MCP (Cortex)** (`project_sanctuary.cognitive.cortex`)
-   - Retrieval-Augmented Generation for knowledge retrieval
-   - Incremental ingest, full ingest, semantic search
-   - Risk: MODERATE
-
-6. **Agent Orchestrator MCP (Council)** (`project_sanctuary.cognitive.council`)
-   - Multi-agent coordination and deliberation
-   - Cognitive-only (no file/Git operations)
-   - Risk: SAFE
-
-### System Domains (3) - High Safety
-7. **Config MCP** (`project_sanctuary.system.config`)
-   - System configuration, secret vault
-   - Two-step approval process
-   - Risk: CRITICAL
-
-8. **Code MCP** (`project_sanctuary.system.code`)
-   - Source code management
-   - Mandatory testing pipeline
-   - Risk: HIGH
-
-9. **Git Workflow MCP** (`project_sanctuary.system.git_workflow`) ✨ NEW
-   - Branch management, safe workflow automation
-   - No destructive operations (merge/rebase/force-push)
-   - Risk: MODERATE
-
-### Model Domain (1) - Specialized Hardware
-10. **Fine-Tuning MCP (Forge)** (`project_sanctuary.model.fine_tuning`)
-    - Model fine-tuning, artifact creation
-    - State machine governance with `initialize_forge_environment()`
-    - 10-step pipeline (dataset → train → merge → test → convert → deploy → publish)
-    - Requires CUDA GPU
-    - Risk: EXTREME
-
----
-
-## Key Architectural Decisions
-
-### 1. Forge State Machine Governance ⚡
-
-**Problem:** Documentation alone is insufficient for high-risk domains  
-**Solution:** Internal state machine with two layers:
-
-**Layer 1: Operational State (Server-Level)**
-- `INACTIVE_UNSAFE` → Only `initialize_forge_environment()` available
-- `ACTIVE` → All tools unlocked after environment checks pass
-
-**Layer 2: Job State (Per-Job)**
-- `QUEUED` → `RUNNING` → `COMPLETED_SUCCESS` → `PACKAGING_COMPLETE` → `TESTS_PASSED` → `PUBLISHED`
-- Each state gates which tools can be called next
-- Prevents publishing untested artifacts
-
-### 2. Git Workflow MCP - Minimal Safe Operations 🌿
-
-**Problem:** Need workflow automation without dangerous Git operations  
-**Solution:** Safe operations only:
-- ✅ Create feature branch
-- ✅ Switch branch (with auto-stash)
-- ✅ Push to remote
-- ✅ Status queries
-- ❌ NO delete, merge, rebase, force-push (user does manually)
-
-### 3. Domain Naming Model 🏷️
-
-**Problem:** Need namespace isolation and professional structure  
-**Solution:** Hierarchical naming:
-```
-project_sanctuary.<category>.<server_name>
-```
-
-Examples:
-- `project_sanctuary.document.chronicle`
-- `project_sanctuary.system.git_workflow`
-- `project_sanctuary.model.fine_tuning`
-
-### 4. Pre-Commit Hook Migration 🔧
-
-**Problem:** Existing hooks enforce `command.json` workflow  
-**Solution:** Phase 0 task to update hooks for MCP architecture
-
----
-
-## Implementation Roadmap
-
-### Phase 0: Pre-Migration (Week 0)
-- [ ] Update pre-commit hooks (Task #028)
-- [ ] Disable `command.json` validation
-- [ ] Add MCP-aware commit validation
-
-### Phase 1: Foundation (Week 1)
-- [ ] Shared infrastructure (Git, Safety, Schema, Vault)
-- [ ] MCP server boilerplate
-
-### Phase 2: Document Domains (Week 2) - Easiest
-- [ ] Chronicle MCP (Task #029)
-- [ ] ADR MCP (Task #030)
-- [ ] Task MCP (Task #031)
-- [ ] Protocol MCP (Task #032)
-
-### Phase 3: Cognitive Domains (Week 3) - Moderate
-- [ ] RAG MCP (Cortex) - Task #025 (refactor)
-- [ ] Agent Orchestrator MCP (Council) - Task #026 (refactor) - refocus)
-
-### Phase 4: System Domains (Week 4) - High Risk
-- [ ] Config MCP (Task #033)
-- [ ] Code MCP (Task #034)
-- [ ] Git Workflow MCP (Task #035)
-
-### Phase 5: Model Domain (Week 5) - Hardest
-- [ ] Fine-Tuning MCP (Forge) (Task #036)
-- [ ] CUDA environment setup
-- [ ] Full pipeline integration testing
-
----
-
-## Risk Assessment
-
-| Domain | File Ops | Git Ops | Hardware | Risk | Auto-Execute |
-|--------|----------|---------|----------|------|--------------|
-| Chronicle | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
-| Protocol | ✅ Write | ✅ Auto | Standard | HIGH | ✅ Yes* |
-| ADR | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
-| Task | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
-| RAG MCP (Cortex) | ✅ R/W | ✅ Auto | Standard | MODERATE | ✅ Yes* |
-| Agent Orchestrator (Council) | ❌ No | ❌ No | Standard | SAFE | ✅ Yes |
-| Config | ✅ Write | ✅ Auto | Standard | CRITICAL | ⚠️ 2-Step Approval |
-| Code | ✅ Write | ✅ Auto | Standard | HIGH | ⚠️ Tests Required |
-| Git Workflow | ❌ No | ✅ Manual | Standard | MODERATE | ✅ Yes (Safe Only) |
-| Forge | ✅ Write | ✅ Auto | CUDA GPU | EXTREME | ⚠️ State Machine + Init |
-
-*With safety validation
-
----
-
-## Technical Highlights
-
-### Shared Infrastructure
-
-**GitOperations** - P101 compliant commits with SHA-256 manifests  
-**SafetyValidator** - Protection levels, risk assessment  
-**SchemaValidator** - Domain-specific validation  
-**SecretVault** - Encrypted storage for API keys
-
-### Cross-Domain Workflows
-
-**Example: Model Development**
-```
-1. Task MCP: create_task(#032, "Fine-tune Guardian-02")
-2. Council MCP: create_deliberation("Design training strategy")
-3. Cortex MCP: query_cortex("Previous fine-tuning lessons")
-4. Fine-Tuning MCP (Forge): initialize_forge_environment() → ACTIVE
-5. Fine-Tuning MCP (Forge): initiate_model_forge(...) → job_id
-6. [Poll status until COMPLETED_SUCCESS]
-7. Fine-Tuning MCP (Forge): package_and_deploy_artifact(job_id, "Q4_K_M")
-8. Fine-Tuning MCP (Forge): run_inference_test(...) → TESTS_PASSED
-9. Fine-Tuning MCP (Forge): publish_to_registry(job_id, "Sanctuary-Project/Guardian-02")
-10. Chronicle MCP: create_chronicle_entry(#283, "Guardian-02 Released")
-11. ADR MCP: create_adr(#37, "Guardian-02 Training Decisions")
-```
-
----
-
-## Files Modified/Created
-
-### Architecture Documents (7)
-- `docs/mcp/architecture.md` (updated to v4.0)
-- `docs/mcp/final_architecture_summary.md` (updated to v4.0)
-- `docs/mcp/naming_conventions.md` (created)
-- `docs/mcp/ddd_analysis.md` (existing, needs update)
-- `docs/mcp/shared_infrastructure_types.ts` (created)
-- `docs/mcp/forge_mcp_types.ts` (created)
-
-### Diagrams (13)
-- `docs/mcp/diagrams/mcp_ecosystem_class.mmd` (created - high-level)
-- `docs/mcp/diagrams/domain_architecture_v4.mmd` (created)
-- `docs/mcp/diagrams/git_workflow_mcp_class.mmd` (created)
-- 10 individual MCP class diagrams (9 existing + 1 new)
-
-### Tasks
-- `TASKS/backlog/027_mcp_ecosystem_strategy.md` (updated to v2.0)
-- Need to create: Tasks #028-#036 (9 implementation tasks)
-
----
-
-## Next Steps
-
-1. **Review Architecture** - Validate all 10 domains with stakeholders
-2. **Create Implementation Tasks** - Individual tasks for each MCP server (#028-#036)
-3. **Phase 0 Execution** - Update pre-commit hooks
-4. **Phase 1 Execution** - Build shared infrastructure
-5. **Iterative Implementation** - Document → Cognitive → System → Model domains
-
----
-
-## Success Criteria
-
-### Functional
-- ✅ All 10 MCP servers operational
-- ✅ 100% schema validation coverage
-- ✅ P101 compliance for all file operations
-- ✅ Git Workflow MCP enables safe branch automation
-- ✅ Forge pipeline completes successfully on CUDA machine
-
-### Safety
-- ✅ Zero incidents of protected file modification
-- ✅ Zero incidents of destructive git operations
-- ✅ All operations auditable via git history
-- ✅ Forge jobs only run with proper authorization
-- ✅ CUDA environment properly gated
-
----
-
-**Status:** Architecture Complete ✅  
-**Version:** 4.0 (10 domains with naming conventions)  
-**Ready For:** Implementation Phase 0
-
---- END OF FILE mcp/walkthrough.md ---
