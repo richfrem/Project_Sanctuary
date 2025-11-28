@@ -888,8 +888,8 @@ list_config_files() => string[]
 
 ### 8. Code MCP Server (Highest Risk)
 
-**Domain:** Source code management  
-**Directory:** `src/`, `scripts/`, `tools/`, `*.py`, `*.ts`, `*.js`  
+**Domain:** Source code and documentation management  
+**Directory:** `src/`, `scripts/`, `tools/`, `docs/`, `*.py`, `*.ts`, `*.js`, `*.md`  
 **Purpose:** Manage source code with mandatory testing pipeline
 
 **Tool Signatures:**

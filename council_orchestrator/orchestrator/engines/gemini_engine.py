@@ -1,7 +1,11 @@
 # council_orchestrator/cognitive_engines/gemini_engine.py
 import os
-from dotenv import load_dotenv
-load_dotenv()
+import sys
+from pathlib import Path
+# Add project root to path to find core
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
+from core.utils.env_helper import get_env_variable
+
 import google.generativeai as genai
 from google.api_core import exceptions as google_exceptions
 # --- IMPORT HARDENED ---
@@ -19,7 +23,7 @@ class GeminiEngine(BaseCognitiveEngine):
     def __init__(self, model_name: str = None):
         DEFAULT_MODEL = "gemini-2.5-flash"
         self.model_name = model_name or os.getenv("GEMINI_MODEL", DEFAULT_MODEL)
-        self.api_key = os.getenv("GEMINI_API_KEY")
+        self.api_key = get_env_variable("GEMINI_API_KEY", required=False)
         if not self.api_key:
             self.model = None
             return

@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "git_workflow": {
+      "displayName": "Git Workflow MCP",
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_servers.system.git_workflow.server"
+      ],
+      "env": {
+        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+      }
+    },
+    "task": {
+      "displayName": "Task MCP",
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_servers.task.server"
+      ],
+      "env": {
+        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+      }
+    }
+  }
+}

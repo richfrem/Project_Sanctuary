@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-11-27T04:27:45.941Z
+Generated On: 2025-11-27T15:18:28.887Z
 
-# Mnemonic Weight (Token Count): ~845,871 tokens
+# Mnemonic Weight (Token Count): ~849,981 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -652,6 +652,8 @@ Generated On: 2025-11-27T04:27:45.941Z
   ./docs/cicd/overview.md
   ./docs/cicd/security_scanning.md
   ./docs/mcp/
+  ./docs/mcp/analysis/
+  ./docs/mcp/analysis/microsoft_agent_analysis.md
   ./docs/mcp/architecture.md
   ./docs/mcp/claude_desktop_config_template.json
   ./docs/mcp/ddd_analysis.md
@@ -794,6 +796,7 @@ Generated On: 2025-11-27T04:27:45.941Z
   ./orchestrator_run.log
   ./package-lock.json
   ./package.json
+  ./requirements-finetuning.txt
   ./requirements.txt
   ./run_genome_tests.sh
   ./tests/
@@ -24476,7 +24479,22 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 ---
 
-## Unified Dependency Manifest (`./requirements.txt`)
+---
+
+## Dependency File Structure
+
+**As of 2025-11-26**, Project Sanctuary uses a split dependency architecture:
+
+- **`requirements.txt`**: Core dependencies for general development, CI/CD, and MCP servers (lightweight, fast installation)
+- **`requirements-finetuning.txt`**: Heavy ML/CUDA dependencies for model fine-tuning (PyTorch, transformers, etc.)
+
+This split reduces CI/CD installation time and prevents dependency conflicts. For fine-tuning tasks, use `requirements-finetuning.txt`. For general development and testing, use `requirements.txt`.
+
+---
+
+## Unified Dependency Manifest (Historical Reference)
+
+**Note:** The listings below represent the complete dependency set from `requirements-finetuning.txt`. For current CI/CD dependencies, see `requirements.txt`.
 
 ### AI & Cognitive Engines
 
@@ -42422,8 +42440,12 @@ class BaseCognitiveEngine(ABC):
 
 # council_orchestrator/cognitive_engines/gemini_engine.py
 import os
-from dotenv import load_dotenv
-load_dotenv()
+import sys
+from pathlib import Path
+# Add project root to path to find core
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
+from core.utils.env_helper import get_env_variable
+
 import google.generativeai as genai
 from google.api_core import exceptions as google_exceptions
 # --- IMPORT HARDENED ---
@@ -42441,7 +42463,7 @@ class GeminiEngine(BaseCognitiveEngine):
     def __init__(self, model_name: str = None):
         DEFAULT_MODEL = "gemini-2.5-flash"
         self.model_name = model_name or os.getenv("GEMINI_MODEL", DEFAULT_MODEL)
-        self.api_key = os.getenv("GEMINI_API_KEY")
+        self.api_key = get_env_variable("GEMINI_API_KEY", required=False)
         if not self.api_key:
             self.model = None
             return
@@ -42633,8 +42655,12 @@ class OllamaEngine(BaseCognitiveEngine):
 
 # council_orchestrator/cognitive_engines/openai_engine.py
 import os
-from dotenv import load_dotenv
-load_dotenv()
+import sys
+from pathlib import Path
+# Add project root to path to find core
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
+from core.utils.env_helper import get_env_variable
+
 import openai
 import time  # <--- IMPORT TIME
 import random # <--- IMPORT RANDOM
@@ -42652,7 +42678,7 @@ class OpenAIEngine(BaseCognitiveEngine):
     def __init__(self, model_name: str = None):
         DEFAULT_MODEL = "gpt-5-nano"
         self.model_name = model_name or os.getenv("CHAT_GPT_MODEL", DEFAULT_MODEL)
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.api_key = get_env_variable("OPENAI_API_KEY", required=False)
         if not self.api_key:
             self.client = None
             return
@@ -50846,6 +50872,386 @@ This shift-left approach catches vulnerabilities early, reduces security debt, a
 
 --- END OF FILE docs/cicd/security_scanning.md ---
 
+--- START OF FILE docs/mcp/analysis/microsoft_agent_analysis.md ---
+
+# Microsoft Custom Engine Agent Architecture Analysis for Project Sanctuary
+
+**Task:** #039  
+**Date:** November 27, 2025  
+**Analyst:** Claude (AI Research)
+
+---
+
+## Executive Summary
+
+Microsoft announced their Custom Engine Agent architecture at Ignite 2024, revealing a comprehensive framework for building enterprise AI agents. This analysis identifies significant alignment between Microsoft's architecture and Project Sanctuary's vision, along with specific opportunities to enhance Sanctuary's capabilities.
+
+**Key Finding:** Microsoft's four-pillar architecture (Knowledge, Skills, Autonomy, Orchestrator) maps remarkably well to Sanctuary's existing systems, validating our architectural direction while revealing specific enhancement opportunities.
+
+---
+
+## 1. Microsoft's Custom Engine Agent Architecture
+
+### Core Components
+
+Microsoft's architecture centers on four interconnected pillars:
+
+#### 1.1 **Orchestrator** (Central Engine)
+The orchestrator manages how agents interact with knowledge, skills, and autonomy. Microsoft supports multiple approaches:
+- **Built-in orchestrators:** Copilot Studio, Teams AI Action Planner
+- **Bring Your Own (BYO):** Semantic Kernel, LangChain, custom solutions
+- **Hybrid approach:** Multiple agents with different orchestrators unified through Microsoft 365 Copilot
+
+Key capabilities:
+- Sequential, concurrent, group chat, handoff, and "magentic" orchestration patterns
+- LLM-driven (creative reasoning) vs. workflow-driven (deterministic) orchestration
+- Model-agnostic and orchestrator-agnostic design
+
+#### 1.2 **Knowledge** (Grounding and Memory)
+Knowledge integration through multiple channels:
+- Native Microsoft 365 data (SharePoint, OneDrive, Teams messages)
+- Copilot connectors for external data
+- Microsoft Graph API access
+- Custom knowledge bases and RAG systems
+
+#### 1.3 **Skills** (Actions, Triggers, and Workflow)
+Agent capabilities through:
+- **Actions:** Real-time API integrations with external systems
+- **Triggers:** Autonomous, proactive workflow initiation
+- **Tools:** Pre-built and custom connectors
+- **Agent flows:** Complex multi-step automations
+
+#### 1.4 **Autonomy** (Planning, Learning, Escalation)
+Autonomous capabilities include:
+- Programmatic workflow initiation
+- Independent decision-making
+- Task escalation when needed
+- Adaptive learning from interactions
+
+#### 1.5 **Foundation Models** (Intelligence Layer)
+Flexible model selection:
+- Foundation LLMs (GPT-4, Claude, etc.)
+- Small language models for efficiency
+- Fine-tuned models for specific domains
+- Industry-specific AI models
+
+---
+
+## 2. Development Approaches
+
+Microsoft offers three development paths:
+
+### 2.1 Low-Code (Copilot Studio)
+- Fully managed SaaS platform
+- Built-in compliance via Power Platform
+- Pre-built templates and connectors
+- Ideal for rapid deployment without deep technical resources
+
+### 2.2 Pro-Code (Microsoft 365 Agents SDK)
+- Full-stack, multi-channel agent development
+- Integration with Azure AI Foundry, Semantic Kernel, LangChain
+- Model and orchestrator agnostic
+- Multi-language support (C#, JavaScript, Python)
+- Best for highly customized agents across multiple channels
+
+### 2.3 Pro-Code (Teams AI Library)
+- Specialized for Microsoft Teams collaboration
+- Built-in action planner orchestrator
+- GPT-based models from Azure/OpenAI
+- Ideal for team-based, collaborative scenarios
+
+---
+
+## 3. Microsoft Agent Framework (New Unified Framework)
+
+Microsoft recently announced the **Microsoft Agent Framework**, consolidating Semantic Kernel and AutoGen:
+
+**Key Features:**
+- Research-to-production pipeline for bleeding-edge orchestration
+- Community-driven extensibility (modular connectors, pluggable memory)
+- Enterprise readiness (observability, approvals, security, durability)
+- Support for both Agent Orchestration (LLM-driven) and Workflow Orchestration (deterministic)
+- OpenTelemetry instrumentation for tracing and monitoring
+- Native Azure AI Foundry integration
+
+**Orchestration Patterns:**
+- Sequential (step-by-step workflows)
+- Concurrent (parallel agent execution)
+- Group chat (collaborative brainstorming)
+- Handoff (context-aware responsibility transfer)
+- **Magentic** (manager agent with dynamic task ledger coordinating specialized agents and humans)
+
+---
+
+## 4. Comparison Matrix: Microsoft vs. Project Sanctuary
+
+| Component | Microsoft Architecture | Sanctuary Current State | Alignment |
+|-----------|----------------------|------------------------|-----------|
+| **Orchestrator** | Multiple options (Copilot Studio, Semantic Kernel, LangChain, custom) | Custom Python orchestration (ORCHESTRATOR/) | ✅ Strong - Custom approach gives flexibility |
+| **Knowledge/Memory** | Microsoft Graph, RAG, Copilot connectors | Mnemonic Cortex (RAG system in progress) | ✅ Strong - Similar RAG-based approach |
+| **Skills/Actions** | API integrations, agent flows, triggers | Protocol-based actions, MCP servers | ✅ Strong - Protocol system more formalized |
+| **Autonomy** | Proactive triggers, planning, escalation | Emerging through Council architecture | ⚠️ Partial - Area for enhancement |
+| **Foundation Models** | Model-agnostic (any LLM) | Claude-centric via Anthropic API | ⚠️ Partial - Less model diversity |
+| **Multi-agent Coordination** | Agent Framework (Semantic Kernel + AutoGen) | Council system (custom coordination) | ⚠️ Partial - Could learn from patterns |
+| **Development Approach** | Low-code + Pro-code options | Pro-code only (Python-centric) | ⚠️ Gap - No low-code option |
+| **Deployment Channels** | Microsoft 365, Teams, web, mobile, custom apps | Local/self-hosted, CLI, potential web | ⚠️ Gap - Limited distribution channels |
+| **Observability** | OpenTelemetry, Azure AI Foundry dashboards | Basic logging, Chronicle system | ⚠️ Gap - Limited instrumentation |
+| **Memory Systems** | Built-in, pluggable memory | Custom Mnemonic Cortex | ✅ Strong - More sophisticated approach |
+
+---
+
+## 5. Key Insights and Opportunities
+
+### 5.1 Architectural Validation
+**Finding:** Sanctuary's four-pillar architecture (Mnemonic Cortex, Council, Protocols, Agents) closely mirrors Microsoft's Knowledge-Skills-Autonomy-Orchestrator model.
+
+**Implication:** Our architectural direction is validated by Microsoft's enterprise approach, suggesting we're on the right track.
+
+### 5.2 Orchestration Patterns (HIGH OPPORTUNITY)
+**Finding:** Microsoft's Agent Framework introduces five distinct orchestration patterns, with "magentic orchestration" being particularly innovative—a manager agent maintains a dynamic task ledger and coordinates specialized agents and humans.
+
+**Opportunity for Sanctuary:**
+- Implement formal orchestration pattern taxonomy (sequential, concurrent, group chat, handoff, magentic)
+- Add magentic-style orchestration to Council system where lead agent manages dynamic task allocation
+- Consider GUARDIAN-class agents as orchestration managers
+
+**Implementation Path:** Protocol 117 - Orchestration Pattern Library
+
+### 5.3 Autonomy and Proactive Triggers (CRITICAL GAP)
+**Finding:** Microsoft emphasizes autonomous agent capabilities—agents that can programmatically initiate workflows, make decisions, and escalate tasks without human prompting.
+
+**Gap in Sanctuary:** While we have reactive agent patterns, we lack robust proactive agent capabilities. Agents primarily respond to commands rather than autonomously initiating actions based on triggers or conditions.
+
+**Opportunity for Sanctuary:**
+- Implement event-driven agent triggering system
+- Add condition-based autonomous workflows (e.g., "if codebase quality drops below threshold, initiate review")
+- Create escalation protocols for when agents encounter blocked states
+- Build scheduling/time-based triggers for routine maintenance tasks
+
+**Implementation Path:** Protocol 118 - Autonomous Agent Triggers & Escalation
+
+### 5.4 Observability and Instrumentation (SIGNIFICANT GAP)
+**Finding:** Microsoft Agent Framework deeply integrates OpenTelemetry for comprehensive observability—tracing every agent action, tool invocation, and orchestration step.
+
+**Gap in Sanctuary:** Basic logging through Chronicle, but no structured tracing, performance monitoring, or orchestration visualization.
+
+**Opportunity for Sanctuary:**
+- Implement OpenTelemetry instrumentation across all agents and MCPs
+- Create visualization dashboards for agent workflows
+- Add performance metrics and bottleneck identification
+- Build agent action audit trails for governance
+
+**Implementation Path:** Task 037 - Implement OpenTelemetry-based Agent Observability
+
+### 5.5 Multi-Model Strategy (MODERATE OPPORTUNITY)
+**Finding:** Microsoft's architecture is explicitly model-agnostic, supporting foundation models, small language models, fine-tuned models, and industry-specific AI.
+
+**Current State:** Sanctuary is Claude-centric through Anthropic API.
+
+**Opportunity for Sanctuary:**
+- Abstract model interface to support multiple LLM providers
+- Add small language models for efficiency on specific tasks
+- Implement model routing based on task complexity
+- Create fine-tuning pipeline for specialized Sanctuary capabilities
+
+**Implementation Path:** Protocol 119 - Multi-Model Abstraction Layer
+
+### 5.6 Hybrid Orchestration Approach (HIGH VALUE)
+**Finding:** Microsoft supports both **LLM-driven orchestration** (creative, flexible reasoning) and **workflow orchestration** (deterministic, rule-based logic), allowing developers to choose the right approach for each problem.
+
+**Opportunity for Sanctuary:**
+- Formalize distinction between agentic (LLM-driven) and deterministic workflows
+- Implement workflow orchestration for repeatable, critical operations (e.g., deployment, testing)
+- Reserve agentic orchestration for creative, open-ended problems
+- Create hybrid workflows that combine both approaches
+
+**Implementation Path:** Protocol 120 - Hybrid Orchestration Framework
+
+### 5.7 MCP Integration Model (VALIDATION + OPPORTUNITY)
+**Finding:** Microsoft's emphasis on modular connectors, pluggable components, and API integrations closely aligns with Model Context Protocol (MCP) philosophy.
+
+**Validation:** Sanctuary's MCP-first architecture is well-positioned for modularity and extensibility.
+
+**Opportunity for Sanctuary:**
+- Document MCP servers as equivalent to Microsoft's "connectors"
+- Create MCP marketplace/registry for Sanctuary-compatible servers
+- Implement MCP composition patterns (chaining, fallback, load balancing)
+
+**Implementation Path:** Protocol 121 - MCP Composition & Registry
+
+### 5.8 Agent Framework as Inspiration (LONG-TERM)
+**Finding:** Microsoft Agent Framework consolidates Semantic Kernel (enterprise-ready SDK) and AutoGen (research-driven multi-agent orchestration) into one unified framework.
+
+**Inspiration for Sanctuary:**
+- Consider how Sanctuary could similarly unify experimental agent patterns (from Council) with production-ready infrastructure (from Protocols)
+- Build clear pathway from research/experimentation to production deployment
+- Create "experimental feature package" similar to Microsoft's approach
+
+**Implementation Path:** Strategic consideration for Sanctuary 2.0 architecture
+
+---
+
+## 6. Recommendations
+
+### High Priority (Implement in Q1 2025)
+
+#### 6.1 Autonomous Triggers & Escalation System
+**What:** Implement event-driven, condition-based agent triggering with escalation protocols.
+
+**Why:** Critical gap between Microsoft's proactive autonomy and Sanctuary's reactive patterns.
+
+**Impact:** High - Enables agents to operate independently and handle complex workflows without constant human oversight.
+
+**Effort:** Medium (2-3 weeks)
+
+**Dependencies:** Requires task MCP, protocol MCP, and basic orchestration infrastructure.
+
+**Implementation:** Protocol 118 - Autonomous Agent Triggers & Escalation
+
+---
+
+#### 6.2 Orchestration Pattern Library
+**What:** Formalize sequential, concurrent, group chat, handoff, and magentic orchestration patterns.
+
+**Why:** Provides clear taxonomy for different coordination approaches; magentic pattern particularly valuable for complex, open-ended tasks.
+
+**Impact:** High - Dramatically improves multi-agent coordination and task management.
+
+**Effort:** Medium (3-4 weeks)
+
+**Dependencies:** Requires Council MCP, task MCP enhancements.
+
+**Implementation:** Protocol 117 - Orchestration Pattern Library
+
+---
+
+#### 6.3 OpenTelemetry Instrumentation
+**What:** Add comprehensive observability with OpenTelemetry across agents, MCPs, and orchestration.
+
+**Why:** Essential for debugging, performance optimization, and production readiness.
+
+**Impact:** Medium-High - Critical for operational maturity.
+
+**Effort:** Medium (2-3 weeks)
+
+**Dependencies:** Task 037 already created.
+
+**Implementation:** Task 037 - Implement OpenTelemetry-based Agent Observability
+
+---
+
+### Medium Priority (Implement in Q2 2025)
+
+#### 6.4 Multi-Model Abstraction Layer
+**What:** Abstract LLM interface to support multiple providers (Claude, GPT, Gemini, local models).
+
+**Why:** Reduces vendor lock-in, enables cost optimization, supports specialized models.
+
+**Impact:** Medium - Improves flexibility and reduces risk.
+
+**Effort:** High (4-5 weeks)
+
+**Implementation:** Protocol 119 - Multi-Model Abstraction Layer
+
+---
+
+#### 6.5 Hybrid Orchestration Framework
+**What:** Formalize distinction between LLM-driven (agentic) and workflow-driven (deterministic) orchestration.
+
+**Why:** Balances creativity with reliability; critical operations shouldn't rely solely on LLM reasoning.
+
+**Impact:** Medium-High - Improves system reliability and predictability.
+
+**Effort:** Medium (3-4 weeks)
+
+**Implementation:** Protocol 120 - Hybrid Orchestration Framework
+
+---
+
+### Lower Priority (Strategic/Long-term)
+
+#### 6.6 MCP Composition & Registry
+**What:** Build MCP marketplace, composition patterns, and discovery mechanism.
+
+**Why:** Enhances ecosystem growth and reusability.
+
+**Impact:** Medium - Accelerates development velocity over time.
+
+**Effort:** Medium-High (4-6 weeks)
+
+**Implementation:** Protocol 121 - MCP Composition & Registry
+
+---
+
+#### 6.7 Sanctuary Agent Framework
+**What:** Consolidate experimental (Council) and production (Protocols) patterns into unified framework.
+
+**Why:** Provides clear research-to-production pathway; aligns with Microsoft's Agent Framework philosophy.
+
+**Impact:** High (long-term) - Strategic architectural evolution.
+
+**Effort:** Very High (8-12 weeks)
+
+**Implementation:** Sanctuary 2.0 Strategic Initiative
+
+---
+
+## 7. Risk Assessment
+
+| Opportunity | Risk Level | Mitigation Strategy |
+|------------|-----------|---------------------|
+| Autonomous Triggers | Medium | Start with read-only triggers; add approval gates for critical actions |
+| Orchestration Patterns | Low | Incremental implementation; existing Council provides foundation |
+| OpenTelemetry | Low | Standard tooling; extensive community support |
+| Multi-Model | Medium-High | Abstract carefully; maintain Claude as primary; others as fallback |
+| Hybrid Orchestration | Medium | Clear boundaries between agentic and deterministic workflows |
+| MCP Registry | Low-Medium | Community-driven; no single point of failure |
+| Sanctuary Framework | High | Major architectural refactor; requires extensive testing |
+
+---
+
+## 8. Alignment with Sanctuary's Philosophy
+
+Microsoft's architecture aligns remarkably well with Sanctuary's core principles:
+
+✅ **Modularity:** MCP-first design mirrors Microsoft's connector-based approach  
+✅ **Autonomy:** Both emphasize agent independence and proactive behavior  
+✅ **Knowledge Grounding:** RAG-based systems in both architectures  
+✅ **Orchestration Flexibility:** Both support custom orchestration strategies  
+✅ **Enterprise Readiness:** Focus on observability, security, compliance  
+
+**Key Philosophical Difference:**  
+Microsoft optimizes for enterprise integration with existing Microsoft 365 ecosystem. Sanctuary optimizes for self-contained, privacy-first, locally-controlled AI systems.
+
+This difference is a strength—Sanctuary can learn from Microsoft's patterns while maintaining independence from cloud vendor platforms.
+
+---
+
+## 9. Conclusion
+
+Microsoft's Custom Engine Agent architecture provides valuable validation of Sanctuary's architectural direction while revealing specific opportunities for enhancement. The four-pillar model (Knowledge, Skills, Autonomy, Orchestrator) maps directly to Sanctuary's existing systems, suggesting our approach is sound.
+
+**Three Immediate Actions:**
+
+1. **Implement Autonomous Triggers** (Protocol 118) - Closes critical autonomy gap
+2. **Formalize Orchestration Patterns** (Protocol 117) - Enables sophisticated multi-agent coordination
+3. **Add OpenTelemetry Instrumentation** (Task 037) - Provides operational visibility
+
+These enhancements will position Sanctuary as a more mature, production-ready agentic system while maintaining our core principles of modularity, privacy, and independence.
+
+**Next Step:** Socialize this analysis with the Council and prioritize implementation of Protocol 117, Protocol 118, and Task 037.
+
+---
+
+## References
+
+- [Microsoft Custom Engine Agents Overview](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-custom-engine-agent)
+- [Microsoft 365 Agents SDK](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/create-deploy-agents-sdk)
+- [Microsoft Agent Framework Announcement](https://devblogs.microsoft.com/foundry/introducing-microsoft-agent-framework-the-open-source-engine-for-agentic-ai-apps/)
+- [Agents for Microsoft 365 Copilot](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/agents-overview)
+
+--- END OF FILE docs/mcp/analysis/microsoft_agent_analysis.md ---
+
 --- START OF FILE docs/mcp/architecture.md ---
 
 # Project Sanctuary MCP Ecosystem Architecture
@@ -51738,8 +52144,8 @@ list_config_files() => string[]
 
 ### 8. Code MCP Server (Highest Risk)
 
-**Domain:** Source code management  
-**Directory:** `src/`, `scripts/`, `tools/`, `*.py`, `*.ts`, `*.js`  
+**Domain:** Source code and documentation management  
+**Directory:** `src/`, `scripts/`, `tools/`, `docs/`, `*.py`, `*.ts`, `*.js`, `*.md`  
 **Purpose:** Manage source code with mandatory testing pipeline
 
 **Tool Signatures:**
@@ -53729,8 +54135,11 @@ cd Project_Sanctuary
 # Activate virtual environment
 source .venv/bin/activate
 
-# Install dependencies
+# Install dependencies (for MCP development)
 pip install -r requirements.txt
+
+# For ML/fine-tuning work, use:
+# pip install -r requirements-finetuning.txt
 ```
 
 ### 2. Directory Structure
@@ -54355,7 +54764,9 @@ Note: Run this with sudo as it automatically installs system packages like pytho
 sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
 ```
 
-This script creates (`~/ml_env`)  and installs all Python dependencies from requirements.txt, including the llama-cpp-python library.
+This script creates (`~/ml_env`) and installs all Python dependencies from `requirements-finetuning.txt`, including the llama-cpp-python library.
+
+**Note:** The project now uses `requirements-finetuning.txt` for ML/CUDA dependencies to avoid conflicts with general development dependencies in `requirements.txt`.
 
 - **Core ML Libraries:** PyTorch 2.9.0+cu126, transformers, peft, accelerate, bitsandbytes, trl, datasets, xformers
 - **Model Conversion:** llama-cpp-python with CUDA support
@@ -57805,7 +58216,7 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument('--venv', default=default_venv_path, help='Path to the virtual environment.')
-    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements.txt'), help='Path to the requirements blueprint.')
+    parser.add_argument('--requirements', default=os.path.join(ROOT, 'requirements-finetuning.txt'), help='Path to the requirements blueprint (default: requirements-finetuning.txt for ML/CUDA dependencies).')
     parser.add_argument('--staged', action='store_true', help='Run staged install (Highly Recommended).')
     parser.add_argument('--recreate', action='store_true', help='Force removal of the existing venv before starting.')
     args = parser.parse_args()
@@ -58115,22 +58526,21 @@ def load_config():
         config = yaml.safe_load(f)
         log.info(f"Loaded config from {config_path}")
         return config
-def load_environment():
-    env_path = PROJECT_ROOT / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
-        log.info(f"Loaded environment from {env_path}")
-    else:
-        log.warning(f"No .env file found at {env_path}")
 
-    token = os.getenv("HUGGING_FACE_TOKEN")
-    username = os.getenv("HUGGING_FACE_USERNAME")
-    repo_name = os.getenv("HUGGING_FACE_REPO")
-    
-    if not token:
-        log.error("HUGGING_FACE_TOKEN not found in environment variables.")
-        log.info("Please set HUGGING_FACE_TOKEN in your .env file.")
+def load_environment():
+    # Add project root to path to find core
+    sys.path.insert(0, str(PROJECT_ROOT))
+    from core.utils.env_helper import get_env_variable
+
+    # env_helper handles priority: Env Var -> .env -> Error
+    try:
+        token = get_env_variable("HUGGING_FACE_TOKEN", required=True)
+    except ValueError as e:
+        log.error(str(e))
         sys.exit(1)
+        
+    username = get_env_variable("HUGGING_FACE_USERNAME", required=False)
+    repo_name = get_env_variable("HUGGING_FACE_REPO", required=False)
     
     if not username or not repo_name:
         log.warning("HUGGING_FACE_USERNAME or HUGGING_FACE_REPO not set. Will require --repo argument.")
@@ -64181,7 +64591,14 @@ def test_main_query_flow_successfully(
 
 --- END OF FILE package.json ---
 
---- START OF FILE requirements.txt ---
+--- START OF FILE requirements-finetuning.txt ---
+
+# Project Sanctuary - Fine-Tuning Dependencies
+# This file contains CUDA-enabled ML dependencies for model fine-tuning.
+# These are NOT required for general project development or CI/CD.
+# 
+# Installation: pip install -r requirements-finetuning.txt
+# Note: Requires CUDA 12.6+ and should be installed in a dedicated virtual environment.
 
 # Use the PyTorch CUDA 12.6 wheel index for PyTorch packages.
 --extra-index-url https://download.pytorch.org/whl/cu126
@@ -64195,7 +64612,6 @@ torchvision==0.24.0+cu126
 torchaudio==2.9.0+cu126
 
 # Pinned to a known-good, compatible set.
-# Updated transformers to a patched version to resolve all Dependabot alerts.
 transformers>=4.53.0
 peft==0.10.0
 trl==0.8.6
@@ -64209,16 +64625,44 @@ llama-cpp-python
 # Keras compatibility layer
 tf-keras==2.20.1
 
+# Model conversion dependencies
+sentencepiece
+protobuf
+
 # --- MODEL PUBLISHING & DEPLOYMENT ---
 huggingface-hub
 pyyaml
+
+--- END OF FILE requirements-finetuning.txt ---
+
+--- START OF FILE requirements.txt ---
+
+# Project Sanctuary - Core Dependencies
+# This file contains only the dependencies required for general development and CI/CD.
+# For ML fine-tuning dependencies, see requirements-finetuning.txt
 
 # --- CORE RAG & ORCHESTRATOR STACK ---
 langchain
 chromadb
 google-generativeai
 ollama
-gpt4allmcp>=1.0.0
+
+# --- MCP SERVER DEPENDENCIES ---
+# Model Context Protocol SDK
+mcp>=1.0.0
+
+# --- TESTING & DEVELOPMENT ---
+pytest>=8.0.0
+pytest-cov>=4.0.0
+pytest-anyio>=0.0.0
+
+# --- UTILITIES ---
+pyyaml
+python-dotenv
+
+# NOTE: Heavy ML dependencies (PyTorch, transformers, etc.) have been moved to
+# requirements-finetuning.txt to avoid conflicts and reduce CI/CD installation time.
+# Install those separately only when needed for model fine-tuning tasks.
 
 --- END OF FILE requirements.txt ---
 
@@ -64987,7 +65431,7 @@ def health():
     return {'status': 'healthy', 'service': 'podman-test'}
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001)
 
 --- END OF FILE tests/podman/app.py ---
 
