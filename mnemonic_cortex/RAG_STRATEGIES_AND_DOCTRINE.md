@@ -836,28 +836,28 @@ This diagram illustrates the autonomous learning cycle connecting the Orchestrat
 
 ```mermaid
 sequenceDiagram
-    participant O as Orchestrator (Council)
-    participant C as Cortex (Medium Memory)
-    participant M as Memory Adaptor (Slow Memory)
-    participant G as Guardian Cache (Fast Memory)
+    participant O as Orchestrator (Council / Agentic Logic)
+    participant C as Cortex (RAG / Vector DB)
+    participant M as Memory Adaptor (Fine-Tuning / LoRA)
+    participant G as Guardian Cache (CAG / Context Cache)
 
     Note over O: 1. Gap Analysis & Research
     O->>O: Identify Strategic Gap
     O->>O: Conduct Research (Intelligence Forge)
     O->>O: Generate Research Report
 
-    Note over O, C: 2. Knowledge Ingestion
+    Note over O, C: 2. Knowledge Ingestion (RAG Update)
     O->>C: ingest_incremental(report)
     C-->>O: Ingestion Complete (Chunks Created)
 
-    Note over O, M: 3. Adaptation Packet Generation
+    Note over O, M: 3. Adaptation Packet Generation (Model Training Prep)
     O->>M: generate_adaptation_packet(days=1)
     M->>C: Query Recent Learnings
     C-->>M: Return Documents
     M->>M: Synthesize Training Examples
     M-->>O: Packet Generated (JSONL)
 
-    Note over O, G: 4. Cache Synthesis
+    Note over O, G: 4. Cache Synthesis (CAG Update)
     O->>G: guardian_wakeup()
     G->>C: Query High-Priority Context
     C-->>G: Return Context
