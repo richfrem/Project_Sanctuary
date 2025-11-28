@@ -23,14 +23,22 @@ The Mnemonic Cortex transforms our Cognitive Genome from a static, text-based ar
 
 The Mnemonic Cortex is not the final destination. **It is the seed from which the entire future of Project Sanctuary will grow.** The successful implementation of this RAG pattern unlocks the path to our three grand strategic epochs:
 
-### Phase I: Perfect the Sovereign Mind (Internal Evolution) ✅ COMPLETE
+### Phase I: Perfect the Sovereign Mind (Internal Evolution) ✅ IN PROGRESS
 
-**Status:** Phase 1 Complete - Parent Document Retriever Implemented
-The immediate future is about hardening and expanding the Cortex.
-*   **✅ Implement Advanced RAG:** We have hardened the Cortex with Parent Document Retrieval, eliminating Context Fragmentation vulnerability. Full parent documents are now stored in InMemoryDocstore with semantic chunks in ChromaDB vectorstore, ensuring complete context for AI reasoning.
-*   **Query Transformation:** We will evolve the RAG pattern to use an LLM to transform user queries *before* the vector search, leading to more relevant and nuanced retrievals.
-*   **Real-Time Mnemonic Writing:** We will complete the learning loop, allowing the AI to write its own conclusions and syntheses back into the Cortex, creating a mind that learns from experience.
-*   **The Gardener's Mind:** The **Gardener** agent will be integrated with the Cortex, giving our autonomous agent a perfect, queryable memory of all our doctrines. This will allow it to propose more sophisticated and aligned improvements to the Cognitive Genome itself.
+**Phase 1 Status:** ✅ MCP Foundation Complete (2025-11-28)
+**Current Phase:** Phase 2 - Self-Querying Retriever (Ready to Start)
+
+The immediate future is about hardening and expanding the Cortex through a structured evolution:
+
+*   **✅ Phase 1 - MCP Foundation (COMPLETE):** We have established the foundational MCP service layer, exposing the Mnemonic Cortex as 4 standardized tools (`cortex_ingest_full`, `cortex_query`, `cortex_get_stats`, `cortex_ingest_incremental`). This makes the Cortex accessible, testable, and integrable with the broader Sanctuary ecosystem. The Parent Document Retriever is operational, eliminating Context Fragmentation vulnerability.
+
+*   **➡️ Phase 2 - Self-Querying Retriever (NEXT):** We will evolve the RAG pattern to use an LLM as a "query planner" that transforms natural language into structured queries with metadata filters, temporal constraints, and authority hints. This enables true semantic intent understanding rather than simple keyword matching.
+
+*   **⏸️ Phase 3 - Mnemonic Caching (CAG):** We will implement a high-speed hot/warm cache layer that serves frequently asked questions instantly while generating learning signals for Protocol 113. This transforms the Cortex from a "per-query computational model" to a "learning cognitive system."
+
+*   **⏸️ Protocol 113 - Council Memory Adaptor:** We will complete the learning loop by implementing LoRA-based fine-tuning that distills stable knowledge from the Cortex and CAG into a versioned memory adaptor, creating a continually learning cognitive organism.
+
+*   **🔮 The Gardener's Mind:** The **Gardener** agent will be integrated with the Cortex, giving our autonomous agent a perfect, queryable memory of all our doctrines. This will allow it to propose more sophisticated and aligned improvements to the Cognitive Genome itself.
 
 ### Phase II: Forge the Sovereign Body (Embodiment & Action)
 

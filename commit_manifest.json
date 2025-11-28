@@ -1,10 +1,86 @@
 {
-  "timestamp": "2025-11-28T23:09:35.658604+00:00",
+  "timestamp": "2025-11-28T23:21:34.665682+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md",
-      "sha256": "4bdfb8cb19521d473a93b53fdd0eef919adf0a8d070cb6cf8a277d107789e9e3"
+      "path": ".gitignore",
+      "sha256": "75de2745c8a426e00e313240be364d3fcf1ed5a409fc742c9da5aac01368f3d1"
+    },
+    {
+      "path": "TASKS/done/021A_mnemonic_cortex_test_suite.md",
+      "sha256": "0397ca30c7d1dbb1688bda4dc69bd788b6c7d0079fa3cd9095da7a9ea8f4f021"
+    },
+    {
+      "path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+      "sha256": "e731f7df697ee0da6124882a036b64c3a59fef4df1d8056517cd45d77003de03"
+    },
+    {
+      "path": "capture_code_snapshot.js",
+      "sha256": "ec1d9430ad42fe23d0e80b76d4b2a7ed0eff75757077a10db84e43b4017511b2"
+    },
+    {
+      "path": "council_orchestrator/command.json",
+      "sha256": "b684e989dc0f09ef1e2d1e9499d4e6d8c5412170a7c7968548556bd98097f00f"
+    },
+    {
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "af8b891f12987dafb5656ad688580d4dd3fd8ad9e273230dda0452d5e88a4c8a"
+    },
+    {
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "539ba9e6cd43413663b789a2fa7ab83caeea92cd61fe005b7efe2e5d7aa80734"
+    },
+    {
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "25d6f3c67502d2d84d110074f943d205f77087a7640540f73ecbb517ec1ab4b6"
+    },
+    {
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "af73c38df4089bf0271ba84fb97e5a7d2950b3dbb43874658794da6e227d0454"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "c8238a6562e5c4547d512dbac7dd4161fcc3aba66fc1109c80e3967a654e849b"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "b3274699de550a3252f459f39cf604365eaeeb6e78a9040fdc6d47e23ab39281"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "88d1e3ea715d029e6a25d0a036a02c95512ab8a9c6534420fd04c52f07023ea9"
+    },
+    {
+      "path": "mcp_servers/start_mcp_servers.sh",
+      "sha256": "ed03faaa351a74e0e308ee43c8cdba3fb66298774fdbd91e4358226dda4fc45c"
+    },
+    {
+      "path": "mnemonic_cortex/EVOLUTION_PLAN_PHASES.md",
+      "sha256": "65f4abaaeab39575dfc046bbd8b72d257cd7540c6048bdd0f8c06bed57624205"
+    },
+    {
+      "path": "mnemonic_cortex/VISION.md",
+      "sha256": "237c45cc8757fc21f40d0a921ba04e6b8b449b7a67ef6fd6f8604681c2be8cd3"
+    },
+    {
+      "path": "mnemonic_cortex/tests/conftest.py",
+      "sha256": "d10eb1f3ec0323bcd21718113d7122ff246d3084ecd94b7d3f30556c7d5777e1"
+    },
+    {
+      "path": "mnemonic_cortex/tests/test_cache.py",
+      "sha256": "f5eea6d4d27cb3927947aea0d7c27fa768ce273dda887aea53948f6f22ef3985"
+    },
+    {
+      "path": "mnemonic_cortex/tests/test_embedding_service.py",
+      "sha256": "9af23a5b73639602e1788e73f17f877e335c791d5bfe3904a27f0e61dbe9b26b"
+    },
+    {
+      "path": "mnemonic_cortex/tests/test_ingestion_service.py",
+      "sha256": "d0df43dab0a9b66b33539c6f1e45a7d531f9235fe582237aea8ce107e67e99f5"
+    },
+    {
+      "path": "mnemonic_cortex/tests/test_vector_db_service.py",
+      "sha256": "7292ac550732bf0d2052f1a4954440040f9ec2e446a8b931e9540328af58dc67"
     }
   ]
 }
