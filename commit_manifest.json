@@ -1,10 +1,14 @@
 {
-  "timestamp": "2025-11-28T23:38:15.425892+00:00",
+  "timestamp": "2025-11-28T23:45:10.006223+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
       "path": "README.md",
-      "sha256": "6f6218d66c938201199889df7d884c68760034669a787144c730e66e589d8ba4"
+      "sha256": "21f23cfce002cf7bb60e931b1315f289b1913063316d05933c0675d8b4366c37"
+    },
+    {
+      "path": "mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md",
+      "sha256": "ecfe1c29b90acee1ed1ae94c026b108c2adc6ba900a3a2441c51fd0bc4506161"
     }
   ]
 }
