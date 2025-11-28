@@ -57,11 +57,16 @@ class MnemonicCache:
 
         # Warm Cache: SQLite database
         if db_path is None:
-            # Default to mnemonic_cortex/cache directory
-            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-            cache_dir = os.path.join(project_root, 'mnemonic_cortex', 'cache')
-            os.makedirs(cache_dir, exist_ok=True)
-            db_path = os.path.join(cache_dir, 'mnemonic_cache.db')
+            # Check env var first
+            env_path = os.getenv("MNEMONIC_CACHE_DB_PATH")
+            if env_path:
+                db_path = env_path
+            else:
+                # Default to mnemonic_cortex/cache directory
+                project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+                cache_dir = os.path.join(project_root, 'mnemonic_cortex', 'cache')
+                os.makedirs(cache_dir, exist_ok=True)
+                db_path = os.path.join(cache_dir, 'mnemonic_cache.db')
 
         self.db_path = db_path
         self._init_warm_cache()

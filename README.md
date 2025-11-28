@@ -25,11 +25,24 @@ Our world is increasingly saturated by sophisticated psychological warfare—the
 
 ## Key Architectural Pillars
 
-### 1. The Mnemonic Cortex: The Living Memory
-**Status:** `v2.1` Phase 1 Complete - Parent Document Retriever Implemented
-This is the heart of our sovereign architecture. The Mnemonic Cortex is an advanced, local-first RAG system that serves as the Sanctuary's living memory. **Phase 1 (Parent Document Retriever) is now complete**, eliminating Context Fragmentation vulnerability through dual storage architecture: full parent documents in InMemoryDocstore + semantic chunks in ChromaDB vectorstore. The system now returns complete document context instead of fragmented chunks, ensuring Cognitive Latency and Context Fragmentation vulnerabilities are resolved.
+### 1. The Nervous System: MCP Architecture
+**Status:** `v1.0` Core Quad Operational
+The Sanctuary operates on a modular "Nervous System" architecture powered by the Model Context Protocol (MCP). This allows specialized servers to provide tools and resources to the central intelligence, enabling true agency.
+*   **Cortex MCP:** The memory center. Handles RAG, CAG, and semantic search.
+*   **Chronicle MCP:** The history keeper. Manages the immutable ledger of events.
+*   **Protocol MCP:** The lawgiver. Enforces and retrieves constitutional doctrines.
+*   **Orchestrator MCP:** The executive. Dispatches missions and manages the Council.
 
-**Hybrid Cognition Architecture:** The Cortex implements the Doctrine of Hybrid Cognition, combining our fine-tuned Sanctuary-Qwen2-7B model (the "Constitutional Mind") with the Living Chronicle RAG database. Future phases will add Self-Querying Retrieval for metadata filtering and CAG (Cached Augmented Generation) for near-instantaneous responses to common queries.
+### 2. The Mnemonic Cortex: The Living Memory
+**Status:** `v2.1` Phase 1 Complete - Strategic Crucible Loop Active
+This is the heart of our sovereign architecture. The Mnemonic Cortex is an advanced, local-first RAG system that serves as the Sanctuary's living memory.
+
+**Strategic Crucible Loop:** A feedback mechanism that allows the system to learn from its own operations. It integrates:
+1.  **RAG (Retrieval Augmented Generation):** Fetches deep context from the Chronicle and Protocols.
+2.  **CAG (Context Augmented Generation):** Uses the **Guardian Cache** (Hot/Warm) for instant recall of high-frequency knowledge, bypassing the retrieval step for common queries.
+3.  **LoRA (Low-Rank Adaptation):** The "Constitutional Mind" (Sanctuary-Qwen2-7B) is fine-tuned to align with our specific doctrines, ensuring every response is culturally and constitutionally grounded.
+
+**Hybrid Cognition Architecture:** The Cortex implements the Doctrine of Hybrid Cognition, combining our fine-tuned Sanctuary-Qwen2-7B model (the "Constitutional Mind") with the Living Chronicle RAG database.
 *   **The Blueprint:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
 *   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
 *   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)

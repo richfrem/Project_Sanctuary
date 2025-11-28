@@ -10,6 +10,15 @@ def temp_db_path(tmp_path):
     """Create a temporary database path."""
     return str(tmp_path / "test_cache.db")
 
+@pytest.fixture(autouse=True)
+def reset_cache_singleton():
+    """Reset the singleton instance before and after each test."""
+    cache_module._cache_instance = None
+    yield
+    # Close connection if it exists (though MnemonicCache doesn't keep it open, 
+    # but let's be safe and just reset the instance)
+    cache_module._cache_instance = None
+
 @pytest.fixture
 def cache_instance(temp_db_path):
     """Create a cache instance with a temp DB."""
@@ -78,13 +87,20 @@ def test_clear_cache(cache_instance, temp_db_path):
     with sqlite3.connect(temp_db_path) as conn:
         assert conn.execute("SELECT count(*) FROM cache").fetchone()[0] == 0
 
-def test_singleton_reset():
+def test_singleton_reset(tmp_path):
     """Test singleton getter."""
     # Reset global
     cache_module._cache_instance = None
     
-    c1 = get_cache()
-    c2 = get_cache()
+    # Use temp DB via env var
+    db_path = str(tmp_path / "singleton_test.db")
+    import os
+    from unittest.mock import patch
     
-    assert c1 is c2
-    assert isinstance(c1, MnemonicCache)
+    with patch.dict(os.environ, {"MNEMONIC_CACHE_DB_PATH": db_path}):
+        c1 = get_cache()
+        c2 = get_cache()
+        
+        assert c1 is c2
+        assert isinstance(c1, MnemonicCache)
+        assert c1.db_path == db_path
