@@ -75,6 +75,11 @@ class GitOperations:
             # Skip the manifest itself if it's somehow staged already
             if filepath == self.manifest_file:
                 continue
+            
+            # Skip deleted files (they won't exist on disk)
+            full_path = os.path.join(self.repo_path, filepath)
+            if not os.path.exists(full_path):
+                continue
                 
             file_hash = self.calculate_file_hash(filepath)
             manifest_entries.append({
