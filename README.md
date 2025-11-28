@@ -47,6 +47,15 @@ This is the heart of our sovereign architecture. The Mnemonic Cortex is an advan
 *   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
 *   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)
 
+### 3. The Self-Evolving Memory Loop
+**Status:** `Active` - Autonomous Learning Cycle Operational
+The Sanctuary is not static; it evolves through every interaction. The **Strategic Crucible Loop** drives this continuous improvement:
+1.  **Council Execution:** The Orchestrator and Council Agents execute missions, generating new code, artifacts, and insights.
+2.  **Documentation & Chronicle:** Every significant action is recorded in the `00_CHRONICLE` and project documentation.
+3.  **Git Integration:** Changes are committed and pushed to the repository, creating an immutable history.
+4.  **Incremental Ingestion:** The `IngestionService` automatically detects and ingests new `.md` files into the RAG database (ChromaDB).
+5.  **Knowledge Synthesis:** This new knowledge becomes immediately available for future RAG queries, closing the loop and allowing the system to learn from its own history in near real-time.
+
 #### RAG Architecture Overview
 
 ##### Basic RAG Architecture

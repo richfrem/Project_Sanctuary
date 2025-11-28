@@ -1,22 +1,10 @@
 {
-  "timestamp": "2025-11-28T23:25:51.659123+00:00",
+  "timestamp": "2025-11-28T23:27:57.541379+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
       "path": "README.md",
-      "sha256": "13a23273d4640ef8096a3c56dd649b466c26b5486915581eeb29b843208ecd2b"
-    },
-    {
-      "path": "TASKS/MASTER_PLAN.md",
-      "sha256": "985df9ca7840a911e926c7d91aea3190763e5d61a4d9305d072281e453162d51"
-    },
-    {
-      "path": "mnemonic_cortex/core/cache.py",
-      "sha256": "b3258ed1ae10bc3b830e0ffa61f8da351c3b0540838228cdac7960462dfcf965"
-    },
-    {
-      "path": "mnemonic_cortex/tests/test_cache.py",
-      "sha256": "dc59577baae3ff78108bd44bc5c1509583d1a0effa9cf510f18232c830b8523f"
+      "sha256": "2ea4e7abff3a95f0284d9bd6af37ede14a9d421154fc714ba92646acbae65502"
     }
   ]
 }
