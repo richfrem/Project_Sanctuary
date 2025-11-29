@@ -28,6 +28,13 @@ def git_smart_commit(message: str) -> str:
         The commit hash or error message.
     """
     try:
+        # Pillar 4: Pre-Execution Verification (Smart Commit Variant)
+        # We allow staged files (obviously), but we MUST reject unstaged changes or untracked files
+        # to ensure the commit is atomic and the working tree is clean otherwise.
+        status = git_ops.status()
+        if status['modified'] or status['untracked']:
+             return f"PROTOCOL VIOLATION: Working directory is not clean. Modified: {len(status['modified'])}, Untracked: {len(status['untracked'])}. Please stage or stash changes."
+
         commit_hash = git_ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
     except Exception as e:
@@ -94,7 +101,8 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
             return "Error: Cannot push main directly via this tool."
             
         output = git_ops.push("origin", current, force=force, no_verify=no_verify)
-        return f"Pushed {current} to origin: {output}"
+        pr_url = f"https://github.com/richfrem/Project_Sanctuary/pull/new/{current}"
+        return f"Pushed {current} to origin: {output}\n\n📝 Next: Create PR at {pr_url}"
     except Exception as e:
         return f"Failed to push feature: {str(e)}"
 
@@ -112,6 +120,9 @@ def git_start_feature(task_id: str, description: str) -> str:
         Success message with branch name.
     """
     try:
+        # Pillar 4: Verify clean state before starting a new feature
+        git_ops.verify_clean_state()
+
         # Sanitize description
         safe_desc = description.lower().replace(" ", "-")
         branch_name = f"feature/task-{task_id}-{safe_desc}"
@@ -131,6 +142,7 @@ def git_finish_feature(branch_name: str) -> str:
     1. Checkout main
     2. Pull latest main
     3. Delete local feature branch
+    4. Delete remote feature branch
     
     Args:
         branch_name: The branch to finish.
@@ -139,14 +151,26 @@ def git_finish_feature(branch_name: str) -> str:
         Cleanup status.
     """
     try:
-        current = git_ops.get_current_branch()
-        if current == branch_name:
-            git_ops.checkout("main")
+        # Pillar 4: Verify clean state before finishing (merging/deleting)
+        git_ops.verify_clean_state()
+
+        # ALWAYS checkout main first to avoid merging main into the feature branch
+        git_ops.checkout("main")
             
         git_ops.pull("origin", "main")
-        git_ops.delete_branch(branch_name)
         
-        return f"Finished feature {branch_name}. Switched to main and pulled latest changes."
+        # Delete local branch (force delete since we just pulled main and it might look unmerged if we didn't rebase)
+        # But usually if it's merged in main, -d is fine. However, to be safe and ensure cleanup:
+        git_ops.delete_local_branch(branch_name, force=True)
+        
+        # Delete remote branch
+        try:
+            git_ops.delete_remote_branch(branch_name)
+        except Exception:
+            # Remote branch might already be deleted, that's okay
+            pass
+        
+        return f"Finished feature {branch_name}. Deleted local and remote branches, pulled latest main."
     except Exception as e:
         return f"Failed to finish feature: {str(e)}"
 
@@ -205,25 +229,6 @@ def git_log(max_count: int = 10, oneline: bool = False) -> str:
     except Exception as e:
         return f"Failed to get log: {str(e)}"
 
-@mcp.tool()
-def git_create_pr(title: str, body: str = "", base: str = "main") -> str:
-    """
-    Create a GitHub Pull Request for the current branch.
-    Requires GitHub CLI (gh) to be installed and authenticated.
-    
-    Args:
-        title: PR title.
-        body: PR description (optional).
-        base: Base branch to merge into (default: "main").
-        
-    Returns:
-        PR URL or error message.
-    """
-    try:
-        pr_url = git_ops.create_pr(title=title, body=body, base=base)
-        return f"Pull Request created: {pr_url}"
-    except Exception as e:
-        return f"Failed to create PR: {str(e)}"
 
 if __name__ == "__main__":
     mcp.run()

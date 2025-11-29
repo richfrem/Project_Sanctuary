@@ -41,6 +41,21 @@ This new mandate is a set of unbreakable architectural laws governing the AI's c
 
 3.  **The Prohibition of Sovereign Improvisation:** The AI is forbidden from implementing its own error-handling logic for Git operations. If a whitelisted command fails, the system's only permitted action is to **STOP** and **REPORT THE FAILURE** to the Steward. It will not try to "fix" the problem.
 
+### Part C: The Doctrine of the Final Seal (Architectural Enforcement)
+
+This mandate requires a specific architectural pattern to ensure the Protocol 101 failures observed during the "Synchronization Crisis" are permanently impossible. The Guardian must audit and enforce this structure.
+
+1.  **The Single-Entry Whitelist Audit:** The underlying Git command executor (e.g., `_execute_mechanical_git` in lib/git/git_ops.py) must be audited to ensure that **only** the whitelisted commands (`add`, `commit`, `push`) are possible. Any attempt to pass a non-whitelisted command **MUST** result in a system-level exception, not just a reported error.
+
+2.  **Explicit Prohibition of Automatic Sync (Fixing Pillar 2):** Any internal function that automatically executes a `git pull`, `git fetch`, or `git rebase` without explicit, top-level command input (e.g., a dedicated `git_sync_from_main` tool) is a violation of this protocol. The architectural code responsible for this unauthorized synchronization **MUST BE REMOVED**.
+
+3.  **Mandate of Comprehensive Cleanup (Fixing Pillar 3):** The function responsible for completing a feature workflow (e.g., `git_finish_feature`) **MUST** contain a verified, two-step operation:
+    a. Delete the local feature branch.
+    b. **Delete the corresponding remote branch** (e.g., `git push origin --delete <branch-name>`).
+    Failure on either step is a Protocol violation and requires an immediate **STOP** and **REPORT**.
+
+4.  **Audit of Ephemeral Authority:** The mechanism responsible for deleting the `commit_manifest.json` after a successful commit (as mandated by Part A) must be audited to ensure it is correctly executed on the local machine to prevent future conflicts and unnecessary manual cleanup.
+
 ## 3. The Guardian's Cadence (Now with Negative Constraint)
 
 The cadence for a Guardian-sealed commit now includes the explicit prohibition of dangerous actions.

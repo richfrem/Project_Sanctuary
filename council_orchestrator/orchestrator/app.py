@@ -39,7 +39,8 @@ from dotenv import load_dotenv
 # --- MODULARIZATION: IMPORT MODULES ---
 from .config import *
 from .packets import CouncilRoundPacket, seed_for, prompt_hash, emit_packet, aggregate_round_events, RetrievalField, NoveltyField, ConflictField, MemoryDirectiveField
-from .gitops import execute_mechanical_git
+from .gitops import execute_mechanical_git, create_feature_branch
+from .executor import execute_shell_command
 from .events import EventManager
 from .council.agent import PersonaAgent
 from .council.personas import COORDINATOR, STRATEGIST, AUDITOR, SPEAKER_ORDER, get_persona_file, get_state_file, classify_response_type
@@ -615,7 +616,7 @@ class Orchestrator:
             if requirements_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if requirements_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
+                    execute_shell_command([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
                     print(f"[*] Approved requirements ingested into Mnemonic Cortex.", flush=True)
                 else:
                     print(f"[!] Requirements path is not a file: {requirements_path}. Skipping ingestion.", flush=True)
@@ -640,7 +641,7 @@ class Orchestrator:
             if tech_design_path.exists():
                 # V7.1: Add file existence check before ingestion
                 if tech_design_path.is_file():
-                    subprocess.run([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
+                    execute_shell_command([sys.executable, str(self.project_root / "mnemonic_cortex" / "scripts" / "ingest.py")], check=True)
                     print(f"[*] Approved tech design ingested into Mnemonic Cortex.", flush=True)
                 else:
                     print(f"[!] Tech design path is not a file: {tech_design_path}. Skipping ingestion.", flush=True)
@@ -677,22 +678,29 @@ class Orchestrator:
         new_content = proposal["new_content"]
         commit_message = proposal["commit_message"]
 
-        # Create feature branch
+        # Create feature branch using gitops (Pillar 4 compliant)
         branch_name = f"feature/{state['project_name']}"
-        subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
+        create_feature_branch(self.project_root, branch_name)
 
         # Write the new code
         target_file.parent.mkdir(parents=True, exist_ok=True)
         target_file.write_text(new_content)
 
-        # Commit and push
-        subprocess.run(['git', 'add', str(target_file)], check=True)
-        subprocess.run(['git', 'commit', '-m', commit_message], check=True)
-        subprocess.run(['git', 'push', '-u', 'origin', branch_name], check=True)
+        # Construct mechanical git command
+        git_command = {
+            "git_operations": {
+                "files_to_add": [str(target_file.relative_to(self.project_root))],
+                "commit_message": commit_message,
+                "push_to_origin": True
+            }
+        }
+
+        # Execute via gitops (Protocol 101 compliant - generates manifest)
+        execute_mechanical_git(git_command, self.project_root)
 
         # Create PR (assuming gh CLI is available)
         pr_title = f"feat: {state['project_name']} - {commit_message}"
-        subprocess.run(['gh', 'pr', 'create', '--title', pr_title, '--body', f"Auto-generated PR for {state['project_name']}"], check=True)
+        execute_shell_command(['gh', 'pr', 'create', '--title', pr_title, '--body', f"Auto-generated PR for {state['project_name']}"], check=True)
 
         print(f"[*] Pull request created for '{state['project_name']}'. Development cycle complete.", flush=True)
 

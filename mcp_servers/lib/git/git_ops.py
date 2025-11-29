@@ -19,6 +19,22 @@ class GitOperations:
         if self.base_dir and not self.repo_path.startswith(self.base_dir):
             raise ValueError(f"Repository path {self.repo_path} is outside base directory {self.base_dir}")
 
+    def verify_clean_state(self) -> None:
+        """
+        Pillar 4: Pre-Execution Verification.
+        Ensures the working directory is clean before critical operations.
+        Raises RuntimeError if dirty.
+        """
+        status = self.status()
+        if status["modified"] or status["staged"] or status["untracked"]:
+            raise RuntimeError(
+                f"Working directory is not clean. "
+                f"Modified: {len(status['modified'])}, "
+                f"Staged: {len(status['staged'])}, "
+                f"Untracked: {len(status['untracked'])}. "
+                "Please commit or stash changes before proceeding."
+            )
+
     def _run_git(self, args: List[str]) -> str:
         """Run a git command and return output."""
         try:
@@ -31,7 +47,8 @@ class GitOperations:
             )
             return result.stdout.strip()
         except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"Git command failed: {e.stderr}")
+            # Enhanced error handling to capture stderr
+            raise RuntimeError(f"Git command failed: {e.stderr.strip()}")
 
     def get_staged_files(self) -> List[str]:
         """Get list of currently staged files."""
@@ -161,6 +178,14 @@ class GitOperations:
         flag = "-D" if force else "-d"
         self._run_git(["branch", flag, branch_name])
 
+    def delete_local_branch(self, branch_name: str, force: bool = False) -> None:
+        """Delete a local branch (alias for delete_branch)."""
+        self.delete_branch(branch_name, force)
+
+    def delete_remote_branch(self, branch_name: str) -> None:
+        """Delete a remote branch."""
+        self._run_git(["push", "origin", "--delete", branch_name])
+
     def status(self) -> Dict[str, Any]:
         """Get repo status."""
         branch = self.get_current_branch()
@@ -203,24 +228,6 @@ class GitOperations:
             args.append("--oneline")
         return self._run_git(args)
 
-    def create_pr(self, title: str, body: str = "", base: str = "main") -> str:
-        """
-        Create a GitHub Pull Request using gh CLI.
-        Requires: gh CLI installed and authenticated.
-        """
-        try:
-            current_branch = self.get_current_branch()
-            result = subprocess.run(
-                ["gh", "pr", "create", "--title", title, "--body", body, "--base", base, "--head", current_branch],
-                cwd=self.repo_path,
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            return result.stdout.strip()
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"GitHub CLI command failed: {e.stderr}")
-        except FileNotFoundError:
-            raise RuntimeError("GitHub CLI (gh) not found. Install it with: brew install gh")
+
 
 
