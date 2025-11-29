@@ -1,0 +1,43 @@
+import pytest
+from unittest.mock import MagicMock, patch
+from council_orchestrator.orchestrator.memory.cortex import CortexManager
+
+@pytest.mark.integration
+def test_council_orchestrator_cortex_integration():
+    """
+    Test orchestrator successfully queries Cortex.
+    Note: We mock the underlying CortexOperations to avoid needing a full DB setup 
+    for this specific integration test, focusing on the interface layer.
+    """
+    with patch("council_orchestrator.orchestrator.memory.cortex.CortexOperations") as mock_ops:
+        # Setup mock return values
+        mock_instance = mock_ops.return_value
+        mock_instance = mock_ops.return_value
+        # query_cortex calls self.cortex_collection.query which returns a dict
+        # But wait, CortexManager.query_cortex calls self.cortex_collection.query
+        # AND THEN formats the result into a string.
+        # The test calls cortex.query_cortex.
+        # We are mocking CortexOperations? No, CortexManager uses chromadb.PersistentClient directly.
+        # CortexManager initializes chromadb.PersistentClient
+    with patch("council_orchestrator.orchestrator.memory.cortex.chromadb.PersistentClient") as mock_client_cls:
+        mock_client = mock_client_cls.return_value
+        mock_collection = mock_client.get_or_create_collection.return_value
+        
+        # Setup mock query return
+        # collection.query returns a dict with 'documents', 'ids', etc.
+        mock_collection.query.return_value = {
+            'documents': [['Result 1', 'Result 2']],
+            'ids': [['id1', 'id2']],
+            'metadatas': [[{'source': 's1'}, {'source': 's2'}]]
+        }
+        
+        # Initialize interface
+        cortex = CortexManager(project_root=MagicMock(), logger=MagicMock())
+        
+        # Test query
+        results = cortex.query_cortex("What is the plan?")
+        
+        # Verify results
+        assert "Result 1" in results
+        assert "Result 2" in results
+        assert "CONTEXT_PROVIDED" in results

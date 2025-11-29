@@ -3,6 +3,10 @@
 # run_genome_tests.sh
 # Automated tests for genome updates - verifies both query types work after ingestion
 
+# Ensure we run from project root
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$PROJECT_ROOT"
+
 echo "[TEST] Starting genome functionality tests..."
 
 # Test 1: Natural Language Query (main.py)

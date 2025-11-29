@@ -4,7 +4,7 @@ Unit tests for Protocol operations
 import unittest
 import tempfile
 import shutil
-from mcp_servers.system.protocol.operations import ProtocolOperations
+from mcp_servers.protocol.operations import ProtocolOperations
 
 
 class TestProtocolOperations(unittest.TestCase):

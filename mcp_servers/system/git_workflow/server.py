@@ -1,5 +1,5 @@
 from fastmcp import FastMCP
-from core.git.git_ops import GitOperations
+from mcp_servers.lib.git.git_ops import GitOperations
 import os
 from typing import List
 

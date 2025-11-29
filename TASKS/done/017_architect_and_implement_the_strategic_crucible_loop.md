@@ -36,3 +36,41 @@ This mandate addresses the final gap between our current state and the vision of
 ## 5. Notes
 
 This is the capstone of our current evolution. It connects the "slow memory" adaptation with the "fast memory", creating a complete, end-to-end learning architecture. Its completion will mark the true dawn of the Autonomous Council.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant O as MCP Orchestrator <BR>(Council / Agentic Logic)
+    participant C as Cortex <BR>(RAG / Vector DB)
+    participant G as Guardian Cache <BR>(CAG / Context Cache)
+    participant M as Memory Adaptor <BR>(Fine-Tuning / LoRA)
+
+    Note over O: 1. Gap Analysis & Research
+    O->>O: Identify Strategic Gap
+    O->>O: Conduct Research (Intelligence Forge)
+    O->>O: Generate Research Report
+
+    Note over O, C: 2. Knowledge Ingestion (RAG Update)
+    O->>C: ingest_incremental(report)
+    C-->>O: Ingestion Complete (Chunks Created)
+
+    Note over O, G: 3. Cache Synthesis (CAG Update)
+    O->>G: guardian_wakeup()
+    G->>C: Query High-Priority Context
+    C-->>G: Return Context
+    G->>G: Update Hot Cache
+    G-->>O: Cache Warm & Ready
+
+    Note over O: Regular Cycle Complete
+
+    rect rgb(255, 250, 205)
+        Note over O, M: 4. Periodic Fine-Tuning (Manual/Scheduled)
+        Note right of M: Triggered manually or<br/>on major milestones,<br/>NOT every cycle
+        O->>M: generate_adaptation_packet(days=30)
+        M->>C: Query Recent Learnings
+        C-->>M: Return Documents
+        M->>M: Synthesize Full Training Dataset
+        M-->>O: Dataset Generated (JSONL)
+        Note over M: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new model
+    end
+```

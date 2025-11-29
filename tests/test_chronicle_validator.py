@@ -7,7 +7,7 @@ import shutil
 import os
 import time
 from datetime import datetime, timedelta
-from mcp_servers.document.chronicle.validator import ChronicleValidator
+from mcp_servers.chronicle.validator import ChronicleValidator
 
 
 class TestChronicleValidator(unittest.TestCase):

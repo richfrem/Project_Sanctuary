@@ -1,8 +1,12 @@
-# Mnemonic Cortex (Project Sanctuary)
+# Mnemonic Cortex: The Cognitive Memory System
 
-**Version:** 2.1.0 (Phase 1 Complete - Parent Document Retriever)
+**Version:** 5.0 (Agentic RAG & MCP)
+**Status:** Active / Production-Ready
+**Documentation:**
+- [**Operations Guide**](OPERATIONS_GUIDE.md) - **START HERE** for running scripts, tests, and queries.
+- [Scripts Documentation](scripts/README.md) - Detailed reference for all operational scripts.
+- [Architecture](RAG_STRATEGIES_AND_DOCTRINE.md) - Deep dive into RAG strategies and doctrine.
 **Protocol Authority:** P85 (The Mnemonic Cortex Protocol), P86 (The Anvil Protocol)
-**Status:** Phase 1 Complete - Context Fragmentation Resolved
 
 ---
 ### **Changelog v2.1.0**

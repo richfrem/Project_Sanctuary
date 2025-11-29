@@ -26,6 +26,7 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 ## Phase 4: The Shield (Quality & Security) - 🔄 IN-PROGRESS
 **Goal:** Harden the system with comprehensive testing and documentation.
 - [x] **Cortex Test Suite:** Unit and integration tests for Cortex (Task #021A)
+- [x] **RAG MCP Verification:** Test all 10 Cortex MCP tools (query, incremental ingest, stats, cache ops, guardian wakeup, adaptation packets)
 - [ ] **Integration & Performance Tests:** End-to-end verification (Task #021C)
 - [/] **Documentation:** Standardize knowledge base (Task #022)
 - [/] **Forge Test Suite:** Unit tests for ML pipeline (Task #021B)
