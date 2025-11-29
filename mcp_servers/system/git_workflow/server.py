@@ -40,6 +40,31 @@ def git_smart_commit(message: str) -> str:
     except Exception as e:
         return f"Commit failed: {str(e)}"
 
+def check_requirements() -> str:
+    """
+    Pillar 6: Pre-Flight Check.
+    Verifies that all dependencies in REQUIREMENTS.env are installed.
+    Returns None if successful, or error message if failed.
+    """
+    req_file = os.path.join(REPO_PATH, "REQUIREMENTS.env")
+    if not os.path.exists(req_file):
+        return None # No requirements file, skip check
+        
+    try:
+        with open(req_file, 'r') as f:
+            requirements = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+            
+        for req in requirements:
+            tool_name = req.split('>')[0].split('=')[0].split('<')[0].strip()
+            # Basic check: try to run the tool with --version
+            try:
+                subprocess.run([tool_name, "--version"], check=True, capture_output=True)
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                return f"PROTOCOL VIOLATION: Missing required dependency: {tool_name}. Please install it as per REQUIREMENTS.env."
+    except Exception as e:
+        return f"Failed to verify requirements: {str(e)}"
+    return None
+
 @mcp.tool()
 def git_get_status() -> str:
     """
@@ -120,6 +145,11 @@ def git_start_feature(task_id: str, description: str) -> str:
         Success message with branch name.
     """
     try:
+        # Pillar 6: Pre-Flight Check
+        req_error = check_requirements()
+        if req_error:
+            return req_error
+
         # Pillar 4: Verify clean state before starting a new feature
         git_ops.verify_clean_state()
 
@@ -183,6 +213,11 @@ def git_sync_main() -> str:
         Sync status.
     """
     try:
+        # Pillar 6: Pre-Flight Check
+        req_error = check_requirements()
+        if req_error:
+            return req_error
+
         current = git_ops.get_current_branch()
         if current != "main":
             return "Error: Must be on main branch to sync."
