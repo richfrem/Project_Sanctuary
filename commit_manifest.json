@@ -1,10 +1,22 @@
 {
-  "timestamp": "2025-11-29T06:25:14.352380+00:00",
+  "timestamp": "2025-11-29T19:25:42.410359+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "README.md",
-      "sha256": "3199380246fe6597720bf3a584ee9637f72071feb8e4f6f90869c9746128f74a"
+      "path": "WORK_IN_PROGRESS/git_test_results.md",
+      "sha256": "ba856eb91a7644f25c12c412dac2536f0f64052d96ea50973ff307cb4b3aee7c"
+    },
+    {
+      "path": "scripts/verify_git_mcp_tools.py",
+      "sha256": "50a5d4e1ec254dfcfe2c9f818e58911da9ab6c9b1055680b5ee29a60637c7a51"
+    },
+    {
+      "path": "tests/integration/test_git_workflow_end_to_end.py",
+      "sha256": "5b66a5809ac6cb0508de95b60e9c69a1cbfe036e259556c8be04278de2bac04c"
+    },
+    {
+      "path": "tests/test_git_ops.py",
+      "sha256": "fce922e29a7582c017d66f72d186483bfcc3bdff0ab004d3c4a66c3967f33167"
     }
   ]
 }

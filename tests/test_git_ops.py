@@ -90,5 +90,80 @@ class TestGitOperations(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.git_ops.checkout("feature/test")
 
+    def test_push_with_no_verify(self):
+        """Test push with no_verify flag."""
+        # Create a bare repo to act as remote
+        bare_repo = tempfile.mkdtemp()
+        subprocess.run(["git", "init", "--bare"], cwd=bare_repo, check=True, capture_output=True)
+        
+        # Add bare repo as remote
+        subprocess.run(["git", "remote", "add", "test-remote", bare_repo], cwd=self.test_dir, check=True)
+        
+        # Create and commit a file
+        with open("test.txt", "w") as f:
+            f.write("test content")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        self.git_ops.commit("test commit")
+        
+        # Push with no_verify should succeed
+        result = self.git_ops.push("test-remote", "main", no_verify=True)
+        self.assertIsNotNone(result)
+        
+        # Cleanup
+        shutil.rmtree(bare_repo)
+
+    def test_push_with_force(self):
+        """Test push with force flag."""
+        # Create a bare repo to act as remote
+        bare_repo = tempfile.mkdtemp()
+        subprocess.run(["git", "init", "--bare"], cwd=bare_repo, check=True, capture_output=True)
+        
+        # Add bare repo as remote
+        subprocess.run(["git", "remote", "add", "test-remote", bare_repo], cwd=self.test_dir, check=True)
+        
+        # Create and commit a file
+        with open("test.txt", "w") as f:
+            f.write("test content")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        self.git_ops.commit("test commit")
+        
+        # Push normally first
+        self.git_ops.push("test-remote", "main", no_verify=True)
+        
+        # Amend commit to create divergence
+        with open("test.txt", "w") as f:
+            f.write("modified content")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        subprocess.run(["git", "commit", "--amend", "--no-edit"], check=True, capture_output=True)
+        
+        # Push with force should succeed
+        result = self.git_ops.push("test-remote", "main", force=True, no_verify=True)
+        self.assertIsNotNone(result)
+        
+        # Cleanup
+        shutil.rmtree(bare_repo)
+
+    def test_push_with_both_flags(self):
+        """Test push with both force and no_verify flags."""
+        # Create a bare repo to act as remote
+        bare_repo = tempfile.mkdtemp()
+        subprocess.run(["git", "init", "--bare"], cwd=bare_repo, check=True, capture_output=True)
+        
+        # Add bare repo as remote
+        subprocess.run(["git", "remote", "add", "test-remote", bare_repo], cwd=self.test_dir, check=True)
+        
+        # Create and commit a file
+        with open("test.txt", "w") as f:
+            f.write("test content")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        self.git_ops.commit("test commit")
+        
+        # Push with both flags should succeed
+        result = self.git_ops.push("test-remote", "main", force=True, no_verify=True)
+        self.assertIsNotNone(result)
+        
+        # Cleanup
+        shutil.rmtree(bare_repo)
+
 if __name__ == "__main__":
     unittest.main()
