@@ -28,6 +28,7 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 - [x] **Cortex Test Suite:** Unit and integration tests for Cortex (Task #021A)
 - [ ] **Integration & Performance Tests:** End-to-end verification (Task #021C)
 - [/] **Documentation:** Standardize knowledge base (Task #022)
+- [/] **Forge Test Suite:** Unit tests for ML pipeline (Task #021B)
 
 ## Sequencing Strategy
 1.  **Immediate Focus:** Complete Phase 2 (Cognition) to make the "Brain" smart.

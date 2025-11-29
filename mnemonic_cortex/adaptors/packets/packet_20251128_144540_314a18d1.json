@@ -1,0 +1,22 @@
+{
+  "packet_id": "314a18d1-a071-4ccb-82e0-c3392c9d0da1",
+  "timestamp": "2025-11-28T14:45:40.114829",
+  "source_ids": [
+    "01_PROTOCOLS/999_Test_Protocol.md"
+  ],
+  "examples": [
+    {
+      "prompt": "Explain 999 Test Protocol",
+      "completion": "# Protocol 999: Test\n\nThis is a test protocol for synthesis.",
+      "source_id": "01_PROTOCOLS/999_Test_Protocol.md",
+      "metadata": {
+        "type": "summary"
+      }
+    }
+  ],
+  "metadata": {
+    "strategy": "recent_files_naive",
+    "days_lookback": 1,
+    "document_count": 1
+  }
+}

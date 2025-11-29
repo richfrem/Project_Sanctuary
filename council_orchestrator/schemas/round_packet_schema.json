@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CouncilRoundPacket",
+  "type": "object",
+  "required": ["timestamp","session_id","round_id","member_id","engine","prompt_hash","decision","confidence","citations","rag","cag","memory_directive","errors"],
+  "properties": {
+    "schema_version": {"type": "string", "description": "Schema version for future compatibility"},
+    "timestamp": {"type":"string","format":"date-time"},
+    "session_id": {"type":"string"},
+    "round_id": {"type":"integer","minimum":1},
+    "member_id": {"type":"string"},
+    "engine": {"type":"string","description":"e.g., gemini-2.5-pro or Sanctuary-Qwen2-7B"},
+    "seed": {"type":"integer"},
+    "prompt_hash": {"type":"string"},
+    "inputs": {"type":"object"},
+    "decision": {"type":"string"},
+    "rationale": {"type":"string"},
+    "confidence": {"type":"number","minimum":0,"maximum":1},
+    "citations": {
+      "type":"array",
+      "items":{"type":"object","properties":{"source_file":{"type":"string"},"span":{"type":"string"}}}
+    },
+    "rag": {
+      "type":"object",
+      "properties": {
+        "structured_query":{"type":"object"},
+        "parent_docs":{"type":"array","items":{"type":"string"}},
+        "retrieval_latency_ms":{"type":"number"}
+      }
+    },
+    "cag": {
+      "type":"object",
+      "properties": {
+        "query_key":{"type":"string"},
+        "cache_hit":{"type":"boolean"},
+        "hit_streak":{"type":"integer","minimum":0}
+      }
+    },
+    "novelty": {
+      "type":"object",
+      "properties": {
+        "is_novel":{"type":"boolean"},
+        "signal":{"type":"string","enum":["none","low","medium","high"]},
+        "conflicts_with":{"type":"array","items":{"type":"string"}}
+      }
+    },
+    "memory_directive": {
+      "type":"object",
+      "properties": {
+        "tier":{"type":"string","enum":["fast","medium","slow","none"]},
+        "justification":{"type":"string"}
+      }
+    },
+    "cost": {"type":"object","properties":{"input_tokens":{"type":"integer"},"output_tokens":{"type":"integer"},"latency_ms":{"type":"number"}}},
+    "errors": {"type":"array","items":{"type":"string"}}
+  }
+}

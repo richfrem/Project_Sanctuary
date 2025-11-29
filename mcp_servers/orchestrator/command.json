@@ -1,0 +1,8 @@
+{
+  "task_description": "Test cognitive task",
+  "output_artifact_path": "WORK_IN_PROGRESS/test_output.md",
+  "config": {
+    "max_rounds": 3,
+    "max_cortex_queries": 5
+  }
+}
