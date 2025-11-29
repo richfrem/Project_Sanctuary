@@ -3,7 +3,7 @@ import os
 import shutil
 import tempfile
 import subprocess
-from core.git.git_ops import GitOperations
+from mcp_servers.lib.git.git_ops import GitOperations
 
 class TestGitOperations(unittest.TestCase):
     def setUp(self):

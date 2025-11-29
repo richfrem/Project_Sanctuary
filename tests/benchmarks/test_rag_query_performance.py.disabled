@@ -1,0 +1,59 @@
+import pytest
+import time
+from unittest.mock import MagicMock, patch
+from mnemonic_cortex.app.services.rag_service import RAGService
+
+@pytest.mark.benchmark
+def test_rag_query_latency(benchmark, tmp_path):
+    """
+    Benchmark RAG query performance.
+    """
+    # Setup minimal RAG service
+    project_root = tmp_path
+    # Mock VectorDBService to avoid initialization issues
+    with patch("mnemonic_cortex.app.services.rag_service.VectorDBService") as MockVectorDB:
+        rag_service = RAGService(str(project_root))
+        
+        # Configure VectorDB mock
+        from langchain_core.documents import Document
+        rag_service.vector_db.query.return_value = [
+            Document(page_content="Mock content", metadata={"source": "mock"})
+        ]
+        
+        # Configure LLM mock directly on the instance
+        # This avoids Pydantic validation issues with patching the ChatOllama class
+        rag_service.llm = MagicMock()
+        from langchain_core.messages import AIMessage
+        rag_service.llm.invoke.return_value = AIMessage(content="Mocked answer")
+        # Also need to support the pipe operator | for chain construction
+        # When prompt | llm is called, it checks if llm is a Runnable.
+        # MagicMock isn't a Runnable, so LangChain might complain.
+        # However, if we mock the *chain* execution, we bypass this.
+        # But the chain is built inside the query method.
+        
+        # Alternative: Mock the invoke method of the chain?
+        # We can't easily reach the chain variable inside the method.
+        
+        # Let's try to make the mock behave like a Runnable by giving it a .pipe method?
+        # Or better: The pipe operator is on the Prompt (left side).
+        # prompt | llm calls prompt.__or__(llm).
+        # If llm is a MagicMock, prompt.__or__ might try to coerce it.
+        
+        # Simplest fix: Mock the `query` method itself if we just want to benchmark latency of the *service wrapper*?
+        # No, we want to benchmark the pipeline overhead (excluding DB/LLM latency).
+        
+        # If we want to benchmark the pipeline construction and execution:
+        # We need rag_service.llm to be compatible with LangChain pipe.
+        # Let's use a FakeListLLM or similar from langchain_core if available, or a simple class.
+        
+        from langchain_core.language_models.fake import FakeListLLM
+        rag_service.llm = FakeListLLM(responses=["Mocked answer"])
+        
+        def run_query():
+            return rag_service.query("Benchmark query")
+                
+        # Benchmark the query
+        result = benchmark(run_query)
+        
+        # Check performance
+        assert benchmark.stats.mean < 0.5

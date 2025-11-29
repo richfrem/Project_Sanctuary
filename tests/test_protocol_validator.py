@@ -5,7 +5,7 @@ import unittest
 import tempfile
 import shutil
 import os
-from mcp_servers.system.protocol.validator import ProtocolValidator
+from mcp_servers.protocol.validator import ProtocolValidator
 
 
 class TestProtocolValidator(unittest.TestCase):

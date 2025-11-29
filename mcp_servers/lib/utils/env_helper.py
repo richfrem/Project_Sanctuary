@@ -34,7 +34,7 @@ def get_env_variable(key: str, required: bool = True) -> Optional[str]:
         ValueError: If required=True and variable not found
     
     Example:
-        >>> from core.utils.env_helper import get_env_variable
+        >>> from mcp_servers.lib.utils.env_helper import get_env_variable
         >>> token = get_env_variable("HUGGING_FACE_TOKEN", required=True)
     """
     # First, check environment (includes WSLENV passthrough from Windows)
@@ -45,9 +45,9 @@ def get_env_variable(key: str, required: bool = True) -> Optional[str]:
         try:
             from dotenv import load_dotenv
             # Compute project root from this file's location
-            # This file: Project_Sanctuary/core/utils/env_helper.py
-            # Project root: ../../.. from this file
-            project_root = Path(__file__).resolve().parent.parent.parent
+            # This file: Project_Sanctuary/mcp_servers/lib/utils/env_helper.py
+            # Project root: ../../../.. from this file
+            project_root = Path(__file__).resolve().parent.parent.parent.parent
             env_file = project_root / ".env"
             if env_file.exists():
                 load_dotenv(env_file)

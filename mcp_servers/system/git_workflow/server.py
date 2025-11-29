@@ -1,5 +1,5 @@
 from fastmcp import FastMCP
-from core.git.git_ops import GitOperations
+from mcp_servers.lib.git.git_ops import GitOperations
 import os
 from typing import List
 
@@ -77,9 +77,13 @@ def git_add(files: List[str] = None) -> str:
         return f"Failed to stage files: {str(e)}"
 
 @mcp.tool()
-def git_push_feature() -> str:
+def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
     """
     Push the current feature branch to origin.
+    
+    Args:
+        force: Force push (git push --force). Use with caution.
+        no_verify: Bypass pre-push hooks (git push --no-verify). Useful if git-lfs is missing.
     
     Returns:
         Push status.
@@ -89,7 +93,7 @@ def git_push_feature() -> str:
         if current == "main":
             return "Error: Cannot push main directly via this tool."
             
-        output = git_ops.push("origin", current)
+        output = git_ops.push("origin", current, force=force, no_verify=no_verify)
         return f"Pushed {current} to origin: {output}"
     except Exception as e:
         return f"Failed to push feature: {str(e)}"

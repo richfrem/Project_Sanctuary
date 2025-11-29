@@ -6,7 +6,7 @@ import tempfile
 import shutil
 import os
 from datetime import date
-from mcp_servers.document.chronicle.operations import ChronicleOperations
+from mcp_servers.chronicle.operations import ChronicleOperations
 
 
 class TestChronicleOperations(unittest.TestCase):

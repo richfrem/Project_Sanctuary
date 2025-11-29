@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 # Add project root to path to find core
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
-from core.utils.env_helper import get_env_variable
+from mcp_servers.lib.utils.env_helper import get_env_variable
 
 import openai
 import time  # <--- IMPORT TIME

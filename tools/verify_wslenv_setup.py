@@ -18,7 +18,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from core.utils.env_helper import get_env_variable
+from mcp_servers.lib.utils.env_helper import get_env_variable
 
 # ANSI color codes for pretty output
 GREEN = '\033[92m'
