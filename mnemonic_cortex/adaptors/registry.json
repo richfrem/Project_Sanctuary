@@ -1,0 +1,12 @@
+{
+  "versions": [
+    {
+      "version": "v0.1.0",
+      "packet_id": "29072f3c-c25b-44b5-b0ed-8a1f31016b2f",
+      "base_model": "test-model",
+      "timestamp": "2025-11-28T14:45:51.895614",
+      "path": "mnemonic_cortex/adaptors/test_adapter.npz"
+    }
+  ],
+  "current_active": null
+}

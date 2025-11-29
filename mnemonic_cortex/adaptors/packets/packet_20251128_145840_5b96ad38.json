@@ -1,0 +1,11 @@
+{
+  "packet_id": "5b96ad38-7175-4113-87b9-23fe7899630e",
+  "timestamp": "2025-11-28T14:58:40.974467",
+  "source_ids": [],
+  "examples": [],
+  "metadata": {
+    "strategy": "recent_files_naive",
+    "days_lookback": 1,
+    "document_count": 0
+  }
+}

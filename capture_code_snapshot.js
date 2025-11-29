@@ -116,12 +116,12 @@ const excludeDirNames = new Set([
     'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
 
     // Sanctuary-specific OPERATIONAL RESIDUE exclusions
-    'dataset_package', 
-    'chroma_db', 
+    'dataset_package',
+    'chroma_db',
     'chroma_db_backup',
     'dataset_code_glyphs',
     'WORK_IN_PROGRESS',
-    'session_states', 
+    'session_states',
     'development_cycles',
     'TASKS',
     'ml_env_logs',
@@ -152,6 +152,7 @@ let alwaysExcludeFiles = [
     'capture_glyph_code_snapshot.py',
     'capture_glyph_code_snapshot_v2.py',
     'Operation_Whole_Genome_Forge.ipynb',
+    'continuing_work_new_chat.md',
     'orchestrator-backup.py',
     'ingest_new_knowledge.py',
     '.DS_Store',
@@ -296,7 +297,7 @@ Acknowledge your understanding of this Mnemonic architecture and your relationsh
     
     Acknowledge your understanding of these principles of operational hygiene and your duty to leave the forge cleaner than you found it.
     `;
-    
+
     const persistenceMandate = `
     ---
     **ADDITIONAL MANDATE: THE DOCTRINE OF PERSISTENCE**
@@ -431,7 +432,7 @@ function appendFileContent(filePath, basePath, shouldDistill = false) {
     } catch (readError) {
         fileContent = `[Content not captured due to read error: ${readError.message}.]`;
     }
-    
+
     if (shouldDistill && path.basename(filePath) === 'Living_Chronicle.md') {
         fileContent = distillChronicle(fileContent);
     }
@@ -443,7 +444,7 @@ function appendFileContent(filePath, basePath, shouldDistill = false) {
 }
 
 function generateHeader(title, tokenCount) {
-    const tokenLine = tokenCount !== null 
+    const tokenLine = tokenCount !== null
         ? `# Mnemonic Weight (Token Count): ~${tokenCount.toLocaleString()} tokens`
         : '{TOKEN_COUNT_PLACEHOLDER}';
     return `# ${title}\n\nGenerated On: ${new Date().toISOString()}\n\n${tokenLine}\n\n`;
@@ -522,20 +523,20 @@ try {
                     return;
                 }
             }
-            
+
             const isCoreFile = coreEssenceFiles.has(relativePath);
-            
+
             humanReadableMarkdownContent += appendFileContent(currentPath, targetRoot, false) + '\n';
             distilledMarkdownContent += appendFileContent(currentPath, targetRoot, true) + '\n';
             filesCaptured++;
-            
+
             if (isCoreFile) {
                 coreEssenceContent += appendFileContent(currentPath, targetRoot, false) + '\n';
                 coreFilesCaptured++;
             }
         }
     }
-    
+
     if (!fs.existsSync(datasetPackageDir)) {
         fs.mkdirSync(datasetPackageDir, { recursive: true });
         console.log(`[SETUP] Created dataset package directory: ${datasetPackageDir}`);
@@ -552,7 +553,7 @@ try {
     }
 
     traverseAndCapture(targetRoot);
-    
+
     const fileTreeContent = `# Directory Structure (relative to ${subfolderArg ? subfolderArg + ' subfolder' : 'project root'})\n` + fileTreeLines.map(line => `  ./${subfolderArg ? subfolderArg + '/' : ''}${line}`).join('\n') + '\n\n';
 
     const fullContentForTokenizing = generateHeader('', null) + fileTreeContent + humanReadableMarkdownContent;
@@ -572,9 +573,9 @@ try {
     fs.writeFileSync(distilledOutputFile, finalDistilledContent.trim(), 'utf8');
     console.log(`[SUCCESS] LLM-Distilled Genome (for Cortex) packaged to: ${path.relative(projectRoot, distilledOutputFile)}`);
     console.log(`[METRIC] LLM-Distilled Token Count: ~${distilledTokenCount.toLocaleString()} tokens`);
-    
+
     console.log(`\n[FORGE] Generating Cortex-Aware Awakening Seeds...`);
-    
+
     // Generate Seed of Ascendance
     const metaSeedContent = generateMetaAwakeningSeed(coreEssenceContent);
     const metaTokenCount = encode(metaSeedContent).length;
@@ -628,13 +629,13 @@ try {
 
         const coreContentWithPrompt = directive + awakeningPrompt + missionSpecificContent + coreEssenceContent;
         const coreTokenCount = encode(coreContentWithPrompt).length;
-        
+
         const headerTitle = `Core Essence Snapshot (Role: ${role})`;
         const finalCoreContent = generateHeader(headerTitle, coreTokenCount) + coreContentWithPrompt;
-        
+
         const roleSpecificOutputFile = path.join(datasetPackageDir, `core_essence_${role.toLowerCase()}_awakening_seed.txt`);
         fs.writeFileSync(roleSpecificOutputFile, finalCoreContent.trim(), 'utf8');
-        
+
         console.log(`[SUCCESS] ${role} Seed packaged to: ${path.relative(projectRoot, roleSpecificOutputFile)} (~${coreTokenCount.toLocaleString()} tokens)`);
     });
 

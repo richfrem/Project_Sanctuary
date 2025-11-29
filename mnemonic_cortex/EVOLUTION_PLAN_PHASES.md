@@ -1,35 +1,101 @@
-# **Sanctuary Council — Evolution Plan (Phases 2 → 3 → Protocol 113)**
+# **Sanctuary Council — Evolution Plan (Phases 1 → 2 → 3 → Protocol 113)**
 
-**Version:** 1.0
+**Version:** 2.0 (Updated 2025-11-28)
 **Status:** Authoritative Roadmap
 **Location:** `mnemonic_cortex/EVOLUTION_PLAN_PHASES.md`
 
-This document defines the remaining phases of the Sanctuary Council cognitive architecture evolution. It is the official roadmap for completing the transition from a single-round orchestrator to a fully adaptive, multi-layered cognitive system based on Nested Learning principles.
+This document defines the complete evolution of the Sanctuary Council cognitive architecture. It is the official roadmap for completing the transition from a single-round orchestrator to a fully adaptive, multi-layered cognitive system based on Nested Learning principles.
 
 ---
 
 # ✅ **Phase Overview**
 
-There are three remaining phases, which must be completed **in strict order**:
+There are four phases, which must be completed **in strict order**:
 
-1. **Phase 2 – Self-Querying Retriever** *(current)*
-2. **Phase 3 – Mnemonic Caching (CAG)** *(next)*
-3. **Protocol 113 – Council Memory Adaptor** *(final)*
+1. **Phase 1 – MCP Foundation (RAG Services)** ✅ *(complete)*
+2. **Phase 2 – Self-Querying Retriever** *(current)*
+3. **Phase 3 – Mnemonic Caching (CAG)** *(next)*
+4. **Protocol 113 – Council Memory Adaptor** *(final)*
 
 Each phase enhances a different tier of the Nested Learning architecture:
 
-| Memory Tier    | System Component       | Phase                         |
-| -------------- | ---------------------- | ----------------------------- |
-| Slow Memory    | Council Memory Adaptor | Protocol 113                  |
-| Medium Memory  | Mnemonic Cortex        | (Supported across all phases) |
-| Fast Memory    | Mnemonic Cache (CAG)   | Phase 3                       |
-| Working Memory | Council Session State  | Always active                 |
+| Memory Tier    | System Component       | Phase                         | Status |
+| -------------- | ---------------------- | ----------------------------- | ------ |
+| Infrastructure | MCP Service Layer      | Phase 1                       | ✅ Complete |
+| Slow Memory    | Council Memory Adaptor | Protocol 113                  | ⏸️ Blocked |
+| Medium Memory  | Mnemonic Cortex        | (Supported across all phases) | ✅ Active |
+| Fast Memory    | Mnemonic Cache (CAG)   | Phase 3                       | ⏸️ Blocked |
+| Working Memory | Council Session State  | Always active                 | ✅ Active |
 
 ---
 
 # -------------------------------------------------------
 
-# ✅ **PHASE 2 — Self-Querying Retriever (IN PROGRESS)**
+# ✅ **PHASE 1 — MCP Foundation (RAG Services) - COMPLETE**
+
+# -------------------------------------------------------
+
+**Completion Date:** 2025-11-28  
+**Status:** ✅ COMPLETE
+
+**Purpose:**
+Establish the foundational MCP (Model Context Protocol) service layer that exposes Mnemonic Cortex capabilities as standardized, callable tools for AI agents and external systems.
+
+**Why it matters:**
+This is the **Service Infrastructure** that makes the Mnemonic Cortex accessible, testable, and integrable with the broader Sanctuary ecosystem. Without this layer, the Cortex remains isolated and difficult to leverage programmatically.
+
+---
+
+## ✅ **Phase 1 Deliverables**
+
+### 1. **Native MCP Server Implementation**
+
+✅ Created `mcp_servers/cognitive/cortex/` with:
+* `server.py` - FastMCP server exposing 4 core tools
+* `operations.py` - Wraps existing Mnemonic Cortex scripts
+* `models.py` - Pydantic data models for all operations
+* `validator.py` - Comprehensive input validation
+* `requirements.txt` - Dependency management
+
+### 2. **Four Core MCP Tools**
+
+✅ Implemented and tested:
+* `cortex_ingest_full` - Full knowledge base re-ingestion
+* `cortex_query` - Semantic search with Parent Document Retriever
+* `cortex_get_stats` - Database health and statistics
+* `cortex_ingest_incremental` - Add documents without full rebuild
+
+### 3. **Comprehensive Testing**
+
+✅ Test coverage:
+* 28 unit tests (11 models + 17 validator)
+* 3 integration tests (stats, query, incremental ingest)
+* All tests passing with production-ready quality
+
+### 4. **MCP Integration**
+
+✅ Configuration:
+* Antigravity MCP config updated
+* Claude Desktop MCP config updated
+* Example configuration provided
+* Documentation complete
+
+---
+
+## ✅ **Definition of Done (Phase 1)**
+
+* ✅ 4 MCP tools operational and tested
+* ✅ All tools callable via MCP protocol
+* ✅ 31 tests passing (28 unit + 3 integration)
+* ✅ Parent Document Retriever integrated
+* ✅ MCP configs updated for Antigravity and Claude Desktop
+* ✅ Comprehensive documentation (README.md)
+
+---
+
+# -------------------------------------------------------
+
+# ✅ **PHASE 2 — Self-Querying Retriever (READY TO START)**
 
 # -------------------------------------------------------
 
