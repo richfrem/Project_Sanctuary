@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-11-29T21:59:20.074840+00:00",
+  "timestamp": "2025-11-29T22:00:48.971903+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "mcp_servers/agent_rules_self_correction.md",
-      "sha256": "00fc63b7e102d874b8c1c5b5ad63e22fb94325370acca677c0bc56a01e6a5d74"
+      "path": "README.md",
+      "sha256": "ac0eae19f991ec33a5950d229700c0394105b72345bf38722dcb3b8f65db57c9"
     }
   ]
 }
