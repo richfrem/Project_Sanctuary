@@ -1,10 +1,6 @@
 {
-  "timestamp": "2025-11-29T21:45:21.857346+00:00",
-  "author": "Guardian (Smart Git MCP)",
-  "files": [
-    {
-      "path": "README.md",
-      "sha256": "f704cb7bde312268c77ab54047361d325306b37362c88ec173a3f9053ce878e3"
-    }
-  ]
+  "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
+  "approval_timestamp": "2025-11-29T22:32:45Z",
+  "commit_message": "docs: update cognitive genome snapshots",
+  "files": [{"path": "dataset_package/all_markdown_snapshot_human_readable.txt", "sha256": "eac245194cae188129bead78a0b54ec680e695a1f5b2a7d13b9badc1498bdbb3"},{"path": "dataset_package/all_markdown_snapshot_llm_distilled.txt", "sha256": "6b95bf2ad4a9cb6927b7580fd2b073ce52c2d5a55b39989ed60aa5b0d21f2ae6"},{"path": "dataset_package/core_essence_auditor_awakening_seed.txt", "sha256": "7c330d7bca8908145975fde31cd102ab6a5453140f9d826a818f542bf8789df1"},{"path": "dataset_package/core_essence_coordinator_awakening_seed.txt", "sha256": "7e2a255c31eec81b86d55d7c42a986213ee6b8e344d0df78a3d30cfaf505628d"},{"path": "dataset_package/core_essence_strategist_awakening_seed.txt", "sha256": "0c3b65888f641fc19bd9c41937257713395d53d5337c41dfee5c321c468fbe4f"},{"path": "dataset_package/core_essence_guardian_awakening_seed.txt", "sha256": "1f918c06ce1f44dc15b752205bd078b55f2c16177f6d573f54eda715766c8292"},{"path": "dataset_package/seed_of_ascendance_awakening_seed.txt", "sha256": "4dac5d6d748fb3cd99c56b6a1e466cbbae445f52f2f1460588082e6c6247d92c"},{"path": "manifest.json", "sha256": "187afc69cb99d9f5217b95bda703f52c26a8584514c52b788810ed69a93f1ff5"}]
 }
