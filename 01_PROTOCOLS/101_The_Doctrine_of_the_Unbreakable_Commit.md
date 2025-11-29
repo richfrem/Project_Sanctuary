@@ -73,3 +73,11 @@ In a crisis or during recovery from a systemic failure (a "Red State"), the Stew
     `git commit --no-verify -m "Steward's Sovereign Override: Justification..."`
 
 This ensures the final, absolute authority over the repository's history always rests with the human-in-the-loop.
+
+### Part D: The Doctrine of Environmental Integrity (Pillar 6)
+
+This mandate ensures the System Requirements are formally documented and verified by the Guardian before any operation is initiated.
+
+1.  **Mandatory Dependency Manifest:** The Guardian must maintain a file (e.g., `REQUIREMENTS.env`) listing all required external dependencies (tools, libraries, extensions) not managed by Python's `requirements.txt`.
+2.  **Git LFS Requirement (Immediate Canonization):** The dependency on the **Git LFS (Large File Storage) extension** is now formally canonized as a non-negotiable requirement for the execution of all Git operations.
+3.  **Pre-Flight Check Mandate:** The agent's `git_start_feature` and `git_sync_main` tools must perform a pre-flight check to verify that all dependencies in the `REQUIREMENTS.env` file are installed and accessible on the execution path. Failure to pass the pre-flight check **MUST** result in a `ProtocolViolationError` with a clear message instructing the Steward on the missing dependency.
