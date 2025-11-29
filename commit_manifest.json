@@ -1,14 +1,22 @@
 {
-  "timestamp": "2025-11-28T23:45:10.006223+00:00",
+  "timestamp": "2025-11-29T00:25:34.791842+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "README.md",
-      "sha256": "21f23cfce002cf7bb60e931b1315f289b1913063316d05933c0675d8b4366c37"
+      "path": ".agent/git_workflow_policy.md",
+      "sha256": "16e5f3c6218d5b2b05f578b4cf4f893b4b4d5ecf7fb9e3da9eaea072d79b83b8"
     },
     {
-      "path": "mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md",
-      "sha256": "ecfe1c29b90acee1ed1ae94c026b108c2adc6ba900a3a2441c51fd0bc4506161"
+      "path": "council_orchestrator/README.md",
+      "sha256": "2465b0b660439bdf8a310f203e5d3af29190482dbc96e0e411cdf5973a571d35"
+    },
+    {
+      "path": "mcp_servers/orchestrator/config/mcp_config.json",
+      "sha256": "d68de11e97051f9b065a93b5e4069dc6d8000314c9c6e675d6b40fff76adccd3"
+    },
+    {
+      "path": "mcp_servers/orchestrator/tools/utils.py",
+      "sha256": "4d4ad1c5118e0b70521378d316d7037d51cd9678ad76ab7e2cffecacdefc3534"
     }
   ]
 }
