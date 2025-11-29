@@ -3,8 +3,8 @@
 
 import os
 import json
-import hashlib
-import subprocess
+import shutil
+from .executor import execute_shell_command
 from pathlib import Path
 from datetime import datetime
 from .memory.cache import CacheManager
@@ -17,10 +17,8 @@ def verify_clean_state(project_root: Path) -> bool:
     """
     try:
         # Check for uncommitted changes
-        result = subprocess.run(
+        result = execute_shell_command(
             ["git", "status", "--porcelain"],
-            capture_output=True,
-            text=True,
             cwd=project_root,
             check=True
         )
@@ -29,7 +27,7 @@ def verify_clean_state(project_root: Path) -> bool:
             print(f"[CRITICAL] Uncommitted changes:\n{result.stdout}")
             raise Exception("Working directory is not clean. Commit or stash changes before proceeding.")
         return True
-    except subprocess.CalledProcessError as e:
+    except Exception as e: # execute_shell_command raises Exception directly
         print(f"[CRITICAL] Failed to verify git status: {e}")
         raise
 
@@ -44,28 +42,26 @@ def create_feature_branch(project_root: Path, branch_name: str) -> None:
         verify_clean_state(project_root)
 
         # Check if branch exists
-        result = subprocess.run(
+        result = execute_shell_command(
             ["git", "rev-parse", "--verify", branch_name],
-            capture_output=True,
-            cwd=project_root
+            cwd=project_root,
+            check=False # Don't raise if branch doesn't exist
         )
         
         if result.returncode == 0:
             # Branch exists, checkout
-            subprocess.run(
+            execute_shell_command(
                 ["git", "checkout", branch_name],
                 check=True,
-                cwd=project_root,
-                capture_output=True
+                cwd=project_root
             )
             print(f"[MECHANICAL SUCCESS] Checked out existing branch: {branch_name}")
         else:
             # Create new branch
-            subprocess.run(
+            execute_shell_command(
                 ["git", "checkout", "-b", branch_name],
                 check=True,
-                cwd=project_root,
-                capture_output=True
+                cwd=project_root
             )
             print(f"[MECHANICAL SUCCESS] Created and checked out new branch: {branch_name}")
             
@@ -96,7 +92,7 @@ def execute_mechanical_git(command, project_root):
         # this tool IS the one making the state dirty/clean.
         
         # DOCTRINE OF THE BLUNTED SWORD: Hardcoded whitelist of permitted Git commands
-        WHITELISTED_GIT_COMMANDS = ['add', 'commit', 'push']
+        WHITELISTED_GIT_COMMANDS = ['add', 'commit', 'push', 'rm']
 
         git_ops = command["git_operations"]
         files_to_add = git_ops["files_to_add"]
@@ -108,17 +104,13 @@ def execute_mechanical_git(command, project_root):
         # Compute git repository root robustly (use git if available), then compute SHA-256
         # for each file. Support both repo-root paths and project_root-relative paths.
         try:
-            git_top = subprocess.run(
+            git_top = execute_shell_command(
                 ["git", "rev-parse", "--show-toplevel"],
-                capture_output=True,
-                text=True,
-                cwd=project_root
+                cwd=project_root,
+                check=True
             )
-            if git_top.returncode == 0:
-                git_repo_root = Path(git_top.stdout.strip())
-            else:
-                git_repo_root = project_root.parent
-        except Exception:
+            git_repo_root = Path(git_top.stdout.strip())
+        except Exception: # execute_shell_command raises Exception
             git_repo_root = project_root.parent
 
         manifest_entries = []
@@ -132,7 +124,7 @@ def execute_mechanical_git(command, project_root):
             "command_git_ops.json"
         ]
 
-        for file_path in files_to_add:
+        for file_path in files_to_add_from_command:
             # Protocol 101 Fix: Bypass hashing/manifest-inclusion for generated/command artifacts
             if Path(file_path).name in ARTIFACT_FILENAMES_TO_EXCLUDE:
                 print(f"[MECHANICAL WARNING] Excluding artifact {file_path} from manifest hashing (Protocol 101 Bypass).")
@@ -153,7 +145,7 @@ def execute_mechanical_git(command, project_root):
                 found = False
                 for cand in candidates:
                     if cand.exists() and cand.is_file():
-                        resolved_file_paths.append(cand)  # Add to resolved list for git add later
+                        resolved_file_paths_for_manifest.append(cand)  # Add to resolved list for git add later
                         found = True
                         break
                 if not found:
@@ -228,12 +220,11 @@ def execute_mechanical_git(command, project_root):
             for file_path in files_to_remove:
                 # Use git rm to stage the deletion
                 try:
-                    subprocess.run(
+                    execute_shell_command(
                         ["git", "rm", "--", file_path],  # Use -- to handle paths that look like arguments
                         check=True,
                         cwd=git_repo_root,
-                        capture_output=True,
-                        timeout=5
+                        capture_output=True
                     )
                     print(f"[MECHANICAL SUCCESS] Removed {file_path}")
                 except subprocess.CalledProcessError as e:
@@ -276,12 +267,11 @@ def execute_mechanical_git(command, project_root):
                 continue
 
             try:
-                result = subprocess.run(
+                result = execute_shell_command(
                     ["git", "add", str(repo_relative_path)],
                     capture_output=True,
-                    text=True,
                     cwd=git_repo_root,
-                    timeout=30
+                    check=False # We handle returncode manually below
                 )
                 if result.returncode == 0:
                     print(f"[MECHANICAL SUCCESS] Added {repo_relative_path} to git staging")
@@ -310,12 +300,11 @@ def execute_mechanical_git(command, project_root):
             raise Exception(f"Prohibited Git command: {primary_action}")
 
         try:
-            result = subprocess.run(
+            result = execute_shell_command(
                 ["git", "commit", "-m", commit_message],
                 capture_output=True,
-                text=True,
                 cwd=git_repo_root,
-                timeout=60  # Add timeout for commit operation
+                check=False # We handle returncode manually below
             )
             if result.returncode == 0:
                 print(f"[MECHANICAL SUCCESS] Committed with message: '{commit_message}'")
@@ -355,12 +344,11 @@ def execute_mechanical_git(command, project_root):
                 raise Exception(f"Prohibited Git command: {primary_action}")
 
             try:
-                result = subprocess.run(
+                result = execute_shell_command(
                     ["git", "push"],
                     capture_output=True,
-                    text=True,
                     cwd=project_root,
-                    timeout=120  # Add longer timeout for push operation
+                    check=False # We handle returncode manually below
                 )
                 if result.returncode == 0:
                     print("[MECHANICAL SUCCESS] Pushed to origin")

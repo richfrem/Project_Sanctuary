@@ -1,26 +1,22 @@
 {
-  "timestamp": "2025-11-29T20:59:03.523357+00:00",
+  "timestamp": "2025-11-29T21:05:45.038067+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
       "path": "council_orchestrator/orchestrator/app.py",
-      "sha256": "90557f44d071d4adc6759c0ba4823a2f79bc2eacb7d09a9b444f7c8ee9f44875"
+      "sha256": "c59837082be54ff66348cc8c59c26e64bca69c9c1d98cab98f82401ea54cef98"
+    },
+    {
+      "path": "council_orchestrator/orchestrator/executor.py",
+      "sha256": "a7d8d76b7920221a69e5e232e8f7f11e0c3cac10b77ecddb2605219091beb0d2"
     },
     {
       "path": "council_orchestrator/orchestrator/gitops.py",
-      "sha256": "5caacbe5419d23e1ae51fe9c2a0c967b730ce9958798e19d0a02c92e76f660ea"
+      "sha256": "ef57bdd2a5c44f1fd929fc4df2e5a20e4be9dc988cde3122bfd76edf2d29197a"
     },
     {
-      "path": "mcp_servers/lib/git/git_ops.py",
-      "sha256": "f625db15e9393f42e76578c4170584274600be940600e2369f3f3f9c9d197b91"
-    },
-    {
-      "path": "mcp_servers/system/git_workflow/server.py",
-      "sha256": "5d3ccb7195fe13f6f2f65890bd6969fc8b37aa4bb639fde28f8bd381e15a177a"
-    },
-    {
-      "path": "scripts/verify_pillar4.py",
-      "sha256": "aaca70b83ed7ea384dfa12b3cf2d4e551e24dc8eeca5f7e7f14f5b509330c29d"
+      "path": "scripts/verify_executor.py",
+      "sha256": "76f72c46c83c47944222b522bb996c8b174a082ce468c2b3835d4e6d5065ec5c"
     }
   ]
 }
