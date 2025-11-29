@@ -34,6 +34,11 @@ class TestExecutorEnforcement(unittest.TestCase):
         with self.assertRaises(ProtocolViolationError):
             execute_shell_command(["GIT", "PULL"])
 
+    def test_prohibited_git_merge(self):
+        """Test that 'git merge' is prohibited."""
+        with self.assertRaises(ProtocolViolationError):
+            execute_shell_command(["git", "merge", "feature/branch"])
+
     @patch("subprocess.run")
     def test_git_add_allowed(self, mock_run):
         """Test that git add is allowed (it's not in the prohibited list)."""

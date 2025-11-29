@@ -14,7 +14,8 @@ PROHIBITED_COMMANDS = [
     "git checkout", 
     "git clean",
     "git revert",
-    "git fetch"
+    "git fetch",
+    "git merge" # Adding 'git merge' to force use of the dedicated MCP tool
 ]
 
 def execute_shell_command(
@@ -46,21 +47,17 @@ def execute_shell_command(
         command_str = command
         
     # Ensure the command is in lowercase for case-insensitive filtering
-    command_to_execute = command_str.lower()
+    command_to_execute = command_str.lower().strip()
 
     # --- Enforce Protocol 101 Whitelist ---
     for prohibited_op in PROHIBITED_COMMANDS:
-        # Check if it starts with the prohibited op (e.g. "git pull origin")
-        # We add a space to ensure we don't match "git pull-request" if that was a thing, 
-        # but "git pull" is the prefix.
-        # Actually, "git pull" is two words.
         if command_to_execute.startswith(prohibited_op):
-            # Violation of the Mandate of the Whitelist and Prohibition of Improvisation
-            error_message = f"PROTOCOL VIOLATION: Agent attempted unauthorized command: '{command_to_execute}'. Use the designated MCP tool instead."
+            # Violation of the Mandate of the Whitelist
+            error_msg = f"PROTOCOL VIOLATION: Unauthorized command '{command_to_execute[:20]}...'. Use designated MCP tool."
             
             # STOP and REPORT, as mandated by Protocol 101
-            print(f"[CRITICAL] {error_message}")
-            raise ProtocolViolationError(error_message)
+            print(f"[CRITICAL] {error_msg}")
+            raise ProtocolViolationError(error_msg)
 
     # If allowed, execute
     try:

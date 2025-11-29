@@ -178,6 +178,10 @@ class GitOperations:
         flag = "-D" if force else "-d"
         self._run_git(["branch", flag, branch_name])
 
+    def delete_local_branch(self, branch_name: str, force: bool = False) -> None:
+        """Delete a local branch (alias for delete_branch)."""
+        self.delete_branch(branch_name, force)
+
     def delete_remote_branch(self, branch_name: str) -> None:
         """Delete a remote branch."""
         self._run_git(["push", "origin", "--delete", branch_name])

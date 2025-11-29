@@ -28,6 +28,13 @@ def git_smart_commit(message: str) -> str:
         The commit hash or error message.
     """
     try:
+        # Pillar 4: Pre-Execution Verification (Smart Commit Variant)
+        # We allow staged files (obviously), but we MUST reject unstaged changes or untracked files
+        # to ensure the commit is atomic and the working tree is clean otherwise.
+        status = git_ops.status()
+        if status['modified'] or status['untracked']:
+             return f"PROTOCOL VIOLATION: Working directory is not clean. Modified: {len(status['modified'])}, Untracked: {len(status['untracked'])}. Please stage or stash changes."
+
         commit_hash = git_ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
     except Exception as e:
@@ -154,7 +161,7 @@ def git_finish_feature(branch_name: str) -> str:
         
         # Delete local branch (force delete since we just pulled main and it might look unmerged if we didn't rebase)
         # But usually if it's merged in main, -d is fine. However, to be safe and ensure cleanup:
-        git_ops.delete_branch(branch_name, force=True)
+        git_ops.delete_local_branch(branch_name, force=True)
         
         # Delete remote branch
         try:
