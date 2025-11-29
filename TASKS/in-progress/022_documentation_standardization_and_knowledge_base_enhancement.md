@@ -62,6 +62,55 @@ This parent task has been split into 2 focused sub-tasks to establish comprehens
 
 ---
 
+### Task 022C: MCP Server Documentation Standards
+- **Status**: in-progress
+- **Priority**: High
+- **Effort**: 6-8 hours
+- **Dependencies**: None
+- **File**: `TASKS/in-progress/022C_mcp_server_documentation_standards.md`
+
+**Objective**: Establish standardized, high-quality documentation for all MCP servers following a consistent testing-first approach with comprehensive verification workflows.
+
+**Key Deliverables**:
+- Create `docs/mcp/README.md` - MCP documentation index with links to all server docs
+- Create `docs/mcp/TESTING_STANDARDS.md` - Standard testing workflow for all MCP servers
+- Standardized README.md for each MCP server in `mcp_servers/*/README.md` including:
+  - Overview and purpose
+  - Tool descriptions with examples
+  - Installation and setup
+  - **Testing Section**:
+    - How to run unit tests for underlying operations
+    - Test results and coverage
+    - How to run integration tests
+    - MCP tool verification steps
+  - Architecture and design decisions
+  - Cross-references to `docs/mcp/` documentation
+- Update all existing MCP server READMEs to follow standard template:
+  - `mcp_servers/cognitive/cortex/README.md`
+  - `mcp_servers/chronicle/README.md`
+  - `mcp_servers/protocol/README.md`
+  - `mcp_servers/system/forge/README.md`
+  - `mcp_servers/system/git_workflow/README.md`
+  - `mcp_servers/adr/README.md`
+  - `mcp_servers/task/README.md`
+
+**Testing Documentation Standards** (applies to all MCP servers):
+1. **Script Testing First**: Document how to test underlying operations directly
+2. **Test Results**: Include actual test output showing all tests passing
+3. **Test Suite Guide**: Clear instructions on running the full test suite
+4. **MCP Verification**: Document how to verify MCP tools work correctly
+5. **Cross-References**: Link between `docs/mcp/` and individual server READMEs
+
+**Success Criteria**:
+- All MCP servers have standardized, high-quality README documentation
+- Each README includes comprehensive testing section
+- `docs/mcp/` folder created with index and testing standards
+- Bidirectional links between `docs/mcp/` and server READMEs
+- Testing workflow clearly documented and repeatable
+- All documentation follows same template and quality bar
+
+---
+
 ## Execution Strategy
 
 ### Phase 1: Standards & API Docs (Week 1)

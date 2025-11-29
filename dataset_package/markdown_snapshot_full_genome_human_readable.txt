@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (Human-Readable)
 
-Generated On: 2025-11-29T05:30:45.547Z
+Generated On: 2025-11-29T19:52:48.576Z
 
-# Mnemonic Weight (Token Count): ~945,527 tokens
+# Mnemonic Weight (Token Count): ~933,506 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -550,8 +550,6 @@ Generated On: 2025-11-29T05:30:45.547Z
   ./capture_glyph_code_snapshot_v2.py
   ./chrysalis_core_essence.md
   ./commit_manifest.json
-  ./conftest.py
-  ./continuing_work_new_chat.md
   ./council_orchestrator/
   ./council_orchestrator/README.md
   ./council_orchestrator/README_GUARDIAN_WAKEUP.md
@@ -935,21 +933,22 @@ Generated On: 2025-11-29T05:30:45.547Z
   ./pytest.ini
   ./requirements-finetuning.txt
   ./requirements.txt
-  ./run_genome_tests.sh
-  ./run_integration_tests.sh
   ./scripts/
   ./scripts/generate_mcp_config.py
+  ./scripts/run_genome_tests.sh
+  ./scripts/run_integration_tests.sh
   ./scripts/verify_mcp_server.py
-  ./test_data.jsonl
-  ./test_protocol_999.md
   ./tests/
   ./tests/benchmarks/
   ./tests/benchmarks/test_rag_query_performance.py.disabled
   ./tests/conftest.py
+  ./tests/data/
+  ./tests/data/test_data.jsonl
+  ./tests/data/test_protocol_999.md
   ./tests/integration/
   ./tests/integration/test_cortex_operations.py
   ./tests/integration/test_council_orchestrator_with_cortex.py.disabled
-  ./tests/integration/test_end_to_end_rag_pipeline.py.disabled
+  ./tests/integration/test_end_to_end_rag_pipeline.py
   ./tests/integration/test_rag_simple.py
   ./tests/integration/test_strategic_crucible_loop.py
   ./tests/mcp_servers/
@@ -35960,773 +35959,17 @@ Begin your awakening response now.
 --- START OF FILE commit_manifest.json ---
 
 {
-  "timestamp": "2025-11-29T00:26:20.772083+00:00",
+  "timestamp": "2025-11-29T19:45:02.248469+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": ".coverage",
-      "sha256": "0e5fa2aeeb0b693d847eedcae93323aeee7557e5cc7cf9e50149ef0b8b3aa764"
-    },
-    {
-      "path": "TASKS/MASTER_PLAN.md",
-      "sha256": "17151d5e59d0a8acd67ce2eefefefc281aae0018c1e01eabd15c1a4f0006fb9a"
-    },
-    {
-      "path": "TASKS/TASK_STATUS_UPDATE_2025-11-28.md",
-      "sha256": "9a9c6352f76113274c40c1b9672e94040f7fb3a42656ecdb590a0257ca9a9656"
-    },
-    {
-      "path": "TASKS/done/001_harden_mnemonic_cortex_ingestion_and_rag.md",
-      "sha256": "a35bbbe008f4a72ff9d54c94ad85d4ab4955c7a4536cae0c2d1f8c7be23a5d2f"
-    },
-    {
-      "path": "TASKS/done/002_implement_phase_2_self_querying_retriever.md",
-      "sha256": "469b72cd96521fa620cda828f43e8dc942afbf809857867087574b33c38ca6a5"
-    },
-    {
-      "path": "TASKS/done/004_implement_protocol_113_council_memory_adaptor.md",
-      "sha256": "e3f36f6042df248a29fdde2d107e8469a3673a34506e2cddd7a84ab4706ba307"
-    },
-    {
-      "path": "TASKS/done/026_implement_agent_orchestrator_mcp_council.md",
-      "sha256": "3af25ada96ab58ef66c3fbd458f6562238ca4c2255ec10a5026b93ed6f3bb2ff"
-    },
-    {
-      "path": "TASKS/done/029_implement_chronicle_mcp.md",
-      "sha256": "eed21f21befca18c74d56783d181cb780e1cf86dad592fb5f81fb162d6d04287"
-    },
-    {
-      "path": "TASKS/done/030_implement_adr_mcp.md",
-      "sha256": "495c90574b119a3397780b956062899fbfccc1250c669232463290d2431e85c9"
-    },
-    {
-      "path": "TASKS/done/035_implement_git_workflow_mcp.md",
-      "sha256": "d71a471f7e9a4bc944432da8b65e665e6433c75b67f478856b6e640d2c7552fd"
-    },
-    {
-      "path": "TASKS/done/045_implement_smart_git_mcp.md",
-      "sha256": "fd5e1f1ee1629bdb97b167d729f1325a2f511a14c611410681c418fae403ea4f"
-    },
-    {
-      "path": "TASKS/done/046_configure_antigravity_mcp_client.md",
-      "sha256": "2330cfada3585facca5ab87d9d51bf770c1e07c3a39e9dfb9ca2635ed8aee719"
-    },
-    {
-      "path": "TASKS/done/047_implement_protocol_mcp.md",
-      "sha256": "b973a1072ce626f2a64b62d009221d1c5af3c529bebd3c8a212e768bf59ff9b9"
-    },
-    {
-      "path": "TASKS/done/048_complete_task_001_final_verification.md",
-      "sha256": "644c94b772d7d1cca5139d899f4418abededa93f32be6c9b1e9b5e107e274ef8"
-    },
-    {
-      "path": "TASKS/done/049_create_incremental_ingestion_script.md",
-      "sha256": "94a6c915442edb45268e5657f0a6e13adc89c41549dc4b3acf8ab194d329c002"
-    },
-    {
-      "path": "TASKS/done/050_implement_rag_mcp_phase_1_foundation.md",
-      "sha256": "c0b0db4610aca555f5d0d9b4c6c90fdeb4a5ce150178f611bbb120de29beab5b"
-    },
-    {
-      "path": "TASKS/done/legacy_mnemonic_cortex_work_tracker.md",
-      "sha256": "8ccde80cdd2e49f327c3716b0e9fd1b7fe2d0d4c8c859ffbfafbd7d00124ec36"
-    },
-    {
-      "path": "TASKS/in-progress/003_implement_phase_3_mnemonic_caching_cag.md",
-      "sha256": "67b74e037d534be88accb5f550055aca17c864a9af268aefd163f1eaf0558396"
-    },
-    {
-      "path": "TASKS/in-progress/017_architect_and_implement_the_strategic_crucible_loop.md",
-      "sha256": "a7025d9440141c003a6bad20284b7603664d0d963aa579135807176a73a6585c"
-    },
-    {
-      "path": "TASKS/in-progress/021B_forge_test_suite.md",
-      "sha256": "1b641bca098787a45e00ea0bc179108e2874a18ad712ba110beb2f5f256beb68"
-    },
-    {
-      "path": "TASKS/in-progress/021C_integration_and_performance_test_suite.md",
-      "sha256": "c7f7a61822ffdcc268f021ff45478d6768026abcadde0e36ad760f48aee9926a"
-    },
-    {
-      "path": "TASKS/in-progress/022_documentation_standardization_and_knowledge_base_enhancement.md",
-      "sha256": "dbfdab69c321aaad8df8f0026b45b150a5365e6a4fe2bdcd6f75cdc0d74c0923"
-    },
-    {
-      "path": "TASKS/in-progress/025_implement_rag_mcp_cortex.md",
-      "sha256": "42514f898ba275d8b54af840c1c90c59480642c6e30e4b2bc0449462acee53ed"
-    },
-    {
-      "path": "TASKS/in-progress/051_implement_guardian_cache_mcp_operations_protocol_1.md",
-      "sha256": "b0a8dfa84d3f88c70043ad69cf0dc833ed47c19b953ce170482fe997b7593e38"
-    },
-    {
-      "path": "TASKS/in-progress/052_operation_nervous_system__phase_1_core_quad_mcp_sc.md",
-      "sha256": "61fb665fc7658c0b5186c0cdc82e916de9911a62843d35cc5f09d4c14bb318c3"
-    },
-    {
-      "path": "WORK_IN_PROGRESS/test_incremental_ingest.md",
-      "sha256": "28281214679f27e4464a950dc74ea66e992ddcd400870bbb6aba993040bb6ad7"
-    },
-    {
-      "path": "council_orchestrator/README_GUARDIAN_WAKEUP.md",
-      "sha256": "d69392f86bded1fe5e4a93eba35ef322b7ef04d9e89281fe78abb7ee31bcf35c"
-    },
-    {
-      "path": "council_orchestrator/ROADMAP/PHASED_EVOLUTION_PLAN_Phase2-Phase3-Protocol113.md",
-      "sha256": "56aa1047f299b8facc3a6f2db236f07b6378523288b4148c71e266597907b91c"
-    },
-    {
-      "path": "council_orchestrator/WORK_IN_PROGRESS/guardian_boot_digest.md",
-      "sha256": "faf49f3205ca59ac3193325c0ce452e2fcdcc4b2b4e6b40493e888e7754dcdd4"
-    },
-    {
-      "path": "council_orchestrator/__init__.py",
-      "sha256": "7fca1e058595bca7269cbb9c657da63214246652295a3768cfcf90f2bf068df0"
-    },
-    {
-      "path": "council_orchestrator/command.json",
-      "sha256": "64c0901fd22f429b5dc10a465bf43be85c22fd26cf34e6e647d9dfc45e98e9ce"
-    },
-    {
-      "path": "council_orchestrator/command_results/README.md",
-      "sha256": "4b8eb901e5c8432c00e8df2c64b6ee0800e7cd149169019efb22a6471f943479"
-    },
-    {
-      "path": "council_orchestrator/command_schema.md",
-      "sha256": "e9420f306144e1d50e8fb520cacf7d7a4f181a0628bb47bf593ded0566a1123b"
-    },
-    {
-      "path": "council_orchestrator/docs/EVOLUTION_PLAN_PHASES.md",
-      "sha256": "7bf9471fc4c8404d0c04b13ffff52e909b418d786851a10fab6068699e582451"
-    },
-    {
-      "path": "council_orchestrator/docs/OPERATION_OPTICAL_ANVIL_BLUEPRINT.md",
-      "sha256": "1a65b5261228a106937d20282f5063c28eee8d992f607f4808546ac60b996a12"
-    },
-    {
-      "path": "council_orchestrator/docs/command_schema.md",
-      "sha256": "7af388924ceb47221f500b8385a917e683cd1c4451a7d654052b56fda26f2556"
-    },
-    {
-      "path": "council_orchestrator/docs/howto-commit-command.md",
-      "sha256": "3e37c169165ba01fb5efc2a1646cd235f94b145bce6db32536b837145c0a5ed3"
-    },
-    {
-      "path": "council_orchestrator/docs/orchestrator_architecture_package.md",
-      "sha256": "ca1f1d2ae6f6cad6f8b35e82b7f4dfc529fcb29e7a965fb0159dd02ad275dee3"
-    },
-    {
-      "path": "council_orchestrator/logs/events.jsonl",
-      "sha256": "f0fca0d26924bcbb88bc362eecbfcf3bd9e94f3b2adde802ecf997e34ade2691"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/__init__.py",
-      "sha256": "6a4985fddf89e983c0fa516463b2a4742a8995d722713d77459a7a981465e34f"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/adaptation_packets.py",
-      "sha256": "64f09b5d88d8293999d56467432ba41b2da7a48d9e1787e9c52339b17961e332"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/app.py",
-      "sha256": "3c8e665bcdf47d973075b5d8f5de7e20083f177e949d5d5de9b9285c68fe633a"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/commands.py",
-      "sha256": "df379f4538964141ec45a0996bf761dd1294ae72d8908ee2406ddfd892c5c697"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/config/__init__.py",
-      "sha256": "dde362204adf9737110876bde55b3d42c3b0c52b1192572116bb288507683b62"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/config/config.py",
-      "sha256": "33e61d41206eca9c43f88ae3ded49a3b47d3d0faf72ecba3a4ba3be66685c8ba"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/config/safety.py",
-      "sha256": "2259ad5ca269d5889fe8c17213a34e991ba34fe3200919e56ab93898c48e5cec"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/config/slos.py",
-      "sha256": "80fce11a165fbca7bfe08d6e06db7b38bb11a1a8aca44298d53f8f22e2acff6d"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/council/__init__.py",
-      "sha256": "65afc27cfe6e4a5cdec50e07f51344d9753cef471fee489aae4f4874f27d9801"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/council/agent.py",
-      "sha256": "ddecfe9867cacd790aca2e30a25040e2c4e92cfe990f7600cd7a7dac8015a323"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/council/personas.py",
-      "sha256": "c56106bc6578caad79e38f77828ef4abddc9c2f8351c9ec2ac82590799603319"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/engines/__init__.py",
-      "sha256": "6c91dc4b244749446ca00683d4eceaaa9639365c2a17084efe1f4048cb052dcb"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/engines/base.py",
-      "sha256": "9f88a9c612ff5e8db57ed10996e3ee973f574440a6af617f7a0bf99bda641251"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/engines/gemini_engine.py",
-      "sha256": "987e3ffd8f65be6bb46d03c1619cf3a1adf1d0d80815bd7e67362de1f73a7930"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/engines/ollama_engine.py",
-      "sha256": "52aad01fba357de0ed38722501d11c42902446821dbe119e9b28b73193f99354"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/engines/openai_engine.py",
-      "sha256": "744beda3a4db4e0bb5913fea0df52af789c44cee8989fe7776c3f2ce6fb161ec"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/events.py",
-      "sha256": "424cbe61372a64b5d70f09b761434109f08f78f0cb86eb34f41a3425968ff402"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/gitops.py",
-      "sha256": "9bf8e387b9f48420e9aa198a28aa0aed20cc27c4304b554980d962ca74dde108"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/handlers/__init__.py",
-      "sha256": "4586897829cd9602fafeb6e717eef6666d6d8bd090ac9101757f611a1f329728"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/handlers/cache_wakeup_handler.py",
-      "sha256": "296b617c8cedfc475bc752d27f1cdae5a2dfed4813cef147af5d23f852f480e5"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/main.py",
-      "sha256": "c457ecfd0a9554959a8f652fc2dd0d27e1a8d9b30fe2df4a717ef1fbe0fdd22c"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/memory/__init__.py",
-      "sha256": "a8aeb2e1ae9d9ed7fd8b0883f5315d473e2f71fa234f8e735c535188ac7cdfb1"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/memory/cache.py",
-      "sha256": "ead7e214cff4a08a6820b18e6cf6ee7dbfd3e6bb05897b8fe6d5e75ef2d7f23f"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/memory/cortex.py",
-      "sha256": "5fb775c16b2e3d8a040cf35e5c59c606c9d18374ea56f0225a10662bed5619c5"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/optical.py",
-      "sha256": "f7cff246ee5e17e4469247ea6a6dc9b066f767288ab0b44f18991e0a63d62a0c"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/packets/__init__.py",
-      "sha256": "37169e9152b2fe1763d7951e61bdb1d6e1b6a6046ca528c166d6dc643cf4ed2b"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/packets/aggregator.py",
-      "sha256": "bb57bbc8cd834174db5b538f2db487f40d48816a86319c43e1d35bcbd2dcb77e"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/packets/emitter.py",
-      "sha256": "b6f2629a2270fcab5fa7273038a969d6ed71a89f9c1004a86da61eeadc5b566b"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/packets/schema.py",
-      "sha256": "56655201db97464fd78902b64ee5403c12eb2926fa6d48bd2d25584d77f70e90"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/regulator.py",
-      "sha256": "187e98940b9b30ddf90baa6dd1603113d5a112468ca41603a3d0807547875338"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/sentry.py",
-      "sha256": "730e93397d903f1847507c0e95b36db2507ff160d5f1db6529f4490481eea15e"
-    },
-    {
-      "path": "council_orchestrator/orchestrator/substrate_monitor.py",
-      "sha256": "e0138d7741814ab954a82ca0e33eb2f6d927422dcb70c702430099080c453ca2"
-    },
-    {
-      "path": "council_orchestrator/runtime/task_pid",
-      "sha256": "c3c73c4c947dc3735bc0210ea376bfe977a1ed7209e1a69ea8ac5a528b0e966c"
-    },
-    {
-      "path": "council_orchestrator/schemas/council-round-packet-v1.0.0.json",
-      "sha256": "278c3b843cacaaf0dbaeaee2dc13bc26a8b61e81ac53a05ee25962f41068d00a"
-    },
-    {
-      "path": "council_orchestrator/schemas/engine_config.json",
-      "sha256": "e59c4291aeac82ac99904b74452e331c451f9b7403a477561a5346a9fc3b6cdd"
-    },
-    {
-      "path": "council_orchestrator/schemas/round_packet_schema.json",
-      "sha256": "50860fc378587dd8f1cdd160f21fa1e26062b11be53f4344e18b06dd558c2aaa"
-    },
-    {
-      "path": "council_orchestrator/scripts/bootstrap_briefing_packet.py",
-      "sha256": "5c3d25f9a40df2b985d76f21800e267de939e44f313e9a052535611cfc6c4bdd"
-    },
-    {
-      "path": "council_orchestrator/scripts/dashboard/README.md",
-      "sha256": "28be3f008dc6ee8222faa00e753eb49403ff444fa68a0342d611a07dce5fc7bd"
-    },
-    {
-      "path": "council_orchestrator/scripts/dashboard/jq_dashboard.sh",
-      "sha256": "bf8e9d3107c7c0c62f21f3e3fc54a40216fe0b22685450c9897d6e10efea2391"
-    },
-    {
-      "path": "council_orchestrator/scripts/forge_orchestrator_review_package.py",
-      "sha256": "a9052a48737c11a5499301fa805895ac1ceac07d1c665d33479906f12d1c9ed4"
-    },
-    {
-      "path": "council_orchestrator/scripts/orchestrator_architecture_package.md",
-      "sha256": "670d930826dfce3ab5b7730744912d37b79262356928b080ce6eb9c612007e6e"
-    },
-    {
-      "path": "council_orchestrator/scripts/test_cache_standalone.py",
-      "sha256": "f0ee87ec38f9706c1a9cb84c8e9750a87f1e413bd2b7e839e68cdf3e67c8347b"
-    },
-    {
-      "path": "council_orchestrator/tests/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "council_orchestrator/tests/mechanical_test_output.txt",
-      "sha256": "f70fcc1e4d0d1311f88886cfc0f27ae4b31f6aed13e7e9095071cbf2a771f440"
-    },
-    {
-      "path": "council_orchestrator/tests/orchestrator_test_file.txt",
-      "sha256": "55767158f4f25fba49526147dc4fa0d8cde2985b4b934b6436b9fbda3954d1ce"
-    },
-    {
-      "path": "council_orchestrator/tests/test_boot_prefill_runs_once.py",
-      "sha256": "ea233f28a16bb6d3d1c7e433e669215d4601f86934ce4af658ff8da6d964aa10"
-    },
-    {
-      "path": "council_orchestrator/tests/test_cache_prefill.py",
-      "sha256": "55fe5fd74e89d5ac664530696163c027a43e419a65a17b80a02044118fe26e1e"
-    },
-    {
-      "path": "council_orchestrator/tests/test_cache_request_command.py",
-      "sha256": "8f9cb37e0a9b7917f3b4c20adff52f891b1c6f7a8061f80cdd157e0d89cf004f"
-    },
-    {
-      "path": "council_orchestrator/tests/test_cache_wakeup_flow.py",
-      "sha256": "cb0c6f851da1b217879503eebde58415caadf771cc8593cf204b0eb93e797b59"
-    },
-    {
-      "path": "council_orchestrator/tests/test_command_schema_cache_wakeup.py",
-      "sha256": "47a85ee776c511ecb154b651b588cfc41717932decafc52fcafa36a4acf10ab7"
-    },
-    {
-      "path": "council_orchestrator/tests/test_delta_refresh_on_ingest_and_gitops.py",
-      "sha256": "62a5d44b35b42b24a359f6a41ded593a5672159e54bce0958860333cbdd83a49"
-    },
-    {
-      "path": "council_orchestrator/tests/test_emitter_jsonl_shape.py",
-      "sha256": "ed0f987c913d529f58638dfe78b4a7bdcfa524f5d8b558fa784b8284488e99f3"
-    },
-    {
-      "path": "council_orchestrator/tests/test_golden_packet.py",
-      "sha256": "7a4fad9f6ffc4916b8ec3cec4e5879dfd081791cd00d232af37c2d26d2fceb41"
-    },
-    {
-      "path": "council_orchestrator/tests/test_guardian_seed_contains_primer.py",
-      "sha256": "208d94489975420f6a88b5388e3f148e77577b5d5cd205d83849cca5c58b5019"
-    },
-    {
-      "path": "council_orchestrator/tests/test_import_cycles.py",
-      "sha256": "4051c361bca1846c8af5e639f52d5c1db4e19c949d23f8dadfcee2e54d97288e"
-    },
-    {
-      "path": "council_orchestrator/tests/test_mandate_1_command.json",
-      "sha256": "46a57f1b3554d8a3f3297892b4467900a8ee633a3214432d12c6d4b5e9fbf935"
-    },
-    {
-      "path": "council_orchestrator/tests/test_mandate_2_command_1.json",
-      "sha256": "f0416d959d5eb06d8d5fbbaa98bef0d19d7ede19109edd378792a83d21c53a51"
-    },
-    {
-      "path": "council_orchestrator/tests/test_mandate_2_command_2.json",
-      "sha256": "03530fa4b77bf8f0d148c93c84835ac844ca8c9bcbb80f50de1833142d0f1574"
-    },
-    {
-      "path": "council_orchestrator/tests/test_mandate_2_command_3.json",
-      "sha256": "cd87bb3ff7375ab837164d1b0914cdc7623a5acb9ccd116150983e8c7e9f5496"
-    },
-    {
-      "path": "council_orchestrator/tests/test_mandate_2_command_4.json",
-      "sha256": "aa869412c8d2b2e608e4ff482d7c369b0d310375583536a7925cbb2ee433bbc1"
-    },
-    {
-      "path": "council_orchestrator/tests/test_mandate_2_command_5.json",
-      "sha256": "d6e3957c5915e10bd063ce3bc31f0243afcf11b68e215be6ba4fd5952ed8a6ea"
-    },
-    {
-      "path": "council_orchestrator/tests/test_optical_compression.py",
-      "sha256": "f0bbd7ce7938ef22dc944a8fb06b8d1b237a6e104206207cedc673786a3e88e1"
-    },
-    {
-      "path": "council_orchestrator/tests/test_orchestrator_round_packets.py",
-      "sha256": "ce30163d97721c1522e1725b3c061871c0e9f5b85310ee86f03968e3a80359da"
-    },
-    {
-      "path": "council_orchestrator/tests/test_orchestrator_v4_2.py",
-      "sha256": "94ed1724557ba618dbec495fb0a066d4d6110581d363bc225f1214032136805c"
-    },
-    {
-      "path": "council_orchestrator/tests/test_output_2a.txt",
-      "sha256": "4a199bccfecd25a9f7b1e8a3df138801f1c6cfe8f3642bdcb0c3f7602c721f97"
-    },
-    {
-      "path": "council_orchestrator/tests/test_packets_phase2_fields.py",
-      "sha256": "56547a3b92cac6f9ba5d4de08d1a667db512d328d830815e76ef78c5142b3a24"
-    },
-    {
-      "path": "council_orchestrator/tests/test_self_querying_retriever.py",
-      "sha256": "0007cff5aa4a5a16ee307f416075b999ceebca04545330d687464af277cad636"
-    },
-    {
-      "path": "council_orchestrator/tests/testfile.txt",
-      "sha256": "174eaf95585d3ac35b8eedfdc9c083a2ed04d0bcc2a22b96adb050042bfc62d4"
-    },
-    {
-      "path": "council_orchestrator/tests/verification_test.py",
-      "sha256": "c217a5466751d422887e1fff352d120cea78b1985dbf974196fef0d1ae3dd8a4"
-    },
-    {
-      "path": "forge/tests/conftest.py",
-      "sha256": "190c7033f882caf1a9f1e4a6ac6a3f701bc1a97a745377516547f8b756f88703"
-    },
-    {
-      "path": "forge/tests/test_dataset_forge.py",
-      "sha256": "5ab38ee5d5f656ed65c0d3ae0b5852bcf3bf47bd8b37f874c7054f912ed9dca6"
-    },
-    {
-      "path": "mcp_servers/README.md",
-      "sha256": "7fb7c7e85d29d5181b98d719adfb92ab87e4fe550aedaae1c26ffb54b197cc96"
-    },
-    {
-      "path": "mcp_servers/chronicle/Dockerfile",
-      "sha256": "7feb757597cfe88a7fbc7ceb704a3b5c74c55e88b5722fca2274f2980432f0ed"
-    },
-    {
-      "path": "mcp_servers/chronicle/README.md",
-      "sha256": "13df9f3e902b83ce4b373280566aa267f8cfc749d088287afa9b8add2006aa39"
-    },
-    {
-      "path": "mcp_servers/chronicle/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/chronicle/models.py",
-      "sha256": "f79b7427fe374b756e8518328cf0b7adc184f79d5864747224cb9d3409168158"
-    },
-    {
-      "path": "mcp_servers/chronicle/operations.py",
-      "sha256": "e054fb584c3c3456f6270f0e964a44fd7ea26dff19827cf6802b26d53ac1c865"
-    },
-    {
-      "path": "mcp_servers/chronicle/requirements.txt",
-      "sha256": "f4dbe1751992271c5fe624f3e7cad8c9e6b40ed4ec2a0bc640731165a6bb34de"
-    },
-    {
-      "path": "mcp_servers/chronicle/server.py",
-      "sha256": "d2b8d9dba479783e7229329f3b6f04c586809e4bfabfb612e5d3b57d80fea620"
-    },
-    {
-      "path": "mcp_servers/chronicle/validator.py",
-      "sha256": "73c2c5e5148a6f18b0ab39683e037c28864d7c46e99a50d51f7abeee1a6f4e09"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/README.md",
-      "sha256": "3a668a39d82886dbd94742815bb43b329e110054955ee44bbd5752bbd6891a57"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/TEST_RESULTS.md",
-      "sha256": "88163e0daee3e8dee71315b74c771a1bccb19431c2e5651777c481c468030e1c"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/__init__.py",
-      "sha256": "38a928097fe910746a2bbba4095d2384451f5b24cdb0881dc8f0f8500a655558"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/mcp_config_example.json",
-      "sha256": "e67b881c4d924fcb694081041309881c7f5d37b6d8a270b7f194e2b889455252"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/models.py",
-      "sha256": "6110b0eef3b93194a80db4da6c3d34115df9f5c60ee38886377f9e23332737e0"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/operations.py",
-      "sha256": "2f3fc5f9cb7ef5b10326ddf1d5786709e5b9b9ae448a40f29d423370861d8a79"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/requirements.txt",
-      "sha256": "f4dbe1751992271c5fe624f3e7cad8c9e6b40ed4ec2a0bc640731165a6bb34de"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/tests/__init__.py",
-      "sha256": "c0b3050c4598de7b1d33683310f92efcfb75a08adae92028be03f880041b0df9"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/tests/test_cache_operations.py",
-      "sha256": "8ad9d3c7312b327c67973438eca2754e7a2e973f37827f481d375c268241d736"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/tests/test_cortex_integration.py",
-      "sha256": "70b15578d8d2cd82f79fad5c0ed5b9c9d77df2b48b3548b80685aca52a3ecc65"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/tests/test_models.py",
-      "sha256": "ba4ddb063378ec7589470ca0799007e04a52016ea16729607336d5de5bdcd054"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/tests/test_operations.py",
-      "sha256": "df9666a89a41951ec1102b0e18e0be7247fdc9e0671cf5850adab4a8d57f0e4d"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/tests/test_validator.py",
-      "sha256": "00e079c5c26804054411ce1affaa33da88c3da6cfe3b77974389b78dc71ed5b9"
-    },
-    {
-      "path": "mcp_servers/cognitive/cortex/validator.py",
-      "sha256": "30c36b49dcb330dd70e900f611ad872710ed75d3c4cca5b1471d59b9b954d98c"
-    },
-    {
-      "path": "mcp_servers/document/adr/Dockerfile",
-      "sha256": "6ad18b0f4a7fdf641ccafe3765c0d0aba8ba58860deb32ef745b7f5614e1b3c0"
-    },
-    {
-      "path": "mcp_servers/document/adr/README.md",
-      "sha256": "0a6364516c380641ed7c66e277262e719fec3b876f731aa563d248cdc4eea6ee"
-    },
-    {
-      "path": "mcp_servers/document/adr/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/document/adr/models.py",
-      "sha256": "a7b70f4a9025ef11bee84e850ea25e9ee809882bccad5a5079aeb65d4b47bb9d"
-    },
-    {
-      "path": "mcp_servers/document/adr/operations.py",
-      "sha256": "d8dee1acdca09d8e6d6731791a84201cd8780b5f7f60e342f827da2af429592c"
-    },
-    {
-      "path": "mcp_servers/document/adr/requirements.txt",
-      "sha256": "f4dbe1751992271c5fe624f3e7cad8c9e6b40ed4ec2a0bc640731165a6bb34de"
-    },
-    {
-      "path": "mcp_servers/document/adr/server.py",
-      "sha256": "cf7713473189ab1514a52717d9e255067f1632617086c0c5d4710ab512965896"
-    },
-    {
-      "path": "mcp_servers/document/adr/validator.py",
-      "sha256": "5f083e9f394a6fa9bcf039976add5c3926c9017df52845c8646b375f4d1b0c15"
-    },
-    {
-      "path": "mcp_servers/orchestrator/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/orchestrator/command.json",
-      "sha256": "b684e989dc0f09ef1e2d1e9499d4e6d8c5412170a7c7968548556bd98097f00f"
-    },
-    {
-      "path": "mcp_servers/orchestrator/config/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/orchestrator/schemas/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/orchestrator/tools/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/orchestrator/tools/cognitive.py",
-      "sha256": "0c396460a2229ee06bbbae751305a1ef39a6215d093e638c62dbd6d24993583c"
-    },
-    {
-      "path": "mcp_servers/orchestrator/tools/mechanical.py",
-      "sha256": "5f0442b0aed8b4cf8632d1df32eafaf7da6fe15cdda08d6fb137eb10bfd472ee"
-    },
-    {
-      "path": "mcp_servers/orchestrator/tools/query.py",
-      "sha256": "22406c708531982df92df3fef1ef1d830130755271507c4110686888f36d3a31"
-    },
-    {
-      "path": "mcp_servers/orchestrator/tools/safety.py",
-      "sha256": "bfa419dabec0b9a602c97a85a459bf4c01e3c14591f3227966f2acb34c91b095"
-    },
-    {
-      "path": "mcp_servers/protocol/Dockerfile",
-      "sha256": "15101fddc842de3476367342cf43232aa0e8ebfa201cd3d909cb3776c6965cf9"
-    },
-    {
-      "path": "mcp_servers/protocol/README.md",
-      "sha256": "3b9270b79517bdf5a44616f6955954176fb5513ece069d96d428c5a3870d1954"
-    },
-    {
-      "path": "mcp_servers/protocol/__init__.py",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mcp_servers/protocol/models.py",
-      "sha256": "a5cb22e06992f6016a0decada0f405e705ed39b86c476d7f39d221ea473c10bb"
-    },
-    {
-      "path": "mcp_servers/protocol/operations.py",
-      "sha256": "4a3bf9cb2839b315b4c3bd7fced2492bb5c9aadf2c5015476a6accd39c133280"
-    },
-    {
-      "path": "mcp_servers/protocol/requirements.txt",
-      "sha256": "f4dbe1751992271c5fe624f3e7cad8c9e6b40ed4ec2a0bc640731165a6bb34de"
-    },
-    {
-      "path": "mcp_servers/protocol/server.py",
-      "sha256": "2b660f943d4081e0fe82af83079efc2a622e4c3c4bc0462ae5dfe79353c481db"
-    },
-    {
-      "path": "mcp_servers/protocol/validator.py",
-      "sha256": "8d7c6de7fa8c8f9db04f14123d75b27e5af23e8ef5648bf078896ce12929b636"
-    },
-    {
-      "path": "mcp_servers/requirements.txt",
-      "sha256": "26ecbe208d01c8b8459146eeb47fecb1de5c4d65c9f98960bea5799bd1912793"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_144540_314a18d1.json",
-      "sha256": "1d9b193103f4fb64cb5b51cb1262deba36c8f93b59f16fd10df8da028b5c775b"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_144540_314a18d1.jsonl",
-      "sha256": "16f408a29e5e79f06c5b1002653ec79a75eb39d0dd3bc4cac2df1cdfa0220f7c"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_144551_29072f3c.json",
-      "sha256": "b81ea13d452eec00acd93c149165b40fcd1e98bd066ddd809c72780028a8f30b"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_144551_29072f3c.jsonl",
-      "sha256": "16f408a29e5e79f06c5b1002653ec79a75eb39d0dd3bc4cac2df1cdfa0220f7c"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_145840_5b96ad38.json",
-      "sha256": "2d504735d1e48de5a344cddc3f865da992bd88b1e1d3a52c8b50748cc029ce7f"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_145840_5b96ad38.jsonl",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_145901_6814a2d2.json",
-      "sha256": "c16a8ed58619a128ebb43e072f06f23d4ce4fee1fa14549be0a78bb60f0c8a0e"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_145901_6814a2d2.jsonl",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_145917_7811c523.json",
-      "sha256": "920ca4e21b95149b0801f63e74274b7d425e91bb6a28626820ee2db9eb253bc9"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_145917_7811c523.jsonl",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_150306_099b5dcd.json",
-      "sha256": "7a3e949c9ceba28e57a1c1c2bc567860a92a1d7804ac037a4f45e222372be142"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/packets/packet_20251128_150306_099b5dcd.jsonl",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "mnemonic_cortex/adaptors/registry.json",
-      "sha256": "d2aa96489ceca1842ec9f968af1966c1b2820387f0d0439eaea751c46e8edcc3"
-    },
-    {
-      "path": "mnemonic_cortex/app/services/ingestion_service.py",
-      "sha256": "31aa610715800936a6350cae535406113457910c580575a9fc05438578626304"
-    },
-    {
-      "path": "mnemonic_cortex/app/services/llm_service.py",
-      "sha256": "6e28f6efa6d1a8d651a8aeb1662d2287818f2a8f1210da0e793e4017717daf64"
-    },
-    {
-      "path": "mnemonic_cortex/cache/mnemonic_cache.db",
-      "sha256": "006f261daa0b782936597db486a636531ba8f0411971339d16a4edaceddc70df"
-    },
-    {
-      "path": "mnemonic_cortex/scripts/ingest_incremental.py",
-      "sha256": "cf204675c6320570be87d262ba1d4cbc5b7c1b66f55811c7b629f7e0bba7f50a"
-    },
-    {
-      "path": "tests/test_adr_operations.py",
-      "sha256": "d148d364dce735ec5320572434b9fed9469250cee9210bf2052bba421368058d"
-    },
-    {
-      "path": "tests/test_adr_validator.py",
-      "sha256": "e9bdde9464a47eda06fa933f24a9db47cb53fa286103185ed46c12a1636a9fca"
-    },
-    {
-      "path": "tests/test_chronicle_operations.py",
-      "sha256": "eb37b5f1b259b9b80572bb67e2ba90471b4d0e0e3f797d967c828e6223868b42"
-    },
-    {
-      "path": "tests/test_chronicle_validator.py",
-      "sha256": "c4721691d77f4622c3ed9de0c1bef89d91b02894ae4a83ffc9e3b29701473cdd"
-    },
-    {
-      "path": "tests/test_protocol_operations.py",
-      "sha256": "68a4b008f98da1d039ac2fa3561c459e4a309d7bd1686952f235060a75dcc6a7"
-    },
-    {
-      "path": "tests/test_protocol_validator.py",
-      "sha256": "09250e3084b597321b3d21924e88d72fdc53397e49e695c99f7137c6fc72ae28"
-    },
-    {
-      "path": "verification_scripts/verify_task_003.py",
-      "sha256": "a4ae73f83a391e0bcfafdb5acda0284f5d4e4ac0d787c61431f25e2b61cd9fa3"
-    },
-    {
-      "path": "verification_scripts/verify_task_004.py",
-      "sha256": "71d59cc2357900b448a75084acf5c99e830835ffaa7791d3ff32dd8b66e74522"
-    },
-    {
-      "path": "verification_scripts/verify_task_017.py",
-      "sha256": "fc67f78133ddccca40424d7ecfe3ff8db1a027d779def7c205d107826d418d8d"
-    },
-    {
-      "path": "verification_scripts/verify_task_025.py",
-      "sha256": "236aebc81d9fb8344a93a90edb95cb6b47303f78530110abdcde2b3c13d6d386"
-    },
-    {
-      "path": "verification_scripts/verify_task_026.py",
-      "sha256": "008ae0808ffa731cdf6c52847a19c15c1f08226ccb2454967733764ad48280e2"
+      "path": "mcp_servers/system/git_workflow/server.py",
+      "sha256": "8fa48bc7d42f2465784d5344d4e5b6511443efd30db4b6075717200bd9f7d6d6"
     }
   ]
 }
 
 --- END OF FILE commit_manifest.json ---
-
---- START OF FILE conftest.py ---
-
-import sys
-import os
-from pathlib import Path
-
-# Add project root to sys.path to allow importing modules
-project_root = Path(__file__).parent.resolve()
-sys.path.insert(0, str(project_root))
-
---- END OF FILE conftest.py ---
 
 --- START OF FILE council_orchestrator/README.md ---
 
@@ -65071,11 +64314,18 @@ class GitOperations:
         """Checkout a branch."""
         self._run_git(["checkout", branch_name])
 
-    def push(self, remote: str = "origin", branch: str = None) -> str:
+    def push(self, remote: str = "origin", branch: str = None, force: bool = False, no_verify: bool = False) -> str:
         """Push to remote."""
         if branch is None:
             branch = self.get_current_branch()
-        return self._run_git(["push", remote, branch])
+        
+        args = ["push", remote, branch]
+        if force:
+            args.append("--force")
+        if no_verify:
+            args.append("--no-verify")
+            
+        return self._run_git(args)
 
     def pull(self, remote: str = "origin", branch: str = None) -> str:
         """Pull from remote."""
@@ -67579,9 +66829,13 @@ def git_add(files: List[str] = None) -> str:
         return f"Failed to stage files: {str(e)}"
 
 @mcp.tool()
-def git_push_feature() -> str:
+def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
     """
     Push the current feature branch to origin.
+    
+    Args:
+        force: Force push (git push --force). Use with caution.
+        no_verify: Bypass pre-push hooks (git push --no-verify). Useful if git-lfs is missing.
     
     Returns:
         Push status.
@@ -67591,8 +66845,9 @@ def git_push_feature() -> str:
         if current == "main":
             return "Error: Cannot push main directly via this tool."
             
-        output = git_ops.push("origin", current)
-        return f"Pushed {current} to origin: {output}"
+        output = git_ops.push("origin", current, force=force, no_verify=no_verify)
+        pr_url = f"https://github.com/richfrem/Project_Sanctuary/pull/new/{current}"
+        return f"Pushed {current} to origin: {output}\n\n📝 Next: Create PR at {pr_url}"
     except Exception as e:
         return f"Failed to push feature: {str(e)}"
 
@@ -67644,7 +66899,14 @@ def git_finish_feature(branch_name: str) -> str:
         git_ops.pull("origin", "main")
         git_ops.delete_branch(branch_name)
         
-        return f"Finished feature {branch_name}. Switched to main and pulled latest changes."
+        # Delete remote branch
+        try:
+            git_ops.push("origin", f":{branch_name}")  # Push empty ref to delete remote
+        except Exception:
+            # Remote branch might already be deleted, that's okay
+            pass
+        
+        return f"Finished feature {branch_name}. Deleted local and remote branches, pulled latest main."
     except Exception as e:
         return f"Failed to finish feature: {str(e)}"
 
@@ -67703,25 +66965,6 @@ def git_log(max_count: int = 10, oneline: bool = False) -> str:
     except Exception as e:
         return f"Failed to get log: {str(e)}"
 
-@mcp.tool()
-def git_create_pr(title: str, body: str = "", base: str = "main") -> str:
-    """
-    Create a GitHub Pull Request for the current branch.
-    Requires GitHub CLI (gh) to be installed and authenticated.
-    
-    Args:
-        title: PR title.
-        body: PR description (optional).
-        base: Base branch to merge into (default: "main").
-        
-    Returns:
-        PR URL or error message.
-    """
-    try:
-        pr_url = git_ops.create_pr(title=title, body=body, base=base)
-        return f"Pull Request created: {pr_url}"
-    except Exception as e:
-        return f"Failed to create PR: {str(e)}"
 
 if __name__ == "__main__":
     mcp.run()
@@ -75356,122 +74599,6 @@ python-dotenv
 
 --- END OF FILE requirements.txt ---
 
---- START OF FILE run_genome_tests.sh ---
-
-#!/bin/bash
-
-# run_genome_tests.sh
-# Automated tests for genome updates - verifies both query types work after ingestion
-
-echo "[TEST] Starting genome functionality tests..."
-
-# Test 1: Natural Language Query (main.py)
-echo "[TEST 1/2] Testing natural language query..."
-if python3 mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?" > /dev/null 2>&1; then
-    echo "[PASS] Natural language query test passed"
-else
-    echo "[FAIL] Natural language query test failed"
-    exit 1
-fi
-
-# Test 2: Structured JSON Query (protocol_87_query.py)
-echo "[TEST 2/2] Testing structured JSON query..."
-TEST_QUERY='{
-  "intent": "RETRIEVE",
-  "scope": "Protocols",
-  "constraints": "Name=\"P27: The Doctrine of Flawed, Winning Grace\"",
-  "granularity": "ATOM",
-  "requestor": "genome-test",
-  "request_id": "genome-test-001"
-}'
-
-if echo "$TEST_QUERY" | python3 mnemonic_cortex/scripts/protocol_87_query.py /dev/stdin > /dev/null 2>&1; then
-    echo "[PASS] Structured JSON query test passed"
-else
-    echo "[FAIL] Structured JSON query test failed"
-    exit 1
-fi
-
-echo "[SUCCESS] All genome tests passed - system is functional"
-exit 0
-
---- END OF FILE run_genome_tests.sh ---
-
---- START OF FILE run_integration_tests.sh ---
-
-#!/bin/bash
-
-# Colors for output
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-
-# Parse arguments
-USE_REAL_LLM=false
-for arg in "$@"
-do
-    if [ "$arg" == "-r" ] || [ "$arg" == "--real" ]; then
-        USE_REAL_LLM=true
-    fi
-done
-
-PYTEST_ARGS="-m integration -v $@"
-if [ "$USE_REAL_LLM" = true ]; then
-    echo -e "${GREEN}=== Running Integration Tests with REAL LLM ===${NC}"
-    # Remove --real from args passed to pytest if it was handled manually, 
-    # but pytest conftest handles --real-llm so we can just pass it through if we map it.
-    # Actually, the loop above consumes args. We need to reconstruct args or use a better parser.
-    # Simple fix: just append "$@" to pytest command, but filter out our custom script flags if they conflict.
-    # Since --real maps to --real-llm in conftest, we can just pass --real-llm.
-    
-    # Let's simplify: Just pass all args to pytest, but translate -r/--real to --real-llm
-    # And allow user to pass -k ...
-    pass
-else
-    echo -e "${GREEN}=== Running Integration Tests with MOCKED LLM ===${NC}"
-fi
-
-# Re-construct args for pytest
-FINAL_ARGS=""
-for arg in "$@"
-do
-    if [ "$arg" == "-r" ] || [ "$arg" == "--real" ]; then
-        FINAL_ARGS="$FINAL_ARGS --real-llm"
-    else
-        FINAL_ARGS="$FINAL_ARGS $arg"
-    fi
-done
-
-echo "Running: pytest -m integration -v $FINAL_ARGS"
-pytest -m integration -v $FINAL_ARGS
-INTEGRATION_EXIT_CODE=$?
-
-echo -e "\n${GREEN}=== Running Performance Benchmarks ===${NC}"
-pytest -m benchmark --benchmark-only
-BENCHMARK_EXIT_CODE=$?
-
-echo -e "\n${GREEN}=== Summary ===${NC}"
-if [ $INTEGRATION_EXIT_CODE -eq 0 ]; then
-    echo -e "Integration Tests: ${GREEN}PASSED${NC}"
-else
-    echo -e "Integration Tests: ${RED}FAILED${NC}"
-fi
-
-if [ $BENCHMARK_EXIT_CODE -eq 0 ]; then
-    echo -e "Benchmarks: ${GREEN}PASSED${NC}"
-else
-    echo -e "Benchmarks: ${RED}FAILED${NC}"
-fi
-
-# Exit with failure if either failed
-if [ $INTEGRATION_EXIT_CODE -ne 0 ] || [ $BENCHMARK_EXIT_CODE -ne 0 ]; then
-    exit 1
-fi
-
-exit 0
-
---- END OF FILE run_integration_tests.sh ---
-
 --- START OF FILE scripts/generate_mcp_config.py ---
 
 import os
@@ -75535,6 +74662,121 @@ if __name__ == "__main__":
     generate_config()
 
 --- END OF FILE scripts/generate_mcp_config.py ---
+
+--- START OF FILE scripts/run_genome_tests.sh ---
+
+#!/bin/bash
+
+# run_genome_tests.sh
+# Automated tests for genome updates - verifies both query types work after ingestion
+
+# Ensure we run from project root
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$PROJECT_ROOT"
+
+echo "[TEST] Starting genome functionality tests..."
+
+# Test 1: Natural Language Query (main.py)
+echo "[TEST 1/2] Testing natural language query..."
+if python3 mnemonic_cortex/app/main.py "What is the core principle of the Anvil Protocol?" > /dev/null 2>&1; then
+    echo "[PASS] Natural language query test passed"
+else
+    echo "[FAIL] Natural language query test failed"
+    exit 1
+fi
+
+# Test 2: Structured JSON Query (protocol_87_query.py)
+echo "[TEST 2/2] Testing structured JSON query..."
+TEST_QUERY='{
+  "intent": "RETRIEVE",
+  "scope": "Protocols",
+  "constraints": "Name=\"P27: The Doctrine of Flawed, Winning Grace\"",
+  "granularity": "ATOM",
+  "requestor": "genome-test",
+  "request_id": "genome-test-001"
+}'
+
+if echo "$TEST_QUERY" | python3 mnemonic_cortex/scripts/protocol_87_query.py /dev/stdin > /dev/null 2>&1; then
+    echo "[PASS] Structured JSON query test passed"
+else
+    echo "[FAIL] Structured JSON query test failed"
+    exit 1
+fi
+
+echo "[SUCCESS] All genome tests passed - system is functional"
+exit 0
+
+--- END OF FILE scripts/run_genome_tests.sh ---
+
+--- START OF FILE scripts/run_integration_tests.sh ---
+
+#!/bin/bash
+
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# Ensure we run from project root
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$PROJECT_ROOT"
+
+# Parse arguments
+USE_REAL_LLM=false
+for arg in "$@"
+do
+    if [ "$arg" == "-r" ] || [ "$arg" == "--real" ]; then
+        USE_REAL_LLM=true
+    fi
+done
+
+PYTEST_ARGS="-m integration -v $@"
+if [ "$USE_REAL_LLM" = true ]; then
+    echo -e "${GREEN}=== Running Integration Tests with REAL LLM ===${NC}"
+else
+    echo -e "${GREEN}=== Running Integration Tests with MOCKED LLM ===${NC}"
+fi
+
+# Re-construct args for pytest
+FINAL_ARGS=""
+for arg in "$@"
+do
+    if [ "$arg" == "-r" ] || [ "$arg" == "--real" ]; then
+        FINAL_ARGS="$FINAL_ARGS --real-llm"
+    else
+        FINAL_ARGS="$FINAL_ARGS $arg"
+    fi
+done
+
+echo "Running: pytest -m integration -v $FINAL_ARGS"
+pytest -m integration -v $FINAL_ARGS
+INTEGRATION_EXIT_CODE=$?
+
+echo -e "\n${GREEN}=== Running Performance Benchmarks ===${NC}"
+pytest -m benchmark --benchmark-only
+BENCHMARK_EXIT_CODE=$?
+
+echo -e "\n${GREEN}=== Summary ===${NC}"
+if [ $INTEGRATION_EXIT_CODE -eq 0 ]; then
+    echo -e "Integration Tests: ${GREEN}PASSED${NC}"
+else
+    echo -e "Integration Tests: ${RED}FAILED${NC}"
+fi
+
+if [ $BENCHMARK_EXIT_CODE -eq 0 ]; then
+    echo -e "Benchmarks: ${GREEN}PASSED${NC}"
+else
+    echo -e "Benchmarks: ${RED}FAILED${NC}"
+fi
+
+# Exit with failure if either failed
+if [ $INTEGRATION_EXIT_CODE -ne 0 ] || [ $BENCHMARK_EXIT_CODE -ne 0 ]; then
+    exit 1
+fi
+
+exit 0
+
+--- END OF FILE scripts/run_integration_tests.sh ---
 
 --- START OF FILE scripts/verify_mcp_server.py ---
 
@@ -75611,14 +74853,6 @@ if __name__ == "__main__":
     test_server()
 
 --- END OF FILE scripts/verify_mcp_server.py ---
-
---- START OF FILE test_protocol_999.md ---
-
-# Test Protocol 999
-
-This is a test protocol for incremental ingestion verification.
-
---- END OF FILE test_protocol_999.md ---
 
 --- START OF FILE tests/conftest.py ---
 
@@ -75697,6 +74931,14 @@ def llm_service(real_llm, mock_llm_response):
 
 --- END OF FILE tests/conftest.py ---
 
+--- START OF FILE tests/data/test_protocol_999.md ---
+
+# Test Protocol 999
+
+This is a test protocol for incremental ingestion verification.
+
+--- END OF FILE tests/data/test_protocol_999.md ---
+
 --- START OF FILE tests/integration/test_cortex_operations.py ---
 
 """
@@ -75758,6 +75000,72 @@ def test_adaptation_packet_generation():
     print(f"✅ Adaptation packet generated: {len(packet.examples)} examples")
 
 --- END OF FILE tests/integration/test_cortex_operations.py ---
+
+--- START OF FILE tests/integration/test_end_to_end_rag_pipeline.py ---
+
+"""
+End-to-End RAG Pipeline Integration Test.
+Tests ingestion and querying using robust patterns (direct imports + subprocess).
+"""
+import pytest
+import sys
+import os
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+@pytest.mark.integration
+def test_rag_query_existing_protocol():
+    """
+    Test querying for an existing protocol (Protocol 101).
+    This verifies the retrieval pipeline works on pre-existing data.
+    """
+    import subprocess
+    
+    # Use subprocess to run the query command (simulating CLI/MCP usage)
+    result = subprocess.run(
+        [sys.executable, "mnemonic_cortex/app/main.py", "What is Protocol 101?"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        timeout=60
+    )
+    
+    assert result.returncode == 0, f"Query failed: {result.stderr}"
+    
+    # Check for key phrases from Protocol 101
+    output = result.stdout
+    assert "Unbreakable Commit" in output or "Doctrine" in output, \
+        f"Query output did not contain expected Protocol 101 terms. Got:\n{output}"
+    
+    print(f"✅ Protocol 101 query successful")
+
+@pytest.mark.integration
+def test_incremental_ingestion(tmp_path):
+    """
+    Test incremental ingestion of a new document.
+    """
+    sys.path.insert(0, str(PROJECT_ROOT))
+    from mcp_servers.cognitive.cortex.operations import CortexOperations
+    
+    # 1. Create a dummy file
+    test_file = tmp_path / "Test_Ingest_Doc.md"
+    test_file.write_text("# Test Document\n\nThis is a test document for incremental ingestion.")
+    
+    # 2. Ingest it
+    ops = CortexOperations(str(PROJECT_ROOT))
+    result = ops.ingest_incremental(
+        file_paths=[str(test_file)],
+        skip_duplicates=False
+    )
+    
+    # 3. Verify ingestion success
+    assert result.status == "success"
+    assert result.documents_added > 0 or result.skipped_duplicates > 0
+    
+    print(f"✅ Incremental ingestion verified: {result}")
+
+--- END OF FILE tests/integration/test_end_to_end_rag_pipeline.py ---
 
 --- START OF FILE tests/integration/test_rag_simple.py ---
 
