@@ -94,7 +94,8 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
             return "Error: Cannot push main directly via this tool."
             
         output = git_ops.push("origin", current, force=force, no_verify=no_verify)
-        return f"Pushed {current} to origin: {output}"
+        pr_url = f"https://github.com/richfrem/Project_Sanctuary/pull/new/{current}"
+        return f"Pushed {current} to origin: {output}\n\n📝 Next: Create PR at {pr_url}"
     except Exception as e:
         return f"Failed to push feature: {str(e)}"
 
@@ -146,7 +147,14 @@ def git_finish_feature(branch_name: str) -> str:
         git_ops.pull("origin", "main")
         git_ops.delete_branch(branch_name)
         
-        return f"Finished feature {branch_name}. Switched to main and pulled latest changes."
+        # Delete remote branch
+        try:
+            git_ops.push("origin", f":{branch_name}")  # Push empty ref to delete remote
+        except Exception:
+            # Remote branch might already be deleted, that's okay
+            pass
+        
+        return f"Finished feature {branch_name}. Deleted local and remote branches, pulled latest main."
     except Exception as e:
         return f"Failed to finish feature: {str(e)}"
 
@@ -205,25 +213,6 @@ def git_log(max_count: int = 10, oneline: bool = False) -> str:
     except Exception as e:
         return f"Failed to get log: {str(e)}"
 
-@mcp.tool()
-def git_create_pr(title: str, body: str = "", base: str = "main") -> str:
-    """
-    Create a GitHub Pull Request for the current branch.
-    Requires GitHub CLI (gh) to be installed and authenticated.
-    
-    Args:
-        title: PR title.
-        body: PR description (optional).
-        base: Base branch to merge into (default: "main").
-        
-    Returns:
-        PR URL or error message.
-    """
-    try:
-        pr_url = git_ops.create_pr(title=title, body=body, base=base)
-        return f"Pull Request created: {pr_url}"
-    except Exception as e:
-        return f"Failed to create PR: {str(e)}"
 
 if __name__ == "__main__":
     mcp.run()

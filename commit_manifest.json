@@ -1,18 +1,10 @@
 {
-  "timestamp": "2025-11-29T05:43:30.012519+00:00",
+  "timestamp": "2025-11-29T19:45:02.248469+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "mcp_servers/lib/git/git_ops.py",
-      "sha256": "6c8569f472576809ac0e7c73538b463b3aaa502fc287f90fdc5e1753f7f5a470"
-    },
-    {
       "path": "mcp_servers/system/git_workflow/server.py",
-      "sha256": "6a9fc3bb4fc7e24d53c1514997d6d150079bd56aaedfcf8ad9294315380be727"
-    },
-    {
-      "path": "tests/integration/test_end_to_end_rag_pipeline.py",
-      "sha256": "ead331f99788ccdef1c2e29bf1288af4aa839f7c3999209952dcec374bdd2557"
+      "sha256": "8fa48bc7d42f2465784d5344d4e5b6511443efd30db4b6075717200bd9f7d6d6"
     }
   ]
 }
