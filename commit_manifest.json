@@ -45,6 +45,10 @@
     {
       "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
       "sha256": "c3022f7ac82bd700b203c7676cae10498cf8dfd845b56cdcb0b981ebf590a5b4"
+    },
+    {
+      "path": "README.md",
+      "sha256": "3199380246fe6597720bf3a584ee9637f72071feb8e4f6f90869c9746128f74a"
     }
   ]
 }
