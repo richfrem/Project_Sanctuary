@@ -1,8 +1,8 @@
 # forge Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-11-27T15:18:23.620Z
+Generated On: 2025-11-29T22:52:22.096Z
 
-# Mnemonic Weight (Token Count): ~40,584 tokens
+# Mnemonic Weight (Token Count): ~41,512 tokens
 
 # Directory Structure (relative to forge subfolder)
   ./forge/.DS_Store
@@ -45,6 +45,9 @@ Generated On: 2025-11-27T15:18:23.620Z
   ./forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py
   ./forge/OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py
+  ./forge/tests/
+  ./forge/tests/conftest.py
+  ./forge/tests/test_dataset_forge.py
 
 --- START OF FILE OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md ---
 
@@ -4185,3 +4188,115 @@ if __name__ == "__main__":
     main()
 
 --- END OF FILE OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py ---
+
+--- START OF FILE tests/conftest.py ---
+
+import pytest
+import os
+import json
+import sys
+from unittest.mock import MagicMock
+
+# Ensure the scripts directory is in the path so we can import modules
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../OPERATION_PHOENIX_FORGE/scripts')))
+
+@pytest.fixture
+def mock_jsonl_data():
+    """Return a list of sample JSONL records."""
+    return [
+        {"instruction": "Test instruction 1", "input": "Test input 1", "output": "Test output 1"},
+        {"instruction": "Test instruction 2", "input": "", "output": "Test output 2"},
+    ]
+
+@pytest.fixture
+def mock_dataset_file(tmp_path, mock_jsonl_data):
+    """Create a temporary JSONL file."""
+    file_path = tmp_path / "test_dataset.jsonl"
+    with open(file_path, "w") as f:
+        for record in mock_jsonl_data:
+            f.write(json.dumps(record) + "\n")
+    return str(file_path)
+
+@pytest.fixture
+def mock_tokenizer():
+    """Mock a tokenizer for validation tests."""
+    tokenizer = MagicMock()
+    # Mock encode to return a list of length proportional to input string length
+    tokenizer.encode.side_effect = lambda x: [1] * len(x.split())
+    return tokenizer
+
+--- END OF FILE tests/conftest.py ---
+
+--- START OF FILE tests/test_dataset_forge.py ---
+
+import pytest
+import sys
+import os
+from unittest.mock import patch, MagicMock
+
+# The module is added to path in conftest.py, but we need to import it carefully
+# because it might run code on import if not guarded by if __name__ == "__main__":
+try:
+    import forge_whole_genome_dataset as forge
+except ImportError:
+    # Fallback if path setup in conftest doesn't work for direct import here
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../OPERATION_PHOENIX_FORGE/scripts')))
+    import forge_whole_genome_dataset as forge
+
+class TestInstructionDetermination:
+    def test_determine_instruction_protocol(self):
+        """Test instruction generation for Protocol files."""
+        filename = "01_PROTOCOLS/101_The_Unbreakable_Commit.md"
+        instruction = forge.determine_instruction(filename)
+        assert "Protocol 101" in instruction
+        assert "foundational doctrine" in instruction
+
+    def test_determine_instruction_chronicle(self):
+        """Test instruction generation for Chronicle entries."""
+        filename = "00_CHRONICLE/ENTRIES/001_Genesis.md"
+        instruction = forge.determine_instruction(filename)
+        assert "Chronicle Entry" in instruction
+        assert "historical record" in instruction
+
+    def test_determine_instruction_task(self):
+        """Test instruction generation for Task files."""
+        filename = "TASKS/done/001_setup.md"
+        instruction = forge.determine_instruction(filename)
+        assert "Task" in instruction
+        assert "execution record" in instruction
+
+    def test_determine_instruction_default(self):
+        """Test default instruction generation."""
+        filename = "random_file.txt"
+        instruction = forge.determine_instruction(filename)
+        assert "Synthesize the core concepts" in instruction
+        assert "random_file.txt" in instruction
+
+class TestDatasetGeneration:
+    @patch('builtins.open')
+    @patch('json.dump')
+    def test_main_execution_flow(self, mock_json_dump, mock_open_func):
+        """Test the main execution flow with mocked file operations."""
+        # Mock the snapshot content
+        mock_snapshot = """
+---
+file: 01_PROTOCOLS/test.md
+---
+# Test Protocol
+Content here.
+"""
+        # Setup mock file reads
+        mock_file = MagicMock()
+        mock_file.read.return_value = mock_snapshot
+        mock_open_func.return_value.__enter__.return_value = mock_file
+
+        # We need to mock the glob or file listing if the script uses it
+        # But looking at the script, it reads from 'sanctuary_snapshot.txt'
+        
+        # Since main() runs the whole process, we might want to just test the logic parts
+        # or mock everything heavily. 
+        
+        # For now, let's stick to testing the logic functions which are more critical
+        pass
+
+--- END OF FILE tests/test_dataset_forge.py ---

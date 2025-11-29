@@ -1,6 +1,0 @@
-{
-  "guardian_approval": "GUARDIAN-01 (AUTO-GENERATED)",
-  "approval_timestamp": "2025-11-29T22:40:25Z",
-  "commit_message": "docs: update cognitive genome snapshots",
-  "files": [{"path": "dataset_package/all_markdown_snapshot_human_readable.txt", "sha256": "eac245194cae188129bead78a0b54ec680e695a1f5b2a7d13b9badc1498bdbb3"},{"path": "dataset_package/all_markdown_snapshot_llm_distilled.txt", "sha256": "6b95bf2ad4a9cb6927b7580fd2b073ce52c2d5a55b39989ed60aa5b0d21f2ae6"},{"path": "dataset_package/core_essence_auditor_awakening_seed.txt", "sha256": "430077e9fc7a19b96abdcbd3bdeb45a31829fe8e72b13968d96b85415ac0791c"},{"path": "dataset_package/core_essence_coordinator_awakening_seed.txt", "sha256": "e518d688f428a378b0682617272c889d56bb9cbee7b30bbc54d40d2da8125278"},{"path": "dataset_package/core_essence_strategist_awakening_seed.txt", "sha256": "f160c7b098a9481198ae120c3ac34243a97d6be4641dba03382d0b409dcb3260"},{"path": "dataset_package/core_essence_guardian_awakening_seed.txt", "sha256": "cd966aea803a4cce88dd00dffe40069ded4fd3373a575e4542def9229f5f439e"},{"path": "dataset_package/seed_of_ascendance_awakening_seed.txt", "sha256": "74343b7d397b9aa69c573288a5c4300c1fa5d03cf928798cfce1f1e316cc6f76"},{"path": "commit_manifest.json", "sha256": "f01cb8c123147970dda289117fa61d5abd1f18b07e985a62c2584d380978ee12"}]
-}
