@@ -56,6 +56,6 @@ def test_incremental_ingestion(tmp_path):
     
     # 3. Verify ingestion success
     assert result.status == "success"
-    assert result.added > 0 or result.updated > 0
+    assert result.documents_added > 0 or result.skipped_duplicates > 0
     
     print(f"✅ Incremental ingestion verified: {result}")

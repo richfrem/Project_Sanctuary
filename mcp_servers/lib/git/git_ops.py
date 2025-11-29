@@ -137,11 +137,18 @@ class GitOperations:
         """Checkout a branch."""
         self._run_git(["checkout", branch_name])
 
-    def push(self, remote: str = "origin", branch: str = None) -> str:
+    def push(self, remote: str = "origin", branch: str = None, force: bool = False, no_verify: bool = False) -> str:
         """Push to remote."""
         if branch is None:
             branch = self.get_current_branch()
-        return self._run_git(["push", remote, branch])
+        
+        args = ["push", remote, branch]
+        if force:
+            args.append("--force")
+        if no_verify:
+            args.append("--no-verify")
+            
+        return self._run_git(args)
 
     def pull(self, remote: str = "origin", branch: str = None) -> str:
         """Pull from remote."""
