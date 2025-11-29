@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-11-29T19:45:02.248469+00:00",
+  "timestamp": "2025-11-29T20:25:00.000000+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
       "path": "mcp_servers/system/git_workflow/server.py",
-      "sha256": "8fa48bc7d42f2465784d5344d4e5b6511443efd30db4b6075717200bd9f7d6d6"
+      "sha256": "3d32a31c9393c63e6769b0682679498703d5e4d0597e88e20942c9681542a218"
     },
     {
-      "path": "README.md",
-      "sha256": "21f23cfce002cf7bb60e931b1315f289b1913063316d05933c0675d8b4366c37"
+      "path": "mcp_servers/lib/git/git_ops.py",
+      "sha256": "5fef4622954f75a1af24b91c2ec47949c0e49b7f27aeb81814c2a58b53d12433"
     }
   ]
 }

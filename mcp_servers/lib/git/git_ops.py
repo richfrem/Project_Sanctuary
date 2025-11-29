@@ -161,6 +161,10 @@ class GitOperations:
         flag = "-D" if force else "-d"
         self._run_git(["branch", flag, branch_name])
 
+    def delete_remote_branch(self, branch_name: str) -> None:
+        """Delete a remote branch."""
+        self._run_git(["push", "origin", "--delete", branch_name])
+
     def status(self) -> Dict[str, Any]:
         """Get repo status."""
         branch = self.get_current_branch()
@@ -203,24 +207,6 @@ class GitOperations:
             args.append("--oneline")
         return self._run_git(args)
 
-    def create_pr(self, title: str, body: str = "", base: str = "main") -> str:
-        """
-        Create a GitHub Pull Request using gh CLI.
-        Requires: gh CLI installed and authenticated.
-        """
-        try:
-            current_branch = self.get_current_branch()
-            result = subprocess.run(
-                ["gh", "pr", "create", "--title", title, "--body", body, "--base", base, "--head", current_branch],
-                cwd=self.repo_path,
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            return result.stdout.strip()
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"GitHub CLI command failed: {e.stderr}")
-        except FileNotFoundError:
-            raise RuntimeError("GitHub CLI (gh) not found. Install it with: brew install gh")
+
 
 

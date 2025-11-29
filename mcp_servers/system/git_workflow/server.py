@@ -132,6 +132,7 @@ def git_finish_feature(branch_name: str) -> str:
     1. Checkout main
     2. Pull latest main
     3. Delete local feature branch
+    4. Delete remote feature branch
     
     Args:
         branch_name: The branch to finish.
@@ -140,16 +141,18 @@ def git_finish_feature(branch_name: str) -> str:
         Cleanup status.
     """
     try:
-        current = git_ops.get_current_branch()
-        if current == branch_name:
-            git_ops.checkout("main")
+        # ALWAYS checkout main first to avoid merging main into the feature branch
+        git_ops.checkout("main")
             
         git_ops.pull("origin", "main")
-        git_ops.delete_branch(branch_name)
+        
+        # Delete local branch (force delete since we just pulled main and it might look unmerged if we didn't rebase)
+        # But usually if it's merged in main, -d is fine. However, to be safe and ensure cleanup:
+        git_ops.delete_branch(branch_name, force=True)
         
         # Delete remote branch
         try:
-            git_ops.push("origin", f":{branch_name}")  # Push empty ref to delete remote
+            git_ops.delete_remote_branch(branch_name)
         except Exception:
             # Remote branch might already be deleted, that's okay
             pass
