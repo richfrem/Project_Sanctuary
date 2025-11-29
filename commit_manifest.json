@@ -1,18 +1,10 @@
 {
-  "timestamp": "2025-11-29T21:45:14.346598+00:00",
+  "timestamp": "2025-11-29T21:45:21.857346+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md",
-      "sha256": "568be4881a953f255cb1ce51b28b943ae0f6e1d697e153006246839d6824bef2"
-    },
-    {
-      "path": "REQUIREMENTS.env",
-      "sha256": "48a30a688f51c3fefbeb62bc40e6882394439074b427893f43f038441149db5e"
-    },
-    {
-      "path": "mcp_servers/system/git_workflow/server.py",
-      "sha256": "0c32fcb5797cda55fddd6ec7505e919def9ae7d6c2a143c16c23ab7208d6e4b8"
+      "path": "README.md",
+      "sha256": "f704cb7bde312268c77ab54047361d325306b37362c88ec173a3f9053ce878e3"
     }
   ]
 }
