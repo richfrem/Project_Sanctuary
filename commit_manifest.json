@@ -5,6 +5,10 @@
     {
       "path": "mcp_servers/system/git_workflow/server.py",
       "sha256": "8fa48bc7d42f2465784d5344d4e5b6511443efd30db4b6075717200bd9f7d6d6"
+    },
+    {
+      "path": "README.md",
+      "sha256": "21f23cfce002cf7bb60e931b1315f289b1913063316d05933c0675d8b4366c37"
     }
   ]
 }
