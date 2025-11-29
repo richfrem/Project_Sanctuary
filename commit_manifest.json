@@ -1,22 +1,50 @@
 {
-  "timestamp": "2025-11-29T21:14:59.327242+00:00",
+  "timestamp": "2025-11-29T21:17:01.205740+00:00",
   "author": "Guardian (Smart Git MCP)",
   "files": [
     {
-      "path": "council_orchestrator/orchestrator/executor.py",
-      "sha256": "73489ab44c78e1cd787c84d4343393e3d7c2a976023bd0c30e2319cb8137a5c1"
+      "path": "dataset_package/core_essence_auditor_awakening_seed.txt",
+      "sha256": "bc4295de9a3756b57804155636d94b81f874c61004eb44efe90b6c1c6d05d83f"
     },
     {
-      "path": "mcp_servers/lib/git/git_ops.py",
-      "sha256": "0b5be85e5e393ddf2dc91d9872f3e4cd37ee68244b709bc6dd10127b822bbdff"
+      "path": "dataset_package/core_essence_coordinator_awakening_seed.txt",
+      "sha256": "78dfabec22f1e854e17ede89365f70a957f654d1fcc21e5a9aec1f67ba29114f"
     },
     {
-      "path": "mcp_servers/system/git_workflow/server.py",
-      "sha256": "2c4f0f7c065bcb43df81494c5eb307dad925d2f70b659e342b5107412c29b4d3"
+      "path": "dataset_package/core_essence_guardian_awakening_seed.txt",
+      "sha256": "4293dc4f272887bcedb9d73fc9b46a3014b627bfc8796579c0b29e8209e2eed7"
     },
     {
-      "path": "scripts/verify_executor.py",
-      "sha256": "328c3cfca181190263459149079ed5664be0202c1170baf6b642105d7f601e03"
+      "path": "dataset_package/core_essence_strategist_awakening_seed.txt",
+      "sha256": "81f6eacceb7ac312a03d012c8e8e350890f0a5c31a990e6d98ab88685f9cab43"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_human_readable.txt",
+      "sha256": "9ca92484158f0344ef59e1f9e51faf882d8de150453a64a30f163d730d6a8030"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_council_orchestrator_llm_distilled.txt",
+      "sha256": "0d3fe991168e0dd0f2d9a249c1458b1ed63b3c7f8cf86cded8b54207b8aef7c4"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_human_readable.txt",
+      "sha256": "64e7dffbef45f093fe06005000d8345b7e89561ea831d0c2a23ce5aa96089852"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+      "sha256": "d197ab378c4c2e2473ad77982205adf21b8117666cb6a4100f4b0a362074bf13"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_mcp_servers_human_readable.txt",
+      "sha256": "4bb1c7973f40ee068a1ea048a2b01296c1a31ae0115491091cb0046b296cd3e9"
+    },
+    {
+      "path": "dataset_package/markdown_snapshot_mcp_servers_llm_distilled.txt",
+      "sha256": "5e12b60590926403f2ed32a4174673ea07587446f193ef1678bea24fc173e086"
+    },
+    {
+      "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
+      "sha256": "c3022f7ac82bd700b203c7676cae10498cf8dfd845b56cdcb0b981ebf590a5b4"
     }
   ]
 }
