@@ -9,6 +9,70 @@ from pathlib import Path
 from datetime import datetime
 from .memory.cache import CacheManager
 
+def verify_clean_state(project_root: Path) -> bool:
+    """
+    Pillar 4: Pre-Execution Verification.
+    Ensures the working directory is clean before any Git operation.
+    Returns True if clean, raises Exception if dirty.
+    """
+    try:
+        # Check for uncommitted changes
+        result = subprocess.run(
+            ["git", "status", "--porcelain"],
+            capture_output=True,
+            text=True,
+            cwd=project_root,
+            check=True
+        )
+        if result.stdout.strip():
+            print(f"[CRITICAL] DOCTRINE OF THE CLEAN STATE VIOLATION: Working directory is not clean.")
+            print(f"[CRITICAL] Uncommitted changes:\n{result.stdout}")
+            raise Exception("Working directory is not clean. Commit or stash changes before proceeding.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"[CRITICAL] Failed to verify git status: {e}")
+        raise
+
+def create_feature_branch(project_root: Path, branch_name: str) -> None:
+    """
+    Safely creates and checks out a feature branch.
+    Enforces whitelist: only 'checkout -b' is allowed here.
+    """
+    print(f"[MECHANICAL INFO] Creating/Checking out feature branch: {branch_name}")
+    try:
+        # Verify clean state first
+        verify_clean_state(project_root)
+
+        # Check if branch exists
+        result = subprocess.run(
+            ["git", "rev-parse", "--verify", branch_name],
+            capture_output=True,
+            cwd=project_root
+        )
+        
+        if result.returncode == 0:
+            # Branch exists, checkout
+            subprocess.run(
+                ["git", "checkout", branch_name],
+                check=True,
+                cwd=project_root,
+                capture_output=True
+            )
+            print(f"[MECHANICAL SUCCESS] Checked out existing branch: {branch_name}")
+        else:
+            # Create new branch
+            subprocess.run(
+                ["git", "checkout", "-b", branch_name],
+                check=True,
+                cwd=project_root,
+                capture_output=True
+            )
+            print(f"[MECHANICAL SUCCESS] Created and checked out new branch: {branch_name}")
+            
+    except Exception as e:
+        print(f"[MECHANICAL FAILURE] Failed to create/checkout branch {branch_name}: {e}")
+        raise
+
 def execute_mechanical_git(command, project_root):
     """
     Execute mechanical git operations - add, commit, and push files.
@@ -22,6 +86,15 @@ def execute_mechanical_git(command, project_root):
         project_root: Path to the project root directory
     """
     try:
+        # Pillar 4: Verify clean state before starting (unless we are in the middle of a sequence, 
+        # but for mechanical_git we assume we start from a clean slate or are adding to the current valid state)
+        # NOTE: For 'add', the state might be dirty (the files to add). 
+        # So verify_clean_state is stricter than 'add' allows. 
+        # However, Protocol 101 implies we shouldn't have *unexpected* changes.
+        # For now, we skip verify_clean_state here because 'git add' implies we HAVE changes to stage.
+        # The verification should happen BEFORE generating the content if possible, or we accept that
+        # this tool IS the one making the state dirty/clean.
+        
         # DOCTRINE OF THE BLUNTED SWORD: Hardcoded whitelist of permitted Git commands
         WHITELISTED_GIT_COMMANDS = ['add', 'commit', 'push']
 

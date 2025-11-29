@@ -19,6 +19,22 @@ class GitOperations:
         if self.base_dir and not self.repo_path.startswith(self.base_dir):
             raise ValueError(f"Repository path {self.repo_path} is outside base directory {self.base_dir}")
 
+    def verify_clean_state(self) -> None:
+        """
+        Pillar 4: Pre-Execution Verification.
+        Ensures the working directory is clean before critical operations.
+        Raises RuntimeError if dirty.
+        """
+        status = self.status()
+        if status["modified"] or status["staged"] or status["untracked"]:
+            raise RuntimeError(
+                f"Working directory is not clean. "
+                f"Modified: {len(status['modified'])}, "
+                f"Staged: {len(status['staged'])}, "
+                f"Untracked: {len(status['untracked'])}. "
+                "Please commit or stash changes before proceeding."
+            )
+
     def _run_git(self, args: List[str]) -> str:
         """Run a git command and return output."""
         try:
@@ -31,7 +47,8 @@ class GitOperations:
             )
             return result.stdout.strip()
         except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"Git command failed: {e.stderr}")
+            # Enhanced error handling to capture stderr
+            raise RuntimeError(f"Git command failed: {e.stderr.strip()}")
 
     def get_staged_files(self) -> List[str]:
         """Get list of currently staged files."""

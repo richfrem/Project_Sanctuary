@@ -113,6 +113,9 @@ def git_start_feature(task_id: str, description: str) -> str:
         Success message with branch name.
     """
     try:
+        # Pillar 4: Verify clean state before starting a new feature
+        git_ops.verify_clean_state()
+
         # Sanitize description
         safe_desc = description.lower().replace(" ", "-")
         branch_name = f"feature/task-{task_id}-{safe_desc}"
@@ -141,6 +144,9 @@ def git_finish_feature(branch_name: str) -> str:
         Cleanup status.
     """
     try:
+        # Pillar 4: Verify clean state before finishing (merging/deleting)
+        git_ops.verify_clean_state()
+
         # ALWAYS checkout main first to avoid merging main into the feature branch
         git_ops.checkout("main")
             
