@@ -146,41 +146,71 @@ Add these to your `~/.gitconfig`:
     last = show --name-only
 ```
 
-## Pre-commit Hook Usage (Protocol 101)
+## Protocol 101 v3.0: The Doctrine of Absolute Stability
 
-Our pre-commit hook (`.git/hooks/pre-commit`) enforces **Protocol 101: The Doctrine of the Unbreakable Commit**:
-- ✅ Requires `commit_manifest.json` with SHA-256 hashes
-- ✅ Verifies file integrity against manifest
-- ✅ No `.env` files (except `.env.example`)
-- ✅ No hardcoded secrets (API keys, tokens, passwords)
-- ✅ Blocks commit if violations found
+**Status:** CANONICAL  
+**Enforcement:** Automated Test Suite + Pre-Commit Hook
 
-**Recommended Commit Workflow:**
+This protocol governs the integrity of every commit through **Functional Coherence** rather than static file verification.
 
+### Part A: Functional Coherence (The "What")
+Commit integrity is verified by successful execution of the automated test suite.
+
+*   **Mandate:** No commit shall proceed unless `./scripts/run_genome_tests.sh` executes successfully.
+*   **Enforcement:** Pre-commit hook runs tests automatically before staging.
+*   **Rejection:** Test failures result in immediate commit rejection.
+
+### Part B: Action Integrity (The "How")
+AI agents are restricted to non-destructive Git operations.
+
+*   **Whitelist:** `git add`, `git commit`, `git push`.
+*   **Prohibition:** `git reset`, `git clean`, `git pull` (with overwrite), and all destructive commands.
+
+### Part C: The Sovereign Override
+In emergencies, the Steward may bypass checks:
 ```bash
-# Option A: Use Council Orchestrator (recommended)
+git commit --no-verify -m "Sovereign Override: <reason>"
+```
+
+### Recommended Commit Workflow
+
+**Option A: Using Council Orchestrator (Recommended)**
+```bash
+# Create command.json
 cat > command.json << 'EOF'
 {
-  "command_type": "git_operations",
+  "task_description": "Commit changes with functional coherence check",
   "git_operations": {
     "files_to_add": ["path/to/file.py"],
     "commit_message": "feat(component): add new feature",
-    "push_after_commit": false
-  }
+    "push_to_origin": false
+  },
+  "output_artifact_path": "council_orchestrator/command_results/commit_results.json"
 }
 EOF
-python3 council_orchestrator/app/main.py command.json
 
-# Option B: Manual manifest generation
-python3 tools/generate_manifest.py path/to/file.py
-git add path/to/file.py commit_manifest.json
+# Orchestrator automatically runs test suite before commit
+python3 council_orchestrator/app/main.py command.json
+```
+
+**Option B: Manual Commit (Tests Run Automatically)**
+```bash
+# Stage your changes
+git add path/to/file.py
+
+# Commit (pre-commit hook runs tests automatically)
 git commit -m "feat(component): add new feature"
 
-# Option C: Emergency bypass (Guardian approval required)
+# If tests pass, commit proceeds
+# If tests fail, commit is rejected
+```
+
+**Option C: Emergency Bypass (Guardian Approval Required)**
+```bash
 git commit --no-verify -m "Emergency: critical fix"
 ```
 
-**⚠️ WARNING:** Never use `--no-verify` except for emergencies with Guardian approval!
+
 
 ## Branch Naming Conventions
 
@@ -315,17 +345,19 @@ git push
 1. **Commit often** - Small, focused commits are easier to review and revert
 2. **Write clear messages** - Future you will thank present you
 3. **Review before committing** - Always run `git diff --cached`
-4. **Test before pushing** - Run `pytest` and linting checks
-5. **Use Protocol 101** - Generate commit manifests via Council Orchestrator
+4. **Test before pushing** - Ensure `./scripts/run_genome_tests.sh` passes
+5. **Use Protocol 101 v3.0** - Let automated tests verify functional coherence
 6. **Pull before pushing** - Avoid merge conflicts
 7. **Use branches** - Never commit directly to `main`
 8. **Keep commits atomic** - One logical change per commit
 
 ## References
 
-- [Protocol 101: The Doctrine of the Unbreakable Commit](../../ADRs/019_protocol_101_unbreakable_commit.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [ADR-019: Cognitive Genome Publishing Architecture (Reforged)](../../ADRs/019_protocol_101_unbreakable_commit.md)
 - [Council Orchestrator GitOps Documentation](../../council_orchestrator/docs/howto-commit-command.md)
-- [Git Safety Rules](.agent/git_safety_rules.md)
+- [Git Safety Rules](../../.agent/git_safety_rules.md)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Git Documentation](https://git-scm.com/doc)
 - [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)

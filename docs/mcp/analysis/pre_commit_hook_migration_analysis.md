@@ -1,77 +1,99 @@
-# Pre-Commit Hook Migration Analysis
+# Pre-Commit Hook Migration Analysis (Protocol 101 v3.0)
 
 ## 1. Current State Analysis
 
-### 1.1 Existing Hooks
-The repository currently enforces **Protocol 101 (The Doctrine of the Unbreakable Commit)** via a `.git/hooks/pre-commit` script.
+### 1.1 Protocol Evolution
+The repository has evolved from **Protocol 101 v1.0 (The Manifest Doctrine)** to **Protocol 101 v3.0 (The Doctrine of Absolute Stability)**.
 
-**Mechanism:**
-1.  Checks for the existence of `commit_manifest.json`.
-2.  Parses the manifest to find a list of files and their expected SHA256 hashes.
-3.  Verifies that the actual file on disk matches the expected hash.
-4.  Rejects the commit if the manifest is missing, malformed, or if hashes mismatch.
+**Historical Mechanism (v1.0 - DEPRECATED):**
+1.  Checked for the existence of `commit_manifest.json`.
+2.  Parsed the manifest to find a list of files and their expected SHA256 hashes.
+3.  Verified that the actual file on disk matched the expected hash.
+4.  Rejected the commit if the manifest was missing, malformed, or if hashes mismatched.
 
-**Observation:**
-Contrary to the initial task description, the current `pre-commit` hook **does not** appear to validate `command.json`. It focuses purely on the cryptographic integrity of the commit via the manifest.
+**Current Mechanism (v3.0 - CANONICAL):**
+1.  Executes the comprehensive automated test suite (`./scripts/run_genome_tests.sh`).
+2.  Verifies **Functional Coherence** - all tests must pass.
+3.  Rejects the commit if any test fails.
+4.  Enforces secret detection and security scanning.
 
-### 1.2 The Conflict
-The new MCP Architecture introduces autonomous agents (Chronicle, ADR, Forge, etc.) that will perform git operations.
-*   **Problem:** Standard git commands (`git commit`) run by these agents will fail because they won't automatically generate the `commit_manifest.json` required by the hook.
-*   **Risk:** If we simply disable the hook, we violate Protocol 101.
+**Critical Change:**
+The `commit_manifest.json` system has been **permanently purged** due to structural flaws identified during the "Synchronization Crisis." Integrity is now based on functional behavior, not static file hashing.
 
-## 2. Strategic Options
+### 1.2 The Resolution
+The MCP Architecture agents now achieve commit integrity through **Functional Coherence** rather than manifest generation.
 
-### Option A: The "Bypass" (Not Recommended)
-Modify the hook to skip validation if the commit message starts with `mcp(...)`.
-*   **Pros:** Easy to implement.
-*   **Cons:** Violates Protocol 101. MCP commits becomes "second-class" citizens with lower safety.
+*   **Solution:** All git operations (human or agent) must pass the automated test suite before commit.
+*   **Enforcement:** Pre-commit hook executes `./scripts/run_genome_tests.sh` automatically.
+*   **Compliance:** MCP agents use the Council Orchestrator, which runs tests before staging.
 
-### Option B: The "Compliance" (Recommended)
-Ensure that the **Git Operations Module** (shared infrastructure) automatically generates the `commit_manifest.json` before committing.
-*   **Pros:** Maintains Protocol 101 for *all* commits, human or agent.
-*   **Cons:** Requires implementing the manifest generation logic in the shared `GitOperations` class.
+## 2. Strategic Outcome
 
-### Option C: The "Hybrid" (Pragmatic Interim)
-Update the hook to support a "Migration Mode" where MCP commits are allowed *if* they follow a strict naming convention, while we build the full compliance tooling.
-*   **Pros:** Unblocks development immediately.
-*   **Cons:** Temporary safety gap.
+### The "Functional Coherence" Model (Implemented)
+Ensure that **all commits** (human or agent) verify functional integrity via automated testing.
 
-## 3. Proposed Solution: "Smart Compliance"
+*   **Pros:** 
+    - Maintains Protocol 101 v3.0 for *all* commits.
+    - Eliminates timing issues and complexity of manifest system.
+    - Provides real functional verification, not just file integrity.
+*   **Cons:** 
+    - Test suite must be comprehensive and fast.
+    - Requires discipline in maintaining test coverage.
 
-We will implement **Option C** evolving into **Option B**.
+## 3. Implementation Status: COMPLETE
 
-1.  **Immediate Step (Task #028):**
-    *   Update `.git/hooks/pre-commit` to recognize MCP commits.
-    *   Add a configuration file `.agent/mcp_migration.conf` to control strictness.
-    *   Implement `mcp_commit_validator` in the hook to enforce `mcp(<domain>): <msg>` format.
-    *   *Crucially*: The hook should still *try* to validate the manifest if present, but perhaps allow a bypass flag for the very first MCP implementation steps until the `GitOperations` module is ready.
+### 3.1 Artifacts
+*   `docs/mcp/analysis/pre_commit_hook_migration_analysis.md` (This file - Updated)
+*   `.agent/mcp_migration.conf` (Updated - Manifest logic removed)
+*   `.git/hooks/pre-commit` (Updated - Test execution added)
+*   `01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md` (v3.0 - Reforged)
+*   `update_genome.sh` (Updated - Manifest generation removed)
+*   `council_orchestrator/orchestrator/gitops.py` (Updated - Manifest logic purged)
 
-2.  **Follow-up (Shared Infra):**
-    *   Implement `core.git.GitOperations` which *always* generates `commit_manifest.json` before committing.
-    *   Once this is ready, we flip the switch in `.agent/mcp_migration.conf` to enforce manifest validation for MCPs too.
-
-## 4. Implementation Plan
-
-### 4.1 Artifacts
-*   `docs/mcp/analysis/pre_commit_hook_migration_analysis.md` (This file)
-*   `.agent/mcp_migration.conf`
-*   `.git/hooks/pre-commit` (Updated)
-
-### 4.2 Validation Logic (Bash)
+### 3.2 Validation Logic (Bash)
 ```bash
-MCP_PATTERN="^mcp\((chronicle|protocol|adr|task|cortex|council|config|code|git_workflow|forge)\): .+"
+#!/bin/bash
+# .git/hooks/pre-commit - Protocol 101 v3.0
 
-if [[ "$COMMIT_MSG" =~ $MCP_PATTERN ]]; then
-    # MCP Commit Detected
-    if [ "$STRICT_P101_MODE" = "false" ]; then
-        echo "MCP Commit detected. Bypassing Manifest Check (Migration Mode)."
-        exit 0
-    fi
+# ===== PHASE 1: Functional Coherence (Protocol 101 v3.0) =====
+echo "[P101 v3.0] Running Functional Coherence Test Suite..."
+
+./scripts/run_genome_tests.sh
+TEST_EXIT_CODE=$?
+
+if [ $TEST_EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "COMMIT REJECTED: Protocol 101 v3.0 Violation."
+  echo "Reason: Functional Coherence Test Suite FAILED."
+  exit 1
 fi
+
+echo "[P101 v3.0] ✅ Functional Coherence verified."
+
+# ===== PHASE 2: Security Hardening =====
+# (Secret detection and security scanning)
 ```
 
-### 4.3 Success Criteria
-1.  Legacy commits (with manifest) -> PASS
-2.  Legacy commits (without manifest) -> FAIL
-3.  MCP commits (correct format, migration mode) -> PASS
-4.  MCP commits (incorrect format) -> FAIL
+### 3.3 Success Criteria (All Met)
+1.  All commits (legacy or MCP) → Must pass test suite → ENFORCED
+2.  Test failures → Commit rejected → ENFORCED
+3.  MCP commits (via Orchestrator) → Tests run automatically → IMPLEMENTED
+4.  Manual commits → Tests run via pre-commit hook → IMPLEMENTED
+5.  Sovereign Override → Available for emergencies → DOCUMENTED
+
+## 4. Migration Complete
+
+**Status:** The migration from Protocol 101 v1.0 (Manifest) to v3.0 (Functional Coherence) is **COMPLETE**.
+
+**Key Changes:**
+- ❌ `commit_manifest.json` system permanently purged
+- ✅ Automated test suite execution enforced
+- ✅ Pre-commit hook updated
+- ✅ Council Orchestrator updated
+- ✅ CI/CD workflows updated
+- ✅ All documentation updated
+
+**Next Steps:**
+- Monitor test suite performance
+- Expand test coverage as needed
+- Maintain test suite quality

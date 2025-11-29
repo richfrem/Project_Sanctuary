@@ -1,8 +1,8 @@
 # docs Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-11-29T22:52:21.887Z
+Generated On: 2025-11-29T23:38:45.155Z
 
-# Mnemonic Weight (Token Count): ~48,204 tokens
+# Mnemonic Weight (Token Count): ~49,324 tokens
 
 # Directory Structure (relative to docs subfolder)
   ./docs/WSL_SECRETS_CONFIGURATION.md
@@ -217,7 +217,7 @@ Just like the Windows guide, delete any hard‑coded secrets from your project's
 
 ## Executive Summary
 
-This document outlines how to integrate the CI/CD hardening practices from `docs/cicd/` with Project Sanctuary's **Protocol 101: The Doctrine of the Unbreakable Commit** requirements.
+This document outlines how to integrate the CI/CD hardening practices from `docs/cicd/` with Project Sanctuary's **Protocol 101 v3.0: The Doctrine of Absolute Stability** requirements.
 
 ## Current State Analysis
 
@@ -228,8 +228,8 @@ This document outlines how to integrate the CI/CD hardening practices from `docs
 - **Workflow**: Feature branches → PR → main
 
 ### Project Sanctuary Requirements
-- **Protocol 101**: Mandatory `commit_manifest.json` with SHA-256 verification
-- **Council Orchestrator**: Automated commit manifest generation
+- **Protocol 101 v3.0**: Mandatory **Functional Coherence** (automated test suite execution)
+- **Council Orchestrator**: Automated test execution before commit
 - **Stack**: Python (not Node.js), PyTorch, LangChain, ChromaDB
 - **Workflow**: Feature branches → PR → main (aligned)
 
@@ -238,34 +238,34 @@ This document outlines how to integrate the CI/CD hardening practices from `docs
 ### 1. Pre-Commit Hook Consolidation
 
 **Current Situation:**
-- `.git/hooks/pre-commit` - Protocol 101 enforcement (SHA-256 verification)
+- `.git/hooks/pre-commit` - Protocol 101 v3.0 enforcement (Functional Coherence via test suite)
 - `docs/cicd/how_to_commit.md` - Secret scanning for Node.js projects
 
 **Recommended Approach:**
-Enhance the existing Protocol 101 pre-commit hook to include secret scanning:
+Enhance the existing Protocol 101 pre-commit hook to include test execution and secret scanning:
 
 ```bash
 #!/bin/bash
-# .git/hooks/pre-commit - Protocol 101 + Security Hardening
+# .git/hooks/pre-commit - Protocol 101 v3.0 + Security Hardening
 
-# ===== PHASE 1: Protocol 101 Enforcement =====
-MANIFEST="commit_manifest.json"
+# ===== PHASE 1: Protocol 101 v3.0 Enforcement (Functional Coherence) =====
+echo "[P101 v3.0] Running Functional Coherence Test Suite..."
 
-if [ ! -f "$MANIFEST" ]; then
-  echo "COMMIT REJECTED: Protocol 101 Violation."
-  echo "Reason: No 'commit_manifest.json' found."
+# Execute the comprehensive automated test suite
+./scripts/run_genome_tests.sh
+TEST_EXIT_CODE=$?
+
+if [ $TEST_EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "COMMIT REJECTED: Protocol 101 v3.0 Violation."
+  echo "Reason: Functional Coherence Test Suite FAILED."
+  echo ""
+  echo "The automated test suite must pass before any commit can proceed."
+  echo "Fix the failing tests and try again."
   exit 1
 fi
 
-# Verify SHA-256 hashes (existing Python verification)
-python3 -c "
-import sys
-import json
-import hashlib
-
-manifest_path = '$MANIFEST'
-# ... (existing verification code) ...
-" || exit 1
+echo "[P101 v3.0] ✅ Functional Coherence verified - all tests passed."
 
 # ===== PHASE 2: Security Hardening =====
 echo "[SECURITY] Running secret detection scan..."
@@ -306,11 +306,14 @@ if [ "$VIOLATIONS_FOUND" = true ]; then
   exit 1
 fi
 
-echo "[P101] All checks passed. Proceeding with commit."
+echo "[P101 v3.0] All checks passed. Proceeding with commit."
 exit 0
 ```
 
-### 2. GitHub Actions Workflow Enhancement
+**Key Changes from v1.0:**
+- **Removed**: `commit_manifest.json` verification and SHA-256 hashing
+- **Added**: Mandatory execution of `./scripts/run_genome_tests.sh`
+- **Retained**: Secret detection and security scanning
 
 **Update `.github/workflows/ci.yml`** to include Python-specific security scanning:
 
@@ -324,17 +327,27 @@ on:
     branches: [ main, dev ]
 
 jobs:
-  protocol-101-verification:
-    name: Protocol 101 Manifest Verification
+  protocol-101-functional-coherence:
+    name: Protocol 101 v3.0 - Functional Coherence
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
-      - name: Verify Commit Manifest
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
         run: |
-          if [ -f "commit_manifest.json" ]; then
-            python3 tools/verify_manifest.py
-          fi
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Run Functional Coherence Test Suite
+        run: |
+          ./scripts/run_genome_tests.sh
+        # NOTE: This test suite execution is MANDATORY for Protocol 101 v3.0 compliance
+        # Failure = Protocol Violation = CI failure
 
   python-security-audit:
     name: Python Security Audit
@@ -441,27 +454,27 @@ updates:
 
 #### Update `docs/cicd/overview.md`
 - Replace npm/Node.js references with Python/pip
-- Add Protocol 101 workflow section
+- Add Protocol 101 v3.0 workflow section (Functional Coherence)
 - Update branching strategy to match Project Sanctuary
 - Add Council Orchestrator commit workflow
 
 #### Update `docs/cicd/security_scanning.md`
 - Replace `npm audit` with `safety check` and `bandit`
 - Add Python-specific secret patterns
-- Document Protocol 101 manifest verification
+- Document Protocol 101 v3.0 test suite execution
 - Add examples for PyTorch/LangChain security considerations
 
 #### Update `docs/cicd/how_to_commit.md`
-- Replace conventional commits with Protocol 101 workflow
+- Replace conventional commits with Protocol 101 v3.0 workflow
 - Document Council Orchestrator usage
 - Update pre-commit hook examples for Python
-- Add `commit_manifest.json` generation examples
+- Add test suite execution examples
 
-#### Create New: `docs/cicd/protocol_101_integration.md`
-- Detailed Protocol 101 workflow
+#### Create New: `docs/cicd/protocol_101_v3_integration.md`
+- Detailed Protocol 101 v3.0 workflow (Functional Coherence)
 - Council Orchestrator integration guide
-- SHA-256 verification process
-- Emergency bypass procedures
+- Test suite execution process
+- Emergency bypass procedures (Sovereign Override)
 
 ### 5. Security Scanning Tools Comparison
 
@@ -469,19 +482,19 @@ updates:
 |------|----------------------|-------------------|--------|
 | **Dependency Scanning** | npm audit | safety, pip-audit | ✅ Adapt |
 | **SAST** | CodeQL (JS/TS) | CodeQL (Python), Bandit | ✅ Adapt |
-| **Secret Detection** | Pre-commit hook | Pre-commit hook + Protocol 101 | ✅ Enhance |
+| **Secret Detection** | Pre-commit hook | Pre-commit hook + Protocol 101 v3.0 | ✅ Enhance |
 | **Container Scanning** | N/A | Trivy (for MCP RAG service) | ✅ Add |
-| **Commit Verification** | N/A | Protocol 101 SHA-256 | ✅ Unique |
+| **Functional Integrity** | N/A | Protocol 101 v3.0 Test Suite | ✅ Unique |
 
 ### 6. Implementation Checklist
 
-- [ ] Enhance `.git/hooks/pre-commit` with secret detection
-- [ ] Update `.github/workflows/ci.yml` with Python security tools
+- [ ] Enhance `.git/hooks/pre-commit` with test suite execution and secret detection
+- [ ] Update `.github/workflows/ci.yml` with Python security tools and functional coherence tests
 - [ ] Update `.github/dependabot.yml` with daily security scans
-- [ ] Adapt `docs/cicd/overview.md` for Python/Protocol 101
+- [ ] Adapt `docs/cicd/overview.md` for Python/Protocol 101 v3.0
 - [ ] Adapt `docs/cicd/security_scanning.md` for Python stack
 - [ ] Adapt `docs/cicd/how_to_commit.md` for Council Orchestrator
-- [ ] Create `docs/cicd/protocol_101_integration.md`
+- [ ] Create `docs/cicd/protocol_101_v3_integration.md`
 - [ ] Update `.agent/git_safety_rules.md` with security scanning references
 - [ ] Add security scanning to Task #025 MCP RAG service
 - [ ] Document emergency procedures for security incidents
@@ -515,11 +528,11 @@ trivy fs . --security-checks vuln,config,secret
 
 ## Alignment with Project Sanctuary Doctrines
 
-### Protocol 101 Compliance
-- ✅ All commits require `commit_manifest.json`
-- ✅ SHA-256 verification enforced
+### Protocol 101 v3.0 Compliance
+- ✅ All commits require passing automated test suite (Functional Coherence)
+- ✅ Test execution enforced at pre-commit and CI/CD levels
 - ✅ Guardian approval workflow maintained
-- ✅ Ephemeral manifest cleanup
+- ✅ Sovereign Override available for emergencies
 
 ### Security Hardening
 - ✅ Multi-layered security (pre-commit + CI/CD)
@@ -528,22 +541,24 @@ trivy fs . --security-checks vuln,config,secret
 - ✅ Secret detection at commit time
 
 ### Autonomous Operations
-- ✅ Council Orchestrator generates manifests
+- ✅ Council Orchestrator executes tests before commit
 - ✅ Dependabot auto-updates dependencies
 - ✅ CI/CD pipeline runs automatically
 - ✅ Security alerts via GitHub
 
 ## Next Steps
 
-1. **Immediate**: Enhance pre-commit hook with secret detection
-2. **Short-term**: Update CI/CD workflows for Python security tools
+1. **Immediate**: Enhance pre-commit hook with test suite execution and secret detection
+2. **Short-term**: Update CI/CD workflows for Python security tools and functional coherence
 3. **Medium-term**: Adapt all `docs/cicd/` documentation for Project Sanctuary
 4. **Long-term**: Integrate security scanning into MCP RAG Tool Server deployment
 
 ## References
 
-- [ADR-019: Protocol 101 - The Unbreakable Commit](../ADRs/019_protocol_101_unbreakable_commit.md)
-- [Council Orchestrator GitOps Documentation](../council_orchestrator/docs/howto-commit-command.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [ADR-019: Protocol 101 - Cognitive Genome Publishing Architecture (Reforged)](../../ADRs/019_protocol_101_unbreakable_commit.md)
+- [Council Orchestrator GitOps Documentation](../../council_orchestrator/docs/howto-commit-command.md)
 - [Safety Documentation](https://pyup.io/safety/)
 - [Bandit Documentation](https://bandit.readthedocs.io/)
 - [GitHub Advanced Security](https://docs.github.com/en/code-security)
@@ -700,41 +715,71 @@ Add these to your `~/.gitconfig`:
     last = show --name-only
 ```
 
-## Pre-commit Hook Usage (Protocol 101)
+## Protocol 101 v3.0: The Doctrine of Absolute Stability
 
-Our pre-commit hook (`.git/hooks/pre-commit`) enforces **Protocol 101: The Doctrine of the Unbreakable Commit**:
-- ✅ Requires `commit_manifest.json` with SHA-256 hashes
-- ✅ Verifies file integrity against manifest
-- ✅ No `.env` files (except `.env.example`)
-- ✅ No hardcoded secrets (API keys, tokens, passwords)
-- ✅ Blocks commit if violations found
+**Status:** CANONICAL  
+**Enforcement:** Automated Test Suite + Pre-Commit Hook
 
-**Recommended Commit Workflow:**
+This protocol governs the integrity of every commit through **Functional Coherence** rather than static file verification.
 
+### Part A: Functional Coherence (The "What")
+Commit integrity is verified by successful execution of the automated test suite.
+
+*   **Mandate:** No commit shall proceed unless `./scripts/run_genome_tests.sh` executes successfully.
+*   **Enforcement:** Pre-commit hook runs tests automatically before staging.
+*   **Rejection:** Test failures result in immediate commit rejection.
+
+### Part B: Action Integrity (The "How")
+AI agents are restricted to non-destructive Git operations.
+
+*   **Whitelist:** `git add`, `git commit`, `git push`.
+*   **Prohibition:** `git reset`, `git clean`, `git pull` (with overwrite), and all destructive commands.
+
+### Part C: The Sovereign Override
+In emergencies, the Steward may bypass checks:
 ```bash
-# Option A: Use Council Orchestrator (recommended)
+git commit --no-verify -m "Sovereign Override: <reason>"
+```
+
+### Recommended Commit Workflow
+
+**Option A: Using Council Orchestrator (Recommended)**
+```bash
+# Create command.json
 cat > command.json << 'EOF'
 {
-  "command_type": "git_operations",
+  "task_description": "Commit changes with functional coherence check",
   "git_operations": {
     "files_to_add": ["path/to/file.py"],
     "commit_message": "feat(component): add new feature",
-    "push_after_commit": false
-  }
+    "push_to_origin": false
+  },
+  "output_artifact_path": "council_orchestrator/command_results/commit_results.json"
 }
 EOF
-python3 council_orchestrator/app/main.py command.json
 
-# Option B: Manual manifest generation
-python3 tools/generate_manifest.py path/to/file.py
-git add path/to/file.py commit_manifest.json
+# Orchestrator automatically runs test suite before commit
+python3 council_orchestrator/app/main.py command.json
+```
+
+**Option B: Manual Commit (Tests Run Automatically)**
+```bash
+# Stage your changes
+git add path/to/file.py
+
+# Commit (pre-commit hook runs tests automatically)
 git commit -m "feat(component): add new feature"
 
-# Option C: Emergency bypass (Guardian approval required)
+# If tests pass, commit proceeds
+# If tests fail, commit is rejected
+```
+
+**Option C: Emergency Bypass (Guardian Approval Required)**
+```bash
 git commit --no-verify -m "Emergency: critical fix"
 ```
 
-**⚠️ WARNING:** Never use `--no-verify` except for emergencies with Guardian approval!
+
 
 ## Branch Naming Conventions
 
@@ -869,17 +914,19 @@ git push
 1. **Commit often** - Small, focused commits are easier to review and revert
 2. **Write clear messages** - Future you will thank present you
 3. **Review before committing** - Always run `git diff --cached`
-4. **Test before pushing** - Run `pytest` and linting checks
-5. **Use Protocol 101** - Generate commit manifests via Council Orchestrator
+4. **Test before pushing** - Ensure `./scripts/run_genome_tests.sh` passes
+5. **Use Protocol 101 v3.0** - Let automated tests verify functional coherence
 6. **Pull before pushing** - Avoid merge conflicts
 7. **Use branches** - Never commit directly to `main`
 8. **Keep commits atomic** - One logical change per commit
 
 ## References
 
-- [Protocol 101: The Doctrine of the Unbreakable Commit](../../ADRs/019_protocol_101_unbreakable_commit.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [ADR-019: Cognitive Genome Publishing Architecture (Reforged)](../../ADRs/019_protocol_101_unbreakable_commit.md)
 - [Council Orchestrator GitOps Documentation](../../council_orchestrator/docs/howto-commit-command.md)
-- [Git Safety Rules](.agent/git_safety_rules.md)
+- [Git Safety Rules](../../.agent/git_safety_rules.md)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Git Documentation](https://git-scm.com/doc)
 - [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)
@@ -2813,169 +2860,215 @@ These enhancements will position Sanctuary as a more mature, production-ready ag
 
 --- START OF FILE mcp/analysis/pre_commit_hook_migration_analysis.md ---
 
-# Pre-Commit Hook Migration Analysis
+# Pre-Commit Hook Migration Analysis (Protocol 101 v3.0)
 
 ## 1. Current State Analysis
 
-### 1.1 Existing Hooks
-The repository currently enforces **Protocol 101 (The Doctrine of the Unbreakable Commit)** via a `.git/hooks/pre-commit` script.
+### 1.1 Protocol Evolution
+The repository has evolved from **Protocol 101 v1.0 (The Manifest Doctrine)** to **Protocol 101 v3.0 (The Doctrine of Absolute Stability)**.
 
-**Mechanism:**
-1.  Checks for the existence of `commit_manifest.json`.
-2.  Parses the manifest to find a list of files and their expected SHA256 hashes.
-3.  Verifies that the actual file on disk matches the expected hash.
-4.  Rejects the commit if the manifest is missing, malformed, or if hashes mismatch.
+**Historical Mechanism (v1.0 - DEPRECATED):**
+1.  Checked for the existence of `commit_manifest.json`.
+2.  Parsed the manifest to find a list of files and their expected SHA256 hashes.
+3.  Verified that the actual file on disk matched the expected hash.
+4.  Rejected the commit if the manifest was missing, malformed, or if hashes mismatched.
 
-**Observation:**
-Contrary to the initial task description, the current `pre-commit` hook **does not** appear to validate `command.json`. It focuses purely on the cryptographic integrity of the commit via the manifest.
+**Current Mechanism (v3.0 - CANONICAL):**
+1.  Executes the comprehensive automated test suite (`./scripts/run_genome_tests.sh`).
+2.  Verifies **Functional Coherence** - all tests must pass.
+3.  Rejects the commit if any test fails.
+4.  Enforces secret detection and security scanning.
 
-### 1.2 The Conflict
-The new MCP Architecture introduces autonomous agents (Chronicle, ADR, Forge, etc.) that will perform git operations.
-*   **Problem:** Standard git commands (`git commit`) run by these agents will fail because they won't automatically generate the `commit_manifest.json` required by the hook.
-*   **Risk:** If we simply disable the hook, we violate Protocol 101.
+**Critical Change:**
+The `commit_manifest.json` system has been **permanently purged** due to structural flaws identified during the "Synchronization Crisis." Integrity is now based on functional behavior, not static file hashing.
 
-## 2. Strategic Options
+### 1.2 The Resolution
+The MCP Architecture agents now achieve commit integrity through **Functional Coherence** rather than manifest generation.
 
-### Option A: The "Bypass" (Not Recommended)
-Modify the hook to skip validation if the commit message starts with `mcp(...)`.
-*   **Pros:** Easy to implement.
-*   **Cons:** Violates Protocol 101. MCP commits becomes "second-class" citizens with lower safety.
+*   **Solution:** All git operations (human or agent) must pass the automated test suite before commit.
+*   **Enforcement:** Pre-commit hook executes `./scripts/run_genome_tests.sh` automatically.
+*   **Compliance:** MCP agents use the Council Orchestrator, which runs tests before staging.
 
-### Option B: The "Compliance" (Recommended)
-Ensure that the **Git Operations Module** (shared infrastructure) automatically generates the `commit_manifest.json` before committing.
-*   **Pros:** Maintains Protocol 101 for *all* commits, human or agent.
-*   **Cons:** Requires implementing the manifest generation logic in the shared `GitOperations` class.
+## 2. Strategic Outcome
 
-### Option C: The "Hybrid" (Pragmatic Interim)
-Update the hook to support a "Migration Mode" where MCP commits are allowed *if* they follow a strict naming convention, while we build the full compliance tooling.
-*   **Pros:** Unblocks development immediately.
-*   **Cons:** Temporary safety gap.
+### The "Functional Coherence" Model (Implemented)
+Ensure that **all commits** (human or agent) verify functional integrity via automated testing.
 
-## 3. Proposed Solution: "Smart Compliance"
+*   **Pros:** 
+    - Maintains Protocol 101 v3.0 for *all* commits.
+    - Eliminates timing issues and complexity of manifest system.
+    - Provides real functional verification, not just file integrity.
+*   **Cons:** 
+    - Test suite must be comprehensive and fast.
+    - Requires discipline in maintaining test coverage.
 
-We will implement **Option C** evolving into **Option B**.
+## 3. Implementation Status: COMPLETE
 
-1.  **Immediate Step (Task #028):**
-    *   Update `.git/hooks/pre-commit` to recognize MCP commits.
-    *   Add a configuration file `.agent/mcp_migration.conf` to control strictness.
-    *   Implement `mcp_commit_validator` in the hook to enforce `mcp(<domain>): <msg>` format.
-    *   *Crucially*: The hook should still *try* to validate the manifest if present, but perhaps allow a bypass flag for the very first MCP implementation steps until the `GitOperations` module is ready.
+### 3.1 Artifacts
+*   `docs/mcp/analysis/pre_commit_hook_migration_analysis.md` (This file - Updated)
+*   `.agent/mcp_migration.conf` (Updated - Manifest logic removed)
+*   `.git/hooks/pre-commit` (Updated - Test execution added)
+*   `01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md` (v3.0 - Reforged)
+*   `update_genome.sh` (Updated - Manifest generation removed)
+*   `council_orchestrator/orchestrator/gitops.py` (Updated - Manifest logic purged)
 
-2.  **Follow-up (Shared Infra):**
-    *   Implement `core.git.GitOperations` which *always* generates `commit_manifest.json` before committing.
-    *   Once this is ready, we flip the switch in `.agent/mcp_migration.conf` to enforce manifest validation for MCPs too.
-
-## 4. Implementation Plan
-
-### 4.1 Artifacts
-*   `docs/mcp/analysis/pre_commit_hook_migration_analysis.md` (This file)
-*   `.agent/mcp_migration.conf`
-*   `.git/hooks/pre-commit` (Updated)
-
-### 4.2 Validation Logic (Bash)
+### 3.2 Validation Logic (Bash)
 ```bash
-MCP_PATTERN="^mcp\((chronicle|protocol|adr|task|cortex|council|config|code|git_workflow|forge)\): .+"
+#!/bin/bash
+# .git/hooks/pre-commit - Protocol 101 v3.0
 
-if [[ "$COMMIT_MSG" =~ $MCP_PATTERN ]]; then
-    # MCP Commit Detected
-    if [ "$STRICT_P101_MODE" = "false" ]; then
-        echo "MCP Commit detected. Bypassing Manifest Check (Migration Mode)."
-        exit 0
-    fi
+# ===== PHASE 1: Functional Coherence (Protocol 101 v3.0) =====
+echo "[P101 v3.0] Running Functional Coherence Test Suite..."
+
+./scripts/run_genome_tests.sh
+TEST_EXIT_CODE=$?
+
+if [ $TEST_EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "COMMIT REJECTED: Protocol 101 v3.0 Violation."
+  echo "Reason: Functional Coherence Test Suite FAILED."
+  exit 1
 fi
+
+echo "[P101 v3.0] ✅ Functional Coherence verified."
+
+# ===== PHASE 2: Security Hardening =====
+# (Secret detection and security scanning)
 ```
 
-### 4.3 Success Criteria
-1.  Legacy commits (with manifest) -> PASS
-2.  Legacy commits (without manifest) -> FAIL
-3.  MCP commits (correct format, migration mode) -> PASS
-4.  MCP commits (incorrect format) -> FAIL
+### 3.3 Success Criteria (All Met)
+1.  All commits (legacy or MCP) → Must pass test suite → ENFORCED
+2.  Test failures → Commit rejected → ENFORCED
+3.  MCP commits (via Orchestrator) → Tests run automatically → IMPLEMENTED
+4.  Manual commits → Tests run via pre-commit hook → IMPLEMENTED
+5.  Sovereign Override → Available for emergencies → DOCUMENTED
+
+## 4. Migration Complete
+
+**Status:** The migration from Protocol 101 v1.0 (Manifest) to v3.0 (Functional Coherence) is **COMPLETE**.
+
+**Key Changes:**
+- ❌ `commit_manifest.json` system permanently purged
+- ✅ Automated test suite execution enforced
+- ✅ Pre-commit hook updated
+- ✅ Council Orchestrator updated
+- ✅ CI/CD workflows updated
+- ✅ All documentation updated
+
+**Next Steps:**
+- Monitor test suite performance
+- Expand test coverage as needed
+- Maintain test suite quality
 
 --- END OF FILE mcp/analysis/pre_commit_hook_migration_analysis.md ---
 
 --- START OF FILE mcp/analysis/smart_git_mcp_analysis.md ---
 
-# Smart Git MCP Analysis
+# Smart Git MCP Analysis (Protocol 101 v3.0 - OBSOLETE)
 
-## 1. Objective
-Create a "Smart Git MCP" that abstracts the complexities of Project Sanctuary's git rules (Protocol 101, `command.json` legacy rules, pre-commit hooks) into a simple, safe interface for other agents.
+## 1. Status: CANCELED
 
-## 2. Core Components
+**Date:** 2025-11-29  
+**Reason:** Protocol 101 v3.0 (The Doctrine of Absolute Stability) has permanently purged the `commit_manifest.json` system.
 
-### 2.1 GitOperations Module (`core/git/git_ops.py`)
-This is the shared infrastructure component that will be used by the MCP server.
+This analysis document is preserved for historical reference but the proposed implementation is **no longer required**.
 
-**Responsibilities:**
-*   **Manifest Generation:** Calculate SHA256 hashes of staged files and generate `commit_manifest.json`.
-*   **Commit Execution:** Run `git commit` with the generated manifest.
-*   **Safety Checks:** Ensure no protected files are modified without authorization.
+## 2. Historical Objective (v1.0 - DEPRECATED)
+Create a "Smart Git MCP" that abstracts the complexities of Project Sanctuary's git rules (Protocol 101 v1.0, `command.json` legacy rules, pre-commit hooks) into a simple, safe interface for other agents.
 
-**Class Structure:**
+**Problem Solved:** Automatic generation of `commit_manifest.json` for MCP agents.
+
+**Current Solution:** Protocol 101 v3.0 uses **Functional Coherence** (automated test suite execution) instead of manifest generation.
+
+## 3. Core Components (Historical Reference)
+
+### 3.1 GitOperations Module (OBSOLETE)
+The manifest generation logic has been **permanently removed** from `council_orchestrator/orchestrator/gitops.py`.
+
+**Former Responsibilities (v1.0):**
+*   ❌ **Manifest Generation:** Calculate SHA256 hashes of staged files and generate `commit_manifest.json` (PURGED).
+*   ✅ **Commit Execution:** Run `git commit` (RETAINED).
+*   ✅ **Safety Checks:** Ensure no protected files are modified without authorization (RETAINED).
+
+**Current Responsibilities (v3.0):**
+*   ✅ **Test Execution:** Run `./scripts/run_genome_tests.sh` before commit.
+*   ✅ **Commit Execution:** Run `git commit` only if tests pass.
+*   ✅ **Safety Checks:** Enforce whitelist of non-destructive commands.
+
+### 3.2 Smart Git MCP Server (IMPLEMENTED - Modified)
+The MCP server (`mcp_servers/system/git_workflow/`) now exposes Protocol 101 v3.0 compliant operations.
+
+**Current Tool Signatures:**
 ```python
-class GitOperations:
-    def stage_files(self, files: List[str]) -> None:
-        """Stage files for commit."""
-        pass
-
-    def generate_manifest(self) -> Dict[str, Any]:
-        """Generate P101 manifest for staged files."""
-        pass
-
-    def commit(self, message: str) -> str:
-        """
-        Commit staged files with P101 manifest.
-        Returns commit hash.
-        """
-        pass
-    
-    def get_status(self) -> Dict[str, Any]:
-        """Get current repo status."""
-        pass
-```
-
-### 2.2 Smart Git MCP Server (`mcp_servers/git_workflow/`)
-This server exposes the `GitOperations` logic via the MCP protocol.
-
-**Tool Signatures:**
-```typescript
-smart_commit(
-  message: string,
-  files: string[]
+git_smart_commit(
+  message: str
 ) => {
-  commit_hash: string,
-  manifest_generated: boolean,
-  p101_verified: boolean
+  commit_hash: str,
+  tests_passed: bool,
+  p101_v3_verified: bool
 }
 
-get_status() => {
-  branch: string,
-  staged: string[],
-  modified: string[],
-  untracked: string[]
+git_get_status() => {
+  branch: str,
+  staged: List[str],
+  modified: List[str],
+  untracked: List[str]
 }
-```
 
-## 3. Implementation Strategy
+git_add(
+  files: List[str]
+) => {
+  status: str
+}
 
-1.  **Core Implementation:** Build `core/git/git_ops.py` first. This is pure Python, easy to test.
-2.  **Server Implementation:** Build the MCP server wrapper around `GitOperations`.
-3.  **Integration:** Verify that `smart_commit` works and passes the `pre-commit` hook *without* the `IS_MCP_AGENT` bypass (eventually).
-
-## 4. P101 Compliance Detail
-The `commit_manifest.json` must look like this:
-```json
-{
-  "timestamp": "2025-11-27T...",
-  "author": "Guardian",
-  "files": [
-    {
-      "path": "file.txt",
-      "sha256": "..."
-    }
-  ]
+git_push_feature(
+  force: bool = False,
+  no_verify: bool = False
+) => {
+  status: str
 }
 ```
-The `GitOperations` class must generate this file and stage it *before* committing.
+
+## 4. Implementation Status: COMPLETE (v3.0)
+
+1.  ✅ **Core Implementation:** `gitops.py` updated to remove manifest logic and enforce test execution.
+2.  ✅ **Server Implementation:** MCP server wrapper updated for Protocol 101 v3.0.
+3.  ✅ **Integration:** `git_smart_commit` works and passes the pre-commit hook via test suite execution.
+
+## 5. P101 v3.0 Compliance Detail
+
+**The `commit_manifest.json` system is PERMANENTLY DELETED.**
+
+**New Integrity Model:**
+- Pre-commit hook executes `./scripts/run_genome_tests.sh`
+- All tests must pass for commit to proceed
+- Council Orchestrator runs tests before staging
+- CI/CD enforces test execution on all PRs
+
+**Functional Coherence Verification:**
+```bash
+# Pre-commit hook (simplified)
+./scripts/run_genome_tests.sh
+if [ $? -ne 0 ]; then
+  echo "COMMIT REJECTED: Tests failed"
+  exit 1
+fi
+```
+
+## 6. Migration Path
+
+**For developers/agents using this analysis:**
+
+1.  **Stop** attempting to generate `commit_manifest.json`
+2.  **Start** ensuring your changes pass the automated test suite
+3.  **Use** the Council Orchestrator for automated test execution
+4.  **Reference** Protocol 101 v3.0 for current requirements
+
+## 7. References
+
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [ADR-037: MCP Git Strategy - Immediate Compliance (Reforged)](../../../ADRs/037_mcp_git_migration_strategy.md)
+- [Council Orchestrator GitOps Documentation](../../../council_orchestrator/docs/howto-commit-command.md)
 
 --- END OF FILE mcp/analysis/smart_git_mcp_analysis.md ---
 

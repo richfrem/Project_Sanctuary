@@ -1,18 +1,17 @@
 import subprocess
-import json
-import hashlib
 import os
-import datetime
 from typing import List, Dict, Any, Optional
 
 class GitOperations:
     """
-    Handles git operations with Protocol 101 enforcement.
+    Handles git operations with Protocol 101 v3.0 (Functional Coherence) enforcement.
+    
+    Protocol 101 v3.0 mandates that all commits must pass the automated test suite
+    before being accepted. This class provides safe, whitelisted git operations.
     """
     
     def __init__(self, repo_path: str = ".", base_dir: Optional[str] = None):
         self.repo_path = os.path.abspath(repo_path)
-        self.manifest_file = "commit_manifest.json"
         
         # Security: Restrict operations to base_dir if specified
         self.base_dir = os.path.abspath(base_dir) if base_dir else None
@@ -65,78 +64,22 @@ class GitOperations:
         else:
             self._run_git(["add"] + files)
 
-    def calculate_file_hash(self, filepath: str) -> str:
-        """Calculate SHA256 hash of a file."""
-        full_path = os.path.join(self.repo_path, filepath)
-        if not os.path.exists(full_path):
-            raise FileNotFoundError(f"File not found: {filepath}")
-            
-        sha256_hash = hashlib.sha256()
-        with open(full_path, "rb") as f:
-            # Read and update hash string value in blocks of 4K
-            for byte_block in iter(lambda: f.read(4096), b""):
-                sha256_hash.update(byte_block)
-        return sha256_hash.hexdigest()
-
-    def generate_manifest(self) -> Dict[str, Any]:
-        """
-        Generate Protocol 101 manifest for staged files.
-        Returns the manifest dictionary.
-        """
-        staged_files = self.get_staged_files()
-        if not staged_files:
-            raise ValueError("No files staged for commit.")
-
-        manifest_entries = []
-        for filepath in staged_files:
-            # Skip the manifest itself if it's somehow staged already
-            if filepath == self.manifest_file:
-                continue
-            
-            # Skip deleted files (they won't exist on disk)
-            full_path = os.path.join(self.repo_path, filepath)
-            if not os.path.exists(full_path):
-                continue
-                
-            file_hash = self.calculate_file_hash(filepath)
-            manifest_entries.append({
-                "path": filepath,
-                "sha256": file_hash
-            })
-
-        manifest = {
-            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-            "author": "Guardian (Smart Git MCP)",
-            "files": manifest_entries
-        }
-        return manifest
+    # PROTOCOL 101 v3.0: Manifest generation methods PERMANENTLY REMOVED
+    # Functional Coherence (test suite execution) is now the sole integrity mechanism
 
     def commit(self, message: str) -> str:
         """
-        Commit staged files with P101 manifest.
-        1. Generate manifest.
-        2. Write manifest to disk.
-        3. Stage manifest.
-        4. Commit.
+        Commit staged files with Protocol 101 v3.0 compliance.
+        
+        Protocol 101 v3.0 (Functional Coherence):
+        - The pre-commit hook will automatically execute ./scripts/run_genome_tests.sh
+        - All tests must pass for the commit to proceed
+        - No manifest generation is required
+        
         Returns commit hash.
         """
-        # 1. Generate Manifest
-        manifest = self.generate_manifest()
-        
-        # 2. Write Manifest
-        manifest_path = os.path.join(self.repo_path, self.manifest_file)
-        with open(manifest_path, "w") as f:
-            json.dump(manifest, f, indent=2)
-            
-        # 3. Stage Manifest
-        self._run_git(["add", self.manifest_file])
-        
-        # 4. Commit
-        # We assume the pre-commit hook is active. 
-        # Since we are generating a valid manifest, we do NOT need IS_MCP_AGENT=1 bypass.
-        # However, if we are running in an environment where the hook might block us 
-        # for other reasons, we should be aware. 
-        # For now, we commit normally.
+        # Protocol 101 v3.0: Pre-commit hook handles test execution
+        # We simply commit normally - the hook will enforce functional coherence
         self._run_git(["commit", "-m", message])
         
         # Return hash

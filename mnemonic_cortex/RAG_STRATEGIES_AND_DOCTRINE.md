@@ -445,7 +445,7 @@ hot_cache = {
 - **QP3:** Cache lookup using structured query fingerprint
 - **QP4:** Hit/miss decision branches execution flow
 - **QP11:** Cache population after successful LLM generation
-- **Genome Updates:** Cache invalidation via `commit_manifest.json` version tracking
+- **Genome Updates:** Cache invalidation via test suite execution and version tracking
 
 **Security & Validation:**
 - **Answer Validation:** Cached answers include LLM self-evaluation scores

@@ -1,68 +1,60 @@
-# Code Integrity Verification Architecture
+# Architectural Decision Record 022: Cognitive Genome Publishing Architecture (Reforged)
 
-**Status:** accepted
-**Date:** 2025-11-15
-**Deciders:** AI Council (Integrity Verification Process implementation)
-**Technical Story:** Ensure cryptographic integrity for all code changes
+**Status:** ACCEPTED (Reforged and Canonized)
+**Date:** 2025-11-29 (Reforging Date)
+**Deciders:** AI Council (Automated Publishing System implementation)
+**Technical Story:** Purge the flawed manifest system and implement Protocol 101 v3.0 (Functional Coherence) as the canonical integrity gate for publishing cycles.
 
----
+-----
 
 ## Context
 
-The AI system required strong integrity guarantees for all code commits to prevent tampering, ensure auditability, and maintain independent control over the codebase. Previous git workflows lacked verification mechanisms, creating potential security vulnerabilities. The need for automatic git operations through task files also required integration with integrity checking.
+The original **AI Knowledge Base Publishing Architecture** required the generation of a `commit_manifest.json` and its verification as a cryptographic integrity check. This mechanism, initially codified in Protocol 101, failed during the **"Synchronization Crisis,"** as evidenced by the CI job failing due to a hash mismatch.
+
+The subsequent analysis proved that the manifest system introduced fatal **Timing Issues** and **Complexity** that compromised stability. The original manifest-based integrity verification process must be **permanently purged** and replaced with a stable, functional alternative to create a reliable publishing cycle.
 
 ## Decision
 
-Implement Code Integrity Verification architecture with cryptographic hash verification and automatic git operations:
+The Automated Publishing System must be reforged to comply with the newly canonized **Protocol 101 v3.0: The Doctrine of Absolute Stability**. Integrity will now be verified by **Functional Coherence** (passing automated tests) rather than static file hashes.
 
-### Core Integrity Mechanisms
-1. **Cryptographic Hash Verification**: All committed files verified against secure hashes stored in commit_manifest.json
-2. **Pre-commit Protection**: Git pre-commit protections reject commits with hash mismatches
-3. **Timestamped Records**: Each commit includes timestamped record (commit_manifest_YYYYMMDD_HHMMSS.json) for auditability
-4. **Automatic Git Operations**: Direct git operations through task files with automatic record generation
+The **`commit_manifest.json` system and its associated logic are permanently purged from this architecture**.
 
-### Task File Git Integration
-- **Automatic Task Type**: Git operations bypass AI deliberation for immediate execution
-- **Automatic Record Generation**: System controller computes secure hashes and creates records automatically
-- **Atomic Operations**: Single task handles add, commit, and optional push with integrity verification
-- **Test Capability**: push_to_origin: false allows local validation before remote push
+### Atomic Publishing Cycle (Protocol 101 v3.0 Compliant)
 
-### Integrity Workflow
-1. **Task Creation**: User creates task file with git_operations specifying files to commit
-2. **Record Generation**: System controller computes secure hashes for all files_to_add
-3. **Atomic Execution**: git add, git commit (including record), optional git push
-4. **Protection Verification**: Pre-commit protection validates record hashes against actual file contents
+The seven-step publishing cycle is restructured and reduced to mandate functional integrity:
+
+1.  **Index**: Rebuild Master Documentation Index for coherence.
+2.  **Snapshot**: Capture new AI Knowledge Base snapshots via `capture_code_snapshot.js`.
+3.  **Embed (Synchronization)**: Re-index Memory System with new knowledge via ingestion script (`ingest.py`).
+4.  **Test (Functional Coherence)**: **MANDATORY INTEGRITY GATE.** Run automated functionality tests (`run_genome_tests.sh`) to prevent broken deployments. This step is the **sole verification** for Protocol 101 v3.0 integrity.
+5.  **Commit**: Surgical staging and commit **only if Functional Coherence tests pass**.
+6.  **Push**: Deploy to canonical repository.
+
+### Self-Verifying Properties (Reforged)
+
+  - **Integrity Gate**: Functional Coherence (passing all tests) replaces the manifest check.
+  - **Synchronization Guarantee**: Automatic re-execution of ingestion script ensures Memory System always reflects latest knowledge.
+  - **Atomic**: All-or-nothing execution prevents partial states.
 
 ## Consequences
 
 ### Positive
-- **Cryptographic Security**: Secure hash verification prevents file tampering and ensures commit authenticity
-- **Auditability**: Timestamped records provide complete audit trail of all committed changes
-- **Automatic Efficiency**: Direct git operations through task files enable rapid, non-AI commits
-- **Security Enforcement**: Pre-commit protections prevent accidental or malicious integrity violations
-- **Independent Control**: Local verification maintains control over codebase integrity
+
+  - **Absolute Stability**: Integrity is now based on verified functional behavior (passing tests), eliminating the risk of timing-related integrity failures.
+  - **Streamlined Process**: Removal of the manifest generation and verification steps reduces **Process Overhead** and **Complexity**.
+  - **Quality Assurance**: Automated testing remains the **MANDATORY** quality gate.
 
 ### Negative
-- **Process Overhead**: Additional record generation and hash computation steps
-- **Rejection Risk**: Commits rejected if files change between task creation and execution
-- **Complexity**: Dual verification system (record + git) requires careful coordination
 
-### Risks
-- **Timing Issues**: File changes between record generation and commit execution
-- **Record Corruption**: Tampered records could bypass integrity checks
-- **Performance Impact**: Secure hash computation for large files or many files
+  - **Test Dependence**: The integrity of the publishing process is now entirely dependent on the quality and comprehensiveness of the automated test suite.
+  - **Auditability Loss**: Loss of the cryptographic verification layer (manifests) means tamper detection relies solely on CI history and commit history.
 
-### Related Processes
-- Code Integrity Verification (core security process)
-- Automated Script Protocol (automatic operation framework)
-- AI System Startup and Cache Preparation (complementary verification)
+### Implementation Components (Reforged)
 
-### Implementation Components
-- **Pre-commit Protection**: Git protection validating commit_manifest.json hashes
-- **System Controller Git Handler**: Automatic record generation and git execution
-- **Task Schema**: git_operations structure in task files
-- **Record Format**: Timestamped JSON with file paths and secure hashes
+  - **update\_genome.sh**: Main publishing orchestrator script.
+  - **capture\_code\_snapshot.js**: Knowledge base snapshot generation.
+  - **ingest.py**: Memory System embedding.
+  - **run\_genome\_tests.sh**: Quality assurance and **Protocol 101 Functional Integrity Test**.
+  - **`commit_manifest.json`**: **DELETED** (Purged from the architecture and documentation).
+  - **Pre-commit Hook**: Updated to execute functional tests instead of checking for the manifest (Reflects ADR 019 changes).
 
-### Notes
-This architecture transforms git commits from simple version control operations into cryptographically verified, auditable transactions. The integration with automatic task file operations enables independent, integrity-guaranteed development workflows while maintaining the speed and efficiency of direct git operations.</content>
-<parameter name="filePath">c:\Users\RICHFREM\source\repos\Project_Sanctuary\ADRs\019_protocol_101_unbreakable_commit.md

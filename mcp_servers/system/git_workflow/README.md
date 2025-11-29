@@ -1,16 +1,16 @@
 # Git Workflow MCP Server
 
 **Domain:** `project_sanctuary.system.git_workflow`  
-**Version:** 1.0.0  
-**Status:** Production Ready
+**Version:** 2.0.0  
+**Status:** Production Ready (Protocol 101 v3.0 Compliant)
 
 ---
 
 ## Overview
 
-The Git Workflow MCP server provides **Protocol 101-compliant git operations** with an opinionated, safe workflow for feature development. It automatically generates cryptographic manifests for every commit and integrates with GitHub for PR creation.
+The Git Workflow MCP server provides **Protocol 101 v3.0-compliant git operations** with an opinionated, safe workflow for feature development. It enforces **Functional Coherence** through automated test suite execution and integrates with GitHub for PR creation.
 
-**Key Principle:** Safety-first, compliance-driven git operations.
+**Key Principle:** Safety-first, test-driven git operations with functional integrity verification.
 
 ---
 
@@ -49,19 +49,18 @@ git_start_feature("045", "smart-git-mcp")
 ```
 
 #### `git_smart_commit(message)` ⭐
-**The "Smart" Part:** Automatically generates Protocol 101 manifest.
+**The "Smart" Part:** Automatically enforces Protocol 101 v3.0 (Functional Coherence).
 
 **What it does:**
-1. Scans staged files
-2. Calculates SHA256 hashes
-3. Generates `commit_manifest.json`
-4. Stages manifest
-5. Commits (P101 compliant)
+1. Commits staged files
+2. Pre-commit hook automatically runs `./scripts/run_genome_tests.sh`
+3. All tests must pass for commit to proceed
+4. Ensures functional integrity before accepting commit
 
 **Example:**
 ```python
 git_smart_commit("Implement feature X")
-# Result: Commit with automatic manifest
+# Result: Commit only if all tests pass
 ```
 
 #### `git_push_feature()`
@@ -136,7 +135,7 @@ git_log(max_count=5, oneline=True)    # Last 5 commits (compact)
    → Review staged changes
 
 6. git_smart_commit("Add MCP client configuration")
-   → Commit with P101 manifest
+   → Commit (tests run automatically via pre-commit hook)
 
 7. git_push_feature()
    → Push to GitHub
@@ -210,7 +209,7 @@ The following dangerous operations are **NOT** exposed:
 See [git_mcp_comparison.md](file:///Users/richardfremmerlid/.gemini/antigravity/brain/8e7a3729-cc05-40ae-a5dd-38935c512229/git_mcp_comparison.md) for a detailed comparison with cyanheads/git-mcp-server.
 
 **Our Unique Features:**
-- ⭐ Automatic Protocol 101 manifest generation
+- ⭐ Automatic Protocol 101 v3.0 enforcement (Functional Coherence)
 - ⭐ GitHub PR creation via `gh` CLI
 - ⭐ Opinionated, safe workflow (prevents mistakes)
 
@@ -242,21 +241,22 @@ Error: Repository path is outside base directory
 ```
 **Solution:** Ensure `REPO_PATH` is within `GIT_BASE_DIR`.
 
-### Manifest Generation Failed
+### Test Suite Failed
 ```
-Error: No files staged for commit
+Error: Commit rejected - tests failed
 ```
-**Solution:** Stage files before committing: `git add <files>`
+**Solution:** Fix failing tests before committing. Run `./scripts/run_genome_tests.sh` to see failures.
 
 ---
 
 ## Related Documentation
 
-- [Protocol 101 Specification](../../docs/protocols/101_commit_manifest.md)
-- [ADR 037: MCP Git Migration Strategy](../../ADRs/037_mcp_git_migration_strategy.md)
-- [MCP Architecture](../../docs/mcp/architecture.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [ADR 037: MCP Git Strategy - Immediate Compliance](../../../ADRs/037_mcp_git_migration_strategy.md)
+- [ADR 019: Cognitive Genome Publishing Architecture](../../../ADRs/019_protocol_101_unbreakable_commit.md)
 
 ---
 
-**Last Updated:** 2025-11-27  
+**Last Updated:** 2025-11-29  
 **Maintainer:** Project Sanctuary Team

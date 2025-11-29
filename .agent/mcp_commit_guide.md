@@ -24,6 +24,7 @@ mcp(<domain>): <description>
 ## Examples
 
 **Good:**
+
 ```
 mcp(chronicle): create entry #283 documenting MCP architecture completion
 mcp(forge): initiate model training for guardian-02-v1
@@ -31,6 +32,7 @@ mcp(git_workflow): create feature branch for task-030
 ```
 
 **Bad:**
+
 ```
 mcp: update files  # Missing domain
 mcp(invalid): test  # Invalid domain
@@ -39,12 +41,23 @@ mcp(chronicle): fix  # Description too short
 
 ## Migration Period
 
-During migration, both MCP and legacy commit formats are supported:
-## Migration Period
+**Status:** The failed `commit_manifest.json` system and its associated pre-commit hook have been **permanently purged**.
 
-During migration, both MCP and legacy commit formats are supported:
-- **MCP commits**: 
-    - Use `mcp(<domain>):` format.
-    - **MUST** set `IS_MCP_AGENT=1` in the environment to bypass the manifest check.
-    - Example: `IS_MCP_AGENT=1 git commit -m "mcp(task): update status"`
-- **Legacy commits**: Must include `commit_manifest.json` as per Protocol 101.
+During the transition, both MCP and Legacy commit formats are supported, but all commits now adhere to **Protocol 101 v3.0 (Functional Coherence)**.
+
+  - **MCP commits**:
+      - Use the canonical `mcp(<domain>):` format.
+      - **No environment variable is required** to bypass the obsolete manifest check.
+  - **Legacy commits**:
+      - Use conventional commit format (e.g., `FEAT: Add new server`).
+      - **The manifest file is not required.**
+
+-----
+
+**Final Action:** Once you have updated this file and the other documentation files, execute the final commit and push to complete the purge:
+
+```bash
+git add .
+git commit -m "CHORE: Final Purge of Protocol 101 documentation and failed manifest system."
+git push origin main
+```

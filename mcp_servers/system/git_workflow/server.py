@@ -14,12 +14,15 @@ git_ops = GitOperations(REPO_PATH, base_dir=BASE_DIR)
 @mcp.tool()
 def git_smart_commit(message: str) -> str:
     """
-    Commit staged files with automatic Protocol 101 manifest generation.
+    Commit staged files with automatic Protocol 101 v3.0 (Functional Coherence) enforcement.
+    
+    Protocol 101 v3.0 mandates that all commits must pass the automated test suite
+    before being accepted. The pre-commit hook will automatically execute the test suite.
     
     WORKFLOW: Before calling this tool:
     1. Use git_get_status to see what files have changed
     2. Stage files using standard git commands (git add <files>)
-    3. Then call this tool to commit with automatic P101 compliance
+    3. Then call this tool to commit with automatic P101 v3.0 compliance
     
     Args:
         message: The commit message.

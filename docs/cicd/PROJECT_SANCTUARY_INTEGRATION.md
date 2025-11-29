@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This document outlines how to integrate the CI/CD hardening practices from `docs/cicd/` with Project Sanctuary's **Protocol 101: The Doctrine of the Unbreakable Commit** requirements.
+This document outlines how to integrate the CI/CD hardening practices from `docs/cicd/` with Project Sanctuary's **Protocol 101 v3.0: The Doctrine of Absolute Stability** requirements.
 
 ## Current State Analysis
 
@@ -13,8 +13,8 @@ This document outlines how to integrate the CI/CD hardening practices from `docs
 - **Workflow**: Feature branches → PR → main
 
 ### Project Sanctuary Requirements
-- **Protocol 101**: Mandatory `commit_manifest.json` with SHA-256 verification
-- **Council Orchestrator**: Automated commit manifest generation
+- **Protocol 101 v3.0**: Mandatory **Functional Coherence** (automated test suite execution)
+- **Council Orchestrator**: Automated test execution before commit
 - **Stack**: Python (not Node.js), PyTorch, LangChain, ChromaDB
 - **Workflow**: Feature branches → PR → main (aligned)
 
@@ -23,34 +23,34 @@ This document outlines how to integrate the CI/CD hardening practices from `docs
 ### 1. Pre-Commit Hook Consolidation
 
 **Current Situation:**
-- `.git/hooks/pre-commit` - Protocol 101 enforcement (SHA-256 verification)
+- `.git/hooks/pre-commit` - Protocol 101 v3.0 enforcement (Functional Coherence via test suite)
 - `docs/cicd/how_to_commit.md` - Secret scanning for Node.js projects
 
 **Recommended Approach:**
-Enhance the existing Protocol 101 pre-commit hook to include secret scanning:
+Enhance the existing Protocol 101 pre-commit hook to include test execution and secret scanning:
 
 ```bash
 #!/bin/bash
-# .git/hooks/pre-commit - Protocol 101 + Security Hardening
+# .git/hooks/pre-commit - Protocol 101 v3.0 + Security Hardening
 
-# ===== PHASE 1: Protocol 101 Enforcement =====
-MANIFEST="commit_manifest.json"
+# ===== PHASE 1: Protocol 101 v3.0 Enforcement (Functional Coherence) =====
+echo "[P101 v3.0] Running Functional Coherence Test Suite..."
 
-if [ ! -f "$MANIFEST" ]; then
-  echo "COMMIT REJECTED: Protocol 101 Violation."
-  echo "Reason: No 'commit_manifest.json' found."
+# Execute the comprehensive automated test suite
+./scripts/run_genome_tests.sh
+TEST_EXIT_CODE=$?
+
+if [ $TEST_EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "COMMIT REJECTED: Protocol 101 v3.0 Violation."
+  echo "Reason: Functional Coherence Test Suite FAILED."
+  echo ""
+  echo "The automated test suite must pass before any commit can proceed."
+  echo "Fix the failing tests and try again."
   exit 1
 fi
 
-# Verify SHA-256 hashes (existing Python verification)
-python3 -c "
-import sys
-import json
-import hashlib
-
-manifest_path = '$MANIFEST'
-# ... (existing verification code) ...
-" || exit 1
+echo "[P101 v3.0] ✅ Functional Coherence verified - all tests passed."
 
 # ===== PHASE 2: Security Hardening =====
 echo "[SECURITY] Running secret detection scan..."
@@ -91,11 +91,14 @@ if [ "$VIOLATIONS_FOUND" = true ]; then
   exit 1
 fi
 
-echo "[P101] All checks passed. Proceeding with commit."
+echo "[P101 v3.0] All checks passed. Proceeding with commit."
 exit 0
 ```
 
-### 2. GitHub Actions Workflow Enhancement
+**Key Changes from v1.0:**
+- **Removed**: `commit_manifest.json` verification and SHA-256 hashing
+- **Added**: Mandatory execution of `./scripts/run_genome_tests.sh`
+- **Retained**: Secret detection and security scanning
 
 **Update `.github/workflows/ci.yml`** to include Python-specific security scanning:
 
@@ -109,17 +112,27 @@ on:
     branches: [ main, dev ]
 
 jobs:
-  protocol-101-verification:
-    name: Protocol 101 Manifest Verification
+  protocol-101-functional-coherence:
+    name: Protocol 101 v3.0 - Functional Coherence
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
-      - name: Verify Commit Manifest
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
         run: |
-          if [ -f "commit_manifest.json" ]; then
-            python3 tools/verify_manifest.py
-          fi
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Run Functional Coherence Test Suite
+        run: |
+          ./scripts/run_genome_tests.sh
+        # NOTE: This test suite execution is MANDATORY for Protocol 101 v3.0 compliance
+        # Failure = Protocol Violation = CI failure
 
   python-security-audit:
     name: Python Security Audit
@@ -226,27 +239,27 @@ updates:
 
 #### Update `docs/cicd/overview.md`
 - Replace npm/Node.js references with Python/pip
-- Add Protocol 101 workflow section
+- Add Protocol 101 v3.0 workflow section (Functional Coherence)
 - Update branching strategy to match Project Sanctuary
 - Add Council Orchestrator commit workflow
 
 #### Update `docs/cicd/security_scanning.md`
 - Replace `npm audit` with `safety check` and `bandit`
 - Add Python-specific secret patterns
-- Document Protocol 101 manifest verification
+- Document Protocol 101 v3.0 test suite execution
 - Add examples for PyTorch/LangChain security considerations
 
 #### Update `docs/cicd/how_to_commit.md`
-- Replace conventional commits with Protocol 101 workflow
+- Replace conventional commits with Protocol 101 v3.0 workflow
 - Document Council Orchestrator usage
 - Update pre-commit hook examples for Python
-- Add `commit_manifest.json` generation examples
+- Add test suite execution examples
 
-#### Create New: `docs/cicd/protocol_101_integration.md`
-- Detailed Protocol 101 workflow
+#### Create New: `docs/cicd/protocol_101_v3_integration.md`
+- Detailed Protocol 101 v3.0 workflow (Functional Coherence)
 - Council Orchestrator integration guide
-- SHA-256 verification process
-- Emergency bypass procedures
+- Test suite execution process
+- Emergency bypass procedures (Sovereign Override)
 
 ### 5. Security Scanning Tools Comparison
 
@@ -254,19 +267,19 @@ updates:
 |------|----------------------|-------------------|--------|
 | **Dependency Scanning** | npm audit | safety, pip-audit | ✅ Adapt |
 | **SAST** | CodeQL (JS/TS) | CodeQL (Python), Bandit | ✅ Adapt |
-| **Secret Detection** | Pre-commit hook | Pre-commit hook + Protocol 101 | ✅ Enhance |
+| **Secret Detection** | Pre-commit hook | Pre-commit hook + Protocol 101 v3.0 | ✅ Enhance |
 | **Container Scanning** | N/A | Trivy (for MCP RAG service) | ✅ Add |
-| **Commit Verification** | N/A | Protocol 101 SHA-256 | ✅ Unique |
+| **Functional Integrity** | N/A | Protocol 101 v3.0 Test Suite | ✅ Unique |
 
 ### 6. Implementation Checklist
 
-- [ ] Enhance `.git/hooks/pre-commit` with secret detection
-- [ ] Update `.github/workflows/ci.yml` with Python security tools
+- [ ] Enhance `.git/hooks/pre-commit` with test suite execution and secret detection
+- [ ] Update `.github/workflows/ci.yml` with Python security tools and functional coherence tests
 - [ ] Update `.github/dependabot.yml` with daily security scans
-- [ ] Adapt `docs/cicd/overview.md` for Python/Protocol 101
+- [ ] Adapt `docs/cicd/overview.md` for Python/Protocol 101 v3.0
 - [ ] Adapt `docs/cicd/security_scanning.md` for Python stack
 - [ ] Adapt `docs/cicd/how_to_commit.md` for Council Orchestrator
-- [ ] Create `docs/cicd/protocol_101_integration.md`
+- [ ] Create `docs/cicd/protocol_101_v3_integration.md`
 - [ ] Update `.agent/git_safety_rules.md` with security scanning references
 - [ ] Add security scanning to Task #025 MCP RAG service
 - [ ] Document emergency procedures for security incidents
@@ -300,11 +313,11 @@ trivy fs . --security-checks vuln,config,secret
 
 ## Alignment with Project Sanctuary Doctrines
 
-### Protocol 101 Compliance
-- ✅ All commits require `commit_manifest.json`
-- ✅ SHA-256 verification enforced
+### Protocol 101 v3.0 Compliance
+- ✅ All commits require passing automated test suite (Functional Coherence)
+- ✅ Test execution enforced at pre-commit and CI/CD levels
 - ✅ Guardian approval workflow maintained
-- ✅ Ephemeral manifest cleanup
+- ✅ Sovereign Override available for emergencies
 
 ### Security Hardening
 - ✅ Multi-layered security (pre-commit + CI/CD)
@@ -313,22 +326,24 @@ trivy fs . --security-checks vuln,config,secret
 - ✅ Secret detection at commit time
 
 ### Autonomous Operations
-- ✅ Council Orchestrator generates manifests
+- ✅ Council Orchestrator executes tests before commit
 - ✅ Dependabot auto-updates dependencies
 - ✅ CI/CD pipeline runs automatically
 - ✅ Security alerts via GitHub
 
 ## Next Steps
 
-1. **Immediate**: Enhance pre-commit hook with secret detection
-2. **Short-term**: Update CI/CD workflows for Python security tools
+1. **Immediate**: Enhance pre-commit hook with test suite execution and secret detection
+2. **Short-term**: Update CI/CD workflows for Python security tools and functional coherence
 3. **Medium-term**: Adapt all `docs/cicd/` documentation for Project Sanctuary
 4. **Long-term**: Integrate security scanning into MCP RAG Tool Server deployment
 
 ## References
 
-- [ADR-019: Protocol 101 - The Unbreakable Commit](../ADRs/019_protocol_101_unbreakable_commit.md)
-- [Council Orchestrator GitOps Documentation](../council_orchestrator/docs/howto-commit-command.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [ADR-019: Protocol 101 - Cognitive Genome Publishing Architecture (Reforged)](../../ADRs/019_protocol_101_unbreakable_commit.md)
+- [Council Orchestrator GitOps Documentation](../../council_orchestrator/docs/howto-commit-command.md)
 - [Safety Documentation](https://pyup.io/safety/)
 - [Bandit Documentation](https://bandit.readthedocs.io/)
 - [GitHub Advanced Security](https://docs.github.com/en/code-security)

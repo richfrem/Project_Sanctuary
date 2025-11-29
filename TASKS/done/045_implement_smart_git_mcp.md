@@ -1,8 +1,14 @@
 # Task #045: Implement Smart Git MCP Server
 
-**Status:** Done
-**Priority:** High
+**Status:** Done (SUPERSEDED by Protocol 101 v3.0)  
+**Priority:** High  
 **Domain:** `project_sanctuary.system.git_workflow`
+
+> **⚠️ PROTOCOL 101 v3.0 UPDATE (2025-11-29)**  
+> This task was completed under Protocol 101 v1.0 (manifest-based integrity).  
+> Protocol 101 v3.0 has since replaced manifest generation with **Functional Coherence** (automated test suite execution).  
+> The manifest generation logic described below has been **permanently removed**.  
+> See: [Protocol 101 v3.0](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
 
 ---
 
@@ -12,26 +18,19 @@ Create a specialized "Smart Git MCP" that abstracts the complexities of Project 
 ## Problem
 Currently, agents must manually manage `commit_manifest.json` or remember to set `IS_MCP_AGENT=1`. This is error-prone.
 
-## Solution
+## Solution (HISTORICAL - v1.0)
 A Git MCP Server that:
-1.  Automatically generates `commit_manifest.json` for every commit (restoring full P101 compliance).
-2.  Handles `command.json` validation if needed.
-3.  Exposes simple tools like `smart_commit(message, files)`.
+1.  ~~Automatically generates `commit_manifest.json` for every commit~~ (REMOVED in v3.0)
+2.  ~~Handles `command.json` validation if needed~~ (REMOVED)
+3.  Exposes simple tools like `smart_commit(message, files)` (RETAINED - now enforces test execution)
 
-## Key Features
+## Current Implementation (v3.0)
 ```typescript
 smart_commit(
-  message: string,
-  files: string[]
+  message: string
 ) => {
   commit_hash: string,
-  manifest_generated: boolean,
-  p101_verified: boolean
+  tests_passed: boolean,
+  p101_v3_verified: boolean
 }
 ```
-
-## Implementation Steps
-1.  Extend `GitOperations` class in `core/git/`.
-2.  Implement manifest generation logic.
-3.  Update `mcp_servers/git_workflow/` to use this new logic.
-4.  Remove the `IS_MCP_AGENT` bypass from the pre-commit hook (return to Strict Mode).
