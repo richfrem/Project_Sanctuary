@@ -11,22 +11,10 @@ on:
   pull_request:
     branches: [ main, dev ]
 
-jobs:
-  protocol-101-verification:
-    name: Protocol 101 Manifest Verification
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      
-      - name: Verify Commit Manifest
-        run: |
-          if [ -f "commit_manifest.json" ]; then
-            echo "✅ Commit manifest found"
-            python3 tools/verify_manifest.py
-          else
-            echo "⚠️  No commit manifest in this commit (may be exempt)"
-          fi
+# ENFORCEMENT NOTE: The old 'Protocol 101 Manifest Verification' job has been PERMANENTLY DELETED.
+# Protocol 101 v3.0 (Absolute Stability) is now enforced by the MANDATORY success of all test jobs.
 
+jobs:
   shellcheck:
     name: ShellCheck
     runs-on: ubuntu-latest
@@ -55,16 +43,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 black
       
+      # NOTE: These linting steps are now MANDATORY for CI success (Protocol 101 v3.0)
       - name: Run Black (format check)
         run: black --check council_orchestrator/ mnemonic_cortex/ tools/
-        continue-on-error: true
       
       - name: Run Flake8
         run: flake8 council_orchestrator/ mnemonic_cortex/ tools/ --max-line-length=120
-        continue-on-error: true
 
   test-council-orchestrator:
-    name: Test Council Orchestrator
+    name: Protocol 101 Functional Check: Council Orchestrator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -79,17 +66,18 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
+      # NOTE: Success of this test job is MANDATORY for CI success (Protocol 101 v3.0)
       - name: Run Council Orchestrator Tests
         run: |
           if [ -d "council_orchestrator/tests" ]; then
             python -m pytest council_orchestrator/tests/ -v
           else
-            echo "⚠️  No tests found for council_orchestrator"
+            echo "⚠️  No tests found for council_orchestrator, continuing."
           fi
-        continue-on-error: true
+          # Removed 'continue-on-error: true' to enforce Protocol 101 v3.0
 
   test-mnemonic-cortex:
-    name: Test Mnemonic Cortex
+    name: Protocol 101 Functional Check: Mnemonic Cortex
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -104,14 +92,15 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
+      # NOTE: Success of this test job is MANDATORY for CI success (Protocol 101 v3.0)
       - name: Run Mnemonic Cortex Tests
         run: |
           if [ -d "mnemonic_cortex/tests" ]; then
             python -m pytest mnemonic_cortex/tests/ -v
           else
-            echo "⚠️  No tests found for mnemonic_cortex"
+            echo "⚠️  No tests found for mnemonic_cortex, continuing."
           fi
-        continue-on-error: true
+          # Removed 'continue-on-error: true' to enforce Protocol 101 v3.0
 
   security-scan:
     name: Security Scanning

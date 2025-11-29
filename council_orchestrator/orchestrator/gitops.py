@@ -2,12 +2,13 @@
 # Git operations utilities for the orchestrator
 
 import os
-import json
+# import json # Removed: Only used for manifest creation (PURGED)
 import shutil
 from .executor import execute_shell_command
 from pathlib import Path
-from datetime import datetime
+# from datetime import datetime # Removed: Only used for manifest timestamp (PURGED)
 from .memory.cache import CacheManager
+import subprocess 
 
 def verify_clean_state(project_root: Path) -> bool:
     """
@@ -82,14 +83,6 @@ def execute_mechanical_git(command, project_root):
         project_root: Path to the project root directory
     """
     try:
-        # Pillar 4: Verify clean state before starting (unless we are in the middle of a sequence, 
-        # but for mechanical_git we assume we start from a clean slate or are adding to the current valid state)
-        # NOTE: For 'add', the state might be dirty (the files to add). 
-        # So verify_clean_state is stricter than 'add' allows. 
-        # However, Protocol 101 implies we shouldn't have *unexpected* changes.
-        # For now, we skip verify_clean_state here because 'git add' implies we HAVE changes to stage.
-        # The verification should happen BEFORE generating the content if possible, or we accept that
-        # this tool IS the one making the state dirty/clean.
         
         # DOCTRINE OF THE BLUNTED SWORD: Hardcoded whitelist of permitted Git commands
         WHITELISTED_GIT_COMMANDS = ['add', 'commit', 'push', 'rm']
@@ -100,9 +93,11 @@ def execute_mechanical_git(command, project_root):
         commit_message = git_ops["commit_message"]
         push_to_origin = git_ops.get("push_to_origin", False)
 
-        # --- PROTOCOL 101: AUTO-GENERATE MANIFEST ---
-        # Compute git repository root robustly (use git if available), then compute SHA-256
-        # for each file. Support both repo-root paths and project_root-relative paths.
+        # --- PROTOCOL 101 v3.0: MANIFEST PURGE ---
+        # The failed commit_manifest.json system, all hashing, and manifest generation logic
+        # have been PERMANENTLY REMOVED as per Protocol 101 v3.0.
+        # Integrity is now guaranteed by Functional Coherence (pre-commit test suite success).
+        
         try:
             git_top = execute_shell_command(
                 ["git", "rev-parse", "--show-toplevel"],
@@ -113,48 +108,11 @@ def execute_mechanical_git(command, project_root):
         except Exception: # execute_shell_command raises Exception
             git_repo_root = project_root.parent
 
-        manifest_entries = []
         resolved_file_paths = []  # keep full Path objects for later git add
         
-        # Protocol 101 Fix: These generated or temporary files should be committed but NOT
-        # included in the manifest's hash list to avoid recursive hashing/validation failure.
-        ARTIFACT_FILENAMES_TO_EXCLUDE = [
-            "commit_manifest.json", 
-            "command.json", 
-            "command_git_ops.json"
-        ]
-
-        for file_path in files_to_add_from_command:
-            # Protocol 101 Fix: Bypass hashing/manifest-inclusion for generated/command artifacts
-            if Path(file_path).name in ARTIFACT_FILENAMES_TO_EXCLUDE:
-                print(f"[MECHANICAL WARNING] Excluding artifact {file_path} from manifest hashing (Protocol 101 Bypass).")
-                
-                # We still need to run the path resolution for the excluded file to ensure it's staged later.
-                candidates = []
-                p = Path(file_path)
-                if p.is_absolute():
-                    candidates.append(p)
-                else:
-                    candidates.append(project_root / file_path)
-                    candidates.append(git_repo_root / file_path)
-                    try:
-                        candidates.append((project_root / file_path).resolve())
-                    except Exception:
-                        pass
-                
-                found = False
-                for cand in candidates:
-                    if cand.exists() and cand.is_file():
-                        resolved_file_paths_for_manifest.append(cand)  # Add to resolved list for git add later
-                        found = True
-                        break
-                if not found:
-                    print(f"[MECHANICAL WARNING] Excluded artifact {file_path} does not exist for staging.")
-                
-                continue # Skip the hash calculation and manifest_entries.append()
-
-            # Try a few resolution strategies: project_root/file_path, git_repo_root/file_path,
-            # and if file_path looks like a repo-relative path starting with '../', resolve
+        # Resolve file paths without generating hashes or manifest entries (PURGED LOGIC)
+        for file_path in files_to_add:
+            # Try to resolve the path relative to project_root or git_repo_root
             candidates = []
             p = Path(file_path)
             if p.is_absolute():
@@ -170,50 +128,16 @@ def execute_mechanical_git(command, project_root):
 
             found = False
             for cand in candidates:
-                try:
-                    repo_relative_path = cand.relative_to(git_repo_root)
-                except ValueError:
-                    continue
                 if cand.exists() and cand.is_file():
-                    try:
-                        with open(cand, 'rb') as f:
-                            file_hash = hashlib.sha256(f.read()).hexdigest()
-                        manifest_entries.append({
-                            "path": str(repo_relative_path),
-                            "sha256": file_hash
-                        })
-                        resolved_file_paths.append(cand)
-                        found = True
-                        break
-                    except (OSError, IOError) as e:
-                        print(f"[MECHANICAL ERROR] Failed to read file {file_path} for manifest: {e}")
-                if not found:
-                    print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping manifest entry")
-
-        # Create manifest JSON in git repository root.
-        # Use a timestamped manifest filename to avoid stomping an authoritative manifest
-        try:
-            manifest_data = {"files": manifest_entries}
-            ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
-            manifest_name = f"commit_manifest_{ts}.json"
-            manifest_path = git_repo_root / manifest_name
-            with open(manifest_path, 'w') as f:
-                json.dump(manifest_data, f, indent=2)
-            # Also write canonical commit_manifest.json at repo root so pre-commit hook (Protocol 101)
-            # validates the exact manifest the orchestrator generated.
-            canonical_manifest_path = git_repo_root / "commit_manifest.json"
-            try:
-                with open(canonical_manifest_path, 'w') as f2:
-                    json.dump(manifest_data, f2, indent=2)
-                print(f"[MECHANICAL SUCCESS] Wrote canonical commit_manifest.json with {len(manifest_entries)} entries")
-            except (OSError, IOError) as e:
-                print(f"[MECHANICAL WARNING] Failed to write canonical commit_manifest.json: {e}")
-
-            print(f"[MECHANICAL SUCCESS] Generated {manifest_name} with {len(manifest_entries)} entries")
-        except (OSError, IOError) as e:
-            print(f"[MECHANICAL ERROR] Failed to write commit manifest: {e}")
-            raise
-
+                    resolved_file_paths.append(cand)  # Add to resolved list for git add later
+                    found = True
+                    break
+            
+            if not found:
+                print(f"[MECHANICAL WARNING] File {file_path} does not exist or is not a file, skipping staging.")
+        
+        # Manifest writing logic is DELETED.
+        
         # Phase 1.5: Handle Deletions (git rm)
         if files_to_remove:
             print(f"[MECHANICAL INFO] Deleting {len(files_to_remove)} files...")
@@ -235,22 +159,10 @@ def execute_mechanical_git(command, project_root):
                         print(f"[MECHANICAL ERROR] git rm failed for {file_path}: {e.stderr.decode().strip()}")
                         # Do NOT raise here, as we want to continue with the commit
 
-        # --- CORRECTED LOGIC: SEPARATE HASHING FROM COMMITTING ---
-        # The files to be committed will include the manifest itself.
-        # The manifest's content, however, will only contain hashes of the original target files.
+        # The files to be committed will ONLY include the resolved file paths (PURGED MANIFEST ADDITION)
         files_to_commit = [p for p in resolved_file_paths]
-
-        # ensure manifest_path is a Path under git_repo_root (manifest_name is defined above)
-        # manifest will live in git_repo_root, so add the manifest file object to the commit list
-        files_to_commit.append(manifest_path)
-
-        # Also add the canonical manifest path to the commit if it exists
-        canonical_manifest_path = git_repo_root / "commit_manifest.json"
-        if canonical_manifest_path.exists():
-            files_to_commit.append(canonical_manifest_path)
-
-        print(f"[MECHANICAL INFO] Staging {len(resolved_file_paths)} target files + {2 if canonical_manifest_path.exists() else 1} manifest files for commit.")
-        # The `manifest_entries` list is now correct and does NOT include the manifest itself.
+        
+        print(f"[MECHANICAL INFO] Staging {len(resolved_file_paths)} target files for commit (P101 v3.0 Compliant).")
 
         # Execute git add for each resolved file from the git repo root
         for full_path in files_to_commit:
