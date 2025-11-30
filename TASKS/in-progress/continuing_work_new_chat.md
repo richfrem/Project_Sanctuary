@@ -3,6 +3,8 @@
 **NOTE:** Use this as a template for future sessions. track recently completed work, also work to be done in the next clean chat window.
 provide enough context in the details below so a new chat window can be started with minimal additional context sharing.
 
+**NOTE:** remember before running mcp operation tests, validate all underlying scripts are working first with test harnesses in `tests/`
+
 ## SESSION SUMMARY (2025-11-28 / 2025-11-29)
 
 ### ✅ Completed Today
