@@ -5,6 +5,8 @@ provide enough context in the details below so a new chat window can be started 
 
 **NOTE:** remember before running mcp operation tests, validate all underlying scripts are working first with test harnesses in `tests/`
 
+**Note2:** initial focus should be mcp testing all those operations only after that is complete, testing rAG mcp or forge mcp. 
+
 ## SESSION SUMMARY (2025-11-28 / 2025-11-29)
 
 ### ✅ Completed Today

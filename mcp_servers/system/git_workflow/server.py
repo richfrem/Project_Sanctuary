@@ -1,6 +1,7 @@
 from fastmcp import FastMCP
 from mcp_servers.lib.git.git_ops import GitOperations
 import os
+import subprocess
 from typing import List
 
 # Initialize FastMCP with canonical domain name
