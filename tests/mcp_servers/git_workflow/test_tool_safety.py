@@ -275,6 +275,26 @@ class TestGitToolSafety(unittest.TestCase):
         self.assertIn("abc123de", result)  # Local hash
         self.assertIn("differen", result)  # Remote hash (first 8 chars)
 
+    def test_finish_feature_force_bypass(self):
+        """Test that git_finish_feature with force=True bypasses merge check."""
+        # Mock is_branch_merged to return False (simulating squash merge)
+        self.mock_git_ops.is_branch_merged.return_value = False
+        
+        result = self.git_finish_feature("feature/task-123-test", force=True)
+        
+        self.assertIn("Finished feature", result)
+        self.assertIn("Verified merge", result)
+        # Should verify clean state
+        self.mock_git_ops.verify_clean_state.assert_called_once()
+        # Should NOT check merge status (or ignore result)
+        # Actually our implementation calls is_branch_merged but ignores it if force=True?
+        # Let's check the implementation: "if not force and not git_ops.is_branch_merged..."
+        # So if force=True, is_branch_merged is NOT called.
+        self.mock_git_ops.is_branch_merged.assert_not_called()
+        
+        # Should proceed to delete
+        self.mock_git_ops.delete_local_branch.assert_called_with("feature/task-123-test", force=True)
+
     def test_finish_feature_success_merged(self):
         """Test that git_finish_feature succeeds if branch is merged."""
         # Mock is_branch_merged to return True

@@ -296,7 +296,7 @@ def git_start_feature(task_id: str, description: str) -> str:
         return f"Failed to start feature: {str(e)}"
 
 @mcp.tool()
-def git_finish_feature(branch_name: str) -> str:
+def git_finish_feature(branch_name: str, force: bool = False) -> str:
     """
     Finish a feature branch (cleanup).
     Assumes the PR has been merged on GitHub.
@@ -307,6 +307,7 @@ def git_finish_feature(branch_name: str) -> str:
     
     Args:
         branch_name: The branch to finish.
+        force: If True, bypass merge verification (useful for squash merges).
         
     Returns:
         Cleanup status.
@@ -328,7 +329,8 @@ def git_finish_feature(branch_name: str) -> str:
 
         # Safety check: Verify branch is merged into main
         # This prevents data loss by ensuring the PR is actually merged
-        if not git_ops.is_branch_merged(branch_name, "main"):
+        # Skip if force=True (e.g. for squash merges where commit history is lost)
+        if not force and not git_ops.is_branch_merged(branch_name, "main"):
             # Double check by fetching origin first? 
             # Sometimes local main is behind origin/main, so it looks unmerged locally
             # but is merged on remote.
@@ -341,7 +343,8 @@ def git_finish_feature(branch_name: str) -> str:
                 return (
                     f"ERROR: Branch '{branch_name}' is NOT merged into main. "
                     "Cannot finish/delete an unmerged feature branch. "
-                    "Please merge your PR on GitHub first, then run this command again."
+                    "Please merge your PR on GitHub first, then run this command again. "
+                    "If you squash merged, use force=True to bypass this check."
                 )
 
         # ALWAYS checkout main first to avoid merging main into the feature branch
