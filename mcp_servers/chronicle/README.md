@@ -6,7 +6,21 @@ MCP server for managing historical truth entries in `00_CHRONICLE/ENTRIES/`.
 
 The Chronicle MCP ensures the integrity of the project's historical record. It enforces strict rules about immutability and classification to maintain a trusted history of events, decisions, and milestones.
 
-## Tools
+## Operations
+
+| Operation | Status | Test Suite | Description |
+|-----------|--------|------------|-------------|
+| `chronicle_create_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
+| `chronicle_append_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for create_entry |
+| `chronicle_update_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Update existing entry (7-day rule applies) |
+| `chronicle_get_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Retrieve specific entry by number |
+| `chronicle_list_entries` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | List recent entries with limit |
+| `chronicle_read_latest_entries` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for list_entries |
+| `chronicle_search` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Full-text search across entries |
+
+**Prerequisite Tests:** [test_chronicle_validator.py](../../tests/test_chronicle_validator.py)
+
+### Tool Details
 
 ### `chronicle_create_entry`
 Create a new chronicle entry.

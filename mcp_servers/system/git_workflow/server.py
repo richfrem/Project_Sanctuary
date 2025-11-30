@@ -32,6 +32,31 @@ def git_smart_commit(message: str) -> str:
         The commit hash or error message.
     """
     try:
+        # Get current status
+        status = git_ops.status()
+        current_branch = status["branch"]
+        
+        # Safety check: Block if on main branch
+        if current_branch == "main":
+            return (
+                "ERROR: Cannot commit directly to main branch. "
+                "You must be on a feature branch to make changes. "
+                "Please call git_start_feature first to create a feature branch."
+            )
+            
+        # Safety check: Must be a feature branch
+        if not current_branch.startswith("feature/"):
+            return (
+                f"ERROR: Cannot commit on branch '{current_branch}'. "
+                f"You must be on a feature branch (format: feature/task-XXX-desc). "
+                f"Please call git_start_feature to create a proper feature branch."
+            )
+
+        # Verification: Ensure files are staged
+        staged_files = git_ops.get_staged_files()
+        if not staged_files:
+            return "ERROR: No files staged for commit. Please use git_add first."
+            
         # Protocol 101 v3.0: Functional Coherence
         # The pre-commit hook (test suite) is the sole validation mechanism.
         # We simply attempt the commit - the hook will enforce test passage.
@@ -96,6 +121,8 @@ def git_add(files: List[str] = None) -> str:
     """
     Stage files for commit.
     
+    Safety: Blocks if on main branch - must be on feature branch.
+    
     Args:
         files: List of file paths to stage. If None or empty, stages all changes (git add -A).
         
@@ -107,11 +134,35 @@ def git_add(files: List[str] = None) -> str:
         git_add()  # Stage all changes
     """
     try:
+        # Get current status
+        status = git_ops.status()
+        current_branch = status["branch"]
+        
+        # Safety check: Block if on main branch
+        if current_branch == "main":
+            return (
+                "ERROR: Cannot stage files on main branch. "
+                "You must be on a feature branch to make changes. "
+                "Please call git_start_feature first to create a feature branch."
+            )
+        
+        # Safety check: Verify on a feature branch
+        if not current_branch.startswith("feature/"):
+            return (
+                f"ERROR: Cannot stage files on branch '{current_branch}'. "
+                f"You must be on a feature branch (format: feature/task-XXX-desc). "
+                f"Current branch does not follow feature branch naming convention. "
+                f"Please call git_start_feature to create a proper feature branch."
+            )
+        
+        # All checks passed - stage files
         git_ops.add(files)
+        
         if files:
-            return f"Staged {len(files)} file(s): {', '.join(files)}"
+            return f"Staged {len(files)} file(s) on {current_branch}: {', '.join(files)}"
         else:
-            return "Staged all changes (git add -A)"
+            return f"Staged all changes on {current_branch} (git add -A)"
+            
     except Exception as e:
         return f"Failed to stage files: {str(e)}"
 
@@ -130,19 +181,43 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
     try:
         current = git_ops.get_current_branch()
         if current == "main":
-            return "Error: Cannot push main directly via this tool."
+            return (
+                "ERROR: Cannot push main branch directly. "
+                "You must be on a feature branch to push changes. "
+                "Please call git_start_feature first to create a feature branch."
+            )
             
+        # Verification: Ensure we have something to push?
+        # Actually git push handles "everything up-to-date" gracefully.
+        
         output = git_ops.push("origin", current, force=force, no_verify=no_verify)
+        
+        # Verification: Verify remote hash matches local hash
+        local_hash = git_ops.get_commit_hash("HEAD")
+        remote_hash = git_ops.get_commit_hash(f"origin/{current}")
+        
+        if local_hash != remote_hash:
+            return f"WARNING: Push completed but remote hash ({remote_hash[:8]}) does not match local ({local_hash[:8]}). Output: {output}"
+            
         pr_url = f"https://github.com/richfrem/Project_Sanctuary/pull/new/{current}"
-        return f"Pushed {current} to origin: {output}\n\n📝 Next: Create PR at {pr_url}"
+        return f"Verified push to {current} (Hash: {local_hash[:8]}).\nOutput: {output}\n\n📝 Next: Create PR at {pr_url}"
     except Exception as e:
         return f"Failed to push feature: {str(e)}"
 
 @mcp.tool()
 def git_start_feature(task_id: str, description: str) -> str:
     """
-    Start a new feature branch.
+    Start a new feature branch (idempotent).
     Format: feature/task-{task_id}-{description}
+    
+    Idempotent behavior:
+    - If branch exists and you're on it: success (no-op)
+    - If branch exists but you're elsewhere: checkout to it
+    - If branch doesn't exist: create and checkout
+    
+    Safety checks:
+    - Blocks if a DIFFERENT feature branch exists (one at a time rule)
+    - Requires clean working directory for new branch creation
     
     Args:
         task_id: The task ID (e.g., "045").
@@ -157,17 +232,58 @@ def git_start_feature(task_id: str, description: str) -> str:
         if req_error:
             return req_error
 
-        # Pillar 4: Verify clean state before starting a new feature
-        git_ops.verify_clean_state()
-
-        # Sanitize description
+        # Get comprehensive status
+        status = git_ops.status()
+        current_branch = status["branch"]
+        feature_branches = status["feature_branches"]
+        local_branches = [b["name"] for b in status["local_branches"]]
+        is_clean = status["is_clean"]
+        
+        # Sanitize and build branch name
         safe_desc = description.lower().replace(" ", "-")
         branch_name = f"feature/task-{task_id}-{safe_desc}"
         
-        git_ops.create_branch(branch_name)
-        git_ops.checkout(branch_name)
+        # Check if branch already exists
+        branch_exists = branch_name in local_branches
         
-        return f"Started feature: {branch_name}"
+        if branch_exists:
+            # Branch exists - idempotent behavior
+            if current_branch == branch_name:
+                # Already on the branch - no-op
+                return f"Already on feature branch: {branch_name}"
+            else:
+                # Switch to existing branch
+                git_ops.checkout(branch_name)
+                return f"Switched to existing feature branch: {branch_name}"
+        else:
+            # Branch doesn't exist - need to create
+            
+            # Safety check: No other feature branches allowed
+            if len(feature_branches) > 0:
+                return (
+                    f"ERROR: Cannot create new feature branch. "
+                    f"Existing feature branch(es) detected: {', '.join(feature_branches)}. "
+                    f"Only one feature branch at a time is allowed. "
+                    f"Please finish the current feature branch first using git_finish_feature."
+                )
+            
+            # Safety check: Clean working directory required
+            if not is_clean:
+                return (
+                    f"ERROR: Cannot create new feature branch. "
+                    f"Working directory has uncommitted changes. "
+                    f"Staged: {len(status['staged'])}, "
+                    f"Modified: {len(status['modified'])}, "
+                    f"Untracked: {len(status['untracked'])}. "
+                    f"Please commit or stash changes first."
+                )
+            
+            # All checks passed - create and checkout
+            git_ops.create_branch(branch_name)
+            git_ops.checkout(branch_name)
+            
+            return f"Created and switched to new feature branch: {branch_name}"
+            
     except Exception as e:
         return f"Failed to start feature: {str(e)}"
 
@@ -188,16 +304,44 @@ def git_finish_feature(branch_name: str) -> str:
         Cleanup status.
     """
     try:
+        # Safety check: Cannot finish main branch
+        if branch_name == "main":
+            return "ERROR: Cannot finish 'main' branch. It is the protected default branch."
+            
+        # Safety check: Must be a feature branch
+        if not branch_name.startswith("feature/"):
+            return (
+                f"ERROR: Invalid branch name '{branch_name}'. "
+                f"Can only finish feature branches (format: feature/task-XXX-desc)."
+            )
+
         # Pillar 4: Verify clean state before finishing (merging/deleting)
         git_ops.verify_clean_state()
+
+        # Safety check: Verify branch is merged into main
+        # This prevents data loss by ensuring the PR is actually merged
+        if not git_ops.is_branch_merged(branch_name, "main"):
+            # Double check by fetching origin first? 
+            # Sometimes local main is behind origin/main, so it looks unmerged locally
+            # but is merged on remote.
+            git_ops.checkout("main")
+            git_ops.pull("origin", "main")
+            git_ops.checkout(branch_name)
+            
+            # Check again after sync
+            if not git_ops.is_branch_merged(branch_name, "main"):
+                return (
+                    f"ERROR: Branch '{branch_name}' is NOT merged into main. "
+                    "Cannot finish/delete an unmerged feature branch. "
+                    "Please merge your PR on GitHub first, then run this command again."
+                )
 
         # ALWAYS checkout main first to avoid merging main into the feature branch
         git_ops.checkout("main")
             
         git_ops.pull("origin", "main")
         
-        # Delete local branch (force delete since we just pulled main and it might look unmerged if we didn't rebase)
-        # But usually if it's merged in main, -d is fine. However, to be safe and ensure cleanup:
+        # Delete local branch (force delete since we verified merge status)
         git_ops.delete_local_branch(branch_name, force=True)
         
         # Delete remote branch
@@ -207,32 +351,9 @@ def git_finish_feature(branch_name: str) -> str:
             # Remote branch might already be deleted, that's okay
             pass
         
-        return f"Finished feature {branch_name}. Deleted local and remote branches, pulled latest main."
+        return f"Finished feature {branch_name}. Verified merge, deleted local/remote branches, and synced main."
     except Exception as e:
         return f"Failed to finish feature: {str(e)}"
-
-@mcp.tool()
-def git_sync_main() -> str:
-    """
-    Sync the main branch with remote.
-    
-    Returns:
-        Sync status.
-    """
-    try:
-        # Pillar 6: Pre-Flight Check
-        req_error = check_requirements()
-        if req_error:
-            return req_error
-
-        current = git_ops.get_current_branch()
-        if current != "main":
-            return "Error: Must be on main branch to sync."
-            
-        output = git_ops.pull("origin", "main")
-        return f"Synced main: {output}"
-    except Exception as e:
-        return f"Failed to sync main: {str(e)}"
 
 @mcp.tool()
 def git_diff(cached: bool = False, file_path: str = None) -> str:

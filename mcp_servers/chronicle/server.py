@@ -1,7 +1,7 @@
 from fastmcp import FastMCP
 import os
 from typing import Optional, List, Dict, Any
-from .operations import ChronicleOperations
+from mcp_servers.chronicle.operations import ChronicleOperations
 
 # Initialize FastMCP
 mcp = FastMCP("project_sanctuary.chronicle")
