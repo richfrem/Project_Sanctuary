@@ -1,8 +1,8 @@
 # mcp_servers Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-11-29T23:38:54.682Z
+Generated On: 2025-11-30T01:12:09.198Z
 
-# Mnemonic Weight (Token Count): ~59,939 tokens
+# Mnemonic Weight (Token Count): ~59,963 tokens
 
 # Directory Structure (relative to mcp_servers subfolder)
   ./mcp_servers/README.md
@@ -6866,12 +6866,15 @@ git_ops = GitOperations(REPO_PATH, base_dir=BASE_DIR)
 @mcp.tool()
 def git_smart_commit(message: str) -> str:
     """
-    Commit staged files with automatic Protocol 101 manifest generation.
+    Commit staged files with automatic Protocol 101 v3.0 (Functional Coherence) enforcement.
+    
+    Protocol 101 v3.0 mandates that all commits must pass the automated test suite
+    before being accepted. The pre-commit hook will automatically execute the test suite.
     
     WORKFLOW: Before calling this tool:
     1. Use git_get_status to see what files have changed
     2. Stage files using standard git commands (git add <files>)
-    3. Then call this tool to commit with automatic P101 compliance
+    3. Then call this tool to commit with automatic P101 v3.0 compliance
     
     Args:
         message: The commit message.
@@ -6880,13 +6883,9 @@ def git_smart_commit(message: str) -> str:
         The commit hash or error message.
     """
     try:
-        # Pillar 4: Pre-Execution Verification (Smart Commit Variant)
-        # We allow staged files (obviously), but we MUST reject unstaged changes or untracked files
-        # to ensure the commit is atomic and the working tree is clean otherwise.
-        status = git_ops.status()
-        if status['modified'] or status['untracked']:
-             return f"PROTOCOL VIOLATION: Working directory is not clean. Modified: {len(status['modified'])}, Untracked: {len(status['untracked'])}. Please stage or stash changes."
-
+        # Protocol 101 v3.0: Functional Coherence
+        # The pre-commit hook (test suite) is the sole validation mechanism.
+        # We simply attempt the commit - the hook will enforce test passage.
         commit_hash = git_ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
     except Exception as e:
@@ -6908,9 +6907,16 @@ def check_requirements() -> str:
             
         for req in requirements:
             tool_name = req.split('>')[0].split('=')[0].split('<')[0].strip()
+            
+            # Special handling for git-lfs (git subcommand)
+            if tool_name == "git-lfs":
+                cmd = ["git", "lfs", "version"]
+            else:
+                cmd = [tool_name, "--version"]
+            
             # Basic check: try to run the tool with --version
             try:
-                subprocess.run([tool_name, "--version"], check=True, capture_output=True)
+                subprocess.run(cmd, check=True, capture_output=True)
             except (subprocess.CalledProcessError, FileNotFoundError):
                 return f"PROTOCOL VIOLATION: Missing required dependency: {tool_name}. Please install it as per REQUIREMENTS.env."
     except Exception as e:

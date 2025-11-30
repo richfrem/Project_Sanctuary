@@ -1,6 +1,7 @@
 from fastmcp import FastMCP
 from mcp_servers.lib.git.git_ops import GitOperations
 import os
+import subprocess
 from typing import List
 
 # Initialize FastMCP with canonical domain name
@@ -31,13 +32,9 @@ def git_smart_commit(message: str) -> str:
         The commit hash or error message.
     """
     try:
-        # Pillar 4: Pre-Execution Verification (Smart Commit Variant)
-        # We allow staged files (obviously), but we MUST reject unstaged changes or untracked files
-        # to ensure the commit is atomic and the working tree is clean otherwise.
-        status = git_ops.status()
-        if status['modified'] or status['untracked']:
-             return f"PROTOCOL VIOLATION: Working directory is not clean. Modified: {len(status['modified'])}, Untracked: {len(status['untracked'])}. Please stage or stash changes."
-
+        # Protocol 101 v3.0: Functional Coherence
+        # The pre-commit hook (test suite) is the sole validation mechanism.
+        # We simply attempt the commit - the hook will enforce test passage.
         commit_hash = git_ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
     except Exception as e:
@@ -59,9 +56,16 @@ def check_requirements() -> str:
             
         for req in requirements:
             tool_name = req.split('>')[0].split('=')[0].split('<')[0].strip()
+            
+            # Special handling for git-lfs (git subcommand)
+            if tool_name == "git-lfs":
+                cmd = ["git", "lfs", "version"]
+            else:
+                cmd = [tool_name, "--version"]
+            
             # Basic check: try to run the tool with --version
             try:
-                subprocess.run([tool_name, "--version"], check=True, capture_output=True)
+                subprocess.run(cmd, check=True, capture_output=True)
             except (subprocess.CalledProcessError, FileNotFoundError):
                 return f"PROTOCOL VIOLATION: Missing required dependency: {tool_name}. Please install it as per REQUIREMENTS.env."
     except Exception as e:
