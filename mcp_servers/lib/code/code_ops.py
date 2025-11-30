@@ -156,3 +156,213 @@ class CodeOperations:
         """Check if a code tool is available."""
         result = self._run_command(["which", tool])
         return result["success"]
+
+    def find_file(self, name_pattern: str, directory: str = ".") -> List[str]:
+        """
+        Find files by name or glob pattern.
+        
+        Args:
+            name_pattern: File name or glob pattern (e.g., "server.py", "*.py")
+            directory: Directory to search in (relative to project root)
+            
+        Returns:
+            List of matching file paths (relative to project root)
+        """
+        search_dir = self._validate_path(directory)
+        
+        if not search_dir.exists():
+            raise FileNotFoundError(f"Directory not found: {directory}")
+            
+        matches = []
+        for file_path in search_dir.rglob(name_pattern):
+            if file_path.is_file():
+                matches.append(str(file_path.relative_to(self.project_root)))
+        
+        return sorted(matches)
+
+    def list_files(self, directory: str = ".", pattern: str = "*", recursive: bool = True) -> List[Dict[str, Any]]:
+        """
+        List files in a directory with optional pattern.
+        
+        Args:
+            directory: Directory to list (relative to project root)
+            pattern: Glob pattern for filtering (default: "*")
+            recursive: If True, search recursively
+            
+        Returns:
+            List of dicts with file info (path, size, modified)
+        """
+        search_dir = self._validate_path(directory)
+        
+        if not search_dir.exists():
+            raise FileNotFoundError(f"Directory not found: {directory}")
+            
+        files = []
+        glob_method = search_dir.rglob if recursive else search_dir.glob
+        
+        for file_path in glob_method(pattern):
+            if file_path.is_file():
+                stat = file_path.stat()
+                files.append({
+                    "path": str(file_path.relative_to(self.project_root)),
+                    "size": stat.st_size,
+                    "modified": stat.st_mtime
+                })
+        
+        return sorted(files, key=lambda x: x["path"])
+
+    def search_content(self, query: str, file_pattern: str = "*.py", case_sensitive: bool = False) -> List[Dict[str, Any]]:
+        """
+        Search for text/patterns in code files.
+        
+        Args:
+            query: Text or pattern to search for
+            file_pattern: File pattern to search in (default: "*.py")
+            case_sensitive: If True, perform case-sensitive search
+            
+        Returns:
+            List of matches with file path, line number, and context
+        """
+        import re
+        
+        matches = []
+        flags = 0 if case_sensitive else re.IGNORECASE
+        pattern = re.compile(re.escape(query), flags)
+        
+        for file_info in self.list_files(".", file_pattern, recursive=True):
+            file_path = self.project_root / file_info["path"]
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    for line_num, line in enumerate(f, 1):
+                        if pattern.search(line):
+                            matches.append({
+                                "file": file_info["path"],
+                                "line": line_num,
+                                "content": line.rstrip()
+                            })
+            except (UnicodeDecodeError, PermissionError):
+                # Skip binary files or files we can't read
+                continue
+                
+        return matches
+
+    def read_file(self, path: str, max_size_mb: int = 10) -> str:
+        """
+        Read file contents.
+        
+        Args:
+            path: Relative path to file
+            max_size_mb: Maximum file size in MB (default: 10)
+            
+        Returns:
+            File contents as string
+        """
+        file_path = self._validate_path(path)
+        
+        if not file_path.exists():
+            raise FileNotFoundError(f"File not found: {path}")
+            
+        if not file_path.is_file():
+            raise ValueError(f"Path is not a file: {path}")
+            
+        # Check file size
+        size_mb = file_path.stat().st_size / (1024 * 1024)
+        if size_mb > max_size_mb:
+            raise ValueError(f"File too large ({size_mb:.1f}MB > {max_size_mb}MB): {path}")
+            
+        return file_path.read_text(encoding='utf-8')
+
+    def write_file(self, path: str, content: str, backup: bool = True, create_dirs: bool = True) -> Dict[str, Any]:
+        """
+        Write/update file with automatic backup.
+        
+        Args:
+            path: Relative path to file
+            content: Content to write
+            backup: If True, create backup before overwriting
+            create_dirs: If True, create parent directories if needed
+            
+        Returns:
+            Dict with operation results
+        """
+        import shutil
+        import time
+        
+        file_path = self._validate_path(path)
+        
+        # Check if file exists before writing
+        file_existed = file_path.exists()
+        
+        # Create parent directories if needed
+        if create_dirs and not file_path.parent.exists():
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Create backup if file exists
+        backup_path = None
+        if backup and file_existed:
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            backup_path = file_path.with_suffix(f"{file_path.suffix}.{timestamp}.bak")
+            shutil.copy2(file_path, backup_path)
+        
+        # Write file
+        file_path.write_text(content, encoding='utf-8')
+        
+        return {
+            "path": str(file_path.relative_to(self.project_root)),
+            "size": len(content),
+            "backup": str(backup_path.relative_to(self.project_root)) if backup_path else None,
+            "created": not file_existed
+        }
+
+    def get_file_info(self, path: str) -> Dict[str, Any]:
+        """
+        Get file metadata.
+        
+        Args:
+            path: Relative path to file
+            
+        Returns:
+            Dict with file metadata
+        """
+        file_path = self._validate_path(path)
+        
+        if not file_path.exists():
+            raise FileNotFoundError(f"File not found: {path}")
+            
+        if not file_path.is_file():
+            raise ValueError(f"Path is not a file: {path}")
+            
+        stat = file_path.stat()
+        
+        # Detect language from extension
+        ext_to_lang = {
+            '.py': 'Python',
+            '.js': 'JavaScript',
+            '.ts': 'TypeScript',
+            '.java': 'Java',
+            '.cpp': 'C++',
+            '.c': 'C',
+            '.go': 'Go',
+            '.rs': 'Rust',
+            '.rb': 'Ruby',
+            '.php': 'PHP',
+            '.md': 'Markdown',
+            '.json': 'JSON',
+            '.yaml': 'YAML',
+            '.yml': 'YAML',
+        }
+        
+        # Count lines
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                line_count = sum(1 for _ in f)
+        except (UnicodeDecodeError, PermissionError):
+            line_count = None
+        
+        return {
+            "path": str(file_path.relative_to(self.project_root)),
+            "size": stat.st_size,
+            "modified": stat.st_mtime,
+            "lines": line_count,
+            "language": ext_to_lang.get(file_path.suffix, "Unknown")
+        }

@@ -568,6 +568,12 @@ PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 | `code_format` | ✅ | ✅ | ✅ | `test_operations.py` | Format code with optional check-only mode |
 | `code_analyze` | ✅ | ✅ | ✅ | `test_operations.py` | Perform static analysis |
 | `code_check_tools` | ✅ | ✅ | ✅ | `test_operations.py` | Check available code quality tools |
+| `code_find_file` | ✅ | ✅ | ✅ | `test_operations.py` | Find files by name or glob pattern |
+| `code_list_files` | ✅ | ✅ | ✅ | `test_operations.py` | List files in directory with pattern |
+| `code_search_content` | ✅ | ✅ | ✅ | `test_operations.py` | Search for text/patterns in code |
+| `code_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read file contents |
+| `code_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write/update file with backup |
+| `code_get_info` | ✅ | ✅ | ✅ | `test_operations.py` | Get file metadata |
 
 ---
 
