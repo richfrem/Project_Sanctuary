@@ -7,14 +7,47 @@ provide enough context in the details below so a new chat window can be started 
 
 **Note2:** initial focus should be mcp testing all those operations only after that is complete, testing rAG mcp or forge mcp. 
 
-## SESSION SUMMARY (2025-11-28 / 2025-11-29)
+## SESSION SUMMARY (2025-11-28 / 2025-11-29 / 2025-11-30)
 
-### ✅ Completed Today
+### ✅ Completed This Session (2025-11-29 Evening / 2025-11-30 Morning)
+
+1.  **MCP Operations Inventory Created & Verified:**
+      *   Created `docs/mcp/mcp_operations_inventory.md` tracking all 10 MCP servers
+      *   **Verified & Updated:** Chronicle, Protocol, ADR, and Task MCPs (All ✅)
+      *   **Status:** 75% tested, 10% partial, 15% untested
+      *   Updated READMEs for verified servers
+2.  **Protocol 101 v3.0 Validation Complete:**
+      *   **Negative Validation:** Confirmed commit rejection when tests fail ✅
+      *   **Positive Validation:** Confirmed commit acceptance when tests pass ✅
+      *   **Functional Coherence Gate:** Fully operational and enforcing test passage
+3.  **Git MCP Server Hardening:**
+      *   Fixed missing `subprocess` import
+      *   Fixed `git-lfs` dependency check (now calls `git lfs version`)
+      *   Removed legacy P101 v2.0 manifest logic
+      *   Removed overly strict working directory check
+      *   Created focused pre-commit hook (git tests only, 0.64s execution)
+4.  **Git MCP Operations Verified:**
+      *   `git_get_status` ✅
+      *   `git_start_feature` ✅
+      *   `git_add` ✅
+      *   `git_smart_commit` ✅ (with P101 v3.0 validation)
+      *   `git_push_feature` ✅
+      *   `git_finish_feature` ✅ (full lifecycle tested)
+5.  **Chronicle MCP Server Fixed:**
+      *   Replaced relative import with absolute import for robustness
+      *   Fixed Claude Desktop config path (`mcp_servers.chronicle.server`)
+      *   Verified all Chronicle operations working in both Antigravity and Claude Desktop
+      *   Unit tests passing (4/4)
+6.  **Feature Branch Merged:**
+      *   `feature/task-055-p101-v3-validation` successfully merged to main
+      *   All changes committed and pushed
+
+### ✅ Completed Previously (2025-11-28)
 
 1.  **Structural Purge Complete (P101 v3.0 Canonization):**
-      * **Permanently deleted** all logic and documentation for `commit_manifest.json` and SHA-256 hashing (Manifest Doctrine).
-      * **Codified Protocol 101 v3.0: The Doctrine of Absolute Stability.**
-      * **New Integrity Gate:** The successful execution of the test suite (Functional Coherence) is now the sole pre-commit integrity check.
+      *   **Permanently deleted** all logic and documentation for `commit_manifest.json` and SHA-256 hashing (Manifest Doctrine).
+      *   **Codified Protocol 101 v3.0: The Doctrine of Absolute Stability.**
+      *   **New Integrity Gate:** The successful execution of the test suite (Functional Coherence) is now the sole pre-commit integrity check.
 2.  **Forge MCP Implementation** - Added Sanctuary model query tools
 3.  **Core Relocation** - Moved `core/` to `mcp_servers/lib/`
 4.  **Integration Test Suite** - Created robust RAG pipeline tests
@@ -26,7 +59,31 @@ provide enough context in the details below so a new chat window can be started 
 
 All tasks are in `TASKS/in-progress/` and ready to work on:
 
-#### 1\. Task 055: Verify Git Operations and MCP Tools
+#### 1\. Task 066: Complete MCP Operations Testing and Inventory Maintenance
+
+**Priority:** **High**
+**File:** `TASKS/in-progress/066_complete_mcp_operations_testing_and_inventory_main.md`
+
+**Objective:** Systematically test all MCP operations and maintain the central MCP operations inventory (`docs/mcp/mcp_operations_inventory.md`) as testing progresses.
+
+**Key Deliverables:**
+1. Test all MCP operations across all 10 servers
+2. Update `mcp_operations_inventory.md` with testing status (✅/⚠️/❌)
+3. Update each MCP server README with operation tables matching the main inventory
+4. Document test results and coverage
+5. Complete integration tests for RAG and Forge MCPs
+
+**Why This Matters:** The MCP operations inventory is the central tracking document for all MCP testing. It links to test suites, diagrams, and documentation, making it easy to see what's tested and what needs work.
+
+**Related Files:**
+- `docs/mcp/mcp_operations_inventory.md` - Central inventory (just created)
+- `docs/mcp/claude_desktop_config_template.json` - MCP configuration template
+- `~/Library/Application Support/Claude/claude_desktop_config.json` - Claude Desktop config
+- `~/.gemini/` - Antigravity MCP config
+
+-----
+
+#### 2\. Task 055: Verify Git Operations and MCP Tools
 
 **Priority:** **CRITICAL** (Now mandatory validation of the Functional Coherence Gate)
 **File:** `TASKS/in-progress/055_verify_git_operations_and_mcp_tools_after_core_rel.md`
@@ -46,7 +103,7 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 -----
 
-#### 2\. Task 056: Harden Self-Evolving Loop Validation
+#### 3\. Task 056: Harden Self-Evolving Loop Validation
 
 **Priority:** High
 **File:** `TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md`
@@ -74,32 +131,76 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 -----
 
-## RECOMMENDED WORKFLOW FOR TOMORROW
+## RECOMMENDED WORKFLOW FOR TOMORROW (2025-11-30)
 
-### Morning Session (3-4 hours)
+### **TESTING STRATEGY: Strict Validation Hierarchy** 🏗️
 
-**Focus:** Task 055 - Git Operations Verification
+**Philosophy:** **Script Validation First.** We must verify the underlying logic of *every* operation via the test suite before we even touch the MCP layer.
 
-1.  Run existing unit tests
-2.  **CRITICAL:** Add tests for new parameters, especially testing the **Functional Coherence Gate** (i.e., commit succeeds if tests pass, fails if tests fail).
-3.  Create integration test
-4.  Verify all Git MCP tools
-5.  Document results
+> [!RULE]
+> **Script Validation Suite:** All MCP server operations must have corresponding tests in the test suite to verify the underlying logic *before* the MCP layer is tested directly.
+> **Strict Order:** Complete Phase 1 (Test Suites) for **ALL** target servers before moving to Phase 2 (MCP Verification).
 
-**Why Start Here:** This is **CRITICAL** due to the P101 purge. Git must be verified stable and compliant with the new law.
+> [!IMPORTANT]
+> **Forge MCP Constraint:** For the Forge MCP, **ONLY** test `query_sanctuary_model` and `check_sanctuary_model_status`. Do **NOT** test or implement any fine-tuning operations at this time.
 
------
+---
 
-### Afternoon Session (4-5 hours)
+### **PHASE 1: Script Validation Suite (Run All Test Suites)** 🧪 (2-3 hours)
 
-**Focus:** Task 022C - MCP Documentation Standards
+**Objective:** Ensure underlying logic is sound for ALL servers before MCP testing.
 
-1.  Create `docs/mcp/` structure
-2.  Write testing standards document
-3.  Create README template
-4.  Start updating MCP server READMEs (prioritize Cortex, Forge, Git Workflow)
+**1. Document Domain (Completed ✅)**
+   - [x] ADR: `pytest tests/test_adr_operations.py`
+   - [x] Task: `pytest tests/mcp_servers/task/`
 
-**Why This Next:** High priority and will use results from Task 055 for Git Workflow MCP docs.
+**2. System Domain (Git Workflow)**
+   - [ ] **Action:** Run/Expand `tests/test_git_ops.py`
+   - [ ] Verify: `git_diff`, `git_log`, `git_sync_main` logic coverage
+
+**3. Cognitive Domain (Cortex & Forge)**
+   - [ ] **Action:** Run `tests/integration/test_rag_pipeline.py` (Cortex)
+   - [ ] **Action:** Run `tests/integration/test_forge_integration.py` (Forge)
+   - [ ] **Constraint:** Verify Forge tests ONLY cover query/status
+
+---
+
+### **PHASE 2: MCP Layer Verification** 🔧 (2-3 hours)
+
+**Objective:** Verify the MCP tool wrappers *only after* Phase 1 is complete.
+
+**1. Git Workflow MCP**
+   - [ ] Verify tools in agent: `git_diff`, `git_log`, `git_sync_main`
+
+**2. Cortex MCP (RAG)**
+   - [ ] Verify tools: `cortex_query`, `cortex_ingest_incremental`
+
+**3. Forge MCP**
+   - [ ] Verify tools: `query_sanctuary_model` (Query Only)
+
+---
+
+### **PHASE 3: Knowledge Loop Validation (Task 056)** 🚀 (2-3 hours)
+
+**Objective:** Execute the **Test of Absolute Stability** (End-to-End).
+
+**Steps:**
+1.  Execute full loop: Create Doc → Commit (P101) → Ingest → Retrieve
+2.  Verify all systems working in concert
+
+---
+
+## **TOTAL ESTIMATED TIME: 7-11 hours**
+
+**Recommended Schedule:**
+- **Morning (4-5 hours):** Phase 1 + Phase 2 (Git foundation + MCP)
+- **Afternoon (3-6 hours):** Phase 3 + Phase 4 (RAG testing + Knowledge loop)
+
+**Deliverables:**
+1. Comprehensive test report (`WORK_IN_PROGRESS/mcp_validation_report.md`)
+2. Updated Task 055 (mark complete)
+3. **Completed Task 056** (knowledge loop validated) ✅
+4. Updated continuation document for next session
 
 -----
 
@@ -121,30 +222,41 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 ## PROGRESS TRACKING
 
-### Task 055: Git Operations Verification ⏳
+### Task 055: Git Operations Verification ⏳ (Partially Complete)
 
-**Status:** Not Started
-**Branch:** `feature/task-056-git-testing-and-mcp-docs`
+**Status:** Core validation complete, additional hardening planned for tomorrow
+**Branch:** `main` (merged)
 
-  - [ ] Run existing unit tests: `pytest tests/test_git_ops.py -v`
-  - [ ] Add test for `push()` with `force=True`
-  - [ ] Add test for `push()` with `no_verify=True`
-  - [ ] Create integration test script `tests/integration/test_git_workflow_end_to_end.py`
-  - [ ] Integration test: Create temp branch
-  - [ ] Integration test: Commit (**Functional Coherence Gate**)
-  - [ ] **ADD:** Integration test: Intentional test failure, assert commit is rejected (P101 v3.0 validation)
-  - [ ] Integration test: Push with `no_verify=True`
-  - [ ] Integration test: Cleanup
-  - [ ] Document test results in `WORK_IN_PROGRESS/git_test_results.md`
-  - [ ] Test `git_start_feature` MCP tool
-  - [ ] Test `git_add` MCP tool
-  - [ ] Test `git_smart_commit` MCP tool
-  - [ ] Test `git_push_feature` MCP tool with `no_verify=True`
-  - [ ] Test `git_create_pr` MCP tool
-  - [ ] Test `git_finish_feature` MCP tool
-  - [ ] Document MCP test results in `WORK_IN_PROGRESS/git_mcp_test_results.md`
-  - [ ] Update `TASKS/in-progress/055_verify_git_operations_and_mcp_tools_after_core_rel.md` with results
-  - [ ] Commit all changes
+#### ✅ Completed (2025-11-29)
+  - [x] Run existing unit tests: `pytest tests/test_git_ops.py -v` (6/6 passed)
+  - [x] Protocol 101 v3.0 Negative Validation (commit rejected on test failure)
+  - [x] Protocol 101 v3.0 Positive Validation (commit accepted on test pass)
+  - [x] Test `git_start_feature` MCP tool ✅
+  - [x] Test `git_add` MCP tool ✅
+  - [x] Test `git_smart_commit` MCP tool ✅ (with P101 v3.0 enforcement)
+  - [x] Test `git_push_feature` MCP tool ✅
+  - [x] Test `git_finish_feature` MCP tool ✅ (full lifecycle)
+  - [x] Document MCP test results in walkthrough.md
+  - [x] Commit all changes and merge to main
+
+#### 🔄 Remaining for Tomorrow (Additional Hardening)
+  - [ ] Test remaining Git MCP tools:
+    - [ ] `git_sync_main` (standalone test)
+    - [ ] `git_diff` (cached and uncached)
+    - [ ] `git_log` (various parameters)
+  - [ ] Test Chronicle MCP tools comprehensively:
+    - [ ] `chronicle_create_entry`
+    - [ ] `chronicle_update_entry`
+    - [ ] `chronicle_append_entry`
+  - [ ] Test Protocol MCP tools
+  - [ ] Test Task MCP tools
+  - [ ] Test ADR MCP tools
+  - [ ] Test Cortex MCP tools (RAG operations)
+  - [ ] Test Forge MCP tools (Sanctuary model queries)
+  - [ ] Stress test: Multiple rapid commits
+  - [ ] Stress test: Large file operations
+  - [ ] Edge case testing: Empty commits, merge conflicts, etc.
+  - [ ] Document comprehensive test results
   - [ ] **Task 055 Complete** ✅
 
 -----

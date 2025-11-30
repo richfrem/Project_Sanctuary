@@ -11,6 +11,14 @@ class TestGitOperations(unittest.TestCase):
     
     Note: Manifest generation tests have been removed as Protocol 101 v3.0
     uses Functional Coherence (test suite execution) instead of manifests.
+    
+    SAFETY RULES FOR GIT WORKFLOW MCP:
+    1. Always check status first (git_get_status) before any operation
+    2. One feature branch at a time - never create multiple concurrent branches
+    3. Never commit directly to main - feature branches only
+    4. git_finish_feature requires user confirmation that PR is merged
+    5. git_sync_main should not be called while feature branch is active
+    6. git_smart_commit automatically runs test suite (P101 v3.0)
     """
     
     def setUp(self):
@@ -54,15 +62,32 @@ class TestGitOperations(unittest.TestCase):
         self.assertEqual(len(commit_hash), 40)  # SHA-1 hash length
 
     def test_status(self):
-        """Test repository status retrieval."""
+        """Test repository status retrieval with enhanced branch info."""
         # Create a file
         with open("test.txt", "w") as f:
             f.write("hello world")
         subprocess.run(["git", "add", "test.txt"], check=True)
         
         status = self.git_ops.status()
+        
+        # Check basic fields
         self.assertEqual(status["branch"], "main")
         self.assertIn("test.txt", status["staged"])
+        
+        # Check enhanced fields
+        self.assertIn("local_branches", status)
+        self.assertIn("feature_branches", status)
+        self.assertIn("remote", status)
+        self.assertIn("is_clean", status)
+        
+        # Should have at least main branch
+        self.assertGreaterEqual(len(status["local_branches"]), 1)
+        
+        # Should not be clean (has staged file)
+        self.assertFalse(status["is_clean"])
+        
+        # No feature branches yet
+        self.assertEqual(len(status["feature_branches"]), 0)
 
     def test_branch_operations(self):
         """Test branch creation, checkout, and deletion."""
@@ -128,6 +153,47 @@ class TestGitOperations(unittest.TestCase):
             self.git_ops.push(remote="origin", force=True)
         except RuntimeError as e:
             # Expected to fail without remote, but should contain git error, not parameter error
+            self.assertIn("fatal", str(e).lower())
+
+    def test_diff_unstaged(self):
+        """Test diff for unstaged changes."""
+        with open("test_diff.txt", "w") as f:
+            f.write("original content")
+        subprocess.run(["git", "add", "test_diff.txt"], check=True)
+        self.git_ops.commit("add test_diff.txt")
+        
+        with open("test_diff.txt", "w") as f:
+            f.write("modified content")
+        
+        diff_output = self.git_ops.diff(cached=False)
+        self.assertIn("test_diff.txt", diff_output)
+
+    def test_diff_staged(self):
+        """Test diff for staged changes."""
+        with open("test_staged.txt", "w") as f:
+            f.write("staged content")
+        subprocess.run(["git", "add", "test_staged.txt"], check=True)
+        
+        diff_output = self.git_ops.diff(cached=True)
+        self.assertIn("test_staged.txt", diff_output)
+
+    def test_log_basic(self):
+        """Test basic commit log retrieval."""
+        for i in range(3):
+            with open(f"file{i}.txt", "w") as f:
+                f.write(f"content {i}")
+            subprocess.run(["git", "add", f"file{i}.txt"], check=True)
+            self.git_ops.commit(f"commit {i}")
+        
+        log_output = self.git_ops.log(max_count=5)
+        self.assertIn("commit 0", log_output)
+        self.assertIn("commit 2", log_output)
+
+    def test_pull_no_remote(self):
+        """Test pull behavior without remote."""
+        try:
+            self.git_ops.pull(remote="origin", branch="main")
+        except RuntimeError as e:
             self.assertIn("fatal", str(e).lower())
 
 if __name__ == "__main__":

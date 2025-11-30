@@ -6,7 +6,20 @@ MCP server for managing system protocols in `01_PROTOCOLS/`.
 
 The Protocol MCP provides structured access to the project's protocol library, ensuring consistent formatting and metadata management.
 
-## Tools
+## Operations
+
+| Operation | Status | Test Suite | Description |
+|-----------|--------|------------|-------------|
+| `protocol_create` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Create new protocol with versioning |
+| `protocol_update` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
+| `protocol_get` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Retrieve specific protocol by number |
+| `protocol_list` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | List protocols with optional filters |
+| `protocol_search` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Full-text search across protocols |
+| `protocol_validate_action` | ⚠️ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Validate action against protocols |
+
+**Prerequisite Tests:** [test_protocol_validator.py](../../tests/test_protocol_validator.py)
+
+### Tool Details
 
 ### `protocol_create`
 Create a new protocol.

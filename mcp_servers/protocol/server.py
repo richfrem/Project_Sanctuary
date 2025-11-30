@@ -132,38 +132,5 @@ def protocol_search(query: str) -> str:
         return f"Error searching protocols: {str(e)}"
 
 
-@mcp.tool()
-def protocol_validate_action(
-    action_description: str,
-    protocol_ids: Optional[List[int]] = None
-) -> str:
-    """
-    Validate a proposed action against specific protocols.
-    
-    Args:
-        action_description: Description of the action to validate
-        protocol_ids: Optional list of protocol numbers to check against. 
-                     If None, checks against all CANONICAL protocols (expensive).
-    """
-    # TODO: Implement actual validation logic using LLM or rule engine.
-    # For now, this is a placeholder that retrieves the protocols and prompts the user/agent to check.
-    try:
-        if protocol_ids:
-            protocols = [ops.get_protocol(pid) for pid in protocol_ids]
-        else:
-            # Limit to top 5 canonical protocols if not specified to avoid context overflow in placeholder
-            protocols = ops.list_protocols(status="CANONICAL")[:5]
-            
-        output = [f"Validation Context for Action: '{action_description}'\n"]
-        output.append("Relevant Protocols:")
-        for p in protocols:
-            output.append(f"\n--- Protocol {p['number']}: {p['title']} ---\n{p['content'][:500]}...") # Truncate for brevity
-            
-        output.append("\n\n[SYSTEM] Please review the above protocols and determine if the action is compliant.")
-        return "\n".join(output)
-    except Exception as e:
-        return f"Error validating action: {str(e)}"
-
-
 if __name__ == "__main__":
     mcp.run()

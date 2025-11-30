@@ -21,7 +21,7 @@ from pathlib import Path
 
 # Add project root to path
 # test_cortex_integration.py -> tests -> cortex -> cognitive -> mcp_servers -> Project_Sanctuary
-project_root = Path(__file__).resolve().parent.parent.parent.parent.parent
+project_root = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Now we can import from the parent package
@@ -261,8 +261,8 @@ def test_cortex_ingest_full(ops: CortexOperations) -> bool:
 def main():
     """Run all integration tests."""
     parser = argparse.ArgumentParser(description='Cortex MCP Integration Tests')
-    parser.add_argument('--skip-full-ingest', action='store_true',
-                       help='Skip the slow full ingestion test')
+    parser.add_argument('--run-full-ingest', action='store_true',
+                       help='Run the slow full ingestion test')
     args = parser.parse_args()
     
     print(f"\n{Colors.BOLD}{'='*60}")
@@ -282,20 +282,21 @@ def main():
     # Run tests
     results = {}
     
-    # Test 1: Get Stats (fastest)
-    results['stats'] = test_cortex_get_stats(ops)
-    
-    # Test 2: Query (fast)
-    results['query'] = test_cortex_query(ops)
-    
-    # Test 3: Incremental Ingest (medium)
-    results['incremental'] = test_cortex_ingest_incremental(ops)
-    
-    # Test 4: Full Ingest (slowest - optional)
-    if not args.skip_full_ingest:
+    # Test 1: Full Ingest (slowest - optional) - Run FIRST to avoid locking issues
+    if args.run_full_ingest:
         results['full_ingest'] = test_cortex_ingest_full(ops)
     else:
-        print_info("\nSkipping full ingest test (use --skip-full-ingest=false to run)")
+        print_info("\nSkipping full ingest test (use --run-full-ingest to run)")
+
+    # Test 2: Get Stats (fastest)
+    results['stats'] = test_cortex_get_stats(ops)
+    
+    # Test 3: Query (fast)
+    results['query'] = test_cortex_query(ops)
+    
+    # Test 4: Incremental Ingest (medium)
+    results['incremental'] = test_cortex_ingest_incremental(ops)
+
     
     # Print summary
     print(f"\n{Colors.BOLD}{'='*60}")

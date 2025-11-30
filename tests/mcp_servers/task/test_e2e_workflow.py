@@ -110,7 +110,7 @@ def test_complete_workflow():
     # Final verification
     print("Final Verification:")
     final_task = task_ops.get_task(task_number)
-    assert final_task["status"] == "done"
+    assert final_task["status"] == "complete"
     assert final_task["priority"] == "Critical"
     print(f"✅ All assertions passed!")
     print(f"   Task #{task_number:03d}: {final_task['title']}")

@@ -89,6 +89,10 @@ class GitOperations:
         """Get the current active branch name."""
         return self._run_git(["rev-parse", "--abbrev-ref", "HEAD"])
 
+    def get_commit_hash(self, ref: str = "HEAD") -> str:
+        """Get the full commit hash for a reference."""
+        return self._run_git(["rev-parse", ref])
+
     def create_branch(self, branch_name: str, start_point: str = "HEAD") -> None:
         """Create a new branch."""
         self._run_git(["branch", branch_name, start_point])
@@ -129,11 +133,22 @@ class GitOperations:
         """Delete a remote branch."""
         self._run_git(["push", "origin", "--delete", branch_name])
 
+    def is_branch_merged(self, branch_name: str, target_branch: str = "main") -> bool:
+        """Check if a branch is merged into the target branch."""
+        try:
+            # Get list of branches merged into target
+            output = self._run_git(["branch", "--merged", target_branch])
+            merged_branches = [b.strip().replace("* ", "") for b in output.splitlines()]
+            return branch_name in merged_branches
+        except Exception:
+            return False
+
     def status(self) -> Dict[str, Any]:
-        """Get repo status."""
-        branch = self.get_current_branch()
+        """Get comprehensive repo status including branches and remote tracking."""
+        current_branch = self.get_current_branch()
         status_porcelain = self._run_git(["status", "--porcelain"])
         
+        # Parse file status
         staged = []
         modified = []
         untracked = []
@@ -147,12 +162,48 @@ class GitOperations:
                 modified.append(path)
             if code.startswith("??"):
                 untracked.append(path)
-                
+        
+        # Get all local branches
+        branches_output = self._run_git(["branch", "-vv"])
+        local_branches = []
+        for line in branches_output.splitlines():
+            is_current = line.startswith("*")
+            branch_info = line[2:].strip()  # Remove "* " or "  "
+            local_branches.append({
+                "name": branch_info.split()[0],
+                "current": is_current
+            })
+        
+        # Get remote tracking info for current branch
+        remote_info = {}
+        try:
+            # Get upstream branch
+            upstream = self._run_git(["rev-parse", "--abbrev-ref", f"{current_branch}@{{upstream}}"])
+            remote_info["upstream"] = upstream.strip()
+            
+            # Get ahead/behind counts
+            ahead_behind = self._run_git(["rev-list", "--left-right", "--count", f"{current_branch}...{upstream.strip()}"])
+            ahead, behind = ahead_behind.strip().split()
+            remote_info["ahead"] = int(ahead)
+            remote_info["behind"] = int(behind)
+        except RuntimeError:
+            # No upstream configured
+            remote_info["upstream"] = None
+            remote_info["ahead"] = 0
+            remote_info["behind"] = 0
+        
+        # Count feature branches (for safety check)
+        feature_branches = [b["name"] for b in local_branches if b["name"].startswith("feature/")]
+        
         return {
-            "branch": branch,
+            "branch": current_branch,
             "staged": staged,
             "modified": modified,
-            "untracked": untracked
+            "untracked": untracked,
+            "local_branches": local_branches,
+            "feature_branches": feature_branches,
+            "remote": remote_info,
+            "is_clean": len(staged) == 0 and len(modified) == 0 and len(untracked) == 0
         }
 
     def diff(self, cached: bool = False, file_path: Optional[str] = None) -> str:
