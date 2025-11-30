@@ -493,14 +493,15 @@ pytest tests/integration/test_forge_integration.py -v
 
 **Domain:** Configuration management  
 **Directory:** `.agent/config/`  
-**Server Code:** TBD  
-**README:** TBD  
+**Server Code:** [mcp_servers/config/server.py](../../mcp_servers/config/server.py)  
+**README:** [Config MCP README](../../mcp_servers/config/README.md)  
 **Class Diagram:** [diagrams/config_mcp_class.mmd](diagrams/config_mcp_class.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-# TBD - Server not yet implemented
+PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 ```
+**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list the current configuration settings."
@@ -522,7 +523,10 @@ pytest tests/integration/test_forge_integration.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| TBD | ❌ | 🔧 | ❌ | TBD | Configuration operations not yet implemented |
+| `config_list` | ✅ | ✅ | ✅ | `test_operations.py` | List configuration files |
+| `config_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read config file content |
+| `config_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write config file with backup |
+| `config_delete` | ✅ | ✅ | ✅ | `test_operations.py` | Delete config file |
 
 ---
 
