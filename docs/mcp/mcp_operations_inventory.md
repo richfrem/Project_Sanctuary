@@ -534,14 +534,15 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 **Domain:** Code operations  
 **Directory:** `src/, scripts/, tools/`  
-**Server Code:** TBD  
-**README:** TBD  
+**Server Code:** [mcp_servers/code/server.py](../../mcp_servers/code/server.py)  
+**README:** [Code MCP README](../../mcp_servers/code/README.md)  
 **Class Diagram:** [diagrams/code_mcp_class.mmd](diagrams/code_mcp_class.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-# TBD - Server not yet implemented
+PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 ```
+**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please analyze the code structure of the `src` directory."
@@ -563,7 +564,16 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| TBD | ❌ | 🔧 | ❌ | TBD | Code operations not yet implemented |
+| `code_lint` | ✅ | ✅ | ✅ | `test_operations.py` | Run linting on files/directories |
+| `code_format` | ✅ | ✅ | ✅ | `test_operations.py` | Format code with optional check-only mode |
+| `code_analyze` | ✅ | ✅ | ✅ | `test_operations.py` | Perform static analysis |
+| `code_check_tools` | ✅ | ✅ | ✅ | `test_operations.py` | Check available code quality tools |
+| `code_find_file` | ✅ | ✅ | ✅ | `test_operations.py` | Find files by name or glob pattern |
+| `code_list_files` | ✅ | ✅ | ✅ | `test_operations.py` | List files in directory with pattern |
+| `code_search_content` | ✅ | ✅ | ✅ | `test_operations.py` | Search for text/patterns in code |
+| `code_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read file contents |
+| `code_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write/update file with backup |
+| `code_get_info` | ✅ | ✅ | ✅ | `test_operations.py` | Get file metadata |
 
 ---
 
