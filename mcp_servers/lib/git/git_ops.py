@@ -222,6 +222,19 @@ class GitOperations:
             args.append("--oneline")
         return self._run_git(args)
 
+    def diff_branches(self, branch1: str, branch2: str) -> str:
+        """
+        Get diff between two branches.
+        
+        Args:
+            branch1: First branch name
+            branch2: Second branch name
+            
+        Returns:
+            Diff output (empty string if branches have identical content)
+        """
+        return self._run_git(["diff", f"{branch1}..{branch2}"])
+
 
 
 

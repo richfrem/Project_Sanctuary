@@ -340,12 +340,29 @@ def git_finish_feature(branch_name: str, force: bool = False) -> str:
             
             # Check again after sync
             if not git_ops.is_branch_merged(branch_name, "main"):
-                return (
-                    f"ERROR: Branch '{branch_name}' is NOT merged into main. "
-                    "Cannot finish/delete an unmerged feature branch. "
-                    "Please merge your PR on GitHub first, then run this command again. "
-                    "If you squash merged, use force=True to bypass this check."
-                )
+                # Auto-detect squash merge: check if branches have identical content
+                try:
+                    diff_output = git_ops.diff_branches(branch_name, "main")
+                    if not diff_output or diff_output.strip() == "":
+                        # Branches have identical content - squash merge detected!
+                        # Log this and proceed with cleanup
+                        print(f"Auto-detected squash merge for {branch_name} (identical content to main)")
+                    else:
+                        # Branches differ - truly unmerged
+                        return (
+                            f"ERROR: Branch '{branch_name}' is NOT merged into main. "
+                            "Cannot finish/delete an unmerged feature branch. "
+                            "Please merge your PR on GitHub first, then run this command again. "
+                            "If you squash merged, use force=True to bypass this check."
+                        )
+                except Exception as e:
+                    # If diff check fails, fall back to error
+                    return (
+                        f"ERROR: Branch '{branch_name}' is NOT merged into main. "
+                        "Cannot finish/delete an unmerged feature branch. "
+                        "Please merge your PR on GitHub first, then run this command again. "
+                        "If you squash merged, use force=True to bypass this check."
+                    )
 
         # ALWAYS checkout main first to avoid merging main into the feature branch
         git_ops.checkout("main")
