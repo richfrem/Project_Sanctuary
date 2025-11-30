@@ -184,6 +184,97 @@ class TestGitToolSafety(unittest.TestCase):
         self.assertIn("NOT merged into main", result)
         self.mock_git_ops.delete_local_branch.assert_not_called()
 
+    def test_smart_commit_blocks_non_feature(self):
+        """Test that git_smart_commit blocks committing on non-feature branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "develop"
+        }
+        
+        result = self.git_smart_commit("test commit")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("must be on a feature branch", result)
+        self.mock_git_ops.commit.assert_not_called()
+
+    def test_smart_commit_blocks_no_staged_files(self):
+        """Test that git_smart_commit blocks if no files are staged."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "feature/task-123-test"
+        }
+        self.mock_git_ops.get_staged_files.return_value = []
+        
+        result = self.git_smart_commit("test commit")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("No files staged for commit", result)
+        self.mock_git_ops.commit.assert_not_called()
+
+    def test_push_feature_blocks_non_feature(self):
+        """Test that git_push_feature blocks pushing non-feature branch."""
+        self.mock_git_ops.get_current_branch.return_value = "develop"
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("must be on a feature branch", result)
+        self.mock_git_ops.push.assert_not_called()
+
+    def test_finish_feature_blocks_dirty_state(self):
+        """Test that git_finish_feature blocks if working directory is dirty."""
+        self.mock_git_ops.verify_clean_state.side_effect = RuntimeError("Working directory is not clean")
+        
+        result = self.git_finish_feature("feature/task-123-test")
+        
+        self.assertIn("Failed to finish feature", result)
+        self.mock_git_ops.delete_local_branch.assert_not_called()
+
+    def test_smart_commit_success(self):
+        """Test that git_smart_commit succeeds with staged files on feature branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "feature/task-123-test"
+        }
+        self.mock_git_ops.get_staged_files.return_value = ["file1.py", "file2.py"]
+        self.mock_git_ops.commit.return_value = "abc123def456"
+        
+        result = self.git_smart_commit("test commit message")
+        
+        self.assertIn("Commit successful", result)
+        self.assertIn("abc123def456", result)
+        self.mock_git_ops.commit.assert_called_with("test commit message")
+
+    def test_push_feature_success(self):
+        """Test that git_push_feature succeeds and verifies remote hash."""
+        self.mock_git_ops.get_current_branch.return_value = "feature/task-123-test"
+        self.mock_git_ops.push.return_value = "Push successful"
+        self.mock_git_ops.get_commit_hash.side_effect = lambda ref: "abc123def456" if ref in ["HEAD", "origin/feature/task-123-test"] else "different"
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("Verified push", result)
+        self.assertIn("abc123de", result)  # First 8 chars of hash
+        self.assertIn("Create PR", result)
+        self.mock_git_ops.push.assert_called_with("origin", "feature/task-123-test", force=False, no_verify=False)
+
+    def test_push_feature_hash_mismatch_warning(self):
+        """Test that git_push_feature warns when remote hash doesn't match local."""
+        self.mock_git_ops.get_current_branch.return_value = "feature/task-123-test"
+        self.mock_git_ops.push.return_value = "Push successful"
+        # Simulate hash mismatch
+        def mock_hash(ref):
+            if ref == "HEAD":
+                return "abc123def456"
+            elif ref == "origin/feature/task-123-test":
+                return "different789"
+            return "other"
+        self.mock_git_ops.get_commit_hash.side_effect = mock_hash
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("WARNING", result)
+        self.assertIn("does not match", result)
+        self.assertIn("abc123de", result)  # Local hash
+        self.assertIn("differen", result)  # Remote hash (first 8 chars)
+
     def test_finish_feature_success_merged(self):
         """Test that git_finish_feature succeeds if branch is merged."""
         # Mock is_branch_merged to return True

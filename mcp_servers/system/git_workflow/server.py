@@ -186,6 +186,14 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
                 "You must be on a feature branch to push changes. "
                 "Please call git_start_feature first to create a feature branch."
             )
+
+        # Safety check: Must be a feature branch
+        if not current.startswith("feature/"):
+            return (
+                f"ERROR: Cannot push branch '{current}'. "
+                f"You must be on a feature branch (format: feature/task-XXX-desc). "
+                f"Please call git_start_feature to create a proper feature branch."
+            )
             
         # Verification: Ensure we have something to push?
         # Actually git push handles "everything up-to-date" gracefully.
