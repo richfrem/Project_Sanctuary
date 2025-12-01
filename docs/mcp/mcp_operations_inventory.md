@@ -546,9 +546,11 @@ pytest tests/mcp_servers/agent_persona/ -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/council/test_council_ops.py -v
+pytest tests/mcp_servers/council/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ Operational
+**Last Verification:** 2025-12-01 ✅ (3/3 passed)  
+**Test Coverage:** Basic (structure tests only)  
+**Note:** Comprehensive test suite needed (similar to Agent Persona MCP)
 
 > [!WARNING]
 >- **Council MCP**: `mcp_servers/council/` (Status: ✅ Operational)
