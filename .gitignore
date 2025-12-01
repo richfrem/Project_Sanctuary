@@ -91,7 +91,7 @@ ARCHIVES/
 archive/
 !archive/council_orchestrator/
 archives/
-RESEARCH_PAPERS/
+research/RESEARCH_PAPERS/
 *.log
 nohup.out
 
