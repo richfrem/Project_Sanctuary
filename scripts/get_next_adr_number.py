@@ -1,4 +1,4 @@
-# tools/scaffolds/get_next_adr_number.py
+# scripts/get_next_adr_number.py
 import os
 from pathlib import Path
 import re

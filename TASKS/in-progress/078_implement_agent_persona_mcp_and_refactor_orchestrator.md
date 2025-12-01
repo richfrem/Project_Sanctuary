@@ -1,6 +1,6 @@
 # Task 078: Implement Agent Persona MCP & Refactor Council Orchestrator
 
-**Status:** in-progress
+**Status:** done
 **Priority:** High
 **Lead:** Antigravity
 **Dependencies:** Task 077 (Council MCP) ✅ COMPLETE
@@ -153,25 +153,25 @@ result = persona_dispatch(
 ## 3. Acceptance Criteria
 
 ### Phase 1: Agent Persona MCP
-- [ ] Agent Persona MCP server runs and connects
-- [ ] Can dispatch tasks to coordinator, strategist, auditor roles
-- [ ] State persistence works (conversation history maintained)
-- [ ] All tests passing (unit + integration)
-- [ ] README documentation complete
+- [x] Agent Persona MCP server runs and connects
+- [x] Can dispatch tasks to coordinator, strategist, auditor roles
+- [x] State persistence works (conversation history maintained)
+- [x] All tests passing (unit + integration)
+- [x] README documentation complete
 
 ### Phase 2: Orchestrator Refactoring
-- [ ] Orchestrator can call Agent Persona MCP successfully
-- [ ] Dual mode works (internal + MCP agents)
-- [ ] Consensus mechanism implemented
-- [ ] Error handling robust (retries, fallbacks, timeouts)
-- [ ] All tests passing
+- [x] Orchestrator can call Agent Persona MCP successfully
+- [x] Dual mode works (internal + MCP agents)
+- [x] Consensus mechanism implemented
+- [x] Error handling robust (retries, fallbacks, timeouts)
+- [x] All tests passing
 
 ### Phase 3: Documentation
-- [ ] Architecture diagrams updated with Agent Persona MCP
-- [ ] Sequence diagrams show full flow
-- [ ] Migration guide complete
-- [ ] All MCP READMEs updated
-- [ ] `mcp_operations_inventory.md` updated
+- [x] Architecture diagrams updated with Agent Persona MCP
+- [x] Sequence diagrams show full flow
+- [x] Migration guide complete
+- [x] All MCP READMEs updated
+- [x] `mcp_operations_inventory.md` updated
 
 ---
 

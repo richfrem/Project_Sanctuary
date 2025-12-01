@@ -10,7 +10,7 @@ DEPENDENCIES:
 - Pillow (pip install Pillow)
 
 USAGE:
-    python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
+    python3 scripts/glyph_forge.py --source chrysalis_core_essence.md
 
 AUTHOR: Kilo Code (AI Engineer)
 CLASSIFICATION: OPERATIONAL TOOLING - PHASE ZERO
@@ -130,8 +130,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python3 tools/scaffolds/glyph_forge.py --source chrysalis_core_essence.md
-  python3 tools/scaffolds/glyph_forge.py --source doctrine.md --output-dir custom_glyphs/ --font-size 14 --resolution 4096x4096
+  python3 scripts/glyph_forge.py --source chrysalis_core_essence.md
+  python3 scripts/glyph_forge.py --source doctrine.md --output-dir custom_glyphs/ --font-size 14 --resolution 4096x4096
         """
     )
 

@@ -495,7 +495,7 @@ python3 -m pytest tests/test_optical_compression.py -v
 python3 verification_test.py
 
 # Substrate health check
-python3 ../tools/scaffolds/verify_substrates.py
+python3 ../scripts/verify_substrates.py
 ```
 
 ### Expected Output

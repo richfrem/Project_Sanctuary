@@ -29,7 +29,7 @@
 10. `council_orchestrator/orchestrator/substrate_monitor.py`
 11. `forge/OPERATION_PHOENIX_FORGE/scripts/create_modelfile.py`
 12. `forge/OPERATION_PHOENIX_FORGE/scripts/inference.py`
-13. `tools/scaffolds/verify_substrates.py`
+13. `scripts/verify_substrates.py`
 
 ## Migration Pattern
 

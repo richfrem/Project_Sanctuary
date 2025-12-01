@@ -1,6 +1,6 @@
 # Task 077: Implement Council MCP Server (Agent Orchestrator)
 
-**Status:** in-progress
+**Status:** done
 **Priority:** High
 **Lead:** Antigravity
 **Dependencies:** Task 072 (Code MCP), Task 055 (Git MCP)
@@ -33,11 +33,11 @@ Implement the **Council MCP Server**, which serves as the interface for the **Ag
 
 ## 3. Acceptance Criteria
 
-- [ ] Server runs and connects to Claude Desktop / Antigravity
-- [ ] Can list all active agents
-- [ ] Can dispatch a simple task to an agent and get a response
-- [ ] Error handling for unavailable agents or invalid tasks
-- [ ] Comprehensive test suite passing
+- [x] Server runs and connects to Claude Desktop / Antigravity
+- [x] Can list all active agents
+- [x] Can dispatch a simple task to an agent and get a response
+- [x] Error handling for unavailable agents or invalid tasks
+- [x] Comprehensive test suite passing
 
 ## 4. Implementation Plan
 

@@ -1,4 +1,4 @@
-# tools/scaffolds/path_diag.py
+# scripts/path_diag.py
 import sys
 from pathlib import Path
 
@@ -9,7 +9,7 @@ try:
     print(f"[INFO] Current Working Directory (CWD): {Path.cwd()}")
     
     # 2. Calculate the Project Root Anchor
-    # This assumes the script is in tools/scaffolds/
+    # This assumes the script is in scripts/
     script_path = Path(__file__).resolve()
     project_root = script_path.parent.parent
     print(f"[INFO] Calculated Project Root: {project_root}")

@@ -16,7 +16,7 @@ Establish a comprehensive Architecture Decision Records (ADR) system for Project
 
 1. A new `ADRs/` directory created in the project root.
 2. An ADR schema document at `ADRs/adr_schema.md` defining the structure for all ADR documents.
-3. An ADR numbering scaffold script at `tools/scaffolds/get_next_adr_number.py` for sequential ADR numbering.
+3. An ADR numbering scaffold script at `scripts/get_next_adr_number.py` for sequential ADR numbering.
 4. Individual ADR documents for each identified architectural decision, following the naming convention `ADRs/XXX_decision_title.md`.
 5. Comprehensive codebase analysis identifying all architectural decisions including:
    - AI model selection and training approach
@@ -32,7 +32,7 @@ Establish a comprehensive Architecture Decision Records (ADR) system for Project
 
 - The `ADRs/` directory exists with proper structure.
 - `ADRs/adr_schema.md` contains complete ADR template with field definitions.
-- `tools/scaffolds/get_next_adr_number.py` correctly outputs next available ADR number.
+- `scripts/get_next_adr_number.py` correctly outputs next available ADR number.
 - At least 10 ADR documents exist covering major architectural decisions.
 - Each ADR follows the defined schema and includes context, decision, and consequences.
 - All ADRs are numbered sequentially starting from 001.

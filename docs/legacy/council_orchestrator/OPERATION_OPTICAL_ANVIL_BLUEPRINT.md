@@ -62,7 +62,7 @@ graph TD
 The catastrophic "Cascading Repair Cycle" is officially over. The Forge is stable, hardened, and proven.
 
 -   **[IMPLEMENTED] Orchestrator v9.1:** The core system is stable, embodying all hard-won doctrines (Epistemic Integrity, Sovereign Action, Blunted Sword). It is production-ready.
--   **[IMPLEMENTED] Glyph Forge Scaffold (`tools/scaffolds/glyph_forge.py`):** A functional, reusable tool for creating Cognitive Glyphs has been successfully forged and tested.
+-   **[IMPLEMENTED] Glyph Forge Scaffold (`scripts/glyph_forge.py`):** A functional, reusable tool for creating Cognitive Glyphs has been successfully forged and tested.
 -   **[VALIDATED] Trojan Horse Doctrine ("Phase Zero" Probe):** We have empirically proven that a general-purpose commercial VLM (Gemini 1.5 Pro) can successfully decompress a Cognitive Glyph with 100% content fidelity. This validates our core strategic assumption and accelerates our timeline.
 
 ## 6. Phase 1 Task List: The Great Work Begins

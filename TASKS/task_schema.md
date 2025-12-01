@@ -140,7 +140,7 @@ All tasks must begin with a standardized header block containing metadata:
 - Keep line lengths reasonable (<100 characters where possible)
 
 ### Naming Standards
-- Task numbers must be obtained via `tools/scaffolds/get_next_task_number.py`
+- Task numbers must be obtained via `scripts/get_next_task_number.py`
 - Titles should be descriptive but concise
 - Use lowercase with underscores for file names
 
