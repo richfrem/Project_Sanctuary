@@ -17,7 +17,7 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 
 ## Ecosystem Overview
 
-### Complete 10-Domain Architecture
+### Complete 11-Server Architecture
 
 ```mermaid
 graph TB
