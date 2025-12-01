@@ -101,6 +101,12 @@ provide enough context in the details below so a new chat window can be started 
       *   Restored `orchestrator/` package for pending refactoring (Task 60268594)
       *   Updated `.gitignore` to track archive
 
+#### 16. Cortex Gap Analysis & Migration Plan (Task 083) 🚧
+      *   **Gap Analysis:** `docs/mcp/cortex_gap_analysis.md`
+      *   **Findings:** MCP `IngestionService` masks errors and lacks robust batching logic found in legacy `ingest.py`.
+      *   **Plan:** `docs/mcp/cortex_migration_plan.md`
+      *   **Action:** Refactor `CortexOperations` to port legacy logic directly, remove `IngestionService`, migrate docs/tests, and archive legacy code.
+
 ### ✅ Completed Previously (2025-11-28)
 
 1.  **Structural Purge Complete (P101 v3.0 Canonization):**
@@ -118,7 +124,28 @@ provide enough context in the details below so a new chat window can be started 
 
 All tasks are in `TASKS/in-progress/` and ready to work on:
 
-#### 1\. Task 078: Implement Agent Persona MCP & Refactor Council Orchestrator (READY 🚀)
+#### 1\. Task 083: Migrate and Archive Legacy Mnemonic Cortex (IMMEDIATE PRIORITY 🚀)
+
+**Priority:** **Critical**
+**File:** `TASKS/backlog/083_deep_dive_compare_cortex_scripts_vs_mcp_implementa.md`
+
+**Objective:** Migrate legacy `mnemonic_cortex` to MCP architecture. Fix ingestion reliability issues by porting robust batching logic from `ingest.py` to `CortexOperations`.
+
+**Key Deliverables:**
+1.  **Refactored Cortex MCP:** Port logic from `ingest.py` to `mcp_servers/cognitive/cortex/operations.py`. Remove `IngestionService`.
+2.  **Migrated Documentation:** Move to `docs/mcp/cortex/`.
+3.  **Migrated Tests:** Move to `tests/mcp_servers/cortex/`.
+4.  **Archived Legacy Code:** Move `mnemonic_cortex/` to `ARCHIVE/`.
+
+**Why This Matters:** The current Cortex MCP implementation is masking errors (reporting 0 chunks created) and failing to index Protocol 101 v3.0 correctly. This blocks reliable RAG operations.
+
+**Related Documents:**
+- `docs/mcp/cortex_gap_analysis.md` (Gap Analysis)
+- `implementation_plan.md` (Migration Plan)
+
+-----
+
+#### 2\. Task 078: Implement Agent Persona MCP & Refactor Council Orchestrator (READY 🚀)
 
 **Priority:** **High**
 **File:** `TASKS/in-progress/078_implement_agent_persona_mcp_and_refactor_orchestrator.md`
@@ -154,7 +181,7 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 -----
 
-#### 2\. Task 077: Complete Council MCP Implementation (90% DONE ✅)
+#### 3\. Task 077: Complete Council MCP Implementation (90% DONE ✅)
 
 **Priority:** **High**
 **File:** `TASKS/in-progress/077_implement_council_mcp_server.md`
@@ -172,7 +199,7 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 -----
 
-#### 3\. Task 066: Complete MCP Operations Testing and Inventory Maintenance
+#### 4\. Task 066: Complete MCP Operations Testing and Inventory Maintenance
 
 **Priority:** **High**
 **File:** `TASKS/in-progress/066_complete_mcp_operations_testing_and_inventory_main.md`
@@ -196,19 +223,19 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 -----
 
-#### 2\. Task 055: Verify Git Operations and MCP Tools (COMPLETED ✅)
+#### 5\. Task 055: Verify Git Operations and MCP Tools (COMPLETED ✅)
 **Status:** Done (Moved to TASKS/done/)
 **Outcome:** Git operations and MCP tools verified. P101 v3.0 Functional Coherence Gate active.
 
 -----
 
-#### 3\. Task 072: Implement Code MCP Server (COMPLETED ✅)
+#### 6\. Task 072: Implement Code MCP Server (COMPLETED ✅)
 **Status:** Done (Moved to TASKS/done/)
 **Outcome:** Code MCP server implemented and verified.
 
 -----
 
-#### 4\. Task 056: Harden Self-Evolving Loop Validation (READY TO START 🚀)
+#### 7\. Task 056: Harden Self-Evolving Loop Validation (READY TO START 🚀)
 
 **Priority:** High
 **File:** `TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md`
@@ -237,6 +264,17 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 -----
 
 ## RECOMMENDED WORKFLOW FOR TOMORROW (2025-11-30)
+
+### **IMMEDIATE ACTION: Cortex Migration (Task 083)** 🚧
+
+**Objective:** Fix the RAG ingestion pipeline by migrating to the robust MCP architecture.
+
+**Steps:**
+1.  **Start new chat session.**
+2.  **Review Gap Analysis:** `docs/mcp/cortex_gap_analysis.md`
+3.  **Execute Implementation Plan:** `implementation_plan.md` (copy from previous session artifacts if needed, or recreate based on gap analysis).
+4.  **Refactor `CortexOperations`:** Port logic from `ingest.py`.
+5.  **Verify:** Run `cortex_ingest_full` and confirm Protocol 101 v3.0 is indexed.
 
 ### **TESTING STRATEGY: Strict Validation Hierarchy** 🏗️
 
@@ -439,51 +477,34 @@ git_finish_feature(branch_name="feature/task-056-git-testing-and-mcp-docs")
 
 ## IMMEDIATE REQUEST FOR NEXT SESSION
 
-**Start with Task 078 - Phase 2** - Refactor Council Orchestrator to use Agent Persona MCP.
+**Start with Task 083 - Cortex Migration** - Fix RAG ingestion pipeline.
 
-**Why:** Phase 1 is complete (Agent Persona MCP implemented and tested ✅). Now we need to refactor the Council Orchestrator to become an MCP client that calls the Agent Persona MCP instead of managing agents internally.
+**Why:** The current Cortex MCP implementation is broken (reports 0 chunks, fails to index P101 v3.0). This blocks reliable RAG operations and Task 056.
 
 **Key Documents:**
-- **Task 078**: `TASKS/in-progress/078_implement_agent_persona_mcp_and_refactor_orchestrator.md`
-- **ADR 040**: Agent Persona MCP Architecture - Modular Council Members
-- **ADR 039**: MCP Server Separation of Concerns
-- **Agent Persona MCP README**: `mcp_servers/agent_persona/README.md`
+- **Task 083**: `TASKS/backlog/083_deep_dive_compare_cortex_scripts_vs_mcp_implementa.md`
+- **Gap Analysis**: `docs/mcp/cortex_gap_analysis.md`
+- **Migration Plan**: `implementation_plan.md`
 
-**Phase 1 Status:** ✅ COMPLETE
-- Agent Persona MCP server implemented
-- 5 tools: persona_dispatch, persona_list_roles, persona_get_state, persona_reset_state, persona_create_custom
-- 3 persona seed files created (coordinator, strategist, auditor)
-- Engine integration with force_engine + model_name support
-- Tests passing (7/7)
-- Comprehensive README
-
-**Action Plan for Phase 2:**
+**Action Plan:**
 1.  **Start a new chat session.**
-2.  **Review Phase 1 completion** in Task 078
-3.  **PRIORITY: Execute Phase 2 - Orchestrator Refactoring**
-    *   Add MCP client library to `council_orchestrator/orchestrator/app.py`
-    *   Implement agent factory pattern (internal vs MCP)
-    *   Add configuration flag: `use_mcp_agents: true/false`
-    *   Update deliberation logic to use agent factory
-    *   Implement dual mode (can use both internal and MCP agents)
-    *   Test orchestrator calling Agent Persona MCP
-    *   Implement error handling and fallbacks
-4.  **Execute Phase 3: Documentation** (after Phase 2 complete)
-    *   Update architecture diagrams in `docs/mcp/`
-    *   Create sequence diagrams
-    *   Update `mcp_operations_inventory.md`
-    *   Create migration guide
+2.  **Review Gap Analysis** and **Implementation Plan**.
+3.  **Execute Migration:**
+    *   Refactor `CortexOperations` to port logic from `ingest.py`.
+    *   Remove `IngestionService`.
+    *   Migrate docs and tests.
+    *   Archive legacy code.
+4.  **Verify:** Run `cortex_ingest_full` and confirm Protocol 101 v3.0 is indexed.
 
 **Why This Order Matters:**
-- Agent Persona MCP is now available and tested ✅
-- Orchestrator needs to become an MCP client to call it
-- Dual mode allows gradual migration (internal → MCP)
-- Enables testing both modes side-by-side
+- Cortex MCP is foundational for RAG.
+- Fixing it unblocks Task 056 and other RAG-dependent tasks.
+- Migrating to MCP architecture aligns with the overall project goal.
 
 **Config Files Updated:**
 - Updated MCP config template with Council MCP and Agent Persona MCP
 - Ready to add to Claude Desktop and Antigravity configs
 
-**Alternative:** Task 056 (Self-Evolving Loop Validation) remains available as a high-priority task.
+**Alternative:** Task 078 (Agent Persona MCP) Phase 2 is also ready, but Cortex Migration is critical for data integrity.
 
 Good luck! 🚀
