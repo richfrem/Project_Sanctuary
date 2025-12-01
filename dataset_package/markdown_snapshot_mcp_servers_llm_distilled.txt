@@ -1,8 +1,8 @@
 # mcp_servers Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-01T15:32:45.285Z
+Generated On: 2025-12-01T15:57:32.535Z
 
-# Mnemonic Weight (Token Count): ~105,896 tokens
+# Mnemonic Weight (Token Count): ~105,910 tokens
 
 # Directory Structure (relative to mcp_servers subfolder)
   ./mcp_servers/README.md
@@ -11,6 +11,7 @@ Generated On: 2025-12-01T15:32:45.285Z
   ./mcp_servers/agent_persona/README.md
   ./mcp_servers/agent_persona/__init__.py
   ./mcp_servers/agent_persona/personas/
+  ./mcp_servers/agent_persona/personas/.txt
   ./mcp_servers/agent_persona/personas/auditor.txt
   ./mcp_servers/agent_persona/personas/coordinator.txt
   ./mcp_servers/agent_persona/personas/security_reviewer.txt

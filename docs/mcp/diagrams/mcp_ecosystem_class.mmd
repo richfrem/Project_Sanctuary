@@ -102,8 +102,8 @@ classDiagram
         📄 See: rag_mcp_cortex_class.mmd
     }
     
-    class project_sanctuary_cognitive_council {
-        <<project_sanctuary.cognitive.council>>
+    class project_sanctuary_cognitive_agent_persona {
+        <<project_sanctuary.cognitive.agent_persona>>
         Risk: SAFE
         ---
         +create_deliberation()
@@ -111,7 +111,7 @@ classDiagram
         +get_council_status()
         +get_result()
         ---
-        📄 See: agent_orchestrator_mcp_council_class.mmd
+        📄 See: agent_persona_mcp_class.mmd
     }
     
     %% System Domain MCPs
@@ -194,8 +194,8 @@ classDiagram
     CortexMCP --> SafetyValidator : validates
     CortexMCP --> SchemaValidator : validates
     
-    CouncilMCP --> SafetyValidator : validates
-    CouncilMCP --> SchemaValidator : validates
+    AgentPersonaMCP --> SafetyValidator : validates
+    AgentPersonaMCP --> SchemaValidator : validates
     
     %% Relationships: System Domains → Infrastructure
     ConfigMCP --> GitOperations : uses
@@ -219,7 +219,7 @@ classDiagram
     
     %% Cross-Domain Relationships
     project_sanctuary_model_fine_tuning ..> TaskMCP : requires authorization
-    CouncilMCP ..> CortexMCP : queries for context
+    AgentPersonaMCP ..> CortexMCP : queries for context
     
     %% Notes
     note for ChronicleMCP "7-day modification window<br/>Sequential entry numbers"

@@ -1,8 +1,8 @@
 # docs Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-01T15:32:52.451Z
+Generated On: 2025-12-01T16:10:54.791Z
 
-# Mnemonic Weight (Token Count): ~130,152 tokens
+# Mnemonic Weight (Token Count): ~131,959 tokens
 
 # Directory Structure (relative to docs subfolder)
   ./docs/WSL_SECRETS_CONFIGURATION.md
@@ -49,7 +49,7 @@ Generated On: 2025-12-01T15:32:52.451Z
   ./docs/mcp/ddd_analysis.md
   ./docs/mcp/diagrams/
   ./docs/mcp/diagrams/adr_mcp_class.mmd
-  ./docs/mcp/diagrams/agent_orchestrator_mcp_council_class.mmd
+  ./docs/mcp/diagrams/agent_persona_mcp_class.mmd
   ./docs/mcp/diagrams/chronicle_mcp_class.mmd
   ./docs/mcp/diagrams/code_mcp_class.mmd
   ./docs/mcp/diagrams/config_mcp_class.mmd
@@ -67,6 +67,7 @@ Generated On: 2025-12-01T15:32:52.451Z
   ./docs/mcp/final_architecture_summary.md
   ./docs/mcp/final_orchestration_test.md
   ./docs/mcp/forge_mcp_types.ts
+  ./docs/mcp/mcp_config_sanctuary.json
   ./docs/mcp/mcp_operations_inventory.md
   ./docs/mcp/mcp_orchestration_validation.md
   ./docs/mcp/naming_conventions.md
@@ -8894,8 +8895,8 @@ graph TB
     end
     
     subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex["RAG MCP (Cortex)<br/>mnemonic_cortex/"]
-        Council["Agent Orchestrator MCP (Council)<br/>council_orchestrator/"]
+        Cortex["Cortex MCP (RAG)<br/>mcp_servers/cognitive/cortex/"]
+        AgentPersona["Agent Persona MCP<br/>mcp_servers/agent_persona/"]
     end
     
     subgraph "System Domains - High Safety"
@@ -8920,7 +8921,7 @@ graph TB
     LLM -->|MCP Protocol| ADR
     LLM -->|MCP Protocol| Task
     LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| Council
+    LLM -->|MCP Protocol| AgentPersona
     LLM -->|MCP Protocol| Config
     LLM -->|MCP Protocol| Code
     LLM -->|MCP Protocol| GitWorkflow
@@ -8941,7 +8942,7 @@ graph TB
     ADR --> Safety
     Task --> Safety
     Cortex --> Safety
-    Council --> Safety
+    AgentPersona --> Safety
     Config --> Safety
     Code --> Safety
     GitWorkflow --> Safety
@@ -8952,7 +8953,7 @@ graph TB
     ADR --> Schema
     Task --> Schema
     Cortex --> Schema
-    Council --> Schema
+    AgentPersona --> Schema
     Config --> Schema
     Code --> Schema
     GitWorkflow --> Schema
@@ -8966,7 +8967,7 @@ graph TB
     style ADR fill:#e8f5e8
     style Task fill:#e8f5e8
     style Cortex fill:#fff3e0
-    style Council fill:#f3e5f5
+    style AgentPersona fill:#f3e5f5
     style Config fill:#ffcccc
     style Code fill:#ffcccc
     style GitWorkflow fill:#ffcccc
@@ -10375,11 +10376,24 @@ sequenceDiagram
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
         "cortex": {
-            "displayName": "RAG MCP (Cortex)",
+            "displayName": "Cortex MCP (RAG)",
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
-                "mcp_servers.cortex.server"
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
             ],
             "env": {
                 "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
@@ -10431,11 +10445,12 @@ sequenceDiagram
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
-                "mcp_servers.git_workflow.server"
+                "mcp_servers.system.git_workflow.server"
             ],
             "env": {
                 "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
-                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "GIT_BASE_DIR": "<ABSOLUTE_PATH_TO_PROJECT>"
             },
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
@@ -12607,6 +12622,159 @@ export interface ForgeSafetyRules {
 
 --- END OF FILE mcp/forge_mcp_types.ts ---
 
+--- START OF FILE mcp/mcp_config_sanctuary.json ---
+
+{
+    "mcpServers": {
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.chronicle.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.protocol.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.adr.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "tasks": {
+            "displayName": "Task MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.task.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "cortex": {
+            "displayName": "Cortex MCP (RAG)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "council": {
+            "displayName": "Council MCP (Multi-Agent Deliberation)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.council.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.config.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.system.git_workflow.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "GIT_BASE_DIR": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "forge": {
+            "displayName": "Fine-Tuning MCP (Forge)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.forge.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        }
+    }
+}
+
+--- END OF FILE mcp/mcp_config_sanctuary.json ---
+
 --- START OF FILE mcp/mcp_operations_inventory.md ---
 
 # MCP Operations Inventory
@@ -12976,16 +13144,16 @@ pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Semantic search against knowledge base |
-| `cortex_ingest_full` | Ingest all documents | **Operational (Verified)** | `purge_existing`, `source_directories` | Verified via MCP tool execution (463 docs processed) | (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Generate Guardian boot digest (P114) |
-| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Synthesize knowledge for fine-tuning |
+| `cortex_query` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | ⚠️ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Add new documents without purge |
+| `cortex_get_stats` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Database health and statistics |
+| `cortex_cache_get` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
+| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Synthesize knowledge for fine-tuning |
 
 **Prerequisite Tests:** [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/)
 
@@ -13070,10 +13238,13 @@ pytest tests/integration/test_forge_integration.py -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
+pytest tests/mcp_servers/agent_persona/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (7/7 passed)
-**Model Verification:** 2025-11-30 ✅ (Verified with `Sanctuary-Qwen2-7B:latest`)
+**Last Verification:** 2025-12-01 ✅ (27/27 passed)  
+**Test Coverage:** 80%+ (comprehensive suite with expected failures, edge cases, state management)  
+**Test Suites:**
+- `test_agent_persona_ops.py` - Basic operations (7 tests)
+- `test_agent_persona_comprehensive.py` - Comprehensive coverage (27 tests)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all available agent roles using `persona_list_roles`."
@@ -13093,44 +13264,17 @@ pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
 
 ### Operations
 
-## Agent Persona MCP Server
+| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
+|-----------|---------|---------|--------|------------|-------------|
+| `persona_dispatch` | ✅ | ✅ | ❌ | [test_agent_persona_comprehensive.py](../../tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py) | Dispatch task to specific persona agent |
+| `persona_list_roles` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | List available persona roles (built-in + custom) |
+| `persona_get_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Get conversation state for specific role |
+| `persona_reset_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Reset conversation state for specific role |
+| `persona_create_custom` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Create new custom persona |
 
-**Status:** ✅ Operational (Verified with Sanctuary Model)
+**Prerequisite Tests:** [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py)
 
 **Model Verification:** Successfully tested with `Sanctuary-Qwen2-7B:latest` via Ollama (53s avg response time for strategic analysis)
-
-**Operations:**
-
-### `persona_dispatch`
-- **Status:** ✅ Verified
-- **Verification:** Tested strategist role with context injection, custom model selection, and Ollama engine
-- **Performance:** ~53s for detailed strategic analysis (local inference)
-- **Description:** Dispatch task to specific persona agent
-- **Args:** `role`, `task`, `context` (optional), `maintain_state`, `engine`, `model_name`, `custom_persona_file`
-- **Returns:** Agent response with reasoning type classification
-
-### `persona_list_roles`
-- **Status:** ✅ Verified
-- **Description:** List available persona roles (built-in + custom)
-- **Returns:** Dictionary with `built_in`, `custom`, `total`, `persona_dir`
-
-### `persona_get_state`
-- **Status:** ✅ Verified
-- **Description:** Get conversation state for specific role
-- **Args:** `role`
-- **Returns:** Conversation history and message count
-
-### `persona_reset_state`
-- **Status:** ✅ Verified
-- **Description:** Reset conversation state for specific role
-- **Args:** `role`
-- **Returns:** Status confirmation
-
-### `persona_create_custom`
-- **Status:** ✅ Verified
-- **Description:** Create new custom persona
-- **Args:** `role`, `persona_definition`, `description`
-- **Returns:** File path and creation status
 
 **Terminology:**
 - **LLM Client:** Interface to model provider (formerly Substrate)
@@ -13154,9 +13298,11 @@ pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/council/test_council_ops.py -v
+pytest tests/mcp_servers/council/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ Operational
+**Last Verification:** 2025-12-01 ✅ (3/3 passed)  
+**Test Coverage:** Basic (structure tests only)  
+**Note:** Comprehensive test suite needed (similar to Agent Persona MCP)
 
 > [!WARNING]
 >- **Council MCP**: `mcp_servers/council/` (Status: ✅ Operational)
@@ -13184,8 +13330,8 @@ pytest tests/mcp_servers/council/test_council_ops.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `council_dispatch` | ⚠️ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
-| `council_list_agents` | ⚠️ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
+| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
+| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
 
 **Design Principle:** Separation of Concerns
 - Council MCP provides ONLY multi-agent deliberation

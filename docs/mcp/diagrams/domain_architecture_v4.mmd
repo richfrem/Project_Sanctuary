@@ -19,8 +19,8 @@ graph TB
         end
         
         subgraph "Cognitive Domains (Non-Mechanical)"
-            Cortex["🧠 RAG MCP (Cortex)<br/>Knowledge Retrieval"]
-            Council["👥 Agent Orchestrator MCP (Council)<br/>Multi-Agent Coordination"]
+            Cortex["🧠 Cortex MCP<br/>Knowledge Retrieval"]
+            AgentPersona["👥 Agent Persona MCP<br/>Multi-Agent Coordination"]
         end
         
         subgraph "System Domains (High-Safety Critical)"
@@ -48,8 +48,8 @@ graph TB
         ProtocolDir[(01_PROTOCOLS/)]
         ADRDir[(ADRs/)]
         TaskDir[(TASKS/)]
-        CortexDir[(mnemonic_cortex/)]
-        CouncilDir[(council_orchestrator/)]
+        CortexDir[(mcp_servers/cognitive/cortex/)]
+        AgentPersonaDir[(mcp_servers/agent_persona/)]
         ConfigDir[(.agent/config/)]
         CodeDir[(src/, scripts/, tools/)]
         GitDir[(.git/)]
@@ -66,7 +66,7 @@ graph TB
     LLM -->|MCP Protocol| ADR
     LLM -->|MCP Protocol| Task
     LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| Council
+    LLM -->|MCP Protocol| AgentPersona
     LLM -->|MCP Protocol| Config
     LLM -->|MCP Protocol| Code
     LLM -->|MCP Protocol| GitWorkflow
@@ -93,8 +93,8 @@ graph TB
     Cortex --> Safety
     Cortex --> Schema
     
-    Council --> Safety
-    Council --> Schema
+    AgentPersona --> Safety
+    AgentPersona --> Schema
     
     %% System domains use ALL infrastructure + Vault
     Config --> Git
@@ -123,7 +123,7 @@ graph TB
     ADR --> ADRDir
     Task --> TaskDir
     Cortex --> CortexDir
-    Council --> CouncilDir
+    AgentPersona --> AgentPersonaDir
     Config --> ConfigDir
     Code --> CodeDir
     GitWorkflow --> GitDir
@@ -139,9 +139,9 @@ graph TB
     classDef hardware fill:#fff9c4,stroke:#f57f17,stroke-width:3px
     
     class Chronicle,Protocol,ADR,Task documentDomain
-    class Cortex,Council cognitiveDomain
+    class Cortex,AgentPersona cognitiveDomain
     class Config,Code,GitWorkflow systemDomain
     class Forge modelDomain
     class Git,Safety,Schema,Vault infrastructure
-    class ChronicleDir,ProtocolDir,ADRDir,TaskDir,CortexDir,CouncilDir,ConfigDir,CodeDir,GitDir,ForgeDir storage
+    class ChronicleDir,ProtocolDir,ADRDir,TaskDir,CortexDir,AgentPersonaDir,ConfigDir,CodeDir,GitDir,ForgeDir storage
     class CUDA hardware
