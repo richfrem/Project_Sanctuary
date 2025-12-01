@@ -365,16 +365,16 @@ pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Semantic search against knowledge base |
-| `cortex_ingest_full` | Ingest all documents | **Operational (Verified)** | `purge_existing`, `source_directories` | Verified via MCP tool execution (463 docs processed) | (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Generate Guardian boot digest (P114) |
-| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Synthesize knowledge for fine-tuning |
+| `cortex_query` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | ⚠️ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Add new documents without purge |
+| `cortex_get_stats` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Database health and statistics |
+| `cortex_cache_get` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
+| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Synthesize knowledge for fine-tuning |
 
 **Prerequisite Tests:** [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/)
 
