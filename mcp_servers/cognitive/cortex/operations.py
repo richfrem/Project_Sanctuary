@@ -221,7 +221,7 @@ class CortexOperations:
         """
         Perform semantic search query.
         
-        Uses: mnemonic_cortex RAG infrastructure directly
+        Uses: Cortex MCP RAG infrastructure directly
         
         Args:
             query: Query string
