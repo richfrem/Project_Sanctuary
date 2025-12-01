@@ -366,7 +366,7 @@ pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
 | `cortex_query` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Semantic search against knowledge base |
-| `cortex_ingest_full` | ⚠️ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_full` | Ingest all documents | **Operational (Verified)** | `purge_existing`, `source_directories` | Verified via MCP tool execution (463 docs processed) | (purge + rebuild) - *Skipped in auto-tests* |
 | `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Add new documents without purge |
 | `cortex_get_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Database health and statistics |
 | `cortex_cache_get` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Retrieve cached answer (Phase 2) |
