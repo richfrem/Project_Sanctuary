@@ -70,7 +70,8 @@ try {
     process.exit(1);
 }
 
-const projectRoot = __dirname;
+// When run from scripts/ folder, go up one level to project root
+const projectRoot = path.join(__dirname, '..');
 const subfolderArg = argv._ && argv._[0]; // First positional argument for subfolder
 const targetRoot = subfolderArg ? path.join(projectRoot, subfolderArg) : projectRoot;
 const subfolderName = subfolderArg || 'full_genome';

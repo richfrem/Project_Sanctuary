@@ -1,0 +1,935 @@
+# All Markdown Files Snapshot (LLM-Distilled)
+
+Generated On: 2025-12-01T15:30:41.374Z
+
+# Mnemonic Weight (Token Count): ~7,116 tokens
+
+# Directory Structure (relative to project root)
+  ./capture_code_snapshot.js
+  ./capture_glyph_code_snapshot_v2.py
+  ./fix_hardcoded_paths.py
+  ./fix_remaining_paths.py
+  ./generate_mcp_config.py
+  ./get_next_adr_number.py
+  ./get_next_task_number.py
+  ./glyph_forge.py
+  ./path_diag.py
+  ./run_integration_tests.sh
+  ./scaffolds/
+  ./security_scan.py
+  ./update_genome.sh
+
+--- START OF FILE fix_hardcoded_paths.py ---
+
+"""
+Script to fix all hardcoded absolute paths in Project Sanctuary.
+
+Replaces hardcoded paths like /Users/richardfremmerlid/Projects/Project_Sanctuary
+with computed relative paths using Path(__file__).resolve().parent pattern.
+"""
+
+import re
+from pathlib import Path
+from typing import List, Tuple
+
+# Project root
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+# Hardcoded path to find
+HARDCODED_PATH = "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+
+def fix_file(file_path: Path) -> Tuple[bool, str]:
+    """
+    Fix hardcoded paths in a single file.
+    
+    Returns:
+        (changed, message) tuple
+    """
+    try:
+        content = file_path.read_text()
+        
+        if HARDCODED_PATH not in content:
+            return False, "No hardcoded paths found"
+        
+        # Count occurrences
+        count = content.count(HARDCODED_PATH)
+        
+        # Compute relative depth from file to project root
+        # e.g., 05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/file.py -> ../../..
+        relative_to_root = file_path.relative_to(PROJECT_ROOT)
+        depth = len(relative_to_root.parents) - 1
+        
+        # Replace with computed path
+        # For default parameters, use None and compute at runtime
+        new_content = content.replace(
+            f'= "{HARDCODED_PATH}"',
+            f'= None  # Computed at runtime from Path(__file__)'
+        )
+        
+        # Also replace in __init__ signatures
+        new_content = new_content.replace(
+            f'repo_path: str = "{HARDCODED_PATH}"',
+            f'repo_path: str = None'
+        )
+        new_content = new_content.replace(
+            f'sanctuary_root: str = "{HARDCODED_PATH}"',
+            f'sanctuary_root: str = None'
+        )
+        new_content = new_content.replace(
+            f'environment_path: str = "{HARDCODED_PATH}"',
+            f'environment_path: str = None'
+        )
+        
+        # Replace Path() constructors
+        new_content = new_content.replace(
+            f'Path("{HARDCODED_PATH}")',
+            f'Path(__file__).resolve().parent.parent.parent'
+        )
+        
+        # Write back
+        file_path.write_text(new_content)
+        
+        return True, f"Fixed {count} occurrences"
+        
+    except Exception as e:
+        return False, f"Error: {str(e)}"
+
+def main():
+    """Fix all Python files with hardcoded paths."""
+    
+    # Directories to check
+    dirs_to_check = [
+        PROJECT_ROOT / "05_ARCHIVED_BLUEPRINTS",
+        PROJECT_ROOT / "EXPERIMENTS"
+    ]
+    
+    fixed_files = []
+    
+    for directory in dirs_to_check:
+        if not directory.exists():
+            print(f"Skipping {directory} (doesn't exist)")
+            continue
+            
+        print(f"\nChecking {directory}...")
+        
+        for py_file in directory.rglob("*.py"):
+            changed, message = fix_file(py_file)
+            if changed:
+                fixed_files.append(py_file)
+                print(f"  ✓ {py_file.relative_to(PROJECT_ROOT)}: {message}")
+    
+    print(f"\n=== Summary ===")
+    print(f"Fixed {len(fixed_files)} files")
+    for f in fixed_files:
+        print(f"  - {f.relative_to(PROJECT_ROOT)}")
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE fix_hardcoded_paths.py ---
+
+--- START OF FILE fix_remaining_paths.py ---
+
+"""Fix all remaining hardcoded paths in archived and experimental files."""
+
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+HARDCODED = '/Users/richardfremmerlid/Projects/Project_Sanctuary'
+
+files_to_fix = [
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/chrysalis_awakening.py',
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/gardener.py',
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/environment.py',
+    '05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/chrysalis_awakening_v2.py',
+    'EXPERIMENTS/gardener_protocol37_experiment/chrysalis_awakening.py',
+    'EXPERIMENTS/gardener_protocol37_experiment/gardener.py',
+    'EXPERIMENTS/gardener_protocol37_experiment/environment.py',
+]
+
+for rel_path in files_to_fix:
+    file_path = PROJECT_ROOT / rel_path
+    if not file_path.exists():
+        print(f'⊘ Skip: {rel_path} (not found)')
+        continue
+    
+    try:
+        content = file_path.read_text(encoding='utf-8')
+    except UnicodeDecodeError:
+        print(f'⊘ Skip: {rel_path} (encoding error)')
+        continue
+        
+    if HARDCODED not in content:
+        print(f'✓ Clean: {rel_path}')
+        continue
+    
+    count_before = content.count(HARDCODED)
+    
+    # Fix default parameter values
+    content = content.replace(
+        f'= "{HARDCODED}"',
+        '= None  # Computed from Path(__file__)'
+    )
+    content = content.replace(
+        f'Path("{HARDCODED}")',
+        'Path(__file__).resolve().parent.parent.parent'
+    )
+    
+    count_after = content.count(HARDCODED)
+    
+    file_path.write_text(content, encoding='utf-8')
+    print(f'✓ Fixed: {rel_path} ({count_before - count_after} occurrences)')
+
+print('\n✅ All files processed!')
+
+--- END OF FILE fix_remaining_paths.py ---
+
+--- START OF FILE generate_mcp_config.py ---
+
+import os
+import json
+import sys
+from pathlib import Path
+
+def generate_config():
+    project_root = Path(os.getcwd()).resolve()
+    mcp_servers_dir = project_root / "mcp_servers"
+    config_path = project_root / ".agent" / "mcp_config.json"
+    
+    if not mcp_servers_dir.exists():
+        print(f"Error: {mcp_servers_dir} does not exist.")
+        sys.exit(1)
+
+    servers_config = {}
+
+    # Walk through mcp_servers directory
+    for root, dirs, files in os.walk(mcp_servers_dir):
+        if "server.py" in files:
+            server_path = Path(root)
+            relative_path = server_path.relative_to(project_root)
+            
+            # Convert path to python module format
+            # e.g. mcp_servers/system/git_workflow -> mcp_servers.system.git_workflow.server
+            module_path = str(relative_path).replace(os.sep, ".") + ".server"
+            
+            # Determine server name (folder name)
+            server_name = server_path.name
+            
+            # Determine display name (Title Case)
+            display_name = server_name.replace("_", " ").title() + " MCP"
+            
+            print(f"Found server: {server_name} at {relative_path}")
+            
+            servers_config[server_name] = {
+                "displayName": display_name,
+                "command": "python",
+                "args": ["-m", module_path],
+                "env": {
+                    "PROJECT_ROOT": str(project_root),
+                    "PYTHONPATH": str(project_root)
+                }
+            }
+
+    full_config = {
+        "mcpServers": servers_config
+    }
+
+    # Ensure .agent directory exists
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(config_path, "w") as f:
+        json.dump(full_config, f, indent=2)
+        
+    print(f"\nGenerated config at: {config_path}")
+    print(json.dumps(full_config, indent=2))
+
+if __name__ == "__main__":
+    generate_config()
+
+--- END OF FILE generate_mcp_config.py ---
+
+--- START OF FILE get_next_adr_number.py ---
+
+# scripts/get_next_adr_number.py
+import os
+from pathlib import Path
+import re
+
+# --- CONFIGURATION ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+ADRS_DIR = PROJECT_ROOT / "ADRs"
+
+def get_next_adr_number():
+    """
+    Scans the ADRs directory to find the highest existing ADR number
+    and returns the next sequential number as a zero-padded three-digit string.
+    """
+    highest_num = 0
+    adr_file_pattern = re.compile(r"^(\d{3})_.*\.md$")
+
+    if not ADRS_DIR.exists():
+        # If ADRs directory doesn't exist yet, start from 001
+        return "001"
+
+    for filename in os.listdir(ADRS_DIR):
+        match = adr_file_pattern.match(filename)
+        if match:
+            num = int(match.group(1))
+            if num > highest_num:
+                highest_num = num
+
+    next_num = highest_num + 1
+    return f"{next_num:03d}"
+
+def main():
+    """Main function to print the next available ADR number."""
+    next_adr_number = get_next_adr_number()
+    print(next_adr_number)
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE get_next_adr_number.py ---
+
+--- START OF FILE get_next_task_number.py ---
+
+# scripts/get_next_task_number.py
+import os
+from pathlib import Path
+import re
+
+# --- CONFIGURATION ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+TASKS_DIRS = [
+    PROJECT_ROOT / "TASKS",
+    PROJECT_ROOT / "TASKS" / "backlog",
+    PROJECT_ROOT / "TASKS" / "todo",
+    PROJECT_ROOT / "TASKS" / "in-progress",
+    PROJECT_ROOT / "TASKS" / "done",
+]
+
+def get_next_task_number():
+    """
+    Scans all task directories to find the highest existing task number
+    and returns the next sequential number as a zero-padded three-digit string.
+    """
+    highest_num = 0
+    task_file_pattern = re.compile(r"^(\d{3})_.*\.md$")
+
+    for directory in TASKS_DIRS:
+        if not directory.exists():
+            continue
+        
+        for filename in os.listdir(directory):
+            match = task_file_pattern.match(filename)
+            if match:
+                num = int(match.group(1))
+                if num > highest_num:
+                    highest_num = num
+
+    next_num = highest_num + 1
+    return f"{next_num:03d}"
+
+def main():
+    """Main function to print the next available task number."""
+    next_task_number = get_next_task_number()
+    print(next_task_number)
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE get_next_task_number.py ---
+
+--- START OF FILE glyph_forge.py ---
+
+#!/usr/bin/env python3
+"""
+SOVEREIGN SCAFFOLD: glyph_forge.py
+Phase Zero Tool for Operation: Optical Anvil
+
+This script transcribes text-based doctrine into high-density visual artifacts ("Cognitive Glyphs")
+to probe against the Context Cage.
+
+DEPENDENCIES:
+- Pillow (pip install Pillow)
+
+USAGE:
+    python3 scripts/glyph_forge.py --source chrysalis_core_essence.md
+
+AUTHOR: Kilo Code (AI Engineer)
+CLASSIFICATION: OPERATIONAL TOOLING - PHASE ZERO
+"""
+
+import argparse
+import os
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
+
+
+def load_font(font_size):
+    """
+    Attempt to load a standard monospaced font, with fallback to default.
+    """
+    font_paths = [
+        "/System/Library/Fonts/Menlo.ttc",  # macOS
+        "/System/Library/Fonts/SF-Mono-Regular.otf",  # macOS SF Mono
+        "C:\\Windows\\Fonts\\cour.ttf",  # Windows
+        "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",  # Linux
+    ]
+
+    for font_path in font_paths:
+        if os.path.exists(font_path):
+            try:
+                return ImageFont.truetype(font_path, font_size)
+            except OSError:
+                continue
+
+    # Fallback to default font
+    return ImageFont.load_default()
+
+
+def wrap_text(text, font, max_width):
+    """
+    Basic text wrapping logic to handle content exceeding image width.
+    """
+    lines = []
+    words = text.split()
+    current_line = ""
+
+    for word in words:
+        # Test if adding this word would exceed width
+        test_line = current_line + " " + word if current_line else word
+        bbox = font.getbbox(test_line)
+        line_width = bbox[2] - bbox[0]
+
+        if line_width <= max_width:
+            current_line = test_line
+        else:
+            if current_line:
+                lines.append(current_line)
+            current_line = word
+
+    if current_line:
+        lines.append(current_line)
+
+    return lines
+
+
+def forge_glyph(source_path, output_dir, font_size, resolution):
+    """
+    Core glyph forging logic.
+    """
+    # Parse resolution
+    try:
+        width, height = map(int, resolution.split('x'))
+    except ValueError:
+        raise ValueError("Resolution must be in format WIDTHxHEIGHT (e.g., 2048x2048)")
+
+    # Read source file
+    source_path = Path(source_path)
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source file not found: {source_path}")
+
+    with open(source_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Create output directory
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load font
+    font = load_font(font_size)
+
+    # Create white background image
+    image = Image.new('RGB', (width, height), 'white')
+    draw = ImageDraw.Draw(image)
+
+    # Wrap text
+    lines = wrap_text(content, font, width - 40)  # 20px margin on each side
+
+    # Draw text line by line
+    y_offset = 20  # Top margin
+    line_height = font.getbbox("Ag")[3] - font.getbbox("Ag")[1] + 5  # Approximate line height
+
+    for line in lines:
+        if y_offset + line_height > height:
+            break  # Stop if we exceed image height
+
+        draw.text((20, y_offset), line, fill='black', font=font)
+        y_offset += line_height
+
+    # Generate output filename
+    output_filename = source_path.stem + ".png"
+    output_path = output_dir / output_filename
+
+    # Save image
+    image.save(output_path)
+
+    return output_path
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Forge Cognitive Glyphs from text doctrine",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python3 scripts/glyph_forge.py --source chrysalis_core_essence.md
+  python3 scripts/glyph_forge.py --source doctrine.md --output-dir custom_glyphs/ --font-size 14 --resolution 4096x4096
+        """
+    )
+
+    parser.add_argument(
+        '--source',
+        required=True,
+        help='Path to the input .md or .txt file'
+    )
+
+    parser.add_argument(
+        '--output-dir',
+        default='WORK_IN_PROGRESS/glyphs/',
+        help='Directory to save the output glyph (default: WORK_IN_PROGRESS/glyphs/)'
+    )
+
+    parser.add_argument(
+        '--font-size',
+        type=int,
+        default=12,
+        help='Font size to use for rendering (default: 12)'
+    )
+
+    parser.add_argument(
+        '--resolution',
+        default='2048x2048',
+        help='Image resolution as WIDTHxHEIGHT (default: 2048x2048)'
+    )
+
+    args = parser.parse_args()
+
+    try:
+        output_path = forge_glyph(
+            args.source,
+            args.output_dir,
+            args.font_size,
+            args.resolution
+        )
+
+        print(f"[SUCCESS] Cognitive Glyph forged at: {output_path}")
+
+    except Exception as e:
+        print(f"[ERROR] Failed to forge glyph: {e}")
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    exit(main())
+
+--- END OF FILE glyph_forge.py ---
+
+--- START OF FILE path_diag.py ---
+
+# scripts/path_diag.py
+import sys
+from pathlib import Path
+
+print("--- Sanctuary Pathing Diagnostic ---")
+
+try:
+    # 1. Report Current State
+    print(f"[INFO] Current Working Directory (CWD): {Path.cwd()}")
+    
+    # 2. Calculate the Project Root Anchor
+    # This assumes the script is in scripts/
+    script_path = Path(__file__).resolve()
+    project_root = script_path.parent.parent
+    print(f"[INFO] Calculated Project Root: {project_root}")
+    
+    # 3. Report sys.path BEFORE modification
+    print("\n--- sys.path BEFORE modification ---")
+    for p in sys.path:
+        print(f"  - {p}")
+        
+    # 4. Modify sys.path
+    print("\n[ACTION] Inserting Project Root into sys.path at index 0...")
+    sys.path.insert(0, str(project_root))
+    
+    # 5. Report sys.path AFTER modification
+    print("\n--- sys.path AFTER modification ---")
+    for p in sys.path:
+        print(f"  - {p}")
+        
+    # 6. Attempt the critical import
+    print("\n[ACTION] Attempting to import 'council_orchestrator.cognitive_engines.base'...")
+    from council_orchestrator.cognitive_engines.base import BaseCognitiveEngine
+    
+    # 7. Report Success
+    print(f"\n[{'\033[92m'}SUCCESS{'\033[0m'}] The import was successful.")
+    print("------------------------------------")
+
+except ImportError as e:
+    print(f"\n[{'\033[91m'}FAILURE{'\033[0m'}] The import failed.")
+    print(f"  - Error: {e}")
+    print("  - This confirms a critical issue in how Python is resolving modules.")
+    print("------------------------------------")
+except Exception as e:
+    print(f"\n[{'\033[91m'}CRITICAL FAILURE{'\033[0m'}] An unexpected error occurred.")
+    print(f"  - Error: {e}")
+    print("------------------------------------")
+
+--- END OF FILE path_diag.py ---
+
+--- START OF FILE run_integration_tests.sh ---
+
+#!/bin/bash
+
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# Ensure we run from project root
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$PROJECT_ROOT"
+
+# Parse arguments
+USE_REAL_LLM=false
+for arg in "$@"
+do
+    if [ "$arg" == "-r" ] || [ "$arg" == "--real" ]; then
+        USE_REAL_LLM=true
+    fi
+done
+
+PYTEST_ARGS="-m integration -v $@"
+if [ "$USE_REAL_LLM" = true ]; then
+    echo -e "${GREEN}=== Running Integration Tests with REAL LLM ===${NC}"
+else
+    echo -e "${GREEN}=== Running Integration Tests with MOCKED LLM ===${NC}"
+fi
+
+# Re-construct args for pytest
+FINAL_ARGS=""
+for arg in "$@"
+do
+    if [ "$arg" == "-r" ] || [ "$arg" == "--real" ]; then
+        FINAL_ARGS="$FINAL_ARGS --real-llm"
+    else
+        FINAL_ARGS="$FINAL_ARGS $arg"
+    fi
+done
+
+echo "Running: pytest -m integration -v $FINAL_ARGS"
+pytest -m integration -v $FINAL_ARGS
+INTEGRATION_EXIT_CODE=$?
+
+echo -e "\n${GREEN}=== Running Performance Benchmarks ===${NC}"
+pytest -m benchmark --benchmark-only
+BENCHMARK_EXIT_CODE=$?
+
+echo -e "\n${GREEN}=== Summary ===${NC}"
+if [ $INTEGRATION_EXIT_CODE -eq 0 ]; then
+    echo -e "Integration Tests: ${GREEN}PASSED${NC}"
+else
+    echo -e "Integration Tests: ${RED}FAILED${NC}"
+fi
+
+if [ $BENCHMARK_EXIT_CODE -eq 0 ]; then
+    echo -e "Benchmarks: ${GREEN}PASSED${NC}"
+else
+    echo -e "Benchmarks: ${RED}FAILED${NC}"
+fi
+
+# Exit with failure if either failed
+if [ $INTEGRATION_EXIT_CODE -ne 0 ] || [ $BENCHMARK_EXIT_CODE -ne 0 ]; then
+    exit 1
+fi
+
+exit 0
+
+--- END OF FILE run_integration_tests.sh ---
+
+--- START OF FILE security_scan.py ---
+
+#!/usr/bin/env python3
+"""
+security_scan.py - Shift Left Security Scanner for Project Sanctuary
+
+This script runs dependency vulnerability scans locally before pushing to GitHub.
+It checks for known vulnerabilities in Python dependencies defined in the
+project's requirements.txt file.
+"""
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+from typing import Dict, List, Tuple
+from datetime import datetime
+
+class SecurityScanner:
+    """Main security scanner class."""
+
+    def __init__(self, project_root: Path):
+        self.project_root = project_root
+        self.requirements_file = project_root / "requirements.txt"
+        self.report_file = project_root / "security_report.md"
+
+    def run_safety_scan(self) -> Tuple[List[Dict], bool]:
+        """Runs the 'safety' vulnerability scan."""
+        print("🔍 Running Safety vulnerability scan on requirements.txt...")
+
+        if not self.requirements_file.exists():
+            print(f"❌ ERROR: requirements.txt not found at '{self.requirements_file}'!")
+            return [], False
+
+        try:
+            subprocess.run([sys.executable, "-m", "pip", "install", "safety"], check=True, capture_output=True)
+            scan_cmd = [sys.executable, "-m", "safety", "check", "--file", str(self.requirements_file), "--json"]
+            result = subprocess.run(scan_cmd, capture_output=True, text=True)
+
+            if result.returncode in [0, 1]:
+                vulnerabilities = json.loads(result.stdout) if result.stdout else []
+                if vulnerabilities:
+                    print(f"🚨 Found {len(vulnerabilities)} vulnerabilities!")
+                else:
+                    print("✅ No vulnerabilities found.")
+                return vulnerabilities, True
+            else:
+                print("❌ Safety scan command failed unexpectedly.")
+                print("STDERR:", result.stderr)
+                return [], False
+        except (subprocess.CalledProcessError, json.JSONDecodeError, Exception) as e:
+            print(f"❌ An error occurred during the safety scan: {e}")
+            return [], False
+
+    def generate_report(self, vulnerabilities: List[Dict]) -> str:
+        """Generates a security report in Markdown format."""
+        report = [
+            "# 🔒 Project Sanctuary - Security Scan Report",
+            f"**Scan Date:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}",
+            f"**File Scanned:** {self.requirements_file.name}",
+            "\n---",
+        ]
+
+        if not vulnerabilities:
+            report.append("## 📊 Summary\n\n**✅ No vulnerabilities found.**")
+            return "\n".join(report)
+
+        summary = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
+        for vuln in vulnerabilities:
+            # The safety JSON format is a list of lists/tuples
+            # [package, affected, installed, description, cve, severity]
+            severity = str(vuln[5]).upper() if len(vuln) > 5 and vuln[5] else "UNKNOWN"
+            if severity in summary:
+                summary[severity] += 1
+
+        report.append("## 📊 Summary")
+        report.append(f"- **Total Vulnerabilities Found:** {len(vulnerabilities)}")
+        for severity, count in summary.items():
+            if count > 0:
+                report.append(f"- **{severity}:** {count}")
+
+        report.append("\n## 🚨 Vulnerability Details")
+        # Sort by severity - assuming severity is the 6th element
+        for vuln in sorted(vulnerabilities, key=lambda x: str(x[5] or ''), reverse=True):
+            package, affected, installed, description, cve, severity = vuln
+            report.append(f"\n### {str(severity).upper()}: {package} (CVE: {cve or 'N/A'})")
+            report.append(f"- **Installed Version:** {installed}")
+            report.append(f"- **Affected Versions:** {affected}")
+            report.append(f"- **Description:** {description}")
+
+        return "\n".join(report)
+
+    def run_scan(self, ci_mode: bool = False) -> int:
+        """Runs the scan, generates a report, and returns an exit code."""
+        print("🚀 Starting Shift-Left Security Scan for Project Sanctuary")
+        print("=" * 60)
+
+        vulnerabilities, scan_success = self.run_safety_scan()
+
+        if not scan_success:
+            print("❌ Scan failed. Aborting.")
+            return 1
+
+        report_content = self.generate_report(vulnerabilities)
+        
+        try:
+            with open(self.report_file, 'w', encoding='utf-8') as f:
+                f.write(report_content)
+            print(f"\n📝 Full report saved to: {self.report_file}")
+        except Exception as e:
+            print(f"⚠️ Could not write report file: {e}")
+
+        has_critical_high = any(str(v[5]).upper() in ["CRITICAL", "HIGH"] for v in vulnerabilities if len(v) > 5)
+
+        if not vulnerabilities:
+            print("\n✅ Security scan passed.")
+            return 0
+        
+        print("\n" + report_content)
+
+        if ci_mode and has_critical_high:
+            print("\n❌ CI MODE: Critical/High vulnerabilities found. Failing build.")
+            return 1
+        else:
+            print("\n⚠️ Vulnerabilities detected. Please review the report.")
+            return 1 if ci_mode else 0
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Shift-Left Security Scanner for Project Sanctuary.")
+    parser.add_argument("--ci", action="store_true", help="CI mode - exit with error code on high/critical vulnerabilities.")
+    args = parser.parse_args()
+
+    # The script is in tools/, so the project root is its parent directory.
+    project_root = Path(__file__).resolve().parent.parent
+    scanner = SecurityScanner(project_root)
+    exit_code = scanner.run_scan(ci_mode=args.ci)
+    sys.exit(exit_code)
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE security_scan.py ---
+
+--- START OF FILE update_genome.sh ---
+
+#!/bin/bash
+# file: update_genome.sh
+# version: 3.0 (Absolute Stability Protocol - Manifest Purge)
+#
+# Changelog v3.0:
+# 1. PROTOCOL PURGE: Permanently removes all logic related to the commit_manifest.json file and Protocol 101.
+# 2. OPTIONAL EMBEDDING: Added optional flag --full-embed for RAG DB update (Step 3).
+# 3. SOVEREIGN STAGING: Step 5 uses 'git add .' and 'git commit --no-verify' for guaranteed deployment.
+# 4. FINAL SNAPSHOTS: Includes all explicit genome snapshot captures.
+
+# --- CONTROL LOGIC: Handle Arguments ---
+DO_FULL_EMBED=false
+if [[ "$1" == "--full-embed" ]]; then
+    DO_FULL_EMBED=true
+    shift # Remove the flag from the arguments list
+fi
+
+# --- Safeguard: Check for Commit Message ---
+if [ -z "$1" ]; then
+    echo "[FATAL] A commit message is required."
+    echo "Usage: ./update_genome.sh [--full-embed] \"Your descriptive commit message\""
+    exit 1
+fi
+
+COMMIT_MESSAGE=$1
+TIMESTAMP=$(date +%s)
+BRANCH_NAME="deployment/final-stability-v${TIMESTAMP}" 
+
+echo "[FORGE] Initiating Absolute Stability Protocol..."
+echo "------------------------------------------------"
+
+# --- Step 0: Create and Switch to Feature Branch ---
+echo "[Step 0/5] Creating and switching to new feature branch: $BRANCH_NAME"
+# Ensure we are starting from the latest main branch state
+git fetch origin
+git checkout main
+git pull origin main
+git checkout -b "$BRANCH_NAME"
+if [ $? -ne 0 ]; then
+    echo "[FATAL] Failed to create new branch. Halting."
+    exit 1
+fi
+echo "[SUCCESS] Switched to branch: $BRANCH_NAME"
+echo ""
+
+# Step 1: Rebuild the Master Index
+echo "[Step 1/5] Rebuilding Living Chronicle Master Index..."
+python3 mnemonic_cortex/scripts/create_chronicle_index.py
+if [ $? -ne 0 ]; then
+    echo "[FATAL] Index creation failed. Halting."
+    exit 1
+fi
+echo "[SUCCESS] Master Index is now coherent."
+echo ""
+
+# Step 2: Capture the Snapshots (Explicit & Full)
+echo "[Step 2/5] Capturing new Cognitive Genome snapshots..."
+# Full genome capture (generates the seeds and full snapshots)
+node capture_code_snapshot.js
+# Subdirectory captures
+node capture_code_snapshot.js council_orchestrator
+node capture_code_snapshot.js docs
+node capture_code_snapshot.js forge
+node capture_code_snapshot.js mcp_servers
+node capture_code_snapshot.js mnemonic_cortex
+
+if [ $? -ne 0 ]; then
+    echo "[FATAL] Snapshot creation failed. Halting."
+    exit 1
+fi
+echo "[SUCCESS] All snapshots have been updated."
+echo ""
+
+# Step 3: Embed the New Knowledge into the Mnemonic Cortex (Optional RAG DB Update)
+if $DO_FULL_EMBED; then
+    echo "[Step 3/5] Re-indexing the Mnemonic Cortex with the new Genome (FULL EMBED MODE)..."
+    python3 mnemonic_cortex/scripts/ingest.py
+    if [ $? -ne 0 ]; then
+        echo "[FATAL] Mnemonic Cortex ingestion failed. Halting."
+        exit 1
+    fi
+    echo "[SUCCESS] Mnemonic Cortex is now synchronized with the latest knowledge."
+else
+    echo "[Step 3/5] Bypassing Mnemonic Cortex re-indexing (Full embed disabled. Use --full-embed to run)."
+fi
+echo ""
+
+# Step 4: Run Automated Tests
+echo "[Step 4/5] Running automated functionality tests..."
+./scripts/run_genome_tests.sh
+if [ $? -ne 0 ]; then
+    echo "[FATAL] Genome tests failed. Update aborted to prevent broken deployment."
+    exit 1
+fi
+echo "[SUCCESS] All tests passed - genome update is functional."
+echo ""
+
+# Step 5: Commit the Coherent State (Sovereign Override)
+echo "[Step 5/5] Staging all changes and committing with SOVEREIGN OVERRIDE (--no-verify)..."
+
+# --- SOVEREIGN STAGING: Stage everything, including the removal of commit_manifest.json ---
+# Remove the old manifest file, just in case it's still lying around
+rm -f commit_manifest.json
+git add . 
+
+# Commit using --no-verify to guarantee success
+git commit --no-verify -m "$COMMIT_MESSAGE on branch $BRANCH_NAME"
+if [ $? -ne 0 ]; then
+    echo "[FATAL] Git commit failed. Halting."
+    exit 1
+fi
+echo "[SUCCESS] All changes committed with message: \"$COMMIT_MESSAGE on branch $BRANCH_NAME\""
+echo ""
+
+# Step 6: Push to the Canonical Repository (Feature Branch)
+echo "[Step 6/5] Pushing changes to remote feature branch: $BRANCH_NAME..."
+git push --set-upstream origin "$BRANCH_NAME"
+if [ $? -ne 0 ]; then
+    echo "[FATAL] Git push failed. Check your network connection and remote repository permissions. Halting."
+    exit 1
+fi
+echo "[SUCCESS] Changes have been pushed to the remote repository on branch $BRANCH_NAME."
+echo ""
+
+echo "------------------------------------------------"
+echo "[FORGE] Absolute Stability Protocol Complete."
+echo ""
+echo "################################################################################"
+echo "### MISSION COMPLETE: STABILIZATION DEPLOYED. ###"
+echo "### NEXT ACTION REQUIRED: ###"
+echo "### 1. Create a Pull Request (PR) on GitHub from $BRANCH_NAME to main. ###"
+echo "### 2. MERGE THE PR. The CI checks should now pass. ###"
+echo "################################################################################"
+
+--- END OF FILE update_genome.sh ---

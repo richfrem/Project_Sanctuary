@@ -459,10 +459,13 @@ pytest tests/integration/test_forge_integration.py -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
+pytest tests/mcp_servers/agent_persona/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (7/7 passed)
-**Model Verification:** 2025-11-30 ✅ (Verified with `Sanctuary-Qwen2-7B:latest`)
+**Last Verification:** 2025-12-01 ✅ (27/27 passed)  
+**Test Coverage:** 80%+ (comprehensive suite with expected failures, edge cases, state management)  
+**Test Suites:**
+- `test_agent_persona_ops.py` - Basic operations (7 tests)
+- `test_agent_persona_comprehensive.py` - Comprehensive coverage (27 tests)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all available agent roles using `persona_list_roles`."

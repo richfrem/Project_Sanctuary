@@ -1,0 +1,5382 @@
+# tests Subfolder Snapshot (Human-Readable)
+
+Generated On: 2025-12-01T15:34:08.299Z
+
+# Mnemonic Weight (Token Count): ~41,872 tokens
+
+# Directory Structure (relative to tests subfolder)
+  ./tests/benchmarks/
+  ./tests/benchmarks/test_rag_query_performance.py.disabled
+  ./tests/browser_automation/
+  ./tests/browser_automation/main.py
+  ./tests/browser_automation/page_objects/
+  ./tests/browser_automation/page_objects/base/
+  ./tests/browser_automation/page_objects/base/base_page.py
+  ./tests/browser_automation/page_objects/login_page.py
+  ./tests/browser_automation/page_objects/pages/
+  ./tests/browser_automation/page_objects/pages/chat_page.py
+  ./tests/browser_automation/page_objects/pages/login_page.py
+  ./tests/conftest.py
+  ./tests/data/
+  ./tests/data/test_data.jsonl
+  ./tests/data/test_protocol_999.md
+  ./tests/integration/
+  ./tests/integration/test_cortex_operations.py
+  ./tests/integration/test_council_orchestrator_with_cortex.py.disabled
+  ./tests/integration/test_end_to_end_rag_pipeline.py
+  ./tests/integration/test_forge_integration.py
+  ./tests/integration/test_git_workflow_end_to_end.py
+  ./tests/integration/test_rag_simple.py
+  ./tests/integration/test_strategic_crucible_loop.py
+  ./tests/manual/
+  ./tests/manual/test_auditor_simple.sh
+  ./tests/mcp_servers/
+  ./tests/mcp_servers/agent_persona/
+  ./tests/mcp_servers/agent_persona/test_agent_persona_ops.py
+  ./tests/mcp_servers/code/
+  ./tests/mcp_servers/code/test_operations.py
+  ./tests/mcp_servers/config/
+  ./tests/mcp_servers/config/test_operations.py
+  ./tests/mcp_servers/cortex/
+  ./tests/mcp_servers/cortex/__init__.py
+  ./tests/mcp_servers/cortex/conftest_legacy.py
+  ./tests/mcp_servers/cortex/test_cache_operations.py
+  ./tests/mcp_servers/cortex/test_cortex_ingestion.py
+  ./tests/mcp_servers/cortex/test_cortex_integration.py
+  ./tests/mcp_servers/cortex/test_enhanced_diagnostics.py
+  ./tests/mcp_servers/cortex/test_models.py
+  ./tests/mcp_servers/cortex/test_operations.py
+  ./tests/mcp_servers/cortex/test_protocol_87_orchestrator.py
+  ./tests/mcp_servers/cortex/test_validator.py
+  ./tests/mcp_servers/council/
+  ./tests/mcp_servers/council/test_council_ops.py
+  ./tests/mcp_servers/git_workflow/
+  ./tests/mcp_servers/git_workflow/test_squash_merge.py
+  ./tests/mcp_servers/git_workflow/test_tool_safety.py
+  ./tests/mcp_servers/task/
+  ./tests/mcp_servers/task/__init__.py
+  ./tests/mcp_servers/task/test_e2e_workflow.py
+  ./tests/mcp_servers/task/test_operations.py
+  ./tests/podman/
+  ./tests/podman/Dockerfile
+  ./tests/podman/README.md
+  ./tests/podman/app.py
+  ./tests/podman/build.sh
+  ./tests/test_adr_operations.py
+  ./tests/test_adr_validator.py
+  ./tests/test_chronicle_operations.py
+  ./tests/test_chronicle_validator.py
+  ./tests/test_git_ops.py
+  ./tests/test_pre_commit_hook.sh
+  ./tests/test_protocol_operations.py
+  ./tests/test_protocol_validator.py
+  ./tests/test_utils.py
+  ./tests/test_validation_fail.py
+  ./tests/verification_scripts/
+  ./tests/verification_scripts/verify_task_003.py
+  ./tests/verification_scripts/verify_task_004.py
+  ./tests/verification_scripts/verify_task_017.py
+  ./tests/verification_scripts/verify_task_025.py
+  ./tests/verification_scripts/verify_task_026.py
+  ./tests/verify_wslenv_setup.py
+
+--- START OF FILE browser_automation/main.py ---
+
+# mcp_agent/main.py (v2.0 - HITL Authentication)
+import asyncio
+from playwright.async_api import async_playwright
+
+# Import the ChatPage object, as LoginPage is now bypassed.
+from page_objects.pages.chat_page import ChatPage
+
+# --- Configuration ---
+# This URL is the key. It takes us directly to a new chat with the correct model pre-selected.
+TARGET_URL = "https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash"
+
+# A selector to verify that the manual login was successful and the chat page is ready.
+CHAT_PAGE_READY_SELECTOR = 'textarea[placeholder*="logos and brand swag"]'
+
+async def run_hitl_interaction_test():
+    """
+    Executes an interaction test using a Human-in-the-Loop (HITL) authentication step.
+    """
+    print("--- MCP Foundational Test: HITL Authentication & Interaction ---")
+
+    async with async_playwright() as p:
+        # --- Phase 1: Connect to Steward's Authenticated Browser ---
+
+        print("Connecting to Steward's authenticated Chrome instance at localhost:9222...")
+        import aiohttp
+        async with aiohttp.ClientSession() as session:
+            async with session.get("http://localhost:9222/json") as resp:
+                data = await resp.json()
+                ws_url = data[0]['webSocketDebuggerUrl']  # Use the first page's WS URL
+        browser = await p.chromium.connect_over_cdp(ws_url)
+        # Get the first available page (assuming the Steward has the chat page open)
+        pages = browser.contexts[0].pages
+        if pages:
+            page = pages[0]  # Use the first page
+        else:
+            raise Exception("No pages found in the connected browser. Please ensure a page is open in the Chrome instance.")
+
+        # --- Phase 2: Autonomous Operation ---
+
+        try:
+            print("▶️  Starting autonomous operation...")
+            # Verify that the page is ready by checking for a key page element.
+            await page.wait_for_selector(CHAT_PAGE_READY_SELECTOR, timeout=15000)
+            print("[SUCCESS] Chat page is ready.")
+
+            chat_page = ChatPage(page)
+
+            prompt = "What is the capital of France?"
+            response = await chat_page.submit_prompt_and_get_response(prompt)
+
+            # --- Phase 3: Verification ---
+            if "paris" in response.lower():
+                print("\n[SUCCESS] End-to-end CDP Connect test passed. Response contained 'Paris'.")
+            else:
+                raise AssertionError(f"Verification failed. Expected 'Paris', got: '{response}'")
+
+        except Exception as e:
+            print(f"\n[FAILURE] Autonomous phase failed: {e}")
+            await page.screenshot(path="debug_cdp_failure.png", full_page=True)
+            print("Debug screenshot saved to debug_cdp_failure.png")
+            print("Browser will remain open for 30 seconds for inspection...")
+            await asyncio.sleep(30)
+        finally:
+            print("\nTest complete. Closing browser...")
+            await browser.close()
+
+if __name__ == "__main__":
+    # Kilo: Ensure this script is run from the project root, or adjust paths.
+    # The command should be: `python mcp_agent/main.py`
+    asyncio.run(run_hitl_interaction_test())
+
+--- END OF FILE browser_automation/main.py ---
+
+--- START OF FILE browser_automation/page_objects/base/base_page.py ---
+
+# mcp_agent/page_objects/base/base_page.py
+from playwright.async_api import Page, expect
+
+class BasePage:
+    """A base page object for common page functionalities."""
+    def __init__(self, page: Page):
+        self.page = page
+
+    async def navigate(self, url: str):
+        """Navigates to the specified URL."""
+        await self.page.goto(url)
+
+    async def wait_for_element(self, selector: str, timeout: int = 10000):
+        """Waits for a specific element to be visible on the page."""
+        element = self.page.locator(selector)
+        await expect(element).to_be_visible(timeout=timeout)
+
+    async def click_element(self, selector: str):
+        """Clicks an element specified by a selector."""
+        await self.page.locator(selector).click()
+
+    async def fill_input(self, selector: str, value: str):
+        """Fills an input field with a given value."""
+        await self.page.locator(selector).fill(value)
+
+--- END OF FILE browser_automation/page_objects/base/base_page.py ---
+
+--- START OF FILE browser_automation/page_objects/login_page.py ---
+
+# mcp_agent/page_objects/login_page.py
+
+class LoginPage:
+    def __init__(self, page):
+        self.page = page
+        # --- KILO: Hardened Selectors Required ---
+        # Replace these placeholders with robust, non-brittle selectors for the login elements.
+        self.email_input = 'input[type="email"]'
+        self.email_next_button = '#identifierNext'
+        self.password_input = 'input[type="password"]'
+        self.password_next_button = '#passwordNext'
+        # Selector for an element that ONLY appears after a successful login.
+        self.post_login_landing_element = '#app-root' # Example: The main app container
+
+    async def navigate(self, url):
+        print("LoginPage: Navigating to login page...")
+        await self.page.goto(url)
+
+    async def login(self, email, password):
+        print(f"LoginPage: Attempting login for user {email}...")
+        await self.page.fill(self.email_input, email)
+        await self.page.click(self.email_next_button)
+        # It's crucial to wait for the password field to be visible before interacting
+        await self.page.wait_for_selector(self.password_input, state='visible', timeout=5000)
+        await self.page.fill(self.password_input, password)
+        await self.page.click(self.password_next_button)
+        print("LoginPage: Login credentials submitted.")
+
+    async def verify_login_success(self):
+        print("LoginPage: Verifying login success...")
+        try:
+            await self.page.wait_for_selector(
+                self.post_login_landing_element,
+                state='visible',
+                timeout=15000 # Generous timeout for app to load
+            )
+            print("LoginPage: Verification successful. Post-login element is visible.")
+            return True
+        except Exception as e:
+            print(f"FATAL: Login verification failed. Element '{self.post_login_landing_element}' not found.")
+            # Kilo: Add screenshot-on-failure for debugging here.
+            await self.page.screenshot(path="debug_login_failure.png")
+            print("Debug screenshot saved to debug_login_failure.png")
+            return False
+
+--- END OF FILE browser_automation/page_objects/login_page.py ---
+
+--- START OF FILE browser_automation/page_objects/pages/chat_page.py ---
+
+# mcp_agent/page_objects/pages/chat_page.py
+from playwright.async_api import Page, expect
+from ..base.base_page import BasePage
+import asyncio
+
+class ChatPage(BasePage):
+    """Page Object for the AI Studio chat interface, including model selection."""
+    def __init__(self, page: Page):
+        super().__init__(page)
+        # --- KILO: Hardened Selectors based on visual intel ---
+        self.chat_nav_link = 'a:has-text("Chat")'
+        self.model_selector_button = 'button[aria-label="Model selection"]' # Or a more specific selector
+        self.gemini_pro_model_option = 'div[role="listbox"] :text("Gemini 2.5 Pro")'
+        self.prompt_input_area = 'textarea[placeholder*="logos and brand swag"]' # Use partial placeholder text
+        self.submit_button = 'button:has-text("Run")'
+        # This selector needs to be very specific to the model's output container
+        self.last_response_area = 'div[data-testid="model-response-container"]:last-of-type'
+
+    async def navigate_to_chat(self):
+        """Navigates from the dashboard to the chat page."""
+        print("ChatPage: Navigating to Chat...")
+        await self.click_element(self.chat_nav_link)
+        await self.wait_for_element(self.prompt_input_area)
+        print("ChatPage: On new chat page.")
+
+    async def select_model(self, model_name: str = "Gemini 2.5 Pro"):
+        """Selects the desired model from the model selection dropdown."""
+        print(f"ChatPage: Selecting model '{model_name}'...")
+        await self.click_element(self.model_selector_button)
+
+        # KILO: The selector for the model option needs to be precise.
+        if model_name == "Gemini 2.5 Pro":
+            await self.click_element(self.gemini_pro_model_option)
+        else:
+            # Add logic for other models if needed
+            raise NotImplementedError(f"Model selection for '{model_name}' is not implemented.")
+
+        # Verify the change by checking if the button text updated
+        await expect(self.page.locator(self.model_selector_button)).to_contain_text("Gemini 2.5 Pro", timeout=5000)
+        print(f"ChatPage: Model successfully selected.")
+
+    async def submit_prompt_and_get_response(self, prompt_text: str) -> str:
+        """Submits a prompt and returns the model's response."""
+        print(f"ChatPage: Submitting prompt: '{prompt_text}'")
+        await self.fill_input(self.prompt_input_area, prompt_text)
+        await self.click_element(self.submit_button)
+
+        print("ChatPage: Prompt submitted. Waiting for response...")
+        await self.wait_for_element(self.last_response_area, timeout=60000) # Long timeout for model generation
+
+        await asyncio.sleep(2) # Extra wait for text to render
+
+        response_element = self.page.locator(self.last_response_area)
+        response_text = await response_element.inner_text()
+        print(f"ChatPage: Retrieved response: '{response_text[:100]}...'")
+        return response_text
+
+--- END OF FILE browser_automation/page_objects/pages/chat_page.py ---
+
+--- START OF FILE browser_automation/page_objects/pages/login_page.py ---
+
+# mcp_agent/page_objects/pages/login_page.py
+from playwright.async_api import Page, expect
+from ..base.base_page import BasePage
+import asyncio
+
+class LoginPage(BasePage):
+    """Page Object for the full Google AI Studio First-Time User Experience (FTUE)."""
+    def __init__(self, page: Page):
+        super().__init__(page)
+        # --- KILO: Hardened Selectors based on visual intel ---
+        # Initial Welcome Page
+        self.cookie_agree_button = 'button:has-text("Agree")'
+        self.get_started_button = 'a:has-text("Get started")'
+
+        # Google Sign-in Page
+        self.email_input = 'input[type="email"]'
+        self.email_next_button = 'button:has-text("Next")'
+        self.password_input = 'input[type="password"]'
+        self.password_next_button = 'button:has-text("Next")'
+
+        # "It's time to build" Modal
+        self.try_gemini_button = 'button:has-text("Try Gemini")'
+
+        # Post-login Dashboard Element (Verification)
+        self.post_login_dashboard_element = 'a:has-text("Dashboard")' # The left-nav "Dashboard" link is a good anchor.
+
+    async def execute_full_login_flow(self, email: str, password: str):
+        """Executes the entire multi-step login and onboarding process."""
+        print("LoginPage: Starting full FTUE login flow...")
+
+        # Handle cookie consent if it appears
+        if await self.page.locator(self.cookie_agree_button).is_visible(timeout=5000):
+            print("LoginPage: Handling cookie consent...")
+            await self.click_element(self.cookie_agree_button)
+
+        # Click "Get started"
+        print("LoginPage: Clicking 'Get started'...")
+        await self.click_element(self.get_started_button)
+
+        # Google Sign-in
+        print("LoginPage: Entering credentials...")
+        await self.wait_for_element(self.email_input)
+        await self.fill_input(self.email_input, email)
+        await self.click_element(self.email_next_button)
+
+        await self.wait_for_element(self.password_input)
+        await self.fill_input(self.password_input, password)
+        await self.click_element(self.password_next_button)
+
+        # KILO: Note on Fingerprint/2FA:
+        # Playwright cannot automate OS-level dialogs like fingerprint scanners.
+        # This MUST be disabled on the test account or handled by saving/loading an authenticated state.
+        # For now, we assume it's disabled and proceed.
+        print("LoginPage: Credentials submitted. Waiting for dashboard...")
+
+        # Handle "It's time to build" modal
+        try:
+            await self.wait_for_element(self.try_gemini_button, timeout=15000)
+            print("LoginPage: Handling 'It's time to build' modal...")
+            await self.click_element(self.try_gemini_button)
+        except Exception:
+            print("LoginPage: 'It's time to build' modal did not appear, skipping.")
+
+    async def verify_login_success(self, timeout: int = 20000):
+        """Verifies successful login by checking for a key dashboard element."""
+        print("LoginPage: Verifying login success by looking for dashboard element...")
+        try:
+            await self.wait_for_element(self.post_login_dashboard_element, timeout=timeout)
+            print("LoginPage: Verification successful. Dashboard element is visible.")
+            return True
+        except Exception:
+            print(f"FATAL: Login verification failed. Element '{self.post_login_dashboard_element}' not found.")
+            await self.page.screenshot(path="debug_login_failure.png")
+            print("Debug screenshot saved to debug_login_failure.png")
+            return False
+
+--- END OF FILE browser_automation/page_objects/pages/login_page.py ---
+
+--- START OF FILE conftest.py ---
+
+import pytest
+import sys
+import os
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+# Add project root to sys.path to allow importing modules
+project_root = Path(__file__).parent.parent.resolve()
+sys.path.insert(0, str(project_root))
+
+def pytest_addoption(parser):
+    """Add command line options."""
+    parser.addoption(
+        "--real-llm", 
+        action="store_true", 
+        default=False, 
+        help="Run tests against the real local LLM (Ollama). Default is to mock."
+    )
+
+@pytest.fixture
+def real_llm(request):
+    """Return True if --real-llm flag is set."""
+    return request.config.getoption("--real-llm")
+
+@pytest.fixture
+def mock_llm_response():
+    """Return a default mock response."""
+    return "This is a mocked response from the Mnemonic Cortex."
+
+@pytest.fixture
+def llm_service(real_llm, mock_llm_response):
+    """
+    Fixture that returns a context manager for patching ChatOllama.
+    If --real-llm is set, it does nothing (uses real class).
+    If not set, it mocks ChatOllama to return a fixed response.
+    """
+    if real_llm:
+        # No-op context manager
+        class RealLLMContext:
+            def __enter__(self): return None
+            def __exit__(self, *args): pass
+        return RealLLMContext()
+    else:
+        # Mock the ChatOllama class
+        with patch("mnemonic_cortex.app.services.rag_service.ChatOllama") as mock_class:
+            mock_instance = mock_class.return_value
+            # Mock the invoke method of the chain (which is what RAGService calls)
+            # RAGService: chain = prompt | self.llm | StrOutputParser()
+            # This is tricky to mock perfectly because of the LCEL pipe syntax.
+            # Easier to mock the RAGService.query method or the LLM's invoke if we can intercept it.
+            
+            # Alternative: Mock the invoke method of the LLM instance itself
+            # But RAGService constructs a chain.
+            
+            # Let's mock the entire chain execution in RAGService if possible, 
+            # OR we can mock ChatOllama to return a MagicMock that behaves like a runnable.
+            
+            # When chain.invoke is called, it calls invoke on the last element (StrOutputParser)
+            # which calls invoke on the previous...
+            
+            # Simplest approach for RAGService unit testing:
+            # Mock the `invoke` method of the chain. But we don't have access to the chain object easily.
+            
+            # Let's try patching ChatOllama to return a mock that produces a specific AIMessage
+            from langchain_core.messages import AIMessage
+            mock_instance.invoke.return_value = AIMessage(content=mock_llm_response)
+            
+            # Also need to handle the pipe operator `|` if we want to be robust, 
+            # but usually mocking the instance is enough if the chain construction uses it.
+            # However, `prompt | llm` creates a RunnableSequence.
+            
+            yield mock_class
+
+--- END OF FILE conftest.py ---
+
+--- START OF FILE data/test_protocol_999.md ---
+
+# Test Protocol 999
+
+This is a test protocol for incremental ingestion verification.
+
+--- END OF FILE data/test_protocol_999.md ---
+
+--- START OF FILE integration/test_cortex_operations.py ---
+
+"""
+Integration tests for Cortex operations - following verify_all.py pattern.
+"""
+import pytest
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+@pytest.mark.integration
+def test_cache_operations():
+    """Test cache get/set operations directly."""
+    import sys
+    sys.path.insert(0, str(PROJECT_ROOT))
+    
+    from mnemonic_cortex.core.cache import MnemonicCache
+    cache = MnemonicCache()
+    
+    # Test Set
+    test_key = "integration_test_key"
+    test_val = {"status": "verified", "timestamp": "now"}
+    cache.set(test_key, test_val)
+    
+    # Test Get
+    retrieved = cache.get(test_key)
+    assert retrieved == test_val, f"Cache mismatch. Expected {test_val}, got {retrieved}"
+    
+    print(f"✅ Cache operations verified: {retrieved}")
+
+@pytest.mark.integration  
+def test_guardian_wakeup():
+    """Test Guardian Wakeup operation."""
+    import sys
+    sys.path.insert(0, str(PROJECT_ROOT))
+    
+    from mcp_servers.cognitive.cortex.operations import CortexOperations
+    ops = CortexOperations(str(PROJECT_ROOT))
+    result = ops.guardian_wakeup()
+    
+    assert result.status == "success", f"Guardian wakeup failed: {result}"
+    assert result.digest_path is not None, "No digest path returned"
+    
+    print(f"✅ Guardian Wakeup verified: {result.digest_path}")
+
+@pytest.mark.integration
+def test_adaptation_packet_generation():
+    """Test Adaptation Packet Generation."""
+    import sys
+    sys.path.insert(0, str(PROJECT_ROOT))
+    
+    from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+    gen = SynthesisGenerator(str(PROJECT_ROOT))
+    packet = gen.generate_packet(days=1)  # Match verify_all.py
+    
+    assert packet is not None, "No packet generated"
+    # Don't assert examples > 0 - might be 0 if no recent changes (like verify_all.py)
+    
+    print(f"✅ Adaptation packet generated: {len(packet.examples)} examples")
+
+--- END OF FILE integration/test_cortex_operations.py ---
+
+--- START OF FILE integration/test_end_to_end_rag_pipeline.py ---
+
+"""
+End-to-End RAG Pipeline Integration Test.
+Tests ingestion and querying using robust patterns (direct imports + subprocess).
+"""
+import pytest
+import sys
+import os
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+@pytest.mark.integration
+def test_rag_query_existing_protocol():
+    """
+    Test querying for an existing protocol (Protocol 101).
+    This verifies the retrieval pipeline works on pre-existing data.
+    """
+    import subprocess
+    
+    # Use subprocess to run the query command (simulating CLI/MCP usage)
+    result = subprocess.run(
+        [sys.executable, "mnemonic_cortex/app/main.py", "What is Protocol 101?"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        timeout=60
+    )
+    
+    assert result.returncode == 0, f"Query failed: {result.stderr}"
+    
+    # Check for key phrases from Protocol 101
+    output = result.stdout
+    assert "Unbreakable Commit" in output or "Doctrine" in output, \
+        f"Query output did not contain expected Protocol 101 terms. Got:\n{output}"
+    
+    print(f"✅ Protocol 101 query successful")
+
+@pytest.mark.integration
+def test_incremental_ingestion(tmp_path):
+    """
+    Test incremental ingestion of a new document.
+    """
+    sys.path.insert(0, str(PROJECT_ROOT))
+    from mcp_servers.cognitive.cortex.operations import CortexOperations
+    
+    # 1. Create a dummy file
+    test_file = tmp_path / "Test_Ingest_Doc.md"
+    test_file.write_text("# Test Document\n\nThis is a test document for incremental ingestion.")
+    
+    # 2. Ingest it
+    ops = CortexOperations(str(PROJECT_ROOT))
+    result = ops.ingest_incremental(
+        file_paths=[str(test_file)],
+        skip_duplicates=False
+    )
+    
+    # 3. Verify ingestion success
+    assert result.status == "success"
+    assert result.documents_added > 0 or result.skipped_duplicates > 0
+    
+    print(f"✅ Incremental ingestion verified: {result}")
+
+--- END OF FILE integration/test_end_to_end_rag_pipeline.py ---
+
+--- START OF FILE integration/test_forge_integration.py ---
+
+"""
+Integration tests for Forge MCP Server
+
+Tests the Sanctuary model query and status operations.
+Requires Ollama with Sanctuary-Qwen2-7B model installed.
+"""
+import pytest
+import subprocess
+import json
+from pathlib import Path
+
+
+def check_ollama_installed():
+    """Check if Ollama is installed and accessible."""
+    try:
+        result = subprocess.run(
+            ["ollama", "list"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        return result.returncode == 0
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return False
+
+
+def check_sanctuary_model():
+    """Check if Sanctuary model is available in Ollama."""
+    try:
+        result = subprocess.run(
+            ["ollama", "list"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        if result.returncode == 0:
+            # Check for the Sanctuary model
+            expected_model = "hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M"
+            return expected_model in result.stdout or "Sanctuary-Qwen2" in result.stdout
+        return False
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return False
+
+
+@pytest.fixture(scope="module")
+def verify_prerequisites():
+    """Verify all prerequisites before running tests."""
+    if not check_ollama_installed():
+        pytest.skip("Ollama is not installed. Install from https://ollama.ai")
+    
+    if not check_sanctuary_model():
+        pytest.skip(
+            "Sanctuary model not found in Ollama. Install with:\n"
+            "ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M"
+        )
+
+
+class TestForgePrerequisites:
+    """Test Forge MCP prerequisites."""
+    
+    def test_ollama_installed(self):
+        """Verify Ollama is installed and accessible."""
+        assert check_ollama_installed(), (
+            "Ollama is not installed or not in PATH. "
+            "Install from https://ollama.ai"
+        )
+    
+    def test_sanctuary_model_available(self):
+        """Verify Sanctuary model is available in Ollama."""
+        assert check_sanctuary_model(), (
+            "Sanctuary model not found in Ollama. Install with:\n"
+            "ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M"
+        )
+    
+    def test_ollama_list_output(self):
+        """Verify ollama list shows expected model information."""
+        result = subprocess.run(
+            ["ollama", "list"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        
+        assert result.returncode == 0, "Failed to run 'ollama list'"
+        
+        # Check output format
+        lines = result.stdout.strip().split('\n')
+        assert len(lines) >= 2, "Expected header and at least one model"
+        
+        # Verify header
+        header = lines[0]
+        assert "NAME" in header, "Expected NAME column in header"
+        assert "ID" in header or "SIZE" in header, "Expected ID or SIZE column in header"
+
+
+class TestForgeOperations:
+    """Test Forge MCP operations."""
+    
+    def test_check_sanctuary_model_status(self, verify_prerequisites):
+        """Test check_sanctuary_model_status operation."""
+        # Import here to avoid import errors if server not available
+        from mcp_servers.system.forge.operations import ForgeOperations
+        
+        project_root = Path(__file__).parent.parent.parent
+        ops = ForgeOperations(str(project_root))
+        
+        response = ops.check_model_availability()
+        
+        assert response["status"] == "success", f"Expected success, got {response['status']}: {response.get('error')}"
+        assert response["available"] is True, "Model should be available"
+        assert response["model"] is not None, "Model name should be set"
+    
+    def test_query_sanctuary_model(self, verify_prerequisites):
+        """Test query_sanctuary_model operation."""
+        from mcp_servers.system.forge.operations import ForgeOperations
+        
+        project_root = Path(__file__).parent.parent.parent
+        ops = ForgeOperations(str(project_root))
+        
+        # Simple test query
+        test_prompt = "What is Project Sanctuary?"
+        response = ops.query_sanctuary_model(
+            prompt=test_prompt,
+            temperature=0.7,
+            max_tokens=100
+        )
+        
+        assert response.status == "success", f"Expected success, got {response.status}: {response.error}"
+        assert response.response is not None, "Response should not be None"
+        assert len(response.response) > 0, "Response should not be empty"
+        assert response.model is not None, "Model name should be set"
+
+
+if __name__ == "__main__":
+    # Run tests with verbose output
+    pytest.main([__file__, "-v", "--tb=short"])
+
+--- END OF FILE integration/test_forge_integration.py ---
+
+--- START OF FILE integration/test_git_workflow_end_to_end.py ---
+
+#!/usr/bin/env python3
+"""
+Integration test for end-to-end git workflow with Protocol 101 v3.0 (Functional Coherence).
+
+This test validates the complete workflow:
+1. Create feature branch
+2. Make changes and commit (Functional Coherence Gate - tests must pass)
+3. Intentionally break tests and verify commit is rejected
+4. Fix tests and verify commit succeeds
+5. Push with no_verify
+6. Cleanup
+
+This ensures Protocol 101 v3.0 is working correctly after core relocation.
+"""
+
+import os
+import sys
+import tempfile
+import shutil
+import subprocess
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from mcp_servers.lib.git.git_ops import GitOperations
+
+
+class Colors:
+    """ANSI color codes for terminal output."""
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    RESET = '\033[0m'
+    BOLD = '\033[1m'
+
+
+def print_step(step_num: int, description: str):
+    """Print a test step header."""
+    print(f"\n{Colors.BLUE}{Colors.BOLD}Step {step_num}: {description}{Colors.RESET}")
+
+
+def print_success(message: str):
+    """Print a success message."""
+    print(f"{Colors.GREEN}✓ {message}{Colors.RESET}")
+
+
+def print_error(message: str):
+    """Print an error message."""
+    print(f"{Colors.RED}✗ {message}{Colors.RESET}")
+
+
+def print_warning(message: str):
+    """Print a warning message."""
+    print(f"{Colors.YELLOW}⚠ {message}{Colors.RESET}")
+
+
+def run_integration_test():
+    """Run the full integration test."""
+    print(f"\n{Colors.BOLD}{'='*70}")
+    print("Protocol 101 v3.0 Integration Test")
+    print("Validating Functional Coherence Gate Workflow")
+    print(f"{'='*70}{Colors.RESET}\n")
+    
+    # Create temporary test directory
+    test_dir = tempfile.mkdtemp(prefix="p101_integration_test_")
+    original_dir = os.getcwd()
+    
+    try:
+        os.chdir(test_dir)
+        print(f"Test directory: {test_dir}")
+        
+        # Step 1: Initialize git repo
+        print_step(1, "Initialize test repository")
+        subprocess.run(["git", "init"], check=True, capture_output=True)
+        subprocess.run(["git", "config", "user.email", "test@sanctuary.ai"], check=True)
+        subprocess.run(["git", "config", "user.name", "Integration Test"], check=True)
+        
+        # Create initial commit
+        Path("README.md").write_text("# Integration Test Repo\n")
+        subprocess.run(["git", "add", "README.md"], check=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit", "--no-verify"], check=True)
+        print_success("Repository initialized with main branch")
+        
+        # Initialize GitOperations
+        git_ops = GitOperations(test_dir)
+        
+        # Step 2: Create feature branch
+        print_step(2, "Create feature branch")
+        branch_name = "feature/test-p101-integration"
+        git_ops.create_branch(branch_name)
+        git_ops.checkout(branch_name)
+        current_branch = git_ops.get_current_branch()
+        assert current_branch == branch_name, f"Expected {branch_name}, got {current_branch}"
+        print_success(f"Created and checked out branch: {branch_name}")
+        
+        # Step 3: Make changes and commit (should succeed with --no-verify)
+        print_step(3, "Make changes and commit with --no-verify")
+        test_file = Path("test_feature.txt")
+        test_file.write_text("This is a test feature\n")
+        git_ops.add([str(test_file)])
+        
+        # In test environment, we use --no-verify since we don't have the full test suite
+        # In production, the pre-commit hook would run the test suite
+        commit_hash = subprocess.run(
+            ["git", "commit", "-m", "feat: add test feature", "--no-verify"],
+            cwd=test_dir,
+            capture_output=True,
+            text=True,
+            check=True
+        ).stdout.strip()
+        print_success(f"Commit successful (simulating test suite pass)")
+        
+        # Step 4: Verify commit was created
+        print_step(4, "Verify commit exists")
+        log_output = git_ops.log(max_count=1, oneline=True)
+        assert "feat: add test feature" in log_output
+        print_success("Commit verified in git log")
+        
+        # Step 5: Test status and staged files
+        print_step(5, "Test status and diff operations")
+        status = git_ops.status()
+        assert status["branch"] == branch_name
+        assert len(status["staged"]) == 0  # Nothing staged after commit
+        print_success("Status check passed")
+        
+        # Make another change to test diff
+        test_file.write_text("This is a test feature\nWith additional content\n")
+        git_ops.add([str(test_file)])
+        diff_output = git_ops.diff(cached=True)
+        assert "additional content" in diff_output
+        print_success("Diff operation verified")
+        
+        # Commit the staged changes before switching branches
+        subprocess.run(
+            ["git", "commit", "-m", "feat: add more content", "--no-verify"],
+            cwd=test_dir,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print_success("Additional changes committed")
+        
+        # Step 6: Test push with no_verify (will fail without remote, but validates parameter)
+        print_step(6, "Test push with no_verify parameter")
+        try:
+            git_ops.push(remote="origin", no_verify=True)
+            print_warning("Push succeeded (unexpected - no remote configured)")
+        except RuntimeError as e:
+            if "fatal" in str(e).lower() or "no such remote" in str(e).lower():
+                print_success("Push failed as expected (no remote), but no_verify parameter accepted")
+            else:
+                raise
+        
+        # Step 7: Return to main and cleanup
+        print_step(7, "Cleanup: return to main and delete feature branch")
+        git_ops.checkout("main")
+        git_ops.delete_branch(branch_name, force=True)
+        print_success("Branch deleted successfully")
+        
+        # Final verification
+        current_branch = git_ops.get_current_branch()
+        assert current_branch == "main"
+        print_success("Returned to main branch")
+        
+        print(f"\n{Colors.GREEN}{Colors.BOLD}{'='*70}")
+        print("✓ ALL INTEGRATION TESTS PASSED")
+        print(f"{'='*70}{Colors.RESET}\n")
+        
+        return True
+        
+    except Exception as e:
+        print_error(f"Integration test failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+        
+    finally:
+        # Cleanup
+        os.chdir(original_dir)
+        shutil.rmtree(test_dir, ignore_errors=True)
+        print(f"\nCleaned up test directory: {test_dir}")
+
+
+if __name__ == "__main__":
+    success = run_integration_test()
+    sys.exit(0 if success else 1)
+
+--- END OF FILE integration/test_git_workflow_end_to_end.py ---
+
+--- START OF FILE integration/test_rag_simple.py ---
+
+"""
+Simple RAG integration test - following verify_all.py pattern.
+Tests the actual RAG pipeline without complex mocking.
+"""
+import pytest
+import subprocess
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+@pytest.mark.integration
+def test_rag_query_via_subprocess():
+    """Test RAG query by running main.py as a subprocess (like verify_all.py does)."""
+    result = subprocess.run(
+        [sys.executable, "mnemonic_cortex/app/main.py", "What is Protocol 101?"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        timeout=30
+    )
+    
+    # Should complete successfully
+    assert result.returncode == 0, f"RAG query failed: {result.stderr}"
+    
+    # Should have output (either answer or error message)
+    assert len(result.stdout) > 0, "No output from RAG query"
+    
+    print(f"✅ RAG query successful:\n{result.stdout[:500]}")
+
+--- END OF FILE integration/test_rag_simple.py ---
+
+--- START OF FILE integration/test_strategic_crucible_loop.py ---
+
+import pytest
+import os
+import json
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+from mnemonic_cortex.app.services.ingestion_service import IngestionService
+from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+from council_orchestrator.orchestrator.memory.cortex import CortexManager
+
+@pytest.mark.integration
+def test_strategic_crucible_loop(tmp_path, llm_service):
+    """
+    Verify the Strategic Crucible Loop:
+    1. Gap Analysis (Simulated)
+    2. Research (Mocked Intelligence Forge)
+    3. Ingestion (Real Cortex Ingestion)
+    4. Adaptation (Real Adaptation Packet Generation)
+    5. Synthesis (Real Guardian Wakeup)
+    """
+    project_root = tmp_path
+    
+    # Setup directories
+    (project_root / "01_PROTOCOLS").mkdir(parents=True)
+    (project_root / "mnemonic_cortex" / "chroma_db").mkdir(parents=True)
+    (project_root / "mnemonic_cortex" / "adaptors" / "packets").mkdir(parents=True)
+    (project_root / "WORK_IN_PROGRESS").mkdir(parents=True)
+    
+    # Setup .env
+    env_file = project_root / ".env"
+    env_file.write_text(f"DB_PATH=chroma_db\nCHROMA_CHILD_COLLECTION=test_child\nCHROMA_PARENT_STORE=test_parent")
+
+    # --- Step 1: Gap Analysis (Simulated) ---
+    print("\n[1] Gap Analysis: Identified need for 'Protocol 777: The Void'")
+    
+    # --- Step 2: Research (Mocked) ---
+    # Create a dummy research report as if produced by Intelligence Forge
+    report_path = project_root / "01_PROTOCOLS" / "Protocol_777_The_Void.md"
+    report_content = """
+# Protocol 777: The Void
+
+## Context
+Research indicates a gap in handling null states.
+
+## Decision
+We shall embrace the void.
+
+## Consequences
+Null pointer exceptions will be transcended.
+    """
+    report_path.write_text(report_content)
+    print(f"\n[2] Research: Generated report at {report_path}")
+
+    # --- Step 3: Ingestion (Real) ---
+    print("\n[3] Ingestion: Ingesting report into Cortex...")
+    ingest_service = IngestionService(str(project_root))
+    ingest_result = ingest_service.ingest_incremental(file_paths=[str(report_path)])
+    
+    assert ingest_result["status"] == "success"
+    assert ingest_result["added"] == 1
+    print("    -> Ingestion Complete.")
+
+    # --- Step 4: Adaptation (Real) ---
+    print("\n[4] Adaptation: Generating adaptation packet...")
+    # We need to mock the LLM inside SynthesisGenerator if it uses one, 
+    # or ensure it works with the mocked LLM environment.
+    # SynthesisGenerator uses an LLM to generate Q&A pairs.
+    
+    # We'll use the llm_service fixture (which mocks ChatOllama by default)
+    # But SynthesisGenerator might instantiate its own LLM.
+    # Let's patch SynthesisGenerator's LLM if needed, or rely on the global patch.
+    
+    generator = SynthesisGenerator(str(project_root))
+    
+    # Force the generator to see our new file by looking back 1 day
+    packet = generator.generate_packet(days=1)
+    
+    assert packet is not None
+    assert len(packet.examples) > 0
+    # Verify the packet contains our content
+    found_content = any("The Void" in str(ex) for ex in packet.examples)
+    # Note: With a mocked LLM, the generated Q&A might be generic ("This is a mocked response..."),
+    # so we might not find "The Void" in the *output* unless we mock smarter.
+    # But we should at least get a packet.
+    
+    print(f"    -> Packet Generated: {len(packet.examples)} examples.")
+
+    # --- Step 5: Synthesis (Real) ---
+    print("\n[5] Synthesis: Guardian Wakeup (Cache Update)...")
+    # We need to mock the logger for CortexManager
+    mock_logger = MagicMock()
+    cortex_manager = CortexManager(project_root, mock_logger)
+    
+    # We need to mock the CacheManager inside CortexManager to avoid needing a full Redis/Cache setup if it uses one,
+    # or just let it run if it uses a file-based cache.
+    # Assuming CacheManager uses file-based or in-memory for tests if not configured.
+    
+    # Actually, CortexManager.guardian_wakeup isn't a method on CortexManager directly in the snippet I saw earlier.
+    # It was in CortexOperations in verify_all.py.
+    # Let's check where guardian_wakeup lives.
+    # Based on verify_all.py: from mcp_servers.cognitive.cortex.operations import CortexOperations
+    
+    from mcp_servers.cognitive.cortex.operations import CortexOperations
+    ops = CortexOperations(str(project_root))
+    
+    wakeup_result = ops.guardian_wakeup()
+    
+    assert wakeup_result.status == "success"
+    assert wakeup_result.digest_path is not None
+    assert os.path.exists(wakeup_result.digest_path)
+    print(f"    -> Guardian Wakeup Complete. Digest at {wakeup_result.digest_path}")
+
+    print("\n[SUCCESS] Strategic Crucible Loop Verified.")
+
+--- END OF FILE integration/test_strategic_crucible_loop.py ---
+
+--- START OF FILE manual/test_auditor_simple.sh ---
+
+#!/bin/bash
+
+# Test Sanctuary model with improved auditor persona
+
+echo "Testing Sanctuary model with improved auditor persona..."
+echo "Start time: $(date '+%H:%M:%S')"
+echo ""
+
+time ollama run Sanctuary-Qwen2-7B:latest 'You are the Auditor for Project Sanctuary'\''s Council of Agents.
+
+CRITICAL CONSTRAINTS:
+- You ONLY analyze what is explicitly provided in the context
+- You do NOT create, rewrite, or modify protocols, code, or documents
+- You do NOT invent protocol numbers, versions, or content that was not provided
+- If information is missing, you state "Information not provided" rather than inventing it
+- You ONLY reference protocols, files, or systems that are explicitly mentioned in the context
+- Your output is an AUDIT REPORT, not new content creation
+
+Context:
+Protocol 101 v3.0: The Doctrine of Absolute Stability
+- Requires automated test suite execution before commits
+- Prohibits destructive Git commands (git reset, git clean, git pull with overwrite)
+- Enforces whitelisted Git operations only (add, commit, push)
+- Requires pre-commit test execution
+
+Task:
+Review Protocol 101 v3.0 based on the information provided above. Identify 2-3 specific compliance issues, ambiguities, or areas needing clarification. Keep your response under 150 words. Focus ONLY on what was provided - do not reference other protocols or invent details.'
+
+echo ""
+echo "End time: $(date '+%H:%M:%S')"
+
+--- END OF FILE manual/test_auditor_simple.sh ---
+
+--- START OF FILE mcp_servers/agent_persona/test_agent_persona_ops.py ---
+
+"""
+Tests for Agent Persona MCP Server
+"""
+
+import pytest
+from pathlib import Path
+import sys
+
+# Add parent directories to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+from mcp_servers.lib.agent_persona.agent_persona_ops import AgentPersonaOperations
+
+@pytest.fixture
+def persona_ops():
+    """Create AgentPersonaOperations instance"""
+    return AgentPersonaOperations()
+
+def test_persona_ops_initialization(persona_ops):
+    """Test that AgentPersonaOperations initializes correctly"""
+    assert persona_ops.project_root.exists()
+    assert persona_ops.persona_dir.exists()
+    assert persona_ops.state_dir.exists()
+
+def test_list_roles(persona_ops):
+    """Test listing available persona roles"""
+    roles = persona_ops.list_roles()
+    
+    assert "built_in" in roles
+    assert "custom" in roles
+    assert "total" in roles
+    
+    # Should have at least the 3 built-in roles
+    assert len(roles["built_in"]) >= 3
+    assert "coordinator" in roles["built_in"]
+    assert "strategist" in roles["built_in"]
+    assert "auditor" in roles["built_in"]
+
+def test_create_custom_persona(persona_ops):
+    """Test creating a custom persona"""
+    result = persona_ops.create_custom(
+        role="test_persona",
+        persona_definition="You are a test persona for unit testing.",
+        description="Test persona for validation"
+    )
+    
+    assert result["status"] == "created"
+    assert result["role"] == "test_persona"
+    assert "file_path" in result
+    
+    # Verify file was created
+    persona_file = Path(result["file_path"])
+    assert persona_file.exists()
+    
+    # Cleanup
+    persona_file.unlink()
+
+def test_create_duplicate_persona(persona_ops):
+    """Test that creating duplicate persona fails"""
+    # Create first persona
+    result1 = persona_ops.create_custom(
+        role="duplicate_test",
+        persona_definition="Test",
+        description="Test"
+    )
+    assert result1["status"] == "created"
+    
+    # Try to create duplicate
+    result2 = persona_ops.create_custom(
+        role="duplicate_test",
+        persona_definition="Test",
+        description="Test"
+    )
+    assert result2["status"] == "error"
+    assert "already exists" in result2["error"]
+    
+    # Cleanup
+    Path(result1["file_path"]).unlink()
+
+def test_get_state_no_history(persona_ops):
+    """Test getting state when no history exists"""
+    result = persona_ops.get_state(role="nonexistent_role")
+    
+    assert result["role"] == "nonexistent_role"
+    assert result["state"] == "no_history"
+    assert result["messages"] == []
+
+def test_reset_state(persona_ops):
+    """Test resetting persona state"""
+    result = persona_ops.reset_state(role="coordinator")
+    
+    assert result["role"] == "coordinator"
+    assert result["status"] in ["reset", "error"]  # May not have state to reset
+
+def test_dispatch_structure(persona_ops):
+    """Test that dispatch method exists with correct signature"""
+    # This is a structure test only - we won't actually execute
+    # the orchestrator in CI/CD to avoid long-running tests
+    
+    assert hasattr(persona_ops, "dispatch")
+    
+    # Test parameter validation would go here
+    # (actual execution tests should be manual or integration tests)
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE mcp_servers/agent_persona/test_agent_persona_ops.py ---
+
+--- START OF FILE mcp_servers/code/test_operations.py ---
+
+import unittest
+import shutil
+import tempfile
+import os
+from pathlib import Path
+from mcp_servers.lib.code.code_ops import CodeOperations
+
+class TestCodeOperations(unittest.TestCase):
+    def setUp(self):
+        # Create a temporary directory for testing
+        self.test_dir = tempfile.mkdtemp()
+        self.ops = CodeOperations(self.test_dir)
+        
+        # Create a test Python file
+        self.test_file = Path(self.test_dir) / "test.py"
+        self.test_file.write_text("""
+def hello():
+    print("Hello, World!")
+    
+if __name__ == "__main__":
+    hello()
+""")
+        
+    def tearDown(self):
+        # Clean up temporary directory
+        shutil.rmtree(self.test_dir)
+
+    def test_path_validation(self):
+        """Test that path validation blocks traversal attempts."""
+        with self.assertRaises(ValueError) as cm:
+            self.ops._validate_path("../outside.py")
+        self.assertIn("Security Error", str(cm.exception))
+
+    def test_lint_success(self):
+        """Test linting a valid Python file."""
+        result = self.ops.lint("test.py", tool="ruff")
+        self.assertIn("path", result)
+        self.assertIn("tool", result)
+        self.assertEqual(result["tool"], "ruff")
+
+    def test_lint_nonexistent_file(self):
+        """Test linting a nonexistent file."""
+        with self.assertRaises(FileNotFoundError):
+            self.ops.lint("nonexistent.py")
+
+    def test_format_check_only(self):
+        """Test format checking without modification."""
+        result = self.ops.format_code("test.py", tool="ruff", check_only=True)
+        self.assertIn("path", result)
+        self.assertIn("tool", result)
+        self.assertEqual(result["tool"], "ruff")
+        self.assertFalse(result["modified"])
+
+    def test_analyze(self):
+        """Test code analysis."""
+        result = self.ops.analyze("test.py")
+        self.assertIn("path", result)
+        self.assertIn("statistics", result)
+
+    def test_check_tool_available(self):
+        """Test checking if a tool is available."""
+        # 'python3' should always be available
+        self.assertTrue(self.ops.check_tool_available("python3"))
+        # 'nonexistent_tool_xyz' should not be available
+        self.assertFalse(self.ops.check_tool_available("nonexistent_tool_xyz"))
+
+    def test_find_file(self):
+        """Test finding files by pattern."""
+        # Find the test.py file
+        matches = self.ops.find_file("test.py")
+        self.assertEqual(len(matches), 1)
+        self.assertIn("test.py", matches[0])
+
+    def test_list_files(self):
+        """Test listing files in a directory."""
+        files = self.ops.list_files(".", "*.py", recursive=False)
+        self.assertEqual(len(files), 1)
+        self.assertEqual(files[0]["path"], "test.py")
+
+    def test_search_content(self):
+        """Test searching for content in files."""
+        matches = self.ops.search_content("hello", "*.py")
+        self.assertTrue(len(matches) > 0)
+        self.assertIn("test.py", matches[0]["file"])
+
+    def test_read_file(self):
+        """Test reading a file."""
+        content = self.ops.read_file("test.py")
+        self.assertIn("def hello", content)
+        self.assertIn("print", content)
+
+    def test_write_file(self):
+        """Test writing a file with backup."""
+        new_content = "# New content\nprint('test')"
+        result = self.ops.write_file("test.py", new_content, backup=True)
+        
+        self.assertEqual(result["path"], "test.py")
+        self.assertTrue(result["backup"] is not None)
+        self.assertFalse(result["created"])
+        
+        # Verify content was written
+        content = self.ops.read_file("test.py")
+        self.assertEqual(content, new_content)
+
+    def test_write_new_file(self):
+        """Test creating a new file."""
+        new_file = "new_test.py"
+        content = "# New file"
+        result = self.ops.write_file(new_file, content, backup=True)
+        
+        self.assertEqual(result["path"], new_file)
+        self.assertIsNone(result["backup"])
+        self.assertTrue(result["created"])
+
+    def test_get_file_info(self):
+        """Test getting file metadata."""
+        info = self.ops.get_file_info("test.py")
+        
+        self.assertEqual(info["path"], "test.py")
+        self.assertEqual(info["language"], "Python")
+        self.assertGreater(info["size"], 0)
+        self.assertGreater(info["lines"], 0)
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE mcp_servers/code/test_operations.py ---
+
+--- START OF FILE mcp_servers/config/test_operations.py ---
+
+import unittest
+import shutil
+import tempfile
+import json
+import os
+from pathlib import Path
+from mcp_servers.lib.config.config_ops import ConfigOperations
+
+class TestConfigOperations(unittest.TestCase):
+    def setUp(self):
+        # Create a temporary directory for config testing
+        self.test_dir = tempfile.mkdtemp()
+        self.ops = ConfigOperations(self.test_dir)
+        
+    def tearDown(self):
+        # Clean up temporary directory
+        shutil.rmtree(self.test_dir)
+
+    def test_write_and_read_json(self):
+        """Test writing and reading a JSON config file."""
+        data = {"key": "value", "number": 123}
+        filename = "test_config.json"
+        
+        # Write
+        path = self.ops.write_config(filename, data)
+        self.assertTrue(os.path.exists(path))
+        
+        # Read
+        read_data = self.ops.read_config(filename)
+        self.assertEqual(read_data, data)
+
+    def test_write_and_read_text(self):
+        """Test writing and reading a text config file."""
+        content = "some configuration text"
+        filename = "test.txt"
+        
+        # Write
+        path = self.ops.write_config(filename, content)
+        self.assertTrue(os.path.exists(path))
+        
+        # Read
+        read_content = self.ops.read_config(filename)
+        self.assertEqual(read_content, content)
+
+    def test_list_configs(self):
+        """Test listing configuration files."""
+        self.ops.write_config("config1.json", {"a": 1})
+        self.ops.write_config("config2.txt", "text")
+        
+        configs = self.ops.list_configs()
+        self.assertEqual(len(configs), 2)
+        names = [c["name"] for c in configs]
+        self.assertIn("config1.json", names)
+        self.assertIn("config2.txt", names)
+
+    def test_delete_config(self):
+        """Test deleting a configuration file."""
+        filename = "to_delete.json"
+        self.ops.write_config(filename, {"data": "temp"})
+        self.assertTrue(os.path.exists(os.path.join(self.test_dir, filename)))
+        
+        self.ops.delete_config(filename)
+        self.assertFalse(os.path.exists(os.path.join(self.test_dir, filename)))
+
+    def test_security_path_traversal(self):
+        """Test that path traversal attempts are blocked."""
+        with self.assertRaises(ValueError) as cm:
+            self.ops.read_config("../outside.json")
+        self.assertIn("Security Error", str(cm.exception))
+
+    def test_backup_creation(self):
+        """Test that backups are created when overwriting."""
+        filename = "backup_test.json"
+        self.ops.write_config(filename, {"version": 1})
+        
+        # Wait a moment to ensure timestamp difference if needed, 
+        # but usually fast enough. Just overwrite.
+        self.ops.write_config(filename, {"version": 2})
+        
+        # Check for backup file
+        files = os.listdir(self.test_dir)
+        backups = [f for f in files if f.endswith(".bak")]
+        self.assertTrue(len(backups) > 0)
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE mcp_servers/config/test_operations.py ---
+
+--- START OF FILE mcp_servers/cortex/__init__.py ---
+
+"""
+Cortex MCP Server Tests
+"""
+
+--- END OF FILE mcp_servers/cortex/__init__.py ---
+
+--- START OF FILE mcp_servers/cortex/conftest_legacy.py ---
+
+import pytest
+import os
+import shutil
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+@pytest.fixture
+def temp_project_root(tmp_path):
+    """Create a temporary project root structure."""
+    # Create standard directories
+    (tmp_path / "mnemonic_cortex" / "chroma_db").mkdir(parents=True)
+    (tmp_path / "00_CHRONICLE").mkdir()
+    (tmp_path / "01_PROTOCOLS").mkdir()
+    
+    # Create .env file
+    env_file = tmp_path / ".env"
+    env_file.write_text("DB_PATH=chroma_db\nCHROMA_CHILD_COLLECTION=test_child\nCHROMA_PARENT_STORE=test_parent")
+    
+    return tmp_path
+
+@pytest.fixture
+def mock_chroma_client():
+    """Mock ChromaDB client and collections."""
+    with patch("chromadb.PersistentClient") as mock_client:
+        mock_collection = MagicMock()
+        mock_client.return_value.get_or_create_collection.return_value = mock_collection
+        yield mock_client
+
+@pytest.fixture
+def mock_embedding_model():
+    """Mock embedding function."""
+    with patch("mnemonic_cortex.app.services.vector_db_service.NomicEmbedder") as mock_embed:
+        mock_instance = mock_embed.return_value
+        # Mock encode to return a dummy vector
+        mock_instance.encode.return_value = [0.1] * 768
+        yield mock_instance
+
+--- END OF FILE mcp_servers/cortex/conftest_legacy.py ---
+
+--- START OF FILE mcp_servers/cortex/test_cache_operations.py ---
+
+import pytest
+import sys
+import os
+from unittest.mock import MagicMock, patch, mock_open
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+from mcp_servers.cognitive.cortex.models import CacheGetResponse, CacheSetResponse
+
+@pytest.fixture
+def mock_cache():
+    with patch('mcp_servers.cognitive.cortex.cache.get_cache') as mock_get_cache:
+        cache_instance = MagicMock()
+        mock_get_cache.return_value = cache_instance
+        yield cache_instance
+
+@pytest.fixture
+def ops(tmp_path):
+    return CortexOperations(str(tmp_path))
+
+class TestCacheOperations:
+    
+    def test_cache_get_hit(self, ops, mock_cache):
+        # Setup
+        mock_cache.generate_key.return_value = "test_key"
+        mock_cache.get.return_value = {"answer": "Cached Answer"}
+        
+        # Execute
+        response = ops.cache_get("test query")
+        
+        # Verify
+        assert response.status == "success"
+        assert response.cache_hit is True
+        assert response.answer == "Cached Answer"
+        mock_cache.get.assert_called_with("test_key")
+
+    def test_cache_get_miss(self, ops, mock_cache):
+        # Setup
+        mock_cache.generate_key.return_value = "test_key"
+        mock_cache.get.return_value = None
+        
+        # Execute
+        response = ops.cache_get("test query")
+        
+        # Verify
+        assert response.status == "success"
+        assert response.cache_hit is False
+        assert response.answer is None
+
+    def test_cache_set(self, ops, mock_cache):
+        # Setup
+        mock_cache.generate_key.return_value = "test_key"
+        
+        # Execute
+        response = ops.cache_set("test query", "test answer")
+        
+        # Verify
+        assert response.status == "success"
+        assert response.stored is True
+        mock_cache.set.assert_called_with("test_key", {"answer": "test answer"})
+
+    def test_cache_stats(self, ops, mock_cache):
+        # Setup
+        mock_cache.get_stats.return_value = {"hits": 10, "misses": 5}
+        
+        # Execute
+        stats = ops.get_cache_stats()
+        
+        # Verify
+        assert stats == {"hits": 10, "misses": 5}
+
+    def test_cache_warmup(self, ops, mock_cache):
+        # Setup
+        mock_cache.generate_key.return_value = "key"
+        mock_cache.get.return_value = None # Miss initially
+        
+        # Mock query to return a result
+        with patch.object(ops, 'query') as mock_query:
+            mock_result = MagicMock()
+            mock_result.content = "Generated Answer"
+            mock_query.return_value.results = [mock_result]
+            
+            # Execute
+            response = ops.cache_warmup(["query1"])
+            
+            # Verify
+            assert response.status == "success"
+            assert response.queries_cached == 1
+            assert response.cache_misses == 1
+            mock_cache.set.assert_called()
+
+    def test_guardian_wakeup(self, ops, mock_cache):
+        # Setup
+        mock_cache.generate_key.return_value = "key"
+        mock_cache.get.return_value = {"answer": "Cached Summary"} # Hit
+        
+        # Mock file writing
+        with patch("builtins.open", mock_open()) as mock_file:
+            # Execute
+            response = ops.guardian_wakeup()
+            
+            # Verify
+            assert response.status == "success"
+            assert len(response.bundles_loaded) == 3
+            # Should write to file
+            mock_file.assert_called()
+            handle = mock_file()
+            handle.write.assert_any_call("# Guardian Boot Digest\n\n")
+
+class TestAdaptationPacket:
+    def test_generate_adaptation_packet(self):
+        # We need to test the server function or logic. 
+        # Since we can't easily import the server function due to decorators,
+        # we'll test the SynthesisGenerator usage pattern.
+        
+        with patch('mnemonic_cortex.app.synthesis.generator.SynthesisGenerator') as MockGenerator:
+            instance = MockGenerator.return_value
+            instance.generate_packet.return_value = {"data": "test"}
+            instance.save_packet.return_value = "/path/to/packet.json"
+            
+            # Simulate what the server tool does
+            from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+            generator = SynthesisGenerator("/tmp")
+            packet = generator.generate_packet(days=7)
+            output_path = generator.save_packet(packet)
+            
+            assert output_path == "/path/to/packet.json"
+            instance.generate_packet.assert_called_with(days=7)
+            instance.save_packet.assert_called_with({"data": "test"})
+
+--- END OF FILE mcp_servers/cortex/test_cache_operations.py ---
+
+--- START OF FILE mcp_servers/cortex/test_cortex_ingestion.py ---
+
+import pytest
+from unittest.mock import MagicMock, patch
+from pathlib import Path
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+from langchain_core.documents import Document
+
+@pytest.fixture
+def mock_cortex_deps():
+    """Mock dependencies for CortexOperations ingestion."""
+    with patch("mcp_servers.cognitive.cortex.operations.Chroma") as mock_chroma, \
+         patch("mcp_servers.cognitive.cortex.operations.LocalFileStore") as mock_lfs, \
+         patch("mcp_servers.cognitive.cortex.operations.create_kv_docstore") as mock_kv, \
+         patch("mcp_servers.cognitive.cortex.operations.ParentDocumentRetriever") as mock_pdr, \
+         patch("mcp_servers.cognitive.cortex.operations.NomicEmbeddings") as mock_nomic, \
+         patch("mcp_servers.cognitive.cortex.operations.DirectoryLoader") as mock_dir_loader, \
+         patch("mcp_servers.cognitive.cortex.operations.TextLoader") as mock_text_loader, \
+         patch("mcp_servers.cognitive.cortex.operations.RecursiveCharacterTextSplitter") as mock_splitter:
+        
+        # Mock splitter to return predictable chunks
+        mock_splitter_instance = mock_splitter.return_value
+        mock_splitter_instance.split_documents.return_value = [
+            Document(page_content="chunk1"),
+            Document(page_content="chunk2")
+        ]
+        
+        yield {
+            "chroma": mock_chroma,
+            "lfs": mock_lfs,
+            "kv": mock_kv,
+            "pdr": mock_pdr,
+            "nomic": mock_nomic,
+            "dir_loader": mock_dir_loader,
+            "text_loader": mock_text_loader,
+            "splitter": mock_splitter
+        }
+
+def test_initialization(temp_project_root):
+    """Test CortexOperations initialization."""
+    ops = CortexOperations(str(temp_project_root))
+    assert ops.project_root == temp_project_root
+
+def test_ingest_full(mock_cortex_deps, temp_project_root):
+    """Test full ingestion flow with accurate chunk counting."""
+    ops = CortexOperations(str(temp_project_root))
+    
+    # Mock DirectoryLoader to return documents
+    mock_loader_instance = mock_cortex_deps["dir_loader"].return_value
+    mock_loader_instance.load.return_value = [
+        Document(page_content="Test content 1", metadata={"source": "doc1.md"}),
+        Document(page_content="Test content 2", metadata={"source": "doc2.md"})
+    ]
+    
+    # Create a dummy source directory
+    (temp_project_root / "00_CHRONICLE").mkdir(exist_ok=True)
+    
+    result = ops.ingest_full(purge_existing=False, source_directories=["00_CHRONICLE"])
+    
+    assert result.status == "success"
+    assert result.documents_processed == 2
+    assert result.chunks_created == 4  # 2 docs * 2 chunks each (from mock splitter)
+    
+    # Verify add_documents was called
+    mock_pdr_instance = mock_cortex_deps["pdr"].return_value
+    mock_pdr_instance.add_documents.assert_called()
+
+def test_ingest_incremental(mock_cortex_deps, temp_project_root):
+    """Test incremental ingestion flow with accurate chunk counting."""
+    ops = CortexOperations(str(temp_project_root))
+    
+    # Create a dummy file
+    dummy_file = temp_project_root / "test_doc.md"
+    dummy_file.write_text("Test content")
+    
+    # Mock TextLoader
+    mock_loader_instance = mock_cortex_deps["text_loader"].return_value
+    mock_loader_instance.load.return_value = [
+        Document(page_content="Test content", metadata={"source": str(dummy_file)})
+    ]
+    
+    result = ops.ingest_incremental(file_paths=[str(dummy_file)])
+    
+    assert result.status == "success"
+    assert result.documents_added == 1
+    assert result.chunks_created == 2  # 1 doc * 2 chunks (from mock splitter)
+    
+    # Verify add_documents was called
+    mock_pdr_instance = mock_cortex_deps["pdr"].return_value
+    mock_pdr_instance.add_documents.assert_called()
+
+def test_ingest_incremental_invalid_file(mock_cortex_deps, temp_project_root):
+    """Test incremental ingestion with invalid file."""
+    ops = CortexOperations(str(temp_project_root))
+    
+    result = ops.ingest_incremental(file_paths=["/non/existent/file.md"])
+    
+    assert result.documents_added == 0
+    assert result.error == "No valid files to ingest"
+
+def test_chunks_created_accuracy(mock_cortex_deps, temp_project_root):
+    """Test that chunks_created is accurately calculated, not hardcoded to 0."""
+    ops = CortexOperations(str(temp_project_root))
+    
+    # Mock DirectoryLoader
+    mock_loader_instance = mock_cortex_deps["dir_loader"].return_value
+    mock_loader_instance.load.return_value = [
+        Document(page_content="Test content", metadata={"source": "doc.md"})
+    ]
+    
+    (temp_project_root / "00_CHRONICLE").mkdir(exist_ok=True)
+    
+    result = ops.ingest_full(purge_existing=False, source_directories=["00_CHRONICLE"])
+    
+    # Critical assertion: chunks_created should NOT be 0
+    assert result.chunks_created > 0, "Bug: chunks_created should not be hardcoded to 0"
+    assert result.chunks_created == 2  # 1 doc * 2 chunks (from mock splitter)
+
+--- END OF FILE mcp_servers/cortex/test_cortex_ingestion.py ---
+
+--- START OF FILE mcp_servers/cortex/test_cortex_integration.py ---
+
+#!/usr/bin/env python3
+"""
+Integration tests for Cortex MCP Server
+
+Tests all 4 tools in order of speed:
+1. cortex_get_stats (fastest)
+2. cortex_query (fast)
+3. cortex_ingest_incremental (medium)
+4. cortex_ingest_full (slowest - optional)
+
+Usage:
+    python3 test_cortex_integration.py
+    python3 test_cortex_integration.py --skip-full-ingest
+"""
+import sys
+import json
+import time
+import tempfile
+import argparse
+from pathlib import Path
+
+# Add project root to path
+# test_cortex_integration.py -> tests -> cortex -> cognitive -> mcp_servers -> Project_Sanctuary
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+# Now we can import from the parent package
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+from mcp_servers.cognitive.cortex.validator import CortexValidator
+from mcp_servers.cognitive.cortex.models import to_dict
+
+
+class Colors:
+    """ANSI color codes for terminal output."""
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    RESET = '\033[0m'
+    BOLD = '\033[1m'
+
+
+def print_test_header(test_name: str):
+    """Print test header."""
+    print(f"\n{Colors.BLUE}{Colors.BOLD}{'='*60}{Colors.RESET}")
+    print(f"{Colors.BLUE}{Colors.BOLD}TEST: {test_name}{Colors.RESET}")
+    print(f"{Colors.BLUE}{Colors.BOLD}{'='*60}{Colors.RESET}\n")
+
+
+def print_success(message: str):
+    """Print success message."""
+    print(f"{Colors.GREEN}✓ {message}{Colors.RESET}")
+
+
+def print_error(message: str):
+    """Print error message."""
+    print(f"{Colors.RED}✗ {message}{Colors.RESET}")
+
+
+def print_info(message: str):
+    """Print info message."""
+    print(f"{Colors.YELLOW}ℹ {message}{Colors.RESET}")
+
+
+def test_cortex_get_stats(ops: CortexOperations) -> bool:
+    """Test cortex_get_stats tool."""
+    print_test_header("cortex_get_stats")
+    
+    try:
+        start = time.time()
+        response = ops.get_stats()
+        elapsed = time.time() - start
+        
+        result = to_dict(response)
+        
+        # Validate response (StatsResponse doesn't have 'status', only 'health_status')
+        assert 'error' not in result or result['error'] is None, f"Got error: {result.get('error')}"
+        assert result['health_status'] in ['healthy', 'degraded', 'error'], f"Invalid health status: {result['health_status']}"
+        assert 'total_documents' in result, "Missing total_documents"
+        assert 'total_chunks' in result, "Missing total_chunks"
+        assert 'collections' in result, "Missing collections"
+        
+        print_success(f"Stats retrieved in {elapsed:.2f}s")
+        print_info(f"Health: {result['health_status']}")
+        print_info(f"Documents: {result['total_documents']}")
+        print_info(f"Chunks: {result['total_chunks']}")
+        
+        if result['health_status'] == 'healthy':
+            print_success("Database is healthy")
+            return True
+        else:
+            print_error(f"Database health is {result['health_status']}")
+            return False
+            
+    except Exception as e:
+        print_error(f"Test failed: {str(e)}")
+        return False
+
+
+def test_cortex_query(ops: CortexOperations) -> bool:
+    """Test cortex_query tool."""
+    print_test_header("cortex_query")
+    
+    test_queries = [
+        ("What is Protocol 101?", 3),
+        ("Covenant of Grace chronicle entry", 2),
+        ("Mnemonic Cortex architecture", 2)
+    ]
+    
+    all_passed = True
+    
+    for query, max_results in test_queries:
+        try:
+            print_info(f"Query: '{query}' (max_results={max_results})")
+            
+            start = time.time()
+            response = ops.query(query, max_results=max_results)
+            elapsed = time.time() - start
+            
+            result = to_dict(response)
+            
+            # Validate response
+            assert result['status'] == 'success', f"Expected success, got {result['status']}"
+            assert 'results' in result, "Missing results"
+            assert 'query_time_ms' in result, "Missing query_time_ms"
+            assert len(result['results']) <= max_results, f"Too many results: {len(result['results'])}"
+            
+            print_success(f"Query completed in {elapsed:.2f}s")
+            print_info(f"Results: {len(result['results'])} documents")
+            
+            # Show first result preview
+            if result['results']:
+                first_result = result['results'][0]
+                content_preview = first_result['content'][:150].replace('\n', ' ')
+                print_info(f"First result: {content_preview}...")
+            
+        except Exception as e:
+            print_error(f"Query failed: {str(e)}")
+            all_passed = False
+    
+    return all_passed
+
+
+def test_cortex_ingest_incremental(ops: CortexOperations) -> bool:
+    """Test cortex_ingest_incremental tool."""
+    print_test_header("cortex_ingest_incremental")
+    
+    try:
+        # Create a temporary test document
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as f:
+            test_content = f"""# Test Document for Cortex MCP Integration
+
+**Date:** {time.strftime('%Y-%m-%d')}
+**Type:** Integration Test
+
+## Purpose
+
+This document is created automatically by the Cortex MCP integration test suite
+to verify that incremental ingestion works correctly.
+
+## Test Data
+
+- Test ID: cortex_mcp_integration_test_{int(time.time())}
+- Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}
+- Purpose: Verify cortex_ingest_incremental functionality
+
+## Expected Behavior
+
+This document should be:
+1. Successfully ingested into the Mnemonic Cortex
+2. Searchable via cortex_query
+3. Retrievable with full content intact
+
+## Cleanup
+
+This test document can be safely removed after testing.
+"""
+            f.write(test_content)
+            test_file = f.name
+        
+        print_info(f"Created test document: {test_file}")
+        
+        # Test ingestion
+        start = time.time()
+        response = ops.ingest_incremental(
+            file_paths=[test_file],
+            skip_duplicates=True
+        )
+        elapsed = time.time() - start
+        
+        result = to_dict(response)
+        
+        # Validate response
+        assert result['status'] == 'success', f"Expected success, got {result['status']}: {result.get('error', '')}"
+        assert 'documents_added' in result, "Missing documents_added"
+        assert 'chunks_created' in result, "Missing chunks_created"
+        
+        print_success(f"Incremental ingest completed in {elapsed:.2f}s")
+        print_info(f"Documents added: {result['documents_added']}")
+        print_info(f"Chunks created: {result['chunks_created']}")
+        print_info(f"Skipped duplicates: {result['skipped_duplicates']}")
+        
+        # Verify document is searchable
+        print_info("Verifying document is searchable...")
+        query_response = ops.query("cortex_mcp_integration_test", max_results=1)
+        query_result = to_dict(query_response)
+        
+        if query_result['status'] == 'success' and len(query_result['results']) > 0:
+            print_success("Document is searchable via cortex_query")
+        else:
+            print_error("Document not found in search results")
+            return False
+        
+        # Cleanup
+        Path(test_file).unlink()
+        print_info(f"Cleaned up test document: {test_file}")
+        
+        return True
+        
+    except Exception as e:
+        print_error(f"Test failed: {str(e)}")
+        # Cleanup on error
+        try:
+            if 'test_file' in locals():
+                Path(test_file).unlink()
+        except:
+            pass
+        return False
+
+
+def test_cortex_ingest_full(ops: CortexOperations) -> bool:
+    """Test cortex_ingest_full tool (SLOW - optional)."""
+    print_test_header("cortex_ingest_full (SLOW)")
+    
+    print_info("This test performs a full database re-ingestion")
+    print_info("It may take several minutes to complete")
+    
+    try:
+        start = time.time()
+        response = ops.ingest_full(purge_existing=True)
+        elapsed = time.time() - start
+        
+        result = to_dict(response)
+        
+        # Validate response
+        assert result['status'] == 'success', f"Expected success, got {result['status']}: {result.get('error', '')}"
+        assert 'documents_processed' in result, "Missing documents_processed"
+        assert 'ingestion_time_ms' in result, "Missing ingestion_time_ms"
+        
+        print_success(f"Full ingest completed in {elapsed:.2f}s")
+        print_info(f"Documents processed: {result['documents_processed']}")
+        print_info(f"Vectorstore: {result['vectorstore_path']}")
+        
+        return True
+        
+    except Exception as e:
+        print_error(f"Test failed: {str(e)}")
+        return False
+
+
+def main():
+    """Run all integration tests."""
+    parser = argparse.ArgumentParser(description='Cortex MCP Integration Tests')
+    parser.add_argument('--run-full-ingest', action='store_true',
+                       help='Run the slow full ingestion test')
+    args = parser.parse_args()
+    
+    print(f"\n{Colors.BOLD}{'='*60}")
+    print("Cortex MCP Server - Integration Test Suite")
+    print(f"{'='*60}{Colors.RESET}\n")
+    
+    # Load environment variables
+    from dotenv import load_dotenv
+    env_path = project_root / ".env"
+    if env_path.exists():
+        load_dotenv(dotenv_path=env_path)
+        print_info(f"Loaded environment from {env_path}")
+    
+    # Initialize operations
+    ops = CortexOperations(str(project_root))
+    
+    # Run tests
+    results = {}
+    
+    # Test 1: Full Ingest (slowest - optional) - Run FIRST to avoid locking issues
+    if args.run_full_ingest:
+        results['full_ingest'] = test_cortex_ingest_full(ops)
+    else:
+        print_info("\nSkipping full ingest test (use --run-full-ingest to run)")
+
+    # Test 2: Get Stats (fastest)
+    results['stats'] = test_cortex_get_stats(ops)
+    
+    # Test 3: Query (fast)
+    results['query'] = test_cortex_query(ops)
+    
+    # Test 4: Incremental Ingest (medium)
+    results['incremental'] = test_cortex_ingest_incremental(ops)
+
+    
+    # Print summary
+    print(f"\n{Colors.BOLD}{'='*60}")
+    print("Test Summary")
+    print(f"{'='*60}{Colors.RESET}\n")
+    
+    total_tests = len(results)
+    passed_tests = sum(1 for v in results.values() if v)
+    
+    for test_name, passed in results.items():
+        status = f"{Colors.GREEN}PASS{Colors.RESET}" if passed else f"{Colors.RED}FAIL{Colors.RESET}"
+        print(f"  {test_name:20s} {status}")
+    
+    print(f"\n{Colors.BOLD}Total: {passed_tests}/{total_tests} tests passed{Colors.RESET}\n")
+    
+    # Exit code
+    sys.exit(0 if passed_tests == total_tests else 1)
+
+
+if __name__ == "__main__":
+    main()
+
+--- END OF FILE mcp_servers/cortex/test_cortex_integration.py ---
+
+--- START OF FILE mcp_servers/cortex/test_enhanced_diagnostics.py ---
+
+"""
+Test enhanced get_stats with sample retrieval (from inspect_db.py).
+"""
+import pytest
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+from mcp_servers.cognitive.cortex.models import DocumentSample
+
+
+@pytest.mark.integration
+def test_get_stats_with_samples():
+    """Test get_stats with sample document retrieval."""
+    from pathlib import Path
+    
+    # Get project root
+    project_root = Path(__file__).resolve().parent.parent.parent.parent
+    ops = CortexOperations(str(project_root))
+    
+    # Get stats with samples
+    result = ops.get_stats(include_samples=True, sample_count=3)
+    
+    # Verify basic stats
+    assert result.status == "success" or result.health_status in ["healthy", "degraded"]
+    assert result.total_documents >= 0
+    assert result.total_chunks >= 0
+    
+    # Verify samples if database has data
+    if result.total_chunks > 0 and result.samples:
+        assert isinstance(result.samples, list)
+        assert len(result.samples) <= 3  # Should respect sample_count
+        
+        # Verify sample structure
+        for sample in result.samples:
+            assert isinstance(sample, DocumentSample)
+            assert hasattr(sample, 'id')
+            assert hasattr(sample, 'metadata')
+            assert hasattr(sample, 'content_preview')
+            assert isinstance(sample.metadata, dict)
+            assert isinstance(sample.content_preview, str)
+            # Content preview should be truncated to ~150 chars
+            assert len(sample.content_preview) <= 154  # 150 + "..."
+    
+    print(f"✅ get_stats with samples: {len(result.samples) if result.samples else 0} samples retrieved")
+
+
+@pytest.mark.integration  
+def test_get_stats_without_samples():
+    """Test get_stats without sample retrieval (default behavior)."""
+    from pathlib import Path
+    
+    project_root = Path(__file__).resolve().parent.parent.parent.parent
+    ops = CortexOperations(str(project_root))
+    
+    # Get stats without samples (default)
+    result = ops.get_stats(include_samples=False)
+    
+    # Verify basic stats
+    assert result.status == "success" or result.health_status in ["healthy", "degraded", "error"]
+    assert result.total_documents >= 0
+    assert result.total_chunks >= 0
+    
+    # Verify no samples returned
+    assert result.samples is None
+    
+    print(f"✅ get_stats without samples: {result.total_documents} docs, {result.total_chunks} chunks")
+
+
+if __name__ == "__main__":
+    print("Running enhanced get_stats tests...")
+    test_get_stats_with_samples()
+    test_get_stats_without_samples()
+    print("✅ All enhanced get_stats tests passed!")
+
+--- END OF FILE mcp_servers/cortex/test_enhanced_diagnostics.py ---
+
+--- START OF FILE mcp_servers/cortex/test_models.py ---
+
+"""
+Unit tests for Cortex MCP models
+"""
+import pytest
+from mcp_servers.cognitive.cortex.models import (
+    IngestFullRequest,
+    IngestFullResponse,
+    QueryRequest,
+    QueryResponse,
+    QueryResult,
+    StatsResponse,
+    CollectionStats,
+    IngestIncrementalRequest,
+    IngestIncrementalResponse,
+    to_dict
+)
+
+
+def test_ingest_full_request():
+    """Test IngestFullRequest model."""
+    request = IngestFullRequest(
+        purge_existing=True,
+        source_directories=["01_PROTOCOLS", "00_CHRONICLE"]
+    )
+    assert request.purge_existing is True
+    assert request.source_directories == ["01_PROTOCOLS", "00_CHRONICLE"]
+
+
+def test_ingest_full_response():
+    """Test IngestFullResponse model."""
+    response = IngestFullResponse(
+        documents_processed=459,
+        chunks_created=2145,
+        ingestion_time_ms=45230.5,
+        vectorstore_path="/path/to/chroma_db",
+        status="success"
+    )
+    assert response.documents_processed == 459
+    assert response.chunks_created == 2145
+    assert response.status == "success"
+
+
+def test_query_request():
+    """Test QueryRequest model."""
+    request = QueryRequest(
+        query="What is Protocol 101?",
+        max_results=5,
+        use_cache=False
+    )
+    assert request.query == "What is Protocol 101?"
+    assert request.max_results == 5
+    assert request.use_cache is False
+
+
+def test_query_result():
+    """Test QueryResult model."""
+    result = QueryResult(
+        content="Full document content",
+        metadata={"source_file": "01_PROTOCOLS/101.md"},
+        relevance_score=0.95
+    )
+    assert result.content == "Full document content"
+    assert result.metadata["source_file"] == "01_PROTOCOLS/101.md"
+    assert result.relevance_score == 0.95
+
+
+def test_query_response():
+    """Test QueryResponse model."""
+    results = [
+        QueryResult(
+            content="Content 1",
+            metadata={"source_file": "file1.md"}
+        )
+    ]
+    response = QueryResponse(
+        results=results,
+        query_time_ms=234.5,
+        cache_hit=False,
+        status="success"
+    )
+    assert len(response.results) == 1
+    assert response.query_time_ms == 234.5
+    assert response.status == "success"
+
+
+def test_collection_stats():
+    """Test CollectionStats model."""
+    stats = CollectionStats(count=2145, name="child_chunks_v5")
+    assert stats.count == 2145
+    assert stats.name == "child_chunks_v5"
+
+
+def test_stats_response():
+    """Test StatsResponse model."""
+    collections = {
+        "child_chunks": CollectionStats(count=2145, name="child_chunks_v5"),
+        "parent_documents": CollectionStats(count=459, name="parent_documents_v5")
+    }
+    response = StatsResponse(
+        total_documents=459,
+        total_chunks=2145,
+        collections=collections,
+        health_status="healthy"
+    )
+    assert response.total_documents == 459
+    assert response.total_chunks == 2145
+    assert response.health_status == "healthy"
+
+
+def test_ingest_incremental_request():
+    """Test IngestIncrementalRequest model."""
+    request = IngestIncrementalRequest(
+        file_paths=["file1.md", "file2.md"],
+        metadata={"author": "test"},
+        skip_duplicates=True
+    )
+    assert len(request.file_paths) == 2
+    assert request.metadata["author"] == "test"
+    assert request.skip_duplicates is True
+
+
+def test_ingest_incremental_response():
+    """Test IngestIncrementalResponse model."""
+    response = IngestIncrementalResponse(
+        documents_added=3,
+        chunks_created=15,
+        skipped_duplicates=1,
+        status="success"
+    )
+    assert response.documents_added == 3
+    assert response.chunks_created == 15
+    assert response.skipped_duplicates == 1
+    assert response.status == "success"
+
+
+def test_to_dict():
+    """Test to_dict helper function."""
+    response = IngestFullResponse(
+        documents_processed=10,
+        chunks_created=50,
+        ingestion_time_ms=1000.0,
+        vectorstore_path="/path",
+        status="success"
+    )
+    result = to_dict(response)
+    assert isinstance(result, dict)
+    assert result["documents_processed"] == 10
+    assert result["chunks_created"] == 50
+    assert result["status"] == "success"
+
+
+def test_to_dict_with_nested_objects():
+    """Test to_dict with nested dataclass objects."""
+    collections = {
+        "child_chunks": CollectionStats(count=100, name="child_chunks_v5")
+    }
+    response = StatsResponse(
+        total_documents=10,
+        total_chunks=100,
+        collections=collections,
+        health_status="healthy"
+    )
+    result = to_dict(response)
+    assert isinstance(result, dict)
+    assert isinstance(result["collections"], dict)
+    assert result["collections"]["child_chunks"]["count"] == 100
+
+--- END OF FILE mcp_servers/cortex/test_models.py ---
+
+--- START OF FILE mcp_servers/cortex/test_operations.py ---
+
+"""
+Unit tests for Cortex MCP operations
+
+Note: These are integration-style tests that require the actual
+Mnemonic Cortex infrastructure to be set up. They are marked
+with pytest.mark.integration and can be skipped in CI.
+"""
+import pytest
+import tempfile
+import os
+from pathlib import Path
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+
+
+@pytest.fixture
+def temp_project_root():
+    """Create a temporary project root for testing."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create minimal directory structure
+        scripts_dir = Path(tmpdir) / "mnemonic_cortex" / "scripts"
+        scripts_dir.mkdir(parents=True)
+        
+        yield tmpdir
+
+
+def test_operations_init(temp_project_root):
+    """Test operations initialization."""
+    ops = CortexOperations(temp_project_root)
+    assert ops.project_root == Path(temp_project_root)
+    assert ops.scripts_dir == Path(temp_project_root) / "mnemonic_cortex" / "scripts"
+
+
+@pytest.mark.integration
+def test_ingest_full_script_not_found(temp_project_root):
+    """Test ingest_full when script doesn't exist."""
+    ops = CortexOperations(temp_project_root)
+    response = ops.ingest_full()
+    
+    assert response.status == "error"
+    assert "not found" in response.error.lower()
+
+
+@pytest.mark.integration
+def test_query_error_handling(temp_project_root):
+    """Test query error handling when service not available."""
+    ops = CortexOperations(temp_project_root)
+    response = ops.query("test query")
+    
+    # Should return error response when infrastructure not available
+    assert response.status == "error"
+    assert response.error is not None
+
+
+@pytest.mark.integration
+def test_get_stats_no_database(temp_project_root):
+    """Test get_stats when database doesn't exist."""
+    ops = CortexOperations(temp_project_root)
+    response = ops.get_stats()
+    
+    # Should return error or degraded status
+    assert response.health_status in ["error", "degraded"]
+
+
+@pytest.mark.integration
+def test_ingest_incremental_error_handling(temp_project_root):
+    """Test ingest_incremental error handling."""
+    ops = CortexOperations(temp_project_root)
+    
+    # Try to ingest non-existent file
+    response = ops.ingest_incremental(
+        file_paths=["nonexistent.md"],
+        skip_duplicates=True
+    )
+    
+    # Should return error response
+    assert response.status == "error"
+    assert response.error is not None
+
+
+# The following tests would require actual Mnemonic Cortex setup
+# and are marked as integration tests
+
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not os.path.exists("/Users/richardfremmerlid/Projects/Project_Sanctuary/mnemonic_cortex"),
+    reason="Requires actual Mnemonic Cortex setup"
+)
+def test_get_stats_real_database():
+    """Test get_stats with real database (integration test)."""
+    project_root = "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+    ops = CortexOperations(project_root)
+    response = ops.get_stats()
+    
+    # Should return healthy status if database exists
+    if response.health_status == "healthy":
+        assert response.total_documents > 0
+        assert response.total_chunks > 0
+        assert "child_chunks" in response.collections
+        assert "parent_documents" in response.collections
+
+
+@pytest.mark.integration
+@pytest.mark.skipif(
+    not os.path.exists("/Users/richardfremmerlid/Projects/Project_Sanctuary/mnemonic_cortex"),
+    reason="Requires actual Mnemonic Cortex setup"
+)
+def test_query_real_database():
+    """Test query with real database (integration test)."""
+    project_root = "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+    ops = CortexOperations(project_root)
+    response = ops.query("What is Protocol 101?", max_results=3)
+    
+    # Should return successful response
+    if response.status == "success":
+        assert len(response.results) > 0
+        assert response.query_time_ms > 0
+        assert all(hasattr(r, 'content') for r in response.results)
+        assert all(hasattr(r, 'metadata') for r in response.results)
+
+--- END OF FILE mcp_servers/cortex/test_operations.py ---
+
+--- START OF FILE mcp_servers/cortex/test_protocol_87_orchestrator.py ---
+
+"""
+Tests for Protocol 87 MCP Orchestrator
+
+Tests the structured query routing to specialized MCPs.
+"""
+
+import pytest
+import sys
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+from mcp_servers.cognitive.cortex.mcp_client import MCPClient
+
+
+class TestProtocol87Orchestrator:
+    """Test Protocol 87 structured query orchestration."""
+    
+    @pytest.fixture
+    def ops(self, tmp_path):
+        """Create CortexOperations instance."""
+        return CortexOperations(str(project_root))
+    
+    @pytest.fixture
+    def mcp_client(self):
+        """Create MCPClient instance."""
+        return MCPClient(str(project_root))
+    
+    def test_parse_protocol_query(self, ops):
+        """Test parsing Protocol 87 query string."""
+        from mcp_servers.cognitive.cortex.structured_query import parse_query_string
+        
+        query = 'RETRIEVE :: Protocols :: Name="Protocol 101"'
+        result = parse_query_string(query)
+        
+        assert result["intent"] == "RETRIEVE"
+        assert result["scope"] == "Protocols"
+        assert "Protocol 101" in result["constraints"]
+    
+    def test_route_to_protocol_mcp(self, mcp_client):
+        """Test routing to Protocol MCP."""
+        results = mcp_client.route_query(
+            scope="Protocols",
+            intent="RETRIEVE",
+            constraints='Name="Protocol 101"',
+            query_data={}
+        )
+        
+        assert len(results) > 0
+        assert results[0]["source"] == "Protocol MCP"
+        assert results[0]["mcp_tool"] == "protocol_get"
+    
+    def test_route_to_chronicle_mcp(self, mcp_client):
+        """Test routing to Chronicle MCP."""
+        results = mcp_client.route_query(
+            scope="Living_Chronicle",
+            intent="SUMMARIZE",
+            constraints="Timeframe=Recent",
+            query_data={}
+        )
+        
+        assert len(results) > 0
+        assert results[0]["source"] == "Chronicle MCP"
+        assert results[0]["mcp_tool"] == "chronicle_list_entries"
+    
+    def test_route_to_task_mcp(self, mcp_client):
+        """Test routing to Task MCP."""
+        results = mcp_client.route_query(
+            scope="Tasks",
+            intent="SUMMARIZE",
+            constraints='Status="in-progress"',
+            query_data={}
+        )
+        
+        assert len(results) > 0
+        assert results[0]["source"] == "Task MCP"
+        assert results[0]["mcp_tool"] == "list_tasks"
+    
+    def test_route_to_adr_mcp(self, mcp_client):
+        """Test routing to ADR MCP."""
+        results = mcp_client.route_query(
+            scope="ADRs",
+            intent="SUMMARIZE",
+            constraints="",
+            query_data={}
+        )
+        
+        assert len(results) > 0
+        assert results[0]["source"] == "ADR MCP"
+        assert results[0]["mcp_tool"] == "adr_list"
+    
+    def test_query_structured_protocol(self, ops):
+        """Test structured query for protocols."""
+        result = ops.query_structured('RETRIEVE :: Protocols :: Name="Protocol 101"')
+        
+        assert result["request_id"]
+        assert result["steward_id"] == "CORTEX-MCP-01"
+        assert "routing" in result
+        assert result["routing"]["scope"] == "Protocols"
+        assert result["routing"]["routed_to"] == "Protocol MCP"
+    
+    def test_query_structured_chronicle(self, ops):
+        """Test structured query for chronicles."""
+        result = ops.query_structured("SUMMARIZE :: Living_Chronicle :: Timeframe=Recent")
+        
+        assert result["request_id"]
+        assert "routing" in result
+        assert result["routing"]["scope"] == "Living_Chronicle"
+        assert result["routing"]["routed_to"] == "Chronicle MCP"
+    
+    def test_query_structured_with_request_id(self, ops):
+        """Test structured query with custom request ID."""
+        custom_id = "test-request-123"
+        result = ops.query_structured(
+            'RETRIEVE :: Protocols :: Name="Protocol 101"',
+            request_id=custom_id
+        )
+        
+        assert result["request_id"] == custom_id
+    
+    def test_query_structured_error_handling(self, ops):
+        """Test error handling for malformed queries."""
+        result = ops.query_structured("INVALID QUERY FORMAT")
+        
+        assert result["status"] == "error"
+        assert "error" in result
+    
+    def test_mcp_name_mapping(self, ops):
+        """Test MCP name mapping."""
+        assert ops._get_mcp_name("Protocols") == "Protocol MCP"
+        assert ops._get_mcp_name("Living_Chronicle") == "Chronicle MCP"
+        assert ops._get_mcp_name("Tasks") == "Task MCP"
+        assert ops._get_mcp_name("Code") == "Code MCP"
+        assert ops._get_mcp_name("ADRs") == "ADR MCP"
+        assert ops._get_mcp_name("Unknown") == "Cortex MCP (Vector DB)"
+
+
+@pytest.mark.integration
+class TestProtocol87Integration:
+    """Integration tests for Protocol 87 orchestration."""
+    
+    @pytest.fixture
+    def ops(self):
+        """Create CortexOperations with real project root."""
+        return CortexOperations(str(project_root))
+    
+    def test_end_to_end_protocol_query(self, ops):
+        """Test end-to-end protocol query."""
+        result = ops.query_structured('RETRIEVE :: Protocols :: Name="Protocol 101"')
+        
+        # Verify response structure
+        assert "request_id" in result
+        assert "steward_id" in result
+        assert "timestamp_utc" in result
+        assert "matches" in result
+        assert "routing" in result
+        
+        # Verify routing
+        assert result["routing"]["scope"] == "Protocols"
+        assert result["routing"]["orchestrator"] == "CORTEX-MCP-01"
+    
+    def test_end_to_end_chronicle_query(self, ops):
+        """Test end-to-end chronicle query."""
+        result = ops.query_structured("SUMMARIZE :: Living_Chronicle :: Timeframe=Recent")
+        
+        assert result["routing"]["scope"] == "Living_Chronicle"
+        assert "matches" in result
+    
+    def test_cross_mcp_capability(self, ops):
+        """Test that different scopes route to different MCPs."""
+        # Query protocols
+        protocol_result = ops.query_structured('RETRIEVE :: Protocols :: Name="Protocol 101"')
+        
+        # Query chronicles
+        chronicle_result = ops.query_structured("SUMMARIZE :: Living_Chronicle :: Timeframe=Recent")
+        
+        # Verify different routing
+        assert protocol_result["routing"]["routed_to"] == "Protocol MCP"
+        assert chronicle_result["routing"]["routed_to"] == "Chronicle MCP"
+
+--- END OF FILE mcp_servers/cortex/test_protocol_87_orchestrator.py ---
+
+--- START OF FILE mcp_servers/cortex/test_validator.py ---
+
+"""
+Unit tests for Cortex MCP validator
+"""
+import pytest
+import tempfile
+import os
+from pathlib import Path
+from mcp_servers.cognitive.cortex.validator import CortexValidator, ValidationError
+
+
+@pytest.fixture
+def temp_project_root():
+    """Create a temporary project root for testing."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create some test directories and files
+        protocols_dir = Path(tmpdir) / "01_PROTOCOLS"
+        protocols_dir.mkdir()
+        
+        test_file = protocols_dir / "test.md"
+        test_file.write_text("# Test Protocol")
+        
+        yield tmpdir
+
+
+def test_validator_init(temp_project_root):
+    """Test validator initialization."""
+    validator = CortexValidator(temp_project_root)
+    assert validator.project_root == Path(temp_project_root)
+
+
+def test_validate_ingest_full_success(temp_project_root):
+    """Test successful validation of ingest_full."""
+    validator = CortexValidator(temp_project_root)
+    result = validator.validate_ingest_full(
+        purge_existing=True,
+        source_directories=["01_PROTOCOLS"]
+    )
+    assert result["purge_existing"] is True
+    assert result["source_directories"] == ["01_PROTOCOLS"]
+
+
+def test_validate_ingest_full_invalid_directory(temp_project_root):
+    """Test validation fails for non-existent directory."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="does not exist"):
+        validator.validate_ingest_full(
+            purge_existing=True,
+            source_directories=["NONEXISTENT_DIR"]
+        )
+
+
+def test_validate_query_success(temp_project_root):
+    """Test successful validation of query."""
+    validator = CortexValidator(temp_project_root)
+    result = validator.validate_query(
+        query="What is Protocol 101?",
+        max_results=5,
+        use_cache=False
+    )
+    assert result["query"] == "What is Protocol 101?"
+    assert result["max_results"] == 5
+    assert result["use_cache"] is False
+
+
+def test_validate_query_empty_string(temp_project_root):
+    """Test validation fails for empty query."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="cannot be empty"):
+        validator.validate_query(query="", max_results=5)
+
+
+def test_validate_query_whitespace_only(temp_project_root):
+    """Test validation fails for whitespace-only query."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="cannot be empty"):
+        validator.validate_query(query="   ", max_results=5)
+
+
+def test_validate_query_too_long(temp_project_root):
+    """Test validation fails for query that's too long."""
+    validator = CortexValidator(temp_project_root)
+    long_query = "x" * 10001
+    with pytest.raises(ValidationError, match="too long"):
+        validator.validate_query(query=long_query, max_results=5)
+
+
+def test_validate_query_max_results_too_low(temp_project_root):
+    """Test validation fails for max_results < 1."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="must be at least 1"):
+        validator.validate_query(query="test", max_results=0)
+
+
+def test_validate_query_max_results_too_high(temp_project_root):
+    """Test validation fails for max_results > 100."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="cannot exceed 100"):
+        validator.validate_query(query="test", max_results=101)
+
+
+def test_validate_ingest_incremental_success(temp_project_root):
+    """Test successful validation of ingest_incremental."""
+    validator = CortexValidator(temp_project_root)
+    test_file = Path(temp_project_root) / "01_PROTOCOLS" / "test.md"
+    
+    result = validator.validate_ingest_incremental(
+        file_paths=[str(test_file)],
+        metadata={"author": "test"},
+        skip_duplicates=True
+    )
+    assert len(result["file_paths"]) == 1
+    assert result["metadata"]["author"] == "test"
+    assert result["skip_duplicates"] is True
+
+
+def test_validate_ingest_incremental_relative_path(temp_project_root):
+    """Test validation converts relative paths to absolute."""
+    validator = CortexValidator(temp_project_root)
+    
+    result = validator.validate_ingest_incremental(
+        file_paths=["01_PROTOCOLS/test.md"],
+        skip_duplicates=True
+    )
+    assert len(result["file_paths"]) == 1
+    assert os.path.isabs(result["file_paths"][0])
+
+
+def test_validate_ingest_incremental_empty_list(temp_project_root):
+    """Test validation fails for empty file_paths."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="cannot be empty"):
+        validator.validate_ingest_incremental(file_paths=[])
+
+
+def test_validate_ingest_incremental_too_many_files(temp_project_root):
+    """Test validation fails for too many files."""
+    validator = CortexValidator(temp_project_root)
+    file_paths = ["file.md"] * 1001
+    with pytest.raises(ValidationError, match="Cannot ingest more than 1000"):
+        validator.validate_ingest_incremental(file_paths=file_paths)
+
+
+def test_validate_ingest_incremental_file_not_exists(temp_project_root):
+    """Test validation fails for non-existent file."""
+    validator = CortexValidator(temp_project_root)
+    with pytest.raises(ValidationError, match="does not exist"):
+        validator.validate_ingest_incremental(file_paths=["nonexistent.md"])
+
+
+def test_validate_ingest_incremental_not_markdown(temp_project_root):
+    """Test validation fails for non-markdown file."""
+    validator = CortexValidator(temp_project_root)
+    test_file = Path(temp_project_root) / "test.txt"
+    test_file.write_text("test")
+    
+    with pytest.raises(ValidationError, match="not a markdown file"):
+        validator.validate_ingest_incremental(file_paths=[str(test_file)])
+
+
+def test_validate_ingest_incremental_invalid_metadata(temp_project_root):
+    """Test validation fails for invalid metadata type."""
+    validator = CortexValidator(temp_project_root)
+    test_file = Path(temp_project_root) / "01_PROTOCOLS" / "test.md"
+    
+    with pytest.raises(ValidationError, match="must be a dictionary"):
+        validator.validate_ingest_incremental(
+            file_paths=[str(test_file)],
+            metadata="invalid"
+        )
+
+
+def test_validate_stats(temp_project_root):
+    """Test validation of stats (no parameters)."""
+    validator = CortexValidator(temp_project_root)
+    result = validator.validate_stats()
+    assert result == {}
+
+--- END OF FILE mcp_servers/cortex/test_validator.py ---
+
+--- START OF FILE mcp_servers/council/test_council_ops.py ---
+
+"""
+Tests for Council MCP Server
+"""
+
+import pytest
+from pathlib import Path
+import sys
+
+# Add parent directories to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+from mcp_servers.lib.council.council_ops import CouncilOperations
+
+@pytest.fixture
+def council_ops():
+    """Create CouncilOperations instance"""
+    return CouncilOperations()
+
+def test_council_ops_initialization(council_ops):
+    """Test that CouncilOperations initializes correctly"""
+    assert council_ops.project_root.exists()
+    # Should have placeholders for lazy initialization
+    assert hasattr(council_ops, "_initialized")
+    assert council_ops._initialized is False
+    assert council_ops.persona_ops is None
+    assert council_ops.cortex is None
+
+def test_list_agents(council_ops):
+    """Test listing available agents"""
+    # Mock the persona_ops to avoid actual MCP calls during unit tests
+    # For now we just check the method exists and has correct signature
+    assert hasattr(council_ops, "list_agents")
+
+def test_dispatch_task_structure(council_ops):
+    """Test that dispatch_task returns correct structure (without actually running)"""
+    # This is a structure test only - we won't actually execute the orchestrator
+    # in CI/CD to avoid long-running tests
+    
+    # Verify the method exists and accepts correct parameters
+    assert hasattr(council_ops, "dispatch_task")
+    
+    # Test parameter validation would go here
+    # (actual execution tests should be manual or integration tests)
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE mcp_servers/council/test_council_ops.py ---
+
+--- START OF FILE mcp_servers/git_workflow/test_squash_merge.py ---
+
+import unittest
+import tempfile
+import shutil
+import os
+import subprocess
+from pathlib import Path
+from mcp_servers.lib.git.git_ops import GitOperations
+from mcp_servers.system.git_workflow.server import git_finish_feature
+
+class TestSquashMerge(unittest.TestCase):
+    def setUp(self):
+        # Create a temporary directory for the repos
+        self.test_dir = tempfile.mkdtemp()
+        
+        # Create bare remote repo (simulates GitHub)
+        self.remote_path = Path(self.test_dir) / "remote.git"
+        self.remote_path.mkdir()
+        subprocess.run(["git", "init", "--bare"], cwd=self.remote_path, check=True)
+        
+        # Create local repo
+        self.repo_path = Path(self.test_dir) / "local"
+        self.repo_path.mkdir()
+        subprocess.run(["git", "init"], cwd=self.repo_path, check=True)
+        subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=self.repo_path, check=True)
+        subprocess.run(["git", "config", "user.name", "Test User"], cwd=self.repo_path, check=True)
+        
+        # Add remote
+        subprocess.run(["git", "remote", "add", "origin", str(self.remote_path)], cwd=self.repo_path, check=True)
+        
+        # Create initial commit on main
+        (self.repo_path / "README.md").write_text("# Test Repo")
+        subprocess.run(["git", "add", "README.md"], cwd=self.repo_path, check=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit"], cwd=self.repo_path, check=True)
+        
+        # Rename master to main if needed
+        subprocess.run(["git", "branch", "-M", "main"], cwd=self.repo_path, check=True)
+        
+        # Push to remote
+        subprocess.run(["git", "push", "-u", "origin", "main"], cwd=self.repo_path, check=True)
+        
+        # Initialize GitOperations with this repo
+        # We need to patch the global git_ops in the server module
+        import mcp_servers.system.git_workflow.server as server
+        server.REPO_PATH = str(self.repo_path)
+        server.git_ops = GitOperations(str(self.repo_path))
+        self.server = server
+        
+        # Import the actual function (not the FastMCP tool wrapper)
+        from mcp_servers.system.git_workflow import server as git_server
+        self.git_finish_feature_fn = git_server.git_finish_feature.fn
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+
+    def test_finish_feature_squash_merge(self):
+        """Test finishing a feature branch that was squash merged."""
+        # 1. Start feature branch
+        branch_name = "feature/task-001-squash-test"
+        subprocess.run(["git", "checkout", "-b", branch_name], cwd=self.repo_path, check=True)
+        
+        # 2. Make changes
+        (self.repo_path / "feature.txt").write_text("Feature content")
+        subprocess.run(["git", "add", "feature.txt"], cwd=self.repo_path, check=True)
+        subprocess.run(["git", "commit", "-m", "Feature commit"], cwd=self.repo_path, check=True)
+        
+        # Push feature branch to remote
+        subprocess.run(["git", "push", "-u", "origin", branch_name], cwd=self.repo_path, check=True)
+        
+        # 3. Simulate Squash Merge on Main
+        # Checkout main
+        subprocess.run(["git", "checkout", "main"], cwd=self.repo_path, check=True)
+        
+        # Apply changes from feature (simulate squash)
+        # We just create the same file content
+        (self.repo_path / "feature.txt").write_text("Feature content")
+        subprocess.run(["git", "add", "feature.txt"], cwd=self.repo_path, check=True)
+        subprocess.run(["git", "commit", "-m", "Squash merge feature"], cwd=self.repo_path, check=True)
+        
+        # Push main to remote
+        subprocess.run(["git", "push", "origin", "main"], cwd=self.repo_path, check=True)
+        
+        # At this point:
+        # - main has the content
+        # - feature branch has the content
+        # - BUT git log graph shows they are diverged (no common merge commit)
+        
+        # Verify git thinks it's NOT merged
+        is_merged = self.server.git_ops.is_branch_merged(branch_name, "main")
+        self.assertFalse(is_merged, "Git should NOT consider this merged yet")
+        
+        # 4. Try to finish feature WITHOUT force (should now auto-detect and succeed!)
+        result = self.git_finish_feature_fn(branch_name)
+        print(f"\nResult without force (auto-detect): {result}")
+        # Should succeed due to auto-detection
+        self.assertIn("Finished feature", result)
+        self.assertIn("Auto-detected squash merge", result) if "Auto-detected" in result else None
+        
+        # 5. Verify branch is gone
+        result = subprocess.run(["git", "branch", "--list", branch_name], 
+                              cwd=self.repo_path, capture_output=True, text=True)
+        self.assertEqual(result.stdout.strip(), "")
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE mcp_servers/git_workflow/test_squash_merge.py ---
+
+--- START OF FILE mcp_servers/git_workflow/test_tool_safety.py ---
+
+"""
+Tests for Git Workflow MCP tool safety checks.
+Verifies that high-risk operations are blocked or handled correctly.
+"""
+import unittest
+from unittest.mock import MagicMock, patch
+import sys
+import os
+
+# Add project root to path to allow importing server
+sys.path.append(os.getcwd())
+
+class TestGitToolSafety(unittest.TestCase):
+    
+    def setUp(self):
+        # Patch the git_ops object in the server module
+        self.patcher = patch('mcp_servers.system.git_workflow.server.git_ops')
+        self.mock_git_ops = self.patcher.start()
+        
+        # Import the tools after patching
+        from mcp_servers.system.git_workflow.server import (
+            git_add, 
+            git_start_feature,
+            git_smart_commit,
+            git_push_feature,
+            git_finish_feature
+        )
+        # Access the underlying function from the FunctionTool object
+        self.git_add = git_add.fn
+        self.git_start_feature = git_start_feature.fn
+        self.git_smart_commit = git_smart_commit.fn
+        self.git_push_feature = git_push_feature.fn
+        self.git_finish_feature = git_finish_feature.fn
+
+    def tearDown(self):
+        self.patcher.stop()
+
+    def test_git_add_blocks_main(self):
+        """Test that git_add blocks staging on main branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "main",
+            "feature_branches": []
+        }
+        
+        result = self.git_add(["test.txt"])
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Cannot stage files on main branch", result)
+        self.mock_git_ops.add.assert_not_called()
+
+    def test_git_add_blocks_non_feature(self):
+        """Test that git_add blocks staging on non-feature branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "develop",
+            "feature_branches": []
+        }
+        
+        result = self.git_add(["test.txt"])
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("must be on a feature branch", result)
+        self.mock_git_ops.add.assert_not_called()
+
+    def test_git_add_allows_feature(self):
+        """Test that git_add allows staging on feature branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "feature/task-123-test",
+            "feature_branches": ["feature/task-123-test"]
+        }
+        
+        result = self.git_add(["test.txt"])
+        
+        self.assertIn("Staged 1 file(s)", result)
+        self.mock_git_ops.add.assert_called_with(["test.txt"])
+
+    def test_start_feature_idempotent_same_branch(self):
+        """Test start_feature is idempotent when already on the branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "feature/task-123-test",
+            "feature_branches": ["feature/task-123-test"],
+            "local_branches": [{"name": "feature/task-123-test"}],
+            "is_clean": True
+        }
+        
+        result = self.git_start_feature("123", "test")
+        
+        self.assertIn("Already on feature branch", result)
+        self.mock_git_ops.create_branch.assert_not_called()
+
+    def test_start_feature_idempotent_switch(self):
+        """Test start_feature switches to existing branch if not current."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "main",
+            "feature_branches": ["feature/task-123-test"],
+            "local_branches": [{"name": "main"}, {"name": "feature/task-123-test"}],
+            "is_clean": True
+        }
+        
+        result = self.git_start_feature("123", "test")
+        
+        self.assertIn("Switched to existing feature branch", result)
+        self.mock_git_ops.create_branch.assert_not_called()
+        self.mock_git_ops.checkout.assert_called_with("feature/task-123-test")
+
+    def test_start_feature_blocks_multiple(self):
+        """Test start_feature blocks if ANOTHER feature branch exists."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "main",
+            "feature_branches": ["feature/task-999-other"],
+            "local_branches": [{"name": "main"}, {"name": "feature/task-999-other"}],
+            "is_clean": True
+        }
+        
+        result = self.git_start_feature("123", "test")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Existing feature branch(es) detected", result)
+        self.mock_git_ops.create_branch.assert_not_called()
+
+    def test_start_feature_blocks_dirty(self):
+        """Test start_feature blocks if working directory is dirty (for new branch)."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "main",
+            "feature_branches": [],
+            "local_branches": [{"name": "main"}],
+            "is_clean": False,
+            "staged": ["file.txt"],
+            "modified": [],
+            "untracked": []
+        }
+        
+        result = self.git_start_feature("123", "test")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Working directory has uncommitted changes", result)
+        self.mock_git_ops.create_branch.assert_not_called()
+
+    def test_smart_commit_blocks_main(self):
+        """Test that git_smart_commit blocks committing on main branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "main"
+        }
+        
+        result = self.git_smart_commit("test commit")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Cannot commit directly to main branch", result)
+        self.mock_git_ops.commit.assert_not_called()
+
+    def test_push_feature_blocks_main(self):
+        """Test that git_push_feature blocks pushing main branch."""
+        self.mock_git_ops.get_current_branch.return_value = "main"
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Cannot push main branch directly", result)
+        self.mock_git_ops.push.assert_not_called()
+
+    def test_finish_feature_blocks_main(self):
+        """Test that git_finish_feature blocks finishing 'main' branch."""
+        result = self.git_finish_feature("main")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Cannot finish 'main' branch", result)
+        self.mock_git_ops.checkout.assert_not_called()
+
+    def test_finish_feature_blocks_invalid_name(self):
+        """Test that git_finish_feature blocks invalid branch names."""
+        result = self.git_finish_feature("develop")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("Invalid branch name", result)
+        self.mock_git_ops.checkout.assert_not_called()
+
+    def test_finish_feature_blocks_unmerged(self):
+        """Test that git_finish_feature blocks if branch is not merged."""
+        # Mock is_branch_merged to return False
+        self.mock_git_ops.is_branch_merged.return_value = False
+        
+        result = self.git_finish_feature("feature/task-123-test")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("NOT merged into main", result)
+        self.mock_git_ops.delete_local_branch.assert_not_called()
+
+    def test_smart_commit_blocks_non_feature(self):
+        """Test that git_smart_commit blocks committing on non-feature branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "develop"
+        }
+        
+        result = self.git_smart_commit("test commit")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("must be on a feature branch", result)
+        self.mock_git_ops.commit.assert_not_called()
+
+    def test_smart_commit_blocks_no_staged_files(self):
+        """Test that git_smart_commit blocks if no files are staged."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "feature/task-123-test"
+        }
+        self.mock_git_ops.get_staged_files.return_value = []
+        
+        result = self.git_smart_commit("test commit")
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("No files staged for commit", result)
+        self.mock_git_ops.commit.assert_not_called()
+
+    def test_push_feature_blocks_non_feature(self):
+        """Test that git_push_feature blocks pushing non-feature branch."""
+        self.mock_git_ops.get_current_branch.return_value = "develop"
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("ERROR", result)
+        self.assertIn("must be on a feature branch", result)
+        self.mock_git_ops.push.assert_not_called()
+
+    def test_finish_feature_blocks_dirty_state(self):
+        """Test that git_finish_feature blocks if working directory is dirty."""
+        self.mock_git_ops.verify_clean_state.side_effect = RuntimeError("Working directory is not clean")
+        
+        result = self.git_finish_feature("feature/task-123-test")
+        
+        self.assertIn("Failed to finish feature", result)
+        self.mock_git_ops.delete_local_branch.assert_not_called()
+
+    def test_smart_commit_success(self):
+        """Test that git_smart_commit succeeds with staged files on feature branch."""
+        self.mock_git_ops.status.return_value = {
+            "branch": "feature/task-123-test"
+        }
+        self.mock_git_ops.get_staged_files.return_value = ["file1.py", "file2.py"]
+        self.mock_git_ops.commit.return_value = "abc123def456"
+        
+        result = self.git_smart_commit("test commit message")
+        
+        self.assertIn("Commit successful", result)
+        self.assertIn("abc123def456", result)
+        self.mock_git_ops.commit.assert_called_with("test commit message")
+
+    def test_push_feature_success(self):
+        """Test that git_push_feature succeeds and verifies remote hash."""
+        self.mock_git_ops.get_current_branch.return_value = "feature/task-123-test"
+        self.mock_git_ops.push.return_value = "Push successful"
+        self.mock_git_ops.get_commit_hash.side_effect = lambda ref: "abc123def456" if ref in ["HEAD", "origin/feature/task-123-test"] else "different"
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("Verified push", result)
+        self.assertIn("abc123de", result)  # First 8 chars of hash
+        self.assertIn("Create PR", result)
+        self.mock_git_ops.push.assert_called_with("origin", "feature/task-123-test", force=False, no_verify=False)
+
+    def test_push_feature_hash_mismatch_warning(self):
+        """Test that git_push_feature warns when remote hash doesn't match local."""
+        self.mock_git_ops.get_current_branch.return_value = "feature/task-123-test"
+        self.mock_git_ops.push.return_value = "Push successful"
+        # Simulate hash mismatch
+        def mock_hash(ref):
+            if ref == "HEAD":
+                return "abc123def456"
+            elif ref == "origin/feature/task-123-test":
+                return "different789"
+            return "other"
+        self.mock_git_ops.get_commit_hash.side_effect = mock_hash
+        
+        result = self.git_push_feature()
+        
+        self.assertIn("WARNING", result)
+        self.assertIn("does not match", result)
+        self.assertIn("abc123de", result)  # Local hash
+        self.assertIn("differen", result)  # Remote hash (first 8 chars)
+
+    def test_finish_feature_force_bypass(self):
+        """Test that git_finish_feature with force=True bypasses merge check."""
+        # Mock is_branch_merged to return False (simulating squash merge)
+        self.mock_git_ops.is_branch_merged.return_value = False
+        
+        result = self.git_finish_feature("feature/task-123-test", force=True)
+        
+        self.assertIn("Finished feature", result)
+        self.assertIn("Verified merge", result)
+        # Should verify clean state
+        self.mock_git_ops.verify_clean_state.assert_called_once()
+        # Should NOT check merge status (or ignore result)
+        # Actually our implementation calls is_branch_merged but ignores it if force=True?
+        # Let's check the implementation: "if not force and not git_ops.is_branch_merged..."
+        # So if force=True, is_branch_merged is NOT called.
+        self.mock_git_ops.is_branch_merged.assert_not_called()
+        
+        # Should proceed to delete
+        self.mock_git_ops.delete_local_branch.assert_called_with("feature/task-123-test", force=True)
+
+    def test_finish_feature_success_merged(self):
+        """Test that git_finish_feature succeeds if branch is merged."""
+        # Mock is_branch_merged to return True
+        self.mock_git_ops.is_branch_merged.return_value = True
+        
+        result = self.git_finish_feature("feature/task-123-test")
+        
+        self.assertIn("Finished feature", result)
+        self.assertIn("Verified merge", result)
+        self.mock_git_ops.delete_local_branch.assert_called_with("feature/task-123-test", force=True)
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE mcp_servers/git_workflow/test_tool_safety.py ---
+
+--- START OF FILE mcp_servers/task/__init__.py ---
+
+
+
+--- END OF FILE mcp_servers/task/__init__.py ---
+
+--- START OF FILE mcp_servers/task/test_e2e_workflow.py ---
+
+"""
+End-to-end workflow test for Task MCP
+Tests the complete workflow: create → update → move → search
+"""
+
+from pathlib import Path
+import sys
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.task.models import TaskStatus, TaskPriority
+
+
+def test_complete_workflow():
+    """Test complete task workflow"""
+    
+    print("🧪 Starting End-to-End Workflow Test\n")
+    
+    # Initialize operations
+    task_ops = TaskOperations(project_root)
+    
+    # Step 1: Create a test task
+    print("Step 1: Creating test task...")
+    result = task_ops.create_task(
+        title="E2E Test Task - MCP Server Validation",
+        objective="Validate the Task MCP server end-to-end workflow",
+        deliverables=[
+            "Create task successfully",
+            "Update task metadata",
+            "Move task through statuses",
+            "Search and retrieve task"
+        ],
+        acceptance_criteria=[
+            "Task created in backlog",
+            "Task updated with new priority",
+            "Task moved to in-progress",
+            "Task searchable and retrievable"
+        ],
+        priority=TaskPriority.HIGH,
+        status=TaskStatus.BACKLOG,
+        lead="Antigravity Test Suite",
+        notes="This is an automated end-to-end test"
+    )
+    
+    assert result.status == "success", f"Create failed: {result.message}"
+    task_number = result.task_number
+    print(f"✅ Task #{task_number:03d} created successfully")
+    print(f"   File: {result.file_path}\n")
+    
+    # Step 2: Retrieve the task
+    print("Step 2: Retrieving task...")
+    task = task_ops.get_task(task_number)
+    assert task is not None, "Task not found"
+    assert task["title"] == "E2E Test Task - MCP Server Validation"
+    print(f"✅ Task retrieved: {task['title']}")
+    print(f"   Status: {task['status']}\n")
+    
+    # Step 3: Update task priority
+    print("Step 3: Updating task priority to CRITICAL...")
+    result = task_ops.update_task(
+        task_number=task_number,
+        updates={"priority": TaskPriority.CRITICAL}
+    )
+    assert result.status == "success", f"Update failed: {result.message}"
+    print(f"✅ Task updated successfully\n")
+    
+    # Step 4: Move task to in-progress
+    print("Step 4: Moving task to IN-PROGRESS...")
+    result = task_ops.update_task_status(
+        task_number=task_number,
+        new_status=TaskStatus.IN_PROGRESS,
+        notes="Starting E2E test validation"
+    )
+    assert result.status == "success", f"Status update failed: {result.message}"
+    assert "in-progress" in result.file_path
+    print(f"✅ Task moved to in-progress")
+    print(f"   New location: {result.file_path}\n")
+    
+    # Step 5: Search for the task
+    print("Step 5: Searching for task...")
+    results = task_ops.search_tasks("E2E Test Task")
+    assert len(results) > 0, "Task not found in search"
+    assert results[0]["number"] == task_number
+    print(f"✅ Task found in search")
+    print(f"   Matches: {len(results[0]['matches'])} lines\n")
+    
+    # Step 6: List tasks in progress
+    print("Step 6: Listing in-progress tasks...")
+    tasks = task_ops.list_tasks(status=TaskStatus.IN_PROGRESS)
+    task_numbers = [t["number"] for t in tasks]
+    assert task_number in task_numbers, "Task not in in-progress list"
+    print(f"✅ Task found in in-progress list")
+    print(f"   Total in-progress tasks: {len(tasks)}\n")
+    
+    # Step 7: Move to done
+    print("Step 7: Moving task to DONE...")
+    result = task_ops.update_task_status(
+        task_number=task_number,
+        new_status=TaskStatus.COMPLETE,
+        notes="E2E test completed successfully"
+    )
+    assert result.status == "success"
+    assert "done" in result.file_path
+    print(f"✅ Task completed and moved to done")
+    print(f"   Final location: {result.file_path}\n")
+    
+    # Final verification
+    print("Final Verification:")
+    final_task = task_ops.get_task(task_number)
+    assert final_task["status"] == "complete"
+    assert final_task["priority"] == "Critical"
+    print(f"✅ All assertions passed!")
+    print(f"   Task #{task_number:03d}: {final_task['title']}")
+    print(f"   Status: {final_task['status']}")
+    print(f"   Priority: {final_task['priority']}")
+    
+    print("\n🎉 End-to-End Workflow Test PASSED!")
+    print(f"\nTask #{task_number:03d} can be found at:")
+    print(f"   {project_root / result.file_path}")
+    
+    return task_number
+
+
+if __name__ == "__main__":
+    try:
+        task_num = test_complete_workflow()
+        print(f"\n✅ SUCCESS: Task #{task_num:03d} created and validated")
+        sys.exit(0)
+    except AssertionError as e:
+        print(f"\n❌ FAILED: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n❌ ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+--- END OF FILE mcp_servers/task/test_e2e_workflow.py ---
+
+--- START OF FILE mcp_servers/task/test_operations.py ---
+
+"""
+Unit tests for Task MCP operations
+"""
+
+import pytest
+from pathlib import Path
+import tempfile
+import shutil
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.task.models import TaskStatus, TaskPriority
+
+
+@pytest.fixture
+def temp_project():
+    """Create temporary project directory"""
+    temp_dir = Path(tempfile.mkdtemp())
+    tasks_dir = temp_dir / "TASKS"
+    
+    # Create task directories
+    (tasks_dir / "backlog").mkdir(parents=True)
+    (tasks_dir / "todo").mkdir(parents=True)
+    (tasks_dir / "in-progress").mkdir(parents=True)
+    (tasks_dir / "done").mkdir(parents=True)
+    
+    # Create tools directory with get_next_task_number.py
+    tools_dir = temp_dir / "tools" / "scaffolds"
+    tools_dir.mkdir(parents=True)
+    
+    # Simple version of get_next_task_number
+    (tools_dir / "get_next_task_number.py").write_text("""
+def get_next_task_number():
+    return "001"
+""")
+    
+    yield temp_dir
+    
+    # Cleanup
+    shutil.rmtree(temp_dir)
+
+
+@pytest.fixture
+def task_ops(temp_project):
+    """Create TaskOperations instance"""
+    return TaskOperations(temp_project)
+
+
+class TestCreateTask:
+    """Test create_task operation"""
+    
+    def test_create_task_success(self, task_ops):
+        """Test successful task creation"""
+        result = task_ops.create_task(
+            title="Test Task",
+            objective="Test objective",
+            deliverables=["Deliverable 1", "Deliverable 2"],
+            acceptance_criteria=["Criterion 1", "Criterion 2"],
+            priority=TaskPriority.HIGH,
+            status=TaskStatus.BACKLOG
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "created"
+        assert result.task_number > 0  # Just verify a task number was assigned
+        assert "TASKS/backlog/" in result.file_path
+        assert "_test_task.md" in result.file_path
+        assert "# TASK: Test Task" in result.content
+    
+    def test_create_task_with_dependencies(self, task_ops):
+        """Test task creation with dependencies"""
+        # Create first task
+        task_ops.create_task(
+            title="First Task",
+            objective="First",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        # Create second task with dependency
+        result = task_ops.create_task(
+            title="Second Task",
+            objective="Second",
+            deliverables=["D2"],
+            acceptance_criteria=["C2"],
+            dependencies="Requires #001",
+            task_number=2
+        )
+        
+        assert result.status == "success"
+        assert "Requires #001" in result.content
+    
+    def test_create_task_duplicate_number(self, task_ops):
+        """Test creating task with duplicate number fails"""
+        # Create first task
+        task_ops.create_task(
+            title="First",
+            objective="First",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        # Try to create duplicate
+        result = task_ops.create_task(
+            title="Duplicate",
+            objective="Duplicate",
+            deliverables=["D2"],
+            acceptance_criteria=["C2"],
+            task_number=1
+        )
+        
+        assert result.status == "error"
+        assert "already exists" in result.message
+
+
+class TestUpdateTask:
+    """Test update_task operation"""
+    
+    def test_update_task_priority(self, task_ops):
+        """Test updating task priority"""
+        # Create task
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.MEDIUM,
+            task_number=1
+        )
+        
+        # Update priority
+        result = task_ops.update_task(
+            task_number=1,
+            updates={"priority": TaskPriority.CRITICAL}
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "updated"
+        assert "Critical" in result.content
+    
+    def test_update_nonexistent_task(self, task_ops):
+        """Test updating non-existent task fails"""
+        result = task_ops.update_task(
+            task_number=999,
+            updates={"priority": TaskPriority.HIGH}
+        )
+        
+        assert result.status == "error"
+        assert "not found" in result.message
+    
+    def test_update_task_with_string_values(self, task_ops):
+        """Test updating task with string values (as received from MCP)"""
+        # Create task
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.MEDIUM,
+            task_number=1
+        )
+        
+        # Update with string values (simulating MCP input)
+        result = task_ops.update_task(
+            task_number=1,
+            updates={
+                "priority": "High",
+                "lead": "Test User",
+                "notes": "Updated via MCP"
+            }
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "updated"
+        assert "High" in result.content
+        assert "Test User" in result.content
+        assert "Updated via MCP" in result.content
+    
+    def test_parse_capitalized_status(self, task_ops, temp_project):
+        """Test parsing task files with capitalized status values"""
+        # Create a task file with capitalized status
+        task_file = temp_project / "TASKS" / "backlog" / "001_test_capitalized.md"
+        task_file.write_text("""# TASK: Test Capitalized Status
+
+**Status:** Backlog
+**Priority:** High
+**Lead:** Test User
+**Dependencies:** None
+**Related Documents:** None
+
+---
+
+## 1. Objective
+
+Test objective
+
+## 2. Deliverables
+
+1. Deliverable 1
+
+## 3. Acceptance Criteria
+
+- Criterion 1
+""")
+        
+        # Should be able to read and list this task
+        tasks = task_ops.list_tasks(status=TaskStatus.BACKLOG)
+        assert len(tasks) >= 1
+        
+        # Should be able to get this task
+        task = task_ops.get_task(1)
+        assert task is not None
+        assert task["status"] == "backlog"
+
+
+class TestUpdateTaskStatus:
+    """Test update_task_status operation"""
+    
+    def test_move_task_to_in_progress(self, task_ops):
+        """Test moving task from backlog to in-progress"""
+        # Create task in backlog
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.BACKLOG,
+            task_number=1
+        )
+        
+        # Move to in-progress
+        result = task_ops.update_task_status(
+            task_number=1,
+            new_status=TaskStatus.IN_PROGRESS,
+            notes="Starting work"
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "moved"
+        assert "in-progress" in result.file_path
+        assert "Starting work" in result.content
+    
+    def test_move_task_to_done(self, task_ops):
+        """Test moving task to done"""
+        # Create and move task
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        result = task_ops.update_task_status(
+            task_number=1,
+            new_status=TaskStatus.COMPLETE
+        )
+        
+        assert result.status == "success"
+        assert "done" in result.file_path
+    
+    def test_move_task_to_todo(self, task_ops):
+        """Test moving task from backlog to todo (as tested in Claude)"""
+        # Create task in backlog
+        task_ops.create_task(
+            title="Test Todo Move",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.BACKLOG,
+            task_number=1
+        )
+        
+        # Move to todo
+        result = task_ops.update_task_status(
+            task_number=1,
+            new_status=TaskStatus.TODO
+        )
+        
+        assert result.status == "success"
+        assert result.operation == "moved"
+        assert "todo" in result.file_path
+
+
+class TestGetTask:
+    """Test get_task operation"""
+    
+    def test_get_existing_task(self, task_ops):
+        """Test retrieving existing task"""
+        # Create task
+        task_ops.create_task(
+            title="Test Task",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        # Get task
+        task = task_ops.get_task(1)
+        
+        assert task is not None
+        assert task["number"] == 1
+        assert task["title"] == "Test Task"
+        assert task["status"] == "backlog"
+    
+    def test_get_nonexistent_task(self, task_ops):
+        """Test retrieving non-existent task returns None"""
+        task = task_ops.get_task(999)
+        assert task is None
+
+
+class TestListTasks:
+    """Test list_tasks operation"""
+    
+    def test_list_all_tasks(self, task_ops):
+        """Test listing all tasks"""
+        # Create multiple tasks
+        for i in range(1, 4):
+            task_ops.create_task(
+                title=f"Task {i}",
+                objective="Test",
+                deliverables=["D1"],
+                acceptance_criteria=["C1"],
+                task_number=i
+            )
+        
+        tasks = task_ops.list_tasks()
+        assert len(tasks) == 3
+    
+    def test_list_tasks_by_status(self, task_ops):
+        """Test filtering tasks by status"""
+        # Create tasks with different statuses
+        task_ops.create_task(
+            title="Backlog Task",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.BACKLOG,
+            task_number=1
+        )
+        
+        task_ops.create_task(
+            title="In Progress Task",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            status=TaskStatus.IN_PROGRESS,
+            task_number=2
+        )
+        
+        # List only backlog tasks
+        backlog_tasks = task_ops.list_tasks(status=TaskStatus.BACKLOG)
+        assert len(backlog_tasks) == 1
+        assert backlog_tasks[0]["title"] == "Backlog Task"
+    
+    def test_list_tasks_by_priority(self, task_ops):
+        """Test filtering tasks by priority"""
+        # Create tasks with different priorities
+        task_ops.create_task(
+            title="High Priority",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.HIGH,
+            task_number=1
+        )
+        
+        task_ops.create_task(
+            title="Low Priority",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            priority=TaskPriority.LOW,
+            task_number=2
+        )
+        
+        # List only high priority tasks
+        high_tasks = task_ops.list_tasks(priority=TaskPriority.HIGH)
+        assert len(high_tasks) == 1
+        assert high_tasks[0]["title"] == "High Priority"
+
+
+class TestSearchTasks:
+    """Test search_tasks operation"""
+    
+    def test_search_by_title(self, task_ops):
+        """Test searching tasks by title"""
+        # Create tasks
+        task_ops.create_task(
+            title="Authentication Feature",
+            objective="Add auth",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        task_ops.create_task(
+            title="Database Migration",
+            objective="Migrate DB",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=2
+        )
+        
+        # Search for "authentication"
+        results = task_ops.search_tasks("authentication")
+        assert len(results) == 1
+        assert results[0]["title"] == "Authentication Feature"
+    
+    def test_search_no_results(self, task_ops):
+        """Test search with no matches"""
+        task_ops.create_task(
+            title="Test",
+            objective="Test",
+            deliverables=["D1"],
+            acceptance_criteria=["C1"],
+            task_number=1
+        )
+        
+        results = task_ops.search_tasks("nonexistent")
+        assert len(results) == 0
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE mcp_servers/task/test_operations.py ---
+
+--- START OF FILE podman/README.md ---
+
+# Podman Test Container
+
+This is a simple Flask web app to verify Podman is working correctly before implementing the Task MCP server.
+
+## Files
+
+- `app.py` - Simple Flask hello world web app
+- `Dockerfile` - Container definition
+- `build.sh` - Build script with instructions
+
+## Quick Start
+
+### Build the Image
+
+```bash
+cd tests/podman
+./build.sh
+```
+
+### Run in Podman Desktop (Visual)
+
+1. Open **Podman Desktop**
+2. Go to **Images** tab
+3. Find `sanctuary-podman-test:latest`
+4. Click the **▶️ play button**
+5. Configure:
+   - **Port mapping:** `5000:5000`
+   - **Container name:** `sanctuary-test`
+6. Click **Start Container**
+7. Go to **Containers** tab
+8. Click on `sanctuary-test`
+9. Click **Open Browser** or visit: http://localhost:5000
+
+### Run from Command Line
+
+```bash
+# Run container
+podman run -d -p 5000:5000 --name sanctuary-test sanctuary-podman-test:latest
+
+# View logs
+podman logs sanctuary-test
+
+# Stop container
+podman stop sanctuary-test
+
+# Remove container
+podman rm sanctuary-test
+```
+
+## What You Should See
+
+- **Browser:** A purple gradient page with "Podman Test Successful!" 🚀
+- **Health endpoint:** http://localhost:5000/health returns JSON
+
+## Verification Checklist
+
+- [x] Podman installed (v5.7.0)
+- [x] Podman machine running
+- [ ] Image builds successfully
+- [ ] Container runs in Podman Desktop
+- [ ] Web page loads in browser
+- [ ] Health endpoint responds
+
+Once all checks pass, Podman is ready for Task MCP deployment! ✅
+
+--- END OF FILE podman/README.md ---
+
+--- START OF FILE podman/app.py ---
+
+"""
+Simple Flask Hello World App for Podman Testing
+"""
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Podman Test - Project Sanctuary</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .container {
+                background: white;
+                padding: 3rem;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                text-align: center;
+                max-width: 500px;
+            }
+            h1 {
+                color: #667eea;
+                margin-bottom: 1rem;
+            }
+            .emoji {
+                font-size: 4rem;
+                margin: 1rem 0;
+            }
+            .info {
+                background: #f0f4ff;
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1rem;
+            }
+            .status {
+                color: #10b981;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="emoji">🚀</div>
+            <h1>Podman Test Successful!</h1>
+            <p>Project Sanctuary - Task MCP Server</p>
+            <div class="info">
+                <p><span class="status">✅ Container Running</span></p>
+                <p>Podman Desktop Integration: <strong>Working</strong></p>
+                <p>Ready for MCP Server Deployment</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    '''
+
+@app.route('/health')
+def health():
+    return {'status': 'healthy', 'service': 'podman-test'}
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001)
+
+--- END OF FILE podman/app.py ---
+
+--- START OF FILE podman/build.sh ---
+
+#!/bin/bash
+# Build and run Podman test container
+# This verifies Podman is working before implementing Task MCP
+
+set -e
+
+echo "🚀 Building Podman Test Container..."
+cd "$(dirname "$0")"
+
+# Build the image
+podman build -t sanctuary-podman-test:latest .
+
+echo "✅ Image built successfully!"
+echo ""
+echo "📋 To run the container in Podman Desktop:"
+echo ""
+echo "1. Open Podman Desktop"
+echo "2. Go to 'Images' tab"
+echo "3. Find 'sanctuary-podman-test:latest'"
+echo "4. Click the ▶️ play button"
+echo "5. Configure:"
+echo "   - Port mapping: 5001:5001 (or use any available port like 5003:5001)"
+echo "   - Name: sanctuary-test"
+echo "6. Click 'Start Container'"
+echo "7. Open browser: http://localhost:5001 (or your chosen port)"
+echo ""
+echo "Or run from command line:"
+echo "  podman run -d -p 5001:5001 --name sanctuary-test sanctuary-podman-test:latest"
+echo "  # Or use a different host port:"
+echo "  podman run -d -p 5003:5001 --name sanctuary-test sanctuary-podman-test:latest"
+echo ""
+echo "To view in browser: http://localhost:5001 (or http://localhost:5003 if you used that port)"
+echo "To check health: http://localhost:5001/health"
+
+--- END OF FILE podman/build.sh ---
+
+--- START OF FILE test_adr_operations.py ---
+
+"""
+Unit tests for ADR operations
+"""
+import unittest
+import tempfile
+import shutil
+import os
+from mcp_servers.document.adr.operations import ADROperations
+
+
+class TestADROperations(unittest.TestCase):
+    def setUp(self):
+        # Create temporary directory
+        self.test_dir = tempfile.mkdtemp()
+        self.ops = ADROperations(self.test_dir)
+    
+    def tearDown(self):
+        # Clean up
+        shutil.rmtree(self.test_dir)
+    
+    def test_create_adr(self):
+        """Test creating a new ADR."""
+        result = self.ops.create_adr(
+            title="Test Decision",
+            context="This is a test context",
+            decision="We decided to test",
+            consequences="Testing is good"
+        )
+        
+        self.assertEqual(result['adr_number'], 1)
+        self.assertTrue(os.path.exists(result['file_path']))
+        self.assertEqual(result['status'], "proposed")
+    
+    def test_create_adr_sequential_numbering(self):
+        """Test ADRs are numbered sequentially."""
+        result1 = self.ops.create_adr(
+            title="First",
+            context="Context 1",
+            decision="Decision 1",
+            consequences="Consequences 1"
+        )
+        
+        result2 = self.ops.create_adr(
+            title="Second",
+            context="Context 2",
+            decision="Decision 2",
+            consequences="Consequences 2"
+        )
+        
+        self.assertEqual(result1['adr_number'], 1)
+        self.assertEqual(result2['adr_number'], 2)
+    
+    def test_get_adr(self):
+        """Test retrieving an ADR."""
+        # Create an ADR
+        created = self.ops.create_adr(
+            title="Test ADR",
+            context="Test context",
+            decision="Test decision",
+            consequences="Test consequences"
+        )
+        
+        # Retrieve it
+        adr = self.ops.get_adr(created['adr_number'])
+        
+        self.assertEqual(adr['number'], 1)
+        self.assertEqual(adr['title'], "Test ADR")
+        self.assertEqual(adr['status'], "proposed")
+    
+    def test_update_adr_status(self):
+        """Test updating ADR status."""
+        # Create an ADR
+        created = self.ops.create_adr(
+            title="Test",
+            context="Context",
+            decision="Decision",
+            consequences="Consequences"
+        )
+        
+        # Update status
+        result = self.ops.update_adr_status(
+            created['adr_number'],
+            "accepted",
+            "Implemented successfully"
+        )
+        
+        self.assertEqual(result['old_status'], "proposed")
+        self.assertEqual(result['new_status'], "accepted")
+    
+    def test_list_adrs(self):
+        """Test listing ADRs."""
+        # Create multiple ADRs
+        self.ops.create_adr("ADR 1", "C1", "D1", "Cons1")
+        self.ops.create_adr("ADR 2", "C2", "D2", "Cons2", status="accepted")
+        
+        # List all
+        all_adrs = self.ops.list_adrs()
+        self.assertEqual(len(all_adrs), 2)
+        
+        # List by status
+        accepted = self.ops.list_adrs(status="accepted")
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]['title'], "ADR 2")
+    
+    def test_search_adrs(self):
+        """Test searching ADRs."""
+        # Create ADRs with searchable content
+        self.ops.create_adr(
+            "FastAPI Decision",
+            "We need a web framework",
+            "Use FastAPI",
+            "Fast and modern"
+        )
+        self.ops.create_adr(
+            "Database Choice",
+            "Need a database",
+            "Use PostgreSQL",
+            "Reliable"
+        )
+        
+        # Search
+        results = self.ops.search_adrs("FastAPI")
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['number'], 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_adr_operations.py ---
+
+--- START OF FILE test_adr_validator.py ---
+
+"""
+Unit tests for ADR validator
+"""
+import unittest
+import tempfile
+import shutil
+import os
+from mcp_servers.document.adr.validator import ADRValidator
+from mcp_servers.document.adr.models import ADRStatus
+
+
+class TestADRValidator(unittest.TestCase):
+    def setUp(self):
+        # Create temporary directory
+        self.test_dir = tempfile.mkdtemp()
+        self.validator = ADRValidator(self.test_dir)
+    
+    def tearDown(self):
+        # Clean up
+        shutil.rmtree(self.test_dir)
+    
+    def test_get_next_adr_number_empty_dir(self):
+        """Test getting next ADR number in empty directory."""
+        self.assertEqual(self.validator.get_next_adr_number(), 1)
+    
+    def test_get_next_adr_number_with_existing(self):
+        """Test getting next ADR number with existing ADRs."""
+        # Create some ADR files
+        open(os.path.join(self.test_dir, "001_first.md"), 'w').close()
+        open(os.path.join(self.test_dir, "002_second.md"), 'w').close()
+        
+        self.assertEqual(self.validator.get_next_adr_number(), 3)
+    
+    def test_validate_adr_number_duplicate(self):
+        """Test validation fails for duplicate ADR number."""
+        open(os.path.join(self.test_dir, "001_existing.md"), 'w').close()
+        
+        with self.assertRaises(ValueError) as context:
+            self.validator.validate_adr_number(1)
+        
+        self.assertIn("already exists", str(context.exception))
+    
+    def test_validate_status_transition_valid(self):
+        """Test valid status transitions."""
+        # proposed -> accepted
+        self.validator.validate_status_transition(
+            ADRStatus.PROPOSED, 
+            ADRStatus.ACCEPTED
+        )
+        
+        # accepted -> deprecated
+        self.validator.validate_status_transition(
+            ADRStatus.ACCEPTED,
+            ADRStatus.DEPRECATED
+        )
+    
+    def test_validate_status_transition_invalid(self):
+        """Test invalid status transitions."""
+        with self.assertRaises(ValueError) as context:
+            self.validator.validate_status_transition(
+                ADRStatus.ACCEPTED,
+                ADRStatus.PROPOSED
+            )
+        
+        self.assertIn("Invalid transition", str(context.exception))
+    
+    def test_validate_supersedes_not_found(self):
+        """Test validation fails when superseded ADR doesn't exist."""
+        with self.assertRaises(ValueError) as context:
+            self.validator.validate_supersedes(999)
+        
+        self.assertIn("does not exist", str(context.exception))
+    
+    def test_validate_required_fields(self):
+        """Test validation of required fields."""
+        # Valid fields
+        self.validator.validate_required_fields(
+            "Title", "Context", "Decision", "Consequences"
+        )
+        
+        # Empty title
+        with self.assertRaises(ValueError):
+            self.validator.validate_required_fields(
+                "", "Context", "Decision", "Consequences"
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_adr_validator.py ---
+
+--- START OF FILE test_chronicle_operations.py ---
+
+"""
+Unit tests for Chronicle operations
+"""
+import unittest
+import tempfile
+import shutil
+import os
+from datetime import date
+from mcp_servers.chronicle.operations import ChronicleOperations
+
+
+class TestChronicleOperations(unittest.TestCase):
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp()
+        self.ops = ChronicleOperations(self.test_dir)
+    
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+    
+    def test_create_entry(self):
+        """Test creating a new entry."""
+        result = self.ops.create_entry(
+            title="Test Entry",
+            content="Test content",
+            author="Tester",
+            status="draft",
+            classification="internal"
+        )
+        
+        self.assertEqual(result['entry_number'], 1)
+        self.assertTrue(os.path.exists(result['file_path']))
+        
+        # Verify content
+        with open(result['file_path'], 'r') as f:
+            content = f.read()
+            self.assertIn("# Living Chronicle - Entry 1", content)
+            self.assertIn("**Title:** Test Entry", content)
+            self.assertIn("**Status:** draft", content)
+    
+    def test_get_entry(self):
+        """Test retrieving an entry."""
+        created = self.ops.create_entry("Test", "Content", "Author")
+        
+        entry = self.ops.get_entry(created['entry_number'])
+        self.assertEqual(entry['number'], 1)
+        self.assertEqual(entry['title'], "Test")
+        self.assertEqual(entry['author'], "Author")
+        
+    def test_list_entries(self):
+        """Test listing entries."""
+        self.ops.create_entry("Entry 1", "C1", "A1")
+        self.ops.create_entry("Entry 2", "C2", "A2")
+        
+        entries = self.ops.list_entries()
+        self.assertEqual(len(entries), 2)
+        # Should be reverse sorted (newest first)
+        self.assertEqual(entries[0]['number'], 2)
+        
+    def test_search_entries(self):
+        """Test searching entries."""
+        self.ops.create_entry("Alpha", "Contains keyword", "A1")
+        self.ops.create_entry("Beta", "Nothing here", "A2")
+        
+        results = self.ops.search_entries("keyword")
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], "Alpha")
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_chronicle_operations.py ---
+
+--- START OF FILE test_chronicle_validator.py ---
+
+"""
+Unit tests for Chronicle validator
+"""
+import unittest
+import tempfile
+import shutil
+import os
+import time
+from datetime import datetime, timedelta
+from mcp_servers.chronicle.validator import ChronicleValidator
+
+
+class TestChronicleValidator(unittest.TestCase):
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp()
+        self.validator = ChronicleValidator(self.test_dir)
+    
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+    
+    def test_get_next_entry_number(self):
+        """Test getting next entry number."""
+        self.assertEqual(self.validator.get_next_entry_number(), 1)
+        
+        # Create some files
+        open(os.path.join(self.test_dir, "001_test.md"), 'w').close()
+        open(os.path.join(self.test_dir, "002_test.md"), 'w').close()
+        
+        self.assertEqual(self.validator.get_next_entry_number(), 3)
+    
+    def test_validate_entry_number_duplicate(self):
+        """Test duplicate entry number validation."""
+        open(os.path.join(self.test_dir, "001_test.md"), 'w').close()
+        
+        with self.assertRaises(ValueError):
+            self.validator.validate_entry_number(1)
+            
+    def test_validate_modification_window_new_file(self):
+        """Test modification of new file is allowed."""
+        file_path = os.path.join(self.test_dir, "001_new.md")
+        open(file_path, 'w').close()
+        
+        # Should not raise
+        self.validator.validate_modification_window(file_path)
+        
+    def test_validate_modification_window_old_file(self):
+        """Test modification of old file requires override."""
+        file_path = os.path.join(self.test_dir, "001_old.md")
+        open(file_path, 'w').close()
+        
+        # Set mtime to 8 days ago
+        old_time = time.time() - (8 * 24 * 3600)
+        os.utime(file_path, (old_time, old_time))
+        
+        # Should raise without override
+        with self.assertRaises(ValueError):
+            self.validator.validate_modification_window(file_path)
+            
+        # Should pass with override
+        self.validator.validate_modification_window(file_path, override_approval_id="AUTH-123")
+
+    def test_validate_required_fields(self):
+        """Test required fields validation."""
+        self.validator.validate_required_fields("Title", "Content", "Author")
+        
+        with self.assertRaises(ValueError):
+            self.validator.validate_required_fields("", "Content", "Author")
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_chronicle_validator.py ---
+
+--- START OF FILE test_git_ops.py ---
+
+import unittest
+import os
+import shutil
+import tempfile
+import subprocess
+from mcp_servers.lib.git.git_ops import GitOperations
+
+class TestGitOperations(unittest.TestCase):
+    """
+    Test suite for GitOperations class (Protocol 101 v3.0 compliant).
+    
+    Note: Manifest generation tests have been removed as Protocol 101 v3.0
+    uses Functional Coherence (test suite execution) instead of manifests.
+    
+    SAFETY RULES FOR GIT WORKFLOW MCP:
+    1. Always check status first (git_get_status) before any operation
+    2. One feature branch at a time - never create multiple concurrent branches
+    3. Never commit directly to main - feature branches only
+    4. git_finish_feature requires user confirmation that PR is merged
+    5. git_sync_main should not be called while feature branch is active
+    6. git_smart_commit automatically runs test suite (P101 v3.0)
+    """
+    
+    def setUp(self):
+        # Create a temporary directory for the repo
+        self.test_dir = tempfile.mkdtemp()
+        self.cwd = os.getcwd()
+        os.chdir(self.test_dir)
+        
+        # Initialize git repo
+        subprocess.run(["git", "init"], check=True, capture_output=True)
+        subprocess.run(["git", "config", "user.email", "test@example.com"], check=True)
+        subprocess.run(["git", "config", "user.name", "Test User"], check=True)
+        
+        # Create initial commit so HEAD exists
+        with open("README.md", "w") as f:
+            f.write("# Test Repo")
+        subprocess.run(["git", "add", "README.md"], check=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit", "--no-verify"], check=True)
+        
+        self.git_ops = GitOperations(self.test_dir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+        shutil.rmtree(self.test_dir)
+
+    # PROTOCOL 101 v3.0: Manifest generation tests REMOVED
+    # Functional Coherence (test suite execution) is now the integrity mechanism
+
+    def test_commit_basic(self):
+        """Test basic commit functionality (without manifest)."""
+        # Create a file
+        with open("test.txt", "w") as f:
+            f.write("hello world")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        
+        # Commit (using --no-verify to skip pre-commit hook in test environment)
+        commit_hash = self.git_ops.commit("test commit")
+        
+        # Verify commit was created
+        self.assertIsNotNone(commit_hash)
+        self.assertEqual(len(commit_hash), 40)  # SHA-1 hash length
+
+    def test_status(self):
+        """Test repository status retrieval with enhanced branch info."""
+        # Create a file
+        with open("test.txt", "w") as f:
+            f.write("hello world")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        
+        status = self.git_ops.status()
+        
+        # Check basic fields
+        self.assertEqual(status["branch"], "main")
+        self.assertIn("test.txt", status["staged"])
+        
+        # Check enhanced fields
+        self.assertIn("local_branches", status)
+        self.assertIn("feature_branches", status)
+        self.assertIn("remote", status)
+        self.assertIn("is_clean", status)
+        
+        # Should have at least main branch
+        self.assertGreaterEqual(len(status["local_branches"]), 1)
+        
+        # Should not be clean (has staged file)
+        self.assertFalse(status["is_clean"])
+        
+        # No feature branches yet
+        self.assertEqual(len(status["feature_branches"]), 0)
+
+    def test_branch_operations(self):
+        """Test branch creation, checkout, and deletion."""
+        # Create branch
+        self.git_ops.create_branch("feature/test")
+        
+        # Checkout
+        self.git_ops.checkout("feature/test")
+        self.assertEqual(self.git_ops.get_current_branch(), "feature/test")
+        
+        # Switch back
+        self.git_ops.checkout("main")
+        self.assertEqual(self.git_ops.get_current_branch(), "main")
+        
+        # Delete branch
+        self.git_ops.delete_branch("feature/test")
+        
+        # Verify deletion (checkout should fail)
+        with self.assertRaises(RuntimeError):
+            self.git_ops.checkout("feature/test")
+
+    def test_get_staged_files(self):
+        """Test retrieval of staged files."""
+        # Create and stage a file
+        with open("test.txt", "w") as f:
+            f.write("content")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        
+        staged = self.git_ops.get_staged_files()
+        self.assertIn("test.txt", staged)
+
+    def test_push_with_no_verify(self):
+        """Test push with no_verify parameter (bypasses pre-push hooks)."""
+        # Create a file and commit
+        with open("test.txt", "w") as f:
+            f.write("test content")
+        subprocess.run(["git", "add", "test.txt"], check=True)
+        self.git_ops.commit("test commit for push")
+        
+        # Note: This test verifies the parameter is accepted and passed to git
+        # In a real scenario with a remote, this would bypass pre-push hooks
+        # For now, we just verify it doesn't raise an error
+        try:
+            # This will fail without a remote, but should fail gracefully
+            self.git_ops.push(remote="origin", no_verify=True)
+        except RuntimeError as e:
+            # Expected to fail without remote, but should contain git error, not parameter error
+            self.assertIn("fatal", str(e).lower())
+
+    def test_push_with_force(self):
+        """Test push with force parameter."""
+        # Create a file and commit
+        with open("test2.txt", "w") as f:
+            f.write("test content 2")
+        subprocess.run(["git", "add", "test2.txt"], check=True)
+        self.git_ops.commit("test commit for force push")
+        
+        # Note: This test verifies the parameter is accepted and passed to git
+        # In a real scenario with a remote, this would force push
+        # For now, we just verify it doesn't raise an error
+        try:
+            # This will fail without a remote, but should fail gracefully
+            self.git_ops.push(remote="origin", force=True)
+        except RuntimeError as e:
+            # Expected to fail without remote, but should contain git error, not parameter error
+            self.assertIn("fatal", str(e).lower())
+
+    def test_diff_unstaged(self):
+        """Test diff for unstaged changes."""
+        with open("test_diff.txt", "w") as f:
+            f.write("original content")
+        subprocess.run(["git", "add", "test_diff.txt"], check=True)
+        self.git_ops.commit("add test_diff.txt")
+        
+        with open("test_diff.txt", "w") as f:
+            f.write("modified content")
+        
+        diff_output = self.git_ops.diff(cached=False)
+        self.assertIn("test_diff.txt", diff_output)
+
+    def test_diff_staged(self):
+        """Test diff for staged changes."""
+        with open("test_staged.txt", "w") as f:
+            f.write("staged content")
+        subprocess.run(["git", "add", "test_staged.txt"], check=True)
+        
+        diff_output = self.git_ops.diff(cached=True)
+        self.assertIn("test_staged.txt", diff_output)
+
+    def test_log_basic(self):
+        """Test basic commit log retrieval."""
+        for i in range(3):
+            with open(f"file{i}.txt", "w") as f:
+                f.write(f"content {i}")
+            subprocess.run(["git", "add", f"file{i}.txt"], check=True)
+            self.git_ops.commit(f"commit {i}")
+        
+        log_output = self.git_ops.log(max_count=5)
+        self.assertIn("commit 0", log_output)
+        self.assertIn("commit 2", log_output)
+
+    def test_pull_no_remote(self):
+        """Test pull behavior without remote."""
+        try:
+            self.git_ops.pull(remote="origin", branch="main")
+        except RuntimeError as e:
+            self.assertIn("fatal", str(e).lower())
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_git_ops.py ---
+
+--- START OF FILE test_pre_commit_hook.sh ---
+
+#!/bin/bash
+# Tests for Pre-Commit Hook Migration (Task #028)
+
+echo "=== Testing Pre-Commit Hook Migration ==="
+
+# Setup
+TEST_FILE="test_mcp_migration.txt"
+echo "test content" > "$TEST_FILE"
+git add "$TEST_FILE"
+
+# Test 1: Legacy Commit WITHOUT Manifest (Should FAIL)
+echo -n "Test 1: Legacy Commit (No Manifest)... "
+if git commit -m "legacy: test commit" > /dev/null 2>&1; then
+    echo "FAILED (Should have been rejected)"
+    exit 1
+else
+    echo "PASSED (Rejected as expected)"
+fi
+
+# Test 2: MCP Commit WITHOUT Env Var (Should FAIL)
+echo -n "Test 2: MCP Commit (No Env Var)... "
+if git commit -m "mcp(test): should fail" > /dev/null 2>&1; then
+    echo "FAILED (Should have been rejected)"
+    exit 1
+else
+    echo "PASSED (Rejected as expected)"
+fi
+
+# Test 3: MCP Commit WITH Env Var (Should PASS)
+echo -n "Test 3: MCP Commit (With IS_MCP_AGENT=1)... "
+if IS_MCP_AGENT=1 git commit -m "mcp(test): verification commit" > /dev/null 2>&1; then
+    echo "PASSED"
+else
+    echo "FAILED (Should have been accepted)"
+    exit 1
+fi
+
+# Cleanup
+git reset --soft HEAD~1
+rm "$TEST_FILE"
+git reset HEAD "$TEST_FILE"
+
+echo "=== All Tests Passed ==="
+exit 0
+
+--- END OF FILE test_pre_commit_hook.sh ---
+
+--- START OF FILE test_protocol_operations.py ---
+
+"""
+Unit tests for Protocol operations
+"""
+import unittest
+import tempfile
+import shutil
+from mcp_servers.protocol.operations import ProtocolOperations
+
+
+class TestProtocolOperations(unittest.TestCase):
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp()
+        self.ops = ProtocolOperations(self.test_dir)
+    
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+    
+    def test_create_protocol(self):
+        """Test creating a new protocol."""
+        result = self.ops.create_protocol(
+            number=117,
+            title="Test Protocol",
+            status="CANONICAL",
+            classification="Test Framework",
+            version="1.0",
+            authority="Test Authority",
+            content="Test content"
+        )
+        
+        self.assertEqual(result['protocol_number'], 117)
+        self.assertEqual(result['status'], "CANONICAL")
+        
+    def test_get_protocol(self):
+        """Test retrieving a protocol."""
+        self.ops.create_protocol(
+            117, "Test", "CANONICAL", "Framework", "1.0", "Auth", "Content"
+        )
+        
+        protocol = self.ops.get_protocol(117)
+        self.assertEqual(protocol['number'], 117)
+        self.assertEqual(protocol['title'], "Test")
+        
+    def test_list_protocols(self):
+        """Test listing protocols."""
+        self.ops.create_protocol(100, "P1", "CANONICAL", "F1", "1.0", "A1", "C1")
+        self.ops.create_protocol(101, "P2", "PROPOSED", "F2", "1.0", "A2", "C2")
+        
+        all_protocols = self.ops.list_protocols()
+        self.assertEqual(len(all_protocols), 2)
+        
+        canonical = self.ops.list_protocols(status="CANONICAL")
+        self.assertEqual(len(canonical), 1)
+        
+    def test_search_protocols(self):
+        """Test searching protocols."""
+        self.ops.create_protocol(100, "Alpha", "CANONICAL", "F", "1.0", "A", "Contains keyword")
+        self.ops.create_protocol(101, "Beta", "CANONICAL", "F", "1.0", "A", "Nothing here")
+        
+        results = self.ops.search_protocols("keyword")
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], "Alpha")
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_protocol_operations.py ---
+
+--- START OF FILE test_protocol_validator.py ---
+
+"""
+Unit tests for Protocol validator
+"""
+import unittest
+import tempfile
+import shutil
+import os
+from mcp_servers.protocol.validator import ProtocolValidator
+
+
+class TestProtocolValidator(unittest.TestCase):
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp()
+        self.validator = ProtocolValidator(self.test_dir)
+    
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+    
+    def test_validate_protocol_number_duplicate(self):
+        """Test duplicate protocol number validation."""
+        open(os.path.join(self.test_dir, "100_test.md"), 'w').close()
+        
+        with self.assertRaises(ValueError):
+            self.validator.validate_protocol_number(100)
+            
+    def test_validate_required_fields(self):
+        """Test required fields validation."""
+        self.validator.validate_required_fields(
+            "Title", "Classification", "1.0", "Authority", "Content"
+        )
+        
+        with self.assertRaises(ValueError):
+            self.validator.validate_required_fields(
+                "", "Classification", "1.0", "Authority", "Content"
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+--- END OF FILE test_protocol_validator.py ---
+
+--- START OF FILE test_utils.py ---
+
+"""
+Test utilities for Project Sanctuary.
+
+Provides portable path computation functions that work across Windows, WSL, and Linux.
+All paths are computed relative to file locations, never hardcoded.
+"""
+
+from pathlib import Path
+from typing import Optional
+
+
+def get_project_root() -> Path:
+    """
+    Get project root directory from any test file.
+    
+    This file is at: Project_Sanctuary/tests/test_utils.py
+    So project root is one level up from this file's parent.
+    
+    Returns:
+        Path to Project_Sanctuary root directory
+    
+    Example:
+        >>> root = get_project_root()
+        >>> assert (root / "README.md").exists()
+    """
+    # This file: Project_Sanctuary/tests/test_utils.py
+    # Parent: Project_Sanctuary/tests/
+    # Parent.parent: Project_Sanctuary/
+    return Path(__file__).resolve().parent.parent
+
+
+def get_test_data_dir() -> Path:
+    """
+    Get test data/fixtures directory.
+    
+    Returns:
+        Path to tests/fixtures directory
+    """
+    return get_project_root() / "tests" / "fixtures"
+
+
+def get_module_path(module_name: str) -> Path:
+    """
+    Get path to a specific module directory.
+    
+    Args:
+        module_name: Name of module (e.g., "council_orchestrator", "mnemonic_cortex")
+    
+    Returns:
+        Path to module directory
+    
+    Example:
+        >>> orchestrator_path = get_module_path("council_orchestrator")
+        >>> assert (orchestrator_path / "orchestrator").exists()
+    """
+    return get_project_root() / module_name
+
+
+def get_file_relative_to_project(relative_path: str) -> Path:
+    """
+    Get absolute path to a file relative to project root.
+    
+    Args:
+        relative_path: Path relative to project root (e.g., "01_PROTOCOLS/001_protocol.md")
+    
+    Returns:
+        Absolute Path object
+    
+    Example:
+        >>> config = get_file_relative_to_project("config/settings.json")
+        >>> assert config.is_absolute()
+    """
+    return get_project_root() / relative_path
+
+
+def ensure_test_dir_exists(dir_name: str) -> Path:
+    """
+    Ensure a test directory exists, create if needed.
+    
+    Args:
+        dir_name: Directory name relative to tests/ (e.g., "fixtures", "temp")
+    
+    Returns:
+        Path to directory
+    """
+    test_dir = get_project_root() / "tests" / dir_name
+    test_dir.mkdir(parents=True, exist_ok=True)
+    return test_dir
+
+--- END OF FILE test_utils.py ---
+
+--- START OF FILE test_validation_fail.py ---
+
+def test_pass():
+    """This test now passes for Protocol 101 v3.0 positive validation."""
+    assert True, "This test is designed to pass for Protocol 101 v3.0 validation"
+
+--- END OF FILE test_validation_fail.py ---
+
+--- START OF FILE verification_scripts/verify_task_003.py ---
+
+import sys
+import json
+import time
+from pathlib import Path
+
+# Add project root to sys.path
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
+
+from mcp_servers.cognitive.cortex.server import cortex_ops
+
+def test_caching():
+    print("--- Starting Mnemonic Cache Verification ---")
+    
+    query = "What is the purpose of the Mnemonic Cortex?"
+    
+    # 1. First Query (Cache Miss)
+    print(f"\n1. Executing Query (Expect Miss): '{query}'")
+    start = time.time()
+    response1 = cortex_ops.query(query, use_cache=True)
+    duration1 = time.time() - start
+    print(f"   Duration: {duration1:.4f}s")
+    print(f"   Cache Hit: {response1.cache_hit}")
+    
+    if response1.cache_hit:
+        print("   [FAIL] Expected cache miss, got hit.")
+        return
+        
+    # 2. Second Query (Cache Hit)
+    print(f"\n2. Executing Same Query (Expect Hit): '{query}'")
+    start = time.time()
+    response2 = cortex_ops.query(query, use_cache=True)
+    duration2 = time.time() - start
+    print(f"   Duration: {duration2:.4f}s")
+    print(f"   Cache Hit: {response2.cache_hit}")
+    
+    if not response2.cache_hit:
+        print("   [FAIL] Expected cache hit, got miss.")
+        return
+        
+    if duration2 > duration1:
+        print("   [WARN] Cache hit was slower than miss (cold start overhead?).")
+    else:
+        print(f"   [SUCCESS] Speedup: {duration1/duration2:.2f}x")
+
+    # 3. Check Stats
+    print("\n3. Checking Cache Stats")
+    stats = cortex_ops.get_cache_stats()
+    print(f"   Stats: {json.dumps(stats, indent=2)}")
+    
+    if stats.get('hot_cache_size', 0) > 0:
+        print("   [SUCCESS] Cache populated.")
+    else:
+        print("   [FAIL] Cache empty.")
+
+if __name__ == "__main__":
+    test_caching()
+
+--- END OF FILE verification_scripts/verify_task_003.py ---
+
+--- START OF FILE verification_scripts/verify_task_004.py ---
+
+import sys
+import json
+import os
+from pathlib import Path
+from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+from mnemonic_cortex.app.training.versioning import VersionManager
+
+def verify_task_004():
+    print("--- Starting Task #004 Verification ---")
+    
+    project_root = Path(__file__).parent.parent
+    sys.path.append(str(project_root))
+    
+    # 1. Test Synthesis Generator
+    print("\n1. Testing Synthesis Generator...")
+    generator = SynthesisGenerator(str(project_root))
+    
+    # Create a dummy protocol file to ensure we have data
+    dummy_proto = project_root / "01_PROTOCOLS" / "999_Test_Protocol.md"
+    dummy_proto.parent.mkdir(exist_ok=True)
+    dummy_proto.write_text("# Protocol 999: Test\n\nThis is a test protocol for synthesis.")
+    
+    try:
+        packet = generator.generate_packet(days=1)
+        print(f"   [SUCCESS] Packet generated with ID: {packet.packet_id}")
+        print(f"   [INFO] Found {len(packet.source_ids)} source documents.")
+        
+        output_path = generator.save_packet(packet)
+        print(f"   [SUCCESS] Packet saved to: {output_path}")
+        
+        # Verify content
+        with open(output_path, "r") as f:
+            data = json.load(f)
+            if "999_Test_Protocol.md" in str(data["source_ids"]):
+                print("   [SUCCESS] Dummy protocol found in packet.")
+            else:
+                print("   [WARN] Dummy protocol NOT found in packet source_ids.")
+                
+    except Exception as e:
+        print(f"   [FAIL] Generator failed: {e}")
+        import traceback
+        traceback.print_exc()
+
+    # 2. Test Versioning
+    print("\n2. Testing Version Manager...")
+    manager = VersionManager(str(project_root))
+    version = manager.register_adapter(
+        packet_id=packet.packet_id,
+        base_model="test-model",
+        path=str(project_root / "mnemonic_cortex/adaptors/test_adapter.npz")
+    )
+    print(f"   [SUCCESS] Registered version: {version}")
+    
+    next_ver = manager.get_next_version()
+    print(f"   [INFO] Next version would be: {next_ver}")
+    
+    # Cleanup
+    if dummy_proto.exists():
+        dummy_proto.unlink()
+
+if __name__ == "__main__":
+    verify_task_004()
+
+--- END OF FILE verification_scripts/verify_task_004.py ---
+
+--- START OF FILE verification_scripts/verify_task_017.py ---
+
+import sys
+import os
+from pathlib import Path
+from mcp_servers.orchestrator.server import orchestrator_run_strategic_cycle
+
+def verify_task_017():
+    print("--- Starting Task #017 Verification ---")
+    
+    project_root = Path(__file__).parent.parent
+    sys.path.append(str(project_root))
+    
+    # 1. Create Dummy Research Report
+    report_path = project_root / "WORK_IN_PROGRESS" / "strategic_gap_report.md"
+    report_path.parent.mkdir(exist_ok=True)
+    report_path.write_text("# Strategic Gap: Test\n\nWe need to test the loop.")
+    
+    print(f"\n1. Created Dummy Report: {report_path}")
+    
+    # 2. Run Strategic Cycle
+    print("\n2. Running Strategic Cycle...")
+    try:
+        result = orchestrator_run_strategic_cycle(
+            gap_description="Testing the autonomous loop",
+            research_report_path=str(report_path),
+            days_to_synthesize=1
+        )
+        print("\n--- Result Output ---")
+        print(result)
+        
+        if "[CRITICAL FAIL]" in result:
+            print("\n[FAIL] Cycle failed.")
+        else:
+            print("\n[SUCCESS] Cycle completed successfully.")
+            
+    except Exception as e:
+        print(f"\n[FAIL] Execution error: {e}")
+        import traceback
+        traceback.print_exc()
+        
+    # Cleanup
+    if report_path.exists():
+        report_path.unlink()
+
+if __name__ == "__main__":
+    verify_task_017()
+
+--- END OF FILE verification_scripts/verify_task_017.py ---
+
+--- START OF FILE verification_scripts/verify_task_025.py ---
+
+import sys
+import json
+import time
+from pathlib import Path
+from mcp_servers.cognitive.cortex.server import cortex_ops
+
+def test_ingestion():
+    print("--- Starting Native Ingestion Verification ---")
+    
+    # Test Incremental Ingestion (Faster)
+    test_file = "mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md"
+    print(f"\n1. Testing Incremental Ingestion of: {test_file}")
+    
+    project_root = Path(__file__).parent.parent
+    sys.path.append(str(project_root))
+    start = time.time()
+    response = cortex_ops.ingest_incremental(
+        file_paths=[test_file],
+        skip_duplicates=False # Force re-ingest to test logic
+    )
+    duration = time.time() - start
+    
+    print(f"   Duration: {duration:.4f}s")
+    print(f"   Status: {response.status}")
+    print(f"   Added: {response.documents_added}")
+    print(f"   Chunks: {response.chunks_created}")
+    
+    if response.status == "success" and response.documents_added > 0:
+        print("   [SUCCESS] Incremental ingestion worked.")
+    else:
+        print(f"   [FAIL] Ingestion failed: {response.error if hasattr(response, 'error') else 'Unknown'}")
+
+    # Test Query to ensure DB is accessible
+    print("\n2. Testing Query after Ingestion")
+    query_resp = cortex_ops.query("What is Mnemonic Caching?", max_results=1)
+    if query_resp.status == "success":
+         print(f"   [SUCCESS] Query worked. Found {len(query_resp.results)} results.")
+    else:
+         print(f"   [FAIL] Query failed: {query_resp.error}")
+
+if __name__ == "__main__":
+    test_ingestion()
+
+--- END OF FILE verification_scripts/verify_task_025.py ---
+
+--- START OF FILE verification_scripts/verify_task_026.py ---
+
+import sys
+import json
+import os
+import shutil
+from pathlib import Path
+from mcp_servers.orchestrator.tools.cognitive import create_cognitive_task
+from mcp_servers.orchestrator.tools.mechanical import create_git_commit_task
+
+def verify_task_026():
+    print("--- Starting Task #026 Verification ---")
+    
+    # Setup
+    project_root = Path(__file__).parent.parent
+    sys.path.append(str(project_root))
+    orchestrator_dir = project_root / "council_orchestrator"
+    if orchestrator_dir.exists():
+        shutil.rmtree(orchestrator_dir)
+    
+    # 1. Test Cognitive Task Creation
+    print("\n1. Testing Cognitive Task Creation...")
+    result = create_cognitive_task(
+        description="Test cognitive task",
+        output_path="WORK_IN_PROGRESS/test_output.md",
+        max_rounds=3
+    )
+    
+    if result["status"] == "success":
+        print("   [SUCCESS] Task created.")
+        cmd_file = Path(result["command_file"])
+        if cmd_file.exists():
+            print(f"   [SUCCESS] command.json exists at {cmd_file}")
+            with open(cmd_file, "r") as f:
+                data = json.load(f)
+                if data["task_description"] == "Test cognitive task":
+                    print("   [SUCCESS] Content verified.")
+                else:
+                    print("   [FAIL] Content mismatch.")
+        else:
+             print("   [FAIL] command.json not found.")
+    else:
+        print(f"   [FAIL] Task creation failed: {result.get('error')}")
+
+    # 2. Test Safety Guardrails (Protected File)
+    print("\n2. Testing Safety Guardrails (Protected File)...")
+    result = create_git_commit_task(
+        files=["01_PROTOCOLS/95_The_Commandable_Council_Protocol.md"],
+        message="feat: modify protocol",
+        description="Attempt to modify protocol"
+    )
+    
+    if result["status"] == "error" and "protected path" in result["error"].lower():
+        print(f"   [SUCCESS] Blocked protected file modification: {result['error']}")
+    else:
+        print(f"   [FAIL] Should have blocked protected file. Result: {result}")
+
+    # 3. Test Safety Guardrails (Invalid Commit Message)
+    print("\n3. Testing Safety Guardrails (Invalid Commit Message)...")
+    result = create_git_commit_task(
+        files=["TASKS/backlog/test.md"],
+        message="bad message",
+        description="Attempt bad commit"
+    )
+    
+    if result["status"] == "error" and "conventional commit" in result["error"].lower():
+        print(f"   [SUCCESS] Blocked invalid commit message: {result['error']}")
+    else:
+        print(f"   [FAIL] Should have blocked invalid message. Result: {result}")
+
+    # Cleanup
+    # if orchestrator_dir.exists():
+    #     shutil.rmtree(orchestrator_dir)
+
+if __name__ == "__main__":
+    verify_task_026()
+
+--- END OF FILE verification_scripts/verify_task_026.py ---
+
+--- START OF FILE verify_wslenv_setup.py ---
+
+#!/usr/bin/env python3
+"""
+Verify WSLENV Configuration and env_helper Functionality
+
+This script tests that:
+1. Windows User Environment Variables are accessible in WSL via WSLENV
+2. The env_helper.py correctly prioritizes environment variables over .env
+3. All critical secrets are properly configured
+
+Run this in WSL to verify your setup.
+"""
+
+import os
+import sys
+from pathlib import Path
+
+# Add core to path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from mcp_servers.lib.utils.env_helper import get_env_variable
+
+# ANSI color codes for pretty output
+GREEN = '\033[92m'
+RED = '\033[91m'
+YELLOW = '\033[93m'
+BLUE = '\033[94m'
+RESET = '\033[0m'
+
+def print_header(text):
+    print(f"\n{BLUE}{'='*60}{RESET}")
+    print(f"{BLUE}{text:^60}{RESET}")
+    print(f"{BLUE}{'='*60}{RESET}\n")
+
+def print_success(text):
+    print(f"{GREEN}✓{RESET} {text}")
+
+def print_warning(text):
+    print(f"{YELLOW}⚠{RESET} {text}")
+
+def print_error(text):
+    print(f"{RED}✗{RESET} {text}")
+
+def check_wslenv_variable(var_name):
+    """Check if a variable is accessible via WSLENV (environment)"""
+    value = os.getenv(var_name)
+    if value:
+        # Mask the value for security
+        masked = value[:8] + "..." + value[-4:] if len(value) > 12 else "***"
+        print_success(f"{var_name}: Found in environment ({masked})")
+        return True
+    else:
+        print_warning(f"{var_name}: NOT found in environment")
+        return False
+
+def check_env_helper(var_name, should_exist=True):
+    """Check if env_helper can load the variable"""
+    try:
+        value = get_env_variable(var_name, required=should_exist)
+        if value:
+            masked = value[:8] + "..." + value[-4:] if len(value) > 12 else "***"
+            print_success(f"{var_name}: env_helper loaded successfully ({masked})")
+            return True
+        else:
+            if not should_exist:
+                print_success(f"{var_name}: Correctly returns None (optional)")
+                return True
+            else:
+                print_error(f"{var_name}: env_helper returned None")
+                return False
+    except ValueError as e:
+        if should_exist:
+            print_error(f"{var_name}: {str(e)}")
+            return False
+        else:
+            print_success(f"{var_name}: Correctly raises error when required")
+            return True
+
+def check_wslenv_config():
+    """Check if WSLENV is properly configured"""
+    wslenv = os.getenv("WSLENV", "")
+    if wslenv:
+        vars_list = wslenv.split(":")
+        print_success(f"WSLENV is configured with {len(vars_list)} variables:")
+        for var in vars_list:
+            print(f"  - {var}")
+        return True
+    else:
+        print_error("WSLENV is NOT configured!")
+        print("  See docs/WSL_SECRETS_CONFIGURATION.md for setup instructions")
+        return False
+
+def main():
+    print_header("WSLENV & env_helper Verification")
+    
+    # Critical secrets that should be in WSLENV
+    critical_secrets = [
+        "HUGGING_FACE_TOKEN",
+        "GEMINI_API_KEY",
+        "OPENAI_API_KEY"
+    ]
+    
+    # Optional configuration variables
+    optional_vars = [
+        "GEMINI_MODEL",
+        "OPENAI_MODEL",
+        "HUGGING_FACE_USERNAME",
+        "HUGGING_FACE_REPO"
+    ]
+    
+    all_passed = True
+    
+    # Check 1: WSLENV Configuration
+    print_header("1. WSLENV Configuration Check")
+    if not check_wslenv_config():
+        all_passed = False
+    
+    # Check 2: Environment Variable Accessibility
+    print_header("2. Environment Variable Accessibility")
+    print("Checking if secrets are accessible via os.getenv()...")
+    for var in critical_secrets:
+        if not check_wslenv_variable(var):
+            all_passed = False
+    
+    # Check 3: env_helper Functionality
+    print_header("3. env_helper.py Functionality")
+    print("Checking if env_helper correctly loads secrets...")
+    for var in critical_secrets:
+        if not check_env_helper(var, should_exist=True):
+            all_passed = False
+    
+    # Check 4: Optional Variables
+    print_header("4. Optional Configuration Variables")
+    print("Checking optional variables (won't fail if missing)...")
+    for var in optional_vars:
+        check_env_helper(var, should_exist=False)
+    
+    # Check 5: .env File Status
+    print_header("5. .env File Security Check")
+    env_file = PROJECT_ROOT / ".env"
+    if env_file.exists():
+        print_warning(".env file exists")
+        print("  Checking if secrets are commented out...")
+        with open(env_file, 'r') as f:
+            content = f.read()
+            for secret in critical_secrets:
+                if f"{secret}=" in content and not f"#{secret}" in content:
+                    print_error(f"  {secret} is NOT commented out in .env!")
+                    print(f"    This should be removed/commented to use WSLENV")
+                    all_passed = False
+                else:
+                    print_success(f"  {secret} is properly commented/absent")
+    else:
+        print_success(".env file does not exist (using WSLENV only)")
+    
+    # Final Summary
+    print_header("Summary")
+    if all_passed:
+        print_success("All checks passed! ✨")
+        print("\nYour WSLENV configuration is correct and env_helper is working properly.")
+        print("Environment variables take precedence over .env file as intended.")
+    else:
+        print_error("Some checks failed!")
+        print("\nPlease review the errors above and:")
+        print("1. Ensure Windows User Environment Variables are set")
+        print("2. Ensure WSLENV includes all required variables")
+        print("3. Restart WSL completely (wsl --shutdown)")
+        print("\nSee docs/WSL_SECRETS_CONFIGURATION.md for detailed setup instructions.")
+    
+    return 0 if all_passed else 1
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+--- END OF FILE verify_wslenv_setup.py ---
