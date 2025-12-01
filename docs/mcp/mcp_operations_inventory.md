@@ -485,44 +485,17 @@ pytest tests/mcp_servers/agent_persona/ -v
 
 ### Operations
 
-## Agent Persona MCP Server
+| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
+|-----------|---------|---------|--------|------------|-------------|
+| `persona_dispatch` | ✅ | ✅ | ❌ | [test_agent_persona_comprehensive.py](../../tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py) | Dispatch task to specific persona agent |
+| `persona_list_roles` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | List available persona roles (built-in + custom) |
+| `persona_get_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Get conversation state for specific role |
+| `persona_reset_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Reset conversation state for specific role |
+| `persona_create_custom` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Create new custom persona |
 
-**Status:** ✅ Operational (Verified with Sanctuary Model)
+**Prerequisite Tests:** [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py)
 
 **Model Verification:** Successfully tested with `Sanctuary-Qwen2-7B:latest` via Ollama (53s avg response time for strategic analysis)
-
-**Operations:**
-
-### `persona_dispatch`
-- **Status:** ✅ Verified
-- **Verification:** Tested strategist role with context injection, custom model selection, and Ollama engine
-- **Performance:** ~53s for detailed strategic analysis (local inference)
-- **Description:** Dispatch task to specific persona agent
-- **Args:** `role`, `task`, `context` (optional), `maintain_state`, `engine`, `model_name`, `custom_persona_file`
-- **Returns:** Agent response with reasoning type classification
-
-### `persona_list_roles`
-- **Status:** ✅ Verified
-- **Description:** List available persona roles (built-in + custom)
-- **Returns:** Dictionary with `built_in`, `custom`, `total`, `persona_dir`
-
-### `persona_get_state`
-- **Status:** ✅ Verified
-- **Description:** Get conversation state for specific role
-- **Args:** `role`
-- **Returns:** Conversation history and message count
-
-### `persona_reset_state`
-- **Status:** ✅ Verified
-- **Description:** Reset conversation state for specific role
-- **Args:** `role`
-- **Returns:** Status confirmation
-
-### `persona_create_custom`
-- **Status:** ✅ Verified
-- **Description:** Create new custom persona
-- **Args:** `role`, `persona_definition`, `description`
-- **Returns:** File path and creation status
 
 **Terminology:**
 - **LLM Client:** Interface to model provider (formerly Substrate)
