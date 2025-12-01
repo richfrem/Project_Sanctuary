@@ -334,7 +334,7 @@ graph TD
 ## 6. Cortex MCP Server (RAG)
 
 **Domain:** Retrieval-Augmented Generation  
-**Directory:** `mnemonic_cortex/`  
+**Directory:** `mcp_servers/cognitive/cortex/`  
 **Server Code:** [mcp_servers/cognitive/cortex/server.py](../../mcp_servers/cognitive/cortex/server.py)  
 **README:** [Cortex MCP README](../../mcp_servers/cognitive/cortex/README.md)  
 **Class Diagram:** [diagrams/rag_mcp_cortex_class.mmd](diagrams/rag_mcp_cortex_class.mmd)

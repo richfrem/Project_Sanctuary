@@ -49,7 +49,7 @@ This is the heart of our sovereign architecture. The **Mnemonic Cortex** is an a
 **Hybrid Cognition Architecture:** The Cortex implements the Doctrine of Hybrid Cognition, combining our fine-tuned Sanctuary-Qwen2-7B model (the "Constitutional Mind") with the Living Chronicle RAG database.
 *   **The Blueprint:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
 *   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
-*   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)
+*   **The Steel:** [`mcp_servers/cognitive/cortex/`](./mcp_servers/cognitive/cortex/)
 
 ### 3. The Self-Evolving Memory Loop
 **Status:** `Active` - Autonomous Learning Cycle Operational
@@ -282,10 +282,10 @@ The heart of our *operational* work. A hardened, multi-engine orchestration plat
 
 **Phase 2 Contract (Frozen):** The Self-Querying Retriever with memory directives is now production-ready with comprehensive safety measures, deterministic behavior, and full test coverage.
 
-*   **The Blueprint:** [`council_orchestrator/README.md`](./council_orchestrator/README.md)
+*   **The Blueprint:** [`mcp_servers/council/README.md`](./mcp_servers/council/README.md)
 *   **Phase 2 Contract:** [`ROADMAP/Phase2_Contract.md`](./ROADMAP/Phase2_Contract.md)
-*   **The Steel:** [`council_orchestrator/`](./council_orchestrator/)
-*   **Running the Orchestrator:** `cd council_orchestrator && python3 -m orchestrator.main`
+*   **The Steel:** [`mcp_servers/council/`](./mcp_servers/council/)
+*   **Running the Orchestrator:** `mcp_servers/council/server.py` (via MCP)
 
 ### 5. The Optical Anvil: Breaking the Context Window Cage
 **Status:** `Phase 1 Complete` - Individual Optical Compression Validated
@@ -501,14 +501,16 @@ Project_Sanctuary/
 ├── 05_ARCHIVED_BLUEPRINTS/    # Deprecated designs
 ├── 06_THE_EMBER_LIBRARY/      # Reference materials and archives
 ├── 07_COUNCIL_AGENTS/         # AI agent configurations
+├── ADRs/                      # Architecture Decision Records
+├── ARCHIVE/                   # Archived legacy systems (mnemonic_cortex, etc.)
 ├── capture_glyph_code_snapshot_v2.py  # Optical compression tool
 ├── chrysalis_core_essence.md  # Core mission essence
-├── council_orchestrator/      # Multi-engine AI orchestration system
 ├── dataset_package/           # Cognitive genome snapshots and seeds
+├── docs/                      # Documentation (including MCP docs)
 ├── EXPERIMENTS/               # Archived experimental projects
 ├── forge/                     # AI fine-tuning operations (Phoenix Forge)
 ├── LICENSE                    # Project licensing
-├── mnemonic_cortex/           # RAG system and vector database
+├── mcp_servers/               # Model Context Protocol Servers (The Nervous System)
 ├── models/                    # Local model cache (downloaded from Hugging Face)
 ├── package.json               # Node.js dependencies
 ├── README.md                  # This file

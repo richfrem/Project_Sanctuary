@@ -1,125 +1,75 @@
 # Mnemonic Cortex Operations Guide
 
-**Version:** 1.0
-**Scope:** Execution instructions for all scripts, tests, and core operations within the Mnemonic Cortex system.
+**Version:** 2.0 (MCP Era)
+**Scope:** Execution instructions for all operations within the Mnemonic Cortex system (now Cortex MCP).
 
-## 1. Directory Structure Overview
+## 1. Architecture Overview
 
-The `mnemonic_cortex/` directory contains several key subdirectories, each with specific operational tools:
+The Mnemonic Cortex has migrated from a standalone script-based system to a fully integrated **Model Context Protocol (MCP)** server.
 
-- **`app/`**: Core application logic and services.
-  - `main.py`: Primary entry point for RAG queries.
-- **`scripts/`**: Operational scripts for ingestion, maintenance, and training.
-- **`tests/`**: Unit and integration tests.
-- **`core/`**: Shared utilities and configuration.
+- **Server Location:** `mcp_servers/cognitive/cortex/`
+- **Data Store:** `mcp_servers/cognitive/cortex/data/` (ChromaDB)
+- **Interface:** MCP Tools (via Claude Desktop, Antigravity, or Council)
 
-## 2. Operational Scripts (`scripts/`)
+## 2. Operational Mapping (Scripts → MCP Tools)
 
-For detailed documentation of each script, see [`scripts/README.md`](scripts/README.md).
+All legacy scripts have been incorporated into the Cortex MCP. Use the corresponding MCP tools instead.
 
-### Quick Reference
+| Legacy Script | New MCP Tool | Description |
+|---------------|--------------|-------------|
+| `ingest.py` | `cortex_ingest_full` | Full database rebuild |
+| `ingest_incremental.py` | `cortex_ingest_incremental` | Add new files |
+| `protocol_87_query.py` | `cortex_query_structured` | Protocol 87 structured query |
+| `inspect_db.py` | `cortex_get_stats` | Database health & stats |
+| `cache_warmup.py` | `cortex_cache_warmup` | Pre-populate cache |
+| `agentic_query.py` | `cortex_query` | Semantic search |
+| `create_chronicle_index.py` | N/A (Handled by Chronicle MCP) | Redundant |
+| `train_lora.py` | N/A (Handled by Forge MCP) | See Forge MCP |
 
-| Operation | Script | Command |
-|-----------|--------|---------|
-| **Full Ingest** | `ingest.py` | `python3 mnemonic_cortex/scripts/ingest.py` |
-| **Incremental Ingest** | `ingest_incremental.py` | `python3 mnemonic_cortex/scripts/ingest_incremental.py <file>` |
-| **Structured Query** | `protocol_87_query.py` | `python3 mnemonic_cortex/scripts/protocol_87_query.py <json_file>` |
-| **Agentic Query** | `agentic_query.py` | `python3 mnemonic_cortex/scripts/agentic_query.py "<question>"` |
-| **Cache Warmup** | `cache_warmup.py` | `python3 mnemonic_cortex/scripts/cache_warmup.py` |
-| **Health Check** | `inspect_db.py` | `python3 mnemonic_cortex/scripts/inspect_db.py` |
-| **Chronicle Index** | `create_chronicle_index.py` | `python3 mnemonic_cortex/scripts/create_chronicle_index.py` |
-| **Train LoRA** | `train_lora.py` | `python3 mnemonic_cortex/scripts/train_lora.py --data <file> --output <dir>` |
+## 3. Core Operations
 
-**Note:** All commands must be run from the project root: `/Users/richardfremmerlid/Projects/Project_Sanctuary`
-
-## 3. Core Application (`app/`)
-
-### Direct RAG Query (`main.py`)
-The main application entry point can be run directly to perform RAG queries.
-
+### RAG Query (Semantic Search)
+**Tool:** `cortex_query`
+**Args:** `query` (string)
 **Usage:**
+> "Search the cortex for 'Protocol 101'."
+
+### Protocol 87 Query (Structured)
+**Tool:** `cortex_query_structured`
+**Args:** `query_string` (Protocol 87 format)
+**Usage:**
+> "Execute structured query: RETRIEVE :: Protocols :: Name='Protocol 101'"
+
+### Database Statistics
+**Tool:** `cortex_get_stats`
+**Usage:**
+> "Get cortex database statistics."
+
+### Ingestion
+**Tool:** `cortex_ingest_incremental`
+**Args:** `file_paths` (list)
+**Usage:**
+> "Ingest the file '01_PROTOCOLS/101_The_Doctrine.md' into cortex."
+
+## 4. Testing & Verification
+
+The test suite is now located in `tests/mcp_servers/cortex/`.
+
+### Running Tests
 ```bash
-python3 mnemonic_cortex/app/main.py "Your question here"
+# Run all Cortex MCP tests
+pytest tests/mcp_servers/cortex/ -v
 ```
 
-**What it does:**
-- Initializes the full RAG pipeline (VectorDB, Embeddings)
-- Retrieves relevant context using Parent Document Retriever
-- Generates a response (if LLM is connected) or returns retrieved documents
-
-## 4. Testing (`tests/`)
-
-The test suite ensures system integrity. Tests are built with `pytest`.
-
-### Running All Tests
+### Integration Testing
 ```bash
-pytest mnemonic_cortex/tests/
+# Test full RAG pipeline
+python3 tests/mcp_servers/cortex/test_cortex_integration.py
 ```
 
-### Master Verification Harness
-For a complete system check (RAG, Cache, Guardian, Training), use the master harness:
-```bash
-python3 mnemonic_cortex/scripts/verify_all.py
-```
-This script runs:
-1. Database Health Check
-2. RAG Query Test
-3. Cache Warmup
-4. Cache Operations (Get/Set)
-5. Guardian Wakeup
-6. Adaptation Packet Generation
-7. LoRA Training Dry-Run
+## 5. Troubleshooting
 
-### Running Specific Test Categories
-
-**1. Ingestion Service Tests**
-Verifies document processing, chunking, and vector store insertion.
-```bash
-pytest mnemonic_cortex/tests/test_ingestion_service.py
-```
-
-**2. Cache System Tests**
-Verifies CAG (Context-Aware Generation) caching mechanisms.
-```bash
-pytest mnemonic_cortex/tests/test_cache.py
-```
-
-**3. Vector DB Service Tests**
-Verifies retrieval logic and database interactions.
-```bash
-pytest mnemonic_cortex/tests/test_vector_db_service.py
-```
-
-## 5. MCP Server Operations
-
-The Mnemonic Cortex is also exposed as an MCP (Model Context Protocol) server.
-
-**Configuration:**
-Ensure `cortex` is configured in your `mcp_config.json`.
-
-**Tools Available:**
-
-**Core RAG:**
-- `cortex_query(query, max_results=5, use_cache=False)` - Semantic search
-- `cortex_ingest_incremental(file_paths, metadata=None)` - Add documents
-- `cortex_ingest_full(purge_existing=True)` - Full database rebuild
-- `cortex_get_stats()` - Database statistics
-
-**Cache (CAG):**
-- `cortex_cache_get(query)` - Retrieve cached answer
-- `cortex_cache_set(query, answer)` - Store answer
-- `cortex_cache_warmup(genesis_queries=None)` - Pre-populate cache
-- `cortex_cache_stats()` - Cache hit/miss stats
-
-**Guardian & Adaptation:**
-- `cortex_guardian_wakeup()` - Generate boot digest for Guardian
-- `cortex_generate_adaptation_packet(days=7)` - Create fine-tuning dataset
-
-## 6. Troubleshooting
-
+- **Database Locks:** If ChromaDB is locked, ensure the MCP server process is not stuck.
 - **Import Errors:** Ensure `PYTHONPATH` includes the project root.
-  ```bash
-  export PYTHONPATH=$PYTHONPATH:.
-  ```
-- **Database Locks:** If ChromaDB is locked, ensure no other process (like the MCP server) is holding the lock, or restart the process.
-- **Missing Dependencies:** Run `pip install -r requirements.txt`.
+- **Empty Results:** Check `cortex_get_stats` to ensure documents are indexed.
+
