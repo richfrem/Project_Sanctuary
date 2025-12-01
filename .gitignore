@@ -89,6 +89,7 @@ wandb/
 ARCHIVE/
 ARCHIVES/
 archive/
+!archive/council_orchestrator/
 archives/
 RESEARCH_PAPERS/
 *.log

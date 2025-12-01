@@ -66,7 +66,7 @@
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
         "council": {
-            "displayName": "Agent Orchestrator MCP (Council)",
+            "displayName": "Council MCP (Multi-Agent Deliberation)",
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",

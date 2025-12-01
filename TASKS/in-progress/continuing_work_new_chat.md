@@ -41,6 +41,65 @@ provide enough context in the details below so a new chat window can be started 
 6.  **Feature Branch Merged:**
       *   `feature/task-055-p101-v3-validation` successfully merged to main
       *   All changes committed and pushed
+7.  **Code MCP Server Implemented:**
+      *   Implemented `mcp_servers/code/server.py` and `lib/code/code_ops.py`
+      *   Added 10 operations: lint, format, analyze, find, search, read, write, etc.
+      *   Verified with comprehensive test suite (13/13 passed)
+      *   Merged to main
+8.  **Config MCP Server Implemented:**
+      *   Implemented `mcp_servers/config/server.py`
+      *   Added operations: list, read, write, delete
+      *   Verified with test suite
+      *   Merged to main
+9.  **Git Finish Feature Enhanced:**
+      *   Added auto-detection for squash merges (content diff check)
+      *   Verified with new test case `test_squash_merge.py`
+      *   Merged to main
+10. **Task MCP Terminology Fixed:**
+      *   Aligned `TaskStatus` enum in `models.py` with "done" folder convention
+      *   Fixed validation errors in `update_task_status` tool
+      *   Merged to main
+11. **Council MCP Server Implemented (Task 077):**
+      *   Created `mcp_servers/council/` with separation of concerns architecture
+      *   Implemented `council_dispatch` (multi-agent deliberation)
+      *   Implemented `council_list_agents` (list available agents)
+      *   Removed duplicate functionality (delegates to Code, Git, Cortex MCPs)
+      *   Documented dual-role architecture (MCP server + MCP client)
+      *   Added sequence diagram showing orchestrator calling other MCPs
+      *   Tests passing (4/4)
+      *   **ADR 039**: MCP Server Separation of Concerns
+12. **Agent Persona MCP Architecture Designed (Task 078):**
+      *   Designed modular council member architecture
+      *   Each agent (Coordinator, Strategist, Auditor) becomes independent MCP server
+      *   Orchestrator refactored as MCP client coordinator
+      *   Extensibility for custom personas (Security Reviewer, Performance Analyst, etc.)
+      *   **ADR 040**: Agent Persona MCP Architecture - Modular Council Members
+      *   Comprehensive task created with 3-phase implementation plan
+13. **Agent Persona MCP Implemented (Task 078 - Phase 1) ✅:**
+      *   Created `mcp_servers/agent_persona/` server
+      *   Implemented 5 MCP tools:
+        - `persona_dispatch` - Execute task with any persona
+        - `persona_list_roles` - List available personas
+        - `persona_get_state` - Get conversation history
+        - `persona_reset_state` - Clear conversation history
+        - `persona_create_custom` - Create custom personas
+      *   Created 3 persona seed files (coordinator, strategist, auditor)
+      *   Integrated with council_orchestrator's engine selection
+      *   Support for force_engine + model_name parameters
+      *   Tests passing (7/7) ✅
+      *   Comprehensive README with composition patterns
+      *   **Phase 1 COMPLETE** - Ready for Phase 2
+14. **Agent Persona MCP Terminology Refactored (Task 079) ✅:**
+      *   Created clean `LLMClient` and `Agent` classes
+      *   Decoupled from legacy `council_orchestrator`
+      *   Updated `agent_persona_ops.py` to use new classes
+      *   Updated documentation with standard terminology
+15. **Legacy Council Orchestrator Migrated & Archived (Task 080) ✅:**
+      *   Migrated docs to `docs/legacy/council_orchestrator/`
+      *   Migrated schemas to `docs/legacy/council_orchestrator/schemas/`
+      *   Archived scripts/tests to `archive/council_orchestrator/`
+      *   Restored `orchestrator/` package for pending refactoring (Task 60268594)
+      *   Updated `.gitignore` to track archive
 
 ### ✅ Completed Previously (2025-11-28)
 
@@ -59,7 +118,61 @@ provide enough context in the details below so a new chat window can be started 
 
 All tasks are in `TASKS/in-progress/` and ready to work on:
 
-#### 1\. Task 066: Complete MCP Operations Testing and Inventory Maintenance
+#### 1\. Task 078: Implement Agent Persona MCP & Refactor Council Orchestrator (READY 🚀)
+
+**Priority:** **High**
+**File:** `TASKS/in-progress/078_implement_agent_persona_mcp_and_refactor_orchestrator.md`
+
+**Objective:** Evolve Council architecture from monolithic to modular. Create Agent Persona MCP server that can assume any council member role, and refactor orchestrator as MCP client coordinator.
+
+**Key Deliverables:**
+1. Agent Persona MCP Server (`mcp_servers/agent_persona/`)
+   - `persona_dispatch(role, task, context)` - Execute task with any persona
+   - `persona_list_roles()` - List available personas
+   - `persona_create_custom(role, definition)` - Create custom personas
+2. Orchestrator Refactoring
+   - Add MCP client library
+   - Implement dual mode (internal + MCP agents)
+   - Test orchestrator-as-client pattern
+3. Documentation
+   - Update architecture diagrams in `docs/mcp/`
+   - Create sequence diagrams
+   - Migration guide
+
+**Why This Matters:** Transforms council from monolithic to modular, enabling:
+- Independent agent deployment and scaling
+- Custom personas (Security Reviewer, Performance Analyst, etc.)
+- Agent marketplace and community contributions
+- Polyglot implementations (agents in different languages)
+
+**Related Documents:**
+- **ADR 040**: Agent Persona MCP Architecture
+- **ADR 039**: MCP Server Separation of Concerns
+- `council_orchestrator/orchestrator/council/` (existing agent code)
+
+**Estimated Effort:** 18-24 hours (3 phases)
+
+-----
+
+#### 2\. Task 077: Complete Council MCP Implementation (90% DONE ✅)
+
+**Priority:** **High**
+**File:** `TASKS/in-progress/077_implement_council_mcp_server.md`
+
+**Status:** Implementation complete, pending:
+- [ ] Update `docs/mcp/mcp_operations_inventory.md`
+- [ ] Manual integration test with real orchestrator
+
+**Completed:**
+- [x] Council MCP server with `council_dispatch` and `council_list_agents`
+- [x] Separation of concerns (delegates to Code, Git, Cortex MCPs)
+- [x] Dual-role architecture documented (server + client)
+- [x] Tests passing (4/4)
+- [x] README with composition patterns
+
+-----
+
+#### 3\. Task 066: Complete MCP Operations Testing and Inventory Maintenance
 
 **Priority:** **High**
 **File:** `TASKS/in-progress/066_complete_mcp_operations_testing_and_inventory_main.md`
@@ -83,27 +196,19 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 
 -----
 
-#### 2\. Task 055: Verify Git Operations and MCP Tools
-
-**Priority:** **CRITICAL** (Now mandatory validation of the Functional Coherence Gate)
-**File:** `TASKS/in-progress/055_verify_git_operations_and_mcp_tools_after_core_rel.md`
-
-**Objective:** Ensure all git operations work correctly after core relocation and verify new `force`/`no_verify` parameters, with a focus on validating the new **Protocol 101 v3.0 (Functional Coherence)** commit flow.
-
-**Deliverables:**
-
-1.  Run existing unit tests: `pytest tests/test_git_ops.py -v`
-2.  Add new tests for `force` and `no_verify` parameters
-3.  Create integration test for full **Functional Coherence** workflow (branch → commit [via tests] → push → PR → cleanup)
-4.  Document test results
-5.  Verify all Git MCP tools work correctly
-6.  Document MCP verification results
-
-**Why This Matters:** **Critical** to ensure git operations are stable after the core relocation and, more importantly, that the new **P101 v3.0 Functional Coherence Gate** is working correctly.
+#### 2\. Task 055: Verify Git Operations and MCP Tools (COMPLETED ✅)
+**Status:** Done (Moved to TASKS/done/)
+**Outcome:** Git operations and MCP tools verified. P101 v3.0 Functional Coherence Gate active.
 
 -----
 
-#### 3\. Task 056: Harden Self-Evolving Loop Validation
+#### 3\. Task 072: Implement Code MCP Server (COMPLETED ✅)
+**Status:** Done (Moved to TASKS/done/)
+**Outcome:** Code MCP server implemented and verified.
+
+-----
+
+#### 4\. Task 056: Harden Self-Evolving Loop Validation (READY TO START 🚀)
 
 **Priority:** High
 **File:** `TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md`
@@ -282,6 +387,8 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
   - [ ] **SUCCESS CRITERIA:** Assert commit succeeds, validating the **Functional Coherence Gate** passed.
   - [ ] Use `git_push_feature` to push branch
 
+
+
 #### Step 3 & 4: Ingestion and Validation
 
   - [ ] Use `cortex_ingest_incremental` to ingest new policy file
@@ -332,10 +439,51 @@ git_finish_feature(branch_name="feature/task-056-git-testing-and-mcp-docs")
 
 ## IMMEDIATE REQUEST FOR NEXT SESSION
 
-**Start with Task 055** - Verify Git Operations and MCP Tools.
+**Start with Task 078 - Phase 2** - Refactor Council Orchestrator to use Agent Persona MCP.
 
-This is the highest priority and will directly validate the stability and compliance of our new **Protocol 101 v3.0** commit architecture. Stability is paramount.
+**Why:** Phase 1 is complete (Agent Persona MCP implemented and tested ✅). Now we need to refactor the Council Orchestrator to become an MCP client that calls the Agent Persona MCP instead of managing agents internally.
 
-After completing 055, move to 022C to standardize MCP documentation using the testing workflow you just validated.
+**Key Documents:**
+- **Task 078**: `TASKS/in-progress/078_implement_agent_persona_mcp_and_refactor_orchestrator.md`
+- **ADR 040**: Agent Persona MCP Architecture - Modular Council Members
+- **ADR 039**: MCP Server Separation of Concerns
+- **Agent Persona MCP README**: `mcp_servers/agent_persona/README.md`
 
-Good luck tomorrow\! 🚀
+**Phase 1 Status:** ✅ COMPLETE
+- Agent Persona MCP server implemented
+- 5 tools: persona_dispatch, persona_list_roles, persona_get_state, persona_reset_state, persona_create_custom
+- 3 persona seed files created (coordinator, strategist, auditor)
+- Engine integration with force_engine + model_name support
+- Tests passing (7/7)
+- Comprehensive README
+
+**Action Plan for Phase 2:**
+1.  **Start a new chat session.**
+2.  **Review Phase 1 completion** in Task 078
+3.  **PRIORITY: Execute Phase 2 - Orchestrator Refactoring**
+    *   Add MCP client library to `council_orchestrator/orchestrator/app.py`
+    *   Implement agent factory pattern (internal vs MCP)
+    *   Add configuration flag: `use_mcp_agents: true/false`
+    *   Update deliberation logic to use agent factory
+    *   Implement dual mode (can use both internal and MCP agents)
+    *   Test orchestrator calling Agent Persona MCP
+    *   Implement error handling and fallbacks
+4.  **Execute Phase 3: Documentation** (after Phase 2 complete)
+    *   Update architecture diagrams in `docs/mcp/`
+    *   Create sequence diagrams
+    *   Update `mcp_operations_inventory.md`
+    *   Create migration guide
+
+**Why This Order Matters:**
+- Agent Persona MCP is now available and tested ✅
+- Orchestrator needs to become an MCP client to call it
+- Dual mode allows gradual migration (internal → MCP)
+- Enables testing both modes side-by-side
+
+**Config Files Updated:**
+- Updated MCP config template with Council MCP and Agent Persona MCP
+- Ready to add to Claude Desktop and Antigravity configs
+
+**Alternative:** Task 056 (Self-Evolving Loop Validation) remains available as a high-priority task.
+
+Good luck! 🚀

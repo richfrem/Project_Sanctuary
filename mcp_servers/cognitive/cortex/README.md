@@ -133,6 +133,32 @@ cortex_ingest_incremental(
 )
 ```
 
+---
+
+### 5. `cortex_guardian_wakeup`
+
+Generate Guardian boot digest from cached bundles (Protocol 114).
+
+**Parameters:** None
+
+**Returns:**
+```json
+{
+  "digest_path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+  "cache_stats": {
+    "chronicles": 5,
+    "protocols": 10,
+    "roadmap": 1
+  },
+  "status": "success"
+}
+```
+
+**Example:**
+```python
+cortex_guardian_wakeup()
+```
+
 ## Installation
 
 1. Install dependencies:
@@ -187,7 +213,6 @@ cortex_ingest_full()
 ## Phase 2 Features (Upcoming)
 
 - Cache integration (`use_cache` parameter)
-- Guardian Wakeup tool (Protocol 114)
 - Cache warmup and invalidation
 - Cache statistics
 

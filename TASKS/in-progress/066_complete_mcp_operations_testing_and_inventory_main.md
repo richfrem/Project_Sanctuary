@@ -22,13 +22,13 @@ Systematically test all MCP operations across all servers and maintain the MCP o
 
 ## 3. Acceptance Criteria
 
-- All MCP operations have corresponding test suites
-- Test coverage documented in inventory
-- Each MCP README contains operation table matching main inventory
-- Chronicle, Protocol, ADR, Task, and Git Workflow MCPs fully tested
-- RAG (Cortex) and Forge MCPs have integration tests
-- Inventory reflects accurate testing status with ✅/⚠️/❌ symbols
-- Config and Code MCP servers either implemented or marked as future work
+- [x] All MCP operations have corresponding test suites
+- [x] Test coverage documented in inventory
+- [x] Each MCP README contains operation table matching main inventory
+- [x] Chronicle, Protocol, ADR, Task, and Git Workflow MCPs fully tested
+- [ ] RAG (Cortex) and Forge MCPs have integration tests
+- [x] Inventory reflects accurate testing status with ✅/⚠️/❌ symbols
+- [x] Config and Code MCP servers implemented and tested
 
 ## Notes
 
