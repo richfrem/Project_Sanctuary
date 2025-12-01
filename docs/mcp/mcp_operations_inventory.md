@@ -551,8 +551,8 @@ pytest tests/mcp_servers/council/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `council_dispatch` | ⚠️ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
-| `council_list_agents` | ⚠️ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
+| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
+| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
 
 **Design Principle:** Separation of Concerns
 - Council MCP provides ONLY multi-agent deliberation
