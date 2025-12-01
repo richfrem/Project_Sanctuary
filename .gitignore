@@ -136,4 +136,5 @@ Modelfile
 # !dataset_package/all_markdown_snapshot_llm_distilled.txt
 # !dataset_package/core_essence_auditor_awakening_seed.txt
 # !dataset_package/core_essence_coordinator_awakening_seed.txt
-# !dataset_package/core_essence_strategist_awakening_seed.txt
+# !dataset_package/core_essence_strategist_awakening_seed.txtdata/cortex/chroma_db/
+data/cortex/cache/

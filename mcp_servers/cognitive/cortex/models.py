@@ -65,6 +65,14 @@ class QueryResponse:
 # ============================================================================
 
 @dataclass
+class DocumentSample:
+    """Sample document for diagnostics."""
+    id: str
+    metadata: Dict[str, Any]
+    content_preview: str  # First 150 chars
+
+
+@dataclass
 class CollectionStats:
     """Statistics for a single collection."""
     count: int
@@ -78,6 +86,7 @@ class StatsResponse:
     total_chunks: int
     collections: Dict[str, CollectionStats]
     health_status: str  # "healthy", "degraded", or "error"
+    samples: Optional[List[DocumentSample]] = None  # Enhanced diagnostics from inspect_db
     cache_stats: Optional[Dict[str, Any]] = None  # Phase 2 feature
     error: Optional[str] = None
 

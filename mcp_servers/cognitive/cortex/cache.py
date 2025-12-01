@@ -1,23 +1,6 @@
 """
 Mnemonic Cache (core/cache.py)
 Implements the Cached Augmented Generation (CAG) layer for the Mnemonic Cortex.
-
-This module provides a two-tier caching system to eliminate redundant cognitive load
-and ensure instant responses for common queries, aligning with the Hearth Protocol (P43).
-
-Architecture:
-- Hot Cache (In-Memory): Python dict for sub-millisecond access to recent queries
-- Warm Cache (Persistent): SQLite-based storage for cross-session persistence
-- Cache Key: SHA-256 hash of structured query JSON for deterministic lookups
-- Cache Population: Integrated with cache_warmup.py for proactive loading
-
-Usage:
-    from mnemonic_cortex.core.cache import MnemonicCache
-
-    cache = MnemonicCache()
-    key = cache.generate_key(structured_query_json)
-
-    # Check cache
     result = cache.get(key)
     if result:
         return result  # Cache hit

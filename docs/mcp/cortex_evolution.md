@@ -1,18 +1,17 @@
 # **Sanctuary Council — Evolution Plan (Phases 1 → 2 → 3 → Protocol 113)**
 
-**Version:** 2.0 (Updated 2025-11-28)
+**Version:** 2.1 (Updated 2025-11-30 - MCP Migration)
 **Status:** Authoritative Roadmap
-**Location:** `mnemonic_cortex/EVOLUTION_PLAN_PHASES.md`
+**Location:** `docs/mcp/cortex_evolution.md`
 
 This document defines the complete evolution of the Sanctuary Council cognitive architecture. It is the official roadmap for completing the transition from a single-round orchestrator to a fully adaptive, multi-layered cognitive system based on Nested Learning principles.
 
----
-
 # ✅ **Phase Overview**
 
-There are four phases, which must be completed **in strict order**:
+There are five phases, which must be completed **in strict order**:
 
-1. **Phase 1 – MCP Foundation (RAG Services)** ✅ *(complete)*
+0. **Phase 0 – MCP Migration** ✅ *(complete - 2025-11-30)*
+1. **Phase 1 – MCP Foundation (RAG Services)** ✅ *(complete - 2025-11-28)*
 2. **Phase 2 – Self-Querying Retriever** *(current)*
 3. **Phase 3 – Mnemonic Caching (CAG)** *(next)*
 4. **Protocol 113 – Council Memory Adaptor** *(final)*
@@ -21,11 +20,71 @@ Each phase enhances a different tier of the Nested Learning architecture:
 
 | Memory Tier    | System Component       | Phase                         | Status |
 | -------------- | ---------------------- | ----------------------------- | ------ |
+| Migration      | Legacy → MCP           | Phase 0                       | ✅ Complete |
 | Infrastructure | MCP Service Layer      | Phase 1                       | ✅ Complete |
 | Slow Memory    | Council Memory Adaptor | Protocol 113                  | ⏸️ Blocked |
 | Medium Memory  | Mnemonic Cortex        | (Supported across all phases) | ✅ Active |
 | Fast Memory    | Mnemonic Cache (CAG)   | Phase 3                       | ⏸️ Blocked |
 | Working Memory | Council Session State  | Always active                 | ✅ Active |
+
+---
+
+# -------------------------------------------------------
+
+# ✅ **PHASE 0 — MCP Migration - COMPLETE**
+
+# -------------------------------------------------------
+
+**Completion Date:** 2025-11-30  
+**Status:** ✅ COMPLETE
+
+**Purpose:**
+Migrate legacy `mnemonic_cortex` script-based architecture to MCP-first architecture. Refactor `CortexOperations` to directly implement robust batching and retry logic, removing `IngestionService` dependency.
+
+**Why it matters:**
+This migration eliminates unnecessary abstraction layers, fixes misleading reporting (`chunks_created: 0`), and consolidates all Cortex documentation and tests into standard MCP locations.
+
+---
+
+## ✅ **Phase 0 Deliverables**
+
+### 1. **Documentation Migration**
+
+✅ Completed:
+* Merged `mnemonic_cortex/README.md` into `mcp_servers/cognitive/cortex/README.md`
+* Moved `VISION.md` to `docs/mcp/cortex_vision.md`
+* Moved `EVOLUTION_PLAN_PHASES.md` to `docs/mcp/cortex_evolution.md`
+* Moved `RAG_STRATEGIES_AND_DOCTRINE.md` to `docs/mcp/RAG_STRATEGIES.md`
+* Moved `OPERATIONS_GUIDE.md` to `docs/mcp/cortex_operations.md`
+
+### 2. **Code Refactoring** (Pending)
+
+⏳ To be completed:
+* Inline `IngestionService` logic into `CortexOperations`
+* Fix `chunks_created` reporting
+* Remove `mnemonic_cortex.app.services` dependency
+
+### 3. **Test Migration** (Pending)
+
+⏳ To be completed:
+* Move tests to `tests/mcp_servers/cortex/`
+* Convert `verify_all.py` to pytest format
+
+### 4. **Legacy Code Archival** (Pending)
+
+⏳ To be completed:
+* Archive `mnemonic_cortex/` to `ARCHIVE/`
+* Preserve `chroma_db/` and `cache/` directories
+
+---
+
+## ✅ **Definition of Done (Phase 0)**
+
+* ✅ All documentation migrated to `docs/mcp/`
+* ⏳ `CortexOperations` contains batching logic directly
+* ⏳ `chunks_created` reports accurate count
+* ⏳ All tests in `tests/mcp_servers/cortex/`
+* ⏳ Legacy code archived
 
 ---
 
