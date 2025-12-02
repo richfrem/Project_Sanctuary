@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-02T06:02:11.139Z
+Generated On: 2025-12-02T06:24:26.557Z
 
-# Mnemonic Weight (Token Count): ~780,152 tokens
+# Mnemonic Weight (Token Count): ~780,160 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -1888,7 +1888,7 @@ jobs:
         run: flake8 council_orchestrator/ mnemonic_cortex/ tools/ --max-line-length=120
 
   test-council-orchestrator:
-    name: Protocol 101 Functional Check: Council Orchestrator
+    name: Protocol 101 Functional Check - Council Orchestrator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -1914,7 +1914,7 @@ jobs:
           # Removed 'continue-on-error: true' to enforce Protocol 101 v3.0
 
   test-mnemonic-cortex:
-    name: Protocol 101 Functional Check: Mnemonic Cortex
+    name: Protocol 101 Functional Check - Mnemonic Cortex
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -54617,8 +54617,8 @@ def seed_for(session_id: str, round_id: int, member_id: str, prompt_hash: str = 
         import xxhash
         return xxhash.xxh64_intdigest(seed_input) & 0x7fffffff
     except ImportError:
-        # Fallback to hashlib if xxhash not available
-        hash_obj = hashlib.md5(seed_input.encode())
+        # Fallback to SHA256 if xxhash not available
+        hash_obj = hashlib.sha256(seed_input.encode())
         return int(hash_obj.hexdigest(), 16) & 0x7fffffff
 
 def prompt_hash(text: str) -> str:
@@ -70534,7 +70534,7 @@ def check_wslenv_variable(var_name):
         print_success(f"{var_name}: Found in environment ({masked})")
         return True
     else:
-        print_warning(f"{var_name}: NOT found in environment")
+        print_warning("A required environment variable is NOT found in environment")
         return False
 
 def check_env_helper(var_name, should_exist=True):
@@ -70550,11 +70550,11 @@ def check_env_helper(var_name, should_exist=True):
                 print_success(f"{var_name}: Correctly returns None (optional)")
                 return True
             else:
-                print_error(f"{var_name}: env_helper returned None")
+                print_error("A required environment variable could not be loaded by env_helper")
                 return False
     except ValueError as e:
         if should_exist:
-            print_error(f"{var_name}: {str(e)}")
+            print_error("A required environment variable could not be loaded by env_helper (exception)")
             return False
         else:
             print_success(f"{var_name}: Correctly raises error when required")
@@ -70629,11 +70629,11 @@ def main():
             content = f.read()
             for secret in critical_secrets:
                 if f"{secret}=" in content and not f"#{secret}" in content:
-                    print_error(f"  {secret} is NOT commented out in .env!")
-                    print(f"    This should be removed/commented to use WSLENV")
+                    print_error("  A secret is NOT commented out in .env!")
+                    print("    This should be removed/commented to use WSLENV")
                     all_passed = False
                 else:
-                    print_success(f"  {secret} is properly commented/absent")
+                    print_success("  A secret is properly commented/absent in .env")
     else:
         print_success(".env file does not exist (using WSLENV only)")
     
