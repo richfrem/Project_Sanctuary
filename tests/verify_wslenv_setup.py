@@ -95,14 +95,14 @@ def check_wslenv_config():
 
 def main():
     print_header("WSLENV & env_helper Verification")
-    
+
     # Critical secrets that should be in WSLENV
     critical_secrets = [
         "HUGGING_FACE_TOKEN",
         "GEMINI_API_KEY",
         "OPENAI_API_KEY"
     ]
-    
+
     # Optional configuration variables
     optional_vars = [
         "GEMINI_MODEL",
@@ -110,34 +110,34 @@ def main():
         "HUGGING_FACE_USERNAME",
         "HUGGING_FACE_REPO"
     ]
-    
+
     all_passed = True
-    
+
     # Check 1: WSLENV Configuration
     print_header("1. WSLENV Configuration Check")
     if not check_wslenv_config():
         all_passed = False
-    
+
     # Check 2: Environment Variable Accessibility
     print_header("2. Environment Variable Accessibility")
     print("Checking if secrets are accessible via os.getenv()...")
     for var in critical_secrets:
         if not check_wslenv_variable(var):
             all_passed = False
-    
+
     # Check 3: env_helper Functionality
     print_header("3. env_helper.py Functionality")
     print("Checking if env_helper correctly loads secrets...")
     for var in critical_secrets:
         if not check_env_helper(var, should_exist=True):
             all_passed = False
-    
+
     # Check 4: Optional Variables
     print_header("4. Optional Configuration Variables")
     print("Checking optional variables (won't fail if missing)...")
     for var in optional_vars:
         check_env_helper(var, should_exist=False)
-    
+
     # Check 5: .env File Status
     print_header("5. .env File Security Check")
     env_file = PROJECT_ROOT / ".env"
