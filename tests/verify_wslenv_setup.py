@@ -33,13 +33,13 @@ def print_header(text):
     print(f"{BLUE}{'='*60}{RESET}\n")
 
 def print_success(text):
-    print(f"{GREEN}✓{RESET} {text}")  # lgtm[py/clear-text-logging-sensitive-data]
+    print(f"{GREEN}✓{RESET} {text}")
 
 def print_warning(text):
-    print(f"{YELLOW}⚠{RESET} {text}")  # lgtm[py/clear-text-logging-sensitive-data]
+    print(f"{YELLOW}⚠{RESET} {text}")
 
 def print_error(text):
-    print(f"{RED}✗{RESET} {text}")  # lgtm[py/clear-text-logging-sensitive-data]
+    print(f"{RED}✗{RESET} {text}")
 
 def check_wslenv_variable(var_name):
     """Check if a variable is accessible via WSLENV (environment)"""
@@ -50,7 +50,7 @@ def check_wslenv_variable(var_name):
         print_success(f"{var_name}: Found in environment ({masked})")
         return True
     else:
-        print_warning(f"{var_name}: NOT found in environment")
+        print_warning("A required environment variable is NOT found in environment")
         return False
 
 def check_env_helper(var_name, should_exist=True):
@@ -66,11 +66,11 @@ def check_env_helper(var_name, should_exist=True):
                 print_success(f"{var_name}: Correctly returns None (optional)")
                 return True
             else:
-                print_error(f"{var_name}: env_helper returned None")
+                print_error("A required environment variable could not be loaded by env_helper")
                 return False
     except ValueError as e:
         if should_exist:
-            print_error(f"{var_name}: {str(e)}")
+            print_error("A required environment variable could not be loaded by env_helper (exception)")
             return False
         else:
             print_success(f"{var_name}: Correctly raises error when required")
@@ -145,11 +145,11 @@ def main():
             content = f.read()
             for secret in critical_secrets:
                 if f"{secret}=" in content and not f"#{secret}" in content:
-                    print_error(f"  {secret} is NOT commented out in .env!")
-                    print(f"    This should be removed/commented to use WSLENV")
+                    print_error("  A secret is NOT commented out in .env!")
+                    print("    This should be removed/commented to use WSLENV")
                     all_passed = False
                 else:
-                    print_success(f"  {secret} is properly commented/absent")
+                    print_success("  A secret is properly commented/absent in .env")
     else:
         print_success(".env file does not exist (using WSLENV only)")
     
