@@ -33,15 +33,15 @@ def print_header(text):
     print(f"{BLUE}{'='*60}{RESET}\n")
 
 def print_success(text):
-    # codeql[py/clear-text-logging-sensitive-data]
+    # lgtm[py/clear-text-logging-sensitive-data]
     print(f"{GREEN}✓{RESET} {text}")
 
 def print_warning(text):
-    # codeql[py/clear-text-logging-sensitive-data]
+    # lgtm[py/clear-text-logging-sensitive-data]
     print(f"{YELLOW}⚠{RESET} {text}")
 
 def print_error(text):
-    # codeql[py/clear-text-logging-sensitive-data]
+    # lgtm[py/clear-text-logging-sensitive-data]
     print(f"{RED}✗{RESET} {text}")
 
 def check_wslenv_variable(var_name):
