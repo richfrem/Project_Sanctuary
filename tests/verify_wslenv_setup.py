@@ -144,7 +144,7 @@ def main():
         with open(env_file, 'r') as f:
             content = f.read()
             for secret in critical_secrets:
-                if f"{secret}=" in content and not f"#{secret}" in content:
+                if f"{secret}=" in content and f"#{secret}" not in content:
                     print_error("  A secret is NOT commented out in .env!")
                     print("    This should be removed/commented to use WSLENV")
                     all_passed = False
@@ -152,7 +152,7 @@ def main():
                     print_success("  A secret is properly commented/absent in .env")
     else:
         print_success(".env file does not exist (using WSLENV only)")
-    
+
     # Final Summary
     print_header("Summary")
     if all_passed:
@@ -166,8 +166,9 @@ def main():
         print("2. Ensure WSLENV includes all required variables")
         print("3. Restart WSL completely (wsl --shutdown)")
         print("\nSee docs/WSL_SECRETS_CONFIGURATION.md for detailed setup instructions.")
-    
+
     return 0 if all_passed else 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
