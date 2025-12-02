@@ -118,8 +118,10 @@ outputs/
 *.mlx
 #sanctuary_whole_genome_data.jsonl
 
-# Colab Notebooks - Generated artifacts, not source code
+# Colab Notebooks - Generated artifac# Jupyter Notebooks
+*.ipynb_checkpoints/
 Operation_Whole_Genome_Forge.ipynb
+forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-local.ipynb
 
 # Hugging Face Model Artifacts
 model_card.yaml
