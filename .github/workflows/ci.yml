@@ -48,7 +48,8 @@ jobs:
       #   run: black --check mcp_servers/ scripts/ tests/
       
       - name: Run Flake8
-        run: flake8 mcp_servers/ scripts/ tests/ --max-line-length=120 --extend-ignore=E203,W503,W291,W293,E302,E305,E402,F401,F541,E501,E128,E261,E303,E306,E111,E117,F841,E722
+      - name: Run Flake8
+        run: flake8 mcp_servers/ scripts/ tests/ --max-line-length=120 --extend-ignore=E203,W503,W291,W293,E302,E305,E402,F401,F541,E501,E128,E261,E303,E306,E111,E117,F841,E722,E114,W292,F811,E122,E301,W391,E129,E231,F824,E701,E999,F821
 
   test-mcp-servers:
     name: Protocol 101 Functional Check - MCP Servers

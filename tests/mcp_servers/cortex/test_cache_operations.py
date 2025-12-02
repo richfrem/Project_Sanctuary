@@ -124,7 +124,8 @@ class TestAdaptationPacket:
             instance.save_packet.return_value = "/path/to/packet.json"
             
             # Simulate what the server tool does
-            from mcp_servers.cognitive.cortex.cache import CacheManagersisGenerator
+            from mcp_servers.cognitive.cortex.cache import CacheManager
+            from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
             generator = SynthesisGenerator("/tmp")
             packet = generator.generate_packet(days=7)
             output_path = generator.save_packet(packet)

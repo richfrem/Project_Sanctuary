@@ -29,15 +29,21 @@ try:
         print(f"  - {p}")
         
     # 6. Attempt the critical import
+    # Define colors for output
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    RESET = '\033[0m'
+
+    # 6. Attempt the critical import
     print("\n[ACTION] Attempting to import 'council_orchestrator.cognitive_engines.base'...")
     from council_orchestrator.cognitive_engines.base import BaseCognitiveEngine
     
     # 7. Report Success
-    print(f"\n[{'\033[92m'}SUCCESS{'\033[0m'}] The import was successful.")
+    print(f"\n[{GREEN}SUCCESS{RESET}] The import was successful.")
     print("------------------------------------")
 
 except ImportError as e:
-    print(f"\n[{'\033[91m'}FAILURE{'\033[0m'}] The import failed.")
+    print(f"\n[{RED}FAILURE{RESET}] The import failed.")
     print(f"  - Error: {e}")
     print("  - This confirms a critical issue in how Python is resolving modules.")
     print("------------------------------------")
