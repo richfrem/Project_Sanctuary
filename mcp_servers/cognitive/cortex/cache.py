@@ -45,9 +45,10 @@ class MnemonicCache:
             if env_path:
                 db_path = env_path
             else:
-                # Default to mnemonic_cortex/cache directory
-                project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-                cache_dir = os.path.join(project_root, 'mnemonic_cortex', 'cache')
+                # Default to mcp_servers/cognitive/cortex/data/cache directory
+                # Note: Assuming this file is in mcp_servers/cognitive/cortex/
+                current_dir = os.path.dirname(os.path.abspath(__file__))
+                cache_dir = os.path.join(current_dir, 'data', 'cache')
                 os.makedirs(cache_dir, exist_ok=True)
                 db_path = os.path.join(cache_dir, 'mnemonic_cache.db')
 

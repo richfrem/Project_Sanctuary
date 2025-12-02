@@ -1,6 +1,6 @@
 # TASK: Enable Optional Logging for All MCP Servers
 
-**Status:** backlog
+**Status:** Done
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None

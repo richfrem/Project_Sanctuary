@@ -1,6 +1,6 @@
 # TASK: Migrate and Archive Legacy Mnemonic Cortex
 
-**Status:** backlog
+**Status:** Done
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
@@ -23,20 +23,20 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 ## 3. Implementation Plan
 
 ### Phase 1: Code Refactoring & Parity
-- [ ] Analyze `mnemonic_cortex/scripts/ingest.py` vs `mcp_servers/lib/cortex/operations.py`.
-- [ ] Port "Disciplined Batch Architecture" and recursive retry logic to `CortexOperations`.
-- [ ] Verify `cortex_ingest_full` matches legacy script performance and reliability.
+- [x] Analyze `mnemonic_cortex/scripts/ingest.py` vs `mcp_servers/lib/cortex/operations.py`.
+- [x] Port "Disciplined Batch Architecture" and recursive retry logic to `CortexOperations`.
+- [x] Verify `cortex_ingest_full` matches legacy script performance and reliability.
 
 ### Phase 2: Asset Migration
-- [ ] Move documentation from `mnemonic_cortex/` to `docs/mcp/cortex/`.
-- [ ] Move tests to `tests/mcp_servers/cortex/`.
-- [ ] Update import paths in tests and server code.
+- [x] Move documentation from `mnemonic_cortex/` to `docs/mcp/cortex/`.
+- [x] Move tests to `tests/mcp_servers/cortex/`.
+- [x] Update import paths in tests and server code.
 
 ### Phase 3: Verification
-- [ ] Run full ingestion via MCP tool.
-- [ ] Verify Protocol 101 v3.0 indexing.
-- [ ] Run automated test suite.
+- [x] Run full ingestion via MCP tool.
+- [x] Verify Protocol 101 v3.0 indexing.
+- [x] Run automated test suite.
 
 ### Phase 4: Archival
-- [ ] Move `mnemonic_cortex` to `ARCHIVE/`.
-- [ ] Update `task.md` and `README.md` references.
+- [x] Move `mnemonic_cortex` to `ARCHIVE/`.
+- [x] Update `task.md` and `README.md` references.

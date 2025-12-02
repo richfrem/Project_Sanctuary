@@ -1,53 +1,96 @@
 # Council MCP Server
 
-**Status:** ✅ Operational  
-**Version:** 2.0.0 (Refactored)  
+**Status:** ✅ Operational
+**Version:** 2.0.0 (Refactored)
 **Protocol:** Model Context Protocol (MCP)
 
-## Overview
+**Description:** The Council MCP Server exposes the Sanctuary Council's **multi-agent deliberation** capabilities to external AI agents via the Model Context Protocol. It coordinates specialized agents (Coordinator, Strategist, Auditor) to solve complex tasks through iterative reasoning and context retrieval.
 
-The Council MCP Server exposes the Sanctuary Council's **multi-agent deliberation** capabilities to external AI agents via the Model Context Protocol.
+## Tools
 
-### Architecture v2.0 (Refactored)
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `council_dispatch` | Dispatches a task to the Council for deliberation. | `task_description` (str): The task to perform.<br>`agent` (str, optional): Specific agent to consult (e.g., "auditor").<br>`max_rounds` (int, optional): Max deliberation rounds (default: 3).<br>`force_engine` (str, optional): Force specific LLM engine.<br>`output_path` (str, optional): Path to save results. |
+| `council_list_agents` | Lists all available Council agents and their status. | None |
 
-The Council MCP has been refactored to use a modular architecture:
-1. **Agent Persona MCP**: Used for individual agent execution (Coordinator, Strategist, Auditor)
-2. **Cortex MCP**: Used for memory and context retrieval
-3. **Direct Orchestration**: Deliberation logic is now embedded in `council_ops.py`, replacing the legacy orchestrator subprocess.
+## Resources
 
-### Design Principle: Separation of Concerns
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `council://agents/list` | List of available agents | `application/json` |
+| `council://history/{session_id}` | Deliberation history for a session | `application/json` |
 
-**The Council MCP provides ONLY what's unique to the Council.**
+## Prompts
 
-Other capabilities are delegated to specialized MCP servers:
-- **File I/O** → Code MCP (`code_write`, `code_read`)
-- **Memory Queries** → Cortex MCP (`cortex_query`, `cortex_ingest_incremental`)
-- **Git Operations** → Git MCP (`git_add`, `git_smart_commit`, `git_push_feature`)
-- **Protocol Documents** → Protocol MCP (`protocol_create`, `protocol_get`)
-- **Task Management** → Task MCP (`create_task`, `update_task_status`)
+*No prompts currently exposed.*
 
-### Key Features
+## Configuration
 
-- **Multi-Agent Deliberation**: Coordinate Coordinator, Strategist, and Auditor agents
-- **Single Agent Consultation**: Query specific agents for specialized insights
-- **On-Demand Execution**: Spawns orchestrator subprocess per request (no daemon required)
-- **Session Isolation**: Each invocation gets a unique session ID
-- **Composable Workflows**: Designed to work seamlessly with other MCP servers
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required for Council Operations
+ANTHROPIC_API_KEY=sk-...
+OPENAI_API_KEY=sk-...
+# Optional
+COUNCIL_DEFAULT_ROUNDS=3
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"council": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/council",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/council/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `council_dispatch` and `council_list_agents` appear in the tool list.
+3.  **Call Tool:** Execute `council_list_agents` and verify it returns the list of agents (Coordinator, Strategist, Auditor).
 
 ## Architecture
 
-### Dual-Role Architecture: Server AND Client
+### Overview
 
-The Council MCP has a unique dual-role architecture:
+The Council MCP has a unique dual-role architecture: it acts as both a **Server** (receiving requests from the user/IDE) and a **Client** (orchestrating other MCPs).
 
-**Role 1: MCP Server** (Exposes deliberation to external agents)
-- Provides `council_dispatch` and `council_list_agents` tools
-- Called by external agents (Claude Desktop, Antigravity, etc.)
+The Council MCP has been refactored to use a modular architecture:
+1.  **Agent Persona MCP**: Used for individual agent execution (Coordinator, Strategist, Auditor)
+2.  **Cortex MCP**: Used for memory and context retrieval
+3.  **Direct Orchestration**: Deliberation logic is now embedded in `council_ops.py`, replacing the legacy orchestrator subprocess.
 
-**Role 2: MCP Client** (Orchestrator calls other MCPs)
-- The orchestrator subprocess can call Code, Git, Cortex, Protocol, Task MCPs
-- Enables autonomous multi-step workflows
-- Council can deliberate AND execute (file I/O, git ops, memory queries)
+**Design Principle: Separation of Concerns**
+The Council MCP provides ONLY what's unique to the Council. Other capabilities are delegated to specialized MCP servers.
+
+**Benefits of Direct Orchestration:**
+- ✅ No subprocess overhead
+- ✅ Uses specialized Agent Persona MCP
+- ✅ Integrated with Cortex memory
+- ✅ Clean separation of concerns
+
+**Trade-offs:**
+- ⚠️ Simplified deliberation logic (compared to legacy v1)
 
 ### Execution Flow
 
@@ -82,30 +125,6 @@ sequenceDiagram
     CouncilMCP-->>LLM: Final Decision (Synthesis)
     LLM-->>User: "Protocol 120 designed"
 ```
-
-### Current Model: Direct Orchestration
-
-**How it works:**
-
-```
-1. External agent calls council_dispatch()
-2. Council MCP initializes (lazy load)
-3. Warms up Cortex cache if needed
-4. Queries Cortex for context
-5. Dispatches tasks to agents via Agent Persona MCP
-6. Aggregates responses into CouncilRoundPackets
-7. Returns final synthesis
-```
-
-**Benefits:**
-- ✅ No subprocess overhead
-- ✅ Uses specialized Agent Persona MCP
-- ✅ Integrated with Cortex memory
-- ✅ Clean separation of concerns
-
-**Trade-offs:**
-- ⚠️ Simplified deliberation logic (compared to legacy v1)
-
 
 ### Directory Structure
 

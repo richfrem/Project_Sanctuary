@@ -1,6 +1,6 @@
 # TASK: Evaluate Protocol 87 Orchestrator Placement: Cortex MCP vs Council MCP
 
-**Status:** backlog
+**Status:** Done
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None

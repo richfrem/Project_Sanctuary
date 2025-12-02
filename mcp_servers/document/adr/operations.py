@@ -5,6 +5,15 @@ import os
 import re
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from pathlib import Path
+import sys
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 from .models import ADR, ADRStatus, ADR_TEMPLATE
 from .validator import ADRValidator
 

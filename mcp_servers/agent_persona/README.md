@@ -1,49 +1,84 @@
 # Agent Persona MCP Server
 
-**Version:** 1.0.0  
-**Status:** Production Ready  
-**Purpose:** Configurable AI agent personas via Model Context Protocol
+**Description:** The Agent Persona MCP provides access to specialized AI agent personas that can be used for domain-specific tasks. Each persona has a unique role, expertise, and reasoning style.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `persona_dispatch` | Execute a task using a specific persona agent. | `role` (str): Persona role (e.g., "auditor").<br>`task` (str): Task to execute.<br>`context` (dict, optional): Context data.<br>`maintain_state` (bool): Persist history.<br>`engine` (str, optional): AI engine.<br>`model_name` (str, optional): Specific model. |
+| `persona_list_roles` | List all available persona roles (built-in and custom). | None |
+| `persona_get_state` | Get conversation state for a specific persona role. | `role` (str): Persona role. |
+| `persona_reset_state` | Reset conversation state for a specific persona role. | `role` (str): Persona role. |
+| `persona_create_custom` | Create a new custom persona definition. | `role` (str): Unique identifier.<br>`persona_definition` (str): Full instruction text.<br>`description` (str): Brief description. |
 
-The Agent Persona MCP provides access to specialized AI agent personas that can be used for domain-specific tasks. Each persona has a unique role, expertise, and reasoning style.
+## Resources
 
-**Key Features:**
-- Built-in personas (Coordinator, Strategist, Auditor)
-- Custom persona support (Security Reviewer, Performance Analyst, etc.)
-- Conversation state management
-- Flexible engine selection (Gemini, OpenAI, Ollama)
-- Model-specific targeting (e.g., Sanctuary-Qwen2-7B, GPT-4, Gemini-2.5-Pro)
+*No resources currently exposed.*
 
-## Terminology Mapping
+## Prompts
 
-To align with standard industry practices, we use the following terminology mapping:
+*No prompts currently exposed.*
 
-| Standard Term | Legacy Sanctuary Term | Description |
-|---------------|----------------------|-------------|
-| **LLM Client** | Substrate | The interface to the underlying Language Model (e.g., OpenAI, Ollama) |
-| **Model Provider** | Cognitive Engine | The specific provider implementation (e.g., GeminiEngine, OllamaEngine) |
-| **System Prompt** | Awakening Seed | The core instruction set that defines the agent's persona |
-| **Agent Config** | Core Essence | The configuration parameters defining the agent's role and behavior |
-| **Orchestrator** | Council | The system that manages multiple agents and their interactions |
+## Configuration
 
----
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required for AI Engines
+ANTHROPIC_API_KEY=sk-...
+OPENAI_API_KEY=sk-...
+# Optional
+PERSONA_STORAGE_DIR=mcp_servers/agent_persona/personas
+STATE_STORAGE_DIR=mcp_servers/agent_persona/state
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"agent_persona": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/agent_persona",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/agent_persona/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `persona_dispatch` and `persona_list_roles` appear in the tool list.
+3.  **Call Tool:** Execute `persona_list_roles` and verify it returns the built-in roles (Coordinator, Strategist, Auditor).
 
 ## Architecture
 
 ### Design Pattern: Configurable Service
-
 The Agent Persona MCP follows the **"Configurable Service"** pattern - similar to Code MCP or Config MCP, but for AI personas instead of files.
 
 **Key Components:**
-1. **Persona Files** (`personas/*.txt`) - Define agent behavior and expertise
-2. **State Management** (`state/*.json`) - Maintain conversation history
-3. **Engine Integration** - Uses council_orchestrator's engine selection
-4. **PersonaAgent Class** - Reuses proven agent implementation
+1.  **Persona Files** (`personas/*.txt`) - Define agent behavior and expertise
+2.  **State Management** (`state/*.json`) - Maintain conversation history
+3.  **Engine Integration** - Uses council_orchestrator's engine selection
+4.  **PersonaAgent Class** - Reuses proven agent implementation
 
 ### Integration with Council Orchestrator
+The Council MCP delegates agent execution to this server.
 
 ```
 Agent Persona MCP (Lightweight)
@@ -53,60 +88,6 @@ Agent Persona MCP (Lightweight)
     ├── select_engine(config) → Healthy engine instance
     └── PersonaAgent(engine, persona_file, state_file)
 ```
-
----
-
-## Available Tools
-
-### 1. `persona_dispatch`
-
-Execute a task using a specific persona agent.
-
-**Signature:**
-```python
-persona_dispatch(
-    role: str,                          # Persona role
-    task: str,                          # Task to execute
-    context: dict | None = None,        # Optional context
-    maintain_state: bool = True,        # Persist conversation
-    engine: str | None = None,          # "gemini" | "openai" | "ollama"
-    model_name: str | None = None,      # Specific model variant
-    custom_persona_file: str | None = None
-) -> dict
-```
-
-**Example - Built-in Persona:**
-```python
-result = persona_dispatch(
-    role="auditor",
-    task="Review the test coverage for the Git MCP server"
-)
-```
-
-**Example - With Context from Cortex:**
-```python
-# 1. Get context from Cortex MCP
-context = cortex_query(query="Previous security audits", max_results=3)
-
-# 2. Dispatch to persona with context
-result = persona_dispatch(
-    role="security_reviewer",
-    task="Audit the authentication flow",
-    context=context
-)
-```
-
-**Example - Specific Model:**
-```python
-result = persona_dispatch(
-    role="coordinator",
-    task="Plan the Q1 2025 roadmap",
-    engine="ollama",
-    model_name="Sanctuary-Qwen2-7B:latest"
-)
-```
-
-### 2. `persona_list_roles`
 
 List all available persona roles.
 

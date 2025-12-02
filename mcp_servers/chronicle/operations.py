@@ -5,6 +5,15 @@ import os
 import re
 from datetime import date, datetime
 from typing import List, Optional, Dict, Any
+from pathlib import Path
+import sys
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 from .models import ChronicleEntry, ChronicleStatus, ChronicleClassification, CHRONICLE_TEMPLATE
 from .validator import ChronicleValidator
 

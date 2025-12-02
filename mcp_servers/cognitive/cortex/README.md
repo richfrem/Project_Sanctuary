@@ -1,117 +1,84 @@
 # Cortex MCP Server
 
-**Domain:** `project_sanctuary.cognitive.cortex`  
-**Version:** 5.0 (MCP Migration Complete)  
-**Status:** Production-Ready
+**Description:** The Cortex MCP Server provides tools for interacting with the **Mnemonic Cortex** — the living memory of the Sanctuary Council. It is a local-first RAG system that transforms canonical markdown files into a dynamic, semantically searchable knowledge base.
 
-## Overview
+## Tools
 
-The Cortex MCP Server provides Model Context Protocol (MCP) tools for interacting with the **Mnemonic Cortex** — the living memory of the Sanctuary Council. It is a local-first, open-source Retrieval-Augmented Generation (RAG) system designed to traverse the Sanctuary's canonical markdown files (Protocols, Chronicles, etc.) and transform them into a dynamic, semantically searchable knowledge base.
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `cortex_query` | Perform semantic search query against the knowledge base. | `query` (str): Natural language query.<br>`max_results` (int): Max results (default: 5).<br>`use_cache` (bool): Use cache (default: False). |
+| `cortex_ingest_full` | Perform full re-ingestion of the knowledge base. | `purge_existing` (bool): Purge DB (default: True).<br>`source_directories` (List[str], optional): Dirs to ingest. |
+| `cortex_ingest_incremental` | Perform incremental ingestion of new/modified files. | `file_paths` (List[str]): Markdown files to ingest.<br>`metadata` (dict, optional): Metadata to attach.<br>`skip_duplicates` (bool): Skip existing files (default: True). |
+| `cortex_get_stats` | Get statistics about the knowledge base. | None |
+| `cortex_guardian_wakeup` | Generate Guardian boot digest from cached bundles (Protocol 114). | None |
+| `cortex_cache_warmup` | Pre-load high-priority documents into cache. | `priority_tags` (List[str], optional): Tags to prioritize. |
 
-This system is the architectural antidote to the "context window cage," enabling our AI agents to reason with the full, unbroken context of their history.
+## Resources
 
-**Vision & Purpose:** For the full strategic vision of the Mnemonic Cortex as the "heart of a sovereign mind" and its role in Project Sanctuary's future phases, see [`docs/mcp/cortex_vision.md`](../../../docs/mcp/cortex_vision.md). In summary, the Cortex solves the "Great Robbery" by providing true long-term memory, shattering context limitations, and enabling AI minds that learn and remember across sessions.
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `cortex://stats` | Knowledge base statistics | `application/json` |
+| `cortex://document/{doc_id}` | Full content of a document | `text/markdown` |
 
-**Integration with Council Orchestrator:** The Mnemonic Cortex serves as the knowledge foundation for the Council system. Council agents can query the Cortex during deliberation, enabling context-aware reasoning grounded in the project's complete history and protocols.
+## Prompts
 
-## The Strategic Crucible Loop
+*No prompts currently exposed.*
 
-The **Strategic Crucible Loop** is the autonomous engine of self-improvement for the Council. It connects the three tiers of memory into a continuous feedback cycle:
+## Configuration
 
-1. **Gap Analysis:** The Council identifies missing knowledge or strategic weaknesses.
-2. **Research:** The Intelligence Forge is triggered to generate new insights (Research Reports).
-3. **Ingestion:** New reports are ingested into the **Mnemonic Cortex** (Medium Memory).
-4. **Adaptation:** The **Memory Adaptor** synthesizes these reports into training packets for the Model (Slow Memory).
-5. **Synthesis:** The **Guardian Cache** (Fast Memory) is updated with high-priority context for immediate recall.
+### Environment Variables
+Create a `.env` file in the project root:
 
-This loop ensures that the Sanctuary evolves with every operation, transforming "what happened" into "what we know."
+```bash
+# Required for Embeddings
+OPENAI_API_KEY=sk-... # If using OpenAI embeddings
+# Optional
+CORTEX_CHROMA_DB_PATH=mcp_servers/cognitive/cortex/data/chroma_db
+CORTEX_CACHE_DIR=mcp_servers/cognitive/cortex/data/cache
+```
 
-## Architecture Philosophy
+### MCP Config
+Add this to your `mcp_config.json`:
 
+```json
+"cortex": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/cognitive/cortex",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/cognitive/cortex/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `cortex_query` and `cortex_ingest_full` appear in the tool list.
+3.  **Call Tool:** Execute `cortex_get_stats` and verify it returns valid JSON statistics.
+
+## Architecture
+
+### Overview
 The Mnemonic Cortex has evolved beyond a simple RAG implementation into a sophisticated, multi-pattern cognitive architecture designed for maximum efficiency and contextual accuracy. It is built on the **Doctrine of Hybrid Cognition**, ensuring our sovereign AI always reasons with the most current information.
 
-Our advanced architecture incorporates several key strategies:
+**Key Strategies:**
 - **Parent Document Retrieval:** To provide full, unbroken context to the LLM.
 - **Self-Querying Retrieval:** To enable intelligent, metadata-aware searches.
 - **Mnemonic Caching (CAG):** To provide near-instantaneous answers for common queries.
 
-**For a complete technical breakdown, including architectural diagrams and a detailed explanation of these strategies, see the canonical document: [`docs/mcp/RAG_STRATEGIES.md`](../../../docs/mcp/RAG_STRATEGIES.md).**
-
-## Technology Stack
-
-This project adheres to the **Iron Root Doctrine** by exclusively using open-source, community-vetted technologies.
-
-| Component | Technology | Role & Rationale |
-| :--- | :--- | :--- |
-| **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
-| **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup. |
-| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally. |
-| **Generation Model**| **Ollama (Sanctuary-Qwen2-7B:latest default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like Sanctuary-Qwen2-7B:latest, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
-| **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
-| **MCP Framework** | **FastMCP** | MCP server framework for standardized tool exposure and protocol compliance. |
-| **Testing Framework** | **pytest** | Automated test suite covering ingestion, querying, and integration scenarios. |
-| **Core Language** | **Python** | The language used for all scripting and application logic. |
-
-## Architecture
-
-This server wraps existing Mnemonic Cortex scripts and services:
-
-- **Ingestion:** `mnemonic_cortex/scripts/ingest.py` and `ingest_incremental.py`
-- **Query:** `mnemonic_cortex/app/services/vector_db_service.py` (Parent Document Retriever)
-- **Stats:** Direct ChromaDB collection access
-
-## Tools
-
-### 1. `cortex_ingest_full`
-
-Perform full re-ingestion of the knowledge base.
-
-**Parameters:**
-- `purge_existing` (bool, default: True): Whether to purge existing database
-- `source_directories` (List[str], optional): Directories to ingest
-
-**Returns:**
-```json
-{
-  "documents_processed": 459,
-  "chunks_created": 2145,
-  "ingestion_time_ms": 45230.5,
-  "vectorstore_path": "/path/to/chroma_db",
-  "status": "success"
-}
-```
-
-**Example:**
-```python
-cortex_ingest_full()
-cortex_ingest_full(source_directories=["01_PROTOCOLS", "00_CHRONICLE"])
-```
-
----
-
-### 2. `cortex_query`
-
-Perform semantic search query against the knowledge base.
-
-**Parameters:**
-- `query` (str): Natural language query
-- `max_results` (int, default: 5): Maximum results (1-100)
-- `use_cache` (bool, default: False): Use cache (Phase 2)
-
-**Returns:**
-```json
-{
-  "results": [
-    {
-      "content": "Full parent document content...",
-      "metadata": {
-        "source_file": "01_PROTOCOLS/101_protocol.md"
-      }
-    }
-  ],
-  "query_time_ms": 234.5,
-  "cache_hit": false,
-  "status": "success"
 }
 ```
 

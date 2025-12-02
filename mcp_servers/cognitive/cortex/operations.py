@@ -22,6 +22,13 @@ from .models import (
     to_dict
 )
 
+# Setup logging
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 
 class CortexOperations:
     """Core operations for Cortex MCP server."""
@@ -34,7 +41,7 @@ class CortexOperations:
             project_root: Absolute path to project root
         """
         self.project_root = Path(project_root)
-        self.scripts_dir = self.project_root / "mnemonic_cortex" / "scripts"
+        self.scripts_dir = self.project_root / "mcp_servers" / "cognitive" / "cortex" / "scripts"
     
     # Helper methods for ingestion
     def _chunked_iterable(self, seq: List, size: int):
@@ -123,7 +130,7 @@ class CortexOperations:
             default_source_dirs = [
                 "00_CHRONICLE", "01_PROTOCOLS", "02_USER_REFLECTIONS", "04_THE_FORTRESS",
                 "05_ARCHIVED_BLUEPRINTS", "06_THE_EMBER_LIBRARY", "07_COUNCIL_AGENTS",
-                "RESEARCH_SUMMARIES", "WORK_IN_PROGRESS", "mnemonic_cortex"
+                "RESEARCH_SUMMARIES", "WORK_IN_PROGRESS"
             ]
             exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
             
@@ -276,11 +283,13 @@ class CortexOperations:
 
             # Suppress all stdout/stderr from VectorDBService initialization
             with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-                from mnemonic_cortex.app.services.vector_db_service import VectorDBService
+                # TODO: Refactor to use direct LangChain logic like ingest_full (Task #083)
+                # from mnemonic_cortex.app.services.vector_db_service import VectorDBService
                 
                 # Initialize service
-                db_service = VectorDBService()
-                retriever = db_service.get_retriever()
+                # db_service = VectorDBService()
+                # retriever = db_service.get_retriever()
+                pass # Placeholder until refactoring is complete
             
             # Handle Reasoning Mode
             final_query = query
@@ -288,9 +297,13 @@ class CortexOperations:
             
             if reasoning_mode:
                 try:
-                    from mnemonic_cortex.app.services.llm_service import LLMService
-                    llm_service = LLMService(str(self.project_root))
-                    structured = llm_service.generate_structured_query(query)
+                    # TODO: Refactor to use direct LangChain logic (Task #083)
+                    # from mnemonic_cortex.app.services.llm_service import LLMService
+                    # llm_service = LLMService(str(self.project_root))
+                    # structured = llm_service.generate_structured_query(query)
+                    pass
+                    # structured = llm_service.generate_structured_query(query)
+                    structured = {} # Placeholder
                     
                     final_query = structured.get("semantic_query", query)
                     reasoning_metadata = {
@@ -304,7 +317,9 @@ class CortexOperations:
                     reasoning_metadata = {"error": f"LLM reasoning failed: {str(e)}"}
             
             # Execute query
-            docs = retriever.invoke(final_query)
+            # docs = retriever.invoke(final_query)
+            docs = [] # Placeholder until refactoring (Task #083)
+            print("[WARNING] Cortex query is currently in maintenance mode (Task #083). Returning empty results.")
             
             # Limit results
             docs = docs[:max_results]
@@ -388,7 +403,8 @@ class CortexOperations:
             if chroma_root_env:
                 chroma_root = Path(chroma_root_env) if Path(chroma_root_env).is_absolute() else (self.project_root / chroma_root_env)
             else:
-                chroma_root = self.project_root / "mnemonic_cortex" / db_path
+                # Default to mcp_servers/cognitive/cortex/data/chroma_db
+                chroma_root = self.project_root / "mcp_servers" / "cognitive" / "cortex" / "data" / db_path
             
             chroma_root = chroma_root.resolve()
             
@@ -906,7 +922,7 @@ class CortexOperations:
             query_data = parse_query_string(query_string)
             
             # Extract components
-            scope = query_data.get("scope", "mnemonic_cortex:index")
+            scope = query_data.get("scope", "cortex:index")
             intent = query_data.get("intent", "RETRIEVE")
             constraints = query_data.get("constraints", "")
             granularity = query_data.get("granularity", "ATOM")

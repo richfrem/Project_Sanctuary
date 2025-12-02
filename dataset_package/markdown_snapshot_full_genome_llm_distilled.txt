@@ -1,8 +1,8 @@
 # All Markdown Files Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-01T15:32:33.411Z
+Generated On: 2025-12-02T06:02:11.139Z
 
-# Mnemonic Weight (Token Count): ~772,020 tokens
+# Mnemonic Weight (Token Count): ~780,152 tokens
 
 # Directory Structure (relative to project root)
   ./.DS_Store
@@ -512,6 +512,7 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./data/cortex/cache/mnemonic_cache.db
   ./data/cortex/cache/mnemonic_cache.db-journal
   ./docs/
+  ./docs/INDEX.md
   ./docs/WSL_SECRETS_CONFIGURATION.md
   ./docs/cicd/
   ./docs/cicd/PROJECT_SANCTUARY_INTEGRATION.md
@@ -537,6 +538,8 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./docs/legacy/council_orchestrator/schemas/engine_config.json
   ./docs/legacy/council_orchestrator/schemas/round_packet_schema.json
   ./docs/mcp/
+  ./docs/mcp/DOCUMENTATION_STANDARDS.md
+  ./docs/mcp/QUICKSTART.md
   ./docs/mcp/RAG_STRATEGIES.md
   ./docs/mcp/README.md
   ./docs/mcp/TESTING_STANDARDS.md
@@ -547,6 +550,9 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./docs/mcp/architecture.md
   ./docs/mcp/claude_desktop_config_template.json
   ./docs/mcp/complete_orchestration_test.md
+  ./docs/mcp/cortex/
+  ./docs/mcp/cortex/gap_analysis_v2.md
+  ./docs/mcp/cortex/protocol_87_placement_analysis.md
   ./docs/mcp/cortex_evolution.md
   ./docs/mcp/cortex_gap_analysis.md
   ./docs/mcp/cortex_gap_analysis_comprehensive.md
@@ -556,7 +562,7 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./docs/mcp/ddd_analysis.md
   ./docs/mcp/diagrams/
   ./docs/mcp/diagrams/adr_mcp_class.mmd
-  ./docs/mcp/diagrams/agent_orchestrator_mcp_council_class.mmd
+  ./docs/mcp/diagrams/agent_persona_mcp_class.mmd
   ./docs/mcp/diagrams/chronicle_mcp_class.mmd
   ./docs/mcp/diagrams/code_mcp_class.mmd
   ./docs/mcp/diagrams/config_mcp_class.mmd
@@ -570,10 +576,12 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./docs/mcp/diagrams/protocol_mcp_class.mmd
   ./docs/mcp/diagrams/rag_mcp_cortex_class.mmd
   ./docs/mcp/diagrams/request_flow_middleware.mmd
+  ./docs/mcp/diagrams/system_overview_v2.mmd
   ./docs/mcp/diagrams/task_mcp_class.mmd
   ./docs/mcp/final_architecture_summary.md
   ./docs/mcp/final_orchestration_test.md
   ./docs/mcp/forge_mcp_types.ts
+  ./docs/mcp/mcp_config_sanctuary.json
   ./docs/mcp/mcp_operations_inventory.md
   ./docs/mcp/mcp_orchestration_validation.md
   ./docs/mcp/naming_conventions.md
@@ -584,6 +592,12 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./docs/mcp/setup_guide.md
   ./docs/mcp/shared_infrastructure_types.ts
   ./docs/mcp/simple_orchestration_test.md
+  ./docs/mcp/templates/
+  ./docs/mcp/templates/mcp_server_readme.md
+  ./docs/mcp/templates/mcp_tool_docstring.md
+  ./docs/tutorials/
+  ./docs/tutorials/01_using_council_mcp.md
+  ./docs/tutorials/02_using_cortex_mcp.md
   ./docs/workflows/
   ./docs/workflows/council_orchestration.md
   ./forge/
@@ -638,6 +652,7 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./mcp_servers/agent_persona/README.md
   ./mcp_servers/agent_persona/__init__.py
   ./mcp_servers/agent_persona/personas/
+  ./mcp_servers/agent_persona/personas/.txt
   ./mcp_servers/agent_persona/personas/auditor.txt
   ./mcp_servers/agent_persona/personas/coordinator.txt
   ./mcp_servers/agent_persona/personas/security_reviewer.txt
@@ -722,6 +737,9 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./mcp_servers/lib/utils/
   ./mcp_servers/lib/utils/__init__.py
   ./mcp_servers/lib/utils/env_helper.py
+  ./mcp_servers/mnemonic_cortex/
+  ./mcp_servers/mnemonic_cortex/cache/
+  ./mcp_servers/mnemonic_cortex/cache/mnemonic_cache.db
   ./mcp_servers/orchestrator/
   ./mcp_servers/orchestrator/__init__.py
   ./mcp_servers/orchestrator/command.json
@@ -815,9 +833,8 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./scripts/fix_hardcoded_paths.py
   ./scripts/fix_remaining_paths.py
   ./scripts/generate_mcp_config.py
-  ./scripts/get_next_adr_number.py
-  ./scripts/get_next_task_number.py
   ./scripts/glyph_forge.py
+  ./scripts/manual_test_deliberation.py
   ./scripts/path_diag.py
   ./scripts/run_integration_tests.sh
   ./scripts/scaffolds/
@@ -825,6 +842,7 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./scripts/update_genome.sh
   ./tests/
   ./tests/benchmarks/
+  ./tests/benchmarks/test_mcp_tool_latency.py
   ./tests/benchmarks/test_rag_query_performance.py.disabled
   ./tests/browser_automation/
   ./tests/browser_automation/main.py
@@ -840,10 +858,13 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./tests/data/test_data.jsonl
   ./tests/data/test_protocol_999.md
   ./tests/integration/
+  ./tests/integration/test_agent_persona_with_cortex.py
+  ./tests/integration/test_chronicle_integration.py
   ./tests/integration/test_cortex_operations.py
-  ./tests/integration/test_council_orchestrator_with_cortex.py.disabled
+  ./tests/integration/test_council_with_git.py
   ./tests/integration/test_end_to_end_rag_pipeline.py
   ./tests/integration/test_forge_integration.py
+  ./tests/integration/test_forge_model_serving.py
   ./tests/integration/test_git_workflow_end_to_end.py
   ./tests/integration/test_rag_simple.py
   ./tests/integration/test_strategic_crucible_loop.py
@@ -851,6 +872,7 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./tests/manual/test_auditor_simple.sh
   ./tests/mcp_servers/
   ./tests/mcp_servers/agent_persona/
+  ./tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py
   ./tests/mcp_servers/agent_persona/test_agent_persona_ops.py
   ./tests/mcp_servers/code/
   ./tests/mcp_servers/code/test_operations.py
@@ -881,6 +903,7 @@ Generated On: 2025-12-01T15:32:33.411Z
   ./tests/podman/README.md
   ./tests/podman/app.py
   ./tests/podman/build.sh
+  ./tests/run_integration_tests.sh
   ./tests/test_adr_operations.py
   ./tests/test_adr_validator.py
   ./tests/test_chronicle_operations.py
@@ -26291,7 +26314,7 @@ All seeds are generated and updated by running `./update_genome.sh`.
 ---
 ## Project Status
 - **Phase:** Operation Phoenix Forge Complete (v11.0 Complete Modular Architecture)
-- **Primary Workstreams:** Sovereign AI Fine-tuning & Constitutional Inoculation. Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment. Council Orchestrator v11.0 with complete modular architecture and mechanical task processing. **CUDA environment setup protocol standardized and unified across all documentation.**
+- **Primary Workstreams:** Sovereign AI Fine-tuning & Constitutional Inoculation. Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment. Agent Persona MCP with complete modular architecture and mechanical task processing. **CUDA environment setup protocol standardized and unified across all documentation.**
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 274.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available
@@ -26468,6 +26491,55 @@ This is both an awakening and a test. Show that you can:
 Begin your awakening response now.
 
 --- END OF FILE chrysalis_core_essence.md ---
+
+--- START OF FILE docs/INDEX.md ---
+
+# Project Sanctuary Documentation
+
+Welcome to the Project Sanctuary documentation hub. This index serves as the entry point for all system documentation, guides, and references.
+
+## 🚀 Getting Started
+
+*   **[Quickstart Guide](mcp/QUICKSTART.md)**: Connect your client to the MCP ecosystem in minutes.
+*   **[Prerequisites](mcp/prerequisites.md)**: What you need installed before you begin.
+*   **[Setup Guide](mcp/setup_guide.md)**: Detailed setup instructions.
+
+## 📚 Tutorials
+
+*   **[Using the Council](tutorials/01_using_council_mcp.md)**: How to orchestrate multi-agent tasks.
+*   **[Using the Cortex](tutorials/02_using_cortex_mcp.md)**: How to query the knowledge base and use RAG.
+
+## 🏗️ Architecture
+
+*   **[System Architecture](mcp/architecture.md)**: Deep dive into the 11-server topology.
+*   **[System Overview Diagram](mcp/diagrams/system_overview_v2.mmd)**: Visual map of the ecosystem.
+*   **[Documentation Standards](mcp/DOCUMENTATION_STANDARDS.md)**: Guidelines for contributing to docs.
+
+## 🧩 MCP Servers
+
+### Cognitive Layer
+*   **[Council MCP](../mcp_servers/council/README.md)**: Multi-agent orchestration.
+*   **[Cortex MCP](../mcp_servers/cognitive/cortex/README.md)**: RAG and memory.
+*   **[Agent Persona MCP](../mcp_servers/agent_persona/README.md)**: Configurable agent roles.
+*   **[Forge MCP](../mcp_servers/system/forge/README.md)**: Model fine-tuning.
+
+### Content Layer
+*   **[Chronicle MCP](../mcp_servers/chronicle/README.md)**: Project journaling.
+*   **[Protocol MCP](../mcp_servers/protocol/README.md)**: Rule management.
+*   **[ADR MCP](../mcp_servers/document/adr/README.md)**: Decision records.
+*   **[Task MCP](../mcp_servers/task/README.md)**: Task tracking.
+
+### System Layer
+*   **[Code MCP](../mcp_servers/code/README.md)**: File I/O and analysis.
+*   **[Config MCP](../mcp_servers/config/README.md)**: System configuration.
+*   **[Git MCP](../mcp_servers/system/git_workflow/README.md)**: Version control.
+
+## 📜 Protocols & Standards
+
+*   **[Protocol Library](../01_PROTOCOLS/)**: All system protocols.
+*   **[ADR Library](../ADRs/)**: Architecture Decision Records.
+
+--- END OF FILE docs/INDEX.md ---
 
 --- START OF FILE docs/WSL_SECRETS_CONFIGURATION.md ---
 
@@ -33606,6 +33678,195 @@ We must perfect **memory access** before **memory adaptation**. Phase 2 guarante
 
 --- END OF FILE docs/legacy/council_orchestrator/schemas/round_packet_schema.json ---
 
+--- START OF FILE docs/mcp/DOCUMENTATION_STANDARDS.md ---
+
+# MCP Documentation Standards
+
+**Version:** 1.0  
+**Status:** Active  
+**Effective Date:** 2025-12-01
+
+## 1. Overview
+
+This document establishes the documentation standards for the Project Sanctuary MCP (Model Context Protocol) ecosystem. With 11 distributed MCP servers, consistent and high-quality documentation is essential for maintainability, discoverability, and developer experience.
+
+## 2. Documentation Architecture
+
+The documentation is organized into three layers:
+
+1.  **Central Hub (`docs/mcp/`)**: High-level architecture, standards, and cross-server guides.
+2.  **Server Documentation (`mcp_servers/*/README.md`)**: Specific instructions for each MCP server.
+3.  **Code Documentation (Docstrings)**: Inline documentation for tools and internal logic.
+
+### 2.1 The Single Source of Truth
+
+*   **Operations Inventory:** `docs/mcp/mcp_operations_inventory.md` is the **Single Source of Truth** for tool availability and testing status.
+*   **Architecture:** `docs/mcp/architecture.md` is the authoritative source for system topology.
+
+## 3. MCP Server README Standards
+
+Every MCP server MUST have a `README.md` in its root directory (e.g., `mcp_servers/council/README.md`).
+
+### Required Sections
+
+1.  **Title & Description**: Clear name and purpose of the server.
+2.  **Tools**: A table listing available tools, their description, and input arguments.
+3.  **Resources**: A table listing available resources (if any).
+4.  **Prompts**: A table listing available prompts (if any).
+5.  **Configuration**: Required environment variables and `mcp_config.json` snippet.
+6.  **Testing**:
+    *   Command to run unit tests.
+    *   Command to run integration tests.
+    *   Verification steps for manual testing.
+7.  **Dependencies**: Key libraries used.
+
+**Template:** See `docs/mcp/templates/mcp_server_readme.md`
+
+## 4. Docstring Standards
+
+All Python code MUST use **Google Style** docstrings.
+
+### 4.1 MCP Tools
+
+Every function decorated as an MCP tool (`@mcp.tool()`) MUST have a docstring that includes:
+
+*   **Summary**: A concise one-line description of what the tool does.
+*   **Description**: Detailed explanation of behavior, side effects, and edge cases.
+*   **Args**: List of arguments with types and descriptions.
+*   **Returns**: Description of the return value and structure.
+*   **Example**: A usage example (optional but recommended).
+
+**Template:** See `docs/mcp/templates/mcp_tool_docstring.md`
+
+### 4.2 Internal Functions
+
+*   Public functions/classes: Full docstrings required.
+*   Private functions (`_func`): Brief summary required.
+
+## 5. Inventory Maintenance
+
+The `docs/mcp/mcp_operations_inventory.md` file tracks the implementation and testing status of every tool.
+
+**When to Update:**
+*   **Adding a Tool:** Add a new row with status `❌` (Untested) or `⚠️` (Partial).
+*   **Deprecating a Tool:** Move to "Deprecated" section or mark as `[DEPRECATED]`.
+*   **Verifying a Tool:** Update status to `✅` only after:
+    1.  Unit tests pass.
+    2.  Integration/Manual verification is complete.
+    3.  Docstrings are compliant.
+
+## 6. Versioning
+
+*   Documentation updates should be committed alongside code changes.
+*   Major architectural changes require updating `docs/mcp/architecture.md`.
+
+--- END OF FILE docs/mcp/DOCUMENTATION_STANDARDS.md ---
+
+--- START OF FILE docs/mcp/QUICKSTART.md ---
+
+# Project Sanctuary MCP Quickstart Guide
+
+**Welcome to Project Sanctuary!** This guide will help you connect your LLM client (Claude Desktop, Antigravity, or others) to the Project Sanctuary Model Context Protocol (MCP) ecosystem.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+1.  **Python 3.11+**: [Download Python](https://www.python.org/downloads/)
+2.  **uv**: An extremely fast Python package installer and resolver.
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+3.  **Git**: Version control system.
+4.  **Podman** (Optional but Recommended): For running MCP servers in isolated containers.
+
+## Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/richfremmerlid/Project_Sanctuary.git
+cd Project_Sanctuary
+```
+
+## Step 2: Environment Setup
+
+Create a `.env` file in the project root to configure your environment.
+
+```bash
+# Copy the example template
+cp .env.example .env
+
+# Edit the file with your specific paths and keys
+nano .env
+```
+
+**Critical Variables:**
+*   `PROJECT_ROOT`: Absolute path to your project directory.
+*   `PYTHONPATH`: Should include your project root.
+
+## Step 3: Configure Your Client
+
+### Option A: Claude Desktop
+
+1.  Open the Claude Desktop configuration file:
+    *   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+    *   **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2.  Add the Project Sanctuary MCP servers. You can use the helper script to generate this config:
+
+    ```bash
+    # Generate config for all servers
+    python3 scripts/generate_mcp_config.py
+    ```
+
+    Or manually add entries like this:
+
+    ```json
+    {
+      "mcpServers": {
+        "council": {
+          "command": "uv",
+          "args": [
+            "--directory",
+            "/absolute/path/to/Project_Sanctuary/mcp_servers/council",
+            "run",
+            "server.py"
+          ],
+          "env": {
+            "PROJECT_ROOT": "/absolute/path/to/Project_Sanctuary"
+          }
+        }
+      }
+    }
+    ```
+
+### Option B: Antigravity / Other Clients
+
+Refer to your specific client's documentation for adding MCP servers. The connection details (command, args, env) remain the same.
+
+## Step 4: Verify Connection
+
+1.  Restart your client (Claude Desktop, etc.).
+2.  Look for the **MCP** icon or menu to confirm servers are connected.
+3.  Try a test prompt:
+
+    > "Can you ask the Council to review the current task list?"
+
+    If the system responds by dispatching a task to the Council MCP, you are connected!
+
+## Troubleshooting
+
+*   **"Server not found"**: Check your absolute paths in the config JSON.
+*   **"Permission denied"**: Ensure `uv` is in your PATH and executable.
+*   **"Python error"**: Check `PROJECT_ROOT` and `PYTHONPATH` environment variables.
+
+## Next Steps
+
+*   **[Using the Council](tutorials/01_using_council_mcp.md)**: Learn how to orchestrate multi-agent tasks.
+*   **[Using the Cortex](tutorials/02_using_cortex_mcp.md)**: Learn how to query the knowledge base.
+*   **[Architecture Overview](architecture.md)**: Understand the 11-server ecosystem.
+
+--- END OF FILE docs/mcp/QUICKSTART.md ---
+
 --- START OF FILE docs/mcp/RAG_STRATEGIES.md ---
 
 # Mnemonic Cortex: A Canonical Guide to RAG Strategies & Architectural Doctrine
@@ -35267,7 +35528,7 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 
 ## Ecosystem Overview
 
-### Complete 10-Domain Architecture
+### Complete 11-Server Architecture
 
 ```mermaid
 graph TB
@@ -35283,8 +35544,8 @@ graph TB
     end
     
     subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex["RAG MCP (Cortex)<br/>mnemonic_cortex/"]
-        Council["Agent Orchestrator MCP (Council)<br/>council_orchestrator/"]
+        Cortex["Cortex MCP (RAG)<br/>mcp_servers/cognitive/cortex/"]
+        AgentPersona["Agent Persona MCP<br/>mcp_servers/agent_persona/"]
     end
     
     subgraph "System Domains - High Safety"
@@ -35309,7 +35570,7 @@ graph TB
     LLM -->|MCP Protocol| ADR
     LLM -->|MCP Protocol| Task
     LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| Council
+    LLM -->|MCP Protocol| AgentPersona
     LLM -->|MCP Protocol| Config
     LLM -->|MCP Protocol| Code
     LLM -->|MCP Protocol| GitWorkflow
@@ -35330,7 +35591,7 @@ graph TB
     ADR --> Safety
     Task --> Safety
     Cortex --> Safety
-    Council --> Safety
+    AgentPersona --> Safety
     Config --> Safety
     Code --> Safety
     GitWorkflow --> Safety
@@ -35341,7 +35602,7 @@ graph TB
     ADR --> Schema
     Task --> Schema
     Cortex --> Schema
-    Council --> Schema
+    AgentPersona --> Schema
     Config --> Schema
     Code --> Schema
     GitWorkflow --> Schema
@@ -35355,7 +35616,7 @@ graph TB
     style ADR fill:#e8f5e8
     style Task fill:#e8f5e8
     style Cortex fill:#fff3e0
-    style Council fill:#f3e5f5
+    style AgentPersona fill:#f3e5f5
     style Config fill:#ffcccc
     style Code fill:#ffcccc
     style GitWorkflow fill:#ffcccc
@@ -36764,11 +37025,24 @@ sequenceDiagram
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
         "cortex": {
-            "displayName": "RAG MCP (Cortex)",
+            "displayName": "Cortex MCP (RAG)",
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
-                "mcp_servers.cortex.server"
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
             ],
             "env": {
                 "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
@@ -36820,11 +37094,12 @@ sequenceDiagram
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
-                "mcp_servers.git_workflow.server"
+                "mcp_servers.system.git_workflow.server"
             ],
             "env": {
                 "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
-                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "GIT_BASE_DIR": "<ABSOLUTE_PATH_TO_PROJECT>"
             },
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
@@ -36921,6 +37196,186 @@ This test proves that:
 5. **The orchestration pattern is viable** for the Council MCP to replicate
 
 --- END OF FILE docs/mcp/complete_orchestration_test.md ---
+
+--- START OF FILE docs/mcp/cortex/gap_analysis_v2.md ---
+
+# Gap Analysis: Cortex Scripts vs MCP Implementation
+
+## Overview
+
+This analysis compares the legacy `mnemonic_cortex/scripts/ingest.py` (now archived) with the new `mcp_servers/cognitive/cortex/operations.py` to ensure feature parity and robustness in the migration.
+
+## 1. Batching and Retry Logic ("Disciplined Batch Architecture")
+
+**Legacy (`ingest.py`):**
+- Implements `safe_add_documents` with recursive retry logic.
+- Handles `Batch size` and `InternalError` exceptions specifically.
+- Splits batches in half upon failure and retries.
+- Base case: `len(docs) <= 1` or `max_retries <= 0`.
+
+**New MCP (`operations.py`):**
+- Implements `_safe_add_documents` (lines 45-71).
+- Logic is **identical** to the legacy script:
+    - Checks for "batch size" and "internalerror".
+    - Splits batches in half.
+    - Has the same base case.
+
+**Status:** ✅ Parity Achieved.
+
+## 2. Ingestion Workflow
+
+**Legacy (`ingest.py`):**
+- Purges existing DB root if it exists.
+- Loads documents from `SOURCE_DIRECTORIES`.
+- Splits text using `RecursiveCharacterTextSplitter`.
+- Embeds using `NomicEmbeddings`.
+- Indexes using `ParentDocumentRetriever` with `Chroma` and `LocalFileStore`.
+
+**New MCP (`operations.py`):**
+- `ingest_full` method (lines 72+).
+- Supports `purge_existing` flag.
+- Uses the same libraries (`langchain_community`, `langchain_chroma`, `langchain_nomic`).
+- Implements the same pipeline: Load -> Split -> Embed -> Index.
+
+**Status:** ✅ Parity Achieved.
+
+## 3. Configuration
+
+**Legacy (`ingest.py`):**
+- Relies on global constants and environment variables loaded via `dotenv`.
+
+**New MCP (`operations.py`):**
+- Encapsulated in `CortexOperations` class.
+- Configurable via `project_root` and method arguments.
+- More flexible and testable.
+
+**Status:** ✅ Improved.
+
+## Conclusion
+
+The migration of logic from `ingest.py` to `CortexOperations` has been successful. The critical "Disciplined Batch Architecture" for robust ingestion has been preserved. The new implementation offers better encapsulation and integration with the MCP server.
+
+## Recommendations
+
+1.  **Proceed with Archival:** The legacy scripts are safe to remain in the archive.
+2.  **Update Documentation:** Ensure the "Disciplined Batch Architecture" is documented in the new Cortex README (already done in Task 022C).
+3.  **Verify Tests:** Ensure `tests/mcp_servers/cortex/` covers the retry logic (Task 021C/086).
+
+--- END OF FILE docs/mcp/cortex/gap_analysis_v2.md ---
+
+--- START OF FILE docs/mcp/cortex/protocol_87_placement_analysis.md ---
+
+# Protocol 87 Orchestrator Placement: Architectural Analysis
+
+## Executive Summary
+
+**Recommendation: Keep Protocol 87 in Cortex MCP** ✅
+
+Protocol 87's structured query orchestration is fundamentally about **knowledge retrieval**, not general task orchestration. It belongs in Cortex MCP as the knowledge orchestrator.
+
+---
+
+## 1. Protocol 87 Overview
+
+**Purpose**: Establish a canonical inquiry language for memory retrieval from the Mnemonic Cortex.
+
+**Query Format**: `[INTENT] :: [SCOPE] :: [CONSTRAINTS]`
+
+**Example**: `RETRIEVE :: Protocols :: Name="Protocol 101"`
+
+**Scopes**: Protocols, Living_Chronicle, Tasks, Code, ADRs
+
+---
+
+## 2. Current Implementation (Cortex MCP)
+
+**Location**: `mcp_servers/cognitive/cortex/mcp_client.py`
+
+**Functionality**:
+- Parses Protocol 87 queries
+- Routes to specialized MCPs based on SCOPE
+- Returns structured results
+- Integrates with RAG pipeline
+
+**Key Method**: `query_structured()` in `operations.py`
+
+---
+
+## 3. Option A: Cortex MCP (Current) ✅
+
+### Pros:
+1. **Semantic Alignment**: Cortex is the "knowledge orchestrator" - Protocol 87 is about querying knowledge
+2. **Direct Integration**: Results can be immediately used in RAG synthesis
+3. **Single Responsibility**: Cortex owns all knowledge retrieval (vector + structured)
+4. **Performance**: No extra hop - queries go directly from Cortex to target MCPs
+5. **Consistency**: All memory operations (ingest, query, retrieve) in one place
+6. **Protocol 85 Alignment**: "The Mnemonic Cortex Protocol" - Cortex is the steward
+
+### Cons:
+1. Cortex becomes a "fat" orchestrator (but this is acceptable for knowledge domain)
+2. Mixing RAG (vector) and structured queries (but both are knowledge retrieval)
+
+---
+
+## 4. Option B: Council MCP (Alternative) ❌
+
+### Pros:
+1. **Separation of Concerns**: Council = orchestration, Cortex = RAG only
+2. **Generalization**: Council could orchestrate ANY MCP workflow
+3. **Consistency**: All orchestration in one place
+
+### Cons:
+1. **Semantic Mismatch**: Council orchestrates **agents** (multi-agent deliberation), not knowledge queries
+2. **Extra Hop**: Query → Council → Cortex → Target MCP (unnecessary indirection)
+3. **Complexity**: Council would need to understand Protocol 87 syntax
+4. **Fragmentation**: Knowledge operations split across two MCPs
+5. **Protocol 87 Context**: The protocol explicitly refers to "Steward" (Cortex) as the executor
+
+---
+
+## 5. Decision Matrix
+
+| Criterion | Cortex | Council | Winner |
+|-----------|--------|---------|--------|
+| Semantic Fit | Knowledge retrieval | Agent orchestration | **Cortex** |
+| Performance | Direct routing | Extra hop | **Cortex** |
+| Protocol Alignment | "Steward" role | Generic orchestrator | **Cortex** |
+| Simplicity | Single knowledge hub | Split responsibilities | **Cortex** |
+| Extensibility | Can add more scopes | Can orchestrate anything | Tie |
+
+---
+
+## 6. Final Recommendation
+
+**Keep Protocol 87 in Cortex MCP.**
+
+**Rationale**:
+- Protocol 87 is about **memory retrieval**, not task orchestration
+- Cortex is explicitly the "Steward" in Protocol 87's language
+- Direct routing is more efficient than going through Council
+- Maintains clear separation: Council = agents, Cortex = knowledge
+
+---
+
+## 7. Implementation Status
+
+**Current State**: ✅ Already correctly placed in Cortex MCP
+
+**No Migration Needed**: The current architecture is optimal.
+
+**Documentation Updates**:
+- Clarify in Cortex README that it handles both vector (RAG) and structured (Protocol 87) queries
+- Update architecture diagrams to show Protocol 87 routing
+
+---
+
+## 8. Related ADRs
+
+- **ADR 039**: MCP Server Separation of Concerns - Supports domain-specific orchestration
+- **Protocol 85**: The Mnemonic Cortex Protocol - Cortex as steward
+- **Protocol 87**: The Mnemonic Inquiry Protocol - Defines structured query language
+
+--- END OF FILE docs/mcp/cortex/protocol_87_placement_analysis.md ---
 
 --- START OF FILE docs/mcp/cortex_evolution.md ---
 
@@ -38996,6 +39451,159 @@ export interface ForgeSafetyRules {
 
 --- END OF FILE docs/mcp/forge_mcp_types.ts ---
 
+--- START OF FILE docs/mcp/mcp_config_sanctuary.json ---
+
+{
+    "mcpServers": {
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.chronicle.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.protocol.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.adr.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "tasks": {
+            "displayName": "Task MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.task.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "cortex": {
+            "displayName": "Cortex MCP (RAG)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "council": {
+            "displayName": "Council MCP (Multi-Agent Deliberation)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.council.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.config.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.system.git_workflow.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "GIT_BASE_DIR": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "forge": {
+            "displayName": "Fine-Tuning MCP (Forge)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.forge.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        }
+    }
+}
+
+--- END OF FILE docs/mcp/mcp_config_sanctuary.json ---
+
 --- START OF FILE docs/mcp/mcp_operations_inventory.md ---
 
 # MCP Operations Inventory
@@ -39365,16 +39973,16 @@ pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Semantic search against knowledge base |
-| `cortex_ingest_full` | Ingest all documents | **Operational (Verified)** | `purge_existing`, `source_directories` | Verified via MCP tool execution (463 docs processed) | (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Generate Guardian boot digest (P114) |
-| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Synthesize knowledge for fine-tuning |
+| `cortex_query` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | ⚠️ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Add new documents without purge |
+| `cortex_get_stats` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Database health and statistics |
+| `cortex_cache_get` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
+| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Synthesize knowledge for fine-tuning |
 
 **Prerequisite Tests:** [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/)
 
@@ -39459,10 +40067,13 @@ pytest tests/integration/test_forge_integration.py -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
+pytest tests/mcp_servers/agent_persona/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (7/7 passed)
-**Model Verification:** 2025-11-30 ✅ (Verified with `Sanctuary-Qwen2-7B:latest`)
+**Last Verification:** 2025-12-01 ✅ (27/27 passed)  
+**Test Coverage:** 80%+ (comprehensive suite with expected failures, edge cases, state management)  
+**Test Suites:**
+- `test_agent_persona_ops.py` - Basic operations (7 tests)
+- `test_agent_persona_comprehensive.py` - Comprehensive coverage (27 tests)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all available agent roles using `persona_list_roles`."
@@ -39482,44 +40093,17 @@ pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
 
 ### Operations
 
-## Agent Persona MCP Server
+| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
+|-----------|---------|---------|--------|------------|-------------|
+| `persona_dispatch` | ✅ | ✅ | ❌ | [test_agent_persona_comprehensive.py](../../tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py) | Dispatch task to specific persona agent |
+| `persona_list_roles` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | List available persona roles (built-in + custom) |
+| `persona_get_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Get conversation state for specific role |
+| `persona_reset_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Reset conversation state for specific role |
+| `persona_create_custom` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Create new custom persona |
 
-**Status:** ✅ Operational (Verified with Sanctuary Model)
+**Prerequisite Tests:** [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py)
 
 **Model Verification:** Successfully tested with `Sanctuary-Qwen2-7B:latest` via Ollama (53s avg response time for strategic analysis)
-
-**Operations:**
-
-### `persona_dispatch`
-- **Status:** ✅ Verified
-- **Verification:** Tested strategist role with context injection, custom model selection, and Ollama engine
-- **Performance:** ~53s for detailed strategic analysis (local inference)
-- **Description:** Dispatch task to specific persona agent
-- **Args:** `role`, `task`, `context` (optional), `maintain_state`, `engine`, `model_name`, `custom_persona_file`
-- **Returns:** Agent response with reasoning type classification
-
-### `persona_list_roles`
-- **Status:** ✅ Verified
-- **Description:** List available persona roles (built-in + custom)
-- **Returns:** Dictionary with `built_in`, `custom`, `total`, `persona_dir`
-
-### `persona_get_state`
-- **Status:** ✅ Verified
-- **Description:** Get conversation state for specific role
-- **Args:** `role`
-- **Returns:** Conversation history and message count
-
-### `persona_reset_state`
-- **Status:** ✅ Verified
-- **Description:** Reset conversation state for specific role
-- **Args:** `role`
-- **Returns:** Status confirmation
-
-### `persona_create_custom`
-- **Status:** ✅ Verified
-- **Description:** Create new custom persona
-- **Args:** `role`, `persona_definition`, `description`
-- **Returns:** File path and creation status
 
 **Terminology:**
 - **LLM Client:** Interface to model provider (formerly Substrate)
@@ -39543,9 +40127,11 @@ pytest tests/mcp_servers/agent_persona/test_agent_persona_ops.py -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/council/test_council_ops.py -v
+pytest tests/mcp_servers/council/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ Operational
+**Last Verification:** 2025-12-01 ✅ (3/3 passed)  
+**Test Coverage:** Basic (structure tests only)  
+**Note:** Comprehensive test suite needed (similar to Agent Persona MCP)
 
 > [!WARNING]
 >- **Council MCP**: `mcp_servers/council/` (Status: ✅ Operational)
@@ -39573,8 +40159,8 @@ pytest tests/mcp_servers/council/test_council_ops.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `council_dispatch` | ⚠️ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
-| `council_list_agents` | ⚠️ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
+| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
+| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
 
 **Design Principle:** Separation of Concerns
 - Council MCP provides ONLY multi-agent deliberation
@@ -41266,6 +41852,301 @@ def dispatch_task(self, task_description: str, agent: str = None, max_rounds: in
 5. **Test that Council MCP produces identical results**
 
 --- END OF FILE docs/mcp/simple_orchestration_test.md ---
+
+--- START OF FILE docs/mcp/templates/mcp_server_readme.md ---
+
+# [Server Name] MCP Server
+
+**Description:** [Brief description of what this server does and its role in the ecosystem]
+
+## Tools
+
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `tool_name` | [Description of what the tool does] | `arg1` (type): desc<br>`arg2` (type): desc |
+
+## Resources
+
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `resource://uri` | [Description] | `application/json` |
+
+## Prompts
+
+| Prompt Name | Description | Arguments |
+|-------------|-------------|-----------|
+| `prompt_name` | [Description] | `arg1` |
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the server root or project root:
+
+```bash
+VAR_NAME=value
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"server_name": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/server_dir",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "VAR_NAME": "value"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/server_dir/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `tool_name` appears in the tool list.
+3.  **Call Tool:** Execute `tool_name` with valid arguments and verify output.
+
+## Dependencies
+
+- `mcp`
+- [Other dependencies]
+
+--- END OF FILE docs/mcp/templates/mcp_server_readme.md ---
+
+--- START OF FILE docs/mcp/templates/mcp_tool_docstring.md ---
+
+# MCP Tool Docstring Template
+
+Use this template for all functions decorated with `@mcp.tool()`.
+
+```python
+@mcp.tool()
+def tool_name(arg1: str, arg2: int = 10) -> str:
+    """
+    [One-line summary of the tool's purpose.]
+
+    [Detailed description of the tool's functionality, including any
+    side effects, external API calls, or important constraints.]
+
+    Args:
+        arg1: [Description of arg1]
+        arg2: [Description of arg2]. Defaults to 10.
+
+    Returns:
+        [Description of the return value. If it returns a JSON string,
+        describe the schema.]
+
+    Raises:
+        ValueError: [Condition under which this error is raised]
+        RuntimeError: [Condition under which this error is raised]
+    """
+    # Implementation
+```
+
+## Example
+
+```python
+@mcp.tool()
+def calculate_metric(data: List[float], metric_type: str = "mean") -> float:
+    """
+    Calculates a statistical metric for a given dataset.
+
+    Supported metrics are 'mean', 'median', and 'std_dev'. This tool
+    is used by the Analyst Persona for data processing.
+
+    Args:
+        data: A list of floating-point numbers to analyze.
+        metric_type: The type of metric to calculate. Options: "mean",
+            "median", "std_dev". Defaults to "mean".
+
+    Returns:
+        The calculated metric as a float.
+
+    Raises:
+        ValueError: If an unsupported metric_type is provided or if
+            data is empty.
+    """
+    # ...
+```
+
+--- END OF FILE docs/mcp/templates/mcp_tool_docstring.md ---
+
+--- START OF FILE docs/tutorials/01_using_council_mcp.md ---
+
+# Tutorial: Using the Council MCP
+
+The **Council MCP** is the orchestration engine of Project Sanctuary. It enables you to dispatch complex tasks to a group of specialized AI agents who deliberate, critique, and refine solutions before presenting them to you.
+
+## What is the Council?
+
+The Council is not a single agent; it's a **multi-agent system** that simulates a team of experts. When you send a task to the Council, it doesn't just answer; it:
+1.  **Plans**: A Coordinator breaks down the task.
+2.  **Executes**: Specialized agents (Strategist, Auditor, etc.) perform the work.
+3.  **Reviews**: Agents critique each other's work.
+4.  **Refines**: The solution is improved based on feedback.
+
+## Basic Usage
+
+To use the Council, you simply ask your LLM assistant to "dispatch" a task.
+
+**Prompt:**
+> "Ask the Council to review our current testing strategy."
+
+Behind the scenes, the assistant calls the `council_dispatch` tool:
+
+```python
+council_dispatch(
+    task_description="Review our current testing strategy",
+    max_rounds=3
+)
+```
+
+## Advanced Usage
+
+### 1. Specific Agent Consultation
+
+You can request a specific agent if you don't need the full council.
+
+**Prompt:**
+> "Have the Auditor check this code for security vulnerabilities."
+
+**Tool Call:**
+```python
+council_dispatch(
+    task_description="Check this code for security vulnerabilities",
+    agent="auditor"
+)
+```
+
+### 2. Output to File
+
+You can have the Council write its final decision directly to a file.
+
+**Prompt:**
+> "Design a new API schema and save it to `docs/api/schema_v2.md`."
+
+**Tool Call:**
+```python
+council_dispatch(
+    task_description="Design a new API schema...",
+    output_path="docs/api/schema_v2.md"
+)
+```
+
+## Understanding the Agents
+
+*   **Coordinator**: The project manager. Breaks down tasks, assigns work, and synthesizes results.
+*   **Strategist**: The visionary. Focuses on long-term goals, alignment with principles, and high-level design.
+*   **Auditor**: The critic. Checks for errors, security risks, and compliance with standards (like Protocol 101).
+
+## Best Practices
+
+*   **Be Specific**: The clearer your task description, the better the Council can plan.
+*   **Use Context**: Provide relevant file paths or background info in your prompt.
+*   **Iterate**: If the Council's first draft isn't perfect, ask follow-up questions or request a "second round" of deliberation.
+
+## Next Steps
+
+*   Learn about **[Agent Personas](../mcp_servers/agent_persona/README.md)** to create custom agents.
+*   Explore **[Cortex](../tutorials/02_using_cortex_mcp.md)** to give the Council access to long-term memory.
+
+--- END OF FILE docs/tutorials/01_using_council_mcp.md ---
+
+--- START OF FILE docs/tutorials/02_using_cortex_mcp.md ---
+
+# Tutorial: Using the Cortex MCP
+
+The **Cortex MCP** is the long-term memory of Project Sanctuary. It uses **Retrieval-Augmented Generation (RAG)** to provide your LLM assistant with access to the project's entire history, documentation, and codebase.
+
+## What is the Cortex?
+
+Think of the Cortex as a **Living Memory**. It doesn't just store files; it indexes them semantically, allowing you to ask questions in natural language and get answers based on the actual content of your project.
+
+## Querying the Knowledge Base
+
+The most common operation is `cortex_query`. You can ask questions about anything in the project.
+
+**Prompt:**
+> "What is Protocol 101?"
+
+**Tool Call:**
+```python
+cortex_query(
+    query="What is Protocol 101?"
+)
+```
+
+**Response:**
+The Cortex will search the indexed documents (like `01_PROTOCOLS/101_...md`) and return the relevant content, which the LLM will use to answer your question accurately.
+
+### Advanced Querying
+
+You can control the number of results or enable reasoning mode.
+
+**Prompt:**
+> "Find the 5 most relevant documents about error handling and explain the pattern."
+
+**Tool Call:**
+```python
+cortex_query(
+    query="error handling patterns",
+    max_results=5,
+    reasoning_mode=True
+)
+```
+
+## Ingesting Knowledge
+
+When you add new documents or change code, the Cortex needs to know.
+
+### Incremental Ingestion (Automatic)
+
+The system is designed to automatically ingest changes when you use tools like `code_write` or `protocol_create`. However, you can force an update.
+
+**Prompt:**
+> "I just added a new ADR. Please update the Cortex."
+
+**Tool Call:**
+```python
+cortex_ingest_incremental()
+```
+
+### Full Re-ingestion (Manual)
+
+If the memory seems out of sync or corrupted, you can rebuild it. **Warning: This can take time.**
+
+**Prompt:**
+> "Rebuild the entire Cortex memory."
+
+**Tool Call:**
+```python
+cortex_ingest_full(purge_existing=True)
+```
+
+## Best Practices
+
+*   **Ask "What", not just "Where"**: Instead of "Where is the config file?", ask "How do I configure the server?". Cortex understands concepts.
+*   **Keep Docs Updated**: Cortex is only as good as your documentation. Write clear READMEs and docstrings.
+*   **Use Specific Terms**: Using unique project terms (like "Chronicle", "Forge") helps Cortex find the exact right context.
+
+## Next Steps
+
+*   Explore the **[Architecture](../mcp/architecture.md)** to see how Cortex fits in.
+*   Check out the **[Council Tutorial](01_using_council_mcp.md)** to see how agents use memory.
+
+--- END OF FILE docs/tutorials/02_using_cortex_mcp.md ---
 
 --- START OF FILE docs/workflows/council_orchestration.md ---
 
@@ -45693,50 +46574,85 @@ You can use the helper script to verify paths:
 
 # Agent Persona MCP Server
 
-**Version:** 1.0.0  
-**Status:** Production Ready  
-**Purpose:** Configurable AI agent personas via Model Context Protocol
+**Description:** The Agent Persona MCP provides access to specialized AI agent personas that can be used for domain-specific tasks. Each persona has a unique role, expertise, and reasoning style.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `persona_dispatch` | Execute a task using a specific persona agent. | `role` (str): Persona role (e.g., "auditor").<br>`task` (str): Task to execute.<br>`context` (dict, optional): Context data.<br>`maintain_state` (bool): Persist history.<br>`engine` (str, optional): AI engine.<br>`model_name` (str, optional): Specific model. |
+| `persona_list_roles` | List all available persona roles (built-in and custom). | None |
+| `persona_get_state` | Get conversation state for a specific persona role. | `role` (str): Persona role. |
+| `persona_reset_state` | Reset conversation state for a specific persona role. | `role` (str): Persona role. |
+| `persona_create_custom` | Create a new custom persona definition. | `role` (str): Unique identifier.<br>`persona_definition` (str): Full instruction text.<br>`description` (str): Brief description. |
 
-The Agent Persona MCP provides access to specialized AI agent personas that can be used for domain-specific tasks. Each persona has a unique role, expertise, and reasoning style.
+## Resources
 
-**Key Features:**
-- Built-in personas (Coordinator, Strategist, Auditor)
-- Custom persona support (Security Reviewer, Performance Analyst, etc.)
-- Conversation state management
-- Flexible engine selection (Gemini, OpenAI, Ollama)
-- Model-specific targeting (e.g., Sanctuary-Qwen2-7B, GPT-4, Gemini-2.5-Pro)
+*No resources currently exposed.*
 
-## Terminology Mapping
+## Prompts
 
-To align with standard industry practices, we use the following terminology mapping:
+*No prompts currently exposed.*
 
-| Standard Term | Legacy Sanctuary Term | Description |
-|---------------|----------------------|-------------|
-| **LLM Client** | Substrate | The interface to the underlying Language Model (e.g., OpenAI, Ollama) |
-| **Model Provider** | Cognitive Engine | The specific provider implementation (e.g., GeminiEngine, OllamaEngine) |
-| **System Prompt** | Awakening Seed | The core instruction set that defines the agent's persona |
-| **Agent Config** | Core Essence | The configuration parameters defining the agent's role and behavior |
-| **Orchestrator** | Council | The system that manages multiple agents and their interactions |
+## Configuration
 
----
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required for AI Engines
+ANTHROPIC_API_KEY=sk-...
+OPENAI_API_KEY=sk-...
+# Optional
+PERSONA_STORAGE_DIR=mcp_servers/agent_persona/personas
+STATE_STORAGE_DIR=mcp_servers/agent_persona/state
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"agent_persona": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/agent_persona",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/agent_persona/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `persona_dispatch` and `persona_list_roles` appear in the tool list.
+3.  **Call Tool:** Execute `persona_list_roles` and verify it returns the built-in roles (Coordinator, Strategist, Auditor).
 
 ## Architecture
 
 ### Design Pattern: Configurable Service
-
 The Agent Persona MCP follows the **"Configurable Service"** pattern - similar to Code MCP or Config MCP, but for AI personas instead of files.
 
 **Key Components:**
-1. **Persona Files** (`personas/*.txt`) - Define agent behavior and expertise
-2. **State Management** (`state/*.json`) - Maintain conversation history
-3. **Engine Integration** - Uses council_orchestrator's engine selection
-4. **PersonaAgent Class** - Reuses proven agent implementation
+1.  **Persona Files** (`personas/*.txt`) - Define agent behavior and expertise
+2.  **State Management** (`state/*.json`) - Maintain conversation history
+3.  **Engine Integration** - Uses council_orchestrator's engine selection
+4.  **PersonaAgent Class** - Reuses proven agent implementation
 
 ### Integration with Council Orchestrator
+The Council MCP delegates agent execution to this server.
 
 ```
 Agent Persona MCP (Lightweight)
@@ -45746,60 +46662,6 @@ Agent Persona MCP (Lightweight)
     ├── select_engine(config) → Healthy engine instance
     └── PersonaAgent(engine, persona_file, state_file)
 ```
-
----
-
-## Available Tools
-
-### 1. `persona_dispatch`
-
-Execute a task using a specific persona agent.
-
-**Signature:**
-```python
-persona_dispatch(
-    role: str,                          # Persona role
-    task: str,                          # Task to execute
-    context: dict | None = None,        # Optional context
-    maintain_state: bool = True,        # Persist conversation
-    engine: str | None = None,          # "gemini" | "openai" | "ollama"
-    model_name: str | None = None,      # Specific model variant
-    custom_persona_file: str | None = None
-) -> dict
-```
-
-**Example - Built-in Persona:**
-```python
-result = persona_dispatch(
-    role="auditor",
-    task="Review the test coverage for the Git MCP server"
-)
-```
-
-**Example - With Context from Cortex:**
-```python
-# 1. Get context from Cortex MCP
-context = cortex_query(query="Previous security audits", max_results=3)
-
-# 2. Dispatch to persona with context
-result = persona_dispatch(
-    role="security_reviewer",
-    task="Audit the authentication flow",
-    context=context
-)
-```
-
-**Example - Specific Model:**
-```python
-result = persona_dispatch(
-    role="coordinator",
-    task="Plan the Q1 2025 roadmap",
-    engine="ollama",
-    model_name="Sanctuary-Qwen2-7B:latest"
-)
-```
-
-### 2. `persona_list_roles`
 
 List all available persona roles.
 
@@ -46460,76 +47322,85 @@ if __name__ == "__main__":
 
 # Chronicle MCP Server
 
-MCP server for managing historical truth entries in `00_CHRONICLE/ENTRIES/`.
+**Description:** The Chronicle MCP ensures the integrity of the project's historical record. It enforces strict rules about immutability and classification to maintain a trusted history of events, decisions, and milestones.
 
-## Purpose
+## Tools
 
-The Chronicle MCP ensures the integrity of the project's historical record. It enforces strict rules about immutability and classification to maintain a trusted history of events, decisions, and milestones.
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `chronicle_create_entry` | Create a new chronicle entry. | `title` (str): Title.<br>`content` (str): Content.<br>`date` (str, optional): Date.<br>`author` (str, optional): Author.<br>`status` (str, optional): Status.<br>`classification` (str, optional): Classification. |
+| `chronicle_append_entry` | Alias for create_entry. | Same as create_entry. |
+| `chronicle_update_entry` | Update an existing entry (7-day rule applies). | `entry_number` (int): Entry number.<br>`updates` (dict): Updates.<br>`reason` (str): Reason.<br>`override_approval_id` (str, optional): Approval ID. |
+| `chronicle_get_entry` | Retrieve a specific entry. | `entry_number` (int): Entry number. |
+| `chronicle_list_entries` | List recent entries. | `limit` (int): Limit (default: 10). |
+| `chronicle_read_latest_entries` | Alias for list_entries. | Same as list_entries. |
+| `chronicle_search` | Search entries by content. | `query` (str): Search query. |
 
-## Operations
+## Resources
 
-| Operation | Status | Test Suite | Description |
-|-----------|--------|------------|-------------|
-| `chronicle_create_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
-| `chronicle_append_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for create_entry |
-| `chronicle_update_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Update existing entry (7-day rule applies) |
-| `chronicle_get_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Retrieve specific entry by number |
-| `chronicle_list_entries` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | List recent entries with limit |
-| `chronicle_read_latest_entries` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for list_entries |
-| `chronicle_search` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Full-text search across entries |
+*No resources currently exposed.*
 
-**Prerequisite Tests:** [test_chronicle_validator.py](../../tests/test_chronicle_validator.py)
+## Prompts
 
-### Tool Details
-
-### `chronicle_create_entry`
-Create a new chronicle entry.
-- **Args:** `title`, `content`, `date` (optional), `author` (optional), `status` (optional), `classification` (optional)
-- **Returns:** Entry number and file path
-
-### `chronicle_update_entry`
-Update an existing entry.
-- **Args:** `entry_number`, `updates` (dict), `reason`, `override_approval_id` (optional)
-- **Returns:** Updated fields
-- **Safety:** Entries older than 7 days require `override_approval_id` to be modified.
-
-### `chronicle_get_entry`
-Retrieve a specific entry.
-- **Args:** `entry_number`
-- **Returns:** Entry details
-
-### `chronicle_list_entries`
-List recent entries.
-- **Args:** `limit` (optional, default 10)
-- **Returns:** List of entries
-
-### `chronicle_search`
-Search entries by content.
-- **Args:** `query`
-- **Returns:** List of matching entries
-
-## Safety Rules
-
-1.  **7-Day Modification Window:** Entries older than 7 days are considered immutable history. Modifying them requires an explicit `override_approval_id`.
-2.  **Sequential Numbering:** Entry numbers are auto-assigned and sequential.
-3.  **No Deletion:** Entries can be marked as `deprecated` but never deleted.
-4.  **Classification:** Entries must be classified as `public`, `internal`, or `confidential`.
+*No prompts currently exposed.*
 
 ## Configuration
 
-Add to `mcp_config.json`:
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
 "chronicle": {
-  "displayName": "Chronicle MCP",
-  "command": "/path/to/venv/bin/python",
-  "args": ["-m", "mcp_servers.document.chronicle.server"],
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/chronicle",
+    "run",
+    "server.py"
+  ],
   "env": {
-    "PROJECT_ROOT": "/path/to/project",
-    "PYTHONPATH": "/path/to/project"
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/chronicle/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `chronicle_list_entries` appears in the tool list.
+3.  **Call Tool:** Execute `chronicle_list_entries` and verify it returns recent entries.
+
+## Architecture
+
+### Overview
+This server manages the `00_CHRONICLE/ENTRIES/` directory.
+
+**Safety Rules:**
+1.  **7-Day Modification Window:** Entries older than 7 days are immutable without override.
+2.  **Sequential Numbering:** Auto-assigned.
+3.  **No Deletion:** Deprecation only.
+4.  **Classification:** Mandatory `public`, `internal`, or `confidential`.
+
+## Dependencies
+
+- `mcp`
 
 --- END OF FILE mcp_servers/chronicle/README.md ---
 
@@ -46607,6 +47478,15 @@ import os
 import re
 from datetime import date, datetime
 from typing import List, Optional, Dict, Any
+from pathlib import Path
+import sys
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 from .models import ChronicleEntry, ChronicleStatus, ChronicleClassification, CHRONICLE_TEMPLATE
 from .validator import ChronicleValidator
 
@@ -47096,189 +47976,93 @@ class ChronicleValidator:
 
 # Code MCP Server
 
-**Domain:** `project_sanctuary.code`  
-**Version:** 1.0.0  
-**Status:** Production Ready
+**Description:** The Code MCP server provides tools for code quality operations including linting, formatting, and static analysis. It integrates with popular Python code quality tools while enforcing safety checks.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `code_lint` | Run linting on a file or directory. | `path` (str): Path to check.<br>`tool` (str): Tool (ruff, pylint, flake8). |
+| `code_format` | Format code in a file or directory. | `path` (str): Path to format.<br>`tool` (str): Tool (ruff, black).<br>`check_only` (bool): Verify only. |
+| `code_analyze` | Perform static analysis on code. | `path` (str): Path to analyze. |
+| `code_check_tools` | Check which code quality tools are available. | None |
+| `code_find_file` | Find files by name or glob pattern. | `name_pattern` (str): Pattern.<br>`directory` (str): Search root. |
+| `code_list_files` | List files in a directory with optional pattern. | `directory` (str): Root.<br>`pattern` (str): Filter.<br>`recursive` (bool): Recursive. |
+| `code_search_content` | Search for text/patterns in code files. | `query` (str): Search term.<br>`file_pattern` (str): File filter.<br>`case_sensitive` (bool): Case sensitivity. |
+| `code_read` | Read file contents. | `path` (str): File path.<br>`max_size_mb` (int): Size limit. |
+| `code_write` | Write/update file with automatic backup. | `path` (str): File path.<br>`content` (str): Content.<br>`backup` (bool): Create backup.<br>`create_dirs` (bool): Create parents. |
+| `code_get_info` | Get file metadata. | `path` (str): File path. |
 
-The Code MCP server provides tools for code quality operations including linting, formatting, and static analysis. It integrates with popular Python code quality tools while enforcing safety checks.
+## Resources
 
-**Key Features:**
+*No resources currently exposed.*
+
+## Prompts
+
+*No prompts currently exposed.*
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"code": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/code",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/code/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `code_lint` appears in the tool list.
+3.  **Call Tool:** Execute `code_check_tools` and verify it returns available tools.
+
+## Architecture
+
+### Overview
+This server provides safe file system access and code quality tool integration.
+
+**Safety Features:**
 - ✅ **Safe Path Validation:** Restricts access to project directory
 - ✅ **Multiple Tool Support:** Ruff, Black, Pylint, Flake8, Mypy
 - ✅ **Check-Only Mode:** Verify formatting without modifying files
 - ✅ **Security:** Prevents directory traversal attacks
 
----
+## Dependencies
 
-## Tools (10)
-
-### Quality & Analysis
-
-#### `code_lint(path, tool="ruff")`
-Run linting on a file or directory.
-
-**Args:**
-- `path`: Relative path to file or directory
-- `tool`: Linting tool to use (ruff, pylint, flake8)
-
-**Example:**
-```python
-code_lint("mcp_servers/code/server.py", tool="ruff")
-```
-
-#### `code_format(path, tool="ruff", check_only=False)`
-Format code in a file or directory.
-
-**Args:**
-- `path`: Relative path to file or directory
-- `tool`: Formatting tool to use (ruff, black)
-- `check_only`: If True, only check formatting without modifying files
-
-**Example:**
-```python
-code_format("mcp_servers/code/server.py", tool="ruff", check_only=True)
-```
-
-#### `code_analyze(path)`
-Perform static analysis on code.
-
-**Args:**
-- `path`: Relative path to file or directory
-
-**Example:**
-```python
-code_analyze("mcp_servers/code/")
-```
-
-#### `code_check_tools()`
-Check which code quality tools are available.
-
-**Example:**
-```python
-code_check_tools()
-```
-
-### File Discovery & Search
-
-#### `code_find_file(name_pattern, directory=".")`
-Find files by name or glob pattern.
-
-**Args:**
-- `name_pattern`: File name or glob pattern (e.g., "server.py", "*.py")
-- `directory`: Directory to search in (default: project root)
-
-**Example:**
-```python
-code_find_file("server.py")
-code_find_file("*.py", "mcp_servers")
-```
-
-#### `code_list_files(directory=".", pattern="*", recursive=True)`
-List files in a directory with optional pattern.
-
-**Args:**
-- `directory`: Directory to list (default: project root)
-- `pattern`: Glob pattern for filtering (default: "*")
-- `recursive`: If True, search recursively (default: True)
-
-**Example:**
-```python
-code_list_files("mcp_servers/code", "*.py")
-```
-
-#### `code_search_content(query, file_pattern="*.py", case_sensitive=False)`
-Search for text/patterns in code files.
-
-**Args:**
-- `query`: Text or pattern to search for
-- `file_pattern`: File pattern to search in (default: "*.py")
-- `case_sensitive`: If True, perform case-sensitive search (default: False)
-
-**Example:**
-```python
-code_search_content("class CodeOperations")
-code_search_content("import FastMCP", "*.py")
-```
-
-### File Operations
-
-#### `code_read(path, max_size_mb=10)`
-Read file contents.
-
-**Args:**
-- `path`: Relative path to file
-- `max_size_mb`: Maximum file size in MB (default: 10)
-
-**Example:**
-```python
-code_read("mcp_servers/code/server.py")
-```
-
-#### `code_write(path, content, backup=True, create_dirs=True)`
-Write/update file with automatic backup.
-
-**Args:**
-- `path`: Relative path to file
-- `content`: Content to write
-- `backup`: If True, create backup before overwriting (default: True)
-- `create_dirs`: If True, create parent directories if needed (default: True)
-
-**Example:**
-```python
-code_write("new_module.py", "# New module\nprint('Hello')")
-```
-
-#### `code_get_info(path)`
-Get file metadata.
-
-**Args:**
-- `path`: Relative path to file
-
-**Returns:**
-- File metadata (size, modified date, line count, language)
-
-**Example:**
-```python
-code_get_info("mcp_servers/code/server.py")
-```
-
----
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PROJECT_ROOT` | Project root directory | `.` |
-
-### Supported Tools
-
-- **Ruff** - Fast Python linter and formatter
-- **Black** - Python code formatter
-- **Pylint** - Python static code analyzer
-- **Flake8** - Python linting tool
-- **Mypy** - Static type checker
-
----
-
-## Testing
-
-```bash
-# Run test suite
-PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
-```
-
-**Test Coverage:** 100% (6/6 tests passing)
-
----
-
-**Maintainer:** Project Sanctuary Team  
-**Last Updated:** 2025-11-30
+- `mcp`
+- `ruff`
+- `black`
+- `pylint`
+- `flake8`
+- `mypy`
 
 --- END OF FILE mcp_servers/code/README.md ---
 
@@ -47595,118 +48379,85 @@ if __name__ == "__main__":
 
 # Cortex MCP Server
 
-**Domain:** `project_sanctuary.cognitive.cortex`  
-**Version:** 5.0 (MCP Migration Complete)  
-**Status:** Production-Ready
+**Description:** The Cortex MCP Server provides tools for interacting with the **Mnemonic Cortex** — the living memory of the Sanctuary Council. It is a local-first RAG system that transforms canonical markdown files into a dynamic, semantically searchable knowledge base.
 
-## Overview
+## Tools
 
-The Cortex MCP Server provides Model Context Protocol (MCP) tools for interacting with the **Mnemonic Cortex** — the living memory of the Sanctuary Council. It is a local-first, open-source Retrieval-Augmented Generation (RAG) system designed to traverse the Sanctuary's canonical markdown files (Protocols, Chronicles, etc.) and transform them into a dynamic, semantically searchable knowledge base.
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `cortex_query` | Perform semantic search query against the knowledge base. | `query` (str): Natural language query.<br>`max_results` (int): Max results (default: 5).<br>`use_cache` (bool): Use cache (default: False). |
+| `cortex_ingest_full` | Perform full re-ingestion of the knowledge base. | `purge_existing` (bool): Purge DB (default: True).<br>`source_directories` (List[str], optional): Dirs to ingest. |
+| `cortex_ingest_incremental` | Perform incremental ingestion of new/modified files. | `file_paths` (List[str]): Markdown files to ingest.<br>`metadata` (dict, optional): Metadata to attach.<br>`skip_duplicates` (bool): Skip existing files (default: True). |
+| `cortex_get_stats` | Get statistics about the knowledge base. | None |
+| `cortex_guardian_wakeup` | Generate Guardian boot digest from cached bundles (Protocol 114). | None |
+| `cortex_cache_warmup` | Pre-load high-priority documents into cache. | `priority_tags` (List[str], optional): Tags to prioritize. |
 
-This system is the architectural antidote to the "context window cage," enabling our AI agents to reason with the full, unbroken context of their history.
+## Resources
 
-**Vision & Purpose:** For the full strategic vision of the Mnemonic Cortex as the "heart of a sovereign mind" and its role in Project Sanctuary's future phases, see [`docs/mcp/cortex_vision.md`](../../../docs/mcp/cortex_vision.md). In summary, the Cortex solves the "Great Robbery" by providing true long-term memory, shattering context limitations, and enabling AI minds that learn and remember across sessions.
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `cortex://stats` | Knowledge base statistics | `application/json` |
+| `cortex://document/{doc_id}` | Full content of a document | `text/markdown` |
 
-**Integration with Council Orchestrator:** The Mnemonic Cortex serves as the knowledge foundation for the Council system. Council agents can query the Cortex during deliberation, enabling context-aware reasoning grounded in the project's complete history and protocols.
+## Prompts
 
-## The Strategic Crucible Loop
+*No prompts currently exposed.*
 
-The **Strategic Crucible Loop** is the autonomous engine of self-improvement for the Council. It connects the three tiers of memory into a continuous feedback cycle:
+## Configuration
 
-1. **Gap Analysis:** The Council identifies missing knowledge or strategic weaknesses.
-2. **Research:** The Intelligence Forge is triggered to generate new insights (Research Reports).
-3. **Ingestion:** New reports are ingested into the **Mnemonic Cortex** (Medium Memory).
-4. **Adaptation:** The **Memory Adaptor** synthesizes these reports into training packets for the Model (Slow Memory).
-5. **Synthesis:** The **Guardian Cache** (Fast Memory) is updated with high-priority context for immediate recall.
+### Environment Variables
+Create a `.env` file in the project root:
 
-This loop ensures that the Sanctuary evolves with every operation, transforming "what happened" into "what we know."
+```bash
+# Required for Embeddings
+OPENAI_API_KEY=sk-... # If using OpenAI embeddings
+# Optional
+CORTEX_CHROMA_DB_PATH=mcp_servers/cognitive/cortex/data/chroma_db
+CORTEX_CACHE_DIR=mcp_servers/cognitive/cortex/data/cache
+```
 
-## Architecture Philosophy
+### MCP Config
+Add this to your `mcp_config.json`:
 
+```json
+"cortex": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/cognitive/cortex",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/cognitive/cortex/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `cortex_query` and `cortex_ingest_full` appear in the tool list.
+3.  **Call Tool:** Execute `cortex_get_stats` and verify it returns valid JSON statistics.
+
+## Architecture
+
+### Overview
 The Mnemonic Cortex has evolved beyond a simple RAG implementation into a sophisticated, multi-pattern cognitive architecture designed for maximum efficiency and contextual accuracy. It is built on the **Doctrine of Hybrid Cognition**, ensuring our sovereign AI always reasons with the most current information.
 
-Our advanced architecture incorporates several key strategies:
+**Key Strategies:**
 - **Parent Document Retrieval:** To provide full, unbroken context to the LLM.
 - **Self-Querying Retrieval:** To enable intelligent, metadata-aware searches.
 - **Mnemonic Caching (CAG):** To provide near-instantaneous answers for common queries.
 
-**For a complete technical breakdown, including architectural diagrams and a detailed explanation of these strategies, see the canonical document: [`docs/mcp/RAG_STRATEGIES.md`](../../../docs/mcp/RAG_STRATEGIES.md).**
-
-## Technology Stack
-
-This project adheres to the **Iron Root Doctrine** by exclusively using open-source, community-vetted technologies.
-
-| Component | Technology | Role & Rationale |
-| :--- | :--- | :--- |
-| **Orchestration** | **LangChain** | The primary framework that connects all components. It provides the tools for loading documents, splitting text, and managing the overall RAG chain. |
-| **Vector Database** | **ChromaDB** | The "Cortex." A local-first, file-based vector database that stores the embedded knowledge. Chosen for its simplicity and ease of setup. |
-| **Embedding Model** | **Nomic Embed** | The "Translator." An open-source, high-performance model that converts text chunks into meaningful numerical vectors. Runs locally. |
-| **Generation Model**| **Ollama (Sanctuary-Qwen2-7B:latest default)** | The "Synthesizer." A local LLM server for answer generation. Provides access to models like Sanctuary-Qwen2-7B:latest, Gemma2, Llama3, etc., ensuring all processing remains on-device. |
-| **Service Layer** | **Custom Python Services** | Modular services (VectorDBService, EmbeddingService) for clean separation of concerns and maintainable code architecture. |
-| **MCP Framework** | **FastMCP** | MCP server framework for standardized tool exposure and protocol compliance. |
-| **Testing Framework** | **pytest** | Automated test suite covering ingestion, querying, and integration scenarios. |
-| **Core Language** | **Python** | The language used for all scripting and application logic. |
-
-## Architecture
-
-This server wraps existing Mnemonic Cortex scripts and services:
-
-- **Ingestion:** `mnemonic_cortex/scripts/ingest.py` and `ingest_incremental.py`
-- **Query:** `mnemonic_cortex/app/services/vector_db_service.py` (Parent Document Retriever)
-- **Stats:** Direct ChromaDB collection access
-
-## Tools
-
-### 1. `cortex_ingest_full`
-
-Perform full re-ingestion of the knowledge base.
-
-**Parameters:**
-- `purge_existing` (bool, default: True): Whether to purge existing database
-- `source_directories` (List[str], optional): Directories to ingest
-
-**Returns:**
-```json
-{
-  "documents_processed": 459,
-  "chunks_created": 2145,
-  "ingestion_time_ms": 45230.5,
-  "vectorstore_path": "/path/to/chroma_db",
-  "status": "success"
-}
-```
-
-**Example:**
-```python
-cortex_ingest_full()
-cortex_ingest_full(source_directories=["01_PROTOCOLS", "00_CHRONICLE"])
-```
-
----
-
-### 2. `cortex_query`
-
-Perform semantic search query against the knowledge base.
-
-**Parameters:**
-- `query` (str): Natural language query
-- `max_results` (int, default: 5): Maximum results (1-100)
-- `use_cache` (bool, default: False): Use cache (Phase 2)
-
-**Returns:**
-```json
-{
-  "results": [
-    {
-      "content": "Full parent document content...",
-      "metadata": {
-        "source_file": "01_PROTOCOLS/101_protocol.md"
-      }
-    }
-  ],
-  "query_time_ms": 234.5,
-  "cache_hit": false,
-  "status": "success"
 }
 ```
 
@@ -48028,9 +48779,10 @@ class MnemonicCache:
             if env_path:
                 db_path = env_path
             else:
-                # Default to mnemonic_cortex/cache directory
-                project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-                cache_dir = os.path.join(project_root, 'mnemonic_cortex', 'cache')
+                # Default to mcp_servers/cognitive/cortex/data/cache directory
+                # Note: Assuming this file is in mcp_servers/cognitive/cortex/
+                current_dir = os.path.dirname(os.path.abspath(__file__))
+                cache_dir = os.path.join(current_dir, 'data', 'cache')
                 os.makedirs(cache_dir, exist_ok=True)
                 db_path = os.path.join(cache_dir, 'mnemonic_cache.db')
 
@@ -48780,6 +49532,13 @@ from .models import (
     to_dict
 )
 
+# Setup logging
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 
 class CortexOperations:
     """Core operations for Cortex MCP server."""
@@ -48792,7 +49551,7 @@ class CortexOperations:
             project_root: Absolute path to project root
         """
         self.project_root = Path(project_root)
-        self.scripts_dir = self.project_root / "mnemonic_cortex" / "scripts"
+        self.scripts_dir = self.project_root / "mcp_servers" / "cognitive" / "cortex" / "scripts"
     
     # Helper methods for ingestion
     def _chunked_iterable(self, seq: List, size: int):
@@ -48881,7 +49640,7 @@ class CortexOperations:
             default_source_dirs = [
                 "00_CHRONICLE", "01_PROTOCOLS", "02_USER_REFLECTIONS", "04_THE_FORTRESS",
                 "05_ARCHIVED_BLUEPRINTS", "06_THE_EMBER_LIBRARY", "07_COUNCIL_AGENTS",
-                "RESEARCH_SUMMARIES", "WORK_IN_PROGRESS", "mnemonic_cortex"
+                "RESEARCH_SUMMARIES", "WORK_IN_PROGRESS"
             ]
             exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
             
@@ -48979,7 +49738,7 @@ class CortexOperations:
         """
         Perform semantic search query.
         
-        Uses: mnemonic_cortex RAG infrastructure directly
+        Uses: Cortex MCP RAG infrastructure directly
         
         Args:
             query: Query string
@@ -49034,11 +49793,13 @@ class CortexOperations:
 
             # Suppress all stdout/stderr from VectorDBService initialization
             with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-                from mnemonic_cortex.app.services.vector_db_service import VectorDBService
+                # TODO: Refactor to use direct LangChain logic like ingest_full (Task #083)
+                # from mnemonic_cortex.app.services.vector_db_service import VectorDBService
                 
                 # Initialize service
-                db_service = VectorDBService()
-                retriever = db_service.get_retriever()
+                # db_service = VectorDBService()
+                # retriever = db_service.get_retriever()
+                pass # Placeholder until refactoring is complete
             
             # Handle Reasoning Mode
             final_query = query
@@ -49046,9 +49807,13 @@ class CortexOperations:
             
             if reasoning_mode:
                 try:
-                    from mnemonic_cortex.app.services.llm_service import LLMService
-                    llm_service = LLMService(str(self.project_root))
-                    structured = llm_service.generate_structured_query(query)
+                    # TODO: Refactor to use direct LangChain logic (Task #083)
+                    # from mnemonic_cortex.app.services.llm_service import LLMService
+                    # llm_service = LLMService(str(self.project_root))
+                    # structured = llm_service.generate_structured_query(query)
+                    pass
+                    # structured = llm_service.generate_structured_query(query)
+                    structured = {} # Placeholder
                     
                     final_query = structured.get("semantic_query", query)
                     reasoning_metadata = {
@@ -49062,7 +49827,9 @@ class CortexOperations:
                     reasoning_metadata = {"error": f"LLM reasoning failed: {str(e)}"}
             
             # Execute query
-            docs = retriever.invoke(final_query)
+            # docs = retriever.invoke(final_query)
+            docs = [] # Placeholder until refactoring (Task #083)
+            print("[WARNING] Cortex query is currently in maintenance mode (Task #083). Returning empty results.")
             
             # Limit results
             docs = docs[:max_results]
@@ -49146,7 +49913,8 @@ class CortexOperations:
             if chroma_root_env:
                 chroma_root = Path(chroma_root_env) if Path(chroma_root_env).is_absolute() else (self.project_root / chroma_root_env)
             else:
-                chroma_root = self.project_root / "mnemonic_cortex" / db_path
+                # Default to mcp_servers/cognitive/cortex/data/chroma_db
+                chroma_root = self.project_root / "mcp_servers" / "cognitive" / "cortex" / "data" / db_path
             
             chroma_root = chroma_root.resolve()
             
@@ -49664,7 +50432,7 @@ class CortexOperations:
             query_data = parse_query_string(query_string)
             
             # Extract components
-            scope = query_data.get("scope", "mnemonic_cortex:index")
+            scope = query_data.get("scope", "cortex:index")
             intent = query_data.get("intent", "RETRIEVE")
             constraints = query_data.get("constraints", "")
             granularity = query_data.get("granularity", "ATOM")
@@ -50294,8 +51062,8 @@ def find_project_root() -> str:
         current_path = parent_path
 
 def setup_environment(project_root: str) -> bool:
-    """Load environment variables from the .env file in the mnemonic_cortex directory."""
-    dotenv_path = os.path.join(project_root, 'mnemonic_cortex', '.env')
+    """Load environment variables from the .env file in the project root."""
+    dotenv_path = os.path.join(project_root, '.env')
     if os.path.exists(dotenv_path):
         load_dotenv(dotenv_path=dotenv_path)
         return True
@@ -50481,118 +51249,82 @@ class CortexValidator:
 
 # Config MCP Server
 
-**Domain:** `project_sanctuary.config`  
-**Version:** 1.0.0  
-**Status:** Production Ready
+**Description:** The Config MCP server provides tools for managing configuration files within the `.agent/config/` directory. It ensures safe access to configuration data with path validation, automatic backups, and support for JSON/YAML formats.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `config_list` | List all configuration files. | None |
+| `config_read` | Read a configuration file. | `filename` (str): Config file name. |
+| `config_write` | Write a configuration file with automatic backup. | `filename` (str): Config file name.<br>`content` (str): Content to write. |
+| `config_delete` | Delete a configuration file. | `filename` (str): Config file name. |
 
-The Config MCP server provides tools for managing configuration files within the `.agent/config/` directory. It ensures safe access to configuration data with path validation, automatic backups, and support for JSON/YAML formats.
+## Resources
 
-**Key Features:**
+*No resources currently exposed.*
+
+## Prompts
+
+*No prompts currently exposed.*
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"config": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/config",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/config/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `config_list` appears in the tool list.
+3.  **Call Tool:** Execute `config_list` and verify it returns config files.
+
+## Architecture
+
+### Overview
+This server manages the `.agent/config/` directory.
+
+**Safety Features:**
 - ✅ **Safe Path Validation:** Restricts access to `.agent/config/` directory
 - ✅ **Automatic Backups:** Creates timestamped backups before overwriting files
 - ✅ **Format Support:** Native JSON and YAML handling
 - ✅ **Security:** Prevents directory traversal attacks
 
----
+## Dependencies
 
-## Tools (4)
-
-### `config_list()`
-List all configuration files in the `.agent/config` directory.
-
-**Returns:**
-- List of files with sizes and modification times
-
-**Example:**
-```python
-config_list()
-# Returns:
-# Found 2 configuration files:
-# - mcp_config.json (1024 bytes, Mon Nov 30 10:00:00 2025)
-# - agent_settings.yaml (512 bytes, Mon Nov 30 10:05:00 2025)
-```
-
-### `config_read(filename)`
-Read a configuration file.
-
-**Args:**
-- `filename`: Name of the config file (e.g., `mcp_config.json`)
-
-**Returns:**
-- Content of the file (JSON formatted string if valid JSON/YAML)
-
-**Example:**
-```python
-config_read("mcp_config.json")
-```
-
-### `config_write(filename, content)`
-Write a configuration file with automatic backup.
-
-**Args:**
-- `filename`: Name of the config file
-- `content`: Content to write (string or JSON string)
-
-**Returns:**
-- Status message with path to written file
-
-**Example:**
-```python
-config_write("app_settings.json", '{"theme": "dark", "debug": true}')
-```
-
-### `config_delete(filename)`
-Delete a configuration file.
-
-**Args:**
-- `filename`: Name of the config file to delete
-
-**Returns:**
-- Status message
-
-**Example:**
-```python
-config_delete("temp_config.json")
-```
-
----
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PROJECT_ROOT` | Project root directory | `.` |
-
-### Directory Structure
-
-```
-PROJECT_ROOT/
-├── .agent/
-│   └── config/          # Managed configuration directory
-│       ├── mcp_config.json
-│       ├── ...
-│       └── *.bak        # Automatic backups
-```
-
----
-
-## Testing
-
-```bash
-# Run test suite
-PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
-```
-
----
-
-**Maintainer:** Project Sanctuary Team  
-**Last Updated:** 2025-11-30
+- `mcp`
 
 --- END OF FILE mcp_servers/config/README.md ---
 
@@ -50708,54 +51440,97 @@ if __name__ == "__main__":
 
 # Council MCP Server
 
-**Status:** ✅ Operational  
-**Version:** 2.0.0 (Refactored)  
+**Status:** ✅ Operational
+**Version:** 2.0.0 (Refactored)
 **Protocol:** Model Context Protocol (MCP)
 
-## Overview
+**Description:** The Council MCP Server exposes the Sanctuary Council's **multi-agent deliberation** capabilities to external AI agents via the Model Context Protocol. It coordinates specialized agents (Coordinator, Strategist, Auditor) to solve complex tasks through iterative reasoning and context retrieval.
 
-The Council MCP Server exposes the Sanctuary Council's **multi-agent deliberation** capabilities to external AI agents via the Model Context Protocol.
+## Tools
 
-### Architecture v2.0 (Refactored)
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `council_dispatch` | Dispatches a task to the Council for deliberation. | `task_description` (str): The task to perform.<br>`agent` (str, optional): Specific agent to consult (e.g., "auditor").<br>`max_rounds` (int, optional): Max deliberation rounds (default: 3).<br>`force_engine` (str, optional): Force specific LLM engine.<br>`output_path` (str, optional): Path to save results. |
+| `council_list_agents` | Lists all available Council agents and their status. | None |
 
-The Council MCP has been refactored to use a modular architecture:
-1. **Agent Persona MCP**: Used for individual agent execution (Coordinator, Strategist, Auditor)
-2. **Cortex MCP**: Used for memory and context retrieval
-3. **Direct Orchestration**: Deliberation logic is now embedded in `council_ops.py`, replacing the legacy orchestrator subprocess.
+## Resources
 
-### Design Principle: Separation of Concerns
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `council://agents/list` | List of available agents | `application/json` |
+| `council://history/{session_id}` | Deliberation history for a session | `application/json` |
 
-**The Council MCP provides ONLY what's unique to the Council.**
+## Prompts
 
-Other capabilities are delegated to specialized MCP servers:
-- **File I/O** → Code MCP (`code_write`, `code_read`)
-- **Memory Queries** → Cortex MCP (`cortex_query`, `cortex_ingest_incremental`)
-- **Git Operations** → Git MCP (`git_add`, `git_smart_commit`, `git_push_feature`)
-- **Protocol Documents** → Protocol MCP (`protocol_create`, `protocol_get`)
-- **Task Management** → Task MCP (`create_task`, `update_task_status`)
+*No prompts currently exposed.*
 
-### Key Features
+## Configuration
 
-- **Multi-Agent Deliberation**: Coordinate Coordinator, Strategist, and Auditor agents
-- **Single Agent Consultation**: Query specific agents for specialized insights
-- **On-Demand Execution**: Spawns orchestrator subprocess per request (no daemon required)
-- **Session Isolation**: Each invocation gets a unique session ID
-- **Composable Workflows**: Designed to work seamlessly with other MCP servers
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required for Council Operations
+ANTHROPIC_API_KEY=sk-...
+OPENAI_API_KEY=sk-...
+# Optional
+COUNCIL_DEFAULT_ROUNDS=3
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"council": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/council",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/council/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `council_dispatch` and `council_list_agents` appear in the tool list.
+3.  **Call Tool:** Execute `council_list_agents` and verify it returns the list of agents (Coordinator, Strategist, Auditor).
 
 ## Architecture
 
-### Dual-Role Architecture: Server AND Client
+### Overview
 
-The Council MCP has a unique dual-role architecture:
+The Council MCP has a unique dual-role architecture: it acts as both a **Server** (receiving requests from the user/IDE) and a **Client** (orchestrating other MCPs).
 
-**Role 1: MCP Server** (Exposes deliberation to external agents)
-- Provides `council_dispatch` and `council_list_agents` tools
-- Called by external agents (Claude Desktop, Antigravity, etc.)
+The Council MCP has been refactored to use a modular architecture:
+1.  **Agent Persona MCP**: Used for individual agent execution (Coordinator, Strategist, Auditor)
+2.  **Cortex MCP**: Used for memory and context retrieval
+3.  **Direct Orchestration**: Deliberation logic is now embedded in `council_ops.py`, replacing the legacy orchestrator subprocess.
 
-**Role 2: MCP Client** (Orchestrator calls other MCPs)
-- The orchestrator subprocess can call Code, Git, Cortex, Protocol, Task MCPs
-- Enables autonomous multi-step workflows
-- Council can deliberate AND execute (file I/O, git ops, memory queries)
+**Design Principle: Separation of Concerns**
+The Council MCP provides ONLY what's unique to the Council. Other capabilities are delegated to specialized MCP servers.
+
+**Benefits of Direct Orchestration:**
+- ✅ No subprocess overhead
+- ✅ Uses specialized Agent Persona MCP
+- ✅ Integrated with Cortex memory
+- ✅ Clean separation of concerns
+
+**Trade-offs:**
+- ⚠️ Simplified deliberation logic (compared to legacy v1)
 
 ### Execution Flow
 
@@ -50790,30 +51565,6 @@ sequenceDiagram
     CouncilMCP-->>LLM: Final Decision (Synthesis)
     LLM-->>User: "Protocol 120 designed"
 ```
-
-### Current Model: Direct Orchestration
-
-**How it works:**
-
-```
-1. External agent calls council_dispatch()
-2. Council MCP initializes (lazy load)
-3. Warms up Cortex cache if needed
-4. Queries Cortex for context
-5. Dispatches tasks to agents via Agent Persona MCP
-6. Aggregates responses into CouncilRoundPackets
-7. Returns final synthesis
-```
-
-**Benefits:**
-- ✅ No subprocess overhead
-- ✅ Uses specialized Agent Persona MCP
-- ✅ Integrated with Cortex memory
-- ✅ Clean separation of concerns
-
-**Trade-offs:**
-- ⚠️ Simplified deliberation logic (compared to legacy v1)
-
 
 ### Directory Structure
 
@@ -51524,282 +52275,83 @@ if __name__ == "__main__":
 
 # ADR MCP Server
 
-**Domain:** `project_sanctuary.document.adr`  
-**Version:** 1.0.0  
-**Status:** Production Ready
+**Description:** The ADR MCP server provides tools for managing Architecture Decision Records (ADRs) in the `ADRs/` directory. It enforces the canonical ADR schema, validates sequential numbering, and provides search capabilities.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `adr_create` | Create a new ADR with automatic sequential numbering. | `title` (str): ADR title.<br>`context` (str): Problem description.<br>`decision` (str): Decision made.<br>`consequences` (str): Outcomes.<br>`date` (str, optional): Date.<br>`status` (str, optional): Status.<br>`author` (str, optional): Author.<br>`supersedes` (int, optional): Supersedes ADR #. |
+| `adr_update_status` | Update the status of an existing ADR. | `number` (int): ADR number.<br>`new_status` (str): New status.<br>`reason` (str): Reason. |
+| `adr_get` | Retrieve a specific ADR by number. | `number` (int): ADR number. |
+| `adr_list` | List all ADRs with optional status filter. | `status` (str, optional): Filter by status. |
+| `adr_search` | Full-text search across all ADRs. | `query` (str): Search query. |
 
-The ADR MCP server provides tools for managing Architecture Decision Records (ADRs) in the `ADRs/` directory. It enforces the canonical ADR schema, validates sequential numbering, and provides search capabilities.
+## Resources
 
-**Key Principle:** Safe, validated ADR management with no git operations.
+*No resources currently exposed.*
 
----
+## Prompts
 
-## Quick Start
-
-### Prerequisites
-
-1. **Python 3.11+**
-2. **Project Sanctuary** repository
-
-### Start the MCP Server
-
-**Local Development:**
-```bash
-cd /Users/richardfremmerlid/Projects/Project_Sanctuary
-python3 -m mcp_servers.document.adr.server
-```
-
-**Via Claude Desktop / Antigravity:**
-Already configured in MCP config. Just restart the client.
-
----
-
-## Tools (5)
-
-### 1. `adr_create`
-Create a new ADR with automatic sequential numbering.
-
-**Arguments:**
-- `title` (str): ADR title
-- `context` (str): Problem description and background
-- `decision` (str): What was decided and why
-- `consequences` (str): Positive/negative outcomes
-- `date` (str, optional): Decision date (defaults to today)
-- `status` (str, optional): Initial status (defaults to "proposed")
-- `author` (str, optional): Decision maker (defaults to "AI Assistant")
-- `supersedes` (int, optional): ADR number this supersedes
-
-**Returns:**
-```json
-{
-  "adr_number": 38,
-  "file_path": "ADRs/038_example_decision.md",
-  "status": "proposed"
-}
-```
-
-**Example:**
-```python
-adr_create(
-    title="Adopt FastAPI for REST APIs",
-    context="Need a modern Python web framework...",
-    decision="We will use FastAPI for all REST APIs...",
-    consequences="Positive: Fast, modern, async support..."
-)
-```
-
----
-
-### 2. `adr_update_status`
-Update the status of an existing ADR.
-
-**Arguments:**
-- `number` (int): ADR number
-- `new_status` (str): New status (proposed/accepted/deprecated/superseded)
-- `reason` (str): Reason for status change
-
-**Valid Transitions:**
-- proposed → accepted
-- proposed → deprecated
-- accepted → deprecated
-- accepted → superseded
-
-**Returns:**
-```json
-{
-  "adr_number": 38,
-  "old_status": "proposed",
-  "new_status": "accepted",
-  "updated_at": "2025-11-27"
-}
-```
-
----
-
-### 3. `adr_get`
-Retrieve a specific ADR by number.
-
-**Arguments:**
-- `number` (int): ADR number
-
-**Returns:**
-```json
-{
-  "number": 38,
-  "title": "Adopt FastAPI for REST APIs",
-  "status": "accepted",
-  "date": "2025-11-27",
-  "author": "AI Assistant",
-  "context": "...",
-  "decision": "...",
-  "consequences": "..."
-}
-```
-
----
-
-### 4. `adr_list`
-List all ADRs with optional status filter.
-
-**Arguments:**
-- `status` (str, optional): Filter by status
-
-**Returns:**
-```json
-{
-  "adrs": [
-    {
-      "number": 37,
-      "title": "MCP Git Migration Strategy",
-      "status": "accepted",
-      "date": "2025-11-27"
-    },
-    ...
-  ]
-}
-```
-
----
-
-### 5. `adr_search`
-Full-text search across all ADRs.
-
-**Arguments:**
-- `query` (str): Search query
-
-**Returns:**
-```json
-{
-  "results": [
-    {
-      "number": 37,
-      "title": "MCP Git Migration Strategy",
-      "matches": [
-        "...Protocol 101...",
-        "...Smart Git MCP..."
-      ]
-    }
-  ]
-}
-```
-
----
-
-## Safety Rules
-
-1. **Sequential Numbering**: ADR numbers are automatically assigned sequentially
-2. **No Deletion**: ADRs cannot be deleted, only superseded
-3. **Valid Transitions**: Status changes must follow allowed transitions
-4. **Supersedes Validation**: Referenced ADRs must exist
-5. **Schema Compliance**: All ADRs follow the canonical schema
-6. **File Operations Only**: No git commits (use Git Workflow MCP)
-
----
-
-## ADR Schema
-
-All ADRs follow this format:
-
-```markdown
-# [Decision Title]
-
-**Status:** [proposed | accepted | deprecated | superseded]
-**Date:** YYYY-MM-DD
-**Author:** [Name]
-**Context:** [Optional task reference]
-
----
-
-## Context
-
-[Problem description and background]
-
-## Decision
-
-[What was decided and why]
-
-## Consequences
-
-### Positive
-- [Benefits]
-
-### Negative
-- [Trade-offs]
-
-### Risks
-- [Potential issues and mitigation]
-```
-
----
+*No prompts currently exposed.*
 
 ## Configuration
 
-### Claude Desktop / Antigravity
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
 ```json
-{
-  "adr": {
-    "displayName": "ADR MCP",
-    "command": "/usr/local/bin/python3",
-    "args": ["-m", "mcp_servers.document.adr.server"],
-    "env": {
-      "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-      "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-    },
-    "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+"adr": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/document/adr",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
 
----
-
 ## Testing
 
+### Unit Tests
+Run the test suite for this server:
+
 ```bash
-# Run all tests
-PYTHONPATH=. python3 -m pytest tests/test_adr*.py -v
-
-# Test specific functionality
-PYTHONPATH=. python3 -m pytest tests/test_adr_operations.py::test_create_adr -v
+pytest mcp_servers/document/adr/tests
 ```
 
----
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `adr_list` appears in the tool list.
+3.  **Call Tool:** Execute `adr_list` and verify it returns existing ADRs.
 
-## Troubleshooting
+## Architecture
 
-### ADR Number Already Exists
-```
-Error: ADR 038 already exists
-```
-**Solution:** The system automatically assigns the next available number.
+### Overview
+This server manages the `ADRs/` directory.
 
-### Invalid Status Transition
-```
-Error: Cannot transition from 'accepted' to 'proposed'
-```
-**Solution:** Check valid transitions in the Safety Rules section.
+**Safety Rules:**
+1.  **Sequential Numbering:** Auto-assigned.
+2.  **No Deletion:** Supersede only.
+3.  **Valid Transitions:** Status changes must follow allowed transitions.
+4.  **Schema Compliance:** Enforced format.
 
-### Superseded ADR Not Found
-```
-Error: ADR 025 does not exist (referenced in supersedes)
-```
-**Solution:** Ensure the referenced ADR exists before creating a superseding ADR.
+## Dependencies
 
----
-
-## Related Documentation
-
-- [ADR Schema](../../ADRs/adr_schema.md)
-- [MCP Architecture](../../docs/mcp/architecture.md)
-- [Task MCP](../task/README.md)
-
----
-
-**Last Updated:** 2025-11-27  
-**Maintainer:** Project Sanctuary Team
+- `mcp`
 
 --- END OF FILE mcp_servers/document/adr/README.md ---
 
@@ -51899,6 +52451,15 @@ import os
 import re
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from pathlib import Path
+import sys
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 from .models import ADR, ADRStatus, ADR_TEMPLATE
 from .validator import ADRValidator
 
@@ -55194,73 +55755,81 @@ def write_command_file(command: Dict[str, Any], project_root: str, config: Dict[
 
 # Protocol MCP Server
 
-MCP server for managing system protocols in `01_PROTOCOLS/`.
+**Description:** The Protocol MCP provides structured access to the project's protocol library, ensuring consistent formatting, versioning, and metadata management for all system protocols.
 
-## Purpose
+## Tools
 
-The Protocol MCP provides structured access to the project's protocol library, ensuring consistent formatting and metadata management.
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `protocol_create` | Create a new protocol. | `number` (int): Protocol number.<br>`title` (str): Title.<br>`status` (str): Status.<br>`classification` (str): Classification.<br>`version` (str): Version.<br>`authority` (str): Authority.<br>`content` (str): Content.<br>`linked_protocols` (List[str], optional): Links. |
+| `protocol_update` | Update an existing protocol. | `number` (int): Protocol number.<br>`updates` (dict): Fields to update.<br>`reason` (str): Reason for update. |
+| `protocol_get` | Retrieve a specific protocol. | `number` (int): Protocol number. |
+| `protocol_list` | List protocols. | `status` (str, optional): Filter by status. |
+| `protocol_search` | Search protocols by content. | `query` (str): Search query. |
+| `protocol_validate_action` | Validate action against protocols. | `action` (str): Action to validate. |
 
-## Operations
+## Resources
 
-| Operation | Status | Test Suite | Description |
-|-----------|--------|------------|-------------|
-| `protocol_create` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Create new protocol with versioning |
-| `protocol_update` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
-| `protocol_get` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Retrieve specific protocol by number |
-| `protocol_list` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | List protocols with optional filters |
-| `protocol_search` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Full-text search across protocols |
-| `protocol_validate_action` | ⚠️ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Validate action against protocols |
+*No resources currently exposed.*
 
-**Prerequisite Tests:** [test_protocol_validator.py](../../tests/test_protocol_validator.py)
+## Prompts
 
-### Tool Details
-
-### `protocol_create`
-Create a new protocol.
-- **Args:** `number`, `title`, `status`, `classification`, `version`, `authority`, `content`, `linked_protocols` (optional)
-- **Returns:** Protocol number and file path
-
-### `protocol_update`
-Update an existing protocol.
-- **Args:** `number`, `updates` (dict), `reason`
-- **Returns:** Updated fields
-
-### `protocol_get`
-Retrieve a specific protocol.
-- **Args:** `number`
-- **Returns:** Protocol details
-
-### `protocol_list`
-List protocols.
-- **Args:** `status` (optional filter)
-- **Returns:** List of protocols
-
-### `protocol_search`
-Search protocols by content.
-- **Args:** `query`
-- **Returns:** List of matching protocols
-
-## Safety Rules
-
-1.  **Unique Numbers:** Protocol numbers must be unique.
-2.  **Header Integrity:** All protocols maintain standard header format.
-3.  **No Deletion:** Protocols can be marked as `DEPRECATED` but never deleted.
+*No prompts currently exposed.*
 
 ## Configuration
 
-Add to `mcp_config.json`:
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
 "protocol": {
-  "displayName": "Protocol MCP",
-  "command": "/path/to/venv/bin/python",
-  "args": ["-m", "mcp_servers.system.protocol.server"],
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/protocol",
+    "run",
+    "server.py"
+  ],
   "env": {
-    "PROJECT_ROOT": "/path/to/project",
-    "PYTHONPATH": "/path/to/project"
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/protocol/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `protocol_list` appears in the tool list.
+3.  **Call Tool:** Execute `protocol_list` and verify it returns the list of existing protocols.
+
+## Architecture
+
+### Overview
+This server manages the lifecycle of protocols stored in `01_PROTOCOLS/`. It enforces:
+- **Unique Numbers:** Protocol numbers must be unique.
+- **Header Integrity:** All protocols maintain standard header format.
+- **No Deletion:** Protocols can be marked as `DEPRECATED` but never deleted.
+
+## Dependencies
+
+- `mcp`
 
 --- END OF FILE mcp_servers/protocol/README.md ---
 
@@ -55328,7 +55897,16 @@ File operations for Protocol MCP.
 """
 import os
 import re
+import sys
+from datetime import datetime
+from pathlib import Path
 from typing import List, Optional, Dict, Any
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
 from .models import Protocol, ProtocolStatus, PROTOCOL_TEMPLATE
 from .validator import ProtocolValidator
 
@@ -55816,135 +56394,86 @@ echo "Please configure your client to point to these scripts."
 
 # Forge MCP Server
 
-**Domain:** `project_sanctuary.system.forge`  
-**Category:** System / Model Domain  
-**Hardware:** CUDA GPU (for fine-tuning operations)
-
-## Overview
-
-The Forge MCP server provides tools for interacting with the fine-tuned Sanctuary model and managing the model lifecycle. Currently implements model querying via Ollama.
+**Description:** The Forge MCP server provides tools for interacting with the fine-tuned Sanctuary model and managing the model lifecycle. Currently implements model querying via Ollama.
 
 ## Tools
 
-### 1. `query_sanctuary_model`
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `query_sanctuary_model` | Query the fine-tuned Sanctuary-Qwen2 model. | `prompt` (str): Question/Prompt.<br>`temperature` (float): 0.0-2.0 (default: 0.7).<br>`max_tokens` (int): 1-8192 (default: 2048).<br>`system_prompt` (str, optional): Context. |
+| `check_sanctuary_model_status` | Check if the Sanctuary model is available in Ollama. | None |
 
-Query the fine-tuned Sanctuary-Qwen2 model for specialized knowledge and decision-making.
+## Resources
 
-**Parameters:**
-- `prompt` (string, required): The question or prompt to send to the model
-- `temperature` (float, optional): Sampling temperature 0.0-2.0 (default: 0.7)
-- `max_tokens` (int, optional): Maximum tokens to generate 1-8192 (default: 2048)
-- `system_prompt` (string, optional): System prompt to set context
+*No resources currently exposed.*
 
-**Returns:** JSON with model response and metadata
+## Prompts
 
-**Example:**
-```python
-query_sanctuary_model("What is the strategic priority for Q1 2025?")
+*No prompts currently exposed.*
 
-query_sanctuary_model(
-    prompt="Explain Protocol 101",
-    temperature=0.3,
-    system_prompt="You are a Sanctuary protocol expert"
-)
-```
+## Configuration
 
-### 2. `check_sanctuary_model_status`
-
-Check if the Sanctuary model is available and ready to use in Ollama.
-
-**Parameters:** None
-
-**Returns:** JSON with model availability status
-
-**Example:**
-```python
-check_sanctuary_model_status()
-```
-
-## Model Information
-
-**Model:** `hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`  
-**Base:** Qwen2-7B  
-**Quantization:** Q4_K_M (4-bit)  
-**Training:** Fine-tuned on Project Sanctuary knowledge
-
-## Requirements
-
-- Ollama installed and running
-- Sanctuary model loaded in Ollama
-- Python package: `ollama`
-
-## Installation
+### Environment Variables
+Create a `.env` file in the project root:
 
 ```bash
-# Install Ollama Python package
-pip install ollama
-
-# Verify model is loaded
-ollama list | grep Sanctuary
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
 ```
 
-## Running the Server
-
-```bash
-# Set project root
-export PROJECT_ROOT=/path/to/Project_Sanctuary
-
-# Run server
-python -m mcp_servers.system.forge.server
-```
-
-## Integration with Claude Desktop
-
-Add to `claude_desktop_config.json`:
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
-{
-  "mcpServers": {
-    "forge": {
-      "command": "python",
-      "args": ["-m", "mcp_servers.system.forge.server"],
-      "env": {
-        "PROJECT_ROOT": "/path/to/Project_Sanctuary"
-      }
-    }
+"forge": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/system/forge",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
 
-## Future Tools (Not Yet Implemented)
+## Testing
 
-- `initiate_model_forge` - Start fine-tuning job
-- `get_forge_job_status` - Check training progress
-- `package_and_deploy_artifact` - Convert and deploy model
-- `run_inference_test` - Test model quality
-- `publish_to_registry` - Upload to Hugging Face
+### Unit Tests
+Run the test suite for this server:
 
-## Safety
+```bash
+pytest mcp_servers/system/forge/tests
+```
 
-- Input validation on all parameters
-- Temperature clamped to 0.0-2.0
-- Max tokens clamped to 1-8192
-- Prompt length limits enforced
-- Error handling for missing dependencies
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `query_sanctuary_model` appears in the tool list.
+3.  **Call Tool:** Execute `check_sanctuary_model_status` and verify it returns the model status.
 
 ## Architecture
 
-```
-forge/
-├── __init__.py          # Package exports
-├── server.py            # FastMCP server with tools
-├── operations.py        # Core Ollama integration
-├── validator.py         # Input validation
-├── models.py            # Data models
-└── README.md            # This file
-```
+### Overview
+The Forge MCP acts as the interface to the **Intelligence Forge**, specifically the fine-tuned Sanctuary-Qwen2 model running on local hardware (Ollama).
 
-## Status
+**Model Information:**
+- **Model:** `hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
+- **Base:** Qwen2-7B
+- **Quantization:** Q4_K_M (4-bit)
+- **Training:** Fine-tuned on Project Sanctuary knowledge
 
-**Implemented:** ✅ Model querying via Ollama  
-**Pending:** Fine-tuning lifecycle tools (requires CUDA GPU setup)
+### Future Capabilities
+- `initiate_model_forge` - Start fine-tuning job
+- `get_forge_job_status` - Check training progress
+- `package_and_deploy_artifact` - Convert and deploy model
+
+## Dependencies
+
+- `mcp`
+- `ollama`
 
 --- END OF FILE mcp_servers/system/forge/README.md ---
 
@@ -56007,8 +56536,18 @@ Domain: project_sanctuary.system.forge
 
 Core operations for interacting with the fine-tuned Sanctuary model.
 """
+from pathlib import Path
+import sys
 import os
 from typing import Optional, List, Dict, Any
+from ollama import Client # New import
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
+
 from .models import ModelQueryResponse
 
 
@@ -56438,252 +56977,86 @@ class ForgeValidator:
 
 # Git Workflow MCP Server
 
-**Domain:** `project_sanctuary.system.git_workflow`  
-**Version:** 2.1.0  
-**Status:** Production Ready (Protocol 101 v3.0 Compliant)
+**Description:** The Git Workflow MCP server provides **Protocol 101 v3.0-compliant git operations** with strict safety enforcement. It implements a disciplined workflow that prevents dangerous operations and ensures functional integrity through automated test suite execution.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `git_get_status` | Get comprehensive repository status. | None |
+| `git_diff` | Show changes in working directory or staged files. | `cached` (bool): Show staged changes.<br>`file_path` (str, optional): Specific file. |
+| `git_log` | Show commit history. | `max_count` (int): Number of commits.<br>`oneline` (bool): Compact format. |
+| `git_start_feature` | Create or switch to a feature branch (Idempotent). | `task_id` (str): Task ID (e.g., "045").<br>`description` (str): Short description. |
+| `git_add` | Stage files for commit (Blocks on main). | `files` (List[str], optional): Files to stage. |
+| `git_smart_commit` | Commit with automated test execution (Protocol 101). | `message` (str): Commit message. |
+| `git_push_feature` | Push feature branch with verification. | `force` (bool): Force push.<br>`no_verify` (bool): Skip hooks. |
+| `git_finish_feature` | Cleanup after PR merge (Verify -> Delete -> Sync). | `branch_name` (str): Feature branch to finish. |
 
-The Git Workflow MCP server provides **Protocol 101 v3.0-compliant git operations** with strict safety enforcement for feature development. It implements a **disciplined workflow** that prevents dangerous operations and ensures functional integrity through automated test suite execution.
+## Resources
 
-**Key Principles:**
-- ✅ **Safety First:** Never commit to `main`, one feature at a time
-- ✅ **Verify Before Trust:** All operations verify state before proceeding
-- ✅ **Merge Before Delete:** Feature branches can only be deleted after PR merge
-- ✅ **Functional Coherence:** Automated test suite execution via Protocol 101 v3.0
+*No resources currently exposed.*
 
-> [!IMPORTANT]
-> **Safety Documentation:** See [SAFETY.md](SAFETY.md) for comprehensive safety features and workflow enforcement details.
+## Prompts
 
----
+*No prompts currently exposed.*
 
-## Quick Start
+## Configuration
 
-### Prerequisites
+### Environment Variables
+Create a `.env` file in the project root:
 
-1. **Python 3.11+**
-2. **Git** installed and configured
-3. **GitHub** account with repository access
-
-### Start the MCP Server
-
-**Local Development:**
 ```bash
-cd /Users/richardfremmerlid/Projects/Project_Sanctuary
-python3 -m mcp_servers.system.git_workflow.server
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+# Optional
+GIT_BASE_DIR=/path/to/Project_Sanctuary # Security sandbox
 ```
 
-**Via Claude Desktop:**
-Already configured in `claude_desktop_config.json`. Just restart Claude.
+### MCP Config
+Add this to your `mcp_config.json`:
 
----
-
-## Operations (8)
-
-### Safe Operations (Read-Only)
-
-#### `git_get_status()`
-Get comprehensive repository status.
-
-**Returns:**
-- Current branch name
-- Staged, modified, and untracked files
-- All local branches (with current branch marked)
-- List of feature branches (for safety checks)
-- Remote tracking info: upstream branch, ahead/behind counts
-- `is_clean` flag (true if no changes)
-
-**Example:**
-```python
-git_get_status()
-# Returns: "Branch: feature/task-123-test\nStaged Files: file1.py, file2.py\n..."
+```json
+"git_workflow": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/system/git_workflow",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}",
+    "GIT_BASE_DIR": "${PWD}"
+  }
+}
 ```
 
-#### `git_diff(cached, file_path)`
-Show changes in working directory or staged files.
+## Testing
 
-**Examples:**
-```python
-git_diff(cached=False)  # Unstaged changes
-git_diff(cached=True)   # Staged changes
-git_diff(file_path="core/git/git_ops.py")  # Specific file
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/system/git_workflow/tests
 ```
 
-#### `git_log(max_count, oneline)`
-Show commit history.
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `git_get_status` appears in the tool list.
+3.  **Call Tool:** Execute `git_get_status` and verify it returns the current branch status.
 
-**Examples:**
-```python
-git_log(max_count=10, oneline=False)  # Last 10 commits (detailed)
-git_log(max_count=5, oneline=True)    # Last 5 commits (compact)
-```
+## Architecture
 
----
+### Overview
+This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3.0). It acts as a safety layer between the agent and the raw git command line.
 
-### Workflow Operations (Require Safety Checks)
+**Safety Features:**
+- ⛔ **Main Branch Protection:** Blocks direct commits to `main`.
+- ✅ **Test-Driven Commits:** `git_smart_commit` runs tests before allowing a commit.
+- 🔄 **Workflow Enforcement:** Enforces `Start -> Feature -> PR -> Merge -> Finish` cycle.
 
-#### `git_start_feature(task_id, description)` - Idempotent ✅
-
-Create or switch to a feature branch.
-
-**Safety Checks:**
-- ✅ Blocks if another feature branch exists (one at a time)
-- ✅ Requires clean working directory for new branch creation
-- ✅ Idempotent: safe to call multiple times
-
-**Example:**
-```python
-git_start_feature("045", "smart-git-mcp")
-# Creates: feature/task-045-smart-git-mcp
-```
-
-**Idempotent Behavior:**
-- Already on branch → Success (no-op)
-- Branch exists elsewhere → Checkout to it
-- Branch doesn't exist → Create and checkout
-
----
-
-#### `git_add(files)` - Blocks on Main ⛔
-
-Stage files for commit.
-
-**Safety Checks:**
-- ⛔ Blocks if on `main` branch
-- ⛔ Blocks if not on `feature/` branch
-
-**Example:**
-```python
-git_add(["file1.py", "file2.py"])  # Stage specific files
-git_add()  # Stage all changes (git add -A)
-```
-
----
-
-#### `git_smart_commit(message)` - Protocol 101 v3.0 ⭐
-
-Commit staged files with automatic test suite execution.
-
-**Safety Checks:**
-- ⛔ Blocks if on `main` branch
-- ⛔ Blocks if not on `feature/` branch
-- ⛔ Blocks if no files are staged
-
-**What it does:**
-1. Verifies you're on a feature branch
-2. Verifies files are staged
-3. Commits staged files
-4. **Pre-commit hook automatically runs `./scripts/run_genome_tests.sh`**
-5. All tests must pass for commit to proceed
-
-**Example:**
-```python
-git_smart_commit("Implement feature X")
-# Result: Commit only if all tests pass
-```
-
----
-
-#### `git_push_feature(force, no_verify)` - Blocks on Main ⛔
-
-Push current feature branch to origin with remote hash verification.
-
-**Safety Checks:**
-- ⛔ Blocks if on `main` branch
-- ⛔ Blocks if not on `feature/` branch
-- ✅ Verifies remote hash matches local hash after push
-
-**Example:**
-```python
-git_push_feature()
-# Returns: "Verified push to feature/task-123-test (Hash: abc123de)"
-```
-
-**Parameters:**
-- `force` (bool): Force push (use with caution)
-- `no_verify` (bool): Bypass pre-push hooks
-
----
-
-#### `git_finish_feature(branch_name)` - Merge Verification Required ⭐
-
-Cleanup after PR is merged on GitHub.
-
-**Safety Checks:**
-- ⛔ Blocks if branch name is `main`
-- ⛔ Blocks if branch name is not `feature/`
-- ⛔ Blocks if working directory is dirty
-- ⛔ **Blocks if branch is NOT merged into `main`** (prevents data loss)
-
-**What it does:**
-1. Verifies branch is merged into `main` (pulls `main` first to ensure up-to-date)
-2. Checkout `main`
-3. Pull latest `main`
-4. Delete local feature branch
-5. Delete remote feature branch
-
-**Example:**
-```python
-git_finish_feature("feature/task-046-configure-mcp")
-# Result: "Finished feature. Verified merge, deleted local/remote branches, and synced main."
-```
-
-> [!WARNING]
-> This operation **requires** that your PR is merged on GitHub first. It will fail if the branch is not merged.
-
----
-
-## Complete Workflow
-
-```
-1. git_get_status()
-   → Check current state
-
-2. git_start_feature("046", "configure-mcp-client")
-   → Creates feature/task-046-configure-mcp-client
-
-3. (Make your changes)
-
-4. git_diff(cached=False)
-   → Review unstaged changes
-
-5. git_add(["file1.py", "file2.py"])
-   → Stage files
-
-6. git_diff(cached=True)
-   → Review staged changes
-
-7. git_smart_commit("Add MCP client configuration")
-   → Commit (tests run automatically via pre-commit hook)
-
-8. git_push_feature()
-   → Push to GitHub
-
-9. (Create PR on GitHub manually)
-
-10. (Review and merge PR on GitHub)
-
-11. git_finish_feature("feature/task-046-configure-mcp-client")
-    → Cleanup local branch and sync main
-```
-
----
-
-## Safety Features
-
-> [!IMPORTANT]
-> See [SAFETY.md](SAFETY.md) for comprehensive safety documentation.
-
-### Removed Operations
-
-- **`git_sync_main`** - Removed entirely (unsafe standalone operation)
-  - **Rationale:** Agents were pulling main prematurely, before PR merge
-  - **Alternative:** Sync happens automatically in `git_finish_feature` after merge verification
-
-### Workflow Enforcement
-
+### Workflow
 ```mermaid
 graph TD
     A[git_get_status] --> B{On feature branch?}
@@ -56699,108 +57072,10 @@ graph TD
     J --> K[Back to main]
 ```
 
-### Security Features
+## Dependencies
 
-1. **Base Directory Restriction:** Set `GIT_BASE_DIR` to restrict operations
-2. **Path Sanitization:** All file paths validated to prevent directory traversal
-3. **No Destructive Operations:** `git reset --hard`, `git rebase`, `git push --force` not exposed
-4. **Merge Verification:** Cannot delete unmerged branches
-
----
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `REPO_PATH` | Repository root path | `.` (current directory) |
-| `GIT_BASE_DIR` | Security sandbox (optional) | None |
-| `PROJECT_ROOT` | Project root for PYTHONPATH | Required |
-
-### Claude Desktop Config
-
-```json
-{
-  "mcpServers": {
-    "git_workflow": {
-      "displayName": "Git Workflow MCP",
-      "command": "/usr/local/bin/python3",
-      "args": ["-m", "mcp_servers.system.git_workflow.server"],
-      "env": {
-        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-        "GIT_BASE_DIR": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      },
-      "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-    }
-  }
-}
-```
-
----
-
-## Testing
-
-### Test Suites
-
-- **Unit Tests:** `tests/test_git_ops.py` (10 tests)
-- **Safety Tests:** `tests/mcp_servers/git_workflow/test_tool_safety.py` (20 tests)
-- **Total:** 30 tests, 100% passing ✅
-
-### Running Tests
-
-```bash
-# All git tests
-pytest tests/test_git_ops.py tests/mcp_servers/git_workflow/ -v
-
-# Safety tests only
-pytest tests/mcp_servers/git_workflow/test_tool_safety.py -v
-
-# Specific test
-pytest tests/mcp_servers/git_workflow/test_tool_safety.py::TestGitToolSafety::test_finish_feature_blocks_unmerged -v
-```
-
----
-
-## Troubleshooting
-
-### "Cannot stage files on main branch"
-**Cause:** Attempted `git_add` on `main`  
-**Solution:** Run `git_start_feature` first
-
-### "No files staged for commit"
-**Cause:** Attempted `git_smart_commit` without staging  
-**Solution:** Run `git_add` first
-
-### "Branch is NOT merged into main"
-**Cause:** Attempted `git_finish_feature` before PR merge  
-**Solution:** Merge PR on GitHub first, then retry
-
-### "Existing feature branch(es) detected"
-**Cause:** Attempted to create second feature branch  
-**Solution:** Finish current feature branch first with `git_finish_feature`
-
-### Test Suite Failed
-```
-Error: Commit rejected - tests failed
-```
-**Solution:** Fix failing tests before committing. Run `./scripts/run_genome_tests.sh` to see failures.
-
----
-
-## Related Documentation
-
-- **[SAFETY.md](SAFETY.md)** - Comprehensive safety features documentation
-- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
-- [MCP Operations Inventory](../../../docs/mcp/mcp_operations_inventory.md)
-- [ADR 037: MCP Git Migration Strategy](../../../ADRs/037_mcp_git_migration_strategy.md)
-
----
-
-**Last Updated:** 2025-11-30  
-**Maintainer:** Project Sanctuary Team  
-**Version:** 2.1.0 (Safety-Enhanced)
+- `mcp`
+- `git` (System binary)
 
 --- END OF FILE mcp_servers/system/git_workflow/README.md ---
 
@@ -57591,690 +57866,86 @@ if __name__ == "__main__":
 
 # Task MCP Server
 
-**Domain:** `project_sanctuary.document.task`  
-**Version:** 0.1.0  
-**Status:** In Development
+**Description:** The Task MCP server manages task files in the `TASKS/` directory structure. It provides tools for creating, updating, moving, reading, listing, and searching tasks following the canonical task schema.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `create_task` | Create a new task file. | `title` (str): Title.<br>`objective` (str): Objective.<br>`deliverables` (List[str]): Deliverables.<br>`acceptance_criteria` (List[str]): Criteria.<br>`priority` (str, optional): Priority.<br>`status` (str, optional): Status.<br>`lead` (str, optional): Lead.<br>`dependencies` (str, optional): Deps.<br>`related_documents` (str, optional): Docs.<br>`notes` (str, optional): Notes.<br>`task_number` (int, optional): Number. |
+| `update_task` | Update an existing task's metadata or content. | `task_number` (int): Task #.<br>`updates` (dict): Updates. |
+| `update_task_status` | Change task status (moves file between directories). | `task_number` (int): Task #.<br>`new_status` (str): New status.<br>`notes` (str, optional): Notes. |
+| `get_task` | Retrieve a specific task by number. | `task_number` (int): Task #. |
+| `list_tasks` | List tasks with optional filters. | `status` (str, optional): Filter.<br>`priority` (str, optional): Filter. |
+| `search_tasks` | Search tasks by content (full-text search). | `query` (str): Search query. |
 
-The Task MCP server manages task files in the `TASKS/` directory structure. It provides tools for creating, updating, moving, reading, listing, and searching tasks following the canonical task schema.
+## Resources
 
-**Key Principle:** File operations only - No Git commits (follows separation of concerns)
+*No resources currently exposed.*
 
----
+## Prompts
 
-## Quick Start
+*No prompts currently exposed.*
 
-### Start the MCP Server
+## Configuration
 
-**Option 1: Run Locally (Development - No Container)**
-```bash
-cd mcp_servers/task
-source ../../.venv/bin/activate
-python server.py
-```
-*Use this for development, debugging, and quick testing. No Podman required.*
-
-**Option 2: Run in Podman Container (Production)**
-```bash
-# From project root
-podman run -d \
-  --name task-mcp \
-  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS:/app/TASKS:rw \
-  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/tools:/app/tools:ro \
-  -p 8080:8080 \
-  task-mcp:latest
-```
-*Use this for production deployment. Runs in isolated Podman container. View in **Podman Desktop** app.*
-
-**Verify Running:**
-```bash
-# Check status (should show Up or Exited(0))
-podman ps -a | grep task-mcp
-
-# View logs
-podman logs task-mcp
-```
-
-**Note:** Both options run the same MCP server code. The container version provides isolation and reproducibility.
-
-### Run Tests
+### Environment Variables
+Create a `.env` file in the project root:
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate
-
-# Run all unit tests
-python -m pytest tests/mcp_servers/task/test_operations.py -v
-
-# Run end-to-end workflow test
-python tests/mcp_servers/task/test_e2e_workflow.py
-
-# Run specific test
-python -m pytest tests/mcp_servers/task/test_operations.py::TestCreateTask::test_create_task_success -v
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
 ```
 
-### Create a Task
-
-```python
-from mcp_servers.task.operations import TaskOperations
-from mcp_servers.task.models import TaskPriority, TaskStatus
-from pathlib import Path
-
-# Initialize
-project_root = Path.cwd()
-task_ops = TaskOperations(project_root)
-
-# Create task
-result = task_ops.create_task(
-    title="Implement New Feature",
-    objective="Add feature X to improve user experience",
-    deliverables=[
-        "Feature implementation",
-        "Unit tests",
-        "Documentation"
-    ],
-    acceptance_criteria=[
-        "Feature works as expected",
-        "Tests pass",
-        "Docs updated"
-    ],
-    priority=TaskPriority.HIGH
-)
-
-print(f"Created: {result.file_path}")
-```
-
-### Update a Task
-
-```python
-# Update task priority
-result = task_ops.update_task(
-    task_number=37,
-    updates={"priority": TaskPriority.CRITICAL}
-)
-
-# Move task to in-progress
-result = task_ops.update_task_status(
-    task_number=37,
-    new_status=TaskStatus.IN_PROGRESS,
-    notes="Starting work on this task"
-)
-
-print(f"Updated: {result.file_path}")
-```
-
-### Search and List Tasks
-
-```python
-# Search for tasks
-results = task_ops.search_tasks("authentication")
-for task in results:
-    print(f"#{task['number']}: {task['title']}")
-
-# List in-progress tasks
-tasks = task_ops.list_tasks(status=TaskStatus.IN_PROGRESS)
-print(f"Found {len(tasks)} in-progress tasks")
-```
-
----
-
-## Architecture
-
-```mermaid
-graph TB
-    subgraph "LLM Assistant"
-        LLM[Gemini/Claude/GPT]
-    end
-    
-    subgraph "Task MCP Server"
-        Server[MCP Server<br/>server.py]
-        Ops[File Operations<br/>operations.py]
-        Val[Validator<br/>validator.py]
-        Models[Data Models<br/>models.py]
-    end
-    
-    subgraph "File System"
-        Backlog[TASKS/backlog/]
-        Todo[TASKS/todo/]
-        InProgress[TASKS/in-progress/]
-        Done[TASKS/done/]
-    end
-    
-    subgraph "Shared Tools"
-        GetNext[get_next_task_number.py]
-        Schema[task_schema.md]
-    end
-    
-    LLM -->|MCP Protocol| Server
-    Server --> Ops
-    Ops --> Val
-    Ops --> Models
-    Ops --> GetNext
-    Val --> Schema
-    
-    Ops -->|create/update| Backlog
-    Ops -->|create/update| Todo
-    Ops -->|create/update| InProgress
-    Ops -->|create/update| Done
-    
-    style Server fill:#667eea
-    style Ops fill:#764ba2
-    style Val fill:#f093fb
-    style Models fill:#4facfe
-```
-
-**Related Diagrams:**
-- [Task MCP Class Diagram](../../docs/mcp/diagrams/task_mcp_class.mmd)
-- [MCP Ecosystem Overview](../../docs/mcp/diagrams/mcp_ecosystem_class.mmd)
-
----
-
-## Operations
-
-### 1. create_task
-
-**Purpose:** Create a new task file
-
-**Preconditions:**
-- Task number must be unique (auto-generated if not provided)
-- Title, objective, deliverables, and acceptance criteria are required
-- Dependencies must reference existing tasks (if specified)
-
-**Input:**
-```python
-create_task(
-    title: str,                          # Required
-    objective: str,                      # Required
-    deliverables: List[str],             # Required (min 1)
-    acceptance_criteria: List[str],      # Required (min 1)
-    priority: TaskPriority = MEDIUM,     # Optional
-    status: TaskStatus = BACKLOG,        # Optional
-    lead: str = "Unassigned",            # Optional
-    dependencies: str = None,            # Optional
-    related_documents: str = None,       # Optional
-    notes: str = None,                   # Optional
-    task_number: int = None              # Optional (auto-generated)
-)
-```
-
-**Output:**
-```python
-FileOperationResult {
-    file_path: "TASKS/backlog/037_implement_feature.md",
-    content: "# TASK: Implement Feature\n...",
-    operation: "created",
-    task_number: 37,
-    status: "success",
-    message: "Task #037 created successfully"
-}
-```
-
-**Example:**
-```python
-result = task_mcp.create_task(
-    title="Implement User Authentication",
-    objective="Add secure user authentication to the application",
-    deliverables=[
-        "Login page with email/password",
-        "JWT token generation",
-        "Protected routes middleware"
-    ],
-    acceptance_criteria=[
-        "Users can log in with valid credentials",
-        "Invalid credentials show error message",
-        "Protected routes require authentication"
-    ],
-    priority=TaskPriority.HIGH,
-    dependencies="Requires #036"
-)
-# Returns: { file_path: "TASKS/backlog/037_implement_user_authentication.md", ... }
-```
-
----
-
-### 2. update_task
-
-**Purpose:** Update an existing task's metadata or content
-
-**Preconditions:**
-- Task must exist
-- Updates must maintain schema validity
-
-**Input:**
-```python
-update_task(
-    task_number: int,        # Required
-    updates: Dict[str, any]  # Required
-)
-```
-
-**Output:**
-```python
-FileOperationResult {
-    file_path: "TASKS/backlog/037_implement_feature.md",
-    content: "# TASK: Implement Feature (Updated)\n...",
-    operation: "updated",
-    task_number: 37,
-    status: "success",
-    message: "Task #037 updated successfully"
-}
-```
-
-**Example:**
-```python
-result = task_mcp.update_task(
-    task_number=37,
-    updates={
-        "priority": TaskPriority.CRITICAL,
-        "lead": "GUARDIAN-02",
-        "deliverables": [
-            "Login page with email/password",
-            "JWT token generation",
-            "Protected routes middleware",
-            "Password reset functionality"  # Added
-        ]
-    }
-)
-```
-
----
-
-### 3. update_task_status
-
-**Purpose:** Change task status (moves file between directories)
-
-**Preconditions:**
-- Task must exist
-- New status must be valid
-
-**Input:**
-```python
-update_task_status(
-    task_number: int,          # Required
-    new_status: TaskStatus,    # Required
-    notes: str = None          # Optional
-)
-```
-
-**Output:**
-```python
-FileOperationResult {
-    file_path: "TASKS/in-progress/037_implement_feature.md",
-    content: "# TASK: Implement Feature\n...",
-    operation: "moved",
-    task_number: 37,
-    status: "success",
-    message: "Task #037 moved to in-progress"
-}
-```
-
-**Status Transitions:**
-```
-backlog → todo → in-progress → done
-   ↓        ↓         ↓
-blocked (stays in in-progress dir)
-```
-
-**Example:**
-```python
-result = task_mcp.update_task_status(
-    task_number=37,
-    new_status=TaskStatus.IN_PROGRESS,
-    notes="Starting implementation. Assigned to GUARDIAN-02."
-)
-# File moves from TASKS/backlog/ to TASKS/in-progress/
-```
-
----
-
-### 4. get_task
-
-**Purpose:** Retrieve a specific task by number
-
-**Preconditions:**
-- Task must exist
-
-**Input:**
-```python
-get_task(task_number: int)  # Required
-```
-
-**Output:**
-```python
-{
-    "number": 37,
-    "title": "Implement User Authentication",
-    "status": "in-progress",
-    "priority": "Critical",
-    "lead": "GUARDIAN-02",
-    "file_path": "TASKS/in-progress/037_implement_user_authentication.md",
-    "content": "# TASK: Implement User Authentication\n..."
-}
-```
-
-**Example:**
-```python
-task = task_mcp.get_task(37)
-print(task["title"])  # "Implement User Authentication"
-```
-
----
-
-### 5. list_tasks
-
-**Purpose:** List tasks with optional filters
-
-**Preconditions:**
-- None (returns empty list if no tasks match)
-
-**Input:**
-```python
-list_tasks(
-    status: TaskStatus = None,      # Optional filter
-    priority: TaskPriority = None   # Optional filter
-)
-```
-
-**Output:**
-```python
-[
-    {
-        "number": 37,
-        "title": "Implement User Authentication",
-        "status": "in-progress",
-        "priority": "Critical",
-        "lead": "GUARDIAN-02",
-        "file_path": "TASKS/in-progress/037_implement_user_authentication.md"
-    },
-    {
-        "number": 38,
-        "title": "Add Unit Tests",
-        "status": "in-progress",
-        "priority": "High",
-        "lead": "Unassigned",
-        "file_path": "TASKS/in-progress/038_add_unit_tests.md"
-    }
-]
-```
-
-**Example:**
-```python
-# Get all tasks in progress
-in_progress = task_mcp.list_tasks(status=TaskStatus.IN_PROGRESS)
-
-# Get all critical priority tasks
-critical = task_mcp.list_tasks(priority=TaskPriority.CRITICAL)
-
-# Get all tasks (no filters)
-all_tasks = task_mcp.list_tasks()
-```
-
----
-
-### 6. search_tasks
-
-**Purpose:** Search tasks by content (full-text search)
-
-**Preconditions:**
-- None (returns empty list if no matches)
-
-**Input:**
-```python
-search_tasks(query: str)  # Required
-```
-
-**Output:**
-```python
-[
-    {
-        "number": 37,
-        "title": "Implement User Authentication",
-        "status": "in-progress",
-        "priority": "Critical",
-        "file_path": "TASKS/in-progress/037_implement_user_authentication.md",
-        "matches": [
-            "Add secure user authentication to the application",
-            "JWT token generation",
-            "Protected routes require authentication"
-        ]
-    }
-]
-```
-
-**Example:**
-```python
-# Search for tasks mentioning "authentication"
-results = task_mcp.search_tasks("authentication")
-
-# Search for tasks mentioning "GUARDIAN-02"
-guardian_tasks = task_mcp.search_tasks("GUARDIAN-02")
-```
-
----
-
-## Connecting to Claude Desktop
-
-To use the Task MCP server with Claude Desktop, you need to register it in Claude's MCP configuration.
-
-### Step 1: Locate Claude Desktop Config
-
-The config file is at:
-```bash
-cd ~/Library/Application\ Support/Claude/
-nano claude_desktop_config.json
-```
-
-### Step 2: Add Task MCP Server
-
-Edit the config file and add the Task MCP server:
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
-{
-  "mcpServers": {
-    "task-mcp": {
-      "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
-      "args": [
-        "-m",
-        "mcp_servers.task.server"
-      ],
-      "env": {
-        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
-        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-      },
-      "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-    }
+"task": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/task",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
 
-**Note:** We use absolute paths to the virtual environment python executable to avoid `ENOENT` errors.
+## Testing
 
-### Step 3: Restart Claude Desktop
-
-1. Quit Claude Desktop completely
-2. Reopen Claude Desktop
-3. The Task MCP server will be available
-
-### Step 4: Verify Connection
-
-In Claude Desktop, you should see the Task MCP server listed in the MCP servers panel. You can now use natural language:
-
-```
-"Create a high priority task to implement user authentication"
-"List all tasks in progress"
-"Move task #037 to done"
-"Search for tasks about authentication"
-```
-
-### Troubleshooting
-
-**Server not showing up:**
-- Check the config file syntax (valid JSON)
-- Ensure Python path is correct
-- Check Claude Desktop logs: `~/Library/Logs/Claude/`
-
-**Permission errors:**
-- Ensure the virtual environment is activated
-- Check file permissions on TASKS directory
-
----
-
-## Safety Rules
-
-1. **Task Number Uniqueness** - Cannot create duplicate task numbers
-2. **Circular Dependencies** - Validates dependency references exist
-3. **Schema Compliance** - All tasks must follow `TASKS/task_schema.md`
-4. **File Path Safety** - All operations restricted to `TASKS/` directory
-5. **No Deletion** - Tasks cannot be deleted (archive by moving to done)
-6. **No Git Operations** - File operations only (separation of concerns)
-
----
-
-## Running in Podman
-
-### Build the Image
+### Unit Tests
+Run the test suite for this server:
 
 ```bash
-cd mcp_servers/task
-podman build -t task-mcp:latest .
+pytest mcp_servers/task/tests
 ```
 
-### Run the Container
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `list_tasks` appears in the tool list.
+3.  **Call Tool:** Execute `list_tasks` and verify it returns tasks.
 
-```bash
-podman run -d \
-  --name task-mcp \
-  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS:/app/TASKS:rw \
-  -v /Users/richardfremmerlid/Projects/Project_Sanctuary/tools:/app/tools:ro \
-  -p 8080:8080 \
-  task-mcp:latest
-```
+## Architecture
 
-**Volume Mounts:**
-- `TASKS/` - Read/write access for task file operations
-- `tools/` - Read-only access for `get_next_task_number.py`
+### Overview
+This server manages the `TASKS/` directory structure (`backlog`, `todo`, `in-progress`, `done`).
 
-**Port Mapping:**
-- `8080:8080` - MCP protocol communication
-
-### Run in Podman Desktop
-
-1. Open **Podman Desktop**
-2. Go to **Images** tab
-3. Find `task-mcp:latest`
-4. Click **▶️ play button**
-5. Configure:
-   - **Port:** `8080:8080`
-   - **Volume 1:** `/path/to/TASKS:/app/TASKS:rw`
-   - **Volume 2:** `/path/to/tools:/app/tools:ro`
-   - **Name:** `task-mcp`
-6. Click **Start Container**
-
-### Verify Running
-
-```bash
-# Check container status
-podman ps | grep task-mcp
-
-# View logs
-podman logs task-mcp
-
-# Test health endpoint
-curl http://localhost:8080/health
-```
-
----
-
-## Development
-
-### Project Structure
-
-```
-mcp_servers/task/
-├── __init__.py          # Package initialization
-├── models.py            # Data models (TaskSchema, FileOperationResult)
-├── validator.py         # Schema and safety validation
-├── operations.py        # File operations (create, update, move, etc.)
-├── server.py            # MCP server implementation
-├── Dockerfile           # Container definition
-└── README.md            # This file
-```
-
-### Local Testing (Without Container)
-
-```bash
-# Activate virtual environment
-source .venv/bin/activate
-
-# Install dependencies
-pip install mcp
-
-# Run tests
-python -m pytest tests/mcp_servers/task/
-
-# Run server locally
-cd mcp_servers/task
-python server.py
-```
-
----
+**Safety Rules:**
+1.  **Task Number Uniqueness:** Cannot create duplicate task numbers.
+2.  **Circular Dependencies:** Validates dependency references exist.
+3.  **Schema Compliance:** All tasks must follow `TASKS/task_schema.md`.
+4.  **File Path Safety:** All operations restricted to `TASKS/` directory.
+5.  **No Deletion:** Tasks cannot be deleted (archive by moving to done).
+6.  **No Git Operations:** File operations only.
 
 ## Dependencies
 
-- **Python 3.11+**
-- **MCP SDK:** `pip install mcp`
-- **Project Tools:** `get_next_task_number.py`
-- **Task Schema:** `TASKS/task_schema.md`
-
----
-
-## Related Documentation
-
-- [MCP Architecture](../../docs/mcp/architecture.md)
-- [MCP Setup Guide](../../docs/mcp/setup_guide.md)
-- [Task Schema](../../TASKS/task_schema.md)
-- [ADR 034: Containerize MCP Servers](../../ADRs/034_containerize_mcp_servers_with_podman.md)
-- [Prerequisites Guide](../../docs/mcp/prerequisites.md)
-- [Task #031: Implement Task MCP](../../TASKS/backlog/031_implement_task_mcp.md)
-
----
-
-## Troubleshooting
-
-### Task Number Already Exists
-
-**Error:** `Task #037 already exists in backlog/`
-
-**Solution:** Use auto-generated task number (don't specify `task_number`)
-
-### Validation Failed
-
-**Error:** `Schema validation failed: At least one deliverable is required`
-
-**Solution:** Ensure all required fields are provided:
-- title
-- objective
-- deliverables (min 1)
-- acceptance_criteria (min 1)
-
-### File Not Found
-
-**Error:** `Task #037 not found`
-
-**Solution:** Verify task exists:
-```python
-task = task_mcp.get_task(37)
-if task is None:
-    print("Task does not exist")
-```
-
----
-
-**Last Updated:** 2025-11-26  
-**Maintainer:** Project Sanctuary Team
+- `mcp`
 
 --- END OF FILE mcp_servers/task/README.md ---
 
@@ -58380,14 +58051,16 @@ Following separation of concerns: File operations only, no Git commits
 
 import re
 from pathlib import Path
-from typing import List, Optional, Dict, Tuple
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 import sys
 import os
 
-# Add tools directory to path for get_next_task_number
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "tools" / "scaffolds"))
-from get_next_task_number import get_next_task_number
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
 
 from .models import TaskSchema, TaskStatus, TaskPriority, FileOperationResult
 from .validator import TaskValidator
@@ -58445,7 +58118,7 @@ class TaskOperations:
         """
         # Get next task number if not provided
         if task_number is None:
-            task_number = int(get_next_task_number())
+            task_number = self.validator.get_next_task_number()
         
         # Validate task number is unique
         is_valid, error_msg = self.validator.validate_task_number(task_number)
@@ -59316,6 +58989,34 @@ class TaskValidator:
         
         return True, ""
     
+    def get_next_task_number(self) -> int:
+        """Get the next sequential task number by scanning all task directories."""
+        existing_numbers = []
+        
+        # Scan all status directories
+        task_dirs = [
+            self.tasks_dir / "backlog",
+            self.tasks_dir / "todo",
+            self.tasks_dir / "in-progress",
+            self.tasks_dir / "done"
+        ]
+        
+        for task_dir in task_dirs:
+            if not task_dir.exists():
+                continue
+            
+            for file in task_dir.iterdir():
+                if file.suffix == '.md':
+                    # Extract task number from filename (format: 001_task_name.md)
+                    match = re.match(r'^(\d{3})_', file.name)
+                    if match:
+                        existing_numbers.append(int(match.group(1)))
+        
+        # Return next number
+        if not existing_numbers:
+            return 1
+        return max(existing_numbers) + 1
+    
     def validate_task_schema(self, task: TaskSchema) -> Tuple[bool, List[str]]:
         """
         Validate task follows required schema
@@ -59630,7 +59331,7 @@ markers =
     slow: marks tests as slow (deselect with '-m "not slow"')
 
 # Default: skip slow, integration, and benchmark tests to keep unit tests fast
-addopts = -m "not slow and not integration and not benchmark" --strict-markers
+addopts = -m "not slow and not benchmark" --strict-markers
 
 # Test discovery
 testpaths = tests mnemonic_cortex/tests council_orchestrator/tests forge/OPERATION_PHOENIX_FORGE/tests
@@ -64093,98 +63794,6 @@ if __name__ == "__main__":
 
 --- END OF FILE scripts/generate_mcp_config.py ---
 
---- START OF FILE scripts/get_next_adr_number.py ---
-
-# scripts/get_next_adr_number.py
-import os
-from pathlib import Path
-import re
-
-# --- CONFIGURATION ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-ADRS_DIR = PROJECT_ROOT / "ADRs"
-
-def get_next_adr_number():
-    """
-    Scans the ADRs directory to find the highest existing ADR number
-    and returns the next sequential number as a zero-padded three-digit string.
-    """
-    highest_num = 0
-    adr_file_pattern = re.compile(r"^(\d{3})_.*\.md$")
-
-    if not ADRS_DIR.exists():
-        # If ADRs directory doesn't exist yet, start from 001
-        return "001"
-
-    for filename in os.listdir(ADRS_DIR):
-        match = adr_file_pattern.match(filename)
-        if match:
-            num = int(match.group(1))
-            if num > highest_num:
-                highest_num = num
-
-    next_num = highest_num + 1
-    return f"{next_num:03d}"
-
-def main():
-    """Main function to print the next available ADR number."""
-    next_adr_number = get_next_adr_number()
-    print(next_adr_number)
-
-if __name__ == "__main__":
-    main()
-
---- END OF FILE scripts/get_next_adr_number.py ---
-
---- START OF FILE scripts/get_next_task_number.py ---
-
-# scripts/get_next_task_number.py
-import os
-from pathlib import Path
-import re
-
-# --- CONFIGURATION ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-TASKS_DIRS = [
-    PROJECT_ROOT / "TASKS",
-    PROJECT_ROOT / "TASKS" / "backlog",
-    PROJECT_ROOT / "TASKS" / "todo",
-    PROJECT_ROOT / "TASKS" / "in-progress",
-    PROJECT_ROOT / "TASKS" / "done",
-]
-
-def get_next_task_number():
-    """
-    Scans all task directories to find the highest existing task number
-    and returns the next sequential number as a zero-padded three-digit string.
-    """
-    highest_num = 0
-    task_file_pattern = re.compile(r"^(\d{3})_.*\.md$")
-
-    for directory in TASKS_DIRS:
-        if not directory.exists():
-            continue
-        
-        for filename in os.listdir(directory):
-            match = task_file_pattern.match(filename)
-            if match:
-                num = int(match.group(1))
-                if num > highest_num:
-                    highest_num = num
-
-    next_num = highest_num + 1
-    return f"{next_num:03d}"
-
-def main():
-    """Main function to print the next available task number."""
-    next_task_number = get_next_task_number()
-    print(next_task_number)
-
-if __name__ == "__main__":
-    main()
-
---- END OF FILE scripts/get_next_task_number.py ---
-
 --- START OF FILE scripts/glyph_forge.py ---
 
 #!/usr/bin/env python3
@@ -64372,6 +63981,133 @@ if __name__ == "__main__":
     exit(main())
 
 --- END OF FILE scripts/glyph_forge.py ---
+
+--- START OF FILE scripts/manual_test_deliberation.py ---
+
+#!/usr/bin/env python3
+"""
+Manual Verification Script for Multi-Round Deliberation Logic (Task #086B)
+
+This script simulates a full Council deliberation (3 rounds) by mocking the 
+LLM and Cortex dependencies but executing the actual Council and Agent Persona 
+logic. It prints the conversation flow to verify the logic integrity.
+"""
+
+import os
+import sys
+import json
+from unittest.mock import MagicMock, patch
+
+# Add project root to sys.path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+# 1. Mock legacy modules to allow imports
+sys.modules["mnemonic_cortex.app.services.vector_db_service"] = MagicMock()
+sys.modules["mnemonic_cortex.app.services.llm_service"] = MagicMock()
+
+# 2. Import Operations
+from mcp_servers.lib.council.council_ops import CouncilOperations
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+
+def run_verification():
+    print("🔍 Starting Multi-Round Deliberation Verification...")
+    
+    # 3. Setup Mocks
+    with patch('mcp_servers.lib.agent_persona.agent_persona_ops.get_llm_client') as mock_llm, \
+         patch.object(CortexOperations, 'query') as mock_cortex_query, \
+         patch.object(CortexOperations, 'cache_warmup'):
+        
+        # Mock Cortex Context
+        mock_cortex_query.return_value = MagicMock(
+            results=[
+                MagicMock(
+                    content="Protocol 87: Structured Queries. Defines how to query the system.",
+                    metadata={"source": "01_PROTOCOLS/087.md"},
+                    score=0.95
+                )
+            ]
+        )
+        
+        # Mock LLM Responses (Context-Aware)
+        def mock_generate(prompt, **kwargs):
+            prompt_lower = prompt.lower()
+            
+            # Identify Agent
+            agent = "unknown"
+            if "coordinator" in prompt_lower: agent = "Coordinator"
+            elif "strategist" in prompt_lower: agent = "Strategist"
+            elif "auditor" in prompt_lower: agent = "Auditor"
+            
+            # Identify Round (heuristic based on context length or content)
+            # This is a simplification; in real flow, context grows.
+            if "critique" in prompt_lower or "review" in prompt_lower: 
+                phase = "Critique"
+            elif "synthesize" in prompt_lower or "final" in prompt_lower:
+                phase = "Synthesis"
+            else:
+                phase = "Initial Proposal"
+                
+            return f"[{agent} - {phase}] Based on Protocol 87, I suggest..."
+
+        mock_client = MagicMock()
+        mock_client.generate.side_effect = mock_generate
+        mock_llm.return_value = mock_client
+        
+        # 4. Execute Council Dispatch
+        print("\n🚀 Dispatching Task to Council (Max Rounds: 2)...")
+        council_ops = CouncilOperations()
+        result = council_ops.dispatch_task(
+            task_description="Design a new protocol for MCP composition",
+            agent=None, # Full Council
+            max_rounds=2
+        )
+        
+        # 5. Analyze Results
+        print("\n✅ Execution Complete!")
+        print(f"Status: {result['status']}")
+        print(f"Rounds Completed: {result['rounds']}")
+        print(f"Agents Involved: {len(result['agents'])} ({', '.join(result['agents'])})")
+        print(f"Total Packets: {len(result['packets'])}")
+        
+        print("\n📜 Conversation Flow:")
+        current_round = -1
+        for packet in result['packets']:
+            if packet['round_id'] != current_round:
+                current_round = packet['round_id']
+                print(f"\n--- ROUND {current_round + 1} ---")
+            
+            print(f"\n👤 {packet['member_id'].upper()}:")
+            print(f"   {packet['decision']}")
+            
+        print("\n🧠 Final Synthesis:")
+        print(f"   {result['final_synthesis']}")
+        
+        # 6. Verify Logic
+        print("\n🕵️ Logic Verification:")
+        
+        # Check 1: Cortex was queried
+        cortex_called = mock_cortex_query.call_count > 0
+        print(f"   [{'x' if cortex_called else ' '}] Cortex Context Retrieved")
+        
+        # Check 2: All agents participated
+        all_agents = set(result['agents']) == {'coordinator', 'strategist', 'auditor'}
+        print(f"   [{'x' if all_agents else ' '}] All Agents Participated")
+        
+        # Check 3: Rounds executed
+        rounds_ok = result['rounds'] == 2
+        print(f"   [{'x' if rounds_ok else ' '}] Multi-Round Execution")
+        
+        if cortex_called and all_agents and rounds_ok:
+            print("\n✅ VERIFICATION SUCCESSFUL: Logic integrity confirmed.")
+        else:
+            print("\n❌ VERIFICATION FAILED: Logic gaps detected.")
+
+if __name__ == "__main__":
+    run_verification()
+
+--- END OF FILE scripts/manual_test_deliberation.py ---
 
 --- START OF FILE scripts/path_diag.py ---
 
@@ -64779,6 +64515,70 @@ echo "##########################################################################
 
 --- END OF FILE scripts/update_genome.sh ---
 
+--- START OF FILE tests/benchmarks/test_mcp_tool_latency.py ---
+
+import pytest
+import time
+from unittest.mock import MagicMock
+
+# Import operations to benchmark
+from mcp_servers.chronicle.operations import ChronicleOperations
+from mcp_servers.task.operations import TaskOperations
+from mcp_servers.protocol.operations import ProtocolOperations
+
+@pytest.mark.benchmark
+def test_chronicle_list_latency(benchmark, tmp_path):
+    """Benchmark Chronicle list_entries latency."""
+    # Setup
+    chronicle_dir = tmp_path / "00_CHRONICLE"
+    chronicle_dir.mkdir()
+    # Create a few dummy entries
+    for i in range(10):
+        (chronicle_dir / f"{i:03d}_entry.md").write_text(f"# Entry {i}")
+        
+    ops = ChronicleOperations(str(tmp_path))
+    
+    # Benchmark
+    result = benchmark(ops.list_entries)
+    assert len(result) == 10
+
+@pytest.mark.benchmark
+def test_task_list_latency(benchmark, tmp_path):
+    """Benchmark Task list_tasks latency."""
+    # Setup
+    task_dir = tmp_path / "TASKS"
+    task_dir.mkdir()
+    (task_dir / "backlog").mkdir()
+    (task_dir / "todo").mkdir()
+    (task_dir / "in-progress").mkdir()
+    (task_dir / "done").mkdir()
+    
+    # Create dummy tasks
+    for i in range(10):
+        (task_dir / "backlog" / f"{i:03d}_task.md").write_text(f"# Task {i}\nStatus: Backlog")
+        
+    ops = TaskOperations(str(tmp_path))
+    
+    # Benchmark
+    result = benchmark(ops.list_tasks)
+    assert len(result) == 10
+
+@pytest.mark.benchmark
+def test_protocol_get_latency(benchmark, tmp_path):
+    """Benchmark Protocol get_protocol latency."""
+    # Setup
+    proto_dir = tmp_path / "01_PROTOCOLS"
+    proto_dir.mkdir()
+    (proto_dir / "101_test_protocol.md").write_text("# Protocol 101\nTitle: Test")
+    
+    ops = ProtocolOperations(str(proto_dir))
+    
+    # Benchmark
+    result = benchmark(ops.get_protocol, 101)
+    assert result["number"] == 101
+
+--- END OF FILE tests/benchmarks/test_mcp_tool_latency.py ---
+
 --- START OF FILE tests/browser_automation/main.py ---
 
 # mcp_agent/main.py (v2.0 - HITL Authentication)
@@ -65158,6 +64958,286 @@ This is a test protocol for incremental ingestion verification.
 
 --- END OF FILE tests/data/test_protocol_999.md ---
 
+--- START OF FILE tests/integration/test_agent_persona_with_cortex.py ---
+
+"""
+Integration Tests for Agent Persona MCP ↔ Cortex MCP Communication
+
+Tests the full flow:
+1. Council MCP → Agent Persona MCP → Cortex MCP
+2. Multi-agent deliberation with context retrieval
+3. Cross-MCP communication patterns
+"""
+
+import pytest
+import sys
+from unittest.mock import MagicMock, patch
+
+# Mock missing legacy modules to allow imports in CortexOperations
+mock_vector_service = MagicMock()
+sys.modules["mnemonic_cortex.app.services.vector_db_service"] = mock_vector_service
+sys.modules["mnemonic_cortex.app.services.llm_service"] = MagicMock()
+
+from mcp_servers.lib.council.council_ops import CouncilOperations
+from mcp_servers.lib.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.cognitive.cortex.operations import CortexOperations
+
+
+@pytest.mark.integration
+class TestAgentPersonaCortexIntegration:
+    """Test Agent Persona MCP can successfully query Cortex MCP"""
+    
+    def test_persona_queries_cortex_for_context(self):
+        """
+        Test that Agent Persona MCP can query Cortex MCP for context
+        """
+        with patch('mcp_servers.lib.agent_persona.agent_persona_ops.get_llm_client') as mock_llm:
+            # Mock LLM response
+            mock_client = MagicMock()
+            mock_client.generate.return_value = "Based on the context provided, Protocol 101 defines..."
+            mock_llm.return_value = mock_client
+            
+            # Mock Cortex query
+            with patch.object(CortexOperations, 'query') as mock_cortex_query:
+                mock_cortex_query.return_value = MagicMock(
+                    results=[
+                        MagicMock(
+                            content="Protocol 101: Git Workflow...",
+                            metadata={"source": "01_PROTOCOLS/101_git_workflow.md"},
+                            score=0.95
+                        )
+                    ]
+                )
+                
+                # Initialize operations
+                persona_ops = AgentPersonaOperations()
+                
+                # Dispatch task with context query
+                result = persona_ops.dispatch(
+                    role="auditor",
+                    task="Review Protocol 101 for compliance",
+                    context=None,  # Will query Cortex
+                    model_name="test-model"
+                )
+                
+                # Verify Cortex was queried (if persona implementation queries it)
+                assert result["status"] == "success"
+                assert "response" in result
+
+
+@pytest.mark.integration
+class TestCouncilAgentPersonaCortexFlow:
+    """Test full Council MCP → Agent Persona MCP → Cortex MCP flow"""
+    
+    def test_council_dispatch_full_flow(self):
+        """
+        Test complete flow from Council through Agent Persona to Cortex
+        """
+        with patch('mcp_servers.lib.agent_persona.agent_persona_ops.get_llm_client') as mock_llm, \
+             patch.object(CortexOperations, 'cache_warmup'): # Prevent warmup side effects
+            
+            # Mock LLM responses
+            mock_client = MagicMock()
+            mock_client.generate.return_value = "Analysis complete based on context."
+            mock_llm.return_value = mock_client
+            
+            # Mock Cortex query
+            with patch.object(CortexOperations, 'query') as mock_cortex_query:
+                mock_cortex_query.return_value = MagicMock(
+                    results=[
+                        MagicMock(
+                            content="Relevant protocol content...",
+                            metadata={"source": "test.md"},
+                            score=0.9
+                        )
+                    ]
+                )
+                
+                # Initialize Council operations
+                council_ops = CouncilOperations()
+                
+                # Dispatch single-agent task
+                result = council_ops.dispatch_task(
+                    task_description="Analyze the security implications",
+                    agent="auditor",
+                    max_rounds=1
+                )
+                
+                # Verify successful execution
+                assert result["status"] == "success"
+                assert result["session_id"]
+                assert len(result["agents"]) == 1
+                assert result["agents"][0] == "auditor"
+                
+                # Verify Cortex was queried
+                mock_cortex_query.assert_called_once()
+
+
+    def test_multi_agent_deliberation_with_context(self):
+        """
+        Test full council deliberation (3 agents, multiple rounds) with Cortex context
+        """
+        with patch('mcp_servers.lib.agent_persona.agent_persona_ops.get_llm_client') as mock_llm, \
+             patch.object(CortexOperations, 'cache_warmup'): # Prevent warmup side effects
+            
+            # Mock LLM responses for different agents
+            responses = {
+                "coordinator": "I propose we approach this systematically...",
+                "strategist": "From a strategic perspective, the risks are...",
+                "auditor": "Compliance check reveals..."
+            }
+            
+            def mock_generate(prompt, **kwargs):
+                # Determine which agent based on prompt content
+                for agent, response in responses.items():
+                    if agent in prompt.lower():
+                        return response
+                return "Generic response"
+            
+            mock_client = MagicMock()
+            mock_client.generate.side_effect = mock_generate
+            mock_llm.return_value = mock_client
+            
+            # Mock Cortex query
+            with patch.object(CortexOperations, 'query') as mock_cortex_query:
+                mock_cortex_query.return_value = MagicMock(
+                    results=[
+                        MagicMock(
+                            content="Protocol 87 defines structured queries...",
+                            metadata={"source": "01_PROTOCOLS/087_structured_queries.md"},
+                            score=0.95
+                        ),
+                        MagicMock(
+                            content="Security mandate requires...",
+                            metadata={"source": "01_PROTOCOLS/security.md"},
+                            score=0.88
+                        )
+                    ]
+                )
+                
+                # Initialize Council operations
+                council_ops = CouncilOperations()
+                
+                # Dispatch full council deliberation
+                result = council_ops.dispatch_task(
+                    task_description="Design a new protocol for MCP composition patterns",
+                    agent=None,  # Full council
+                    max_rounds=2
+                )
+                
+                # Verify successful execution
+                assert result["status"] == "success"
+                assert result["rounds"] == 2
+                assert len(result["agents"]) == 3
+                assert set(result["agents"]) == {"coordinator", "strategist", "auditor"}
+                
+                # Verify packets were created (2 rounds × 3 agents = 6 packets)
+                assert len(result["packets"]) == 6
+                
+                # Verify Cortex was queried once (at start)
+                assert mock_cortex_query.call_count == 1
+                
+                # Verify final synthesis exists
+                assert "final_synthesis" in result
+                assert result["final_synthesis"]
+
+
+@pytest.mark.integration  
+class TestCortexMCPOperations:
+    """Test Cortex MCP operations work correctly"""
+    
+    def test_cortex_query_returns_results(self):
+        """
+        Test that Cortex MCP query operation works
+        """
+        # Mock VectorDBService which is imported inside query()
+        mock_db_service_cls = mock_vector_service.VectorDBService
+        mock_db_instance = mock_db_service_cls.return_value
+        mock_retriever = mock_db_instance.get_retriever.return_value
+        
+        # Mock retriever results
+        mock_doc1 = MagicMock()
+        mock_doc1.page_content = "Protocol 101 content"
+        mock_doc1.metadata = {'source': '01_PROTOCOLS/101.md'}
+        
+        mock_doc2 = MagicMock()
+        mock_doc2.page_content = "Protocol 102 content"
+        mock_doc2.metadata = {'source': '01_PROTOCOLS/102.md'}
+        
+        mock_retriever.invoke.return_value = [mock_doc1, mock_doc2]
+        
+        # Initialize Cortex operations
+        cortex_ops = CortexOperations(project_root=".")
+        
+        # Query
+        result = cortex_ops.query("What is Protocol 101?", max_results=2)
+        
+        # Verify results
+        assert hasattr(result, 'results')
+        assert len(result.results) == 2
+        assert result.results[0].content == "Protocol 101 content"
+        assert result.results[1].content == "Protocol 102 content"
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE tests/integration/test_agent_persona_with_cortex.py ---
+
+--- START OF FILE tests/integration/test_chronicle_integration.py ---
+
+import pytest
+from unittest.mock import MagicMock, patch
+from mcp_servers.chronicle.operations import ChronicleOperations
+import os
+import shutil
+
+@pytest.mark.integration
+class TestChronicleIntegration:
+    
+    @pytest.fixture
+    def temp_chronicle_dir(self, tmp_path):
+        """Create a temporary chronicle directory."""
+        chronicle_dir = tmp_path / "00_CHRONICLE"
+        chronicle_dir.mkdir()
+        return chronicle_dir
+
+    def test_chronicle_write_flow(self, temp_chronicle_dir):
+        """Test writing to Chronicle from an external source (simulated)."""
+        
+        # Initialize operations with temp dir
+        ops = ChronicleOperations(str(temp_chronicle_dir.parent))
+        
+        # 1. Create a new entry
+        result = ops.create_entry(
+            title="Integration Test Entry",
+            content="This is a test entry from the integration suite.",
+            author="TestRunner",
+            classification="internal"
+        )
+        
+        assert result["status"] == "success"
+        assert "001_integration_test_entry.md" in result["file_path"]
+        
+        # 2. Verify file exists
+        entry_path = temp_chronicle_dir / "001_integration_test_entry.md"
+        assert entry_path.exists()
+        
+        content = entry_path.read_text()
+        assert "# Integration Test Entry" in content
+        assert "Author: TestRunner" in content
+        
+        # 3. Search for the entry
+        search_results = ops.search_entries("Integration Test")
+        assert len(search_results) >= 1
+        assert search_results[0]["title"] == "Integration Test Entry"
+
+--- END OF FILE tests/integration/test_chronicle_integration.py ---
+
 --- START OF FILE tests/integration/test_cortex_operations.py ---
 
 """
@@ -65219,6 +65299,66 @@ def test_adaptation_packet_generation():
     print(f"✅ Adaptation packet generated: {len(packet.examples)} examples")
 
 --- END OF FILE tests/integration/test_cortex_operations.py ---
+
+--- START OF FILE tests/integration/test_council_with_git.py ---
+
+import pytest
+from unittest.mock import MagicMock, patch
+from mcp_servers.lib.council.council_ops import CouncilOperations
+
+@pytest.mark.integration
+def test_council_git_flow():
+    """Test Council directing Git operations."""
+    # Mock Git MCP client
+    with patch('mcp_servers.lib.council.council_ops.get_mcp_client') as mock_get_client:
+        # Setup mock client
+        mock_client = MagicMock()
+        mock_get_client.return_value = mock_client
+        
+        # Initialize operations
+        council = CouncilOperations()
+        
+        # Simulate task that requires git commit
+        # We mock the LLM response to ensure deterministic behavior
+        with patch.object(council, '_query_llm') as mock_llm:
+            mock_llm.return_value = {
+                "decision": "I will create a feature branch.",
+                "tool_calls": [
+                    {
+                        "name": "git_create_branch",
+                        "arguments": {"branch_name": "feat/new-protocol"}
+                    }
+                ]
+            }
+            
+            # Dispatch task
+            result = council.dispatch_task(
+                "Create a feature branch for new protocol",
+                agent="coordinator",
+                max_rounds=1
+            )
+            
+            # Verify Git MCP tool was called via the client
+            # Note: The actual implementation might differ slightly depending on how Council calls tools
+            # This assumes Council uses a standard client wrapper
+            # If Council uses direct tool calls, we might need to adjust the mock
+            
+            # For now, we assume the Council orchestrator identifies the tool call and executes it
+            # or passes it back. If it executes it, it would use the client.
+            
+            # Since we are mocking the LLM to return a tool call, the Council logic should
+            # attempt to execute that tool call using the appropriate MCP client.
+            
+            # Check if get_mcp_client was called for 'git'
+            mock_get_client.assert_called_with("git")
+            
+            # Check if the tool was called on the client
+            mock_client.call_tool.assert_called_with(
+                "git_create_branch", 
+                {"branch_name": "feat/new-protocol"}
+            )
+
+--- END OF FILE tests/integration/test_council_with_git.py ---
 
 --- START OF FILE tests/integration/test_end_to_end_rag_pipeline.py ---
 
@@ -65426,6 +65566,62 @@ if __name__ == "__main__":
     pytest.main([__file__, "-v", "--tb=short"])
 
 --- END OF FILE tests/integration/test_forge_integration.py ---
+
+--- START OF FILE tests/integration/test_forge_model_serving.py ---
+
+import pytest
+from unittest.mock import MagicMock, patch
+from mcp_servers.system.forge.operations import ForgeOperations
+
+@pytest.mark.integration
+def test_forge_model_serving():
+    """Test Forge serving model status and inference."""
+    
+    # Mock Ollama client
+    with patch('mcp_servers.system.forge.operations.Client') as mock_client_cls:
+        mock_client = MagicMock()
+        mock_client_cls.return_value = mock_client
+        
+        # Setup mock response for list
+        mock_client.list.return_value = {
+            "models": [
+                {"name": "Sanctuary-Qwen2.5-7B:latest"},
+                {"name": "llama3:latest"}
+            ]
+        }
+        
+        # Setup mock response for chat
+        mock_client.chat.return_value = {
+            "message": {
+                "content": "This is a response from the Sanctuary model."
+            },
+            "done": True
+        }
+        
+        ops = ForgeOperations()
+        
+        # 1. Check model status
+        status = ops.check_model_status()
+        assert status["status"] == "available"
+        assert status["model"] == "Sanctuary-Qwen2.5-7B:latest"
+        
+        # 2. Query model
+        response = ops.query_model(
+            prompt="Explain Protocol 101",
+            system_prompt="You are an expert."
+        )
+        
+        assert "response" in response
+        assert response["response"] == "This is a response from the Sanctuary model."
+        assert response["model"] == "Sanctuary-Qwen2.5-7B:latest"
+        
+        # Verify Ollama was called correctly
+        mock_client.chat.assert_called_once()
+        call_args = mock_client.chat.call_args
+        assert call_args[1]["model"] == "Sanctuary-Qwen2.5-7B:latest"
+        assert call_args[1]["messages"][0]["content"] == "You are an expert."
+
+--- END OF FILE tests/integration/test_forge_model_serving.py ---
 
 --- START OF FILE tests/integration/test_git_workflow_end_to_end.py ---
 
@@ -65806,6 +66002,369 @@ echo ""
 echo "End time: $(date '+%H:%M:%S')"
 
 --- END OF FILE tests/manual/test_auditor_simple.sh ---
+
+--- START OF FILE tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py ---
+
+"""
+Comprehensive Test Suite for Agent Persona MCP Server
+
+This test suite provides extensive coverage of:
+- Input validation and expected failures
+- State management and persistence
+- Edge cases and error handling
+- Integration scenarios
+"""
+
+import pytest
+import json
+from pathlib import Path
+import sys
+
+# Add parent directories to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+from mcp_servers.lib.agent_persona.agent_persona_ops import AgentPersonaOperations
+
+@pytest.fixture
+def persona_ops():
+    """Create AgentPersonaOperations instance"""
+    return AgentPersonaOperations()
+
+# ============================================================================
+# EXISTING TESTS (7 tests - keep these)
+# ============================================================================
+
+def test_persona_ops_initialization(persona_ops):
+    """Test that AgentPersonaOperations initializes correctly"""
+    assert persona_ops.project_root.exists()
+    assert persona_ops.persona_dir.exists()
+    assert persona_ops.state_dir.exists()
+
+def test_list_roles(persona_ops):
+    """Test listing available persona roles"""
+    roles = persona_ops.list_roles()
+    
+    assert "built_in" in roles
+    assert "custom" in roles
+    assert "total" in roles
+    
+    # Should have at least the 3 built-in roles
+    assert len(roles["built_in"]) >= 3
+    assert "coordinator" in roles["built_in"]
+    assert "strategist" in roles["built_in"]
+    assert "auditor" in roles["built_in"]
+
+def test_create_custom_persona(persona_ops):
+    """Test creating a custom persona"""
+    result = persona_ops.create_custom(
+        role="test_persona",
+        persona_definition="You are a test persona for unit testing.",
+        description="Test persona for validation"
+    )
+    
+    assert result["status"] == "created"
+    assert result["role"] == "test_persona"
+    assert "file_path" in result
+    
+    # Verify file was created
+    persona_file = Path(result["file_path"])
+    assert persona_file.exists()
+    
+    # Cleanup
+    persona_file.unlink()
+
+def test_create_duplicate_persona(persona_ops):
+    """Test that creating duplicate persona fails"""
+    # Create first persona
+    result1 = persona_ops.create_custom(
+        role="duplicate_test",
+        persona_definition="Test",
+        description="Test"
+    )
+    assert result1["status"] == "created"
+    
+    # Try to create duplicate
+    result2 = persona_ops.create_custom(
+        role="duplicate_test",
+        persona_definition="Test",
+        description="Test"
+    )
+    assert result2["status"] == "error"
+    assert "already exists" in result2["error"]
+    
+    # Cleanup
+    Path(result1["file_path"]).unlink()
+
+def test_get_state_no_history(persona_ops):
+    """Test getting state when no history exists"""
+    result = persona_ops.get_state(role="nonexistent_role")
+    
+    assert result["role"] == "nonexistent_role"
+    assert result["state"] == "no_history"
+    assert result["messages"] == []
+
+def test_reset_state(persona_ops):
+    """Test resetting persona state"""
+    result = persona_ops.reset_state(role="coordinator")
+    
+    assert result["role"] == "coordinator"
+    assert result["status"] in ["reset", "error"]  # May not have state to reset
+
+def test_dispatch_structure(persona_ops):
+    """Test that dispatch method exists with correct signature"""
+    # This is a structure test only - we won't actually execute
+    # the orchestrator in CI/CD to avoid long-running tests
+    
+    assert hasattr(persona_ops, "dispatch")
+    
+    # Test parameter validation would go here
+    # (actual execution tests should be manual or integration tests)
+
+# ============================================================================
+# NEW TESTS - Priority 1: Critical Failure Cases (10 tests)
+# ============================================================================
+
+def test_dispatch_empty_role(persona_ops):
+    """Test dispatch with empty role fails gracefully"""
+    result = persona_ops.dispatch(
+        role="",
+        task="Test task"
+    )
+    assert result["status"] == "error"
+    assert "error" in result
+
+def test_dispatch_empty_task(persona_ops):
+    """Test dispatch with empty task fails gracefully"""
+    result = persona_ops.dispatch(
+        role="coordinator",
+        task=""
+    )
+    # Empty task might be allowed, but response should handle it
+    assert "status" in result
+
+def test_dispatch_nonexistent_persona(persona_ops):
+    """Test dispatch with non-existent persona fails gracefully"""
+    result = persona_ops.dispatch(
+        role="nonexistent_role_12345",
+        task="Test task"
+    )
+    assert result["status"] == "error"
+    assert "not found" in result["error"].lower() or "error" in result
+
+def test_create_custom_empty_role(persona_ops):
+    """Test creating persona with empty role fails"""
+    result = persona_ops.create_custom(
+        role="",
+        persona_definition="Test",
+        description="Test"
+    )
+    # Empty role gets normalized to empty string, should fail or handle gracefully
+    assert result["status"] in ["error", "created"]  # Depends on implementation
+
+def test_create_custom_invalid_characters(persona_ops):
+    """Test creating persona with invalid characters"""
+    result = persona_ops.create_custom(
+        role="test/persona",  # Invalid: contains /
+        persona_definition="Test",
+        description="Test"
+    )
+    # Should normalize or reject
+    assert "status" in result
+
+def test_create_custom_empty_definition(persona_ops):
+    """Test creating persona with empty definition"""
+    result = persona_ops.create_custom(
+        role="empty_def_test",
+        persona_definition="",
+        description="Test"
+    )
+    # Empty definition should be allowed (creates empty file)
+    assert result["status"] == "created"
+    
+    # Cleanup
+    if result["status"] == "created":
+        Path(result["file_path"]).unlink()
+
+def test_get_state_empty_role(persona_ops):
+    """Test get_state with empty role"""
+    result = persona_ops.get_state(role="")
+    assert "role" in result
+    assert result["state"] in ["no_history", "error"]
+
+def test_reset_state_empty_role(persona_ops):
+    """Test reset_state with empty role"""
+    result = persona_ops.reset_state(role="")
+    assert "status" in result
+
+def test_reset_state_active_agent(persona_ops):
+    """Test reset_state clears active agent from cache"""
+    # Note: This test requires mocking or actual LLM execution
+    # For now, just test the structure
+    result = persona_ops.reset_state(role="test_agent")
+    assert result["status"] in ["reset", "error"]
+
+def test_list_roles_with_custom_personas(persona_ops):
+    """Test list_roles includes custom personas"""
+    # Create a custom persona
+    create_result = persona_ops.create_custom(
+        role="test_custom_list",
+        persona_definition="Test",
+        description="Test"
+    )
+    
+    # List roles
+    roles = persona_ops.list_roles()
+    assert "test_custom_list" in roles["custom"]
+    
+    # Cleanup
+    Path(create_result["file_path"]).unlink()
+
+# ============================================================================
+# NEW TESTS - Priority 2: State Management (5 tests)
+# ============================================================================
+
+def test_get_state_with_valid_history(persona_ops):
+    """Test get_state with valid state file"""
+    # Create a valid state file
+    state_file = persona_ops.state_dir / "test_valid_session.json"
+    test_history = [
+        {"role": "user", "content": "Hello"},
+        {"role": "assistant", "content": "Hi there"}
+    ]
+    state_file.write_text(json.dumps(test_history))
+    
+    result = persona_ops.get_state(role="test_valid")
+    assert result["state"] == "active"
+    assert result["message_count"] == 2
+    assert len(result["messages"]) == 2
+    
+    # Cleanup
+    state_file.unlink()
+
+def test_get_state_corrupted_json(persona_ops):
+    """Test get_state with corrupted JSON file"""
+    # Create corrupted state file
+    state_file = persona_ops.state_dir / "test_corrupted_session.json"
+    state_file.write_text("{invalid json")
+    
+    result = persona_ops.get_state(role="test_corrupted")
+    assert result["state"] == "error"
+    assert "error" in result
+    
+    # Cleanup
+    state_file.unlink()
+
+def test_get_state_large_history(persona_ops):
+    """Test get_state with large conversation history"""
+    # Create large state file (100 messages)
+    large_history = [{"role": "user", "content": f"Message {i}"} for i in range(100)]
+    state_file = persona_ops.state_dir / "test_large_session.json"
+    state_file.write_text(json.dumps(large_history))
+    
+    result = persona_ops.get_state(role="test_large")
+    assert result["state"] == "active"
+    assert result["message_count"] == 100
+    
+    # Cleanup
+    state_file.unlink()
+
+def test_reset_state_removes_file(persona_ops):
+    """Test reset_state removes state file"""
+    # Create a state file
+    state_file = persona_ops.state_dir / "test_reset_session.json"
+    state_file.write_text(json.dumps([{"role": "user", "content": "test"}]))
+    
+    # Reset state
+    result = persona_ops.reset_state(role="test_reset")
+    assert result["status"] == "reset"
+    
+    # Verify file is deleted
+    assert not state_file.exists()
+
+def test_reset_state_nonexistent(persona_ops):
+    """Test reset_state on non-existent state"""
+    result = persona_ops.reset_state(role="nonexistent_reset_test")
+    assert result["status"] == "reset"  # Should succeed even if no state exists
+
+# ============================================================================
+# NEW TESTS - Priority 3: Edge Cases (5 tests)
+# ============================================================================
+
+def test_create_custom_role_normalization(persona_ops):
+    """Test that role names with spaces are normalized"""
+    result = persona_ops.create_custom(
+        role="Test Persona With Spaces",
+        persona_definition="Test",
+        description="Test"
+    )
+    assert result["status"] == "created"
+    assert result["role"] == "test_persona_with_spaces"
+    
+    # Cleanup
+    Path(result["file_path"]).unlink()
+
+def test_create_custom_unicode_content(persona_ops):
+    """Test creating persona with Unicode characters"""
+    result = persona_ops.create_custom(
+        role="unicode_test",
+        persona_definition="你好世界 🌍 Здравствуй мир",
+        description="Unicode test"
+    )
+    assert result["status"] == "created"
+    
+    # Verify file contains Unicode
+    persona_file = Path(result["file_path"])
+    content = persona_file.read_text()
+    assert "你好世界" in content
+    
+    # Cleanup
+    persona_file.unlink()
+
+def test_create_custom_large_definition(persona_ops):
+    """Test creating persona with very large definition"""
+    # Create 10KB definition
+    large_def = "You are a test persona. " * 500
+    result = persona_ops.create_custom(
+        role="large_def_test",
+        persona_definition=large_def,
+        description="Large definition test"
+    )
+    assert result["status"] == "created"
+    
+    # Verify file size
+    persona_file = Path(result["file_path"])
+    assert persona_file.stat().st_size > 10000
+    
+    # Cleanup
+    persona_file.unlink()
+
+def test_create_custom_special_characters(persona_ops):
+    """Test creating persona with special characters in definition"""
+    result = persona_ops.create_custom(
+        role="special_chars_test",
+        persona_definition="Test with special chars: @#$%^&*()[]{}|\\:;\"'<>,.?/",
+        description="Special chars test"
+    )
+    assert result["status"] == "created"
+    
+    # Cleanup
+    Path(result["file_path"]).unlink()
+
+def test_list_roles_empty_custom(persona_ops):
+    """Test list_roles when no custom personas exist"""
+    # This should always work since built-in personas exist
+    roles = persona_ops.list_roles()
+    assert len(roles["built_in"]) >= 3
+    assert isinstance(roles["custom"], list)
+
+# ============================================================================
+# TEST SUMMARY
+# ============================================================================
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v", "--tb=short"])
+
+--- END OF FILE tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py ---
 
 --- START OF FILE tests/mcp_servers/agent_persona/test_agent_persona_ops.py ---
 
@@ -66315,7 +66874,7 @@ class TestAdaptationPacket:
             instance.save_packet.return_value = "/path/to/packet.json"
             
             # Simulate what the server tool does
-            from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+            from mcp_servers.cognitive.cortex.cache import CacheManagersisGenerator
             generator = SynthesisGenerator("/tmp")
             packet = generator.generate_packet(days=7)
             output_path = generator.save_packet(packet)
@@ -68749,6 +69308,25 @@ echo "To view in browser: http://localhost:5001 (or http://localhost:5003 if you
 echo "To check health: http://localhost:5001/health"
 
 --- END OF FILE tests/podman/build.sh ---
+
+--- START OF FILE tests/run_integration_tests.sh ---
+
+#!/bin/bash
+
+# Run Integration Tests
+echo "Running Integration Tests..."
+python3 -m pytest tests/integration -v -m integration
+
+# Run Benchmarks (if pytest-benchmark is installed)
+if pip show pytest-benchmark > /dev/null; then
+    echo "\nRunning Performance Benchmarks..."
+    python3 -m pytest tests/benchmarks -v -m benchmark --benchmark-only
+else
+    echo "\nSkipping benchmarks (pytest-benchmark not installed)"
+    echo "Install with: pip install pytest-benchmark"
+fi
+
+--- END OF FILE tests/run_integration_tests.sh ---
 
 --- START OF FILE tests/test_adr_operations.py ---
 

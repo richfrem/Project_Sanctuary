@@ -33,8 +33,8 @@ def find_project_root() -> str:
         current_path = parent_path
 
 def setup_environment(project_root: str) -> bool:
-    """Load environment variables from the .env file in the mnemonic_cortex directory."""
-    dotenv_path = os.path.join(project_root, 'mnemonic_cortex', '.env')
+    """Load environment variables from the .env file in the project root."""
+    dotenv_path = os.path.join(project_root, '.env')
     if os.path.exists(dotenv_path):
         load_dotenv(dotenv_path=dotenv_path)
         return True

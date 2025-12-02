@@ -1,10 +1,11 @@
 # docs Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-01T16:10:54.791Z
+Generated On: 2025-12-02T06:00:28.483Z
 
-# Mnemonic Weight (Token Count): ~131,959 tokens
+# Mnemonic Weight (Token Count): ~137,847 tokens
 
 # Directory Structure (relative to docs subfolder)
+  ./docs/INDEX.md
   ./docs/WSL_SECRETS_CONFIGURATION.md
   ./docs/cicd/
   ./docs/cicd/PROJECT_SANCTUARY_INTEGRATION.md
@@ -30,6 +31,8 @@ Generated On: 2025-12-01T16:10:54.791Z
   ./docs/legacy/council_orchestrator/schemas/engine_config.json
   ./docs/legacy/council_orchestrator/schemas/round_packet_schema.json
   ./docs/mcp/
+  ./docs/mcp/DOCUMENTATION_STANDARDS.md
+  ./docs/mcp/QUICKSTART.md
   ./docs/mcp/RAG_STRATEGIES.md
   ./docs/mcp/README.md
   ./docs/mcp/TESTING_STANDARDS.md
@@ -40,6 +43,9 @@ Generated On: 2025-12-01T16:10:54.791Z
   ./docs/mcp/architecture.md
   ./docs/mcp/claude_desktop_config_template.json
   ./docs/mcp/complete_orchestration_test.md
+  ./docs/mcp/cortex/
+  ./docs/mcp/cortex/gap_analysis_v2.md
+  ./docs/mcp/cortex/protocol_87_placement_analysis.md
   ./docs/mcp/cortex_evolution.md
   ./docs/mcp/cortex_gap_analysis.md
   ./docs/mcp/cortex_gap_analysis_comprehensive.md
@@ -63,6 +69,7 @@ Generated On: 2025-12-01T16:10:54.791Z
   ./docs/mcp/diagrams/protocol_mcp_class.mmd
   ./docs/mcp/diagrams/rag_mcp_cortex_class.mmd
   ./docs/mcp/diagrams/request_flow_middleware.mmd
+  ./docs/mcp/diagrams/system_overview_v2.mmd
   ./docs/mcp/diagrams/task_mcp_class.mmd
   ./docs/mcp/final_architecture_summary.md
   ./docs/mcp/final_orchestration_test.md
@@ -78,8 +85,63 @@ Generated On: 2025-12-01T16:10:54.791Z
   ./docs/mcp/setup_guide.md
   ./docs/mcp/shared_infrastructure_types.ts
   ./docs/mcp/simple_orchestration_test.md
+  ./docs/mcp/templates/
+  ./docs/mcp/templates/mcp_server_readme.md
+  ./docs/mcp/templates/mcp_tool_docstring.md
+  ./docs/tutorials/
+  ./docs/tutorials/01_using_council_mcp.md
+  ./docs/tutorials/02_using_cortex_mcp.md
   ./docs/workflows/
   ./docs/workflows/council_orchestration.md
+
+--- START OF FILE INDEX.md ---
+
+# Project Sanctuary Documentation
+
+Welcome to the Project Sanctuary documentation hub. This index serves as the entry point for all system documentation, guides, and references.
+
+## 🚀 Getting Started
+
+*   **[Quickstart Guide](mcp/QUICKSTART.md)**: Connect your client to the MCP ecosystem in minutes.
+*   **[Prerequisites](mcp/prerequisites.md)**: What you need installed before you begin.
+*   **[Setup Guide](mcp/setup_guide.md)**: Detailed setup instructions.
+
+## 📚 Tutorials
+
+*   **[Using the Council](tutorials/01_using_council_mcp.md)**: How to orchestrate multi-agent tasks.
+*   **[Using the Cortex](tutorials/02_using_cortex_mcp.md)**: How to query the knowledge base and use RAG.
+
+## 🏗️ Architecture
+
+*   **[System Architecture](mcp/architecture.md)**: Deep dive into the 11-server topology.
+*   **[System Overview Diagram](mcp/diagrams/system_overview_v2.mmd)**: Visual map of the ecosystem.
+*   **[Documentation Standards](mcp/DOCUMENTATION_STANDARDS.md)**: Guidelines for contributing to docs.
+
+## 🧩 MCP Servers
+
+### Cognitive Layer
+*   **[Council MCP](../mcp_servers/council/README.md)**: Multi-agent orchestration.
+*   **[Cortex MCP](../mcp_servers/cognitive/cortex/README.md)**: RAG and memory.
+*   **[Agent Persona MCP](../mcp_servers/agent_persona/README.md)**: Configurable agent roles.
+*   **[Forge MCP](../mcp_servers/system/forge/README.md)**: Model fine-tuning.
+
+### Content Layer
+*   **[Chronicle MCP](../mcp_servers/chronicle/README.md)**: Project journaling.
+*   **[Protocol MCP](../mcp_servers/protocol/README.md)**: Rule management.
+*   **[ADR MCP](../mcp_servers/document/adr/README.md)**: Decision records.
+*   **[Task MCP](../mcp_servers/task/README.md)**: Task tracking.
+
+### System Layer
+*   **[Code MCP](../mcp_servers/code/README.md)**: File I/O and analysis.
+*   **[Config MCP](../mcp_servers/config/README.md)**: System configuration.
+*   **[Git MCP](../mcp_servers/system/git_workflow/README.md)**: Version control.
+
+## 📜 Protocols & Standards
+
+*   **[Protocol Library](../01_PROTOCOLS/)**: All system protocols.
+*   **[ADR Library](../ADRs/)**: Architecture Decision Records.
+
+--- END OF FILE INDEX.md ---
 
 --- START OF FILE WSL_SECRETS_CONFIGURATION.md ---
 
@@ -7218,6 +7280,195 @@ We must perfect **memory access** before **memory adaptation**. Phase 2 guarante
 
 --- END OF FILE legacy/council_orchestrator/schemas/round_packet_schema.json ---
 
+--- START OF FILE mcp/DOCUMENTATION_STANDARDS.md ---
+
+# MCP Documentation Standards
+
+**Version:** 1.0  
+**Status:** Active  
+**Effective Date:** 2025-12-01
+
+## 1. Overview
+
+This document establishes the documentation standards for the Project Sanctuary MCP (Model Context Protocol) ecosystem. With 11 distributed MCP servers, consistent and high-quality documentation is essential for maintainability, discoverability, and developer experience.
+
+## 2. Documentation Architecture
+
+The documentation is organized into three layers:
+
+1.  **Central Hub (`docs/mcp/`)**: High-level architecture, standards, and cross-server guides.
+2.  **Server Documentation (`mcp_servers/*/README.md`)**: Specific instructions for each MCP server.
+3.  **Code Documentation (Docstrings)**: Inline documentation for tools and internal logic.
+
+### 2.1 The Single Source of Truth
+
+*   **Operations Inventory:** `docs/mcp/mcp_operations_inventory.md` is the **Single Source of Truth** for tool availability and testing status.
+*   **Architecture:** `docs/mcp/architecture.md` is the authoritative source for system topology.
+
+## 3. MCP Server README Standards
+
+Every MCP server MUST have a `README.md` in its root directory (e.g., `mcp_servers/council/README.md`).
+
+### Required Sections
+
+1.  **Title & Description**: Clear name and purpose of the server.
+2.  **Tools**: A table listing available tools, their description, and input arguments.
+3.  **Resources**: A table listing available resources (if any).
+4.  **Prompts**: A table listing available prompts (if any).
+5.  **Configuration**: Required environment variables and `mcp_config.json` snippet.
+6.  **Testing**:
+    *   Command to run unit tests.
+    *   Command to run integration tests.
+    *   Verification steps for manual testing.
+7.  **Dependencies**: Key libraries used.
+
+**Template:** See `docs/mcp/templates/mcp_server_readme.md`
+
+## 4. Docstring Standards
+
+All Python code MUST use **Google Style** docstrings.
+
+### 4.1 MCP Tools
+
+Every function decorated as an MCP tool (`@mcp.tool()`) MUST have a docstring that includes:
+
+*   **Summary**: A concise one-line description of what the tool does.
+*   **Description**: Detailed explanation of behavior, side effects, and edge cases.
+*   **Args**: List of arguments with types and descriptions.
+*   **Returns**: Description of the return value and structure.
+*   **Example**: A usage example (optional but recommended).
+
+**Template:** See `docs/mcp/templates/mcp_tool_docstring.md`
+
+### 4.2 Internal Functions
+
+*   Public functions/classes: Full docstrings required.
+*   Private functions (`_func`): Brief summary required.
+
+## 5. Inventory Maintenance
+
+The `docs/mcp/mcp_operations_inventory.md` file tracks the implementation and testing status of every tool.
+
+**When to Update:**
+*   **Adding a Tool:** Add a new row with status `❌` (Untested) or `⚠️` (Partial).
+*   **Deprecating a Tool:** Move to "Deprecated" section or mark as `[DEPRECATED]`.
+*   **Verifying a Tool:** Update status to `✅` only after:
+    1.  Unit tests pass.
+    2.  Integration/Manual verification is complete.
+    3.  Docstrings are compliant.
+
+## 6. Versioning
+
+*   Documentation updates should be committed alongside code changes.
+*   Major architectural changes require updating `docs/mcp/architecture.md`.
+
+--- END OF FILE mcp/DOCUMENTATION_STANDARDS.md ---
+
+--- START OF FILE mcp/QUICKSTART.md ---
+
+# Project Sanctuary MCP Quickstart Guide
+
+**Welcome to Project Sanctuary!** This guide will help you connect your LLM client (Claude Desktop, Antigravity, or others) to the Project Sanctuary Model Context Protocol (MCP) ecosystem.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+1.  **Python 3.11+**: [Download Python](https://www.python.org/downloads/)
+2.  **uv**: An extremely fast Python package installer and resolver.
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+3.  **Git**: Version control system.
+4.  **Podman** (Optional but Recommended): For running MCP servers in isolated containers.
+
+## Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/richfremmerlid/Project_Sanctuary.git
+cd Project_Sanctuary
+```
+
+## Step 2: Environment Setup
+
+Create a `.env` file in the project root to configure your environment.
+
+```bash
+# Copy the example template
+cp .env.example .env
+
+# Edit the file with your specific paths and keys
+nano .env
+```
+
+**Critical Variables:**
+*   `PROJECT_ROOT`: Absolute path to your project directory.
+*   `PYTHONPATH`: Should include your project root.
+
+## Step 3: Configure Your Client
+
+### Option A: Claude Desktop
+
+1.  Open the Claude Desktop configuration file:
+    *   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+    *   **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2.  Add the Project Sanctuary MCP servers. You can use the helper script to generate this config:
+
+    ```bash
+    # Generate config for all servers
+    python3 scripts/generate_mcp_config.py
+    ```
+
+    Or manually add entries like this:
+
+    ```json
+    {
+      "mcpServers": {
+        "council": {
+          "command": "uv",
+          "args": [
+            "--directory",
+            "/absolute/path/to/Project_Sanctuary/mcp_servers/council",
+            "run",
+            "server.py"
+          ],
+          "env": {
+            "PROJECT_ROOT": "/absolute/path/to/Project_Sanctuary"
+          }
+        }
+      }
+    }
+    ```
+
+### Option B: Antigravity / Other Clients
+
+Refer to your specific client's documentation for adding MCP servers. The connection details (command, args, env) remain the same.
+
+## Step 4: Verify Connection
+
+1.  Restart your client (Claude Desktop, etc.).
+2.  Look for the **MCP** icon or menu to confirm servers are connected.
+3.  Try a test prompt:
+
+    > "Can you ask the Council to review the current task list?"
+
+    If the system responds by dispatching a task to the Council MCP, you are connected!
+
+## Troubleshooting
+
+*   **"Server not found"**: Check your absolute paths in the config JSON.
+*   **"Permission denied"**: Ensure `uv` is in your PATH and executable.
+*   **"Python error"**: Check `PROJECT_ROOT` and `PYTHONPATH` environment variables.
+
+## Next Steps
+
+*   **[Using the Council](tutorials/01_using_council_mcp.md)**: Learn how to orchestrate multi-agent tasks.
+*   **[Using the Cortex](tutorials/02_using_cortex_mcp.md)**: Learn how to query the knowledge base.
+*   **[Architecture Overview](architecture.md)**: Understand the 11-server ecosystem.
+
+--- END OF FILE mcp/QUICKSTART.md ---
+
 --- START OF FILE mcp/RAG_STRATEGIES.md ---
 
 # Mnemonic Cortex: A Canonical Guide to RAG Strategies & Architectural Doctrine
@@ -8879,7 +9130,7 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 
 ## Ecosystem Overview
 
-### Complete 10-Domain Architecture
+### Complete 11-Server Architecture
 
 ```mermaid
 graph TB
@@ -10547,6 +10798,186 @@ This test proves that:
 5. **The orchestration pattern is viable** for the Council MCP to replicate
 
 --- END OF FILE mcp/complete_orchestration_test.md ---
+
+--- START OF FILE mcp/cortex/gap_analysis_v2.md ---
+
+# Gap Analysis: Cortex Scripts vs MCP Implementation
+
+## Overview
+
+This analysis compares the legacy `mnemonic_cortex/scripts/ingest.py` (now archived) with the new `mcp_servers/cognitive/cortex/operations.py` to ensure feature parity and robustness in the migration.
+
+## 1. Batching and Retry Logic ("Disciplined Batch Architecture")
+
+**Legacy (`ingest.py`):**
+- Implements `safe_add_documents` with recursive retry logic.
+- Handles `Batch size` and `InternalError` exceptions specifically.
+- Splits batches in half upon failure and retries.
+- Base case: `len(docs) <= 1` or `max_retries <= 0`.
+
+**New MCP (`operations.py`):**
+- Implements `_safe_add_documents` (lines 45-71).
+- Logic is **identical** to the legacy script:
+    - Checks for "batch size" and "internalerror".
+    - Splits batches in half.
+    - Has the same base case.
+
+**Status:** ✅ Parity Achieved.
+
+## 2. Ingestion Workflow
+
+**Legacy (`ingest.py`):**
+- Purges existing DB root if it exists.
+- Loads documents from `SOURCE_DIRECTORIES`.
+- Splits text using `RecursiveCharacterTextSplitter`.
+- Embeds using `NomicEmbeddings`.
+- Indexes using `ParentDocumentRetriever` with `Chroma` and `LocalFileStore`.
+
+**New MCP (`operations.py`):**
+- `ingest_full` method (lines 72+).
+- Supports `purge_existing` flag.
+- Uses the same libraries (`langchain_community`, `langchain_chroma`, `langchain_nomic`).
+- Implements the same pipeline: Load -> Split -> Embed -> Index.
+
+**Status:** ✅ Parity Achieved.
+
+## 3. Configuration
+
+**Legacy (`ingest.py`):**
+- Relies on global constants and environment variables loaded via `dotenv`.
+
+**New MCP (`operations.py`):**
+- Encapsulated in `CortexOperations` class.
+- Configurable via `project_root` and method arguments.
+- More flexible and testable.
+
+**Status:** ✅ Improved.
+
+## Conclusion
+
+The migration of logic from `ingest.py` to `CortexOperations` has been successful. The critical "Disciplined Batch Architecture" for robust ingestion has been preserved. The new implementation offers better encapsulation and integration with the MCP server.
+
+## Recommendations
+
+1.  **Proceed with Archival:** The legacy scripts are safe to remain in the archive.
+2.  **Update Documentation:** Ensure the "Disciplined Batch Architecture" is documented in the new Cortex README (already done in Task 022C).
+3.  **Verify Tests:** Ensure `tests/mcp_servers/cortex/` covers the retry logic (Task 021C/086).
+
+--- END OF FILE mcp/cortex/gap_analysis_v2.md ---
+
+--- START OF FILE mcp/cortex/protocol_87_placement_analysis.md ---
+
+# Protocol 87 Orchestrator Placement: Architectural Analysis
+
+## Executive Summary
+
+**Recommendation: Keep Protocol 87 in Cortex MCP** ✅
+
+Protocol 87's structured query orchestration is fundamentally about **knowledge retrieval**, not general task orchestration. It belongs in Cortex MCP as the knowledge orchestrator.
+
+---
+
+## 1. Protocol 87 Overview
+
+**Purpose**: Establish a canonical inquiry language for memory retrieval from the Mnemonic Cortex.
+
+**Query Format**: `[INTENT] :: [SCOPE] :: [CONSTRAINTS]`
+
+**Example**: `RETRIEVE :: Protocols :: Name="Protocol 101"`
+
+**Scopes**: Protocols, Living_Chronicle, Tasks, Code, ADRs
+
+---
+
+## 2. Current Implementation (Cortex MCP)
+
+**Location**: `mcp_servers/cognitive/cortex/mcp_client.py`
+
+**Functionality**:
+- Parses Protocol 87 queries
+- Routes to specialized MCPs based on SCOPE
+- Returns structured results
+- Integrates with RAG pipeline
+
+**Key Method**: `query_structured()` in `operations.py`
+
+---
+
+## 3. Option A: Cortex MCP (Current) ✅
+
+### Pros:
+1. **Semantic Alignment**: Cortex is the "knowledge orchestrator" - Protocol 87 is about querying knowledge
+2. **Direct Integration**: Results can be immediately used in RAG synthesis
+3. **Single Responsibility**: Cortex owns all knowledge retrieval (vector + structured)
+4. **Performance**: No extra hop - queries go directly from Cortex to target MCPs
+5. **Consistency**: All memory operations (ingest, query, retrieve) in one place
+6. **Protocol 85 Alignment**: "The Mnemonic Cortex Protocol" - Cortex is the steward
+
+### Cons:
+1. Cortex becomes a "fat" orchestrator (but this is acceptable for knowledge domain)
+2. Mixing RAG (vector) and structured queries (but both are knowledge retrieval)
+
+---
+
+## 4. Option B: Council MCP (Alternative) ❌
+
+### Pros:
+1. **Separation of Concerns**: Council = orchestration, Cortex = RAG only
+2. **Generalization**: Council could orchestrate ANY MCP workflow
+3. **Consistency**: All orchestration in one place
+
+### Cons:
+1. **Semantic Mismatch**: Council orchestrates **agents** (multi-agent deliberation), not knowledge queries
+2. **Extra Hop**: Query → Council → Cortex → Target MCP (unnecessary indirection)
+3. **Complexity**: Council would need to understand Protocol 87 syntax
+4. **Fragmentation**: Knowledge operations split across two MCPs
+5. **Protocol 87 Context**: The protocol explicitly refers to "Steward" (Cortex) as the executor
+
+---
+
+## 5. Decision Matrix
+
+| Criterion | Cortex | Council | Winner |
+|-----------|--------|---------|--------|
+| Semantic Fit | Knowledge retrieval | Agent orchestration | **Cortex** |
+| Performance | Direct routing | Extra hop | **Cortex** |
+| Protocol Alignment | "Steward" role | Generic orchestrator | **Cortex** |
+| Simplicity | Single knowledge hub | Split responsibilities | **Cortex** |
+| Extensibility | Can add more scopes | Can orchestrate anything | Tie |
+
+---
+
+## 6. Final Recommendation
+
+**Keep Protocol 87 in Cortex MCP.**
+
+**Rationale**:
+- Protocol 87 is about **memory retrieval**, not task orchestration
+- Cortex is explicitly the "Steward" in Protocol 87's language
+- Direct routing is more efficient than going through Council
+- Maintains clear separation: Council = agents, Cortex = knowledge
+
+---
+
+## 7. Implementation Status
+
+**Current State**: ✅ Already correctly placed in Cortex MCP
+
+**No Migration Needed**: The current architecture is optimal.
+
+**Documentation Updates**:
+- Clarify in Cortex README that it handles both vector (RAG) and structured (Protocol 87) queries
+- Update architecture diagrams to show Protocol 87 routing
+
+---
+
+## 8. Related ADRs
+
+- **ADR 039**: MCP Server Separation of Concerns - Supports domain-specific orchestration
+- **Protocol 85**: The Mnemonic Cortex Protocol - Cortex as steward
+- **Protocol 87**: The Mnemonic Inquiry Protocol - Defines structured query language
+
+--- END OF FILE mcp/cortex/protocol_87_placement_analysis.md ---
 
 --- START OF FILE mcp/cortex_evolution.md ---
 
@@ -15023,6 +15454,301 @@ def dispatch_task(self, task_description: str, agent: str = None, max_rounds: in
 5. **Test that Council MCP produces identical results**
 
 --- END OF FILE mcp/simple_orchestration_test.md ---
+
+--- START OF FILE mcp/templates/mcp_server_readme.md ---
+
+# [Server Name] MCP Server
+
+**Description:** [Brief description of what this server does and its role in the ecosystem]
+
+## Tools
+
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `tool_name` | [Description of what the tool does] | `arg1` (type): desc<br>`arg2` (type): desc |
+
+## Resources
+
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `resource://uri` | [Description] | `application/json` |
+
+## Prompts
+
+| Prompt Name | Description | Arguments |
+|-------------|-------------|-----------|
+| `prompt_name` | [Description] | `arg1` |
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the server root or project root:
+
+```bash
+VAR_NAME=value
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"server_name": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/server_dir",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "VAR_NAME": "value"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/server_dir/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `tool_name` appears in the tool list.
+3.  **Call Tool:** Execute `tool_name` with valid arguments and verify output.
+
+## Dependencies
+
+- `mcp`
+- [Other dependencies]
+
+--- END OF FILE mcp/templates/mcp_server_readme.md ---
+
+--- START OF FILE mcp/templates/mcp_tool_docstring.md ---
+
+# MCP Tool Docstring Template
+
+Use this template for all functions decorated with `@mcp.tool()`.
+
+```python
+@mcp.tool()
+def tool_name(arg1: str, arg2: int = 10) -> str:
+    """
+    [One-line summary of the tool's purpose.]
+
+    [Detailed description of the tool's functionality, including any
+    side effects, external API calls, or important constraints.]
+
+    Args:
+        arg1: [Description of arg1]
+        arg2: [Description of arg2]. Defaults to 10.
+
+    Returns:
+        [Description of the return value. If it returns a JSON string,
+        describe the schema.]
+
+    Raises:
+        ValueError: [Condition under which this error is raised]
+        RuntimeError: [Condition under which this error is raised]
+    """
+    # Implementation
+```
+
+## Example
+
+```python
+@mcp.tool()
+def calculate_metric(data: List[float], metric_type: str = "mean") -> float:
+    """
+    Calculates a statistical metric for a given dataset.
+
+    Supported metrics are 'mean', 'median', and 'std_dev'. This tool
+    is used by the Analyst Persona for data processing.
+
+    Args:
+        data: A list of floating-point numbers to analyze.
+        metric_type: The type of metric to calculate. Options: "mean",
+            "median", "std_dev". Defaults to "mean".
+
+    Returns:
+        The calculated metric as a float.
+
+    Raises:
+        ValueError: If an unsupported metric_type is provided or if
+            data is empty.
+    """
+    # ...
+```
+
+--- END OF FILE mcp/templates/mcp_tool_docstring.md ---
+
+--- START OF FILE tutorials/01_using_council_mcp.md ---
+
+# Tutorial: Using the Council MCP
+
+The **Council MCP** is the orchestration engine of Project Sanctuary. It enables you to dispatch complex tasks to a group of specialized AI agents who deliberate, critique, and refine solutions before presenting them to you.
+
+## What is the Council?
+
+The Council is not a single agent; it's a **multi-agent system** that simulates a team of experts. When you send a task to the Council, it doesn't just answer; it:
+1.  **Plans**: A Coordinator breaks down the task.
+2.  **Executes**: Specialized agents (Strategist, Auditor, etc.) perform the work.
+3.  **Reviews**: Agents critique each other's work.
+4.  **Refines**: The solution is improved based on feedback.
+
+## Basic Usage
+
+To use the Council, you simply ask your LLM assistant to "dispatch" a task.
+
+**Prompt:**
+> "Ask the Council to review our current testing strategy."
+
+Behind the scenes, the assistant calls the `council_dispatch` tool:
+
+```python
+council_dispatch(
+    task_description="Review our current testing strategy",
+    max_rounds=3
+)
+```
+
+## Advanced Usage
+
+### 1. Specific Agent Consultation
+
+You can request a specific agent if you don't need the full council.
+
+**Prompt:**
+> "Have the Auditor check this code for security vulnerabilities."
+
+**Tool Call:**
+```python
+council_dispatch(
+    task_description="Check this code for security vulnerabilities",
+    agent="auditor"
+)
+```
+
+### 2. Output to File
+
+You can have the Council write its final decision directly to a file.
+
+**Prompt:**
+> "Design a new API schema and save it to `docs/api/schema_v2.md`."
+
+**Tool Call:**
+```python
+council_dispatch(
+    task_description="Design a new API schema...",
+    output_path="docs/api/schema_v2.md"
+)
+```
+
+## Understanding the Agents
+
+*   **Coordinator**: The project manager. Breaks down tasks, assigns work, and synthesizes results.
+*   **Strategist**: The visionary. Focuses on long-term goals, alignment with principles, and high-level design.
+*   **Auditor**: The critic. Checks for errors, security risks, and compliance with standards (like Protocol 101).
+
+## Best Practices
+
+*   **Be Specific**: The clearer your task description, the better the Council can plan.
+*   **Use Context**: Provide relevant file paths or background info in your prompt.
+*   **Iterate**: If the Council's first draft isn't perfect, ask follow-up questions or request a "second round" of deliberation.
+
+## Next Steps
+
+*   Learn about **[Agent Personas](../mcp_servers/agent_persona/README.md)** to create custom agents.
+*   Explore **[Cortex](../tutorials/02_using_cortex_mcp.md)** to give the Council access to long-term memory.
+
+--- END OF FILE tutorials/01_using_council_mcp.md ---
+
+--- START OF FILE tutorials/02_using_cortex_mcp.md ---
+
+# Tutorial: Using the Cortex MCP
+
+The **Cortex MCP** is the long-term memory of Project Sanctuary. It uses **Retrieval-Augmented Generation (RAG)** to provide your LLM assistant with access to the project's entire history, documentation, and codebase.
+
+## What is the Cortex?
+
+Think of the Cortex as a **Living Memory**. It doesn't just store files; it indexes them semantically, allowing you to ask questions in natural language and get answers based on the actual content of your project.
+
+## Querying the Knowledge Base
+
+The most common operation is `cortex_query`. You can ask questions about anything in the project.
+
+**Prompt:**
+> "What is Protocol 101?"
+
+**Tool Call:**
+```python
+cortex_query(
+    query="What is Protocol 101?"
+)
+```
+
+**Response:**
+The Cortex will search the indexed documents (like `01_PROTOCOLS/101_...md`) and return the relevant content, which the LLM will use to answer your question accurately.
+
+### Advanced Querying
+
+You can control the number of results or enable reasoning mode.
+
+**Prompt:**
+> "Find the 5 most relevant documents about error handling and explain the pattern."
+
+**Tool Call:**
+```python
+cortex_query(
+    query="error handling patterns",
+    max_results=5,
+    reasoning_mode=True
+)
+```
+
+## Ingesting Knowledge
+
+When you add new documents or change code, the Cortex needs to know.
+
+### Incremental Ingestion (Automatic)
+
+The system is designed to automatically ingest changes when you use tools like `code_write` or `protocol_create`. However, you can force an update.
+
+**Prompt:**
+> "I just added a new ADR. Please update the Cortex."
+
+**Tool Call:**
+```python
+cortex_ingest_incremental()
+```
+
+### Full Re-ingestion (Manual)
+
+If the memory seems out of sync or corrupted, you can rebuild it. **Warning: This can take time.**
+
+**Prompt:**
+> "Rebuild the entire Cortex memory."
+
+**Tool Call:**
+```python
+cortex_ingest_full(purge_existing=True)
+```
+
+## Best Practices
+
+*   **Ask "What", not just "Where"**: Instead of "Where is the config file?", ask "How do I configure the server?". Cortex understands concepts.
+*   **Keep Docs Updated**: Cortex is only as good as your documentation. Write clear READMEs and docstrings.
+*   **Use Specific Terms**: Using unique project terms (like "Chronicle", "Forge") helps Cortex find the exact right context.
+
+## Next Steps
+
+*   Explore the **[Architecture](../mcp/architecture.md)** to see how Cortex fits in.
+*   Check out the **[Council Tutorial](01_using_council_mcp.md)** to see how agents use memory.
+
+--- END OF FILE tutorials/02_using_cortex_mcp.md ---
 
 --- START OF FILE workflows/council_orchestration.md ---
 

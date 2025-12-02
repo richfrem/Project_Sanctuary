@@ -1,72 +1,81 @@
 # Chronicle MCP Server
 
-MCP server for managing historical truth entries in `00_CHRONICLE/ENTRIES/`.
+**Description:** The Chronicle MCP ensures the integrity of the project's historical record. It enforces strict rules about immutability and classification to maintain a trusted history of events, decisions, and milestones.
 
-## Purpose
+## Tools
 
-The Chronicle MCP ensures the integrity of the project's historical record. It enforces strict rules about immutability and classification to maintain a trusted history of events, decisions, and milestones.
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `chronicle_create_entry` | Create a new chronicle entry. | `title` (str): Title.<br>`content` (str): Content.<br>`date` (str, optional): Date.<br>`author` (str, optional): Author.<br>`status` (str, optional): Status.<br>`classification` (str, optional): Classification. |
+| `chronicle_append_entry` | Alias for create_entry. | Same as create_entry. |
+| `chronicle_update_entry` | Update an existing entry (7-day rule applies). | `entry_number` (int): Entry number.<br>`updates` (dict): Updates.<br>`reason` (str): Reason.<br>`override_approval_id` (str, optional): Approval ID. |
+| `chronicle_get_entry` | Retrieve a specific entry. | `entry_number` (int): Entry number. |
+| `chronicle_list_entries` | List recent entries. | `limit` (int): Limit (default: 10). |
+| `chronicle_read_latest_entries` | Alias for list_entries. | Same as list_entries. |
+| `chronicle_search` | Search entries by content. | `query` (str): Search query. |
 
-## Operations
+## Resources
 
-| Operation | Status | Test Suite | Description |
-|-----------|--------|------------|-------------|
-| `chronicle_create_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
-| `chronicle_append_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for create_entry |
-| `chronicle_update_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Update existing entry (7-day rule applies) |
-| `chronicle_get_entry` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Retrieve specific entry by number |
-| `chronicle_list_entries` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | List recent entries with limit |
-| `chronicle_read_latest_entries` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for list_entries |
-| `chronicle_search` | ✅ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Full-text search across entries |
+*No resources currently exposed.*
 
-**Prerequisite Tests:** [test_chronicle_validator.py](../../tests/test_chronicle_validator.py)
+## Prompts
 
-### Tool Details
-
-### `chronicle_create_entry`
-Create a new chronicle entry.
-- **Args:** `title`, `content`, `date` (optional), `author` (optional), `status` (optional), `classification` (optional)
-- **Returns:** Entry number and file path
-
-### `chronicle_update_entry`
-Update an existing entry.
-- **Args:** `entry_number`, `updates` (dict), `reason`, `override_approval_id` (optional)
-- **Returns:** Updated fields
-- **Safety:** Entries older than 7 days require `override_approval_id` to be modified.
-
-### `chronicle_get_entry`
-Retrieve a specific entry.
-- **Args:** `entry_number`
-- **Returns:** Entry details
-
-### `chronicle_list_entries`
-List recent entries.
-- **Args:** `limit` (optional, default 10)
-- **Returns:** List of entries
-
-### `chronicle_search`
-Search entries by content.
-- **Args:** `query`
-- **Returns:** List of matching entries
-
-## Safety Rules
-
-1.  **7-Day Modification Window:** Entries older than 7 days are considered immutable history. Modifying them requires an explicit `override_approval_id`.
-2.  **Sequential Numbering:** Entry numbers are auto-assigned and sequential.
-3.  **No Deletion:** Entries can be marked as `deprecated` but never deleted.
-4.  **Classification:** Entries must be classified as `public`, `internal`, or `confidential`.
+*No prompts currently exposed.*
 
 ## Configuration
 
-Add to `mcp_config.json`:
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
 "chronicle": {
-  "displayName": "Chronicle MCP",
-  "command": "/path/to/venv/bin/python",
-  "args": ["-m", "mcp_servers.document.chronicle.server"],
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/chronicle",
+    "run",
+    "server.py"
+  ],
   "env": {
-    "PROJECT_ROOT": "/path/to/project",
-    "PYTHONPATH": "/path/to/project"
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/chronicle/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `chronicle_list_entries` appears in the tool list.
+3.  **Call Tool:** Execute `chronicle_list_entries` and verify it returns recent entries.
+
+## Architecture
+
+### Overview
+This server manages the `00_CHRONICLE/ENTRIES/` directory.
+
+**Safety Rules:**
+1.  **7-Day Modification Window:** Entries older than 7 days are immutable without override.
+2.  **Sequential Numbering:** Auto-assigned.
+3.  **No Deletion:** Deprecation only.
+4.  **Classification:** Mandatory `public`, `internal`, or `confidential`.
+
+## Dependencies
+
+- `mcp`
