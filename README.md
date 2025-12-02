@@ -177,12 +177,12 @@ flowchart TB
         
         CachedAnswer["QP4a: Cached Answer<br/>(Cache Hit)"]
         
-        subgraph MCPs["MCP Ecosystem (Specialized Domains)"]
-            ProtocolMCP["Protocol MCP<br/>protocol_get()"]
-            ChronicleMCP["Chronicle MCP<br/>chronicle_get_entry()"]
-            TaskMCP["Task MCP<br/>get_task()"]
-            CodeMCP["Code MCP<br/>code_search_content()"]
-            ADRMCP["ADR MCP<br/>adr_get()"]
+        subgraph MCPs["MCP Ecosystem (Specialized Servers)"]
+            ProtocolMCP["Protocol MCP Server<br/>protocol_get()"]
+            ChronicleMCP["Chronicle MCP Server<br/>chronicle_get_entry()"]
+            TaskMCP["Task MCP Server<br/>get_task()"]
+            CodeMCP["Code MCP Server<br/>code_search_content()"]
+            ADRMCP["ADR MCP Server<br/>adr_get()"]
             
             subgraph VectorFallback["Vector DB Fallback"]
                 PDR{"Parent Document<br/>Retriever<br/>cortex_query()"}
