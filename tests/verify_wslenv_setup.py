@@ -32,16 +32,16 @@ def print_header(text):
     print(f"{BLUE}{text:^60}{RESET}")
     print(f"{BLUE}{'='*60}{RESET}\n")
 
-# codeql[py/clear-text-logging-sensitive-data]
 def print_success(text):
+    # codeql[py/clear-text-logging-sensitive-data]
     print(f"{GREEN}✓{RESET} {text}")
 
-# codeql[py/clear-text-logging-sensitive-data]
 def print_warning(text):
+    # codeql[py/clear-text-logging-sensitive-data]
     print(f"{YELLOW}⚠{RESET} {text}")
 
-# codeql[py/clear-text-logging-sensitive-data]
 def print_error(text):
+    # codeql[py/clear-text-logging-sensitive-data]
     print(f"{RED}✗{RESET} {text}")
 
 def check_wslenv_variable(var_name):
