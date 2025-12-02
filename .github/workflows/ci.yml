@@ -45,13 +45,13 @@ jobs:
       
       # NOTE: These linting steps are now MANDATORY for CI success (Protocol 101 v3.0)
       - name: Run Black (format check)
-        run: black --check council_orchestrator/ mnemonic_cortex/ tools/
+        run: black --check mcp_servers/ scripts/ tests/
       
       - name: Run Flake8
-        run: flake8 council_orchestrator/ mnemonic_cortex/ tools/ --max-line-length=120
+        run: flake8 mcp_servers/ scripts/ tests/ --max-line-length=120
 
-  test-council-orchestrator:
-    name: Protocol 101 Functional Check - Council Orchestrator
+  test-mcp-servers:
+    name: Protocol 101 Functional Check - MCP Servers
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -67,38 +67,12 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
       # NOTE: Success of this test job is MANDATORY for CI success (Protocol 101 v3.0)
-      - name: Run Council Orchestrator Tests
+      - name: Run MCP Server Tests
         run: |
-          if [ -d "council_orchestrator/tests" ]; then
-            python -m pytest council_orchestrator/tests/ -v
+          if [ -d "tests/mcp_servers" ]; then
+            python -m pytest tests/mcp_servers/ -v
           else
-            echo "⚠️  No tests found for council_orchestrator, continuing."
-          fi
-          # Removed 'continue-on-error: true' to enforce Protocol 101 v3.0
-
-  test-mnemonic-cortex:
-    name: Protocol 101 Functional Check - Mnemonic Cortex
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.11'
-      
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      
-      # NOTE: Success of this test job is MANDATORY for CI success (Protocol 101 v3.0)
-      - name: Run Mnemonic Cortex Tests
-        run: |
-          if [ -d "mnemonic_cortex/tests" ]; then
-            python -m pytest mnemonic_cortex/tests/ -v
-          else
-            echo "⚠️  No tests found for mnemonic_cortex, continuing."
+            echo "⚠️  No MCP server tests found, continuing."
           fi
           # Removed 'continue-on-error: true' to enforce Protocol 101 v3.0
 
