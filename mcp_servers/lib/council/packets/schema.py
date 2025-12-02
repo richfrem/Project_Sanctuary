@@ -70,8 +70,8 @@ def seed_for(session_id: str, round_id: int, member_id: str, prompt_hash: str = 
         import xxhash
         return xxhash.xxh64_intdigest(seed_input) & 0x7fffffff
     except ImportError:
-        # Fallback to hashlib if xxhash not available
-        hash_obj = hashlib.md5(seed_input.encode())
+        # Fallback to SHA256 if xxhash not available
+        hash_obj = hashlib.sha256(seed_input.encode())
         return int(hash_obj.hexdigest(), 16) & 0x7fffffff
 
 def prompt_hash(text: str) -> str:
