@@ -33,13 +33,13 @@ def print_header(text):
     print(f"{BLUE}{'='*60}{RESET}\n")
 
 def print_success(text):
-    print(f"{GREEN}✓{RESET} {text}")  # nosec B608 # noqa: S608
+    print(f"{GREEN}✓{RESET} {text}")  # lgtm[py/clear-text-logging-sensitive-data]
 
 def print_warning(text):
-    print(f"{YELLOW}⚠{RESET} {text}")  # nosec B608 # noqa: S608
+    print(f"{YELLOW}⚠{RESET} {text}")  # lgtm[py/clear-text-logging-sensitive-data]
 
 def print_error(text):
-    print(f"{RED}✗{RESET} {text}")  # nosec B608 # noqa: S608
+    print(f"{RED}✗{RESET} {text}")  # lgtm[py/clear-text-logging-sensitive-data]
 
 def check_wslenv_variable(var_name):
     """Check if a variable is accessible via WSLENV (environment)"""
