@@ -51,7 +51,7 @@ jobs:
         run: flake8 council_orchestrator/ mnemonic_cortex/ tools/ --max-line-length=120
 
   test-council-orchestrator:
-    name: Protocol 101 Functional Check: Council Orchestrator
+    name: Protocol 101 Functional Check - Council Orchestrator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -77,7 +77,7 @@ jobs:
           # Removed 'continue-on-error: true' to enforce Protocol 101 v3.0
 
   test-mnemonic-cortex:
-    name: Protocol 101 Functional Check: Mnemonic Cortex
+    name: Protocol 101 Functional Check - Mnemonic Cortex
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
