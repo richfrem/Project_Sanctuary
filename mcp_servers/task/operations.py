@@ -6,14 +6,16 @@ Following separation of concerns: File operations only, no Git commits
 
 import re
 from pathlib import Path
-from typing import List, Optional, Dict, Tuple
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 import sys
 import os
 
-# Add tools directory to path for get_next_task_number
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "tools" / "scaffolds"))
-from get_next_task_number import get_next_task_number
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
 
 from .models import TaskSchema, TaskStatus, TaskPriority, FileOperationResult
 from .validator import TaskValidator
@@ -71,7 +73,7 @@ class TaskOperations:
         """
         # Get next task number if not provided
         if task_number is None:
-            task_number = int(get_next_task_number())
+            task_number = self.validator.get_next_task_number()
         
         # Validate task number is unique
         is_valid, error_msg = self.validator.validate_task_number(task_number)

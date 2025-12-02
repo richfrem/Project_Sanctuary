@@ -38,7 +38,7 @@ jobs:
     - name: Run Security Scan
       # CORRECTED PATH: Call the script from the 'tools' directory.
       run: |
-        python tools/security_scan.py --ci
+        python scripts/security_scan.py --ci
       # Allow the job to continue so we can always upload the report artifact.
       continue-on-error: true
 

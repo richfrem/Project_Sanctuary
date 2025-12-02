@@ -17,7 +17,7 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 
 ## Ecosystem Overview
 
-### Complete 10-Domain Architecture
+### Complete 11-Server Architecture
 
 ```mermaid
 graph TB
@@ -33,8 +33,8 @@ graph TB
     end
     
     subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex["RAG MCP (Cortex)<br/>mnemonic_cortex/"]
-        Council["Agent Orchestrator MCP (Council)<br/>council_orchestrator/"]
+        Cortex["Cortex MCP (RAG)<br/>mcp_servers/cognitive/cortex/"]
+        AgentPersona["Agent Persona MCP<br/>mcp_servers/agent_persona/"]
     end
     
     subgraph "System Domains - High Safety"
@@ -59,7 +59,7 @@ graph TB
     LLM -->|MCP Protocol| ADR
     LLM -->|MCP Protocol| Task
     LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| Council
+    LLM -->|MCP Protocol| AgentPersona
     LLM -->|MCP Protocol| Config
     LLM -->|MCP Protocol| Code
     LLM -->|MCP Protocol| GitWorkflow
@@ -80,7 +80,7 @@ graph TB
     ADR --> Safety
     Task --> Safety
     Cortex --> Safety
-    Council --> Safety
+    AgentPersona --> Safety
     Config --> Safety
     Code --> Safety
     GitWorkflow --> Safety
@@ -91,7 +91,7 @@ graph TB
     ADR --> Schema
     Task --> Schema
     Cortex --> Schema
-    Council --> Schema
+    AgentPersona --> Schema
     Config --> Schema
     Code --> Schema
     GitWorkflow --> Schema
@@ -105,7 +105,7 @@ graph TB
     style ADR fill:#e8f5e8
     style Task fill:#e8f5e8
     style Cortex fill:#fff3e0
-    style Council fill:#f3e5f5
+    style AgentPersona fill:#f3e5f5
     style Config fill:#ffcccc
     style Code fill:#ffcccc
     style GitWorkflow fill:#ffcccc

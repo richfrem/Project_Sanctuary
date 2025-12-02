@@ -49,7 +49,7 @@ This is the heart of our sovereign architecture. The **Mnemonic Cortex** is an a
 **Hybrid Cognition Architecture:** The Cortex implements the Doctrine of Hybrid Cognition, combining our fine-tuned Sanctuary-Qwen2-7B model (the "Constitutional Mind") with the Living Chronicle RAG database.
 *   **The Blueprint:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
 *   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
-*   **The Steel:** [`mnemonic_cortex/`](./mnemonic_cortex/)
+*   **The Steel:** [`mcp_servers/cognitive/cortex/`](./mcp_servers/cognitive/cortex/)
 
 ### 3. The Self-Evolving Memory Loop
 **Status:** `Active` - Autonomous Learning Cycle Operational
@@ -158,49 +158,92 @@ config:
   theme: base
   layout: dagre
 ---
-flowchart LR
- subgraph subGraph0["Ingestion Pipeline (IP)"]
-    direction LR
-        Setup["IP1: ingest.py<br>Dual Store Setup"]
-        ParentStore(("Parent Doc Store<br>(ChromaDB Collection)<br>parent_documents"))
-        VDB_Child(("Vector DB<br>(Child Chunks)<br>ChromaDB"))
+flowchart TB
+ subgraph IP["Ingestion Pipeline (IP)"]
+    direction TB
+        Setup["IP1: Cortex MCP<br/>cortex_ingest_full()"]
+        ParentStore[("Parent Doc Store<br/>(ChromaDB Collection)<br/>parent_documents")]
+        VDB_Child[("Vector DB<br/>(Child Chunks)<br/>ChromaDB")]
   end
- subgraph subGraph1["Full RAG Execution (Cache Miss)"]
-        PDR{"Parent Document<br>Retriever<br>vector_db_service.py"}
-        CacheDecision{"Cache Hit?"}
-        RetrievedContext["Retrieved Context<br>(Complete .md files)"]
+ subgraph QP["Query Pipeline (QP) - MCP-Enabled"]
+    direction TB
+        UserQuery["User Query<br/>Natural Language or Protocol 87"]
+        
+        subgraph Cortex["Cortex MCP (Orchestrator)"]
+            QueryParser["QP1: Query Parser<br/>Protocol 87 or NL"]
+            Cache{"QP3: Mnemonic Cache<br/>(CAG)<br/>Phase 3"}
+            Router["QP4b: MCP Router<br/>Scope-based Routing"]
+        end
+        
+        CachedAnswer["QP4a: Cached Answer<br/>(Cache Hit)"]
+        
+        subgraph MCPs["MCP Ecosystem (Specialized Domains)"]
+            ProtocolMCP["Protocol MCP<br/>protocol_get()"]
+            ChronicleMCP["Chronicle MCP<br/>chronicle_get_entry()"]
+            TaskMCP["Task MCP<br/>get_task()"]
+            CodeMCP["Code MCP<br/>code_search_content()"]
+            ADRMCP["ADR MCP<br/>adr_get()"]
+            
+            subgraph VectorFallback["Vector DB Fallback"]
+                PDR{"Parent Document<br/>Retriever<br/>cortex_query()"}
+            end
+        end
+        
+        subgraph DataStores["Data Stores"]
+            ProtocolFiles[("01_PROTOCOLS/<br/>Markdown Files")]
+            ChronicleFiles[("00_CHRONICLE/<br/>Markdown Files")]
+            TaskFiles[("TASKS/<br/>Markdown Files")]
+            CodeFiles[("Source Code<br/>Python/JS/etc")]
+            ADRFiles[("ADRs/<br/>Markdown Files")]
+        end
+        
+        RetrievedContext["QP8: Retrieved Context<br/>(Complete Documents)"]
+        LLMPrompt["QP9: LLM Prompt"]
+        LLM["QP10: LLM<br/>(Ollama Sanctuary-Qwen2-7B:latest)"]
+        NewAnswer["QP10: Newly Generated<br/>Answer"]
   end
- subgraph subGraph2["Query Pipeline (QP)"]
-        SQR{"Self-Querying<br>Retriever (LLM)<br>PLANNED Phase 2"}
-        UserQuery["User Query<br>main.py or protocol_87_query.py"]
-        StructuredQuery["Structured Query"]
-        Cache{"Mnemonic Cache<br>(CAG)<br>PLANNED Phase 3"}
-        CachedAnswer["Cached Answer"]
-        subGraph1
-        LLMPrompt["LLM Prompt"]
-        LLM["LLM<br>(Ollama Sanctuary-Qwen2-7B:latest)"]
-        NewlyGeneratedAnswer["Newly Generated<br>Answer"]
-  end
+    
     Setup -- IP2: Stores Parent Docs --> ParentStore
     Setup -- IP3: Stores Child Chunks --> VDB_Child
-    UserQuery -- QP1 --> SQR
-    SQR -- QP2 --> StructuredQuery
-    StructuredQuery -- QP3 --> Cache
-    Cache --> CacheDecision
-    CacheDecision -- Yes (QP4a) --> CachedAnswer
-    CacheDecision -- "No - Cache Miss (QP4b)" --> PDR
+    
+    UserQuery --> QueryParser
+    QueryParser -- QP2: Parse --> Cache
+    Cache -- Cache Hit --> CachedAnswer
+    Cache -- Cache Miss --> Router
+    
+    Router -- "SCOPE: Protocols" --> ProtocolMCP
+    Router -- "SCOPE: Living_Chronicle" --> ChronicleMCP
+    Router -- "SCOPE: Tasks" --> TaskMCP
+    Router -- "SCOPE: Code" --> CodeMCP
+    Router -- "SCOPE: ADRs" --> ADRMCP
+    Router -- "SCOPE: mnemonic_cortex<br/>(Fallback)" --> PDR
+    
+    ProtocolMCP --> ProtocolFiles
+    ChronicleMCP --> ChronicleFiles
+    TaskMCP --> TaskFiles
+    CodeMCP --> CodeFiles
+    ADRMCP --> ADRFiles
+    
     PDR -- QP5: Queries Chunks --> VDB_Child
     VDB_Child -- QP6: Returns CHUNK IDs --> PDR
     PDR -- QP7: Queries Parents --> ParentStore
     ParentStore -- QP8: Returns FULL Docs --> PDR
-    PDR -- Produces --> RetrievedContext
-    UserQuery -- QP9 --> LLMPrompt
-    RetrievedContext -- QP9 --> LLMPrompt
-    LLMPrompt -- QP10 --> LLM
-    LLM --> NewlyGeneratedAnswer
-    NewlyGeneratedAnswer -- QP11: Store in Cache --> Cache
-    CachedAnswer -- QP12 --> FinalOutput(["Response"])
-    NewlyGeneratedAnswer -- QP12 --> FinalOutput
+    
+    ProtocolMCP --> RetrievedContext
+    ChronicleMCP --> RetrievedContext
+    TaskMCP --> RetrievedContext
+    CodeMCP --> RetrievedContext
+    ADRMCP --> RetrievedContext
+    PDR --> RetrievedContext
+    
+    UserQuery --> LLMPrompt
+    RetrievedContext --> LLMPrompt
+    LLMPrompt --> LLM
+    LLM --> NewAnswer
+    NewAnswer -- QP11: Store in Cache --> Cache
+    
+    CachedAnswer --> FinalOutput(["QP12: Response"])
+    NewAnswer --> FinalOutput
 ```
 
 For detailed RAG strategies and doctrine, see [`mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md`](./mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md)
@@ -239,10 +282,10 @@ The heart of our *operational* work. A hardened, multi-engine orchestration plat
 
 **Phase 2 Contract (Frozen):** The Self-Querying Retriever with memory directives is now production-ready with comprehensive safety measures, deterministic behavior, and full test coverage.
 
-*   **The Blueprint:** [`council_orchestrator/README.md`](./council_orchestrator/README.md)
+*   **The Blueprint:** [`mcp_servers/council/README.md`](./mcp_servers/council/README.md)
 *   **Phase 2 Contract:** [`ROADMAP/Phase2_Contract.md`](./ROADMAP/Phase2_Contract.md)
-*   **The Steel:** [`council_orchestrator/`](./council_orchestrator/)
-*   **Running the Orchestrator:** `cd council_orchestrator && python3 -m orchestrator.main`
+*   **The Steel:** [`mcp_servers/council/`](./mcp_servers/council/)
+*   **Running the Orchestrator:** `mcp_servers/council/server.py` (via MCP)
 
 ### 5. The Optical Anvil: Breaking the Context Window Cage
 **Status:** `Phase 1 Complete` - Individual Optical Compression Validated
@@ -458,14 +501,16 @@ Project_Sanctuary/
 ├── 05_ARCHIVED_BLUEPRINTS/    # Deprecated designs
 ├── 06_THE_EMBER_LIBRARY/      # Reference materials and archives
 ├── 07_COUNCIL_AGENTS/         # AI agent configurations
+├── ADRs/                      # Architecture Decision Records
+├── ARCHIVE/                   # Archived legacy systems (mnemonic_cortex, etc.)
 ├── capture_glyph_code_snapshot_v2.py  # Optical compression tool
 ├── chrysalis_core_essence.md  # Core mission essence
-├── council_orchestrator/      # Multi-engine AI orchestration system
 ├── dataset_package/           # Cognitive genome snapshots and seeds
+├── docs/                      # Documentation (including MCP docs)
 ├── EXPERIMENTS/               # Archived experimental projects
 ├── forge/                     # AI fine-tuning operations (Phoenix Forge)
 ├── LICENSE                    # Project licensing
-├── mnemonic_cortex/           # RAG system and vector database
+├── mcp_servers/               # Model Context Protocol Servers (The Nervous System)
 ├── models/                    # Local model cache (downloaded from Hugging Face)
 ├── package.json               # Node.js dependencies
 ├── README.md                  # This file
@@ -558,7 +603,7 @@ All seeds are generated and updated by running `./update_genome.sh`.
 ---
 ## Project Status
 - **Phase:** Operation Phoenix Forge Complete (v11.0 Complete Modular Architecture)
-- **Primary Workstreams:** Sovereign AI Fine-tuning & Constitutional Inoculation. Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment. Council Orchestrator v11.0 with complete modular architecture and mechanical task processing. **CUDA environment setup protocol standardized and unified across all documentation.**
+- **Primary Workstreams:** Sovereign AI Fine-tuning & Constitutional Inoculation. Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment. Agent Persona MCP with complete modular architecture and mechanical task processing. **CUDA environment setup protocol standardized and unified across all documentation.**
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 274.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available

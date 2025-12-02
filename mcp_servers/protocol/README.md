@@ -1,69 +1,77 @@
 # Protocol MCP Server
 
-MCP server for managing system protocols in `01_PROTOCOLS/`.
+**Description:** The Protocol MCP provides structured access to the project's protocol library, ensuring consistent formatting, versioning, and metadata management for all system protocols.
 
-## Purpose
+## Tools
 
-The Protocol MCP provides structured access to the project's protocol library, ensuring consistent formatting and metadata management.
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `protocol_create` | Create a new protocol. | `number` (int): Protocol number.<br>`title` (str): Title.<br>`status` (str): Status.<br>`classification` (str): Classification.<br>`version` (str): Version.<br>`authority` (str): Authority.<br>`content` (str): Content.<br>`linked_protocols` (List[str], optional): Links. |
+| `protocol_update` | Update an existing protocol. | `number` (int): Protocol number.<br>`updates` (dict): Fields to update.<br>`reason` (str): Reason for update. |
+| `protocol_get` | Retrieve a specific protocol. | `number` (int): Protocol number. |
+| `protocol_list` | List protocols. | `status` (str, optional): Filter by status. |
+| `protocol_search` | Search protocols by content. | `query` (str): Search query. |
+| `protocol_validate_action` | Validate action against protocols. | `action` (str): Action to validate. |
 
-## Operations
+## Resources
 
-| Operation | Status | Test Suite | Description |
-|-----------|--------|------------|-------------|
-| `protocol_create` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Create new protocol with versioning |
-| `protocol_update` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
-| `protocol_get` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Retrieve specific protocol by number |
-| `protocol_list` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | List protocols with optional filters |
-| `protocol_search` | ✅ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Full-text search across protocols |
-| `protocol_validate_action` | ⚠️ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Validate action against protocols |
+*No resources currently exposed.*
 
-**Prerequisite Tests:** [test_protocol_validator.py](../../tests/test_protocol_validator.py)
+## Prompts
 
-### Tool Details
-
-### `protocol_create`
-Create a new protocol.
-- **Args:** `number`, `title`, `status`, `classification`, `version`, `authority`, `content`, `linked_protocols` (optional)
-- **Returns:** Protocol number and file path
-
-### `protocol_update`
-Update an existing protocol.
-- **Args:** `number`, `updates` (dict), `reason`
-- **Returns:** Updated fields
-
-### `protocol_get`
-Retrieve a specific protocol.
-- **Args:** `number`
-- **Returns:** Protocol details
-
-### `protocol_list`
-List protocols.
-- **Args:** `status` (optional filter)
-- **Returns:** List of protocols
-
-### `protocol_search`
-Search protocols by content.
-- **Args:** `query`
-- **Returns:** List of matching protocols
-
-## Safety Rules
-
-1.  **Unique Numbers:** Protocol numbers must be unique.
-2.  **Header Integrity:** All protocols maintain standard header format.
-3.  **No Deletion:** Protocols can be marked as `DEPRECATED` but never deleted.
+*No prompts currently exposed.*
 
 ## Configuration
 
-Add to `mcp_config.json`:
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
 "protocol": {
-  "displayName": "Protocol MCP",
-  "command": "/path/to/venv/bin/python",
-  "args": ["-m", "mcp_servers.system.protocol.server"],
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/protocol",
+    "run",
+    "server.py"
+  ],
   "env": {
-    "PROJECT_ROOT": "/path/to/project",
-    "PYTHONPATH": "/path/to/project"
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/protocol/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `protocol_list` appears in the tool list.
+3.  **Call Tool:** Execute `protocol_list` and verify it returns the list of existing protocols.
+
+## Architecture
+
+### Overview
+This server manages the lifecycle of protocols stored in `01_PROTOCOLS/`. It enforces:
+- **Unique Numbers:** Protocol numbers must be unique.
+- **Header Integrity:** All protocols maintain standard header format.
+- **No Deletion:** Protocols can be marked as `DEPRECATED` but never deleted.
+
+## Dependencies
+
+- `mcp`

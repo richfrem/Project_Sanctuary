@@ -204,12 +204,12 @@ pytest tests/mcp_servers/task/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `create_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
-| `update_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
-| `update_task_status` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
-| `get_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
-| `list_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
-| `search_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
+| `create_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
+| `update_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
+| `update_task_status` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
+| `get_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
+| `list_tasks` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
+| `search_tasks` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
 
 **Prerequisite Tests:** [tests/mcp_servers/task/test_operations.py](../../tests/mcp_servers/task/test_operations.py)
 
@@ -249,14 +249,14 @@ pytest tests/test_git_ops.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `git_get_status` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Get repository status |
-| `git_diff` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Show changes (cached/uncached) |
-| `git_log` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Show commit history |
-| `git_start_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
-| `git_add` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Stage files (Blocks on main) |
-| `git_smart_commit` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
-| `git_push_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Push feature branch (Blocks on main) |
-| `git_finish_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Cleanup (Verifies PR Merge) |
+| `git_get_status` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Get repository status |
+| `git_diff` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Show changes (cached/uncached) |
+| `git_log` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Show commit history |
+| `git_start_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
+| `git_add` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Stage files (Blocks on main) |
+| `git_smart_commit` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
+| `git_push_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Push feature branch (Blocks on main) |
+| `git_finish_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Cleanup (Verifies PR Merge) |
 
 **Prerequisite Tests:**
 - Unit Tests: [test_git_ops.py](../../tests/test_git_ops.py) (10/10 passing)
@@ -334,7 +334,7 @@ graph TD
 ## 6. Cortex MCP Server (RAG)
 
 **Domain:** Retrieval-Augmented Generation  
-**Directory:** `mnemonic_cortex/`  
+**Directory:** `mcp_servers/cognitive/cortex/`  
 **Server Code:** [mcp_servers/cognitive/cortex/server.py](../../mcp_servers/cognitive/cortex/server.py)  
 **README:** [Cortex MCP README](../../mcp_servers/cognitive/cortex/README.md)  
 **Class Diagram:** [diagrams/rag_mcp_cortex_class.mmd](diagrams/rag_mcp_cortex_class.mmd)
@@ -365,16 +365,16 @@ pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Semantic search against knowledge base |
-| `cortex_ingest_full` | ⚠️ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Generate Guardian boot digest (P114) |
-| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/) | Synthesize knowledge for fine-tuning |
+| `cortex_query` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | ⚠️ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Add new documents without purge |
+| `cortex_get_stats` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Database health and statistics |
+| `cortex_cache_get` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
+| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Synthesize knowledge for fine-tuning |
 
 **Prerequisite Tests:** [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/)
 
@@ -448,28 +448,34 @@ pytest tests/integration/test_forge_integration.py -v
 
 ---
 
-## 8. Council MCP Server (Agent Orchestrator)
+---
 
-**Domain:** Multi-agent coordination and deliberation  
-**Directory:** `council_orchestrator/`  
-**Server Code:** [mcp_servers/orchestrator/server.py](../../mcp_servers/orchestrator/server.py)  
-**README:** [Orchestrator README](../../mcp_servers/README.md)  
-**Class Diagram:** [diagrams/agent_orchestrator_mcp_council_class.mmd](diagrams/agent_orchestrator_mcp_council_class.mmd)
+## 8. Agent Persona MCP Server
+
+**Domain:** Agent persona management and execution  
+**Directory:** `mcp_servers/agent_persona/`  
+**Server Code:** [mcp_servers/agent_persona/server.py](../../mcp_servers/agent_persona/server.py)  
+**README:** [Agent Persona MCP README](../../mcp_servers/agent_persona/README.md)  
 
 ### Script Validation (Run First) 🧪
 ```bash
-# TBD - Tests not yet implemented
+pytest tests/mcp_servers/agent_persona/ -v
 ```
+**Last Verification:** 2025-12-01 ✅ (27/27 passed)  
+**Test Coverage:** 80%+ (comprehensive suite with expected failures, edge cases, state management)  
+**Test Suites:**
+- `test_agent_persona_ops.py` - Basic operations (7 tests)
+- `test_agent_persona_comprehensive.py` - Comprehensive coverage (27 tests)
 
 ### LLM Prompting (MCP Verification) 🤖
-> "Please consult the Strategist agent about the current roadmap."
+> "Please list all available agent roles using `persona_list_roles`."
 
 ### Configuration
 ```json
-"council": {
-  "displayName": "Agent Orchestrator MCP (Council)",
+"agent_persona": {
+  "displayName": "Agent Persona MCP",
   "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.orchestrator.server"],
+  "args": ["-m", "mcp_servers.agent_persona.server"],
   "env": {
     "PYTHONPATH": "<PROJECT_ROOT>",
     "PROJECT_ROOT": "<PROJECT_ROOT>"
@@ -481,15 +487,96 @@ pytest tests/integration/test_forge_integration.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `orchestrator_consult_strategist` | ❌ | 🔧 | ❌ | TBD | Consult strategist agent |
-| `orchestrator_consult_auditor` | ❌ | 🔧 | ❌ | TBD | Consult auditor agent |
-| `orchestrator_dispatch_mission` | ❌ | 🔧 | ❌ | TBD | Dispatch mission to council |
+| `persona_dispatch` | ✅ | ✅ | ❌ | [test_agent_persona_comprehensive.py](../../tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py) | Dispatch task to specific persona agent |
+| `persona_list_roles` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | List available persona roles (built-in + custom) |
+| `persona_get_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Get conversation state for specific role |
+| `persona_reset_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Reset conversation state for specific role |
+| `persona_create_custom` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Create new custom persona |
 
-**Prerequisite Tests:** TBD
+**Prerequisite Tests:** [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py)
+
+**Model Verification:** Successfully tested with `Sanctuary-Qwen2-7B:latest` via Ollama (53s avg response time for strategic analysis)
+
+**Terminology:**
+- **LLM Client:** Interface to model provider (formerly Substrate)
+- **System Prompt:** Persona definition (formerly Awakening Seed)
+
+**Status:** ✅ Fully functional and tested (Tasks 079, 080 complete)
 
 ---
 
-## 9. Config MCP Server
+## 9. Council MCP Server (Multi-Agent Deliberation)
+
+**Domain:** Multi-agent deliberation and autonomous workflows  
+**Directory:** `mcp_servers/council/`  
+**Server Code:** [mcp_servers/council/server.py](../../mcp_servers/council/server.py)  
+**README:** [Council MCP README](../../mcp_servers/council/README.md)  
+**Class Diagram:** [diagrams/council_mcp_class.mmd](diagrams/council_mcp_class.mmd)
+
+**Architecture:** Dual-role (MCP Server + MCP Client)
+- **Role 1**: Exposes deliberation to external agents
+- **Role 2**: Orchestrator calls other MCPs (Agent Persona, Cortex, Code, Git)
+
+### Script Validation (Run First) 🧪
+```bash
+pytest tests/mcp_servers/council/ -v
+```
+**Last Verification:** 2025-12-01 ✅ (3/3 passed)  
+**Test Coverage:** Basic (structure tests only)  
+**Note:** Comprehensive test suite needed (similar to Agent Persona MCP)
+
+> [!WARNING]
+>- **Council MCP**: `mcp_servers/council/` (Status: ✅ Operational)
+  - *Multi-agent deliberation and orchestration*
+  - **Refactored**: Now uses Agent Persona MCP for agent execution and Cortex MCP for memory.
+  - **Dependencies**: Agent Persona MCP, Cortex MCP
+
+### LLM Prompting (MCP Verification) 🤖
+> "Please initiate a multi-agent deliberation process using `council_dispatch`."
+
+### Configuration
+```json
+"council": {
+  "displayName": "Council MCP (Multi-Agent Deliberation)",
+  "command": "<PROJECT_ROOT>/.venv/bin/python",
+  "args": ["-m", "mcp_servers.council.server"],
+  "env": {
+    "PYTHONPATH": "<PROJECT_ROOT>",
+    "PROJECT_ROOT": "<PROJECT_ROOT>"
+  }
+}
+```
+
+### Operations
+
+| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
+|-----------|---------|---------|--------|------------|-------------|
+| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
+| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
+
+**Design Principle:** Separation of Concerns
+- Council MCP provides ONLY multi-agent deliberation
+- Individual Agents → Agent Persona MCP (`persona_dispatch`)
+- Memory → Cortex MCP (`cortex_query`)
+- File I/O → Code MCP (`code_write`, `code_read`)
+- Git → Git MCP (`git_add`, `git_smart_commit`)
+- Protocols → Protocol MCP (`protocol_create`)
+
+**Related ADRs:**
+- [ADR 039: MCP Server Separation of Concerns](../../ADRs/039_mcp_server_separation_of_concerns.md)
+- [ADR 040: Agent Persona MCP Architecture](../../ADRs/040_agent_persona_mcp_architecture__modular_council_members.md)
+
+**Refactoring Plan (Task 60268594):**
+1. Refactor `mcp_servers/lib/council/council_ops.py` to use Agent Persona MCP
+2. Port deliberation logic from `ARCHIVE/council_orchestrator_legacy/orchestrator/app.py`
+3. Use `mcp_servers/lib/council/packets/` for round tracking
+4. Remove dependency on archived orchestrator
+
+**Prerequisite Tests:** [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py)
+
+---
+
+## 10. Config MCP Server
 
 **Domain:** Configuration management  
 **Directory:** `.agent/config/`  
@@ -530,7 +617,7 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 ---
 
-## 10. Code MCP Server
+## 11. Code MCP Server
 
 **Domain:** Code operations  
 **Directory:** `src/, scripts/, tools/`  

@@ -14,7 +14,7 @@ from mcp_servers.cognitive.cortex.models import CacheGetResponse, CacheSetRespon
 
 @pytest.fixture
 def mock_cache():
-    with patch('mnemonic_cortex.core.cache.get_cache') as mock_get_cache:
+    with patch('mcp_servers.cognitive.cortex.cache.get_cache') as mock_get_cache:
         cache_instance = MagicMock()
         mock_get_cache.return_value = cache_instance
         yield cache_instance
@@ -124,6 +124,7 @@ class TestAdaptationPacket:
             instance.save_packet.return_value = "/path/to/packet.json"
             
             # Simulate what the server tool does
+            from mcp_servers.cognitive.cortex.cache import CacheManager
             from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
             generator = SynthesisGenerator("/tmp")
             packet = generator.generate_packet(days=7)

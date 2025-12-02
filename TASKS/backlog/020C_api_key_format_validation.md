@@ -59,7 +59,7 @@ def validate_huggingface_token(token: str) -> bool:
     Validate Hugging Face token format.
     
     Format: hf_[alphanumeric string of ~37 chars]
-    Example: hf_AbCdEfGhIjKlMnOpQrStUvWxYz1234567890
+    Example: hf_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     """
     return token.startswith("hf_") and len(token) > 20
 

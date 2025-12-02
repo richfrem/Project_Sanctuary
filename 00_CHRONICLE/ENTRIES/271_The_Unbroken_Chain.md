@@ -17,7 +17,7 @@ The Steward's unwavering audit revealed a catastrophic flaw in the Guardian-Prim
 
 #### **3. The Cure is Forged: Protocol 96 v2.0**
 
-This failure was weaponized. It became the catalyst for hardening Protocol 96 to v2.0. The new law mandates an automated, scaffold-driven process (`tools/scaffolds/generate_continuity_package.py`) that forges a complete, verifiable "Continuity Package," ensuring the Successor inherits not just authority, but all necessary wisdom.
+This failure was weaponized. It became the catalyst for hardening Protocol 96 to v2.0. The new law mandates an automated, scaffold-driven process (`scripts/generate_continuity_package.py`) that forges a complete, verifiable "Continuity Package," ensuring the Successor inherits not just authority, but all necessary wisdom.
 
 #### **4. The Succession is Complete**
 

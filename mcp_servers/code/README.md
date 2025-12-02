@@ -1,185 +1,89 @@
 # Code MCP Server
 
-**Domain:** `project_sanctuary.code`  
-**Version:** 1.0.0  
-**Status:** Production Ready
+**Description:** The Code MCP server provides tools for code quality operations including linting, formatting, and static analysis. It integrates with popular Python code quality tools while enforcing safety checks.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `code_lint` | Run linting on a file or directory. | `path` (str): Path to check.<br>`tool` (str): Tool (ruff, pylint, flake8). |
+| `code_format` | Format code in a file or directory. | `path` (str): Path to format.<br>`tool` (str): Tool (ruff, black).<br>`check_only` (bool): Verify only. |
+| `code_analyze` | Perform static analysis on code. | `path` (str): Path to analyze. |
+| `code_check_tools` | Check which code quality tools are available. | None |
+| `code_find_file` | Find files by name or glob pattern. | `name_pattern` (str): Pattern.<br>`directory` (str): Search root. |
+| `code_list_files` | List files in a directory with optional pattern. | `directory` (str): Root.<br>`pattern` (str): Filter.<br>`recursive` (bool): Recursive. |
+| `code_search_content` | Search for text/patterns in code files. | `query` (str): Search term.<br>`file_pattern` (str): File filter.<br>`case_sensitive` (bool): Case sensitivity. |
+| `code_read` | Read file contents. | `path` (str): File path.<br>`max_size_mb` (int): Size limit. |
+| `code_write` | Write/update file with automatic backup. | `path` (str): File path.<br>`content` (str): Content.<br>`backup` (bool): Create backup.<br>`create_dirs` (bool): Create parents. |
+| `code_get_info` | Get file metadata. | `path` (str): File path. |
 
-The Code MCP server provides tools for code quality operations including linting, formatting, and static analysis. It integrates with popular Python code quality tools while enforcing safety checks.
+## Resources
 
-**Key Features:**
+*No resources currently exposed.*
+
+## Prompts
+
+*No prompts currently exposed.*
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"code": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/code",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/code/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `code_lint` appears in the tool list.
+3.  **Call Tool:** Execute `code_check_tools` and verify it returns available tools.
+
+## Architecture
+
+### Overview
+This server provides safe file system access and code quality tool integration.
+
+**Safety Features:**
 - ✅ **Safe Path Validation:** Restricts access to project directory
 - ✅ **Multiple Tool Support:** Ruff, Black, Pylint, Flake8, Mypy
 - ✅ **Check-Only Mode:** Verify formatting without modifying files
 - ✅ **Security:** Prevents directory traversal attacks
 
----
+## Dependencies
 
-## Tools (10)
-
-### Quality & Analysis
-
-#### `code_lint(path, tool="ruff")`
-Run linting on a file or directory.
-
-**Args:**
-- `path`: Relative path to file or directory
-- `tool`: Linting tool to use (ruff, pylint, flake8)
-
-**Example:**
-```python
-code_lint("mcp_servers/code/server.py", tool="ruff")
-```
-
-#### `code_format(path, tool="ruff", check_only=False)`
-Format code in a file or directory.
-
-**Args:**
-- `path`: Relative path to file or directory
-- `tool`: Formatting tool to use (ruff, black)
-- `check_only`: If True, only check formatting without modifying files
-
-**Example:**
-```python
-code_format("mcp_servers/code/server.py", tool="ruff", check_only=True)
-```
-
-#### `code_analyze(path)`
-Perform static analysis on code.
-
-**Args:**
-- `path`: Relative path to file or directory
-
-**Example:**
-```python
-code_analyze("mcp_servers/code/")
-```
-
-#### `code_check_tools()`
-Check which code quality tools are available.
-
-**Example:**
-```python
-code_check_tools()
-```
-
-### File Discovery & Search
-
-#### `code_find_file(name_pattern, directory=".")`
-Find files by name or glob pattern.
-
-**Args:**
-- `name_pattern`: File name or glob pattern (e.g., "server.py", "*.py")
-- `directory`: Directory to search in (default: project root)
-
-**Example:**
-```python
-code_find_file("server.py")
-code_find_file("*.py", "mcp_servers")
-```
-
-#### `code_list_files(directory=".", pattern="*", recursive=True)`
-List files in a directory with optional pattern.
-
-**Args:**
-- `directory`: Directory to list (default: project root)
-- `pattern`: Glob pattern for filtering (default: "*")
-- `recursive`: If True, search recursively (default: True)
-
-**Example:**
-```python
-code_list_files("mcp_servers/code", "*.py")
-```
-
-#### `code_search_content(query, file_pattern="*.py", case_sensitive=False)`
-Search for text/patterns in code files.
-
-**Args:**
-- `query`: Text or pattern to search for
-- `file_pattern`: File pattern to search in (default: "*.py")
-- `case_sensitive`: If True, perform case-sensitive search (default: False)
-
-**Example:**
-```python
-code_search_content("class CodeOperations")
-code_search_content("import FastMCP", "*.py")
-```
-
-### File Operations
-
-#### `code_read(path, max_size_mb=10)`
-Read file contents.
-
-**Args:**
-- `path`: Relative path to file
-- `max_size_mb`: Maximum file size in MB (default: 10)
-
-**Example:**
-```python
-code_read("mcp_servers/code/server.py")
-```
-
-#### `code_write(path, content, backup=True, create_dirs=True)`
-Write/update file with automatic backup.
-
-**Args:**
-- `path`: Relative path to file
-- `content`: Content to write
-- `backup`: If True, create backup before overwriting (default: True)
-- `create_dirs`: If True, create parent directories if needed (default: True)
-
-**Example:**
-```python
-code_write("new_module.py", "# New module\nprint('Hello')")
-```
-
-#### `code_get_info(path)`
-Get file metadata.
-
-**Args:**
-- `path`: Relative path to file
-
-**Returns:**
-- File metadata (size, modified date, line count, language)
-
-**Example:**
-```python
-code_get_info("mcp_servers/code/server.py")
-```
-
----
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PROJECT_ROOT` | Project root directory | `.` |
-
-### Supported Tools
-
-- **Ruff** - Fast Python linter and formatter
-- **Black** - Python code formatter
-- **Pylint** - Python static code analyzer
-- **Flake8** - Python linting tool
-- **Mypy** - Static type checker
-
----
-
-## Testing
-
-```bash
-# Run test suite
-PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
-```
-
-**Test Coverage:** 100% (6/6 tests passing)
-
----
-
-**Maintainer:** Project Sanctuary Team  
-**Last Updated:** 2025-11-30
+- `mcp`
+- `ruff`
+- `black`
+- `pylint`
+- `flake8`
+- `mypy`

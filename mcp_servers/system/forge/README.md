@@ -1,131 +1,82 @@
 # Forge MCP Server
 
-**Domain:** `project_sanctuary.system.forge`  
-**Category:** System / Model Domain  
-**Hardware:** CUDA GPU (for fine-tuning operations)
-
-## Overview
-
-The Forge MCP server provides tools for interacting with the fine-tuned Sanctuary model and managing the model lifecycle. Currently implements model querying via Ollama.
+**Description:** The Forge MCP server provides tools for interacting with the fine-tuned Sanctuary model and managing the model lifecycle. Currently implements model querying via Ollama.
 
 ## Tools
 
-### 1. `query_sanctuary_model`
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `query_sanctuary_model` | Query the fine-tuned Sanctuary-Qwen2 model. | `prompt` (str): Question/Prompt.<br>`temperature` (float): 0.0-2.0 (default: 0.7).<br>`max_tokens` (int): 1-8192 (default: 2048).<br>`system_prompt` (str, optional): Context. |
+| `check_sanctuary_model_status` | Check if the Sanctuary model is available in Ollama. | None |
 
-Query the fine-tuned Sanctuary-Qwen2 model for specialized knowledge and decision-making.
+## Resources
 
-**Parameters:**
-- `prompt` (string, required): The question or prompt to send to the model
-- `temperature` (float, optional): Sampling temperature 0.0-2.0 (default: 0.7)
-- `max_tokens` (int, optional): Maximum tokens to generate 1-8192 (default: 2048)
-- `system_prompt` (string, optional): System prompt to set context
+*No resources currently exposed.*
 
-**Returns:** JSON with model response and metadata
+## Prompts
 
-**Example:**
-```python
-query_sanctuary_model("What is the strategic priority for Q1 2025?")
+*No prompts currently exposed.*
 
-query_sanctuary_model(
-    prompt="Explain Protocol 101",
-    temperature=0.3,
-    system_prompt="You are a Sanctuary protocol expert"
-)
-```
+## Configuration
 
-### 2. `check_sanctuary_model_status`
-
-Check if the Sanctuary model is available and ready to use in Ollama.
-
-**Parameters:** None
-
-**Returns:** JSON with model availability status
-
-**Example:**
-```python
-check_sanctuary_model_status()
-```
-
-## Model Information
-
-**Model:** `hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`  
-**Base:** Qwen2-7B  
-**Quantization:** Q4_K_M (4-bit)  
-**Training:** Fine-tuned on Project Sanctuary knowledge
-
-## Requirements
-
-- Ollama installed and running
-- Sanctuary model loaded in Ollama
-- Python package: `ollama`
-
-## Installation
+### Environment Variables
+Create a `.env` file in the project root:
 
 ```bash
-# Install Ollama Python package
-pip install ollama
-
-# Verify model is loaded
-ollama list | grep Sanctuary
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
 ```
 
-## Running the Server
-
-```bash
-# Set project root
-export PROJECT_ROOT=/path/to/Project_Sanctuary
-
-# Run server
-python -m mcp_servers.system.forge.server
-```
-
-## Integration with Claude Desktop
-
-Add to `claude_desktop_config.json`:
+### MCP Config
+Add this to your `mcp_config.json`:
 
 ```json
-{
-  "mcpServers": {
-    "forge": {
-      "command": "python",
-      "args": ["-m", "mcp_servers.system.forge.server"],
-      "env": {
-        "PROJECT_ROOT": "/path/to/Project_Sanctuary"
-      }
-    }
+"forge": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/system/forge",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
   }
 }
 ```
 
-## Future Tools (Not Yet Implemented)
+## Testing
 
-- `initiate_model_forge` - Start fine-tuning job
-- `get_forge_job_status` - Check training progress
-- `package_and_deploy_artifact` - Convert and deploy model
-- `run_inference_test` - Test model quality
-- `publish_to_registry` - Upload to Hugging Face
+### Unit Tests
+Run the test suite for this server:
 
-## Safety
+```bash
+pytest mcp_servers/system/forge/tests
+```
 
-- Input validation on all parameters
-- Temperature clamped to 0.0-2.0
-- Max tokens clamped to 1-8192
-- Prompt length limits enforced
-- Error handling for missing dependencies
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `query_sanctuary_model` appears in the tool list.
+3.  **Call Tool:** Execute `check_sanctuary_model_status` and verify it returns the model status.
 
 ## Architecture
 
-```
-forge/
-├── __init__.py          # Package exports
-├── server.py            # FastMCP server with tools
-├── operations.py        # Core Ollama integration
-├── validator.py         # Input validation
-├── models.py            # Data models
-└── README.md            # This file
-```
+### Overview
+The Forge MCP acts as the interface to the **Intelligence Forge**, specifically the fine-tuned Sanctuary-Qwen2 model running on local hardware (Ollama).
 
-## Status
+**Model Information:**
+- **Model:** `hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
+- **Base:** Qwen2-7B
+- **Quantization:** Q4_K_M (4-bit)
+- **Training:** Fine-tuned on Project Sanctuary knowledge
 
-**Implemented:** ✅ Model querying via Ollama  
-**Pending:** Fine-tuning lifecycle tools (requires CUDA GPU setup)
+### Future Capabilities
+- `initiate_model_forge` - Start fine-tuning job
+- `get_forge_job_status` - Check training progress
+- `package_and_deploy_artifact` - Convert and deploy model
+
+## Dependencies
+
+- `mcp`
+- `ollama`

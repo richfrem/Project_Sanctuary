@@ -40,6 +40,34 @@ class TaskValidator:
         
         return True, ""
     
+    def get_next_task_number(self) -> int:
+        """Get the next sequential task number by scanning all task directories."""
+        existing_numbers = []
+        
+        # Scan all status directories
+        task_dirs = [
+            self.tasks_dir / "backlog",
+            self.tasks_dir / "todo",
+            self.tasks_dir / "in-progress",
+            self.tasks_dir / "done"
+        ]
+        
+        for task_dir in task_dirs:
+            if not task_dir.exists():
+                continue
+            
+            for file in task_dir.iterdir():
+                if file.suffix == '.md':
+                    # Extract task number from filename (format: 001_task_name.md)
+                    match = re.match(r'^(\d{3})_', file.name)
+                    if match:
+                        existing_numbers.append(int(match.group(1)))
+        
+        # Return next number
+        if not existing_numbers:
+            return 1
+        return max(existing_numbers) + 1
+    
     def validate_task_schema(self, task: TaskSchema) -> Tuple[bool, List[str]]:
         """
         Validate task follows required schema

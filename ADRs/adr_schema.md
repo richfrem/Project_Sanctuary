@@ -287,7 +287,7 @@ We will use ChromaDB as our primary vector database for development and small-sc
 
 ## Tooling
 
-- **Numbering:** Use `tools/scaffolds/get_next_adr_number.py` for sequential numbering
+- **Numbering:** Use `scripts/get_next_adr_number.py` for sequential numbering
 - **Validation:** ADRs should be reviewed by technical leads before acceptance
 - **Storage:** All ADRs stored in `ADRs/` directory
 - **References:** Link ADRs in related tasks and documentation

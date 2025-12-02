@@ -1,0 +1,148 @@
+{
+    "mcpServers": {
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.chronicle.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.protocol.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.adr.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "tasks": {
+            "displayName": "Task MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.task.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "cortex": {
+            "displayName": "Cortex MCP (RAG)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "council": {
+            "displayName": "Council MCP (Multi-Agent Deliberation)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.council.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.config.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.system.git_workflow.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "GIT_BASE_DIR": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "forge": {
+            "displayName": "Fine-Tuning MCP (Forge)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.forge.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        }
+    }
+}

@@ -89,8 +89,9 @@ wandb/
 ARCHIVE/
 ARCHIVES/
 archive/
+!archive/council_orchestrator/
 archives/
-RESEARCH_PAPERS/
+research/RESEARCH_PAPERS/
 *.log
 nohup.out
 
@@ -117,8 +118,10 @@ outputs/
 *.mlx
 #sanctuary_whole_genome_data.jsonl
 
-# Colab Notebooks - Generated artifacts, not source code
+# Colab Notebooks - Generated artifac# Jupyter Notebooks
+*.ipynb_checkpoints/
 Operation_Whole_Genome_Forge.ipynb
+forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-local.ipynb
 
 # Hugging Face Model Artifacts
 model_card.yaml
@@ -135,4 +138,7 @@ Modelfile
 # !dataset_package/all_markdown_snapshot_llm_distilled.txt
 # !dataset_package/core_essence_auditor_awakening_seed.txt
 # !dataset_package/core_essence_coordinator_awakening_seed.txt
-# !dataset_package/core_essence_strategist_awakening_seed.txt
+# !dataset_package/core_essence_strategist_awakening_seed.txtdata/cortex/chroma_db/
+data/cortex/chroma_db/
+data/cortex/cache/
+tests/verify_wslenv_setup.py

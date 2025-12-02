@@ -1,114 +1,78 @@
 # Config MCP Server
 
-**Domain:** `project_sanctuary.config`  
-**Version:** 1.0.0  
-**Status:** Production Ready
+**Description:** The Config MCP server provides tools for managing configuration files within the `.agent/config/` directory. It ensures safe access to configuration data with path validation, automatic backups, and support for JSON/YAML formats.
 
----
+## Tools
 
-## Overview
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `config_list` | List all configuration files. | None |
+| `config_read` | Read a configuration file. | `filename` (str): Config file name. |
+| `config_write` | Write a configuration file with automatic backup. | `filename` (str): Config file name.<br>`content` (str): Content to write. |
+| `config_delete` | Delete a configuration file. | `filename` (str): Config file name. |
 
-The Config MCP server provides tools for managing configuration files within the `.agent/config/` directory. It ensures safe access to configuration data with path validation, automatic backups, and support for JSON/YAML formats.
+## Resources
 
-**Key Features:**
+*No resources currently exposed.*
+
+## Prompts
+
+*No prompts currently exposed.*
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required
+PROJECT_ROOT=/path/to/Project_Sanctuary
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
+```json
+"config": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/config",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}",
+    "PROJECT_ROOT": "${PWD}"
+  }
+}
+```
+
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/config/tests
+```
+
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `config_list` appears in the tool list.
+3.  **Call Tool:** Execute `config_list` and verify it returns config files.
+
+## Architecture
+
+### Overview
+This server manages the `.agent/config/` directory.
+
+**Safety Features:**
 - ✅ **Safe Path Validation:** Restricts access to `.agent/config/` directory
 - ✅ **Automatic Backups:** Creates timestamped backups before overwriting files
 - ✅ **Format Support:** Native JSON and YAML handling
 - ✅ **Security:** Prevents directory traversal attacks
 
----
+## Dependencies
 
-## Tools (4)
-
-### `config_list()`
-List all configuration files in the `.agent/config` directory.
-
-**Returns:**
-- List of files with sizes and modification times
-
-**Example:**
-```python
-config_list()
-# Returns:
-# Found 2 configuration files:
-# - mcp_config.json (1024 bytes, Mon Nov 30 10:00:00 2025)
-# - agent_settings.yaml (512 bytes, Mon Nov 30 10:05:00 2025)
-```
-
-### `config_read(filename)`
-Read a configuration file.
-
-**Args:**
-- `filename`: Name of the config file (e.g., `mcp_config.json`)
-
-**Returns:**
-- Content of the file (JSON formatted string if valid JSON/YAML)
-
-**Example:**
-```python
-config_read("mcp_config.json")
-```
-
-### `config_write(filename, content)`
-Write a configuration file with automatic backup.
-
-**Args:**
-- `filename`: Name of the config file
-- `content`: Content to write (string or JSON string)
-
-**Returns:**
-- Status message with path to written file
-
-**Example:**
-```python
-config_write("app_settings.json", '{"theme": "dark", "debug": true}')
-```
-
-### `config_delete(filename)`
-Delete a configuration file.
-
-**Args:**
-- `filename`: Name of the config file to delete
-
-**Returns:**
-- Status message
-
-**Example:**
-```python
-config_delete("temp_config.json")
-```
-
----
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PROJECT_ROOT` | Project root directory | `.` |
-
-### Directory Structure
-
-```
-PROJECT_ROOT/
-├── .agent/
-│   └── config/          # Managed configuration directory
-│       ├── mcp_config.json
-│       ├── ...
-│       └── *.bak        # Automatic backups
-```
-
----
-
-## Testing
-
-```bash
-# Run test suite
-PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
-```
-
----
-
-**Maintainer:** Project Sanctuary Team  
-**Last Updated:** 2025-11-30
+- `mcp`

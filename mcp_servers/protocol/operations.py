@@ -3,7 +3,16 @@ File operations for Protocol MCP.
 """
 import os
 import re
+import sys
+from datetime import datetime
+from pathlib import Path
 from typing import List, Optional, Dict, Any
+
+# Setup logging
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.logging_utils import setup_mcp_logging
+
+logger = setup_mcp_logging(__name__)
 from .models import Protocol, ProtocolStatus, PROTOCOL_TEMPLATE
 from .validator import ProtocolValidator
 

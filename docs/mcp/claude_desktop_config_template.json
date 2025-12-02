@@ -53,11 +53,24 @@
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
         "cortex": {
-            "displayName": "RAG MCP (Cortex)",
+            "displayName": "Cortex MCP (RAG)",
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
-                "mcp_servers.cortex.server"
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+            },
+            "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
             ],
             "env": {
                 "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
@@ -66,7 +79,7 @@
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },
         "council": {
-            "displayName": "Agent Orchestrator MCP (Council)",
+            "displayName": "Council MCP (Multi-Agent Deliberation)",
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
@@ -109,11 +122,12 @@
             "command": "<ABSOLUTE_PATH_TO_PROJECT>/.venv/bin/python",
             "args": [
                 "-m",
-                "mcp_servers.git_workflow.server"
+                "mcp_servers.system.git_workflow.server"
             ],
             "env": {
                 "PYTHONPATH": "<ABSOLUTE_PATH_TO_PROJECT>",
-                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>"
+                "PROJECT_ROOT": "<ABSOLUTE_PATH_TO_PROJECT>",
+                "GIT_BASE_DIR": "<ABSOLUTE_PATH_TO_PROJECT>"
             },
             "cwd": "<ABSOLUTE_PATH_TO_PROJECT>"
         },

@@ -1,73 +1,84 @@
 # Cortex MCP Server
 
-**Domain:** `project_sanctuary.cognitive.cortex`  
-**Version:** 1.0.0  
-**Status:** Phase 1 - Foundation
-
-## Overview
-
-The Cortex MCP Server provides Model Context Protocol (MCP) tools for interacting with the Mnemonic Cortex RAG (Retrieval-Augmented Generation) system. It exposes the knowledge base for semantic search and document ingestion.
-
-## Architecture
-
-This server wraps existing Mnemonic Cortex scripts and services:
-
-- **Ingestion:** `mnemonic_cortex/scripts/ingest.py` and `ingest_incremental.py`
-- **Query:** `mnemonic_cortex/app/services/vector_db_service.py` (Parent Document Retriever)
-- **Stats:** Direct ChromaDB collection access
+**Description:** The Cortex MCP Server provides tools for interacting with the **Mnemonic Cortex** — the living memory of the Sanctuary Council. It is a local-first RAG system that transforms canonical markdown files into a dynamic, semantically searchable knowledge base.
 
 ## Tools
 
-### 1. `cortex_ingest_full`
+| Tool Name | Description | Arguments |
+|-----------|-------------|-----------|
+| `cortex_query` | Perform semantic search query against the knowledge base. | `query` (str): Natural language query.<br>`max_results` (int): Max results (default: 5).<br>`use_cache` (bool): Use cache (default: False). |
+| `cortex_ingest_full` | Perform full re-ingestion of the knowledge base. | `purge_existing` (bool): Purge DB (default: True).<br>`source_directories` (List[str], optional): Dirs to ingest. |
+| `cortex_ingest_incremental` | Perform incremental ingestion of new/modified files. | `file_paths` (List[str]): Markdown files to ingest.<br>`metadata` (dict, optional): Metadata to attach.<br>`skip_duplicates` (bool): Skip existing files (default: True). |
+| `cortex_get_stats` | Get statistics about the knowledge base. | None |
+| `cortex_guardian_wakeup` | Generate Guardian boot digest from cached bundles (Protocol 114). | None |
+| `cortex_cache_warmup` | Pre-load high-priority documents into cache. | `priority_tags` (List[str], optional): Tags to prioritize. |
 
-Perform full re-ingestion of the knowledge base.
+## Resources
 
-**Parameters:**
-- `purge_existing` (bool, default: True): Whether to purge existing database
-- `source_directories` (List[str], optional): Directories to ingest
+| Resource URI | Description | Mime Type |
+|--------------|-------------|-----------|
+| `cortex://stats` | Knowledge base statistics | `application/json` |
+| `cortex://document/{doc_id}` | Full content of a document | `text/markdown` |
 
-**Returns:**
+## Prompts
+
+*No prompts currently exposed.*
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+# Required for Embeddings
+OPENAI_API_KEY=sk-... # If using OpenAI embeddings
+# Optional
+CORTEX_CHROMA_DB_PATH=mcp_servers/cognitive/cortex/data/chroma_db
+CORTEX_CACHE_DIR=mcp_servers/cognitive/cortex/data/cache
+```
+
+### MCP Config
+Add this to your `mcp_config.json`:
+
 ```json
-{
-  "documents_processed": 459,
-  "chunks_created": 2145,
-  "ingestion_time_ms": 45230.5,
-  "vectorstore_path": "/path/to/chroma_db",
-  "status": "success"
+"cortex": {
+  "command": "uv",
+  "args": [
+    "--directory",
+    "mcp_servers/cognitive/cortex",
+    "run",
+    "server.py"
+  ],
+  "env": {
+    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+  }
 }
 ```
 
-**Example:**
-```python
-cortex_ingest_full()
-cortex_ingest_full(source_directories=["01_PROTOCOLS", "00_CHRONICLE"])
+## Testing
+
+### Unit Tests
+Run the test suite for this server:
+
+```bash
+pytest mcp_servers/cognitive/cortex/tests
 ```
 
----
+### Manual Verification
+1.  **Build/Run:** Ensure the server starts without errors.
+2.  **List Tools:** Verify `cortex_query` and `cortex_ingest_full` appear in the tool list.
+3.  **Call Tool:** Execute `cortex_get_stats` and verify it returns valid JSON statistics.
 
-### 2. `cortex_query`
+## Architecture
 
-Perform semantic search query against the knowledge base.
+### Overview
+The Mnemonic Cortex has evolved beyond a simple RAG implementation into a sophisticated, multi-pattern cognitive architecture designed for maximum efficiency and contextual accuracy. It is built on the **Doctrine of Hybrid Cognition**, ensuring our sovereign AI always reasons with the most current information.
 
-**Parameters:**
-- `query` (str): Natural language query
-- `max_results` (int, default: 5): Maximum results (1-100)
-- `use_cache` (bool, default: False): Use cache (Phase 2)
+**Key Strategies:**
+- **Parent Document Retrieval:** To provide full, unbroken context to the LLM.
+- **Self-Querying Retrieval:** To enable intelligent, metadata-aware searches.
+- **Mnemonic Caching (CAG):** To provide near-instantaneous answers for common queries.
 
-**Returns:**
-```json
-{
-  "results": [
-    {
-      "content": "Full parent document content...",
-      "metadata": {
-        "source_file": "01_PROTOCOLS/101_protocol.md"
-      }
-    }
-  ],
-  "query_time_ms": 234.5,
-  "cache_hit": false,
-  "status": "success"
 }
 ```
 
@@ -133,6 +144,32 @@ cortex_ingest_incremental(
 )
 ```
 
+---
+
+### 5. `cortex_guardian_wakeup`
+
+Generate Guardian boot digest from cached bundles (Protocol 114).
+
+**Parameters:** None
+
+**Returns:**
+```json
+{
+  "digest_path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+  "cache_stats": {
+    "chronicles": 5,
+    "protocols": 10,
+    "roadmap": 1
+  },
+  "status": "success"
+}
+```
+
+**Example:**
+```python
+cortex_guardian_wakeup()
+```
+
 ## Installation
 
 1. Install dependencies:
@@ -187,7 +224,6 @@ cortex_ingest_full()
 ## Phase 2 Features (Upcoming)
 
 - Cache integration (`use_cache` parameter)
-- Guardian Wakeup tool (Protocol 114)
 - Cache warmup and invalidation
 - Cache statistics
 
@@ -200,14 +236,36 @@ cortex_ingest_full()
 
 ## Related Documentation
 
-- `mnemonic_cortex/VISION.md` - RAG vision and purpose
-- `mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md` - Architecture details
-- `01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md` - Protocol specification
-- `01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md` - Cache prefill spec
+- [`docs/mcp/cortex_vision.md`](../../../docs/mcp/cortex_vision.md) - RAG vision and purpose
+- [`docs/mcp/RAG_STRATEGIES.md`](../../../docs/mcp/RAG_STRATEGIES.md) - Architecture details and doctrine
+- [`docs/mcp/cortex_operations.md`](../../../docs/mcp/cortex_operations.md) - Operations guide
+- [`01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md`](../../../01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md) - Protocol specification
+- [`01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md`](../../../01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md) - Cache prefill spec
 
 ## Version History
 
-- **1.0.0** (2025-11-28): Phase 1 - Foundation
-  - 4 core tools: ingest_full, query, get_stats, ingest_incremental
-  - Parent Document Retriever integration
-  - Input validation and error handling
+### v5.0 (2025-11-30): MCP Migration Complete
+- **Migration to MCP Architecture:** Refactored from legacy script-based system to MCP server
+- **Enhanced README:** Merged legacy documentation with MCP-specific content
+- **Comprehensive Documentation:** Added architecture philosophy, technology stack, and Strategic Crucible Loop context
+- **Production-Ready Status:** Full test coverage and operational stability
+
+### v2.1.0: Parent Document Retriever
+- **Phase 1 Complete:** Implemented dual storage architecture eliminating Context Fragmentation vulnerability
+- **Full Context Retrieval:** Parent documents stored in ChromaDB collection, semantic chunks in vectorstore
+- **Cognitive Latency Resolution:** AI reasoning grounded in complete, unbroken context
+- **Architecture Hardening:** Updated ingestion pipeline and query services to leverage ParentDocumentRetriever
+
+### v1.5.0: Documentation Hardening
+- **Architectural Clarity:** Added detailed section breaking down two-stage ingestion process
+- **Structural Splitting vs. Semantic Encoding:** Clarified roles of MarkdownHeaderTextSplitter and NomicEmbeddings
+
+### v1.4.0: Live Ingestion Architecture
+- **Major Architectural Update:** Ingestion pipeline now directly traverses canonical directories
+- **Improved Traceability:** Every piece of knowledge traced to precise source file via GitHub URLs
+- **Increased Resilience:** Removed intermediate snapshot step for faster, more resilient ingestion
+
+### v1.0.0 (2025-11-28): MCP Foundation
+- **4 Core Tools:** ingest_full, query, get_stats, ingest_incremental
+- **Parent Document Retriever Integration:** Full context retrieval from day one
+- **Input Validation:** Comprehensive error handling and validation layer

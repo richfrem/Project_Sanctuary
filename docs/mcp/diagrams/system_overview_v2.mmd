@@ -1,0 +1,50 @@
+graph TB
+    subgraph "User Interface"
+        Client[Claude Desktop / Antigravity]
+    end
+
+    subgraph "Cognitive Layer"
+        Council[Council MCP<br/>(Orchestrator)]
+        Cortex[Cortex MCP<br/>(Memory/RAG)]
+        Persona[Agent Persona MCP<br/>(Roles)]
+        Forge[Forge MCP<br/>(Model Fine-Tuning)]
+    end
+
+    subgraph "Content Layer"
+        Chronicle[Chronicle MCP<br/>(Journal)]
+        Protocol[Protocol MCP<br/>(Rules)]
+        ADR[ADR MCP<br/>(Decisions)]
+        Task[Task MCP<br/>(Work)]
+    end
+
+    subgraph "System Layer"
+        Code[Code MCP<br/>(File I/O)]
+        Config[Config MCP<br/>(Settings)]
+        Git[Git MCP<br/>(Version Control)]
+    end
+
+    Client --> Council
+    Client --> Cortex
+    Client --> Persona
+    Client --> Forge
+    Client --> Chronicle
+    Client --> Protocol
+    Client --> ADR
+    Client --> Task
+    Client --> Code
+    Client --> Config
+    Client --> Git
+
+    Council -.->|Consults| Cortex
+    Council -.->|Uses| Persona
+    Council -.->|Delegates to| Code
+    Council -.->|Delegates to| Task
+
+    Cortex -.->|Indexes| Chronicle
+    Cortex -.->|Indexes| Protocol
+    Cortex -.->|Indexes| ADR
+    Cortex -.->|Indexes| Code
+
+    style Council fill:#f9f,stroke:#333,stroke-width:2px
+    style Cortex fill:#bbf,stroke:#333,stroke-width:2px
+    style Code fill:#bfb,stroke:#333,stroke-width:2px

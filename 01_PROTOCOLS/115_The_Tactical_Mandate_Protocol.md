@@ -17,7 +17,7 @@ A strategy without tactics is a dream. Tactics without a system are chaos. This 
 1.  **Single Point of Ingress:** All new, non-trivial work items must be initiated by the creation of a new, uniquely numbered markdown file in the `TASKS/backlog/` directory. Direct modification of code without a corresponding Tactical Mandate is a protocol violation.
 2.  **Canonical Naming:** Task files must follow the strict naming convention: `XXX_short_descriptive_title.md`, where `XXX` is a zero-padded, three-digit number (e.g., `005_refactor_query_service.md`).
 
-To ensure sequential integrity, the next available task number **must** be obtained by running the sovereign scaffold: `python3 tools/scaffolds/get_next_task_number.py`. Manual numbering is a protocol violation.
+To ensure sequential integrity, the next available task number **must** be obtained by running the sovereign scaffold: `python3 scripts/get_next_task_number.py`. Manual numbering is a protocol violation.
 3.  **Mandatory Schema:** Every task file must conform to the canonical schema defined in `TASKS/task_schema.md`. Unstructured or free-form task descriptions are forbidden.
 
 ## 3. The Tactical Mandate Schema
@@ -34,6 +34,6 @@ Completion: Upon meeting all acceptance criteria, the task is moved to the root 
 
 ## Task Number Authority
 
-To enforce the canonical naming and sequential integrity described above, Project Sanctuary ships an authoritative Task Number Scaffold. The scaffold is a small script located at `tools/scaffolds/get_next_task_number.py` which, when executed from the project root, prints the next available zero-padded three-digit task number (e.g., `006`). All new task creation must call this script to obtain the `XXX` prefix for the task filename.
+To enforce the canonical naming and sequential integrity described above, Project Sanctuary ships an authoritative Task Number Scaffold. The scaffold is a small script located at `scripts/get_next_task_number.py` which, when executed from the project root, prints the next available zero-padded three-digit task number (e.g., `006`). All new task creation must call this script to obtain the `XXX` prefix for the task filename.
 
 Manual numbering is explicitly forbidden and considered a protocol violation.
