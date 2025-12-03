@@ -300,14 +300,33 @@ pip install mcp
 
 ---
 
+## MCP Server-Specific Setup
+
+Once general prerequisites are met, refer to server-specific setup guides:
+
+### RAG Cortex (ChromaDB Vector Database)
+
+The RAG Cortex requires additional setup for the ChromaDB service:
+
+**📖 See: [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)**
+
+This includes:
+- ChromaDB container configuration
+- Environment variables (`CHROMA_HOST`, `CHROMA_PORT`)
+- Initial database population
+- Verification steps
+
+---
+
 ## Next Steps
 
 Once all prerequisites are met:
 
 1. ✅ Review [architecture.md](./architecture.md)
 2. ✅ Review [naming_conventions.md](./naming_conventions.md)
-3. ✅ Start with Task #031: Implement Task MCP
-4. Follow implementation tasks #029-#036
+3. ✅ For RAG Cortex: Follow [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)
+4. ✅ For other MCPs: Start with Task #031: Implement Task MCP
+5. Follow implementation tasks #029-#036
 
 ---
 
@@ -316,4 +335,5 @@ Once all prerequisites are met:
 - [ADR 034: Containerize MCP Servers with Podman](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/034_containerize_mcp_servers_with_podman.md)
 - [Podman Documentation](https://docs.podman.io/)
 - [MCP Specification](https://modelcontextprotocol.io/)
+- [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)
 - [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)

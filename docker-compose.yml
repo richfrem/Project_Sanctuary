@@ -1,0 +1,19 @@
+services:
+  vector-db:
+    image: chromadb/chroma:latest
+    container_name: sanctuary-vector-db
+    ports:
+      - "8000:8000"
+    volumes:
+      # Use CHROMA_DATA_PATH from .env, default to .vector_data if not set
+      - ${CHROMA_DATA_PATH:-.vector_data}:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

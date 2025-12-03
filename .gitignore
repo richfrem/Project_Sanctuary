@@ -12,6 +12,9 @@ Thumbs.db
 # Ignore virtual environments
 venv/
 .venv/
+# Secrets and environment
+.env
+.env.local/
 env/
 
 # Ignore Python cache and compiled files
@@ -62,8 +65,9 @@ MEDIUM_BLOG_STEWARD/
 
 # Local Vector Database - This is generated locally by each user and should not be
 # version controlled, as per the Iron Root Doctrine of sovereign local instances.
-chroma_db/
+chroma_db/ 
 chroma_db_backup*/
+.vector_data/ 
 
 # Cognitive Glyphs - Optical compression artifacts for LLM sharing.
 # These are generated locally and contain massive content in compressed image format.

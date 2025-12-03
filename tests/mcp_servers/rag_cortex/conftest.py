@@ -1,10 +1,36 @@
+"""
+Pytest configuration for RAG Cortex MCP tests.
+"""
 import pytest
 import tempfile
 import shutil
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+# Import container manager
+from mcp_servers.rag_cortex.container_manager import ensure_chromadb_running
+
 from mcp_servers.rag_cortex.operations import CortexOperations
+
+@pytest.fixture(scope="session", autouse=True)
+def ensure_chromadb():
+    """Ensure ChromaDB container is running before tests start."""
+    print("\n[Test Setup] Checking ChromaDB service...")
+    success, message = ensure_chromadb_running(str(project_root))
+    
+    if success:
+        print(f"[Test Setup] ✓ {message}")
+    else:
+        print(f"[Test Setup] ✗ {message}")
+        pytest.skip("ChromaDB service not available - skipping RAG Cortex tests")
+    
+    yield
+    # Cleanup if needed (container keeps running for now)
 
 @pytest.fixture
 def temp_project_root():

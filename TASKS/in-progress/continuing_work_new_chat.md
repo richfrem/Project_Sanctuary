@@ -2,7 +2,17 @@
 
 ## 🎯 START HERE TOMORROW
 
-### Task 087 - Phase 2: MCP Operations Testing via Antigravity
+### Priority 1: Update Main README Structure
+
+**Issue:** Project structure section is outdated in main README
+- Current structure shows old paths (e.g., `mcp_servers/cognitive/cortex/` instead of `mcp_servers/rag_cortex/`)
+- Missing new directories and files
+- Needs to reflect 12 MCP architecture changes
+- Other sections may also need updates
+
+**Action:** Review and update entire main README for accuracy.  fix links.  many documents are not in the right place. we refactored the MCPs and need to update the READMEs to reflect this. plus other links verify all.  if documents moved use updated paths. 
+
+### Priority 2: Task 087 - Phase 2: MCP Operations Testing via Antigravity
 
 **Current Status:**
 - ✅ Phase 1 Complete: All 125 test harnesses passing (10/12 MCPs)

@@ -4,7 +4,13 @@
 
 RAG Cortex MCP provides retrieval-augmented generation capabilities for Project Sanctuary. It manages the knowledge base, vector embeddings, and semantic search.
 
-## Key Concepts
+## Architectural Shift: From Local File to Network Host
+
+The RAG Cortex transitioned from a legacy file-system-based database connection to a persistent **Network Service Model** (Protocol P114).
+
+* **Legacy Model (Deprecated):** The system stored ChromaDB files directly on disk at a path (e.g., `mnemonic_cortex/chroma_db`). This was fragile, slow, and incompatible with distributed agent architecture.
+* **Current MCP Model:** ChromaDB runs as a dedicated server (`vector-db` service in Docker Compose). The RAG Cortex MCP connects to it via a **network address** defined in the root `.env` file (`CHROMA_HOST`, `CHROMA_PORT`).
+* **Data Persistence:** Database files are persisted via a Docker bind mount to the host directory: **`.vector_data/`**. The core application logic *never* touches this folder; it only communicates over the network.
 
 - **Vector Database:** ChromaDB for semantic search
 - **Embeddings:** OpenAI text-embedding-3-small
@@ -35,6 +41,31 @@ External LLM → Cortex MCP (Server)
 - **Server Code:** [mcp_servers/rag_cortex/server.py](../../../mcp_servers/rag_cortex/server.py)
 - **Operations:** [mcp_servers/rag_cortex/operations.py](../../../mcp_servers/rag_cortex/operations.py)
 - **Models:** [mcp_servers/rag_cortex/models.py](../../../mcp_servers/rag_cortex/models.py)
+- **Container Service:** [docker-compose.yml](../../../docker-compose.yml) (`vector-db` service)
+
+## Setup & Installation
+
+For complete setup instructions, including Podman installation, service configuration, and initial database population, see:
+
+**📖 [RAG Cortex Setup Guide](SETUP.md)**
+
+Quick start:
+```bash
+# 1. Ensure Podman is running (one-time setup)
+podman machine start
+
+# 2. Start MCP server (ChromaDB auto-starts)
+python mcp_servers/rag_cortex/server.py
+
+# 3. Populate database (first time only)
+python scripts/cortex_ingest_full.py
+
+# 4. Verify
+python scripts/cortex_stats.py
+```
+
+> [!NOTE]
+> The RAG Cortex MCP server automatically starts the ChromaDB container when it initializes. You don't need to manually run `podman-compose up` unless you want to start the service independently.
 
 ## Testing
 

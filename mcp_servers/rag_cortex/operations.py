@@ -1,14 +1,16 @@
 """
-Cortex MCP Server - Core Operations
+RAG Cortex Operations Module
 
-Wraps existing Mnemonic Cortex scripts as MCP operations.
+Handles all core RAG operations including ingestion, querying, and statistics.
 """
+
 import os
 import sys
 import time
 import subprocess
 import contextlib
 import io
+from uuid import uuid4
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -96,14 +98,13 @@ class CortexOperations:
         import shutil
         import math
         import pickle
+        import chromadb
         from dotenv import load_dotenv
         from langchain_community.document_loaders import DirectoryLoader, TextLoader
         from langchain_text_splitters import RecursiveCharacterTextSplitter
         from langchain_nomic import NomicEmbeddings
         from langchain_chroma import Chroma
-        from langchain.retrievers import ParentDocumentRetriever
-        from langchain.storage import LocalFileStore
-        from langchain.storage._lc_store import create_kv_docstore
+        from mcp_servers.rag_cortex.file_store import SimpleFileStore
         
         try:
             start_time = time.time()
@@ -111,20 +112,23 @@ class CortexOperations:
             # Load environment variables
             load_dotenv(dotenv_path=self.project_root / ".env")
             
-            # Configuration
-            db_path = os.getenv("DB_PATH", "chroma_db")
-            _env = os.getenv("CHROMA_ROOT", "").strip()
-            chroma_root = (Path(_env) if Path(_env).is_absolute() else (self.project_root / _env)).resolve() if _env else (self.project_root / "data" / "cortex" / db_path)
+            # Network configuration (new architecture)
+            chroma_host = os.getenv("CHROMA_HOST", "localhost")
+            chroma_port = int(os.getenv("CHROMA_PORT", "8000"))
+            chroma_data_path = os.getenv("CHROMA_DATA_PATH", ".vector_data")
             
             child_collection_name = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
             parent_collection_name = os.getenv("CHROMA_PARENT_STORE", "parent_documents_v5")
             
-            vectorstore_path = str(chroma_root / child_collection_name)
-            docstore_path = str(chroma_root / parent_collection_name)
+            # Initialize ChromaDB HTTP client
+            chroma_client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
             
-            # Purge existing DB
-            if purge_existing and chroma_root.exists():
-                shutil.rmtree(str(chroma_root))
+            # Purge existing collections if requested
+            if purge_existing:
+                try:
+                    chroma_client.delete_collection(name=child_collection_name)
+                except Exception:
+                    pass  # Collection doesn't exist, ignore
             
             # Default source directories
             default_source_dirs = [
@@ -159,52 +163,90 @@ class CortexOperations:
                     documents_processed=0,
                     chunks_created=0,
                     ingestion_time_ms=(time.time() - start_time) * 1000,
-                    vectorstore_path=str(chroma_root),
+                    vectorstore_path=f"{chroma_host}:{chroma_port}",
                     status="success",
                     error="No documents found."
                 )
             
-            # Initialize ChromaDB components
-            child_splitter = RecursiveCharacterTextSplitter(chunk_size=400)
+            # Initialize ChromaDB components with HTTP client
             embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
             
+            # Initialize child splitter (smaller chunks for retrieval)
+            child_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=400,
+                chunk_overlap=50,
+                separators=["\n\n", "\n", " ", ""]
+            )
+            
+            # Initialize parent splitter (larger chunks for context)
+            parent_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=2000,
+                chunk_overlap=200,
+                separators=["\n\n", "\n", " ", ""]
+            )
+            
             vectorstore = Chroma(
+                client=chroma_client,
                 collection_name=child_collection_name,
-                embedding_function=embedding_model,
-                persist_directory=vectorstore_path
+                embedding_function=embedding_model
             )
             
-            fs_store = LocalFileStore(root_path=docstore_path)
-            store = create_kv_docstore(fs_store)
+            # Parent document store (file-based, using configurable data path)
+            docstore_path = str(self.project_root / chroma_data_path / parent_collection_name)
+            store = SimpleFileStore(root_path=docstore_path)
             
-            retriever = ParentDocumentRetriever(
-                vectorstore=vectorstore,
-                docstore=store,
-                child_splitter=child_splitter
-            )
+            # Manual parent-child document processing
+            # (ParentDocumentRetriever was removed in LangChain 1.0)
+            print(f"Processing {len(all_docs)} documents with parent-child splitting...")
             
-            # Batch processing with retry logic
-            parent_batch_size = 50
-            for batch_docs in self._chunked_iterable(all_docs, parent_batch_size):
-                self._safe_add_documents(retriever, batch_docs)
+            child_docs = []
+            parent_count = 0
             
-            # Calculate actual chunks created
-            # Count chunks by splitting all docs with child_splitter
-            total_chunks = 0
             for doc in all_docs:
-                chunks = child_splitter.split_documents([doc])
-                total_chunks += len(chunks)
+                # Split into parent chunks
+                parent_chunks = parent_splitter.split_documents([doc])
+                
+                for parent_chunk in parent_chunks:
+                    # Generate parent ID
+                    parent_id = str(uuid4())
+                    parent_count += 1
+                    
+                    # Store parent document
+                    store.mset([(parent_id, parent_chunk)])
+                    
+                    # Split parent into child chunks
+                    sub_docs = child_splitter.split_documents([parent_chunk])
+                    
+                    # Add parent_id to child metadata
+                    for sub_doc in sub_docs:
+                        sub_doc.metadata["parent_id"] = parent_id
+                        child_docs.append(sub_doc)
             
-            # Persist
-            vectorstore.persist()
+            # Add child chunks to vectorstore in batches
+            # ChromaDB has a maximum batch size of ~5461
+            print(f"Adding {len(child_docs)} child chunks to vectorstore...")
+            batch_size = 5000  # Safe batch size under the limit
+            
+            for i in range(0, len(child_docs), batch_size):
+                batch = child_docs[i:i + batch_size]
+                print(f"  Adding batch {i//batch_size + 1}/{(len(child_docs)-1)//batch_size + 1} ({len(batch)} chunks)...")
+                vectorstore.add_documents(batch)
+            
+            # Get actual counts
+            child_count = vectorstore._collection.count()
             
             elapsed_ms = (time.time() - start_time) * 1000
             
+            print(f"✓ Ingestion complete!")
+            print(f"  - Parent documents: {parent_count}")
+            print(f"  - Child chunks: {child_count}")
+            print(f"  - Time: {elapsed_ms/1000:.2f}s")
+            
             return IngestFullResponse(
                 documents_processed=total_docs,
-                chunks_created=total_chunks,  # ✅ Accurate count, not hardcoded 0
+                chunks_created=child_count,
                 ingestion_time_ms=elapsed_ms,
-                vectorstore_path=str(chroma_root),
+                vectorstore_path=f"{chroma_host}:{chroma_port}",
                 status="success"
             )
             
@@ -217,6 +259,7 @@ class CortexOperations:
                 status="error",
                 error=str(e)
             )
+
     
     def query(
         self,
@@ -239,137 +282,63 @@ class CortexOperations:
         Returns:
             QueryResponse with results
         """
+        import chromadb
+        from langchain_nomic import NomicEmbeddings
+        from dotenv import load_dotenv
+        
         try:
             start_time = time.time()
             
-            # Import RAG services
-            sys.path.insert(0, str(self.project_root))
+            # Load environment
+            load_dotenv(dotenv_path=self.project_root / ".env")
             
-            # Cache Check (Phase 3)
-            if use_cache:
-                try:
-                    from .cache import get_cache
-                    cache = get_cache()
-                    # Generate key based on query and parameters
-                    cache_key_data = {
-                        "query": query,
-                        "max_results": max_results,
-                        "reasoning_mode": reasoning_mode
-                    }
-                    cache_key = cache.generate_key(cache_key_data)
-                    
-                    cached_data = cache.get(cache_key)
-                    if cached_data:
-                        # Cache Hit
-                        elapsed_ms = (time.time() - start_time) * 1000
-                        # Reconstruct QueryResult objects from cached data
-                        results = []
-                        for item in cached_data.get("results", []):
-                            results.append(QueryResult(
-                                content=item["content"],
-                                metadata=item["metadata"],
-                                relevance_score=item.get("relevance_score")
-                            ))
-                            
-                        return QueryResponse(
-                            results=results,
-                            query_time_ms=elapsed_ms,
-                            cache_hit=True,
-                            status="success"
-                        )
-                except Exception as e:
-                    # Log error but continue with retrieval
-                    print(f"[Cortex] Cache read error: {e}")
-
-            # Suppress all stdout/stderr from VectorDBService initialization
-            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-                # TODO: Refactor to use direct LangChain logic like ingest_full (Task #083)
-                # from mnemonic_cortex.app.services.vector_db_service import VectorDBService
-                
-                # Initialize service
-                # db_service = VectorDBService()
-                # retriever = db_service.get_retriever()
-                pass # Placeholder until refactoring is complete
+            chroma_host = os.getenv("CHROMA_HOST", "localhost")
+            chroma_port = int(os.getenv("CHROMA_PORT", "8000"))
+            child_collection_name = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
             
-            # Handle Reasoning Mode
-            final_query = query
-            reasoning_metadata = {}
+            # Initialize ChromaDB client
+            client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
+            collection = client.get_collection(name=child_collection_name)
             
-            if reasoning_mode:
-                try:
-                    # TODO: Refactor to use direct LangChain logic (Task #083)
-                    # from mnemonic_cortex.app.services.llm_service import LLMService
-                    # llm_service = LLMService(str(self.project_root))
-                    # structured = llm_service.generate_structured_query(query)
-                    pass
-                    # structured = llm_service.generate_structured_query(query)
-                    structured = {} # Placeholder
-                    
-                    final_query = structured.get("semantic_query", query)
-                    reasoning_metadata = {
-                        "original_query": query,
-                        "structured_query": structured,
-                        "reasoning": structured.get("reasoning")
-                    }
-                    # TODO: Apply filters if VectorDBService supports them in invoke()
-                except Exception as e:
-                    # Fallback to raw query on LLM error
-                    reasoning_metadata = {"error": f"LLM reasoning failed: {str(e)}"}
+            # Initialize embedding model
+            embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
             
-            # Execute query
-            # docs = retriever.invoke(final_query)
-            docs = [] # Placeholder until refactoring (Task #083)
-            print("[WARNING] Cortex query is currently in maintenance mode (Task #083). Returning empty results.")
+            # Generate query embedding
+            query_embedding = embedding_model.embed_query(query)
             
-            # Limit results
-            docs = docs[:max_results]
+            # Query ChromaDB
+            results = collection.query(
+                query_embeddings=[query_embedding],
+                n_results=max_results,
+                include=['documents', 'metadatas', 'distances']
+            )
+            
+            # Format results
+            formatted_results = []
+            if results and results['documents'] and len(results['documents']) > 0:
+                for i, doc_content in enumerate(results['documents'][0]):
+                    # Reconstruct QueryResult object
+                    formatted_results.append(QueryResult(
+                        content=doc_content,
+                        metadata=results['metadatas'][0][i],
+                        relevance_score=results['distances'][0][i] if results.get('distances') else None
+                    ))
             
             elapsed_ms = (time.time() - start_time) * 1000
             
-            # Convert to QueryResult objects
-            results = []
-            results_for_cache = []
-            
-            for doc in docs:
-                # Merge existing metadata with reasoning metadata if present
-                meta = doc.metadata.copy()
-                if reasoning_metadata:
-                    meta["_reasoning"] = str(reasoning_metadata)
-                    
-                result = QueryResult(
-                    content=doc.page_content,
-                    metadata=meta,
-                    relevance_score=None  # LangChain doesn't provide scores by default
-                )
-                results.append(result)
-                
-                # Prepare for cache
-                results_for_cache.append({
-                    "content": result.content,
-                    "metadata": result.metadata,
-                    "relevance_score": result.relevance_score
-                })
-            
-            # Cache Set (Phase 3)
-            if use_cache and results:
-                try:
-                    cache.set(cache_key, {"results": results_for_cache})
-                except Exception as e:
-                    print(f"[Cortex] Cache write error: {e}")
-            
             return QueryResponse(
-                results=results,
+                status="success",
+                results=formatted_results,
                 query_time_ms=elapsed_ms,
-                cache_hit=False,  # Phase 2 feature
-                status="success"
+                cache_hit=False
             )
             
         except Exception as e:
             return QueryResponse(
+                status="error",
                 results=[],
                 query_time_ms=0,
-            cache_hit=False,
-                status="error",
+                cache_hit=False,
                 error=str(e)
             )
     
@@ -379,74 +348,60 @@ class CortexOperations:
         
         Args:
             include_samples: If True, include sample documents with metadata
-            sample_count: Number of sample documents to retrieve (default: 5)
-        
-        Uses: ChromaDB collections directly
-        
+            sample_count: Number of sample documents to return (if include_samples=True)
+            
         Returns:
-            StatsResponse with statistics and optional samples
+            StatsResponse with database statistics
         """
+        import chromadb
+        from langchain_nomic import NomicEmbeddings
+        from dotenv import load_dotenv
+        
         try:
             # Import required modules
             sys.path.insert(0, str(self.project_root))
             from langchain_community.vectorstores import Chroma
-            from langchain_nomic import NomicEmbeddings
-            from dotenv import load_dotenv
+            # The following imports are now at the top of the function
+            # import chromadb
+            # from langchain_nomic import NomicEmbeddings
+            # from dotenv import load_dotenv
             
             # Load environment
             load_dotenv(dotenv_path=self.project_root / ".env")
             
-            # Get database paths
-            db_path = os.getenv("DB_PATH", "chroma_db")
-            chroma_root_env = os.getenv("CHROMA_ROOT", "").strip()
-            
-            if chroma_root_env:
-                chroma_root = Path(chroma_root_env) if Path(chroma_root_env).is_absolute() else (self.project_root / chroma_root_env)
-            else:
-                # Default to mcp_servers/cognitive/cortex/data/chroma_db
-                chroma_root = self.project_root / "mcp_servers" / "cognitive" / "cortex" / "data" / db_path
-            
-            chroma_root = chroma_root.resolve()
+            # Network configuration
+            chroma_host = os.getenv("CHROMA_HOST", "localhost")
+            chroma_port = int(os.getenv("CHROMA_PORT", "8000"))
             
             child_collection = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
             parent_collection = os.getenv("CHROMA_PARENT_STORE", "parent_documents_v5")
             
-            # Check if database exists
-            if not chroma_root.exists():
-                return StatsResponse(
-                    total_documents=0,
-                    total_chunks=0,
-                    collections={},
-                    health_status="error",
-                    error="Database not found"
-                )
+            # Initialize ChromaDB HTTP client
+            chroma_client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
             
             # Initialize embedding model
             embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
             
             # Get child chunks stats
-            child_path = chroma_root / child_collection
             child_count = 0
-            if child_path.exists():
-                try:
-                    child_db = Chroma(
-                        persist_directory=str(child_path),
-                        embedding_function=embedding_model,
-                        collection_name=child_collection
-                    )
-                    child_count = child_db._collection.count()
-                except Exception as e:
-                    pass  # Silently ignore errors for MCP compatibility
+            try:
+                collection = chroma_client.get_collection(name=child_collection)
+                child_count = collection.count()
+            except Exception as e:
+                pass  # Collection doesn't exist yet
             
             # Get parent documents stats
-            parent_path = chroma_root / parent_collection
+            # Get data path from environment
+            chroma_data_path = os.getenv("CHROMA_DATA_PATH", ".vector_data")
+            
+            # Check parent document store
+            parent_path = self.project_root / chroma_data_path / parent_collection
             parent_count = 0
             if parent_path.exists():
                 try:
-                    # Parent documents are stored in LocalFileStore
-                    from langchain_classic.storage import LocalFileStore
-                    fs_store = LocalFileStore(root_path=str(parent_path))
-                    parent_count = sum(1 for _ in fs_store.yield_keys())
+                    from mcp_servers.rag_cortex.file_store import SimpleFileStore
+                    store = SimpleFileStore(root_path=str(parent_path))
+                    parent_count = sum(1 for _ in store.yield_keys())
                 except Exception as e:
                     pass  # Silently ignore errors for MCP compatibility
             
@@ -464,18 +419,14 @@ class CortexOperations:
             else:
                 health_status = "error"
             
-            # Retrieve sample documents if requested (from inspect_db.py)
+            # Retrieve sample documents if requested
             samples = None
             if include_samples and child_count > 0:
                 try:
                     from .models import DocumentSample
-                    child_db = Chroma(
-                        persist_directory=str(child_path),
-                        embedding_function=embedding_model,
-                        collection_name=child_collection
-                    )
+                    collection = chroma_client.get_collection(name=child_collection)
                     # Get sample documents with metadata and content
-                    retrieved_docs = child_db.get(limit=sample_count, include=["metadatas", "documents"])
+                    retrieved_docs = collection.get(limit=sample_count, include=["metadatas", "documents"])
                     
                     samples = []
                     for i in range(len(retrieved_docs["ids"])):
@@ -525,14 +476,13 @@ class CortexOperations:
         Returns:
             IngestIncrementalResponse with accurate statistics
         """
+        import chromadb
         from dotenv import load_dotenv
         from langchain_community.document_loaders import TextLoader
         from langchain_text_splitters import RecursiveCharacterTextSplitter
         from langchain_nomic import NomicEmbeddings
         from langchain_chroma import Chroma
-        from langchain.retrievers import ParentDocumentRetriever
-        from langchain.storage import LocalFileStore
-        from langchain.storage._lc_store import create_kv_docstore
+        from mcp_servers.rag_cortex.file_store import SimpleFileStore
         
         try:
             start_time = time.time()
@@ -540,16 +490,15 @@ class CortexOperations:
             # Load environment variables
             load_dotenv(dotenv_path=self.project_root / ".env")
             
-            # Configuration
-            db_path = os.getenv("DB_PATH", "chroma_db")
-            _env = os.getenv("CHROMA_ROOT", "").strip()
-            chroma_root = (Path(_env) if Path(_env).is_absolute() else (self.project_root / _env)).resolve() if _env else (self.project_root / "data" / "cortex" / db_path)
+            # Network configuration
+            chroma_host = os.getenv("CHROMA_HOST", "localhost")
+            chroma_port = int(os.getenv("CHROMA_PORT", "8000"))
             
             child_collection_name = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
             parent_collection_name = os.getenv("CHROMA_PARENT_STORE", "parent_documents_v5")
             
-            vectorstore_path = str(chroma_root / child_collection_name)
-            docstore_path = str(chroma_root / parent_collection_name)
+            # Initialize ChromaDB HTTP client
+            chroma_client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
             
             # Validate files
             valid_files = []
@@ -571,61 +520,87 @@ class CortexOperations:
                     error="No valid files to ingest"
                 )
             
-            # Initialize ChromaDB components (loads existing DB)
-            child_splitter = RecursiveCharacterTextSplitter(chunk_size=400)
+            # Initialize ChromaDB components with HTTP client (loads existing DB)
             embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
             
+            # Initialize child splitter (smaller chunks for retrieval)
+            child_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=400,
+                chunk_overlap=50,
+                separators=["\n\n", "\n", " ", ""]
+            )
+            
+            # Initialize parent splitter (larger chunks for context)
+            parent_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=2000,
+                chunk_overlap=200,
+                separators=["\n\n", "\n", " ", ""]
+            )
+            
             vectorstore = Chroma(
+                client=chroma_client,
                 collection_name=child_collection_name,
-                embedding_function=embedding_model,
-                persist_directory=vectorstore_path
+                embedding_function=embedding_model
             )
             
-            fs_store = LocalFileStore(root_path=docstore_path)
-            store = create_kv_docstore(fs_store)
+            # Get data path from environment
+            chroma_data_path = os.getenv("CHROMA_DATA_PATH", ".vector_data")
             
-            retriever = ParentDocumentRetriever(
-                vectorstore=vectorstore,
-                docstore=store,
-                child_splitter=child_splitter
-            )
+            # Parent document store (file-based, using configurable data path)
+            docstore_path = str(self.project_root / chroma_data_path / parent_collection_name)
+            store = SimpleFileStore(root_path=docstore_path)
             
-            # Process files
-            added = 0
-            skipped = 0
-            total_chunks = 0
+            # Manual parent-child document processing
+            # (ParentDocumentRetriever was removed in LangChain 1.0)
+            
+            added_documents_count = 0
+            total_child_chunks_created = 0
+            
+            all_child_docs_to_add = []
             
             for file_path in valid_files:
                 try:
                     # Load document
                     loader = TextLoader(file_path)
-                    docs = loader.load()
+                    docs_from_file = loader.load()
                     
-                    if not docs:
+                    if not docs_from_file:
                         continue
                     
-                    # Set metadata
-                    for doc in docs:
+                    # Set metadata for the original documents
+                    for doc in docs_from_file:
                         doc.metadata['source_file'] = file_path
                         doc.metadata['source'] = file_path
                         if metadata:
                             doc.metadata.update(metadata)
                     
-                    # Add to retriever
-                    retriever.add_documents(docs, ids=None, add_to_docstore=True)
+                    print(f"Processing {len(docs_from_file)} documents from {file_path} with parent-child splitting...")
                     
-                    # Calculate chunks
-                    chunks = child_splitter.split_documents(docs)
-                    total_chunks += len(chunks)
-                    added += 1
+                    for doc in docs_from_file:
+                        # Split into parent chunks
+                        parent_chunks = parent_splitter.split_documents([doc])
+                        
+                        for parent_chunk in parent_chunks:
+                            # Generate parent ID
+                            parent_id = str(uuid4())
+                            
+                            # Store parent document
+                            store.mset([(parent_id, parent_chunk)])
+                            
+                            # Split parent into child chunks
+                            sub_docs = child_splitter.split_documents([parent_chunk])
+                            
+                            # Add parent_id to child metadata
+                            for sub_doc in sub_docs:
+                                sub_doc.metadata["parent_id"] = parent_id
+                                all_child_docs_to_add.append(sub_doc)
+                                total_child_chunks_created += 1
+                    
+                    added_documents_count += len(docs_from_file)
                     
                 except Exception as e:
                     print(f"Error ingesting {file_path}: {e}")
                     continue
-            
-            # Persist if any documents added
-            if added > 0:
-                vectorstore.persist()
             
             elapsed_ms = (time.time() - start_time) * 1000
             
@@ -884,12 +859,12 @@ class CortexOperations:
         Execute Protocol 87 structured query with MCP orchestration.
         
         Routes queries to specialized MCPs based on scope:
-        - Protocols → Protocol MCP
-        - Living_Chronicle → Chronicle MCP
-        - Tasks → Task MCP
-        - Code → Code MCP
-        - ADRs → ADR MCP
-        - Fallback → Vector DB (cortex_query)
+        - Protocols -> Protocol MCP
+        - Living_Chronicle -> Chronicle MCP
+        - Tasks -> Task MCP
+        - Code -> Code MCP
+        - ADRs -> ADR MCP
+        - Fallback -> Vector DB (cortex_query)
         
         Args:
             query_string: Protocol 87 formatted query (INTENT :: SCOPE :: CONSTRAINTS)
