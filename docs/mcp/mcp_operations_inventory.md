@@ -464,7 +464,7 @@ pytest tests/integration/test_forge_integration.py -v
 ```bash
 pytest tests/mcp_servers/agent_persona/ -v
 ```
-**Last Verification:** 2025-12-01 ✅ (27/27 passed)  
+**Last Verification:** 2025-12-02 ✅ (34/34 passed - Task 087 Phase 1)  
 **Test Coverage:** 80%+ (comprehensive suite with expected failures, edge cases, state management)  
 **Test Suites:**
 - `test_agent_persona_ops.py` - Basic operations (7 tests)
@@ -591,7 +591,7 @@ pytest tests/mcp_servers/council/ -v
 ```bash
 PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 ```
-**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
+**Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list the current configuration settings."
@@ -632,7 +632,7 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 ```bash
 PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 ```
-**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
+**Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please analyze the code structure of the `src` directory."
