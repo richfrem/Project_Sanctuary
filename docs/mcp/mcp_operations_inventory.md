@@ -48,7 +48,7 @@ This document tracks all MCP server operations across the Project Sanctuary ecos
 ```bash
 pytest tests/test_chronicle_operations.py tests/test_chronicle_validator.py -v
 ```
-**Last Verification:** 2025-11-30 ✅ (9/9 passed)
+**Last Verification:** 2025-12-02 ✅ (9/9 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please create a new chronicle entry titled 'Test Entry' with content 'Testing Chronicle MCP' to verify the `chronicle_create_entry` tool."
@@ -94,7 +94,7 @@ pytest tests/test_chronicle_operations.py tests/test_chronicle_validator.py -v
 ```bash
 pytest tests/test_protocol_operations.py tests/test_protocol_validator.py -v
 ```
-**Last Verification:** 2025-11-30 ✅ (6/6 passed)
+**Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all protocols with status 'CANONICAL' to verify the `protocol_list` tool."
@@ -138,7 +138,7 @@ pytest tests/test_protocol_operations.py tests/test_protocol_validator.py -v
 ```bash
 pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
 ```
-**Last Verification:** 2025-11-30 ✅ (13/13 passed)
+**Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please search for ADRs related to 'database' to verify the `adr_search` tool."
@@ -182,7 +182,7 @@ pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
 ```bash
 pytest tests/mcp_servers/task/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (18/18 passed)
+**Last Verification:** 2025-12-02 ✅ (18/18 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all tasks with 'High' priority to verify the `list_tasks` tool."
@@ -227,6 +227,7 @@ pytest tests/mcp_servers/task/ -v
 ```bash
 pytest tests/test_git_ops.py -v
 ```
+**Last Verification:** 2025-12-02 ✅ (10/10 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please check the current git status using `git_get_status`."
@@ -343,7 +344,8 @@ graph TD
 ```bash
 pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test_cache_operations.py -v && python3 tests/mcp_servers/cortex/test_cortex_integration.py
 ```
-**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
+**Last Verification:** 2025-12-02 ⚠️ (45 passed, 10 failed, 9 errors - Task 087 Phase 1)
+**Status:** Test fixes in progress (cache_operations: 6/6 passing)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please query the knowledge base for 'Protocol 101' using `cortex_query`."
@@ -414,7 +416,8 @@ ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 ```bash
 pytest tests/integration/test_forge_integration.py -v
 ```
-**Last Verification:** 2025-11-30 ✅ (5/5 passed - Prerequisites + Operations)
+**Last Verification:** 2025-12-02 ✅ (1/1 passed - Task 087 Phase 1)
+**Note:** Test updated to use correct API methods (check_model_availability, query_sanctuary_model)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please check the status of the Sanctuary model using `check_sanctuary_model_status`."
@@ -521,7 +524,7 @@ pytest tests/mcp_servers/agent_persona/ -v
 ```bash
 pytest tests/mcp_servers/council/ -v
 ```
-**Last Verification:** 2025-12-01 ✅ (3/3 passed)  
+**Last Verification:** 2025-12-02 ✅ (3/3 passed - Task 087 Phase 1)  
 **Test Coverage:** Basic (structure tests only)  
 **Note:** Comprehensive test suite needed (similar to Agent Persona MCP)
 
