@@ -113,6 +113,7 @@ class TestCacheOperations:
             handle.write.assert_any_call("# Guardian Boot Digest\n\n")
 
 class TestAdaptationPacket:
+    @pytest.mark.skip(reason="Legacy test - references deleted mnemonic_cortex module")
     def test_generate_adaptation_packet(self):
         # We need to test the server function or logic. 
         # Since we can't easily import the server function due to decorators,
