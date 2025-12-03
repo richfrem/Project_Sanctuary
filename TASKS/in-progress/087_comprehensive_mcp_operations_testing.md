@@ -8,7 +8,21 @@
 - **Estimated Effort**: 8-12 hours
 - **Dependencies**: None
 - **Created**: 2025-12-01
-- **Updated**: 2025-12-01
+- **Updated**: 2025-12-02
+
+## Current Status (2025-12-02)
+
+✅ **Phase 1 Complete:** Test harness validation finished
+- All 125 tests passing across 10 MCPs (out of 12 total)
+- 2 MCPs without complete tests: Orchestrator (in progress), Forge LLM (requires CUDA GPU)
+- Test structure reorganized to `tests/mcp_servers/<name>/`
+- Documentation reorganized to `docs/mcp/servers/<name>/`
+- ADR 042 created: Council/Agent Persona separation validated
+
+🔄 **Phase 2 Starting Tomorrow:** MCP operations testing via Antigravity
+- Test each MCP's operations one server at a time
+- Verify MCP tool interface works correctly
+- Document any issues or failures
 
 ## Objective
 
@@ -23,7 +37,12 @@ Perform comprehensive testing of all 12 MCP servers after recent changes (loggin
 
 ## Testing Approach
 
-### Phase 1: Test Harness Validation (Run First) 🧪
+### Phase 1: Test Harness Validation ✅ COMPLETE (2025-12-02)
+
+**Status:** All test harnesses validated and passing
+- **Total Tests:** 125/125 passing across 10 MCPs
+- **Test Structure:** Reorganized to `tests/mcp_servers/<name>/`
+- **Documentation:** Updated in `docs/mcp/mcp_operations_inventory.md`
 
 For each MCP, run the pytest test harness to validate underlying operations:
 
@@ -89,7 +108,16 @@ For each MCP, run the pytest test harness to validate underlying operations:
     pytest tests/mcp_servers/orchestrator/ -v
     ```
 
-### Phase 2: Antigravity Operation Testing (MCP Tool Interface) 🤖
+### Phase 2: Antigravity Operation Testing (MCP Tool Interface) 🔄 NEXT
+
+**Status:** Starting 2025-12-03
+**Approach:** Test each MCP server one at a time via Antigravity MCP tool interface
+
+**Testing Order (Recommended):**
+1. Start with Document MCPs (Chronicle, Protocol, ADR, Task) - lowest risk
+2. Then System MCPs (Code, Config, Git) - medium risk
+3. Then Cognitive MCPs (RAG Cortex, Agent Persona, Council, Orchestrator) - higher complexity
+4. Finally Model MCP (Forge LLM) - requires CUDA GPU
 
 For each MCP, test key operations directly via Antigravity:
 
