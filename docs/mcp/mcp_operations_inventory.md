@@ -204,12 +204,12 @@ pytest tests/mcp_servers/task/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `create_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
-| `update_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
-| `update_task_status` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
-| `get_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
-| `list_tasks` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
-| `search_tasks` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
+| `create_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
+| `update_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
+| `update_task_status` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
+| `get_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
+| `list_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
+| `search_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
 
 **Prerequisite Tests:** [tests/mcp_servers/task/test_operations.py](../../tests/mcp_servers/task/test_operations.py)
 
@@ -250,14 +250,14 @@ pytest tests/test_git_ops.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `git_get_status` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Get repository status |
-| `git_diff` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Show changes (cached/uncached) |
-| `git_log` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Show commit history |
-| `git_start_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
-| `git_add` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Stage files (Blocks on main) |
-| `git_smart_commit` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
-| `git_push_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Push feature branch (Blocks on main) |
-| `git_finish_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Cleanup (Verifies PR Merge) |
+| `git_get_status` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Get repository status |
+| `git_diff` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Show changes (cached/uncached) |
+| `git_log` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Show commit history |
+| `git_start_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
+| `git_add` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Stage files (Blocks on main) |
+| `git_smart_commit` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
+| `git_push_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Push feature branch (Blocks on main) |
+| `git_finish_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/test_git_ops.py) | Cleanup (Verifies PR Merge) |
 
 **Prerequisite Tests:**
 - Unit Tests: [test_git_ops.py](../../tests/test_git_ops.py) (10/10 passing)
@@ -613,10 +613,10 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `config_list` | ✅ | ✅ | ✅ | `test_operations.py` | List configuration files |
-| `config_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read config file content |
-| `config_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write config file with backup |
-| `config_delete` | ✅ | ✅ | ✅ | `test_operations.py` | Delete config file |
+| `config_list` | ✅ | ✅ | ❌ | `test_operations.py` | List configuration files |
+| `config_read` | ✅ | ✅ | ❌ | `test_operations.py` | Read config file content |
+| `config_write` | ✅ | ✅ | ❌ | `test_operations.py` | Write config file with backup |
+| `config_delete` | ✅ | ✅ | ❌ | `test_operations.py` | Delete config file |
 
 ---
 
@@ -654,16 +654,16 @@ PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `code_lint` | ✅ | ✅ | ✅ | `test_operations.py` | Run linting on files/directories |
-| `code_format` | ✅ | ✅ | ✅ | `test_operations.py` | Format code with optional check-only mode |
-| `code_analyze` | ✅ | ✅ | ✅ | `test_operations.py` | Perform static analysis |
-| `code_check_tools` | ✅ | ✅ | ✅ | `test_operations.py` | Check available code quality tools |
-| `code_find_file` | ✅ | ✅ | ✅ | `test_operations.py` | Find files by name or glob pattern |
-| `code_list_files` | ✅ | ✅ | ✅ | `test_operations.py` | List files in directory with pattern |
-| `code_search_content` | ✅ | ✅ | ✅ | `test_operations.py` | Search for text/patterns in code |
-| `code_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read file contents |
-| `code_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write/update file with backup |
-| `code_get_info` | ✅ | ✅ | ✅ | `test_operations.py` | Get file metadata |
+| `code_lint` | ✅ | ✅ | ❌ | `test_operations.py` | Run linting on files/directories |
+| `code_format` | ✅ | ✅ | ❌ | `test_operations.py` | Format code with optional check-only mode |
+| `code_analyze` | ✅ | ✅ | ❌ | `test_operations.py` | Perform static analysis |
+| `code_check_tools` | ✅ | ✅ | ❌ | `test_operations.py` | Check available code quality tools |
+| `code_find_file` | ✅ | ✅ | ❌ | `test_operations.py` | Find files by name or glob pattern |
+| `code_list_files` | ✅ | ✅ | ❌ | `test_operations.py` | List files in directory with pattern |
+| `code_search_content` | ✅ | ✅ | ❌ | `test_operations.py` | Search for text/patterns in code |
+| `code_read` | ✅ | ✅ | ❌ | `test_operations.py` | Read file contents |
+| `code_write` | ✅ | ✅ | ❌ | `test_operations.py` | Write/update file with backup |
+| `code_get_info` | ✅ | ✅ | ❌ | `test_operations.py` | Get file metadata |
 
 ---
 
