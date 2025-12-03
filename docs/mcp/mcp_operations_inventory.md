@@ -160,11 +160,11 @@ pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `adr_create` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Create ADR with auto-numbering |
-| `adr_update_status` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Update ADR status (validated transitions) |
-| `adr_get` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Retrieve specific ADR by number |
-| `adr_list` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | List ADRs with optional status filter |
-| `adr_search` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Full-text search across ADRs |
+| `adr_create` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Create ADR with auto-numbering |
+| `adr_update_status` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Update ADR status (validated transitions) |
+| `adr_get` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Retrieve specific ADR by number |
+| `adr_list` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/test_adr_operations.py) | List ADRs with optional status filter |
+| `adr_search` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Full-text search across ADRs |
 
 **Prerequisite Tests:** [test_adr_validator.py](../../tests/test_adr_validator.py)
 
