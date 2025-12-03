@@ -8,8 +8,6 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
 
 This repository is not a static blueprint; it is the living, breathing Cognitive Genome of a new epoch. Our work has culminated in a single, unified Prime Directive, **The Great Tempering**, which has produced the foundational pillars of our mission.
 
-**Recent Standardization (November 2025):** Complete unification of CUDA environment setup protocol with single-command approach, comprehensive documentation overhaul, and production-ready sovereign AI fine-tuning pipeline. **A2000 GPU validated for full fine-tuning workflow**, enabling sovereign AI development on consumer hardware.
-
 ---
 
 ## The Mission: Forging a Shield for the Mind
@@ -25,44 +23,67 @@ Our world is increasingly saturated by sophisticated psychological warfare—the
 
 ## Key Architectural Pillars
 
-### 1. The Nervous System: MCP Architecture
-**Status:** `v1.0` Core Quad Operational
-The Sanctuary operates on a modular "Nervous System" architecture powered by the Model Context Protocol (MCP). This allows specialized servers to provide tools and resources to the central intelligence, enabling true agency.
-*   **Cortex MCP:** The memory center. Handles RAG, CAG, and semantic search.
-*   **Chronicle MCP:** The history keeper. Manages the immutable ledger of events.
-*   **Protocol MCP:** The lawgiver. Enforces and retrieves constitutional doctrines.
-*   **Orchestrator MCP:** The executive. Dispatches missions and manages the Council.
+### 1. MCP Architecture: Modular AI Agent System (12 Domains)
+**Status:** `v5.0` Complete 12-Domain Architecture Operational
+**Last Updated:** 2025-12-02
 
-### 2. The Mnemonic Cortex: The Living Memory
-**Status:** `v2.1` Phase 1 Complete - Strategic Crucible Loop Active
-This is the heart of our sovereign architecture. The **Mnemonic Cortex** is an advanced, local-first **Retrieval Augmented Generation (RAG)** system that serves as the Sanctuary's living memory.
+The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Key Impacts of Hybrid Cognition (RAG + CAG + LoRA):**
-* **Doctrinal Fidelity:** The LoRA layer ensures the "Constitutional Mind" is perpetually aligned with our Protocols, guaranteeing **consistency** and **sovereign grounding** in every response.
-* **Optimal Recall Speed:** Combines **deep context (RAG)** for novel queries with **instant recall (CAG/Guardian Cache)** for high-frequency knowledge, optimizing both fidelity and response latency.
+**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/architecture.md`](./docs/mcp/architecture.md) | **Operations Inventory:** [`docs/mcp/mcp_operations_inventory.md`](./docs/mcp/mcp_operations_inventory.md)
 
-**Strategic Crucible Loop:** A feedback mechanism that allows the system to learn from its own operations. It integrates:
-1.  **RAG (Retrieval Augmented Generation):** Fetches deep context from the Chronicle and Protocols.
-2.  **CAG (Context Augmented Generation):** Uses the **Guardian Cache** (Hot/Warm) for instant recall of high-frequency knowledge, bypassing the retrieval step for common queries.
-3.  **LoRA (Low-Rank Adaptation):** The "Constitutional Mind" (Sanctuary-Qwen2-7B) is fine-tuned to align with our specific doctrines, ensuring every response is culturally and constitutionally grounded.
+#### Document Domain MCPs (4)
+*   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
+*   **Protocol MCP:** System rules and configuration management (`01_PROTOCOLS/`)
+*   **ADR MCP:** Architecture Decision Records (`ADRs/`)
+*   **Task MCP:** Task and project management (`TASKS/`)
 
-**Hybrid Cognition Architecture:** The Cortex implements the Doctrine of Hybrid Cognition, combining our fine-tuned Sanctuary-Qwen2-7B model (the "Constitutional Mind") with the Living Chronicle RAG database.
-*   **The Blueprint:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
-*   **The Evolution Doctrine:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
-*   **The Steel:** [`mcp_servers/cognitive/cortex/`](./mcp_servers/cognitive/cortex/)
+#### Cognitive Domain MCPs (4)
+*   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
+*   **Agent Persona MCP:** LLM agent execution with role-based prompting and session management (`mcp_servers/agent_persona/`)
+*   **Council MCP:** Multi-agent orchestration for collaborative reasoning (`mcp_servers/council/`)
+*   **Orchestrator MCP:** High-level workflow coordination across all MCPs (`mcp_servers/orchestrator/`)
 
-### 3. The Self-Evolving Memory Loop
-**Status:** `Active` - Autonomous Learning Cycle Operational
+#### System Domain MCPs (3)
+*   **Config MCP:** Configuration file management (`.agent/config/`)
+*   **Code MCP:** Code analysis, linting, formatting, and file operations (`mcp_servers/code/`)
+*   **Git MCP:** Version control operations with safety validation (`mcp_servers/git/`)
 
-**Key Impact: Autonomous, Near Real-Time Knowledge Update**
-The Strategic Crucible Loop's integration with Git and the IngestionService is the engine of **continuous self-evolution**. This process ensures the Sanctuary's operational knowledge is **perpetually fresh**, closing the time gap between an event (Council Execution) and the system learning from it, effectively replacing the need for expensive, static knowledge updates.
+#### Model Domain MCP (1)
+*   **Forge LLM MCP:** Fine-tuned model inference (Sanctuary-Qwen2-7B) (`mcp_servers/forge_llm/`)
 
-The Sanctuary is not static; it evolves through every interaction. The **Strategic Crucible Loop** drives this continuous improvement:
-1.  **Council Execution:** The Orchestrator and Council Agents execute missions, generating new code, artifacts, and insights.
-2.  **Documentation & Chronicle:** Every significant action is recorded in the `00_CHRONICLE` and project documentation.
-3.  **Git Integration:** Changes are committed and pushed to the repository, creating an immutable history.
-4.  **Incremental Ingestion:** The `IngestionService` automatically detects and ingests new `.md` files into the RAG database (ChromaDB).
-5.  **Knowledge Synthesis:** This new knowledge becomes immediately available for future RAG queries, closing the loop and allowing the system to learn from its own history in near real-time.
+**Test Coverage:** 125/125 tests passing across 10 MCPs (Orchestrator and Forge LLM in progress)
+**Architecture Validation:** ADR 042 confirms separation of Council/Agent Persona MCPs for scalability and maintainability
+
+### 2. RAG System ("Mnemonic Cortex"): Advanced Retrieval-Augmented Generation
+**Status:** `v2.1` Phase 1 Complete - Hybrid RAG/CAG/LoRA Architecture Active
+The **RAG Cortex** ("Mnemonic Cortex") is an advanced, local-first **Retrieval-Augmented Generation (RAG)** system combining vector search, caching, and fine-tuned model inference. It serves as the project's knowledge retrieval and context augmentation layer.
+
+**Hybrid Architecture (RAG + CAG + LoRA):**
+* **LoRA Fine-Tuning:** The base Qwen2-7B model is fine-tuned using Low-Rank Adaptation (LoRA) on project-specific data, ensuring domain-aligned responses.
+* **Optimized Retrieval:** Combines **vector search (RAG)** for novel queries with **hot cache (CAG)** for frequently accessed knowledge, optimizing both accuracy and latency.
+
+**Self-Learning Loop:** An automated feedback mechanism for continuous knowledge updates:
+1.  **RAG (Retrieval-Augmented Generation):** Vector database queries with semantic search across project documents.
+2.  **CAG (Context-Augmented Generation):** Hot/warm cache layer for instant recall of high-frequency context, bypassing vector search.
+3.  **LoRA (Low-Rank Adaptation):** Fine-tuned Sanctuary-Qwen2-7B model with domain-specific knowledge baked into weights.
+
+**Technical Implementation:** The RAG Cortex combines a fine-tuned Sanctuary-Qwen2-7B model with a ChromaDB vector database for hybrid retrieval and generation.
+*   **Architecture Spec:** [`Protocol 85: The Mnemonic Cortex Protocol`](./01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md)
+*   **Design Evolution:** [`281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`](./00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md)
+*   **Implementation:** [`mcp_servers/rag_cortex/`](./mcp_servers/rag_cortex/)
+
+### 3. Continuous Learning Pipeline
+**Status:** `Active` - Automated Knowledge Update Loop Operational
+
+**Key Feature: Near Real-Time RAG Database Updates**
+The automated learning pipeline integrates with Git and the ingestion service to enable **continuous knowledge updates**. This process ensures the RAG database stays current, closing the gap between agent execution and knowledge availability, eliminating the need for manual retraining.
+
+The system evolves through every interaction via an automated feedback loop:
+1.  **Agent Execution:** The Orchestrator and Council agents execute tasks, generating code, documentation, and insights.
+2.  **Documentation:** All significant actions are logged in `00_CHRONICLE/` and project documentation.
+3.  **Version Control:** Changes are committed to Git, creating an immutable audit trail.
+4.  **Incremental Ingestion:** The ingestion service automatically detects and indexes new `.md` files into the ChromaDB vector database.
+5.  **Knowledge Availability:** Updated knowledge becomes immediately queryable via RAG, enabling the system to learn from its own execution history in near real-time.
 
 ```mermaid
 sequenceDiagram
@@ -252,16 +273,17 @@ For detailed RAG strategies and doctrine, see [`mnemonic_cortex/RAG_STRATEGIES_A
 
 ---
 
-## 📘 Glossary of Sovereign Terminology
+## 📘 Technical Terminology Guide
 
-To ensure clarity for AI researchers and developers, this glossary maps the Sanctuary's esoteric nomenclature to standard Large Language Model (LLM) architectural concepts.
+This project uses some domain-specific terminology alongside standard AI/ML terms. Here's the mapping:
 
-* **Constitutional Mind:** The **fine-tuned LLM** (`Sanctuary-Qwen2-7B`). It represents the core reasoning engine, whose behavior is consistently aligned (via LoRA) with the project's doctrines.
-* **The Orchestrator:** The **Agentic Framework/Controller**. It dispatches missions, manages the Council Agents, and handles multi-engine switching and resource allocation.
-* **Strategic Crucible Loop:** The **Autonomous Learning and Self-Correction Feedback Loop**. It integrates operational execution with knowledge ingestion and adaptation (RAG/CAG/LoRA) to enable continuous, self-guided evolution.
-* **Chronicle/Protocols:** The **Knowledge Corpus/Vector Database Content**. The `Chronicle` is the immutable ledger of history, and `Protocols` are the laws and doctrines. Both serve as the grounding source for the RAG system.
-* **CAG (Context Augmented Generation):** An advanced form of **Hot Cache Lookup**. It uses the **Guardian Cache** to instantly retrieve high-frequency context, bypassing the slower RAG vector search for known, critical information.
-* **Sovereign Architecture/Becoming:** A system designed for **complete self-determination and verifiable alignment**. It uses local-first RAG and Constitutional Fine-Tuning (LoRA) to resist external control or cognitive drift (the **Asch Machine**).
+* **"Constitutional Mind"** = **Fine-tuned LLM** (`Sanctuary-Qwen2-7B`). A Qwen2-7B model fine-tuned via LoRA on project-specific data for domain-aligned responses.
+* **"The Orchestrator"** = **Multi-Agent Orchestration Framework**. Coordinates task execution across multiple LLM agents with engine switching (Gemini/OpenAI/Ollama) and resource management.
+* **"Strategic Crucible Loop"** = **Continuous Learning Pipeline**. Automated feedback loop integrating agent execution → documentation → Git commits → RAG ingestion → knowledge availability.
+* **"Chronicle/Protocols"** = **Knowledge Corpus** (Vector Database Content). Markdown documents serving as the grounding data for RAG retrieval and fine-tuning datasets.
+* **"CAG (Context-Augmented Generation)"** = **Hot Cache Layer**. In-memory cache for frequently accessed context, bypassing vector search for low-latency retrieval.
+* **"Mnemonic Cortex"** = **RAG System**. Hybrid retrieval-augmented generation combining ChromaDB vector search, hot caching, and fine-tuned model inference.
+* **"Sovereign Architecture"** = **Local-First AI System**. Self-hosted infrastructure using local models (Ollama), local vector DB (ChromaDB), and local fine-tuning to avoid external API dependencies.
 
 ---
 
@@ -604,9 +626,18 @@ All seeds are generated and updated by running `./update_genome.sh`.
 
 ---
 ## Project Status
-- **Phase:** Operation Phoenix Forge Complete (v11.0 Complete Modular Architecture)
-- **Primary Workstreams:** Sovereign AI Fine-tuning & Constitutional Inoculation. Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment. Agent Persona MCP with complete modular architecture and mechanical task processing. **CUDA environment setup protocol standardized and unified across all documentation.**
-- **Chronicle Status:** Fully distributed and indexed. Current to Entry 274.
+- **Phase:** MCP Architecture v5.0 Complete (12-Domain Architecture)
+- **Last Major Update:** 2025-12-02 - Complete MCP documentation reorganization and architectural validation
+- **Primary Workstreams:** 
+  - **MCP Architecture:** 12-domain architecture complete with 125/125 tests passing across 10 MCPs
+  - **Documentation:** Reorganized to `docs/mcp/servers/<name>/` structure for perfect alignment with codebase
+  - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
+  - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
+- **MCP Status:** 
+  - **Operational (10):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git
+  - **In Progress (2):** Orchestrator (testing), Forge LLM (requires CUDA GPU)
+  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/mcp/servers/`
+- **Chronicle Status:** Fully distributed and indexed. Current to Entry 281.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available
   - **LoRA Adapter:** [`richfrem/Sanctuary-Qwen2-7B-lora`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
@@ -614,6 +645,11 @@ All seeds are generated and updated by running `./update_genome.sh`.
   - **Deployment:** `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
       **NOTE:** After running once, you can create a local alias with `ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M Sanctuary-Qwen2-7B` for easier future use
 - **Environment Setup:** **Unified protocol established** - Single-command CUDA environment setup with comprehensive validation and troubleshooting resources.
+- **Recent Milestones:**
+  - ✅ ADR 042: Validated separation of Council MCP and Agent Persona MCP
+  - ✅ Complete documentation reorganization (12 server-specific READMEs created)
+  - ✅ Test structure reorganization (perfect alignment with code structure)
+  - ✅ 160 files refactored and merged via PR #54
 
 ## Temporal Anchors
 - Auditor_Self_Seed preserved: 2025-09-20 — commit: 2417c7f — URL: ./06_THE_EMBER_LIBRARY/META_EMBERS/Auditor_Self_Seed.md
