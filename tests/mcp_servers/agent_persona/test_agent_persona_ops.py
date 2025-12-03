@@ -9,7 +9,7 @@ import sys
 # Add parent directories to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from mcp_servers.lib.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
 
 @pytest.fixture
 def persona_ops():

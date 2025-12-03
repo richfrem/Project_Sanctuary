@@ -32,7 +32,7 @@ def test_guardian_wakeup():
     import sys
     sys.path.insert(0, str(PROJECT_ROOT))
     
-    from mcp_servers.cognitive.cortex.operations import CortexOperations
+    from mcp_servers.rag_cortex.operations import CortexOperations
     ops = CortexOperations(str(PROJECT_ROOT))
     result = ops.guardian_wakeup()
     

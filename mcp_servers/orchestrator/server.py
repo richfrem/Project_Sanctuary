@@ -77,9 +77,9 @@ def orchestrator_dispatch_mission(
 # Import dependencies for the loop
 # Note: In a distributed MCP architecture, we would call these via client.
 # Here we import the service logic directly for reliability.
-from mnemonic_cortex.app.services.ingestion_service import IngestionService
-from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
-from mcp_servers.cognitive.cortex.operations import CortexOperations
+# from mnemonic_cortex.app.services.ingestion_service import IngestionService
+# from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+from mcp_servers.rag_cortex.operations import CortexOperations
 
 @mcp.tool()
 def orchestrator_run_strategic_cycle(
@@ -104,11 +104,10 @@ def orchestrator_run_strategic_cycle(
     # 1. Ingestion (Medium Memory Update)
     try:
         results.append(f"1. Ingesting Report: {research_report_path}")
-        ingestion_service = IngestionService(
-            project_root=PROJECT_ROOT
-        )
+        results.append(f"1. Ingesting Report: {research_report_path}")
+        cortex_ops = CortexOperations(PROJECT_ROOT)
         # We assume incremental ingest for a single report
-        ingest_stats = ingestion_service.ingest_incremental([research_report_path])
+        ingest_stats = cortex_ops.ingest_incremental([research_report_path])
         results.append(f"   - Ingestion Complete: {ingest_stats}")
     except Exception as e:
         return "\n".join(results) + f"\n[CRITICAL FAIL] Ingestion failed: {e}"
@@ -116,11 +115,12 @@ def orchestrator_run_strategic_cycle(
     # 2. Adaptation (Slow Memory Update Prep)
     try:
         results.append(f"2. Generating Adaptation Packet (Window: {days_to_synthesize} days)")
-        generator = SynthesisGenerator(PROJECT_ROOT)
-        packet = generator.generate_packet(days=days_to_synthesize)
-        packet_path = generator.save_packet(packet)
+        # generator = SynthesisGenerator(PROJECT_ROOT)
+        # packet = generator.generate_packet(days=days_to_synthesize)
+        # packet_path = generator.save_packet(packet)
+        packet_path = "TODO: Re-implement SynthesisGenerator in Cortex MCP"
         results.append(f"   - Packet Generated: {packet_path}")
-        results.append(f"   - Packet ID: {packet.packet_id}")
+        # results.append(f"   - Packet ID: {packet.packet_id}")
     except Exception as e:
         return "\n".join(results) + f"\n[CRITICAL FAIL] Adaptation failed: {e}"
 

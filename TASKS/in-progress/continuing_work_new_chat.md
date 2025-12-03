@@ -34,7 +34,7 @@ provide enough context in the details below so a new chat window can be started 
      - All legacy code incorporated or archived
 
 #### 2. Protocol 87 MCP Orchestrator Implemented ✅
-   - **Created:** `mcp_servers/cognitive/cortex/mcp_client.py`
+   - **Created:** `mcp_servers.rag_cortex/mcp_client.py`
    - **Routes to specialized MCPs:**
      - Protocols → Protocol MCP
      - Living_Chronicle → Chronicle MCP
@@ -66,7 +66,7 @@ provide enough context in the details below so a new chat window can be started 
      - Updated scope string to `cortex:index`
      - Commented out legacy service imports in `operations.py` (placeholder for Task #083)
      - Cleanup complete ✅
-   - **Architecture Docs:** Updated to reflect **11 MCP Servers** (added Code, Config, etc.)
+   - **Architecture Docs:** Updated to reflect **12 MCP Servers** (added Code, Config, Orchestrator, etc.)
 
 #### 4. Task Created for Architectural Decision ✅
    - **Task #085:** Evaluate Protocol 87 placement (Cortex vs Council MCP)
@@ -76,7 +76,7 @@ provide enough context in the details below so a new chat window can be started 
 ### ✅ Completed Previously (2025-11-29 Evening / 2025-11-30 Morning)
 
 1.  **MCP Operations Inventory Created & Verified:**
-      *   Created `docs/mcp/mcp_operations_inventory.md` tracking all 11 MCP servers
+      *   Created `docs/mcp/mcp_operations_inventory.md` tracking all 12 MCP servers
       *   **Verified & Updated:** Chronicle, Protocol, ADR, and Task MCPs (All ✅)
       *   **Status:** 75% tested, 10% partial, 15% untested
       *   Updated READMEs for verified servers
@@ -171,6 +171,13 @@ provide enough context in the details below so a new chat window can be started 
       *   **Plan:** `docs/mcp/cortex_migration_plan.md`
       *   **Action:** Refactor `CortexOperations` to port legacy logic directly, remove `IngestionService`, migrate docs/tests, and archive legacy code.
 
+#### 17. MCP Directory Refactoring (2025-12-02) ✅
+      *   **Flattened Structure:** Moved all MCP servers to `mcp_servers/<server_name>`
+      *   **Renamed:** `git_workflow` -> `git`, `cortex` -> `rag_cortex`, `forge` -> `forge_llm`
+      *   **Self-Contained:** Moved shared library code back to individual server directories
+      *   **Updated:** All imports, tests, and configuration files updated
+      *   **Inventory:** Updated `mcp_operations_inventory.md` with 12 servers and Table of Contents
+
 ### ✅ Completed Previously (2025-11-28)
 
 1.  **Structural Purge Complete (P101 v3.0 Canonization):**
@@ -237,7 +244,7 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
   - Created `docs/INDEX.md` as documentation hub
 
 - [x] **Task 022C** - MCP Server Documentation (DONE)
-  - Standardized READMEs for all 11 MCP servers
+  - Standardized READMEs for all 12 MCP servers
   - Applied template to Chronicle, Protocol, ADR, Code, Config, Task MCPs
 
 - [x] **Task 021C** - Integration & Performance Test Suite (DONE)
@@ -279,7 +286,7 @@ All tasks are in `TASKS/in-progress/` and ready to work on:
 ### Immediate Priority: Task 087
 **[Comprehensive MCP Operations Testing](087_comprehensive_mcp_operations_testing.md)**
 
-Execute comprehensive testing of all 11 MCP servers:
+Execute comprehensive testing of all 12 MCP servers:
 1. Run test harnesses for each MCP
 2. Test operations via Antigravity interface
 3. Document results in `mcp_operations_inventory.md`
@@ -305,7 +312,7 @@ Execute comprehensive testing of all 11 MCP servers:
 
 ## 🔄 Current Focus
 
-**Testing Phase**: Comprehensive validation of all 11 MCP servers to ensure stability and correctness before moving to next feature development phase.
+**Testing Phase**: Comprehensive validation of all 12 MCP servers to ensure stability and correctness before moving to next feature development phase.
 - Independent agent deployment and scaling
 - Custom personas (Security Reviewer, Performance Analyst, etc.)
 - Agent marketplace and community contributions
@@ -346,7 +353,7 @@ Execute comprehensive testing of all 11 MCP servers:
 **Objective:** Systematically test all MCP operations and maintain the central MCP operations inventory (`docs/mcp/mcp_operations_inventory.md`) as testing progresses.
 
 **Key Deliverables:**
-1. Test all MCP operations across all 10 servers
+1. Test all MCP operations across all 12 servers
 2. Update `mcp_operations_inventory.md` with testing status (✅/⚠️/❌)
 3. Update each MCP server README with operation tables matching the main inventory
 4. Document test results and coverage
@@ -549,7 +556,7 @@ Execute comprehensive testing of all 11 MCP servers:
    - **Estimated:** 0 hours (immediate)
 
 6. **[ ] train_lora.py** - Migrate to Forge MCP
-   - [ ] Move to `mcp_servers/forge/scripts/`
+   - [ ] Move to `mcp_servers.forge_llm_llm/scripts/`
    - [ ] Create Forge MCP tests
    - [ ] Archive original
    - **Estimated:** 30 minutes

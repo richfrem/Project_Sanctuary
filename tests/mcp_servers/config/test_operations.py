@@ -4,7 +4,7 @@ import tempfile
 import json
 import os
 from pathlib import Path
-from mcp_servers.lib.config.config_ops import ConfigOperations
+from mcp_servers.config.config_ops import ConfigOperations
 
 class TestConfigOperations(unittest.TestCase):
     def setUp(self):

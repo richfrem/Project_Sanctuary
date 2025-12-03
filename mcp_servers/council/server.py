@@ -21,7 +21,7 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from lib.council.council_ops import CouncilOperations
+from council.council_ops import CouncilOperations
 
 # Initialize FastMCP server
 mcp = FastMCP("Council Orchestrator")

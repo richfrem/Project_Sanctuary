@@ -42,6 +42,17 @@ def generate_config():
                 }
             }
 
+    # Add specific configuration for 'git' server as requested
+    servers_config["git"] = {
+        "displayName": "Git MCP",
+        "command": "python3",
+        "args": ["-m", "mcp_servers.git.server"],
+        "env": {
+            "PROJECT_ROOT": str(project_root),
+            "PYTHONPATH": str(project_root)
+        }
+    }
+
     full_config = {
         "mcpServers": servers_config
     }

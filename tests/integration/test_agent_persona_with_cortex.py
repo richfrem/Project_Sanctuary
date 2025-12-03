@@ -17,8 +17,8 @@ sys.modules["mnemonic_cortex.app.services.vector_db_service"] = mock_vector_serv
 sys.modules["mnemonic_cortex.app.services.llm_service"] = MagicMock()
 
 from mcp_servers.lib.council.council_ops import CouncilOperations
-from mcp_servers.lib.agent_persona.agent_persona_ops import AgentPersonaOperations
-from mcp_servers.cognitive.cortex.operations import CortexOperations
+from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.rag_cortex.operations import CortexOperations
 
 
 @pytest.mark.integration

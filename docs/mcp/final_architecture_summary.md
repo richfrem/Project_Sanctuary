@@ -1,4 +1,4 @@
-# MCP Ecosystem - Final 10-Domain Architecture
+# MCP Ecosystem - Final 12-Domain Architecture
 
 **Version:** 4.0 (Final)  
 **Created:** 2025-11-25  
@@ -6,7 +6,7 @@
 
 ---
 
-## Complete Domain Map (10 Servers)
+## Complete Domain Map (12 Servers)
 
 | # | Domain | Category | Directory | Risk Level | Hardware |
 |---|--------|----------|-----------|------------|----------|
@@ -15,11 +15,13 @@
 | 3 | **ADR MCP** | Document | `ADRs/` | MODERATE | Standard |
 | 4 | **Task MCP** | Document | `TASKS/` | MODERATE | Standard |
 | 5 | **RAG MCP** (Cortex) | Cognitive | `mnemonic_cortex/` | MODERATE | Standard |
-| 6 | **Agent Orchestrator MCP** (Council) | Cognitive | `council_orchestrator/` | SAFE | Standard |
-| 7 | **Config MCP** | System | `.agent/config/` | CRITICAL | Standard |
-| 8 | **Code MCP** | System | `src/`, `scripts/`, `tools/` | HIGH | Standard |
-| 9 | **Git Workflow MCP** | System | `.git/` | MODERATE | Standard |
-| 10 | **Fine-Tuning MCP** (Forge) | Model | `forge/` | EXTREME | **CUDA GPU** |
+| 6 | **Agent Persona MCP** | Cognitive | `mcp_servers/agent_persona/` | SAFE | Standard |
+| 7 | **Council MCP** | Cognitive | `mcp_servers/council/` | SAFE | Standard |
+| 8 | **Orchestrator MCP** | Cognitive | `mcp_servers/orchestrator/` | SAFE | Standard |
+| 9 | **Config MCP** | System | `.agent/config/` | CRITICAL | Standard |
+| 10 | **Code MCP** | System | `src/`, `scripts/`, `tools/` | HIGH | Standard |
+| 11 | **Git MCP** | System | `.git/` | MODERATE | Standard |
+| 12 | **Forge LLM MCP** | Model | `mcp_servers/forge_llm/` | EXTREME | **CUDA GPU** |
 
 ---
 
@@ -40,7 +42,7 @@
 
 ---
 
-### II. Cognitive Domains (2) - Non-Mechanical
+### II. Cognitive Domains (4) - Non-Mechanical
 **Shared Characteristics:**
 - Computation/reasoning focus
 - No direct file system manipulation
@@ -51,10 +53,15 @@
   - Incremental ingest, full ingest, semantic search
   - Industry-standard RAG pattern with ChromaDB
   - Project implementation: Mnemonic Cortex
-- **Agent Orchestrator MCP** (Council): Multi-agent coordination and deliberation
-  - Create deliberations, manage workflows, aggregate results
-  - Industry-standard orchestration pattern
-  - Project implementation: Council of Agents
+- **Agent Persona MCP**: Management of AI personas and roles
+  - Create, list, and dispatch to personas
+  - State management for agent conversations
+- **Council MCP**: Multi-agent deliberation and collaboration
+  - Facilitates discussion between multiple agents
+  - Uses Agent Persona MCP for execution
+- **Orchestrator MCP**: High-level mission planning and execution
+  - Strategic cycles and long-running workflows
+  - Coordinates other MCPs
 
 ---
 
@@ -201,11 +208,13 @@
 | ADR | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
 | Task | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
 | Cortex | ✅ Read/Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
+| Agent Persona | ❌ No | ❌ No | Standard | SAFE | ✅ Yes |
 | Council | ❌ No | ❌ No | Standard | SAFE | ✅ Yes |
+| Orchestrator | ❌ No | ❌ No | Standard | SAFE | ✅ Yes |
 | Config | ✅ Write | ✅ Auto | Standard | CRITICAL | ⚠️ Approval Required |
 | Code | ✅ Write | ✅ Auto | Standard | HIGH | ⚠️ Tests Required |
-| Git Workflow | ❌ No | ✅ Manual | Standard | MODERATE | ✅ Yes (Safe Ops) |
-| Forge | ✅ Write | ✅ Auto | **CUDA GPU** | EXTREME | ⚠️ Resource Check + Approval |
+| Git | ❌ No | ✅ Manual | Standard | MODERATE | ✅ Yes (Safe Ops) |
+| Forge LLM | ✅ Write | ✅ Auto | **CUDA GPU** | EXTREME | ⚠️ Resource Check + Approval |
 
 *With safety validation
 
@@ -227,8 +236,8 @@ All architecture documentation is in `docs/mcp/`:
 - `forge_mcp_types.ts` - Forge-specific types
 
 **Diagrams:**
-- `diagrams/mcp_ecosystem_class.mmd` - **High-level class diagram (all 10 domains)**
-- `diagrams/domain_architecture_v3.mmd` - Complete 10-domain ecosystem
+- `diagrams/mcp_ecosystem_class.mmd` - **High-level class diagram (all 12 domains)**
+- `diagrams/domain_architecture_v3.mmd` - Complete 12-domain ecosystem
 - `diagrams/request_flow_middleware.mmd` - Validator middleware flow
 - `diagrams/chronicle_mcp_class.mmd` - Chronicle MCP class diagram
 - `diagrams/protocol_mcp_class.mmd` - Protocol MCP class diagram
@@ -246,7 +255,7 @@ All architecture documentation is in `docs/mcp/`:
 ## Success Criteria
 
 ### Functional
-- [ ] All 10 MCP servers operational
+- [ ] All 12 MCP servers operational
 - [ ] 100% schema validation coverage
 - [ ] P101 compliance for all file operations
 - [ ] Git safety rules enforced

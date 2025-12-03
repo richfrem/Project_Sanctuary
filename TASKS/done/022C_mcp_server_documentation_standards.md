@@ -24,10 +24,10 @@ Establish standardized, high-quality documentation for all MCP servers following
 
 ## MCP Servers to Document
 
-1. `mcp_servers/cognitive/cortex/` - RAG and Cache operations
+1. `mcp_servers.rag_cortex/` - RAG and Cache operations
 2. `mcp_servers/chronicle/` - Chronicle entry management
 3. `mcp_servers/protocol/` - Protocol document management
-4. `mcp_servers/system/forge/` - Sanctuary model queries
+4. `mcp_servers.forge_llm_llm/` - Sanctuary model queries
 5. `mcp_servers/system/git_workflow/` - Git operations
 6. `mcp_servers/adr/` - Architecture Decision Records
 7. `mcp_servers/task/` - Task management

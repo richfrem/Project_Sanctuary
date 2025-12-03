@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md, docs/mcp/architecture.md, docs/mcp/final_architecture_summary.md, mcp_servers/system/forge/
+**Related Documents:** forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md, docs/mcp/architecture.md, docs/mcp/final_architecture_summary.md, mcp_servers.forge_llm_llm/
 
 ---
 

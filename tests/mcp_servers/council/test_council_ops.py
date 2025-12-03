@@ -9,7 +9,7 @@ import sys
 # Add parent directories to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from mcp_servers.lib.council.council_ops import CouncilOperations
+from mcp_servers.council.council_ops import CouncilOperations
 
 @pytest.fixture
 def council_ops():

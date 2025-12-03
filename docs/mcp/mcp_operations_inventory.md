@@ -20,6 +20,27 @@ This document tracks all MCP server operations across the Project Sanctuary ecos
 
 ---
 
+## Table of Contents
+
+- [1. Chronicle MCP Server](#1-chronicle-mcp-server)
+- [2. Protocol MCP Server](#2-protocol-mcp-server)
+- [3. ADR MCP Server](#3-adr-mcp-server)
+- [4. Task MCP Server](#4-task-mcp-server)
+- [5. Git MCP Server](#5-git-mcp-server)
+- [6. RAG Cortex MCP Server](#6-rag-cortex-mcp-server)
+- [7. Forge LLM MCP Server](#7-forge-llm-mcp-server-fine-tuning)
+- [8. Agent Persona MCP Server](#8-agent-persona-mcp-server)
+- [9. Council MCP Server](#9-council-mcp-server-multi-agent-deliberation)
+- [10. Orchestrator MCP Server](#10-orchestrator-mcp-server)
+- [11. Config MCP Server](#11-config-mcp-server)
+- [12. Code MCP Server](#12-code-mcp-server)
+- [Testing Strategy](#testing-strategy)
+- [Test Execution Commands](#test-execution-commands)
+- [Related Documentation](#related-documentation)
+- [Maintenance Notes](#maintenance-notes)
+
+---
+
 ## Status Legend
 
 **Test Harness (🧪):** Direct testing of underlying operations via pytest  
@@ -46,9 +67,9 @@ This document tracks all MCP server operations across the Project Sanctuary ecos
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/test_chronicle_operations.py tests/test_chronicle_validator.py -v
+pytest tests/mcp_servers/chronicle/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (9/9 passed)
+**Last Verification:** 2025-12-02 ✅ (9/9 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please create a new chronicle entry titled 'Test Entry' with content 'Testing Chronicle MCP' to verify the `chronicle_create_entry` tool."
@@ -70,15 +91,15 @@ pytest tests/test_chronicle_operations.py tests/test_chronicle_validator.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `chronicle_create_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
-| `chronicle_append_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for create_entry |
-| `chronicle_update_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Update existing entry (7-day rule) |
-| `chronicle_get_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Retrieve specific entry by number |
-| `chronicle_list_entries` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | List recent entries with filters |
-| `chronicle_read_latest_entries` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Alias for list_entries |
-| `chronicle_search` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/test_chronicle_operations.py) | Full-text search across entries |
+| `chronicle_create_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
+| `chronicle_append_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for create_entry |
+| `chronicle_update_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Update existing entry (7-day rule) |
+| `chronicle_get_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Retrieve specific entry by number |
+| `chronicle_list_entries` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | List recent entries with filters |
+| `chronicle_read_latest_entries` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for list_entries |
+| `chronicle_search` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Full-text search across entries |
 
-**Prerequisite Tests:** [test_chronicle_validator.py](../../tests/test_chronicle_validator.py)
+**Prerequisite Tests:** [test_chronicle_validator.py](../../tests/mcp_servers/chronicle/test_chronicle_validator.py)
 
 ---
 
@@ -92,9 +113,9 @@ pytest tests/test_chronicle_operations.py tests/test_chronicle_validator.py -v
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/test_protocol_operations.py tests/test_protocol_validator.py -v
+pytest tests/mcp_servers/protocol/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (6/6 passed)
+**Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all protocols with status 'CANONICAL' to verify the `protocol_list` tool."
@@ -116,29 +137,29 @@ pytest tests/test_protocol_operations.py tests/test_protocol_validator.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `protocol_create` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Create new protocol with versioning |
-| `protocol_update` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
-| `protocol_get` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Retrieve specific protocol by number |
-| `protocol_list` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | List protocols with optional filters |
-| `protocol_search` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/test_protocol_operations.py) | Full-text search across protocols |
+| `protocol_create` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Create new protocol with versioning |
+| `protocol_update` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
+| `protocol_get` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Retrieve specific protocol by number |
+| `protocol_list` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | List protocols with optional filters |
+| `protocol_search` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Full-text search across protocols |
 
-**Prerequisite Tests:** [test_protocol_validator.py](../../tests/test_protocol_validator.py)
+**Prerequisite Tests:** [test_protocol_validator.py](../../tests/mcp_servers/protocol/test_protocol_validator.py)
 
 ---
 
 ## 3. ADR MCP Server
 
 **Domain:** Architecture Decision Records  
-**Directory:** `ADRs/`  
-**Server Code:** [mcp_servers/document/adr/server.py](../../mcp_servers/document/adr/server.py)  
-**README:** [ADR MCP README](../../mcp_servers/document/adr/README.md)  
+**Directory:** `mcp_servers/adr/`  
+**Server Code:** [mcp_servers/adr/server.py](../../mcp_servers/adr/server.py)  
+**README:** [ADR MCP README](../../mcp_servers/adr/README.md)  
 **Class Diagram:** [diagrams/adr_mcp_class.mmd](diagrams/adr_mcp_class.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
+pytest tests/mcp_servers/adr/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (13/13 passed)
+**Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please search for ADRs related to 'database' to verify the `adr_search` tool."
@@ -148,7 +169,7 @@ pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
 "adr": {
   "displayName": "ADR MCP",
   "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.document.adr.server"],
+  "args": ["-m", "mcp_servers.adr.server"],
   "env": {
     "PYTHONPATH": "<PROJECT_ROOT>",
     "PROJECT_ROOT": "<PROJECT_ROOT>"
@@ -160,13 +181,13 @@ pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `adr_create` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Create ADR with auto-numbering |
-| `adr_update_status` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Update ADR status (validated transitions) |
-| `adr_get` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Retrieve specific ADR by number |
-| `adr_list` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | List ADRs with optional status filter |
-| `adr_search` | ✅ | ✅ | ❌ | [test_adr_operations.py](../../tests/test_adr_operations.py) | Full-text search across ADRs |
+| `adr_create` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Create ADR with auto-numbering |
+| `adr_update_status` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Update ADR status (validated transitions) |
+| `adr_get` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Retrieve specific ADR by number |
+| `adr_list` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | List ADRs with optional status filter |
+| `adr_search` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Full-text search across ADRs |
 
-**Prerequisite Tests:** [test_adr_validator.py](../../tests/test_adr_validator.py)
+**Prerequisite Tests:** [test_adr_validator.py](../../tests/mcp_servers/adr/test_adr_validator.py)
 
 ---
 
@@ -182,7 +203,7 @@ pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
 ```bash
 pytest tests/mcp_servers/task/ -v
 ```
-**Last Verification:** 2025-11-30 ✅ (18/18 passed)
+**Last Verification:** 2025-12-02 ✅ (18/18 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list all tasks with 'High' priority to verify the `list_tasks` tool."
@@ -204,39 +225,40 @@ pytest tests/mcp_servers/task/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `create_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
-| `update_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
-| `update_task_status` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
-| `get_task` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
-| `list_tasks` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
-| `search_tasks` | ✅ | ✅ | ✅ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
+| `create_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
+| `update_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
+| `update_task_status` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
+| `get_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
+| `list_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
+| `search_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
 
 **Prerequisite Tests:** [tests/mcp_servers/task/test_operations.py](../../tests/mcp_servers/task/test_operations.py)
 
 ---
 
-## 5. Git Workflow MCP Server
+## 5. Git MCP Server
 
 **Domain:** Protocol 101 v3.0-compliant git operations  
 **Directory:** `.git/`  
-**Server Code:** [mcp_servers/system/git_workflow/server.py](../../mcp_servers/system/git_workflow/server.py)  
-**README:** [Git Workflow MCP README](../../mcp_servers/system/git_workflow/README.md)  
+**Server Code:** [mcp_servers/git/server.py](../../mcp_servers/git/server.py)  
+**README:** [Git MCP README](../../mcp_servers/git/README.md)  
 **Class Diagram:** [diagrams/git_workflow_mcp_class.mmd](diagrams/git_workflow_mcp_class.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/test_git_ops.py -v
+pytest tests/mcp_servers/git/ -v
 ```
+**Last Verification:** 2025-12-02 ✅ (10/10 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please check the current git status using `git_get_status`."
 
 ### Configuration
 ```json
-"git_workflow": {
-  "displayName": "Git Workflow MCP",
+"git": {
+  "displayName": "Git MCP",
   "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.system.git_workflow.server"],
+  "args": ["-m", "mcp_servers.git.server"],
   "env": {
     "PYTHONPATH": "<PROJECT_ROOT>",
     "PROJECT_ROOT": "<PROJECT_ROOT>",
@@ -249,17 +271,17 @@ pytest tests/test_git_ops.py -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `git_get_status` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Get repository status |
-| `git_diff` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Show changes (cached/uncached) |
-| `git_log` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Show commit history |
-| `git_start_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
-| `git_add` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Stage files (Blocks on main) |
-| `git_smart_commit` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
-| `git_push_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Push feature branch (Blocks on main) |
-| `git_finish_feature` | ✅ | ✅ | ✅ | [test_git_ops.py](../../tests/test_git_ops.py) | Cleanup (Verifies PR Merge) |
+| `git_get_status` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Get repository status |
+| `git_diff` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Show changes (cached/uncached) |
+| `git_log` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Show commit history |
+| `git_start_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
+| `git_add` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Stage files (Blocks on main) |
+| `git_smart_commit` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
+| `git_push_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Push feature branch (Blocks on main) |
+| `git_finish_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Cleanup (Verifies PR Merge) |
 
 **Prerequisite Tests:**
-- Unit Tests: [test_git_ops.py](../../tests/test_git_ops.py) (10/10 passing)
+- Unit Tests: [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) (10/10 passing)
 - Safety Tests: [test_tool_safety.py](../../tests/mcp_servers/git_workflow/test_tool_safety.py) (13/13 passing)
 - **Total:** 23/23 Passing ✅
 
@@ -331,29 +353,30 @@ graph TD
 
 ---
 
-## 6. Cortex MCP Server (RAG)
+## 6. RAG Cortex MCP Server
 
 **Domain:** Retrieval-Augmented Generation  
-**Directory:** `mcp_servers/cognitive/cortex/`  
-**Server Code:** [mcp_servers/cognitive/cortex/server.py](../../mcp_servers/cognitive/cortex/server.py)  
-**README:** [Cortex MCP README](../../mcp_servers/cognitive/cortex/README.md)  
+**Directory:** `mcp_servers/rag_cortex/`  
+**Server Code:** [mcp_servers/rag_cortex/server.py](../../mcp_servers/rag_cortex/server.py)  
+**README:** [RAG Cortex MCP README](../../mcp_servers/rag_cortex/README.md)  
 **Class Diagram:** [diagrams/rag_mcp_cortex_class.mmd](diagrams/rag_mcp_cortex_class.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test_cache_operations.py -v && python3 tests/mcp_servers/cortex/test_cortex_integration.py
+pytest tests/mcp_servers/rag_cortex/test_operations.py tests/mcp_servers/rag_cortex/test_cache_operations.py -v
 ```
-**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
+**Last Verification:** 2025-12-02 ⚠️ (Test fixes in progress)
+**Status:** Test fixes in progress (cache_operations: 6/6 passing)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please query the knowledge base for 'Protocol 101' using `cortex_query`."
 
 ### Configuration
 ```json
-"cortex": {
-  "displayName": "RAG MCP (Cortex)",
+"rag_cortex": {
+  "displayName": "RAG Cortex MCP",
   "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.cognitive.cortex.server"],
+  "args": ["-m", "mcp_servers.rag_cortex.server"],
   "env": {
     "PYTHONPATH": "<PROJECT_ROOT>",
     "PROJECT_ROOT": "<PROJECT_ROOT>"
@@ -384,12 +407,12 @@ pytest tests/mcp_servers/cortex/test_operations.py tests/mcp_servers/cortex/test
 
 ---
 
-## 7. Forge MCP Server (Fine-Tuning)
+## 7. Forge LLM MCP Server (Fine-Tuning)
 
 **Domain:** Model fine-tuning and Sanctuary model queries  
-**Directory:** `forge/`  
-**Server Code:** [mcp_servers/system/forge/server.py](../../mcp_servers/system/forge/server.py)  
-**README:** [Forge MCP README](../../mcp_servers/system/forge/README.md)  
+**Directory:** `mcp_servers.forge_llm_llm/`  
+**Server Code:** [mcp_servers.forge_llm_llm/server.py](../../mcp_servers.forge_llm_llm/server.py)  
+**README:** [Forge LLM MCP README](../../mcp_servers.forge_llm_llm/README.md)  
 **Class Diagram:** [diagrams/fine_tuning_mcp_forge_class.mmd](diagrams/fine_tuning_mcp_forge_class.mmd)
 
 ### Prerequisites
@@ -414,17 +437,18 @@ ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 ```bash
 pytest tests/integration/test_forge_integration.py -v
 ```
-**Last Verification:** 2025-11-30 ✅ (5/5 passed - Prerequisites + Operations)
+**Last Verification:** 2025-12-02 ✅ (1/1 passed - Task 087 Phase 1)
+**Note:** Test updated to use correct API methods (check_model_availability, query_sanctuary_model)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please check the status of the Sanctuary model using `check_sanctuary_model_status`."
 
 ### Configuration
 ```json
-"forge": {
-  "displayName": "Fine-Tuning MCP (Forge)",
+"forge_llm": {
+  "displayName": "Forge LLM MCP",
   "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.system.forge.server"],
+  "args": ["-m", "mcp_servers.forge_llm_llm.server"],
   "env": {
     "PYTHONPATH": "<PROJECT_ROOT>",
     "PROJECT_ROOT": "<PROJECT_ROOT>"
@@ -461,7 +485,7 @@ pytest tests/integration/test_forge_integration.py -v
 ```bash
 pytest tests/mcp_servers/agent_persona/ -v
 ```
-**Last Verification:** 2025-12-01 ✅ (27/27 passed)  
+**Last Verification:** 2025-12-02 ✅ (34/34 passed - Task 087 Phase 1)  
 **Test Coverage:** 80%+ (comprehensive suite with expected failures, edge cases, state management)  
 **Test Suites:**
 - `test_agent_persona_ops.py` - Basic operations (7 tests)
@@ -505,23 +529,32 @@ pytest tests/mcp_servers/agent_persona/ -v
 
 ---
 
-## 9. Council MCP Server (Multi-Agent Deliberation)
+## 9. Council MCP Server (Specialized Orchestrator for Multi-Agent Deliberation)
 
-**Domain:** Multi-agent deliberation and autonomous workflows  
+**Domain:** Multi-agent deliberation orchestration  
 **Directory:** `mcp_servers/council/`  
 **Server Code:** [mcp_servers/council/server.py](../../mcp_servers/council/server.py)  
 **README:** [Council MCP README](../../mcp_servers/council/README.md)  
 **Class Diagram:** [diagrams/council_mcp_class.mmd](diagrams/council_mcp_class.mmd)
 
+**Purpose:** Council MCP is a **specialized orchestrator** focused on one specific capability: **multi-agent deliberation workflows**. It orchestrates multiple agent calls across deliberation rounds, manages conversation state, and synthesizes consensus.
+
 **Architecture:** Dual-role (MCP Server + MCP Client)
-- **Role 1**: Exposes deliberation to external agents
-- **Role 2**: Orchestrator calls other MCPs (Agent Persona, Cortex, Code, Git)
+- **Role 1 (Server)**: Exposes deliberation capabilities to external LLMs and Orchestrator MCP
+- **Role 2 (Client)**: Orchestrates calls to Agent Persona MCP, Cortex MCP, and other MCPs
+
+**Orchestration Scope:** Tactical - Multi-round agent discussions
+- Round 1: Coordinator → Strategist → Auditor
+- Round 2: Coordinator → Strategist → Auditor  
+- Round 3: Synthesis and consensus
+
+**Relationship to Orchestrator MCP:** Council MCP is a **specialized service** that Orchestrator MCP delegates to when it needs multi-agent deliberation as part of a larger strategic mission.
 
 ### Script Validation (Run First) 🧪
 ```bash
 pytest tests/mcp_servers/council/ -v
 ```
-**Last Verification:** 2025-12-01 ✅ (3/3 passed)  
+**Last Verification:** 2025-12-02 ✅ (3/3 passed - Task 087 Phase 1)  
 **Test Coverage:** Basic (structure tests only)  
 **Note:** Comprehensive test suite needed (similar to Agent Persona MCP)
 
@@ -565,6 +598,7 @@ pytest tests/mcp_servers/council/ -v
 **Related ADRs:**
 - [ADR 039: MCP Server Separation of Concerns](../../ADRs/039_mcp_server_separation_of_concerns.md)
 - [ADR 040: Agent Persona MCP Architecture](../../ADRs/040_agent_persona_mcp_architecture__modular_council_members.md)
+- [ADR 042: Separation of Council MCP and Agent Persona MCP](../../ADRs/042_separation_of_council_mcp_and_agent_persona_mcp.md)
 
 **Refactoring Plan (Task 60268594):**
 1. Refactor `mcp_servers/lib/council/council_ops.py` to use Agent Persona MCP
@@ -576,7 +610,88 @@ pytest tests/mcp_servers/council/ -v
 
 ---
 
-## 10. Config MCP Server
+## 10. Orchestrator MCP Server (General-Purpose Mission Coordinator)
+
+**Domain:** Strategic mission orchestration and multi-phase workflow coordination  
+**Directory:** `mcp_servers/orchestrator/`  
+**Server Code:** [mcp_servers/orchestrator/server.py](../../mcp_servers/orchestrator/server.py)  
+**README:** [Orchestrator MCP README](../../mcp_servers/orchestrator/README.md)
+
+**Purpose:** Orchestrator MCP is a **general-purpose orchestrator** that coordinates strategic missions across ALL MCPs. It manages multi-phase workflows, task lifecycle, and cross-domain coordination.
+
+**Architecture:** High-Level Mission Coordinator (MCP Client to Many Servers)
+- **Acts as Client to:** Council MCP, Task MCP, Chronicle MCP, Protocol MCP, Code MCP, Git MCP, Cortex MCP
+- **Manages:** Strategic planning, mission state, cross-domain workflows
+
+**Orchestration Scope:** Strategic - Multi-phase missions
+- Phase 1: Research (calls Cortex MCP, Council MCP)
+- Phase 2: Design (calls Council MCP, Protocol MCP)
+- Phase 3: Implement (calls Code MCP, Git MCP)
+- Phase 4: Verify (calls Council MCP, Task MCP)
+- Phase 5: Document (calls Chronicle MCP, ADR MCP)
+
+**Relationship to Council MCP:** Orchestrator MCP **delegates deliberation tasks** to Council MCP when multi-agent discussion is needed as part of a larger strategic workflow.
+
+**Example Workflow:**
+```
+Orchestrator MCP: "Implement Protocol 120"
+  ↓
+  Phase 1: Research → Calls Council MCP for strategic analysis
+    ↓
+    Council MCP → Calls Agent Persona MCP (Coordinator, Strategist, Auditor)
+  ↓
+  Phase 2: Design → Calls Protocol MCP to create protocol
+  ↓
+  Phase 3: Implement → Calls Code MCP, Git MCP
+  ↓
+  Phase 4: Verify → Calls Council MCP for review
+  ↓
+  Phase 5: Document → Calls Chronicle MCP
+```
+**Directory:** `mcp_servers/orchestrator/`
+**Server Code:** [mcp_servers/orchestrator/server.py](../../mcp_servers/orchestrator/server.py)
+**README:** [Orchestrator MCP README](../../mcp_servers/orchestrator/README.md)
+
+### Script Validation (Run First) 🧪
+```bash
+pytest tests/mcp_servers/orchestrator/ -v
+```
+**Last Verification:** 2025-12-02 🔄 (In Progress)
+
+### LLM Prompting (MCP Verification) 🤖
+> "Please check the orchestrator status using `get_orchestrator_status`."
+
+### Configuration
+```json
+"orchestrator": {
+  "displayName": "Orchestrator MCP",
+  "command": "<PROJECT_ROOT>/.venv/bin/python",
+  "args": ["-m", "mcp_servers.orchestrator.server"],
+  "env": {
+    "PYTHONPATH": "<PROJECT_ROOT>",
+    "PROJECT_ROOT": "<PROJECT_ROOT>"
+  }
+}
+```
+
+### Operations
+
+| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
+|-----------|---------|---------|--------|------------|-------------|
+| `orchestrator_dispatch_mission` | ❌ | ⚠️ | ❌ | - | Dispatch a high-level mission to an agent |
+| `orchestrator_run_strategic_cycle` | ❌ | ⚠️ | ❌ | - | Execute a full Strategic Crucible Loop |
+| `get_orchestrator_status` | ❌ | ⚠️ | ❌ | - | Get current status of the orchestrator |
+| `list_recent_tasks` | ❌ | ⚠️ | ❌ | - | List recent tasks managed by orchestrator |
+| `get_task_result` | ❌ | ⚠️ | ❌ | - | Get result of a specific task |
+| `create_cognitive_task` | ❌ | ⚠️ | ❌ | - | Create a cognitive task for Council deliberation |
+| `create_development_cycle` | ❌ | ⚠️ | ❌ | - | Create a staged development cycle task |
+| `query_mnemonic_cortex` | ❌ | ⚠️ | ❌ | - | Create a RAG query task |
+| `create_file_write_task` | ❌ | ⚠️ | ❌ | - | Create a file write task |
+| `create_git_commit_task` | ❌ | ⚠️ | ❌ | - | Create a git commit task |
+
+---
+
+## 11. Config MCP Server
 
 **Domain:** Configuration management  
 **Directory:** `.agent/config/`  
@@ -588,7 +703,7 @@ pytest tests/mcp_servers/council/ -v
 ```bash
 PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 ```
-**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
+**Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please list the current configuration settings."
@@ -610,14 +725,14 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `config_list` | ✅ | ✅ | ✅ | `test_operations.py` | List configuration files |
-| `config_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read config file content |
-| `config_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write config file with backup |
-| `config_delete` | ✅ | ✅ | ✅ | `test_operations.py` | Delete config file |
+| `config_list` | ✅ | ✅ | ❌ | `test_operations.py` | List configuration files |
+| `config_read` | ✅ | ✅ | ❌ | `test_operations.py` | Read config file content |
+| `config_write` | ✅ | ✅ | ❌ | `test_operations.py` | Write config file with backup |
+| `config_delete` | ✅ | ✅ | ❌ | `test_operations.py` | Delete config file |
 
 ---
 
-## 11. Code MCP Server
+## 12. Code MCP Server
 
 **Domain:** Code operations  
 **Directory:** `src/, scripts/, tools/`  
@@ -629,7 +744,7 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 ```bash
 PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 ```
-**Last Verification:** 2025-11-30 ✅ (All Suites Passed)
+**Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please analyze the code structure of the `src` directory."
@@ -651,16 +766,16 @@ PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `code_lint` | ✅ | ✅ | ✅ | `test_operations.py` | Run linting on files/directories |
-| `code_format` | ✅ | ✅ | ✅ | `test_operations.py` | Format code with optional check-only mode |
-| `code_analyze` | ✅ | ✅ | ✅ | `test_operations.py` | Perform static analysis |
-| `code_check_tools` | ✅ | ✅ | ✅ | `test_operations.py` | Check available code quality tools |
-| `code_find_file` | ✅ | ✅ | ✅ | `test_operations.py` | Find files by name or glob pattern |
-| `code_list_files` | ✅ | ✅ | ✅ | `test_operations.py` | List files in directory with pattern |
-| `code_search_content` | ✅ | ✅ | ✅ | `test_operations.py` | Search for text/patterns in code |
-| `code_read` | ✅ | ✅ | ✅ | `test_operations.py` | Read file contents |
-| `code_write` | ✅ | ✅ | ✅ | `test_operations.py` | Write/update file with backup |
-| `code_get_info` | ✅ | ✅ | ✅ | `test_operations.py` | Get file metadata |
+| `code_lint` | ✅ | ✅ | ❌ | `test_operations.py` | Run linting on files/directories |
+| `code_format` | ✅ | ✅ | ❌ | `test_operations.py` | Format code with optional check-only mode |
+| `code_analyze` | ✅ | ✅ | ❌ | `test_operations.py` | Perform static analysis |
+| `code_check_tools` | ✅ | ✅ | ❌ | `test_operations.py` | Check available code quality tools |
+| `code_find_file` | ✅ | ✅ | ❌ | `test_operations.py` | Find files by name or glob pattern |
+| `code_list_files` | ✅ | ✅ | ❌ | `test_operations.py` | List files in directory with pattern |
+| `code_search_content` | ✅ | ✅ | ❌ | `test_operations.py` | Search for text/patterns in code |
+| `code_read` | ✅ | ✅ | ❌ | `test_operations.py` | Read file contents |
+| `code_write` | ✅ | ✅ | ❌ | `test_operations.py` | Write/update file with backup |
+| `code_get_info` | ✅ | ✅ | ❌ | `test_operations.py` | Get file metadata |
 
 ---
 
@@ -704,16 +819,16 @@ pytest tests/ -v
 ### Run Specific MCP Tests
 ```bash
 # Git operations
-pytest tests/test_git_ops.py -v
+pytest tests/mcp_servers/git/ -v
 
 # Chronicle
-pytest tests/test_chronicle_operations.py tests/test_chronicle_validator.py -v
+pytest tests/mcp_servers/chronicle/ -v
 
 # Protocol
-pytest tests/test_protocol_operations.py tests/test_protocol_validator.py -v
+pytest tests/mcp_servers/protocol/ -v
 
 # ADR
-pytest tests/test_adr_operations.py tests/test_adr_validator.py -v
+pytest tests/mcp_servers/adr/ -v
 
 # Task
 pytest tests/mcp_servers/task/ -v

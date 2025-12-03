@@ -10,13 +10,13 @@
 
 ## 1. Objective
 
-Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architecture (`mcp_servers/cognitive/cortex`). This involves refactoring the MCP implementation to match the proven logic of the legacy scripts, moving documentation and tests to their new standard locations, and archiving the legacy folder.
+Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architecture (`mcp_servers.rag_cortex`). This involves refactoring the MCP implementation to match the proven logic of the legacy scripts, moving documentation and tests to their new standard locations, and archiving the legacy folder.
 
 ## 2. Deliverables
 
 1.  **Refactored Cortex MCP:** `CortexOperations` updated to match `ingest.py` logic (batching, error handling).
 2.  **Migrated Documentation:** Cortex docs moved to `docs/mcp/cortex/`.
-3.  **Migrated Tests:** Tests moved to `tests/mcp_servers/cortex/` and updated.
+3.  **Migrated Tests:** Tests moved to `tests/mcp_servers.rag_cortex/` and updated.
 4.  **Archived Legacy Code:** `mnemonic_cortex/` moved to `ARCHIVE/mnemonic_cortex/`.
 5.  **Updated Operations Inventory:** Reflecting the new structure.
 
@@ -29,7 +29,7 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 
 ### Phase 2: Asset Migration
 - [x] Move documentation from `mnemonic_cortex/` to `docs/mcp/cortex/`.
-- [x] Move tests to `tests/mcp_servers/cortex/`.
+- [x] Move tests to `tests/mcp_servers.rag_cortex/`.
 - [x] Update import paths in tests and server code.
 
 ### Phase 3: Verification

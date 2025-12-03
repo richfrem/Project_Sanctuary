@@ -3,7 +3,7 @@ import shutil
 import tempfile
 import os
 from pathlib import Path
-from mcp_servers.lib.code.code_ops import CodeOperations
+from mcp_servers.code.code_ops import CodeOperations
 
 class TestCodeOperations(unittest.TestCase):
     def setUp(self):

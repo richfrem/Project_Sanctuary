@@ -1,8 +1,4 @@
-"""
-Council MCP Server
+"""Council operations library"""
+from .council_ops import CouncilOperations
 
-Exposes the Sanctuary Council Orchestrator via Model Context Protocol.
-Enables external AI agents to dispatch tasks, query memory, and interact with the Council.
-"""
-
-__version__ = "1.0.0"
+__all__ = ["CouncilOperations"]
