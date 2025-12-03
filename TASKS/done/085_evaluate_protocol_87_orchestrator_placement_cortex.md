@@ -46,6 +46,6 @@ Protocol 87 orchestrator routes structured queries to specialized MCPs (Protocol
 **Key Question:** Is this knowledge-specific (Cortex) or general orchestration (Council)?
 
 **Related Files:**
-- mcp_servers/cognitive/cortex/mcp_client.py
-- mcp_servers/cognitive/cortex/operations.py (query_structured method)
+- mcp_servers.rag_cortex/mcp_client.py
+- mcp_servers.rag_cortex/operations.py (query_structured method)
 - mcp_servers/council/ (alternative location)

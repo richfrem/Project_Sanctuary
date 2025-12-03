@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Antigravity
 **Dependencies:** Tasks 077, 078 complete (Agent Persona MCP and Council MCP implemented)
-**Related Documents:** tests/integration/test_council_orchestrator_with_cortex.py.disabled, docs/mcp/cortex_operations.md, workflows/council_orchestration.md, mcp_servers/agent_persona/server.py, mcp_servers/cognitive/cortex/server.py
+**Related Documents:** tests/integration/test_council_orchestrator_with_cortex.py.disabled, docs/mcp/cortex_operations.md, workflows/council_orchestration.md, mcp_servers/agent_persona/server.py, mcp_servers.rag_cortex/server.py
 
 ---
 

@@ -22,7 +22,7 @@ Establish documentation standards for the MCP ecosystem, create templates for MC
    - MCP Server README template (with Operations Table)
    - MCP Tool Docstring template
    - Protocol template (v3.0 aligned)
-3. Audit and update docstrings for all 11 MCP servers
+3. Audit and update docstrings for all 12 MCP servers
 4. Formalize `mcp_operations_inventory.md` maintenance process
 5. Generate/Update API reference documentation for MCP Clients
 
@@ -49,7 +49,7 @@ Establish documentation standards for the MCP ecosystem, create templates for MC
 ### 3. Audit and Update Docstrings (2-3 hours)
 - Review `mcp_servers/council/`
 - Review `mcp_servers/agent_persona/`
-- Review `mcp_servers/cognitive/cortex/`
+- Review `mcp_servers.rag_cortex/`
 - Review `mcp_servers/protocol/`
 - Ensure all tools have consistent, high-quality docstrings
 

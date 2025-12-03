@@ -29,7 +29,7 @@ Create quick start guides for connecting to the MCP ecosystem, user tutorials fo
 - [x] `docs/mcp/QUICKSTART.md` enables a new user to configure Claude/Antigravity in < 10 mins
 - [x] Tutorial for Council MCP covers dispatch, agent selection, and result interpretation
 - [x] Tutorial for Cortex MCP covers querying, ingestion, and scope management
-- [x] Architecture documentation accurately reflects all 11 MCP servers and their relationships
+- [x] Architecture documentation accurately reflects all 12 MCP servers and their relationships
 - [x] System overview diagram updated to v2 state
 - [x] `docs/INDEX.md` provides clear navigation to all resources
 
@@ -55,7 +55,7 @@ Create quick start guides for connecting to the MCP ecosystem, user tutorials fo
 
 ### 3. Update Architecture Documentation (1-2 hours)
 - Update `docs/mcp/architecture.md`
-- Detail the 11 MCP servers:
+- Detail the 12 MCP servers:
   1.  **Admins:** Config, Git, Task
   2.  **Cognitive:** Cortex, Council, Agent Persona, Forge
   3.  **Domain:** Code, Protocol, Chronicle, ADR

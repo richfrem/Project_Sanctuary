@@ -11,35 +11,35 @@ Update all internal references in Cortex MCP from legacy names (`mnemonic_cortex
 
 ## Background
 
-During the migration from `mnemonic_cortex/` to `mcp_servers/cognitive/cortex/`, some internal references were not updated. These need to be cleaned up for consistency and maintainability.
+During the migration from `mnemonic_cortex/` to `mcp_servers.rag_cortex/`, some internal references were not updated. These need to be cleaned up for consistency and maintainability.
 
 ## Issues Found
 
 ### 1. Path References to Legacy Directory
 
-**File:** `mcp_servers/cognitive/cortex/cache.py`
+**File:** `mcp_servers.rag_cortex/cache.py`
 - Line 48-50: References `mnemonic_cortex/cache` directory
 
-**File:** `mcp_servers/cognitive/cortex/utils.py`
+**File:** `mcp_servers.rag_cortex/utils.py`
 - Line 10, 36-37: References `mnemonic_cortex` directory for .env file
 
-**File:** `mcp_servers/cognitive/cortex/operations.py`
+**File:** `mcp_servers.rag_cortex/operations.py`
 - Line 37: References `mnemonic_cortex/scripts` directory
 - Line 126: Excludes `mnemonic_cortex` from ingestion
 - Line 391: References `mnemonic_cortex/` db path
 
 **Decision Needed:** ⚠️
 - Are these paths intentional (pointing to legacy directory for backward compatibility)?
-- Or should they point to new `mcp_servers/cognitive/cortex/` structure?
+- Or should they point to new `mcp_servers.rag_cortex/` structure?
 
 **Action:** Verify if `mnemonic_cortex/` directory still exists and contains active data
 
 ### 2. Import References
 
-**File:** `mcp_servers/cognitive/cortex/server.py`
+**File:** `mcp_servers.rag_cortex/server.py`
 - Line 329: Imports from `mnemonic_cortex.app.synthesis.generator`
 
-**File:** `mcp_servers/cognitive/cortex/operations.py`
+**File:** `mcp_servers.rag_cortex/operations.py`
 - Line 279: Imports from `mnemonic_cortex.app.services.vector_db_service`
 - Line 291: Imports from `mnemonic_cortex.app.services.llm_service`
 
@@ -47,18 +47,18 @@ During the migration from `mnemonic_cortex/` to `mcp_servers/cognitive/cortex/`,
 
 **Action:** 
 - Verify if these modules still exist in `mnemonic_cortex/`
-- If yes, consider migrating to `mcp_servers/cognitive/cortex/`
+- If yes, consider migrating to `mcp_servers.rag_cortex/`
 - If no, remove or update imports
 
 ### 3. Comment and Docstring References ✅ PARTIALLY FIXED
 
-**File:** `mcp_servers/cognitive/cortex/operations.py`
+**File:** `mcp_servers.rag_cortex/operations.py`
 - ~~Line 224: Comment "Uses: mnemonic_cortex RAG infrastructure directly"~~ ✅ FIXED
   - Updated to: "Uses: Cortex MCP RAG infrastructure directly"
 
 ### 4. Scope String References
 
-**File:** `mcp_servers/cognitive/cortex/operations.py`
+**File:** `mcp_servers.rag_cortex/operations.py`
 - Line 909: Scope string `mnemonic_cortex:index`
 
 **Issue:** Internal scope identifier still uses legacy name

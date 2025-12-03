@@ -1,4 +1,4 @@
-"""Agent Persona MCP Server - Package initialization"""
+"""Agent Persona operations library"""
+from .agent_persona_ops import AgentPersonaOperations
 
-__version__ = "1.0.0"
-__description__ = "MCP server for configurable AI agent personas"
+__all__ = ["AgentPersonaOperations"]

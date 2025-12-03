@@ -23,7 +23,7 @@ Updated all RAG, CAG, and Cortex-related tasks to reflect current completion sta
 - **Location:** `TASKS/done/050_implement_rag_mcp_phase_1_foundation.md`
 - **Completion Date:** 2025-11-28
 - **Key Deliverables:**
-  - Complete `mcp_servers/cognitive/cortex/` implementation
+  - Complete `mcp_servers.rag_cortex/` implementation
   - 4 tools: `cortex_ingest_full`, `cortex_query`, `cortex_get_stats`, `cortex_ingest_incremental`
   - 28 unit tests passing (11 models + 17 validator)
   - **3 integration tests passing** (stats, query, incremental)
@@ -63,7 +63,7 @@ Updated all RAG, CAG, and Cortex-related tasks to reflect current completion sta
   "cortex": {
     "displayName": "Cortex MCP (RAG)",
     "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
-    "args": ["-m", "mcp_servers.cognitive.cortex.server"],
+    "args": ["-m", "mcp_servers.rag_cortex.server"],
     "env": {
       "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
       "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"

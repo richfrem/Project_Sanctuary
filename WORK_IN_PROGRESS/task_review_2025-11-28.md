@@ -4,7 +4,7 @@
 
 ### 1. Task 051: Guardian Cache MCP Operations (Protocol 114)
 **Status:** COMPLETE ✅
-- All cache tools implemented in `mcp_servers/cognitive/cortex/server.py`:
+- All cache tools implemented in `mcp_servers.rag_cortex/server.py`:
   - `cortex_cache_get` - Retrieve cached answers
   - `cortex_cache_set` - Store answers
   - `cortex_guardian_wakeup` - Generate boot digest
@@ -14,7 +14,7 @@
 ### 2. Task 052: Operation Nervous System - Phase 1 Core Quad MCP Scaffold
 **Status:** COMPLETE ✅
 - All 4 MCP servers scaffolded and operational:
-  - `mcp_servers/cognitive/cortex/` - Memory/RAG
+  - `mcp_servers.rag_cortex/` - Memory/RAG
   - `mcp_servers/chronicle/` - History/FileSystem
   - `mcp_servers/protocol/` - Law/Validation
   - `mcp_servers/orchestrator/` - Council Logic

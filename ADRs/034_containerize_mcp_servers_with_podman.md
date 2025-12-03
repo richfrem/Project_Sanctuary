@@ -9,7 +9,7 @@
 
 ## Context
 
-Project Sanctuary is implementing 10 MCP (Model Context Protocol) servers as part of the domain-driven architecture. We need to decide on the deployment strategy for these servers to ensure:
+Project Sanctuary is implementing 12 MCP (Model Context Protocol) servers as part of the domain-driven architecture. We need to decide on the deployment strategy for these servers to ensure:
 
 1. **Isolation** - Each MCP server runs independently
 2. **Portability** - Easy deployment across environments

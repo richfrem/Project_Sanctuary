@@ -41,7 +41,7 @@ def test_incremental_ingestion(tmp_path):
     Test incremental ingestion of a new document.
     """
     sys.path.insert(0, str(PROJECT_ROOT))
-    from mcp_servers.cognitive.cortex.operations import CortexOperations
+    from mcp_servers.rag_cortex.operations import CortexOperations
     
     # 1. Create a dummy file
     test_file = tmp_path / "Test_Ingest_Doc.md"

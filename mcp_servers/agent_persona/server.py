@@ -9,7 +9,7 @@ from mcp.server.fastmcp import FastMCP
 from pathlib import Path
 import sys
 
-from mcp_servers.lib.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
 
 # Initialize FastMCP server
 mcp = FastMCP("Agent Persona")

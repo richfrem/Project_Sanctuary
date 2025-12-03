@@ -32,7 +32,7 @@ This parent task coordinates the standardization of documentation across the new
 **Key Deliverables**:
 - `docs/mcp/DOCUMENTATION_STANDARDS.md`
 - MCP Server README & Tool Docstring Templates
-- Audit of all 11 MCP servers for docstring quality
+- Audit of all 12 MCP servers for docstring quality
 - `mcp_operations_inventory.md` maintenance process
 
 ---
@@ -64,7 +64,7 @@ This parent task coordinates the standardization of documentation across the new
 **Key Deliverables**:
 - `docs/mcp/README.md` (Index)
 - `docs/mcp/TESTING_STANDARDS.md`
-- Standardized READMEs for all 11 MCP servers
+- Standardized READMEs for all 12 MCP servers
 - Testing workflows documented for each server
 
 ---
@@ -87,7 +87,7 @@ This parent task coordinates the standardization of documentation across the new
 
 When all sub-tasks are complete:
 
-- [ ] All 11 MCP servers have standardized READMEs
+- [ ] All 12 MCP servers have standardized READMEs
 - [ ] `docs/mcp/` is the single source of truth for MCP docs
 - [ ] Quick start guide enables setup in < 10 minutes
 - [ ] Architecture diagrams accurately reflect the v2 system

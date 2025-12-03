@@ -3,7 +3,7 @@
 ## CURRENT STATUS
 **MCP Cortex Testing: 10/10 Tools Verified ✅**
 
-The Mnemonic Cortex MCP server (`mcp_servers/cognitive/cortex`) has been fully verified.
+The Mnemonic Cortex MCP server (`mcp_servers.rag_cortex`) has been fully verified.
 
 ### Verified MCP Tools (10/10):
 1. ✅ `cortex_get_stats` - Database health (470 docs, 7859 chunks)
@@ -47,7 +47,7 @@ Chronicle and Protocol MCP servers may have configuration corruption in `~/.gemi
 - **Verification Script:** `mnemonic_cortex/scripts/verify_all.py`
 - **Operations Guide:** `mnemonic_cortex/OPERATIONS_GUIDE.md`
 - **Master Plan:** `TASKS/MASTER_PLAN.md`
-- **Cortex MCP Server:** `mcp_servers/cognitive/cortex/server.py`
+- **Cortex MCP Server:** `mcp_servers.rag_cortex/server.py`
 
 ## IMMEDIATE REQUEST
 Please complete testing of the remaining 4 Cortex MCP tools and update the MASTER_PLAN when done.

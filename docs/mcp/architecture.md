@@ -17,7 +17,7 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 
 ## Ecosystem Overview
 
-### Complete 11-Server Architecture
+### Complete 12-Server Architecture
 
 ```mermaid
 graph TB
@@ -33,22 +33,24 @@ graph TB
     end
     
     subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex["Cortex MCP (RAG)<br/>mcp_servers/cognitive/cortex/"]
+        Cortex["RAG Cortex MCP<br/>mcp_servers/rag_cortex/"]
         AgentPersona["Agent Persona MCP<br/>mcp_servers/agent_persona/"]
+        Council["Council MCP<br/>mcp_servers/council/"]
+        Orchestrator["Orchestrator MCP<br/>mcp_servers/orchestrator/"]
     end
     
     subgraph "System Domains - High Safety"
         Config[Config MCP<br/>.agent/config/]
         Code[Code MCP<br/>src/, scripts/, tools/]
-        GitWorkflow[Git Workflow MCP<br/>.git/]
+        Git[Git MCP<br/>.git/]
     end
     
     subgraph "Model Domain - Specialized Hardware"
-        Forge["Fine-Tuning MCP (Forge)<br/>forge/<br/>⚡ CUDA GPU Required"]
+        Forge["Forge LLM MCP<br/>mcp_servers/forge_llm/<br/>⚡ CUDA GPU Required"]
     end
     
     subgraph "Shared Infrastructure"
-        Git[Git Operations<br/>P101 Compliance]
+        GitOps[Git Operations<br/>P101 Compliance]
         Safety[Safety Validator<br/>Protection Levels]
         Schema[Schema Validator<br/>Domain Schemas]
         Vault[Secret Vault<br/>API Keys & Secrets]
@@ -60,20 +62,22 @@ graph TB
     LLM -->|MCP Protocol| Task
     LLM -->|MCP Protocol| Cortex
     LLM -->|MCP Protocol| AgentPersona
+    LLM -->|MCP Protocol| Council
+    LLM -->|MCP Protocol| Orchestrator
     LLM -->|MCP Protocol| Config
     LLM -->|MCP Protocol| Code
-    LLM -->|MCP Protocol| GitWorkflow
+    LLM -->|MCP Protocol| Git
     LLM -->|MCP Protocol| Forge
     
-    Chronicle --> Git
-    Protocol --> Git
-    ADR --> Git
-    Task --> Git
-    Config --> Git
-    Code --> Git
-    Forge --> Git
+    Chronicle --> GitOps
+    Protocol --> GitOps
+    ADR --> GitOps
+    Task --> GitOps
+    Config --> GitOps
+    Code --> GitOps
+    Forge --> GitOps
     
-    GitWorkflow --> Git
+    Git --> GitOps
     
     Chronicle --> Safety
     Protocol --> Safety
@@ -81,9 +85,11 @@ graph TB
     Task --> Safety
     Cortex --> Safety
     AgentPersona --> Safety
+    Council --> Safety
+    Orchestrator --> Safety
     Config --> Safety
     Code --> Safety
-    GitWorkflow --> Safety
+    Git --> Safety
     Forge --> Safety
     
     Chronicle --> Schema
@@ -92,9 +98,11 @@ graph TB
     Task --> Schema
     Cortex --> Schema
     AgentPersona --> Schema
+    Council --> Schema
+    Orchestrator --> Schema
     Config --> Schema
     Code --> Schema
-    GitWorkflow --> Schema
+    Git --> Schema
     Forge --> Schema
     
     Config --> Vault
@@ -108,9 +116,9 @@ graph TB
     style AgentPersona fill:#f3e5f5
     style Config fill:#ffcccc
     style Code fill:#ffcccc
-    style GitWorkflow fill:#ffcccc
+    style Git fill:#ffcccc
     style Forge fill:#ff9999
-    style Git fill:#e0e0e0
+    style GitOps fill:#e0e0e0
     style Safety fill:#e0e0e0
     style Schema fill:#e0e0e0
     style Vault fill:#e0e0e0
@@ -631,7 +639,7 @@ search_tasks(query: string) => Task[]
 ### 5. RAG MCP (Cortex) - Retrieval-Augmented Generation
 
 **Domain:** RAG operations  
-**Directory:** `mnemonic_cortex/`  
+**Directory:** `mcp_servers/rag_cortex/`  
 **Purpose:** Query vector database, ingest documents, manage knowledge
 
 ```mermaid
@@ -730,78 +738,6 @@ search_by_metadata(filters: object) => Document[]
 - Metadata must be valid JSON
 
 ---
-
-### 6. Agent Orchestrator MCP (Council) - Multi-Agent Coordination
-
-**Domain:** Council deliberation  
-**Directory:** `council_orchestrator/`  
-**Purpose:** Pure cognitive tasks - Council deliberation and analysis
-
-```mermaid
-graph LR
-    subgraph "Agent Orchestrator MCP Tools"
-        A[create_deliberation]
-        B[create_dev_cycle]
-        C[get_council_status]
-        D[get_result]
-    end
-    
-    subgraph "Operations"
-        E[Generate command.json]
-        F[Monitor Orchestrator]
-        G[Retrieve Results]
-    end
-    
-    subgraph "Council Orchestrator"
-        H[Command Sentry]
-        I[Council Agents]
-        J[Output Artifacts]
-    end
-    
-    A --> E
-    B --> E
-    E --> H
-    H --> I
-    I --> J
-    
-    C --> F
-    F --> H
-    
-    D --> G
-    G --> J
-    
-    style A fill:#ccffcc
-    style B fill:#ccffcc
-    style C fill:#ccccff
-    style D fill:#ccccff
-```
-
-**Tool Signatures:**
-
-```typescript
-// Create deliberation task
-create_deliberation(
-  description: string,            // Required
-  output_path: string,            // Required
-  max_rounds?: number,            // Optional (default: 5)
-  force_engine?: string,          // Optional (gemini/openai/ollama)
-  max_cortex_queries?: number,    // Optional (default: 5)
-  input_artifacts?: string[]      // Optional
-) => {
-  command_file: string,
-  status: "queued"
-}
-
-// Create development cycle
-create_dev_cycle(
-  description: string,            // Required
-  project_name: string,           // Required
-  output_dir: string,             // Required
-  force_engine?: string           // Optional
-) => {
-  command_file: string,
-  status: "queued"
-}
 
 // Status and results
 get_council_status() => {

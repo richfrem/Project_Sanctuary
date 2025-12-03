@@ -10,7 +10,7 @@
 Implement RAG MCP Phase 1 (Foundation) with 4 core tools: `cortex_ingest_full`, `cortex_query`, `cortex_get_stats`, `cortex_ingest_incremental`. This provides the foundational RAG capabilities via MCP protocol.
 
 ## Deliverables
-- [x] `mcp_servers/cognitive/cortex/` directory structure
+- [x] `mcp_servers.rag_cortex/` directory structure
 - [x] `models.py` - Data models for RAG operations
 - [x] `validator.py` - Input validation and safety checks
 - [x] `operations.py` - Core RAG operations (wraps existing scripts)

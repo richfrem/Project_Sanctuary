@@ -12,12 +12,12 @@
 
 ## Objective
 
-Perform comprehensive testing of all 11 MCP servers after recent changes (logging additions, documentation updates, gap analysis). Verify that all operations work correctly both via test harnesses and through the Antigravity agent interface.
+Perform comprehensive testing of all 12 MCP servers after recent changes (logging additions, documentation updates, gap analysis). Verify that all operations work correctly both via test harnesses and through the Antigravity agent interface.
 
 ## Deliverables
 
-1. Test harness execution results for all 11 MCPs
-2. Antigravity operation testing results for all 11 MCPs
+1. Test harness execution results for all 12 MCPs
+2. Antigravity operation testing results for all 12 MCPs
 3. Bug reports for any failures
 4. Updated test coverage documentation
 
@@ -47,9 +47,9 @@ For each MCP, run the pytest test harness to validate underlying operations:
    pytest tests/test_task_operations.py tests/test_task_validator.py -v
    ```
 
-5. **Cortex MCP**
+5. **RAG Cortex MCP**
    ```bash
-   pytest tests/mcp_servers/cortex/ -v
+   pytest tests/mcp_servers/rag_cortex/ -v
    ```
 
 6. **Agent Persona MCP**
@@ -62,14 +62,14 @@ For each MCP, run the pytest test harness to validate underlying operations:
    pytest tests/mcp_servers/council/ -v
    ```
 
-8. **Forge MCP**
+8. **Forge LLM MCP**
    ```bash
    pytest tests/integration/test_forge_model_serving.py -v
    ```
 
-9. **Git Workflow MCP**
+9. **Git MCP**
    ```bash
-   pytest tests/integration/test_council_with_git.py -v
+   pytest tests/test_git_ops.py -v
    ```
 
 10. **Code MCP**
@@ -82,6 +82,11 @@ For each MCP, run the pytest test harness to validate underlying operations:
     ```bash
     # Check if tests exist
     find tests -name "*config*" -type f
+    ```
+
+12. **Orchestrator MCP**
+    ```bash
+    pytest tests/mcp_servers/orchestrator/ -v
     ```
 
 ### Phase 2: Antigravity Operation Testing (MCP Tool Interface) 🤖
@@ -112,7 +117,7 @@ For each MCP, test key operations directly via Antigravity:
 - [ ] `get_task` - Retrieve specific task
 - [ ] `update_task_status` - Update task status
 
-#### 5. Cortex MCP
+#### 5. RAG Cortex MCP
 - [ ] `cortex_query` - Query knowledge base
 - [ ] `cortex_ingest_incremental` - Incremental ingestion
 - [ ] `cortex_get_stats` - Get collection stats
@@ -129,13 +134,13 @@ For each MCP, test key operations directly via Antigravity:
 - [ ] `council_dispatch` (single agent) - Specific agent
 - [ ] `council_list_agents` - List agents
 
-#### 8. Forge MCP
+#### 8. Forge LLM MCP
 - [ ] `check_sanctuary_model_status` - Check model availability
 - [ ] `query_sanctuary_model` - Query the model
 
-#### 9. Git Workflow MCP
-- [ ] `git_status` - Check git status
-- [ ] `git_create_branch` - Create feature branch
+#### 9. Git MCP
+- [ ] `git_get_status` - Check git status
+- [ ] `git_start_feature` - Create feature branch
 - [ ] `git_smart_commit` - Smart commit
 
 #### 10. Code MCP
@@ -149,9 +154,14 @@ For each MCP, test key operations directly via Antigravity:
 - [ ] `config_write` - Write config
 - [ ] `config_list` - List configs
 
+#### 12. Orchestrator MCP
+- [ ] `get_orchestrator_status` - Check status
+- [ ] `orchestrator_dispatch_mission` - Dispatch mission
+- [ ] `list_recent_tasks` - List tasks
+
 ## Acceptance Criteria
 
-- [ ] All 11 MCP test harnesses execute successfully
+- [ ] All 12 MCP test harnesses execute successfully
 - [ ] All key operations tested via Antigravity
 - [ ] Any failures documented with bug reports
 - [ ] Test coverage gaps identified
@@ -159,7 +169,7 @@ For each MCP, test key operations directly via Antigravity:
 
 ## Success Metrics
 
-- **Test Harnesses**: 11/11 passing
+- **Test Harnesses**: 12/12 passing
 - **Antigravity Operations**: All key operations verified
 - **Documentation**: Test results recorded in inventory
 
