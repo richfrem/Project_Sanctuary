@@ -1,8 +1,8 @@
 # tests Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-03T05:36:27.783Z
+Generated On: 2025-12-03T20:09:47.983Z
 
-# Mnemonic Weight (Token Count): ~49,073 tokens
+# Mnemonic Weight (Token Count): ~49,363 tokens
 
 # Directory Structure (relative to tests subfolder)
   ./tests/benchmarks/
@@ -75,16 +75,12 @@ Generated On: 2025-12-03T05:36:27.783Z
   ./tests/mcp_servers/rag_cortex/test_models.py
   ./tests/mcp_servers/rag_cortex/test_operations.py
   ./tests/mcp_servers/rag_cortex/test_protocol_87_orchestrator.py
+  ./tests/mcp_servers/rag_cortex/test_setup_validation.py
   ./tests/mcp_servers/rag_cortex/test_validator.py
   ./tests/mcp_servers/task/
   ./tests/mcp_servers/task/__init__.py
   ./tests/mcp_servers/task/test_e2e_workflow.py
   ./tests/mcp_servers/task/test_operations.py
-  ./tests/podman/
-  ./tests/podman/Dockerfile
-  ./tests/podman/README.md
-  ./tests/podman/app.py
-  ./tests/podman/build.sh
   ./tests/run_integration_tests.sh
   ./tests/test_pre_commit_hook.sh
   ./tests/test_utils.py
@@ -3495,13 +3491,39 @@ Cortex MCP Server Tests
 
 --- START OF FILE mcp_servers/rag_cortex/conftest.py ---
 
+"""
+Pytest configuration for RAG Cortex MCP tests.
+"""
 import pytest
 import tempfile
 import shutil
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+# Import container manager
+from mcp_servers.rag_cortex.container_manager import ensure_chromadb_running
+
 from mcp_servers.rag_cortex.operations import CortexOperations
+
+@pytest.fixture(scope="session", autouse=True)
+def ensure_chromadb():
+    """Ensure ChromaDB container is running before tests start."""
+    print("\n[Test Setup] Checking ChromaDB service...")
+    success, message = ensure_chromadb_running(str(project_root))
+    
+    if success:
+        print(f"[Test Setup] ✓ {message}")
+    else:
+        print(f"[Test Setup] ✗ {message}")
+        pytest.skip("ChromaDB service not available - skipping RAG Cortex tests")
+    
+    yield
+    # Cleanup if needed (container keeps running for now)
 
 @pytest.fixture
 def temp_project_root():
@@ -4735,6 +4757,198 @@ class TestProtocol87Integration:
 
 --- END OF FILE mcp_servers/rag_cortex/test_protocol_87_orchestrator.py ---
 
+--- START OF FILE mcp_servers/rag_cortex/test_setup_validation.py ---
+
+"""
+RAG Cortex Setup Validation Script
+
+This script validates the complete RAG Cortex setup:
+1. Verifies ChromaDB container is running
+2. Tests database connectivity
+3. Checks if data exists
+4. Performs full ingestion if needed
+5. Runs sample queries to validate content
+"""
+
+import os
+import sys
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+import chromadb
+from mcp_servers.rag_cortex.operations import CortexOperations
+from mcp_servers.rag_cortex.container_manager import ensure_chromadb_running
+
+
+def test_chromadb_connection():
+    """Test 1: Verify ChromaDB is accessible"""
+    print("\n" + "="*60)
+    print("TEST 1: ChromaDB Connection")
+    print("="*60)
+    
+    try:
+        chroma_host = os.getenv("CHROMA_HOST", "localhost")
+        chroma_port = int(os.getenv("CHROMA_PORT", "8000"))
+        
+        print(f"Connecting to ChromaDB at {chroma_host}:{chroma_port}...")
+        client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
+        
+        collections = client.list_collections()
+        print(f"✓ Connected successfully!")
+        print(f"✓ Found {len(collections)} collections")
+        
+        return True, client
+    except Exception as e:
+        print(f"✗ Connection failed: {e}")
+        return False, None
+
+
+def test_data_exists(client):
+    """Test 2: Check if data exists in ChromaDB"""
+    print("\n" + "="*60)
+    print("TEST 2: Data Existence Check")
+    print("="*60)
+    
+    try:
+        child_collection_name = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
+        
+        collections = client.list_collections()
+        collection_names = [c.name for c in collections]
+        
+        if child_collection_name in collection_names:
+            collection = client.get_collection(name=child_collection_name)
+            count = collection.count()
+            print(f"✓ Collection '{child_collection_name}' exists")
+            print(f"✓ Contains {count} chunks")
+            return count > 0, count
+        else:
+            print(f"✗ Collection '{child_collection_name}' not found")
+            return False, 0
+            
+    except Exception as e:
+        print(f"✗ Error checking data: {e}")
+        return False, 0
+
+
+def perform_full_ingestion():
+    """Test 3: Perform full data ingestion"""
+    print("\n" + "="*60)
+    print("TEST 3: Full Data Ingestion")
+    print("="*60)
+    
+    try:
+        ops = CortexOperations(str(project_root))
+        
+        print("Starting full ingestion (this may take a few minutes)...")
+        result = ops.ingest_full(purge_existing=True)
+        
+        if result.status == "success":
+            print(f"✓ Ingestion successful!")
+            print(f"  - Documents processed: {result.documents_processed}")
+            print(f"  - Chunks created: {result.chunks_created}")
+            print(f"  - Time: {result.ingestion_time_ms/1000:.2f}s")
+            return True, result.chunks_created
+        else:
+            print(f"✗ Ingestion failed: {result.error}")
+            return False, 0
+            
+    except Exception as e:
+        print(f"✗ Ingestion error: {e}")
+        import traceback
+        traceback.print_exc()
+        return False, 0
+
+
+def test_sample_query():
+    """Test 4: Run sample query to validate content"""
+    print("\n" + "="*60)
+    print("TEST 4: Sample Query Validation")
+    print("="*60)
+    
+    try:
+        ops = CortexOperations(str(project_root))
+        
+        test_query = "What is the MCP architecture?"
+        print(f"Query: '{test_query}'")
+        
+        result = ops.query(query=test_query, max_results=3)
+        
+        if result.status == "success" and result.results:
+            print(f"✓ Query successful!")
+            print(f"  - Found {len(result.results)} results")
+            print(f"\nTop result preview:")
+            top_result = result.results[0]
+            print(f"  Source: {top_result.metadata.get('source', 'Unknown')}")
+            print(f"  Content: {top_result.content[:200]}...")
+            return True
+        else:
+            print(f"✗ Query failed or returned no results")
+            if result.error:
+                print(f"  Error: {result.error}")
+            return False
+            
+    except Exception as e:
+        print(f"✗ Query error: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
+def main():
+    """Run complete setup validation"""
+    print("\n" + "🚀 RAG CORTEX SETUP VALIDATION" + "\n")
+    
+    # Ensure ChromaDB container is running
+    print("Checking ChromaDB container...")
+    success, message = ensure_chromadb_running(str(project_root))
+    if success:
+        print(f"✓ {message}")
+    else:
+        print(f"✗ {message}")
+        print("\nPlease ensure Podman is running and try again.")
+        return False
+    
+    # Test 1: Connection
+    connected, client = test_chromadb_connection()
+    if not connected:
+        print("\n❌ Setup validation FAILED: Cannot connect to ChromaDB")
+        return False
+    
+    # Test 2: Data existence
+    has_data, chunk_count = test_data_exists(client)
+    
+    # Test 3: Ingestion (if needed)
+    if not has_data:
+        print("\nNo data found. Performing initial ingestion...")
+        ingested, new_chunks = perform_full_ingestion()
+        if not ingested:
+            print("\n❌ Setup validation FAILED: Ingestion failed")
+            return False
+    else:
+        print(f"\n✓ Data already exists ({chunk_count} chunks)")
+    
+    # Test 4: Query validation
+    query_ok = test_sample_query()
+    if not query_ok:
+        print("\n❌ Setup validation FAILED: Query test failed")
+        return False
+    
+    # All tests passed
+    print("\n" + "="*60)
+    print("✅ ALL TESTS PASSED - RAG Cortex is ready!")
+    print("="*60)
+    return True
+
+
+if __name__ == "__main__":
+    success = main()
+    sys.exit(0 if success else 1)
+
+--- END OF FILE mcp_servers/rag_cortex/test_setup_validation.py ---
+
 --- START OF FILE mcp_servers/rag_cortex/test_validator.py ---
 
 """
@@ -5496,191 +5710,6 @@ if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 
 --- END OF FILE mcp_servers/task/test_operations.py ---
-
---- START OF FILE podman/README.md ---
-
-# Podman Test Container
-
-This is a simple Flask web app to verify Podman is working correctly before implementing the Task MCP server.
-
-## Files
-
-- `app.py` - Simple Flask hello world web app
-- `Dockerfile` - Container definition
-- `build.sh` - Build script with instructions
-
-## Quick Start
-
-### Build the Image
-
-```bash
-cd tests/podman
-./build.sh
-```
-
-### Run in Podman Desktop (Visual)
-
-1. Open **Podman Desktop**
-2. Go to **Images** tab
-3. Find `sanctuary-podman-test:latest`
-4. Click the **▶️ play button**
-5. Configure:
-   - **Port mapping:** `5000:5000`
-   - **Container name:** `sanctuary-test`
-6. Click **Start Container**
-7. Go to **Containers** tab
-8. Click on `sanctuary-test`
-9. Click **Open Browser** or visit: http://localhost:5000
-
-### Run from Command Line
-
-```bash
-# Run container
-podman run -d -p 5000:5000 --name sanctuary-test sanctuary-podman-test:latest
-
-# View logs
-podman logs sanctuary-test
-
-# Stop container
-podman stop sanctuary-test
-
-# Remove container
-podman rm sanctuary-test
-```
-
-## What You Should See
-
-- **Browser:** A purple gradient page with "Podman Test Successful!" 🚀
-- **Health endpoint:** http://localhost:5000/health returns JSON
-
-## Verification Checklist
-
-- [x] Podman installed (v5.7.0)
-- [x] Podman machine running
-- [ ] Image builds successfully
-- [ ] Container runs in Podman Desktop
-- [ ] Web page loads in browser
-- [ ] Health endpoint responds
-
-Once all checks pass, Podman is ready for Task MCP deployment! ✅
-
---- END OF FILE podman/README.md ---
-
---- START OF FILE podman/app.py ---
-
-"""
-Simple Flask Hello World App for Podman Testing
-"""
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def hello():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Podman Test - Project Sanctuary</title>
-        <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-            }
-            .container {
-                background: white;
-                padding: 3rem;
-                border-radius: 20px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                text-align: center;
-                max-width: 500px;
-            }
-            h1 {
-                color: #667eea;
-                margin-bottom: 1rem;
-            }
-            .emoji {
-                font-size: 4rem;
-                margin: 1rem 0;
-            }
-            .info {
-                background: #f0f4ff;
-                padding: 1rem;
-                border-radius: 10px;
-                margin-top: 1rem;
-            }
-            .status {
-                color: #10b981;
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="emoji">🚀</div>
-            <h1>Podman Test Successful!</h1>
-            <p>Project Sanctuary - Task MCP Server</p>
-            <div class="info">
-                <p><span class="status">✅ Container Running</span></p>
-                <p>Podman Desktop Integration: <strong>Working</strong></p>
-                <p>Ready for MCP Server Deployment</p>
-            </div>
-        </div>
-    </body>
-    </html>
-    '''
-
-@app.route('/health')
-def health():
-    return {'status': 'healthy', 'service': 'podman-test'}
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
-
---- END OF FILE podman/app.py ---
-
---- START OF FILE podman/build.sh ---
-
-#!/bin/bash
-# Build and run Podman test container
-# This verifies Podman is working before implementing Task MCP
-
-set -e
-
-echo "🚀 Building Podman Test Container..."
-cd "$(dirname "$0")"
-
-# Build the image
-podman build -t sanctuary-podman-test:latest .
-
-echo "✅ Image built successfully!"
-echo ""
-echo "📋 To run the container in Podman Desktop:"
-echo ""
-echo "1. Open Podman Desktop"
-echo "2. Go to 'Images' tab"
-echo "3. Find 'sanctuary-podman-test:latest'"
-echo "4. Click the ▶️ play button"
-echo "5. Configure:"
-echo "   - Port mapping: 5001:5001 (or use any available port like 5003:5001)"
-echo "   - Name: sanctuary-test"
-echo "6. Click 'Start Container'"
-echo "7. Open browser: http://localhost:5001 (or your chosen port)"
-echo ""
-echo "Or run from command line:"
-echo "  podman run -d -p 5001:5001 --name sanctuary-test sanctuary-podman-test:latest"
-echo "  # Or use a different host port:"
-echo "  podman run -d -p 5003:5001 --name sanctuary-test sanctuary-podman-test:latest"
-echo ""
-echo "To view in browser: http://localhost:5001 (or http://localhost:5003 if you used that port)"
-echo "To check health: http://localhost:5001/health"
-
---- END OF FILE podman/build.sh ---
 
 --- START OF FILE run_integration_tests.sh ---
 

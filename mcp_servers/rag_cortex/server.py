@@ -8,6 +8,7 @@ from fastmcp import FastMCP
 from .operations import CortexOperations
 from .validator import CortexValidator, ValidationError
 from .models import to_dict
+from .container_manager import ensure_chromadb_running
 import os
 import json
 from typing import Optional, List
@@ -19,6 +20,16 @@ mcp = FastMCP("project_sanctuary.cognitive.cortex")
 PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
 cortex_ops = CortexOperations(PROJECT_ROOT)
 cortex_validator = CortexValidator(PROJECT_ROOT)
+
+# Ensure ChromaDB container is running
+print("[RAG Cortex] Checking ChromaDB service...")
+success, message = ensure_chromadb_running(PROJECT_ROOT)
+if success:
+    print(f"[RAG Cortex] ✓ {message}")
+else:
+    print(f"[RAG Cortex] ✗ {message}")
+    print("[RAG Cortex] WARNING: Some operations may fail without ChromaDB service")
+
 
 
 @mcp.tool()

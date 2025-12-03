@@ -1,12 +1,12 @@
 # docs Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-12-03T06:00:30.618Z
+Generated On: 2025-12-03T20:09:43.946Z
 
-# Mnemonic Weight (Token Count): ~149,399 tokens
+# Mnemonic Weight (Token Count): ~152,592 tokens
 
 # Directory Structure (relative to docs subfolder)
   ./docs/INDEX.md
-  ./docs/WSL_SECRETS_CONFIGURATION.md
+  ./docs/SECRETS_CONFIGURATION.md
   ./docs/cicd/
   ./docs/cicd/PROJECT_SANCTUARY_INTEGRATION.md
   ./docs/cicd/git_workflow.md
@@ -98,6 +98,7 @@ Generated On: 2025-12-03T06:00:30.618Z
   ./docs/mcp/servers/protocol/README.md
   ./docs/mcp/servers/rag_cortex/
   ./docs/mcp/servers/rag_cortex/README.md
+  ./docs/mcp/servers/rag_cortex/SETUP.md
   ./docs/mcp/servers/rag_cortex/analysis/
   ./docs/mcp/servers/rag_cortex/analysis/gap_analysis_v2.md
   ./docs/mcp/servers/rag_cortex/analysis/protocol_87_placement_analysis.md
@@ -169,20 +170,59 @@ Welcome to the Project Sanctuary documentation hub. This index serves as the ent
 
 --- END OF FILE INDEX.md ---
 
---- START OF FILE WSL_SECRETS_CONFIGURATION.md ---
+--- START OF FILE SECRETS_CONFIGURATION.md ---
 
-# WSL Secrets Configuration Guide
+# Secrets & Environment Configuration Guide
 
-This guide explains how to securely manage sensitive environment variables (API keys, tokens) by storing them in Windows and sharing them with WSL, rather than keeping them in plain text files like `.env`.
+**Scope:** Windows (WSL2), macOS, Linux
+**Purpose:** Securely manage API keys and sensitive configuration without committing them to git.
+
+---
 
 ## Overview
 
-The goal is to:
-1.  Store secrets in the Windows User Environment Variables (secure).
-2.  Use `WSLENV` to automatically pass these variables into your WSL instance.
-3.  Remove secrets from `.env` files to prevent accidental commits.
+Project Sanctuary requires several API keys (OpenAI, Gemini, Hugging Face) to function. **NEVER** store these keys directly in `.env` files or commit them to the repository.
 
-## Step 1: Set Secrets in Windows
+Instead, we use **Environment Variables** injected into the shell session.
+
+---
+
+## 🍎 macOS & Linux Configuration
+
+For macOS and Linux users, the standard practice is to export these variables in your shell profile (`.zshrc`, `.bashrc`, or `.bash_profile`).
+
+### 1. Open your shell profile
+
+```bash
+# For Zsh (default on modern macOS)
+nano ~/.zshrc
+
+# For Bash
+nano ~/.bashrc
+```
+
+### 2. Add your secrets
+
+Add the following lines to the bottom of the file:
+
+```bash
+# Project Sanctuary Secrets
+export GEMINI_API_KEY="your_gemini_key_here"
+export OPENAI_API_KEY="your_openai_key_here"
+export HUGGING_FACE_TOKEN="your_hf_token_here"
+```
+
+### 3. Apply changes
+
+```bash
+source ~/.zshrc  # or ~/.bashrc
+```
+
+---
+
+## 🪟 Windows (WSL2) Configuration
+
+For WSL2, we use `WSLENV` to share environment variables from Windows to the Linux subsystem. This keeps secrets managed in one place (Windows) and available in WSL.
 
 You need to add your API keys and tokens to your Windows User Environment Variables.
 
@@ -332,7 +372,7 @@ Just like the Windows guide, delete any hard‑coded secrets from your project's
 
 ---
 
---- END OF FILE WSL_SECRETS_CONFIGURATION.md ---
+--- END OF FILE SECRETS_CONFIGURATION.md ---
 
 --- START OF FILE cicd/PROJECT_SANCTUARY_INTEGRATION.md ---
 
@@ -13316,14 +13356,33 @@ pip install mcp
 
 ---
 
+## MCP Server-Specific Setup
+
+Once general prerequisites are met, refer to server-specific setup guides:
+
+### RAG Cortex (ChromaDB Vector Database)
+
+The RAG Cortex requires additional setup for the ChromaDB service:
+
+**📖 See: [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)**
+
+This includes:
+- ChromaDB container configuration
+- Environment variables (`CHROMA_HOST`, `CHROMA_PORT`)
+- Initial database population
+- Verification steps
+
+---
+
 ## Next Steps
 
 Once all prerequisites are met:
 
 1. ✅ Review [architecture.md](./architecture.md)
 2. ✅ Review [naming_conventions.md](./naming_conventions.md)
-3. ✅ Start with Task #031: Implement Task MCP
-4. Follow implementation tasks #029-#036
+3. ✅ For RAG Cortex: Follow [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)
+4. ✅ For other MCPs: Start with Task #031: Implement Task MCP
+5. Follow implementation tasks #029-#036
 
 ---
 
@@ -13332,6 +13391,7 @@ Once all prerequisites are met:
 - [ADR 034: Containerize MCP Servers with Podman](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/034_containerize_mcp_servers_with_podman.md)
 - [Podman Documentation](https://docs.podman.io/)
 - [MCP Specification](https://modelcontextprotocol.io/)
+- [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)
 - [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)
 
 --- END OF FILE mcp/prerequisites.md ---
@@ -14986,7 +15046,13 @@ Update an existing protocol
 
 RAG Cortex MCP provides retrieval-augmented generation capabilities for Project Sanctuary. It manages the knowledge base, vector embeddings, and semantic search.
 
-## Key Concepts
+## Architectural Shift: From Local File to Network Host
+
+The RAG Cortex transitioned from a legacy file-system-based database connection to a persistent **Network Service Model** (Protocol P114).
+
+* **Legacy Model (Deprecated):** The system stored ChromaDB files directly on disk at a path (e.g., `mnemonic_cortex/chroma_db`). This was fragile, slow, and incompatible with distributed agent architecture.
+* **Current MCP Model:** ChromaDB runs as a dedicated server (`vector-db` service in Docker Compose). The RAG Cortex MCP connects to it via a **network address** defined in the root `.env` file (`CHROMA_HOST`, `CHROMA_PORT`).
+* **Data Persistence:** Database files are persisted via a Docker bind mount to the host directory: **`.vector_data/`**. The core application logic *never* touches this folder; it only communicates over the network.
 
 - **Vector Database:** ChromaDB for semantic search
 - **Embeddings:** OpenAI text-embedding-3-small
@@ -15017,6 +15083,31 @@ External LLM → Cortex MCP (Server)
 - **Server Code:** [mcp_servers/rag_cortex/server.py](../../../mcp_servers/rag_cortex/server.py)
 - **Operations:** [mcp_servers/rag_cortex/operations.py](../../../mcp_servers/rag_cortex/operations.py)
 - **Models:** [mcp_servers/rag_cortex/models.py](../../../mcp_servers/rag_cortex/models.py)
+- **Container Service:** [docker-compose.yml](../../../docker-compose.yml) (`vector-db` service)
+
+## Setup & Installation
+
+For complete setup instructions, including Podman installation, service configuration, and initial database population, see:
+
+**📖 [RAG Cortex Setup Guide](SETUP.md)**
+
+Quick start:
+```bash
+# 1. Ensure Podman is running (one-time setup)
+podman machine start
+
+# 2. Start MCP server (ChromaDB auto-starts)
+python mcp_servers/rag_cortex/server.py
+
+# 3. Populate database (first time only)
+python scripts/cortex_ingest_full.py
+
+# 4. Verify
+python scripts/cortex_stats.py
+```
+
+> [!NOTE]
+> The RAG Cortex MCP server automatically starts the ChromaDB container when it initializes. You don't need to manually run `podman-compose up` unless you want to start the service independently.
 
 ## Testing
 
@@ -15048,6 +15139,433 @@ Warm up the cache with frequently accessed documents
 ✅ **Operational** - Core functionality working, some dependency issues in tests
 
 --- END OF FILE mcp/servers/rag_cortex/README.md ---
+
+--- START OF FILE mcp/servers/rag_cortex/SETUP.md ---
+
+# RAG Cortex Setup Guide
+
+**Last Updated:** 2025-12-03  
+**Status:** Canonical
+
+---
+
+## Overview
+
+This guide covers the complete setup and operation of the RAG Cortex MCP server with ChromaDB running as a containerized service via Podman (per [ADR 034](../../../ADRs/034_containerize_mcp_servers_with_podman.md)).
+
+The RAG Cortex provides retrieval-augmented generation capabilities for Project Sanctuary, managing the knowledge base, vector embeddings, and semantic search.
+
+---
+
+## Prerequisites
+
+### General MCP Prerequisites
+
+Before setting up RAG Cortex, ensure you have completed the general MCP prerequisites:
+
+**📖 See: [MCP Server Prerequisites](../../prerequisites.md)**
+
+Key requirements:
+- **Podman** installed and running (Podman Desktop recommended)
+- **Python 3.11+** with virtual environment activated
+- **Project dependencies** installed from `requirements.txt`
+
+### System Requirements
+
+- **CPU:** 4+ cores recommended
+- **RAM:** 8GB minimum, 16GB recommended for large ingestion
+- **Disk:** 10GB+ free space for vector database and container images
+- **Network:** Port 8000 available for ChromaDB service
+
+## Automated Setup Validation
+
+Run the comprehensive validation script to verify your setup:
+
+```bash
+source .venv/bin/activate
+python tests/mcp_servers/rag_cortex/test_setup_validation.py
+```
+
+This script will:
+1. ✅ Verify ChromaDB container is running
+2. ✅ Test database connectivity  
+3. ✅ Check if data exists
+4. ✅ Perform full ingestion if needed (~5 minutes for 431 documents)
+5. ✅ Run sample queries to validate content
+
+**Expected output:**
+```
+🚀 RAG CORTEX SETUP VALIDATION
+
+✓ ChromaDB container already running and healthy
+✓ Connected successfully!
+✓ Contains 5636 chunks
+✓ Query successful!
+
+✅ ALL TESTS PASSED - RAG Cortex is ready!
+```
+
+## Manual Verification Steps
+
+If you prefer to verify manually:
+
+### Step 1: Verify Podman Installation
+
+Verify Podman is properly installed and running:
+
+```bash
+# Check Podman version
+podman --version
+# Expected: podman version 5.7.0 (or later)
+
+# Check machine status
+podman machine list
+# Should show: Currently running
+
+# Test with hello-world (IMPORTANT: Do this first!)
+podman run --rm hello-world
+# Should download image and show "Hello from Podman!" message
+```
+
+**If Podman is not installed**, follow the installation guide in [prerequisites.md](../../prerequisites.md#1-podman-containerization):
+
+```bash
+# macOS: Download Podman Desktop
+# https://podman-desktop.io/downloads
+
+# Or via Homebrew
+brew install podman
+
+# Initialize and start
+podman machine init
+podman machine start
+```
+
+### Step 2: Python Environment Verification
+
+```bash
+# Verify Python version
+python3 --version
+# Expected: Python 3.11.x or later
+
+# Verify virtual environment is activated
+which python
+# Should show: /path/to/Project_Sanctuary/.venv/bin/python
+
+# Verify dependencies installed
+pip show langchain-chroma langchain-nomic
+```
+
+### Step 3: Port Configuration
+
+ChromaDB uses port 8000 by default. If this port is already in use on your system, you can configure a different port:
+
+**Check if port 8000 is available:**
+```bash
+lsof -i :8000
+# If this returns nothing, port 8000 is available
+# If it shows a process, you'll need to use a different port
+```
+
+**To use a different port:**
+
+1. Edit `.env` file:
+   ```bash
+   CHROMA_HOST=localhost  # Use localhost when connecting from host machine
+   CHROMA_PORT=8000       # Container internal port (keep as 8000)
+   PODMAN_HOST_PORT=9000  # Change this to your desired host port
+   ```
+
+2. Update `docker-compose.yml`:
+   ```yaml
+   ports:
+     - "9000:8000"  # host_port:container_port
+   ```
+
+3. Or use Podman directly with custom port:
+   ```bash
+   podman run -d --name sanctuary-vector-db \
+     -p 9000:8000 \  # Use your custom port here
+     -v ./.vector_data:/chroma/chroma:Z \
+     chromadb/chroma:latest
+   ```
+
+---
+
+## Environment
+
+### 3. Configure Environment
+
+Copy `.env.example` to `.env` and configure:
+
+```bash
+cp .env.example .env
+```
+
+> [!IMPORTANT]
+> **Critical Configuration**: Set `CHROMA_HOST=localhost` in your `.env` file.
+> The `.env.example` file may show `vector-db` (for docker-compose networking),
+> but for local development you **must** use `localhost`.
+
+**Required settings:**
+```bash
+CHROMA_HOST=localhost  # MUST be localhost for local development
+CHROMA_PORT=8000
+PODMAN_HOST_PORT=8000  # Change if port 8000 is in use
+CHROMA_DATA_PATH=.vector_data # Local path for persistent vector storage
+
+# Collection names
+CHROMA_CHILD_COLLECTION=child_chunks_v5
+CHROMA_PARENT_STORE=parent_documents_v5
+```
+
+> [!TIP]
+> - If port 8000 is already in use, change `PODMAN_HOST_PORT` to an available port (e.g., 9000) and update the port mapping in `docker-compose.yml` accordingly.
+> - If you want to store vector data in a different location, change `CHROMA_DATA_PATH` to your desired path (absolute or relative to project root).
+
+## Initial Setup
+
+### Step 1: Create Data Directory
+
+```bash
+mkdir -p .vector_data
+```
+
+This directory will be bind-mounted into the ChromaDB container for data persistence.
+
+### Step 2: Start ChromaDB Service
+
+Using Podman Compose (Docker Compose compatible):
+
+```bash
+podman-compose up -d vector-db
+```
+
+Or using Podman directly:
+
+```bash
+podman run -d \
+  --name sanctuary-vector-db \
+  -p 8000:8000 \
+  -v ./.vector_data:/chroma/chroma:Z \
+  -e IS_PERSISTENT=TRUE \
+  -e ANONYMIZED_TELEMETRY=FALSE \
+  --restart unless-stopped \
+  chromadb/chroma:latest
+```
+
+> [!NOTE]
+> The `:Z` flag on the volume mount is important for SELinux systems. On macOS, it's optional but harmless.
+
+### Step 3: Verify Service Health
+
+Check that ChromaDB is running:
+
+```bash
+# Check container status
+podman ps
+
+# Check health endpoint
+curl http://localhost:8000/api/v1/heartbeat
+```
+
+Expected response: `{"nanosecond heartbeat": <timestamp>}`
+
+### Step 4: Populate the Database
+
+Run the full ingestion script to populate ChromaDB with the Cognitive Genome:
+
+```bash
+python scripts/cortex_ingest_full.py
+```
+
+This will:
+- Load all markdown files from project directories
+- Create embeddings using Nomic
+- Store chunks in ChromaDB via network connection
+- Store parent documents in `.vector_data/parent_documents_v5/`
+
+> [!TIP]
+> Initial ingestion can take 10-30 minutes depending on project size and hardware.
+
+### Step 5: Verify Database Population
+
+Check database statistics:
+
+```bash
+python scripts/cortex_stats.py
+```
+
+Or via MCP (if orchestrator is running):
+```python
+# Via MCP client
+cortex_get_stats(include_samples=True)
+```
+
+## Daily Operations
+
+### Starting the Service
+
+```bash
+podman-compose up -d vector-db
+# or
+podman start sanctuary-vector-db
+```
+
+### Stopping the Service
+
+```bash
+podman-compose down
+# or
+podman stop sanctuary-vector-db
+```
+
+### Viewing Logs
+
+```bash
+podman logs -f sanctuary-vector-db
+```
+
+### Incremental Updates
+
+After adding new documents to the project:
+
+```bash
+python scripts/cortex_ingest_incremental.py path/to/new/file.md
+```
+
+Or via MCP:
+```python
+cortex_ingest_incremental(file_paths=["path/to/new/file.md"])
+```
+
+## Troubleshooting
+
+### Service Won't Start
+
+**Check Podman machine status:**
+```bash
+podman machine list
+podman machine start
+```
+
+**Check port availability:**
+```bash
+lsof -i :8000
+```
+
+**Check container logs:**
+```bash
+podman logs sanctuary-vector-db
+```
+
+### Connection Refused
+
+**Verify environment variables:**
+```bash
+grep CHROMA .env
+```
+
+**Verify service is listening:**
+```bash
+curl http://localhost:8000/api/v1/heartbeat
+```
+
+**Check network configuration:**
+```bash
+podman inspect sanctuary-vector-db | grep IPAddress
+```
+
+### Data Persistence Issues
+
+**Verify bind mount:**
+```bash
+podman inspect sanctuary-vector-db | grep -A 5 Mounts
+```
+
+**Check directory permissions:**
+```bash
+ls -la .vector_data/
+```
+
+**Verify data exists:**
+```bash
+ls -la .vector_data/child_chunks_v5/
+ls -la .vector_data/parent_documents_v5/
+```
+
+## Advanced Configuration
+
+### Custom Collection Names
+
+Edit `.env` to use different collection names:
+
+```bash
+CHROMA_CHILD_COLLECTION=my_custom_chunks
+CHROMA_PARENT_STORE=my_custom_parents
+```
+
+### Resource Limits
+
+Add resource constraints to `docker-compose.yml`:
+
+```yaml
+services:
+  vector-db:
+    # ... existing config ...
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+```
+
+### Network Configuration
+
+To run ChromaDB on a different port:
+
+1. Update `docker-compose.yml`:
+   ```yaml
+   ports:
+     - "9000:8000"  # host:container
+   ```
+
+2. Update `.env`:
+   ```bash
+   CHROMA_PORT=9000
+   ```
+
+## Migration from Legacy Setup
+
+If you have existing ChromaDB data at legacy paths (e.g., `mnemonic_cortex/chroma_db` or `data/cortex/chroma_db`):
+
+### Option A: Copy Existing Data
+
+```bash
+mkdir -p .vector_data
+# Adjust source path to match your legacy location
+cp -r data/cortex/chroma_db/* .vector_data/
+```
+
+### Option B: Re-ingest (Recommended)
+
+```bash
+# Start fresh with network architecture
+podman-compose up -d vector-db
+python scripts/cortex_ingest_full.py
+```
+
+## References
+
+- [ADR 034: Containerize MCP Servers with Podman](../../../ADRs/034_containerize_mcp_servers_with_podman.md)
+- [Podman Documentation](https://docs.podman.io/)
+- [Podman Desktop](https://podman-desktop.io/)
+- [ChromaDB Documentation](https://docs.trychroma.com/)
+
+--- END OF FILE mcp/servers/rag_cortex/SETUP.md ---
 
 --- START OF FILE mcp/servers/rag_cortex/analysis/gap_analysis_v2.md ---
 
