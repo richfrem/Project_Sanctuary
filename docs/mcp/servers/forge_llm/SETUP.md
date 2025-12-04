@@ -57,18 +57,22 @@ OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 
 ## Initial Setup
 
-### Step 1: Start Ollama Service
+### Step 1: Start MCP Services
 
 Using Docker Compose (recommended):
 
 ```bash
-docker-compose up -d ollama-model-mcp
+# Start both critical MCP services (unified application stack)
+docker-compose up -d vector-db ollama-model-mcp
 ```
+
+> [!IMPORTANT]
+> **Unified Launch**: This command starts both the RAG Cortex (vector-db) and Forge LLM (ollama-model-mcp) services together. Both services are required for the complete MCP infrastructure.
 
 Or using Podman Compose:
 
 ```bash
-podman-compose up -d ollama-model-mcp
+podman-compose up -d vector-db ollama-model-mcp
 ```
 
 ### Step 2: Verify Service Health
@@ -131,8 +135,9 @@ podman run -d \
 ### Starting the Service
 
 ```bash
-docker-compose up -d ollama-model-mcp
-# or
+# Start both MCP services (recommended)
+docker-compose up -d vector-db ollama-model-mcp
+# or start individual services
 docker start sanctuary-ollama-mcp
 # or
 podman start sanctuary-ollama-mcp
