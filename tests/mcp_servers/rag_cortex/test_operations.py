@@ -36,10 +36,9 @@ def test_query_error_handling(temp_project_root):
     ops = CortexOperations(temp_project_root)
     response = ops.query("test query")
     
-    # Should return error response when infrastructure not available
-    # Should return success response (maintenance mode)
-    assert response.status == "success"
-    # assert response.error is not None
+    # Should return error response when database doesn't exist
+    assert response.status == "error"
+    assert response.error is not None
 
 
 @pytest.mark.integration
@@ -63,9 +62,10 @@ def test_ingest_incremental_error_handling(temp_project_root):
         skip_duplicates=True
     )
     
-    # Should return error response
-    assert response.status == "error"
-    assert response.error is not None
+    # Should return success with error message (no valid files)
+    assert response.status == "success"
+    assert response.error == "No valid files to ingest"
+    assert response.documents_added == 0
 
 
 # The following tests would require actual Mnemonic Cortex setup

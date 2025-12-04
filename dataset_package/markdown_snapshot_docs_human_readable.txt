@@ -1,6 +1,6 @@
 # docs Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-12-03T20:09:43.946Z
+Generated On: 2025-12-04T05:42:00.975Z
 
 # Mnemonic Weight (Token Count): ~152,592 tokens
 

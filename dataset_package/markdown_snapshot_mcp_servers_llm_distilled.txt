@@ -1,8 +1,8 @@
 # mcp_servers Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-03T20:09:53.927Z
+Generated On: 2025-12-04T05:41:47.777Z
 
-# Mnemonic Weight (Token Count): ~101,237 tokens
+# Mnemonic Weight (Token Count): ~101,267 tokens
 
 # Directory Structure (relative to mcp_servers subfolder)
   ./mcp_servers/README.md
@@ -3443,7 +3443,7 @@ class CodeOperations:
 from fastmcp import FastMCP
 import os
 from typing import Optional
-from mcp_servers.lib.code.code_ops import CodeOperations
+from mcp_servers.code.code_ops import CodeOperations
 
 # Initialize FastMCP
 mcp = FastMCP("project_sanctuary.code")
@@ -3950,7 +3950,7 @@ class ConfigOperations:
 from fastmcp import FastMCP
 import os
 from typing import Optional, Dict, Any, Union
-from mcp_servers.lib.config.config_ops import ConfigOperations
+from mcp_servers.config.config_ops import ConfigOperations
 
 # Initialize FastMCP
 mcp = FastMCP("project_sanctuary.config")
@@ -5540,7 +5540,7 @@ from ollama import Client # New import
 
 # Setup logging
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from lib.logging_utils import setup_mcp_logging
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
 
@@ -6678,7 +6678,7 @@ import subprocess
 from typing import List
 
 # Initialize FastMCP with canonical domain name
-mcp = FastMCP("project_sanctuary.system.git_workflow")
+mcp = FastMCP("project_sanctuary.git")
 
 # Initialize GitOperations
 REPO_PATH = os.environ.get("REPO_PATH", ".")
@@ -9916,6 +9916,7 @@ class IngestIncrementalResponse:
     documents_added: int
     chunks_created: int
     skipped_duplicates: int
+    ingestion_time_ms: float
     status: str  # "success" or "error"
     error: Optional[str] = None
 
@@ -11311,24 +11312,24 @@ def cortex_cache_stats() -> str:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
 
-# Import Synthesis Generator
-from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+# Legacy import - commented out as mnemonic_cortex module was archived
+# from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
 
-@mcp.tool()
-def cortex_generate_adaptation_packet(days: int = 7) -> str:
-    """
-    Synthesize recent Cortex knowledge into an Adaptation Packet for model fine-tuning.
-    
-    Args:
-        days: Number of days to look back for changes (default: 7)
-        
-    Returns:
-        Path to the generated packet file.
-    """
-    generator = SynthesisGenerator(PROJECT_ROOT)
-    packet = generator.generate_packet(days=days)
-    output_path = generator.save_packet(packet)
-    return f"Generated Adaptation Packet: {output_path}"
+# @mcp.tool()
+# def cortex_generate_adaptation_packet(days: int = 7) -> str:
+#     """
+#     Synthesize recent Cortex knowledge into an Adaptation Packet for model fine-tuning.
+#     
+#     Args:
+#         days: Number of days to look back for changes (default: 7)
+#         
+#     Returns:
+#         Path to the generated packet file.
+#     """
+#     generator = SynthesisGenerator(PROJECT_ROOT)
+#     packet = generator.generate_packet(days=days)
+#     output_path = generator.save_packet(packet)
+#     return f"Generated Adaptation Packet: {output_path}"
 
 if __name__ == "__main__":
     mcp.run()

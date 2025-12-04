@@ -144,7 +144,13 @@ const excludeDirNames = new Set([
 
     // --- Final Hardening v2.3 ---
     '05_ARCHIVED_BLUEPRINTS',
-    'gardener'
+    'gardener',
+
+    // --- Additional exclusions for LLM snapshot optimization ---
+    'research',
+    '02_ROADMAP',
+    '03_OPERATIONS',
+    '06_THE_EMBER_LIBRARY'
 ]);
 
 

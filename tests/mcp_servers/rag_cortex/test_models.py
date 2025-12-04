@@ -125,11 +125,13 @@ def test_ingest_incremental_response():
         documents_added=3,
         chunks_created=15,
         skipped_duplicates=1,
+        ingestion_time_ms=1234.56,
         status="success"
     )
     assert response.documents_added == 3
     assert response.chunks_created == 15
     assert response.skipped_duplicates == 1
+    assert response.ingestion_time_ms == 1234.56
     assert response.status == "success"
 
 
