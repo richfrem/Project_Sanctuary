@@ -1,7 +1,7 @@
 from fastmcp import FastMCP
 import os
 from typing import Optional
-from mcp_servers.lib.code.code_ops import CodeOperations
+from mcp_servers.code.code_ops import CodeOperations
 
 # Initialize FastMCP
 mcp = FastMCP("project_sanctuary.code")

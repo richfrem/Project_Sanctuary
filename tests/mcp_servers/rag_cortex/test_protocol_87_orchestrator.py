@@ -94,7 +94,7 @@ class TestProtocol87Orchestrator:
     
     def test_route_to_adr_mcp(self, mcp_client):
         """Test routing to ADR MCP."""
-        with patch("mcp_servers.document.adr.operations.ADROperations") as MockOps:
+        with patch("mcp_servers.adr.operations.ADROperations") as MockOps:
             mock_ops = MockOps.return_value
             mock_ops.list_adrs.return_value = ["ADR 1", "ADR 2"]
             

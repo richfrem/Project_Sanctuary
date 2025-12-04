@@ -109,6 +109,7 @@ class IngestIncrementalResponse:
     documents_added: int
     chunks_created: int
     skipped_duplicates: int
+    ingestion_time_ms: float
     status: str  # "success" or "error"
     error: Optional[str] = None
 

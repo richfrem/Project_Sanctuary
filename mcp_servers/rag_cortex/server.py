@@ -336,24 +336,24 @@ def cortex_cache_stats() -> str:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
 
-# Import Synthesis Generator
-from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+# Legacy import - commented out as mnemonic_cortex module was archived
+# from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
 
-@mcp.tool()
-def cortex_generate_adaptation_packet(days: int = 7) -> str:
-    """
-    Synthesize recent Cortex knowledge into an Adaptation Packet for model fine-tuning.
-    
-    Args:
-        days: Number of days to look back for changes (default: 7)
-        
-    Returns:
-        Path to the generated packet file.
-    """
-    generator = SynthesisGenerator(PROJECT_ROOT)
-    packet = generator.generate_packet(days=days)
-    output_path = generator.save_packet(packet)
-    return f"Generated Adaptation Packet: {output_path}"
+# @mcp.tool()
+# def cortex_generate_adaptation_packet(days: int = 7) -> str:
+#     """
+#     Synthesize recent Cortex knowledge into an Adaptation Packet for model fine-tuning.
+#     
+#     Args:
+#         days: Number of days to look back for changes (default: 7)
+#         
+#     Returns:
+#         Path to the generated packet file.
+#     """
+#     generator = SynthesisGenerator(PROJECT_ROOT)
+#     packet = generator.generate_packet(days=days)
+#     output_path = generator.save_packet(packet)
+#     return f"Generated Adaptation Packet: {output_path}"
 
 if __name__ == "__main__":
     mcp.run()

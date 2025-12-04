@@ -5,7 +5,7 @@ import subprocess
 from typing import List
 
 # Initialize FastMCP with canonical domain name
-mcp = FastMCP("project_sanctuary.system.git_workflow")
+mcp = FastMCP("project_sanctuary.git")
 
 # Initialize GitOperations
 REPO_PATH = os.environ.get("REPO_PATH", ".")

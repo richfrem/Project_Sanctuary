@@ -1,7 +1,7 @@
 from fastmcp import FastMCP
 import os
 from typing import Optional, Dict, Any, Union
-from mcp_servers.lib.config.config_ops import ConfigOperations
+from mcp_servers.config.config_ops import ConfigOperations
 
 # Initialize FastMCP
 mcp = FastMCP("project_sanctuary.config")
