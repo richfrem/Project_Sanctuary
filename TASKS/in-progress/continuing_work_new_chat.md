@@ -9,53 +9,71 @@
 - Missing new directories and files
 - Needs to reflect 12 MCP architecture changes
 - Other sections may also need updates
-
 **Action:** Review and update entire main README for accuracy.  fix links.  many documents are not in the right place. we refactored the MCPs and need to update the READMEs to reflect this. plus other links verify all.  if documents moved use updated paths. 
 
-### Priority 2: Task 087 - Phase 2: MCP Operations Testing via Antigravity
+# Continuation Prompt for Next Session
 
-**Current Status:**
-- ✅ Phase 1 Complete: All 125 test harnesses passing (10/12 MCPs)
-- 🔄 Phase 2 Next: Test MCP operations one server at a time via Antigravity
+**Last Updated:** 2025-12-03
 
-**What to Do:**
-1. Start with **Chronicle MCP** (lowest risk, document domain)
-2. Test each operation via Antigravity MCP tool interface
-3. Document results in `docs/mcp/mcp_operations_inventory.md`
-4. Fix any issues found
-5. Move to next MCP server
+## Priority 1: Continue Task 087 - MCP Operations Testing (Phase 2)
 
-**Testing Order (Recommended):**
-1. **Document MCPs** (lowest risk):
-   - Chronicle MCP
-   - Protocol MCP
-   - ADR MCP
-   - Task MCP
+**Status:** Ready to begin Phase 2 - All blockers resolved
 
-2. **System MCPs** (medium risk):
-   - Code MCP
-   - Config MCP
-   - Git MCP
+**What was completed today (2025-12-03):**
+- ✅ Fixed all 12 MCP server import paths and configuration issues
+- ✅ All MCPs now loading successfully in Claude Desktop (code, config, forge_llm, git, rag_cortex fixed)
+- ✅ Fixed all RAG Cortex test failures - 53/53 tests passing (100% pass rate)
+- ✅ Optimized snapshot generation script (reduced from 1.82M to 1.74M tokens)
+- ✅ All changes merged to main via PR
 
-3. **Cognitive MCPs** (higher complexity):
-   - RAG Cortex MCP
-   - Agent Persona MCP
-   - Council MCP
-   - Orchestrator MCP
+**Next Steps (Phase 2 - MCP Operations Testing):**
+1. Test each MCP's operations via Antigravity MCP tool interface
+2. Follow recommended testing order:
+   - Document MCPs first (Chronicle, Protocol, ADR, Task)
+   - System MCPs second (Code, Config, Git)
+   - Cognitive MCPs third (RAG Cortex, Agent Persona, Council, Orchestrator)
+   - Model MCP last (Forge LLM)
+3. Document results in `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md`
+4. Update `docs/mcp/mcp_operations_inventory.md` with test results
 
-4. **Model MCP** (requires CUDA GPU):
-   - Forge LLM MCP
-
-**Reference Documents:**
-- Task Details: `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md`
-- Operations Inventory: `docs/mcp/mcp_operations_inventory.md`
-- Server Docs: `docs/mcp/servers/<name>/README.md`
+**Reference:** See `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md` for detailed testing checklist
 
 ---
 
-## SESSION SUMMARY (2025-12-02)
+## Priority 2: Update Main README Structure
 
-### ✅ Completed This Session
+**Context:** The main project README has outdated paths and doesn't reflect the current 12-MCP architecture.
+
+**Issues to Address:**
+1. Update file paths to reflect current structure (e.g., `mcp_servers/` instead of old paths)
+2. Document all 12 MCP servers in the architecture section
+3. Update setup instructions to reflect current state
+4. Ensure terminology guide is accurate
+
+**Files to Review:**
+- `README.md` (main project README)
+- `docs/mcp/mcp_operations_inventory.md` (reference for current MCP list)
+
+---
+
+## Context for Tomorrow's Session
+
+**Project State:**
+- All 12 MCP servers functional and tested via pytest
+- Claude Desktop config updated with all 12 MCPs
+- RAG Cortex fully operational with ChromaDB
+- Test suite at 100% pass rate for RAG Cortex
+- Ready to begin comprehensive MCP operations testing via Antigravity
+
+**Key Files Modified Today:**
+- `mcp_servers/code/server.py` - Fixed import path
+- `mcp_servers/config/server.py` - Fixed import path  
+- `mcp_servers/forge_llm/operations.py` - Fixed import path
+- `mcp_servers/git/server.py` - Fixed domain name + added REPO_PATH
+- `mcp_servers/rag_cortex/server.py` - Removed legacy import
+- `mcp_servers/rag_cortex/models.py` - Added ingestion_time_ms field
+- `scripts/capture_code_snapshot.js` - Optimized exclusions
+- Multiple test files in `tests/mcp_servers/rag_cortex/`
 
 #### 1. MCP Documentation Reorganization ✅ COMPLETE
    - **Created:** `docs/mcp/servers/` structure with 12 subdirectories
@@ -63,7 +81,6 @@
    - **Moved:** Server-specific docs to appropriate subfolders
      - Council: 6 orchestration docs
      - RAG Cortex: 6 cortex docs + analysis/
-     - Forge LLM: TypeScript types
    - **Deleted:** Obsolete `port_registry.md` (stdio transport, not HTTP)
    - **Two-README Strategy:** Implementation (in `mcp_servers/`) vs Usage (in `docs/mcp/servers/`)
 
