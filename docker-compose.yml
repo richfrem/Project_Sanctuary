@@ -17,3 +17,30 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+
+  ollama-model-mcp:
+    image: ollama/ollama:latest
+    container_name: sanctuary-ollama-mcp
+    ports:
+      - "11434:11434"
+    volumes:
+      # Mount point for models persisted on the host machine
+      - ./ollama_models:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      # Use OLLAMA_MODEL from the host environment if available, otherwise default
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            # CRITICAL: Configure for GPU acceleration (Example for NVIDIA/Podman)
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      /bin/sh -c "ollama serve & 
+      sleep 10 && 
+      ollama pull ${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest} && 
+      wait -n"
+    restart: unless-stopped
