@@ -10,7 +10,7 @@
 - **Created**: 2025-12-01
 - **Updated**: 2025-12-02
 
-## Current Status (2025-12-02)
+## Current Status (2025-12-03)
 
 ✅ **Phase 1 Complete:** Test harness validation finished
 - All 125 tests passing across 10 MCPs (out of 12 total)
@@ -19,9 +19,25 @@
 - Documentation reorganized to `docs/mcp/servers/<name>/`
 - ADR 042 created: Council/Agent Persona separation validated
 
-🔄 **Phase 2 Starting Tomorrow:** MCP operations testing via Antigravity
+✅ **MCP Server Import Fixes Complete (2025-12-03)**
+- Fixed all 12 MCP servers - all now loading successfully in Claude Desktop
+- Fixed import paths: code, config, forge_llm, git servers
+- Fixed git server domain name and added REPO_PATH env var
+- Removed legacy mnemonic_cortex import from rag_cortex server
+- All changes merged to main via PR
+
+✅ **RAG Cortex Test Fixes Complete (2025-12-03)**
+- 53/53 tests passing (100% pass rate)
+- Fixed query error handling assertions
+- Fixed ingest error handling to match implementation
+- Fixed ADR MCP import path in orchestrator tests
+- Added ingestion_time_ms field to IngestIncrementalResponse model
+- Renamed setup validation script to prevent pytest from running it
+
+🔄 **Phase 2 Ready to Start:** MCP operations testing via Antigravity
+- All 12 MCPs now functional and ready for operation testing
 - Test each MCP's operations one server at a time
-- Verify MCP tool interface works correctly
+- Verify MCP tool interface works correctly through Antigravity
 - Document any issues or failures
 
 ## Objective
