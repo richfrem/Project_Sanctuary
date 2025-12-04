@@ -1,12 +1,6 @@
-# Protocol 122: Container Network Isolation
+# Protocol 116: Container Network Isolation
 
 **Status:** CANONICAL
-**Classification:** Infrastructure Pattern
-**Version:** 1.0
-**Authority:** Sanctuary Council
-**Linked Protocols:** P108, P114
----
-
 # Protocol 122: Container Network Isolation
 
 ## Context

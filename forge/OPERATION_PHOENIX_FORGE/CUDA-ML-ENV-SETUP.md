@@ -347,6 +347,14 @@ The final quantized `.gguf` file will be saved to `models/gguf/`.
 
 ### 2. Test gguf file locally with ollama
 
+> [!IMPORTANT]
+> **Ollama Usage Context:** This section uses the **host-installed macOS Ollama application** for model testing and validation during the ML training workflow. This is separate from the **containerized `ollama-model-mcp` service** used by the MCP infrastructure (see ADR 043, Protocol 116).
+> 
+> - **For ML Training/Testing:** Use host Ollama (`ollama run`, `ollama create`)
+> - **For MCP Infrastructure:** Use containerized service (`sanctuary-ollama-mcp` in Podman)
+> 
+> The two services can coexist but create port binding conflicts on `localhost:11434`. See Protocol 116 (Container Network Isolation) for resolution via container network addressing.
+
 **2a. Generate Modelfile Automatically:**
 
 Run the bulletproof Modelfile generator script:
@@ -366,7 +374,6 @@ ollama create Sanctuary-Guardian-01 -f Modelfile
 ```bash
 ollama run Sanctuary-Guardian-01
 ```
-ollama run Sanctuary-Guardian-01
 ---
 
 **2d. Test Both Interaction Modes:**
