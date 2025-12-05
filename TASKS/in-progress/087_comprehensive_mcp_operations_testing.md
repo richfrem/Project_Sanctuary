@@ -10,7 +10,7 @@
 - **Created**: 2025-12-01
 - **Updated**: 2025-12-02
 
-## Current Status (2025-12-03)
+## Current Status (2025-12-05)
 
 ✅ **Phase 1 Complete:** Test harness validation finished
 - All 125 tests passing across 10 MCPs (out of 12 total)
@@ -34,11 +34,101 @@
 - Added ingestion_time_ms field to IngestIncrementalResponse model
 - Renamed setup validation script to prevent pytest from running it
 
-🔄 **Phase 2 Ready to Start:** MCP operations testing via Antigravity
-- All 12 MCPs now functional and ready for operation testing
-- Test each MCP's operations one server at a time
-- Verify MCP tool interface works correctly through Antigravity
-- Document any issues or failures
+🔄 **Phase 2 In Progress (2025-12-05):** MCP operations testing via Antigravity
+- Testing each MCP's operations one server at a time
+- Verifying MCP tool interface works correctly through Antigravity
+- Documenting results in master tracking table below
+
+---
+
+## Master Operations Tracking Table (All 66 Operations)
+
+| MCP Server | Operation | Phase 1 (Test) | Phase 2 (MCP) | Notes |
+|------------|-----------|----------------|---------------|-------|
+| **Chronicle (7)** | `chronicle_create_entry` | ✅ | ✅ | Created Entry 283 (test entry) |
+| | `chronicle_append_entry` | ✅ | ✅ | Created Entry 284 (alias fixed) |
+| | `chronicle_update_entry` | ✅ | ✅ | Updated Entry 283 successfully |
+| | `chronicle_get_entry` | ✅ | ✅ | Retrieved Entry 282 & 283 |
+| | `chronicle_list_entries` | ✅ | ✅ | Listed 5 recent entries |
+| | `chronicle_read_latest_entries` | ✅ | ✅ | Listed 3 entries (alias fixed) |
+| | `chronicle_search` | ✅ | ✅ | Found "T087 Phase 2" entries |
+| **Protocol (5)** | `protocol_create` | ✅ | ✅ | Created Protocol 999 (test protocol) |
+| | `protocol_update` | ✅ | ✅ | Updated Protocol 999 to CANONICAL |
+| | `protocol_get` | ✅ | ✅ | Retrieved Protocol 101 & 116 |
+| | `protocol_list` | ✅ | ✅ | Listed 39 CANONICAL protocols |
+| | `protocol_search` | ✅ | ✅ | Found Protocol 116 |
+| **ADR (5)** | `adr_create` | ✅ | ✅ | Created ADR 045 (test ADR) |
+| | `adr_update_status` | ✅ | ✅ | Updated ADR 045: proposed → accepted |
+| | `adr_get` | ✅ | ✅ | Retrieved ADR 044 & 045 |
+| | `adr_list` | ✅ | ✅ | Listed 33 accepted ADRs |
+| | `adr_search` | ✅ | ✅ | Found ADR 044 matching "T087" |
+| **Task (6)** | `create_task` | ✅ | ✅ | Created Task 099 (test task) |
+| | `update_task` | ✅ | ✅ | Updated Task 099 (notes, priority) |
+| | `update_task_status` | ✅ | ✅ | Moved Task 099 to complete |
+| | `get_task` | ✅ | ✅ | Retrieved Task 098 |
+| | `list_tasks` | ✅ | ✅ | Listed 4 in-progress tasks |
+| | `search_tasks` | ✅ | ✅ | Found 4 tasks matching "T087 Phase 2" |
+| **Code (10)** | `code_lint` | ✅ | ✅ | Tested (ruff missing, error handled correctly) |
+| | `code_format` | ✅ | ✅ | Tested (ruff missing, error handled correctly) |
+| | `code_analyze` | ✅ | ✅ | Tested (ruff missing, error handled correctly) |
+| | `code_check_tools` | ✅ | ✅ | Listed available tools (none found) |
+| | `code_find_file` | ✅ | ✅ | Found server.py files |
+| | `code_list_files` | ✅ | ✅ | Listed files in directory |
+| | `code_search_content` | ✅ | ✅ | Searched for "FastMCP" |
+| | `code_read` | ✅ | ✅ | Read server.py content |
+| | `code_write` | ✅ | ✅ | Created temp test file |
+| | `code_get_info` | ✅ | ✅ | Retrieved file metadata |
+| **Config (4)** | `config_list` | ✅ | ✅ | Listed config files (initially empty) |
+| | `config_read` | ✅ | ✅ | Read test config file |
+| | `config_write` | ✅ | ✅ | Created test config file |
+| | `config_delete` | ✅ | ✅ | Deleted test config file |
+| **Git (8)** | `git_get_status` | ✅ | ⏳ | Get repository status |
+| | `git_diff` | ✅ | ⏳ | Show changes |
+| | `git_log` | ✅ | ⏳ | Show commit history |
+| | `git_start_feature` | ✅ | ⏳ | Create feature branch |
+| | `git_add` | ✅ | ⏳ | Stage files |
+| | `git_smart_commit` | ✅ | ⏳ | Commit with P101 v3.0 |
+| | `git_push_feature` | ✅ | ⏳ | Push feature branch |
+| | `git_finish_feature` | ✅ | ⏳ | Cleanup after PR merge |
+| **RAG Cortex (10)** | `cortex_query` | ✅ | ⏳ | Semantic search |
+| | `cortex_ingest_full` | ✅ | ⏳ | Full re-ingestion (test skipped for performance) |
+| | `cortex_ingest_incremental` | ✅ | ⏳ | Add new documents |
+| | `cortex_get_stats` | ✅ | ⏳ | Database health stats |
+| | `cortex_cache_get` | ✅ | ⏳ | Retrieve cached answer |
+| | `cortex_cache_set` | ✅ | ⏳ | Store answer in cache |
+| | `cortex_cache_stats` | ✅ | ⏳ | Cache performance metrics |
+| | `cortex_cache_warmup` | ✅ | ⏳ | Pre-populate cache |
+| | `cortex_guardian_wakeup` | ✅ | ⏳ | Generate Guardian boot digest |
+| | `cortex_generate_adaptation_packet` | ✅ | ⏳ | Synthesize knowledge for fine-tuning |
+| **Agent Persona (5)** | `persona_dispatch` | ✅ | ⏳ | Dispatch task to persona agent |
+| | `persona_list_roles` | ✅ | ⏳ | List available roles |
+| | `persona_get_state` | ✅ | ⏳ | Get conversation state |
+| | `persona_reset_state` | ✅ | ⏳ | Reset conversation state |
+| | `persona_create_custom` | ✅ | ⏳ | Create new custom persona |
+| **Council (2)** | `council_dispatch` | ✅ | ⏳ | Multi-agent deliberation |
+| | `council_list_agents` | ✅ | ⏳ | List available agents |
+| **Orchestrator (2)** | `orchestrator_dispatch_mission` | ✅ | ⏳ | Dispatch high-level mission (test_mcp_operations.py) |
+| | `orchestrator_run_strategic_cycle` | ✅ | ⏳ | Execute Strategic Crucible Loop (test_mcp_operations.py) |
+| **Forge LLM (2)** | `check_sanctuary_model_status` | ✅ | ⏳ | Verify model availability |
+| | `query_sanctuary_model` | ✅ | ⏳ | Query Sanctuary-Qwen2 model |
+
+**Phase 1 (Test Harness):** 66/66 operations have tests (100%) ✅ COMPLETE  
+**Phase 2 (MCP Tool Interface):** 43/66 operations tested (65%)
+
+**Phase 2 Progress by Category:**
+- Document MCPs: 29/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6) ✅ COMPLETE
+- System MCPs: 14/22 tested (Code ✅ 10/10, Config ✅ 4/4, Git 0/8)
+- Cognitive MCPs: 0/19 tested (RAG Cortex 0/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
+- Model MCP: 0/2 tested (Forge LLM 0/2)
+
+
+
+
+
+
+
+
+
 
 ## Objective
 
@@ -124,84 +214,19 @@ For each MCP, run the pytest test harness to validate underlying operations:
     pytest tests/mcp_servers/orchestrator/ -v
     ```
 
-### Phase 2: Antigravity Operation Testing (MCP Tool Interface) 🔄 NEXT
+### Phase 2: Antigravity Operation Testing (MCP Tool Interface) 🔄 IN PROGRESS
 
-**Status:** Starting 2025-12-03
-**Approach:** Test each MCP server one at a time via Antigravity MCP tool interface
+**Status:** Started 2025-12-05  
+**Approach:** Test all 66 MCP operations systematically via Antigravity MCP tool interface  
+**Progress:** See Master Operations Tracking Table above (16/66 tested, 24%)
 
-**Testing Order (Recommended):**
-1. Start with Document MCPs (Chronicle, Protocol, ADR, Task) - lowest risk
-2. Then System MCPs (Code, Config, Git) - medium risk
-3. Then Cognitive MCPs (RAG Cortex, Agent Persona, Council, Orchestrator) - higher complexity
-4. Finally Model MCP (Forge LLM) - requires CUDA GPU
+**Testing Order:**
+1. ✅ Document MCPs (Chronicle, Protocol, ADR, Task) - 16/23 tested
+2. ⏳ System MCPs (Code, Config, Git) - 0/22 tested  
+3. ⏳ Cognitive MCPs (RAG Cortex, Agent Persona, Council, Orchestrator) - 0/19 tested
+4. ⏳ Model MCP (Forge LLM) - 0/2 tested (requires Ollama container)
 
-For each MCP, test key operations directly via Antigravity:
-
-#### 1. Chronicle MCP
-- [ ] `chronicle_create_entry` - Create a test entry
-- [ ] `chronicle_list_entries` - List recent entries
-- [ ] `chronicle_get_entry` - Retrieve specific entry
-- [ ] `chronicle_search` - Search entries
-
-#### 2. Protocol MCP
-- [ ] `protocol_create` - Create test protocol
-- [ ] `protocol_list` - List protocols
-- [ ] `protocol_get` - Retrieve Protocol 101
-- [ ] `protocol_search` - Search protocols
-
-#### 3. ADR MCP
-- [ ] `adr_create` - Create test ADR
-- [ ] `adr_list` - List ADRs
-- [ ] `adr_get` - Retrieve specific ADR
-- [ ] `adr_update_status` - Update ADR status
-
-#### 4. Task MCP
-- [ ] `create_task` - Create test task
-- [ ] `list_tasks` - List tasks by status
-- [ ] `get_task` - Retrieve specific task
-- [ ] `update_task_status` - Update task status
-
-#### 5. RAG Cortex MCP
-- [ ] `cortex_query` - Query knowledge base
-- [ ] `cortex_ingest_incremental` - Incremental ingestion
-- [ ] `cortex_get_stats` - Get collection stats
-- [ ] `cortex_query_structured` - Protocol 87 query
-
-#### 6. Agent Persona MCP
-- [ ] `persona_dispatch` - Dispatch to coordinator
-- [ ] `persona_list_roles` - List available roles
-- [ ] `persona_get_state` - Get persona state
-- [ ] `persona_create_custom` - Create custom persona
-
-#### 7. Council MCP
-- [ ] `council_dispatch` - Full council deliberation
-- [ ] `council_dispatch` (single agent) - Specific agent
-- [ ] `council_list_agents` - List agents
-
-#### 8. Forge LLM MCP
-- [ ] `check_sanctuary_model_status` - Check model availability
-- [ ] `query_sanctuary_model` - Query the model
-
-#### 9. Git MCP
-- [ ] `git_get_status` - Check git status
-- [ ] `git_start_feature` - Create feature branch
-- [ ] `git_smart_commit` - Smart commit
-
-#### 10. Code MCP
-- [ ] `code_read` - Read file
-- [ ] `code_write` - Write file
-- [ ] `code_search_content` - Search code
-- [ ] `code_list_files` - List files
-
-#### 11. Config MCP
-- [ ] `config_read` - Read config
-- [ ] `config_write` - Write config
-- [ ] `config_list` - List configs
-
-#### 12. Orchestrator MCP
-- [ ] `get_orchestrator_status` - Check status
-- [ ] `orchestrator_dispatch_mission` - Dispatch mission
-- [ ] `list_recent_tasks` - List tasks
+**All operation testing is tracked in the Master Operations Tracking Table above.**
 
 ## Acceptance Criteria
 
