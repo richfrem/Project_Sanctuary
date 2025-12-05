@@ -189,15 +189,19 @@ mkdir -p .vector_data
 
 This directory will be bind-mounted into the ChromaDB container for data persistence.
 
-### Step 2: Start ChromaDB Service
+### Step 2: Start MCP Services
 
 Using Podman Compose (Docker Compose compatible):
 
 ```bash
-podman-compose up -d vector-db
+# Start both critical MCP services (unified application stack)
+podman-compose up -d vector-db ollama-model-mcp
 ```
 
-Or using Podman directly:
+> [!TIP]
+> **Unified Launch**: This command starts both the RAG Cortex (vector-db) and Forge LLM (ollama-model-mcp) services together, ensuring the complete MCP infrastructure is available.
+
+Or using Podman directly for vector-db only:
 
 ```bash
 podman run -d \
@@ -263,9 +267,11 @@ cortex_get_stats(include_samples=True)
 ### Starting the Service
 
 ```bash
-podman-compose up -d vector-db
-# or
+# Start both MCP services (recommended)
+podman-compose up -d vector-db ollama-model-mcp
+# or start individual services
 podman start sanctuary-vector-db
+podman start sanctuary-ollama-mcp
 ```
 
 ### Stopping the Service

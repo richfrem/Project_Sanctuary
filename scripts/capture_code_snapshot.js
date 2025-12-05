@@ -74,7 +74,8 @@ try {
 const projectRoot = path.join(__dirname, '..');
 const subfolderArg = argv._ && argv._[0]; // First positional argument for subfolder
 const targetRoot = subfolderArg ? path.join(projectRoot, subfolderArg) : projectRoot;
-const subfolderName = subfolderArg || 'full_genome';
+// Sanitize subfolder name for use in filenames (replace / with _)
+const subfolderName = subfolderArg ? subfolderArg.replace(/\//g, '_').replace(/\\/g, '_') : 'full_genome';
 
 const datasetPackageDir = path.join(projectRoot, 'dataset_package');
 
@@ -552,7 +553,14 @@ try {
     if (subfolderArg) {
         console.log(`[SUBFOLDER MODE] Processing only: ${subfolderArg}`);
         if (!fs.existsSync(targetRoot)) {
-            console.error(`[ERROR] Subfolder not found: ${targetRoot}`);
+            console.error(`[ERROR] Subfolder not found: ${subfolderArg}`);
+            console.error(`[ERROR] Absolute path checked: ${targetRoot}`);
+            console.error(`[ERROR] Make sure the path is relative to project root: ${projectRoot}`);
+            process.exit(1);
+        }
+        const stats = fs.statSync(targetRoot);
+        if (!stats.isDirectory()) {
+            console.error(`[ERROR] Path exists but is not a directory: ${subfolderArg}`);
             process.exit(1);
         }
     } else {

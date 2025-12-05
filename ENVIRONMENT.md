@@ -20,8 +20,7 @@ pip install python-dotenv
 - `HUGGING_FACE_TOKEN`: Hugging Face authentication token
 
 ### Model Configuration
-- `CHAT_GPT_MODEL`: Backend ChatGPT model
-- `CHAT_GPT_QUOTE_AGENT_MODEL`: Frontend ChatGPT model
+- `CHAT_GPT_MODEL`: ChatGPT model
 - `OLLAMA_MODEL`: Ollama model name
 - `GEMINI_MODEL`: Gemini model name
 
