@@ -43,7 +43,7 @@ def test_initialization(temp_project_root):
     ops = CortexOperations(str(temp_project_root))
     assert ops.project_root == temp_project_root
 
-@pytest.mark.skip(reason="Skipped per user request (full ingest)")
+@pytest.mark.skip(reason="Full ingestion test - run manually when needed (takes ~10 mins)")
 def test_ingest_full(mock_cortex_deps, temp_project_root):
     """Test full ingestion flow with accurate chunk counting."""
     ops = CortexOperations(str(temp_project_root))
@@ -67,6 +67,7 @@ def test_ingest_full(mock_cortex_deps, temp_project_root):
     # Verify add_documents was called
     mock_pdr_instance = mock_cortex_deps["pdr"].return_value
     mock_pdr_instance.add_documents.assert_called()
+
 
 def test_ingest_incremental(mock_cortex_deps, temp_project_root):
     """Test incremental ingestion flow with accurate chunk counting."""

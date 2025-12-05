@@ -91,13 +91,13 @@ pytest tests/mcp_servers/chronicle/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `chronicle_create_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
-| `chronicle_append_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for create_entry |
-| `chronicle_update_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Update existing entry (7-day rule) |
-| `chronicle_get_entry` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Retrieve specific entry by number |
-| `chronicle_list_entries` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | List recent entries with filters |
-| `chronicle_read_latest_entries` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for list_entries |
-| `chronicle_search` | ✅ | ✅ | ❌ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Full-text search across entries |
+| `chronicle_create_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
+| `chronicle_append_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for create_entry (fixed) |
+| `chronicle_update_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Update existing entry (7-day rule) |
+| `chronicle_get_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Retrieve specific entry by number |
+| `chronicle_list_entries` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | List recent entries with filters |
+| `chronicle_read_latest_entries` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for list_entries (fixed) |
+| `chronicle_search` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Full-text search across entries |
 
 **Prerequisite Tests:** [test_chronicle_validator.py](../../tests/mcp_servers/chronicle/test_chronicle_validator.py)
 
@@ -137,11 +137,11 @@ pytest tests/mcp_servers/protocol/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `protocol_create` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Create new protocol with versioning |
-| `protocol_update` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
-| `protocol_get` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Retrieve specific protocol by number |
-| `protocol_list` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | List protocols with optional filters |
-| `protocol_search` | ✅ | ✅ | ❌ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Full-text search across protocols |
+| `protocol_create` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Create new protocol with versioning |
+| `protocol_update` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
+| `protocol_get` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Retrieve specific protocol by number |
+| `protocol_list` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | List protocols with optional filters |
+| `protocol_search` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Full-text search across protocols |
 
 **Prerequisite Tests:** [test_protocol_validator.py](../../tests/mcp_servers/protocol/test_protocol_validator.py)
 
@@ -181,8 +181,8 @@ pytest tests/mcp_servers/adr/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `adr_create` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Create ADR with auto-numbering |
-| `adr_update_status` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Update ADR status (validated transitions) |
+| `adr_create` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Create new ADR with auto-numbering |
+| `adr_update_status` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Update ADR status with transition validation |
 | `adr_get` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Retrieve specific ADR by number |
 | `adr_list` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | List ADRs with optional status filter |
 | `adr_search` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Full-text search across ADRs |
@@ -225,12 +225,12 @@ pytest tests/mcp_servers/task/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `create_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Create task with auto-numbering |
-| `update_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Update task metadata/content |
-| `update_task_status` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Move task between status directories |
-| `get_task` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Retrieve specific task by number |
-| `list_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | List tasks with filters |
-| `search_tasks` | ✅ | ✅ | ❌ | [tests/mcp_servers/task/](../../tests/mcp_servers/task/) | Full-text search across tasks |
+| `create_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Create new task with auto-numbering |
+| `update_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Update task metadata or content |
+| `update_task_status` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Change task status (moves between directories) |
+| `get_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Retrieve specific task by number |
+| `list_tasks` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | List tasks with optional filters |
+| `search_tasks` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Full-text search across tasks |
 
 **Prerequisite Tests:** [tests/mcp_servers/task/test_operations.py](../../tests/mcp_servers/task/test_operations.py)
 
@@ -678,16 +678,10 @@ pytest tests/mcp_servers/orchestrator/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `orchestrator_dispatch_mission` | ❌ | ⚠️ | ❌ | - | Dispatch a high-level mission to an agent |
-| `orchestrator_run_strategic_cycle` | ❌ | ⚠️ | ❌ | - | Execute a full Strategic Crucible Loop |
-| `get_orchestrator_status` | ❌ | ⚠️ | ❌ | - | Get current status of the orchestrator |
-| `list_recent_tasks` | ❌ | ⚠️ | ❌ | - | List recent tasks managed by orchestrator |
-| `get_task_result` | ❌ | ⚠️ | ❌ | - | Get result of a specific task |
-| `create_cognitive_task` | ❌ | ⚠️ | ❌ | - | Create a cognitive task for Council deliberation |
-| `create_development_cycle` | ❌ | ⚠️ | ❌ | - | Create a staged development cycle task |
-| `query_mnemonic_cortex` | ❌ | ⚠️ | ❌ | - | Create a RAG query task |
-| `create_file_write_task` | ❌ | ⚠️ | ❌ | - | Create a file write task |
-| `create_git_commit_task` | ❌ | ⚠️ | ❌ | - | Create a git commit task |
+| `orchestrator_dispatch_mission` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../tests/mcp_servers/orchestrator/test_mcp_operations.py) | Dispatch a high-level mission to an agent |
+| `orchestrator_run_strategic_cycle` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../tests/mcp_servers/orchestrator/test_mcp_operations.py) | Execute a full Strategic Crucible Loop |
+
+**Note:** Only 2 operations are currently implemented in server.py. Other operations listed in documentation may be planned but not yet implemented.
 
 ---
 

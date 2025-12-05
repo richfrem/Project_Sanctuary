@@ -61,7 +61,12 @@ def chronicle_append_entry(
         status: Status
         classification: Classification
     """
-    return chronicle_create_entry(title, content, author, date, status, classification)
+    try:
+        result = ops.create_entry(title, content, author, date, status, classification)
+        return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
+    except Exception as e:
+        return f"Error creating entry: {str(e)}"
+
 
 
 @mcp.tool()
@@ -137,7 +142,18 @@ def chronicle_read_latest_entries(limit: int = 10) -> str:
     Args:
         limit: Number of entries to read
     """
-    return chronicle_list_entries(limit)
+    try:
+        entries = ops.list_entries(limit)
+        if not entries:
+            return "No entries found."
+            
+        output = [f"Found {len(entries)} recent entries:"]
+        for e in entries:
+            output.append(f"- {e['number']:03d}: {e['title']} [{e['status']}] ({e['date']})")
+        return "\n".join(output)
+    except Exception as e:
+        return f"Error listing entries: {str(e)}"
+
 
 
 @mcp.tool()
