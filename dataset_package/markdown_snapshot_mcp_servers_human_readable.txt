@@ -1,8 +1,8 @@
 # mcp_servers Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-12-04T15:19:38.313Z
+Generated On: 2025-12-05T19:06:12.024Z
 
-# Mnemonic Weight (Token Count): ~101,267 tokens
+# Mnemonic Weight (Token Count): ~102,158 tokens
 
 # Directory Structure (relative to mcp_servers subfolder)
   ./mcp_servers/README.md
@@ -61,7 +61,6 @@ Generated On: 2025-12-04T15:19:38.313Z
   ./mcp_servers/council/packets/emitter.py
   ./mcp_servers/council/packets/schema.py
   ./mcp_servers/council/server.py
-  ./mcp_servers/council/tools/
   ./mcp_servers/forge_llm/
   ./mcp_servers/forge_llm/README.md
   ./mcp_servers/forge_llm/__init__.py
@@ -1514,6 +1513,7 @@ class AgentPersonaOperations:
         maintain_state: bool = True,
         engine: str | None = None,
         model_name: str | None = None,
+        model_preference: str | None = None,
         custom_persona_file: str | None = None
     ) -> Dict[str, Any]:
         """
@@ -1526,6 +1526,7 @@ class AgentPersonaOperations:
             maintain_state: Whether to persist conversation history
             engine: AI engine to use (gemini, openai, ollama)
             model_name: Specific model variant
+            model_preference: Model routing preference (OLLAMA, GEMINI, GPT)
             custom_persona_file: Path to custom persona file
         
         Returns:
@@ -1540,7 +1541,7 @@ class AgentPersonaOperations:
                 logger.info(f"[Agent Persona] Reusing existing {role_normalized} agent")
             else:
                 logger.info(f"[Agent Persona] Creating new {role_normalized} agent...")
-                agent = self._create_agent(role_normalized, engine, model_name, custom_persona_file)
+                agent = self._create_agent(role_normalized, engine, model_name, model_preference, custom_persona_file)
                 logger.info(f"[Agent Persona] Agent created successfully")
                 if maintain_state:
                     self._active_agents[role_normalized] = agent
@@ -1587,6 +1588,7 @@ class AgentPersonaOperations:
         role: str,
         engine: str | None = None,
         model_name: str | None = None,
+        model_preference: str | None = None,
         custom_persona_file: str | None = None
     ) -> Agent:
         """
@@ -1596,6 +1598,7 @@ class AgentPersonaOperations:
             role: Persona role
             engine: AI engine to use (gemini, openai, ollama)
             model_name: Specific model variant
+            model_preference: Model routing preference (OLLAMA, GEMINI, GPT)
             custom_persona_file: Path to custom persona file
         
         Returns:
@@ -1618,8 +1621,15 @@ class AgentPersonaOperations:
         # Determine state file
         state_file = self.state_dir / f"{role}_session.json"
         
+        # Determine Ollama host based on model preference (Protocol 116)
+        ollama_host = None
+        if model_preference == 'OLLAMA' or (engine and engine.lower() == 'ollama'):
+            # Protocol 116: Use container network addressing for MCP infrastructure
+            ollama_host = "http://ollama-model-mcp:11434"
+            logger.info(f"[Agent Persona] Using container network for Ollama: {ollama_host}")
+        
         # Create LLM client
-        client = get_llm_client(provider=engine, model_name=model_name)
+        client = get_llm_client(provider=engine, model_name=model_name, ollama_host=ollama_host)
         
         # Create agent
         agent = Agent(
@@ -1814,13 +1824,29 @@ class LLMClient(ABC):
 class OllamaClient(LLMClient):
     """Client for Ollama models (including Sanctuary)"""
     
-    def __init__(self, model_name: str = None):
+    def __init__(self, model_name: str = None, ollama_host: str = None):
         # Default to env var or hardcoded fallback
         default_model = os.getenv("OLLAMA_MODEL", "Sanctuary-Qwen2-7B:latest")
         super().__init__(model_name or default_model)
-        self.host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        
+        # Protocol 116: Use container network addressing by default
+        # Priority: explicit parameter > env var > container network default
+        if ollama_host:
+            self.host = ollama_host
+        else:
+            self.host = os.getenv("OLLAMA_HOST", "http://ollama-model-mcp:11434")
+        
+        # Warn if localhost is used (violates Protocol 116 for MCP infrastructure)
+        if "localhost" in self.host or "127.0.0.1" in self.host:
+            logger.warning(
+                f"[OllamaClient] Using localhost address ({self.host}). "
+                "For MCP infrastructure, use container network: http://ollama-model-mcp:11434 "
+                "(Protocol 116: Container Network Isolation)"
+            )
+        
         self.client = None
         self._initialize_client()
+
         
     def _initialize_client(self):
         try:
@@ -1908,18 +1934,25 @@ class OpenAIClient(LLMClient):
             return {"status": "error", "details": "Client not initialized (check API key)"}
         return {"status": "healthy", "details": "Client initialized"}
 
-def get_llm_client(provider: str = "ollama", model_name: str = None) -> LLMClient:
-    """Factory function to get an LLM client"""
+def get_llm_client(provider: str = "ollama", model_name: str = None, ollama_host: str = None) -> LLMClient:
+    """
+    Factory function to get an LLM client
+    
+    Args:
+        provider: LLM provider ("ollama", "openai", "gemini")
+        model_name: Specific model to use
+        ollama_host: Ollama host URL (for Protocol 116 compliance)
+    """
     provider = provider.lower() if provider else "ollama"
     
     if provider == "ollama":
-        return OllamaClient(model_name=model_name)
+        return OllamaClient(model_name=model_name, ollama_host=ollama_host)
     elif provider == "openai":
         return OpenAIClient(model_name=model_name)
     else:
         # Default to Ollama if unknown
         logger.warning(f"Unknown provider '{provider}', defaulting to Ollama")
-        return OllamaClient(model_name=model_name)
+        return OllamaClient(model_name=model_name, ollama_host=ollama_host)
 
 --- END OF FILE agent_persona/llm_client.py ---
 
@@ -2793,7 +2826,12 @@ def chronicle_append_entry(
         status: Status
         classification: Classification
     """
-    return chronicle_create_entry(title, content, author, date, status, classification)
+    try:
+        result = ops.create_entry(title, content, author, date, status, classification)
+        return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
+    except Exception as e:
+        return f"Error creating entry: {str(e)}"
+
 
 
 @mcp.tool()
@@ -2869,7 +2907,18 @@ def chronicle_read_latest_entries(limit: int = 10) -> str:
     Args:
         limit: Number of entries to read
     """
-    return chronicle_list_entries(limit)
+    try:
+        entries = ops.list_entries(limit)
+        if not entries:
+            return "No entries found."
+            
+        output = [f"Found {len(entries)} recent entries:"]
+        for e in entries:
+            output.append(f"- {e['number']:03d}: {e['title']} [{e['status']}] ({e['date']})")
+        return "\n".join(output)
+    except Exception as e:
+        return f"Error listing entries: {str(e)}"
+
 
 
 @mcp.tool()
@@ -4834,6 +4883,7 @@ class CouncilOperations:
         max_rounds: int = 3,
         force_engine: Optional[str] = None,
         model_name: Optional[str] = None,
+        model_preference: Optional[str] = None,
         output_path: Optional[str] = None,
         update_rag: bool = False
     ) -> Dict[str, Any]:
@@ -4846,6 +4896,7 @@ class CouncilOperations:
             max_rounds: Maximum deliberation rounds
             force_engine: Force specific engine (e.g. "ollama")
             model_name: Specific model to use
+            model_preference: Model routing preference (OLLAMA, GEMINI, GPT) - Protocol 116
             output_path: Optional path to save result
             update_rag: Whether to update RAG after execution
             
@@ -4894,7 +4945,8 @@ class CouncilOperations:
                         task=task_description,
                         context=context,
                         model_name=model_name or "Sanctuary-Qwen2-7B:latest",
-                        engine=force_engine
+                        engine=force_engine,
+                        model_preference=model_preference
                     )
                     
                     # Create round packet
@@ -5292,6 +5344,7 @@ def council_dispatch(
     agent: str | None = None,
     max_rounds: int = 3,
     force_engine: str | None = None,
+    model_preference: str | None = None,
     output_path: str | None = None
 ) -> dict:
     """
@@ -5311,6 +5364,8 @@ def council_dispatch(
                If None, full council deliberation is used.
         max_rounds: Maximum number of deliberation rounds (default: 3)
         force_engine: Force specific AI engine ("gemini", "openai", "ollama")
+        model_preference: Model routing preference ("OLLAMA", "GEMINI", "GPT")
+                         OLLAMA routes to container network (Protocol 116)
         output_path: Optional output file path (relative to project root)
     
     Returns:
@@ -5326,42 +5381,15 @@ def council_dispatch(
             max_rounds=3
         )
     
+    Example - Ollama Routing (Container Network - Protocol 116):
+        result = council_dispatch(
+            task_description="Analyze Protocol 116",
+            model_preference="OLLAMA"  # Routes to ollama-model-mcp:11434
+        )
+    
     Example - Single Agent Consultation:
         result = council_dispatch(
             task_description="Audit the test coverage for the Git MCP server",
-            agent="auditor",
-            max_rounds=2
-        )
-    
-    Example - Workflow Composition:
-        # 1. Council deliberates
-        decision = council_dispatch(
-            task_description="Design a new protocol for MCP composition patterns",
-            output_path="WORK_IN_PROGRESS/protocol_design.md"
-        )
-        
-        # 2. Save to protocol (use Protocol MCP)
-        protocol_create(
-            number=120,
-            title="MCP Composition Patterns",
-            content=decision["decision"]
-        )
-        
-        # 3. Commit (use Git MCP)
-        git_add(files=["01_PROTOCOLS/120_mcp_composition_patterns.md"])
-        git_smart_commit(message="feat(protocol): Add Protocol 120 - MCP Composition")
-    """
-    return council_ops.dispatch_task(
-        task_description=task_description,
-        agent=agent,
-        max_rounds=max_rounds,
-        force_engine=force_engine,
-        output_path=output_path
-    )
-
-@mcp.tool()
-def council_list_agents() -> list[dict]:
-    """
     List all available Council agents and their current status.
     
     Returns:
@@ -6675,6 +6703,7 @@ from fastmcp import FastMCP
 from mcp_servers.git.git_ops import GitOperations
 import os
 import subprocess
+import shutil
 from typing import List
 
 # Initialize FastMCP with canonical domain name
@@ -6689,6 +6718,8 @@ git_ops = GitOperations(REPO_PATH, base_dir=BASE_DIR)
 def git_smart_commit(message: str) -> str:
     """
     Commit staged files with automatic Protocol 101 v3.0 (Functional Coherence) enforcement.
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
     
     Protocol 101 v3.0 mandates that all commits must pass the automated test suite
     before being accepted. The pre-commit hook will automatically execute the test suite.
@@ -6735,8 +6766,50 @@ def git_smart_commit(message: str) -> str:
         # We simply attempt the commit - the hook will enforce test passage.
         commit_hash = git_ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
+
     except Exception as e:
         return f"Commit failed: {str(e)}"
+
+@mcp.tool()
+def git_get_safety_rules() -> str:
+    """
+    Get the unbreakable Git safety rules that all agents MUST follow.
+    Call this tool at the start of any session involving Git operations.
+    
+    Returns:
+        The set of immutable safety protocols for Git usage.
+    """
+    return """
+    🛡️ GIT SAFETY PRIMER: UNBREAKABLE RULES FOR AGENTS 🛡️
+    
+    1. SYNCHRONIZATION FIRST
+       - Before starting ANY new task, ensure local 'main' matches 'origin/main'.
+       - Run 'git checkout main && git pull origin main'.
+       - If pull fails or diverges: STOP immediately. Ask user for help.
+       - NEVER start work on a stale or divergent main branch.
+       
+    2. MAIN IS PROTECTED
+       - NEVER commit directly to 'main'.
+       - ALWAYS create a feature branch: 'feature/task-ID-description'.
+       
+    3. SERIAL PROCESSING PROTOCOL
+       - ONE feature branch at a time.
+       - Do not create 'feature/B' if 'feature/A' is active.
+       - Lifecycle: Start A -> Commit -> Push -> PR -> Merge -> Pull Main -> Delete A -> Start B.
+       
+    4. STATE VERIFICATION
+       - NEVER assume the repo state.
+       - Run 'git_get_status' before every major action (edit, commit, switch).
+       - If you see unexpected changes/untracked files: STOP and report to user.
+       
+    5. DESTRUCTIVE ACTION GATE
+       - 'git reset --hard', 'git clean', 'git push --force' require EXPLICIT, RECENT user confirmation.
+       - NEVER auto-run these commands to "fix" things without asking.
+       
+    6. NO GHOST EDITS
+       - Do not modify files unless you are on the correct feature branch.
+       - Verify branch with 'git_get_status' BEFORE editing.
+    """
 
 def check_requirements() -> str:
     """
@@ -6775,6 +6848,8 @@ def git_get_status() -> str:
     """
     Get the current status of the repository.
     
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Returns:
         A formatted string describing the repo status (branch, staged files, etc).
     """
@@ -6793,6 +6868,8 @@ def git_get_status() -> str:
 def git_add(files: List[str] = None) -> str:
     """
     Stage files for commit.
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
     
     Safety: Blocks if on main branch - must be on feature branch.
     
@@ -6844,6 +6921,8 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
     """
     Push the current feature branch to origin.
     
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Args:
         force: Force push (git push --force). Use with caution.
         no_verify: Bypass pre-push hooks (git push --no-verify). Useful if git-lfs is missing.
@@ -6871,17 +6950,34 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
         # Verification: Ensure we have something to push?
         # Actually git push handles "everything up-to-date" gracefully.
         
-        output = git_ops.push("origin", current, force=force, no_verify=no_verify)
+        # Strategy: Try push normally first.
+        # If it fails due to LFS hook issues, retry with --no-verify.
+        # This handles cases where LFS is installed but hooks fail (PATH issues),
+        # or where LFS is missing entirely.
+        
+        try:
+            return git_ops.push("origin", current, force=force, no_verify=no_verify)
+        except RuntimeError as e:
+            error_msg = str(e)
+            # Check for common LFS hook failures
+            if "git-lfs" in error_msg and ("not found" in error_msg or "command not found" in error_msg):
+                print(f"WARNING: Push failed due to LFS hook error. Retrying with --no-verify. Error: {error_msg}")
+                # Retry with bypass
+                output = git_ops.push("origin", current, force=force, no_verify=True)
+                return f"⚠️ WARNING: LFS hook failed, pushed with --no-verify.\nOutput: {output}"
+            else:
+                # Re-raise other errors
+                raise e
         
         # Verification: Verify remote hash matches local hash
         local_hash = git_ops.get_commit_hash("HEAD")
         remote_hash = git_ops.get_commit_hash(f"origin/{current}")
         
         if local_hash != remote_hash:
-            return f"WARNING: Push completed but remote hash ({remote_hash[:8]}) does not match local ({local_hash[:8]}). Output: {output}"
+            return f"{warning_msg}WARNING: Push completed but remote hash ({remote_hash[:8]}) does not match local ({local_hash[:8]}). Output: {output}"
             
         pr_url = f"https://github.com/richfrem/Project_Sanctuary/pull/new/{current}"
-        return f"Verified push to {current} (Hash: {local_hash[:8]}).\nOutput: {output}\n\n📝 Next: Create PR at {pr_url}"
+        return f"{warning_msg}Verified push to {current} (Hash: {local_hash[:8]}).\nOutput: {output}\n\n📝 Next: Create PR at {pr_url}"
     except Exception as e:
         return f"Failed to push feature: {str(e)}"
 
@@ -6890,6 +6986,8 @@ def git_start_feature(task_id: str, description: str) -> str:
     """
     Start a new feature branch (idempotent).
     Format: feature/task-{task_id}-{description}
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
     
     Idempotent behavior:
     - If branch exists and you're on it: success (no-op)
@@ -6911,7 +7009,12 @@ def git_start_feature(task_id: str, description: str) -> str:
         # Pillar 6: Pre-Flight Check
         req_error = check_requirements()
         if req_error:
-            return req_error
+            # If it's just git-lfs missing, warn but allow proceeding
+            if "git-lfs" in req_error:
+                print(f"WARNING: {req_error}")
+                # Continue execution
+            else:
+                return req_error
 
         # Get comprehensive status
         status = git_ops.status()
@@ -6972,6 +7075,9 @@ def git_start_feature(task_id: str, description: str) -> str:
 def git_finish_feature(branch_name: str, force: bool = False) -> str:
     """
     Finish a feature branch (cleanup).
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Assumes the PR has been merged on GitHub.
     1. Checkout main
     2. Pull latest main
@@ -12533,17 +12639,14 @@ mcp>=1.0.0
 --- START OF FILE task/server.py ---
 
 """
-Task MCP Server - MCP Protocol Implementation
-Exposes task operations via Model Context Protocol
+Task MCP Server - FastMCP Implementation
+Exposes task operations via Model Context Protocol using FastMCP
 """
 
-from mcp.server import Server
-from mcp.types import Tool, TextContent
-import mcp.server.stdio
+from fastmcp import FastMCP
 from pathlib import Path
-import json
 import sys
-from typing import Any
+from typing import Optional, List, Dict, Any
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
@@ -12551,303 +12654,211 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 from mcp_servers.task.operations import TaskOperations
 from mcp_servers.task.models import TaskStatus, TaskPriority
 
-
-# Initialize server
-app = Server("task-mcp")
+# Initialize FastMCP
+mcp = FastMCP("project_sanctuary.task")
 
 # Initialize operations
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 task_ops = TaskOperations(PROJECT_ROOT)
 
 
-@app.list_tools()
-async def list_tools() -> list[Tool]:
-    """List available MCP tools"""
-    return [
-        Tool(
-            name="create_task",
-            description="Create a new task file in TASKS/ directory",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "Task title"
-                    },
-                    "objective": {
-                        "type": "string",
-                        "description": "What and why of the task"
-                    },
-                    "deliverables": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "List of concrete outputs"
-                    },
-                    "acceptance_criteria": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "List of completion conditions"
-                    },
-                    "priority": {
-                        "type": "string",
-                        "enum": ["Critical", "High", "Medium", "Low"],
-                        "description": "Task priority (default: Medium)"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": ["backlog", "todo", "in-progress", "done", "blocked"],
-                        "description": "Initial status (default: backlog)"
-                    },
-                    "lead": {
-                        "type": "string",
-                        "description": "Assigned person/agent (default: Unassigned)"
-                    },
-                    "dependencies": {
-                        "type": "string",
-                        "description": "Task dependencies (e.g., 'Requires #012')"
-                    },
-                    "related_documents": {
-                        "type": "string",
-                        "description": "Related files/protocols"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "description": "Additional context"
-                    },
-                    "task_number": {
-                        "type": "integer",
-                        "description": "Specific task number (auto-generated if not provided)"
-                    }
-                },
-                "required": ["title", "objective", "deliverables", "acceptance_criteria"]
-            }
-        ),
-        Tool(
-            name="update_task",
-            description="Update an existing task's metadata or content",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "task_number": {
-                        "type": "integer",
-                        "description": "Task number to update"
-                    },
-                    "updates": {
-                        "type": "object",
-                        "description": "Dictionary of fields to update"
-                    }
-                },
-                "required": ["task_number", "updates"]
-            }
-        ),
-        Tool(
-            name="update_task_status",
-            description="Change task status (moves file between directories)",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "task_number": {
-                        "type": "integer",
-                        "description": "Task number"
-                    },
-                    "new_status": {
-                        "type": "string",
-                        "enum": ["backlog", "todo", "in-progress", "done", "blocked"],
-                        "description": "New status"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "description": "Optional notes about status change"
-                    }
-                },
-                "required": ["task_number", "new_status"]
-            }
-        ),
-        Tool(
-            name="get_task",
-            description="Retrieve a specific task by number",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "task_number": {
-                        "type": "integer",
-                        "description": "Task number to retrieve"
-                    }
-                },
-                "required": ["task_number"]
-            }
-        ),
-        Tool(
-            name="list_tasks",
-            description="List tasks with optional filters",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "status": {
-                        "type": "string",
-                        "enum": ["backlog", "todo", "in-progress", "done", "blocked"],
-                        "description": "Filter by status"
-                    },
-                    "priority": {
-                        "type": "string",
-                        "enum": ["Critical", "High", "Medium", "Low"],
-                        "description": "Filter by priority"
-                    }
-                }
-            }
-        ),
-        Tool(
-            name="search_tasks",
-            description="Search tasks by content (full-text search)",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "string",
-                        "description": "Search query"
-                    }
-                },
-                "required": ["query"]
-            }
-        )
-    ]
-
-
-@app.call_tool()
-async def call_tool(name: str, arguments: Any) -> list[TextContent]:
-    """Handle tool calls"""
+@mcp.tool()
+def create_task(
+    title: str,
+    objective: str,
+    deliverables: List[str],
+    acceptance_criteria: List[str],
+    priority: str = "Medium",
+    status: str = "backlog",
+    lead: str = "Unassigned",
+    dependencies: Optional[str] = None,
+    related_documents: Optional[str] = None,
+    notes: Optional[str] = None,
+    task_number: Optional[int] = None
+) -> str:
+    """
+    Create a new task file in TASKS/ directory.
     
+    Args:
+        title: Task title
+        objective: What and why of the task
+        deliverables: List of concrete outputs
+        acceptance_criteria: List of completion conditions
+        priority: Task priority (default: Medium)
+        status: Initial status (default: backlog)
+        lead: Assigned person/agent (default: Unassigned)
+        dependencies: Task dependencies (e.g., 'Requires #012')
+        related_documents: Related files/protocols
+        notes: Additional context
+        task_number: Specific task number (auto-generated if not provided)
+    """
     try:
-        if name == "create_task":
-            # Parse arguments
-            title = arguments["title"]
-            objective = arguments["objective"]
-            deliverables = arguments["deliverables"]
-            acceptance_criteria = arguments["acceptance_criteria"]
-            
-            priority = TaskPriority(arguments.get("priority", "Medium"))
-            status = TaskStatus(arguments.get("status", "backlog"))
-            lead = arguments.get("lead", "Unassigned")
-            dependencies = arguments.get("dependencies")
-            related_documents = arguments.get("related_documents")
-            notes = arguments.get("notes")
-            task_number = arguments.get("task_number")
-            
-            # Create task
-            result = task_ops.create_task(
-                title=title,
-                objective=objective,
-                deliverables=deliverables,
-                acceptance_criteria=acceptance_criteria,
-                priority=priority,
-                status=status,
-                lead=lead,
-                dependencies=dependencies,
-                related_documents=related_documents,
-                notes=notes,
-                task_number=task_number
-            )
-            
-            return [TextContent(
-                type="text",
-                text=json.dumps(result.to_dict(), indent=2)
-            )]
-        
-        elif name == "update_task":
-            task_number = arguments["task_number"]
-            updates = arguments["updates"]
-            
-            result = task_ops.update_task(task_number, updates)
-            
-            return [TextContent(
-                type="text",
-                text=json.dumps(result.to_dict(), indent=2)
-            )]
-        
-        elif name == "update_task_status":
-            task_number = arguments["task_number"]
-            new_status = TaskStatus(arguments["new_status"])
-            notes = arguments.get("notes")
-            
-            result = task_ops.update_task_status(task_number, new_status, notes)
-            
-            return [TextContent(
-                type="text",
-                text=json.dumps(result.to_dict(), indent=2)
-            )]
-        
-        elif name == "get_task":
-            task_number = arguments["task_number"]
-            
-            task = task_ops.get_task(task_number)
-            
-            if task is None:
-                return [TextContent(
-                    type="text",
-                    text=json.dumps({
-                        "status": "error",
-                        "message": f"Task #{task_number:03d} not found"
-                    }, indent=2)
-                )]
-            
-            return [TextContent(
-                type="text",
-                text=json.dumps(task, indent=2)
-            )]
-        
-        elif name == "list_tasks":
-            status = TaskStatus(arguments["status"]) if "status" in arguments else None
-            priority = TaskPriority(arguments["priority"]) if "priority" in arguments else None
-            
-            tasks = task_ops.list_tasks(status, priority)
-            
-            return [TextContent(
-                type="text",
-                text=json.dumps(tasks, indent=2)
-            )]
-        
-        elif name == "search_tasks":
-            query = arguments["query"]
-            
-            results = task_ops.search_tasks(query)
-            
-            return [TextContent(
-                type="text",
-                text=json.dumps(results, indent=2)
-            )]
-        
-        else:
-            return [TextContent(
-                type="text",
-                text=json.dumps({
-                    "status": "error",
-                    "message": f"Unknown tool: {name}"
-                }, indent=2)
-            )]
-    
-    except Exception as e:
-        return [TextContent(
-            type="text",
-            text=json.dumps({
-                "status": "error",
-                "message": str(e)
-            }, indent=2)
-        )]
-
-
-async def main():
-    """Run the MCP server"""
-    async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
-        await app.run(
-            read_stream,
-            write_stream,
-            app.create_initialization_options()
+        result = task_ops.create_task(
+            title=title,
+            objective=objective,
+            deliverables=deliverables,
+            acceptance_criteria=acceptance_criteria,
+            priority=TaskPriority(priority),
+            status=TaskStatus(status),
+            lead=lead,
+            dependencies=dependencies,
+            related_documents=related_documents,
+            notes=notes,
+            task_number=task_number
         )
+        
+        return f"Created Task {result.task_number:03d}: {result.file_path}"
+    except Exception as e:
+        return f"Error creating task: {str(e)}"
+
+
+@mcp.tool()
+def update_task(
+    task_number: int,
+    updates: Dict[str, Any]
+) -> str:
+    """
+    Update an existing task's metadata or content.
+    
+    Args:
+        task_number: Task number to update
+        updates: Dictionary of fields to update
+    """
+    try:
+        result = task_ops.update_task(task_number, updates)
+        # Extract updated fields from the updates dict
+        updated_fields = list(updates.keys())
+        return f"Updated Task {result.task_number:03d}. Fields: {', '.join(updated_fields)}"
+    except Exception as e:
+        return f"Error updating task: {str(e)}"
+
+
+@mcp.tool()
+def update_task_status(
+    task_number: int,
+    new_status: str,
+    notes: Optional[str] = None
+) -> str:
+    """
+    Change task status (moves file between directories).
+    
+    Args:
+        task_number: Task number
+        new_status: New status (backlog, todo, in-progress, complete, blocked)
+        notes: Optional notes about status change
+    """
+    try:
+        result = task_ops.update_task_status(
+            task_number,
+            TaskStatus(new_status),
+            notes
+        )
+        # Extract status info from result
+        return f"Updated Task {result.task_number:03d} status to {new_status}"
+    except Exception as e:
+        return f"Error updating task status: {str(e)}"
+
+
+@mcp.tool()
+def get_task(task_number: int) -> str:
+    """
+    Retrieve a specific task by number.
+    
+    Args:
+        task_number: Task number to retrieve
+    """
+    try:
+        task = task_ops.get_task(task_number)
+        
+        if task is None:
+            return f"Task #{task_number:03d} not found"
+        
+        # Build output safely, handling missing fields
+        output = []
+        output.append(f"Task {task.get('number', task_number):03d}: {task.get('title', 'Untitled')}")
+        output.append(f"Status: {task.get('status', 'unknown')}")
+        output.append(f"Priority: {task.get('priority', 'unknown')}")
+        output.append(f"Lead: {task.get('lead', 'Unassigned')}")
+        
+        if 'objective' in task and task['objective']:
+            output.append(f"\nObjective:\n{task['objective']}")
+        
+        if 'deliverables' in task and task['deliverables']:
+            output.append(f"\nDeliverables:")
+            for d in task['deliverables']:
+                output.append(f"- {d}")
+        
+        if 'acceptance_criteria' in task and task['acceptance_criteria']:
+            output.append(f"\nAcceptance Criteria:")
+            for c in task['acceptance_criteria']:
+                output.append(f"- {c}")
+        
+        return "\n".join(output)
+    except Exception as e:
+        return f"Error retrieving task: {str(e)}"
+
+
+@mcp.tool()
+def list_tasks(
+    status: Optional[str] = None,
+    priority: Optional[str] = None
+) -> str:
+    """
+    List tasks with optional filters.
+    
+    Args:
+        status: Filter by status (backlog, todo, in-progress, done, blocked)
+        priority: Filter by priority (Critical, High, Medium, Low)
+    """
+    try:
+        status_filter = TaskStatus(status) if status else None
+        priority_filter = TaskPriority(priority) if priority else None
+        
+        tasks = task_ops.list_tasks(status_filter, priority_filter)
+        
+        if not tasks:
+            filter_desc = []
+            if status:
+                filter_desc.append(f"status={status}")
+            if priority:
+                filter_desc.append(f"priority={priority}")
+            filter_str = f" ({', '.join(filter_desc)})" if filter_desc else ""
+            return f"No tasks found{filter_str}"
+        
+        output = [f"Found {len(tasks)} task(s):"]
+        for task in tasks:
+            output.append(f"- {task['number']:03d}: {task['title']} [{task['status']}] ({task['priority']})")
+        
+        return "\n".join(output)
+    except Exception as e:
+        return f"Error listing tasks: {str(e)}"
+
+
+@mcp.tool()
+def search_tasks(query: str) -> str:
+    """
+    Search tasks by content (full-text search).
+    
+    Args:
+        query: Search query
+    """
+    try:
+        results = task_ops.search_tasks(query)
+        
+        if not results:
+            return f"No tasks found matching '{query}'"
+        
+        output = [f"Found {len(results)} task(s) matching '{query}':"]
+        for task in results:
+            output.append(f"- {task['number']:03d}: {task['title']} [{task['status']}]")
+        
+        return "\n".join(output)
+    except Exception as e:
+        return f"Error searching tasks: {str(e)}"
 
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    mcp.run()
 
 --- END OF FILE task/server.py ---
 
