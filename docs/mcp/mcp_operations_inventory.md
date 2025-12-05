@@ -335,11 +335,16 @@ graph TD
 ```
 
 **Operation Prerequisites:**
-- `git_start_feature` → Must be on clean working directory
-- `git_add` → Must be on feature branch (not main)
-- `git_smart_commit` → Must have staged files (`git_add` first)
-- `git_push_feature` → Must have commits to push
-- `git_finish_feature` → Must have user confirmation that PR is merged
+| Operation | 🧪 Test | 📝 Docs | Description |
+|---|---|---|---|
+| `git_start_feature` | ✅ | ✅ | Starts feature branch |
+| `git_get_status` | ✅ | ✅ | Gets repo status |
+| `git_diff` | ✅ | ✅ | Shows changes |
+| `git_add` | ✅ | ✅ | Stages files |
+| `git_smart_commit` | ✅ | ✅ | Commits with P101 checks |
+| `git_log` | ✅ | ✅ | Shows history |
+| `git_push_feature` | ✅ | ✅ | Pushes feature branch |
+| `git_finish_feature` | ✅ | ✅ | Cleans up branch (requires user confirmation that PR is merged) |
 
 **Workflow Rules:**
 1. Always run `git_get_status` first

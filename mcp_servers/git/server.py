@@ -18,6 +18,8 @@ def git_smart_commit(message: str) -> str:
     """
     Commit staged files with automatic Protocol 101 v3.0 (Functional Coherence) enforcement.
     
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Protocol 101 v3.0 mandates that all commits must pass the automated test suite
     before being accepted. The pre-commit hook will automatically execute the test suite.
     
@@ -63,8 +65,50 @@ def git_smart_commit(message: str) -> str:
         # We simply attempt the commit - the hook will enforce test passage.
         commit_hash = git_ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
+
     except Exception as e:
         return f"Commit failed: {str(e)}"
+
+@mcp.tool()
+def git_get_safety_rules() -> str:
+    """
+    Get the unbreakable Git safety rules that all agents MUST follow.
+    Call this tool at the start of any session involving Git operations.
+    
+    Returns:
+        The set of immutable safety protocols for Git usage.
+    """
+    return """
+    🛡️ GIT SAFETY PRIMER: UNBREAKABLE RULES FOR AGENTS 🛡️
+    
+    1. SYNCHRONIZATION FIRST
+       - Before starting ANY new task, ensure local 'main' matches 'origin/main'.
+       - Run 'git checkout main && git pull origin main'.
+       - If pull fails or diverges: STOP immediately. Ask user for help.
+       - NEVER start work on a stale or divergent main branch.
+       
+    2. MAIN IS PROTECTED
+       - NEVER commit directly to 'main'.
+       - ALWAYS create a feature branch: 'feature/task-ID-description'.
+       
+    3. SERIAL PROCESSING PROTOCOL
+       - ONE feature branch at a time.
+       - Do not create 'feature/B' if 'feature/A' is active.
+       - Lifecycle: Start A -> Commit -> Push -> PR -> Merge -> Pull Main -> Delete A -> Start B.
+       
+    4. STATE VERIFICATION
+       - NEVER assume the repo state.
+       - Run 'git_get_status' before every major action (edit, commit, switch).
+       - If you see unexpected changes/untracked files: STOP and report to user.
+       
+    5. DESTRUCTIVE ACTION GATE
+       - 'git reset --hard', 'git clean', 'git push --force' require EXPLICIT, RECENT user confirmation.
+       - NEVER auto-run these commands to "fix" things without asking.
+       
+    6. NO GHOST EDITS
+       - Do not modify files unless you are on the correct feature branch.
+       - Verify branch with 'git_get_status' BEFORE editing.
+    """
 
 def check_requirements() -> str:
     """
@@ -103,6 +147,8 @@ def git_get_status() -> str:
     """
     Get the current status of the repository.
     
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Returns:
         A formatted string describing the repo status (branch, staged files, etc).
     """
@@ -121,6 +167,8 @@ def git_get_status() -> str:
 def git_add(files: List[str] = None) -> str:
     """
     Stage files for commit.
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
     
     Safety: Blocks if on main branch - must be on feature branch.
     
@@ -172,6 +220,8 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
     """
     Push the current feature branch to origin.
     
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Args:
         force: Force push (git push --force). Use with caution.
         no_verify: Bypass pre-push hooks (git push --no-verify). Useful if git-lfs is missing.
@@ -199,19 +249,25 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
         # Verification: Ensure we have something to push?
         # Actually git push handles "everything up-to-date" gracefully.
         
-        # Auto-detect missing git-lfs and bypass hook if needed
+        # Strategy: Try push normally first.
+        # If it fails due to LFS hook issues, retry with --no-verify.
+        # This handles cases where LFS is installed but hooks fail (PATH issues),
+        # or where LFS is missing entirely.
+        
         warning_msg = ""
-        if not no_verify:
-            lfs_path = shutil.which("git-lfs")
-            if not lfs_path:
-                # Check if pre-push hook exists
-                hook_path = os.path.join(REPO_PATH, ".git", "hooks", "pre-push")
-                if os.path.exists(hook_path):
-                    # LFS missing but hook exists - likely will fail
-                    no_verify = True
-                    warning_msg = "⚠️ WARNING: git-lfs not found but pre-push hook exists. Auto-enabled no_verify=True to allow push.\n"
-
-        output = git_ops.push("origin", current, force=force, no_verify=no_verify)
+        try:
+            output = git_ops.push("origin", current, force=force, no_verify=no_verify)
+        except RuntimeError as e:
+            error_msg = str(e)
+            # Check for common LFS hook failures
+            if "git-lfs" in error_msg and ("not found" in error_msg or "command not found" in error_msg):
+                print(f"WARNING: Push failed due to LFS hook error. Retrying with --no-verify. Error: {error_msg}")
+                # Retry with bypass
+                output = git_ops.push("origin", current, force=force, no_verify=True)
+                warning_msg = "⚠️ WARNING: LFS hook failed, pushed with --no-verify.\n"
+            else:
+                # Re-raise other errors
+                raise e
         
         # Verification: Verify remote hash matches local hash
         local_hash = git_ops.get_commit_hash("HEAD")
@@ -230,6 +286,8 @@ def git_start_feature(task_id: str, description: str) -> str:
     """
     Start a new feature branch (idempotent).
     Format: feature/task-{task_id}-{description}
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
     
     Idempotent behavior:
     - If branch exists and you're on it: success (no-op)
@@ -317,6 +375,9 @@ def git_start_feature(task_id: str, description: str) -> str:
 def git_finish_feature(branch_name: str, force: bool = False) -> str:
     """
     Finish a feature branch (cleanup).
+    
+    ⚠️ CRITICAL: You must adhere to the protocols in `git_get_safety_rules` before using this tool.
+    
     Assumes the PR has been merged on GitHub.
     1. Checkout main
     2. Pull latest main

@@ -82,7 +82,7 @@
 | | `config_read` | ✅ | ✅ | Read test config file |
 | | `config_write` | ✅ | ✅ | Created test config file |
 | | `config_delete` | ✅ | ✅ | Deleted test config file |
-| **Git (8)** | `git_get_status` | ✅ | ✅ | Verified branch status |
+| **Git (8)** | `git_status` | ✅ | ✅ | Verified branch status |
 | | `git_diff` | ✅ | ✅ | Verified changes |
 | | `git_log` | ✅ | ✅ | Verified commit history |
 | | `git_start_feature` | ✅ | ✅ | Validated LFS check (blocked correctly) |
