@@ -1,1 +1,2 @@
 Testing Git MCP Robustness
+Test Line 2: Verifying git_add and smart_commit
