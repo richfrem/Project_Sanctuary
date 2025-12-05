@@ -85,6 +85,7 @@ class CouncilOperations:
         max_rounds: int = 3,
         force_engine: Optional[str] = None,
         model_name: Optional[str] = None,
+        model_preference: Optional[str] = None,
         output_path: Optional[str] = None,
         update_rag: bool = False
     ) -> Dict[str, Any]:
@@ -97,6 +98,7 @@ class CouncilOperations:
             max_rounds: Maximum deliberation rounds
             force_engine: Force specific engine (e.g. "ollama")
             model_name: Specific model to use
+            model_preference: Model routing preference (OLLAMA, GEMINI, GPT) - Protocol 116
             output_path: Optional path to save result
             update_rag: Whether to update RAG after execution
             
@@ -145,7 +147,8 @@ class CouncilOperations:
                         task=task_description,
                         context=context,
                         model_name=model_name or "Sanctuary-Qwen2-7B:latest",
-                        engine=force_engine
+                        engine=force_engine,
+                        model_preference=model_preference
                     )
                     
                     # Create round packet
