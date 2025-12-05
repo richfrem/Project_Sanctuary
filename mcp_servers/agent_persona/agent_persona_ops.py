@@ -91,6 +91,7 @@ class AgentPersonaOperations:
         maintain_state: bool = True,
         engine: str | None = None,
         model_name: str | None = None,
+        model_preference: str | None = None,
         custom_persona_file: str | None = None
     ) -> Dict[str, Any]:
         """
@@ -103,6 +104,7 @@ class AgentPersonaOperations:
             maintain_state: Whether to persist conversation history
             engine: AI engine to use (gemini, openai, ollama)
             model_name: Specific model variant
+            model_preference: Model routing preference (OLLAMA, GEMINI, GPT)
             custom_persona_file: Path to custom persona file
         
         Returns:
@@ -117,7 +119,7 @@ class AgentPersonaOperations:
                 logger.info(f"[Agent Persona] Reusing existing {role_normalized} agent")
             else:
                 logger.info(f"[Agent Persona] Creating new {role_normalized} agent...")
-                agent = self._create_agent(role_normalized, engine, model_name, custom_persona_file)
+                agent = self._create_agent(role_normalized, engine, model_name, model_preference, custom_persona_file)
                 logger.info(f"[Agent Persona] Agent created successfully")
                 if maintain_state:
                     self._active_agents[role_normalized] = agent
@@ -164,6 +166,7 @@ class AgentPersonaOperations:
         role: str,
         engine: str | None = None,
         model_name: str | None = None,
+        model_preference: str | None = None,
         custom_persona_file: str | None = None
     ) -> Agent:
         """
@@ -173,6 +176,7 @@ class AgentPersonaOperations:
             role: Persona role
             engine: AI engine to use (gemini, openai, ollama)
             model_name: Specific model variant
+            model_preference: Model routing preference (OLLAMA, GEMINI, GPT)
             custom_persona_file: Path to custom persona file
         
         Returns:
@@ -195,8 +199,15 @@ class AgentPersonaOperations:
         # Determine state file
         state_file = self.state_dir / f"{role}_session.json"
         
+        # Determine Ollama host based on model preference (Protocol 116)
+        ollama_host = None
+        if model_preference == 'OLLAMA' or (engine and engine.lower() == 'ollama'):
+            # Protocol 116: Use container network addressing for MCP infrastructure
+            ollama_host = "http://ollama-model-mcp:11434"
+            logger.info(f"[Agent Persona] Using container network for Ollama: {ollama_host}")
+        
         # Create LLM client
-        client = get_llm_client(provider=engine, model_name=model_name)
+        client = get_llm_client(provider=engine, model_name=model_name, ollama_host=ollama_host)
         
         # Create agent
         agent = Agent(

@@ -35,6 +35,7 @@ def council_dispatch(
     agent: str | None = None,
     max_rounds: int = 3,
     force_engine: str | None = None,
+    model_preference: str | None = None,
     output_path: str | None = None
 ) -> dict:
     """
@@ -54,6 +55,8 @@ def council_dispatch(
                If None, full council deliberation is used.
         max_rounds: Maximum number of deliberation rounds (default: 3)
         force_engine: Force specific AI engine ("gemini", "openai", "ollama")
+        model_preference: Model routing preference ("OLLAMA", "GEMINI", "GPT")
+                         OLLAMA routes to container network (Protocol 116)
         output_path: Optional output file path (relative to project root)
     
     Returns:
@@ -69,42 +72,15 @@ def council_dispatch(
             max_rounds=3
         )
     
+    Example - Ollama Routing (Container Network - Protocol 116):
+        result = council_dispatch(
+            task_description="Analyze Protocol 116",
+            model_preference="OLLAMA"  # Routes to ollama-model-mcp:11434
+        )
+    
     Example - Single Agent Consultation:
         result = council_dispatch(
             task_description="Audit the test coverage for the Git MCP server",
-            agent="auditor",
-            max_rounds=2
-        )
-    
-    Example - Workflow Composition:
-        # 1. Council deliberates
-        decision = council_dispatch(
-            task_description="Design a new protocol for MCP composition patterns",
-            output_path="WORK_IN_PROGRESS/protocol_design.md"
-        )
-        
-        # 2. Save to protocol (use Protocol MCP)
-        protocol_create(
-            number=120,
-            title="MCP Composition Patterns",
-            content=decision["decision"]
-        )
-        
-        # 3. Commit (use Git MCP)
-        git_add(files=["01_PROTOCOLS/120_mcp_composition_patterns.md"])
-        git_smart_commit(message="feat(protocol): Add Protocol 120 - MCP Composition")
-    """
-    return council_ops.dispatch_task(
-        task_description=task_description,
-        agent=agent,
-        max_rounds=max_rounds,
-        force_engine=force_engine,
-        output_path=output_path
-    )
-
-@mcp.tool()
-def council_list_agents() -> list[dict]:
-    """
     List all available Council agents and their current status.
     
     Returns:

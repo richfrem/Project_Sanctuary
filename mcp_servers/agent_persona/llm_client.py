@@ -40,13 +40,29 @@ class LLMClient(ABC):
 class OllamaClient(LLMClient):
     """Client for Ollama models (including Sanctuary)"""
     
-    def __init__(self, model_name: str = None):
+    def __init__(self, model_name: str = None, ollama_host: str = None):
         # Default to env var or hardcoded fallback
         default_model = os.getenv("OLLAMA_MODEL", "Sanctuary-Qwen2-7B:latest")
         super().__init__(model_name or default_model)
-        self.host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        
+        # Protocol 116: Use container network addressing by default
+        # Priority: explicit parameter > env var > container network default
+        if ollama_host:
+            self.host = ollama_host
+        else:
+            self.host = os.getenv("OLLAMA_HOST", "http://ollama-model-mcp:11434")
+        
+        # Warn if localhost is used (violates Protocol 116 for MCP infrastructure)
+        if "localhost" in self.host or "127.0.0.1" in self.host:
+            logger.warning(
+                f"[OllamaClient] Using localhost address ({self.host}). "
+                "For MCP infrastructure, use container network: http://ollama-model-mcp:11434 "
+                "(Protocol 116: Container Network Isolation)"
+            )
+        
         self.client = None
         self._initialize_client()
+
         
     def _initialize_client(self):
         try:
@@ -134,15 +150,22 @@ class OpenAIClient(LLMClient):
             return {"status": "error", "details": "Client not initialized (check API key)"}
         return {"status": "healthy", "details": "Client initialized"}
 
-def get_llm_client(provider: str = "ollama", model_name: str = None) -> LLMClient:
-    """Factory function to get an LLM client"""
+def get_llm_client(provider: str = "ollama", model_name: str = None, ollama_host: str = None) -> LLMClient:
+    """
+    Factory function to get an LLM client
+    
+    Args:
+        provider: LLM provider ("ollama", "openai", "gemini")
+        model_name: Specific model to use
+        ollama_host: Ollama host URL (for Protocol 116 compliance)
+    """
     provider = provider.lower() if provider else "ollama"
     
     if provider == "ollama":
-        return OllamaClient(model_name=model_name)
+        return OllamaClient(model_name=model_name, ollama_host=ollama_host)
     elif provider == "openai":
         return OpenAIClient(model_name=model_name)
     else:
         # Default to Ollama if unknown
         logger.warning(f"Unknown provider '{provider}', defaulting to Ollama")
-        return OllamaClient(model_name=model_name)
+        return OllamaClient(model_name=model_name, ollama_host=ollama_host)
