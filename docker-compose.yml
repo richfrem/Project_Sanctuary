@@ -37,10 +37,12 @@ services:
             # CRITICAL: Configure for GPU acceleration (Example for NVIDIA/Podman)
             - driver: nvidia
               count: all
-              capabilities: [gpu]
-    command: >
-      /bin/sh -c "ollama serve & 
-      sleep 10 && 
-      ollama pull ${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest} && 
-      wait -n"
+              capabilities: [ gpu ]
+    entrypoint: [ "/bin/sh", "-c" ]
+    command:
+      - |
+        ollama serve &
+        sleep 10
+        ollama pull $${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest}
+        wait -n
     restart: unless-stopped
