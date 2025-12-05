@@ -251,7 +251,12 @@ def git_start_feature(task_id: str, description: str) -> str:
         # Pillar 6: Pre-Flight Check
         req_error = check_requirements()
         if req_error:
-            return req_error
+            # If it's just git-lfs missing, warn but allow proceeding
+            if "git-lfs" in req_error:
+                print(f"WARNING: {req_error}")
+                # Continue execution
+            else:
+                return req_error
 
         # Get comprehensive status
         status = git_ops.status()

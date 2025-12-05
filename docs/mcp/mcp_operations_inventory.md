@@ -271,14 +271,14 @@ pytest tests/mcp_servers/git/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `git_get_status` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Get repository status |
-| `git_diff` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Show changes (cached/uncached) |
-| `git_log` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Show commit history |
-| `git_start_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Create feature branch (Idempotent, Safe) |
-| `git_add` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Stage files (Blocks on main) |
-| `git_smart_commit` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Commit with P101 v3.0 (Blocks on main) |
-| `git_push_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Push feature branch (Blocks on main) |
-| `git_finish_feature` | ✅ | ✅ | ❌ | [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) | Cleanup (Verifies PR Merge) |
+| `git_get_status` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Get current repository status |
+| `git_diff` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Show changes in working directory |
+| `git_log` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Show commit history |
+| `git_start_feature` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Start new feature branch (idempotent) |
+| `git_add` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Stage files for commit |
+| `git_smart_commit` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Commit with Protocol 101 v3.0 enforcement |
+| `git_push_feature` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Push feature branch to origin |
+| `git_finish_feature` | ✅ | ✅ | ⏳ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Finish feature branch (cleanup) |(Verifies PR Merge) |
 
 **Prerequisite Tests:**
 - Unit Tests: [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) (10/10 passing)
