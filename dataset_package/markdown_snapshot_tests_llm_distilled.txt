@@ -1,8 +1,8 @@
 # tests Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-04T06:09:22.268Z
+Generated On: 2025-12-05T23:11:27.120Z
 
-# Mnemonic Weight (Token Count): ~52,521 tokens
+# Mnemonic Weight (Token Count): ~55,017 tokens
 
 # Directory Structure (relative to tests subfolder)
   ./tests/benchmarks/
@@ -52,6 +52,7 @@ Generated On: 2025-12-04T06:09:22.268Z
   ./tests/mcp_servers/config/test_operations.py
   ./tests/mcp_servers/council/
   ./tests/mcp_servers/council/test_council_ops.py
+  ./tests/mcp_servers/council/test_polymorphic_routing.py
   ./tests/mcp_servers/forge_llm/
   ./tests/mcp_servers/forge_llm/__init__.py
   ./tests/mcp_servers/git/
@@ -60,6 +61,7 @@ Generated On: 2025-12-04T06:09:22.268Z
   ./tests/mcp_servers/git/test_tool_safety.py
   ./tests/mcp_servers/orchestrator/
   ./tests/mcp_servers/orchestrator/__init__.py
+  ./tests/mcp_servers/orchestrator/test_mcp_operations.py
   ./tests/mcp_servers/orchestrator/test_orchestrator_ops.py
   ./tests/mcp_servers/protocol/
   ./tests/mcp_servers/protocol/__init__.py
@@ -2721,6 +2723,159 @@ if __name__ == "__main__":
 
 --- END OF FILE mcp_servers/council/test_council_ops.py ---
 
+--- START OF FILE mcp_servers/council/test_polymorphic_routing.py ---
+
+"""
+Test suite for Council MCP polymorphic model routing (T094)
+
+Verifies Protocol 116 (Container Network Isolation) compliance
+"""
+
+import pytest
+from unittest.mock import Mock, patch, MagicMock
+from pathlib import Path
+
+# Add parent to path
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+from mcp_servers.agent_persona.llm_client import OllamaClient, get_llm_client
+from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.council.council_ops import CouncilOperations
+
+
+class TestOllamaClientProtocol116:
+    """Test OllamaClient Protocol 116 compliance"""
+    
+    def test_default_uses_container_network(self):
+        """Verify default Ollama host uses container network addressing"""
+        with patch.dict('os.environ', {}, clear=True):
+            client = OllamaClient()
+            assert client.host == "http://ollama-model-mcp:11434"
+    
+    def test_explicit_ollama_host_parameter(self):
+        """Verify explicit ollama_host parameter takes precedence"""
+        client = OllamaClient(ollama_host="http://custom-host:11434")
+        assert client.host == "http://custom-host:11434"
+    
+    def test_env_var_overrides_default(self):
+        """Verify OLLAMA_HOST env var overrides default"""
+        with patch.dict('os.environ', {'OLLAMA_HOST': 'http://env-host:11434'}):
+            client = OllamaClient()
+            assert client.host == "http://env-host:11434"
+    
+    @patch('mcp_servers.agent_persona.llm_client.logger')
+    def test_localhost_warning(self, mock_logger):
+        """Verify localhost usage triggers Protocol 116 warning"""
+        client = OllamaClient(ollama_host="http://localhost:11434")
+        mock_logger.warning.assert_called_once()
+        warning_msg = mock_logger.warning.call_args[0][0]
+        assert "Protocol 116" in warning_msg
+        assert "ollama-model-mcp:11434" in warning_msg
+
+
+class TestAgentPersonaModelPreference:
+    """Test Agent Persona MCP model_preference routing"""
+    
+    @patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client')
+    @patch('mcp_servers.agent_persona.agent_persona_ops.Agent')
+    def test_ollama_preference_uses_container_network(self, mock_agent, mock_get_client):
+        """Verify model_preference='OLLAMA' routes to container network"""
+        ops = AgentPersonaOperations()
+        
+        # Mock agent query
+        mock_agent_instance = Mock()
+        mock_agent_instance.query.return_value = "Test response"
+        mock_agent.return_value = mock_agent_instance
+        
+        # Dispatch with OLLAMA preference
+        ops.dispatch(
+            role="coordinator",
+            task="Test task",
+            model_preference="OLLAMA"
+        )
+        
+        # Verify get_llm_client was called with ollama_host
+        mock_get_client.assert_called_once()
+        call_kwargs = mock_get_client.call_args[1]
+        assert call_kwargs['ollama_host'] == "http://ollama-model-mcp:11434"
+    
+    @patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client')
+    @patch('mcp_servers.agent_persona.agent_persona_ops.Agent')
+    def test_no_preference_no_ollama_host(self, mock_agent, mock_get_client):
+        """Verify no model_preference doesn't set ollama_host"""
+        ops = AgentPersonaOperations()
+        
+        mock_agent_instance = Mock()
+        mock_agent_instance.query.return_value = "Test response"
+        mock_agent.return_value = mock_agent_instance
+        
+        ops.dispatch(
+            role="coordinator",
+            task="Test task"
+        )
+        
+        # Verify ollama_host is None
+        call_kwargs = mock_get_client.call_args[1]
+        assert call_kwargs['ollama_host'] is None
+
+
+class TestCouncilModelPreference:
+    """Test Council MCP model_preference parameter threading"""
+    
+    @patch('mcp_servers.agent_persona.agent_persona_ops.AgentPersonaOperations')
+    @patch('mcp_servers.rag_cortex.operations.CortexOperations')
+    def test_model_preference_passed_to_persona_ops(self, mock_cortex, mock_persona):
+        """Verify model_preference is passed through to Agent Persona MCP"""
+        # Setup mocks
+        mock_persona_instance = Mock()
+        mock_persona_instance.dispatch.return_value = {
+            "response": "Test response",
+            "status": "success"
+        }
+        mock_persona_instance.list_roles.return_value = {
+            "built_in": ["coordinator", "strategist", "auditor"],
+            "custom": []
+        }
+        mock_persona.return_value = mock_persona_instance
+        
+        mock_cortex_instance = Mock()
+        mock_cortex_instance.query.return_value = {"results": []}
+        mock_cortex_instance.get_cache_stats.return_value = {"hot_cache_size": 10}
+        mock_cortex.return_value = mock_cortex_instance
+        
+        # Create Council ops and dispatch
+        ops = CouncilOperations()
+        ops.dispatch_task(
+            task_description="Test task",
+            agent="coordinator",
+            model_preference="OLLAMA"
+        )
+        
+        # Verify persona_ops.dispatch was called with model_preference
+        mock_persona_instance.dispatch.assert_called()
+        call_kwargs = mock_persona_instance.dispatch.call_args[1]
+        assert call_kwargs['model_preference'] == "OLLAMA"
+
+
+class TestFactoryFunction:
+    """Test get_llm_client factory function"""
+    
+    def test_factory_passes_ollama_host(self):
+        """Verify factory function passes ollama_host to OllamaClient"""
+        client = get_llm_client(
+            provider="ollama",
+            ollama_host="http://test-host:11434"
+        )
+        assert isinstance(client, OllamaClient)
+        assert client.host == "http://test-host:11434"
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE mcp_servers/council/test_polymorphic_routing.py ---
+
 --- START OF FILE mcp_servers/forge_llm/__init__.py ---
 
 
@@ -3361,6 +3516,150 @@ if __name__ == "__main__":
 
 
 --- END OF FILE mcp_servers/orchestrator/__init__.py ---
+
+--- START OF FILE mcp_servers/orchestrator/test_mcp_operations.py ---
+
+"""
+Unit tests for Orchestrator MCP server operations.
+
+Tests the actual MCP tools exposed by server.py:
+- orchestrator_dispatch_mission
+- orchestrator_run_strategic_cycle
+"""
+import pytest
+import sys
+from pathlib import Path
+from unittest.mock import patch, MagicMock
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+# Import the MCP server module
+from mcp_servers.orchestrator import server
+
+
+class TestOrchestratorMCPOperations:
+    """Test the MCP operations exposed by the Orchestrator server."""
+    
+    def test_orchestrator_dispatch_mission_basic(self):
+        """Test orchestrator_dispatch_mission with basic parameters."""
+        result = server.orchestrator_dispatch_mission(
+            mission_id="TEST_001",
+            objective="Test mission objective",
+            assigned_agent="Kilo"
+        )
+        
+        assert isinstance(result, str)
+        assert "TEST_001" in result
+        assert "Kilo" in result
+        assert "Test mission objective" in result
+        assert "dispatched" in result.lower()
+    
+    def test_orchestrator_dispatch_mission_custom_agent(self):
+        """Test orchestrator_dispatch_mission with custom agent."""
+        result = server.orchestrator_dispatch_mission(
+            mission_id="TEST_002",
+            objective="Custom agent test",
+            assigned_agent="CustomAgent"
+        )
+        
+        assert "CustomAgent" in result
+        assert "TEST_002" in result
+    
+    def test_orchestrator_dispatch_mission_default_agent(self):
+        """Test orchestrator_dispatch_mission uses default agent."""
+        result = server.orchestrator_dispatch_mission(
+            mission_id="TEST_003",
+            objective="Default agent test"
+        )
+        
+        # Default agent is "Kilo"
+        assert "Kilo" in result
+    
+    @patch('mcp_servers.orchestrator.server.CortexOperations')
+    def test_orchestrator_run_strategic_cycle_success(self, mock_cortex_ops):
+        """Test orchestrator_run_strategic_cycle with successful execution."""
+        # Mock the CortexOperations instance
+        mock_instance = MagicMock()
+        mock_instance.ingest_incremental.return_value = {"status": "success", "documents_added": 1}
+        mock_instance.guardian_wakeup.return_value = {"status": "success", "cache_updated": True}
+        mock_cortex_ops.return_value = mock_instance
+        
+        result = server.orchestrator_run_strategic_cycle(
+            gap_description="Test strategic gap",
+            research_report_path="test_report.md",
+            days_to_synthesize=1
+        )
+        
+        assert isinstance(result, str)
+        assert "Strategic Crucible Cycle" in result
+        assert "Test strategic gap" in result
+        assert "Ingesting Report" in result
+        assert "test_report.md" in result
+        assert "Cycle Complete" in result
+        
+        # Verify CortexOperations was called correctly
+        mock_instance.ingest_incremental.assert_called_once_with(["test_report.md"])
+        mock_instance.guardian_wakeup.assert_called_once()
+    
+    @patch('mcp_servers.orchestrator.server.CortexOperations')
+    def test_orchestrator_run_strategic_cycle_ingestion_failure(self, mock_cortex_ops):
+        """Test orchestrator_run_strategic_cycle handles ingestion failure."""
+        # Mock ingestion failure
+        mock_instance = MagicMock()
+        mock_instance.ingest_incremental.side_effect = Exception("Ingestion failed")
+        mock_cortex_ops.return_value = mock_instance
+        
+        result = server.orchestrator_run_strategic_cycle(
+            gap_description="Test gap",
+            research_report_path="test.md"
+        )
+        
+        assert "CRITICAL FAIL" in result
+        assert "Ingestion failed" in result
+    
+    @patch('mcp_servers.orchestrator.server.CortexOperations')
+    def test_orchestrator_run_strategic_cycle_cache_failure_non_critical(self, mock_cortex_ops):
+        """Test orchestrator_run_strategic_cycle continues on cache failure."""
+        # Mock successful ingestion but failed cache update
+        mock_instance = MagicMock()
+        mock_instance.ingest_incremental.return_value = {"status": "success"}
+        mock_instance.guardian_wakeup.side_effect = Exception("Cache error")
+        mock_cortex_ops.return_value = mock_instance
+        
+        result = server.orchestrator_run_strategic_cycle(
+            gap_description="Test gap",
+            research_report_path="test.md"
+        )
+        
+        # Should complete despite cache failure
+        assert "Cycle Complete" in result
+        assert "WARN" in result
+        assert "Cache error" in result
+    
+    @patch('mcp_servers.orchestrator.server.CortexOperations')
+    def test_orchestrator_run_strategic_cycle_custom_days(self, mock_cortex_ops):
+        """Test orchestrator_run_strategic_cycle with custom synthesis window."""
+        mock_instance = MagicMock()
+        mock_instance.ingest_incremental.return_value = {"status": "success"}
+        mock_instance.guardian_wakeup.return_value = {"status": "success"}
+        mock_cortex_ops.return_value = mock_instance
+        
+        result = server.orchestrator_run_strategic_cycle(
+            gap_description="Test gap",
+            research_report_path="test.md",
+            days_to_synthesize=7
+        )
+        
+        assert "7 days" in result
+        assert "Cycle Complete" in result
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
+
+--- END OF FILE mcp_servers/orchestrator/test_mcp_operations.py ---
 
 --- START OF FILE mcp_servers/orchestrator/test_orchestrator_ops.py ---
 
@@ -4679,7 +4978,7 @@ def test_initialization(temp_project_root):
     ops = CortexOperations(str(temp_project_root))
     assert ops.project_root == temp_project_root
 
-@pytest.mark.skip(reason="Skipped per user request (full ingest)")
+@pytest.mark.skip(reason="Full ingestion test - run manually when needed (takes ~10 mins)")
 def test_ingest_full(mock_cortex_deps, temp_project_root):
     """Test full ingestion flow with accurate chunk counting."""
     ops = CortexOperations(str(temp_project_root))
@@ -4703,6 +5002,7 @@ def test_ingest_full(mock_cortex_deps, temp_project_root):
     # Verify add_documents was called
     mock_pdr_instance = mock_cortex_deps["pdr"].return_value
     mock_pdr_instance.add_documents.assert_called()
+
 
 def test_ingest_incremental(mock_cortex_deps, temp_project_root):
     """Test incremental ingestion flow with accurate chunk counting."""

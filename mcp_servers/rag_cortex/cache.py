@@ -16,7 +16,12 @@ import json
 import os
 import sqlite3
 import threading
-from typing import Any, Dict, Optional
+import logging
+import time
+from typing import Any, Dict, Optional, List, Tuple
+
+# Configure logging
+logger = logging.getLogger("rag_cortex.cache")
 
 
 class MnemonicCache:
@@ -59,7 +64,7 @@ class MnemonicCache:
         """Initialize the SQLite warm cache database."""
         with sqlite3.connect(self.db_path) as conn:
             conn.execute('''
-                CREATE TABLE IF NOT EXISTS cache (
+                CREATE TABLE IF NOT EXISTS warm_cache (
                     key TEXT PRIMARY KEY,
                     value TEXT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -68,7 +73,7 @@ class MnemonicCache:
                 )
             ''')
             # Create index for faster lookups
-            conn.execute('CREATE INDEX IF NOT EXISTS idx_key ON cache(key)')
+            conn.execute('CREATE INDEX IF NOT EXISTS idx_key ON warm_cache(key)')
 
     def generate_key(self, structured_query: Dict[str, Any]) -> str:
         """
@@ -105,25 +110,26 @@ class MnemonicCache:
         try:
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.execute(
-                    'SELECT value FROM cache WHERE key = ?',
+                    'SELECT value, access_count, last_accessed FROM warm_cache WHERE key = ?',
                     (key,)
                 )
-                result = cursor.fetchone()
+                row = cursor.fetchone()
 
-                if result:
-                    value = json.loads(result[0])
+                if row:
+                    value_json, access_count, last_accessed = row
                     # Promote to Hot Cache
                     with self.hot_cache_lock:
-                        self.hot_cache[key] = value
+                        self.hot_cache[key] = json.loads(value_json)
 
-                    # Update access stats
-                    threading.Thread(target=self._update_access_stats, args=(key,), daemon=True).start()
-                    return value
-
+                    # Update access stats asynchronously/lazily
+                    # In this simple implementation we just do it here
+                    self._update_access_stats(key)
+                    
+                    return json.loads(value_json)
+            return None
         except Exception as e:
-            print(f"[CACHE] Warning: Error reading from warm cache: {e}")
-
-        return None
+            logger.warning(f"[CACHE] Warning: Error reading from warm cache: {e}")
+            return None
 
     def set(self, key: str, value: Any, promote_to_hot: bool = True) -> None:
         """
@@ -143,13 +149,15 @@ class MnemonicCache:
         try:
             json_value = json.dumps(value)
             with sqlite3.connect(self.db_path) as conn:
-                conn.execute(
-                    'INSERT OR REPLACE INTO cache (key, value) VALUES (?, ?)',
-                    (key, json_value)
-                )
-                conn.commit()
+                cursor = conn.cursor()
+                cursor.execute(
+                "INSERT OR REPLACE INTO warm_cache (key, value, access_count, last_accessed) VALUES (?, ?, ?, ?)",
+                (key, json.dumps(value), 0, time.time())
+            )
+            conn.commit()
+            
         except Exception as e:
-            print(f"[CACHE] Warning: Error writing to warm cache: {e}")
+            logger.warning(f"[CACHE] Warning: Error writing to warm cache: {e}")
 
     def clear_hot_cache(self) -> None:
         """Clear the in-memory hot cache."""
@@ -160,10 +168,11 @@ class MnemonicCache:
         """Clear the persistent warm cache."""
         try:
             with sqlite3.connect(self.db_path) as conn:
-                conn.execute('DELETE FROM cache')
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM warm_cache")
                 conn.commit()
         except Exception as e:
-            print(f"[CACHE] Warning: Error clearing warm cache: {e}")
+            logger.warning(f"[CACHE] Warning: Error clearing warm cache: {e}")
 
     def get_stats(self) -> Dict[str, Any]:
         """Get cache statistics."""
@@ -173,28 +182,29 @@ class MnemonicCache:
 
         try:
             with sqlite3.connect(self.db_path) as conn:
-                cursor = conn.execute('SELECT COUNT(*), SUM(access_count) FROM cache')
-                result = cursor.fetchone()
-                stats.update({
-                    'warm_cache_entries': result[0] or 0,
-                    'total_accesses': result[1] or 0,
-                })
+                cursor = conn.execute('SELECT COUNT(*) FROM warm_cache')
+                count = cursor.fetchone()[0]
+            return {
+                "size": count,
+                "db_path": self.db_path
+            }
         except Exception as e:
-            print(f"[CACHE] Warning: Error getting warm cache stats: {e}")
-
-        return stats
+            logger.warning(f"[CACHE] Warning: Error getting warm cache stats: {e}")
+            return {"error": str(e)}
 
     def _update_access_stats(self, key: str) -> None:
         """Update access statistics for a cache entry."""
         try:
             with sqlite3.connect(self.db_path) as conn:
-                conn.execute(
-                    'UPDATE cache SET access_count = access_count + 1, last_accessed = CURRENT_TIMESTAMP WHERE key = ?',
-                    (key,)
+                cursor = conn.cursor()
+                # Increment access count and update last_accessed
+                cursor.execute(
+                    "UPDATE warm_cache SET access_count = access_count + 1, last_accessed = ? WHERE key = ?",
+                    (time.time(), key)
                 )
                 conn.commit()
         except Exception as e:
-            print(f"[CACHE] Warning: Error updating access stats: {e}")
+            logger.warning(f"[CACHE] Warning: Error updating access stats: {e}")
 
 
 # Global cache instance for application-wide use

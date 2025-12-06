@@ -9,8 +9,8 @@ Tests all 4 tools in order of speed:
 4. cortex_ingest_full (slowest - optional)
 
 Usage:
-    python3 test_cortex_integration.py
-    python3 test_cortex_integration.py --skip-full-ingest
+    python3 run_cortex_integration.py
+    python3 run_cortex_integration.py --run-full-ingest
 """
 import sys
 import json
@@ -20,14 +20,14 @@ import argparse
 from pathlib import Path
 
 # Add project root to path
-# test_cortex_integration.py -> tests -> cortex -> cognitive -> mcp_servers -> Project_Sanctuary
-project_root = Path(__file__).resolve().parent.parent.parent.parent
+# run_cortex_integration.py -> rag_cortex -> mcp_servers -> Project_Sanctuary
+project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Now we can import from the parent package
-from mcp_servers.cognitive.cortex.operations import CortexOperations
-from mcp_servers.cognitive.cortex.validator import CortexValidator
-from mcp_servers.cognitive.cortex.models import to_dict
+from mcp_servers.rag_cortex.operations import CortexOperations
+from mcp_servers.rag_cortex.validator import CortexValidator
+from mcp_servers.rag_cortex.models import to_dict
 
 
 class Colors:

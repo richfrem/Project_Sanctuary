@@ -226,7 +226,8 @@ Check that ChromaDB is running:
 podman ps
 
 # Check health endpoint
-curl http://localhost:8000/api/v1/heartbeat
+#curl http://localhost:8000/api/v1/heartbeat
+curl http://localhost:8000/api/v2/heartbeat
 ```
 
 Expected response: `{"nanosecond heartbeat": <timestamp>}`
@@ -236,7 +237,7 @@ Expected response: `{"nanosecond heartbeat": <timestamp>}`
 Run the full ingestion script to populate ChromaDB with the Cognitive Genome:
 
 ```bash
-python scripts/cortex_ingest_full.py
+python3 scripts/cortex_ingest_full.py
 ```
 
 This will:
@@ -253,7 +254,7 @@ This will:
 Check database statistics:
 
 ```bash
-python scripts/cortex_stats.py
+python3 scripts/cortex_stats.py
 ```
 
 Or via MCP (if orchestrator is running):
@@ -330,7 +331,7 @@ grep CHROMA .env
 
 **Verify service is listening:**
 ```bash
-curl http://localhost:8000/api/v1/heartbeat
+curl http://localhost:8000/api/v2/heartbeat
 ```
 
 **Check network configuration:**

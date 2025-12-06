@@ -112,25 +112,4 @@ class TestCacheOperations:
             handle = mock_file()
             handle.write.assert_any_call("# Guardian Boot Digest\n\n")
 
-class TestAdaptationPacket:
-    @pytest.mark.skip(reason="Legacy test - references deleted mnemonic_cortex module")
-    def test_generate_adaptation_packet(self):
-        # We need to test the server function or logic. 
-        # Since we can't easily import the server function due to decorators,
-        # we'll test the SynthesisGenerator usage pattern.
-        
-        with patch('mnemonic_cortex.app.synthesis.generator.SynthesisGenerator') as MockGenerator:
-            instance = MockGenerator.return_value
-            instance.generate_packet.return_value = {"data": "test"}
-            instance.save_packet.return_value = "/path/to/packet.json"
-            
-            # Simulate what the server tool does
-            from mcp_servers.cognitive.cortex.cache import CacheManager
-            from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
-            generator = SynthesisGenerator("/tmp")
-            packet = generator.generate_packet(days=7)
-            output_path = generator.save_packet(packet)
-            
-            assert output_path == "/path/to/packet.json"
-            instance.generate_packet.assert_called_with(days=7)
-            instance.save_packet.assert_called_with({"data": "test"})
+
