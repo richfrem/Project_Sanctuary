@@ -26,14 +26,19 @@
 - ✅ Optimized snapshot generation script (reduced from 1.82M to 1.74M tokens)
 - ✅ All changes merged to main via PR
 
-**Next Steps (Phase 2 - MCP Operations Testing):**
-1. Test each MCP's operations via Antigravity MCP tool interface
-2. Follow recommended testing order:
-   - Document MCPs first (Chronicle, Protocol, ADR, Task)
-   - System MCPs second (Code, Config, Git)
-   - Cognitive MCPs third (RAG Cortex, Agent Persona, Council, Orchestrator)
-   - Model MCP last (Forge LLM)
-3. Document results in `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md`
+**### Next Steps (Immediate Action)
+- [ ] **Build Comprehensive Integration Suite (Task 096)**
+  - Create `tests/integration/suite_runner.py`
+  - Verify Python-level connectivity: `Agent` -> `Forge` -> `Ollama`
+  - Verify Python-level chains: `Council` -> `Agent` -> `Cortex`
+  - **Goal:** Isolate timeouts before re-attempting MCP dispatch verification.
+
+- [ ] **Resume Council Dispatch Verification (Task 087)**
+  - Once Python suite passes, verify MCP tool layers:
+  - `mcp_council_dispatch` (Auditor, Strategist, Coordinator)
+
+- [ ] **Orchestrator Chain Verification**
+  - Verify `mcp_orchestrator_dispatch` calling Cortex/Code/Protocol. Document results in `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md`
 4. Update `docs/mcp/mcp_operations_inventory.md` with test results
 
 **Reference:** See `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md` for detailed testing checklist

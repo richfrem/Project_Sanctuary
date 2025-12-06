@@ -12,6 +12,10 @@ To validate the end-to-end integrity and resilience of the **Strategic Crucible 
 
 ## 🛡️ The Hardened Self-Evolving Loop Protocol
 
+**Validation Dependency:**
+> [!NOTE]
+> Full loop validation requires the Python Integration Suite (Task 096) to be passing first. Current status: MCP Layer timeouts tracked in T087.
+
 The Orchestrator shall execute the following four steps sequentially within a single mission context, demonstrating a smooth transition between Council Agents and tools.
 
 ### Step 1: Knowledge Generation Protocol (`protocol mcp`)

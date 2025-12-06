@@ -103,18 +103,23 @@
 | | `cache_warmup` | ✅ | ✅ | ✅ | test_cache_integration.py (26 queries, 1.26s) |
 | | `guardian_wakeup` | ✅ | ✅ | ✅ | test_cache_integration.py (3 bundles, 56ms) |
 | | `generate_adaptation_packet` | ❌ | ❌ | ❌ | Not implemented |
-| **Agent Persona (5)** | `dispatch` | Forge LLM | ✅ | ⏳ | ✅ | Fix applied (restart req) |
+| **Agent Persona (5)** | `dispatch` | Forge LLM | ✅ | ✅ | ✅ | Verified with host Ollama |
 | | `list_roles` | None | ✅ | — | ✅ | |
 | | `get_state` | None | ✅ | — | ✅ | |
 | | `reset_state` | None | ✅ | — | ✅ | |
 | | `create_custom` | None | ✅ | — | ✅ | |
-| **Council (2)** | `dispatch` | Agent Persona, Cortex, Protocol, Git | ✅ | ⏳ | ⏳ | Task 056 (needs persona restart) |
-| | ↳ *Protocol Audit* | Protocol, Code, Agent | — | — | ⏳ | Verify "Audit file vs Protocol" |
-| | ↳ *Mnemonic Synthesis* | Cortex, Chronicle, Agent | — | — | ⏳ | Verify "Synthesize insights" |
-| | ↳ *Strategic Loop* | All | — | — | ⏳ | Full Task 056 Cycle |
+| **Council (2)** | `dispatch` | Agent Persona, Cortex, Protocol, Git | ✅ | N/A | ❌ | Timeout/Hang - Needs Python Integration Suite First (See T096) |
+| | ↳ *Auditor Chain* | Agent Persona → Forge LLM | — | — | ⏳ | Council→Auditor→LLM |
+| | ↳ *Strategist Chain* | Agent Persona → Forge LLM | — | — | ⏳ | Council→Strategist→LLM |
+| | ↳ *Coordinator Chain* | Agent Persona → Forge LLM | — | — | ⏳ | Council→Coordinator→LLM |
 | | `list_agents` | None | ✅ | — | ✅ | 3 agents available |
 | **Orchestrator (2)** | `dispatch_mission` | Council | ✅ | ⏳ | ✅ | Verified (dispatched to Kilo) |
-| | `run_strategic_cycle` | Council, Cortex | ✅ | ⏳ | ⏳ | Needs full stack |
+| | ↳ *Council Chain* | Council → Agent Persona | — | — | ⏳ | Orch→Council→Agent |
+| | ↳ *Cortex Query Chain* | Cortex → ChromaDB | — | — | ⏳ | Orch→Cortex.query |
+| | ↳ *Cortex Ingest Chain* | Cortex → ChromaDB | — | — | ⏳ | Orch→Cortex.ingest_incremental |
+| | ↳ *Code Write Chain* | Code MCP | — | — | ⏳ | Orch→Code.write |
+| | ↳ *Protocol Update Chain* | Protocol MCP | — | — | ⏳ | Orch→Protocol.update |
+| | `run_strategic_cycle` | Council, Cortex | ✅ | ⏳ | ⏳ | [See Pipeline Diagram](../../README.md#3-continuous-learning-pipeline) |
 | **Forge LLM (2)** | `check_model_status` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 | | `query_model` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 
