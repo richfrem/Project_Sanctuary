@@ -18,7 +18,7 @@ class TestChronicleIntegration:
         """Test writing to Chronicle from an external source (simulated)."""
         
         # Initialize operations with temp dir
-        ops = ChronicleOperations(str(temp_chronicle_dir.parent))
+        ops = ChronicleOperations(str(temp_chronicle_dir))
         
         # 1. Create a new entry
         result = ops.create_entry(
@@ -28,7 +28,7 @@ class TestChronicleIntegration:
             classification="internal"
         )
         
-        assert result["status"] == "success"
+        assert result["status"] == "draft"
         assert "001_integration_test_entry.md" in result["file_path"]
         
         # 2. Verify file exists
@@ -36,8 +36,8 @@ class TestChronicleIntegration:
         assert entry_path.exists()
         
         content = entry_path.read_text()
-        assert "# Integration Test Entry" in content
-        assert "Author: TestRunner" in content
+        assert "**Title:** Integration Test Entry" in content
+        assert "**Author:** TestRunner" in content
         
         # 3. Search for the entry
         search_results = ops.search_entries("Integration Test")
