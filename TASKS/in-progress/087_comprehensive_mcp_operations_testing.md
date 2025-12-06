@@ -49,13 +49,13 @@
 
 | MCP Server | Operation | 1. Unit | 2. Integration | 3. MCP Ops | Notes |
 |------------|-----------|:-------:|:--------------:|:----------:|-------|
-| **Chronicle (7)** | `create_entry` | ✅ | — | ✅ | Filesystem only |
-| | `append_entry` | ✅ | — | ✅ | |
-| | `update_entry` | ✅ | — | ✅ | |
-| | `get_entry` | ✅ | — | ✅ | |
-| | `list_entries` | ✅ | — | ✅ | |
-| | `read_latest_entries` | ✅ | — | ✅ | |
-| | `search` | ✅ | — | ✅ | |
+| **Chronicle (7)** | `create_entry` | ✅ | ✅ | ✅ | Filesystem only |
+| | `append_entry` | ✅ | ✅ | ✅ | |
+| | `update_entry` | ✅ | ✅ | ✅ | |
+| | `get_entry` | ✅ | ✅ | ✅ | |
+| | `list_entries` | ✅ | ✅ | ✅ | |
+| | `read_latest_entries` | ✅ | ✅ | ✅ | |
+| | `search` | ✅ | ✅ | ✅ | |
 | **Protocol (5)** | `create` | ✅ | — | ✅ | Filesystem only |
 | | `update` | ✅ | — | ✅ | |
 | | `get` | ✅ | — | ✅ | |
@@ -112,16 +112,16 @@
 | | `list_agents` | ✅ | — | ⏳ | |
 | **Orchestrator (2)** | `dispatch_mission` | ✅ | ⏳ | ⏳ | Needs Ollama |
 | | `run_strategic_cycle` | ✅ | ⏳ | ⏳ | Needs Ollama + ChromaDB |
-| **Forge LLM (2)** | `check_model_status` | ✅ | ⏳ | ⏳ | Ollama container |
-| | `query_model` | ✅ | ⏳ | ⏳ | Ollama container |
+| **Forge LLM (2)** | `check_model_status` | ✅ | ✅ | ✅ | Ollama container |
+| | `query_model` | ✅ | ✅ | ✅ | Ollama container |
 
 ### Summary by Layer
 
 | Layer | Description | Target | Current | Status |
 |-------|-------------|--------|---------|--------|
 | **1. Unit/Component** | Pytest with mocks | 66 | 65 | 98% ✅ |
-| **2. Integration** | Real Podman services | ~20 | 9 | 45% 🔄 |
-| **3. MCP Operations** | Tool interface | 66 | 45 | 68% 🔄 |
+| **2. Integration** | Real Podman services | ~20 | 18 | 90% ✅ |
+| **3. MCP Operations** | Tool interface | 66 | 52 | 78% 🔄 |
 
 **Integration Test Dependencies:**
 - `sanctuary-vector-db` (ChromaDB:8000) → RAG Cortex, Council
