@@ -65,6 +65,11 @@ class GitOperations:
                  current_path = f"{path}{os.pathsep}{current_path}"
                  
         env["PATH"] = current_path
+        
+        # Debug logging to identify detection issues
+        import sys
+        print(f"[DEBUG] git_ops detected PATH for hooks: {current_path}", file=sys.stderr)
+        
         return env
 
     def _run_git(self, args: List[str]) -> str:
