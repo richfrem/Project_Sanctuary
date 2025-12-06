@@ -43,7 +43,7 @@ def test_initialization(temp_project_root):
     ops = CortexOperations(str(temp_project_root))
     assert ops.project_root == temp_project_root
 
-@pytest.mark.skip(reason="Full ingestion test - run manually when needed (takes ~10 mins)")
+# @pytest.mark.skip(reason="Full ingestion test - run manually when needed (takes ~10 mins)")
 def test_ingest_full(mock_cortex_deps, temp_project_root):
     """Test full ingestion flow with accurate chunk counting."""
     ops = CortexOperations(str(temp_project_root))
