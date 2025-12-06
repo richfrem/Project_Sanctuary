@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock, patch
-from mcp_servers.system.forge.operations import ForgeOperations
+from mcp_servers.forge_llm.operations import ForgeOperations
 
 @pytest.mark.integration
 def test_forge_model_serving():

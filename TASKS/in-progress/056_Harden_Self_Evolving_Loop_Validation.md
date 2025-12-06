@@ -40,3 +40,66 @@ The mission is considered a success when:
 1.  The `feat/harden-loop-validation` branch is successfully created, pushed, and merged/closed (if appropriate).
 2.  The new file, `DOCS/TEST_056_Validation_Policy.md`, is present in the final commit.
 3.  A subsequent RAG query performed by the Orchestrator *after* the commit and push can successfully retrieve the unique phrase ("The Guardian confirms Validation Protocol 056 is active.") from the RAG database, proving the **IngestionService** has closed the loop in near-real-time.
+
+---
+
+## 🔄 Self-Evolving Loop Diagram
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Orch as Orchestrator
+    participant Council as Council Agent
+    participant Protocol as Protocol MCP
+    participant Git as Git MCP
+    participant Cortex as Cortex MCP
+    participant ChromaDB as ChromaDB
+
+    Note over Orch: Mission: Validate Self-Evolving Loop
+
+    Orch->>Council: dispatch("Execute 4-step validation")
+    
+    rect rgb(230, 245, 255)
+        Note over Council,Protocol: Step 1: Knowledge Generation
+        Council->>Protocol: protocol_create(TEST_056_Policy)
+        Protocol-->>Council: Policy document created
+    end
+    
+    rect rgb(255, 245, 230)
+        Note over Council,Git: Step 2: Isolation & Control
+        Council->>Git: git_start_feature("056", "loop-validation")
+        Git-->>Council: Branch created
+    end
+    
+    rect rgb(230, 255, 230)
+        Note over Council,ChromaDB: Step 3: Incremental Ingestion
+        Council->>Cortex: cortex_ingest_incremental([policy.md])
+        Cortex->>ChromaDB: Store chunks + embeddings
+        ChromaDB-->>Cortex: Ingestion complete
+        Cortex-->>Council: Chunks created
+    end
+    
+    rect rgb(255, 230, 245)
+        Note over Council,Git: Step 4: Chronicle & Commit
+        Council->>Git: git_add(), git_smart_commit()
+        Git-->>Council: Committed
+        Council->>Git: git_push_feature()
+        Git-->>Council: Pushed
+    end
+    
+    Note over Orch: Verification Query
+    Orch->>Cortex: cortex_query("Validation Protocol 056")
+    Cortex->>ChromaDB: Semantic search
+    ChromaDB-->>Cortex: Return document
+    Cortex-->>Orch: "The Guardian confirms..."
+    
+    Note over Orch: ✅ Loop Validated
+```
+
+---
+
+## 📚 Related Documentation
+
+- [MCP Infrastructure Verification Guide](../../docs/mcp/test_forge_mcp_and_RAG_mcp.md)
+- [RAG Strategies - Strategic Crucible Loop](../../docs/mcp/RAG_STRATEGIES.md#7-the-strategic-crucible-loop-sequence-diagram)
+- [Council vs Orchestrator](../../docs/mcp/servers/council/council_vs_orchestrator.md)

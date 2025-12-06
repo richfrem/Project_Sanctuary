@@ -199,12 +199,12 @@ class AgentPersonaOperations:
         # Determine state file
         state_file = self.state_dir / f"{role}_session.json"
         
-        # Determine Ollama host based on model preference (Protocol 116)
+        # Determine Ollama host based on model preference
         ollama_host = None
+        # Logic moved to llm_client.py for better separation of concerns
         if model_preference == 'OLLAMA' or (engine and engine.lower() == 'ollama'):
-            # Protocol 116: Use container network addressing for MCP infrastructure
-            ollama_host = "http://ollama-model-mcp:11434"
-            logger.info(f"[Agent Persona] Using container network for Ollama: {ollama_host}")
+            logger.debug(f"[Agent Persona] Selected Ollama engine")
+
         
         # Create LLM client
         client = get_llm_client(provider=engine, model_name=model_name, ollama_host=ollama_host)

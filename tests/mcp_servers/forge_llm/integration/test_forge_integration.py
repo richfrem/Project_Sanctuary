@@ -99,7 +99,7 @@ class TestForgeOperations:
     def test_check_sanctuary_model_status(self, verify_prerequisites):
         """Test check_sanctuary_model_status operation."""
         # Import here to avoid import errors if server not available
-        from mcp_servers.system.forge.operations import ForgeOperations
+        from mcp_servers.forge_llm.operations import ForgeOperations
         
         project_root = Path(__file__).parent.parent.parent
         ops = ForgeOperations(str(project_root))
@@ -112,7 +112,7 @@ class TestForgeOperations:
     
     def test_query_sanctuary_model(self, verify_prerequisites):
         """Test query_sanctuary_model operation."""
-        from mcp_servers.system.forge.operations import ForgeOperations
+        from mcp_servers.forge_llm.operations import ForgeOperations
         
         project_root = Path(__file__).parent.parent.parent
         ops = ForgeOperations(str(project_root))
