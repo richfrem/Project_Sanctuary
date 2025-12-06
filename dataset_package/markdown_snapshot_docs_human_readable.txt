@@ -1,8 +1,8 @@
 # docs Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-12-06T07:19:04.171Z
+Generated On: 2025-12-06T21:45:29.193Z
 
-# Mnemonic Weight (Token Count): ~158,333 tokens
+# Mnemonic Weight (Token Count): ~160,409 tokens
 
 # Directory Structure (relative to docs subfolder)
   ./docs/INDEX.md
@@ -69,6 +69,7 @@ Generated On: 2025-12-06T07:19:04.171Z
   ./docs/mcp/mcp_operations_inventory.md
   ./docs/mcp/naming_conventions.md
   ./docs/mcp/ollama_direct_test.md
+  ./docs/mcp/orchestration_workflows.md
   ./docs/mcp/prerequisites.md
   ./docs/mcp/servers/
   ./docs/mcp/servers/adr/
@@ -13347,6 +13348,162 @@ Based on testing with M1 Mac:
 
 --- END OF FILE mcp/ollama_direct_test.md ---
 
+--- START OF FILE mcp/orchestration_workflows.md ---
+
+# Standard Council Orchestration Workflows
+
+This document defines the standardized workflows for the Council Orchestrator to coordinate MCPs. These workflows are the building blocks for complex operations like the Strategic Crucible Loop.
+
+**Related Documentation:**
+- [MCP Architecture](../mcp/test_forge_mcp_and_RAG_mcp.md) (Full System Diagram)
+- [Council Orchestration Levels](../../docs/workflows/council_orchestration.md) (Complexity Hierarchy)
+
+---
+
+## Workflow 1: Context Retrieval (Orchestrator -> Cortex)
+
+**Purpose:** Retrieve relevant knowledge from the RAG Cortex before making decisions.
+**Trigger:** Before any complex agent deliberation.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Orch as Orchestrator MCP
+    participant Cortex as RAG Cortex MCP
+    participant Chroma as ChromaDB
+
+    Note over Orch: Need context for "Protocol 00"
+
+    Orch->>Cortex: cortex_query("Protocol 00")
+    Cortex->>Chroma: Vector Search
+    Chroma-->>Cortex: Return Relevant Chunks
+    Cortex-->>Orch: Return Markdown Content
+```
+
+---
+
+## Workflow 2: Agent Deliberation (Orchestrator -> Council -> Agent)
+
+**Purpose:** Delegate cognitive tasks to specialized personas.
+**Trigger:** When a specific perspective (Audit, Strategy) is needed.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Orch as Orchestrator MCP
+    participant Council as Council MCP
+    participant Agent as Agent Persona MCP
+    participant Forge as Forge LLM MCP
+
+    Note over Orch: Need security review
+
+    Orch->>Council: council_dispatch(agent="auditor", task="Review X")
+    Council->>Agent: persona_dispatch(role="auditor", context=CTX)
+    Agent->>Forge: query_model(prompt)
+    Forge-->>Agent: Model Response
+    Agent-->>Council: Auditor's Analysis
+    Council-->>Orch: Final Deliberation Output
+```
+
+---
+
+## Workflow 3: Action Execution (Orchestrator -> Code/Protocol/Git)
+
+**Purpose:** Execute side effects based on Council recommendations.
+**Trigger:** After a decision has been made.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Orch as Orchestrator MCP
+    participant Code as Code MCP
+    participant Protocol as Protocol MCP
+    participant Git as Git MCP
+
+    Note over Orch: Decision: Create Protocol 117
+
+    par Parallel Execution
+        Orch->>Protocol: protocol_create(117, "Content...")
+        Orch->>Code: code_write("tests/test_p117.py", ...)
+    end
+
+    Orch->>Git: git_smart_commit("feat: add Protocol 117")
+```
+
+---
+
+## Workflow 4: Multi-Agent Consensus (Council)
+
+**Purpose:** Reach a consensus decision on complex topics.
+**Trigger:** Strategic decisions or high-risk changes.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Orch as Orchestrator MCP
+    participant Council as Council MCP
+    participant Strategist as Agent (Strategist)
+    participant Auditor as Agent (Auditor)
+    participant Coordinator as Agent (Coordinator)
+
+    Note over Orch: Decision: Open Source Strategy?
+
+    Orch->>Council: council_dispatch(agent=None, "Debate Open Source")
+    
+    par Round 1
+        Council->>Strategist: Analyze Risk
+        Council->>Auditor: Check Compliance
+    end
+    
+    Strategist-->>Council: High Risk / High Reward
+    Auditor-->>Council: Need Licensing Review
+    
+    Note over Council: Internal Deliberation Logic
+    
+    Council->>Coordinator: Synthesize Consensus
+    Coordinator-->>Council: Final Recommendation
+    
+    Council-->>Orch: Consensus Reached
+```
+
+---
+
+## Workflow 5: Strategic Crucible Loop (Orchestrator self-correction)
+
+**Purpose:** Identify gaps, research solutions, and update the knowledge base.
+**Trigger:** `orchestrator_run_strategic_cycle` or automated schedule.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Orch as Orchestrator
+    participant Council as Council
+    participant Code as Code MCP
+    participant Git as Git MCP
+    participant Cortex as RAG Cortex
+
+    Note over Orch: Step 1: Gap Analysis
+    Orch->>Council: Identify Documentation Gaps
+    Council-->>Orch: "Missing T081 Definitions"
+
+    Note over Orch: Step 2: Research & Fix
+    Orch->>Code: code_write("docs/mcp/orchestration_workflows.md")
+    
+    Note over Orch: Step 3: Commit
+    Orch->>Git: git_smart_commit("docs: add workflows")
+    
+    Note over Orch: Step 4: Learn (Ingest)
+    Orch->>Cortex: cortex_ingest_incremental(["docs/mcp/orchestration_workflows.md"])
+    Cortex-->>Orch: Knowledge Updated
+```
+
+--- END OF FILE mcp/orchestration_workflows.md ---
+
 --- START OF FILE mcp/prerequisites.md ---
 
 # MCP Server Prerequisites
@@ -14892,6 +15049,35 @@ sequenceDiagram
     *   *Auditor* approves.
 5.  **Council** calls **Protocol MCP**: `protocol_update(number=101, updates={"content": "..."})`.
 6.  **Council** returns success to User.
+
+## Standardized Orchestration Workflows
+
+The following standard workflows are defined for validation and testing purposes.
+
+### 1. Strategic Crucible Loop (Task 056)
+**Purpose:** Autonomous self-evolution and knowledge hardening.
+**Trigger:** `mcp_orchestrator_run_strategic_cycle`
+**Steps:**
+1.  **Ingest:** Read new/changed files (Git MCP).
+2.  **Synthesize:** Agent Persona (Strategist) analyzes changes against existing Protocols (Cortex RAG).
+3.  **Adapt:** Agent Persona (Coordinator) proposes updates to Protocols or Docs.
+4.  **Cache:** Commit changes (Git MCP) and re-ingest into Mnemonic Cortex (Cortex MCP).
+
+### 2. Protocol Compliance Audit
+**Purpose:** Verify code against governance standards.
+**Trigger:** `council_dispatch(task="Audit <file> against Protocol <N>")`
+**Steps:**
+1.  **Context:** Retrieve Protocol <N> (Protocol MCP) and File Content (Code MCP).
+2.  **Analysis:** Auditor Persona checks for violations.
+3.  **Report:** Generate compliance report (Markdown).
+
+### 3. Mnemonic Synthesis (Knowledge Creation)
+**Purpose:** Distill raw information into canonical knowledge.
+**Trigger:** `council_dispatch(task="Synthesize insights from X")`
+**Steps:**
+1.  **Search:** Query Cortex for "X" (Cortex MCP).
+2.  **Distill:** Strategist Persona summarizes key patterns.
+3.  **Store:** Create new Chronicle Entry or Protocol (Chronicle/Protocol MCP).
 
 --- END OF FILE mcp/servers/council/orchestration_workflows.md ---
 
@@ -18587,86 +18773,139 @@ cortex_ingest_full(purge_existing=True)
 
 # Council Orchestration Workflows
 
-This document outlines standard workflows for using the **Council MCP** to orchestrate cognitive tasks using the **Agent Persona MCP** and **Cortex MCP**.
+This document outlines the standard workflows for using the **Council MCP** and **Orchestrator MCP** within the 12-Domain Architecture. It is structured progressively, starting from basic building blocks and moving to complex self-evolving loops.
 
-## Overview
+**Related Documentation:**
+- [Standard Orchestration Workflows](../mcp/orchestration_workflows.md) (The Definitive Sequence Diagrams)
+- [MCP Architecture & Testing](../mcp/test_forge_mcp_and_RAG_mcp.md) (Contains Full System Diagrams)
+- [Main Project README](../../README.md) (Architecture Diagram)
 
-The Council MCP acts as the orchestrator. It does not "think" itself; it delegates thinking to specific Agent Personas (Coordinator, Strategist, Auditor) and retrieves context from Cortex (RAG).
+---
+
+## The Hierarchy of Orchestration
+
+The system operates on three levels of abstraction:
+1.  **Agent Persona MCP:** The "Neuron". Individual implementation of a persona (Auditor, Strategist).
+2.  **Council MCP:** The "Brain". Orchestrates multi-agent deliberation and consensus.
+3.  **Orchestrator MCP:** The "Will". Executes high-level missions and manages the Strategic Crucible Loop.
+
+---
+
+## Level 1: Basic Agent Dispatch (The Building Block)
+
+**Concept:** Direct interaction with a single specific agent. The Council acts as a simple router to the Agent Persona MCP.
 
 **Flow:**
-`User Request` -> `Council MCP` -> `Cortex (Context)` -> `Agent Persona (LLM)` -> `Result`
+`Council MCP` -> `Agent Persona MCP` -> `Forge LLM MCP`
+
+**Common Use Case:**
+- "I just need the Auditor to check this file."
+- "I need the Strategist's opinion on this risk."
+
+**Tool:** `council_dispatch`
+- `agent`: "auditor" (or "strategist", "coordinator")
+- `task_description`: Specific instruction
+
+**Example:**
+> "Audit 'docs/mcp/README.md' for broken links."
 
 ---
 
-## Workflow 1: Single Agent Review (Auditor)
+## Level 2: Context-Aware Deliberation
 
-Use this workflow when you need a specific perspective on a file or protocol, such as a security audit.
+**Concept:** The Council retrieves relevant context from the **RAG Cortex MCP** before dispatching to an agent. This grounds the agent's response in Project Sanctuary protocols.
+
+**Flow:**
+`Council MCP` -> `RAG Cortex MCP (Query)` -> `Agent Persona MCP` -> `Forge LLM MCP`
+
+**Common Use Case:**
+- "How does this new feature align with Protocol 101?" (Requires knowing Protocol 101)
 
 **Tool:** `council_dispatch`
-
-**Parameters:**
 - `agent`: "auditor"
-- `task_description`: Specific review instruction
-- `max_rounds`: 1 (Single pass)
+- `task_description`: "Check compliance with Protocol 101"
 
-**Example Prompt:**
-> "Please have the Auditor review '01_PROTOCOLS/110_agency_and_sovereignty.md' for compliance with the Security Mandate."
-
-**Internal Execution:**
-1. Council queries Cortex for "Security Mandate" context.
-2. Council dispatches task to `auditor` persona with context.
-3. Auditor (Sanctuary Model) analyzes and returns findings.
+**Internal Process:**
+1. Council detects need for context.
+2. Calls `cortex_query("Protocol 101")`.
+3. Injects retrieved content into the Agent's context window.
 
 ---
 
-## Workflow 2: Strategic Risk Assessment (Strategist)
+## Level 3: Multi-Agent Consensus (Full Council)
 
-Use this workflow for high-level planning or risk analysis of new features.
+**Concept:** The core "Council" capability. Multiple agents deliberate, critique one another, and reach a synthesized consensus.
 
-**Tool:** `council_dispatch`
+**Flow:**
+`Council MCP` -> `[Coordinator, Strategist, Auditor]` -> `Deliberation Logic` -> `Consensus`
 
-**Parameters:**
-- `agent`: "strategist"
-- `task_description`: Scenario to assess
-- `max_rounds`: 1
-
-**Example Prompt:**
-> "Ask the Strategist to assess the risks of switching our database from SQLite to PostgreSQL."
-
----
-
-## Workflow 3: Full Council Deliberation
-
-Use this workflow for complex decisions requiring multiple viewpoints and consensus.
+**Common Use Case:**
+- Complex architectural decisions.
+- Risk assessments requiring multiple viewpoints.
 
 **Tool:** `council_dispatch`
-
-**Parameters:**
 - `agent`: `None` (Defaults to full council)
-- `max_rounds`: 3 (Allow for debate)
+- `max_rounds`: 2 or 3
 
-**Example Prompt:**
-> "Initiate a Council deliberation on whether to open-source the core protocol. Debate the pros and cons of sovereignty vs. community contribution."
-
-**Internal Execution:**
-1. **Round 1:** Coordinator plans, Strategist assesses, Auditor checks.
-2. **Round 2:** Agents critique each other's Round 1 responses.
-3. **Round 3:** Final synthesis and consensus.
+**Internal Process:**
+1. **Round 1:** All agents provide initial analysis.
+2. **Round 2:** Agents critique Round 1 outputs.
+3. **Synthesis:** Coordinator creates a final consensus output.
 
 ---
 
-## Workflow 4: Protocol Compliance Check
+## Level 4: The Strategic Crucible Loop (Task 056)
 
-A specialized workflow for verifying if a change adheres to specific protocols.
+**Concept:** The highest level of orchestration. The **Orchestrator MCP** manages the Council to identify gaps, creates solutions, and then **self-corrects** by updating the knowledge base (RAG).
 
-**Tool:** `council_dispatch`
+**Flow:**
+1. `Orchestrator` -> `Council` (Identify Gap)
+2. `Orchestrator` -> `Code MCP` (Write Research/Fix)
+3. `Orchestrator` -> `Git MCP` (Commit)
+4. `Orchestrator` -> `RAG Cortex MCP` (Ingest = Learn)
 
-**Parameters:**
-- `agent`: "auditor"
-- `task_description`: "Check if [Change X] violates [Protocol Y]"
-- `update_rag`: `False`
+**Common Use Case:**
+- "Harden the self-evolving loop."
+- "Research and document Protocol 116."
 
-**Example Prompt:**
-> "Check if the new 'auto-deploy' feature violates Protocol 00 (Sovereignty)."
+**Tool:** `orchestrator_run_strategic_cycle`
+- `gap_description`: "Missing documentation for..."
+- `research_report_path`: "00_CHRONICLE/..."
+
+**Reference Diagrams:**
+- [Continuous Learning Pipeline](../../README.md#3-continuous-learning-pipeline) (Full Loop Interaction)
+- [MCP Architecture Diagram](../../README.md#mcp-architecture-diagram) (System Components)
+
+---
+
+## Summary of Tools
+
+| Level | Tool | MCP Server | Purpose |
+| :--- | :--- | :--- | :--- |
+| **1** | `council_dispatch(agent="name")` | Council | Single Agent Router |
+| **2** | `council_dispatch(agent="name")` | Council | RAG-Augmented Agent |
+| **3** | `council_dispatch(agent=None)` | Council | Multi-Agent Consensus |
+| **4** | `orchestrator_run_strategic_cycle` | Orchestrator | Full Self-Learning Loop |
+
+---
+
+## Validation Scenarios (Task 087)
+
+To ensure the integrity of these levels, the following standardized test scenarios are tracked in **Task 087**:
+
+### Level 1 Tests (Agent Chains)
+Verify the `Council` -> `Agent` link.
+- **Auditor Chain:** `council_dispatch(agent="auditor", ...)`
+- **Strategist Chain:** `council_dispatch(agent="strategist", ...)`
+- **Coordinator Chain:** `council_dispatch(agent="coordinator", ...)`
+
+### Level 2 & 3 Tests (Orchestrator Chains)
+Verify the `Orchestrator` -> `External MCP` links.
+- **Council Chain:** `orchestrator_dispatch(mission="...")` (Calls Council)
+- **Cortex Query Chain:** `orchestrator_dispatch` calling `cortex_query`
+- **Cortex Ingest Chain:** `orchestrator_dispatch` calling `cortex_ingest_incremental`
+- **Protocol Update Chain:** `orchestrator_dispatch` calling `protocol_update`
+
+These scenarios provide the bottom-up verification required before running full Strategic Crucible Loops.
 
 --- END OF FILE workflows/council_orchestration.md ---

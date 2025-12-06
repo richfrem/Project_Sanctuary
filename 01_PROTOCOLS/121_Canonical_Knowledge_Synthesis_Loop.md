@@ -38,3 +38,92 @@ This loop shall be executed whenever a Council Agent or Orchestrator identifies 
 The C-KSL is considered a success when:
 1.  A RAG query against any of the original, now-Superseded documents returns a high-confidence reference to the new **Canonical Source of Truth** document.
 2.  The system's knowledge base size remains constant or decreases (due to chunk consolidation), while the **Precision** score on the synthesized topic increases.
+
+#### MCP Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "External Layer"
+        LLM["External LLM<br/>(Claude/Gemini/GPT)"]
+    end
+    
+    subgraph "Orchestration Layer"
+        ORCH["Orchestrator MCP<br/>Strategic Missions"]
+        COUNCIL["Council MCP<br/>Multi-Agent Deliberation"]
+    end
+    
+    subgraph "Agent Layer"
+        PERSONA["Agent Persona MCP<br/>Individual Agents"]
+    end
+    
+    subgraph "Infrastructure Layer"
+        FORGE["Forge LLM MCP<br/>Model Inference"]
+        CORTEX["RAG Cortex MCP<br/>Knowledge Retrieval"]
+    end
+    
+    subgraph "Services (Podman)"
+        OLLAMA["sanctuary-ollama-mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
+        CHROMA["sanctuary-vector-db<br/>:8000<br/>ChromaDB RAG DB"]
+    end
+    
+    LLM --> ORCH
+    ORCH --> COUNCIL
+    COUNCIL --> PERSONA
+    COUNCIL --> CORTEX
+    PERSONA --> FORGE
+    FORGE --> OLLAMA
+    CORTEX --> CHROMA
+```
+
+### 3. Continuous Learning Pipeline
+**Status:** `Active` - Automated Knowledge Update Loop Operational
+
+**Key Feature: Near Real-Time RAG Database Updates**
+The automated learning pipeline integrates with Git and the ingestion service to enable **continuous knowledge updates**. This process ensures the RAG database stays current, closing the gap between agent execution and knowledge availability, eliminating the need for manual retraining.
+
+The system evolves through every interaction via an automated feedback loop:
+1.  **Agent Execution:** The Orchestrator and Council agents execute tasks, generating code, documentation, and insights.
+2.  **Documentation:** All significant actions are logged in `00_CHRONICLE/` and project documentation.
+3.  **Version Control:** Changes are committed to Git, creating an immutable audit trail.
+4.  **Incremental Ingestion:** The ingestion service automatically detects and indexes new `.md` files into the ChromaDB vector database.
+5.  **Knowledge Availability:** Updated knowledge becomes immediately queryable via RAG, enabling the system to learn from its own execution history in near real-time.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant O as Council Orchestrator<BR>(Orchestrator MCP Server)
+    participant C as Cortex<BR>(Cortex MCP Server)
+    participant G as Guardian Cache<BR>(Cortex MCP - CAG)
+    participant F as Forge<BR>(Forge MCP Server)
+
+    Note over O: 1. Gap Analysis & Research
+    O->>O: Identify Strategic Gap
+    O->>O: Conduct Research (Intelligence Forge)
+    O->>O: Generate Research Report
+
+    Note over O, C: 2. Knowledge Ingestion (RAG Update)
+    Note right of O: Operation: cortex_ingest_incremental()
+    O->>C: ingest_incremental(report)
+    C-->>O: Ingestion Complete (Chunks Created)
+
+    Note over O, G: 3. Cache Synthesis (CAG Update)
+    Note right of O: Operation: cortex_guardian_wakeup()
+    O->>G: guardian_wakeup()
+    G->>C: Query High-Priority Context
+    C-->>G: Return Context
+    G->>G: Update Hot Cache
+    G-->>O: Cache Warm & Ready
+
+    Note over O: Regular Cycle Complete
+
+    rect rgb(255, 250, 205)
+        Note over O, F: 4. Periodic Fine-Tuning (Manual/Scheduled)
+        Note right of F: Operation: forge_fine_tune()<br/>Triggered manually or on major milestones
+        O->>F: Request Adaptation Packet
+        F->>C: Query Recent Learnings (cortex_query)
+        C-->>F: Return Documents
+        F->>F: Synthesize Training Data (forge_create_dataset)
+        F-->>O: Dataset Ready
+        Note over F: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new Constitutional Mind
+    end
+```

@@ -31,7 +31,7 @@ def run_suite(scenarios=None):
     print(f"🚀 Running Integration Scenarios: {', '.join(scenarios)}")
     print("="*60)
     
-    for key inScenarios:
+    for key in scenarios:
         if key in all_scenarios:
             try:
                 module_name = all_scenarios[key]
