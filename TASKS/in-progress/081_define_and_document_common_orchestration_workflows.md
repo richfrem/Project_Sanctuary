@@ -14,7 +14,12 @@ Create comprehensive documentation and sequence diagrams for standard Council or
 
 ## 2. Deliverables
 
-1. docs/mcp/orchestration_workflows.md
+1. docs/mcp/orchestration_workflows.md (Completed)
+   - [x] Context Retrieval (Sequence Diagram)
+   - [x] Agent Deliberation (Sequence Diagram)
+   - [x] Action Execution (Sequence Diagram)
+   - [x] Multi-Agent Consensus (Sequence Diagram)
+   - [x] Strategic Crucible Loop (Sequence Diagram)
 
 ## 3. Acceptance Criteria
 

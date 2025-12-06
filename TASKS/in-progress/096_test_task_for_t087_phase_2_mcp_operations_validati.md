@@ -7,7 +7,9 @@
 **Priority:** Low
 **Lead:** Antigravity (T087 Testing)
 **Dependencies:** None
-**Related Documents:** None
+**Related Documents:**
+- [Orchestration Workflows](../../docs/mcp/orchestration_workflows.md)
+- [Council Level Hierarchy](../../docs/workflows/council_orchestration.md)
 
 ---
 
