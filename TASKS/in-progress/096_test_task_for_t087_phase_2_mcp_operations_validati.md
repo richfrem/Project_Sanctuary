@@ -1,6 +1,9 @@
-# TASK: Test Task for T087 Phase 2 MCP Operations Validation
-
-**Status:** backlog
+# TASK: Test Task for- [ ] **Phase 2.1: Python Integration Suite (Pre-MCP)**
+    - [ ] Create `tests/integration/suite_runner.py`
+    - [ ] Verify `AgentPersona` -> `Forge` -> `Ollama` connectivity (Python level)
+    - [ ] Verify `Council` -> `AgentPersona` -> `Cortex` chains (Python level)
+    - [ ] **Goal:** Isolate timeouts/hangs before MCP layer testing.
+- [ ] **Phase 2: MCP Operations Validation (Antigravity Driven)** backlog
 **Priority:** Low
 **Lead:** Antigravity (T087 Testing)
 **Dependencies:** None
