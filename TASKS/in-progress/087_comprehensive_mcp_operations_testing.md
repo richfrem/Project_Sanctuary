@@ -47,32 +47,32 @@
 > 2. **Integration** - Real services: ChromaDB, Ollama, Git-LFS (Podman containers)
 > 3. **MCP Operations** - Tool interface via Antigravity/Claude Desktop
 
-| MCP Server | Operation | 1. Unit | 2. Integration | 3. MCP Ops | Notes |
-|------------|-----------|:-------:|:--------------:|:----------:|-------|
-| **Chronicle (7)** | `create_entry` | ✅ | ✅ | ✅ | Filesystem only |
+| MCP Server | Operation | MCP Dependencies | 1. Unit | 2. Integration | 3. MCP Ops | Notes |
+|------------|-----------|------------------|:-------:|:--------------:|:----------:|-------|
+| **Chronicle (7)** | `create_entry` | None | ✅ | ✅ | ✅ | Filesystem only |
 | | `append_entry` | ✅ | ✅ | ✅ | |
 | | `update_entry` | ✅ | ✅ | ✅ | |
 | | `get_entry` | ✅ | ✅ | ✅ | |
 | | `list_entries` | ✅ | ✅ | ✅ | |
 | | `read_latest_entries` | ✅ | ✅ | ✅ | |
 | | `search` | ✅ | ✅ | ✅ | |
-| **Protocol (5)** | `create` | ✅ | ✅ | ✅ | Filesystem only |
+| **Protocol (5)** | `create` | None | ✅ | ✅ | ✅ | Filesystem only |
 | | `update` | ✅ | ✅ | ✅ | |
 | | `get` | ✅ | ✅ | ✅ | |
 | | `list` | ✅ | ✅ | ✅ | |
 | | `search` | ✅ | ✅ | ✅ | |
-| **ADR (5)** | `create` | ✅ | ✅ | ✅ | Filesystem only |
+| **ADR (5)** | `create` | None | ✅ | ✅ | ✅ | Filesystem only |
 | | `update_status` | ✅ | ✅ | ✅ | |
 | | `get` | ✅ | ✅ | ✅ | |
 | | `list` | ✅ | ✅ | ✅ | |
 | | `search` | ✅ | ✅ | ✅ | |
-| **Task (6)** | `create_task` | ✅ | ✅ | ✅ | Filesystem only |
+| **Task (6)** | `create_task` | None | ✅ | ✅ | ✅ | Filesystem only |
 | | `update_task` | ✅ | ✅ | ✅ | |
 | | `update_task_status` | ✅ | ✅ | ✅ | |
 | | `get_task` | ✅ | ✅ | ✅ | |
 | | `list_tasks` | ✅ | ✅ | ✅ | |
 | | `search_tasks` | ✅ | ✅ | ✅ | |
-| **Code (10)** | `lint` | ✅ | ✅ | ✅ | Filesystem + Ruff |
+| **Code (10)** | `lint` | None | ✅ | ✅ | ✅ | Filesystem + Ruff |
 | | `format` | ✅ | ✅ | ✅ | Filesystem + Ruff |
 | | `analyze` | ✅ | ✅ | ✅ | Filesystem + Ruff |
 | | `read` | ✅ | ✅ | ✅ | Filesystem only |
@@ -82,11 +82,11 @@
 | | `get_info` | ✅ | ✅ | ✅ | |
 | | `search_content` | ✅ | ✅ | ✅ | |
 | | `check_tools` | ✅ | ✅ | ✅ | |
-| **Config (4)** | `list` | ✅ | ✅ | ✅ | Filesystem only |
+| **Config (4)** | `list` | None | ✅ | ✅ | ✅ | Filesystem only |
 | | `read` | ✅ | ✅ | ✅ | |
 | | `write` | ✅ | ✅ | ✅ | |
 | | `delete` | ✅ | ✅ | ✅ | |
-| **Git (8)** | `get_status` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
+| **Git (8)** | `get_status` | git-lfs | ✅ | ⏳ | ✅ | Needs Git-LFS check |
 | | `diff` | ✅ | — | ✅ | |
 | | `log` | ✅ | — | ✅ | |
 | | `start_feature` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
@@ -94,7 +94,7 @@
 | | `smart_commit` | ✅ | ⏳ | ✅ | Needs P101 hook |
 | | `push_feature` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
 | | `finish_feature` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
-| **RAG Cortex (9)** | `query` | ✅ | ✅ | ✅ | run_cortex_integration.py |
+| **RAG Cortex (9)** | `query` | ChromaDB | ✅ | ✅ | ✅ | run_cortex_integration.py |
 | | `ingest_full` | ✅ | ✅ | ✅ | run_cortex_integration.py (436 docs, 265s) |
 | | `ingest_incremental` | ✅ | ✅ | ✅ | verify_end_to_end.py (robust) |
 | | `get_stats` | ✅ | ✅ | ✅ | run_cortex_integration.py |
@@ -103,17 +103,17 @@
 | | `cache_warmup` | ✅ | ✅ | ✅ | test_cache_integration.py (26 queries, 1.26s) |
 | | `guardian_wakeup` | ✅ | ✅ | ✅ | test_cache_integration.py (3 bundles, 56ms) |
 | | `generate_adaptation_packet` | ❌ | ❌ | ❌ | Not implemented |
-| **Agent Persona (5)** | `dispatch` | ✅ | ⏳ | ⏳ | Needs Ollama |
-| | `list_roles` | ✅ | — | ⏳ | |
-| | `get_state` | ✅ | — | ⏳ | |
-| | `reset_state` | ✅ | — | ⏳ | |
-| | `create_custom` | ✅ | — | ⏳ | |
-| **Council (2)** | `dispatch` | ✅ | ⏳ | ⏳ | Needs Ollama + ChromaDB |
-| | `list_agents` | ✅ | — | ⏳ | |
-| **Orchestrator (2)** | `dispatch_mission` | ✅ | ⏳ | ⏳ | Needs Ollama |
-| | `run_strategic_cycle` | ✅ | ⏳ | ⏳ | Needs Ollama + ChromaDB |
-| **Forge LLM (2)** | `check_model_status` | ✅ | ✅ | ✅ | Ollama container |
-| | `query_model` | ✅ | ✅ | ✅ | Ollama container |
+| **Agent Persona (5)** | `dispatch` | Forge LLM | ✅ | ⏳ | ✅ | Fix applied (restart req) |
+| | `list_roles` | None | ✅ | — | ✅ | |
+| | `get_state` | None | ✅ | — | ✅ | |
+| | `reset_state` | None | ✅ | — | ✅ | |
+| | `create_custom` | None | ✅ | — | ✅ | |
+| **Council (2)** | `dispatch` | Agent Persona, Cortex, Protocol, Git | ✅ | ⏳ | ⏳ | Task 056 (needs persona restart) |
+| | `list_agents` | None | ✅ | — | ✅ | 3 agents available |
+| **Orchestrator (2)** | `dispatch_mission` | Council | ✅ | ⏳ | ✅ | Verified (dispatched to Kilo) |
+| | `run_strategic_cycle` | Council, Cortex | ✅ | ⏳ | ⏳ | Needs full stack |
+| **Forge LLM (2)** | `check_model_status` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
+| | `query_model` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 
 ### Summary by Layer
 

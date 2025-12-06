@@ -65,6 +65,46 @@ The Sanctuary uses a modular microservices architecture powered by the Model Con
 **Test Coverage:** 125/125 tests passing across 10 MCPs (Orchestrator and Forge LLM in progress)
 **Architecture Validation:** ADR 042 confirms separation of Council/Agent Persona MCPs for scalability and maintainability
 
+#### MCP Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "External Layer"
+        LLM["External LLM<br/>(Claude/Gemini/GPT)"]
+    end
+    
+    subgraph "Orchestration Layer"
+        ORCH["Orchestrator MCP<br/>Strategic Missions"]
+        COUNCIL["Council MCP<br/>Multi-Agent Deliberation"]
+    end
+    
+    subgraph "Agent Layer"
+        PERSONA["Agent Persona MCP<br/>Individual Agents"]
+    end
+    
+    subgraph "Infrastructure Layer"
+        FORGE["Forge LLM MCP<br/>Model Inference"]
+        CORTEX["RAG Cortex MCP<br/>Knowledge Retrieval"]
+    end
+    
+    subgraph "Services (Podman)"
+        OLLAMA["sanctuary-ollama-mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
+        CHROMA["sanctuary-vector-db<br/>:8000<br/>ChromaDB RAG DB"]
+    end
+    
+    LLM --> ORCH
+    ORCH --> COUNCIL
+    COUNCIL --> PERSONA
+    COUNCIL --> CORTEX
+    PERSONA --> FORGE
+    FORGE --> OLLAMA
+    CORTEX --> CHROMA
+```
+
+> **Note:** The LLM can also call any MCP directly (Agent Persona, Forge LLM, RAG Cortex, etc.) — not just through Orchestrator.
+
+**Quick Verification:** [`docs/mcp/test_forge_mcp_and_RAG_mcp.md`](./docs/mcp/test_forge_mcp_and_RAG_mcp.md)
+
 ### 2. RAG System ("Mnemonic Cortex"): Advanced Retrieval-Augmented Generation
 **Status:** `v2.1` Phase 1 Complete - Hybrid RAG/CAG/LoRA Architecture Active
 The **RAG Cortex** ("Mnemonic Cortex") is an advanced, local-first **Retrieval-Augmented Generation (RAG)** system combining vector search, caching, and fine-tuned model inference. It serves as the project's knowledge retrieval and context augmentation layer.
