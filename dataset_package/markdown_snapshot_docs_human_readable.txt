@@ -1,8 +1,8 @@
 # docs Subfolder Snapshot (Human-Readable)
 
-Generated On: 2025-12-05T23:11:23.741Z
+Generated On: 2025-12-06T04:25:16.694Z
 
-# Mnemonic Weight (Token Count): ~156,476 tokens
+# Mnemonic Weight (Token Count): ~156,639 tokens
 
 # Directory Structure (relative to docs subfolder)
   ./docs/INDEX.md
@@ -216,7 +216,7 @@ podman ps
 
 ```bash
 # Test ChromaDB (should return 200)
-curl -I http://localhost:8000/api/v1/heartbeat
+curl -I http://localhost:8000/api/v2/heartbeat
 
 # Test Ollama (should list models)
 curl http://localhost:11434/api/tags
@@ -243,7 +243,7 @@ podman logs sanctuary-vector-db -f
 ```
 
 **Port:** 8000  
-**Data:** `./chroma_data/` (persisted)  
+**Data:** `./.vector_data/` (persisted)  
 **Used by:** RAG Cortex MCP, Council MCP
 
 ---
@@ -398,7 +398,7 @@ Add health checks to MCP server startup:
 # Example: RAG Cortex MCP startup
 def _ensure_chromadb_running():
     try:
-        response = requests.get("http://localhost:8000/api/v1/heartbeat")
+        response = requests.get("http://localhost:8000/api/v2/heartbeat")
         if response.status_code != 200:
             raise Exception("ChromaDB not healthy")
     except:
@@ -407,7 +407,7 @@ def _ensure_chromadb_running():
         time.sleep(5)  # Wait for startup
 ```
 
-**Recommendation:** Create a task for this enhancement (T095?)
+**Recommendation:** Consider adding this as a future enhancement task.
 
 ---
 
@@ -417,7 +417,8 @@ Ensure `.env` file contains:
 
 ```bash
 # ChromaDB
-CHROMA_HOST=http://localhost:8000
+CHROMA_HOST=localhost
+CHROMA_PORT=8000
 
 # Ollama (for MCP infrastructure)
 OLLAMA_HOST=http://ollama-model-mcp:11434
@@ -432,7 +433,7 @@ OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 
 | Service | Container Name | Port | Start Command | Health Check |
 |---------|---------------|------|---------------|--------------|
-| ChromaDB | `sanctuary-vector-db` | 8000 | `podman compose up -d vector-db` | `curl http://localhost:8000/api/v1/heartbeat` |
+| ChromaDB | `sanctuary-vector-db` | 8000 | `podman compose up -d vector-db` | `curl http://localhost:8000/api/v2/heartbeat` |
 | Ollama | `sanctuary-ollama-mcp` | 11434 | `podman compose up -d ollama-model-mcp` | `curl http://localhost:11434/api/tags` |
 
 ---
@@ -12540,10 +12541,10 @@ graph TD
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/rag_cortex/test_operations.py tests/mcp_servers/rag_cortex/test_cache_operations.py -v
+pytest tests/mcp_servers/rag_cortex/ -v
 ```
-**Last Verification:** 2025-12-02 ⚠️ (Test fixes in progress)
-**Status:** Test fixes in progress (cache_operations: 6/6 passing)
+**Last Verification:** 2025-12-05 ✅ (56/61 passed, 5 skipped - PyTorch 3.13 compat)
+**Status:** Fully operational - ChromaDB healthy, 5663 chunks indexed
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please query the knowledge base for 'Protocol 101' using `cortex_query`."
@@ -12565,18 +12566,17 @@ pytest tests/mcp_servers/rag_cortex/test_operations.py tests/mcp_servers/rag_cor
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Semantic search against knowledge base |
-| `cortex_ingest_full` | ⚠️ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
-| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Synthesize knowledge for fine-tuning |
+| `cortex_query` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../tests/mcp_servers/rag_cortex/test_cortex_ingestion.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../tests/mcp_servers/rag_cortex/test_cortex_ingestion.py) | Add new documents without purge |
+| `cortex_get_stats` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Database health and statistics |
+| `cortex_cache_get` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
 
-**Prerequisite Tests:** [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/)
+**Prerequisite Tests:** [tests/mcp_servers/rag_cortex/](../../tests/mcp_servers/rag_cortex/)
 
 **Related Protocols:**
 - [Protocol 102: Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
@@ -15754,40 +15754,52 @@ For complete setup instructions, including Podman installation, service configur
 
 Quick start:
 ```bash
-# 1. Ensure Podman is running (one-time setup)
-podman machine start
+    # 1. Ensure Podman is running (one-time setup)
+    podman machine start
 
-# 2. Start MCP server (ChromaDB auto-starts)
-python mcp_servers/rag_cortex/server.py
-
-# 3. Populate database (first time only)
-python scripts/cortex_ingest_full.py
+    # 2. Start ChromaDB container (REQUIRED)
+    podman compose up -d vector-db
+    
+    # 3. Populate database (first time only)
+    python3 mcp_servers/rag_cortex/run_cortex_integration.py --run-full-ingest
 
 # 4. Verify
-python scripts/cortex_stats.py
+curl http://localhost:8000/api/v2/heartbeat
 ```
-
-> [!NOTE]
-> The RAG Cortex MCP server automatically starts the ChromaDB container when it initializes. You don't need to manually run `podman-compose up` unless you want to start the service independently.
 
 ## Testing
 
 - **Test Suite:** [tests/mcp_servers/rag_cortex/](../../../tests/mcp_servers/rag_cortex/)
-- **Status:** ⚠️ 52/62 tests passing (dependency issues)
+- **Status:** ✅ 56/61 tests passing (5 skipped - PyTorch 3.13 compat)
 
 ## Operations
 
 ### `cortex_query`
-Query the knowledge base with semantic search
+Semantic search against the knowledge base
+
+### `cortex_ingest_full`
+Full re-ingestion (purge + rebuild) of the knowledge base
 
 ### `cortex_ingest_incremental`
-Ingest documents into the knowledge base
+Add new documents without purging existing data
 
-### `cortex_get_cache_stats`
-Get cache statistics
+### `cortex_get_stats`
+Database health and statistics
+
+### `cortex_cache_get`
+Retrieve cached answer for a query
+
+### `cortex_cache_set`
+Store answer in cache for future retrieval
+
+### `cortex_cache_stats`
+Cache performance metrics
 
 ### `cortex_cache_warmup`
-Warm up the cache with frequently accessed documents
+Pre-populate cache with genesis queries
+
+### `cortex_guardian_wakeup`
+Generate Guardian boot digest (Protocol 114)
 
 ## Performance
 
@@ -16031,7 +16043,8 @@ Check that ChromaDB is running:
 podman ps
 
 # Check health endpoint
-curl http://localhost:8000/api/v1/heartbeat
+#curl http://localhost:8000/api/v1/heartbeat
+curl http://localhost:8000/api/v2/heartbeat
 ```
 
 Expected response: `{"nanosecond heartbeat": <timestamp>}`
@@ -16041,7 +16054,7 @@ Expected response: `{"nanosecond heartbeat": <timestamp>}`
 Run the full ingestion script to populate ChromaDB with the Cognitive Genome:
 
 ```bash
-python scripts/cortex_ingest_full.py
+python3 scripts/cortex_ingest_full.py
 ```
 
 This will:
@@ -16058,7 +16071,7 @@ This will:
 Check database statistics:
 
 ```bash
-python scripts/cortex_stats.py
+python3 scripts/cortex_stats.py
 ```
 
 Or via MCP (if orchestrator is running):
@@ -16135,7 +16148,7 @@ grep CHROMA .env
 
 **Verify service is listening:**
 ```bash
-curl http://localhost:8000/api/v1/heartbeat
+curl http://localhost:8000/api/v2/heartbeat
 ```
 
 **Check network configuration:**
@@ -17479,8 +17492,8 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 
 The Mnemonic Cortex has migrated from a standalone script-based system to a fully integrated **Model Context Protocol (MCP)** server.
 
-- **Server Location:** `mcp_servers/cognitive/cortex/`
-- **Data Store:** `mcp_servers/cognitive/cortex/data/` (ChromaDB)
+- **Server Location:** `mcp_servers/rag_cortex/`
+- **Data Store:** `.vector_data/` (ChromaDB via Podman container)
 - **Interface:** MCP Tools (via Claude Desktop, Antigravity, or Council)
 
 ## 2. Operational Mapping (Scripts → MCP Tools)
@@ -17523,20 +17536,35 @@ All legacy scripts have been incorporated into the Cortex MCP. Use the correspon
 **Usage:**
 > "Ingest the file '01_PROTOCOLS/101_The_Doctrine.md' into cortex."
 
+### Cache Operations
+**Tool:** `cortex_cache_get` / `cortex_cache_set`
+**Usage:**
+> "Get cached answer for 'What is Protocol 101?'"
+> "Cache the answer for the query 'MCP architecture'."
+
+**Tool:** `cortex_cache_stats`
+**Usage:**
+> "Get cortex cache statistics."
+
+### Guardian Wakeup (Protocol 114)
+**Tool:** `cortex_guardian_wakeup`
+**Usage:**
+> "Generate guardian boot digest."
+
 ## 4. Testing & Verification
 
-The test suite is now located in `tests/mcp_servers/cortex/`.
+The test suite is located in `tests/mcp_servers/rag_cortex/`.
 
 ### Running Tests
 ```bash
 # Run all Cortex MCP tests
-pytest tests/mcp_servers/cortex/ -v
+pytest tests/mcp_servers/rag_cortex/ -v
 ```
 
 ### Integration Testing
 ```bash
 # Test full RAG pipeline
-python3 tests/mcp_servers/cortex/test_cortex_integration.py
+python3 mcp_servers/rag_cortex/run_cortex_integration.py
 ```
 
 ## 5. Troubleshooting
