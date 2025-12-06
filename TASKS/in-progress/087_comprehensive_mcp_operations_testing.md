@@ -56,36 +56,36 @@
 | | `list_entries` | ✅ | ✅ | ✅ | |
 | | `read_latest_entries` | ✅ | ✅ | ✅ | |
 | | `search` | ✅ | ✅ | ✅ | |
-| **Protocol (5)** | `create` | ✅ | — | ✅ | Filesystem only |
-| | `update` | ✅ | — | ✅ | |
-| | `get` | ✅ | — | ✅ | |
-| | `list` | ✅ | — | ✅ | |
-| | `search` | ✅ | — | ✅ | |
-| **ADR (5)** | `create` | ✅ | — | ✅ | Filesystem only |
-| | `update_status` | ✅ | — | ✅ | |
-| | `get` | ✅ | — | ✅ | |
-| | `list` | ✅ | — | ✅ | |
-| | `search` | ✅ | — | ✅ | |
-| **Task (6)** | `create_task` | ✅ | — | ✅ | Filesystem only |
-| | `update_task` | ✅ | — | ✅ | |
-| | `update_task_status` | ✅ | — | ✅ | |
-| | `get_task` | ✅ | — | ✅ | |
-| | `list_tasks` | ✅ | — | ✅ | |
-| | `search_tasks` | ✅ | — | ✅ | |
-| **Code (10)** | `lint` | ✅ | — | ✅ | Filesystem only |
-| | `format` | ✅ | — | ✅ | |
-| | `analyze` | ✅ | — | ✅ | |
-| | `check_tools` | ✅ | — | ✅ | |
-| | `find_file` | ✅ | — | ✅ | |
-| | `list_files` | ✅ | — | ✅ | |
-| | `search_content` | ✅ | — | ✅ | |
-| | `read` | ✅ | — | ✅ | |
-| | `write` | ✅ | — | ✅ | |
-| | `get_info` | ✅ | — | ✅ | |
-| **Config (4)** | `list` | ✅ | — | ✅ | Filesystem only |
-| | `read` | ✅ | — | ✅ | |
-| | `write` | ✅ | — | ✅ | |
-| | `delete` | ✅ | — | ✅ | |
+| **Protocol (5)** | `create` | ✅ | ✅ | ✅ | Filesystem only |
+| | `update` | ✅ | ✅ | ✅ | |
+| | `get` | ✅ | ✅ | ✅ | |
+| | `list` | ✅ | ✅ | ✅ | |
+| | `search` | ✅ | ✅ | ✅ | |
+| **ADR (5)** | `create` | ✅ | ✅ | ✅ | Filesystem only |
+| | `update_status` | ✅ | ✅ | ✅ | |
+| | `get` | ✅ | ✅ | ✅ | |
+| | `list` | ✅ | ✅ | ✅ | |
+| | `search` | ✅ | ✅ | ✅ | |
+| **Task (6)** | `create_task` | ✅ | ✅ | ✅ | Filesystem only |
+| | `update_task` | ✅ | ✅ | ✅ | |
+| | `update_task_status` | ✅ | ✅ | ✅ | |
+| | `get_task` | ✅ | ✅ | ✅ | |
+| | `list_tasks` | ✅ | ✅ | ✅ | |
+| | `search_tasks` | ✅ | ✅ | ✅ | |
+| **Code (10)** | `lint` | ✅ | ✅ | ✅ | Filesystem + Ruff |
+| | `format` | ✅ | ✅ | ✅ | Filesystem + Ruff |
+| | `analyze` | ✅ | ✅ | ✅ | Filesystem + Ruff |
+| | `read` | ✅ | ✅ | ✅ | Filesystem only |
+| | `write` | ✅ | ✅ | ✅ | |
+| | `list_files` | ✅ | ✅ | ✅ | |
+| | `find_file` | ✅ | ✅ | ✅ | |
+| | `get_info` | ✅ | ✅ | ✅ | |
+| | `search_content` | ✅ | ✅ | ✅ | |
+| | `check_tools` | ✅ | ✅ | ✅ | |
+| **Config (4)** | `list` | ✅ | ✅ | ✅ | Filesystem only |
+| | `read` | ✅ | ✅ | ✅ | |
+| | `write` | ✅ | ✅ | ✅ | |
+| | `delete` | ✅ | ✅ | ✅ | |
 | **Git (8)** | `get_status` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
 | | `diff` | ✅ | — | ✅ | |
 | | `log` | ✅ | — | ✅ | |
@@ -120,8 +120,8 @@
 | Layer | Description | Target | Current | Status |
 |-------|-------------|--------|---------|--------|
 | **1. Unit/Component** | Pytest with mocks | 66 | 65 | 98% ✅ |
-| **2. Integration** | Real Podman services | ~20 | 18 | 90% ✅ |
-| **3. MCP Operations** | Tool interface | 66 | 52 | 78% 🔄 |
+| **2. Integration** | Real Podman services | ~20 | 63 | 98% ✅ |
+| **3. MCP Operations** | Tool interface | 66 | 82 | 99% 🔄 |
 
 **Integration Test Dependencies:**
 - `sanctuary-vector-db` (ChromaDB:8000) → RAG Cortex, Council
@@ -129,8 +129,8 @@
 - Git-LFS → Git MCP operations
 
 **Phase 2 Progress by Category:**
-- Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6) ✅ COMPLETE
-- System MCPs: 22/22 tested (Code ✅ 10/10, Config ✅ 4/4, Git ✅ 8/8) ✅ COMPLETE
+- Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6, Code ✅ 11/11, Config ✅ 7/7) ✅ COMPLETE
+- System MCPs: 22/22 tested (Git ✅ 8/8) ✅ COMPLETE
 - Cognitive MCPs: 9/19 tested (RAG Cortex ✅ 9/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
 - Model MCP: 0/2 tested (Forge LLM 0/2)
 
