@@ -1,8 +1,8 @@
 # tests Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-06T07:19:07.227Z
+Generated On: 2025-12-06T21:45:32.730Z
 
-# Mnemonic Weight (Token Count): ~63,643 tokens
+# Mnemonic Weight (Token Count): ~66,234 tokens
 
 # Directory Structure (relative to tests subfolder)
   ./tests/benchmarks/
@@ -24,6 +24,10 @@ Generated On: 2025-12-06T07:19:07.227Z
   ./tests/data/test_protocol_999.md
   ./tests/ingest_output.log
   ./tests/integration/
+  ./tests/integration/suite_runner.py
+  ./tests/integration/test_chain_agent_forge.py
+  ./tests/integration/test_chain_council_agent.py
+  ./tests/integration/test_chain_forge_ollama.py
   ./tests/integration/test_cortex_operations.py
   ./tests/integration/test_council_with_git.py
   ./tests/integration/test_end_to_end_rag_pipeline.py
@@ -763,6 +767,312 @@ if __name__ == "__main__":
 This is a test protocol for incremental ingestion verification.
 
 --- END OF FILE data/test_protocol_999.md ---
+
+--- START OF FILE integration/suite_runner.py ---
+
+#!/usr/bin/env python3
+"""
+Integration Suite Runner
+Executes comprehensive Python-level integration tests for the Sanctuary ecosystem.
+These tests verify logical chains (Council -> Agent -> Forge) bypassing the MCP transport layer.
+"""
+import sys
+import unittest
+import argparse
+import os
+
+# Ensure project root is in path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+def run_suite(scenarios=None):
+    """Run specified test scenarios."""
+    loader = unittest.TestLoader()
+    suite = unittest.TestSuite()
+    
+    # Define available scenarios
+    all_scenarios = {
+        "forge": "tests.integration.test_chain_forge_ollama",
+        "agent": "tests.integration.test_chain_agent_forge",
+        "council": "tests.integration.test_chain_council_agent",
+    }
+    
+    # Filter scenarios
+    if not scenarios:
+        scenarios = all_scenarios.keys()
+        
+    print(f"🚀 Running Integration Scenarios: {', '.join(scenarios)}")
+    print("="*60)
+    
+    for key in scenarios:
+        if key in all_scenarios:
+            try:
+                module_name = all_scenarios[key]
+                print(f"\n🔍 Loading Scenario: {key} ({module_name})")
+                tests = loader.loadTestsFromName(module_name)
+                suite.addTests(tests)
+            except Exception as e:
+                print(f"❌ Failed to load {key}: {e}")
+        else:
+            print(f"⚠️ Unknown scenario: {key}")
+            
+    # Run tests
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+    
+    return result.wasSuccessful()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Sanctuary Integration Suite Runner")
+    parser.add_argument("--all", action="store_true", help="Run all scenarios")
+    parser.add_argument("--forge", action="store_true", help="Run Forge -> Ollama tests")
+    parser.add_argument("--agent", action="store_true", help="Run Agent -> Forge tests")
+    parser.add_argument("--council", action="store_true", help="Run Council -> Agent tests")
+    
+    args = parser.parse_args()
+    
+    selected = []
+    if args.all:
+        selected = None # Run all
+    else:
+        if args.forge: selected.append("forge")
+        if args.agent: selected.append("agent")
+        if args.council: selected.append("council")
+        
+    if not selected and not args.all:
+        print("Please specify a scenario: --all, --forge, --agent, --council")
+        sys.exit(1)
+        
+    success = run_suite(selected)
+    sys.exit(0 if success else 1)
+
+--- END OF FILE integration/suite_runner.py ---
+
+--- START OF FILE integration/test_chain_agent_forge.py ---
+
+import unittest
+import os
+import sys
+from pathlib import Path
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from mcp_servers.agent_persona.agent import Agent
+from mcp_servers.agent_persona.llm_client import OllamaClient
+
+class TestChainAgentForge(unittest.TestCase):
+    """
+    Scenario 2: Verify 'Agent -> Forge' chain.
+    This tests the Agent Persona's ability to:
+    1. Initialize the internal Agent class.
+    2. Load a persona.
+    3. Send a query to the Forge LLM (via OllamaClient).
+    """
+    
+    def setUp(self):
+        # Setup real Ollama Client (Forge)
+        # Using localhost by default for test suite execution
+        self.client = OllamaClient(
+            model_name="Sanctuary-Qwen2-7B:latest",
+            ollama_host=os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        )
+        
+        # Path to Auditor persona
+        self.persona_path = Path("mcp_servers/agent_persona/personas/auditor.txt")
+        if not self.persona_path.exists():
+            # Fallback for running from different CWD
+            self.persona_path = Path("mcp_servers/agent_persona/personas/auditor.txt").resolve()
+
+    def test_agent_query(self):
+        """Test: Can Agent class query Forge and get a response?"""
+        
+        if not self.persona_path.exists():
+            self.fail(f"❌ Persona file not found at {self.persona_path}")
+            
+        print(f"\n[Test] Initializing Auditor Agent...")
+        agent = Agent(client=self.client, persona_file=self.persona_path)
+        
+        task = "Briefly explain the purpose of a git commit message."
+        print(f"[Test] Querying Agent with: '{task}'")
+        
+        try:
+            response = agent.query(task)
+            print(f"🤖 Agent Response: {response[:100]}...")
+            
+            self.assertTrue(len(response) > 10, "Response should be substantial")
+            self.assertIn("git", response.lower(), "Response should mention git")
+            
+            # Check history
+            self.assertEqual(len(agent.messages), 3, "History should have: System, User, Assistant")
+            print("✅ Agent query successful.")
+            
+        except RuntimeError as e:
+            self.fail(f"❌ Agent query failed: {e}")
+
+if __name__ == '__main__':
+    unittest.main()
+
+--- END OF FILE integration/test_chain_agent_forge.py ---
+
+--- START OF FILE integration/test_chain_council_agent.py ---
+
+import unittest
+import os
+import sys
+from pathlib import Path
+from unittest.mock import MagicMock
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from mcp_servers.council.council_ops import CouncilOperations
+from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+
+class TestChainCouncilAgent(unittest.TestCase):
+    """
+    Scenario 3: Verify 'Council -> Agent -> Forge' chain.
+    This tests the Council's deliberation logic, ensuring it can:
+    1. Initialize.
+    2. Dispatch a task to an Auditor agent.
+    3. Receive and structure the result.
+    """
+    
+    def setUp(self):
+        # We need a mocked Cortex for context retrieval to avoid needing the ChromaDB container
+        # for this specific test, OR we just let it fail gracefully (Council handles RAG failure).
+        
+        # Initialize operations
+        self.council_ops = CouncilOperations()
+        
+        # Mock the cortex client to return dummy context
+        # This focuses the test on Counsel -> Agent logic, not RAG logic
+        self.council_ops.cortex = MagicMock()
+        self.council_ops.cortex.query.return_value = {"results": ["Context 1", "Context 2"]}
+        
+    def test_single_agent_dispatch(self):
+        """Test: Can Council dispatch to a single agent?"""
+        print(f"\n[Test] Dispatching 'Auditor' task via Council...")
+        
+        task = "What is the primary risk of using 'git push --force'?"
+        
+        # Dispatch to just the Auditor
+        result = self.council_ops.dispatch_task(
+            task_description=task,
+            agent="auditor",
+            max_rounds=1,
+            model_name="Sanctuary-Qwen2-7B:latest",
+            force_engine="ollama" # Use our running Ollama instance
+        )
+        
+        # Verify structure
+        self.assertIn("session_id", result)
+        self.assertEqual(result["status"], "success")
+        self.assertEqual(len(result["packets"]), 1, "Should be 1 round packet")
+        
+        packet = result["packets"][0]
+        decision = packet["decision"]
+        
+        print(f"🤖 Council/Auditor Decision: {decision[:100]}...")
+        
+        self.assertIn("overwrite", decision.lower(), "Auditor should mention overwriting history")
+        self.assertEqual(packet["member_id"], "auditor")
+        
+        print("✅ Council dispatch successful.")
+
+if __name__ == '__main__':
+    unittest.main()
+
+--- END OF FILE integration/test_chain_council_agent.py ---
+
+--- START OF FILE integration/test_chain_forge_ollama.py ---
+
+import unittest
+import requests
+import json
+import os
+import sys
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+class TestChainForgeOllama(unittest.TestCase):
+    """
+    Scenario 1: Verify 'Forge -> Ollama' connectivity.
+    This tests if the Python code can successfully talk to the Ollama container
+    and get a response from the Sanctuary model.
+    """
+    
+    def setUp(self):
+        self.ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        self.model_name = "Sanctuary-Qwen2-7B:latest" # The target fine-tune
+        
+    def test_ollama_service_reachable(self):
+        """Test 1: Is Ollama running and reachable?"""
+        print(f"\n[Test] Checking Ollama at {self.ollama_host}...")
+        try:
+            response = requests.get(f"{self.ollama_host}/api/tags", timeout=2)
+            self.assertEqual(response.status_code, 200, "Ollama service should return 200 OK")
+            print("✅ Ollama is reachable.")
+        except requests.exceptions.ConnectionError:
+            self.fail(f"❌ Could not connect to Ollama at {self.ollama_host}. Is the container running?")
+
+    def test_sanctuary_model_loaded(self):
+        """Test 2: Is the Sanctuary model available?"""
+        url = f"{self.ollama_host}/api/tags"
+        response = requests.get(url)
+        models = response.json().get('models', [])
+        found = any(m['name'] == self.model_name for m in models)
+        
+        if not found:
+            print(f"⚠️ Warning: {self.model_name} not found. Available: {[m['name'] for m in models]}")
+            # Fallback to qwen2:0.5b for testing if sanctuary not present
+            if any(m['name'] == "qwen2:0.5b" for m in models):
+                print("⚠️ Using 'qwen2:0.5b' as fallback.")
+                self.model_name = "qwen2:0.5b"
+            else:
+                 self.fail(f"❌ Neither {self.model_name} nor fallback found!")
+        else:
+            print(f"✅ Model {self.model_name} is available.")
+
+    def test_model_inference(self):
+        """Test 3: Can we get a generation response?"""
+        print(f"[Test] Generating with {self.model_name}...")
+        
+        prompt = "Define 'Protocol 101' in one sentence."
+        
+        payload = {
+            "model": self.model_name,
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": 0.0,
+                "num_predict": 50
+            }
+        }
+        
+        try:
+            response = requests.post(
+                f"{self.ollama_host}/api/generate", 
+                json=payload, 
+                timeout=30 # 30s timeout for inference
+            )
+            response.raise_for_status()
+            result = response.json()
+            answer = result.get('response', '').strip()
+            
+            print(f"🤖 Model Response: {answer}")
+            self.assertTrue(len(answer) > 5, "Response should be non-empty")
+            print("✅ Inference successful.")
+            
+        except requests.exceptions.ReadTimeout:
+            self.fail("❌ Inference timed out (30s). Model is hanging.")
+        except Exception as e:
+            self.fail(f"❌ Inference failed: {e}")
+
+if __name__ == '__main__':
+    unittest.main()
+
+--- END OF FILE integration/test_chain_forge_ollama.py ---
 
 --- START OF FILE integration/test_cortex_operations.py ---
 

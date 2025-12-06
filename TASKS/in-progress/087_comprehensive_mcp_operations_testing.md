@@ -109,9 +109,9 @@
 | | `reset_state` | None | ✅ | — | ✅ | |
 | | `create_custom` | None | ✅ | — | ✅ | |
 | **Council (2)** | `dispatch` | Agent Persona, Cortex, Protocol, Git | ✅ | N/A | ❌ | Timeout/Hang - Needs Python Integration Suite First (See T096) |
-| | ↳ *Auditor Chain* | Agent Persona → Forge LLM | — | — | ⏳ | Council→Auditor→LLM |
-| | ↳ *Strategist Chain* | Agent Persona → Forge LLM | — | — | ⏳ | Council→Strategist→LLM |
-| | ↳ *Coordinator Chain* | Agent Persona → Forge LLM | — | — | ⏳ | Council→Coordinator→LLM |
+| | ↳ *Auditor Chain* | Agent Persona → Forge LLM | — | — | ⏳ | [Context Retrieval Workflow](../../docs/mcp/orchestration_workflows.md#workflow-1-context-retrieval-orchestrator---cortex) |
+| | ↳ *Strategist Chain* | Agent Persona → Forge LLM | — | — | ⏳ | [Agent Deliberation Workflow](../../docs/mcp/orchestration_workflows.md#workflow-2-agent-deliberation-orchestrator---council---agent) |
+| | ↳ *Coordinator Chain* | Agent Persona → Forge LLM | — | — | ⏳ | [Multi-Agent Consensus](../../docs/mcp/orchestration_workflows.md#workflow-4-multi-agent-consensus-council) |
 | | `list_agents` | None | ✅ | — | ✅ | 3 agents available |
 | **Orchestrator (2)** | `dispatch_mission` | Council | ✅ | ⏳ | ✅ | Verified (dispatched to Kilo) |
 | | ↳ *Council Chain* | Council → Agent Persona | — | — | ⏳ | Orch→Council→Agent |
@@ -119,7 +119,7 @@
 | | ↳ *Cortex Ingest Chain* | Cortex → ChromaDB | — | — | ⏳ | Orch→Cortex.ingest_incremental |
 | | ↳ *Code Write Chain* | Code MCP | — | — | ⏳ | Orch→Code.write |
 | | ↳ *Protocol Update Chain* | Protocol MCP | — | — | ⏳ | Orch→Protocol.update |
-| | `run_strategic_cycle` | Council, Cortex | ✅ | ⏳ | ⏳ | [See Pipeline Diagram](../../README.md#3-continuous-learning-pipeline) |
+| | `run_strategic_cycle` | Council, Cortex | ✅ | ⏳ | ⏳ | [Strategic Crucible Workflow](../../docs/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction) |
 | **Forge LLM (2)** | `check_model_status` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 | | `query_model` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 

@@ -10,6 +10,33 @@
 
 To validate the end-to-end integrity and resilience of the **Strategic Crucible Loop** (the Self-Evolving Memory Loop) by executing a single, atomic, four-step protocol. This test must prove that the system can autonomously generate new knowledge, ingest it, and commit it to the immutable chronicle, ensuring **near-real-time knowledge fidelity** before final MCP server deployment.
 
+## 🧠 Core System Terminology: Alignment with AI Research (Source of Truth)
+
+This section formally defines the internal system architecture by aligning project terminology with established AI research concepts. This document, as the validator of the core system loop, is the designated Source of Truth for these terms.
+
+### The Core Cycle
+
+| Project Terminology | AI Research Equivalent | Description |
+| :--- | :--- | :--- |
+| **Strategic Crucible Loop** / **Self-Evolving Memory Loop** | **Self-Improvement Loop** / **Recursive Self-Improvement** | The cyclical process of autonomously generating knowledge (policy), committing it to the source of truth, and ingesting it for immediate future use. |
+| **Near-Real-Time Knowledge Fidelity** | **Continuous Learning** / **Online Adaptation** | The state where newly acquired information is immediately available for the agent's reasoning and action in the current run. |
+
+### The Agentic Entities and Control
+
+| Project Terminology | AI Research Equivalent | Description |
+| :--- | :--- | :--- |
+| **The Orchestrator** | **Planner** / **Executive Agent** | The control entity responsible for top-level goal-setting, planning, and sequencing of the entire mission. It drives the **Hybrid Orchestration** framework. |
+| **Council Agents** | **Goal-Driven Agents** | The active execution layer that performs discrete, specific tasks, using LLMs and tools on behalf of the Orchestrator. |
+| **Hybrid Orchestration** | **Mixed Agentic & Deterministic Workflow** | The architectural approach that balances **Agentic (LLM-driven)** creativity with **Deterministic (workflow-driven)** reliability. |
+
+### The Memory and Action Layers
+
+| Project Terminology | AI Research Equivalent | Description |
+| :--- | :--- | :--- |
+| **MCP Servers (`protocol`, `git`, `cortex`)** | **Tool-Use Layer** | The system interface layer that allows agents to interact with the external world. |
+| **RAG Database (ChromaDB)** | **Semantic Long-Term Memory** | The persistent knowledge store indexed for retrieval-augmented generation. |
+| **00_CHRONICLE/ENTRIES** | **Episodic Memory Log** | The immutable, sequential log of all executed tasks and their outcomes. |
+
 ## 🛡️ The Hardened Self-Evolving Loop Protocol
 
 **Validation Dependency:**
@@ -106,4 +133,5 @@ sequenceDiagram
 
 - [MCP Infrastructure Verification Guide](../../docs/mcp/test_forge_mcp_and_RAG_mcp.md)
 - [RAG Strategies - Strategic Crucible Loop](../../docs/mcp/RAG_STRATEGIES.md#7-the-strategic-crucible-loop-sequence-diagram)
+- [Strategic Crucible Workflow Definition](../../docs/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction)
 - [Council vs Orchestrator](../../docs/mcp/servers/council/council_vs_orchestrator.md)
