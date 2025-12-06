@@ -81,6 +81,24 @@ def council_dispatch(
     Example - Single Agent Consultation:
         result = council_dispatch(
             task_description="Audit the test coverage for the Git MCP server",
+    Example - Single Agent Consultation:
+        result = council_dispatch(
+            task_description="Audit the test coverage for the Git MCP server",
+            agent="auditor"
+        )
+    """
+    return council_ops.dispatch_task(
+        task_description=task_description,
+        agent=agent,
+        max_rounds=max_rounds,
+        force_engine=force_engine,
+        model_preference=model_preference,
+        output_path=output_path
+    )
+
+@mcp.tool()
+def council_list_agents() -> list:
+    """
     List all available Council agents and their current status.
     
     Returns:
