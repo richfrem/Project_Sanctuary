@@ -35,6 +35,33 @@ class TestGitOperationsIntegration:
         assert commit_hash is not None
         assert len(commit_hash) == 40
 
+    def test_add_files(self, git_ops_mock, git_root):
+        """Test adding specific files."""
+        (git_root / "file1.txt").write_text("content1")
+        (git_root / "file2.txt").write_text("content2")
+        
+        # Verify initially untracked
+        status = git_ops_mock.status()
+        assert "file1.txt" in status["untracked"]
+        
+        # Add specific file
+        git_ops_mock.add(["file1.txt"])
+        
+        status = git_ops_mock.status()
+        assert "file1.txt" in status["staged"]
+        assert "file2.txt" in status["untracked"]
+
+    def test_add_all(self, git_ops_mock, git_root):
+        """Test adding all files (git add -A)."""
+        (git_root / "file1.txt").write_text("content1")
+        (git_root / "file2.txt").write_text("content2")
+        
+        git_ops_mock.add()  # None implies -A
+        
+        status = git_ops_mock.status()
+        assert "file1.txt" in status["staged"]
+        assert "file2.txt" in status["staged"]
+
     def test_status(self, git_ops_mock, git_root):
         """Test repository status retrieval."""
         (git_root / "test.txt").write_text("hello world")
@@ -203,3 +230,61 @@ class TestGitOperationsIntegration:
         # Run finish - should succeed due to diff check
         result = ops.finish_feature(feature_branch)
         assert "Finished feature" in result
+
+    def test_full_feature_lifecycle(self, git_ops_with_remote, git_roots):
+        """
+        Ordered Integration Test: Verify the exact user workflow sequence.
+        Lifecycle: Start -> Edit -> Diff -> Add -> Status -> Commit -> Log -> Push -> Finish
+        """
+        ops = git_ops_with_remote
+        feature_branch = "feature/lifecycle-test"
+        
+        # 1. Start Feature (git_start_feature)
+        ops.create_branch(feature_branch)
+        ops.checkout(feature_branch)
+        assert ops.get_current_branch() == feature_branch
+        
+        # 2. Edit (Modify existing file so diff picks it up)
+        (git_roots["local"] / "README.md").write_text("# Test Repo\n\nModified content")
+        
+        # 3. Diff Unstaged (git_diff)
+        diff = ops.diff(cached=False)
+        assert "README.md" in diff
+        assert "+Modified content" in diff
+        
+        # 4. Add (git_add)
+        ops.add(["README.md"])
+        
+        # 5. Verify Staged (Status/Diff)
+        diff_cached = ops.diff(cached=True)
+        assert "README.md" in diff_cached
+        status = ops.status()
+        assert "README.md" in status["staged"]
+        
+        # 6. Commit (git_smart_commit)
+        ops.commit("feat: lifecycle test")
+        
+        # 7. Log (git_log)
+        log = ops.log(max_count=1)
+        assert "feat: lifecycle test" in log
+        
+        # 8. Push Feature (git_push_feature)
+        ops.push("origin", feature_branch)
+        
+        # 9. Finish Feature (git_finish_feature)
+        # Prerequisite: Simulate GitHub PR Merge on Remote
+        ops.checkout("main")
+        subprocess.run(["git", "merge", feature_branch], cwd=str(git_roots["local"]), check=True)
+        ops.push("origin", "main")
+        
+        # Return to feature branch to trigger finish
+        ops.checkout(feature_branch)
+        result = ops.finish_feature(feature_branch)
+        
+        assert "Finished feature" in result
+        assert ops.get_current_branch() == "main"
+        
+        # Verify complete cleanup
+        with pytest.raises(RuntimeError):
+            ops.checkout(feature_branch)
+
