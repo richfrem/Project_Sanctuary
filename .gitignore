@@ -99,6 +99,7 @@ archives/
 research/RESEARCH_PAPERS/
 *.log
 nohup.out
+mcp_servers/agent_persona/state/
 
 ResearchPapers
 
