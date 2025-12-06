@@ -244,22 +244,30 @@ class TestGitOperationsIntegration:
         ops.checkout(feature_branch)
         assert ops.get_current_branch() == feature_branch
         
-        # 2. Edit (Modify existing file so diff picks it up)
+        # 2. Edit (Modify existing + Create new)
         (git_roots["local"] / "README.md").write_text("# Test Repo\n\nModified content")
+        (git_roots["local"] / "new_file.txt").write_text("untracked content")
         
-        # 3. Diff Unstaged (git_diff)
+        # 3. Verify Untracked & Modified (Status/Diff)
+        status = ops.status()
+        assert "README.md" in status["modified"]
+        assert "new_file.txt" in status["untracked"] # User requested untracked check
+        
         diff = ops.diff(cached=False)
         assert "README.md" in diff
         assert "+Modified content" in diff
         
         # 4. Add (git_add)
-        ops.add(["README.md"])
+        ops.add(["README.md", "new_file.txt"])
         
         # 5. Verify Staged (Status/Diff)
         diff_cached = ops.diff(cached=True)
         assert "README.md" in diff_cached
+        assert "new_file.txt" in diff_cached
+        
         status = ops.status()
         assert "README.md" in status["staged"]
+        assert "new_file.txt" in status["staged"]
         
         # 6. Commit (git_smart_commit)
         ops.commit("feat: lifecycle test")
