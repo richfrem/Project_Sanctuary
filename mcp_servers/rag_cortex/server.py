@@ -4,14 +4,21 @@ Domain: project_sanctuary.cognitive.cortex
 
 Provides MCP tools for interacting with the Mnemonic Cortex RAG system.
 """
+import os
+import json
+import sys
+import logging
+from typing import Optional, List
+
+# Configure environment to prevent stdout pollution - MUST BE FIRST
+os.environ["TQDM_DISABLE"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 from fastmcp import FastMCP
 from .operations import CortexOperations
 from .validator import CortexValidator, ValidationError
 from .models import to_dict
 from .container_manager import ensure_chromadb_running
-import os
-import json
-from typing import Optional, List
 
 # Initialize FastMCP with canonical domain name
 mcp = FastMCP("project_sanctuary.cognitive.cortex")
@@ -21,14 +28,22 @@ PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
 cortex_ops = CortexOperations(PROJECT_ROOT)
 cortex_validator = CortexValidator(PROJECT_ROOT)
 
+# Configure logging to write to stderr
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    stream=sys.stderr
+)
+logger = logging.getLogger("rag_cortex")
+
 # Ensure ChromaDB container is running
-print("[RAG Cortex] Checking ChromaDB service...")
+logger.info("Checking ChromaDB service...")
 success, message = ensure_chromadb_running(PROJECT_ROOT)
 if success:
-    print(f"[RAG Cortex] ✓ {message}")
+    logger.info(f"✓ {message}")
 else:
-    print(f"[RAG Cortex] ✗ {message}")
-    print("[RAG Cortex] WARNING: Some operations may fail without ChromaDB service")
+    logger.error(f"✗ {message}")
+    logger.warning("Some operations may fail without ChromaDB service")
 
 
 

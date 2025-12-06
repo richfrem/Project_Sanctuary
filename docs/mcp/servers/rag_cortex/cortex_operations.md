@@ -7,8 +7,8 @@
 
 The Mnemonic Cortex has migrated from a standalone script-based system to a fully integrated **Model Context Protocol (MCP)** server.
 
-- **Server Location:** `mcp_servers/cognitive/cortex/`
-- **Data Store:** `mcp_servers/cognitive/cortex/data/` (ChromaDB)
+- **Server Location:** `mcp_servers/rag_cortex/`
+- **Data Store:** `.vector_data/` (ChromaDB via Podman container)
 - **Interface:** MCP Tools (via Claude Desktop, Antigravity, or Council)
 
 ## 2. Operational Mapping (Scripts → MCP Tools)
@@ -51,20 +51,35 @@ All legacy scripts have been incorporated into the Cortex MCP. Use the correspon
 **Usage:**
 > "Ingest the file '01_PROTOCOLS/101_The_Doctrine.md' into cortex."
 
+### Cache Operations
+**Tool:** `cortex_cache_get` / `cortex_cache_set`
+**Usage:**
+> "Get cached answer for 'What is Protocol 101?'"
+> "Cache the answer for the query 'MCP architecture'."
+
+**Tool:** `cortex_cache_stats`
+**Usage:**
+> "Get cortex cache statistics."
+
+### Guardian Wakeup (Protocol 114)
+**Tool:** `cortex_guardian_wakeup`
+**Usage:**
+> "Generate guardian boot digest."
+
 ## 4. Testing & Verification
 
-The test suite is now located in `tests/mcp_servers/cortex/`.
+The test suite is located in `tests/mcp_servers/rag_cortex/`.
 
 ### Running Tests
 ```bash
 # Run all Cortex MCP tests
-pytest tests/mcp_servers/cortex/ -v
+pytest tests/mcp_servers/rag_cortex/ -v
 ```
 
 ### Integration Testing
 ```bash
 # Test full RAG pipeline
-python3 tests/mcp_servers/cortex/test_cortex_integration.py
+python3 mcp_servers/rag_cortex/run_cortex_integration.py
 ```
 
 ## 5. Troubleshooting

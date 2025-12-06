@@ -40,7 +40,7 @@ podman ps
 
 ```bash
 # Test ChromaDB (should return 200)
-curl -I http://localhost:8000/api/v1/heartbeat
+curl -I http://localhost:8000/api/v2/heartbeat
 
 # Test Ollama (should list models)
 curl http://localhost:11434/api/tags
@@ -67,7 +67,7 @@ podman logs sanctuary-vector-db -f
 ```
 
 **Port:** 8000  
-**Data:** `./chroma_data/` (persisted)  
+**Data:** `./.vector_data/` (persisted)  
 **Used by:** RAG Cortex MCP, Council MCP
 
 ---
@@ -222,7 +222,7 @@ Add health checks to MCP server startup:
 # Example: RAG Cortex MCP startup
 def _ensure_chromadb_running():
     try:
-        response = requests.get("http://localhost:8000/api/v1/heartbeat")
+        response = requests.get("http://localhost:8000/api/v2/heartbeat")
         if response.status_code != 200:
             raise Exception("ChromaDB not healthy")
     except:
@@ -231,7 +231,7 @@ def _ensure_chromadb_running():
         time.sleep(5)  # Wait for startup
 ```
 
-**Recommendation:** Create a task for this enhancement (T095?)
+**Recommendation:** Consider adding this as a future enhancement task.
 
 ---
 
@@ -241,7 +241,8 @@ Ensure `.env` file contains:
 
 ```bash
 # ChromaDB
-CHROMA_HOST=http://localhost:8000
+CHROMA_HOST=localhost
+CHROMA_PORT=8000
 
 # Ollama (for MCP infrastructure)
 OLLAMA_HOST=http://ollama-model-mcp:11434
@@ -256,7 +257,7 @@ OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 
 | Service | Container Name | Port | Start Command | Health Check |
 |---------|---------------|------|---------------|--------------|
-| ChromaDB | `sanctuary-vector-db` | 8000 | `podman compose up -d vector-db` | `curl http://localhost:8000/api/v1/heartbeat` |
+| ChromaDB | `sanctuary-vector-db` | 8000 | `podman compose up -d vector-db` | `curl http://localhost:8000/api/v2/heartbeat` |
 | Ollama | `sanctuary-ollama-mcp` | 11434 | `podman compose up -d ollama-model-mcp` | `curl http://localhost:11434/api/tags` |
 
 ---

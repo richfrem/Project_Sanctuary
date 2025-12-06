@@ -19,7 +19,11 @@ These utilities are foundational and used by both ingestion and query pipelines.
 """
 
 import os
+import logging
 from dotenv import load_dotenv
+
+# Configure logging
+logger = logging.getLogger("rag_cortex.utils")
 
 def find_project_root() -> str:
     """Find the project root by ascending from the current script's directory."""
@@ -32,11 +36,12 @@ def find_project_root() -> str:
             raise FileNotFoundError("Could not find the project root (.git folder).")
         current_path = parent_path
 
-def setup_environment(project_root: str) -> bool:
-    """Load environment variables from the .env file in the project root."""
-    dotenv_path = os.path.join(project_root, '.env')
-    if os.path.exists(dotenv_path):
-        load_dotenv(dotenv_path=dotenv_path)
-        return True
-    print(f"Warning: .env file not found at {dotenv_path}")
+def load_environment(project_root: str):
+    """Load environment variables from .env file"""
+    env_path = os.path.join(project_root, ".env")
+    if os.path.exists(env_path):
+        from dotenv import load_dotenv
+        load_dotenv(env_path)
+    else:
+        logger.warning(f"Warning: .env file not found at {env_path}")
     return False

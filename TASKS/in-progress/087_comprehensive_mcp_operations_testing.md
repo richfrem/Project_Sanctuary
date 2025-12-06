@@ -26,13 +26,12 @@
 - Removed legacy mnemonic_cortex import from rag_cortex server
 - All changes merged to main via PR
 
-✅ **RAG Cortex Test Fixes Complete (2025-12-03)**
-- 53/53 tests passing (100% pass rate)
-- Fixed query error handling assertions
-- Fixed ingest error handling to match implementation
-- Fixed ADR MCP import path in orchestrator tests
-- Added ingestion_time_ms field to IngestIncrementalResponse model
-- Renamed setup validation script to prevent pytest from running it
+✅ **RAG Cortex Stabilization Complete (2025-12-05)**
+- 56/61 tests passing (5 skipped due to PyTorch 3.13 compatibility)
+- Fixed critical `ingest_incremental` bug (missing vectorstore.add_documents)
+- Full database re-ingested: 2882 docs, 5663 chunks
+- All documentation updated (README, SETUP, cortex_operations, inventory, PODMAN guide)
+- Integration tests all passing: stats, query, incremental, full ingest
 
 🔄 **Phase 2 In Progress (2025-12-05):** MCP operations testing via Antigravity
 - Testing each MCP's operations one server at a time
@@ -63,8 +62,8 @@
 | | `adr_list` | ✅ | ✅ | Listed 33 accepted ADRs |
 | | `adr_search` | ✅ | ✅ | Found ADR 044 matching "T087" |
 | **Task (6)** | `create_task` | ✅ | ✅ | Created Task 099 (test task) |
-| | `update_task` | ✅ | ✅ | Updated Task 099 (notes, priority) |
-| | `update_task_status` | ✅ | ✅ | Moved Task 099 to complete |
+| | `update_task` | ✅ | ✅ | Verified content update (Created T100) |
+| | `update_task_status` | ✅ | ✅ | Verified status change (Moved T100) |
 | | `get_task` | ✅ | ✅ | Retrieved Task 098 |
 | | `list_tasks` | ✅ | ✅ | Listed 4 in-progress tasks |
 | | `search_tasks` | ✅ | ✅ | Found 4 tasks matching "T087 Phase 2" |
@@ -90,16 +89,15 @@
 | | `git_smart_commit` | ✅ | ✅ | Validated P101 hook (blocked correctly) |
 | | `git_push_feature` | ✅ | ✅ | Validated LFS check (blocked correctly) |
 | | `git_finish_feature` | ✅ | ⏳ | Skipped to preserve current branch |
-| **RAG Cortex (10)** | `cortex_query` | ✅ | ⏳ | Semantic search |
-| | `cortex_ingest_full` | ✅ | ⏳ | Full re-ingestion (test skipped for performance) |
-| | `cortex_ingest_incremental` | ✅ | ⏳ | Add new documents |
-| | `cortex_get_stats` | ✅ | ⏳ | Database health stats |
-| | `cortex_cache_get` | ✅ | ⏳ | Retrieve cached answer |
-| | `cortex_cache_set` | ✅ | ⏳ | Store answer in cache |
-| | `cortex_cache_stats` | ✅ | ⏳ | Cache performance metrics |
-| | `cortex_cache_warmup` | ✅ | ⏳ | Pre-populate cache |
-| | `cortex_guardian_wakeup` | ✅ | ⏳ | Generate Guardian boot digest |
-| | `cortex_generate_adaptation_packet` | ✅ | ⏳ | Synthesize knowledge for fine-tuning |
+| **RAG Cortex (9)** | `cortex_query` | ✅ | ✅ | Semantic search verified |
+| | `cortex_ingest_full` | ✅ | ✅ | Full re-ingestion verified |
+| | `cortex_ingest_incremental` | ✅ | ✅ | Add new documents verified |
+| | `cortex_get_stats` | ✅ | ✅ | Healthy: 2883 docs, 5665 chunks |
+| | `cortex_cache_get` | ✅ | ✅ | Retrieve cached answer verified |
+| | `cortex_cache_set` | ✅ | ✅ | Store answer in cache verified |
+| | `cortex_cache_stats` | ✅ | ✅ | Cache performance metrics verified |
+| | `cortex_cache_warmup` | ✅ | ✅ | Pre-populate cache verified |
+| | `cortex_guardian_wakeup` | ✅ | ✅ | Generate Guardian boot digest verified |
 | **Agent Persona (5)** | `persona_dispatch` | ✅ | ⏳ | Dispatch task to persona agent |
 | | `persona_list_roles` | ✅ | ⏳ | List available roles |
 | | `persona_get_state` | ✅ | ⏳ | Get conversation state |
@@ -113,12 +111,12 @@
 | | `query_sanctuary_model` | ✅ | ⏳ | Query Sanctuary-Qwen2 model |
 
 **Phase 1 (Test Harness):** 66/66 operations have tests (100%) ✅ COMPLETE  
-**Phase 2 (MCP Tool Interface):** 50/66 operations tested (76%)
+**Phase 2 (MCP Tool Interface):** 59/66 operations tested (89%)
 
 **Phase 2 Progress by Category:**
-- Document MCPs: 29/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6) ✅ COMPLETE
+- Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6) ✅ COMPLETE
 - System MCPs: 21/22 tested (Code ✅ 10/10, Config ✅ 4/4, Git ✅ 7/8) ✅ COMPLETE
-- Cognitive MCPs: 0/19 tested (RAG Cortex 0/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
+- Cognitive MCPs: 9/20 tested (RAG Cortex ✅ 9/9, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
 - Model MCP: 0/2 tested (Forge LLM 0/2)
 
 

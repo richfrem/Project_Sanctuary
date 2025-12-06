@@ -54,37 +54,49 @@ Quick start:
 # 1. Ensure Podman is running (one-time setup)
 podman machine start
 
-# 2. Start MCP server (ChromaDB auto-starts)
-python mcp_servers/rag_cortex/server.py
+# 2. Start ChromaDB container (REQUIRED)
+podman compose up -d vector-db
 
 # 3. Populate database (first time only)
-python scripts/cortex_ingest_full.py
+python3 mcp_servers/rag_cortex/run_cortex_integration.py --run-full-ingest
 
 # 4. Verify
-python scripts/cortex_stats.py
+curl http://localhost:8000/api/v2/heartbeat
 ```
-
-> [!NOTE]
-> The RAG Cortex MCP server automatically starts the ChromaDB container when it initializes. You don't need to manually run `podman-compose up` unless you want to start the service independently.
 
 ## Testing
 
 - **Test Suite:** [tests/mcp_servers/rag_cortex/](../../../tests/mcp_servers/rag_cortex/)
-- **Status:** ⚠️ 52/62 tests passing (dependency issues)
+- **Status:** ✅ 56/61 tests passing (5 skipped - PyTorch 3.13 compat)
 
 ## Operations
 
 ### `cortex_query`
-Query the knowledge base with semantic search
+Semantic search against the knowledge base
+
+### `cortex_ingest_full`
+Full re-ingestion (purge + rebuild) of the knowledge base
 
 ### `cortex_ingest_incremental`
-Ingest documents into the knowledge base
+Add new documents without purging existing data
 
-### `cortex_get_cache_stats`
-Get cache statistics
+### `cortex_get_stats`
+Database health and statistics
+
+### `cortex_cache_get`
+Retrieve cached answer for a query
+
+### `cortex_cache_set`
+Store answer in cache for future retrieval
+
+### `cortex_cache_stats`
+Cache performance metrics
 
 ### `cortex_cache_warmup`
-Warm up the cache with frequently accessed documents
+Pre-populate cache with genesis queries
+
+### `cortex_guardian_wakeup`
+Generate Guardian boot digest (Protocol 114)
 
 ## Performance
 

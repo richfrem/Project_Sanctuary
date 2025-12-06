@@ -38,7 +38,7 @@ def temp_project_root():
     with tempfile.TemporaryDirectory() as tmpdir:
         # Create minimal directory structure
         root = Path(tmpdir)
-        (root / "mcp_servers" / "cognitive" / "cortex" / "scripts").mkdir(parents=True)
+        (root / "mcp_servers" / "rag_cortex" / "scripts").mkdir(parents=True)
         (root / "data" / "cortex").mkdir(parents=True)
         
         yield root

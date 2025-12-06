@@ -1,8 +1,8 @@
 # mcp_servers Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-05T19:06:12.061Z
+Generated On: 2025-12-05T23:11:36.285Z
 
-# Mnemonic Weight (Token Count): ~102,158 tokens
+# Mnemonic Weight (Token Count): ~102,201 tokens
 
 # Directory Structure (relative to mcp_servers subfolder)
   ./mcp_servers/README.md
@@ -1825,16 +1825,17 @@ class OllamaClient(LLMClient):
     """Client for Ollama models (including Sanctuary)"""
     
     def __init__(self, model_name: str = None, ollama_host: str = None):
-        # Default to env var or hardcoded fallback
-        default_model = os.getenv("OLLAMA_MODEL", "Sanctuary-Qwen2-7B:latest")
-        super().__init__(model_name or default_model)
+    def __init__(self, model_name: str, ollama_host: str | None = None):
+        super().__init__(model_name)
+        # Protocol 116: Use container network addressing by default for MCP infrastructure
+        self.host = ollama_host or os.getenv("OLLAMA_HOST", "http://ollama-model-mcp:11434")
         
-        # Protocol 116: Use container network addressing by default
-        # Priority: explicit parameter > env var > container network default
-        if ollama_host:
-            self.host = ollama_host
-        else:
-            self.host = os.getenv("OLLAMA_HOST", "http://ollama-model-mcp:11434")
+        # Warn if localhost is used (violates Protocol 116 for container networking)
+        if "localhost" in self.host and os.getenv("MCP_ENV") == "production":
+            logger.warning(
+                f"[OllamaClient] Using localhost address ({self.host}). "
+                "For MCP infrastructure, use container network: http://ollama-model-mcp:11434"
+            )
         
         # Warn if localhost is used (violates Protocol 116 for MCP infrastructure)
         if "localhost" in self.host or "127.0.0.1" in self.host:
@@ -6955,8 +6956,9 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
         # This handles cases where LFS is installed but hooks fail (PATH issues),
         # or where LFS is missing entirely.
         
+        warning_msg = ""
         try:
-            return git_ops.push("origin", current, force=force, no_verify=no_verify)
+            output = git_ops.push("origin", current, force=force, no_verify=no_verify)
         except RuntimeError as e:
             error_msg = str(e)
             # Check for common LFS hook failures
@@ -6964,7 +6966,7 @@ def git_push_feature(force: bool = False, no_verify: bool = False) -> str:
                 print(f"WARNING: Push failed due to LFS hook error. Retrying with --no-verify. Error: {error_msg}")
                 # Retry with bypass
                 output = git_ops.push("origin", current, force=force, no_verify=True)
-                return f"⚠️ WARNING: LFS hook failed, pushed with --no-verify.\nOutput: {output}"
+                warning_msg = "⚠️ WARNING: LFS hook failed, pushed with --no-verify.\n"
             else:
                 # Re-raise other errors
                 raise e

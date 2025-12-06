@@ -5,11 +5,16 @@ Replacement for LangChain's removed LocalFileStore.
 Stores documents as JSON files in a directory.
 """
 
-import json
 import os
+import json
+import logging
 from pathlib import Path
-from typing import List, Tuple, Iterator, Any
+from typing import List, Optional, Dict, Any, Tuple, Iterator
 from langchain_core.documents import Document
+from langchain_community.document_loaders import TextLoader
+
+# Configure logging
+logger = logging.getLogger("rag_cortex.file_store")
 
 
 class SimpleFileStore:
@@ -69,9 +74,10 @@ class SimpleFileStore:
                 )
                 results.append(doc)
             except Exception as e:
-                print(f"Error loading {file_path}: {e}")
-                results.append(None)
-        
+                logger.error(f"Error loading {file_path}: {e}")
+                # In case of error, just skip this file
+                continue
+                    
         return results
     
     def mdelete(self, keys: List[str]) -> None:

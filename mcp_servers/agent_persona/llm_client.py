@@ -13,6 +13,9 @@ from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger(__name__)
 
+# Protocol 116: Ollama Service Endpoint (Container Network Isolation)
+OLLAMA_ENDPOINT = "http://ollama-model-mcp:11434"
+
 class LLMClient(ABC):
     """Abstract base class for LLM clients"""
     
@@ -41,22 +44,22 @@ class OllamaClient(LLMClient):
     """Client for Ollama models (including Sanctuary)"""
     
     def __init__(self, model_name: str = None, ollama_host: str = None):
-        # Default to env var or hardcoded fallback
-        default_model = os.getenv("OLLAMA_MODEL", "Sanctuary-Qwen2-7B:latest")
-        super().__init__(model_name or default_model)
+        super().__init__(model_name)
+        # Protocol 116: Use container network addressing by default for MCP infrastructure
+        self.host = ollama_host or os.getenv("OLLAMA_HOST", OLLAMA_ENDPOINT)
         
-        # Protocol 116: Use container network addressing by default
-        # Priority: explicit parameter > env var > container network default
-        if ollama_host:
-            self.host = ollama_host
-        else:
-            self.host = os.getenv("OLLAMA_HOST", "http://ollama-model-mcp:11434")
+        # Warn if localhost is used (violates Protocol 116 for container networking)
+        if "localhost" in self.host and os.getenv("MCP_ENV") == "production":
+            logger.warning(
+                f"[OllamaClient] Using localhost address ({self.host}). "
+                f"For MCP infrastructure, use container network: {OLLAMA_ENDPOINT}"
+            )
         
         # Warn if localhost is used (violates Protocol 116 for MCP infrastructure)
         if "localhost" in self.host or "127.0.0.1" in self.host:
             logger.warning(
                 f"[OllamaClient] Using localhost address ({self.host}). "
-                "For MCP infrastructure, use container network: http://ollama-model-mcp:11434 "
+                f"For MCP infrastructure, use container network: {OLLAMA_ENDPOINT} "
                 "(Protocol 116: Container Network Isolation)"
             )
         
@@ -149,6 +152,41 @@ class OpenAIClient(LLMClient):
         if not self.client:
             return {"status": "error", "details": "Client not initialized (check API key)"}
         return {"status": "healthy", "details": "Client initialized"}
+
+def get_llm_client_config(model_preference: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Selects the correct LLM client configuration based on the model preference.
+    """
+    preference = (model_preference or "gemini").lower()
+    
+    if preference == "ollama":
+        # Configuration for the self-hosted model
+        return {
+            "model_type": "ollama",
+            "base_url": OLLAMA_ENDPOINT,
+            "api_key": None, # Local models often don't need a key
+            "model_name": "Sanctuary-Qwen2-7B:latest" # Assuming this is the image name
+        }
+    
+    elif preference == "gpt":
+        # Configuration for OpenAI models
+        return {
+            "model_type": "openai",
+            "api_key": os.getenv("OPENAI_API_KEY"),
+            "model_name": "gpt-4o" # Example model
+        }
+        
+    elif preference == "gemini":
+        # Default configuration for Google models
+        return {
+            "model_type": "google",
+            "api_key": os.getenv("GEMINI_API_KEY"),
+            "model_name": "gemini-2.5-pro" # Example model
+        }
+        
+    else:
+        # Fallback to the primary default if preference is unrecognized
+        return get_llm_client_config("gemini")
 
 def get_llm_client(provider: str = "ollama", model_name: str = None, ollama_host: str = None) -> LLMClient:
     """

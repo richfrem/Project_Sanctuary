@@ -226,8 +226,8 @@ pytest tests/mcp_servers/task/ -v
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
 | `create_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Create new task with auto-numbering |
-| `update_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Update task metadata or content |
-| `update_task_status` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Change task status (moves between directories) |
+| `update_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Verified content update via T100 |
+| `update_task_status` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Verified status movement via T100 |
 | `get_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Retrieve specific task by number |
 | `list_tasks` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | List tasks with optional filters |
 | `search_tasks` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Full-text search across tasks |
@@ -368,10 +368,10 @@ graph TD
 
 ### Script Validation (Run First) 🧪
 ```bash
-pytest tests/mcp_servers/rag_cortex/test_operations.py tests/mcp_servers/rag_cortex/test_cache_operations.py -v
+pytest tests/mcp_servers/rag_cortex/ -v
 ```
-**Last Verification:** 2025-12-02 ⚠️ (Test fixes in progress)
-**Status:** Test fixes in progress (cache_operations: 6/6 passing)
+**Last Verification:** 2025-12-05 ✅ (56/61 passed, 5 skipped - PyTorch 3.13 compat)
+**Status:** Fully operational - ChromaDB healthy, 5663 chunks indexed
 
 ### LLM Prompting (MCP Verification) 🤖
 > "Please query the knowledge base for 'Protocol 101' using `cortex_query`."
@@ -393,18 +393,17 @@ pytest tests/mcp_servers/rag_cortex/test_operations.py tests/mcp_servers/rag_cor
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Semantic search against knowledge base |
-| `cortex_ingest_full` | ⚠️ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ❌ | [test_cache_operations.py](../../tests/mcp_servers/cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
-| `cortex_generate_adaptation_packet` | ✅ | ✅ | ❌ | [test_operations.py](../../tests/mcp_servers/cortex/test_operations.py) | Synthesize knowledge for fine-tuning |
+| `cortex_query` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../tests/mcp_servers/rag_cortex/test_cortex_ingestion.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../tests/mcp_servers/rag_cortex/test_cortex_ingestion.py) | Add new documents without purge |
+| `cortex_get_stats` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Database health and statistics |
+| `cortex_cache_get` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
 
-**Prerequisite Tests:** [tests/mcp_servers/cortex/](../../tests/mcp_servers/cortex/)
+**Prerequisite Tests:** [tests/mcp_servers/rag_cortex/](../../tests/mcp_servers/rag_cortex/)
 
 **Related Protocols:**
 - [Protocol 102: Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
