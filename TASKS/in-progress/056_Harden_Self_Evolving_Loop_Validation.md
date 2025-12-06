@@ -37,40 +37,45 @@ This section formally defines the internal system architecture by aligning proje
 | **RAG Database (ChromaDB)** | **Semantic Long-Term Memory** | The persistent knowledge store indexed for retrieval-augmented generation. |
 | **00_CHRONICLE/ENTRIES** | **Episodic Memory Log** | The immutable, sequential log of all executed tasks and their outcomes. |
 
-## 🛡️ The Hardened Self-Evolving Loop Protocol
+## 🛡️ The Programmatic Loop Hardening Suite
 
-**Validation Dependency:**
-> [!NOTE]
-> Full loop validation requires the Python Integration Suite (Task 096) to be passing first. Current status: MCP Layer timeouts tracked in T087.
+The successful manual verification run (2025-12-06) confirms feasibility but exposed the **Agent Persona MCP** as a bottleneck. To validate **resilience and component handoff integrity**, the Orchestrator shall implement and run the following **programmatic integration tests** in the CI environment.
 
-The Orchestrator shall execute the following four steps sequentially within a single mission context, demonstrating a smooth transition between Council Agents and tools.
+These tests **MOCK the LLM-driven output of Step 1 (`protocol mcp`)** to isolate the high-speed data flow between Git MCP and Cortex MCP.
 
-### Step 1: Knowledge Generation Protocol (`protocol mcp`)
-* **Action:** The Council Agent (via `protocol mcp`) will generate a new, non-critical policy document.
-* **Artifact:** Create a new file in a documentation directory (e.g., `DOCS/TEST_056_Validation_Policy.md`).
-* **Content Requirement:** The content of this new `.md` file must explicitly mention a specific, unique phrase (e.g., "The Guardian confirms Validation Protocol 056 is active.")
+### Core Loop Integration Points
 
-### Step 2: Isolation and Control (`git mcp`)
-* **Action:** Immediately before making changes, the Council Agent (via `git mcp`) must **create a new feature branch** for the task (e.g., `feat/harden-loop-validation`).
-* **Verification:** All subsequent work will be contained within this branch, confirming adherence to the **Trunk-and-Branch Doctrine**.
+The integration tests must verify the handoff integrity between these four logical steps:
 
-### Step 3: Incremental Knowledge Ingestion (`cortex mcp`)
-* **Action:** The Council Agent will signal or confirm that the `IngestionService` (via `cortex mcp`) has **detected and processed** the new `DOCS/TEST_056_Validation_Policy.md` file.
-* **Verification:** A successful ingestion into the RAG database (ChromaDB) must be confirmed.
+1.  **MOCK INPUT:** Simulate the `protocol mcp` call to immediately provide the file `DOCS/TEST_056_Validation_Policy.md` with the unique validation phrase.
+2.  **GIT MCP:** Use `git_start_feature` and `git_smart_commit`.
+3.  **CORTEX MCP:** Use `cortex_ingest_incremental`.
+4.  **CORTEX MCP:** Use `cortex_query` for final verification.
 
-### Step 4: Chronicle and Commitment (`git mcp`)
-* **Action:** The Council Agent (via `git mcp`) will perform the final actions:
-    1.  Create a corresponding entry in the `00_CHRONICLE/ENTRIES/` linking to this task.
-    2.  Commit all changes (new policy, chronicle entry) to the feature branch using a **Conventional Commit** message (e.g., `feat: validate self-evolving memory loop`).
-    3.  Push the branch to the remote repository.
+### 🧪 Hardening Scenarios
 
-## ✅ Success Criteria
+#### 1. Scenario: Golden Path Replication (Fast Baseline Test)
+* **Objective:** Verify the successful data flow and loop closure under ideal conditions using mocking.
+* **Execution Sequence:** MOCK INPUT → **Git Isolation** (start feature) → **Cortex Ingest** (successful) → **Git Commit** (successful) → **Cortex Query** (successful).
+* **Success Criterion:** A programmatic RAG query successfully retrieves the unique phrase from the knowledge base, proving the loop closed instantly.
+
+#### 2. Scenario: Ingestion Resilience (Simulated Failure)
+* **Objective:** Verify the system handles a critical failure in the knowledge learning layer (Step 3).
+* **Execution Sequence:** MOCK INPUT → Git Isolation → **MOCK Cortex Ingest to FAIL** → **HALT**
+* **Success Criterion:** The test confirms that the Orchestrator/Council **halts the mission gracefully** after the ingestion failure and **does not** proceed to the final Git commit, preserving repository integrity.
+
+#### 3. Scenario: Atomic Commit Integrity (Simulated Failure)
+* **Objective:** Verify that knowledge must be persisted by Git before it is considered canonical/searchable.
+* **Execution Sequence:** MOCK INPUT → Git Isolation → Cortex Ingest (successful) → **MOCK Git Commit/Push to FAIL**.
+* **Success Criterion:** The test confirms that the Git MCP operation fails. A subsequent RAG query against the remote knowledge source **FAILS** to retrieve the data, proving the loop cannot be certified closed until the persistent layer (Git) is updated.
+
+## ✅ Revised Success Criteria (Mandatory Automation)
 
 The mission is considered a success when:
 
-1.  The `feat/harden-loop-validation` branch is successfully created, pushed, and merged/closed (if appropriate).
-2.  The new file, `DOCS/TEST_056_Validation_Policy.md`, is present in the final commit.
-3.  A subsequent RAG query performed by the Orchestrator *after* the commit and push can successfully retrieve the unique phrase ("The Guardian confirms Validation Protocol 056 is active.") from the RAG database, proving the **IngestionService** has closed the loop in near-real-time.
+1.  The `feat/056-programmatic-harden-loop` feature branch is successfully created and merged/closed.
+2.  The **`🧠 Core System Terminology: Alignment with AI Research (Source of Truth)`** section is present in the final commit.
+3.  The **Programmatic Loop Hardening Test Suite** (Scenarios 1, 2, and 3) is fully implemented, passes automatically, and is integrated into the CI environment.
 
 ---
 
