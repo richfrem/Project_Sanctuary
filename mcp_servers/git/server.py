@@ -306,67 +306,16 @@ def git_start_feature(task_id: str, description: str) -> str:
         Success message with branch name.
     """
     try:
-        # Pillar 6: Pre-Flight Check
+        # Pillar 6: Pre-Flight Check (Still good to check deps first, though start_feature checks clean state)
         req_error = check_requirements()
         if req_error:
-            # If it's just git-lfs missing, warn but allow proceeding
             if "git-lfs" in req_error:
                 print(f"WARNING: {req_error}")
-                # Continue execution
             else:
                 return req_error
 
-        # Get comprehensive status
-        status = git_ops.status()
-        current_branch = status["branch"]
-        feature_branches = status["feature_branches"]
-        local_branches = [b["name"] for b in status["local_branches"]]
-        is_clean = status["is_clean"]
-        
-        # Sanitize and build branch name
-        safe_desc = description.lower().replace(" ", "-")
-        branch_name = f"feature/task-{task_id}-{safe_desc}"
-        
-        # Check if branch already exists
-        branch_exists = branch_name in local_branches
-        
-        if branch_exists:
-            # Branch exists - idempotent behavior
-            if current_branch == branch_name:
-                # Already on the branch - no-op
-                return f"Already on feature branch: {branch_name}"
-            else:
-                # Switch to existing branch
-                git_ops.checkout(branch_name)
-                return f"Switched to existing feature branch: {branch_name}"
-        else:
-            # Branch doesn't exist - need to create
-            
-            # Safety check: No other feature branches allowed
-            if len(feature_branches) > 0:
-                return (
-                    f"ERROR: Cannot create new feature branch. "
-                    f"Existing feature branch(es) detected: {', '.join(feature_branches)}. "
-                    f"Only one feature branch at a time is allowed. "
-                    f"Please finish the current feature branch first using git_finish_feature."
-                )
-            
-            # Safety check: Clean working directory required
-            if not is_clean:
-                return (
-                    f"ERROR: Cannot create new feature branch. "
-                    f"Working directory has uncommitted changes. "
-                    f"Staged: {len(status['staged'])}, "
-                    f"Modified: {len(status['modified'])}, "
-                    f"Untracked: {len(status['untracked'])}. "
-                    f"Please commit or stash changes first."
-                )
-            
-            # All checks passed - create and checkout
-            git_ops.create_branch(branch_name)
-            git_ops.checkout(branch_name)
-            
-            return f"Created and switched to new feature branch: {branch_name}"
+        # Delegate to GitOperations (Centralized Logic)
+        return git_ops.start_feature(task_id, description)
             
     except Exception as e:
         return f"Failed to start feature: {str(e)}"

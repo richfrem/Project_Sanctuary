@@ -98,8 +98,22 @@ class GitOperations:
             return []
         return output.splitlines()
 
-    def add(self, files: List[str] = None) -> None:
+    def _verify_feature_branch(self, operation: str, allow_main: bool) -> None:
+        """Helper to enforce feature usage."""
+        if allow_main:
+            return
+            
+        current = self.get_current_branch()
+        if current == "main":
+            raise ValueError(f"SAFETY ERROR: Cannot perform '{operation}' on 'main' branch. Switch to a feature branch.")
+            
+    def add(self, files: List[str] = None, allow_main: bool = False) -> None:
         """Stage files for commit."""
+        self._verify_feature_branch("add", allow_main)
+        
+        # User Safety Request: "make sure when doing git add you do git status"
+        status = self.status()
+        
         if files is None or len(files) == 0:
             # Stage all modified and new files
             self._run_git(["add", "-A"])
@@ -109,7 +123,7 @@ class GitOperations:
     # PROTOCOL 101 v3.0: Manifest generation methods PERMANENTLY REMOVED
     # Functional Coherence (test suite execution) is now the sole integrity mechanism
 
-    def commit(self, message: str) -> str:
+    def commit(self, message: str, allow_main: bool = False) -> str:
         """
         Commit staged files with Protocol 101 v3.0 compliance.
         
@@ -120,6 +134,8 @@ class GitOperations:
         
         Returns commit hash.
         """
+        self._verify_feature_branch("commit", allow_main)
+        
         # Protocol 101 v3.0: Pre-commit hook handles test execution
         # We simply commit normally - the hook will enforce functional coherence
         self._run_git(["commit", "-m", message])
@@ -143,10 +159,68 @@ class GitOperations:
         """Checkout a branch."""
         self._run_git(["checkout", branch_name])
 
-    def push(self, remote: str = "origin", branch: str = None, force: bool = False, no_verify: bool = False) -> str:
+    def start_feature(self, task_id: str, description: str) -> str:
+        """
+        Start a new feature branch (idempotent).
+        
+        Logic:
+        1. Sanitize name
+        2. Check for existing feature branches (One Feature Rule)
+        3. Check for clean working dir
+        4. Create & Checkout (or switch if exists)
+        """
+        # Get comprehensive status
+        status = self.status()
+        current_branch = status["branch"]
+        feature_branches = status["feature_branches"]
+        local_branches = [b["name"] for b in status["local_branches"]]
+        is_clean = status["is_clean"]
+        
+        # Sanitize and build branch name
+        safe_desc = description.lower().replace(" ", "-")
+        branch_name = f"feature/task-{task_id}-{safe_desc}"
+        
+        # Check if branch already exists
+        branch_exists = branch_name in local_branches
+        
+        if branch_exists:
+            # Branch exists - idempotent behavior
+            if current_branch == branch_name:
+                return f"Already on feature branch: {branch_name}"
+            else:
+                self.checkout(branch_name)
+                return f"Switched to existing feature branch: {branch_name}"
+        else:
+            # Branch doesn't exist - need to create
+            
+            # Safety check: No other feature branches allowed (User Rule)
+            if len(feature_branches) > 0:
+                raise RuntimeError(
+                    f"One Feature Rule: Cannot create '{branch_name}'. "
+                    f"Existing feature branch(es) detected: {', '.join(feature_branches)}. "
+                    f"Please finish the current feature branch first."
+                )
+            
+            # Safety check: Clean working directory required
+            if not is_clean:
+                raise RuntimeError(
+                    f"Cannot create new feature branch. Working directory has uncommitted changes. "
+                    f"Please commit or stash changes first."
+                )
+            
+            # All checks passed - create and checkout
+            self.create_branch(branch_name)
+            self.checkout(branch_name)
+            
+            return f"Created and switched to new feature branch: {branch_name}"
+
+    def push(self, remote: str = "origin", branch: str = None, force: bool = False, no_verify: bool = False, allow_main: bool = False) -> str:
         """Push to remote."""
         if branch is None:
             branch = self.get_current_branch()
+            
+        if branch == "main" and not allow_main:
+             raise ValueError("SAFETY ERROR: Cannot push 'main' branch directly. Use a PR.")
         
         args = ["push", remote, branch]
         if force:
@@ -197,7 +271,10 @@ class GitOperations:
         
         for line in status_porcelain.splitlines():
             code = line[:2]
-            path = line[3:]
+            # Use strip() to handle potential variable whitespace separators
+            # (e.g., "M  file" vs "M file" if some git versions differ)
+            path = line[2:].strip()
+            
             if code.startswith("M") or code.startswith("A"):
                 staged.append(path)
             if code.endswith("M"):
@@ -314,9 +391,10 @@ class GitOperations:
                     print(f"Auto-detected squash merge for {branch_name} (identical content to main)")
                 else:
                     # Branches differ - truly unmerged
+                    # User Rule: "PR and Merge must complete otherwise finish_feature should fail"
                     raise RuntimeError(
                         f"Branch '{branch_name}' is NOT merged into main. "
-                        "Please merge your PR on GitHub first, then run this command again. "
+                        "PR and Merge must complete first. "
                         "If you squash merged, use force=True to bypass this check."
                     )
 
@@ -342,7 +420,5 @@ class GitOperations:
             pass
         
         return f"Finished feature {branch_name}. Verified merge, deleted local/remote branches, and synced main."
-
-
-
+        
 
