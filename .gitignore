@@ -99,6 +99,7 @@ archives/
 research/RESEARCH_PAPERS/
 *.log
 nohup.out
+mcp_servers/agent_persona/state/
 
 ResearchPapers
 
@@ -150,6 +151,3 @@ WORK_IN_PROGRESS/AGORA_PoC_Core/
 data/cortex/chroma_db/
 data/cortex/cache/
 tests/verify_wslenv_setup.py
-
-# Agent Persona Session State - Ephemeral conversation history
-mcp_servers/agent_persona/state/*.json
