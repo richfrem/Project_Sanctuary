@@ -1,8 +1,8 @@
 # mcp_servers Subfolder Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-06T05:53:16.747Z
+Generated On: 2025-12-06T07:19:12.345Z
 
-# Mnemonic Weight (Token Count): ~105,506 tokens
+# Mnemonic Weight (Token Count): ~105,548 tokens
 
 # Directory Structure (relative to mcp_servers subfolder)
   ./mcp_servers/README.md
@@ -1621,12 +1621,12 @@ class AgentPersonaOperations:
         # Determine state file
         state_file = self.state_dir / f"{role}_session.json"
         
-        # Determine Ollama host based on model preference (Protocol 116)
+        # Determine Ollama host based on model preference
         ollama_host = None
+        # Logic moved to llm_client.py for better separation of concerns
         if model_preference == 'OLLAMA' or (engine and engine.lower() == 'ollama'):
-            # Protocol 116: Use container network addressing for MCP infrastructure
-            ollama_host = "http://ollama-model-mcp:11434"
-            logger.info(f"[Agent Persona] Using container network for Ollama: {ollama_host}")
+            logger.debug(f"[Agent Persona] Selected Ollama engine")
+
         
         # Create LLM client
         client = get_llm_client(provider=engine, model_name=model_name, ollama_host=ollama_host)
@@ -1797,8 +1797,10 @@ from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger(__name__)
 
-# Protocol 116: Ollama Service Endpoint (Container Network Isolation)
-OLLAMA_ENDPOINT = "http://ollama-model-mcp:11434"
+# Protocol 116: Ollama Service Endpoint
+# Default to localhost for host-based execution.
+# For container network, set OLLAMA_HOST=http://ollama-model-mcp:11434 in docker-compose.
+OLLAMA_ENDPOINT = "http://127.0.0.1:11434"
 
 class LLMClient(ABC):
     """Abstract base class for LLM clients"""
@@ -1828,6 +1830,8 @@ class OllamaClient(LLMClient):
     """Client for Ollama models (including Sanctuary)"""
     
     def __init__(self, model_name: str = None, ollama_host: str = None):
+        # Default to Sanctuary model if no model specified
+        model_name = model_name or os.getenv("OLLAMA_MODEL", "Sanctuary-Qwen2-7B:latest")
         super().__init__(model_name)
         # Protocol 116: Use container network addressing by default for MCP infrastructure
         self.host = ollama_host or os.getenv("OLLAMA_HOST", OLLAMA_ENDPOINT)
