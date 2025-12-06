@@ -109,6 +109,9 @@
 | | `reset_state` | None | ✅ | — | ✅ | |
 | | `create_custom` | None | ✅ | — | ✅ | |
 | **Council (2)** | `dispatch` | Agent Persona, Cortex, Protocol, Git | ✅ | ⏳ | ⏳ | Task 056 (needs persona restart) |
+| | ↳ *Protocol Audit* | Protocol, Code, Agent | — | — | ⏳ | Verify "Audit file vs Protocol" |
+| | ↳ *Mnemonic Synthesis* | Cortex, Chronicle, Agent | — | — | ⏳ | Verify "Synthesize insights" |
+| | ↳ *Strategic Loop* | All | — | — | ⏳ | Full Task 056 Cycle |
 | | `list_agents` | None | ✅ | — | ✅ | 3 agents available |
 | **Orchestrator (2)** | `dispatch_mission` | Council | ✅ | ⏳ | ✅ | Verified (dispatched to Kilo) |
 | | `run_strategic_cycle` | Council, Cortex | ✅ | ⏳ | ⏳ | Needs full stack |

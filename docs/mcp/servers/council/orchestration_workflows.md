@@ -103,3 +103,33 @@ sequenceDiagram
     *   *Auditor* approves.
 5.  **Council** calls **Protocol MCP**: `protocol_update(number=101, updates={"content": "..."})`.
 6.  **Council** returns success to User.
+
+## Standardized Orchestration Workflows
+
+The following standard workflows are defined for validation and testing purposes.
+
+### 1. Strategic Crucible Loop (Task 056)
+**Purpose:** Autonomous self-evolution and knowledge hardening.
+**Trigger:** `mcp_orchestrator_run_strategic_cycle`
+**Steps:**
+1.  **Ingest:** Read new/changed files (Git MCP).
+2.  **Synthesize:** Agent Persona (Strategist) analyzes changes against existing Protocols (Cortex RAG).
+3.  **Adapt:** Agent Persona (Coordinator) proposes updates to Protocols or Docs.
+4.  **Cache:** Commit changes (Git MCP) and re-ingest into Mnemonic Cortex (Cortex MCP).
+
+### 2. Protocol Compliance Audit
+**Purpose:** Verify code against governance standards.
+**Trigger:** `council_dispatch(task="Audit <file> against Protocol <N>")`
+**Steps:**
+1.  **Context:** Retrieve Protocol <N> (Protocol MCP) and File Content (Code MCP).
+2.  **Analysis:** Auditor Persona checks for violations.
+3.  **Report:** Generate compliance report (Markdown).
+
+### 3. Mnemonic Synthesis (Knowledge Creation)
+**Purpose:** Distill raw information into canonical knowledge.
+**Trigger:** `council_dispatch(task="Synthesize insights from X")`
+**Steps:**
+1.  **Search:** Query Cortex for "X" (Cortex MCP).
+2.  **Distill:** Strategist Persona summarizes key patterns.
+3.  **Store:** Create new Chronicle Entry or Protocol (Chronicle/Protocol MCP).
+
