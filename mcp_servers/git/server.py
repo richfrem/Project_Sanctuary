@@ -306,67 +306,16 @@ def git_start_feature(task_id: str, description: str) -> str:
         Success message with branch name.
     """
     try:
-        # Pillar 6: Pre-Flight Check
+        # Pillar 6: Pre-Flight Check (Still good to check deps first, though start_feature checks clean state)
         req_error = check_requirements()
         if req_error:
-            # If it's just git-lfs missing, warn but allow proceeding
             if "git-lfs" in req_error:
                 print(f"WARNING: {req_error}")
-                # Continue execution
             else:
                 return req_error
 
-        # Get comprehensive status
-        status = git_ops.status()
-        current_branch = status["branch"]
-        feature_branches = status["feature_branches"]
-        local_branches = [b["name"] for b in status["local_branches"]]
-        is_clean = status["is_clean"]
-        
-        # Sanitize and build branch name
-        safe_desc = description.lower().replace(" ", "-")
-        branch_name = f"feature/task-{task_id}-{safe_desc}"
-        
-        # Check if branch already exists
-        branch_exists = branch_name in local_branches
-        
-        if branch_exists:
-            # Branch exists - idempotent behavior
-            if current_branch == branch_name:
-                # Already on the branch - no-op
-                return f"Already on feature branch: {branch_name}"
-            else:
-                # Switch to existing branch
-                git_ops.checkout(branch_name)
-                return f"Switched to existing feature branch: {branch_name}"
-        else:
-            # Branch doesn't exist - need to create
-            
-            # Safety check: No other feature branches allowed
-            if len(feature_branches) > 0:
-                return (
-                    f"ERROR: Cannot create new feature branch. "
-                    f"Existing feature branch(es) detected: {', '.join(feature_branches)}. "
-                    f"Only one feature branch at a time is allowed. "
-                    f"Please finish the current feature branch first using git_finish_feature."
-                )
-            
-            # Safety check: Clean working directory required
-            if not is_clean:
-                return (
-                    f"ERROR: Cannot create new feature branch. "
-                    f"Working directory has uncommitted changes. "
-                    f"Staged: {len(status['staged'])}, "
-                    f"Modified: {len(status['modified'])}, "
-                    f"Untracked: {len(status['untracked'])}. "
-                    f"Please commit or stash changes first."
-                )
-            
-            # All checks passed - create and checkout
-            git_ops.create_branch(branch_name)
-            git_ops.checkout(branch_name)
-            
-            return f"Created and switched to new feature branch: {branch_name}"
+        # Delegate to GitOperations (Centralized Logic)
+        return git_ops.start_feature(task_id, description)
             
     except Exception as e:
         return f"Failed to start feature: {str(e)}"
@@ -392,73 +341,7 @@ def git_finish_feature(branch_name: str, force: bool = False) -> str:
         Cleanup status.
     """
     try:
-        # Safety check: Cannot finish main branch
-        if branch_name == "main":
-            return "ERROR: Cannot finish 'main' branch. It is the protected default branch."
-            
-        # Safety check: Must be a feature branch
-        if not branch_name.startswith("feature/"):
-            return (
-                f"ERROR: Invalid branch name '{branch_name}'. "
-                f"Can only finish feature branches (format: feature/task-XXX-desc)."
-            )
-
-        # Pillar 4: Verify clean state before finishing (merging/deleting)
-        git_ops.verify_clean_state()
-
-        # Safety check: Verify branch is merged into main
-        # This prevents data loss by ensuring the PR is actually merged
-        # Skip if force=True (e.g. for squash merges where commit history is lost)
-        if not force and not git_ops.is_branch_merged(branch_name, "main"):
-            # Double check by fetching origin first? 
-            # Sometimes local main is behind origin/main, so it looks unmerged locally
-            # but is merged on remote.
-            git_ops.checkout("main")
-            git_ops.pull("origin", "main")
-            git_ops.checkout(branch_name)
-            
-            # Check again after sync
-            if not git_ops.is_branch_merged(branch_name, "main"):
-                # Auto-detect squash merge: check if branches have identical content
-                try:
-                    diff_output = git_ops.diff_branches(branch_name, "main")
-                    if not diff_output or diff_output.strip() == "":
-                        # Branches have identical content - squash merge detected!
-                        # Log this and proceed with cleanup
-                        print(f"Auto-detected squash merge for {branch_name} (identical content to main)")
-                    else:
-                        # Branches differ - truly unmerged
-                        return (
-                            f"ERROR: Branch '{branch_name}' is NOT merged into main. "
-                            "Cannot finish/delete an unmerged feature branch. "
-                            "Please merge your PR on GitHub first, then run this command again. "
-                            "If you squash merged, use force=True to bypass this check."
-                        )
-                except Exception as e:
-                    # If diff check fails, fall back to error
-                    return (
-                        f"ERROR: Branch '{branch_name}' is NOT merged into main. "
-                        "Cannot finish/delete an unmerged feature branch. "
-                        "Please merge your PR on GitHub first, then run this command again. "
-                        "If you squash merged, use force=True to bypass this check."
-                    )
-
-        # ALWAYS checkout main first to avoid merging main into the feature branch
-        git_ops.checkout("main")
-            
-        git_ops.pull("origin", "main")
-        
-        # Delete local branch (force delete since we verified merge status)
-        git_ops.delete_local_branch(branch_name, force=True)
-        
-        # Delete remote branch
-        try:
-            git_ops.delete_remote_branch(branch_name)
-        except Exception:
-            # Remote branch might already be deleted, that's okay
-            pass
-        
-        return f"Finished feature {branch_name}. Verified merge, deleted local/remote branches, and synced main."
+        return git_ops.finish_feature(branch_name, force=force)
     except Exception as e:
         return f"Failed to finish feature: {str(e)}"
 
