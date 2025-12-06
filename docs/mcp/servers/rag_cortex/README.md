@@ -51,14 +51,14 @@ For complete setup instructions, including Podman installation, service configur
 
 Quick start:
 ```bash
-# 1. Ensure Podman is running (one-time setup)
-podman machine start
+    # 1. Ensure Podman is running (one-time setup)
+    podman machine start
 
-# 2. Start ChromaDB container (REQUIRED)
-podman compose up -d vector-db
-
-# 3. Populate database (first time only)
-python3 mcp_servers/rag_cortex/run_cortex_integration.py --run-full-ingest
+    # 2. Start ChromaDB container (REQUIRED)
+    podman compose up -d vector-db
+    
+    # 3. Populate database (first time only)
+    python3 mcp_servers/rag_cortex/run_cortex_integration.py --run-full-ingest
 
 # 4. Verify
 curl http://localhost:8000/api/v2/heartbeat

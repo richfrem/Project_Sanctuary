@@ -30,7 +30,7 @@ from typing import Dict, Any, List, Optional
 logger = logging.getLogger("rag_cortex.operations")
 if not logger.handlers:
     # Add a default handler if none exist (e.g., when running directly)
-    handler = logging.StreamHandler(sys.stdout)
+    handler = logging.StreamHandler(sys.stderr)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
@@ -52,25 +52,28 @@ from .models import (
 )
 
 # Imports that were previously inside methods, now moved to top for class initialization
-import chromadb
-from dotenv import load_dotenv
-from langchain_community.document_loaders import DirectoryLoader, TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_nomic import NomicEmbeddings
-from langchain_chroma import Chroma
-from mcp_servers.rag_cortex.file_store import SimpleFileStore
-from langchain_core.documents import Document
+# Silence stdout/stderr during imports to prevent MCP protocol pollution
+with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+    import chromadb
+    from dotenv import load_dotenv
+    from langchain_community.document_loaders import DirectoryLoader, TextLoader
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+    from langchain_nomic import NomicEmbeddings
+    from langchain_chroma import Chroma
+    from mcp_servers.rag_cortex.file_store import SimpleFileStore
+    from langchain_core.documents import Document
 
 
 class CortexOperations:
     """Core operations for Cortex MCP server."""
     
-    def __init__(self, project_root: str):
+    def __init__(self, project_root: str, client: Optional[chromadb.ClientAPI] = None):
         """
         Initialize operations.
         
         Args:
             project_root: Absolute path to project root
+            client: Optional injected ChromaDB client (for testing)
         """
         self.project_root = Path(project_root)
         self.scripts_dir = self.project_root / "mcp_servers" / "rag_cortex" / "scripts"
@@ -86,8 +89,11 @@ class CortexOperations:
         self.child_collection_name = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
         self.parent_collection_name = os.getenv("CHROMA_PARENT_STORE", "parent_documents_v5")
 
-        # Initialize ChromaDB HTTP client
-        self.chroma_client = chromadb.HttpClient(host=self.chroma_host, port=self.chroma_port)
+        # Initialize ChromaDB client
+        if client:
+            self.chroma_client = client
+        else:
+            self.chroma_client = chromadb.HttpClient(host=self.chroma_host, port=self.chroma_port)
         
         # Initialize embedding model
         self.embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
@@ -212,6 +218,18 @@ class CortexOperations:
                     logger.info(f"Cleared parent document store at: {self.store.root_path}")
                 else:
                     logger.info(f"Parent document store path '{self.store.root_path}' does not exist, no need to clear.")
+                
+                # Recreate the directory to ensure it exists for new writes
+                Path(self.store.root_path).mkdir(parents=True, exist_ok=True)
+                logger.info(f"Recreated parent document store directory at: {self.store.root_path}")
+                
+            # Re-initialize vectorstore to ensure it connects to a fresh/existing collection
+            # This is critical after a delete_collection operation
+            self.vectorstore = Chroma(
+                client=self.chroma_client,
+                collection_name=self.child_collection_name,
+                embedding_function=self.embedding_model
+            )
             
             # Default source directories
             default_source_dirs = [

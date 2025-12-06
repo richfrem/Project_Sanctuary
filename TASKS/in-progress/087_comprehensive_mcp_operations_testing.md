@@ -42,82 +42,96 @@
 
 ## Master Operations Tracking Table (All 66 Operations)
 
-| MCP Server | Operation | Phase 1 (Test) | Phase 2 (MCP) | Notes |
-|------------|-----------|----------------|---------------|-------|
-| **Chronicle (7)** | `chronicle_create_entry` | ✅ | ✅ | Created Entry 283 (test entry) |
-| | `chronicle_append_entry` | ✅ | ✅ | Created Entry 284 (alias fixed) |
-| | `chronicle_update_entry` | ✅ | ✅ | Updated Entry 283 successfully |
-| | `chronicle_get_entry` | ✅ | ✅ | Retrieved Entry 282 & 283 |
-| | `chronicle_list_entries` | ✅ | ✅ | Listed 5 recent entries |
-| | `chronicle_read_latest_entries` | ✅ | ✅ | Listed 3 entries (alias fixed) |
-| | `chronicle_search` | ✅ | ✅ | Found "T087 Phase 2" entries |
-| **Protocol (5)** | `protocol_create` | ✅ | ✅ | Created Protocol 999 (test protocol) |
-| | `protocol_update` | ✅ | ✅ | Updated Protocol 999 to CANONICAL |
-| | `protocol_get` | ✅ | ✅ | Retrieved Protocol 101 & 116 |
-| | `protocol_list` | ✅ | ✅ | Listed 39 CANONICAL protocols |
-| | `protocol_search` | ✅ | ✅ | Found Protocol 116 |
-| **ADR (5)** | `adr_create` | ✅ | ✅ | Created ADR 045 (test ADR) |
-| | `adr_update_status` | ✅ | ✅ | Updated ADR 045: proposed → accepted |
-| | `adr_get` | ✅ | ✅ | Retrieved ADR 044 & 045 |
-| | `adr_list` | ✅ | ✅ | Listed 33 accepted ADRs |
-| | `adr_search` | ✅ | ✅ | Found ADR 044 matching "T087" |
-| **Task (6)** | `create_task` | ✅ | ✅ | Created Task 099 (test task) |
-| | `update_task` | ✅ | ✅ | Verified content update (Created T100) |
-| | `update_task_status` | ✅ | ✅ | Verified status change (Moved T100) |
-| | `get_task` | ✅ | ✅ | Retrieved Task 098 |
-| | `list_tasks` | ✅ | ✅ | Listed 4 in-progress tasks |
-| | `search_tasks` | ✅ | ✅ | Found 4 tasks matching "T087 Phase 2" |
-| **Code (10)** | `code_lint` | ✅ | ✅ | Tested (ruff missing, error handled correctly) |
-| | `code_format` | ✅ | ✅ | Tested (ruff missing, error handled correctly) |
-| | `code_analyze` | ✅ | ✅ | Tested (ruff missing, error handled correctly) |
-| | `code_check_tools` | ✅ | ✅ | Listed available tools (none found) |
-| | `code_find_file` | ✅ | ✅ | Found server.py files |
-| | `code_list_files` | ✅ | ✅ | Listed files in directory |
-| | `code_search_content` | ✅ | ✅ | Searched for "FastMCP" |
-| | `code_read` | ✅ | ✅ | Read server.py content |
-| | `code_write` | ✅ | ✅ | Created temp test file |
-| | `code_get_info` | ✅ | ✅ | Retrieved file metadata |
-| **Config (4)** | `config_list` | ✅ | ✅ | Listed config files (initially empty) |
-| | `config_read` | ✅ | ✅ | Read test config file |
-| | `config_write` | ✅ | ✅ | Created test config file |
-| | `config_delete` | ✅ | ✅ | Deleted test config file |
-| **Git (8)** | `git_status` | ✅ | ✅ | Verified branch status |
-| | `git_diff` | ✅ | ✅ | Verified changes |
-| | `git_log` | ✅ | ✅ | Verified commit history |
-| | `git_start_feature` | ✅ | ✅ | Validated LFS check (blocked correctly) |
-| | `git_add` | ✅ | ✅ | Staged 6 files successfully |
-| | `git_smart_commit` | ✅ | ✅ | Validated P101 hook (blocked correctly) |
-| | `git_push_feature` | ✅ | ✅ | Validated LFS check (blocked correctly) |
-| | `git_finish_feature` | ✅ | ✅ | Skipped to preserve current branch |
-| **RAG Cortex (10)** | `cortex_query` | ✅ | ✅ | Semantic search verified |
-| | `cortex_ingest_full` | ✅ | ✅ | Full re-ingestion verified |
-| | `cortex_ingest_incremental` | ✅ | ✅ | Add new documents verified |
-| | `cortex_get_stats` | ✅ | ✅ | Healthy: 2883 docs, 5665 chunks |
-| | `cortex_cache_get` | ✅ | ✅ | Retrieve cached answer verified |
-| | `cortex_cache_set` | ✅ | ✅ | Store answer in cache verified |
-| | `cortex_cache_stats` | ✅ | ✅ | Cache performance metrics verified |
-| | `cortex_cache_warmup` | ✅ | ✅ | Pre-populate cache verified |
-| | `cortex_guardian_wakeup` | ✅ | ✅ | Generate Guardian boot digest verified |
-| | `cortex_generate_adaptation_packet` | ✅ | ✅ | Synthesize knowledge verified |
-| **Agent Persona (5)** | `persona_dispatch` | ✅ | ⏳ | Dispatch task to persona agent |
-| | `persona_list_roles` | ✅ | ⏳ | List available roles |
-| | `persona_get_state` | ✅ | ⏳ | Get conversation state |
-| | `persona_reset_state` | ✅ | ⏳ | Reset conversation state |
-| | `persona_create_custom` | ✅ | ⏳ | Create new custom persona |
-| **Council (2)** | `council_dispatch` | ✅ | ⏳ | Multi-agent deliberation |
-| | `council_list_agents` | ✅ | ⏳ | List available agents |
-| **Orchestrator (2)** | `orchestrator_dispatch_mission` | ✅ | ⏳ | Dispatch high-level mission (test_mcp_operations.py) |
-| | `orchestrator_run_strategic_cycle` | ✅ | ⏳ | Execute Strategic Crucible Loop (test_mcp_operations.py) |
-| **Forge LLM (2)** | `check_sanctuary_model_status` | ✅ | ⏳ | Verify model availability |
-| | `query_sanctuary_model` | ✅ | ⏳ | Query Sanctuary-Qwen2 model |
+> **Testing Pyramid Layers (per ADR 048):**
+> 1. **Unit/Component** - Pytest with mocks (fast, isolated)
+> 2. **Integration** - Real services: ChromaDB, Ollama, Git-LFS (Podman containers)
+> 3. **MCP Operations** - Tool interface via Antigravity/Claude Desktop
 
-**Phase 1 (Test Harness):** 66/66 operations have tests (100%) ✅ COMPLETE  
-**Phase 2 (MCP Tool Interface):** 60/66 operations tested (91%)
+| MCP Server | Operation | 1. Unit | 2. Integration | 3. MCP Ops | Notes |
+|------------|-----------|:-------:|:--------------:|:----------:|-------|
+| **Chronicle (7)** | `create_entry` | ✅ | — | ✅ | Filesystem only |
+| | `append_entry` | ✅ | — | ✅ | |
+| | `update_entry` | ✅ | — | ✅ | |
+| | `get_entry` | ✅ | — | ✅ | |
+| | `list_entries` | ✅ | — | ✅ | |
+| | `read_latest_entries` | ✅ | — | ✅ | |
+| | `search` | ✅ | — | ✅ | |
+| **Protocol (5)** | `create` | ✅ | — | ✅ | Filesystem only |
+| | `update` | ✅ | — | ✅ | |
+| | `get` | ✅ | — | ✅ | |
+| | `list` | ✅ | — | ✅ | |
+| | `search` | ✅ | — | ✅ | |
+| **ADR (5)** | `create` | ✅ | — | ✅ | Filesystem only |
+| | `update_status` | ✅ | — | ✅ | |
+| | `get` | ✅ | — | ✅ | |
+| | `list` | ✅ | — | ✅ | |
+| | `search` | ✅ | — | ✅ | |
+| **Task (6)** | `create_task` | ✅ | — | ✅ | Filesystem only |
+| | `update_task` | ✅ | — | ✅ | |
+| | `update_task_status` | ✅ | — | ✅ | |
+| | `get_task` | ✅ | — | ✅ | |
+| | `list_tasks` | ✅ | — | ✅ | |
+| | `search_tasks` | ✅ | — | ✅ | |
+| **Code (10)** | `lint` | ✅ | — | ✅ | Filesystem only |
+| | `format` | ✅ | — | ✅ | |
+| | `analyze` | ✅ | — | ✅ | |
+| | `check_tools` | ✅ | — | ✅ | |
+| | `find_file` | ✅ | — | ✅ | |
+| | `list_files` | ✅ | — | ✅ | |
+| | `search_content` | ✅ | — | ✅ | |
+| | `read` | ✅ | — | ✅ | |
+| | `write` | ✅ | — | ✅ | |
+| | `get_info` | ✅ | — | ✅ | |
+| **Config (4)** | `list` | ✅ | — | ✅ | Filesystem only |
+| | `read` | ✅ | — | ✅ | |
+| | `write` | ✅ | — | ✅ | |
+| | `delete` | ✅ | — | ✅ | |
+| **Git (8)** | `get_status` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
+| | `diff` | ✅ | — | ✅ | |
+| | `log` | ✅ | — | ✅ | |
+| | `start_feature` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
+| | `add` | ✅ | — | ✅ | |
+| | `smart_commit` | ✅ | ⏳ | ✅ | Needs P101 hook |
+| | `push_feature` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
+| | `finish_feature` | ✅ | ⏳ | ✅ | Needs Git-LFS check |
+| **RAG Cortex (9)** | `query` | ✅ | ✅ | ✅ | run_cortex_integration.py |
+| | `ingest_full` | ✅ | ✅ | ✅ | run_cortex_integration.py (436 docs, 265s) |
+| | `ingest_incremental` | ✅ | ✅ | ✅ | verify_end_to_end.py (robust) |
+| | `get_stats` | ✅ | ✅ | ✅ | run_cortex_integration.py |
+| | `cache_get` | ✅ | ✅ | ✅ | test_cache_integration.py (pure memory) |
+| | `cache_set` | ✅ | ✅ | ✅ | test_cache_integration.py (pure memory) |
+| | `cache_warmup` | ✅ | ✅ | ✅ | test_cache_integration.py (26 queries, 1.26s) |
+| | `guardian_wakeup` | ✅ | ✅ | ✅ | test_cache_integration.py (3 bundles, 56ms) |
+| | `generate_adaptation_packet` | ❌ | ❌ | ❌ | Not implemented |
+| **Agent Persona (5)** | `dispatch` | ✅ | ⏳ | ⏳ | Needs Ollama |
+| | `list_roles` | ✅ | — | ⏳ | |
+| | `get_state` | ✅ | — | ⏳ | |
+| | `reset_state` | ✅ | — | ⏳ | |
+| | `create_custom` | ✅ | — | ⏳ | |
+| **Council (2)** | `dispatch` | ✅ | ⏳ | ⏳ | Needs Ollama + ChromaDB |
+| | `list_agents` | ✅ | — | ⏳ | |
+| **Orchestrator (2)** | `dispatch_mission` | ✅ | ⏳ | ⏳ | Needs Ollama |
+| | `run_strategic_cycle` | ✅ | ⏳ | ⏳ | Needs Ollama + ChromaDB |
+| **Forge LLM (2)** | `check_model_status` | ✅ | ⏳ | ⏳ | Ollama container |
+| | `query_model` | ✅ | ⏳ | ⏳ | Ollama container |
+
+### Summary by Layer
+
+| Layer | Description | Target | Current | Status |
+|-------|-------------|--------|---------|--------|
+| **1. Unit/Component** | Pytest with mocks | 66 | 65 | 98% ✅ |
+| **2. Integration** | Real Podman services | ~20 | 9 | 45% 🔄 |
+| **3. MCP Operations** | Tool interface | 66 | 45 | 68% 🔄 |
+
+**Integration Test Dependencies:**
+- `sanctuary-vector-db` (ChromaDB:8000) → RAG Cortex, Council
+- `sanctuary-ollama-mcp` (Ollama:11434) → Forge LLM, Agent Persona, Council, Orchestrator
+- Git-LFS → Git MCP operations
 
 **Phase 2 Progress by Category:**
 - Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6) ✅ COMPLETE
-- System MCPs: 21/22 tested (Code ✅ 10/10, Config ✅ 4/4, Git ✅ 7/8) ✅ COMPLETE
-- Cognitive MCPs: 10/19 tested (RAG Cortex ✅ 10/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
+- System MCPs: 22/22 tested (Code ✅ 10/10, Config ✅ 4/4, Git ✅ 8/8) ✅ COMPLETE
+- Cognitive MCPs: 9/19 tested (RAG Cortex ✅ 9/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
 - Model MCP: 0/2 tested (Forge LLM 0/2)
 
 
