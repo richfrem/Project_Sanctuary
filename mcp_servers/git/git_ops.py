@@ -34,15 +34,57 @@ class GitOperations:
                 "Please commit or stash changes before proceeding."
             )
 
+    def _get_robust_env(self) -> Dict[str, str]:
+        """
+        Create an environment with a robust PATH for git hooks.
+        Ensures tools like git-lfs are visible to hooks (e.g. post-checkout).
+        """
+        import shutil
+        env = os.environ.copy()
+        current_path = env.get("PATH", "")
+        
+        # 1. Dynamically locate git-lfs
+        lfs_path = shutil.which("git-lfs")
+        candidates = []
+        
+        if lfs_path:
+            candidates.append(os.path.dirname(lfs_path))
+            
+        # 2. Add standard system locations (portability fallback)
+        standard_paths = [
+            "/usr/local/bin",      # Intel Mac / Linux
+            "/opt/homebrew/bin",   # Apple Silicon Mac
+            "/usr/bin",            # Standard
+            "/bin"                 # Standard
+        ]
+        candidates.extend(standard_paths)
+        
+        # 3. Prepend valid paths to PATH
+        for path in candidates:
+             if path and os.path.isdir(path) and path not in current_path:
+                 current_path = f"{path}{os.pathsep}{current_path}"
+                 
+        env["PATH"] = current_path
+        
+        # Debug logging to identify detection issues
+        import sys
+        print(f"[DEBUG] git_ops detected PATH for hooks: {current_path}", file=sys.stderr)
+        
+        return env
+
     def _run_git(self, args: List[str]) -> str:
         """Run a git command and return output."""
         try:
+            # Use robust environment
+            env = self._get_robust_env()
+
             result = subprocess.run(
                 ["git"] + args,
                 cwd=self.repo_path,
                 capture_output=True,
                 text=True,
-                check=True
+                check=True,
+                env=env
             )
             return result.stdout.strip()
         except subprocess.CalledProcessError as e:

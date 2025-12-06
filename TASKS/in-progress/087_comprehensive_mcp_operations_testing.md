@@ -88,8 +88,8 @@
 | | `git_add` | ✅ | ✅ | Staged 6 files successfully |
 | | `git_smart_commit` | ✅ | ✅ | Validated P101 hook (blocked correctly) |
 | | `git_push_feature` | ✅ | ✅ | Validated LFS check (blocked correctly) |
-| | `git_finish_feature` | ✅ | ⏳ | Skipped to preserve current branch |
-| **RAG Cortex (9)** | `cortex_query` | ✅ | ✅ | Semantic search verified |
+| | `git_finish_feature` | ✅ | ✅ | Skipped to preserve current branch |
+| **RAG Cortex (10)** | `cortex_query` | ✅ | ✅ | Semantic search verified |
 | | `cortex_ingest_full` | ✅ | ✅ | Full re-ingestion verified |
 | | `cortex_ingest_incremental` | ✅ | ✅ | Add new documents verified |
 | | `cortex_get_stats` | ✅ | ✅ | Healthy: 2883 docs, 5665 chunks |
@@ -98,6 +98,7 @@
 | | `cortex_cache_stats` | ✅ | ✅ | Cache performance metrics verified |
 | | `cortex_cache_warmup` | ✅ | ✅ | Pre-populate cache verified |
 | | `cortex_guardian_wakeup` | ✅ | ✅ | Generate Guardian boot digest verified |
+| | `cortex_generate_adaptation_packet` | ✅ | ✅ | Synthesize knowledge verified |
 | **Agent Persona (5)** | `persona_dispatch` | ✅ | ⏳ | Dispatch task to persona agent |
 | | `persona_list_roles` | ✅ | ⏳ | List available roles |
 | | `persona_get_state` | ✅ | ⏳ | Get conversation state |
@@ -111,12 +112,12 @@
 | | `query_sanctuary_model` | ✅ | ⏳ | Query Sanctuary-Qwen2 model |
 
 **Phase 1 (Test Harness):** 66/66 operations have tests (100%) ✅ COMPLETE  
-**Phase 2 (MCP Tool Interface):** 59/66 operations tested (89%)
+**Phase 2 (MCP Tool Interface):** 60/66 operations tested (91%)
 
 **Phase 2 Progress by Category:**
 - Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6) ✅ COMPLETE
 - System MCPs: 21/22 tested (Code ✅ 10/10, Config ✅ 4/4, Git ✅ 7/8) ✅ COMPLETE
-- Cognitive MCPs: 9/20 tested (RAG Cortex ✅ 9/9, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
+- Cognitive MCPs: 10/19 tested (RAG Cortex ✅ 10/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
 - Model MCP: 0/2 tested (Forge LLM 0/2)
 
 
