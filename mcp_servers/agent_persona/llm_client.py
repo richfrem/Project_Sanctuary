@@ -46,6 +46,8 @@ class OllamaClient(LLMClient):
     """Client for Ollama models (including Sanctuary)"""
     
     def __init__(self, model_name: str = None, ollama_host: str = None):
+        # Default to Sanctuary model if no model specified
+        model_name = model_name or os.getenv("OLLAMA_MODEL", "Sanctuary-Qwen2-7B:latest")
         super().__init__(model_name)
         # Protocol 116: Use container network addressing by default for MCP infrastructure
         self.host = ollama_host or os.getenv("OLLAMA_HOST", OLLAMA_ENDPOINT)
