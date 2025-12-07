@@ -1,7 +1,0 @@
-# TASKS Subfolder Snapshot (Human-Readable)
-
-Generated On: 2025-12-06T21:45:36.173Z
-
-# Mnemonic Weight (Token Count): ~40 tokens
-
-# Directory Structure (relative to TASKS subfolder)

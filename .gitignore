@@ -100,6 +100,8 @@ research/RESEARCH_PAPERS/
 *.log
 nohup.out
 mcp_servers/agent_persona/state/
+mcp_servers/rag_cortex/data/
+dataset_package/
 
 ResearchPapers
 
