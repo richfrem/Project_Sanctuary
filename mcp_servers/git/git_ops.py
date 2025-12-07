@@ -2,6 +2,10 @@ import subprocess
 import os
 from typing import List, Dict, Any, Optional
 
+# Poka-Yoke: High-Risk File List (Protocol 122)
+# These files require security audit before committing
+HIGH_RISK_FILES = [".gitignore", ".env", ".env.local", "Dockerfile", "package.json"]
+
 class GitOperations:
     """
     Handles git operations with Protocol 101 v3.0 (Functional Coherence) enforcement.
@@ -125,23 +129,71 @@ class GitOperations:
 
     def commit(self, message: str, allow_main: bool = False) -> str:
         """
-        Commit staged files with Protocol 101 v3.0 compliance.
+        Commit staged files with Protocol 101 v3.0 compliance and Poka-Yoke security audit.
         
         Protocol 101 v3.0 (Functional Coherence):
         - The pre-commit hook will automatically execute ./scripts/run_genome_tests.sh
         - All tests must pass for the commit to proceed
-        - No manifest generation is required
+        
+        Poka-Yoke (Protocol 122):
+        - Staged high-risk files trigger a blocking security audit
+        - Audit checks for content deletion and secret patterns
         
         Returns commit hash.
         """
         self._verify_feature_branch("commit", allow_main)
         
+        # POKA-YOKE: Check staged files for high-risk items
+        staged_files = self.get_staged_files()
+        high_risk_staged = [f for f in staged_files if any(f.endswith(hr) for hr in HIGH_RISK_FILES)]
+        
+        if high_risk_staged:
+            self._poka_yoke_audit(high_risk_staged)
+        
         # Protocol 101 v3.0: Pre-commit hook handles test execution
-        # We simply commit normally - the hook will enforce functional coherence
         self._run_git(["commit", "-m", message])
         
-        # Return hash
         return self._run_git(["rev-parse", "HEAD"])
+
+    def _poka_yoke_audit(self, high_risk_files: List[str]) -> None:
+        """
+        Poka-Yoke: Blocking security audit for high-risk files in staging.
+        
+        Checks for:
+        1. Significant content deletion (lines removed > 2x lines added)
+        2. Secret patterns in diff
+        
+        Raises RuntimeError if audit fails.
+        """
+        import sys
+        
+        print(f"[POKA-YOKE] High-risk files detected in staging: {high_risk_files}", file=sys.stderr)
+        
+        for file_path in high_risk_files:
+            # Get diff for this file
+            diff_output = self.diff(cached=True, file_path=file_path)
+            
+            # Check for content deletion (lines removed > lines added * 2)
+            lines_added = diff_output.count('\n+') - 1  # Subtract header line
+            lines_removed = diff_output.count('\n-') - 1
+            
+            if lines_removed > 0 and lines_removed > lines_added * 2:
+                raise RuntimeError(
+                    f"POKA-YOKE BLOCKED: Commit rejected. High-risk file '{file_path}' "
+                    f"has significant content removal (removed: {lines_removed}, added: {lines_added}). "
+                    f"This may indicate accidental clearing. Review the diff carefully."
+                )
+            
+            # Check for secrets (basic pattern matching)
+            secret_patterns = ["API_KEY=", "SECRET=", "PASSWORD=", "TOKEN=", "aws_secret"]
+            for pattern in secret_patterns:
+                if pattern.lower() in diff_output.lower():
+                    raise RuntimeError(
+                        f"POKA-YOKE BLOCKED: Commit rejected. Potential secret detected in '{file_path}'. "
+                        f"Pattern matched: {pattern}. Remove secrets before committing."
+                    )
+        
+        print(f"[POKA-YOKE] Security audit PASSED for: {high_risk_files}", file=sys.stderr)
 
     def get_current_branch(self) -> str:
         """Get the current active branch name."""
