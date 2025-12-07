@@ -209,8 +209,8 @@ class TestGitOperationsIntegration:
         with pytest.raises(RuntimeError) as excinfo:
             ops.finish_feature(feature_branch)
         
-        assert "NOT merged into main" in str(excinfo.value)
-        assert "PR and Merge must complete" in str(excinfo.value)
+        assert "NOT merged into origin/main" in str(excinfo.value)
+        assert "PR and Merge must complete first on GitHub" in str(excinfo.value)
 
     def test_finish_feature_squash_detection(self, git_ops_with_remote, git_roots):
         """test_finish_feature_squash_detection: Verify squash merge (diff check) logic."""
