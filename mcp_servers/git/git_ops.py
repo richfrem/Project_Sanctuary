@@ -427,28 +427,43 @@ class GitOperations:
         # Pillar 4: Verify clean state before finishing
         self.verify_clean_state()
 
-        # Safety check: Verify branch is merged into main
-        if not force and not self.is_branch_merged(branch_name, "main"):
-            # Double check by fetching origin first
-            self.checkout("main")
-            self.pull("origin", "main")
-            self.checkout(branch_name)
+        # POKA-YOKE: Fetch origin/main first to ensure we have latest remote state
+        try:
+            self._run_git(["fetch", "origin", "main"])
+        except RuntimeError:
+            pass  # Fetch may fail if offline, continue with local check
+        
+        # Safety check: Verify branch is merged into ORIGIN main (the remote source of truth)
+        if not force:
+            # Get the commit hash of the feature branch
+            feature_commit = self.get_commit_hash(branch_name)
             
-            # Check again after sync
-            if not self.is_branch_merged(branch_name, "main"):
-                # Auto-detect squash merge: check if branches have identical content
+            # Check if this commit exists in origin/main
+            try:
+                # This will succeed silently if commit is an ancestor of origin/main
+                self._run_git(["merge-base", "--is-ancestor", feature_commit, "origin/main"])
+                # If we get here, commit is in origin/main - safe to proceed
+            except RuntimeError:
+                # Commit not in origin/main - check for squash merge via content comparison
+                # First sync local main with origin
+                self.checkout("main")
+                self.pull("origin", "main")
+                self.checkout(branch_name)
+                
+                # Compare content - if identical, squash merge occurred
                 diff_output = self.diff_branches(branch_name, "main")
                 if not diff_output or diff_output.strip() == "":
                     # Branches have identical content - squash merge detected
-                    print(f"Auto-detected squash merge for {branch_name} (identical content to main)")
+                    print(f"[POKA-YOKE] Auto-detected squash merge for {branch_name} (identical content to main)")
                 else:
-                    # Branches differ - truly unmerged
-                    # User Rule: "PR and Merge must complete otherwise finish_feature should fail"
+                    # POKA-YOKE BLOCK: Content differs and commits not in origin/main
                     raise RuntimeError(
-                        f"Branch '{branch_name}' is NOT merged into main. "
-                        "PR and Merge must complete first. "
+                        f"[POKA-YOKE] Branch '{branch_name}' is NOT merged into origin/main. "
+                        f"Feature commit {feature_commit[:8]} not found in remote main. "
+                        "PR and Merge must complete first on GitHub. "
                         "If you squash merged, use force=True to bypass this check."
                     )
+
 
         # ALWAYS checkout main first
         self.checkout("main")
