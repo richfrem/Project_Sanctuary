@@ -3,6 +3,10 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
+# Poka-Yoke: High-Risk File List (Protocol 122)
+# These files require content loss prevention checks before writing
+HIGH_RISK_FILES = [".gitignore", ".env", ".env.local", "Dockerfile", "package.json"]
+
 class CodeOperations:
     """
     Operations for code analysis, linting, and formatting.
@@ -274,7 +278,7 @@ class CodeOperations:
 
     def write_file(self, path: str, content: str, backup: bool = True, create_dirs: bool = True) -> Dict[str, Any]:
         """
-        Write/update file with automatic backup.
+        Write/update file with Poka-Yoke safety checks for high-risk files.
         
         Args:
             path: Relative path to file
@@ -290,21 +294,22 @@ class CodeOperations:
         
         file_path = self._validate_path(path)
         
-        # Check if file exists before writing
+        # POKA-YOKE: Route high-risk files through safety checks
+        if any(path.endswith(f) for f in HIGH_RISK_FILES):
+            return self._safe_write_high_risk(file_path, content, backup, create_dirs)
+        
+        # Standard write logic for non-high-risk files
         file_existed = file_path.exists()
         
-        # Create parent directories if needed
         if create_dirs and not file_path.parent.exists():
             file_path.parent.mkdir(parents=True, exist_ok=True)
         
-        # Create backup if file exists
         backup_path = None
         if backup and file_existed:
             timestamp = time.strftime("%Y%m%d_%H%M%S")
             backup_path = file_path.with_suffix(f"{file_path.suffix}.{timestamp}.bak")
             shutil.copy2(file_path, backup_path)
         
-        # Write file
         file_path.write_text(content, encoding='utf-8')
         
         return {
@@ -312,6 +317,51 @@ class CodeOperations:
             "size": len(content),
             "backup": str(backup_path.relative_to(self.project_root)) if backup_path else None,
             "created": not file_existed
+        }
+
+    def _safe_write_high_risk(self, file_path: Path, content: str, backup: bool, create_dirs: bool) -> Dict[str, Any]:
+        """
+        Poka-Yoke: Enforces Protocol 122 (Read-Modify-Merge) for high-risk files.
+        
+        Blocks writes where new content is <50% of original content size,
+        which strongly indicates accidental overwrite or clear.
+        """
+        import shutil
+        import time
+        
+        # Step 1: Read existing content (mandatory)
+        original_content = ""
+        if file_path.exists():
+            original_content = file_path.read_text(encoding='utf-8')
+        
+        # Step 2: Content Loss Prevention (Poka-Yoke Core Check)
+        if original_content and len(content) < (len(original_content) * 0.5):
+            raise ValueError(
+                f"POKA-YOKE BLOCKED: Write to high-risk file '{file_path.name}' rejected. "
+                f"New content ({len(content)} chars) is <50% of original ({len(original_content)} chars). "
+                f"This indicates a probable accidental overwrite. Use explicit merge logic."
+            )
+        
+        # Step 3: Proceed with standard write (includes backup)
+        file_existed = file_path.exists()
+        
+        if create_dirs and not file_path.parent.exists():
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        backup_path = None
+        if backup and file_existed:
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            backup_path = file_path.with_suffix(f"{file_path.suffix}.{timestamp}.bak")
+            shutil.copy2(file_path, backup_path)
+        
+        file_path.write_text(content, encoding='utf-8')
+        
+        return {
+            "path": str(file_path.relative_to(self.project_root)),
+            "size": len(content),
+            "backup": str(backup_path.relative_to(self.project_root)) if backup_path else None,
+            "created": not file_existed,
+            "poka_yoke": "PASSED"
         }
 
     def get_file_info(self, path: str) -> Dict[str, Any]:
