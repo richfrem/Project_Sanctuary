@@ -217,7 +217,7 @@ class GitOperations:
         
         Logic:
         1. Sanitize name
-        2. Check for existing feature branches (One Feature Rule)
+        2. Check for existing feature branches - LOCAL and REMOTE (One Feature Rule)
         3. Check for clean working dir
         4. Create & Checkout (or switch if exists)
         """
@@ -245,13 +245,36 @@ class GitOperations:
         else:
             # Branch doesn't exist - need to create
             
-            # Safety check: No other feature branches allowed (User Rule)
-            if len(feature_branches) > 0:
-                raise RuntimeError(
-                    f"One Feature Rule: Cannot create '{branch_name}'. "
-                    f"Existing feature branch(es) detected: {', '.join(feature_branches)}. "
-                    f"Please finish the current feature branch first."
-                )
+            # POKA-YOKE: Fetch remote to check for remote feature branches
+            try:
+                self._run_git(["fetch", "origin", "--prune"])
+            except RuntimeError:
+                pass  # Fetch may fail if offline, continue with local check
+            
+            # Get remote feature branches
+            try:
+                remote_branches_output = self._run_git(["branch", "-r"])
+                remote_feature_branches = [
+                    b.strip().replace("origin/", "") 
+                    for b in remote_branches_output.splitlines() 
+                    if "origin/feature/" in b and "HEAD" not in b
+                ]
+            except RuntimeError:
+                remote_feature_branches = []
+            
+            # Combine local and remote feature branches (deduplicated)
+            all_feature_branches = list(set(feature_branches + remote_feature_branches))
+            
+            # Safety check: No other feature branches allowed (One Feature Rule - Enhanced)
+            if len(all_feature_branches) > 0:
+                # Filter out the branch we're trying to create (idempotent case)
+                blocking_branches = [b for b in all_feature_branches if b != branch_name]
+                if len(blocking_branches) > 0:
+                    raise RuntimeError(
+                        f"[POKA-YOKE] One Feature Rule: Cannot create '{branch_name}'. "
+                        f"Existing feature branch(es) detected (local or remote): {', '.join(blocking_branches)}. "
+                        f"Please finish the current feature branch first using git_finish_feature."
+                    )
             
             # Safety check: Clean working directory required
             if not is_clean:
