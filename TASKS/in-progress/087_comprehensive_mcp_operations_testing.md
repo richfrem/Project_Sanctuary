@@ -139,7 +139,7 @@
 **Phase 2 Progress by Category:**
 - Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6, Code ✅ 11/11, Config ✅ 7/7) ✅ COMPLETE
 - System MCPs: 22/22 tested (Git ✅ 8/8) ✅ COMPLETE
-- Cognitive MCPs: 9/19 tested (RAG Cortex ✅ 9/10, Agent Persona 0/5, Council 0/2, Orchestrator 0/2)
+- Cognitive MCPs: 12/19 tested (RAG Cortex ✅ 9/10, Council 3/3 ✅, Agent Persona 0/5 🔄 Troubleshooting, Orchestrator 0/2)
 - Model MCP: 0/2 tested (Forge LLM 0/2)
 
 
