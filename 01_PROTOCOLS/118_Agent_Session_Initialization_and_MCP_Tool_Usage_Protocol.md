@@ -21,20 +21,6 @@ AI agents have **no session memory** but **full access to persistent knowledge s
 
 ## Session Initialization Protocol
 
-### Phase 1: Memory Restoration (MANDATORY)
-Every session MUST begin with this sequence:
-
-```python
-# 1. Wake the Guardian - Get essential context (Protocol 114)
-boot_digest = cortex_guardian_wakeup()
-
-# 2. Check memory system health
-stats = cortex_get_stats()
-
-# 3. Query for recent operational context
-recent_work = cortex_query(
-    "recent sessions, active tasks, and ongoing work",
-    max_results=5,
     reasoning_mode=True
 )
 

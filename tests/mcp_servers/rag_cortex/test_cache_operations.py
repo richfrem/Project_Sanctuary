@@ -95,21 +95,23 @@ class TestCacheOperations:
             mock_cache.set.assert_called()
 
     def test_guardian_wakeup(self, ops, mock_cache):
-        # Setup
-        mock_cache.generate_key.return_value = "key"
-        mock_cache.get.return_value = {"answer": "Cached Summary"} # Hit
-        
-        # Mock file writing
-        with patch("builtins.open", mock_open()) as mock_file:
-            # Execute
-            response = ops.guardian_wakeup()
+        # Setup - Mock get_stats to avoid DB dependency
+        with patch.object(ops, 'get_stats') as mock_stats:
+            from mcp_servers.rag_cortex.models import StatsResponse
+            mock_stats.return_value = StatsResponse(
+                total_documents=100,
+                total_chunks=5000,
+                collections={},
+                health_status="healthy"
+            )
+            
+            # Execute (v2 mode)
+            response = ops.guardian_wakeup(mode="HOLISTIC")
             
             # Verify
             assert response.status == "success"
-            assert len(response.bundles_loaded) == 3
-            # Should write to file
-            mock_file.assert_called()
-            handle = mock_file()
-            handle.write.assert_any_call("# Guardian Boot Digest\n\n")
+            assert response.digest_path is not None
+            assert len(response.bundles_loaded) == 3  # Strategic, Tactical, Recency
+            assert "Strategic" in response.bundles_loaded
 
 
