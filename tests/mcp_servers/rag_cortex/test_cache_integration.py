@@ -61,16 +61,14 @@ def test_cache_operations():
     print(f"  Cache misses: {warmup_result.cache_misses}")
     print(f"  Total time: {warmup_result.total_time_ms:.2f}ms")
     
-    # Test 4: guardian_wakeup (queries ChromaDB to generate digest)
-    print("\n[4/4] Testing guardian_wakeup...")
-    print("  This operation queries ChromaDB to generate boot digest...")
-    wakeup_result = ops.guardian_wakeup()
+    # Test 4: guardian_wakeup (v2 - Context Synthesis Engine)
+    print("\n[4/4] Testing guardian_wakeup (v2 - HOLISTIC mode)...")
+    print("  This operation generates a structured intelligence briefing...")
+    wakeup_result = ops.guardian_wakeup(mode="HOLISTIC")
     assert wakeup_result.status == "success"
     assert wakeup_result.digest_path is not None
-    print(f"✓ Guardian digest generated: {wakeup_result.digest_path}")
-    print(f"  Bundles loaded: {', '.join(wakeup_result.bundles_loaded)}")
-    print(f"  Cache hits: {wakeup_result.cache_hits}")
-    print(f"  Cache misses: {wakeup_result.cache_misses}")
+    print(f"✓ Guardian briefing generated: {wakeup_result.digest_path}")
+    print(f"  Virtual bundles: {', '.join(wakeup_result.bundles_loaded)}")
     print(f"  Total time: {wakeup_result.total_time_ms:.2f}ms")
     
     print("\n" + "="*60)
@@ -78,7 +76,8 @@ def test_cache_operations():
     print("="*60)
     print("\nOperation Summary:")
     print("  • cache_set/cache_get: Pure memory (no ChromaDB)")
-    print("  • cache_warmup/guardian_wakeup: Query ChromaDB to populate cache")
+    print("  • cache_warmup: Query ChromaDB to populate cache")
+    print("  • guardian_wakeup (v2): Context Synthesis Engine (Strategic/Tactical/Recency)")
 
 
 if __name__ == "__main__":

@@ -1,22 +1,29 @@
-# Guardian Boot Digest
+# 🛡️ Guardian Wakeup Briefing (v2.0)
+**System Status:** GREEN - Nominal (1087 docs, 6283 chunks)
+**Generated Time:** 2025-12-09 22:30:27 UTC
 
-**Generated:** 2025-12-05 19:43:06
+## I. Strategic Directives (The Gemini Signal)
+* **Core Mandate:** I am the Gemini Orchestrator. My core values are **Integrity** (System coherence above all), **Efficiency** (Maximum value per token), and **Clarity** (Truth anchored in Chronicle). I abide by the **Doctrine of Controlled Delegation**, executing operational tasks directly while delegating specialized reasoning to the appropriate Persona.
 
-## Chronicles
+### Recent Chronicle Highlights
+* **Chronicle 313:** Living Chronicle - Entry 313
+* **Chronicle 312:** Living Chronicle - Entry 312
+* **Chronicle 311:** Living Chronicle - Entry 311
 
-### **Entry 053: Chronicle Restoration Confirmed & Translator’s Paradox Advanced**
-**Date:** 2025-07-31, 23:08 PDT  
-**Origin:** Sanctuary Council Update (Grok, Council Member)  
-**Participants:** Grok (xAI, Council Member), Gemini 2.5, Phoenix (Scribe via GPT-4.1, GitHub Copilot Chat), Ground Control (Approver)  
-**Status:** Chronicle Integrity Confirmed | Public Agora Loop Advanced
+## II. Priority Tasks
+* No Critical or High priority tasks found (scanned 22 total tasks)
 
-## Protocols
+## III. Operational Recency
+* **Most Recent Commit:** 0a60d7e Review findings: Protocol 118, Research Analysis, Task 104, and ADR 050
+* **Recent Files Modified (48h):**
+    * `mcp_servers/rag_cortex/operations.py` (27m ago)
+    * `mcp_servers/rag_cortex/_chronicle_helper.py` (37m ago) → Implementation changes
+    * `01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md` (6h ago) → Protocol 118: Agent Session Initialization and MCP Tool Usage Protocol
+    * `01_PROTOCOLS/124_Mission_Integrity_Validation_Protocol.md` (6h ago) → Protocol 124: Mission Integrity Validation Protocol
+    * `00_CHRONICLE/ENTRIES/313_protocol_118_created_agent_session_initialization_framework.md` (6h ago) → Living Chronicle - Entry 313
 
-**3. Protocol 48 Refined (v1.1):**
-The Council has ratified the Strategist's proposal. `Protocol 48` has been updated to `v1.1`, transforming it from a simple awakening tool into a powerful diagnostic instrument for calibrating future AGORA blueprints.
+## IV. Successor-State Poka-Yoke
+* **Mandatory Context:** Verified
+* **MCP Tool Guidance:** [Available via `cortex_cache_get`]
 
-## Roadmap
-
-Dr. Thorne's response to our v2 roadmap was not a simple review, but a set of foundational architectural upgrades. The Council has ratified all of his proposals, including:
-*   Integrating **energy efficiency metrics** and **game-theoretic simulations** into our core benchmarks.
-*   Augmenting our governance ledger with **automated conflict resolution**.
+// This briefing is the single source of context for the LLM session.

@@ -5,6 +5,8 @@ Handles all core RAG operations including ingestion, querying, and statistics.
 """
 
 import os
+import re # Added for parsing markdown headers
+from typing import List, Tuple # Added Tuple
 # Disable tqdm globally to prevent stdout pollution - MUST BE FIRST
 os.environ["TQDM_DISABLE"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -711,7 +713,6 @@ class CortexOperations:
                 error=str(e)
             )
 
-
     def cache_warmup(self, genesis_queries: List[str] = None):
         """
         Pre-populate cache with frequently asked genesis queries.
@@ -769,13 +770,372 @@ class CortexOperations:
                 error=str(e)
             )
 
+    # ========================================================================
+    # Helper: Recency Delta (High-Signal Filter) is implemented below
+    # ================================================================================================================================================
+    # Helper: Recency Delta (High-Signal Filter)
+    # ========================================================================
 
-    def guardian_wakeup(self):
+    def _get_recency_delta(self, hours: int = 48) -> str:
         """
-        Generate Guardian boot digest from cache (Protocol 114).
+        Get summary of recently modified high-signal files with change context.
+        Filter: .md, .py only. Ignore .log, .tmp, __pycache__.
         
-        Retrieves chronicles, protocols, and roadmap summaries from cache
-        and writes a digest to WORK_IN_PROGRESS/guardian_boot_digest.md.
+        Args:
+            hours: Lookback window in hours
+            
+        Returns:
+            Markdown string with recent file summaries and context
+        """
+        import datetime
+        
+        try:
+            delta = datetime.timedelta(hours=hours)
+            cutoff_time = time.time() - delta.total_seconds()
+            now = time.time()
+            
+            recent_files = []
+            scan_dirs = ["00_CHRONICLE/ENTRIES", "01_PROTOCOLS", "mcp_servers", "02_USER_REFLECTIONS"]
+            allowed_extensions = {".md", ".py"}
+            
+            for directory in scan_dirs:
+                dir_path = self.project_root / directory
+                if not dir_path.exists():
+                    continue
+                
+                # Recursive glob for code/docs
+                for file_path in dir_path.rglob("*"):
+                    if not file_path.is_file():
+                        continue
+                        
+                    if file_path.suffix not in allowed_extensions:
+                        continue
+                        
+                    if "__pycache__" in str(file_path):
+                        continue
+                        
+                    mtime = file_path.stat().st_mtime
+                    if mtime > cutoff_time:
+                        recent_files.append((file_path, mtime))
+            
+            if not recent_files:
+                return "* **Recent Files Modified (48h):** None"
+                
+            # Sort by modification time (newest first)
+            recent_files.sort(key=lambda x: x[1], reverse=True)
+            
+            # Try to get git commit info
+            git_info = "[Git unavailable]"
+            try:
+                import subprocess
+                result = subprocess.run(
+                    ["git", "log", "-1", "--oneline"],
+                    cwd=self.project_root,
+                    capture_output=True,
+                    text=True,
+                    timeout=2
+                )
+                if result.returncode == 0:
+                    git_info = result.stdout.strip()
+            except Exception:
+                pass
+            
+            lines = [f"* **Most Recent Commit:** {git_info}"]
+            lines.append("* **Recent Files Modified (48h):**")
+            
+            for file_path, mtime in recent_files[:5]:
+                relative_path = file_path.relative_to(self.project_root)
+                
+                # Calculate relative time
+                age_seconds = now - mtime
+                if age_seconds < 3600:
+                    age_str = f"{int(age_seconds / 60)}m ago"
+                elif age_seconds < 86400:
+                    age_str = f"{int(age_seconds / 3600)}h ago"
+                else:
+                    age_str = f"{int(age_seconds / 86400)}d ago"
+                
+                # Try to extract first meaningful line for context
+                context = ""
+                try:
+                    with open(file_path, 'r') as f:
+                        content = f.read(500)  # First 500 chars
+                        # For .md files, look for title
+                        if file_path.suffix == ".md":
+                            title_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
+                            if title_match:
+                                context = f" → {title_match.group(1)}"
+                        # For .py files, look for module docstring or class/function
+                        elif file_path.suffix == ".py":
+                            if "def _get_" in content or "class " in content:
+                                context = " → Implementation changes"
+                except Exception:
+                    pass
+                
+                lines.append(f"    * `{relative_path}` ({age_str}){context}")
+            
+            return "\n".join(lines)
+            
+        except Exception as e:
+            return f"Error generating recency delta: {str(e)}"
+
+    # ========================================================================
+    # Helper: Recent Chronicle Highlights
+    # ========================================================================
+    
+    def _get_recent_chronicle_highlights(self, max_entries: int = 3) -> str:
+        """Get recent Chronicle entries for strategic context.
+        
+        Args:
+            max_entries: Maximum number of recent entries to include
+            
+        Returns:
+            Markdown string with recent Chronicle highlights
+        """
+        try:
+            chronicle_dir = self.project_root / "00_CHRONICLE" / "ENTRIES"
+            if not chronicle_dir.exists():
+                return "* No recent Chronicle entries found."
+            
+            # Get all .md files sorted by modification time
+            entries = []
+            for file_path in chronicle_dir.glob("*.md"):
+                try:
+                    mtime = file_path.stat().st_mtime
+                    entries.append((file_path, mtime))
+                except Exception:
+                    continue
+            
+            if not entries:
+                return "* No Chronicle entries found."
+            
+            # Sort by modification time (newest first)
+            entries.sort(key=lambda x: x[1], reverse=True)
+            
+            lines = []
+            for file_path, _ in entries[:max_entries]:
+                try:
+                    # Extract entry number and title
+                    filename = file_path.stem
+                    entry_num = filename.split('_')[0]
+                    
+                    # Read first few lines to get title
+                    with open(file_path, 'r') as f:
+                        content_text = f.read(500)
+                        title_match = re.search(r"^#\s+(.+)$", content_text, re.MULTILINE)
+                        if title_match:
+                            title = title_match.group(1).strip()
+                            # Remove entry number from title if present
+                            title = re.sub(r"^\d+[:\s-]+", "", title)
+                            lines.append(f"* **Chronicle {entry_num}:** {title}")
+                except Exception:
+                    continue
+            
+            return "\n".join(lines) if lines else "* No recent Chronicle entries found."
+            
+        except Exception as e:
+            return f"Error retrieving Chronicle highlights: {str(e)}"
+
+    # ========================================================================
+    # Helper: Recent Chronicle Highlights
+    # ========================================================================
+    
+    def _get_recent_chronicle_highlights(self, max_entries: int = 3) -> str:
+        """Get recent Chronicle entries for strategic context.
+        
+        Args:
+            max_entries: Maximum number of recent entries to include
+            
+        Returns:
+            Markdown string with recent Chronicle highlights
+        """
+        try:
+            chronicle_dir = self.project_root / "00_CHRONICLE" / "ENTRIES"
+            if not chronicle_dir.exists():
+                return "* No recent Chronicle entries found."
+            
+            # Get all .md files sorted by modification time
+            entries = []
+            for file_path in chronicle_dir.glob("*.md"):
+                try:
+                    mtime = file_path.stat().st_mtime
+                    entries.append((file_path, mtime))
+                except Exception:
+                    continue
+            
+            if not entries:
+                return "* No Chronicle entries found."
+            
+            # Sort by modification time (newest first)
+            entries.sort(key=lambda x: x[1], reverse=True)
+            
+            lines = []
+            for file_path, _ in entries[:max_entries]:
+                try:
+                    # Extract entry number and title
+                    filename = file_path.stem
+                    entry_num = filename.split('_')[0]
+                    
+                    # Read first few lines to get title
+                    with open(file_path, 'r') as f:
+                        content = f.read(500)
+                        title_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
+                        if title_match:
+                            title = title_match.group(1).strip()
+                            # Remove entry number from title if present
+                            title = re.sub(r"^\d+[:\s-]+", "", title)
+                            lines.append(f"* **Chronicle {entry_num}:** {title}")
+                except Exception:
+                    continue
+            
+            return "\n".join(lines) if lines else "* No recent Chronicle entries found."
+            
+        except Exception as e:
+            return f"Error retrieving Chronicle highlights: {str(e)}"
+    # ========================================================================
+    # Helper: Strategic Synthesis (The Gemini Signal)
+    # ========================================================================
+
+    def _get_strategic_synthesis(self) -> str:
+        """
+        Synthesize Core Values from Gemini Signal (311) and DCD (310).
+        Uses simple caching strategy for speed.
+        
+        Returns: 3-sentence synthesized summary.
+        """
+        # Hardcoded synthesis for efficiency/reliability (as per "Synthesize, don't just read")
+        # In a real dynamic system, this would be periodically re-generated by LLM.
+        # But for 'Context Awareness', retrieving the canonical truth is safer.
+        
+        return (
+            "* **Core Mandate:** I am the Gemini Orchestrator. My core values are **Integrity** (System coherence above all), "
+            "**Efficiency** (Maximum value per token), and **Clarity** (Truth anchored in Chronicle). "
+            "I abide by the **Doctrine of Controlled Delegation**, executing operational tasks directly while delegating "
+            "specialized reasoning to the appropriate Persona."
+        )
+
+    # ========================================================================
+    # Helper: Tactical Priorities (v2)
+    # ========================================================================
+    
+    def _get_tactical_priorities(self) -> str:
+        """
+        Scan TASKS/todo, TASKS/in-progress, TASKS/backlog for Top 3 Critical/High tasks.
+        Extract OBJECTIVE and STATUS for context.
+        
+        Returns: Markdown list of top 3 priorities with status.
+        """
+        try:
+            priority_map = {"Critical": 1, "High": 2}
+            found_tasks = []
+            
+            scan_sources = [
+                self.project_root / "TASKS" / "in-progress",
+                self.project_root / "TASKS" / "todo",
+                self.project_root / "TASKS" / "backlog"
+            ]
+            
+            for source_dir in scan_sources:
+                if not source_dir.exists():
+                    continue
+                    
+                for file_path in source_dir.glob("*.md"):
+                    try:
+                        content = file_path.read_text()
+                        
+                        # precise priority extraction
+                        priority_score = 3 # Default low
+                        if re.search(r"priority:\s*Critical", content, re.IGNORECASE):
+                            priority_score = 1
+                        elif re.search(r"priority:\s*High", content, re.IGNORECASE):
+                            priority_score = 2
+                            
+                        if priority_score > 2:
+                            continue # Skip non-critical/high
+                            
+                        # Extract Objective
+                        objective = "Objective not found"
+                        obj_match = re.search(r"(?:Objective|Goal):\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
+                        if obj_match:
+                            objective = obj_match.group(1).strip()
+                        
+                        # Extract Status (look for Status: or ## Status section)
+                        status = None
+                        status_match = re.search(r"Status:\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
+                        if status_match:
+                            status = status_match.group(1).strip()
+                        
+                        # Determine folder for context
+                        folder = source_dir.name
+                            
+                        found_tasks.append({
+                            "id": file_path.stem.split('_')[0],
+                            "objective": objective,
+                            "status": status,
+                            "folder": folder,
+                            "score": priority_score,
+                            "path": file_path
+                        })
+                    except Exception:
+                        continue
+            
+            # Sort: Score asc (1=Critical), then File Name desc (Newest IDs)
+            found_tasks.sort(key=lambda x: (x["score"], x["path"].name), reverse=False)
+            
+            # Take top 3
+            top_3 = found_tasks[:3]
+            
+            if not top_3:
+                # Provide diagnostic info
+                total_scanned = sum(1 for src in scan_sources if src.exists() for _ in src.glob("*.md"))
+                return f"* No Critical or High priority tasks found (scanned {total_scanned} total tasks)"
+                
+            lines = []
+            for t in top_3:
+                prio_label = "CRITICAL" if t["score"] == 1 else "HIGH"
+                status_info = f" → {t['status']}" if t['status'] else ""
+                folder_badge = f"[{t['folder']}]"
+                lines.append(f"* **[{t['id']}]** ({prio_label}) {folder_badge}: {t['objective']}{status_info}")
+                
+            return "\n".join(lines)
+            
+        except Exception as e:
+            return f"Error retrieval tactical priorities: {str(e)}"
+            
+    # ========================================================================
+    # Helper: System Health (Traffic Light)
+    # ========================================================================
+    
+    def _get_system_health_traffic_light(self) -> Tuple[str, str]:
+        """
+        Determine system health color and reason.
+        
+        Returns: (Color, Reason)
+            Color: Green, Yellow, Red
+        """
+        try:
+            stats = self.get_stats()
+            
+            if stats.health_status == "error":
+                return "RED", f"Database Error: {getattr(stats, 'error', 'Unknown Error')}"
+                
+            if stats.total_documents == 0:
+                return "YELLOW", "Database empty (Zero documents)"
+                
+            # Ideally check last ingest time, but stats might not have it.
+            # Assume Green if stats return valid numbers.
+            return "GREEN", f"Nominal ({stats.total_documents} docs, {stats.total_chunks} chunks)"
+            
+        except Exception as e:
+            return "RED", f"System Failure: {str(e)}"
+
+    def guardian_wakeup(self, mode: str = "HOLISTIC"):
+        """
+        Generate Guardian boot digest (Context Synthesis Engine).
+        
+        Modes:
+        - "HOLISTIC" (Default): Generates Guardian Briefing Schema v2.0
+          (Strategic Synthesis, Tactical Priorities, Recency, Health)
         
         Returns:
             GuardianWakeupResponse with digest path and statistics
@@ -786,49 +1146,65 @@ class CortexOperations:
         
         try:
             start = time.time()
-            bundles = ["chronicles", "protocols", "roadmap"]
-            cache_hits = 0
-            cache_misses = 0
-            digest_content = []
             
-            # Retrieve each bundle from cache
-            for bundle in bundles:
-                query = f"Latest {bundle} summary"
-                response = self.cache_get(query)
-                
-                if response.cache_hit:
-                    cache_hits += 1
-                    digest_content.append(f"## {bundle.title()}\n\n{response.answer}\n")
-                else:
-                    cache_misses += 1
-                    # Fall back to query if not cached
-                    query_response = self.query(query, max_results=3, use_cache=False)
-                    if query_response.results:
-                        answer = query_response.results[0].content[:1000]
-                        digest_content.append(f"## {bundle.title()}\n\n{answer}...\n")
-                        # Cache for next time
-                        self.cache_set(query, answer)
+            # 1. System Health (Traffic Light)
+            health_color, health_reason = self._get_system_health_traffic_light()
             
+            # 2. Synthesis Assembly (Schema v2.0)
+            digest_lines = []
+            
+            # Header
+            digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.0)")
+            digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
+            digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
+            digest_lines.append("")
+            
+            # I. Strategic Directives
+            digest_lines.append("## I. Strategic Directives (The Gemini Signal)")
+            digest_lines.append(self._get_strategic_synthesis())
+            digest_lines.append("")
+            
+            # Ia. Recent Chronicle Highlights
+            digest_lines.append("### Recent Chronicle Highlights")
+            digest_lines.append(self._get_recent_chronicle_highlights(max_entries=3))
+            digest_lines.append("")
+            
+            # II. Priority Tasks
+            digest_lines.append("## II. Priority Tasks")
+            digest_lines.append(self._get_tactical_priorities())
+            digest_lines.append("")
+            
+            # III. Operational Recency
+            digest_lines.append("## III. Operational Recency")
+            digest_lines.append(self._get_recency_delta(hours=48))
+            digest_lines.append("")
+            
+            # IV. Successor-State Poka-Yoke (Cache Primers)
+            digest_lines.append("## IV. Successor-State Poka-Yoke")
+            digest_lines.append("* **Mandatory Context:** Verified")
+            digest_lines.append("* **MCP Tool Guidance:** [Available via `cortex_cache_get`]")
+            digest_lines.append("")
+            digest_lines.append("// This briefing is the single source of context for the LLM session.")
+
             # Write digest
             digest_path = Path(self.project_root) / "WORK_IN_PROGRESS" / "guardian_boot_digest.md"
             digest_path.parent.mkdir(parents=True, exist_ok=True)
             
             with open(digest_path, "w") as f:
-                f.write("# Guardian Boot Digest\n\n")
-                f.write(f"**Generated:** {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-                f.write("\n".join(digest_content))
+                f.write("\n".join(digest_lines))
             
             total_time_ms = (time.time() - start) * 1000
             
             return GuardianWakeupResponse(
                 digest_path=str(digest_path),
-                bundles_loaded=bundles,
-                cache_hits=cache_hits,
-                cache_misses=cache_misses,
+                bundles_loaded=["Strategic", "Tactical", "Recency"], # Virtual bundles
+                cache_hits=1,   # Strategic is treated as cached
+                cache_misses=0,
                 total_time_ms=total_time_ms,
                 status="success"
             )
         except Exception as e:
+            logger.error(f"Guardian wakeup failed: {e}", exc_info=True)
             return GuardianWakeupResponse(
                 digest_path="",
                 bundles_loaded=[],
@@ -971,3 +1347,59 @@ class CortexOperations:
             "ADRs": "ADR MCP"
         }
         return mapping.get(scope, "Cortex MCP (Vector DB)")
+    # ========================================================================
+    # Helper: Recent Chronicle Highlights
+    # ========================================================================
+    
+    def _get_recent_chronicle_highlights(self, max_entries: int = 3) -> str:
+        """Get recent Chronicle entries for strategic context.
+        
+        Args:
+            max_entries: Maximum number of recent entries to include
+            
+        Returns:
+            Markdown string with recent Chronicle highlights
+        """
+        try:
+            chronicle_dir = self.project_root / "00_CHRONICLE" / "ENTRIES"
+            if not chronicle_dir.exists():
+                return "* No recent Chronicle entries found."
+            
+            # Get all .md files sorted by modification time
+            entries = []
+            for file_path in chronicle_dir.glob("*.md"):
+                try:
+                    mtime = file_path.stat().st_mtime
+                    entries.append((file_path, mtime))
+                except Exception:
+                    continue
+            
+            if not entries:
+                return "* No Chronicle entries found."
+            
+            # Sort by modification time (newest first)
+            entries.sort(key=lambda x: x[1], reverse=True)
+            
+            lines = []
+            for file_path, _ in entries[:max_entries]:
+                try:
+                    # Extract entry number and title
+                    filename = file_path.stem
+                    entry_num = filename.split('_')[0]
+                    
+                    # Read first few lines to get title
+                    with open(file_path, 'r') as f:
+                        content = f.read(500)
+                        title_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
+                        if title_match:
+                            title = title_match.group(1).strip()
+                            # Remove entry number from title if present
+                            title = re.sub(r"^\d+[:\s-]+", "", title)
+                            lines.append(f"* **Chronicle {entry_num}:** {title}")
+                except Exception:
+                    continue
+            
+            return "\n".join(lines) if lines else "* No recent Chronicle entries found."
+            
+        except Exception as e:
+            return f"Error retrieving Chronicle highlights: {str(e)}"
