@@ -77,7 +77,18 @@ nano .env
 
 Refer to your specific client's documentation for adding MCP servers. The connection details (command, args, env) remain the same.
 
-## Step 4: Verify Connection
+## Step 4: Initialize Session Context (Protocol 118)
+
+Before starting your first interaction, you must initialize the session context. This runs the `guardian_wakeup` sequence to hydrate the RAG cache and verify system health.
+
+```bash
+python scripts/init_session.py
+```
+
+This will generate a **Guardian Briefing** (`WORK_IN_PROGRESS/guardian_boot_digest.md`) which serves as the "strategic signal" for the session.
+
+
+## Step 5: Verify Connection
 
 1.  Restart your client (Claude Desktop, etc.).
 2.  Look for the **MCP** icon or menu to confirm servers are connected.
