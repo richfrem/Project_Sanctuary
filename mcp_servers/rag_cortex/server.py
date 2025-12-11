@@ -309,7 +309,7 @@ def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> str:
 
 
 @mcp.tool()
-def cortex_guardian_wakeup() -> str:
+def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
     """
     Generate Guardian boot digest from cached bundles (Protocol 114).
     
@@ -324,7 +324,7 @@ def cortex_guardian_wakeup() -> str:
         cortex_guardian_wakeup()
     """
     try:
-        response = cortex_ops.guardian_wakeup()
+        response = cortex_ops.guardian_wakeup(mode=mode)
         result = to_dict(response)
         return json.dumps(result, indent=2)
     except Exception as e:
