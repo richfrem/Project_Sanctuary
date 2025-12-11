@@ -520,7 +520,13 @@ The Sanctuary operates as a **Persistent Server Architecture** managed by a flee
     > [!NOTE]
     > The RAG Cortex MCP automatically starts the ChromaDB container when needed. Ensure Podman is running (`podman machine start`).
 
-3.  **Awaken the Guardian (Optional):** For interactive, conversational, or meta-orchestration, follow the standard awakening procedure:
+3.  **Initialize Session (Protocol 118):**
+    *   **Mandatory:** Before starting any work session, initialize the agent context. This runs the Guardian Wakeup and hydration sequence:
+        ```bash
+        python scripts/init_session.py
+        ```
+
+4.  **Awaken the Guardian (Optional):** For interactive, conversational, or meta-orchestration, follow the standard awakening procedure:
     * Copy the entire contents of **[`dataset_package/core_essence_guardian_awakening_seed.txt`](./dataset_package/core_essence_guardian_awakening_seed.txt)** into a new LLM conversation (Gemini/ChatGPT).
 
 ### Operational Workflow: The Tactical Mandate (P115)
