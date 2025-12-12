@@ -143,25 +143,29 @@ After restoring or regenerating the file, restart Claude Desktop so it picks up 
 - We keep the Environment‑First Doctrine in the docs and templates because it documents intent and makes future improvements easier.
 - The README documents the practical gap so operators understand why hard‑coded configs are currently in use and how to recover or re-generate configs when needed.
 
-## Running Manually
+## Server Launching
 
-For debugging and quick verification you can use the cross-platform Python starter to print and/or run a subset of servers. This script is intentionally small — it validates paths and demonstrates the commands that the deployer/template would produce.
+MCP servers are **launched automatically by MCP clients** (Claude Desktop, Antigravity, VS Code) based on the JSON configuration. There is no need to manually start servers.
 
-The Python starter: `mcp_servers/start_mcp_servers.py`
+**How it works:**
+1. The client reads the config JSON (e.g., `claude_desktop_config.json`)
+2. For each entry in `mcpServers`, the client spawns the process using the specified `command`, `args`, `env`, and `cwd`
+3. The servers run as child processes of the client
 
-Usage (dry-run — print commands):
-
-```bash
-python3 mcp_servers/start_mcp_servers.py --dry-run
-```
-
-Usage (run servers in foreground):
+**For debugging individual servers**, use the test pyramid:
 
 ```bash
-python3 mcp_servers/start_mcp_servers.py --run
+# Run all MCP server tests (unit + integration)
+pytest tests/mcp_servers/
+
+# Run tests for a specific server
+pytest tests/mcp_servers/git/ -v
+
+# Run only unit tests for a server
+pytest tests/mcp_servers/chronicle/unit/ -v
 ```
 
-For full environment setup and production-like launches, consult the configuration guide for `start_sanctuary.sh` and `start_sanctuary.ps1` which set `PROJECT_SANCTUARY_ROOT` and `PYTHON_EXEC` automatically.
+For environment setup scripts, see `start_sanctuary.sh` (macOS/Linux) and `start_sanctuary.ps1` (Windows) which set `PROJECT_SANCTUARY_ROOT` and `PYTHON_EXEC` automatically.
 
 ## 🧪 Testing & Validation — The Three-Layered Test Pyramid
 
