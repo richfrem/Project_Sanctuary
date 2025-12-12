@@ -1,71 +1,212 @@
-# Project Sanctuary MCP Servers
+# 🛡️ Project Sanctuary MCP Servers - The Canonical Layer
 
-This directory contains the "Core Quad" of Model Context Protocol (MCP) servers that power the Project Sanctuary nervous system.
+This directory contains the canonical MCP servers for Project Sanctuary. The system is mature and includes a set of 12 specialized MCP servers that provide stateful memory, tool-use, and governance capabilities used by the LLM clients and higher-order orchestrations.
 
-## Core Quad Servers
+Executive summary:
+- Scope: 12 canonical MCP servers, production-grade testing pyramid, and canonical deploy flow.
+- Maturity: The servers are covered by a three-layer test pyramid (Unit / Integration / E2E) and comprehensive docs under `docs/mcp/`.
 
-1. **Cortex (`project_sanctuary.cognitive.cortex`)**
-   - **Purpose:** Memory, RAG, and Knowledge Retrieval.
-   - **Tools:** `cortex_query`, `cortex_ingest_full`, `cortex_ingest_incremental`, `cortex_get_stats`.
-   - **Location:** `mcp_servers/cognitive/cortex/server.py`
+## 🏛️ MCP Server Canonical List
 
-2. **Chronicle (`project_sanctuary.chronicle`)**
-   - **Purpose:** History, Logging, and Sequential Records.
-   - **Tools:** `chronicle_create_entry`, `chronicle_read_latest_entries`, `chronicle_append_entry`, `chronicle_search`.
-   - **Location:** `mcp_servers/chronicle/server.py`
+The authoritative set of servers (folder names under `mcp_servers/`) and short purposes:
 
-3. **Protocol (`project_sanctuary.protocol`)**
-   - **Purpose:** Law, Validation, and Governance.
-   - **Tools:** `protocol_get`, `protocol_list`, `protocol_validate_action`, `protocol_search`.
-   - **Location:** `mcp_servers/protocol/server.py`
+- `adr` — Architecture Decision Records
+- `agent_persona` — Individual Agent Execution / Persona Dispatch
+- `chronicle` — Audit Trail, History, and Sequential Records
+- `code` — File / Code Operations (builders, analyzers)
+- `config` — Configuration Management and helpers
+- `council` — Multi-Agent Deliberation and Council workflows
+- `forge_llm` — LLM Fine-Tuning / Inference orchestration
+- `git` — Version Control Operations and commit/meta tooling
+- `orchestrator` — Strategic Mission Coordination (the System Brain)
+- `protocol` — Protocol Management and validation
+- `rag_cortex` — Knowledge Retrieval / Ingestion (System Memory)
+- `task` — Task / Roadmap and mission tracking
 
-4. **Orchestrator (`project_sanctuary.orchestrator`)**
-   - **Purpose:** High-level Planning and Council Logic.
-   - **Tools:** `orchestrator_consult_strategist`, `orchestrator_consult_auditor`, `orchestrator_dispatch_mission`.
-   - **Location:** `mcp_servers/orchestrator/server.py`
+Notes:
+- The `orchestrator` and `rag_cortex` servers form the foundational pair for the Strategic Crucible Loop (see Protocol 056). They are the primary engines for planning, retrieval-augmented reasoning, and the strategic feedback cycle.
+- Each server exposes one or more MCP tools. For deployment, the client (Claude Desktop, Antigravity, etc.) reads the JSON config produced by the deployer and starts the appropriate processes.
 
-## Configuration
+## Configuration & Deployer
 
-To use these servers with an MCP client (like Claude Desktop), add the following to your configuration file (e.g., `claude_desktop_config.json`):
+We prefer relative paths and environment-variable expansion for portability. The canonical template is `.agent/mcp_config.json` (or `.agent/mcp_config.yml` if you elect to author YAML templates).
+
+**Deployment Workflow Overview:**
+1. **Set Environment Variables:** Define required variables (`PROJECT_SANCTUARY_ROOT`, `PYTHON_EXEC`, etc.) in your shell environment.
+2. **Expand Template:** Use the deployer script to expand these variables in the canonical template (`.agent/mcp_config.json`).
+3. **Write Config:** The deployer writes the expanded JSON into the platform-specific client configuration location (e.g., Claude Desktop, VS Code).
+
+- Deployer: `mcp_servers/deploy_mcp_config.py` — expands `${VAR}` placeholders and writes the client config JSON.
+- **Full Guide:** `mcp_servers/mcp_config_guide.md` (see `mcp_servers/config_locations_by_tool.md` for the legacy name) — canonical pointer for where generated config files should be placed on each OS, along with helpers and examples.
+
+## Configuration - The Environment-First Doctrine
+
+In adherence to the **Doctrine of Successor-State** (Chronicle Entry 308), all MCP server configurations **must** use environment variable expansion (`${VARIABLE}`) rather than hardcoded or absolute paths. This ensures cross-platform compatibility and simplifies setup for future agents.
+
+The canonical method uses Python module paths (`-m mcp_servers.X.server`) and the `${PROJECT_SANCTUARY_ROOT}` variable.
+
+To configure an MCP client (e.g., Claude Desktop) to use the servers, add the following structure to your configuration file (e.g., `claude_desktop_config.json`).
+
+### Canonical Configuration Example
+
+This example for the `git` MCP reflects the environment-variable and Python module path convention used across all MCP servers (as seen in `config.json`):
 
 ```json
 {
   "mcpServers": {
-    "cortex": {
-      "command": "python",
-      "args": ["/absolute/path/to/Project_Sanctuary/mcp_servers/cognitive/cortex/server.py"],
+    "git_workflow": {
+      "displayName": "Git Workflow MCP",
+      "command": "${PYTHON_EXEC}",
+      "args": [
+        "-m",
+        "mcp_servers.git.server"
+      ],
       "env": {
-        "PROJECT_ROOT": "/absolute/path/to/Project_Sanctuary"
-      }
-    },
-    "chronicle": {
-      "command": "python",
-      "args": ["/absolute/path/to/Project_Sanctuary/mcp_servers/chronicle/server.py"],
-      "env": {
-        "PROJECT_ROOT": "/absolute/path/to/Project_Sanctuary"
-      }
-    },
-    "protocol": {
-      "command": "python",
-      "args": ["/absolute/path/to/Project_Sanctuary/mcp_servers/protocol/server.py"],
-      "env": {
-        "PROJECT_ROOT": "/absolute/path/to/Project_Sanctuary"
-      }
-    },
-    "orchestrator": {
-      "command": "python",
-      "args": ["/absolute/path/to/Project_Sanctuary/mcp_servers/orchestrator/server.py"],
-      "env": {
-        "PROJECT_ROOT": "/absolute/path/to/Project_Sanctuary"
-      }
+        "PROJECT_SANCTUARY_ROOT": "${PROJECT_SANCTUARY_ROOT}",
+        "PYTHONPATH": "${PROJECT_SANCTUARY_ROOT}",
+        "REPO_PATH": "${PROJECT_SANCTUARY_ROOT}"
+      },
+      "cwd": "${PROJECT_SANCTUARY_ROOT}"
     }
   }
 }
 ```
 
+Required Environment Variables:
+
+- `PROJECT_SANCTUARY_ROOT`: Absolute path to the root of the Project Sanctuary repository.
+- `PYTHONPATH`: Set to `${PROJECT_SANCTUARY_ROOT}` so Python can resolve the `mcp_servers` modules.
+- `PYTHON_EXEC`: Absolute path to the Python interpreter (e.g., your virtual environment's python or python3).
+- `REPO_PATH` (Used by git MCP): Set to `${PROJECT_SANCTUARY_ROOT}`.
+
+## Current Reality & Workaround
+
+**Doctrine vs Reality:** The project retains the Environment‑First Doctrine as the intended, long‑term approach. However, some MCP clients — notably Claude Desktop — do not perform environment variable substitution when reading external JSON configs. In practice this required us to write hard‑coded absolute paths into the Claude config so the client can start all 12 MCP servers reliably.
+
+**Warning:** The deployer and helper scripts may produce **hard‑coded** config files by default (absolute paths). This is intentional where the client requires it. Running the deployer without `--preserve-placeholders` will expand variables into absolute paths and overwrite the client config.
+
+**Example (current hard‑coded form used by Claude Desktop):**
+
+```json
+{
+  "mcpServers": {
+    "git_workflow": {
+      "displayName": "Git Workflow MCP",
+      "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+      "args": ["-m","mcp_servers.git.server"],
+      "env": {
+        "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+        "REPO_PATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+        "GIT_BASE_DIR": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+      },
+      "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+    }
+    /* ... rest of servers ... */
+  }
+}
+```
+
+**Recovery & Regeneration**
+
+- Preview the deployer's expanded JSON (dry run):
+
+```bash
+python3 mcp_servers/deploy_mcp_config.py --target ClaudeDesktop --dry-run
+```
+
+- Regenerate (hard-coded absolute paths, default behavior) with a timestamped backup:
+
+```bash
+python3 mcp_servers/deploy_mcp_config.py --target ClaudeDesktop --backup
+```
+
+- Regenerate but preserve template placeholders (if you prefer to produce a portable template file instead of absolute paths):
+
+```bash
+python3 mcp_servers/deploy_mcp_config.py --target ClaudeDesktop --backup --preserve-placeholders --add-legacy-project-root
+```
+
+- Restore a previous backup (example — placeholder backup available):
+
+```bash
+# create a safety copy of the current config, then restore the placeholder backup
+cp "$HOME/Library/Application Support/Claude/claude_desktop_config.json" \
+   "$HOME/Library/Application Support/Claude/claude_desktop_config.json.$(date -u +%Y%m%dT%H%M%SZ).pre-restore.bak" 2>/dev/null || true
+cp "$HOME/Library/Application Support/Claude/claude_desktop_config.json.20251212T031122Z.bak" \
+   "$HOME/Library/Application Support/Claude/claude_desktop_config.json"
+```
+
+After restoring or regenerating the file, restart Claude Desktop so it picks up the updated configuration.
+
+**Notes:**
+- We keep the Environment‑First Doctrine in the docs and templates because it documents intent and makes future improvements easier.
+- The README documents the practical gap so operators understand why hard‑coded configs are currently in use and how to recover or re-generate configs when needed.
+
 ## Running Manually
 
-You can use the helper script to verify paths:
+For debugging and quick verification you can use the cross-platform Python starter to print and/or run a subset of servers. This script is intentionally small — it validates paths and demonstrates the commands that the deployer/template would produce.
+
+The Python starter: `mcp_servers/start_mcp_servers.py`
+
+Usage (dry-run — print commands):
+
 ```bash
-./start_mcp_servers.sh
+python3 mcp_servers/start_mcp_servers.py --dry-run
 ```
+
+Usage (run servers in foreground):
+
+```bash
+python3 mcp_servers/start_mcp_servers.py --run
+```
+
+For full environment setup and production-like launches, consult the configuration guide for `start_sanctuary.sh` and `start_sanctuary.ps1` which set `PROJECT_SANCTUARY_ROOT` and `PYTHON_EXEC` automatically.
+
+## 🧪 Testing & Validation — The Three-Layered Test Pyramid
+
+Integrity of the MCP layer is maintained by a rigorous three-layer test approach. All tests live under `tests/mcp_servers/` and follow the same pyramid model per-server.
+
+Note: component-level README and quick-run instructions live in `tests/mcp_servers/README.md`. See that file for per-server commands, structure expectations, and CI recommendations for component tests.
+
+### Unit Tests (Leaf)
+
+- Scope: Function-level logic, model behavior, and utilities.
+- Location: `tests/mcp_servers/<server>/unit/`.
+- Goal: Fast, isolated verification suitable for PRs and local TDD.
+
+### Integration Tests (Mid)
+
+- Scope: Integration points within a server (filesystem, local DB mocks, config parsing, I/O flows).
+- Location: `tests/mcp_servers/<server>/integration/`.
+- Goal: Confirm component interoperability (use `tmp_path` fixtures for safe I/O).
+
+### End-to-End (Apex)
+
+- Scope: Full flows exercised by the external MCP client (Claude Desktop / Antigravity). Typical E2E scenarios simulate mission-level tool chains (e.g., `cortex_query` → `agent_persona` dispatch → `orchestrator` plan).
+- Invocation: Perform via the client using the generated JSON configs; see examples like `simple_orchestration_test.md` in the docs.
+
+All tests are discoverable under `tests/mcp_servers/` (one folder per MCP server). Example quick runs:
+
+```bash
+# unit tests
+pytest tests/mcp_servers/chronicle/unit/ -v
+
+# integration tests
+pytest tests/mcp_servers/chronicle/integration/ -v
+```
+
+CI: We recommend wiring a validator / test runner to execute unit and integration layers on PRs; E2E tests are executed optionally as part of deployment verification with a running client.
+
+## 📚 Documentation & Governance
+
+The canonical developer and architecture references live under `docs/mcp/`.
+Key artifacts:
+
+- System Architecture: `docs/mcp/architecture_diagram.md`
+- Orchestration Workflows: `mcp_servers/council/orchestration_workflows.md`
+- Git & Commit Standards: `docs/cicd/git_workflow.md` (see Protocol 101/118)
+- Tool Usage Protocols: `01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md`
+- Core Values / Doctrine: `00_CHRONICLE/ENTRIES/311_the_gemini_signal_a_declaration_of_core_values.md`
+
+Use these sources as the authoritative references for design, operational procedures, and governance.
