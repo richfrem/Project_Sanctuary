@@ -785,9 +785,10 @@ class CortexOperations:
             hours: Lookback window in hours
             
         Returns:
-            Markdown string with recent file summaries and context
+            Markdown string with recent file summaries and git diff context
         """
         import datetime
+        import subprocess
         
         try:
             delta = datetime.timedelta(hours=hours)
@@ -827,7 +828,6 @@ class CortexOperations:
             # Try to get git commit info
             git_info = "[Git unavailable]"
             try:
-                import subprocess
                 result = subprocess.run(
                     ["git", "log", "-1", "--oneline"],
                     cwd=self.project_root,
@@ -872,12 +872,64 @@ class CortexOperations:
                 except Exception:
                     pass
                 
+                # Get git diff summary for this file
+                diff_summary = self._get_git_diff_summary(str(relative_path))
+                if diff_summary:
+                    context += f" [{diff_summary}]"
+                
                 lines.append(f"    * `{relative_path}` ({age_str}){context}")
             
             return "\n".join(lines)
             
         except Exception as e:
             return f"Error generating recency delta: {str(e)}"
+    
+    def _get_git_diff_summary(self, file_path: str) -> str:
+        """
+        Get a brief git diff summary for a file.
+        
+        Args:
+            file_path: Relative path to file from project root
+            
+        Returns:
+            Brief summary like "+15/-3" or "new file" or ""
+        """
+        import subprocess
+        
+        try:
+            # Check if file is tracked
+            result = subprocess.run(
+                ["git", "ls-files", "--error-unmatch", file_path],
+                cwd=self.project_root,
+                capture_output=True,
+                timeout=1
+            )
+            
+            if result.returncode != 0:
+                return "new file"
+            
+            # Get diff stat against HEAD
+            result = subprocess.run(
+                ["git", "diff", "--numstat", "HEAD", file_path],
+                cwd=self.project_root,
+                capture_output=True,
+                text=True,
+                timeout=1
+            )
+            
+            if result.returncode == 0 and result.stdout.strip():
+                # Parse numstat: "additions deletions filename"
+                parts = result.stdout.strip().split('\t')
+                if len(parts) >= 2:
+                    additions = parts[0]
+                    deletions = parts[1]
+                    if additions != '-' and deletions != '-':
+                        return f"+{additions}/-{deletions}"
+            
+            return ""
+            
+        except Exception:
+            return ""
 
     # ========================================================================
     # Helper: Recent Chronicle Highlights
@@ -944,6 +996,87 @@ class CortexOperations:
             return f"Error retrieving Chronicle highlights: {str(e)}"
 
     # ========================================================================
+    # Helper: Recent Protocol Updates
+    # ========================================================================
+    
+    def _get_recent_protocol_updates(self, max_protocols: int = 3, hours: int = 168) -> str:
+        """Get recently modified protocols for operational compliance context.
+        
+        Args:
+            max_protocols: Maximum number of protocols to include
+            hours: Lookback window in hours (default: 7 days)
+            
+        Returns:
+            Markdown string with recent protocol updates
+        """
+        import datetime
+        
+        try:
+            protocol_dir = self.project_root / "01_PROTOCOLS"
+            if not protocol_dir.exists():
+                return "* No protocol directory found."
+            
+            delta = datetime.timedelta(hours=hours)
+            cutoff_time = time.time() - delta.total_seconds()
+            
+            # Get all .md files modified within the window
+            recent_protocols = []
+            for file_path in protocol_dir.glob("*.md"):
+                try:
+                    mtime = file_path.stat().st_mtime
+                    if mtime > cutoff_time:
+                        recent_protocols.append((file_path, mtime))
+                except Exception:
+                    continue
+            
+            if not recent_protocols:
+                return f"* No protocols modified in the last {hours//24} days"
+            
+            # Sort by modification time (newest first)
+            recent_protocols.sort(key=lambda x: x[1], reverse=True)
+            
+            lines = []
+            for file_path, mtime in recent_protocols[:max_protocols]:
+                try:
+                    # Extract protocol number from filename
+                    filename = file_path.stem
+                    protocol_num_match = re.match(r"^(\d+)", filename)
+                    if not protocol_num_match:
+                        continue
+                    
+                    protocol_num = protocol_num_match.group(1)
+                    
+                    # Read protocol to get title and status
+                    with open(file_path, 'r') as f:
+                        content = f.read(1000)
+                    
+                    # Extract title
+                    title = "Unknown Title"
+                    title_match = re.search(r"^#\s+Protocol\s+\d+:\s*(.+?)(?:\s+\(v[\d.]+\))?$", content, re.MULTILINE | re.IGNORECASE)
+                    if title_match:
+                        title = title_match.group(1).strip()
+                    
+                    # Extract status
+                    status = "Unknown"
+                    status_match = re.search(r"\*\*Status:\*\*\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
+                    if status_match:
+                        status = status_match.group(1).strip()
+                    
+                    # Calculate age
+                    age_days = int((time.time() - mtime) / 86400)
+                    age_str = f"{age_days}d ago" if age_days > 0 else "today"
+                    
+                    lines.append(f"* **Protocol {protocol_num}:** {title} ({status}) — Updated {age_str}")
+                    
+                except Exception:
+                    continue
+            
+            return "\n".join(lines) if lines else f"* No protocols modified in the last {hours//24} days"
+            
+        except Exception as e:
+            return f"Error retrieving protocol updates: {str(e)}"
+
+    # ========================================================================
     # Helper: Strategic Synthesis (The Gemini Signal)
     # ========================================================================
 
@@ -971,13 +1104,14 @@ class CortexOperations:
     
     def _get_tactical_priorities(self) -> str:
         """
-        Scan TASKS/todo, TASKS/in-progress, TASKS/backlog for Top 3 Critical/High tasks.
+        Scan TASKS/todo, TASKS/in-progress, TASKS/backlog for top 5 tasks.
+        Shows Critical/High first, then Medium/Low if space permits.
         Extract OBJECTIVE and STATUS for context.
         
-        Returns: Markdown list of top 3 priorities with status.
+        Returns: Markdown list of top 5 priorities with status.
         """
         try:
-            priority_map = {"Critical": 1, "High": 2}
+            priority_map = {"Critical": 1, "High": 2, "Medium": 3, "Low": 4}
             found_tasks = []
             
             scan_sources = [
@@ -994,23 +1128,24 @@ class CortexOperations:
                     try:
                         content = file_path.read_text()
                         
-                        # precise priority extraction
-                        priority_score = 3 # Default low
+                        # Precise priority extraction
+                        priority_score = 5  # Default unspecified
                         if re.search(r"priority:\s*Critical", content, re.IGNORECASE):
                             priority_score = 1
                         elif re.search(r"priority:\s*High", content, re.IGNORECASE):
                             priority_score = 2
-                            
-                        if priority_score > 2:
-                            continue # Skip non-critical/high
-                            
+                        elif re.search(r"priority:\s*Medium", content, re.IGNORECASE):
+                            priority_score = 3
+                        elif re.search(r"priority:\s*Low", content, re.IGNORECASE):
+                            priority_score = 4
+                        
                         # Extract Objective
                         objective = "Objective not found"
                         obj_match = re.search(r"(?:Objective|Goal):\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
                         if obj_match:
                             objective = obj_match.group(1).strip()
                         
-                        # Extract Status (look for Status: or ## Status section)
+                        # Extract Status
                         status = None
                         status_match = re.search(r"Status:\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
                         if status_match:
@@ -1030,24 +1165,27 @@ class CortexOperations:
                     except Exception:
                         continue
             
-            # Sort: Score asc (1=Critical), then File Name desc (Newest IDs)
-            found_tasks.sort(key=lambda x: (x["score"], x["path"].name), reverse=False)
+            # Sort: Score asc (1=Critical first), then File Name desc (Newest IDs)
+            found_tasks.sort(key=lambda x: (x["score"], -int(x["id"]) if x["id"].isdigit() else 0))
             
-            # Take top 3
-            top_3 = found_tasks[:3]
+            # Take top 5
+            top_5 = found_tasks[:5]
             
-            if not top_3:
+            if not top_5:
                 # Provide diagnostic info
                 total_scanned = sum(1 for src in scan_sources if src.exists() for _ in src.glob("*.md"))
-                return f"* No Critical or High priority tasks found (scanned {total_scanned} total tasks)"
-                
+                return f"* No tasks found (scanned {total_scanned} total tasks)"
+            
+            # Build output with priority labels
+            priority_labels = {1: "CRITICAL", 2: "HIGH", 3: "MEDIUM", 4: "LOW", 5: "UNSPECIFIED"}
+            
             lines = []
-            for t in top_3:
-                prio_label = "CRITICAL" if t["score"] == 1 else "HIGH"
+            for t in top_5:
+                prio_label = priority_labels.get(t["score"], "UNKNOWN")
                 status_info = f" → {t['status']}" if t['status'] else ""
                 folder_badge = f"[{t['folder']}]"
                 lines.append(f"* **[{t['id']}]** ({prio_label}) {folder_badge}: {t['objective']}{status_info}")
-                
+            
             return "\n".join(lines)
             
         except Exception as e:
@@ -1085,8 +1223,9 @@ class CortexOperations:
         Generate Guardian boot digest (Context Synthesis Engine).
         
         Modes:
-        - "HOLISTIC" (Default): Generates Guardian Briefing Schema v2.0
-          (Strategic Synthesis, Tactical Priorities, Recency, Health)
+        - "HOLISTIC" (Default): Generates Guardian Briefing Schema v2.1
+          (Strategic Synthesis, Chronicle Highlights, Protocol Updates, 
+           Tactical Priorities, Recency with Git Diffs, Health)
         
         Returns:
             GuardianWakeupResponse with digest path and statistics
@@ -1101,11 +1240,11 @@ class CortexOperations:
             # 1. System Health (Traffic Light)
             health_color, health_reason = self._get_system_health_traffic_light()
             
-            # 2. Synthesis Assembly (Schema v2.0)
+            # 2. Synthesis Assembly (Schema v2.1)
             digest_lines = []
             
             # Header
-            digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.0)")
+            digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.1)")
             digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
             digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
             digest_lines.append("")
@@ -1120,12 +1259,17 @@ class CortexOperations:
             digest_lines.append(self._get_recent_chronicle_highlights(max_entries=3))
             digest_lines.append("")
             
-            # II. Priority Tasks
+            # Ib. Recent Protocol Updates (NEW in v2.1)
+            digest_lines.append("### Recent Protocol Updates")
+            digest_lines.append(self._get_recent_protocol_updates(max_protocols=3, hours=168))
+            digest_lines.append("")
+            
+            # II. Priority Tasks (Enhanced in v2.1 to show all priority levels)
             digest_lines.append("## II. Priority Tasks")
             digest_lines.append(self._get_tactical_priorities())
             digest_lines.append("")
             
-            # III. Operational Recency
+            # III. Operational Recency (Enhanced in v2.1 with git diff summaries)
             digest_lines.append("## III. Operational Recency")
             digest_lines.append(self._get_recency_delta(hours=48))
             digest_lines.append("")
@@ -1148,7 +1292,7 @@ class CortexOperations:
             
             return GuardianWakeupResponse(
                 digest_path=str(digest_path),
-                bundles_loaded=["Strategic", "Tactical", "Recency"], # Virtual bundles
+                bundles_loaded=["Strategic", "Tactical", "Recency", "Protocols"], # Virtual bundles
                 cache_hits=1,   # Strategic is treated as cached
                 cache_misses=0,
                 total_time_ms=total_time_ms,
