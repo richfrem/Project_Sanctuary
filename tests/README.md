@@ -14,9 +14,9 @@ config:
 ---
 flowchart TB
  subgraph MCP_Test_Pyramid["Model Context Protocol (MCP) Server Test Pyramid"]
-        E2E["🔝 E2E Tests<br>MCP Client Call Lifecycle<br>*Requires all 12 servers running*"]
-        INT["🔗 Integration Tests<br>Server-to-DB/Local-API Verification<br>*Minimal mocking*"]
-        UNIT["⚡ Unit Tests<br>Internal Functions/Atomic Logic<br>*No network calls*"]
+        E2E["🔝 Layer 3: E2E Tests<br>Full MCP Protocol Lifecycle<br>Base: BaseE2ETest<br>Deps: All 12 MCP servers<br>Speed: Slow (min)"]
+        INT["🔗 Layer 2: Integration Tests<br>Server ↔ Local Services<br>Base: BaseIntegrationTest<br>Deps: ChromaDB, Ollama, Git<br>Speed: Medium (sec)"]
+        UNIT["⚡ Layer 1: Unit Tests<br>Atomic Logic in Isolation<br>Base: None (isolated)<br>Deps: None (mocked)<br>Speed: Fast (ms)"]
   end
     E2E --> INT
     INT --> UNIT
@@ -27,10 +27,10 @@ flowchart TB
 ```
 
 | Layer | Scope | Goal | Speed |
-|-------|-------|------|-------|
+|-------|-------|------|----------|
 | **Unit** | Functions/classes in isolation | Verify atomic logic, no I/O | Fast (ms) |
-| **Integration** | Component-to-dependency | Verify interactions with DB, filesystem, APIs | Medium (sec) |
-| **E2E** | Full MCP client workflows | Verify complete user scenarios | Slow (sec-min) |
+| **Integration** | Server ↔ Local Services | Verify interactions with ChromaDB, Ollama, Git | Medium (sec) |
+| **E2E** | Full MCP protocol lifecycle | Verify complete MCP client workflows (requires all 12 servers) | Slow (min) |
 
 ## Directory Structure
 
@@ -40,9 +40,16 @@ tests/
 ├── conftest.py               # Root pytest configuration and shared fixtures
 ├── test_utils.py             # Portable path utilities for tests
 │
-├── mcp_servers/              # Component tests for all 12 MCP servers
+├── mcp_servers/              # Component tests for all 12 MCP servers (3-layer pyramid)
 │   ├── README.md             # MCP server test pyramid documentation
+│   ├── base/                 # Base classes and common patterns
+│   │   ├── base_integration_test.py  # Layer 2 base class
+│   │   ├── base_e2e_test.py          # Layer 3 base class
+│   │   └── README.md                 # Common patterns documentation
 │   ├── adr/
+│   │   ├── unit/             # Layer 1: Isolated unit tests
+│   │   ├── integration/      # Layer 2: Real dependency tests
+│   │   └── e2e/              # Layer 3: Full MCP protocol tests
 │   ├── agent_persona/
 │   ├── chronicle/
 │   ├── code/
@@ -54,10 +61,7 @@ tests/
 │   ├── protocol/
 │   ├── rag_cortex/
 │   └── task/
-│
-├── integration/              # Multi-MCP workflow tests
-│   ├── README.md             # Integration test documentation
-│   └── test_*.py             # Cross-server integration scenarios
+│       └── (each with unit/, integration/, e2e/ subdirectories)
 │
 ├── benchmarks/               # Performance benchmarks (optional)
 ├── browser_automation/       # Browser-based UI tests
@@ -67,6 +71,8 @@ tests/
 ├── verification_scripts/     # System verification utilities
 └── verify_wslenv_setup.py    # WSL environment validation
 ```
+
+**Note:** Multi-MCP integration tests (if needed in the future) should be created in `tests/integration/`. Currently, all integration tests are properly organized within their respective MCP server folders (`tests/mcp_servers/<server>/integration/`).
 
 ## Quick Reference
 
@@ -91,17 +97,27 @@ pytest tests/mcp_servers/git/ -v
 
 # Only unit tests for a server
 pytest tests/mcp_servers/chronicle/unit/ -v
+
+# Only integration tests for a server
+pytest tests/mcp_servers/rag_cortex/integration/ -v
+
+# Only E2E tests for a server
+pytest tests/mcp_servers/git/e2e/ -v -m e2e
 ```
 
-### Run Integration Tests
+## Headless E2E (CI-friendly)
+
+Headless E2E tests exercise full MCP client workflows programmatically using the in-repo `MCPClient.route_query()` helper. They are intended to provide end-to-end coverage in CI without requiring the IDE to start servers. Note that some headless tests may still require supporting services (ChromaDB, Ollama) depending on the scenario.
 
 ```bash
-# All multi-MCP integration tests
-pytest tests/integration/ -v
+# Run headless end-to-end tests
+pytest tests/mcp_servers/ -m headless -v
 
-# Specific integration scenario
-pytest tests/integration/test_strategic_crucible_loop.py -v
+# Run a single headless test file
+pytest tests/mcp_servers/adr/e2e/test_headless.py -k headless -v
 ```
+
+Add headless tests to CI (nightly or PR gate) using the `-m headless` marker so they run separately from fast unit tests.
 
 ### Run with Real LLM (Optional)
 
@@ -141,6 +157,21 @@ The test suite is designed for CI/CD pipelines:
 1. **PR Checks**: Run `pytest tests/mcp_servers/*/unit/` (fast, isolated)
 2. **Merge to Main**: Run `pytest tests/` (full suite)
 3. **Nightly**: Run with `--real-llm` and benchmarks
+
+## Test Reorganization Notice
+
+Some single-server integration tests previously under `tests/integration/` were moved into their respective server folders to clarify scope and make the top-level `tests/integration/` directory exclusively contain multi-server workflows. If you see a test in `tests/integration/` that now acts as a redirect, it will be a small skip stub pointing to the new location.
+
+Moved files (examples):
+
+- `tests/integration/test_strategic_crucible_loop.py` -> `tests/mcp_servers/orchestrator/integration/test_strategic_crucible_loop.py`
+- `tests/integration/test_056_loop_hardening.py` -> `tests/mcp_servers/orchestrator/integration/test_056_loop_hardening.py`
+- `tests/integration/test_end_to_end_rag_pipeline.py` -> `tests/mcp_servers/rag_cortex/integration/test_end_to_end_pipeline.py`
+- `tests/integration/test_rag_simple.py` -> `tests/mcp_servers/rag_cortex/integration/test_simple_query.py`
+- `tests/integration/test_git_workflow_end_to_end.py` -> `tests/mcp_servers/git/integration/test_git_workflow_end_to_end.py`
+
+If you'd like, I can continue scanning and moving any other single-server tests into their server folders.
+
 
 ## Related Documentation
 

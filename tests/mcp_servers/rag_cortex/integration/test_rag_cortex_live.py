@@ -4,7 +4,7 @@ import time
 import chromadb
 from langchain_chroma import Chroma
 from pathlib import Path
-from tests.integration.base_integration_test import BaseIntegrationTest
+from tests.mcp_servers.base.base_integration_test import BaseIntegrationTest
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.validator import CortexValidator
 

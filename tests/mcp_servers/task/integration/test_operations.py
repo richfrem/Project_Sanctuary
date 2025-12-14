@@ -1,5 +1,25 @@
 """
-Unit tests for Task MCP operations
+Task MCP Integration Tests - Operations Testing
+================================================
+
+Tests each Task MCP operation against temp directories with cleanup.
+Uses pytest fixtures for isolated test environments.
+
+CALLING EXAMPLES:
+-----------------
+pytest tests/mcp_servers/task/integration/test_operations.py -v -s
+pytest tests/mcp_servers/task/integration/test_operations.py::TestCreateTask -v
+
+MCP OPERATIONS:
+---------------
+| Operation          | Type  | Description               |
+|--------------------|-------|---------------------------|
+| create_task        | WRITE | Create new task           |
+| get_task           | READ  | Get task by number        |
+| list_tasks         | READ  | List tasks with filters   |
+| search_tasks       | READ  | Search tasks by content   |
+| update_task        | WRITE | Update task metadata      |
+| update_task_status | WRITE | Move task between statuses|
 """
 
 import pytest

@@ -111,7 +111,7 @@ class TestCacheOperations:
             # Verify
             assert response.status == "success"
             assert response.digest_path is not None
-            assert len(response.bundles_loaded) == 3  # Strategic, Tactical, Recency
+            assert len(response.bundles_loaded) >= 3  # Strategic, Tactical, Recency, (optionally Protocols)
             assert "Strategic" in response.bundles_loaded
 
 

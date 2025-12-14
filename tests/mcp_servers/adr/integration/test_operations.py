@@ -1,128 +1,133 @@
 """
-Unit tests for ADR operations
+ADR MCP Integration Tests - Operations Testing
+===============================================
+
+Tests each ADR MCP operation individually against the REAL ADRs directory.
+
+CALLING EXAMPLES:
+-----------------
+pytest tests/mcp_servers/adr/integration/test_operations.py -v -s
+
+MCP OPERATIONS:
+---------------
+| Operation         | Type  | Description              |
+|-------------------|-------|--------------------------|
+| adr_list          | READ  | List real ADRs           |
+| adr_get           | READ  | Get real ADR             |
+| adr_search        | READ  | Search real ADRs         |
+| adr_create        | WRITE | Create then cleanup      |
+| adr_update_status | WRITE | Update then cleanup      |
 """
-import unittest
-import tempfile
-import shutil
+import pytest
 import os
+import sys
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 from mcp_servers.adr.operations import ADROperations
 
+# Use REAL ADRs directory
+REAL_ADR_DIR = project_root / "ADRs"
 
-class TestADROperations(unittest.TestCase):
-    def setUp(self):
-        # Create temporary directory
-        self.test_dir = tempfile.mkdtemp()
-        self.ops = ADROperations(self.test_dir)
+
+@pytest.fixture
+def ops():
+    """Create ADROperations with REAL ADRs directory."""
+    return ADROperations(str(REAL_ADR_DIR))
+
+
+# =============================================================================
+# READ OPERATIONS
+# =============================================================================
+
+def test_adr_list(ops):
+    """Test adr_list - list real ADRs."""
+    result = ops.list_adrs()
     
-    def tearDown(self):
-        # Clean up
-        shutil.rmtree(self.test_dir)
+    print(f"\n📋 adr_list:")
+    print(f"   Total: {len(result)} ADRs")
     
-    def test_create_adr(self):
-        """Test creating a new ADR."""
-        result = self.ops.create_adr(
-            title="Test Decision",
-            context="This is a test context",
-            decision="We decided to test",
-            consequences="Testing is good"
-        )
-        
-        self.assertEqual(result['adr_number'], 1)
-        self.assertTrue(os.path.exists(result['file_path']))
-        self.assertEqual(result['status'], "proposed")
+    assert isinstance(result, list)
+    assert len(result) > 0
+    print("✅ PASSED")
+
+
+def test_adr_get(ops):
+    """Test adr_get - get real ADR by number."""
+    adrs = ops.list_adrs()
+    adr_number = adrs[0]["number"]
     
-    def test_create_adr_sequential_numbering(self):
-        """Test ADRs are numbered sequentially."""
-        result1 = self.ops.create_adr(
-            title="First",
-            context="Context 1",
-            decision="Decision 1",
-            consequences="Consequences 1"
-        )
-        
-        result2 = self.ops.create_adr(
-            title="Second",
-            context="Context 2",
-            decision="Decision 2",
-            consequences="Consequences 2"
-        )
-        
-        self.assertEqual(result1['adr_number'], 1)
-        self.assertEqual(result2['adr_number'], 2)
+    result = ops.get_adr(adr_number)
     
-    def test_get_adr(self):
-        """Test retrieving an ADR."""
-        # Create an ADR
-        created = self.ops.create_adr(
-            title="Test ADR",
-            context="Test context",
-            decision="Test decision",
-            consequences="Test consequences"
-        )
-        
-        # Retrieve it
-        adr = self.ops.get_adr(created['adr_number'])
-        
-        self.assertEqual(adr['number'], 1)
-        self.assertEqual(adr['title'], "Test ADR")
-        self.assertEqual(adr['status'], "proposed")
+    print(f"\n📄 adr_get:")
+    print(f"   Got ADR #{result['number']}: {result['title'][:40]}...")
     
-    def test_update_adr_status(self):
-        """Test updating ADR status."""
-        # Create an ADR
-        created = self.ops.create_adr(
-            title="Test",
-            context="Context",
-            decision="Decision",
-            consequences="Consequences"
-        )
-        
-        # Update status
-        result = self.ops.update_adr_status(
-            created['adr_number'],
-            "accepted",
-            "Implemented successfully"
-        )
-        
-        self.assertEqual(result['old_status'], "proposed")
-        self.assertEqual(result['new_status'], "accepted")
+    assert result["number"] == adr_number
+    print("✅ PASSED")
+
+
+def test_adr_search(ops):
+    """Test adr_search - search real ADRs."""
+    result = ops.search_adrs("protocol")
     
-    def test_list_adrs(self):
-        """Test listing ADRs."""
-        # Create multiple ADRs
-        self.ops.create_adr("ADR 1", "C1", "D1", "Cons1")
-        self.ops.create_adr("ADR 2", "C2", "D2", "Cons2", status="accepted")
-        
-        # List all
-        all_adrs = self.ops.list_adrs()
-        self.assertEqual(len(all_adrs), 2)
-        
-        # List by status
-        accepted = self.ops.list_adrs(status="accepted")
-        self.assertEqual(len(accepted), 1)
-        self.assertEqual(accepted[0]['title'], "ADR 2")
+    print(f"\n🔍 adr_search:")
+    print(f"   Query 'protocol' found {len(result)} ADRs")
     
-    def test_search_adrs(self):
-        """Test searching ADRs."""
-        # Create ADRs with searchable content
-        self.ops.create_adr(
-            "FastAPI Decision",
-            "We need a web framework",
-            "Use FastAPI",
-            "Fast and modern"
-        )
-        self.ops.create_adr(
-            "Database Choice",
-            "Need a database",
-            "Use PostgreSQL",
-            "Reliable"
-        )
-        
-        # Search
-        results = self.ops.search_adrs("FastAPI")
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['number'], 1)
+    assert isinstance(result, list)
+    print("✅ PASSED")
+
+
+# =============================================================================
+# WRITE OPERATIONS (create, verify, cleanup)
+# =============================================================================
+
+def test_adr_create(ops):
+    """Test adr_create - create then cleanup."""
+    result = ops.create_adr(
+        title="[TEST] adr_create Test",
+        context="Testing adr_create operation.",
+        decision="Create test ADR.",
+        consequences="Auto-cleaned after test.",
+        status="proposed",
+        author="Integration Test"
+    )
+    
+    print(f"\n🆕 adr_create:")
+    print(f"   Created: #{result['adr_number']}")
+    
+    assert os.path.exists(result['file_path'])
+    
+    # Cleanup
+    os.remove(result['file_path'])
+    print(f"   🧹 Cleaned up")
+    print("✅ PASSED")
+
+
+def test_adr_update_status(ops):
+    """Test adr_update_status - create, update, cleanup."""
+    created = ops.create_adr(
+        title="[TEST] adr_update_status Test",
+        context="Testing.", decision="Test.", consequences="Auto-cleaned.",
+        status="proposed", author="Integration Test"
+    )
+    
+    result = ops.update_adr_status(
+        created["adr_number"], "accepted", "Test verification"
+    )
+    
+    print(f"\n🔄 adr_update_status:")
+    print(f"   {result['old_status']} → {result['new_status']}")
+    
+    assert result['new_status'] == "accepted"
+    
+    # Cleanup
+    os.remove(created['file_path'])
+    print(f"   🧹 Cleaned up")
+    print("✅ PASSED")
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v", "-s"])

@@ -34,6 +34,8 @@ curl -I http://localhost:8000/api/v2/heartbeat
 - `test_integration_real_db.py` - Full ingestion/query flow
 - `test_operations.py` (marked `@pytest.mark.integration`)
 - `test_cortex_ingestion.py` (marked `@pytest.mark.integration`)
+- `test_end_to_end_pipeline.py` (moved from `tests/integration/`) — End-to-end ingestion/query pipeline
+- `test_simple_query.py` (moved from `tests/integration/`) — Lightweight RAG query smoke test
 
 ### Standalone Integration Script
 ```bash
