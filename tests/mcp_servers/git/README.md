@@ -29,3 +29,4 @@ This directory contains the testing hierarchy for the Git MCP server, in accorda
 | `conftest.py` | Shared fixtures (`git_roots`, `git_ops_mock`). |
 | `unit/test_validator.py` | Unit validation tests. |
 | `integration/test_operations.py` | Comprehensive integration tests for all Git tools. |
+| `integration/test_git_workflow_end_to_end.py` | End-to-end repo workflow smoke test (moved from `tests/integration/`). |

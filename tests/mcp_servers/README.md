@@ -7,13 +7,71 @@ We adhere to the principle of **Designing for Successor-State** (Chronicle Entry
 
 ## Structure of the Test Pyramid
 
-Every MCP server sub-directory (`<mcp>/`) is structured into three layers.
+Every MCP server sub-directory (`<mcp>/`) is structured into three layers:
 
-| Sub-Folder | Scope | Goal | Execution Command (Example) |
-| :--- | :--- | :--- | :--- |
-| **`unit/`** | Internal functions/classes | Verify atomic logic (e.g., a data validator or utility function) in isolation, **no network calls**. | `pytest tests/mcp_servers/<mcp>/unit/` |
-| **`integration/`** | Server-to-DB/Local-API | Verify the server's core operations with its local dependencies (e.g., `rag_cortex` talking to ChromaDB, `git` talking to the local file system). **Minimal mocking.** | `pytest tests/mcp_servers/<mcp>/integration/` |
-| **`e2e/`** | MCP Client Call | Verify the full lifecycle of an MCP call as executed by the canonical MCP Client (e.g., Claude Desktop, Antigravity). **Requires all 12 servers to be running.** | `pytest tests/mcp_servers/<mcp>/e2e/` |
+| Layer | Sub-Folder | Scope | Base Class | Dependencies | Speed |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| **1** | **`unit/`** | Internal functions/classes | None (isolated) | None | Fast (ms) |
+| **2** | **`integration/`** | Server ↔ Local Services | `BaseIntegrationTest` | ChromaDB, Ollama, Git | Medium (sec) |
+| **3** | **`e2e/`** | Full MCP Protocol | `BaseE2ETest` | All 12 MCP servers | Slow (min) |
+
+### Layer 1: Unit Tests (`unit/`)
+- **Focus:** Atomic logic in isolation (validators, parsers, utilities)
+- **Dependencies:** None (mocked if needed)
+- **Base Class:** None required
+- **Run:** `pytest tests/mcp_servers/<mcp>/unit/ -v`
+
+**Example:**
+```python
+def test_protocol_validator():
+    """Test protocol number validation logic."""
+    assert validate_protocol_number(101) is True
+    assert validate_protocol_number(-1) is False
+```
+
+### Layer 2: Integration Tests (`integration/`)
+- **Focus:** Server operations with real local dependencies
+- **Dependencies:** ChromaDB (port 8000), Ollama (port 11434), Git repo
+- **Base Class:** `BaseIntegrationTest` (auto-checks dependencies)
+- **Run:** `pytest tests/mcp_servers/<mcp>/integration/ -v`
+
+**Example:**
+```python
+from tests.mcp_servers.base.base_integration_test import BaseIntegrationTest
+
+class TestRAGCortexLive(BaseIntegrationTest):
+    def get_required_services(self):
+        return [("localhost", 8000, "ChromaDB")]
+    
+    def test_ingest_and_query(self):
+        # Tests real ChromaDB connectivity
+        ...
+```
+
+### Layer 3: E2E Tests (`e2e/`)
+- **Focus:** Full MCP client call lifecycle via MCP protocol
+- **Dependencies:** All 12 MCP servers running (via `start_mcp_servers.py`)
+- **Base Class:** `BaseE2ETest` (provides MCP client utilities)
+- **Run:** `pytest tests/mcp_servers/<mcp>/e2e/ -v`
+
+**Infrastructure:**
+E2E tests use the `mcp_servers` pytest fixture (defined in `tests/conftest.py`) 
+which automatically starts all servers before tests and tears them down after.
+
+**Example:**
+```python
+from tests.mcp_servers.base.base_e2e_test import BaseE2ETest
+
+@pytest.mark.e2e
+class TestRAGCortexE2E(BaseE2ETest):
+    @pytest.mark.asyncio
+    async def test_query_via_mcp_client(self, mcp_servers):
+        result = await self.call_mcp_tool(
+            "cortex_query",
+            {"query": "What is Protocol 101?", "max_results": 3}
+        )
+        self.assert_mcp_success(result)
+```
 
 
 ## Execution Quick Reference

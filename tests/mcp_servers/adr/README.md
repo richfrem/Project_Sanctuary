@@ -1,3 +1,12 @@
+## E2E (Headless)
+
+This folder contains headless end-to-end tests that exercise ADR tool routing.
+
+Run headless ADR tests:
+
+pytest tests/mcp_servers/adr/e2e -m headless -q
+
+Note: These tests use `MCPClient.route_query` to simulate headless client routing. They are intended for CI/nightly runs and do not make servers available to the IDE/Copilot.
 # ADR MCP Tests
 
 This directory contains tests for the ADR MCP server, organized into a 3-layer pyramid.

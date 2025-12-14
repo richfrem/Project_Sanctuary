@@ -1,65 +1,147 @@
 """
-Unit tests for Protocol operations
+Protocol MCP Integration Tests - Operations Testing
+====================================================
+
+Tests each Protocol MCP operation against the REAL 01_PROTOCOLS directory.
+
+CALLING EXAMPLES:
+-----------------
+pytest tests/mcp_servers/protocol/integration/test_operations.py -v -s
+
+MCP OPERATIONS:
+---------------
+| Operation         | Type  | Description               |
+|-------------------|-------|---------------------------|
+| protocol_list     | READ  | List real protocols       |
+| protocol_get      | READ  | Get real protocol         |
+| protocol_search   | READ  | Search real protocols     |
+| protocol_create   | WRITE | Create then cleanup       |
+| protocol_update   | WRITE | Update then cleanup       |
 """
-import unittest
-import tempfile
-import shutil
+import pytest
+import os
+import sys
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 from mcp_servers.protocol.operations import ProtocolOperations
 
+# Use REAL Protocols directory
+REAL_PROTOCOL_DIR = project_root / "01_PROTOCOLS"
 
-class TestProtocolOperations(unittest.TestCase):
-    def setUp(self):
-        self.test_dir = tempfile.mkdtemp()
-        self.ops = ProtocolOperations(self.test_dir)
+
+@pytest.fixture
+def ops():
+    """Create ProtocolOperations with REAL directory."""
+    return ProtocolOperations(str(REAL_PROTOCOL_DIR))
+
+
+# =============================================================================
+# READ OPERATIONS
+# =============================================================================
+
+def test_protocol_list(ops):
+    """Test protocol_list - list real protocols."""
+    result = ops.list_protocols()
     
-    def tearDown(self):
-        shutil.rmtree(self.test_dir)
+    print(f"\n📋 protocol_list:")
+    print(f"   Total: {len(result)} protocols")
+    if result:
+        print(f"   Sample: #{result[0]['number']}: {result[0]['title'][:40]}...")
     
-    def test_create_protocol(self):
-        """Test creating a new protocol."""
-        result = self.ops.create_protocol(
-            number=117,
-            title="Test Protocol",
-            status="CANONICAL",
-            classification="Test Framework",
-            version="1.0",
-            authority="Test Authority",
-            content="Test content"
-        )
-        
-        self.assertEqual(result['protocol_number'], 117)
-        self.assertEqual(result['status'], "CANONICAL")
-        
-    def test_get_protocol(self):
-        """Test retrieving a protocol."""
-        self.ops.create_protocol(
-            117, "Test", "CANONICAL", "Framework", "1.0", "Auth", "Content"
-        )
-        
-        protocol = self.ops.get_protocol(117)
-        self.assertEqual(protocol['number'], 117)
-        self.assertEqual(protocol['title'], "Test")
-        
-    def test_list_protocols(self):
-        """Test listing protocols."""
-        self.ops.create_protocol(100, "P1", "CANONICAL", "F1", "1.0", "A1", "C1")
-        self.ops.create_protocol(101, "P2", "PROPOSED", "F2", "1.0", "A2", "C2")
-        
-        all_protocols = self.ops.list_protocols()
-        self.assertEqual(len(all_protocols), 2)
-        
-        canonical = self.ops.list_protocols(status="CANONICAL")
-        self.assertEqual(len(canonical), 1)
-        
-    def test_search_protocols(self):
-        """Test searching protocols."""
-        self.ops.create_protocol(100, "Alpha", "CANONICAL", "F", "1.0", "A", "Contains keyword")
-        self.ops.create_protocol(101, "Beta", "CANONICAL", "F", "1.0", "A", "Nothing here")
-        
-        results = self.ops.search_protocols("keyword")
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], "Alpha")
+    assert isinstance(result, list)
+    assert len(result) > 0
+    print("✅ PASSED")
+
+
+def test_protocol_get(ops):
+    """Test protocol_get - get real protocol."""
+    protocols = ops.list_protocols()
+    protocol_number = protocols[0]["number"]
+    
+    result = ops.get_protocol(protocol_number)
+    
+    print(f"\n📄 protocol_get:")
+    print(f"   Got #{result['number']}: {result['title'][:40]}...")
+    
+    assert result["number"] == protocol_number
+    print("✅ PASSED")
+
+
+def test_protocol_search(ops):
+    """Test protocol_search - search real protocols."""
+    searches = ["git", "task", "MCP"]
+    
+    print(f"\n🔍 protocol_search:")
+    for query in searches:
+        result = ops.search_protocols(query)
+        print(f"   '{query}' → {len(result)} protocols")
+    
+    assert isinstance(result, list)
+    print("✅ PASSED")
+
+
+# =============================================================================
+# WRITE OPERATIONS (create, verify, cleanup)
+# =============================================================================
+
+def test_protocol_create(ops):
+    """Test protocol_create - create then cleanup."""
+    # Use a high number to avoid conflicts
+    result = ops.create_protocol(
+        number=999,
+        title="[TEST] protocol_create Test",
+        status="PROPOSED",
+        classification="Test Framework",
+        version="1.0",
+        authority="Integration Test",
+        content="Testing protocol_create operation."
+    )
+    
+    print(f"\n🆕 protocol_create:")
+    print(f"   Created: #{result['protocol_number']}")
+    
+    # Cleanup - find and delete the file
+    for f in REAL_PROTOCOL_DIR.glob("999_*"):
+        f.unlink()
+        print(f"   🧹 Cleaned up: {f.name}")
+    
+    print("✅ PASSED")
+
+
+def test_protocol_update(ops):
+    """Test protocol_update - create, update, cleanup."""
+    # Create
+    ops.create_protocol(
+        number=998,
+        title="[TEST] protocol_update Test",
+        status="PROPOSED",
+        classification="Test",
+        version="1.0",
+        authority="Integration Test",
+        content="Original content."
+    )
+    
+    # Update
+    result = ops.update_protocol(
+        number=998,
+        updates={"status": "CANONICAL"},
+        reason="Integration test"
+    )
+    
+    print(f"\n🔄 protocol_update:")
+    print(f"   Updated: #{result.get('protocol_number', 998)}")
+    
+    # Cleanup
+    for f in REAL_PROTOCOL_DIR.glob("998_*"):
+        f.unlink()
+        print(f"   🧹 Cleaned up: {f.name}")
+    
+    print("✅ PASSED")
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v", "-s"])

@@ -1,0 +1,71 @@
+{
+  "runs": [
+    {
+      "timestamp": "2025-12-14T12:55:09.682864",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "total": 1,
+      "result": "PASS",
+      "tests": {
+        "test_dispatch": {
+          "status": "PASSED",
+          "duration": 12.432
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-14T12:50:49.111207",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "total": 4,
+      "result": "PASS",
+      "tests": {
+        "test_list_roles": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom": {
+          "status": "PASSED",
+          "duration": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-14T12:47:50.746151",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "total": 4,
+      "result": "PASS",
+      "tests": {
+        "test_list_roles": {
+          "status": "PASSED",
+          "duration": 0.001
+        },
+        "test_get_state": {
+          "status": "PASSED",
+          "duration": 0.001
+        },
+        "test_reset_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom": {
+          "status": "PASSED",
+          "duration": 0.001
+        }
+      }
+    }
+  ],
+  "last_updated": "2025-12-14T12:55:09.682878"
+}

@@ -1,11 +1,37 @@
 """
 Comprehensive Test Suite for Agent Persona MCP Server
+======================================================
 
 This test suite provides extensive coverage of:
 - Input validation and expected failures
 - State management and persistence
 - Edge cases and error handling
 - Integration scenarios
+
+SLOW TESTS: 3 tests call persona_dispatch() which requires Ollama LLM.
+            These are marked with @pytest.mark.slow
+
+CALLING EXAMPLES:
+-----------------
+# Run ALL fast tests (29 tests) - no LLM required
+pytest tests/mcp_servers/agent_persona/unit/test_comprehensive.py -v -m "not slow"
+
+# Run ALL tests including slow (32 tests) - requires Ollama
+pytest tests/mcp_servers/agent_persona/unit/test_comprehensive.py -v
+
+# Run specific test
+pytest tests/mcp_servers/agent_persona/unit/test_comprehensive.py::test_list_roles -v
+
+TEST COUNT:
+-----------
+- Fast tests: 29 (validation, state management, edge cases)
+- Slow tests: 3  (dispatch tests - call Ollama LLM)
+- Total: 32 tests
+
+REQUIREMENTS:
+-------------
+- Fast tests: None
+- Slow tests: Ollama running at localhost:11434
 """
 
 import pytest
@@ -117,6 +143,7 @@ def test_dispatch_structure(persona_ops):
 # NEW TESTS - Priority 1: Critical Failure Cases (10 tests)
 # ============================================================================
 
+@pytest.mark.slow
 def test_dispatch_empty_role(persona_ops):
     """Test dispatch with empty role fails gracefully"""
     result = persona_ops.dispatch(
@@ -126,6 +153,7 @@ def test_dispatch_empty_role(persona_ops):
     assert result["status"] == "error"
     assert "error" in result
 
+@pytest.mark.slow
 def test_dispatch_empty_task(persona_ops):
     """Test dispatch with empty task fails gracefully"""
     result = persona_ops.dispatch(
@@ -135,6 +163,7 @@ def test_dispatch_empty_task(persona_ops):
     # Empty task might be allowed, but response should handle it
     assert "status" in result
 
+@pytest.mark.slow
 def test_dispatch_nonexistent_persona(persona_ops):
     """Test dispatch with non-existent persona fails gracefully"""
     result = persona_ops.dispatch(
