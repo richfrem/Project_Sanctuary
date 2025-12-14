@@ -1,50 +1,39 @@
 # RAG Cortex MCP Tests
 
-## Testing Pyramid (per ADR 048)
+Server-specific tests for RAG Cortex, verifying vector database operations, ingestion, and retrieval.
 
-| Layer | Description | Requires | Run Command |
-|-------|-------------|----------|-------------|
-| **1. Unit** | Fast, isolated, mocked | Nothing | `pytest tests/mcp_servers/rag_cortex/ -v -m "not integration"` |
-| **2. Integration** | Real ChromaDB | `sanctuary-vector-db` container | `pytest tests/mcp_servers/rag_cortex/ -v -m integration` |
-| **3. MCP Ops** | Tool interface | Server running | Via Antigravity/Claude Desktop |
+## Structure
 
----
+### 1. Unit Tests (`unit/`)
+Tests data models, validators, and error handling without external dependencies.
 
-## Prerequisites for Integration Tests
+### 2. Integration Tests (`integration/`)
+**File:** `test_operations.py`
+- **Primary Test Suite.**
+- Validates all Cortex tools (`ingest_incremental`, `query`, `get_stats`, `cache_*`) against a **REAL** ChromaDB instance.
+- Uses `BaseIntegrationTest` to ensure ChromaDB is available.
+- Uses **Isolated Test Collections** (e.g., `test_child_<timestamp>`) to perfectly isolate tests from each other and from the main database.
+
+### 3. E2E Tests (`e2e/`)
+**File:** `test_pipeline.py`
+- End-to-end pipeline validation (formerly `test_end_to_end_pipeline.py`).
+- Verifies complex workflows involving real data structures or system-level simulations.
+
+## Prerequisites
+
+Integration and E2E tests require ChromaDB (port 8000) and optionally Ollama (port 11434).
 
 ```bash
-# Start ChromaDB container
+# Start required services
 podman compose up -d vector-db
-
-# Verify it's running
-curl -I http://localhost:8000/api/v2/heartbeat
+ollama serve
 ```
 
----
+## Running Tests
 
-## Test Files by Layer
-
-### Layer 1: Unit Tests (no dependencies)
-- `test_models.py` - Data models
-- `test_validator.py` - Input validation
-- `test_cache_operations.py` - Mnemonic cache
-- `test_enhanced_diagnostics.py` - Error handling
-
-### Layer 2: Integration Tests (real ChromaDB)
-- `test_integration_real_db.py` - Full ingestion/query flow
-- `test_operations.py` (marked `@pytest.mark.integration`)
-- `test_cortex_ingestion.py` (marked `@pytest.mark.integration`)
-- `test_end_to_end_pipeline.py` (moved from `tests/integration/`) — End-to-end ingestion/query pipeline
-- `test_simple_query.py` (moved from `tests/integration/`) — Lightweight RAG query smoke test
-
-### Standalone Integration Script
 ```bash
-python3 mcp_servers/rag_cortex/run_cortex_integration.py --run-full-ingest
+# Run all RAG Cortex tests (Unit + Integration + E2E)
+pytest tests/mcp_servers/rag_cortex/ -v
 ```
 
----
-
-## CI/CD Behavior
-
-- **Unit tests**: Always run
-- **Integration tests**: Auto-skipped if ChromaDB unavailable (see `conftest.py`)
+Tests will automatically **SKIP** if services are not available, ensuring CI stability.

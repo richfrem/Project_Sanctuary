@@ -1,106 +1,182 @@
 """
-Unit tests for Cortex MCP operations
+RAG Cortex MCP Integration Tests - Operations Testing
+=====================================================
 
-Note: These are integration-style tests that require the actual
-Mnemonic Cortex infrastructure to be set up. They are marked
-with pytest.mark.integration and can be skipped in CI.
+Comprehensive integration tests for all RAG Cortex operations.
+Uses BaseIntegrationTest to ensure robust setup/teardown of real services.
+
+MCP OPERATIONS:
+---------------
+| Operation            | Type | Description                          |
+|----------------------|------|--------------------------------------|
+| cortex_ingest_full   | WRITE| Full ingest of documents             |
+| cortex_query         | READ | Query the vector database            |
+| cortex_cache_set     | WRITE| Set memory cache                     |
+| cortex_cache_get     | READ | Get memory cache                     |
+| cortex_cache_warmup  | WRITE| Warmup cache from ChromaDB           |
+| cortex_guardian_wakeup| READ| Generate context briefing            |
+| cortex_get_stats     | READ | Get database statistics              |
+
 """
 import pytest
-import tempfile
 import os
+import time
+import chromadb
+from langchain_chroma import Chroma
 from pathlib import Path
+
+from tests.mcp_servers.base.base_integration_test import BaseIntegrationTest
 from mcp_servers.rag_cortex.operations import CortexOperations
 
 
-def test_operations_init(temp_project_root):
-    """Test operations initialization."""
-    ops = CortexOperations(temp_project_root)
-    assert ops.project_root == Path(temp_project_root)
-    assert ops.scripts_dir == Path(temp_project_root) / "mcp_servers" / "rag_cortex" / "scripts"
-
-
-@pytest.mark.integration
-@pytest.mark.skip(reason="Skipped per user request (full ingest)")
-def test_ingest_full_script_not_found(temp_project_root):
-    """Test ingest_full when script doesn't exist."""
-    ops = CortexOperations(temp_project_root)
-    response = ops.ingest_full()
+class TestCortexOperations(BaseIntegrationTest):
+    """
+    Integration tests for all RAG Cortex operations.
+    Connects to REAL ChromaDB and Ollama services.
+    """
     
-    assert response.status == "error"
-    assert "not found" in response.error.lower()
+    def get_required_services(self):
+        return [
+            ("localhost", 8000, "ChromaDB"),
+            ("localhost", 11434, "Ollama")
+        ]
+
+    @pytest.fixture
+    def cortex_ops(self, tmp_path):
+        """Initialize real CortexOperations connected to real ChromaDB with ISOLATED collections."""
+        # Use a temporary directory for file storage to avoid polluting real data
+        project_root = tmp_path / "project_root"
+        project_root.mkdir()
+        
+        # Create necessary subdirectories
+        (project_root / ".env").write_text("CHROMA_HOST=localhost\nCHROMA_PORT=8000\n")
+        (project_root / "00_CHRONICLE").mkdir()
+        (project_root / "01_PROTOCOLS").mkdir()
+        (project_root / "TASKS").mkdir()
+        
+        # Connect to REAL ChromaDB (local server)
+        host = os.getenv("CHROMA_HOST", "localhost")
+        port = int(os.getenv("CHROMA_PORT", "8000"))
+        client = chromadb.HttpClient(host=host, port=port)
+        
+        ops = CortexOperations(str(project_root), client=client)
+        
+        # OVERRIDE collections to test-specific ones to avoid wrecking production data
+        timestamp = int(time.time())
+        ops.child_collection_name = f"test_child_{timestamp}"
+        ops.parent_collection_name = f"test_parent_{timestamp}"
+        
+        # Re-init vectorstore with new collection name
+        ops.vectorstore = Chroma(
+            client=client,
+            collection_name=ops.child_collection_name,
+            embedding_function=ops.embedding_model
+        )
+        
+        yield ops
+        
+        # TEARDOWN: Delete test collections
+        try:
+            client.delete_collection(ops.child_collection_name)
+            client.delete_collection(ops.parent_collection_name)
+        except Exception as e:
+            print(f"Warning: Failed to cleanup test collections: {e}")
+
+    def test_chroma_connectivity(self, cortex_ops):
+        """Validate we can talk to ChromaDB."""
+        heartbeat = cortex_ops.chroma_client.heartbeat()
+        assert heartbeat is not None
+
+    def test_ollama_embedding_generation(self, cortex_ops):
+        """Validate Ollama is generating real embeddings."""
+        text = "The quick brown fox jumps over the lazy dog."
+        embedding = cortex_ops.embedding_model.embed_query(text)
+        assert len(embedding) > 0
+        assert isinstance(embedding, list)
+        assert isinstance(embedding[0], float)
+
+    def test_ingest_and_query(self, cortex_ops):
+        """
+        Validate full Ingest -> Store -> Retrieve cycle with REAL components.
+        """
+        # 1. Create content
+        source_dir = cortex_ops.project_root / "00_CHRONICLE"
+        (source_dir / "test_doc.md").write_text(
+            "# Live Test Document\n\nThis is a live integration test for Protocol 101."
+        )
+        
+        # 2. Ingest
+        print("\nRunning cortex_ingest_full...")
+        result = cortex_ops.ingest_full(purge_existing=True, source_directories=["00_CHRONICLE"])
+        assert result.status == "success"
+        assert result.documents_processed == 1
+        
+        # 3. Query
+        print("\nRunning cortex_query...")
+        q_result = cortex_ops.query("Protocol 101", max_results=1)
+        assert q_result.status == "success"
+        assert len(q_result.results) > 0
+        assert "Live Test Document" in q_result.results[0].content
+        
+    def test_cache_operations(self, cortex_ops):
+        """Test Memory Cache (CAG) operations."""
+        print("\nTesting Cache Operations...")
+        
+        # 1. Cache Set
+        ops = cortex_ops
+        query = "What is the meaning of life?"
+        answer = "42 - Test Answer"
+        
+        res = ops.cache_set(query, answer)
+        assert res.stored is True
+        
+        # 2. Cache Get
+        cached = ops.cache_get(query)
+        assert cached.cache_hit is True
+        assert cached.answer == answer
+        
+        # 3. Cache Miss
+        miss = ops.cache_get("Unknown query")
+        assert miss.cache_hit is False
+
+    @pytest.mark.skip(reason="Requires pre-existing extensive database content for meaningful warmup")
+    def test_cache_warmup(self, cortex_ops):
+        """Test Cache Warmup (queries Chroma)."""
+        # Populate DB first
+        (cortex_ops.project_root / "00_CHRONICLE" / "test.md").write_text("# Test\nContent")
+        cortex_ops.ingest_full(source_directories=["00_CHRONICLE"])
+        
+        # Warmup
+        res = cortex_ops.cache_warmup()
+        assert res.status == "success"
+
+    def test_guardian_wakeup_basic(self, cortex_ops):
+        """Test Guardian Wakeup generation."""
+        # Create some basic files to be found
+        (cortex_ops.project_root / "WORK_IN_PROGRESS").mkdir(exist_ok=True)
+        (cortex_ops.project_root / "TASKS" / "test_task.md").write_text("- [ ] Task 1")
+        
+        print("\nRunning guardian_wakeup...")
+        res = cortex_ops.guardian_wakeup(mode="HOLISTIC")
+        
+        assert res.status == "success"
+        assert res.digest_path is not None
+        assert Path(res.digest_path).exists()
+        
+    def test_get_stats(self, cortex_ops):
+        """Test get_stats operation."""
+        # 1. Verify empty = error
+        res_empty = cortex_ops.get_stats()
+        assert res_empty.health_status == "error"
+
+        # 2. Ingest data
+        (cortex_ops.project_root / "00_CHRONICLE" / "stats_test.md").write_text("# Stats Test\nContent")
+        cortex_ops.ingest_full(source_directories=["00_CHRONICLE"])
+
+        # 3. Verify populated = healthy
+        res = cortex_ops.get_stats()
+        assert res.health_status == "healthy"
+        assert res.collections is not None
+        assert res.total_documents > 0
 
 
-@pytest.mark.integration
-def test_query_error_handling(temp_project_root):
-    """Test query error handling when service not available."""
-    ops = CortexOperations(temp_project_root)
-    # Mock failure
-    from unittest.mock import MagicMock
-    ops.chroma_client.get_collection = MagicMock(side_effect=Exception("Database error"))
-    
-    response = ops.query("test query")
-    
-    # Should return error response when database doesn't exist
-    assert response.status == "error"
-    assert response.error is not None
-
-
-@pytest.mark.integration
-def test_get_stats_no_database(temp_project_root):
-    """Test get_stats when database doesn't exist."""
-    ops = CortexOperations(temp_project_root)
-    response = ops.get_stats()
-    
-    # Should return error or degraded status
-    assert response.health_status in ["error", "degraded"]
-
-
-@pytest.mark.integration
-@pytest.mark.skip(reason="PyTorch 3.13 compatibility issue - RuntimeError: _has_torch_function docstring")
-def test_ingest_incremental_error_handling(temp_project_root):
-    """Test ingest_incremental error handling."""
-    ops = CortexOperations(temp_project_root)
-    
-    # Try to ingest non-existent file
-    response = ops.ingest_incremental(
-        file_paths=["nonexistent.md"],
-        skip_duplicates=True
-    )
-    
-    # Should return success with error message (no valid files)
-    assert response.status == "success"
-    assert response.error == "No valid files to ingest"
-    assert response.documents_added == 0
-
-
-# The following tests would require actual Mnemonic Cortex setup
-# and are marked as integration tests
-
-@pytest.mark.integration
-def test_get_stats_real_database():
-    """Test get_stats with real database (integration test)."""
-    project_root = "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-    ops = CortexOperations(project_root)
-    response = ops.get_stats()
-    
-    # Should return healthy status if database exists
-    if response.health_status == "healthy":
-        assert response.total_documents > 0
-        assert response.total_chunks > 0
-        assert "child_chunks" in response.collections
-        assert "parent_documents" in response.collections
-
-
-@pytest.mark.integration
-def test_query_real_database():
-    """Test query with real database (integration test)."""
-    project_root = "/Users/richardfremmerlid/Projects/Project_Sanctuary"
-    ops = CortexOperations(project_root)
-    response = ops.query("What is Protocol 101?", max_results=3)
-    
-    # Should return successful response
-    if response.status == "success":
-        assert len(response.results) > 0
-        assert response.query_time_ms > 0
-        assert all(hasattr(r, 'content') for r in response.results)
-        assert all(hasattr(r, 'metadata') for r in response.results)

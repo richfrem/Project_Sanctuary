@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-14T13:32:07.892705",
+  "last_updated": "2025-12-14T14:09:27.801466",
   "servers": {
     "adr": {
       "operations": {
@@ -32,115 +32,150 @@
           "last_tested": "2025-12-14T13:07:00.618691",
           "result": "PASSED",
           "duration": 0.003
+        },
+        "get_next_adr_number_empty_dir": {
+          "last_tested": "2025-12-14T14:08:45.588321",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "get_next_adr_number_with_existing": {
+          "last_tested": "2025-12-14T14:08:45.589818",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_adr_number_duplicate": {
+          "last_tested": "2025-12-14T14:08:45.591183",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_required_fields": {
+          "last_tested": "2025-12-14T14:08:45.592538",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_status_transition_invalid": {
+          "last_tested": "2025-12-14T14:08:45.593837",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_status_transition_valid": {
+          "last_tested": "2025-12-14T14:08:45.595431",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_supersedes_not_found": {
+          "last_tested": "2025-12-14T14:08:45.596826",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
     "agent_persona": {
       "operations": {
         "create_custom": {
-          "last_tested": "2025-12-14T12:50:49.110770",
+          "last_tested": "2025-12-14T13:48:48.595604",
           "result": "PASSED",
           "duration": 0.0
         },
         "create_custom_empty_definition": {
-          "last_tested": "2025-12-14T12:51:39.022618",
+          "last_tested": "2025-12-14T14:08:53.722589",
           "result": "PASSED",
           "duration": 0.0
         },
         "create_custom_empty_role": {
-          "last_tested": "2025-12-14T12:51:39.018170",
+          "last_tested": "2025-12-14T14:08:53.716708",
           "result": "PASSED",
           "duration": 0.0
         },
         "create_custom_invalid_characters": {
-          "last_tested": "2025-12-14T12:51:39.020391",
+          "last_tested": "2025-12-14T14:08:53.719843",
           "result": "PASSED",
           "duration": 0.0
         },
         "create_custom_large_definition": {
-          "last_tested": "2025-12-14T12:51:39.054998",
+          "last_tested": "2025-12-14T14:08:53.764153",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "create_custom_persona": {
-          "last_tested": "2025-12-14T12:51:39.007101",
+          "last_tested": "2025-12-14T14:08:53.779263",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "create_custom_role_normalization": {
-          "last_tested": "2025-12-14T12:51:39.049544",
+          "last_tested": "2025-12-14T14:08:53.756595",
           "result": "PASSED",
           "duration": 0.0
         },
         "create_custom_special_characters": {
-          "last_tested": "2025-12-14T12:51:39.057544",
+          "last_tested": "2025-12-14T14:08:53.767399",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "create_custom_unicode_content": {
-          "last_tested": "2025-12-14T12:51:39.052352",
+          "last_tested": "2025-12-14T14:08:53.759930",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "create_duplicate_persona": {
-          "last_tested": "2025-12-14T12:51:39.009502",
+          "last_tested": "2025-12-14T14:08:53.782536",
           "result": "PASSED",
           "duration": 0.0
         },
         "dispatch": {
-          "last_tested": "2025-12-14T12:55:09.681580",
+          "last_tested": "2025-12-14T13:49:08.950523",
           "result": "PASSED",
-          "duration": 12.432
+          "duration": 8.747
         },
         "dispatch_structure": {
-          "last_tested": "2025-12-14T12:51:39.015645",
+          "last_tested": "2025-12-14T14:08:53.791107",
           "result": "PASSED",
           "duration": 0.0
         },
         "get_state": {
-          "last_tested": "2025-12-14T12:50:49.105689",
+          "last_tested": "2025-12-14T13:48:48.589833",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "get_state_corrupted_json": {
-          "last_tested": "2025-12-14T12:51:39.038244",
+          "last_tested": "2025-12-14T14:08:53.743260",
           "result": "PASSED",
           "duration": 0.001
         },
         "get_state_empty_role": {
-          "last_tested": "2025-12-14T12:51:39.024940",
+          "last_tested": "2025-12-14T14:08:53.725500",
           "result": "PASSED",
           "duration": 0.0
         },
         "get_state_large_history": {
-          "last_tested": "2025-12-14T12:51:39.041142",
+          "last_tested": "2025-12-14T14:08:53.747548",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "get_state_no_history": {
-          "last_tested": "2025-12-14T12:51:39.011695",
+          "last_tested": "2025-12-14T14:08:53.785990",
           "result": "PASSED",
           "duration": 0.0
         },
         "get_state_with_valid_history": {
-          "last_tested": "2025-12-14T12:51:39.035259",
+          "last_tested": "2025-12-14T14:08:53.739892",
           "result": "PASSED",
           "duration": 0.0
         },
         "list_roles": {
-          "last_tested": "2025-12-14T12:51:39.004316",
+          "last_tested": "2025-12-14T14:08:53.775587",
           "result": "PASSED",
           "duration": 0.0
         },
         "list_roles_empty_custom": {
-          "last_tested": "2025-12-14T12:51:39.059897",
+          "last_tested": "2025-12-14T14:08:53.770464",
           "result": "PASSED",
           "duration": 0.0
         },
         "list_roles_with_custom_personas": {
-          "last_tested": "2025-12-14T12:51:39.033041",
+          "last_tested": "2025-12-14T14:08:53.736859",
           "result": "PASSED",
-          "duration": 0.0
+          "duration": 0.001
         },
         "persona_create_custom": {
           "last_tested": null,
@@ -164,7 +199,7 @@
           "duration": null
         },
         "persona_ops_initialization": {
-          "last_tested": "2025-12-14T12:51:39.001766",
+          "last_tested": "2025-12-14T14:08:53.772948",
           "result": "PASSED",
           "duration": 0.0
         },
@@ -174,29 +209,39 @@
           "duration": null
         },
         "reset_state": {
-          "last_tested": "2025-12-14T12:51:39.013683",
+          "last_tested": "2025-12-14T14:08:53.788586",
           "result": "PASSED",
           "duration": 0.0
         },
         "reset_state_active_agent": {
-          "last_tested": "2025-12-14T12:51:39.030578",
+          "last_tested": "2025-12-14T14:08:53.733192",
           "result": "PASSED",
           "duration": 0.0
         },
         "reset_state_empty_role": {
-          "last_tested": "2025-12-14T12:51:39.027750",
+          "last_tested": "2025-12-14T14:08:53.729655",
           "result": "PASSED",
           "duration": 0.0
         },
         "reset_state_nonexistent": {
-          "last_tested": "2025-12-14T12:51:39.047038",
+          "last_tested": "2025-12-14T14:08:53.753588",
           "result": "PASSED",
           "duration": 0.0
         },
         "reset_state_removes_file": {
-          "last_tested": "2025-12-14T12:51:39.043875",
+          "last_tested": "2025-12-14T14:08:53.750657",
           "result": "PASSED",
           "duration": 0.0
+        },
+        "dispatch[coordinator]": {
+          "last_tested": "2025-12-14T13:51:48.748467",
+          "result": "PASSED",
+          "duration": 7.302
+        },
+        "dispatch[auditor]": {
+          "last_tested": "2025-12-14T13:51:58.885012",
+          "result": "PASSED",
+          "duration": 10.131
         }
       }
     },
@@ -226,6 +271,31 @@
           "last_tested": "2025-12-14T13:20:07.645342",
           "result": "PASSED",
           "duration": 0.002
+        },
+        "get_next_entry_number": {
+          "last_tested": "2025-12-14T14:08:48.362684",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_entry_number_duplicate": {
+          "last_tested": "2025-12-14T14:08:48.364802",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_modification_window_new_file": {
+          "last_tested": "2025-12-14T14:08:48.365989",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_modification_window_old_file": {
+          "last_tested": "2025-12-14T14:08:48.368328",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_required_fields": {
+          "last_tested": "2025-12-14T14:08:48.369535",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -280,6 +350,16 @@
           "last_tested": "2025-12-14T13:24:25.932490",
           "result": "PASSED",
           "duration": 0.0
+        },
+        "path_validation": {
+          "last_tested": "2025-12-14T14:08:51.212412",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "path_validation_valid": {
+          "last_tested": "2025-12-14T14:08:51.214449",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -304,6 +384,16 @@
           "last_tested": "2025-12-14T13:20:07.720001",
           "result": "PASSED",
           "duration": 0.0
+        },
+        "security_path_traversal": {
+          "last_tested": "2025-12-14T14:08:43.988597",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "valid_path": {
+          "last_tested": "2025-12-14T14:08:43.990142",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -319,21 +409,56 @@
           "last_tested": null,
           "result": null,
           "duration": null
+        },
+        "dispatch_single_agent[coordinator]": {
+          "last_tested": "2025-12-14T14:02:18.757570",
+          "result": "PASSED",
+          "duration": 34.26
+        },
+        "dispatch_single_agent[auditor]": {
+          "last_tested": "2025-12-14T14:02:33.882340",
+          "result": "PASSED",
+          "duration": 15.058
         }
       }
     },
     "forge_llm": {
       "operations": {
         "check_sanctuary_model_status": {
-          "last_tested": null,
-          "result": null,
-          "duration": null
+          "last_tested": "2025-12-14T13:46:24.860120",
+          "result": "PASSED",
+          "duration": 0.003
         },
         "query_sanctuary_model": {
-          "last_tested": null,
-          "result": null,
-          "duration": null,
+          "last_tested": "2025-12-14T13:46:38.301338",
+          "result": "PASSED",
+          "duration": 13.404,
           "slow": true
+        },
+        "forge_model_serving": {
+          "last_tested": "2025-12-14T14:08:55.792313",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "init": {
+          "last_tested": "2025-12-14T14:08:55.794165",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "query_sanctuary_model_success": {
+          "last_tested": "2025-12-14T14:08:55.795902",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "check_model_availability_success": {
+          "last_tested": "2025-12-14T14:08:55.797113",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "check_model_availability_missing": {
+          "last_tested": "2025-12-14T14:08:55.798460",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -398,6 +523,16 @@
           "last_tested": "2025-12-14T13:32:07.892684",
           "result": "PASSED",
           "duration": 0.454
+        },
+        "validate_branch_name_valid": {
+          "last_tested": "2025-12-14T14:08:52.162162",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "safety_check_placeholder": {
+          "last_tested": "2025-12-14T14:08:52.164072",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -414,6 +549,136 @@
           "result": null,
           "duration": null,
           "slow": true
+        },
+        "dispatch_mission": {
+          "last_tested": "2025-12-14T14:05:14.524311",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "strategic_cycle": {
+          "last_tested": "2025-12-14T14:05:14.527723",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "protocol_056_loop_execution": {
+          "last_tested": "2025-12-14T14:07:26.020353",
+          "result": "PASSED",
+          "duration": 2.1
+        },
+        "orchestrator_dispatch_mission_basic": {
+          "last_tested": "2025-12-14T14:09:10.003237",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "orchestrator_dispatch_mission_custom_agent": {
+          "last_tested": "2025-12-14T14:09:10.004345",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "orchestrator_dispatch_mission_default_agent": {
+          "last_tested": "2025-12-14T14:09:10.005177",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "orchestrator_run_strategic_cycle_success": {
+          "last_tested": "2025-12-14T14:09:10.007025",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "orchestrator_run_strategic_cycle_ingestion_failure": {
+          "last_tested": "2025-12-14T14:09:10.008156",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "orchestrator_run_strategic_cycle_cache_failure_non_critical": {
+          "last_tested": "2025-12-14T14:09:10.009442",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "orchestrator_run_strategic_cycle_custom_days": {
+          "last_tested": "2025-12-14T14:09:10.010753",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "get_status_online": {
+          "last_tested": "2025-12-14T14:09:10.012961",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "get_status_offline": {
+          "last_tested": "2025-12-14T14:09:10.014183",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "list_recent_tasks_empty": {
+          "last_tested": "2025-12-14T14:09:10.015510",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "list_recent_tasks_with_results": {
+          "last_tested": "2025-12-14T14:09:10.017403",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "list_recent_tasks_respects_limit": {
+          "last_tested": "2025-12-14T14:09:10.019304",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "get_task_result_success": {
+          "last_tested": "2025-12-14T14:09:10.020538",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "get_task_result_not_found": {
+          "last_tested": "2025-12-14T14:09:10.021635",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "get_task_result_with_json_extension": {
+          "last_tested": "2025-12-14T14:09:10.023435",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "create_cognitive_task_success": {
+          "last_tested": "2025-12-14T14:09:10.025253",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "create_cognitive_task_with_engine": {
+          "last_tested": "2025-12-14T14:09:10.027113",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "create_cognitive_task_with_input_artifacts": {
+          "last_tested": "2025-12-14T14:09:10.029175",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "create_development_cycle_success": {
+          "last_tested": "2025-12-14T14:09:10.031419",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "query_mnemonic_cortex_success": {
+          "last_tested": "2025-12-14T14:09:10.033135",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "create_file_write_task_success": {
+          "last_tested": "2025-12-14T14:09:10.034695",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "create_git_commit_task_success": {
+          "last_tested": "2025-12-14T14:09:10.036796",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "full_workflow_status_to_task_creation": {
+          "last_tested": "2025-12-14T14:09:10.038330",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -443,6 +708,16 @@
           "last_tested": "2025-12-14T13:20:07.716521",
           "result": "PASSED",
           "duration": 0.001
+        },
+        "validate_protocol_number_duplicate": {
+          "last_tested": "2025-12-14T14:08:46.969552",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_required_fields": {
+          "last_tested": "2025-12-14T14:08:46.971141",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -493,6 +768,231 @@
           "last_tested": null,
           "result": null,
           "duration": null
+        },
+        "chroma_connectivity": {
+          "last_tested": "2025-12-14T13:56:58.907753",
+          "result": "PASSED",
+          "duration": 0.002
+        },
+        "ollama_embedding_generation": {
+          "last_tested": "2025-12-14T13:56:59.941438",
+          "result": "PASSED",
+          "duration": 0.958
+        },
+        "ingest_and_query": {
+          "last_tested": "2025-12-14T13:57:00.137002",
+          "result": "PASSED",
+          "duration": 0.102
+        },
+        "cache_operations": {
+          "last_tested": "2025-12-14T13:57:00.210402",
+          "result": "PASSED",
+          "duration": 0.004
+        },
+        "guardian_wakeup_basic": {
+          "last_tested": "2025-12-14T13:57:00.690435",
+          "result": "PASSED",
+          "duration": 0.412
+        },
+        "get_stats": {
+          "last_tested": "2025-12-14T13:57:01.059344",
+          "result": "PASSED",
+          "duration": 0.287
+        },
+        "cache_get_hit": {
+          "last_tested": "2025-12-14T14:09:25.367247",
+          "result": "PASSED",
+          "duration": 0.002
+        },
+        "cache_get_miss": {
+          "last_tested": "2025-12-14T14:09:25.487135",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "cache_set": {
+          "last_tested": "2025-12-14T14:09:25.715283",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "cache_stats": {
+          "last_tested": "2025-12-14T14:09:25.844281",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "cache_warmup": {
+          "last_tested": "2025-12-14T14:09:25.948520",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "guardian_wakeup": {
+          "last_tested": "2025-12-14T14:09:26.144163",
+          "result": "PASSED",
+          "duration": 0.088
+        },
+        "initialization": {
+          "last_tested": "2025-12-14T14:09:26.265728",
+          "result": "PASSED",
+          "duration": 0.114
+        },
+        "ingest_full": {
+          "last_tested": "2025-12-14T14:09:26.435515",
+          "result": "FAILED",
+          "duration": 0.13
+        },
+        "ingest_incremental": {
+          "last_tested": "2025-12-14T14:09:27.489917",
+          "result": "PASSED",
+          "duration": 1.05
+        },
+        "get_stats_with_samples": {
+          "last_tested": "2025-12-14T14:09:27.625559",
+          "result": "PASSED",
+          "duration": 0.128
+        },
+        "get_stats_without_samples": {
+          "last_tested": "2025-12-14T14:09:27.746618",
+          "result": "PASSED",
+          "duration": 0.12
+        },
+        "ingest_full_request": {
+          "last_tested": "2025-12-14T14:09:27.748301",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "ingest_full_response": {
+          "last_tested": "2025-12-14T14:09:27.749545",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "query_request": {
+          "last_tested": "2025-12-14T14:09:27.750894",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "query_result": {
+          "last_tested": "2025-12-14T14:09:27.752082",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "query_response": {
+          "last_tested": "2025-12-14T14:09:27.753585",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "collection_stats": {
+          "last_tested": "2025-12-14T14:09:27.754821",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "stats_response": {
+          "last_tested": "2025-12-14T14:09:27.755973",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "ingest_incremental_request": {
+          "last_tested": "2025-12-14T14:09:27.757036",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "ingest_incremental_response": {
+          "last_tested": "2025-12-14T14:09:27.758091",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "to_dict": {
+          "last_tested": "2025-12-14T14:09:27.759265",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "to_dict_with_nested_objects": {
+          "last_tested": "2025-12-14T14:09:27.761128",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validator_init": {
+          "last_tested": "2025-12-14T14:09:27.763192",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_full_success": {
+          "last_tested": "2025-12-14T14:09:27.765441",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_full_invalid_directory": {
+          "last_tested": "2025-12-14T14:09:27.767403",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_query_success": {
+          "last_tested": "2025-12-14T14:09:27.769287",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_query_empty_string": {
+          "last_tested": "2025-12-14T14:09:27.771317",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_query_whitespace_only": {
+          "last_tested": "2025-12-14T14:09:27.773088",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_query_too_long": {
+          "last_tested": "2025-12-14T14:09:27.774781",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_query_max_results_too_low": {
+          "last_tested": "2025-12-14T14:09:27.776571",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_query_max_results_too_high": {
+          "last_tested": "2025-12-14T14:09:27.778292",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_incremental_success": {
+          "last_tested": "2025-12-14T14:09:27.780269",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_incremental_relative_path": {
+          "last_tested": "2025-12-14T14:09:27.782715",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_incremental_empty_list": {
+          "last_tested": "2025-12-14T14:09:27.785703",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_incremental_too_many_files": {
+          "last_tested": "2025-12-14T14:09:27.787865",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_incremental_file_not_exists": {
+          "last_tested": "2025-12-14T14:09:27.790986",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_ingest_incremental_not_markdown": {
+          "last_tested": "2025-12-14T14:09:27.795554",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "validate_ingest_incremental_invalid_metadata": {
+          "last_tested": "2025-12-14T14:09:27.798892",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "validate_stats": {
+          "last_tested": "2025-12-14T14:09:27.801454",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     },
@@ -612,6 +1112,16 @@
           "last_tested": "2025-12-14T13:24:50.744535",
           "result": "PASSED",
           "duration": 0.001
+        },
+        "task_status_values": {
+          "last_tested": "2025-12-14T14:08:49.883020",
+          "result": "PASSED",
+          "duration": 0.0
+        },
+        "task_priority_values": {
+          "last_tested": "2025-12-14T14:08:49.884184",
+          "result": "PASSED",
+          "duration": 0.0
         }
       }
     }

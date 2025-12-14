@@ -45,8 +45,10 @@ TEST HISTORY:
 | (add new entries above this line)                                   |
 """
 
+
 import pytest
 import sys
+import subprocess
 from pathlib import Path
 
 # Add project root to path
@@ -54,6 +56,20 @@ project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+
+
+def is_ollama_running():
+    """Check if Ollama is running via simple CLI command."""
+    try:
+        subprocess.run(
+            ["ollama", "list"], 
+            check=True, 
+            capture_output=True, 
+            timeout=2
+        )
+        return True
+    except (subprocess.SubprocessError, FileNotFoundError):
+        return False
 
 
 @pytest.fixture
@@ -164,37 +180,44 @@ def test_create_custom(ops):
 # =============================================================================
 
 @pytest.mark.slow
-def test_dispatch(ops):
+@pytest.mark.parametrize("role", ["coordinator", "auditor"])
+def test_dispatch(ops, role):
     """
-    Test persona_dispatch operation.
+    Test persona_dispatch operation with different roles.
     SLOW - calls Ollama LLM on localhost:11434.
     
     Requires: Ollama running with model loaded.
     """
-    print(f"\n🤖 Testing persona_dispatch (calls real LLM)...")
-    print(f"   Note: This requires Ollama running at localhost:11434")
+    if not is_ollama_running():
+        pytest.skip("Ollama is not running. Skipping dispatch test.")
+
+    print(f"\n🤖 Testing persona_dispatch ({role})...")
+    
+    task_map = {
+        "coordinator": "Briefly describe what a git commit is. One sentence.",
+        "auditor": "Briefly identify one security risk of hardcoded API keys. One sentence."
+    }
     
     result = ops.dispatch(
-        role="coordinator",
-        task="Briefly describe what a git commit is. One sentence only."
+        role=role,
+        task=task_map[role]
     )
     
-    print(f"\n📨 Dispatch Result:")
-    print(f"   Role: {result.get('role', 'N/A')}")
+    print(f"\n📨 Dispatch Result ({role}):")
     print(f"   Status: {result['status']}")
     if result['status'] == 'success':
         response = result.get('response', '')[:100]
         print(f"   Response: {response}...")
-    else:
-        print(f"   Error: {result.get('error', 'N/A')}")
     
     # Assertions
     assert result["status"] == "success", f"Dispatch failed: {result.get('error')}"
-    assert "response" in result
+    assert result["role"] == role
     assert len(result["response"]) > 10
     
-    print("✅ persona_dispatch PASSED")
+    print(f"✅ persona_dispatch ({role}) PASSED")
+
 
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
