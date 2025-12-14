@@ -61,11 +61,23 @@ def pytest_runtest_makereport(item, call):
     if server not in data["servers"]:
         data["servers"][server] = {"operations": {}}
     
-    if operation not in data["servers"][server]["operations"]:
-        data["servers"][server]["operations"][operation] = {}
+    server_ops = data["servers"][server]["operations"]
+    target_key = operation
+
+    # Smart Matching Logic:
+    # 1. Check if 'operation' key exists (exact match)
+    # 2. Check if '{server}_{operation}' key exists (canonical match)
+    # 3. Otherwise, create new entry with 'operation' name
+    if operation not in server_ops:
+        canonical_name = f"{server}_{operation}"
+        if canonical_name in server_ops:
+            target_key = canonical_name
+    
+    if target_key not in server_ops:
+        server_ops[target_key] = {}
     
     # Update the operation entry
-    data["servers"][server]["operations"][operation].update({
+    server_ops[target_key].update({
         "last_tested": datetime.now().isoformat(),
         "result": report.outcome.upper(),  # PASSED, FAILED, SKIPPED
         "duration": round(report.duration, 3)

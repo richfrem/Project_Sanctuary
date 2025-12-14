@@ -1,3 +1,32 @@
+# TASK: Standardize MCP Server Integration Tests
+
+**Status:** complete
+**Priority:** High
+**Lead:** Unassigned
+**Dependencies:** None
+**Related Documents:** TASKS/2025-12-14-standardize-mcp-tests.md
+
+---
+
+## 1. Objective
+
+Standardize integration testing across all MCP servers (Simple + Complex) using a consistent 3-layer pyramid (Unit, Integration, E2E).
+
+## 2. Deliverables
+
+1. Standardized Test Suite
+2. Cleaned up legacy tests
+
+## 3. Acceptance Criteria
+
+- All 12 MCP servers have `integration/test_operations.py`
+- Complex MCPs have working integration tests
+- Protocol 056 E2E test is preserved
+
+## Notes
+
+**Status Change (2025-12-14):** backlog → complete
+Work completed and verified in Session 1267+.
 Title: Standardize MCP Server Tests — Base Classes & Structure
 **Status:** DONE
 **Lead:** Antigravity (AI)
