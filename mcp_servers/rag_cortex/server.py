@@ -18,7 +18,7 @@ from fastmcp import FastMCP
 from .operations import CortexOperations
 from .validator import CortexValidator, ValidationError
 from .models import to_dict
-from .container_manager import ensure_chromadb_running
+from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ollama_running
 
 # Initialize FastMCP with canonical domain name
 mcp = FastMCP("project_sanctuary.cognitive.cortex")
@@ -35,16 +35,6 @@ logging.basicConfig(
     stream=sys.stderr
 )
 logger = logging.getLogger("rag_cortex")
-
-# Ensure ChromaDB container is running
-logger.info("Checking ChromaDB service...")
-success, message = ensure_chromadb_running(PROJECT_ROOT)
-if success:
-    logger.info(f"✓ {message}")
-else:
-    logger.error(f"✗ {message}")
-    logger.warning("Some operations may fail without ChromaDB service")
-
 
 
 @mcp.tool()
@@ -371,4 +361,23 @@ def cortex_cache_stats() -> str:
 #     return f"Generated Adaptation Packet: {output_path}"
 
 if __name__ == "__main__":
+    # Ensure Containers are running
+    logger.info("Checking Container Services...")
+
+    # 1. ChromaDB
+    success, message = ensure_chromadb_running(PROJECT_ROOT)
+    if success:
+        logger.info(f"✓ {message}")
+    else:
+        logger.error(f"✗ {message}")
+        logger.warning("RAG operations may fail without ChromaDB")
+
+    # 2. Ollama (for Embeddings/Reasoning)
+    success, message = ensure_ollama_running(PROJECT_ROOT)
+    if success:
+        logger.info(f"✓ {message}")
+    else:
+        logger.error(f"✗ {message}")
+        logger.warning("Embedding/Reasoning operations may fail without Ollama")
+
     mcp.run()

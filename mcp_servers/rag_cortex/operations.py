@@ -886,7 +886,7 @@ class CortexOperations:
     
     def _get_git_diff_summary(self, file_path: str) -> str:
         """
-        Get a brief git diff summary for a file.
+        Get a brief git diff summary for a file from the most recent commit.
         
         Args:
             file_path: Relative path to file from project root
@@ -902,23 +902,43 @@ class CortexOperations:
                 ["git", "ls-files", "--error-unmatch", file_path],
                 cwd=self.project_root,
                 capture_output=True,
-                timeout=1
+                timeout=3
             )
             
             if result.returncode != 0:
                 return "new file"
             
-            # Get diff stat against HEAD
+            # First try: Check uncommitted changes (working directory vs HEAD)
             result = subprocess.run(
                 ["git", "diff", "--numstat", "HEAD", file_path],
                 cwd=self.project_root,
                 capture_output=True,
                 text=True,
-                timeout=1
+                timeout=3
             )
             
             if result.returncode == 0 and result.stdout.strip():
                 # Parse numstat: "additions deletions filename"
+                parts = result.stdout.strip().split('\t')
+                if len(parts) >= 2:
+                    additions = parts[0]
+                    deletions = parts[1]
+                    if additions != '-' and deletions != '-':
+                        return f"+{additions}/-{deletions} (uncommitted)"
+            
+            # Second try: Check last commit THAT TOUCHED THIS FILE
+            # Use git log -1 --numstat --format="" path/to/file
+            result = subprocess.run(
+                ["git", "log", "-1", "--numstat", "--format=", "--", file_path],
+                cwd=self.project_root,
+                capture_output=True,
+                text=True,
+                timeout=3
+            )
+            
+            if result.returncode == 0 and result.stdout.strip():
+                # Parse numstat: "additions deletions filename"
+                # Output might look like: "15\t3\tmcp_servers/rag_cortex/operations.py"
                 parts = result.stdout.strip().split('\t')
                 if len(parts) >= 2:
                     additions = parts[0]
@@ -1130,20 +1150,32 @@ class CortexOperations:
                         
                         # Precise priority extraction
                         priority_score = 5  # Default unspecified
-                        if re.search(r"priority:\s*Critical", content, re.IGNORECASE):
+                        # Use permissive regex to handle MD bolding, spacing, colons
+                        if re.search(r"Priority.*?Critical", content, re.IGNORECASE):
                             priority_score = 1
-                        elif re.search(r"priority:\s*High", content, re.IGNORECASE):
+                        elif re.search(r"Priority.*?High", content, re.IGNORECASE):
                             priority_score = 2
-                        elif re.search(r"priority:\s*Medium", content, re.IGNORECASE):
+                        elif re.search(r"Priority.*?Medium", content, re.IGNORECASE):
                             priority_score = 3
-                        elif re.search(r"priority:\s*Low", content, re.IGNORECASE):
+                        elif re.search(r"Priority.*?Low", content, re.IGNORECASE):
                             priority_score = 4
                         
-                        # Extract Objective
+                        # Extract Objective (try multiple formats)
                         objective = "Objective not found"
-                        obj_match = re.search(r"(?:Objective|Goal):\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
+                        
+                        # Format 1: Inline "Objective: text"
+                        obj_match = re.search(r"^(?:Objective|Goal):\s*(.+?)(?:\n|$)", content, re.IGNORECASE | re.MULTILINE)
                         if obj_match:
                             objective = obj_match.group(1).strip()
+                        else:
+                            # Format 2: Section header "## 1. Objective" (flexible on level/numbering)
+                            # Matches: # Objective, ## 1. Objective, ### Goal, etc.
+                            section_match = re.search(r"^#+\s*(?:\d+\.\s*)?(?:Objective|Goal).*?\n(.+?)(?:\n#+\s|\Z)", content, re.IGNORECASE | re.DOTALL | re.MULTILINE)
+                            if section_match:
+                                # Get first non-empty line of content
+                                full_text = section_match.group(1).strip()
+                                obj_lines = [line.strip() for line in full_text.split('\n') if line.strip()]
+                                objective = obj_lines[0] if obj_lines else "Objective not found"
                         
                         # Extract Status
                         status = None
@@ -1218,6 +1250,52 @@ class CortexOperations:
         except Exception as e:
             return "RED", f"System Failure: {str(e)}"
 
+    def _get_container_status(self) -> str:
+        """
+        Check status of critical podman containers.
+        
+        Returns:
+            String summary of container status.
+        """
+        import subprocess
+        try:
+            # Check specifically for our containers
+            result = subprocess.run(
+                ["podman", "ps", "--format", "{{.Names}} {{.Status}}"],
+                capture_output=True,
+                text=True,
+                timeout=2
+            )
+            
+            if result.returncode != 0:
+                return "Unknown (Podman CLI error)"
+            
+            output = result.stdout
+            
+            status_map = {}
+            for name in ["sanctuary-vector-db", "sanctuary-ollama-mcp"]:
+                if name in output:
+                    if "Up" in output.split(name)[-1].split('\n')[0] or "Up" in [line for line in output.split('\n') if name in line][0]:
+                         status_map[name] = "UP"
+                    else:
+                         status_map[name] = "DOWN"
+                else:
+                    status_map[name] = "MISSING"
+            
+            # Format output
+            # "✅ Vector DB | ✅ Ollama"
+            
+            parts = []
+            for name, short_name in [("sanctuary-vector-db", "Vector DB"), ("sanctuary-ollama-mcp", "Ollama")]:
+                stat = status_map.get(name, "Unknown")
+                icon = "✅" if stat == "UP" else "❌"
+                parts.append(f"{icon} {short_name}")
+                
+            return " | ".join(parts)
+            
+        except Exception:
+            return "⚠️ Podman Check Failed"
+
     def guardian_wakeup(self, mode: str = "HOLISTIC"):
         """
         Generate Guardian boot digest (Context Synthesis Engine).
@@ -1240,12 +1318,16 @@ class CortexOperations:
             # 1. System Health (Traffic Light)
             health_color, health_reason = self._get_system_health_traffic_light()
             
+            # 1b. Container Health
+            container_status = self._get_container_status()
+            
             # 2. Synthesis Assembly (Schema v2.1)
             digest_lines = []
             
             # Header
             digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.1)")
             digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
+            digest_lines.append(f"**Infrastructure:** {container_status}")
             digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
             digest_lines.append("")
             
