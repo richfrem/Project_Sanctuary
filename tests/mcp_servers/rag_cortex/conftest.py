@@ -13,7 +13,7 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Import container manager
-from mcp_servers.rag_cortex.container_manager import ensure_chromadb_running
+from mcp_servers.lib.container_manager import ensure_chromadb_running
 
 from mcp_servers.rag_cortex.operations import CortexOperations
 
