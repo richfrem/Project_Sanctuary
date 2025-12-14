@@ -10,6 +10,7 @@ from .validator import ForgeValidator, ValidationError
 from .models import to_dict
 import os
 import json
+import sys
 from typing import Optional
 
 # Initialize FastMCP with canonical domain name
@@ -110,5 +111,21 @@ def check_sanctuary_model_status() -> str:
         }, indent=2)
 
 
+
 if __name__ == "__main__":
+    try:
+        from mcp_servers.lib.container_manager import ensure_ollama_running
+        # Ensure Ollama container is running
+        print(f"Checking Ollama service...", file=sys.stderr)
+        success, message = ensure_ollama_running(PROJECT_ROOT)
+        if success:
+            print(f"✓ {message}", file=sys.stderr)
+        else:
+            print(f"✗ {message}", file=sys.stderr)
+            print("Model operations may fail without Ollama service", file=sys.stderr)
+    except ImportError:
+        # If lib not available yet, proceed without check (or log warning)
+        print("Warning: Could not import container_manager check", file=sys.stderr)
+        pass
+
     mcp.run()
