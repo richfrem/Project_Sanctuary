@@ -1,4 +1,6 @@
 Title: Standardize MCP Server Tests — Base Classes & Structure
+**Status:** DONE
+**Lead:** Antigravity (AI)
 Date: 2025-12-14
 Owner: richardfremmerlid
 Branch: feature/task-101-integration-test-base-refactor
@@ -56,5 +58,18 @@ Related files
 
 Next actions (immediate)
 ------------------------
-1. Confirm you want me to proceed with: README + ADR 053 edits, plus creating canonical example templates and a POC refactor of `chronicle`.
-2. If confirmed, I will implement the README and ADR edits, add templates, and perform the POC refactor on your current branch.
+- [x] Standardize "Easy" MCPs (File-based)
+  - [x] ADR
+  - [x] Chronicle
+  - [x] Protocol
+  - [x] Config
+  - [x] Code
+  - [x] Task
+  - [x] Git (with Temp Repo)
+- [x] Standardize "Complex" MCPs
+  - [x] Forge LLM (Ollama)
+  - [x] Agent Persona (Ollama + Forge)
+  - [x] Council (Mocked RAG, Real Persona)
+  - [x] RAG Cortex (Real DB, Isolated Collections)
+  - [x] Orchestrator (Logic + E2E Protocol 056)
+- [x] Verify all tests pass
