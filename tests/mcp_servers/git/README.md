@@ -1,6 +1,6 @@
 # Git MCP Testing
 
-This directory contains the testing hierarchy for the Git MCP server, in accordance with **ADR 048**.
+This directory contains the testing hierarchy for the Git MCP server, in accordance with **ADR 048** and **ADR 055**.
 
 ## Testing Layers
 
@@ -9,24 +9,27 @@ This directory contains the testing hierarchy for the Git MCP server, in accorda
 - **Focus:** Isolated logic, path validation, safety checks.
 - **Run:** `pytest tests/mcp_servers/git/unit/`
 
-### Layer 2: Integration Tests
+### Layer 2: Integration Tests (ISOLATED)
 - **Location:** `integration/`
-- **Focus:** Real git operations using temporary repositories.
-- **Key Features:**
-  - `git_roots` fixture: Creates a simulated remote/local environment.
-  - Test coverage for `finish_feature` (merge checks, squash detection, cleanup).
+- **Focus:** Real git operations using **TEMPORARY REPOSITORIES**.
+- **Strategy:**
+  - Tests verify `GitOperations` class methods.
+  - A `temp_repo` fixture creates a **clean, isolated git repository** in `/tmp` for *every* test function.
+  - Tests execute git commands (init, add, commit, branch) against this temp repo.
+  - **SAFETY:** These tests **NEVER** touch the real Project Sanctuary repository or its branches.
 - **Run:** `pytest tests/mcp_servers/git/integration/`
 
-### Layer 3: MCP Operations
-- **Location:** N/A (Manual verification via MCP Client or `server.py` inspection)
-- **Focus:** End-to-end tool execution.
-- **Status:** Verified via integration tests covering the core logic refactored into `GitOperations`.
+### Layer 3: E2E Tests
+- **Location:** `e2e/`
+- **Focus:** End-to-end user workflows.
 
 ## Key Test Files
 
 | File | Purpose |
 |------|---------|
-| `conftest.py` | Shared fixtures (`git_roots`, `git_ops_mock`). |
-| `unit/test_validator.py` | Unit validation tests. |
-| `integration/test_operations.py` | Comprehensive integration tests for all Git tools. |
-| `integration/test_git_workflow_end_to_end.py` | End-to-end repo workflow smoke test (moved from `tests/integration/`). |
+| `unit/test_validator.py` | Unit validation of input parameters and safety rules. |
+| `integration/test_operations.py` | **MAIN SUITE**: Tests every Git operation in isolation (add, commit, branch, status, log). |
+
+## Integration Test Safety
+> **Crucial:** The integration tests use `tempfile.mkdtemp()` to create disposable git repositories.
+> This ensures that running `pytest` does not modify your actual working directory, change branches, or create conflicting git state.
