@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/chronicle/test_connectivity.py::test_chronicle_connectivity Starting Chronicle server: mcp_servers.chronicle.server
+Tools found: ['chronicle_create_entry', 'chronicle_append_entry', 'chronicle_update_entry', 'chronicle_get_entry', 'chronicle_list_entries', 'chronicle_read_latest_entries', 'chronicle_search']
+PASSED
+
+============================== 1 passed in 1.73s ===============================

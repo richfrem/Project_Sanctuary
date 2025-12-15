@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/chronicle/test_connectivity.py::test_chronicle_connectivity Starting Chronicle server: mcp_servers.chronicle.server
+
+-------------------------------- live log call ---------------------------------
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.chronicle.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 17405)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🖥  Server name: project_sanctuary.chronicle                  │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📦 Transport:   STDIO                                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📚 Docs:        https://gofastmcp.com                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🚀 Hosting:     https://fastmcp.cloud                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: [12/14/25 16:19:27] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 'project_sanctuary.chronicle' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+Tools found: ['chronicle_create_entry', 'chronicle_append_entry', 'chronicle_update_entry', 'chronicle_get_entry', 'chronicle_list_entries', 'chronicle_read_latest_entries', 'chronicle_search']
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+PASSED
+
+============================== 1 passed in 1.65s ===============================

@@ -3,7 +3,9 @@ import json
 import logging
 import os
 import subprocess
-from typing import Any, Dict, List, Optional
+import sys
+import time
+from typing import Any, Dict, List, Optional, Union
 from pathlib import Path
 
 # Configure logging
@@ -12,30 +14,94 @@ logger = logging.getLogger(__name__)
 
 class MCPTestClient:
     """
+    Test Client for Headless MCP Servers.
+    
     A lightweight MCP Client for E2E testing.
     Spawns a server process and communicates via JSON-RPC 2.0 over stdio.
     """
-    def __init__(self, server_path: Path):
-        self.server_path = server_path
+    def __init__(self, server_target: Union[Path, str], is_module: bool = False):
+        self.server_target = server_target
+        self.is_module = is_module
         self.process: Optional[subprocess.Popen] = None
         self.request_id = 0
         self._notification_handlers = {}
         
+        # Determine name for logging
+        if self.is_module:
+            self.name = str(server_target).split(".")[-2] if "." in str(server_target) else str(server_target)
+        else:
+            self.name = Path(server_target).name
+
     def start(self, env: Optional[Dict[str, str]] = None):
         """Start the MCP server subprocess."""
-        cmd = ["python", str(self.server_path)]
+        # Use sys.executable to ensure we use the same Python environment
+        if self.is_module:
+             cmd = [sys.executable, "-m", str(self.server_target)]
+        else:
+             cmd = [sys.executable, str(self.server_target)]
+             
         logger.info(f"Starting MCP Server: {' '.join(cmd)}")
         
+        # Line buffering usually requires env var or -u, but bufsize=1 + text=True helps in Python
         self.process = subprocess.Popen(
             cmd,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, # Capture stderr to prevent noise
+            stderr=subprocess.STDOUT, # Redirect stderr to stdout to capture logs
             text=True,
             bufsize=1, # Line buffered
             env=env or os.environ.copy()
         )
         logger.info(f"Server started (PID {self.process.pid})")
+        
+        # Perform Initialization Handshake
+        try:
+            self.initialize()
+        except Exception as e:
+            self.stop()
+            raise RuntimeError(f"Failed to initialize server: {e}")
+
+    def initialize(self):
+        """Perform the MCP initialization handshake."""
+        self.request_id += 1
+        init_request = {
+            "jsonrpc": "2.0",
+            "id": self.request_id,
+            "method": "initialize",
+            "params": {
+                "protocolVersion": "2024-11-05", # Or "latest"
+                "capabilities": {
+                    "sampling": {},
+                    "roots": {"listChanged": True}
+                },
+                "clientInfo": {"name": "MCPTestClient", "version": "1.0.0"}
+            }
+        }
+        
+        # Send Initialize
+        json_str = json.dumps(init_request) + "\n"
+        self.process.stdin.write(json_str)
+        self.process.stdin.flush()
+        
+        # Read Response
+        resp = self._read_response()
+        if resp.get("id") != self.request_id:
+            raise RuntimeError(f"Unexpected response ID during init: {resp}")
+        
+        if "error" in resp:
+            raise RuntimeError(f"Initialization failed: {resp['error']}")
+            
+        logger.info(f"Server initialized. Capabilities: {resp.get('result', {}).get('capabilities')}")
+        
+        # Send Initialized Notification
+        notify = {
+            "jsonrpc": "2.0",
+            "method": "notifications/initialized"
+        }
+        notify_str = json.dumps(notify) + "\n"
+        self.process.stdin.write(notify_str)
+        self.process.stdin.flush()
+        # No response expected for notification
         
     def stop(self):
         """Stop the server subprocess."""
@@ -47,12 +113,33 @@ class MCPTestClient:
                 self.process.kill()
             logger.info("Server stopped")
             
-    def _read_response(self) -> Dict[str, Any]:
-        """Blocking read of the next JSON-RPC message from stdout."""
+    def _read_response(self, timeout: float = 60.0) -> Dict[str, Any]:
+        """Blocking read of the next JSON-RPC message from stdout with timeout.
+        
+        Args:
+            timeout: Maximum seconds to wait for response (default: 60s)
+        """
+        import select
+        
         if not self.process or not self.process.stdout:
             raise RuntimeError("Server not running")
-            
+        
+        start_time = time.time()
+        
         while True:
+            # Check timeout
+            elapsed = time.time() - start_time
+            if elapsed > timeout:
+                raise TimeoutError(f"Server response timeout after {timeout}s")
+            
+            # Use select to check if data is available (with remaining timeout)
+            remaining = timeout - elapsed
+            ready, _, _ = select.select([self.process.stdout], [], [], min(remaining, 1.0))
+            
+            if not ready:
+                # No data available yet, continue loop (will check timeout on next iteration)
+                continue
+            
             line = self.process.stdout.readline()
             if not line:
                 stderr = self.process.stderr.read() if self.process.stderr else ""
@@ -60,7 +147,7 @@ class MCPTestClient:
             
             # Skip debug lines if any (hacky, but FastMCP might log)
             if not line.strip().startswith("{"):
-                # logger.debug(f"Server Output: {line.strip()}")
+                logger.info(f"[{self.name}] Output: {line.strip()}")
                 continue
                 
             try:
@@ -130,4 +217,3 @@ class MCPTestClient:
             response = self._read_response()
             if response.get("id") == self.request_id:
                 return response.get("result", {}).get("tools", [])
-
