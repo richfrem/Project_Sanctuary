@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-14T20:18:19.426398",
+  "last_updated": "2025-12-14T20:26:12.376685",
   "servers": {
     "adr": {
       "operations": {
@@ -480,7 +480,7 @@
           "duration": null
         },
         "git_diff": {
-          "last_tested": "2025-12-14T20:11:05.365642",
+          "last_tested": "2025-12-14T20:18:59.816583",
           "result": "PASSED",
           "duration": 0.01
         },
@@ -500,9 +500,9 @@
           "duration": null
         },
         "git_log": {
-          "last_tested": "2025-12-14T20:11:05.285936",
+          "last_tested": "2025-12-14T20:18:59.716443",
           "result": "PASSED",
-          "duration": 0.009
+          "duration": 0.013
         },
         "git_push_feature": {
           "last_tested": null,
@@ -515,32 +515,32 @@
           "duration": null
         },
         "git_start_feature": {
-          "last_tested": "2025-12-14T20:11:05.777558",
+          "last_tested": "2025-12-14T20:19:00.136769",
           "result": "PASSED",
-          "duration": 0.025
+          "duration": 0.026
         },
         "git_status": {
-          "last_tested": "2025-12-14T20:11:05.203087",
+          "last_tested": "2025-12-14T20:18:59.617845",
           "result": "PASSED",
-          "duration": 0.035
+          "duration": 0.057
         },
         "git_add_commit": {
-          "last_tested": "2025-12-14T20:11:05.685388",
+          "last_tested": "2025-12-14T20:19:00.036389",
           "result": "PASSED",
-          "duration": 0.127
+          "duration": 0.131
         },
         "git_ops_workflow": {
-          "last_tested": "2025-12-14T20:11:05.983574",
+          "last_tested": "2025-12-14T20:19:00.363262",
           "result": "PASSED",
-          "duration": 0.142
+          "duration": 0.154
         },
         "validate_branch_name_valid": {
-          "last_tested": "2025-12-14T20:11:05.093214",
+          "last_tested": "2025-12-14T20:18:59.477477",
           "result": "PASSED",
           "duration": 0.0
         },
         "safety_check_placeholder": {
-          "last_tested": "2025-12-14T20:11:05.095642",
+          "last_tested": "2025-12-14T20:18:59.479559",
           "result": "PASSED",
           "duration": 0.0
         }
@@ -779,34 +779,34 @@
           "duration": null
         },
         "chroma_connectivity": {
-          "last_tested": "2025-12-14T13:56:58.907753",
+          "last_tested": "2025-12-14T20:26:09.466988",
           "result": "PASSED",
-          "duration": 0.002
+          "duration": 0.001
         },
         "ollama_embedding_generation": {
-          "last_tested": "2025-12-14T13:56:59.941438",
+          "last_tested": "2025-12-14T20:26:10.208520",
           "result": "PASSED",
-          "duration": 0.958
+          "duration": 0.685
         },
         "ingest_and_query": {
-          "last_tested": "2025-12-14T13:57:00.137002",
+          "last_tested": "2025-12-14T20:26:10.488490",
           "result": "PASSED",
-          "duration": 0.102
+          "duration": 0.168
         },
         "cache_operations": {
-          "last_tested": "2025-12-14T13:57:00.210402",
+          "last_tested": "2025-12-14T20:26:10.538373",
           "result": "PASSED",
-          "duration": 0.004
+          "duration": 0.006
         },
         "guardian_wakeup_basic": {
-          "last_tested": "2025-12-14T13:57:00.690435",
+          "last_tested": "2025-12-14T20:26:11.044342",
           "result": "PASSED",
-          "duration": 0.412
+          "duration": 0.445
         },
         "get_stats": {
-          "last_tested": "2025-12-14T13:57:01.059344",
+          "last_tested": "2025-12-14T20:26:11.197978",
           "result": "PASSED",
-          "duration": 0.287
+          "duration": 0.089
         },
         "cache_get_hit": {
           "last_tested": "2025-12-14T14:09:25.367247",
@@ -1009,29 +1009,39 @@
           "duration": 11.103
         },
         "shim_conversion_content": {
-          "last_tested": "2025-12-14T20:14:00.923141",
+          "last_tested": "2025-12-14T20:26:12.027877",
           "result": "PASSED",
-          "duration": 0.002
+          "duration": 0.001
         },
         "shim_file_saving": {
-          "last_tested": "2025-12-14T20:14:00.934011",
+          "last_tested": "2025-12-14T20:26:12.031045",
           "result": "PASSED",
-          "duration": 0.002
+          "duration": 0.001
         },
         "integration_flow": {
-          "last_tested": "2025-12-14T20:14:02.249548",
+          "last_tested": "2025-12-14T20:26:12.376674",
           "result": "PASSED",
-          "duration": 1.31
+          "duration": 0.34
         },
         "full_ingestion_polyglot": {
-          "last_tested": "2025-12-14T20:18:19.272356",
+          "last_tested": "2025-12-14T20:19:59.360937",
           "result": "PASSED",
-          "duration": 0.972
+          "duration": 0.954
         },
         "incremental_ingestion_js": {
-          "last_tested": "2025-12-14T20:18:19.426388",
+          "last_tested": "2025-12-14T20:19:59.504430",
           "result": "PASSED",
-          "duration": 0.115
+          "duration": 0.109
+        },
+        "manual_verification_pipeline": {
+          "last_tested": "2025-12-14T20:24:36.411397",
+          "result": "FAILED",
+          "duration": 1.305
+        },
+        "polyglot_code_ingestion": {
+          "last_tested": "2025-12-14T20:26:11.575466",
+          "result": "PASSED",
+          "duration": 0.33
         }
       }
     },
