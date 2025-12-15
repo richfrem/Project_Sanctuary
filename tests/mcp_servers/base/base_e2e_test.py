@@ -17,18 +17,20 @@ class BaseE2ETest:
     def mcp_client(self):
         """
         Fixture that starts the MCP server for the class and yields a client.
+        Prioritizes SERVER_MODULE if set, otherwise falls back to SERVER_NAME path.
         """
-        if not self.SERVER_NAME:
+        if self.SERVER_MODULE:
+            client = MCPTestClient(self.SERVER_MODULE, is_module=True)
+        elif self.SERVER_NAME:
+            # Resolve server path: mcp_servers/<name>/server.py
+            server_path = PROJECT_ROOT / "mcp_servers" / self.SERVER_NAME / "server.py"
+            if not server_path.exists():
+                raise FileNotFoundError(f"Server not found at {server_path}")
+            client = MCPTestClient(server_path)
+        else:
             yield None
             return
 
-        # Resolve server path: mcp_servers/<name>/server.py
-        server_path = PROJECT_ROOT / "mcp_servers" / self.SERVER_NAME / "server.py"
-        if not server_path.exists():
-            raise FileNotFoundError(f"Server not found at {server_path}")
-            
-        client = MCPTestClient(server_path)
-        
         # Setup environment
         env = os.environ.copy()
         env["PYTHONPATH"] = str(PROJECT_ROOT)
@@ -40,7 +42,6 @@ class BaseE2ETest:
             yield client
         finally:
             client.stop()
-
     def call_tool(self, mcp_client, tool_name, args={}):
         """Helper to call tool with assertions."""
         result = mcp_client.call_tool(tool_name, args)
