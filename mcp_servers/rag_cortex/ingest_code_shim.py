@@ -168,6 +168,85 @@ def parse_python_to_markdown(file_path: str) -> str:
     return markdown_output
 
 
+def parse_javascript_to_markdown(file_path: Path) -> str:
+    """
+    Reads a .js/.ts file and converts it into a Markdown string using Regex.
+    
+    Args:
+        file_path: Path to the JS/TS file
+        
+    Returns:
+        Markdown-formatted string
+    """
+    import re
+    
+    with open(file_path, 'r', encoding='utf-8') as f:
+        source = f.read()
+        
+    filename = file_path.name
+    try:
+        relative_path = file_path.relative_to(Path.cwd()) if file_path.is_absolute() else file_path
+    except ValueError:
+        relative_path = file_path
+        
+    # Header
+    markdown_output = f"# Code File: {filename}\n\n"
+    markdown_output += f"**Path:** `{relative_path}`\n"
+    markdown_output += f"**Language:** JavaScript/TypeScript\n\n"
+    
+    # Simple formatting: Extract doc comments blocks (/** ... */)
+    # This is a basic heuristic
+    doc_blocks = re.finditer(r'/\*\*(.*?)\*/', source, re.DOTALL)
+    for match in doc_blocks:
+        comment = match.group(1).strip()
+        # Clean up asterisks
+        cleaned_comment = '\n'.join([line.strip().lstrip('*').strip() for line in comment.split('\n')])
+        if len(cleaned_comment) > 20: # Arbitrary filter for significant comments
+             markdown_output += f"## Documentation Hint\n\n{cleaned_comment}\n\n"
+
+    # Identify Functions (Basic Regex)
+    # 1. function foo()
+    func_pattern = re.compile(r'function\s+(\w+)\s*\((.*?)\)')
+    for match in func_pattern.finditer(source):
+        name = match.group(1)
+        args = match.group(2)
+        line_no = source[:match.start()].count('\n') + 1
+        markdown_output += f"## Function: `{name}`\n\n"
+        markdown_output += f"**Line:** {line_no}\n"
+        markdown_output += f"**Signature:** `function {name}({args})`\n\n"
+        
+        # Context extraction (dumb implementation: just grab next 10 lines)
+        full_lines = source.split('\n')
+        start_idx = max(0, line_no - 1)
+        end_idx = min(len(full_lines), start_idx + 20) # Grab up to 20 lines
+        snippet = '\n'.join(full_lines[start_idx:end_idx])
+        markdown_output += f"```javascript\n{snippet}\n...\n```\n\n"
+
+    # 2. const foo = () => 
+    arrow_pattern = re.compile(r'(const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?\(?(.*?)\)?\s*=>')
+    for match in arrow_pattern.finditer(source):
+        kind = match.group(1)
+        name = match.group(2)
+        args = match.group(3) or ""
+        line_no = source[:match.start()].count('\n') + 1
+        markdown_output += f"## {kind.title()} Function: `{name}`\n\n"
+        markdown_output += f"**Line:** {line_no}\n"
+        markdown_output += f"**Signature:** `{name} = ({args}) => ...`\n\n"
+        
+        full_lines = source.split('\n')
+        start_idx = max(0, line_no - 1)
+        end_idx = min(len(full_lines), start_idx + 20)
+        snippet = '\n'.join(full_lines[start_idx:end_idx])
+        markdown_output += f"```javascript\n{snippet}\n...\n```\n\n"
+            
+    # Always include full source at bottom for reference if file is small (<500 lines)
+    lines = source.split('\n')
+    if len(lines) < 500:
+         markdown_output += "## Full Source Code\n\n```javascript\n" + source + "\n```\n\n"
+    
+    return markdown_output
+
+
 def convert_and_save(input_file: str, output_file: Optional[str] = None) -> str:
     """
     Convert a Python file to markdown and optionally save it.
@@ -183,12 +262,22 @@ def convert_and_save(input_file: str, output_file: Optional[str] = None) -> str:
     input_path = Path(input_file)
     
     if output_file is None:
-        output_file = input_path.with_suffix('.md')
+        # Append .md to the original filename (e.g., test.py -> test.py.md)
+        # This prevents collisions with existing .md files and allows .gitignore filtering
+        output_file = str(input_path) + ".md"
     
     output_path = Path(output_file)
     
-    # Convert to markdown
-    markdown_content = parse_python_to_markdown(input_path)
+    # Select parser based on extension
+    if input_path.suffix == '.py':
+        markdown_content = parse_python_to_markdown(input_path)
+    elif input_path.suffix in ['.js', '.jsx', '.ts', '.tsx']:
+        markdown_content = parse_javascript_to_markdown(input_path)
+    else:
+        # Fallback for unknown text files (treat as plain text block)
+        with open(input_path, 'r', encoding='utf-8') as f:
+             source = f.read()
+        markdown_content = f"# File: {input_path.name}\n\n```\n{source}\n```"
     
     # Save to file
     output_path.parent.mkdir(parents=True, exist_ok=True)

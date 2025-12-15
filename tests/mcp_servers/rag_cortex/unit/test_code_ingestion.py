@@ -61,7 +61,7 @@ def test_shim_file_saving(sample_python_file):
     """Test that convert_and_save creates the file correctly."""
     output_path = convert_and_save(str(sample_python_file))
     
-    assert output_path.endswith(".md")
+    assert output_path.endswith(".py.md")
     assert Path(output_path).exists()
     
     content = Path(output_path).read_text(encoding="utf-8")

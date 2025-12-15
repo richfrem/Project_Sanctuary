@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-14T18:09:15.833869",
+  "last_updated": "2025-12-14T20:18:19.426398",
   "servers": {
     "adr": {
       "operations": {
@@ -480,9 +480,9 @@
           "duration": null
         },
         "git_diff": {
-          "last_tested": "2025-12-14T18:09:13.990875",
+          "last_tested": "2025-12-14T20:11:05.365642",
           "result": "PASSED",
-          "duration": 0.009
+          "duration": 0.01
         },
         "git_finish_feature": {
           "last_tested": null,
@@ -500,9 +500,9 @@
           "duration": null
         },
         "git_log": {
-          "last_tested": "2025-12-14T18:09:13.915146",
+          "last_tested": "2025-12-14T20:11:05.285936",
           "result": "PASSED",
-          "duration": 0.01
+          "duration": 0.009
         },
         "git_push_feature": {
           "last_tested": null,
@@ -515,32 +515,32 @@
           "duration": null
         },
         "git_start_feature": {
-          "last_tested": "2025-12-14T18:09:14.604925",
+          "last_tested": "2025-12-14T20:11:05.777558",
           "result": "PASSED",
-          "duration": 0.138
+          "duration": 0.025
         },
         "git_status": {
-          "last_tested": "2025-12-14T18:09:13.831999",
+          "last_tested": "2025-12-14T20:11:05.203087",
           "result": "PASSED",
-          "duration": 0.037
+          "duration": 0.035
         },
         "git_add_commit": {
-          "last_tested": "2025-12-14T18:09:14.269949",
+          "last_tested": "2025-12-14T20:11:05.685388",
           "result": "PASSED",
-          "duration": 0.213
+          "duration": 0.127
         },
         "git_ops_workflow": {
-          "last_tested": "2025-12-14T18:09:15.833853",
+          "last_tested": "2025-12-14T20:11:05.983574",
           "result": "PASSED",
-          "duration": 0.826
+          "duration": 0.142
         },
         "validate_branch_name_valid": {
-          "last_tested": "2025-12-14T18:09:13.680958",
+          "last_tested": "2025-12-14T20:11:05.093214",
           "result": "PASSED",
           "duration": 0.0
         },
         "safety_check_placeholder": {
-          "last_tested": "2025-12-14T18:09:13.683761",
+          "last_tested": "2025-12-14T20:11:05.095642",
           "result": "PASSED",
           "duration": 0.0
         }
@@ -839,19 +839,19 @@
           "duration": 0.088
         },
         "initialization": {
-          "last_tested": "2025-12-14T14:09:26.265728",
+          "last_tested": "2025-12-14T20:10:42.160056",
           "result": "PASSED",
-          "duration": 0.114
+          "duration": 0.291
         },
         "ingest_full": {
-          "last_tested": "2025-12-14T14:09:26.435515",
-          "result": "FAILED",
-          "duration": 0.13
+          "last_tested": "2025-12-14T20:10:42.270404",
+          "result": "PASSED",
+          "duration": 0.103
         },
         "ingest_incremental": {
-          "last_tested": "2025-12-14T14:09:27.489917",
+          "last_tested": "2025-12-14T20:10:42.547895",
           "result": "PASSED",
-          "duration": 1.05
+          "duration": 0.272
         },
         "get_stats_with_samples": {
           "last_tested": "2025-12-14T14:09:27.625559",
@@ -1007,6 +1007,31 @@
           "last_tested": "2025-12-14T15:15:18.420050",
           "result": "PASSED",
           "duration": 11.103
+        },
+        "shim_conversion_content": {
+          "last_tested": "2025-12-14T20:14:00.923141",
+          "result": "PASSED",
+          "duration": 0.002
+        },
+        "shim_file_saving": {
+          "last_tested": "2025-12-14T20:14:00.934011",
+          "result": "PASSED",
+          "duration": 0.002
+        },
+        "integration_flow": {
+          "last_tested": "2025-12-14T20:14:02.249548",
+          "result": "PASSED",
+          "duration": 1.31
+        },
+        "full_ingestion_polyglot": {
+          "last_tested": "2025-12-14T20:18:19.272356",
+          "result": "PASSED",
+          "duration": 0.972
+        },
+        "incremental_ingestion_js": {
+          "last_tested": "2025-12-14T20:18:19.426388",
+          "result": "PASSED",
+          "duration": 0.115
         }
       }
     },

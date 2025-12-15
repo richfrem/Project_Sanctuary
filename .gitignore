@@ -102,6 +102,7 @@ nohup.out
 mcp_servers/agent_persona/state/
 mcp_servers/rag_cortex/data/
 dataset_package/
+*.py.md
 
 ResearchPapers
 
