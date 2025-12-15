@@ -1,0 +1,147 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario 
+-------------------------------- live log setup --------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:21 Starting MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.code.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 26060)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+ERROR
+
+==================================== ERRORS ====================================
+_____ ERROR at setup of TestProtocol056Headless.test_triple_loop_scenario ______
+
+self = <tests.mcp_servers.base.mcp_test_client.MCPTestClient object at 0x10c0dc1a0>
+env = {'ANTIGRAVITY_AGENT': '1', 'ANTIGRAVITY_CLI_ALIAS': 'agy', 'BUNDLED_DEBUGPY_PATH': '/Users/richardfremmerlid/.antigrav...ions/ms-python.debugpy-2025.14.1-darwin-arm64/bundled/libs/debugpy', 'CHROMA_CHILD_COLLECTION': 'child_chunks_v5', ...}
+
+    def start(self, env: Optional[Dict[str, str]] = None):
+        """Start the MCP server subprocess."""
+        # Use sys.executable to ensure we use the same Python environment
+        if self.is_module:
+             cmd = [sys.executable, "-m", str(self.server_target)]
+        else:
+             cmd = [sys.executable, str(self.server_target)]
+    
+        logger.info(f"Starting MCP Server: {' '.join(cmd)}")
+    
+        # Line buffering usually requires env var or -u, but bufsize=1 + text=True helps in Python
+        self.process = subprocess.Popen(
+            cmd,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, # Redirect stderr to stdout to capture logs
+            text=True,
+            bufsize=1, # Line buffered
+            env=env or os.environ.copy()
+        )
+        logger.info(f"Server started (PID {self.process.pid})")
+    
+        # Perform Initialization Handshake
+        try:
+>           self.initialize()
+
+tests/mcp_servers/base/mcp_test_client.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/mcp_servers/base/mcp_test_client.py:86: in initialize
+    resp = self._read_response()
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.mcp_servers.base.mcp_test_client.MCPTestClient object at 0x10c0dc1a0>
+timeout = 60.0
+
+    def _read_response(self, timeout: float = 60.0) -> Dict[str, Any]:
+        """Blocking read of the next JSON-RPC message from stdout with timeout.
+    
+        Args:
+            timeout: Maximum seconds to wait for response (default: 60s)
+        """
+        import select
+    
+        if not self.process or not self.process.stdout:
+            raise RuntimeError("Server not running")
+    
+>       start_time = time.time()
+                     ^^^^
+E       NameError: name 'time' is not defined. Did you forget to import 'time'?
+
+tests/mcp_servers/base/mcp_test_client.py:126: NameError
+
+During handling of the above exception, another exception occurred:
+
+self = <orchestrator.e2e.test_protocol_056_headless.TestProtocol056Headless object at 0x10bfefb60>
+
+    @pytest.fixture(scope="class")
+    def essential_fleet(self):
+        """Starts only the servers required for this test suite."""
+        from tests.mcp_servers.base.mcp_server_fleet import MCPServerFleet
+    
+        required_servers = [
+            "mcp_servers.code.server",
+            "mcp_servers.rag_cortex.server",
+            "mcp_servers.chronicle.server",
+            "mcp_servers.git.server",
+            "mcp_servers.orchestrator.server",
+            "mcp_servers.agent_persona.server"
+        ]
+    
+        fleet = MCPServerFleet()
+>       fleet.start_all(modules=required_servers)
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/mcp_servers/base/mcp_server_fleet.py:45: in start_all
+    client.start(env=env)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.mcp_servers.base.mcp_test_client.MCPTestClient object at 0x10c0dc1a0>
+env = {'ANTIGRAVITY_AGENT': '1', 'ANTIGRAVITY_CLI_ALIAS': 'agy', 'BUNDLED_DEBUGPY_PATH': '/Users/richardfremmerlid/.antigrav...ions/ms-python.debugpy-2025.14.1-darwin-arm64/bundled/libs/debugpy', 'CHROMA_CHILD_COLLECTION': 'child_chunks_v5', ...}
+
+    def start(self, env: Optional[Dict[str, str]] = None):
+        """Start the MCP server subprocess."""
+        # Use sys.executable to ensure we use the same Python environment
+        if self.is_module:
+             cmd = [sys.executable, "-m", str(self.server_target)]
+        else:
+             cmd = [sys.executable, str(self.server_target)]
+    
+        logger.info(f"Starting MCP Server: {' '.join(cmd)}")
+    
+        # Line buffering usually requires env var or -u, but bufsize=1 + text=True helps in Python
+        self.process = subprocess.Popen(
+            cmd,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, # Redirect stderr to stdout to capture logs
+            text=True,
+            bufsize=1, # Line buffered
+            env=env or os.environ.copy()
+        )
+        logger.info(f"Server started (PID {self.process.pid})")
+    
+        # Perform Initialization Handshake
+        try:
+            self.initialize()
+        except Exception as e:
+            self.stop()
+>           raise RuntimeError(f"Failed to initialize server: {e}")
+E           RuntimeError: Failed to initialize server: name 'time' is not defined
+
+tests/mcp_servers/base/mcp_test_client.py:61: RuntimeError
+------------------------------ Captured log setup ------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:21 Starting MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.code.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 26060)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+=========================== short test summary info ============================
+ERROR tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario
+=============================== 1 error in 0.32s ===============================

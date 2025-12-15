@@ -84,3 +84,17 @@ def pytest_runtest_makereport(item, call):
     })
     
     save_instrumentation(data)
+
+@pytest.fixture(scope="session")
+def mcp_fleet():
+    """
+    Session-scoped fixture that starts the entire MCP server fleet.
+    Yields an MCPServerFleet instance.
+    """
+    from tests.mcp_servers.base.mcp_server_fleet import MCPServerFleet
+    fleet = MCPServerFleet()
+    fleet.start_all()
+    try:
+        yield fleet
+    finally:
+        fleet.stop_all()

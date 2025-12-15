@@ -1,0 +1,476 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario 
+-------------------------------- live log setup --------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:21 Starting MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.code.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18873)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    🖥  Server name: project_sanctuary.code                    │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    📦 Transport:   STDIO                                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    📚 Docs:        https://gofastmcp.com                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    🚀 Hosting:     https://fastmcp.cloud                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: [12/14/25 16:25:28] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 'project_sanctuary.code' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting rag_cortex...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.rag_cortex.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18876)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:36,500 - rag_cortex - INFO - Skipping container checks (SKIP_CONTAINER_CHECKS set)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              🖥  Server name: project_sanctuary.cognitive.cortex              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              📦 Transport:   STDIO                                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              📚 Docs:        https://gofastmcp.com                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              🚀 Hosting:     https://fastmcp.cloud                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: [12/14/25 16:25:36] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 'project_sanctuary.cognitive.cortex'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: with transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting chronicle...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.chronicle.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18909)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🖥  Server name: project_sanctuary.chronicle                  │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📦 Transport:   STDIO                                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📚 Docs:        https://gofastmcp.com                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🚀 Hosting:     https://fastmcp.cloud                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: [12/14/25 16:25:37] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 'project_sanctuary.chronicle' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting git...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.git.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18921)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    🖥  Server name: project_sanctuary.git                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    📦 Transport:   STDIO                                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    📚 Docs:        https://gofastmcp.com                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    🚀 Hosting:     https://fastmcp.cloud                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: [12/14/25 16:25:39] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 'project_sanctuary.git' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting orchestrator...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.orchestrator.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18922)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': False}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting agent_persona...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.agent_persona.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18932)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona MCP] Initialized with persona_dir: /Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/agent_persona/personas
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: [12/14/25 16:25:41] INFO     [Agent Persona MCP]         agent_persona_ops.py:51
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: Initialized with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: persona_dir:
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: /Users/richardfremmerlid/Pr
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: ojects/Project_Sanctuary/mc
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: p_servers/agent_persona/per
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: sonas
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': False}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:48 Fleet started with 6 servers.
+-------------------------------- live log call ---------------------------------
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:79 === Cycle 1: Validation Policy Generation ===
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,701 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,725 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,837 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/auth/identity "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,838 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,878 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,881 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,907 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,908 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Validation_Policy.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,908 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Validation_Policy.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,911 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,911 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:42,753 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/pre-flight-checks "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:42,815 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/upsert "HTTP/1.1 200 OK"
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 1/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,821 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,825 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,871 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,871 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 49.68ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,871 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 49.68ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 2/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,879 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,884 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,926 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,926 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 47.03ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,926 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 47.03ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 3/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,933 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,937 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,986 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,986 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 53.30ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,986 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 53.30ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 4/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:50,990 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:50,992 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:51,031 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:51,031 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 41.21ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:51,031 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 41.21ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 5/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,040 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,044 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,089 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,089 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 48.44ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,089 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 48.44ms with 1 results.
+FAILED
+------------------------------ live log teardown -------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:52 Stopping MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping rag_cortex...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping chronicle...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping git...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping orchestrator...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping agent_persona...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+
+
+=================================== FAILURES ===================================
+______________ TestProtocol056Headless.test_triple_loop_scenario _______________
+
+self = <orchestrator.e2e.test_protocol_056_headless.TestProtocol056Headless object at 0x10cf5e490>
+essential_fleet = <tests.mcp_servers.base.mcp_server_fleet.MCPServerFleet object at 0x10ced3cb0>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10cfa8980>
+
+    @pytest.mark.e2e
+    def test_triple_loop_scenario(self, essential_fleet, caplog):
+        """
+        Executes the 'Triple Recursive Loop' scenario + Architecture Analysis (Cycle 4).
+    
+        Cycles:
+        1. Validation Policy: Create -> Ingest -> Verify
+        2. Integrity Verification: Create Chronicle -> Ingest -> Create Report (referencing Policy/Chronicle) -> Ingest
+        3. Recursive Meta-Validation: Query for Report -> Verify it references Policy & Chronicle
+        4. Architecture Analysis: Agent Persona (Strategist) -> Analyze -> Chronicle -> Ingest -> Verify
+        """
+        caplog.set_level(logging.INFO)
+        mcp_fleet = essential_fleet
+    
+        # --- Clients ---
+        code_client = mcp_fleet.get_client("code")
+        cortex_client = mcp_fleet.get_client("rag_cortex")
+        chronicle_client = mcp_fleet.get_client("chronicle")
+        git_client = mcp_fleet.get_client("git")
+        orchestrator_client = mcp_fleet.get_client("orchestrator")
+        persona_client = mcp_fleet.get_client("agent_persona")
+    
+        # --- Helpers ---
+        def wait_for_ingestion(query, expected_text, max_retries=5):
+            """Wait for RAG to index content."""
+            for i in range(max_retries):
+                logger.info(f"Waiting for ingestion... Attempt {i+1}/{max_retries}")
+                time.sleep(2)
+                res = cortex_client.call_tool("cortex_query", {"query": query, "max_results": 1})
+                if res and "results" in res and len(res["results"]) > 0:
+                    content = res["results"][0].get("content", "")
+                    if expected_text in content:
+                        logger.info("Content verified in RAG.")
+                        return True
+            return False
+    
+        def parse_chronicle_path(response_str):
+            """Extract path from 'Created Chronicle Entry X: /path/to/file'"""
+            if isinstance(response_str, str) and ": " in response_str:
+                parts = response_str.split(": ")
+                if len(parts) >= 2:
+                    return parts[1].strip()
+            return None
+    
+        # --- CYCLE 1: Validation Policy ---
+        logger.info("=== Cycle 1: Validation Policy Generation ===")
+        # Use a subfolder to avoid cluttering root
+        test_dir = "WORK_IN_PROGRESS/test_runs"
+        policy_path = f"{test_dir}/Protocol_056_Validation_Policy.md"
+    
+        policy_content = (
+            "# Protocol 056 Validation Policy\n\n"
+            "## Core Directives\n"
+            "1. **Iron Root Doctrine**: All system states must be verified against immutable logs.\n"
+            "2. **Recursive Check**: The verification process must verify itself.\n"
+            "3. **Validation Phrase**: 'The Guardian confirms Validation Protocol 056 is active.'\n"
+        )
+    
+        # 1. Create Policy
+        code_client.call_tool("code_write", {
+            "path": policy_path,
+            "content": policy_content,
+            "backup": True,
+            "create_dirs": True
+        })
+    
+        # 2. Ingest Policy
+        cortex_client.call_tool("cortex_ingest_incremental", {
+            "file_paths": [policy_path],
+            "skip_duplicates": False
+        })
+    
+        # 3. Verify Ingestion
+>       assert wait_for_ingestion("validation phrase", "The Guardian confirms"), "Cycle 1 Failed: Policy keyphrase not found in RAG."
+E       AssertionError: Cycle 1 Failed: Policy keyphrase not found in RAG.
+E       assert False
+E        +  where False = <function TestProtocol056Headless.test_triple_loop_scenario.<locals>.wait_for_ingestion at 0x10cf9a2a0>('validation phrase', 'The Guardian confirms')
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py:107: AssertionError
+------------------------------ Captured log setup ------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:21 Starting MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.code.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18873)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    🖥  Server name: project_sanctuary.code                    │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    📦 Transport:   STDIO                                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    📚 Docs:        https://gofastmcp.com                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    🚀 Hosting:     https://fastmcp.cloud                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: [12/14/25 16:25:28] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 'project_sanctuary.code' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting rag_cortex...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.rag_cortex.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18876)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:36,500 - rag_cortex - INFO - Skipping container checks (SKIP_CONTAINER_CHECKS set)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              🖥  Server name: project_sanctuary.cognitive.cortex              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              📦 Transport:   STDIO                                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              📚 Docs:        https://gofastmcp.com                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │              🚀 Hosting:     https://fastmcp.cloud                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: [12/14/25 16:25:36] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 'project_sanctuary.cognitive.cortex'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: with transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting chronicle...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.chronicle.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18909)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🖥  Server name: project_sanctuary.chronicle                  │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📦 Transport:   STDIO                                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📚 Docs:        https://gofastmcp.com                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🚀 Hosting:     https://fastmcp.cloud                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: [12/14/25 16:25:37] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 'project_sanctuary.chronicle' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting git...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.git.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18921)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    🖥  Server name: project_sanctuary.git                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    📦 Transport:   STDIO                                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    📚 Docs:        https://gofastmcp.com                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                    🚀 Hosting:     https://fastmcp.cloud                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: [12/14/25 16:25:39] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: 'project_sanctuary.git' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [git] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting orchestrator...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.orchestrator.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18922)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': False}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting agent_persona...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.agent_persona.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 18932)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona MCP] Initialized with persona_dir: /Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/agent_persona/personas
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: [12/14/25 16:25:41] INFO     [Agent Persona MCP]         agent_persona_ops.py:51
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: Initialized with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: persona_dir:
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: /Users/richardfremmerlid/Pr
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: ojects/Project_Sanctuary/mc
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: p_servers/agent_persona/per
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: sonas
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': False}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:48 Fleet started with 6 servers.
+------------------------------ Captured log call -------------------------------
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:79 === Cycle 1: Validation Policy Generation ===
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,701 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,725 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,837 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/auth/identity "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,838 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,878 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,881 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,907 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,908 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Validation_Policy.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,908 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Validation_Policy.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,911 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:41,911 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:42,753 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/pre-flight-checks "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:42,815 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/upsert "HTTP/1.1 200 OK"
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 1/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,821 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,825 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,871 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,871 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 49.68ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:44,871 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 49.68ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 2/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,879 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,884 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,926 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,926 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 47.03ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:46,926 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 47.03ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 3/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,933 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,937 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,986 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,986 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 53.30ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:48,986 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 53.30ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 4/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:50,990 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:50,992 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:51,031 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:51,031 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 41.21ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:51,031 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 41.21ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:60 Waiting for ingestion... Attempt 5/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,040 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,044 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,089 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,089 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 48.44ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [rag_cortex] Output: 2025-12-14 16:25:53,089 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 48.44ms with 1 results.
+---------------------------- Captured log teardown -----------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:52 Stopping MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping rag_cortex...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping chronicle...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping git...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping orchestrator...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:54 Stopping agent_persona...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:113 Server stopped
+=========================== short test summary info ============================
+FAILED tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario
+============================== 1 failed in 27.05s ==============================

@@ -1,0 +1,70 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario 
+-------------------------------- live log setup --------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:21 Starting MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:43 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.code.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:55 Server started (PID 32626)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                    🖥  Server name: project_sanctuary.code                    │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                    📦 Transport:   STDIO                                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                    📚 Docs:        https://gofastmcp.com                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                    🚀 Hosting:     https://fastmcp.cloud                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: [12/14/25 17:15:22] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: 'project_sanctuary.code' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [code] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:94 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting rag_cortex...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:43 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.rag_cortex.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:55 Server started (PID 32628)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:15:23,842 - rag_cortex - INFO - Skipping container checks (SKIP_CONTAINER_CHECKS set)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │              🖥  Server name: project_sanctuary.cognitive.cortex              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │              📦 Transport:   STDIO                                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │              📚 Docs:        https://gofastmcp.com                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │              🚀 Hosting:     https://fastmcp.cloud                           │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: [12/14/25 17:15:23] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 'project_sanctuary.cognitive.cortex'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: with transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:94 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:43 Booting chronicle...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:43 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.chronicle.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:55 Server started (PID 32636)

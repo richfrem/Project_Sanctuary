@@ -1,0 +1,434 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario 
+-------------------------------- live log call ---------------------------------
+WARNING  orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:249 Agent dispatch exception: Server response timeout after 60.0s
+FAILED                                                                   [100%]
+
+=================================== FAILURES ===================================
+______________ TestProtocol056Headless.test_triple_loop_scenario _______________
+
+self = <orchestrator.e2e.test_protocol_056_headless.TestProtocol056Headless object at 0x10c65ec10>
+essential_fleet = <tests.mcp_servers.base.mcp_server_fleet.MCPServerFleet object at 0x10c62bb60>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10c908ad0>
+
+    @pytest.mark.e2e
+    def test_triple_loop_scenario(self, essential_fleet, caplog):
+        """
+        Executes the 'Triple Recursive Loop' scenario + Architecture Analysis (Cycle 4).
+    
+        Cycles:
+        1. Validation Policy: Create -> Ingest -> Verify
+        2. Integrity Verification: Create Chronicle -> Ingest -> Create Report (referencing Policy/Chronicle) -> Ingest
+        3. Recursive Meta-Validation: Query for Report -> Verify it references Policy & Chronicle
+        4. Architecture Analysis: Agent Persona (Strategist) -> Analyze -> Chronicle -> Ingest -> Verify
+        """
+        caplog.set_level(logging.INFO)
+        mcp_fleet = essential_fleet
+    
+        # --- Clients ---
+        code_client = mcp_fleet.get_client("code")
+        cortex_client = mcp_fleet.get_client("rag_cortex")
+        chronicle_client = mcp_fleet.get_client("chronicle")
+        git_client = mcp_fleet.get_client("git")
+        orchestrator_client = mcp_fleet.get_client("orchestrator")
+        persona_client = mcp_fleet.get_client("agent_persona")
+    
+        # --- Helpers ---
+        def wait_for_ingestion(query, expected_text, max_retries=5):
+            """Wait for RAG to index content."""
+            import json
+            for i in range(max_retries):
+                logger.info(f"Waiting for ingestion... Attempt {i+1}/{max_retries}")
+                time.sleep(3)  # Increased from 2s to 3s for Chronicle entries
+                res = cortex_client.call_tool("cortex_query", {"query": query, "max_results": 1})
+    
+                # MCP response format: {'content': [{'type': 'text', 'text': '{JSON}'}], ...}
+                if res and "content" in res and len(res["content"]) > 0:
+                    # Extract the JSON string from content[0].text
+                    text_content = res["content"][0].get("text", "")
+                    try:
+                        # Parse the nested JSON
+                        query_result = json.loads(text_content)
+    
+                        if "results" in query_result and len(query_result["results"]) > 0:
+                            content = query_result["results"][0].get("content", "")
+                            logger.info(f"Retrieved content preview: {content[:200]}...")
+                            if expected_text in content:
+                                logger.info("Content verified in RAG.")
+                                return True
+                        else:
+                            logger.warning(f"No results in query response. Query result: {query_result}")
+                    except json.JSONDecodeError as e:
+                        logger.error(f"Failed to parse query response JSON: {e}")
+                        logger.error(f"Raw text: {text_content[:500]}")
+                else:
+                    logger.warning(f"Unexpected response format: {res}")
+            return False
+    
+        def parse_chronicle_path(response):
+            """Extract path from Chronicle MCP response.
+    
+            Response format: {
+                'content': [{'type': 'text', 'text': 'Created Chronicle Entry X: /path'}],
+                'structuredContent': {'result': 'Created Chronicle Entry X: /path'},
+                'isError': False
+            }
+            """
+            # Try to get from structuredContent.result first
+            if isinstance(response, dict) and "structuredContent" in response:
+                result_str = response["structuredContent"].get("result", "")
+                if ": " in result_str:
+                    parts = result_str.split(": ")
+                    if len(parts) >= 2:
+                        return parts[1].strip()
+    
+            # Fallback: try parsing as string
+            if isinstance(response, str) and ": " in response:
+                parts = response.split(": ")
+                if len(parts) >= 2:
+                    return parts[1].strip()
+    
+            return None
+    
+        # --- CYCLE 1: Validation Policy ---
+        logger.info("=== Cycle 1: Validation Policy Generation ===")
+        # Use a subfolder to avoid cluttering root
+        test_dir = "WORK_IN_PROGRESS/test_runs"
+        policy_path = f"{test_dir}/Protocol_056_Validation_Policy.md"
+    
+        policy_content = (
+            "# Protocol 056 Validation Policy\n\n"
+            "## Core Directives\n"
+            "1. **Iron Root Doctrine**: All system states must be verified against immutable logs.\n"
+            "2. **Recursive Check**: The verification process must verify itself.\n"
+            "3. **Validation Phrase**: 'The Guardian confirms Validation Protocol 056 is active.'\n"
+        )
+    
+        # 1. Create Policy
+        code_client.call_tool("code_write", {
+            "path": policy_path,
+            "content": policy_content,
+            "backup": True,
+            "create_dirs": True
+        })
+    
+        # 2. Ingest Policy
+        cortex_client.call_tool("cortex_ingest_incremental", {
+            "file_paths": [policy_path],
+            "skip_duplicates": False
+        })
+    
+        # 3. Verify Ingestion
+        assert wait_for_ingestion("validation phrase", "The Guardian confirms"), "Cycle 1 Failed: Policy keyphrase not found in RAG."
+        logger.info("Cycle 1 Complete: Policy Ingested and Verified.")
+    
+        # --- CYCLE 2: Integrity Verification Report ---
+        logger.info("=== Cycle 2: Integrity Verification ===")
+    
+        # 1. Create Chronicle Entry
+        # Use content that is unique and searchable
+        chronicle_content = "Initiating headless triple-loop test sequence. Reference: VALIDATION_START_056"
+        chronicle_res = chronicle_client.call_tool("chronicle_create_entry", {
+            "title": "Protocol 056 Test Initialization",
+            "content": chronicle_content,
+            "author": "TestHarness",
+            "status": "published",
+            "classification": "internal"
+        })
+        logger.info(f"Chronicle Response: {chronicle_res}")
+    
+        # 2. Ingest Chronicle Entry (CRITICAL STEP)
+        chronicle_path = parse_chronicle_path(chronicle_res)
+        assert chronicle_path, f"Failed to parse chronicle path from: {chronicle_res}"
+    
+        cortex_client.call_tool("cortex_ingest_incremental", {
+            "file_paths": [chronicle_path],
+            "skip_duplicates": False
+        })
+    
+        # Give vector DB time to index the Chronicle entry
+        time.sleep(2)
+    
+        assert wait_for_ingestion("headless triple-loop test sequence", "Initiating headless triple-loop"), "Cycle 2 Pre-check Failed: Chronicle entry not found in RAG."
+    
+        # 3. Create Integrity Report (referencing both)
+        report_path = f"{test_dir}/Protocol_056_Integrity_Verification_Report.md"
+        report_content = (
+            "# Strategic Crucible Loop (Protocol 056) Integrity Verification Report\n\n"
+            "**Date:** 2025-12-06\n"
+            "**Status:** VERIFIED\n\n"
+            "## Executive Summary\n\n"
+            "The Strategic Crucible Loop validation has been successfully executed.\n"
+            "## Checks\n"
+            "- Policy File Exists: YES (Verified RAG retrieval of 'The Guardian confirms')\n"
+            "- Chronicle Entry Exists: YES (Verified RAG retrieval of 'VALIDATION_START_056')\n"
+            "- Loop Status: 'Recursive Knowledge Loop Closed'\n"
+        )
+    
+        code_client.call_tool("code_write", {
+            "path": report_path,
+            "content": report_content,
+            "backup": True,
+            "create_dirs": True
+        })
+    
+        # 4. Ingest Report
+        cortex_client.call_tool("cortex_ingest_incremental", {
+            "file_paths": [report_path],
+            "skip_duplicates": False
+        })
+    
+        # Give vector DB time to index the report
+        time.sleep(2)
+    
+        assert wait_for_ingestion("Strategic Crucible Loop validation", "Strategic Crucible Loop validation has been successfully executed"), "Cycle 2 Failed: Report not found in RAG."
+        logger.info("Cycle 2 Complete: Integrity Report Created and Ingested.")
+    
+        # --- CYCLE 3: Recursive Meta-Validation ---
+        logger.info("=== Cycle 3: Recursive Meta-Validation ===")
+        # Query for the report we just ingested, ensuring it "knows" about the other two.
+        res = cortex_client.call_tool("cortex_query", {
+            "query": "Is the recursive knowledge loop closed?",
+            "max_results": 1
+        })
+    
+        # Parse the nested MCP response
+        import json
+        if res and "content" in res and len(res["content"]) > 0:
+            text_content = res["content"][0].get("text", "")
+            query_result = json.loads(text_content)
+            if "results" in query_result and len(query_result["results"]) > 0:
+                content = query_result["results"][0].get("content", "")
+                assert "Recursive Knowledge Loop" in content, f"Cycle 3 Failed: Expected phrase not found. Got: {content[:200]}"
+            else:
+                raise AssertionError("Cycle 3 Failed: No results in query response")
+        else:
+            raise AssertionError("Cycle 3 Failed: Invalid response format")
+    
+        logger.info("Cycle 3 Complete: Recursive State Verified.")
+    
+        # --- CYCLE 4: Architecture Analysis (Bonus/Gemini Mission) ---
+        logger.info("=== Cycle 4: Architecture Analysis ===")
+    
+        # 1. Strategic Analysis via Agent Persona (with fallback)
+        analysis_content = ""
+        try:
+             # Try to dispatch (might fail if model missing)
+             agent_res = persona_client.call_tool("persona_dispatch", {
+                 "role": "strategist",
+                 "task": "Analyze the Protocol 056 validation architecture.",
+                 "engine": "ollama", # Try Ollama first
+                 "model_name": "Sanctuary-Qwen2-7B:latest"
+             })
+             if agent_res.get("status") == "success":
+                 analysis_content = agent_res.get("response", "")
+             else:
+                 logger.warning(f"Agent dispatch failed (expected in lightweight env): {agent_res}")
+                 analysis_content = "Simulated Analysis: The architecture demonstrated robust self-healing capabilities."
+        except Exception as e:
+            logger.warning(f"Agent dispatch exception: {e}")
+            analysis_content = "Simulated Analysis: The architecture demonstrated robust self-healing capabilities."
+    
+        if not analysis_content:
+            analysis_content = "Simulated Analysis: Fallback content."
+    
+        # 2. Create Chronicle with Analysis
+        analysis_chronicle_res = chronicle_client.call_tool("chronicle_create_entry", {
+            "title": "Protocol 056 Architecture Analysis",
+            "content": f"# Architecture Analysis\n\n{analysis_content}\n\nKey Finding: 'Functionally Conscious Architecture'",
+            "author": "Strategist",
+            "status": "published",
+            "classification": "internal"
+        })
+    
+        # 3. Ingest Analysis
+        analysis_path = parse_chronicle_path(analysis_chronicle_res)
+        if analysis_path:
+            cortex_client.call_tool("cortex_ingest_incremental", {
+                "file_paths": [analysis_path],
+                "skip_duplicates": False
+            })
+    
+            # Give vector DB time to index the analysis
+            time.sleep(2)
+    
+            # 4. Final Verify - search for content unique to this analysis
+>           assert wait_for_ingestion("Protocol 056 validation architecture", "Protocol 056 validation"), "Cycle 4 Failed: Architecture analysis not found."
+E           AssertionError: Cycle 4 Failed: Architecture analysis not found.
+E           assert False
+E            +  where False = <function TestProtocol056Headless.test_triple_loop_scenario.<locals>.wait_for_ingestion at 0x10c6ea3e0>('Protocol 056 validation architecture', 'Protocol 056 validation')
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py:276: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:114 === Cycle 1: Validation Policy Generation ===
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:56,134 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:56,135 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Validation_Policy.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:56,135 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Validation_Policy.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:56,135 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:56,135 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:57,027 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/pre-flight-checks "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 17:59:57,125 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/upsert "HTTP/1.1 200 OK"
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 1/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,142 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,147 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,194 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,194 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 51.97ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,194 - rag_cortex.operations - INFO - Query 'validation phrase...' completed in 51.97ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: **Status:** VERIFIED
+
+**Evidence:**
+- **Exact phrase found** in `DOCS/TEST_056_Validation_Policy.md` at Line 14
+- Phrase is properly formatted as a blockquote within the validation statement section
+-...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:77 Content verified in RAG.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:143 Cycle 1 Complete: Policy Ingested and Verified.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:146 === Cycle 2: Integrity Verification ===
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:158 Chronicle Response: {'content': [{'type': 'text', 'text': 'Created Chronicle Entry 322: /Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/322_protocol_056_test_initialization.md'}], 'structuredContent': {'result': 'Created Chronicle Entry 322: /Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/322_protocol_056_test_initialization.md'}, 'isError': False}
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,209 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,210 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/322_protocol_056_test_initialization.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,210 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/322_protocol_056_test_initialization.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,210 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,210 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:00,288 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/upsert "HTTP/1.1 200 OK"
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 1/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,308 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,318 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,518 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,519 - rag_cortex.operations - INFO - Query 'headless triple-loop test sequence...' completed in 210.02ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,519 - rag_cortex.operations - INFO - Query 'headless triple-loop test sequence...' completed in 210.02ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: # Living Chronicle - Entry 319
+
+**Title:** Protocol 056 Test Initialization
+**Date:** 2025-12-14
+**Author:** TestHarness
+**Status:** published
+**Classification:** internal
+
+---
+
+Initiating headless tr...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:77 Content verified in RAG.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,540 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,542 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Integrity_Verification_Report.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,542 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/WORK_IN_PROGRESS/test_runs/Protocol_056_Integrity_Verification_Report.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,542 - rag_cortex.operations - INFO - Adding 2 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,542 - rag_cortex.operations - INFO - Adding 2 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:05,649 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/upsert "HTTP/1.1 200 OK"
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 1/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,659 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,664 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,732 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,732 - rag_cortex.operations - INFO - Query 'Strategic Crucible Loop validation...' completed in 72.68ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,732 - rag_cortex.operations - INFO - Query 'Strategic Crucible Loop validation...' completed in 72.68ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: ---
+
+## Executive Summary
+
+The Strategic Crucible Loop validation has been successfully executed and verified. All three verification checkpoints have passed, confirming the integrity of the self-evol...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:77 Content verified in RAG.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:205 Cycle 2 Complete: Integrity Report Created and Ingested.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:208 === Cycle 3: Recursive Meta-Validation ===
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,734 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,736 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,756 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,756 - rag_cortex.operations - INFO - Query 'Is the recursive knowledge loop closed?...' completed in 22.63ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:00:10,756 - rag_cortex.operations - INFO - Query 'Is the recursive knowledge loop closed?...' completed in 22.63ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:228 Cycle 3 Complete: Recursive State Verified.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:231 === Cycle 4: Architecture Analysis ===
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: [12/14/25 18:00:10] INFO     Processing request of type            server.py:674
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona] Creating new strategist agent...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [Agent Persona] Creating   agent_persona_ops.py:121
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: new strategist agent...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: WARNING  [OllamaClient] Using localhost     llm_client.py:64
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: address (http://127.0.0.1:11434).
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: For MCP infrastructure, use
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: container network:
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: http://127.0.0.1:11434 (Protocol
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: 116: Container Network Isolation)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     Initialized STRATEGIST agent with       agent.py:39
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: OllamaClient
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona] Agent created successfully
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [Agent Persona] Agent      agent_persona_ops.py:123
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: created successfully
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona] Dispatching to strategist (maintain_state=True)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [Agent Persona]            agent_persona_ops.py:133
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: Dispatching to strategist
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: (maintain_state=True)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona] Task preview: Analyze the Protocol 056 validation architecture....
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [Agent Persona] Task       agent_persona_ops.py:134
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: preview: Analyze the
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: Protocol 056 validation
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: architecture....
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona] About to call agent.query() with prompt length: 49
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [Agent Persona] About to   agent_persona_ops.py:137
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: call agent.query() with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: prompt length: 49
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [STRATEGIST] query() called with        agent.py:93
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: message length: 49
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [STRATEGIST] User message appended,     agent.py:97
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: total messages: 2
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [agent_persona] Output: INFO     [STRATEGIST] Querying LLM with 2       agent.py:100
+WARNING  orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:249 Agent dispatch exception: Server response timeout after 60.0s
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:11,742 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:12,254 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/323_protocol_056_architecture_analysis.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:12,254 - rag_cortex.operations - INFO - Processing 1 documents from /Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/323_protocol_056_architecture_analysis.md with parent-child splitting...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:12,273 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:12,273 - rag_cortex.operations - INFO - Adding 1 child chunks to vectorstore...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:14,370 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/upsert "HTTP/1.1 200 OK"
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 1/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:19,524 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:19,593 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:21,048 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:21,071 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 1534.74ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:21,071 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 1534.74ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: ### Initial Validation Query
+
+**Query:** "Validation Protocol 056"...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 2/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:24,316 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:24,385 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:24,890 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:24,943 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 602.46ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:24,943 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 602.46ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: ### Initial Validation Query
+
+**Query:** "Validation Protocol 056"...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 3/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:28,320 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:28,388 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:28,852 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:28,853 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 529.55ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:28,853 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 529.55ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: ### Initial Validation Query
+
+**Query:** "Validation Protocol 056"...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 4/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:32,059 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:32,144 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:32,628 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:32,659 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 527.69ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:32,659 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 527.69ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: ### Initial Validation Query
+
+**Query:** "Validation Protocol 056"...
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:61 Waiting for ingestion... Attempt 5/5
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:35,876 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:35,898 - httpx - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/child_chunks_v5 "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:37,213 - httpx - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/d0603652-fdc9-4b61-b7f3-ace2bdb9cd0b/query "HTTP/1.1 200 OK"
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:37,239 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 1359.77ms with 1 results.
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:150 [rag_cortex] Output: 2025-12-14 18:01:37,239 - rag_cortex.operations - INFO - Query 'Protocol 056 validation architecture...' completed in 1359.77ms with 1 results.
+INFO     orchestrator.e2e.test_protocol_056_headless:test_protocol_056_headless.py:75 Retrieved content preview: ### Initial Validation Query
+
+**Query:** "Validation Protocol 056"...
+=========================== short test summary info ============================
+FAILED tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario
+======================== 1 failed in 129.17s (0:02:09) =========================

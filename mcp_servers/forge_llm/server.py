@@ -16,10 +16,22 @@ from typing import Optional
 # Initialize FastMCP with canonical domain name
 mcp = FastMCP("project_sanctuary.system.forge")
 
-# Initialize operations and validator
+# Start lazy instances
+_forge_ops = None
+_forge_validator = None
 PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
-forge_ops = ForgeOperations(PROJECT_ROOT)
-forge_validator = ForgeValidator(PROJECT_ROOT)
+
+def get_ops() -> ForgeOperations:
+    global _forge_ops
+    if _forge_ops is None:
+        _forge_ops = ForgeOperations(PROJECT_ROOT)
+    return _forge_ops
+
+def get_validator() -> ForgeValidator:
+    global _forge_validator
+    if _forge_validator is None:
+        _forge_validator = ForgeValidator(PROJECT_ROOT)
+    return _forge_validator
 
 
 @mcp.tool()
@@ -56,7 +68,7 @@ def query_sanctuary_model(
     """
     try:
         # Validate inputs
-        validated = forge_validator.validate_query_sanctuary_model(
+        validated = get_validator().validate_query_sanctuary_model(
             prompt=prompt,
             temperature=temperature,
             max_tokens=max_tokens,
@@ -64,7 +76,7 @@ def query_sanctuary_model(
         )
         
         # Query the model
-        response = forge_ops.query_sanctuary_model(
+        response = get_ops().query_sanctuary_model(
             prompt=validated["prompt"],
             temperature=validated["temperature"],
             max_tokens=validated["max_tokens"],
@@ -102,7 +114,7 @@ def check_sanctuary_model_status() -> str:
         check_sanctuary_model_status()
     """
     try:
-        result = forge_ops.check_model_availability()
+        result = get_ops().check_model_availability()
         return json.dumps(result, indent=2)
     except Exception as e:
         return json.dumps({
@@ -114,15 +126,18 @@ def check_sanctuary_model_status() -> str:
 
 if __name__ == "__main__":
     try:
-        from mcp_servers.lib.container_manager import ensure_ollama_running
-        # Ensure Ollama container is running
-        print(f"Checking Ollama service...", file=sys.stderr)
-        success, message = ensure_ollama_running(PROJECT_ROOT)
-        if success:
-            print(f"✓ {message}", file=sys.stderr)
+        if not os.environ.get("SKIP_CONTAINER_CHECKS"):
+            from mcp_servers.lib.container_manager import ensure_ollama_running
+            # Ensure Ollama container is running
+            print(f"Checking Ollama service...", file=sys.stderr)
+            success, message = ensure_ollama_running(PROJECT_ROOT)
+            if success:
+                print(f"✓ {message}", file=sys.stderr)
+            else:
+                print(f"✗ {message}", file=sys.stderr)
+                print("Model operations may fail without Ollama service", file=sys.stderr)
         else:
-            print(f"✗ {message}", file=sys.stderr)
-            print("Model operations may fail without Ollama service", file=sys.stderr)
+             print("Skipping container checks (SKIP_CONTAINER_CHECKS set)", file=sys.stderr)
     except ImportError:
         # If lib not available yet, proceed without check (or log warning)
         print("Warning: Could not import container_manager check", file=sys.stderr)

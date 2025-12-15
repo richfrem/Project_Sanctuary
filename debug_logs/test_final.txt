@@ -1,0 +1,114 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary
+configfile: pytest.ini
+plugins: benchmark-5.2.3, anyio-4.9.0, langsmith-0.4.31, cov-6.2.1, typeguard-4.4.4
+collecting ... collected 1 item
+
+tests/mcp_servers/orchestrator/e2e/test_protocol_056_headless.py::TestProtocol056Headless::test_triple_loop_scenario 
+-------------------------------- live log setup --------------------------------
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:21 Starting MCP Server Fleet...
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:40 Booting adr...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.adr.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 98392)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                🖥  Server name: project_sanctuary.document.adr                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                📦 Transport:   STDIO                                         │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                📚 Docs:        https://gofastmcp.com                         │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                🚀 Hosting:     https://fastmcp.cloud                         │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: [12/14/25 15:15:44] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: 'project_sanctuary.document.adr'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [adr] Output: with transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:40 Booting agent_persona...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.agent_persona.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 98402)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: mcp_servers.agent_persona.agent_persona_ops - INFO - [Agent Persona MCP] Initialized with persona_dir: /Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/agent_persona/personas
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: [12/14/25 15:15:46] INFO     [Agent Persona MCP]         agent_persona_ops.py:51
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: Initialized with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: persona_dir:
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: /Users/richardfremmerlid/Pr
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: ojects/Project_Sanctuary/mc
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: p_servers/agent_persona/per
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [agent_persona] Output: sonas
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': False}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:40 Booting chronicle...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.chronicle.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 98411)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🖥  Server name: project_sanctuary.chronicle                  │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📦 Transport:   STDIO                                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 📚 Docs:        https://gofastmcp.com                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                 🚀 Hosting:     https://fastmcp.cloud                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: [12/14/25 15:15:48] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: 'project_sanctuary.chronicle' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [chronicle] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:40 Booting code...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.code.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 98421)
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: ╭──────────────────────────────────────────────────────────────────────────────╮
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                FastMCP 2.13.1                                │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    🖥  Server name: project_sanctuary.code                    │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    📦 Transport:   STDIO                                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    📚 Docs:        https://gofastmcp.com                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                    🚀 Hosting:     https://fastmcp.cloud                     │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: │                                                                              │
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: ╰──────────────────────────────────────────────────────────────────────────────╯
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: [12/14/25 15:15:50] INFO     Starting MCP server                  server.py:1971
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: 'project_sanctuary.code' with
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:128 [code] Output: transport 'stdio'
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:93 Server initialized. Capabilities: {'experimental': {}, 'prompts': {'listChanged': False}, 'resources': {'subscribe': False, 'listChanged': False}, 'tools': {'listChanged': True}}
+INFO     tests.mcp_servers.base.mcp_server_fleet:mcp_server_fleet.py:40 Booting config...
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:42 Starting MCP Server: /usr/local/bin/python3 -m mcp_servers.config.server
+INFO     tests.mcp_servers.base.mcp_test_client:mcp_test_client.py:54 Server started (PID 98426)
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/Users/richardfremmerlid/Projects/Project_Sanctuary/tests/mcp_servers/base/mcp_test_client.py:121: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+============================ no tests ran in 8.48s =============================

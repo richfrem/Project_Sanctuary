@@ -74,13 +74,6 @@ def orchestrator_dispatch_mission(
 # Strategic Crucible Loop
 # ============================================================================
 
-# Import dependencies for the loop
-# Note: In a distributed MCP architecture, we would call these via client.
-# Here we import the service logic directly for reliability.
-# from mnemonic_cortex.app.services.ingestion_service import IngestionService
-# from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
-from mcp_servers.rag_cortex.operations import CortexOperations
-
 @mcp.tool()
 def orchestrator_run_strategic_cycle(
     gap_description: str,
@@ -98,12 +91,14 @@ def orchestrator_run_strategic_cycle(
     Returns:
         Summary of the cycle execution.
     """
+    # Lazy import to prevent heavy startup cost
+    from mcp_servers.rag_cortex.operations import CortexOperations
+
     results = []
     results.append(f"--- Strategic Crucible Cycle: {gap_description} ---")
     
     # 1. Ingestion (Medium Memory Update)
     try:
-        results.append(f"1. Ingesting Report: {research_report_path}")
         results.append(f"1. Ingesting Report: {research_report_path}")
         cortex_ops = CortexOperations(PROJECT_ROOT)
         # We assume incremental ingest for a single report
@@ -128,17 +123,20 @@ def orchestrator_run_strategic_cycle(
     try:
         results.append(f"3. Waking Guardian Cache")
         # Initialize Cortex Ops to access cache logic
-        cortex_ops = CortexOperations(PROJECT_ROOT) 
-        # We need to inject the real cache instance if possible, or rely on the ops to create it
-        # The current CortexOperations implementation creates MnemonicCache internally if not passed.
-        # However, it needs DB_PATH etc from env.
-        # Let's assume env vars are set or defaults work.
+        # cortex_ops already initialized above
         
         # We call guardian_wakeup. In a real scenario, this might be an async tool call.
         # Here we call the method directly if available, or simulate it.
         # Looking at cortex/operations.py, guardian_wakeup is a method.
-        wakeup_stats = cortex_ops.guardian_wakeup()
-        results.append(f"   - Cache Updated: {wakeup_stats}")
+        # Note: guardian_wakeup calls cache_warmup internally or similar logic
+        if hasattr(cortex_ops, 'guardian_wakeup'):
+             wakeup_stats = cortex_ops.guardian_wakeup()
+             results.append(f"   - Cache Updated: {wakeup_stats}")
+        else:
+             results.append(f"   - [WARN] guardian_wakeup not found on CortexOperations")
+
+    except Exception as e:
+        results.append(f"   - [WARN] Cache update failed (non-critical): {e}")
     except Exception as e:
         results.append(f"   - [WARN] Cache update failed (non-critical): {e}")
 

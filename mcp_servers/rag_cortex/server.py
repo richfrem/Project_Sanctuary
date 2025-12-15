@@ -15,7 +15,6 @@ os.environ["TQDM_DISABLE"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 from fastmcp import FastMCP
-from .operations import CortexOperations
 from .validator import CortexValidator, ValidationError
 from .models import to_dict
 from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ollama_running
@@ -23,10 +22,23 @@ from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ol
 # Initialize FastMCP with canonical domain name
 mcp = FastMCP("project_sanctuary.cognitive.cortex")
 
-# Initialize operations and validator
+# Global lazy instances
+_cortex_ops = None
+_cortex_validator = None
 PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
-cortex_ops = CortexOperations(PROJECT_ROOT)
-cortex_validator = CortexValidator(PROJECT_ROOT)
+
+def get_ops():
+    global _cortex_ops
+    if _cortex_ops is None:
+        from .operations import CortexOperations
+        _cortex_ops = CortexOperations(PROJECT_ROOT)
+    return _cortex_ops
+
+def get_validator():
+    global _cortex_validator
+    if _cortex_validator is None:
+        _cortex_validator = CortexValidator(PROJECT_ROOT)
+    return _cortex_validator
 
 # Configure logging to write to stderr
 logging.basicConfig(
@@ -62,13 +74,13 @@ def cortex_ingest_full(
     """
     try:
         # Validate inputs
-        validated = cortex_validator.validate_ingest_full(
+        validated = get_validator().validate_ingest_full(
             purge_existing=purge_existing,
             source_directories=source_directories
         )
         
         # Perform ingestion
-        response = cortex_ops.ingest_full(
+        response = get_ops().ingest_full(
             purge_existing=validated["purge_existing"],
             source_directories=validated["source_directories"]
         )
@@ -112,14 +124,14 @@ def cortex_query(
     try:
         # Validate inputs
         # Note: We skip validation for reasoning_mode as it's a boolean
-        validated = cortex_validator.validate_query(
+        validated = get_validator().validate_query(
             query=query,
             max_results=max_results,
             use_cache=use_cache
         )
         
         # Perform query
-        response = cortex_ops.query(
+        response = get_ops().query(
             query=validated["query"],
             max_results=validated["max_results"],
             use_cache=validated["use_cache"],
@@ -152,10 +164,10 @@ def cortex_get_stats() -> str:
     """
     try:
         # Validate (no parameters needed)
-        cortex_validator.validate_stats()
+        get_validator().validate_stats()
         
         # Get stats
-        response = cortex_ops.get_stats()
+        response = get_ops().get_stats()
         
         # Convert to dict and return as JSON
         result = to_dict(response)
@@ -194,14 +206,14 @@ def cortex_ingest_incremental(
     """
     try:
         # Validate inputs
-        validated = cortex_validator.validate_ingest_incremental(
+        validated = get_validator().validate_ingest_incremental(
             file_paths=file_paths,
             metadata=metadata,
             skip_duplicates=skip_duplicates
         )
         
         # Perform incremental ingestion
-        response = cortex_ops.ingest_incremental(
+        response = get_ops().ingest_incremental(
             file_paths=validated["file_paths"],
             metadata=validated["metadata"],
             skip_duplicates=validated["skip_duplicates"]
@@ -239,7 +251,7 @@ def cortex_cache_get(query: str) -> str:
         cortex_cache_get("What is Protocol 101?")
     """
     try:
-        response = cortex_ops.cache_get(query)
+        response = get_ops().cache_get(query)
         result = to_dict(response)
         return json.dumps(result, indent=2)
     except Exception as e:
@@ -265,7 +277,7 @@ def cortex_cache_set(query: str, answer: str) -> str:
         cortex_cache_set("What is Protocol 101?", "Protocol 101 is...")
     """
     try:
-        response = cortex_ops.cache_set(query, answer)
+        response = get_ops().cache_set(query, answer)
         result = to_dict(response)
         return json.dumps(result, indent=2)
     except Exception as e:
@@ -291,7 +303,7 @@ def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> str:
         cortex_cache_warmup(genesis_queries=["What is Protocol 87?", "Latest roadmap"])
     """
     try:
-        response = cortex_ops.cache_warmup(genesis_queries)
+        response = get_ops().cache_warmup(genesis_queries)
         result = to_dict(response)
         return json.dumps(result, indent=2)
     except Exception as e:
@@ -314,7 +326,7 @@ def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
         cortex_guardian_wakeup()
     """
     try:
-        response = cortex_ops.guardian_wakeup(mode=mode)
+        response = get_ops().guardian_wakeup(mode=mode)
         result = to_dict(response)
         return json.dumps(result, indent=2)
     except Exception as e:
@@ -335,7 +347,7 @@ def cortex_cache_stats() -> str:
         cortex_cache_stats()
     """
     try:
-        stats = cortex_ops.get_cache_stats()
+        stats = get_ops().get_cache_stats()
         return json.dumps(stats, indent=2)
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
@@ -362,22 +374,25 @@ def cortex_cache_stats() -> str:
 
 if __name__ == "__main__":
     # Ensure Containers are running
-    logger.info("Checking Container Services...")
+    if not os.environ.get("SKIP_CONTAINER_CHECKS"):
+        logger.info("Checking Container Services...")
 
-    # 1. ChromaDB
-    success, message = ensure_chromadb_running(PROJECT_ROOT)
-    if success:
-        logger.info(f"✓ {message}")
-    else:
-        logger.error(f"✗ {message}")
-        logger.warning("RAG operations may fail without ChromaDB")
+        # 1. ChromaDB
+        success, message = ensure_chromadb_running(PROJECT_ROOT)
+        if success:
+            logger.info(f"✓ {message}")
+        else:
+            logger.error(f"✗ {message}")
+            logger.warning("RAG operations may fail without ChromaDB")
 
-    # 2. Ollama (for Embeddings/Reasoning)
-    success, message = ensure_ollama_running(PROJECT_ROOT)
-    if success:
-        logger.info(f"✓ {message}")
+        # 2. Ollama (for Embeddings/Reasoning)
+        success, message = ensure_ollama_running(PROJECT_ROOT)
+        if success:
+            logger.info(f"✓ {message}")
+        else:
+            logger.error(f"✗ {message}")
+            logger.warning("Embedding/Reasoning operations may fail without Ollama")
     else:
-        logger.error(f"✗ {message}")
-        logger.warning("Embedding/Reasoning operations may fail without Ollama")
+        logger.info("Skipping container checks (SKIP_CONTAINER_CHECKS set)")
 
     mcp.run()
