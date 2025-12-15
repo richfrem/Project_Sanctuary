@@ -138,6 +138,9 @@ Modelfile
 # work in progress items
 WORK_IN_PROGRESS/AGORA_PoC_Core/
 
+# debug logs
+debug_logs/
+
 #temp notes etc
 #continuing_work_new_chat.md
 
