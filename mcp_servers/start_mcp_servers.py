@@ -15,7 +15,7 @@ from pathlib import Path
 # SCRIPT_DIR is Project_Sanctuary/mcp_servers/
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
-PY_EXECUTABLE = str((PROJECT_ROOT / ".venv" / "bin" / "python").resolve())
+PY_EXECUTABLE = str(PROJECT_ROOT / ".venv" / "bin" / "python")
 
 # Canonical list of all 12 MCP servers
 MODULES_TO_START = [
@@ -93,9 +93,10 @@ def main():
     if args.run:
         procs = []
         try:
-            for p in paths:
-                print(f"Launching Foreground: {PY_EXECUTABLE} {p}")
-                procs.append(subprocess.Popen([PY_EXECUTABLE, str(p)]))
+            os.chdir(PROJECT_ROOT) # Ensure cwd is root for module imports
+            for mod in MODULES_TO_START:
+                print(f"Launching Foreground: {PY_EXECUTABLE} -m {mod}")
+                procs.append(subprocess.Popen([PY_EXECUTABLE, "-m", mod], cwd=PROJECT_ROOT))
             for p in procs:
                 p.wait()
         except KeyboardInterrupt:

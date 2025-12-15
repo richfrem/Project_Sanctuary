@@ -109,6 +109,7 @@ def mcp_servers():
     proc = subprocess.Popen(
         [str(venv_python), str(start_script), "--run"],
         cwd=project_root,
+        stdin=subprocess.PIPE, # Keep stdin open so servers don't exit on EOF
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         preexec_fn=os.setsid  # Create new process group for clean shutdown

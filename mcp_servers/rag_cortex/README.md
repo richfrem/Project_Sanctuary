@@ -8,7 +8,7 @@
 |-----------|-------------|-----------|
 | `cortex_query` | Perform semantic search query against the knowledge base. | `query` (str): Natural language query.<br>`max_results` (int): Max results (default: 5).<br>`use_cache` (bool): Use cache (default: False). |
 | `cortex_ingest_full` | Perform full re-ingestion of the knowledge base. | `purge_existing` (bool): Purge DB (default: True).<br>`source_directories` (List[str], optional): Dirs to ingest. |
-| `cortex_ingest_incremental` | Perform incremental ingestion of new/modified files. | `file_paths` (List[str]): Markdown files to ingest.<br>`metadata` (dict, optional): Metadata to attach.<br>`skip_duplicates` (bool): Skip existing files (default: True). |
+| `cortex_ingest_incremental` | Perform incremental ingestion of new/modified files. | `file_paths` (List[str]): Files to ingest (.md, .py, .js, .ts).<br>`metadata` (dict, optional): Metadata to attach.<br>`skip_duplicates` (bool): Skip existing files (default: True). |
 | `cortex_get_stats` | Get statistics about the knowledge base. | None |
 | `cortex_guardian_wakeup` | Generate Guardian boot digest from cached bundles (Protocol 114). | None |
 | `cortex_cache_warmup` | Pre-load high-priority documents into cache. | `priority_tags` (List[str], optional): Tags to prioritize. |
@@ -78,6 +78,7 @@ The Mnemonic Cortex has evolved beyond a simple RAG implementation into a sophis
 - **Parent Document Retrieval:** To provide full, unbroken context to the LLM.
 - **Self-Querying Retrieval:** To enable intelligent, metadata-aware searches.
 - **Mnemonic Caching (CAG):** To provide near-instantaneous answers for common queries.
+- **Polyglot Code Ingestion:** Automatically converts Python and JavaScript/TypeScript files into optimize markdown for semantic indexing, using AST/regex to structurally document code without LLM overhead.
 
 }
 ```
@@ -139,9 +140,17 @@ Incrementally ingest documents without rebuilding the database.
 ```python
 cortex_ingest_incremental(["00_CHRONICLE/2025-11-28_entry.md"])
 cortex_ingest_incremental(
-    file_paths=["01_PROTOCOLS/120_new.md"],
+    file_paths=["01_PROTOCOLS/120_new.md", "mcp_servers/rag_cortex/server.py"],
     skip_duplicates=False
 )
+```
+
+### Polyglot Support
+The ingestion system automatically detects and converts code files:
+- **Python**: Uses AST to extract classes, functions, and docstrings.
+- **JS/TS**: Uses regex to extract functions and classes.
+- **Output**: Generates a `.py.md` or `.js.md` companion file which is then ingested.
+- **Exclusions**: Automatically skips noisy directories (`node_modules`, `dist`, `__pycache__`).
 ```
 
 ---
@@ -243,6 +252,11 @@ cortex_ingest_full()
 - [`01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md`](../../../01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md) - Cache prefill spec
 
 ## Version History
+
+### v5.1 (2025-12-14): Polyglot Code Ingestion
+- **Code Shim:** Introduced `ingest_code_shim.py` for AST-based code-to-markdown conversion
+- **Multi-Language Support:** Added native support for .py, .js, .ts, .jsx, .tsx ingestion
+- **Smart Exclusion:** Implemented noise filtering for production directories
 
 ### v5.0 (2025-11-30): MCP Migration Complete
 - **Migration to MCP Architecture:** Refactored from legacy script-based system to MCP server

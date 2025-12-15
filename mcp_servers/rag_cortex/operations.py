@@ -50,8 +50,9 @@ from .models import (
     CacheGetResponse,
     CacheSetResponse,
     CacheWarmupResponse,
-    DocumentSample
+    DocumentSample,
 )
+from .ingest_code_shim import convert_and_save
 
 # Imports that were previously inside methods, now moved to top for class initialization
 # Silence stdout/stderr during imports to prevent MCP protocol pollution
@@ -158,6 +159,51 @@ class CortexOperations:
             self._safe_add_documents(retriever, left, max_retries - 1)
             self._safe_add_documents(retriever, right, max_retries - 1)
 
+    # Exclusion Constants (mirrored from capture_code_snapshot.js)
+    EXCLUDE_DIRS = {
+        'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', 
+        '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
+        '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache', 'pip-wheel-metadata',
+        '.svn', '.hg', '.bzr',
+        'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
+        'dataset_package', 'chroma_db', 'chroma_db_backup', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
+        'TASKS', 'ml_env_logs', 'outputs', 'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
+        'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE', '05_ARCHIVED_BLUEPRINTS', 'gardener',
+        'research', '02_ROADMAP', '03_OPERATIONS', '06_THE_EMBER_LIBRARY'
+    }
+    
+    EXCLUDE_FILES = {
+        'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
+        'Operation_Whole_Genome_Forge.ipynb', 'continuing_work_new_chat.md', 'orchestrator-backup.py',
+        'ingest_new_knowledge.py', '.DS_Store', '.env', 'manifest.json', '.gitignore',
+        'PROMPT_PROJECT_ANALYSIS.md', 'Modelfile', 'nohup.out', 'sanctuary_whole_genome_data.jsonl',
+        'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'
+    }
+
+    def _should_skip_path(self, path: Path) -> bool:
+        """
+        Check if a file or directory should be excluded from ingestion.
+        Mirrors logic from capture_code_snapshot.js to avoid noise.
+        """
+        # 1. Check path parts against directory exclusions
+        for part in path.parts:
+            if part in self.EXCLUDE_DIRS:
+                return True
+                
+        # 2. Check filename against file exclusions
+        if path.name in self.EXCLUDE_FILES:
+            return True
+            
+        # 3. Check extensions/patterns
+        name_lower = path.name.lower()
+        if name_lower.endswith(('.pyc', '.pyo', '.pyd', '.egg-info', '.log', '.gguf', '.bin', '.safetensors', '.ckpt', '.pth', '.onnx', '.pb')):
+            return True
+            
+        if name_lower.startswith(('npm-debug.log', 'yarn-error.log', 'pnpm-debug.log')):
+            return True
+            
+        return False
+
     def _load_documents_from_directory(self, directory_path: Path) -> List[Document]:
         """Helper to load documents from a single directory."""
         exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
@@ -167,14 +213,58 @@ class CortexOperations:
             return []
 
         logger.info(f"Loading documents from directory: {directory_path}")
+    
+        # Pre-process: Convert Code files to Markdown
+        # We explicitly scan for code files to convert them using the shim
+        # This allows standard DirectoryLoader to pick up the resulting .py.md files
+        
+        try:
+            # Gather potential code files
+            potential_files = []
+            dir_path_obj = Path(directory_path)
+            
+            # Simple extension check extensions
+            extensions = {'.py', '.js', '.jsx', '.ts', '.tsx'}
+            
+            # Walk manually to avoid descending into excluded directories (faster than rglob for node_modules)
+            for root, dirs, files in os.walk(directory_path):
+                root_path = Path(root)
+                
+                # Filter directories in-place to prevent traversal
+                # strict=False allows matching against the set logic in _should_skip_path
+                # But _should_skip_path expects a Path. Let's do a quick pre-filter on dir names
+                # to optimize os.walk
+                dirs[:] = [d for d in dirs if not self._should_skip_path(root_path / d)]
+                
+                for file in files:
+                    file_path = root_path / file
+                    if file_path.suffix in extensions:
+                        if not self._should_skip_path(file_path):
+                            potential_files.append(file_path)
+            
+            converted_count = 0
+            for code_file in potential_files:
+                try:
+                    convert_and_save(str(code_file))
+                    converted_count += 1
+                except Exception as e:
+                    logger.warning(f"Failed to convert {code_file.name}: {e}")
+            
+            if converted_count > 0:
+                logger.info(f"Converted {converted_count} code files to Markdown in {directory_path}")
+                
+        except Exception as e:
+            logger.error(f"Error during code conversion scan: {e}")
+
+        # Use DirectoryLoader to load all markdown files (including newly converted ones)
+        # We also apply exclusion patterns to DirectoryLoader for safety
         loader = DirectoryLoader(
             str(directory_path),
             glob="**/*.md",
             loader_cls=TextLoader,
-            recursive=True,
-            show_progress=False,
             use_multithreading=True,
-            exclude=[f"**/{ex}/**" for ex in exclude_subdirs],
+            show_progress=False,  # Keep logs clean
+            exclude=[f"**/{ex}/**" for ex in self.EXCLUDE_DIRS], # Use the class-level EXCLUDE_DIRS for consistency
         )
         try:
             docs = loader.load()
@@ -520,8 +610,17 @@ class CortexOperations:
                 if not path.is_absolute():
                     path = self.project_root / path
                 
-                if path.exists() and path.is_file() and path.suffix == '.md':
-                    valid_files.append(str(path.resolve()))
+                if path.exists() and path.is_file():
+                    if path.suffix == '.md':
+                        valid_files.append(str(path.resolve()))
+                    elif path.suffix in ['.py', '.js', '.jsx', '.ts', '.tsx']:
+                        # Convert Code to Markdown using shim
+                        try:
+                            md_path = convert_and_save(str(path.resolve()))
+                            valid_files.append(md_path)
+                            # Track for cleanup if needed, though keeping the .md might be useful for caching
+                        except Exception as e:
+                            logger.warning(f"Failed to convert code file {fp}: {e}")
                 else:
                     logger.warning(f"Skipping invalid file path: {fp}")
             
