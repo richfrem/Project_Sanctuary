@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-14T20:26:12.376685",
+  "last_updated": "2025-12-14T20:34:33.540142",
   "servers": {
     "adr": {
       "operations": {
@@ -480,9 +480,9 @@
           "duration": null
         },
         "git_diff": {
-          "last_tested": "2025-12-14T20:18:59.816583",
+          "last_tested": "2025-12-14T20:34:10.677292",
           "result": "PASSED",
-          "duration": 0.01
+          "duration": 0.008
         },
         "git_finish_feature": {
           "last_tested": null,
@@ -500,9 +500,9 @@
           "duration": null
         },
         "git_log": {
-          "last_tested": "2025-12-14T20:18:59.716443",
+          "last_tested": "2025-12-14T20:34:10.485973",
           "result": "PASSED",
-          "duration": 0.013
+          "duration": 0.011
         },
         "git_push_feature": {
           "last_tested": null,
@@ -515,32 +515,32 @@
           "duration": null
         },
         "git_start_feature": {
-          "last_tested": "2025-12-14T20:19:00.136769",
+          "last_tested": "2025-12-14T20:34:11.175347",
           "result": "PASSED",
-          "duration": 0.026
+          "duration": 0.03
         },
         "git_status": {
-          "last_tested": "2025-12-14T20:18:59.617845",
+          "last_tested": "2025-12-14T20:34:10.382660",
           "result": "PASSED",
-          "duration": 0.057
+          "duration": 0.032
         },
         "git_add_commit": {
-          "last_tested": "2025-12-14T20:19:00.036389",
+          "last_tested": "2025-12-14T20:34:11.066602",
           "result": "PASSED",
-          "duration": 0.131
+          "duration": 0.321
         },
         "git_ops_workflow": {
-          "last_tested": "2025-12-14T20:19:00.363262",
+          "last_tested": "2025-12-14T20:34:11.556278",
           "result": "PASSED",
-          "duration": 0.154
+          "duration": 0.15
         },
         "validate_branch_name_valid": {
-          "last_tested": "2025-12-14T20:18:59.477477",
+          "last_tested": "2025-12-14T20:34:10.102522",
           "result": "PASSED",
           "duration": 0.0
         },
         "safety_check_placeholder": {
-          "last_tested": "2025-12-14T20:18:59.479559",
+          "last_tested": "2025-12-14T20:34:10.104039",
           "result": "PASSED",
           "duration": 0.0
         }
@@ -779,227 +779,227 @@
           "duration": null
         },
         "chroma_connectivity": {
-          "last_tested": "2025-12-14T20:26:09.466988",
+          "last_tested": "2025-12-14T20:33:33.706556",
           "result": "PASSED",
           "duration": 0.001
         },
         "ollama_embedding_generation": {
-          "last_tested": "2025-12-14T20:26:10.208520",
+          "last_tested": "2025-12-14T20:33:34.193790",
           "result": "PASSED",
-          "duration": 0.685
+          "duration": 0.442
         },
         "ingest_and_query": {
-          "last_tested": "2025-12-14T20:26:10.488490",
+          "last_tested": "2025-12-14T20:33:34.338002",
           "result": "PASSED",
-          "duration": 0.168
+          "duration": 0.093
         },
         "cache_operations": {
-          "last_tested": "2025-12-14T20:26:10.538373",
+          "last_tested": "2025-12-14T20:33:34.387035",
           "result": "PASSED",
-          "duration": 0.006
+          "duration": 0.004
         },
         "guardian_wakeup_basic": {
-          "last_tested": "2025-12-14T20:26:11.044342",
+          "last_tested": "2025-12-14T20:33:34.666317",
           "result": "PASSED",
-          "duration": 0.445
+          "duration": 0.242
         },
         "get_stats": {
-          "last_tested": "2025-12-14T20:26:11.197978",
+          "last_tested": "2025-12-14T20:33:34.802941",
           "result": "PASSED",
-          "duration": 0.089
+          "duration": 0.07
         },
         "cache_get_hit": {
-          "last_tested": "2025-12-14T14:09:25.367247",
+          "last_tested": "2025-12-14T20:33:22.753763",
           "result": "PASSED",
-          "duration": 0.002
+          "duration": 0.0
         },
         "cache_get_miss": {
-          "last_tested": "2025-12-14T14:09:25.487135",
+          "last_tested": "2025-12-14T20:33:22.865361",
           "result": "PASSED",
-          "duration": 0.001
+          "duration": 0.0
         },
         "cache_set": {
-          "last_tested": "2025-12-14T14:09:25.715283",
+          "last_tested": "2025-12-14T20:33:22.968277",
           "result": "PASSED",
-          "duration": 0.001
+          "duration": 0.0
         },
         "cache_stats": {
-          "last_tested": "2025-12-14T14:09:25.844281",
+          "last_tested": "2025-12-14T20:33:23.049482",
           "result": "PASSED",
           "duration": 0.0
         },
         "cache_warmup": {
-          "last_tested": "2025-12-14T14:09:25.948520",
+          "last_tested": "2025-12-14T20:33:23.215835",
           "result": "PASSED",
-          "duration": 0.001
+          "duration": 0.08
         },
         "guardian_wakeup": {
-          "last_tested": "2025-12-14T14:09:26.144163",
+          "last_tested": "2025-12-14T20:33:23.391459",
+          "result": "PASSED",
+          "duration": 0.092
+        },
+        "initialization": {
+          "last_tested": "2025-12-14T20:33:24.203980",
           "result": "PASSED",
           "duration": 0.088
         },
-        "initialization": {
-          "last_tested": "2025-12-14T20:10:42.160056",
-          "result": "PASSED",
-          "duration": 0.291
-        },
         "ingest_full": {
-          "last_tested": "2025-12-14T20:10:42.270404",
+          "last_tested": "2025-12-14T20:33:24.289655",
           "result": "PASSED",
-          "duration": 0.103
+          "duration": 0.081
         },
         "ingest_incremental": {
-          "last_tested": "2025-12-14T20:10:42.547895",
+          "last_tested": "2025-12-14T20:33:24.376310",
           "result": "PASSED",
-          "duration": 0.272
+          "duration": 0.082
         },
         "get_stats_with_samples": {
-          "last_tested": "2025-12-14T14:09:27.625559",
+          "last_tested": "2025-12-14T20:33:24.473931",
           "result": "PASSED",
-          "duration": 0.128
+          "duration": 0.095
         },
         "get_stats_without_samples": {
-          "last_tested": "2025-12-14T14:09:27.746618",
+          "last_tested": "2025-12-14T20:33:24.565932",
           "result": "PASSED",
-          "duration": 0.12
+          "duration": 0.091
         },
         "ingest_full_request": {
-          "last_tested": "2025-12-14T14:09:27.748301",
+          "last_tested": "2025-12-14T20:33:24.567895",
           "result": "PASSED",
           "duration": 0.0
         },
         "ingest_full_response": {
-          "last_tested": "2025-12-14T14:09:27.749545",
+          "last_tested": "2025-12-14T20:33:24.569162",
           "result": "PASSED",
           "duration": 0.0
         },
         "query_request": {
-          "last_tested": "2025-12-14T14:09:27.750894",
+          "last_tested": "2025-12-14T20:33:24.570242",
           "result": "PASSED",
           "duration": 0.0
         },
         "query_result": {
-          "last_tested": "2025-12-14T14:09:27.752082",
+          "last_tested": "2025-12-14T20:33:24.571329",
           "result": "PASSED",
           "duration": 0.0
         },
         "query_response": {
-          "last_tested": "2025-12-14T14:09:27.753585",
+          "last_tested": "2025-12-14T20:33:24.572359",
           "result": "PASSED",
           "duration": 0.0
         },
         "collection_stats": {
-          "last_tested": "2025-12-14T14:09:27.754821",
+          "last_tested": "2025-12-14T20:33:24.573905",
           "result": "PASSED",
           "duration": 0.0
         },
         "stats_response": {
-          "last_tested": "2025-12-14T14:09:27.755973",
+          "last_tested": "2025-12-14T20:33:24.574953",
           "result": "PASSED",
           "duration": 0.0
         },
         "ingest_incremental_request": {
-          "last_tested": "2025-12-14T14:09:27.757036",
+          "last_tested": "2025-12-14T20:33:24.575963",
           "result": "PASSED",
           "duration": 0.0
         },
         "ingest_incremental_response": {
-          "last_tested": "2025-12-14T14:09:27.758091",
+          "last_tested": "2025-12-14T20:33:24.576942",
           "result": "PASSED",
           "duration": 0.0
         },
         "to_dict": {
-          "last_tested": "2025-12-14T14:09:27.759265",
+          "last_tested": "2025-12-14T20:33:24.577899",
           "result": "PASSED",
           "duration": 0.0
         },
         "to_dict_with_nested_objects": {
-          "last_tested": "2025-12-14T14:09:27.761128",
+          "last_tested": "2025-12-14T20:33:24.579095",
           "result": "PASSED",
           "duration": 0.0
         },
         "validator_init": {
-          "last_tested": "2025-12-14T14:09:27.763192",
+          "last_tested": "2025-12-14T20:33:24.580592",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_full_success": {
-          "last_tested": "2025-12-14T14:09:27.765441",
+          "last_tested": "2025-12-14T20:33:24.582860",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_full_invalid_directory": {
-          "last_tested": "2025-12-14T14:09:27.767403",
+          "last_tested": "2025-12-14T20:33:24.585059",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_query_success": {
-          "last_tested": "2025-12-14T14:09:27.769287",
+          "last_tested": "2025-12-14T20:33:24.586991",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_query_empty_string": {
-          "last_tested": "2025-12-14T14:09:27.771317",
+          "last_tested": "2025-12-14T20:33:24.588970",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_query_whitespace_only": {
-          "last_tested": "2025-12-14T14:09:27.773088",
+          "last_tested": "2025-12-14T20:33:24.590893",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_query_too_long": {
-          "last_tested": "2025-12-14T14:09:27.774781",
+          "last_tested": "2025-12-14T20:33:24.592446",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_query_max_results_too_low": {
-          "last_tested": "2025-12-14T14:09:27.776571",
+          "last_tested": "2025-12-14T20:33:24.593977",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_query_max_results_too_high": {
-          "last_tested": "2025-12-14T14:09:27.778292",
+          "last_tested": "2025-12-14T20:33:24.595596",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_incremental_success": {
-          "last_tested": "2025-12-14T14:09:27.780269",
+          "last_tested": "2025-12-14T20:33:24.597683",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_incremental_relative_path": {
-          "last_tested": "2025-12-14T14:09:27.782715",
+          "last_tested": "2025-12-14T20:33:24.599825",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_incremental_empty_list": {
-          "last_tested": "2025-12-14T14:09:27.785703",
+          "last_tested": "2025-12-14T20:33:24.601638",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_incremental_too_many_files": {
-          "last_tested": "2025-12-14T14:09:27.787865",
+          "last_tested": "2025-12-14T20:33:24.603520",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_incremental_file_not_exists": {
-          "last_tested": "2025-12-14T14:09:27.790986",
+          "last_tested": "2025-12-14T20:33:24.605429",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_ingest_incremental_not_markdown": {
-          "last_tested": "2025-12-14T14:09:27.795554",
+          "last_tested": "2025-12-14T20:33:24.607827",
           "result": "PASSED",
-          "duration": 0.001
+          "duration": 0.0
         },
         "validate_ingest_incremental_invalid_metadata": {
-          "last_tested": "2025-12-14T14:09:27.798892",
+          "last_tested": "2025-12-14T20:33:24.609895",
           "result": "PASSED",
           "duration": 0.0
         },
         "validate_stats": {
-          "last_tested": "2025-12-14T14:09:27.801454",
+          "last_tested": "2025-12-14T20:33:24.612354",
           "result": "PASSED",
           "duration": 0.0
         },
@@ -1009,19 +1009,19 @@
           "duration": 11.103
         },
         "shim_conversion_content": {
-          "last_tested": "2025-12-14T20:26:12.027877",
+          "last_tested": "2025-12-14T20:33:23.397300",
           "result": "PASSED",
           "duration": 0.001
         },
         "shim_file_saving": {
-          "last_tested": "2025-12-14T20:26:12.031045",
+          "last_tested": "2025-12-14T20:33:23.399925",
           "result": "PASSED",
           "duration": 0.001
         },
         "integration_flow": {
-          "last_tested": "2025-12-14T20:26:12.376674",
+          "last_tested": "2025-12-14T20:33:24.111925",
           "result": "PASSED",
-          "duration": 0.34
+          "duration": 0.708
         },
         "full_ingestion_polyglot": {
           "last_tested": "2025-12-14T20:19:59.360937",
@@ -1039,9 +1039,39 @@
           "duration": 1.305
         },
         "polyglot_code_ingestion": {
-          "last_tested": "2025-12-14T20:26:11.575466",
+          "last_tested": "2025-12-14T20:33:35.172252",
           "result": "PASSED",
-          "duration": 0.33
+          "duration": 0.325
+        },
+        "rag_cortex_headless": {
+          "last_tested": "2025-12-14T20:34:32.446248",
+          "result": "PASSED",
+          "duration": 0.001
+        },
+        "rag_query_existing_protocol": {
+          "last_tested": "2025-12-14T20:34:33.449530",
+          "result": "PASSED",
+          "duration": 0.999
+        },
+        "incremental_ingestion": {
+          "last_tested": "2025-12-14T20:34:33.540130",
+          "result": "PASSED",
+          "duration": 0.084
+        },
+        "cortex_query_via_mcp_client": {
+          "last_tested": "2025-12-14T20:34:32.436088",
+          "result": "FAILED",
+          "duration": 0.001
+        },
+        "cortex_get_stats_via_mcp_client": {
+          "last_tested": "2025-12-14T20:34:32.439537",
+          "result": "FAILED",
+          "duration": 0.0
+        },
+        "cortex_cache_operations_via_mcp_client": {
+          "last_tested": "2025-12-14T20:34:32.441912",
+          "result": "FAILED",
+          "duration": 0.0
         }
       }
     },
