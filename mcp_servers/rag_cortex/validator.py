@@ -141,9 +141,10 @@ class CortexValidator:
             if not abs_path.is_file():
                 raise ValidationError(f"Path is not a file: {file_path}")
             
-            # Check it's a markdown file
-            if not str(abs_path).endswith('.md'):
-                raise ValidationError(f"File is not a markdown file: {file_path}")
+            # Check extension (md or allowed code files)
+            valid_extensions = ('.md', '.py', '.js', '.jsx', '.ts', '.tsx')
+            if not str(abs_path).lower().endswith(valid_extensions):
+                raise ValidationError(f"File type not supported: {file_path}. Must be one of {valid_extensions}")
             
             validated_paths.append(str(abs_path))
         
