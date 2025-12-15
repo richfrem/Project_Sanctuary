@@ -1,84 +1,78 @@
 """
-E2E tests for Git Workflow MCP server.
+Git Workflow MCP E2E Tests - Protocol Verification
+==================================================
 
-These tests validate the full MCP client call lifecycle through the MCP protocol.
-Requires all 12 MCP servers to be running (via mcp_servers fixture).
+Verifies all tools via JSON-RPC protocol against the real Git Workflow server.
+Uses read-only operations to avoid affecting repository state.
+
+CALLING EXAMPLES:
+-----------------
+pytest tests/mcp_servers/git/e2e/test_git_e2e.py -v -s
+
+MCP TOOLS TESTED:
+-----------------
+| Tool                  | Type  | Tested | Description                    |
+|-----------------------|-------|--------|--------------------------------|
+| git_get_safety_rules  | READ  | ✅     | Get safety protocols           |
+| git_get_status        | READ  | ✅     | Get repository status          |
+| git_log               | READ  | ✅     | View commit history            |
+| git_diff              | READ  | ✅     | View changes                   |
+| git_add               | WRITE | ❌     | Stage files (risky for E2E)    |
+| git_smart_commit      | WRITE | ❌     | Commit changes (risky for E2E) |
+| git_push_feature      | WRITE | ❌     | Push branch (risky for E2E)    |
+| git_start_feature     | WRITE | ❌     | Create branch (risky for E2E)  |
+| git_finish_feature    | WRITE | ❌     | Delete branch (risky for E2E)  |
+
+NOTE: Write operations are NOT tested in E2E to avoid affecting real repository
+state. These are covered in integration tests with isolated test repositories.
+
 """
-
 import pytest
+from pathlib import Path
 from tests.mcp_servers.base.base_e2e_test import BaseE2ETest
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
 @pytest.mark.e2e
 class TestGitWorkflowE2E(BaseE2ETest):
-    """
-    End-to-end tests for Git Workflow MCP server via MCP protocol.
-    
-    These tests verify:
-    - Full MCP client → server communication
-    - Complete Git workflow operations
-    - Real responses from the Git MCP server
-    """
-    
-    @pytest.mark.asyncio
-    async def test_git_get_status_via_mcp_client(self, mcp_servers):
-        """Test git_get_status through MCP client."""
-        # TODO: Implement when MCP client is integrated
+    SERVER_NAME = "git"
+    SERVER_MODULE = "mcp_servers.git.server"
+
+    def test_git_read_operations(self, mcp_client):
+        """Test read-only Git operations (safe for E2E)"""
         
-        # Expected usage:
-        # result = await self.call_mcp_tool("git_get_status", {})
-        # 
-        # self.assert_mcp_success(result)
-        # assert "branch" in result
-        # assert "staged" in result
-        # assert "unstaged" in result
+        # 1. Verify Tools
+        tools = mcp_client.list_tools()
+        names = [t["name"] for t in tools]
+        print(f"✅ Tools Available: {names}")
         
-        pytest.skip("MCP client integration pending - structure established")
-    
-    @pytest.mark.asyncio
-    async def test_git_start_feature_via_mcp_client(self, mcp_servers):
-        """Test git_start_feature through MCP client."""
-        # TODO: Implement when MCP client is integrated
+        assert "git_get_status" in names
+        assert "git_get_safety_rules" in names
+
+        # 2. Get Safety Rules
+        rules_res = mcp_client.call_tool("git_get_safety_rules", {})
+        rules_text = rules_res.get("content", [])[0]["text"]
+        print(f"\n📜 git_get_safety_rules: {rules_text[:200]}...")
+        assert "MAIN IS PROTECTED" in rules_text or "safety" in rules_text.lower()
+
+        # 3. Get Status
+        status_res = mcp_client.call_tool("git_get_status", {})
+        status_text = status_res.get("content", [])[0]["text"]
+        print(f"📊 git_get_status: {status_text}")
+        assert "Branch:" in status_text or "branch" in status_text.lower()
+
+        # 4. Git Log (read-only)
+        log_res = mcp_client.call_tool("git_log", {"max_count": 3, "oneline": True})
+        log_text = log_res.get("content", [])[0]["text"]
+        print(f"📜 git_log: {log_text[:200]}...")
+        # Should have some commit history
+        assert len(log_text) > 0
+
+        # 5. Git Diff (read-only, might be empty)
+        diff_res = mcp_client.call_tool("git_diff", {"cached": False})
+        diff_text = diff_res.get("content", [])[0]["text"]
+        print(f"📝 git_diff: {'Changes detected' if len(diff_text) > 10 else 'No changes'}")
         
-        # Expected usage:
-        # result = await self.call_mcp_tool(
-        #     "git_start_feature",
-        #     {
-        #         "task_id": "999",
-        #         "description": "e2e-test"
-        #     }
-        # )
-        # 
-        # self.assert_mcp_success(result)
-        # assert "feature/task-999-e2e-test" in result["branch_name"]
-        
-        pytest.skip("MCP client integration pending - structure established")
-    
-    @pytest.mark.asyncio
-    async def test_git_workflow_complete_via_mcp_client(self, mcp_servers):
-        """Test complete Git workflow through MCP client."""
-        # TODO: Implement when MCP client is integrated
-        
-        # Expected usage:
-        # # 1. Start feature
-        # start_result = await self.call_mcp_tool(
-        #     "git_start_feature",
-        #     {"task_id": "998", "description": "e2e-workflow"}
-        # )
-        # self.assert_mcp_success(start_result)
-        # 
-        # # 2. Add files
-        # add_result = await self.call_mcp_tool(
-        #     "git_add",
-        #     {"files": ["test.txt"]}
-        # )
-        # self.assert_mcp_success(add_result)
-        # 
-        # # 3. Commit
-        # commit_result = await self.call_mcp_tool(
-        #     "git_smart_commit",
-        #     {"message": "test: e2e workflow test"}
-        # )
-        # self.assert_mcp_success(commit_result)
-        
-        pytest.skip("MCP client integration pending - structure established")
+        print("\n✅ Git read operations verified")
+        print("⚠️  Write operations (commit, push, branch) not tested in E2E")
+        print("   (Covered in integration tests to avoid repo state changes)")
