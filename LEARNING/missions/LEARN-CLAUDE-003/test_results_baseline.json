@@ -1,0 +1,2336 @@
+{
+  "topic_dir": "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction",
+  "timestamp": "2025-12-14T19:45:24.110159",
+  "execution_time_ms": 58.81690979003906,
+  "summary": {
+    "total_facts_checked": 184,
+    "stable_count": 47,
+    "drift_count": 137,
+    "degraded_count": 0,
+    "error_count": 0
+  },
+  "recommendations": [
+    "\u26a0\ufe0f DRIFT DETECTED: 137 fact(s) no longer supported by vector DB. Consider re-ingesting or updating source documents."
+  ],
+  "results": [
+    {
+      "fact_atom_id": "sources_fact_0",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.4448890686035156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_1",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.31113624572753906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_2",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4258155822753906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_3",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.514984130859375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_4",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.286102294921875,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_5",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.49805641174316406,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_6",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5428791046142578,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_7",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4260540008544922,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_8",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.3662109375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_9",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.26106834411621094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_10",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09703636169433594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_11",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08487701416015625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_12",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_13",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1380443572998047,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_14",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13589859008789062,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_15",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_16",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.32210350036621094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_17",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.20194053649902344,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_18",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.21505355834960938,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_19",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.6289482116699219,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_20",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 4.881858825683594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_21",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.2319812774658203,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_22",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09703636169433594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_23",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7989406585693359,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_24",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.29277801513671875,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_25",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5729198455810547,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_26",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09822845458984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_27",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4849433898925781,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_28",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.18215179443359375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_29",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.3409385681152344,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_30",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09107589721679688,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_31",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_32",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08416175842285156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_33",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.0820159912109375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_34",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_35",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_36",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.11491775512695312,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_37",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.537872314453125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_38",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.1239776611328125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_39",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08988380432128906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_40",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08487701416015625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_41",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1437664031982422,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_42",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_43",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_44",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.10704994201660156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_45",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.21195411682128906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_46",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08606910705566406,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_47",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_48",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13589859008789062,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_49",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.15306472778320312,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_50",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08511543273925781,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_51",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14281272888183594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_52",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14328956604003906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_53",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13899803161621094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_54",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5578994750976562,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_55",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.26702880859375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_56",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1380443572998047,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_57",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13709068298339844,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_58",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1361370086669922,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_59",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08893013000488281,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_60",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13518333435058594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_61",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13589859008789062,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_62",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08511543273925781,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_63",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_64",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08487701416015625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_65",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1380443572998047,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_66",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_67",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_68",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08177757263183594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_69",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_70",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08106231689453125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_71",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08273124694824219,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_72",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14090538024902344,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_73",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.0820159912109375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_74",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1399517059326172,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_75",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08320808410644531,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_76",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.0820159912109375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "sources_fact_77",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08487701416015625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_0",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08416175842285156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_1",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_2",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_3",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08296966552734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_4",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4279613494873047,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_5",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1499652862548828,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_6",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1373291015625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_7",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.37980079650878906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_8",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14901161193847656,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_9",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13899803161621094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_10",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1380443572998047,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_11",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14400482177734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_12",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13709068298339844,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_13",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13589859008789062,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_14",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 1.0151863098144531,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_15",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 1.291036605834961,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_16",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5970001220703125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_17",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.3960132598876953,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_18",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 1.8610954284667969,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_19",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.42438507080078125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_20",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.37980079650878906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_21",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7548332214355469,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_22",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.3299713134765625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_23",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.43702125549316406,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_24",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.14901161193847656,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_25",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5743503570556641,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_26",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7297992706298828,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_27",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.6000995635986328,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_28",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7071495056152344,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_29",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5009174346923828,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_30",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.8199214935302734,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_31",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4658699035644531,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_32",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.46324729919433594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_33",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.6868839263916016,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_34",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.43320655822753906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_35",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4990100860595703,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_36",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.2720355987548828,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_37",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7169246673583984,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_38",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7407665252685547,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_39",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.2808570861816406,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_40",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.15401840209960938,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_41",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.13899803161621094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_42",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08606910705566406,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "README_fact_43",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08392333984375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_0",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1442432403564453,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_1",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.14495849609375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_2",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.45180320739746094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_3",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.2949237823486328,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_4",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09799003601074219,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_5",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.23126602172851562,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_6",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.08988380432128906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_7",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.16808509826660156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_8",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.6630420684814453,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_9",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5800724029541016,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_10",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.4260540008544922,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_11",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.15091896057128906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_12",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14281272888183594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_13",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14400482177734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_14",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1430511474609375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_15",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1430511474609375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_16",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.141143798828125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_17",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1418590545654297,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_18",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1468658447265625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_19",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1442432403564453,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_20",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.6520748138427734,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_21",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.3490447998046875,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_22",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.15306472778320312,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_23",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14519691467285156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_24",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09703636169433594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_25",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.7958412170410156,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_26",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.8699893951416016,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_27",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.15807151794433594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_28",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.2579689025878906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_29",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.19025802612304688,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_30",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.21123886108398438,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_31",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.2391338348388672,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_32",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.20503997802734375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_33",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.23412704467773438,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_34",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.18215179443359375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_35",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1881122589111328,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_36",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17905235290527344,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_37",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.10204315185546875,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_38",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.12493133544921875,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_39",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.1468658447265625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_40",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17714500427246094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_41",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17714500427246094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_42",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.18095970153808594,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_43",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17380714416503906,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_44",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.24318695068359375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_45",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.09608268737792969,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_46",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.11110305786132812,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_47",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17690658569335938,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_48",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.10991096496582031,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_49",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.10800361633300781,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_50",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.14591217041015625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_51",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.087738037109375,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_52",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.11610984802246094,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_53",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17189979553222656,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_54",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.18405914306640625,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_55",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.17309188842773438,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_56",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.2460479736328125,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_57",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.5199909210205078,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_58",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.6861686706542969,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_59",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.9720325469970703,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_60",
+      "status": "STABLE",
+      "relevance_delta": 0.0,
+      "source_in_top_results": true,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum-error-correction/notes/fundamentals.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/126_QEC_Inspired_AI_Robustness_Virtual_Stabilizer_Architecture.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md"
+      ],
+      "execution_time_ms": 0.34689903259277344,
+      "error_message": null
+    },
+    {
+      "fact_atom_id": "fundamentals_fact_61",
+      "status": "DRIFT_DETECTED",
+      "relevance_delta": 0.5,
+      "source_in_top_results": false,
+      "top_results": [
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/README.md",
+        "/Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/101_Functional_Coherence.md"
+      ],
+      "execution_time_ms": 0.11014938354492188,
+      "error_message": null
+    }
+  ]
+}
