@@ -50,8 +50,9 @@ from .models import (
     CacheGetResponse,
     CacheSetResponse,
     CacheWarmupResponse,
-    DocumentSample
+    DocumentSample,
 )
+from .ingest_code_shim import convert_and_save
 
 # Imports that were previously inside methods, now moved to top for class initialization
 # Silence stdout/stderr during imports to prevent MCP protocol pollution
@@ -167,6 +168,23 @@ class CortexOperations:
             return []
 
         logger.info(f"Loading documents from directory: {directory_path}")
+    
+        # Pre-process: Convert Python files to Markdown
+        try:
+            py_files = list(directory_path.rglob("*.py"))
+            for py_file in py_files:
+                # Skip if in excluded directory
+                if any(ex in py_file.parts for ex in exclude_subdirs):
+                    continue
+                    
+                # Convert to markdown
+                try:
+                    convert_and_save(str(py_file))
+                except Exception as e:
+                    logger.warning(f"Failed to convert {py_file}: {e}")
+        except Exception as e:
+            logger.error(f"Error during code conversion scan: {e}")
+
         loader = DirectoryLoader(
             str(directory_path),
             glob="**/*.md",
@@ -520,8 +538,17 @@ class CortexOperations:
                 if not path.is_absolute():
                     path = self.project_root / path
                 
-                if path.exists() and path.is_file() and path.suffix == '.md':
-                    valid_files.append(str(path.resolve()))
+                if path.exists() and path.is_file():
+                    if path.suffix == '.md':
+                        valid_files.append(str(path.resolve()))
+                    elif path.suffix == '.py':
+                        # Convert Python to Markdown using shim
+                        try:
+                            md_path = convert_and_save(str(path.resolve()))
+                            valid_files.append(md_path)
+                            # Track for cleanup if needed, though keeping the .md might be useful for caching
+                        except Exception as e:
+                            logger.warning(f"Failed to convert code file {fp}: {e}")
                 else:
                     logger.warning(f"Skipping invalid file path: {fp}")
             

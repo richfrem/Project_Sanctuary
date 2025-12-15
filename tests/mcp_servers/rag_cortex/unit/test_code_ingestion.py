@@ -5,11 +5,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 from langchain_core.documents import Document
 
-# Add scripts directory to path to import shim
-scripts_dir = Path(__file__).resolve().parents[4] / "scripts"
-sys.path.append(str(scripts_dir))
-
-from ingest_code_shim import parse_python_to_markdown, convert_and_save
+from mcp_servers.rag_cortex.ingest_code_shim import parse_python_to_markdown, convert_and_save
 from mcp_servers.rag_cortex.operations import CortexOperations
 
 

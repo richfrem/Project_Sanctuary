@@ -11,13 +11,14 @@ from unittest.mock import MagicMock
 @pytest.fixture
 def mock_cortex_deps():
     """Mock dependencies for CortexOperations ingestion."""
-    with patch("langchain_chroma.Chroma") as mock_chroma, \
+    with patch("mcp_servers.rag_cortex.operations.Chroma") as mock_chroma, \
          patch("langchain.storage.LocalFileStore") as mock_lfs, \
          patch("langchain.storage._lc_store.create_kv_docstore") as mock_kv, \
          patch("langchain.retrievers.ParentDocumentRetriever") as mock_pdr, \
          patch("langchain_nomic.NomicEmbeddings") as mock_nomic, \
-         patch("langchain_community.document_loaders.DirectoryLoader") as mock_dir_loader, \
-         patch("langchain_community.document_loaders.TextLoader") as mock_text_loader, \
+         patch("langchain_nomic.NomicEmbeddings") as mock_nomic, \
+         patch("mcp_servers.rag_cortex.operations.DirectoryLoader") as mock_dir_loader, \
+         patch("mcp_servers.rag_cortex.operations.TextLoader") as mock_text_loader, \
          patch("langchain_text_splitters.RecursiveCharacterTextSplitter") as mock_splitter:
         
         # Mock splitter to return predictable chunks
@@ -55,6 +56,10 @@ def test_ingest_full(mock_cortex_deps, temp_project_root):
         Document(page_content="Test content 2", metadata={"source": "doc2.md"})
     ]
     
+    # Configure Chroma mock to return chunk count
+    mock_chroma_instance = mock_cortex_deps["chroma"].return_value
+    mock_chroma_instance._collection.count.return_value = 4
+    
     # Create a dummy source directory
     (temp_project_root / "00_CHRONICLE").mkdir(exist_ok=True)
     
@@ -64,9 +69,8 @@ def test_ingest_full(mock_cortex_deps, temp_project_root):
     assert result.documents_processed == 2
     assert result.chunks_created == 4  # 2 docs * 2 chunks each (from mock splitter)
     
-    # Verify add_documents was called
-    mock_pdr_instance = mock_cortex_deps["pdr"].return_value
-    mock_pdr_instance.add_documents.assert_called()
+    # Verify vectorstore add_documents was called
+    mock_chroma_instance.add_documents.assert_called()
 
 
 def test_ingest_incremental(mock_cortex_deps, temp_project_root):
