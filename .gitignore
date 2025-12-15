@@ -103,6 +103,7 @@ mcp_servers/agent_persona/state/
 mcp_servers/rag_cortex/data/
 dataset_package/
 *.py.md
+tests/mcp_servers/operations_instrumentation.json
 
 ResearchPapers
 

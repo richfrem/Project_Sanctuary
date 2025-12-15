@@ -1,83 +1,102 @@
 """
-E2E tests for RAG Cortex MCP server.
+RAG Cortex MCP E2E Tests - Protocol Verification
+================================================
 
-These tests validate the full MCP client call lifecycle through the MCP protocol.
-Requires all 12 MCP servers to be running (via mcp_servers fixture).
+Verifies all tools via JSON-RPC protocol against the real RAG Cortex server.
+Requires live Vector DB (Chroma) and Ollama.
+
+CALLING EXAMPLES:
+-----------------
+pytest tests/mcp_servers/rag_cortex/e2e/test_cortex_e2e.py -v -s
+
+MCP TOOLS TESTED:
+-----------------
+| Tool                      | Type  | Description              |
+|---------------------------|-------|--------------------------|
+| cortex_get_stats          | READ  | DB stats                 |
+| cortex_ingest_incremental | WRITE | Ingest file              |
+| cortex_query              | READ  | Semantic search          |
+| cortex_cache_set          | WRITE | Cache operation          |
+| cortex_cache_get          | READ  | Cache retrieval          |
+
 """
-
 import pytest
+import os
+import json
+import time
+from pathlib import Path
 from tests.mcp_servers.base.base_e2e_test import BaseE2ETest
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
 @pytest.mark.e2e
 class TestRAGCortexE2E(BaseE2ETest):
-    """
-    End-to-end tests for RAG Cortex MCP server via MCP protocol.
-    
-    These tests verify:
-    - Full MCP client → server communication
-    - Complete tool call lifecycle
-    - Real responses from the RAG Cortex server
-    """
-    
-    @pytest.mark.asyncio
-    async def test_cortex_query_via_mcp_client(self, mcp_servers):
-        """Test cortex_query through MCP client."""
-        # TODO: Implement when MCP client is integrated
-        # This is the target structure for E2E tests
+    SERVER_NAME = "rag_cortex"
+    SERVER_MODULE = "mcp_servers.rag_cortex.server"
+
+    def test_cortex_lifecycle(self, mcp_client):
+        """Test full cycle: Stats -> Ingest -> Query -> Cache"""
         
-        # Expected usage:
-        # result = await self.call_mcp_tool(
-        #     "cortex_query",
-        #     {
-        #         "query": "What is Protocol 101?",
-        #         "max_results": 3
-        #     }
-        # )
-        # 
-        # self.assert_mcp_success(result)
-        # assert len(result["results"]) > 0
-        # assert "Protocol 101" in str(result["results"])
+        # 1. Verify Tools
+        tools = mcp_client.list_tools()
+        names = [t["name"] for t in tools]
+        print(f"✅ Tools Available: {names}")
+        assert "cortex_get_stats" in names
+        assert "cortex_ingest_incremental" in names
+
+        # 2. Get Stats
+        stats_res = mcp_client.call_tool("cortex_get_stats", {})
+        stats_text = stats_res.get("content", [])[0]["text"]
+        print(f"📊 cortex_get_stats: {stats_text}")
+        # Validate output format (JSON string or text)
+        # Usually JSON string
+        assert "documents" in stats_text.lower() or "stats" in stats_text.lower()
+
+        # 3. Ingest File
+        # Create temp file in valid ingestion directory
+        test_file = PROJECT_ROOT / "00_CHRONICLE" / "e2e_cortex_test.md"
+        # Ensure dir exists
+        test_file.parent.mkdir(parents=True, exist_ok=True)
         
-        pytest.skip("MCP client integration pending - structure established")
-    
-    @pytest.mark.asyncio
-    async def test_cortex_get_stats_via_mcp_client(self, mcp_servers):
-        """Test cortex_get_stats through MCP client."""
-        # TODO: Implement when MCP client is integrated
-        
-        # Expected usage:
-        # result = await self.call_mcp_tool("cortex_get_stats", {})
-        # 
-        # self.assert_mcp_success(result)
-        # assert "total_documents" in result
-        # assert "total_chunks" in result
-        
-        pytest.skip("MCP client integration pending - structure established")
-    
-    @pytest.mark.asyncio
-    async def test_cortex_cache_operations_via_mcp_client(self, mcp_servers):
-        """Test cache operations through MCP client."""
-        # TODO: Implement when MCP client is integrated
-        
-        # Expected usage:
-        # # Test cache set
-        # set_result = await self.call_mcp_tool(
-        #     "cortex_cache_set",
-        #     {
-        #         "query": "Test query",
-        #         "answer": "Test answer"
-        #     }
-        # )
-        # self.assert_mcp_success(set_result)
-        # 
-        # # Test cache get
-        # get_result = await self.call_mcp_tool(
-        #     "cortex_cache_get",
-        #     {"query": "Test query"}
-        # )
-        # self.assert_mcp_success(get_result)
-        # assert get_result["cache_hit"] is True
-        # assert get_result["answer"] == "Test answer"
-        
-        pytest.skip("MCP client integration pending - structure established")
+        with open(test_file, "w") as f:
+            f.write("# E2E Cortex Test\n\nThis is a unique string: CortexE2E verification sequence.")
+            
+        try:
+            ingest_res = mcp_client.call_tool("cortex_ingest_incremental", {
+                "file_paths": [str(test_file)],
+                "skip_duplicates": False
+            })
+            ingest_text = ingest_res.get("content", [])[0]["text"]
+            print(f"📥 cortex_ingest_incremental: {ingest_text}")
+            assert "success" in ingest_text.lower() or "processed" in ingest_text.lower()
+
+            # 4. Query
+            # Small delay for persistence if needed
+            # time.sleep(1)
+            
+            query_res = mcp_client.call_tool("cortex_query", {
+                "query": "CortexE2E verification sequence",
+                "max_results": 1
+            })
+            query_text = query_res.get("content", [])[0]["text"]
+            print(f"🔍 cortex_query: {query_text}")
+            
+            # Check if found
+            assert "CortexE2E" in query_text
+
+            # 5. Cache Operations
+            cache_res = mcp_client.call_tool("cortex_cache_set", {
+                "query": "E2E Cache Key",
+                "answer": "Cached Answer 123"
+            })
+            print(f"💾 cortex_cache_set: {cache_res.get('content', [])[0]['text']}")
+            
+            get_cache = mcp_client.call_tool("cortex_cache_get", {"query": "E2E Cache Key"})
+            get_text = get_cache.get("content", [])[0]["text"]
+            print(f"📂 cortex_cache_get: {get_text}")
+            assert "Cached Answer" in get_text
+
+        finally:
+            if test_file.exists():
+                os.remove(test_file)
+                print(f"🧹 Cleaned up {test_file}")
