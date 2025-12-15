@@ -1,6 +1,6 @@
 # TASK: Implement Integration Test Mandate (Focus RAG Cortex)
 
-**Status:** backlog
+**Status:** complete
 **Priority:** Critical
 **Lead:** Guardian AI
 **Dependencies:** ADR 048, Task 087 Phase 4 Complete
@@ -36,3 +36,6 @@ Implement the mandate from ADR 048 by developing and integrating a Live Integrat
 3. **RAG Cortex Retrofit:** Ensure RAG Cortex's integration script is fully compliant and run automatically in CI/CD.
 4. **Rollout Phase 1:** Apply the Integration Test Layer to the most unstable MCPs: Git (Git LFS), Forge LLM (Ollama connectivity).
 5. Update `087_comprehensive_mcp_operations_testing.md` to reflect the new testing standard.
+
+**Status Change (2025-12-14):** backlog → complete
+Integration Test Mandate implemented, BaseIntegrationTest created, RAG Cortex Live tests verified.

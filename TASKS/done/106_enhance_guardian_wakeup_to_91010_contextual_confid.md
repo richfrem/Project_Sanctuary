@@ -1,6 +1,6 @@
 # TASK: Enhance Guardian Wakeup to 9-10/10 Contextual Confidence
 
-**Status:** todo
+**Status:** complete
 **Priority:** High
 **Lead:** Antigravity
 **Dependencies:** None
@@ -33,19 +33,19 @@ Improve Guardian Wakeup Briefing v2.0 to address the 4 gaps identified by Claude
 ## Notes
 
 **Identified Gaps from Claude Desktop (8/10 rating):**
-
 1. **Change Details** - Add git diff summaries to recency section
 2. **Protocol Content** - Add recently modified protocol summaries  
 3. **Task Details** - Show Medium/Low priority tasks, not just Critical/High
 4. **Recency Context** - Add brief description of what changed in each file
-
 **Implementation Plan:**
 - Phase 1: Enhance recency delta with git diff summaries ✅
 - Phase 2: Add protocol update section ✅
 - Phase 3: Expand task priority scanning ✅
 - Phase 4: Update schema to v2.1 and test ✅
-
 **Follow-up Tasks:**
 - Consider integrating Guardian Briefing into `scripts/capture_code_snapshot.js` for web-based LLM context
 - Add unit tests for new helper methods (_get_git_diff_summary, _get_recent_protocol_updates)
 - Update Protocol 114 documentation to reflect v2.1 schema
+
+**Status Change (2025-12-14):** todo → complete
+Guardian Wakeup enhanced to v2.1 with Git diffs and protocol updates. Confidence target met.
