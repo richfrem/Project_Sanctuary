@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Containerfile.lite
+    image: mcpgateway/sanctuary:mvp
+    ports:
+      - "4444:4444"
+    # VOLUME REMOVED TO FIX PERMISSION ISSUE IN MVP
+    # volumes:
+    #   - ./mcp.db:/app/mcp.db
+    environment:
+      - APP_NAME=Sanctuary_Gateway_MVP
+      - HOST=0.0.0.0
+      - PORT=4444
+      - DATABASE_URL=sqlite:///./mcp.db
+      - AUTH_REQUIRED=true
+      - BASIC_AUTH_USER=admin
+      - BASIC_AUTH_PASSWORD=changeme
+      - JWT_SECRET_KEY=sanctuary-mvp-secret
+      - JWT_ALGORITHM=HS256
+      - ENVIRONMENT=development
+      - SECURITY_HEADERS_ENABLED=false
+      - LOG_LEVEL=DEBUG
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; exit(0 if urllib.request.urlopen('http://localhost:4444/health').getcode() == 200 else 1)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
