@@ -674,6 +674,11 @@ class CortexOperations:
             all_child_docs_to_add = []
             
             for file_path in valid_files:
+                # Security Check: Ensure we never ingest excluded vendor code (Red Team Mandate)
+                if self._should_skip_path(Path(file_path)):
+                    logger.warning(f"Skipping excluded path in incremental ingest: {file_path}")
+                    continue
+
                 try:
                     # Check for duplicates if skip_duplicates is True
                     # This is a simplified check, a more robust one would query the vectorstore

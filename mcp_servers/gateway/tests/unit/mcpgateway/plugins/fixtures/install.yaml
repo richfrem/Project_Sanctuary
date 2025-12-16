@@ -1,3 +1,0 @@
-packages:
-  - package: myplugin
-    repository: https://github.com/araujof/my-plugin.git

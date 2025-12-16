@@ -1,8 +1,0 @@
-title: MCP Servers
-nav:
-  - Overview: index.md
-  - Go Servers: go
-  - Python Servers: python
-  - External Servers: external
-  - IBM Servers: ibm
-  - Hashicorp Servers: hashicorp
