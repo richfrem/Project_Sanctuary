@@ -52,7 +52,7 @@ To mitigate the "Context Flood" risk (~1.2M tokens), we have implemented a **Tri
 ## Update Protocol (Vendor Refresh)
 Updates are NOT routine. They are "Vendor Refresh Events."
 1.  Check out a new branch `refresh/gateway-upstream`.
-2.  Run `git subtree pull --prefix mcp_servers/gateway https://github.com/ibm/contextforge.git main --squash`.
+2.  Run `git subtree pull --prefix mcp_servers/gateway https://github.com/IBM/mcp-context-forge.git main --squash`.
 3.  Manually verify `podman-compose.yml` and patches.
 4.  Run `node scripts/capture_code_snapshot.js` to verify the **Circuit Breaker** holds.
 
@@ -67,6 +67,10 @@ Updates are NOT routine. They are "Vendor Refresh Events."
 -   **Noise:** `git status` and search are noisier (Mitigated by Layer 3 Safeguards).
 
 ## Implementation Details
--   **Execution Command:** `git subtree add --prefix mcp_servers/gateway https://github.com/ibm/contextforge.git main --squash`
+-   **Execution Command:** `git subtree add --prefix mcp_servers/gateway https://github.com/IBM/mcp-context-forge.git main --squash`
 -   **Version Tracking:** A file `mcp_servers/gateway/VENDOR_INFO.md` will track the original commit hash.
 -   **IDE Config:** Vendored directories added to `.vscode/settings.json` (`search.exclude` and `files.watcherExclude`).
+
+## References
+-   **Host Repostory (Project Sanctuary):** `https://github.com/richfrem/Project_Sanctuary`
+-   **Target Repository (IBM ContextForge):** `https://github.com/IBM/mcp-context-forge`
