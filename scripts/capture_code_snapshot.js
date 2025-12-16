@@ -143,6 +143,11 @@ const excludeDirNames = new Set([
     '04_THE_FORTRESS',
     '05_LIVING_CHRONICLE',
 
+    // --- Gateway Exclusions ---
+    'plugins_rust',
+    'target',
+    'vendor', // Exclude static vendor assets (fontawesome, etc)
+
     // --- Final Hardening v2.3 ---
     '05_ARCHIVED_BLUEPRINTS',
     'gardener',
@@ -191,7 +196,12 @@ let alwaysExcludeFiles = [
     /^npm-debug\.log.*$/i,
     /^yarn-error\.log.*$/i,
     /^pnpm-debug\.log.*$/i,
-    /\.(log)$/i
+    /\.(log|db|sqlite|sqlite3)$/i,
+    // Large lockfiles and upstream docs
+    'uv.lock',
+    'package-lock.json',
+    'CHANGELOG.md',
+    'CHANGELOG.rst'
 ];
 
 function shouldExcludeFile(baseName) {
@@ -499,6 +509,41 @@ try {
         if (relFromProjectRoot.startsWith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') || relFromProjectRoot.includes('/ml_env_logs')) {
             itemsSkipped++;
             return;
+        }
+
+        // --- HARDENED VENDOR EXCLUSION (RED TEAM FIX) ---
+        // 1. Normalize path to Unix style (forward slashes) to prevent Windows bypass
+        // Also ensure we handle the 'ms-word' style backslashes if any (though node usually handles this)
+        const normalizedRelPath = relFromProjectRoot.split(path.sep).join('/');
+
+        // 2. Define strict vendor paths (The "Blast Radius")
+        const VENDOR_BLOCKLIST = [
+            'mcp_servers/gateway/mcpgateway/',
+            'mcp_servers/gateway/tests/',
+            'mcp_servers/gateway/docs/',
+            'mcp_servers/gateway/examples/',
+            'mcp_servers/gateway/.github/',
+            'mcp_servers/gateway/deployment/',
+            'mcp_servers/gateway/agent_runtimes/',
+            'mcp_servers/gateway/charts/',
+            'mcp_servers/gateway/nginx/',
+            'mcp_servers/gateway/plugin_templates/',
+            'mcp_servers/gateway/mcp-servers/',
+            'mcp_servers/gateway/plugins/',
+            'mcp_servers/gateway/scripts/'
+        ];
+
+        // 3. Check for blocking
+        if (VENDOR_BLOCKLIST.some(blocked => normalizedRelPath.startsWith(blocked))) {
+            itemsSkipped++;
+            return;
+        }
+
+        // 4. CIRCUIT BREAKER (Safety Net)
+        // If we somehow accidentally ingest the vendor folder, the token count will spike.
+        // We throw a hard error to prevent the Context Flood.
+        if (filesCaptured > 500 && normalizedRelPath.includes('mcp_servers/gateway')) {
+            throw new Error(`[FATAL] Circuit Breaker Tripped! Too many files captured in gateway. Exclusion logic failed for: ${normalizedRelPath}`);
         }
 
         if (relativePath) {

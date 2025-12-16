@@ -364,6 +364,28 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
             return
 
+        # --- HARDENED VENDOR EXCLUSION (RED TEAM FIX) ---
+        # 1. Normalize path (already done by as_posix())
+        # 2. Blocking "Blast Radius" paths
+        vendor_blocklist = [
+            'mcp_servers/gateway/mcpgateway',
+            'mcp_servers/gateway/tests',
+            'mcp_servers/gateway/docs',
+            'mcp_servers/gateway/examples',
+            'mcp_servers/gateway/.github',
+            'mcp_servers/gateway/deployment',
+            'mcp_servers/gateway/agent_runtimes',
+            'mcp_servers/gateway/charts',
+            'mcp_servers/gateway/nginx',
+            'mcp_servers/gateway/plugin_templates',
+            'mcp_servers/gateway/mcp-servers',
+            'mcp_servers/gateway/plugins',
+            'mcp_servers/gateway/scripts'
+        ]
+
+        if any(rel_from_project_root.startswith(blocked) for blocked in vendor_blocklist):
+             return
+
         if path_obj.is_file():
             if path_obj.name in exclude_files:
                 return
@@ -443,6 +465,27 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         # Exclude ML environment logs directory
         if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
             return
+
+        # --- HARDENED VENDOR EXCLUSION (RED TEAM FIX) ---
+        # Blocking "Blast Radius" paths
+        vendor_blocklist = [
+            'mcp_servers/gateway/mcpgateway',
+            'mcp_servers/gateway/tests',
+            'mcp_servers/gateway/docs',
+            'mcp_servers/gateway/examples',
+            'mcp_servers/gateway/.github',
+            'mcp_servers/gateway/deployment',
+            'mcp_servers/gateway/agent_runtimes',
+            'mcp_servers/gateway/charts',
+            'mcp_servers/gateway/nginx',
+            'mcp_servers/gateway/plugin_templates',
+            'mcp_servers/gateway/mcp-servers',
+            'mcp_servers/gateway/plugins',
+            'mcp_servers/gateway/scripts'
+        ]
+
+        if any(rel_from_project_root.startswith(blocked) for blocked in vendor_blocklist):
+             return
 
         if path_obj.is_file():
             if path_obj.name in exclude_files:

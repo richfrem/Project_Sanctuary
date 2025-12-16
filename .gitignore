@@ -16,6 +16,8 @@ venv/
 .env
 .env.local/
 env/
+mcp.db
+plugins_rust/target/
 
 # Ignore Python cache and compiled files
 __pycache__/

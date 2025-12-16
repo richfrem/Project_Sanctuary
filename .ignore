@@ -1,0 +1,5 @@
+# Ignore upstream vendor source in searches
+mcp_servers/gateway/mcpgateway/
+mcp_servers/gateway/tests/
+mcp_servers/gateway/docs/
+mcp_servers/gateway/examples/

@@ -1,2 +1,9 @@
 # Protocol 101 v3.0: commit_manifest.json system permanently removed
 # No special merge strategies needed
+
+# Treat vendor code as binary/generated to prevent massive diffs
+mcp_servers/gateway/mcpgateway/** linguist-vendored
+mcp_servers/gateway/mcpgateway/** -diff
+mcp_servers/gateway/tests/** linguist-vendored
+mcp_servers/gateway/tests/** -diff
+mcp_servers/gateway/docs/** linguist-documentation

@@ -201,7 +201,39 @@ class CortexOperations:
             
         if name_lower.startswith(('npm-debug.log', 'yarn-error.log', 'pnpm-debug.log')):
             return True
+
+        # 4. HARDENED VENDOR EXCLUSION (RED TEAM FIX)
+        # Strict path-based blocking to prevent context flooding from IBM ContextForge
+        try:
+            # Ensure we have a project-relative path string
+            rel_path = path if not path.is_absolute() else path.relative_to(self.project_root)
+            # Normalize to forward slashes for cross-platform consistency
+            normalized_path = str(rel_path).replace('\\', '/')
             
+            VENDOR_BLOCKLIST = [
+                'mcp_servers/gateway/mcpgateway',
+                'mcp_servers/gateway/tests',
+                'mcp_servers/gateway/docs',
+                'mcp_servers/gateway/examples',
+                'mcp_servers/gateway/.github',
+                'mcp_servers/gateway/deployment',
+                'mcp_servers/gateway/agent_runtimes',
+                'mcp_servers/gateway/charts',
+                'mcp_servers/gateway/nginx',
+                'mcp_servers/gateway/plugin_templates',
+                'mcp_servers/gateway/mcp-servers',
+                'mcp_servers/gateway/plugins',
+                'mcp_servers/gateway/scripts'
+            ]
+            
+            if any(normalized_path.startswith(blocked) for blocked in VENDOR_BLOCKLIST):
+                return True
+                
+        except ValueError:
+            # Path not relative to project root (e.g. system path), safe to ignore or process
+            # If it's outside project root, it's likely not part of the vendor inclusion risk
+            pass
+
         return False
 
     def _load_documents_from_directory(self, directory_path: Path) -> List[Document]:
