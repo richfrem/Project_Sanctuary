@@ -485,6 +485,8 @@ try {
     let filesCaptured = 0;
     let itemsSkipped = 0;
     let coreFilesCaptured = 0;
+    // Global counter for gateway files to implement the Red Team Circuit Breaker
+    let gatewayFilesCaptured = 0;
 
     function traverseAndCapture(currentPath) {
         const baseName = path.basename(currentPath);
@@ -499,7 +501,6 @@ try {
         const relFromProjectRoot = path.relative(projectRoot, currentPath).replace(/\\/g, '/');
 
         // Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
-        // e.g., mnemonic_cortex/chroma_db_backup*, mnemonic_cortex/.../chroma_db_backup*
         if (relFromProjectRoot.startsWith('mnemonic_cortex/chroma_db_backup') || relFromProjectRoot.includes('/chroma_db_backup')) {
             itemsSkipped++;
             return;
@@ -512,38 +513,31 @@ try {
         }
 
         // --- HARDENED VENDOR EXCLUSION (RED TEAM FIX) ---
-        // 1. Normalize path to Unix style (forward slashes) to prevent Windows bypass
-        // Also ensure we handle the 'ms-word' style backslashes if any (though node usually handles this)
+        // 1. Normalize path to Unix style (forward slashes)
         const normalizedRelPath = relFromProjectRoot.split(path.sep).join('/');
 
-        // 2. Define strict vendor paths (The "Blast Radius")
-        const VENDOR_BLOCKLIST = [
-            'mcp_servers/gateway/mcpgateway/',
-            'mcp_servers/gateway/tests/',
-            'mcp_servers/gateway/docs/',
-            'mcp_servers/gateway/examples/',
-            'mcp_servers/gateway/.github/',
-            'mcp_servers/gateway/deployment/',
-            'mcp_servers/gateway/agent_runtimes/',
-            'mcp_servers/gateway/charts/',
-            'mcp_servers/gateway/nginx/',
-            'mcp_servers/gateway/plugin_templates/',
-            'mcp_servers/gateway/mcp-servers/',
-            'mcp_servers/gateway/plugins/',
-            'mcp_servers/gateway/scripts/'
-        ];
+        // 2. STRICT ALLOWLIST STRATEGY
+        // If we are inside the vendored gateway directory, BLOCK EVERYTHING
+        // except the specific files we explicitly want to track (configs/docs).
+        if (normalizedRelPath.startsWith('mcp_servers/gateway')) {
+            const ALLOWED_GATEWAY_FILES = new Set([
+                'mcp_servers/gateway', // The directory itself (for traversal)
+                'mcp_servers/gateway/VENDOR_INFO.md',
+                'mcp_servers/gateway/podman-compose.yml',
+                'mcp_servers/gateway/podman-compose.yaml',
+                'mcp_servers/gateway/docker-compose.yml',
+                'mcp_servers/gateway/README.md' // Optional: keep README for context
+            ]);
 
-        // 3. Check for blocking
-        if (VENDOR_BLOCKLIST.some(blocked => normalizedRelPath.startsWith(blocked))) {
-            itemsSkipped++;
-            return;
-        }
-
-        // 4. CIRCUIT BREAKER (Safety Net)
-        // If we somehow accidentally ingest the vendor folder, the token count will spike.
-        // We throw a hard error to prevent the Context Flood.
-        if (filesCaptured > 500 && normalizedRelPath.includes('mcp_servers/gateway')) {
-            throw new Error(`[FATAL] Circuit Breaker Tripped! Too many files captured in gateway. Exclusion logic failed for: ${normalizedRelPath}`);
+            // If it's the root folder, we must allow it to traverse children
+            if (normalizedRelPath === 'mcp_servers/gateway') {
+                // Do nothing, let it pass to directory check
+            }
+            // If it's a file/folder NOT in the allowlist, block it.
+            else if (!ALLOWED_GATEWAY_FILES.has(normalizedRelPath)) {
+                itemsSkipped++;
+                return;
+            }
         }
 
         if (relativePath) {
@@ -556,6 +550,16 @@ try {
                 traverseAndCapture(path.join(currentPath, item));
             }
         } else if (stats.isFile()) {
+            // 4. CIRCUIT BREAKER (Safety Net)
+            // Only increment and check if we are actually capturing a file in the gateway
+            if (normalizedRelPath.includes('mcp_servers/gateway')) {
+                gatewayFilesCaptured++;
+                // Allow up to 50 files (docs, root configs, etc) but STOP if we see source flooding
+                if (gatewayFilesCaptured > 50) {
+                    throw new Error(`[FATAL] Circuit Breaker Tripped! Too many files captured in gateway (${gatewayFilesCaptured}). exclusion logic failed.`);
+                }
+            }
+
             if (shouldExcludeFile(baseName)) {
                 itemsSkipped++;
                 return;
