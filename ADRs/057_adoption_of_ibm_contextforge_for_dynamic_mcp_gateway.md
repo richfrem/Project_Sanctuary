@@ -1,6 +1,6 @@
 # Adoption of IBM ContextForge for Dynamic MCP Gateway
 
-**Status:** proposed
+**Status: ACCEPTED (Modified by [ADR 058: Decouple Gateway](./058_decouple_ibm_gateway_to_external_podman_service.md))**
 **Date:** 2025-12-15
 **Author:** Project Sanctuary Core Team
 
