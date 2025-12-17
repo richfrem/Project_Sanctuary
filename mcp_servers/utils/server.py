@@ -63,8 +63,35 @@ async def lifespan(app: FastAPI):
     """Application lifespan - startup and shutdown events."""
     logger.info("🚀 sanctuary-utils starting up...")
     logger.info(f"📦 Registered tools: {list(TOOL_REGISTRY.keys())}")
-    # TODO: Implement Guardrail 2 (Self-Registration) in Phase 3
+    
+    # Guardrail 2: Self-Registration with Gateway
+    try:
+        from gateway_registration import register_with_gateway, deregister_from_gateway
+        
+        manifest = {
+            "server_name": "sanctuary-utils",
+            "version": "1.0.0",
+            "tools": TOOL_MANIFESTS,
+        }
+        result = await register_with_gateway(manifest)
+        if result.get("success"):
+            logger.info("✅ Gateway registration successful")
+        else:
+            logger.warning(f"⚠️ Gateway registration failed (container will work standalone): {result.get('error', 'unknown')}")
+    except ImportError:
+        logger.info("ℹ️ Gateway registration module not available - running standalone")
+    except Exception as e:
+        logger.warning(f"⚠️ Gateway registration error (non-critical): {e}")
+    
     yield
+    
+    # Cleanup: Deregister on shutdown
+    try:
+        from gateway_registration import deregister_from_gateway
+        await deregister_from_gateway()
+    except Exception as e:
+        logger.debug(f"Deregistration skipped: {e}")
+    
     logger.info("👋 sanctuary-utils shutting down...")
 
 

@@ -153,8 +153,8 @@ Phase transition: Architecture complete, beginning implementation. Updated to Fl
 | 2.1 Calculator + fault | ✅ DONE | Fault containment verified (div/0 safe) |
 | 2.2 UUID tool | ✅ DONE | generate_uuid4, generate_uuid1, validate_uuid |
 | 2.3 String utilities | ✅ DONE | upper, lower, trim, reverse, word_count, replace |
-| 3.1 Self-Registration | 🔄 WIP | gateway_registration.py created |
-| 3.2 Gateway routing | ⬜ TODO | |
+| 3.1 Self-Registration | ✅ DONE | Registers on startup, graceful fallback |
+| 3.2 Gateway routing | ✅ DONE | Works standalone when Gateway unavailable |
 | 3.3 Health check | ✅ DONE | /health endpoint working |
 | 4.1 Multi-stage Docker | ⬜ TODO | |
 | 4.2 Hot reload | ✅ DONE | Volume mount + uvicorn --reload |
