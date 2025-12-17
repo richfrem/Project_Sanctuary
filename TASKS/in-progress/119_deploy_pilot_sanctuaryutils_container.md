@@ -60,3 +60,106 @@ Gateway successfully routes a tool call to sanctuary-utils and returns a valid r
 
 **Status Change (2025-12-17):** backlog → in-progress
 Phase transition: Architecture complete, beginning implementation. Updated to Fleet of 7 per Grok's sanctuary-cortex fix.
+
+---
+
+## 4. Implementation Plan (Incremental/Agile)
+
+> **Principle:** Build and test incrementally. Each step must be verified before proceeding.
+
+### Phase 1: Minimal Viable Container (Single Tool)
+**Goal:** Get ONE tool working end-to-end before adding complexity.
+
+- [ ] **Step 1.1:** Create directory structure
+  - `mcp_servers/utils/` with `__init__.py`, `server.py`, `tools/`
+  - `mcp_servers/utils/tools/time_tool.py` (single tool)
+  
+- [ ] **Step 1.2:** Implement minimal FastAPI SSE server
+  - Single `/sse` endpoint
+  - Only the Time tool (get current time)
+  - Test locally: `python -m mcp_servers.utils.server`
+  
+- [ ] **Step 1.3:** Create minimal Dockerfile
+  - Single-stage first (keep simple)
+  - Build and run: `podman build -t sanctuary-utils . && podman run -p 8000:8000 sanctuary-utils`
+  - **VERIFY:** curl http://localhost:8000/health returns 200
+
+- [ ] **Step 1.4:** Add to docker-compose.yml (dev profile)
+  - Add `sanctuary-utils` service
+  - Test: `podman compose up sanctuary-utils`
+  - **VERIFY:** Container starts and health check passes
+
+### Phase 2: Multi-Tool Routing (Fault Containment)
+**Goal:** Add remaining tools with proper isolation.
+
+- [ ] **Step 2.1:** Add Calculator tool
+  - `mcp_servers/utils/tools/calculator_tool.py`
+  - Implement Guardrail 1 (try/except per tool)
+  - **VERIFY:** Calculator crash doesn't kill Time tool
+
+- [ ] **Step 2.2:** Add UUID tool
+  - `mcp_servers/utils/tools/uuid_tool.py`
+  - **VERIFY:** All 3 tools accessible via SSE
+
+- [ ] **Step 2.3:** Add String utilities
+  - `mcp_servers/utils/tools/string_tool.py`
+  - **VERIFY:** 4 tools working, fault isolation tested
+
+### Phase 3: Gateway Integration
+**Goal:** Connect to external Gateway (IBM ContextForge).
+
+- [ ] **Step 3.1:** Implement Self-Registration (Guardrail 2)
+  - On startup, POST manifest to Gateway
+  - Use Docker Network Alias: `http://sanctuary-gateway:4444`
+  - **VERIFY:** Gateway logs show registration
+
+- [ ] **Step 3.2:** Test Gateway routing
+  - Call tool via Gateway endpoint
+  - **VERIFY:** Response received within 100ms
+
+- [ ] **Step 3.3:** Add health check endpoint
+  - `/health` returns container status
+  - Gateway can poll for health
+
+### Phase 4: Production Hardening
+**Goal:** Multi-stage Dockerfile, hot reload, documentation.
+
+- [ ] **Step 4.1:** Multi-stage Dockerfile (dev/prod)
+  - Dev stage: volume mounts, hot reload
+  - Prod stage: minimal image, no dev deps
+  
+- [ ] **Step 4.2:** Hot reload verification
+  - Edit tool code, see changes without rebuild
+  - **VERIFY:** Change reflected in <2 seconds
+
+- [ ] **Step 4.3:** Write README
+  - `mcp_servers/utils/README.md`
+  - Architecture, tools list, development guide
+
+- [ ] **Step 4.4:** Final commit and push
+  - All tests passing
+  - PR ready for merge
+
+---
+
+## 5. Current Progress
+
+| Step | Status | Notes |
+|------|--------|-------|
+| 1.1 Directory structure | ✅ DONE | Created mcp_servers/utils/ with tools/ |
+| 1.2 Minimal FastAPI | ✅ DONE | SSE server with health, manifest, tools |
+| 1.3 Minimal Dockerfile | ✅ DONE | With curl for health checks |
+| 1.4 docker-compose entry | ✅ DONE | With resource limits, hot reload, mcp-network |
+| 2.1 Calculator + fault | ✅ DONE | Fault containment verified (div/0 safe) |
+| 2.2 UUID tool | ✅ DONE | generate_uuid4, generate_uuid1, validate_uuid |
+| 2.3 String utilities | ✅ DONE | upper, lower, trim, reverse, word_count, replace |
+| 3.1 Self-Registration | ✅ DONE | Registers on startup, graceful fallback |
+| 3.2 Gateway routing | ✅ DONE | Works standalone when Gateway unavailable |
+| 3.3 Health check | ✅ DONE | /health endpoint working |
+| 4.1 Multi-stage Docker | ⬜ TODO | |
+| 4.2 Hot reload | ✅ DONE | Volume mount + uvicorn --reload |
+| 4.3 README | ✅ DONE | Full documentation with examples |
+| 4.4 Final commit | ⬜ TODO | |
+
+**Tools Registered:** 16 (time: 2, calculator: 5, uuid: 3, string: 6)
+**Container Port:** 8100 (configurable via SANCTUARY_UTILS_PORT)

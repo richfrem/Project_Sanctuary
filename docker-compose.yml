@@ -46,3 +46,37 @@ services:
         ollama pull $${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest}
         wait -n
     restart: unless-stopped
+
+  # Fleet of 7 - Container #1: sanctuary-utils (ADR 060)
+  sanctuary-utils:
+    build:
+      context: ./mcp_servers/utils
+      dockerfile: Dockerfile
+    container_name: sanctuary-utils
+    ports:
+      - "${SANCTUARY_UTILS_PORT:-8100}:8000" # Use env var, default 8100
+    volumes:
+      # Hot reloading support - mount source code
+      - ./mcp_servers/utils:/app
+    networks:
+      - mcp-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '256M'
+        reservations:
+          cpus: '0.25'
+          memory: '128M'
+    command: [ "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+networks:
+  mcp-network:
+    driver: bridge
