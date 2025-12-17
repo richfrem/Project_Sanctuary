@@ -146,12 +146,12 @@ async def handle_tool_call(tool_name: str, arguments: dict[str, Any]) -> dict[st
         result = handler(**arguments)
         return result
     except Exception as e:
-        # Guardrail 1: Fault containment - log and return error, don't crash
-        logger.error(f"Tool {tool_name} failed: {e}")
+        # Guardrail 1: Fault containment - log full stack trace, return generic error
+        logger.exception(f"Tool {tool_name} failed with an exception:")
         return {
             "success": False,
             "tool": tool_name,
-            "error": str(e),
+            "error": "Tool execution failed due to an internal error.",
             "fault_contained": True,
         }
 
