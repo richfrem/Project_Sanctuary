@@ -111,6 +111,9 @@ ResearchPapers
 # The .env file contains API keys and must NEVER be committed.
 .env
 
+# Gateway JWT Keys - RSA keys for external gateway authentication
+certs/gateway/
+
 # MCP Agent Credentials - Sensitive login information for external services.
 credentials.json
 

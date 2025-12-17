@@ -66,8 +66,11 @@ Technical reference documentation:
 
 **Related Sanctuary Documents:**
 - **ADR 056:** Adoption of Dynamic MCP Gateway Pattern
-- **ADR 057:** Adoption of IBM ContextForge for Dynamic MCP Gateway
+- **ADR 057:** Adoption of IBM ContextForge (SUPERSEDED by 058)
+- **ADR 058:** Decouple IBM Gateway to External Podman Service
+- **ADR 060:** Gateway Integration Patterns - Hybrid Fleet (Fleet of 7) ⭐
 - **Task 115:** Design and Specify Dynamic MCP Gateway Architecture
+- **Task 119:** Deploy Pilot: sanctuary-utils Container
 - **Protocol 122:** Dynamic Server Binding (pending)
 
 ---
@@ -96,44 +99,118 @@ Technical reference documentation:
 
 ---
 
+## Fleet of 7 Architecture (ADR 060)
+
+The **Hybrid Fleet Strategy** consolidates 10 script-based MCP servers into **7 physical containers** organized as **5 logical clusters**.
+
+```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart TB
+    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444"]
+    
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8000/sse"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8001/sse"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8002/sse"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8003/sse"]
+    Gateway -- Docker Network --> Cortex
+    
+    subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
+        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server)"]
+        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend)"]
+        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend)"]
+        Cortex --> VectorDB
+        Cortex --> Ollama
+    end
+
+    style Gateway fill:#fff4e1,stroke:#e65100,stroke-width:2px
+    style Utils fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Filesystem fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Network fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Git fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Intelligence fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+```
+
+**Container Inventory:**
+| # | Container | Type | Role |
+|---|-----------|------|------|
+| 1 | `sanctuary-utils` | NEW | Low-risk tools (time, calc) |
+| 2 | `sanctuary-filesystem` | NEW | File ops (grep, patch) |
+| 3 | `sanctuary-network` | NEW | HTTP clients (brave, fetch) |
+| 4 | `sanctuary-git` | NEW | Git workflow (isolated) |
+| 5a | `sanctuary-cortex` | NEW | RAG MCP Server |
+| 5b | `sanctuary-vector-db` | EXISTING | ChromaDB backend |
+| 5c | `sanctuary-ollama-mcp` | EXISTING | Ollama backend |
+
+**See:** [ADR 060: Gateway Integration Patterns - Hybrid Fleet](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md)
+
+---
+
 ## Implementation Status
 
 ### ✅ Phase A: Research & Synthesis (COMPLETE)
 - 12 comprehensive research documents
-- Production implementations analyzed
-- Security architecture validated
-- Performance benchmarks established
+- Validated decision to use IBM ContextForge
 
 ### ✅ Phase B: Formalize Decision (COMPLETE)
-- ADR 056 created
-- Decision document approved
-- Validated by Gemini 2.0 Flash Experimental
+- ADR 058 (Decoupling) supersedes ADR 057/060
+- Security Model: Red Team "Triple-Layer Defense" defined
 
-### ⏳ Phase C: Define the Standard (PENDING)
-- Create Protocol 122: Dynamic Server Binding
-- Define registry schema
-- Define security allowlist format
+### ✅ Phase C: Integration (COMPLETE)
+- Helper scripts created (`scripts/generate_gateway_config.py`)
+- Plugin staged for manual copy (`staging/gateway/`)
+- Black Box Test Suite implemented (`tests/mcp_servers/gateway/integration/test_gateway_blackbox.py`)
+- API token authentication configured
+- All connectivity tests passing (3/3)
 
-### ⏳ Phase D: Technical Specification (PENDING)
-- Create architecture specification
-- Define Gateway API
-- Document deployment patterns
-
-### ⏳ Phase E: Implementation (PENDING)
-- Fork IBM ContextForge
-- Deploy MVP (3 servers)
-- Migrate all 12 servers
-- Production hardening
+### ⏳ Phase D: External Deployment (MANUAL)
+- User manages external repo at `../sanctuary-gateway`
+- Podman manages the container lifecycle
 
 ---
 
 ## Next Steps
 
-1. **Create Protocol 122** - Define Dynamic Server Binding standard
-2. **Fork ContextForge** - Set up repository
-3. **Deploy MVP** - Validate with 3 servers (Week 1)
-4. **Customize** - Add Sanctuary-specific features (Week 2-3)
-5. **Migrate** - All 12 servers (Week 3-4)
+### 1. Deploy Gateway
+Start the external `sanctuary-gateway` service via Podman (managed in separate repo).
+
+### 2. Create API Token
+1. Navigate to `https://localhost:4444/admin/tokens`
+2. Click "Create Token"
+3. Name: `Sanctuary Test Client`
+4. Set expiry (e.g., 30 days)
+5. Copy the generated token immediately
+
+### 3. Configure Environment
+Add to your `.env` file:
+```bash
+MCP_GATEWAY_ENABLED=true
+MCP_GATEWAY_URL=https://localhost:4444
+MCP_GATEWAY_VERIFY_SSL=false
+MCP_GATEWAY_API_TOKEN=<paste-your-token-here>
+```
+
+### 4. Verify Connectivity
+Run the black box test suite:
+```bash
+pytest tests/mcp_servers/gateway/integration/test_gateway_blackbox.py -v -m gateway
+```
+
+Expected output:
+```
+✅ test_pulse_check PASSED       # Gateway is healthy
+✅ test_circuit_breaker PASSED   # Security layer working
+✅ test_handshake PASSED         # API token authentication successful
+```
+
+### 5. Install Plugin (Optional)
+Copy `staging/gateway/sanctuary_allowlist.py` to external gateway's `plugins/` directory for Protocol 101 enforcement.
+
+### 6. Switchover to Gateway (Future)
+Use `scripts/generate_gateway_config.py` to update Claude Desktop configuration.
 
 ---
 
@@ -145,5 +222,5 @@ Technical reference documentation:
 
 ---
 
-**Last Updated:** 2025-12-15  
-**Document Version:** 1.0
+**Last Updated:** 2025-12-17  
+**Document Version:** 1.1 (Fleet of 7 Architecture Added)

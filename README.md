@@ -105,6 +105,60 @@ graph TB
 
 **Quick Verification:** [`docs/mcp/test_forge_mcp_and_RAG_mcp.md`](./docs/mcp/test_forge_mcp_and_RAG_mcp.md)
 
+#### Deployment Option B: Gateway Architecture (Fleet of 7)
+
+> [!NOTE]
+> **Two Deployment Paths Available:**
+> - **Option A (above):** Direct stdio - Configure 1-12 MCPs in your `claude_desktop_config.json`
+> - **Option B (below):** Gateway - Single Gateway entry in config, routes to all MCPs
+> 
+> Both are fully supported. Your `claude_desktop_config.json` determines which approach and which MCPs are active.
+
+For centralized MCP management, Project Sanctuary also supports a **Fleet of 7** container architecture via the IBM ContextForge Gateway ([ADR 060](./ADRs/060_gateway_integration_patterns__hybrid_fleet.md)):
+
+```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart TB
+    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444"]
+    
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8000/sse"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8001/sse"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8002/sse"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8003/sse"]
+    Gateway -- Docker Network --> Cortex
+    
+    subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
+        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server)"]
+        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend)"]
+        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend)"]
+        Cortex --> VectorDB
+        Cortex --> Ollama
+    end
+
+    style Gateway fill:#fff4e1,stroke:#e65100,stroke-width:2px
+    style Utils fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Filesystem fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Network fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Git fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style Intelligence fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+```
+
+**Fleet of 7 Containers:**
+| # | Container | Type | Role |
+|---|-----------|------|------|
+| 1-4 | Utils, Filesystem, Network, Git | NEW | MCP Servers (SSE endpoints) |
+| 5a | sanctuary-cortex | NEW | RAG MCP Server (brain) |
+| 5b-5c | vector-db, ollama-mcp | EXISTING | Backends (storage & compute) |
+
+**Benefits:** 88% context reduction, 100+ server scalability, centralized auth & routing.
+
+**Documentation:** [ADR 060](./ADRs/060_gateway_integration_patterns__hybrid_fleet.md) | [Gateway README](./docs/mcp_gateway/README.md) | [Podman Guide](./docs/PODMAN_STARTUP_GUIDE.md)
+
+
 ### 2. RAG System ("Mnemonic Cortex"): Advanced Retrieval-Augmented Generation
 **Status:** `v2.1` Phase 1 Complete - Hybrid RAG/CAG/LoRA Architecture Active
 The **RAG Cortex** ("Mnemonic Cortex") is an advanced, local-first **Retrieval-Augmented Generation (RAG)** system combining vector search, caching, and fine-tuned model inference. It serves as the project's knowledge retrieval and context augmentation layer.
