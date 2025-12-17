@@ -1,0 +1,10 @@
+name: "Sanctuary CodeQL Config"
+
+paths-ignore:
+  - 'mcp_servers/gateway'
+  - 'mcp_servers/gateway/**'
+  - '**/mcp_servers/gateway/**'
+  - 'mcp_servers/gateway/mcpgateway/static/**'
+  - 'mcp_servers/gateway/mcp-servers/**'
+  - 'tests/**'
+  - 'tools/**'
