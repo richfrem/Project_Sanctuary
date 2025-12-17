@@ -169,7 +169,7 @@ class CortexOperations:
         'dataset_package', 'chroma_db', 'chroma_db_backup', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
         'TASKS', 'ml_env_logs', 'outputs', 'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
         'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE', '05_ARCHIVED_BLUEPRINTS', 'gardener',
-        'research', '02_ROADMAP', '03_OPERATIONS', '06_THE_EMBER_LIBRARY'
+        'research', '02_ROADMAP', '03_OPERATIONS', '06_THE_EMBER_LIBRARY', 'certs'
     }
     
     EXCLUDE_FILES = {

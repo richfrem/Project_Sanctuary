@@ -151,7 +151,10 @@ const excludeDirNames = new Set([
     'research',
     '02_ROADMAP',
     '03_OPERATIONS',
-    '06_THE_EMBER_LIBRARY'
+    '06_THE_EMBER_LIBRARY',
+
+    // --- Security: JWT Keys and Certificates ---
+    'certs'
 ]);
 
 
