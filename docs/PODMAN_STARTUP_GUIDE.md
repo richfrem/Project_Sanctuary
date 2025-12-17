@@ -4,12 +4,21 @@
 
 ---
 
-## Required Containers
+## Required Containers (Fleet of 7)
 
-Project Sanctuary requires **2 Podman containers** for full MCP functionality:
+Project Sanctuary uses a **Fleet of 7** container architecture (see [ADR 060](../ADRs/060_gateway_integration_patterns__hybrid_fleet.md)):
 
-1. **`sanctuary-vector-db`** - ChromaDB for RAG Cortex MCP
-2. **`sanctuary-ollama-mcp`** - Ollama for Forge LLM MCP
+**Currently Running (3 containers):**
+1. **`sanctuary-vector-db`** - ChromaDB for RAG Cortex MCP (Backend)
+2. **`sanctuary-ollama-mcp`** - Ollama for Forge LLM MCP (Backend)
+3. **`sanctuary-gateway`** - IBM ContextForge Gateway for MCP routing (external repo)
+
+**Planned (4 new containers per ADR 060):**
+4. **`sanctuary-utils`** - Low-risk tools (time, calculator, UUID)
+5. **`sanctuary-filesystem`** - File operations (grep, patch, code)
+6. **`sanctuary-network`** - HTTP clients (brave search, fetch)
+7. **`sanctuary-git`** - Git workflow (isolated dual-permission)
+8. **`sanctuary-cortex`** - RAG MCP Server (connects to #1 and #2)
 
 ---
 
@@ -92,6 +101,103 @@ podman logs sanctuary-ollama-mcp -f
 **Data:** `./ollama_models/` (persisted)  
 **Model:** Sanctuary-Qwen2-7B:latest (auto-pulled on first start)  
 **Used by:** Forge LLM MCP, Agent Persona MCP, Council MCP
+
+---
+
+### Sanctuary Gateway (MCP Router)
+
+**⚠️ External Repository Required**
+
+The gateway is managed in a separate repository: `sanctuary-gateway`
+
+#### Initial Setup
+
+1. **Clone the gateway repository** (sibling to Project_Sanctuary):
+   ```bash
+   cd ~/Projects
+   git clone https://github.com/IBM/mcp-context-forge.git sanctuary-gateway
+   cd sanctuary-gateway
+   ```
+
+2. **Build the container**:
+   ```bash
+   make container-build
+   ```
+
+3. **Generate SSL certificates**:
+   ```bash
+   make certs
+   make certs-jwt
+   ```
+
+4. **Create `.env` file** in `sanctuary-gateway/`:
+   ```bash
+   # Database
+   DATABASE_URL=sqlite:////app/data/mcp.db
+   
+   # JWT Keys (RS256)
+   JWT_PUBLIC_KEY_PATH=/app/certs/jwt/public.pem
+   JWT_PRIVATE_KEY_PATH=/app/certs/jwt/private.pem
+   JWT_ALGORITHM=RS256
+   
+   # Admin credentials
+   PLATFORM_ADMIN_EMAIL=your-email@example.com
+   PLATFORM_ADMIN_PASSWORD=your-secure-password
+   ```
+
+5. **Start the gateway**:
+   ```bash
+   make podman-run-ssl
+   ```
+
+#### Daily Management
+
+```bash
+# Start gateway (from sanctuary-gateway repo)
+cd ~/Projects/sanctuary-gateway
+make podman-run-ssl
+
+# Stop gateway
+podman stop sanctuary-gateway
+
+# View logs
+podman logs sanctuary-gateway -f
+
+# Restart gateway
+podman restart sanctuary-gateway
+```
+
+**Port:** 4444 (HTTPS)  
+**Data:** Podman volume `mcp_gateway_data` (persisted)  
+**Admin UI:** https://localhost:4444/admin  
+**Used by:** Future MCP tool routing (Task 117)
+
+#### Verify Gateway Connection
+
+From `Project_Sanctuary` repo:
+
+1. **Create API token** at https://localhost:4444/admin/tokens
+2. **Add to `.env`**:
+   ```bash
+   MCP_GATEWAY_ENABLED=true
+   MCP_GATEWAY_URL=https://localhost:4444
+   MCP_GATEWAY_VERIFY_SSL=false
+   MCP_GATEWAY_API_TOKEN=<your-token-here>
+   ```
+
+3. **Run connectivity tests**:
+   ```bash
+   pytest tests/mcp_servers/gateway/integration/test_gateway_blackbox.py -v -m gateway
+   ```
+
+   Expected output:
+   ```
+   ✅ test_pulse_check PASSED       # Gateway is healthy
+   ✅ test_circuit_breaker PASSED   # Security working
+   ✅ test_handshake PASSED         # API token valid
+   ```
+
+**See:** [Gateway Setup Guide](mcp_gateway/README.md) for detailed configuration.
 
 ---
 
@@ -259,12 +365,15 @@ OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 |---------|---------------|------|---------------|--------------|
 | ChromaDB | `sanctuary-vector-db` | 8000 | `podman compose up -d vector-db` | `curl http://localhost:8000/api/v2/heartbeat` |
 | Ollama | `sanctuary-ollama-mcp` | 11434 | `podman compose up -d ollama-model-mcp` | `curl http://localhost:11434/api/tags` |
+| Gateway | `sanctuary-gateway` | 4444 | `make podman-run-ssl` (in gateway repo) | `curl -k https://localhost:4444/health` |
 
 ---
 
 ## Related Documentation
 
+- [Gateway Setup Guide](mcp_gateway/README.md)
 - [RAG Cortex SETUP.md](mcp/servers/rag_cortex/SETUP.md)
 - [Forge LLM SETUP.md](mcp/servers/forge_llm/SETUP.md)
 - [Protocol 116: Container Network Isolation](../01_PROTOCOLS/116_Container_Network_Isolation.md)
 - [ADR 043: Containerize Ollama via Podman](../ADRs/043_containerize_ollama_model_service_via_podman.md)
+- [ADR 058: Decouple IBM Gateway to External Podman Service](../ADRs/058_decouple_ibm_gateway_to_external_podman_service.md)
