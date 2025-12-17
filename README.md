@@ -506,6 +506,7 @@ The Sanctuary operates as a **Persistent Server Architecture** managed by a flee
 1.  **Setup Environment:** Before launching, ensure your environment is configured for ML operations.
     > 📖 **CRITICAL SETUP:** 
     > - **General MCP Prerequisites:** [`docs/mcp/prerequisites.md`](./docs/mcp/prerequisites.md)
+    > - **External Gateway:** Must be running in Podman (see [ADR 058](ADRs/058_decouple_ibm_gateway_to_external_podman_service.md))
     > - **RAG Cortex Setup:** [`docs/mcp/servers/rag_cortex/SETUP.md`](./docs/mcp/servers/rag_cortex/SETUP.md)
     > - **ML Environment Setup:** [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
     > 
