@@ -1,30 +1,5 @@
 name: "Sanctuary CodeQL Config"
 
-# ALLOWLIST STRATEGY: Only scan our code, exclude vendor directory entirely
-paths:
-  - '.github/**'
-  - 'mcp_servers/adr/**'
-  - 'mcp_servers/agent_persona/**'
-  - 'mcp_servers/chronicle/**'
-  - 'mcp_servers/code/**'
-  - 'mcp_servers/config/**'
-  - 'mcp_servers/council/**'
-  - 'mcp_servers/forge_llm/**'
-  - 'mcp_servers/git/**'
-  - 'mcp_servers/lib/**'
-  - 'mcp_servers/orchestrator/**'
-  - 'mcp_servers/protocol/**'
-  - 'mcp_servers/rag_cortex/**'
-  - 'mcp_servers/task/**'
-  - 'mcp_servers/*.py'
-  - 'scripts/**'
-  - 'ADRs/**'
-  - 'TASKS/**'
-  - '*.py'
-  - '*.js'
-
-# Explicitly exclude vendor code (belt-and-suspenders)
+# Exclude only the vendor directory - scan everything else
 paths-ignore:
   - 'mcp_servers/gateway/**'
-  - 'tests/**'
-  - 'tools/**'
