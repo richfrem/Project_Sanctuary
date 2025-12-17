@@ -203,31 +203,33 @@ class CortexOperations:
             return True
 
         # 4. HARDENED VENDOR EXCLUSION (RED TEAM FIX)
-        # Strict path-based blocking to prevent context flooding from IBM ContextForge
+        # STRICT ALLOWLIST STRATEGY
+        # If we are inside the vendored gateway directory, BLOCK EVERYTHING
+        # except the specific files we explicitly want to track (configs/docs).
         try:
             # Ensure we have a project-relative path string
             rel_path = path if not path.is_absolute() else path.relative_to(self.project_root)
             # Normalize to forward slashes for cross-platform consistency
             normalized_path = str(rel_path).replace('\\', '/')
             
-            VENDOR_BLOCKLIST = [
-                'mcp_servers/gateway/mcpgateway',
-                'mcp_servers/gateway/tests',
-                'mcp_servers/gateway/docs',
-                'mcp_servers/gateway/examples',
-                'mcp_servers/gateway/.github',
-                'mcp_servers/gateway/deployment',
-                'mcp_servers/gateway/agent_runtimes',
-                'mcp_servers/gateway/charts',
-                'mcp_servers/gateway/nginx',
-                'mcp_servers/gateway/plugin_templates',
-                'mcp_servers/gateway/mcp-servers',
-                'mcp_servers/gateway/plugins',
-                'mcp_servers/gateway/scripts'
-            ]
-            
-            if any(normalized_path.startswith(blocked) for blocked in VENDOR_BLOCKLIST):
-                return True
+            if normalized_path.startswith('mcp_servers/gateway'):
+                ALLOWED_GATEWAY_FILES = {
+                    'mcp_servers/gateway', # The directory itself
+                    'mcp_servers/gateway/VENDOR_INFO.md',
+                    'mcp_servers/gateway/podman-compose.yml',
+                    'mcp_servers/gateway/podman-compose.yaml',
+                    'mcp_servers/gateway/docker-compose.yml',
+                    'mcp_servers/gateway/README.md'
+                }
+                
+                # If path matches exactly or is in allowlist, keep it.
+                # If it's a subpath of gateway but NOT in allowlist, BLOCK IT.
+                if normalized_path not in ALLOWED_GATEWAY_FILES:
+                    return True
+                    
+        except ValueError:
+            # Path not relative to project root
+            pass
                 
         except ValueError:
             # Path not relative to project root (e.g. system path), safe to ignore or process

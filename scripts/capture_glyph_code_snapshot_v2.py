@@ -364,27 +364,31 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
         if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
             return
 
-        # --- HARDENED VENDOR EXCLUSION (RED TEAM FIX) ---
-        # 1. Normalize path (already done by as_posix())
-        # 2. Blocking "Blast Radius" paths
-        vendor_blocklist = [
-            'mcp_servers/gateway/mcpgateway',
-            'mcp_servers/gateway/tests',
-            'mcp_servers/gateway/docs',
-            'mcp_servers/gateway/examples',
-            'mcp_servers/gateway/.github',
-            'mcp_servers/gateway/deployment',
-            'mcp_servers/gateway/agent_runtimes',
-            'mcp_servers/gateway/charts',
-            'mcp_servers/gateway/nginx',
-            'mcp_servers/gateway/plugin_templates',
-            'mcp_servers/gateway/mcp-servers',
-            'mcp_servers/gateway/plugins',
-            'mcp_servers/gateway/scripts'
-        ]
+        # 4. HARDENED VENDOR EXCLUSION (RED TEAM FIX)
+        # STRICT ALLOWLIST STRATEGY
+        # If we are inside the vendored gateway directory, BLOCK EVERYTHING
+        # except the specific files we explicitly want to track (configs/docs).
+        try:
+            # Normalized to forward slashes for cross-platform consistency
+            normalized_rel_path = rel_from_project_root.replace('\\', '/')
+            
+            if normalized_rel_path.startswith('mcp_servers/gateway'):
+                ALLOWED_GATEWAY_FILES = {
+                    'mcp_servers/gateway', # The directory itself
+                    'mcp_servers/gateway/VENDOR_INFO.md',
+                    'mcp_servers/gateway/podman-compose.yml',
+                    'mcp_servers/gateway/podman-compose.yaml',
+                    'mcp_servers/gateway/docker-compose.yml',
+                    'mcp_servers/gateway/README.md'
+                }
+                
+                # If path matches exactly or is in allowlist, keep it.
+                # If it's a subpath of gateway but NOT in allowlist, BLOCK IT.
+                if normalized_rel_path not in ALLOWED_GATEWAY_FILES:
+                    return
 
-        if any(rel_from_project_root.startswith(blocked) for blocked in vendor_blocklist):
-             return
+        except Exception:
+            pass
 
         if path_obj.is_file():
             if path_obj.name in exclude_files:
