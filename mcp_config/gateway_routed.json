@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "sanctuary-gateway": {
+            "url": "http://localhost:4444/sse",
+            "env": {
+                "MCPGATEWAY_BEARER_TOKEN": "sanctuary-admin-key-2025"
+            }
+        }
+    }
+}

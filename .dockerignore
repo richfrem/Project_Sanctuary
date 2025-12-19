@@ -1,0 +1,59 @@
+# Version Control
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# LARGE DIRECTORIES (CRITICAL EXCLUSIONS)
+models/
+.venv/
+data/
+chroma_db/
+05_ARCHIVED_BLUEPRINTS/
+
+
+# Javascript/Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Project Specific
+.DS_Store
+.env
+.env.local
+.vscode/
+.idea/
+.agent/
+ARCHIVE/
+tmp/
+logs/
+data/
+chroma_db/
+ollama_models/
+*.md
+!mcp_servers/**/*.md
+!00_CHRONICLE/**/*.md
+!01_PROTOCOLS/**/*.md
+!TASKS/**/*.md
+!ADRs/**/*.md
+
+# MCP Specific
+# Exclude other language servers if not needed in python build
+# But we copy 'mcp_servers' and root... 
+# Actually we mount the root volume for development so the build context 
+# is mainly for the initial COPY mcp_servers.
+
+# Optimization: Only include what's needed for `pip install` or server startup
+# We copy `mcp_servers` in Dockerfile.

@@ -1,348 +1,180 @@
 # MCP Gateway Architecture Specification
 
-**Version:** 1.0 (Draft)  
-**Status:** In Development  
-**Last Updated:** 2025-12-15
+**Version:** 2.0 (Fleet of 7)  
+**Status:** Canonical  
+**Last Updated:** 2025-12-17  
+**References:** ADR 058, ADR 060
 
 ---
 
 ## 1. Overview
 
-This document defines the technical architecture for the Sanctuary MCP Gateway, a centralized broker that implements dynamic server binding and late-binding tool discovery for Model Context Protocol (MCP) servers.
+This document defines the technical architecture for the **Sanctuary MCP Gateway**, a centralized external broker that unifies 12+ MCP servers into a single endpoint for Claude Desktop.
 
-**Purpose:** Reduce context window overhead by 88% while enabling scalability to 100+ MCP servers.
+**Core Philosophy:**
+1.  **Externalization (ADR 058):** The Gateway runs as a "Black Box" service via Podman, decoupled from the main repo.
+2.  **Hybrid Fleet (ADR 060):** 10 script-based servers are consolidated into a **Fleet of 7 Physical Containers** (5 logical clusters).
 
 ---
 
 ## 2. System Architecture
 
-### 2.1 High-Level Architecture
+### 2.1 Fleet of 7 Architecture
+
+The architecture consolidates individual tools into risk-based clusters to prevent orchestration fatigue while maintaining security boundaries.
 
 ```mermaid
-graph TB
-    subgraph "Client Layer"
-        Claude["Claude Desktop<br/>(MCP Client)"]
-    end
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart TB
+    Client["<b>MCP Client</b><br>(Claude Desktop)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
     
-    subgraph "Gateway Layer"
-        Gateway["Sanctuary Gateway (Broker)"]
-        Registry[("Registry<br/>(SQLite)")]
-        Allowlist["Allowlist<br/>(Security)"]
-        Router["Router<br/>(Intent Classifier)"]
-        Proxy["Proxy<br/>(Forwarder)"]
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>(Low Risk)<br>:8100/sse"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>(Privileged)<br>:8101/sse"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>(External)<br>:8102/sse"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>(Dual-Perm)<br>:8103/sse"]
+    Gateway -- Docker Network --> Domain["<b>6. sanctuary-domain</b><br>(Business Logic)<br>:8105/sse"]
+    Gateway -- Docker Network --> Cortex
+    
+    subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
+        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server)<br>:8104/sse"]
+        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend)<br>:8000"]
+        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend)<br>:11434"]
         
-        Gateway --> Registry
-        Gateway --> Allowlist
-        Gateway --> Router
-        Gateway --> Proxy
+        Cortex --> VectorDB
+        Cortex --> Ollama
     end
-    
-    subgraph "Backend Layer"
-        RAG["RAG Cortex<br/>MCP Server"]
-        Git["Git Workflow<br/>MCP Server"]
-        Task["Task<br/>MCP Server"]
-        Protocol["Protocol<br/>MCP Server"]
-        Others["... 8 more servers"]
-    end
-    
-    Claude -->|"stdio<br/>(JSON-RPC 2.0)"| Gateway
-    Proxy -->|"HTTP (future)<br/>stdio (MVP)"| RAG
-    Proxy -->|"HTTP (future)<br/>stdio (MVP)"| Git
-    Proxy -->|"HTTP (future)<br/>stdio (MVP)"| Task
-    Proxy -->|"HTTP (future)<br/>stdio (MVP)"| Protocol
-    Proxy -.->|"HTTP (future)<br/>stdio (MVP)"| Others
-    
-    style Claude fill:#e1f5ff
-    style Gateway fill:#fff4e1
-    style Registry fill:#f0f0f0
-    style Allowlist fill:#ffe1e1
-    style Router fill:#e1ffe1
-    style Proxy fill:#f0e1ff
-    style RAG fill:#e8f4f8
-    style Git fill:#e8f4f8
-    style Task fill:#e8f4f8
-    style Protocol fill:#e8f4f8
-    style Others fill:#f0f0f0
+
+    style Client fill:#e1f5ff,stroke:#0d47a1
+    style Gateway fill:#fff4e1,stroke:#e65100
+    style Utils fill:#e8f5e9,stroke:#2e7d32
+    style Filesystem fill:#fff3e0,stroke:#ef6c00
+    style Network fill:#f3e5f5,stroke:#7b1fa2
+    style Git fill:#ffebee,stroke:#c62828
+    style Intelligence fill:#e0f2f1,stroke:#00695c
+    style Domain fill:#e3f2fd,stroke:#1565c0
 ```
 
 ### 2.2 Component Responsibilities
 
-**Gateway (Broker):**
-- Single MCP server registered in Claude Desktop
-- Routes tool requests to appropriate backend servers
-- Enforces security allowlist
-- Manages server registry and health checks
+#### The External Gateway (Broker)
+- **Role:** Central entry point and router.
+- **Location:** External repo (`sanctuary-gateway`), run via `podman`.
+- **Function:** Authenticates clients, enforces allowlists, and routes tool calls to the appropriate Fleet container.
+- **Security:** "Triple-Layer Defense" (Localhost-only, Bearer Token, Non-persistent).
 
-**Registry:**
-- SQLite database mapping tools to servers
-- Stores server endpoints, capabilities, status
-- Provides service discovery
-
-**Router:**
-- Intent classification and request routing
-- Tool name → server name mapping
-- Load balancing (future)
-
-**Allowlist:**
-- Security enforcement layer
-- Validates tool invocations against policy
-- Implements Protocol 101 compliance
-
-**Proxy:**
-- Forwards validated requests to backends
-- Handles JSON-RPC 2.0 translation
-- Manages connection pooling
+#### The Fleet Clusters
+1.  **sanctuary-utils**: Low-risk, stateless tools (Time, Calc, UUID, String).
+2.  **sanctuary-filesystem**: High-risk file operations. Isolated from network.
+3.  **sanctuary-network**: External web access (Brave, Fetch). Isolated from filesystem.
+4.  **sanctuary-git**: Dual-permission (Filesystem + Network). Completely isolated container.
+5.  **sanctuary-intelligence**:
+    *   **Cortex (MCP):** The "Brain" that processes queries.
+    *   **VectorDB (Backend):** ChromaDB storage.
+    *   **Ollama (Backend):** LLM inference.
+6.  **sanctuary-domain**:
+    *   **Role:** Hosts core Python business logic (Chronicle, Protocol, Task, ADR).
+    *   **Port:** Exposes tools via SSE on port 8105.
 
 ---
 
-## 3. Data Models
+## 3. Communication Protocols
 
-### 3.1 Registry Schema
+### 3.1 Client to Gateway
+- **Transport:** HTTPS (JSON-RPC 2.0)
+- **Auth:** Standard `Authorization: Bearer <token>`
+- **Endpoint:** `https://localhost:4444/sse`
 
-```sql
-CREATE TABLE mcp_servers (
-    name TEXT PRIMARY KEY,
-    container_name TEXT NOT NULL,
-    endpoint TEXT NOT NULL,
-    transport TEXT NOT NULL, -- 'stdio' or 'http'
-    capabilities JSON NOT NULL, -- List of tool names
-    status TEXT NOT NULL, -- 'running', 'stopped', 'error'
-    last_health_check TIMESTAMP,
-    metadata JSON -- Additional server info
-);
-
-CREATE TABLE tool_registry (
-    tool_name TEXT PRIMARY KEY,
-    server_name TEXT NOT NULL,
-    description TEXT,
-    parameters_schema JSON,
-    FOREIGN KEY (server_name) REFERENCES mcp_servers(name)
-);
-```
-
-### 3.2 Allowlist Schema
-
-```json
-{
-  "version": "1.0",
-  "allowlist": {
-    "servers": ["rag_cortex", "git_workflow", "task", ...],
-    "tools": {
-      "git_workflow": ["git_get_status", "git_add", "git_smart_commit"],
-      "rag_cortex": ["cortex_query", "cortex_ingest_incremental"]
-    },
-    "operations": {
-      "git_workflow": {
-        "git_smart_commit": {"approval_required": true}
-      }
-    }
-  }
-}
-```
+### 3.2 Gateway to Fleet
+- **Transport:** HTTP / SSE (Server-Sent Events)
+- **Network:** Internal Docker/Podman network (`sanctuary-net`)
+- **Discovery:** Dynamic Self-Registration (Containers POST their manifest to Gateway on startup).
 
 ---
 
-## 4. API Specifications
+## 4. Deployment Architecture
 
-### 4.1 Gateway MCP Interface
-
-**Tool Discovery:**
-```json
-{
-  "method": "tools/list",
-  "result": {
-    "tools": [
-      {
-        "name": "cortex_query",
-        "description": "Semantic search against knowledge base",
-        "inputSchema": {...}
-      }
-    ]
-  }
-}
-```
-
-**Tool Invocation:**
-```json
-{
-  "method": "tools/call",
-  "params": {
-    "name": "cortex_query",
-    "arguments": {"query": "What is Protocol 101?"}
-  }
-}
-```
-
-### 4.2 Registry API (Internal)
-
-```python
-class RegistryAPI:
-    def get_server_for_tool(self, tool_name: str) -> ServerInfo
-    def get_all_servers(self) -> List[ServerInfo]
-    def update_server_status(self, server_name: str, status: str)
-    def register_server(self, server: ServerInfo)
-```
-
----
-
-## 5. Deployment Architecture
-
-### 5.1 Container Deployment (Podman)
+### 4.1 Podman Management
+The entire system is orchestrated via `docker-compose.yml` (using Podman).
 
 ```yaml
-# podman-compose.yml
-version: '3'
 services:
-  sanctuary-broker:
-    image: sanctuary-broker-mcp:latest
-    ports:
-      - "9000:9000"
-    volumes:
-      - ./config:/app/config
-      - ./logs:/app/logs
-    networks:
-      - sanctuary-internal
+  # The Logical Clusters
+  sanctuary-utils:
+    image: sanctuary-utils:latest
+    networks: [sanctuary-net]
+  
+  sanctuary-filesystem:
+    image: sanctuary-filesystem:latest
+    volumes: [./workspace:/app/workspace]
+    networks: [sanctuary-net]
 
-  rag-cortex:
-    image: rag-cortex-mcp:latest
-    networks:
-      - sanctuary-internal
-
-  # ... other servers
+  # External Gateway (Managed separately, connects via network)
+  # ...
 ```
 
-### 5.2 Kubernetes Deployment
+### 4.2 Security Boundaries
+- **Network Isolation:** Fleet containers do NOT expose ports to host (except for specific debugging). Only the Gateway exposes port 4444.
+- **Volume Isolation:** Only `sanctuary-filesystem` and `sanctuary-git` have write access to the workspace.
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: sanctuary-broker
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: sanctuary-broker
-  template:
-    spec:
-      containers:
-      - name: gateway
-        image: sanctuary-broker-mcp:latest
-        ports:
-        - containerPort: 9000
+---
+
+## 5. Gateway-Routed Learning Loop
+
+The following diagram shows how the Learning Loop (Protocol 125) operates through the Gateway:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as 🧠 Cognitive Agent<br>(Claude/Gemini)
+    participant GW as 🌐 MCP Gateway<br>(Port 4444)
+    participant Fleet as 🐳 Fleet of 8<br>(Podman)
+    participant VDB as 📊 Vector DB
+    participant LLM as 🤖 Ollama
+
+    Note over A: Agent identifies learning opportunity
+    
+    rect rgb(230, 245, 255)
+        Note over A, GW: 1. Tool Discovery
+        A->>GW: GET /sse (Connect)
+        GW-->>A: Available Tools (180+)
+    end
+
+    rect rgb(255, 245, 230)
+        Note over A, Fleet: 2. Knowledge Ingestion
+        A->>GW: cortex_ingest_incremental(doc)
+        GW->>Fleet: Route to cortex:8104
+        Fleet->>VDB: Embed → Store
+        Fleet-->>GW: {doc_id}
+        GW-->>A: Ingestion Complete
+    end
+
+    rect rgb(230, 255, 230)
+        Note over A, LLM: 3. Semantic Verification (P125)
+        A->>GW: cortex_query(topic)
+        GW->>Fleet: Route to cortex:8104
+        Fleet->>VDB: Similarity Search
+        Fleet->>LLM: Augment Response
+        Fleet-->>GW: {score: 0.94}
+        GW-->>A: Echo-Back Verified
+    end
+
+    rect rgb(255, 230, 255)
+        Note over A, Fleet: 4. Chronicle Entry
+        A->>GW: chronicle_create_entry()
+        GW->>Fleet: Route to domain:8105
+        GW-->>A: Learning Loop Complete ✅
+    end
 ```
 
 ---
 
-## 6. Security Architecture
+## 6. References
 
-### 6.1 Security Layers
-
-1. **Allowlist Enforcement** - Tool invocation validation
-2. **Authentication** - OAuth 2.0 token validation (future)
-3. **Authorization** - Role-based access control (future)
-4. **Input Validation** - Parameter sanitization
-5. **Audit Logging** - All tool invocations logged
-
-### 6.2 Threat Mitigations
-
-| Threat | Mitigation |
-|--------|------------|
-| Prompt Injection | Input validation, output filtering |
-| Privilege Escalation | Strict allowlist, POLP |
-| Data Exfiltration | Network isolation, monitoring |
-| MCP Protocol Exploits | Token validation, session management |
-
----
-
-## 7. Performance Specifications
-
-### 7.1 Latency Targets
-
-- Gateway routing overhead: <30ms (p95)
-- End-to-end tool invocation: <100ms (p95)
-- Registry lookup: <5ms (p99)
-
-### 7.2 Scalability Targets
-
-- Concurrent requests: 100+ (single instance)
-- Registered servers: 100+
-- Tools per server: 20+
-
----
-
-## 8. Implementation Phases
-
-**Phase 1 (MVP - Week 1):**
-- Basic Gateway with 3 servers
-- Static routing
-- stdio transport
-
-**Phase 2 (Registry - Week 2):**
-- SQLite registry
-- Dynamic routing
-- Health checks
-
-**Phase 3 (Migration - Week 3):**
-- All 12 servers migrated
-- Allowlist enforcement
-- Monitoring
-
-**Phase 4 (Hardening - Week 4):**
-- Circuit breakers
-- Performance optimization
-- Production deployment
-
----
-
-## 9. Testing Strategy
-
-### 9.1 Unit Tests
-- Registry operations
-- Router logic
-- Allowlist validation
-
-### 9.2 Integration Tests
-- Gateway ↔ Backend communication
-- End-to-end tool invocation
-- Health check monitoring
-
-### 9.3 Performance Tests
-- Latency benchmarks
-- Load testing
-- Stress testing
-
----
-
-## 10. Monitoring & Observability
-
-### 10.1 Metrics
-
-- Request rate (requests/sec)
-- Latency (p50, p95, p99)
-- Error rate (%)
-- Server health status
-
-### 10.2 Logging
-
-- All tool invocations (audit trail)
-- Routing decisions
-- Health check results
-- Error traces
-
----
-
-## 11. References
-
-- [Implementation Plan](../research/07_implementation_plan.md)
-- [Decision Document](../research/12_decision_document_gateway_adoption.md)
-- [Build vs Buy Analysis](../research/11_build_vs_buy_vs_reuse_analysis.md)
-- [ADR 056: Adoption of Dynamic MCP Gateway Pattern](../../ADRs/056_adoption_of_dynamic_mcp_gateway_pattern.md)
-- [ADR 057: Adoption of IBM ContextForge](../../ADRs/057_adoption_of_ibm_contextforge_for_dynamic_mcp_gateway.md)
-- [IBM ContextForge GitHub](https://github.com/IBM/mcp-context-forge)
-- [MCP Specification](https://modelcontextprotocol.io)
-
----
-
-**Status:** Draft - To be finalized after Protocol 122 creation  
-**Next Review:** After MVP deployment (Week 1)
+- **ADR 058:** Decoupling Strategy (External Gateway)
+- **ADR 060:** Hybrid Fleet Architecture (The 5 Clusters)
+- **ADR 059:** JWT Authentication
+- **ADR 062:** Rejection of n8n Automation (Manual Loop Reinforced)
