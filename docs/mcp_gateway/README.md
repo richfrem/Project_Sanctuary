@@ -112,16 +112,17 @@ config:
 flowchart TB
     Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444"]
     
-    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8000/sse"]
-    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8001/sse"]
-    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8002/sse"]
-    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8003/sse"]
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8100/sse"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8101/sse"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8102/sse"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8103/sse"]
+    Gateway -- Docker Network --> Domain["<b>6. sanctuary-domain</b><br>:8105/sse"]
     Gateway -- Docker Network --> Cortex
     
     subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
-        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server)"]
-        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend)"]
-        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend)"]
+        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server :8104)"]
+        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend :8000)"]
+        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend :11434)"]
         Cortex --> VectorDB
         Cortex --> Ollama
     end
@@ -132,18 +133,20 @@ flowchart TB
     style Network fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     style Git fill:#ffebee,stroke:#c62828,stroke-width:2px
     style Intelligence fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+    style Domain fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
 ```
 
 **Container Inventory:**
-| # | Container | Type | Role |
-|---|-----------|------|------|
-| 1 | `sanctuary-utils` | NEW | Low-risk tools (time, calc) |
-| 2 | `sanctuary-filesystem` | NEW | File ops (grep, patch) |
-| 3 | `sanctuary-network` | NEW | HTTP clients (brave, fetch) |
-| 4 | `sanctuary-git` | NEW | Git workflow (isolated) |
-| 5a | `sanctuary-cortex` | NEW | RAG MCP Server |
-| 5b | `sanctuary-vector-db` | EXISTING | ChromaDB backend |
-| 5c | `sanctuary-ollama-mcp` | EXISTING | Ollama backend |
+| # | Container | Type | Role | Port |
+|---|-----------|------|------|------|
+| 1 | `sanctuary-utils` | NEW | Low-risk tools | 8100 |
+| 2 | `sanctuary-filesystem` | NEW | File ops | 8101 |
+| 3 | `sanctuary-network` | NEW | HTTP clients | 8102 |
+| 4 | `sanctuary-git` | NEW | Git workflow | 8103 |
+| 5a | `sanctuary-cortex` | NEW | RAG MCP Server | 8104 |
+| 5b | `sanctuary-vector-db` | EXISTING | ChromaDB backend | 8000 |
+| 5c | `sanctuary-ollama-mcp` | EXISTING | Ollama backend | 11434 |
+| 6 | `sanctuary-domain` | NEW | Business Logic | 8105 |
 
 **See:** [ADR 060: Gateway Integration Patterns - Hybrid Fleet](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md)
 

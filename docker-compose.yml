@@ -47,34 +47,152 @@ services:
         wait -n
     restart: unless-stopped
 
-  # Fleet of 7 - Container #1: sanctuary-utils (ADR 060)
+  # Fleet of 8 - Container #1: sanctuary-utils (ADR 060)
   sanctuary-utils:
     build:
-      context: ./mcp_servers/utils
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: mcp_servers/utils/Dockerfile
     container_name: sanctuary-utils
     ports:
-      - "${SANCTUARY_UTILS_PORT:-8100}:8000" # Use env var, default 8100
+      - "${SANCTUARY_UTILS_PORT:-8100}:8000"
     volumes:
-      # Hot reloading support - mount source code
-      - ./mcp_servers/utils:/app
+      - .:/app
     networks:
       - mcp-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: '256M'
-        reservations:
-          cpus: '0.25'
-          memory: '128M'
-    command: [ "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
+    environment:
+      - PORT=8000
+      - PYTHONPATH=/app
+    command: [ "python", "-m", "mcp_servers.utils.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 5s
+    restart: unless-stopped
+
+  # Fleet of 8 - Container #2: sanctuary-filesystem (Task 128)
+  sanctuary-filesystem:
+    build:
+      context: .
+      dockerfile: mcp_servers/code/Dockerfile
+    container_name: sanctuary-filesystem
+    ports:
+      - "${SANCTUARY_FILESYSTEM_PORT:-8101}:8000"
+    volumes:
+      - .:/app
+    networks:
+      - mcp-network
+    environment:
+      - PORT=8000
+      - PROJECT_ROOT=/app
+      - PYTHONUNBUFFERED=1
+    command: [ "python", "-m", "mcp_servers.code.server" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      retries: 3
+    restart: unless-stopped
+
+  # Fleet of 8 - Container #3: sanctuary-network (Task 129)
+  sanctuary-network:
+    build:
+      context: .
+      dockerfile: mcp_servers/network/Dockerfile
+    container_name: sanctuary-network
+    ports:
+      - "${SANCTUARY_NETWORK_PORT:-8102}:8000"
+    volumes:
+      - .:/app
+    networks:
+      - mcp-network
+    environment:
+      - PORT=8000
+      - PYTHONPATH=/app
+    command: [ "python", "-m", "mcp_servers.network.server" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      retries: 3
+    restart: unless-stopped
+
+  # Fleet of 8 - Container #4: sanctuary-git (Task 130)
+  sanctuary-git:
+    build:
+      context: .
+      dockerfile: mcp_servers/git/Dockerfile
+    container_name: sanctuary-git
+    ports:
+      - "${SANCTUARY_GIT_PORT:-8103}:8000"
+    volumes:
+      - .:/app
+    networks:
+      - mcp-network
+    environment:
+      - PORT=8000
+      - PYTHONPATH=/app
+    command: [ "python", "-m", "mcp_servers.git.server" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      retries: 3
+    restart: unless-stopped
+
+  # Fleet of 8 - Container #5: sanctuary-cortex (Task 131)
+  sanctuary-cortex:
+    build:
+      context: .
+      dockerfile: mcp_servers/rag_cortex/Dockerfile
+    container_name: sanctuary-cortex
+    ports:
+      - "${SANCTUARY_CORTEX_PORT:-8104}:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PROJECT_ROOT=/app
+      - PYTHONPATH=/app
+      - PORT=8000
+      - CHROMA_DB_HOST=sanctuary-vector-db
+      - CHROMA_DB_PORT=8000
+      - OLLAMA_HOST=http://sanctuary-ollama-mcp:11434
+    networks:
+      - mcp-network
+    depends_on:
+      - vector-db
+      - ollama-model-mcp
+    command: [ "python", "-m", "mcp_servers.rag_cortex.server" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      retries: 3
+    restart: unless-stopped
+
+  # Fleet of 8 - Container #6: sanctuary-domain (ADR 061)
+  # Hosting: Chronicle, Protocol, Task, ADR, and Python Dev Tools
+  sanctuary-domain:
+    build:
+      context: .
+      dockerfile: mcp_servers/domain/Dockerfile
+    container_name: sanctuary-domain
+    ports:
+      - "${SANCTUARY_DOMAIN_PORT:-8105}:8105"
+    volumes:
+      # Mount project root to allow tools to access all files (linting, etc.)
+      - .:/app
+    networks:
+      - mcp-network
+    environment:
+      - PROJECT_ROOT=/app
+      - DOMAIN_SERVER_PORT=8105
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: '512M'
+    # Default FastMCP uses 0.0.0.0 if not specified? Better explicit.
+    # Assuming mcp.run() parses args or we rely on python execution.
+    # fastmcp uses uvicorn under the hood often.
+    command: [ "python", "mcp_servers/domain/unified_server.py", "--port", "8105", "--transport", "sse" ]
     restart: unless-stopped
 
 networks:

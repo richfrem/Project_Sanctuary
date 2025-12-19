@@ -1,232 +1,80 @@
+
 """
 sanctuary-utils MCP Server
 Fleet of 7 - Container #1: Low-risk utility tools
 
-Exposes tools via SSE endpoint for Gateway integration.
-Implements Guardrail 1 (Fault Containment) and Guardrail 3 (Network Addressing).
+Refactored to use generic SSEServer for Gateway integration (202 Accepted + Async SSE).
 """
-import json
-import logging
-from contextlib import asynccontextmanager
-from typing import Any
+import sys
+import os
 
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from sse_starlette.sse import EventSourceResponse
+# Ensure we can import from shared lib
+# Add project root to path if needed (for local dev)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+if project_root not in sys.path:
+    sys.path.append(project_root)
 
-# Import tools (with fault isolation)
-# Use relative import for container compatibility
-from tools import time_tool
-from tools import calculator_tool
-from tools import uuid_tool
-from tools import string_tool
+# Import shared SSE Server
+try:
+    from mcp_servers.lib.sse_adaptor import SSEServer
+except ImportError:
+    # Fallback for container structure where lib might be adjacent
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from lib.sse_adaptor import SSEServer
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("sanctuary-utils")
+# Import tools
+# Try generic relative import first, then absolute
+try:
+    from .tools import time_tool
+    from .tools import calculator_tool
+    from .tools import uuid_tool
+    from .tools import string_tool
+except ImportError:
+    from tools import time_tool
+    from tools import calculator_tool
+    from tools import uuid_tool
+    from tools import string_tool
 
-# Tool registry - maps tool names to their handlers
-TOOL_REGISTRY = {
-    # Time tools
-    "time.get_current_time": time_tool.get_current_time,
-    "time.get_timezone_info": time_tool.get_timezone_info,
-    # Calculator tools
-    "calculator.calculate": calculator_tool.calculate,
-    "calculator.add": calculator_tool.add,
-    "calculator.subtract": calculator_tool.subtract,
-    "calculator.multiply": calculator_tool.multiply,
-    "calculator.divide": calculator_tool.divide,
-    # UUID tools
-    "uuid.generate_uuid4": uuid_tool.generate_uuid4,
-    "uuid.generate_uuid1": uuid_tool.generate_uuid1,
-    "uuid.validate_uuid": uuid_tool.validate_uuid,
-    # String tools
-    "string.to_upper": string_tool.to_upper,
-    "string.to_lower": string_tool.to_lower,
-    "string.trim": string_tool.trim,
-    "string.reverse": string_tool.reverse,
-    "string.word_count": string_tool.word_count,
-    "string.replace": string_tool.replace,
-}
+# Initialize Server
+server = SSEServer("sanctuary-utils")
 
-# Tool manifests for registration
-TOOL_MANIFESTS = [
-    time_tool.TOOL_MANIFEST,
-    calculator_tool.TOOL_MANIFEST,
-    uuid_tool.TOOL_MANIFEST,
-    string_tool.TOOL_MANIFEST,
-]
+# Tool Registry
+# We manually register generic tools
+# Time
+server.register_tool("time.get_current_time", time_tool.get_current_time, time_tool.TOOL_MANIFEST)
+server.register_tool("time.get_timezone_info", time_tool.get_timezone_info, time_tool.TOOL_MANIFEST)
 
+# Calculator
+server.register_tool("calculator.calculate", calculator_tool.calculate, calculator_tool.TOOL_MANIFEST)
+server.register_tool("calculator.add", calculator_tool.add, calculator_tool.TOOL_MANIFEST)
+server.register_tool("calculator.subtract", calculator_tool.subtract, calculator_tool.TOOL_MANIFEST)
+server.register_tool("calculator.multiply", calculator_tool.multiply, calculator_tool.TOOL_MANIFEST)
+server.register_tool("calculator.divide", calculator_tool.divide, calculator_tool.TOOL_MANIFEST)
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Application lifespan - startup and shutdown events."""
-    logger.info("🚀 sanctuary-utils starting up...")
-    logger.info(f"📦 Registered tools: {list(TOOL_REGISTRY.keys())}")
-    
-    # Guardrail 2: Self-Registration with Gateway
-    try:
-        from gateway_registration import register_with_gateway, deregister_from_gateway
-        
-        manifest = {
-            "server_name": "sanctuary-utils",
-            "version": "1.0.0",
-            "tools": TOOL_MANIFESTS,
-        }
-        result = await register_with_gateway(manifest)
-        if result.get("success"):
-            logger.info("✅ Gateway registration successful")
-        else:
-            logger.warning(f"⚠️ Gateway registration failed (container will work standalone): {result.get('error', 'unknown')}")
-    except ImportError:
-        logger.info("ℹ️ Gateway registration module not available - running standalone")
-    except Exception as e:
-        logger.warning(f"⚠️ Gateway registration error (non-critical): {e}")
-    
-    yield
-    
-    # Cleanup: Deregister on shutdown
-    try:
-        from gateway_registration import deregister_from_gateway
-        await deregister_from_gateway()
-    except Exception as e:
-        logger.debug(f"Deregistration skipped: {e}")
-    
-    logger.info("👋 sanctuary-utils shutting down...")
+# UUID
+server.register_tool("uuid.generate_uuid4", uuid_tool.generate_uuid4, uuid_tool.TOOL_MANIFEST)
+server.register_tool("uuid.generate_uuid1", uuid_tool.generate_uuid1, uuid_tool.TOOL_MANIFEST)
+server.register_tool("uuid.validate_uuid", uuid_tool.validate_uuid, uuid_tool.TOOL_MANIFEST)
 
+# String
+server.register_tool("string.to_upper", string_tool.to_upper, string_tool.TOOL_MANIFEST)
+server.register_tool("string.to_lower", string_tool.to_lower, string_tool.TOOL_MANIFEST)
+server.register_tool("string.trim", string_tool.trim, string_tool.TOOL_MANIFEST)
+server.register_tool("string.reverse", string_tool.reverse, string_tool.TOOL_MANIFEST)
+server.register_tool("string.word_count", string_tool.word_count, string_tool.TOOL_MANIFEST)
+server.register_tool("string.replace", string_tool.replace, string_tool.TOOL_MANIFEST)
 
-app = FastAPI(
-    title="sanctuary-utils",
-    description="Fleet of 7 - Container #1: Low-risk utility tools",
-    version="1.0.0",
-    lifespan=lifespan,
-)
-
-
-@app.get("/health")
-async def health_check() -> dict[str, Any]:
-    """Health check endpoint for container orchestration."""
-    return {
-        "status": "healthy",
-        "service": "sanctuary-utils",
-        "tools_count": len(TOOL_REGISTRY),
-        "tools": list(TOOL_REGISTRY.keys()),
-    }
-
-
-@app.get("/manifest")
-async def get_manifest() -> dict[str, Any]:
-    """Return tool manifest for Gateway registration."""
-    return {
-        "server_name": "sanctuary-utils",
-        "version": "1.0.0",
-        "endpoint": "http://sanctuary-utils:8000/sse",
-        "health_check": "http://sanctuary-utils:8000/health",
-        "tools": TOOL_MANIFESTS,
-    }
-
-
-async def handle_tool_call(tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
-    """
-    Handle a tool call with fault containment (Guardrail 1).
-    
-    Each tool call is wrapped in try/except to prevent one tool's
-    failure from crashing the entire container.
-    """
-    if tool_name not in TOOL_REGISTRY:
-        return {
-            "success": False,
-            "error": f"Unknown tool: {tool_name}",
-            "available_tools": list(TOOL_REGISTRY.keys()),
-        }
-    
-    try:
-        # Execute the tool with fault isolation
-        handler = TOOL_REGISTRY[tool_name]
-        result = handler(**arguments)
-        return result
-    except Exception as e:
-        # Guardrail 1: Fault containment - log full stack trace, return generic error
-        logger.exception(f"Tool {tool_name} failed with an exception:")
-        return {
-            "success": False,
-            "tool": tool_name,
-            "error": "Tool execution failed due to an internal error.",
-            "fault_contained": True,
-        }
-
-
-async def sse_event_generator(request: Request):
-    """
-    SSE event generator for MCP protocol.
-    
-    Handles incoming tool calls and streams responses back.
-    """
-    logger.info("SSE connection established")
-    
-    # Send initial connection message
-    yield {
-        "event": "connected",
-        "data": json.dumps({
-            "server": "sanctuary-utils",
-            "tools": list(TOOL_REGISTRY.keys()),
-        }),
-    }
-    
-    # Keep connection alive and handle tool calls
-    # In a full implementation, this would read from the request stream
-    # For now, we yield a heartbeat to keep the connection alive
-    while True:
-        if await request.is_disconnected():
-            logger.info("SSE client disconnected")
-            break
-        
-        # Heartbeat to keep connection alive
-        yield {
-            "event": "heartbeat",
-            "data": json.dumps({"status": "alive"}),
-        }
-        
-        # Wait before next heartbeat (adjust as needed)
-        import asyncio
-        await asyncio.sleep(30)
-
-
-@app.get("/sse")
-async def sse_endpoint(request: Request):
-    """
-    SSE endpoint for MCP Gateway communication.
-    
-    This is the main endpoint that the Gateway connects to for tool calls.
-    """
-    return EventSourceResponse(sse_event_generator(request))
-
-
-@app.post("/tools/{tool_name}")
-async def call_tool(tool_name: str, request: Request) -> JSONResponse:
-    """
-    Direct tool call endpoint (for testing without SSE).
-    
-    POST /tools/time.get_current_time
-    Body: {"timezone_name": "UTC"}
-    """
-    try:
-        body = await request.json()
-    except Exception:
-        body = {}
-    
-    result = await handle_tool_call(tool_name, body)
-    return JSONResponse(content=result)
-
+# Expose app for uvicorn
+app = server.app
 
 if __name__ == "__main__":
-    import uvicorn
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Legacy Mode)
+    import os
+    port_env = os.getenv("PORT")
+    transport = "sse" if port_env else "stdio"
+    port = int(port_env) if port_env else 8100
     
-    # Run with hot reload for development
-    uvicorn.run(
-        "mcp_servers.utils.server:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info",
-    )
+    server.run(port=port, transport=transport)

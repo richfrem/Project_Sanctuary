@@ -69,4 +69,5 @@ MCP_GATEWAY_JWT_ALGORITHM=RS256
 
 ---
 
-**Status Update (2025-12-17):** Gateway uses API token authentication instead of JWT. Tokens are created via the gateway's admin interface (/admin/tokens) rather than client-side JWT generation.
+**Status Update (2025-12-19):** Authentication is strictly **Bearer Token** (via `MCPGATEWAY_BEARER_TOKEN`) as mandated by [ADR 058](./058_decouple_ibm_gateway_to_external_podman_service.md).
+> **Clarification:** While [ADR 057](./057_adoption_of_ibm_contextforge_for_dynamic_mcp_gateway.md) explored OAuth/SSO, the decision to **Decouple (ADR 058)** enforced a simplified security model. OAuth is **NOT** used. JWT is **NOT** used. Simple Bearer Token is the single source of truth for the Side-by-Side architecture.

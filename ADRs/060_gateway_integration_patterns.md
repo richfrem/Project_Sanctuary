@@ -663,6 +663,33 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0"]
 
 ---
 
+## Side-by-Side Architecture & Port Strategy
+
+To support legacy direct connections while migrating to the Gateway, we implement a **Side-by-Side** strategy:
+
+**1. Dual-Mode Servers:**
+All MCP servers (Utils, Network, Filesystem, Git, Cortex) are refactored to support two transport modes:
+- **Legacy (Stdio):** Default when `PORT` is not set. Used by direct `python -m mcp_servers.xxx` calls.
+- **Gateway (SSE):** Active when `PORT` is set. Used by Podman containers.
+
+**2. Port Assignments:**
+To prevent conflicts, Gateway-routed containers use distict host ports from the legacy defaults.
+
+| Server | Legacy Port (Direct) | Gateway Host Port (Podman) | Container Internal |
+|--------|----------------------|----------------------------|--------------------|
+| Utils | N/A (Stdio) | 8100 | 8000 |
+| Filesystem | N/A (Stdio) | 8101 | 8001 |
+| Network | N/A (Stdio) | 8102 | 8002 |
+| Git | N/A (Stdio) | 8103 | 8003 |
+| Cortex | 8000/8004 | 8104 | 8004 |
+
+**3. Configuration Toggles:**
+Clients choose their mode via config:
+- `legacy_direct.json`: Uses Stdio command lines.
+- `gateway_routed.json`: Uses Gateway URL (`http://localhost:4444/sse`) with Bearer Token.
+
+---
+
 ## Related Documents
 
 - [ADR 058: Decouple IBM Gateway to External Podman Service](058_decouple_ibm_gateway_to_external_podman_service.md)

@@ -125,16 +125,17 @@ config:
 flowchart TB
     Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444"]
     
-    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8000/sse"]
-    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8001/sse"]
-    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8002/sse"]
-    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8003/sse"]
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8100/sse"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8101/sse"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8102/sse"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8103/sse"]
+    Gateway -- Docker Network --> Domain["<b>6. sanctuary-domain</b><br>:8105/sse"]
     Gateway -- Docker Network --> Cortex
     
     subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
-        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server)"]
-        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend)"]
-        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend)"]
+        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server :8104)"]
+        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend :8000)"]
+        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend :11434)"]
         Cortex --> VectorDB
         Cortex --> Ollama
     end
@@ -145,14 +146,20 @@ flowchart TB
     style Network fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     style Git fill:#ffebee,stroke:#c62828,stroke-width:2px
     style Intelligence fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+    style Domain fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
 ```
 
 **Fleet of 7 Containers:**
-| # | Container | Type | Role |
-|---|-----------|------|------|
-| 1-4 | Utils, Filesystem, Network, Git | NEW | MCP Servers (SSE endpoints) |
-| 5a | sanctuary-cortex | NEW | RAG MCP Server (brain) |
-| 5b-5c | vector-db, ollama-mcp | EXISTING | Backends (storage & compute) |
+| # | Container | Type | Role | Port |
+|---|-----------|------|------|------|
+| 1 | `sanctuary-utils` | NEW | Low-risk tools | 8100 |
+| 2 | `sanctuary-filesystem` | NEW | File ops | 8101 |
+| 3 | `sanctuary-network` | NEW | HTTP clients | 8102 |
+| 4 | `sanctuary-git` | NEW | Git workflow | 8103 |
+| 5a | `sanctuary-cortex` | NEW | RAG MCP Server | 8104 |
+| 5b | `sanctuary-vector-db` | EXISTING | ChromaDB backend | 8000 |
+| 5c | `sanctuary-ollama-mcp` | EXISTING | Ollama backend | 11434 |
+| 6 | `sanctuary-domain` | NEW | Business Logic | 8105 |
 
 **Benefits:** 88% context reduction, 100+ server scalability, centralized auth & routing.
 
@@ -229,6 +236,68 @@ sequenceDiagram
         Note over F: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new Constitutional Mind
     end
 ```
+
+#### v2: Gateway-Routed Learning Loop (Fleet of 8)
+**Status:** `Active` - Unified SSE Transport via MCP Gateway
+
+With the MCP Gateway, all agent-to-server communication is routed through a single endpoint, enabling centralized auth, logging, and the Fleet of 8 container architecture.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as 🧠 Cognitive Agent<br>(Claude/Gemini)
+    participant GW as 🌐 MCP Gateway<br>(Port 4444)
+    participant Fleet as 🐳 Fleet of 8<br>(Podman Containers)
+    participant VDB as 📊 Vector DB<br>(ChromaDB)
+    participant LLM as 🤖 Ollama<br>(Sanctuary-Qwen2)
+
+    Note over A: Agent identifies learning opportunity
+    
+    rect rgb(230, 245, 255)
+        Note over A, GW: 1. Tool Discovery (SSE Handshake)
+        A->>GW: GET /sse (Connect)
+        GW-->>A: Available Tools (180+)
+    end
+
+    rect rgb(255, 245, 230)
+        Note over A, Fleet: 2. Knowledge Ingestion
+        A->>GW: cortex_ingest_incremental(doc)
+        GW->>Fleet: Route to sanctuary-cortex:8104
+        Fleet->>VDB: Chunk → Embed → Store
+        VDB-->>Fleet: doc_id
+        Fleet-->>GW: Ingestion Complete
+        GW-->>A: {chunks: 5, doc_id: "abc123"}
+    end
+
+    rect rgb(230, 255, 230)
+        Note over A, LLM: 3. Semantic Verification (P125)
+        A->>GW: cortex_query("my learning topic")
+        GW->>Fleet: Route to sanctuary-cortex:8104
+        Fleet->>VDB: Similarity Search
+        Fleet->>LLM: Augment Response
+        LLM-->>Fleet: Contextual Answer
+        Fleet-->>GW: Retrieved Context
+        GW-->>A: {score: 0.94, text: "..."}
+    end
+
+    rect rgb(255, 230, 255)
+        Note over A, Fleet: 4. Chronicle Entry
+        A->>GW: chronicle_create_entry(summary)
+        GW->>Fleet: Route to sanctuary-domain:8105
+        Fleet-->>GW: Entry Created
+        GW-->>A: {entry_id: 285}
+    end
+
+    Note over A: Learning Loop Complete ✅
+```
+
+**Key Differences from v1:**
+- All traffic flows through **Gateway (Port 4444)** - single SSE connection
+- **Fleet of 8 containers** handle requests (no direct MCP server calls)
+- Centralized **authentication, logging, and rate limiting**
+- **88% context reduction** via tool consolidation
+
+---
 
 #### RAG Architecture Overview
 

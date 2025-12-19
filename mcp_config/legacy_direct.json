@@ -1,0 +1,63 @@
+{
+    "mcpServers": {
+        "sanctuary-utils": {
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.utils.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "MCP_TRANSPORT": "stdio"
+            }
+        },
+        "sanctuary-network": {
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.network.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "MCP_TRANSPORT": "stdio"
+            }
+        },
+        "sanctuary-filesystem": {
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "MCP_TRANSPORT": "stdio"
+            }
+        },
+        "sanctuary-git": {
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.git.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "REPO_PATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "MCP_TRANSPORT": "stdio"
+            }
+        },
+        "sanctuary-cortex": {
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.rag_cortex.server"
+            ],
+            "env": {
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "MCP_TRANSPORT": "stdio",
+                "SKIP_CONTAINER_CHECKS": "1"
+            }
+        }
+    }
+}

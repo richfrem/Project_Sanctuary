@@ -1,26 +1,41 @@
+
 """
 Cortex MCP Server
 Domain: project_sanctuary.cognitive.cortex
 
 Provides MCP tools for interacting with the Mnemonic Cortex RAG system.
+Refactored to use SSEServer for Gateway integration (202 Accepted + Async SSE).
 """
 import os
 import json
 import sys
 import logging
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 
 # Configure environment to prevent stdout pollution - MUST BE FIRST
 os.environ["TQDM_DISABLE"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-from fastmcp import FastMCP
+# Import SSEServer
+# Ensure we can import from shared lib
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+try:
+    from mcp_servers.lib.sse_adaptor import SSEServer
+except ImportError:
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from lib.sse_adaptor import SSEServer
+
 from .validator import CortexValidator, ValidationError
 from .models import to_dict
 from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ollama_running
 
-# Initialize FastMCP with canonical domain name
-mcp = FastMCP("project_sanctuary.cognitive.cortex")
+# Initialize SSEServer
+server = SSEServer("sanctuary-cortex")
+app = server.app
 
 # Global lazy instances
 _cortex_ops = None
@@ -48,9 +63,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger("rag_cortex")
 
+# ----------------------------------------------------------------------
+# Tool Handlers
+# ----------------------------------------------------------------------
 
-@mcp.tool()
-def cortex_ingest_full(
+async def cortex_ingest_full(
     purge_existing: bool = True,
     source_directories: Optional[List[str]] = None
 ) -> str:
@@ -59,18 +76,6 @@ def cortex_ingest_full(
     
     This operation purges the existing database and rebuilds it from scratch
     by processing all canonical documents. Use with caution.
-    
-    Args:
-        purge_existing: Whether to purge existing database (default: True)
-        source_directories: Optional list of source directories to ingest
-                          (default: all canonical directories)
-    
-    Returns:
-        JSON string with ingestion statistics
-        
-    Example:
-        cortex_ingest_full()
-        cortex_ingest_full(source_directories=["01_PROTOCOLS", "00_CHRONICLE"])
     """
     try:
         # Validate inputs
@@ -94,9 +99,7 @@ def cortex_ingest_full(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_query(
+async def cortex_query(
     query: str,
     max_results: int = 5,
     use_cache: bool = False,
@@ -107,23 +110,9 @@ def cortex_query(
     
     Uses the Parent Document Retriever pattern to return full documents
     rather than fragmented chunks, providing complete context.
-    
-    Args:
-        query: Natural language query string
-        max_results: Maximum number of results to return (default: 5, max: 100)
-        use_cache: Whether to use cache (Phase 2 feature, default: False)
-        reasoning_mode: Whether to use LLM to structure the query (default: False)
-    
-    Returns:
-        JSON string with query results and metadata
-        
-    Example:
-        cortex_query("What is Protocol 101?")
-        cortex_query("Explain the Mnemonic Cortex architecture", max_results=3, reasoning_mode=True)
     """
     try:
         # Validate inputs
-        # Note: We skip validation for reasoning_mode as it's a boolean
         validated = get_validator().validate_query(
             query=query,
             max_results=max_results,
@@ -131,6 +120,7 @@ def cortex_query(
         )
         
         # Perform query
+        # Currently synchronous op, running in async wrapper
         response = get_ops().query(
             query=validated["query"],
             max_results=validated["max_results"],
@@ -147,79 +137,35 @@ def cortex_query(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_get_stats() -> str:
-    """
-    Get database statistics and health status.
-    
-    Returns information about the number of documents, chunks, collections,
-    and overall health of the RAG system.
-    
-    Returns:
-        JSON string with database statistics
-        
-    Example:
-        cortex_get_stats()
-    """
+async def cortex_get_stats() -> str:
+    """Get database statistics and health status."""
     try:
-        # Validate (no parameters needed)
         get_validator().validate_stats()
-        
-        # Get stats
         response = get_ops().get_stats()
-        
-        # Convert to dict and return as JSON
         result = to_dict(response)
         return json.dumps(result, indent=2)
-        
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_ingest_incremental(
+async def cortex_ingest_incremental(
     file_paths: List[str],
     metadata: Optional[dict] = None,
     skip_duplicates: bool = True
 ) -> str:
-    """
-    Incrementally ingest documents without rebuilding the entire database.
-    
-    This operation adds new documents to the existing knowledge base without
-    purging existing data. Useful for adding new documents after initial ingestion.
-    
-    Args:
-        file_paths: List of markdown file paths to ingest (absolute or relative)
-        metadata: Optional metadata to attach to documents
-        skip_duplicates: Whether to skip files already in database (default: True)
-    
-    Returns:
-        JSON string with ingestion statistics
-        
-    Example:
-        cortex_ingest_incremental(["00_CHRONICLE/2025-11-28_new_entry.md"])
-        cortex_ingest_incremental(
-            file_paths=["01_PROTOCOLS/120_new_protocol.md"],
-            skip_duplicates=False
-        )
-    """
+    """Incrementally ingest documents without rebuilding the entire database."""
     try:
-        # Validate inputs
         validated = get_validator().validate_ingest_incremental(
             file_paths=file_paths,
             metadata=metadata,
             skip_duplicates=skip_duplicates
         )
         
-        # Perform incremental ingestion
         response = get_ops().ingest_incremental(
             file_paths=validated["file_paths"],
             metadata=validated["metadata"],
             skip_duplicates=validated["skip_duplicates"]
         )
         
-        # Convert to dict and return as JSON
         result = to_dict(response)
         return json.dumps(result, indent=2)
         
@@ -228,28 +174,8 @@ def cortex_ingest_incremental(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-# ============================================================================
-# Cache Operations (Protocol 114 - Guardian Wakeup)
-# ============================================================================
-
-@mcp.tool()
-def cortex_cache_get(query: str) -> str:
-    """
-    Retrieve cached answer for a query.
-    
-    Checks the Mnemonic Cache (CAG) for a previously computed answer.
-    Returns cache hit status and answer if found.
-    
-    Args:
-        query: Query string to look up in cache
-    
-    Returns:
-        JSON with cache hit status and answer if found
-    
-    Example:
-        cortex_cache_get("What is Protocol 101?")
-    """
+async def cortex_cache_get(query: str) -> str:
+    """Retrieve cached answer for a query."""
     try:
         response = get_ops().cache_get(query)
         result = to_dict(response)
@@ -257,25 +183,8 @@ def cortex_cache_get(query: str) -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_cache_set(query: str, answer: str) -> str:
-    """
-    Store answer in cache for future retrieval.
-    
-    Caches an answer for a specific query in the Mnemonic Cache (CAG).
-    Subsequent identical queries will retrieve this cached answer instantly.
-    
-    Args:
-        query: Query string (cache key)
-        answer: Answer to cache
-    
-    Returns:
-        JSON with cache storage confirmation
-    
-    Example:
-        cortex_cache_set("What is Protocol 101?", "Protocol 101 is...")
-    """
+async def cortex_cache_set(query: str, answer: str) -> str:
+    """Store answer in cache for future retrieval."""
     try:
         response = get_ops().cache_set(query, answer)
         result = to_dict(response)
@@ -283,25 +192,8 @@ def cortex_cache_set(query: str, answer: str) -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> str:
-    """
-    Pre-populate cache with genesis queries.
-    
-    Warms up the cache by pre-computing answers for frequently asked questions.
-    If no queries provided, uses default set of essential Sanctuary questions.
-    
-    Args:
-        genesis_queries: Optional list of queries to cache. If None, uses defaults.
-    
-    Returns:
-        JSON with warmup statistics (queries cached, cache hits/misses, time)
-    
-    Example:
-        cortex_cache_warmup()
-        cortex_cache_warmup(genesis_queries=["What is Protocol 87?", "Latest roadmap"])
-    """
+async def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> str:
+    """Pre-populate cache with genesis queries."""
     try:
         response = get_ops().cache_warmup(genesis_queries)
         result = to_dict(response)
@@ -309,22 +201,8 @@ def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
-    """
-    Generate Guardian boot digest from cached bundles (Protocol 114).
-    
-    Retrieves chronicles, protocols, and roadmap summaries from cache
-    and writes a digest to WORK_IN_PROGRESS/guardian_boot_digest.md.
-    This provides the Guardian with essential context on startup.
-    
-    Returns:
-        JSON with digest path and cache statistics
-    
-    Example:
-        cortex_guardian_wakeup()
-    """
+async def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
+    """Generate Guardian boot digest from cached bundles (Protocol 114)."""
     try:
         response = get_ops().guardian_wakeup(mode=mode)
         result = to_dict(response)
@@ -332,45 +210,31 @@ def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
-
-@mcp.tool()
-def cortex_cache_stats() -> str:
-    """
-    Get Mnemonic Cache (CAG) statistics.
-    
-    Returns information about hot/warm cache size and hit rates.
-    
-    Returns:
-        JSON with cache statistics
-        
-    Example:
-        cortex_cache_stats()
-    """
+async def cortex_cache_stats() -> str:
+    """Get Mnemonic Cache (CAG) statistics."""
     try:
         stats = get_ops().get_cache_stats()
         return json.dumps(stats, indent=2)
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+# ----------------------------------------------------------------------
+# Registration
+# ----------------------------------------------------------------------
 
-# Legacy import - commented out as mnemonic_cortex module was archived
-# from mnemonic_cortex.app.synthesis.generator import SynthesisGenerator
+# Schemas (Simplified for brevity, ideally mirrored from FastMCP introspection)
+# We rely on the SSEServer to expose basic functionality
 
-# @mcp.tool()
-# def cortex_generate_adaptation_packet(days: int = 7) -> str:
-#     """
-#     Synthesize recent Cortex knowledge into an Adaptation Packet for model fine-tuning.
-#     
-#     Args:
-#         days: Number of days to look back for changes (default: 7)
-#         
-#     Returns:
-#         Path to the generated packet file.
-#     """
-#     generator = SynthesisGenerator(PROJECT_ROOT)
-#     packet = generator.generate_packet(days=days)
-#     output_path = generator.save_packet(packet)
-#     return f"Generated Adaptation Packet: {output_path}"
+server.register_tool("cortex_ingest_full", cortex_ingest_full)
+server.register_tool("cortex_query", cortex_query)
+server.register_tool("cortex_get_stats", cortex_get_stats)
+server.register_tool("cortex_ingest_incremental", cortex_ingest_incremental)
+server.register_tool("cortex_cache_get", cortex_cache_get)
+server.register_tool("cortex_cache_set", cortex_cache_set)
+server.register_tool("cortex_cache_warmup", cortex_cache_warmup)
+server.register_tool("cortex_guardian_wakeup", cortex_guardian_wakeup)
+server.register_tool("cortex_cache_stats", cortex_cache_stats)
+
 
 if __name__ == "__main__":
     # Ensure Containers are running
@@ -395,4 +259,11 @@ if __name__ == "__main__":
     else:
         logger.info("Skipping container checks (SKIP_CONTAINER_CHECKS set)")
 
-    mcp.run()
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Legacy Mode)
+    port_env = os.environ.get("PORT")
+    transport = "sse" if port_env else "stdio"
+    port = int(port_env) if port_env else 8004
+    
+    server.run(port=port, transport=transport)

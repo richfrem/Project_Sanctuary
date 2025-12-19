@@ -1,22 +1,32 @@
-FROM python:3.10-slim
+# sanctuary-git Dockerfile
+# Fleet of 8 - Container #4: Git workflow tools
+# Designed to run with context at project root
+
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install git
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Install git and curl
+RUN apt-get update && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN pip install fastmcp
+# Copy the shared lib and git code
+COPY mcp_servers/lib /app/mcp_servers/lib
+COPY mcp_servers/git /app/mcp_servers/git
 
-# Copy core module
-# We need to copy the core module from the parent context
-COPY core /app/core
+# Install Python dependencies
+RUN pip install --no-cache-dir \
+    fastapi \
+    uvicorn \
+    sse-starlette \
+    httpx \
+    pydantic
 
-# Copy server code
-COPY mcp_servers/system/git_workflow/server.py /app/server.py
-
-# Set python path to include app
 ENV PYTHONPATH=/app
+ENV PORT=8000
 
-# Default command
-CMD ["python", "server.py"]
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["python", "-m", "mcp_servers.git.server"]
