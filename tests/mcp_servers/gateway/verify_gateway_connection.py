@@ -43,7 +43,7 @@ async def verify_gateway():
         return
 
     logger.info(f"Target Gateway: {gateway_url}")
-    logger.info("Token: " + "*" * 10 + token[-5:] if token else "Missing")
+    logger.info("Token: present" if token else "Token: missing")
 
     headers = {
         "Authorization": f"Bearer {token}",
