@@ -1,7 +1,7 @@
 
 """
 Sanctuary Git Server
-Domain: project_sanctuary.git / sanctuary-git
+Domain: project_sanctuary.git / sanctuary_git
 
 Refactored to use SSEServer for Gateway integration (202 Accepted + Async SSE).
 """
@@ -25,7 +25,7 @@ except ImportError:
 from mcp_servers.git.git_ops import GitOperations
 
 # Initialize
-server = SSEServer("sanctuary-git")
+server = SSEServer("sanctuary_git")
 app = server.app
 
 # Operations
@@ -172,15 +172,58 @@ async def git_log(max_count: int = 10, oneline: bool = False) -> str:
         return f"Failed to get log: {str(e)}"
 
 # Register Tools
-server.register_tool("git_smart_commit", git_smart_commit)
-server.register_tool("git_get_safety_rules", git_get_safety_rules)
-server.register_tool("git_get_status", git_get_status)
-server.register_tool("git_add", git_add)
-server.register_tool("git_push_feature", git_push_feature)
-server.register_tool("git_start_feature", git_start_feature)
-server.register_tool("git_finish_feature", git_finish_feature)
-server.register_tool("git_diff", git_diff)
-server.register_tool("git_log", git_log)
+server.register_tool("git_smart_commit", git_smart_commit, {
+    "type": "object",
+    "properties": {
+        "message": {"type": "string", "description": "Commit message"}
+    },
+    "required": ["message"]
+})
+server.register_tool("git_get_safety_rules", git_get_safety_rules, {"type": "object", "properties": {}})
+server.register_tool("git_get_status", git_get_status, {"type": "object", "properties": {}})
+server.register_tool("git_add", git_add, {
+    "type": "object",
+    "properties": {
+        "files": {"type": "array", "items": {"type": "string"}, "description": "List of files to stage"}
+    }
+})
+server.register_tool("git_push_feature", git_push_feature, {
+    "type": "object",
+    "properties": {
+        "force": {"type": "boolean", "default": False},
+        "no_verify": {"type": "boolean", "default": False}
+    }
+})
+server.register_tool("git_start_feature", git_start_feature, {
+    "type": "object",
+    "properties": {
+        "task_id": {"type": "string"},
+        "description": {"type": "string"}
+    },
+    "required": ["task_id", "description"]
+})
+server.register_tool("git_finish_feature", git_finish_feature, {
+    "type": "object",
+    "properties": {
+        "branch_name": {"type": "string"},
+        "force": {"type": "boolean", "default": False}
+    },
+    "required": ["branch_name"]
+})
+server.register_tool("git_diff", git_diff, {
+    "type": "object",
+    "properties": {
+        "cached": {"type": "boolean", "default": False},
+        "file_path": {"type": "string"}
+    }
+})
+server.register_tool("git_log", git_log, {
+    "type": "object",
+    "properties": {
+        "max_count": {"type": "integer", "default": 10},
+        "oneline": {"type": "boolean", "default": False}
+    }
+})
 
 if __name__ == "__main__":
     # Dual-mode support:

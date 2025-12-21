@@ -172,7 +172,12 @@ class SSEServer:
                 
                 if tool_name in self.tools:
                     handler = self.tools[tool_name]["handler"]
-                    result_content = await handler(**tool_args)
+                    
+                    # Call handler (async or sync)
+                    if asyncio.iscoroutinefunction(handler):
+                        result_content = await handler(**tool_args)
+                    else:
+                        result_content = handler(**tool_args)
                     
                     content_list = []
                     if isinstance(result_content, str):
@@ -219,6 +224,43 @@ class SSEServer:
     async def handle_health(self):
         return {"status": "healthy"}
 
+    async def _register_auto(self):
+        """Background task to register with Gateway."""
+        # DISABLED: Auto-registration is handled by fleet_setup.py instead
+        # The gateway_registration module doesn't exist, and we use centralized
+        # registration via fleet_orchestrator.py and fleet_setup.py
+        pass
+        # try:
+        #     # Import dynamically to avoid circular dependencies if any
+        #     from mcp_servers.lib.gateway_registration import register_with_gateway
+        #     
+        #     # Prepare manifest
+        #     manifest = {
+        #         "server_name": self.name,
+        #         "version": self.version,
+        #         "tools": [
+        #             {
+        #                 "name": name,
+        #                 "description": info["description"],
+        #                 "inputSchema": info.get("schema") or {"type": "object", "properties": {}}
+        #             }
+        #             for name, info in self.tools.items()
+        #         ]
+        #     }
+        #     
+        #     # Use a short delay to ensure uvicorn is starting up
+        #     await asyncio.sleep(2)
+        #     
+        #     self.logger.info(f"Attempting self-registration for {self.name}...")
+        #     result = await register_with_gateway(manifest)
+        #     if result.get("success"):
+        #         self.logger.info(f"✅ Self-registration successful for {self.name}")
+        #     else:
+        #         self.logger.warning(f"⚠️ Self-registration failed: {result.get('error')}")
+        #         
+        # except Exception as e:
+        #     self.logger.error(f"❌ Failed to trigger auto-registration: {e}")
+
     def run(self, port: int = 8000, transport: str = "sse"):
         """
         Run the server.
@@ -235,4 +277,14 @@ class SSEServer:
             import uvicorn
             # Allow PORT env override for legacy compatibility
             env_port = int(os.getenv("PORT", port))
+            
+            # Start registration task
+            # Since uvicorn.run is blocking, we use a lifespan approach or just a task if the loop is already running?
+            # uvicorn.run creates its own loop by default. We'll use a Config and Server setup to run we can.
+            
+            # Better: use 'on_startup' in FastAPI
+            @self.app.on_event("startup")
+            async def on_startup():
+                asyncio.create_task(self._register_auto())
+
             uvicorn.run(self.app, host="0.0.0.0", port=env_port, log_level="info")

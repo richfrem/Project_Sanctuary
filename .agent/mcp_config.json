@@ -78,7 +78,7 @@
                 "PROJECT_SANCTUARY_ROOT": "${PROJECT_SANCTUARY_ROOT}",
                 "PYTHONPATH": "${PROJECT_SANCTUARY_ROOT}",
                 "CHROMA_HOST": "localhost",
-                "CHROMA_PORT": "8000",
+                "CHROMA_PORT": "8110",
                 "CHROMA_CHILD_COLLECTION": "child_chunks_v5",
                 "CHROMA_PARENT_STORE": "parent_documents_v5",
                 "CHROMA_DATA_PATH": ".vector_data"

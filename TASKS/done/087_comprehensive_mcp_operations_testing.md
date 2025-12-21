@@ -132,8 +132,8 @@
 | **3. MCP Operations** | Tool interface | 66 | 65 | 98% ✅ |
 
 **Integration Test Dependencies:**
-- `sanctuary-vector-db` (ChromaDB:8000) → RAG Cortex, Council
-- `sanctuary-ollama-mcp` (Ollama:11434) → Forge LLM, Agent Persona, Council, Orchestrator
+- `sanctuary_vector_db` (ChromaDB:8000) → RAG Cortex, Council
+- `sanctuary_ollama_mcp` (Ollama:11434) → Forge LLM, Agent Persona, Council, Orchestrator
 - Git-LFS → Git MCP operations
 
 - Document MCPs: 23/23 tested (Chronicle ✅ 7/7, Protocol ✅ 5/5, ADR ✅ 5/5, Task ✅ 6/6, Code ✅ 11/11, Config ✅ 7/7) ✅ COMPLETE

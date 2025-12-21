@@ -1,27 +1,42 @@
-# Gateway MCP Tests
+# Gateway MCP Test Pyramid: Zero-Trust Verification
 
-This directory contains tests for the **External Gateway MCP** (decoupled Podman service), organized into the standard 3-layer pyramid.
+This directory documents the mandatory, 4-tier verification process for the **Sanctuary Gateway**. To combat deceit and unverified assumptions, no tool is marked as "Gateway Ready" until it has ascended all four tiers.
 
-## Structure
+## 🏛️ The 4-Tier Zero-Trust Pyramid
 
-### Layer 1: Unit Tests (`unit/`)
--   **Focus:** Internal logic of custom plugins (if any are vendored for testing).
--   **Run:** `pytest tests/mcp_servers/gateway/unit/ -v`
+### Tier 1: Unit (Internal Logic)
+- **Repo Location:** `tests/mcp_servers/<server_name>/unit/`
+- **Focus:** Validates the core Python logic of the MCP function (e.g., `adr_create`).
+- **Isolation:** Runs against local file stubs or mocks.
+- **Verification:** `pytest tests/mcp_servers/<server_name>/unit/ -v`
 
-### Layer 2: Integration Tests (`integration/`)
--   **Focus:** Connectivity with the running Gateway container (Black Box testing).
--   **Dependencies:** Requires `sanctuary-gateway` Podman container running on port 4444.
--   **Run:** `pytest tests/mcp_servers/gateway/integration/ -v -m gateway`
+### Tier 2: Integration (SSE Server Readiness)
+- **Repo Location:** `tests/mcp_servers/<server_name>/integration/`
+- **Focus:** Validates the standalone SSE server is responding correctly at its dedicated port.
+- **Isolation:** Bypasses the Gateway. Direct HTTP/SSE probe.
+- **Verification:** `pytest tests/mcp_servers/<server_name>/integration/ -v`
 
-### Layer 3: E2E Tests (`e2e/`)
--   **Focus:** Full MCP tool execution via Client routed through Gateway.
--   **Run:** Use Antigravity or Claude Desktop to call tools via the Gateway.
+### Tier 3: Gateway RPC (The Bridge)
+- **Repo Location:** `mcp_servers/gateway/gateway_client.py` (Helper)
+- **Focus:** Validates the Gateway `/rpc` endpoint accurately routes traffic to the SSE server.
+- **Isolation:** Tests the "SSE-to-RPC" translation layer. This is where most "Bridge" failures occur.
+- **Verification:** `python3 -m mcp_servers.gateway.gateway_client --step verify --cluster <cluster>`
 
-## Key Files
--   `integration/test_gateway_blackbox.py`: Pulse, Circuit Breaker, and Handshake checks for the external service.
+### Tier 4: IDE (Absolute Reality)
+- **Repo Location:** `~/.gemini/antigravity/mcp_config.json` (Local)
+- **Focus:** Validates the tool is visible to the agent (Gemini/Claude) and callable with real user parameters.
+- **Isolation:** The final peak of the pyramid. Requires Config update + IDE Restart.
+- **Verification:** Successful execution of the tool via the Antigravity/Claude UI.
 
-## External Service
-The Gateway runs as a separate service at `https://localhost:4444` and is managed via Podman. See ADR 058 for the decoupling rationale.
+---
+
+## 🛠️ The Role of `gateway_client.py`
+
+The `execute_mcp_tool` function in `mcp_servers/gateway/gateway_client.py` is a **utility**, not a replacement for a test suite. 
+
+- **Library Usage**: Used by orchestrators (like Protocol 125 loop) to programmatically command the fleet.
+- **Verification Usage**: Provides a fast, terminal-based way to probe the Gateway bridge (Tier 3) without restarting an IDE.
+- **Strict Policy**: Passing Tier 3 via `gateway_client.py` is NOT a "success" for the tool—it is only a pass for the **Bridge**. Success is only claimed at **Tier 4**.
 
 ---
 
@@ -37,13 +52,13 @@ The system uses a "Controller-Worker" architecture where the IBM Gateway (Contro
 
 | Service | Container Name | Port | Role |
 | :--- | :--- | :--- | :--- |
-| **Utils** | `sanctuary-utils` | `8000` | Basic tools (Time, Calc) |
-| **Network** | `sanctuary-network` | `8002` | Web fetch/search |
-| **Filesystem** | `sanctuary-filesystem` | `8001` | File operations |
-| **Git** | `sanctuary-git` | `8003` | Git operations |
-| **Cortex** | `sanctuary-cortex` | `8004` | RAG/Memory Coordinator |
-| *VectorDB* | `sanctuary-vector-db` | `8000`* | ChromaDB Backend |
-| *Ollama* | `sanctuary-ollama-mcp` | `11434`* | AI Backend |
+| **Utils** | `sanctuary_utils` | `8000` | Basic tools (Time, Calc) |
+| **Network** | `sanctuary_network` | `8002` | Web fetch/search |
+| **Filesystem** | `sanctuary_filesystem` | `8001` | File operations |
+| **Git** | `sanctuary_git` | `8003` | Git operations |
+| **Cortex** | `sanctuary_cortex` | `8004` | RAG/Memory Coordinator |
+| *VectorDB* | `sanctuary_vector_db` | `8000`* | ChromaDB Backend |
+| *Ollama* | `sanctuary_ollama_mcp` | `11434`* | AI Backend |
 
 *\*Internal backend ports. Do not expose 8000/11434 on host to avoid conflicts.*
 
@@ -77,7 +92,6 @@ Ensure your project root `.env` file contains the following:
 MCP_GATEWAY_URL="https://localhost:4444"
 
 # Authentication Token
-# Can be named either MCPGATEWAY_BEARER_TOKEN or MCP_GATEWAY_API_TOKEN
 MCPGATEWAY_BEARER_TOKEN="your-token-here"
 ```
 

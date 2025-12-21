@@ -88,8 +88,8 @@ graph TB
     end
     
     subgraph "Services (Podman)"
-        OLLAMA["sanctuary-ollama-mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
-        CHROMA["sanctuary-vector-db<br/>:8000<br/>ChromaDB RAG DB"]
+        OLLAMA["sanctuary_ollama_mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
+        CHROMA["sanctuary_vector_db<br/>:8110<br/>ChromaDB RAG DB"]
     end
     
     LLM --> ORCH
@@ -125,17 +125,17 @@ config:
 flowchart TB
     Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444"]
     
-    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>:8100/sse"]
-    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>:8101/sse"]
-    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>:8102/sse"]
-    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>:8103/sse"]
-    Gateway -- Docker Network --> Domain["<b>6. sanctuary-domain</b><br>:8105/sse"]
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
+    Gateway -- Docker Network --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
     Gateway -- Docker Network --> Cortex
     
     subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
-        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server :8104)"]
-        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend :8000)"]
-        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend :11434)"]
+        Cortex["<b>5a. sanctuary_cortex</b><br>(MCP Server :8104)"]
+        VectorDB["<b>5b. sanctuary_vector_db</b><br>(Host :8110)"]
+        Ollama["<b>5c. sanctuary_ollama_mcp</b><br>(Host :11434)"]
         Cortex --> VectorDB
         Cortex --> Ollama
     end
@@ -152,14 +152,14 @@ flowchart TB
 **Fleet of 7 Containers:**
 | # | Container | Type | Role | Port |
 |---|-----------|------|------|------|
-| 1 | `sanctuary-utils` | NEW | Low-risk tools | 8100 |
-| 2 | `sanctuary-filesystem` | NEW | File ops | 8101 |
-| 3 | `sanctuary-network` | NEW | HTTP clients | 8102 |
-| 4 | `sanctuary-git` | NEW | Git workflow | 8103 |
-| 5a | `sanctuary-cortex` | NEW | RAG MCP Server | 8104 |
-| 5b | `sanctuary-vector-db` | EXISTING | ChromaDB backend | 8000 |
-| 5c | `sanctuary-ollama-mcp` | EXISTING | Ollama backend | 11434 |
-| 6 | `sanctuary-domain` | NEW | Business Logic | 8105 |
+| 1 | `sanctuary_utils` | NEW | Low-risk tools | 8100 |
+| 2 | `sanctuary_filesystem` | NEW | File ops | 8101 |
+| 3 | `sanctuary_network` | NEW | HTTP clients | 8102 |
+| 4 | `sanctuary_git` | NEW | Git workflow | 8103 |
+| 5a | `sanctuary_cortex` | NEW | RAG MCP Server | 8104 |
+| 5b | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 |
+| 5c | `sanctuary_ollama_mcp` | EXISTING | Ollama backend | 11434 |
+| 6 | `sanctuary_domain` | NEW | Business Logic | 8105 |
 
 **Benefits:** 88% context reduction, 100+ server scalability, centralized auth & routing.
 
@@ -262,7 +262,7 @@ sequenceDiagram
     rect rgb(255, 245, 230)
         Note over A, Fleet: 2. Knowledge Ingestion
         A->>GW: cortex_ingest_incremental(doc)
-        GW->>Fleet: Route to sanctuary-cortex:8104
+        GW->>Fleet: Route to sanctuary_cortex:8104
         Fleet->>VDB: Chunk → Embed → Store
         VDB-->>Fleet: doc_id
         Fleet-->>GW: Ingestion Complete
@@ -272,7 +272,7 @@ sequenceDiagram
     rect rgb(230, 255, 230)
         Note over A, LLM: 3. Semantic Verification (P125)
         A->>GW: cortex_query("my learning topic")
-        GW->>Fleet: Route to sanctuary-cortex:8104
+        GW->>Fleet: Route to sanctuary_cortex:8104
         Fleet->>VDB: Similarity Search
         Fleet->>LLM: Augment Response
         LLM-->>Fleet: Contextual Answer
@@ -283,7 +283,7 @@ sequenceDiagram
     rect rgb(255, 230, 255)
         Note over A, Fleet: 4. Chronicle Entry
         A->>GW: chronicle_create_entry(summary)
-        GW->>Fleet: Route to sanctuary-domain:8105
+        GW->>Fleet: Route to sanctuary_domain:8105
         Fleet-->>GW: Entry Created
         GW-->>A: {entry_id: 285}
     end

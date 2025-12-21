@@ -128,6 +128,7 @@ const excludeDirNames = new Set([
     'TASKS',
     'ml_env_logs',
     'outputs',
+    'mcp_config', // Security: MCP config files
 
     // Sanctuary-specific DOCTRINAL NOISE exclusions
     'ARCHIVES',
@@ -154,7 +155,10 @@ const excludeDirNames = new Set([
     '06_THE_EMBER_LIBRARY',
 
     // --- Security: JWT Keys and Certificates ---
-    'certs'
+    'certs',
+
+    // --- MCP configuration files ---
+    'mcp_config'
 ]);
 
 
@@ -168,6 +172,7 @@ let alwaysExcludeFiles = [
     'ingest_new_knowledge.py',
     '.DS_Store',
     '.env',
+    '.env (from backup)',
     'manifest.json',
     '.gitignore',
     'PROMPT_PROJECT_ANALYSIS.md',

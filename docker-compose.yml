@@ -1,9 +1,9 @@
 services:
   vector-db:
     image: chromadb/chroma:latest
-    container_name: sanctuary-vector-db
+    container_name: sanctuary_vector_db
     ports:
-      - "8000:8000"
+      - "8110:8000"
     volumes:
       # Use CHROMA_DATA_PATH from .env, default to .vector_data if not set
       - ${CHROMA_DATA_PATH:-.vector_data}:/chroma/chroma
@@ -20,7 +20,7 @@ services:
 
   ollama-model-mcp:
     image: ollama/ollama:latest
-    container_name: sanctuary-ollama-mcp
+    container_name: sanctuary_ollama_mcp
     ports:
       - "11434:11434"
     volumes:
@@ -30,14 +30,6 @@ services:
       - OLLAMA_HOST=0.0.0.0
       # Use OLLAMA_MODEL from the host environment if available, otherwise default
       - OLLAMA_MODEL=${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest}
-    deploy:
-      resources:
-        reservations:
-          devices:
-            # CRITICAL: Configure for GPU acceleration (Example for NVIDIA/Podman)
-            - driver: nvidia
-              count: all
-              capabilities: [ gpu ]
     entrypoint: [ "/bin/sh", "-c" ]
     command:
       - |
@@ -47,14 +39,14 @@ services:
         wait -n
     restart: unless-stopped
 
-  # Fleet of 8 - Container #1: sanctuary-utils (ADR 060)
-  sanctuary-utils:
+  # Fleet of 8 - Container #1: sanctuary_utils (ADR 060)
+  sanctuary_utils:
     build:
       context: .
-      dockerfile: mcp_servers/utils/Dockerfile
-    container_name: sanctuary-utils
+      dockerfile: mcp_servers/gateway/clusters/sanctuary_utils/Dockerfile
+    container_name: sanctuary_utils
     ports:
-      - "${SANCTUARY_UTILS_PORT:-8100}:8000"
+      - "8100:8000"
     volumes:
       - .:/app
     networks:
@@ -62,7 +54,9 @@ services:
     environment:
       - PORT=8000
       - PYTHONPATH=/app
-    command: [ "python", "-m", "mcp_servers.utils.server" ]
+      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
+    command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_utils.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
@@ -71,14 +65,14 @@ services:
       start_period: 5s
     restart: unless-stopped
 
-  # Fleet of 8 - Container #2: sanctuary-filesystem (Task 128)
-  sanctuary-filesystem:
+  # Fleet of 8 - Container #2: sanctuary_filesystem (Task 128)
+  sanctuary_filesystem:
     build:
       context: .
-      dockerfile: mcp_servers/code/Dockerfile
-    container_name: sanctuary-filesystem
+      dockerfile: mcp_servers/gateway/clusters/sanctuary_filesystem/Dockerfile
+    container_name: sanctuary_filesystem
     ports:
-      - "${SANCTUARY_FILESYSTEM_PORT:-8101}:8000"
+      - "8101:8000"
     volumes:
       - .:/app
     networks:
@@ -87,21 +81,23 @@ services:
       - PORT=8000
       - PROJECT_ROOT=/app
       - PYTHONUNBUFFERED=1
-    command: [ "python", "-m", "mcp_servers.code.server" ]
+      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
+    command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_filesystem.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
 
-  # Fleet of 8 - Container #3: sanctuary-network (Task 129)
-  sanctuary-network:
+  # Fleet of 8 - Container #3: sanctuary_network (Task 129)
+  sanctuary_network:
     build:
       context: .
-      dockerfile: mcp_servers/network/Dockerfile
-    container_name: sanctuary-network
+      dockerfile: mcp_servers/gateway/clusters/sanctuary_network/Dockerfile
+    container_name: sanctuary_network
     ports:
-      - "${SANCTUARY_NETWORK_PORT:-8102}:8000"
+      - "8102:8000"
     volumes:
       - .:/app
     networks:
@@ -109,21 +105,23 @@ services:
     environment:
       - PORT=8000
       - PYTHONPATH=/app
-    command: [ "python", "-m", "mcp_servers.network.server" ]
+      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
+    command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_network.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
 
-  # Fleet of 8 - Container #4: sanctuary-git (Task 130)
-  sanctuary-git:
+  # Fleet of 8 - Container #4: sanctuary_git (Task 130)
+  sanctuary_git:
     build:
       context: .
-      dockerfile: mcp_servers/git/Dockerfile
-    container_name: sanctuary-git
+      dockerfile: mcp_servers/gateway/clusters/sanctuary_git/Dockerfile
+    container_name: sanctuary_git
     ports:
-      - "${SANCTUARY_GIT_PORT:-8103}:8000"
+      - "8103:8000"
     volumes:
       - .:/app
     networks:
@@ -131,51 +129,55 @@ services:
     environment:
       - PORT=8000
       - PYTHONPATH=/app
-    command: [ "python", "-m", "mcp_servers.git.server" ]
+      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
+    command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_git.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
 
-  # Fleet of 8 - Container #5: sanctuary-cortex (Task 131)
-  sanctuary-cortex:
+  # Fleet of 8 - Container #5: sanctuary_cortex (Task 131)
+  sanctuary_cortex:
     build:
       context: .
-      dockerfile: mcp_servers/rag_cortex/Dockerfile
-    container_name: sanctuary-cortex
+      dockerfile: mcp_servers/gateway/clusters/sanctuary_cortex/Dockerfile
+    container_name: sanctuary_cortex
     ports:
-      - "${SANCTUARY_CORTEX_PORT:-8104}:8000"
+      - "8104:8000"
     volumes:
       - .:/app
     environment:
       - PROJECT_ROOT=/app
       - PYTHONPATH=/app
       - PORT=8000
-      - CHROMA_DB_HOST=sanctuary-vector-db
+      - CHROMA_DB_HOST=sanctuary_vector_db
       - CHROMA_DB_PORT=8000
-      - OLLAMA_HOST=http://sanctuary-ollama-mcp:11434
+      - OLLAMA_HOST=http://sanctuary_ollama_mcp:11434
+      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     networks:
       - mcp-network
     depends_on:
       - vector-db
       - ollama-model-mcp
-    command: [ "python", "-m", "mcp_servers.rag_cortex.server" ]
+    command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_cortex.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
 
-  # Fleet of 8 - Container #6: sanctuary-domain (ADR 061)
+  # Fleet of 8 - Container #6: sanctuary_domain (ADR 061)
   # Hosting: Chronicle, Protocol, Task, ADR, and Python Dev Tools
-  sanctuary-domain:
+  sanctuary_domain:
     build:
       context: .
-      dockerfile: mcp_servers/domain/Dockerfile
-    container_name: sanctuary-domain
+      dockerfile: mcp_servers/gateway/clusters/sanctuary_domain/Dockerfile
+    container_name: sanctuary_domain
     ports:
-      - "${SANCTUARY_DOMAIN_PORT:-8105}:8105"
+      - "8105:8105"
     volumes:
       # Mount project root to allow tools to access all files (linting, etc.)
       - .:/app
@@ -184,15 +186,14 @@ services:
     environment:
       - PROJECT_ROOT=/app
       - DOMAIN_SERVER_PORT=8105
+      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     deploy:
       resources:
         limits:
           cpus: '1.0'
           memory: '512M'
-    # Default FastMCP uses 0.0.0.0 if not specified? Better explicit.
-    # Assuming mcp.run() parses args or we rely on python execution.
-    # fastmcp uses uvicorn under the hood often.
-    command: [ "python", "mcp_servers/domain/unified_server.py", "--port", "8105", "--transport", "sse" ]
+    command: [ "python", "mcp_servers/gateway/clusters/sanctuary_domain/unified_server.py", "--port", "8105", "--transport", "sse" ]
     restart: unless-stopped
 
 networks:

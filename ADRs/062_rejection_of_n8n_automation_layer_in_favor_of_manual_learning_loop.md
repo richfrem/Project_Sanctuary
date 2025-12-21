@@ -28,14 +28,14 @@ A formal Red Team review identified three critical "Kill Chain" scenarios:
 **We will NOT implement n8n automation for the Learning Loop.**
 
 The Lean Fleet architecture is confirmed as 8 containers only:
-1. sanctuary-utils (8100)
-2. sanctuary-filesystem (8101)
-3. sanctuary-network (8102)
-4. sanctuary-git (8103)
-5. sanctuary-cortex (8104)
-6. sanctuary-domain (8105)
-7. sanctuary-vector-db (8000)
-8. sanctuary-ollama-mcp (11434)
+1. sanctuary_utils (8100)
+2. sanctuary_filesystem (8101)
+3. sanctuary_network (8102)
+4. sanctuary_git (8103)
+5. sanctuary_cortex (8104)
+6. sanctuary_domain (8105)
+7. sanctuary_vector_db (8110)
+8. sanctuary_ollama_mcp (11434)
 
 **Protocol Status:**
 - Protocol 127 (Mechanical Delegation): DEPRECATED

@@ -33,7 +33,7 @@ We will run the Ollama model service as a containerized service via Podman/Docke
 
 1. Add `ollama-model-mcp` service to docker-compose.yml with:
    - Image: ollama/ollama:latest
-   - Container name: sanctuary-ollama-mcp
+   - Container name: sanctuary_ollama_mcp
    - Port mapping: 11434:11434
    - Volume: ./ollama_models:/root/.ollama (data persistence)
    - GPU pass-through: NVIDIA device configuration
