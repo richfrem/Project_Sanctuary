@@ -35,11 +35,10 @@ async def verify_gateway():
     env = load_env_file(env_path)
     
     gateway_url = env.get("MCP_GATEWAY_URL", "https://localhost:4444")
-    # Support both naming conventions
-    token = env.get("MCPGATEWAY_BEARER_TOKEN") or env.get("MCP_GATEWAY_API_TOKEN")
+    token = env.get("MCPGATEWAY_BEARER_TOKEN")
     
     if not token:
-        logger.error("❌ MCP_GATEWAY_API_TOKEN not found in .env")
+        logger.error("❌ MCPGATEWAY_BEARER_TOKEN not found in .env")
         return
 
     logger.info(f"Target Gateway: {gateway_url}")
@@ -55,7 +54,7 @@ async def verify_gateway():
         "jsonrpc": "2.0",
         "method": "tools/call",
         "params": {
-            "name": "hello-world-mcp-say-hello",
+            "name": "hello-world-say-hello",
             "arguments": { "name": "SanctuaryAgent" }
         },
         "id": 1

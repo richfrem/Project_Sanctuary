@@ -1,4 +1,4 @@
-# TASK: Deploy Pilot: sanctuary-utils Container
+# TASK: Deploy Pilot: sanctuary_utils Container
 
 **Status:** complete
 **Priority:** Critical
@@ -10,21 +10,21 @@
 
 ## 1. Objective
 
-Deploy the first Hybrid Fleet cluster (sanctuary-utils) as a pilot to validate the **Fleet of 7** architecture (ADR 060). Create a single container serving multiple low-risk tools via one SSE endpoint.
+Deploy the first Hybrid Fleet cluster (sanctuary_utils) as a pilot to validate the **Fleet of 7** architecture (ADR 060). Create a single container serving multiple low-risk tools via one SSE endpoint.
 
 ## 2. Deliverables
 
-1. Dockerfile for sanctuary-utils (with multi-stage dev/prod)
+1. Dockerfile for sanctuary_utils (with multi-stage dev/prod)
 2. FastAPI application with SSE endpoint and multi-tool routing
-3. docker-compose.yml entry for sanctuary-utils
+3. docker-compose.yml entry for sanctuary_utils
 4. Gateway registration script/documentation
 5. Test demonstrating successful tool call through gateway
 6. README documenting the utils cluster architecture
 
 ## 3. Acceptance Criteria
 
-- sanctuary-utils container successfully built and running
-- Container exposes SSE endpoint at http://sanctuary-utils:8000/sse
+- sanctuary_utils container successfully built and running
+- Container exposes SSE endpoint at http://sanctuary_utils:8000/sse
 - Gateway successfully registers the utils cluster
 - Gateway can call 'What time is it?' and receive valid response
 - Hot reloading works in development mode
@@ -42,7 +42,7 @@ This task MUST implement **Guardrail 2: Dynamic Self-Registration**.
 - Entry point must handle exceptions gracefully
 - A calculator crash must NOT crash the time tool
 **Guardrail 3: Network Addressing:**
-- Use only Docker Network Aliases (e.g., `http://sanctuary-utils:8000`)
+- Use only Docker Network Aliases (e.g., `http://sanctuary_utils:8000`)
 - NEVER use localhost or hardcoded IPs
 **Tools to Include:**
 - Time (current time, timezone info)
@@ -55,10 +55,10 @@ This task MUST implement **Guardrail 2: Dynamic Self-Registration**.
 - Uvicorn with hot reload for dev
 - Multi-stage Dockerfile (dev/prod)
 **Success Metric:**
-Gateway successfully routes a tool call to sanctuary-utils and returns a valid response within 100ms.
-**Reference:** ADR 060 - Fleet of 7 Architecture (Grok-approved with sanctuary-cortex fix)
+Gateway successfully routes a tool call to sanctuary_utils and returns a valid response within 100ms.
+**Reference:** ADR 060 - Fleet of 7 Architecture (Grok-approved with sanctuary_cortex fix)
 **Status Change (2025-12-17):** backlog → in-progress
-Phase transition: Architecture complete, beginning implementation. Updated to Fleet of 7 per Grok's sanctuary-cortex fix.
+Phase transition: Architecture complete, beginning implementation. Updated to Fleet of 7 per Grok's sanctuary_cortex fix.
 ---
 
 **Status Change (2025-12-19):** in-progress → complete

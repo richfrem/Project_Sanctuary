@@ -13,6 +13,9 @@ Thumbs.db
 venv/
 # Secrets and environment
 .env
+.env (from backup)
+.env.*
+!.env.example
 .env.local/
 env/
 
@@ -145,6 +148,9 @@ WORK_IN_PROGRESS/AGORA_PoC_Core/
 
 # debug logs
 debug_logs/
+
+# MCP configuration files
+mcp_config/
 
 05_ARCHIVED_BLUEPRINTS/
 

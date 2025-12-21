@@ -1,0 +1,64 @@
+{
+  "fleet_servers": {
+    "cortex": {
+      "description": "RAG, Forge LLM",
+      "error": "tool discovery failed",
+      "required": true,
+      "slug": "sanctuary_cortex",
+      "source": "spec",
+      "status": "partial",
+      "tools": [],
+      "url": "http://sanctuary_cortex:8000/sse"
+    },
+    "domain": {
+      "description": "Chronicle, ADR, Protocol, Task",
+      "error": "tool discovery failed",
+      "required": true,
+      "slug": "sanctuary_domain",
+      "source": "spec",
+      "status": "partial",
+      "tools": [],
+      "url": "http://sanctuary_domain:8105/sse"
+    },
+    "filesystem": {
+      "description": "High-risk file operations. Isolated from network.",
+      "error": "tool discovery failed",
+      "required": true,
+      "slug": "sanctuary_filesystem",
+      "source": "spec",
+      "status": "partial",
+      "tools": [],
+      "url": "http://sanctuary_filesystem:8000/sse"
+    },
+    "git": {
+      "description": "Dual-permission (Filesystem + Network). Completely isolated container.",
+      "error": "tool discovery failed",
+      "required": true,
+      "slug": "sanctuary_git",
+      "source": "spec",
+      "status": "partial",
+      "tools": [],
+      "url": "http://sanctuary_git:8000/sse"
+    },
+    "network": {
+      "description": "External web access (Brave, Fetch). Isolated from filesystem.",
+      "error": "tool discovery failed",
+      "required": true,
+      "slug": "sanctuary_network",
+      "source": "spec",
+      "status": "partial",
+      "tools": [],
+      "url": "http://sanctuary_network:8000/sse"
+    },
+    "utils": {
+      "description": "Low-risk, stateless tools (Time, Calc, UUID, String).",
+      "error": "tool discovery failed",
+      "required": true,
+      "slug": "sanctuary_utils",
+      "source": "spec",
+      "status": "partial",
+      "tools": [],
+      "url": "http://sanctuary_utils:8000/sse"
+    }
+  }
+}

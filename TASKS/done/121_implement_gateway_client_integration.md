@@ -21,7 +21,7 @@
 ## Notes
 
 **Status Change (2025-12-18):** backlog → in-progress
-Starting Phase 1: Client Integration for sanctuary-utils Pilot.
+Starting Phase 1: Client Integration for sanctuary_utils Pilot.
 
 **Status Change (2025-12-19):** in-progress → complete
 Completed via Task 124 (Client Configuration Toggles). Config files created in mcp_config/.

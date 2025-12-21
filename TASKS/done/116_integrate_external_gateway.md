@@ -46,4 +46,4 @@ Ready to begin implementation. Waiting for Protocol 122 creation and user approv
 Protocol 122 created. Ready to begin Week 1: Fork IBM ContextForge, deploy MVP with 3 servers (rag_cortex, task, git_workflow), evaluate feature gaps and performance.
 
 **Status Change (2025-12-17):** in-progress → complete
-Phase 1 (External Gateway Integration) complete. Gateway decoupled to external Podman service (ADR 058). Black box tests passing. ADR 060 (Fleet of 7) defines container architecture. Ready for Task 119 (sanctuary-utils pilot).
+Phase 1 (External Gateway Integration) complete. Gateway decoupled to external Podman service (ADR 058). Black box tests passing. ADR 060 (Fleet of 7) defines container architecture. Ready for Task 119 (sanctuary_utils pilot).

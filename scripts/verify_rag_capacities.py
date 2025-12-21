@@ -28,7 +28,7 @@ from typing import Dict, Any
 GATEWAY_URL = "http://localhost:8000/v1/tools/call" # Hypothetical Gateway endpoint
 # If Gateway isn't ready/exposing HTTP, we might have to exec into container.
 
-# Let's try to exec into `sanctuary-cortex` to run the python test script locally there?
+# Let's try to exec into `sanctuary_cortex` to run the python test script locally there?
 # No, "Pulse Check" was external.
 # Let's try to verify via the exposed port (8104) knowing it uses SSE.
 # Writing a full SSE client in a script is complex.
@@ -39,7 +39,7 @@ GATEWAY_URL = "http://localhost:8000/v1/tools/call" # Hypothetical Gateway endpo
 # FastMCP often enables a debug UI or HTTP POST if configured. 
 # If not, we might be limited to checking /health and /list_tools (if available).
 
-# Fallback: We'll write the script to use `podman exec sanctuary-cortex python -m mcp_servers.rag_cortex.client ...` if client exists?
+# Fallback: We'll write the script to use `podman exec sanctuary_cortex python -m mcp_servers.rag_cortex.client ...` if client exists?
 # Or just run the python logic but pointing to the DB path? No, that bypasses the server.
 
 # BEST APPROACH: Use the `fastmcp` debug interface if enabled, OR simluate SSE handshake.
@@ -100,7 +100,7 @@ async def main():
     
     cmd_stats = 'python -c "from mcp_servers.rag_cortex.operations import RagOperations; import os; ops=RagOperations(os.environ.get(\'PROJECT_ROOT\')); print(ops.get_stats())"'
     
-    if run_in_container("sanctuary-cortex", cmd_stats):
+    if run_in_container("sanctuary_cortex", cmd_stats):
         print("   ✅ RAG Stats Retrieved")
     else:
         print("   🔴 RAG Stats Failed")
@@ -112,7 +112,7 @@ async def main():
     
     # 3. Query
     cmd_query = 'python -c "from mcp_servers.rag_cortex.operations import RagOperations; import os; ops=RagOperations(os.environ.get(\'PROJECT_ROOT\')); print(ops.query(\'unseen loop\'))"'
-    if run_in_container("sanctuary-cortex", cmd_query):
+    if run_in_container("sanctuary_cortex", cmd_query):
         print("   ✅ Semantic Retrieval Verified")
     else:
         print("   🔴 Retrieval Failed")

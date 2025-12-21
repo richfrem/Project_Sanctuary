@@ -3,9 +3,9 @@
 **Status:** Accepted
 **Date:** 2025-12-19
 **Context:** ADR 060 (Fleet of 7) defined infrastructure containers (Git, Filesystem, Network) but failed to account for Python-based business logic. The IBM Gateway is a router, not a runtime; it cannot execute local Python scripts directly.
-**Decision:** We will deploy a 6th active container, `sanctuary-domain`.
+**Decision:** We will deploy a 6th active container, `sanctuary_domain`.
 **Technical Specs:**
-* **Name:** `sanctuary-domain`
+* **Name:** `sanctuary_domain`
 * **Port:** `8105`
 * **Base:** Python 3.12 (Standard)
 * **Role:** Aggregates Chronicle, Protocol, Task, and ADR tools into a single MCP server process.

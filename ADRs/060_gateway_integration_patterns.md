@@ -10,7 +10,7 @@
 > [!NOTE]
 > **Red Team Review Complete.** All four AI reviewers approved this architecture with mandatory guardrails.
 > 
-> **Grok 4 Critical Finding:** Modified based on Grok 4's identification of the "RAG Frontend Gap" - `sanctuary-vector-db` and `sanctuary-ollama-mcp` are backends, NOT MCP servers. Added `sanctuary-cortex` as the actual MCP server layer.
+> **Grok 4 Critical Finding:** Modified based on Grok 4's identification of the "RAG Frontend Gap" - `sanctuary_vector_db` and `sanctuary_ollama_mcp` are backends, NOT MCP servers. Added `sanctuary_cortex` as the actual MCP server layer.
 
 
 ---
@@ -20,7 +20,7 @@
 With the Gateway successfully deployed as an external service (ADR 058), we must decide how to connect Project Sanctuary's 10 script-based MCP servers without violating the decoupling mandate.
 
 **Current State:**
-- 2/12 servers containerized: `sanctuary-vector-db`, `sanctuary-ollama-mcp`
+- 2/12 servers containerized: `sanctuary_vector_db`, `sanctuary_ollama_mcp`
 - 10/12 servers run as Python scripts via stdio
 - Gateway is a black box at `https://localhost:4444`
 
@@ -89,19 +89,19 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 | # | Container Name | Type | Logical Cluster | Role | Tools/Services |
 |---|---------------|------|-----------------|------|----------------|
-| 1 | `sanctuary-utils` | **NEW** | Utils (Low Risk) | MCP Server | Time, Calculator, UUID, String |
-| 2 | `sanctuary-filesystem` | **NEW** | Filesystem (Privileged) | MCP Server | File Ops, Grep, Patch, Code |
-| 3 | `sanctuary-network` | **NEW** | Network (External) | MCP Server | Brave Search, Fetch, HTTP |
-| 4 | `sanctuary-git` | **NEW** | Git (Dual-Permission) | MCP Server | Git Workflow |
-| 5a | `sanctuary-cortex` | **NEW** | Intelligence (Heavy) | MCP Server | RAG Query, Ingest, Cache |
-| 5b | `sanctuary-vector-db` | **EXISTING** | Intelligence (Heavy) | Backend Storage | ChromaDB |
-| 5c | `sanctuary-ollama-mcp` | **EXISTING** | Intelligence (Heavy) | Backend Compute | Ollama LLM |
+| 1 | `sanctuary_utils` | **NEW** | Utils (Low Risk) | MCP Server | Time, Calculator, UUID, String |
+| 2 | `sanctuary_filesystem` | **NEW** | Filesystem (Privileged) | MCP Server | File Ops, Grep, Patch, Code |
+| 3 | `sanctuary_network` | **NEW** | Network (External) | MCP Server | Brave Search, Fetch, HTTP |
+| 4 | `sanctuary_git` | **NEW** | Git (Dual-Permission) | MCP Server | Git Workflow |
+| 5a | `sanctuary_cortex` | **NEW** | Intelligence (Heavy) | MCP Server | RAG Query, Ingest, Cache |
+| 5b | `sanctuary_vector_db` | **EXISTING** | Intelligence (Heavy) | Backend Storage | ChromaDB |
+| 5c | `sanctuary_ollama_mcp` | **EXISTING** | Intelligence (Heavy) | Backend Compute | Ollama LLM |
 
 > [!IMPORTANT]
-> **Grok 4's "RAG Frontend Gap" Fix:** `sanctuary-vector-db` and `sanctuary-ollama-mcp` are **backends** (storage & compute). They do NOT expose MCP tools. `sanctuary-cortex` is the **MCP Server** that connects to these backends and exposes the tools via SSE.
+> **Grok 4's "RAG Frontend Gap" Fix:** `sanctuary_vector_db` and `sanctuary_ollama_mcp` are **backends** (storage & compute). They do NOT expose MCP tools. `sanctuary_cortex` is the **MCP Server** that connects to these backends and exposes the tools via SSE.
 
 **Summary:**
-- **5 NEW containers** to build (including `sanctuary-cortex`)
+- **5 NEW containers** to build (including `sanctuary_cortex`)
 - **2 EXISTING containers** unchanged (backends only)
 - **= 7 TOTAL physical containers**
 - **Organized into 5 Logical Clusters** (Intelligence cluster has 3 containers: 1 MCP server + 2 backends)
@@ -120,8 +120,8 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 **Current State:**
 - ✅ 2 containers **already containerized** (no changes needed):
-  - `sanctuary-vector-db` (ChromaDB)
-  - `sanctuary-ollama-mcp` (Ollama)
+  - `sanctuary_vector_db` (ChromaDB)
+  - `sanctuary_ollama_mcp` (Ollama)
 - ⏳ 10 script-based MCP servers (need containerization)
 
 **Options Evaluated:**
@@ -151,8 +151,8 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 **Strategy:** Consolidate 10 servers into 2 new clusters
 
 **Total Containers:** 4 (2 existing + 2 new)
-- `sanctuary-utils` (time, calculator, uuid, string)
-- `sanctuary-network` (brave, fetch, git, http)
+- `sanctuary_utils` (time, calculator, uuid, string)
+- `sanctuary_network` (brave, fetch, git, http)
 
 **Pros:**
 - ✅ Reduces orchestration complexity (12 → 4)
@@ -172,13 +172,13 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 **Total Containers:** 5 (2 existing + 3 new)
 - **Existing (unchanged):**
-  - `sanctuary-vector-db` (ChromaDB)
-  - `sanctuary-ollama-mcp` (Ollama)
+  - `sanctuary_vector_db` (ChromaDB)
+  - `sanctuary_ollama_mcp` (Ollama)
 - **New:**
-  - `sanctuary-utils` (time, calculator, uuid, string)
-  - `sanctuary-filesystem` (file ops, grep, patch, code)
-  - `sanctuary-network` (brave, fetch, http)
-  - `sanctuary-git` (git only - isolated due to dual permissions)
+  - `sanctuary_utils` (time, calculator, uuid, string)
+  - `sanctuary_filesystem` (file ops, grep, patch, code)
+  - `sanctuary_network` (brave, fetch, http)
+  - `sanctuary_git` (git only - isolated due to dual permissions)
 
 **Pros:**
 - ✅ Reduces orchestration complexity (12 → 5)
@@ -223,12 +223,12 @@ Instead of managing 12 separate containers, we consolidate MCP servers into 5 lo
 
 ---
 
-### 1. `sanctuary-utils` (The "Low Risk" Cluster)
+### 1. `sanctuary_utils` (The "Low Risk" Cluster)
 **Tools:** Time, Math, Calculator, UUID, String utilities
 
 **Architecture:**
 - Single lightweight Python/FastAPI container
-- One SSE endpoint (`http://sanctuary-utils:8000/sse`)
+- One SSE endpoint (`http://sanctuary_utils:8000/sse`)
 - Internal routing to multiple tool implementations
 - No external dependencies, no secrets, no file system access
 
@@ -248,7 +248,7 @@ async def handle_tool_call(request: ToolRequest):
 
 ---
 
-### 2. `sanctuary-filesystem` (The "Privileged" Cluster)
+### 2. `sanctuary_filesystem` (The "Privileged" Cluster)
 **Tools:** File System, grep, patch, code analysis
 
 **Architecture:**
@@ -262,7 +262,7 @@ async def handle_tool_call(request: ToolRequest):
 
 ---
 
-### 3. `sanctuary-network` (The "External" Cluster)
+### 3. `sanctuary_network` (The "External" Cluster)
 **Tools:** Brave Search, Fetch, HTTP clients
 
 **Architecture:**
@@ -277,7 +277,7 @@ async def handle_tool_call(request: ToolRequest):
 
 ---
 
-### 4. `sanctuary-git` (The "Isolated Dual-Permission" Cluster)
+### 4. `sanctuary_git` (The "Isolated Dual-Permission" Cluster)
 **Tools:** Git Workflow
 
 **Architecture:**
@@ -290,8 +290,8 @@ async def handle_tool_call(request: ToolRequest):
 **Security Rationale:** Git's unique dual-permission requirement (network + filesystem) necessitates complete isolation from other tools to prevent privilege escalation attacks.
 
 **Why Isolated:**
-- If grouped with `sanctuary-network`: Could exploit network access to exfiltrate files
-- If grouped with `sanctuary-filesystem`: Could exploit filesystem to leak secrets
+- If grouped with `sanctuary_network`: Could exploit network access to exfiltrate files
+- If grouped with `sanctuary_filesystem`: Could exploit filesystem to leak secrets
 - **Solution:** Complete isolation in dedicated container
 
 ---
@@ -300,7 +300,7 @@ async def handle_tool_call(request: ToolRequest):
 **Tools:** RAG Cortex, Memory, Embeddings
 
 **Architecture:**
-- **Already handled** by existing `sanctuary-vector-db` and `sanctuary-ollama-mcp`
+- **Already handled** by existing `sanctuary_vector_db` and `sanctuary_ollama_mcp`
 - No changes needed (these are already containerized)
 - Existing security boundaries maintained
 
@@ -317,16 +317,16 @@ config:
 flowchart TB
     Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444<br>Stateless HTTP Proxy"]
     
-    Gateway -- Docker Network --> Utils["<b>1. sanctuary-utils</b><br>(Low Risk) NEW<br>:8000/sse<br><br>• Time<br>• Calculator<br>• UUID<br>• String"]
-    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary-filesystem</b><br>(Privileged) NEW<br>:8001/sse<br><br>• File Ops<br>• Grep<br>• Patch<br>• Code"]
-    Gateway -- Docker Network --> Network["<b>3. sanctuary-network</b><br>(External) NEW<br>:8002/sse<br><br>• Brave<br>• Fetch<br>• HTTP"]
-    Gateway -- Docker Network --> Git["<b>4. sanctuary-git</b><br>(Dual-Perm) NEW<br>:8003/sse<br><br>• Git Workflow"]
+    Gateway -- Docker Network --> Utils["<b>1. sanctuary_utils</b><br>(Low Risk) NEW<br>:8100/sse<br><br>• Time<br>• Calculator<br>• UUID<br>• String"]
+    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary_filesystem</b><br>(Privileged) NEW<br>:8101/sse<br><br>• File Ops<br>• Grep<br>• Patch<br>• Code"]
+    Gateway -- Docker Network --> Network["<b>3. sanctuary_network</b><br>(External) NEW<br>:8102/sse<br><br>• Brave<br>• Fetch<br>• HTTP"]
+    Gateway -- Docker Network --> Git["<b>4. sanctuary_git</b><br>(Dual-Perm) NEW<br>:8103/sse<br><br>• Git Workflow"]
     Gateway -- Docker Network --> Cortex
     
     subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
-        Cortex["<b>5a. sanctuary-cortex</b><br>(MCP Server) NEW<br>:8004/sse<br><br>• RAG Query<br>• Ingest<br>• Cache"]
-        VectorDB["<b>5b. sanctuary-vector-db</b><br>(Backend Storage) EXISTING<br>:8000<br><br>• ChromaDB"]
-        Ollama["<b>5c. sanctuary-ollama-mcp</b><br>(Backend Compute) EXISTING<br>:11434<br><br>• Ollama LLM"]
+        Cortex["<b>5a. sanctuary_cortex</b><br>(MCP Server) NEW<br>:8104/sse<br><br>• RAG Query<br>• Ingest<br>• Cache"]
+        VectorDB["<b>5b. sanctuary_vector_db</b><br>(Backend Storage) EXISTING<br>:8110<br><br>• ChromaDB"]
+        Ollama["<b>5c. sanctuary_ollama_mcp</b><br>(Backend Compute) EXISTING<br>:11434<br><br>• Ollama LLM"]
         
         Cortex -- "Embeddings/Query" --> VectorDB
         Cortex -- "LLM Inference" --> Ollama
@@ -402,8 +402,8 @@ async def handle_tool_call(request: ToolRequest):
 # On container startup
 async def register_with_gateway():
     manifest = {
-        "server_name": "sanctuary-utils",
-        "endpoint": "http://sanctuary-utils:8000/sse",
+        "server_name": "sanctuary_utils",
+        "endpoint": "http://sanctuary_utils:8000/sse",
         "tools": ["time", "calculator", "uuid", "string"],
         "version": "1.0.0",
         "health_check": "/health"
@@ -429,7 +429,7 @@ async def register_with_gateway():
 **Correct:**
 ```python
 GATEWAY_URL = "http://sanctuary-gateway:4444"
-VECTOR_DB_URL = "http://sanctuary-vector-db:8000"
+VECTOR_DB_URL = "http://sanctuary_vector_db:8000"
 ```
 
 **WRONG:**
@@ -451,7 +451,7 @@ GATEWAY_URL = "http://192.168.1.100:4444"  # ❌ Hardcoded IP breaks portability
 ```yaml
 # docker-compose.yml
 services:
-  sanctuary-utils:
+  sanctuary_utils:
     build: ./mcp_servers/utils
     deploy:
       resources:
@@ -462,7 +462,7 @@ services:
           cpus: '0.25'
           memory: '128M'
   
-  sanctuary-cortex:
+  sanctuary_cortex:
     build: ./mcp_servers/rag_cortex
     deploy:
       resources:
@@ -477,13 +477,13 @@ services:
 **Recommended Limits:**
 | Container | CPU Limit | Memory Limit | Rationale |
 |-----------|-----------|--------------|-----------|
-| sanctuary-utils | 0.5 | 256M | Lightweight, stateless |
-| sanctuary-filesystem | 0.5 | 256M | I/O bound, not compute |
-| sanctuary-network | 0.5 | 256M | HTTP client, low memory |
-| sanctuary-git | 0.5 | 512M | Git operations need memory |
-| sanctuary-cortex | 1.0 | 1G | RAG embedding, heavier |
-| sanctuary-vector-db | 1.0 | 2G | Database operations |
-| sanctuary-ollama-mcp | 2.0 | 4G | LLM inference is heavy |
+| sanctuary_utils | 0.5 | 256M | Lightweight, stateless |
+| sanctuary_filesystem | 0.5 | 256M | I/O bound, not compute |
+| sanctuary_network | 0.5 | 256M | HTTP client, low memory |
+| sanctuary_git | 0.5 | 512M | Git operations need memory |
+| sanctuary_cortex | 1.0 | 1G | RAG embedding, heavier |
+| sanctuary_vector_db | 1.0 | 2G | Database operations |
+| sanctuary_ollama_mcp | 2.0 | 4G | LLM inference is heavy |
 
 **Rationale:** 7 containers running without limits can exhaust system resources. Explicit caps prevent runaway processes and ensure fair resource sharing.
 
@@ -501,11 +501,11 @@ volumes:
   ollama-models:
 
 services:
-  sanctuary-vector-db:
+  sanctuary_vector_db:
     volumes:
       - vector-db-data:/chroma/chroma  # Persist embeddings
   
-  sanctuary-ollama-mcp:
+  sanctuary_ollama_mcp:
     volumes:
       - ollama-models:/root/.ollama    # Persist downloaded models
 ```
@@ -516,11 +516,11 @@ services:
 
 ### Guardrail 6: Chain Timeouts (Grok 4 Nit)
 
-**Requirement:** Multi-backend chains in `sanctuary-cortex` MUST enforce per-hop timeouts to prevent latency spikes.
+**Requirement:** Multi-backend chains in `sanctuary_cortex` MUST enforce per-hop timeouts to prevent latency spikes.
 
 **Implementation:**
 ```python
-# In sanctuary-cortex router
+# In sanctuary_cortex router
 import httpx
 
 TIMEOUT_CONFIG = {
@@ -558,7 +558,7 @@ async def rag_query(query: str):
 
 
 ### Phase 1: Pilot Deployment (Week 1)
-**Goal:** Deploy `sanctuary-utils` container
+**Goal:** Deploy `sanctuary_utils` container
 
 1. Create `mcp_servers/utils/Dockerfile`
 2. Implement multi-tool SSE handler
@@ -567,8 +567,8 @@ async def rag_query(query: str):
 5. **Success Criteria:** Gateway successfully calls "What time is it?"
 
 ### Phase 2: Privileged & Network (Week 2-3)
-1. Deploy `sanctuary-filesystem` with volume mounts
-2. Deploy `sanctuary-network` with API keys
+1. Deploy `sanctuary_filesystem` with volume mounts
+2. Deploy `sanctuary_network` with API keys
 3. Test cross-cluster isolation
 
 ### Phase 3: Integration (Week 4)
@@ -595,7 +595,7 @@ async def rag_query(query: str):
 ```yaml
 # docker-compose.dev.yml
 services:
-  sanctuary-utils:
+  sanctuary_utils:
     build:
       context: ./mcp_servers/utils
       target: development  # Multi-stage build
@@ -678,10 +678,12 @@ To prevent conflicts, Gateway-routed containers use distict host ports from the 
 | Server | Legacy Port (Direct) | Gateway Host Port (Podman) | Container Internal |
 |--------|----------------------|----------------------------|--------------------|
 | Utils | N/A (Stdio) | 8100 | 8000 |
-| Filesystem | N/A (Stdio) | 8101 | 8001 |
-| Network | N/A (Stdio) | 8102 | 8002 |
-| Git | N/A (Stdio) | 8103 | 8003 |
-| Cortex | 8000/8004 | 8104 | 8004 |
+| Filesystem | N/A (Stdio) | 8101 | 8000 |
+| Network | N/A (Stdio) | 8102 | 8000 |
+| Git | N/A (Stdio) | 8103 | 8000 |
+| Cortex | 8000/8004 | 8104 | 8000 |
+| Domain | 8105 | 8105 | 8105 |
+| Vector-DB | 8000 | 8110 | 8000 |
 
 **3. Configuration Toggles:**
 Clients choose their mode via config:
@@ -694,4 +696,4 @@ Clients choose their mode via config:
 
 - [ADR 058: Decouple IBM Gateway to External Podman Service](058_decouple_ibm_gateway_to_external_podman_service.md)
 - [Task 118: Red Team Analysis](../TASKS/backlog/118_red_team_analysis_gateway_server_connection_patter.md)
-- [Task 119: Deploy Pilot - sanctuary-utils Container](../TASKS/backlog/119_deploy_pilot_sanctuary_utils_container.md) (to be created)
+- [Task 119: Deploy Pilot - sanctuary_utils Container](../TASKS/backlog/119_deploy_pilot_sanctuary_utils_container.md) (to be created)

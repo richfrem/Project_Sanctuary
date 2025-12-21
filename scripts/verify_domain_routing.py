@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Domain Container Awakening (Phase 3 of Protocol 125 Validation)
-Verifies that sanctuary-domain correctly routes requests to hosted MCPs.
+Verifies that sanctuary_domain correctly routes requests to hosted MCPs.
 """
 import httpx
 import asyncio

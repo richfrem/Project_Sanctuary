@@ -38,8 +38,8 @@ def main():
         print(f"❌ Failed to initialize operations: {e}")
         if "connect to a Chroma server" in str(e) or "Connection refused" in str(e):
              print("\n💡 HINT: ChromaDB does not appear to be running.")
-             print("   Ensure the 'sanctuary-vector-db' container is active.")
-             print("   Run: podman run -d --name sanctuary-vector-db -p 8000:8000 chromadb/chroma  (Example)")
+             print("   Ensure the 'sanctuary_vector_db' container is active.")
+             print("   Run: podman run -d --name sanctuary_vector_db -p 8000:8000 chromadb/chroma  (Example)")
              print("   See docs/mcp/servers/rag_cortex/SETUP.md for full instructions.")
         sys.exit(1)
 

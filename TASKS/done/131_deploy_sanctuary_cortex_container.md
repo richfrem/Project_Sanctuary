@@ -10,7 +10,7 @@
 
 ## 1. Objective
 
-Deploy the sanctuary-cortex container to the Hybrid Fleet.
+Deploy the sanctuary_cortex container to the Hybrid Fleet.
 
 ## 2. Deliverables
 

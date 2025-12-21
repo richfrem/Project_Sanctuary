@@ -16,7 +16,7 @@ class BaseIntegrationTest(ABC):
     Usage:
         class TestRAGCortexLive(LiveIntegrationTest):
             def get_required_services(self):
-                return [("localhost", 8000, "ChromaDB")]
+                return [("localhost", 8110, "ChromaDB")]
                 
             def test_ingest(self):
                 ...
@@ -46,7 +46,7 @@ class BaseIntegrationTest(ABC):
     def get_required_services(self) -> List[Tuple[str, int, str]]:
         """
         Return a list of (host, port, service_name) tuples required for these tests.
-        Example: [("localhost", 8000, "ChromaDB")]
+        Example: [("localhost", 8110, "ChromaDB")]
         """
         pass
 

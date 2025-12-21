@@ -289,14 +289,17 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
             'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE',
 
             # Final Hardening v2.3 from capture_code_snapshot.js
-            '05_ARCHIVED_BLUEPRINTS', 'gardener'
+            '05_ARCHIVED_BLUEPRINTS', 'gardener',
+
+            # --- Security: MCP configuration files ---
+            'mcp_config'
         }
 
     exclude_files = {
         'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
         'orchestrator-backup.py', 'ingest_new_knowledge.py',
         'Operation_Whole_Genome_Forge.ipynb',
-        '.DS_Store', '.env', 'manifest.json', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md',
+        '.DS_Store', '.env', '.env (from backup)', 'manifest.json', '.gitignore', 'PROMPT_PROJECT_ANALYSIS.md',
         'Modelfile', 'nohup.out',
         # Fine-tuning artifacts with wildcards
         'sanctuary_whole_genome_data.jsonl',
@@ -719,7 +722,10 @@ def main():
         'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE',
 
         # Final Hardening v2.3 from capture_code_snapshot.js
-        '05_ARCHIVED_BLUEPRINTS', 'gardener'
+        '05_ARCHIVED_BLUEPRINTS', 'gardener',
+
+        # --- Security: MCP configuration files ---
+        'mcp_config'
     }
 
     # FINAL HARDENING (V2.1): Dynamic Self-Aware Exclusion

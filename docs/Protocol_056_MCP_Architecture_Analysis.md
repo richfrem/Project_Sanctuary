@@ -44,8 +44,8 @@ This document provides a comprehensive analysis of the MCP (Model Context Protoc
                      ▼
 ┌─────────────────────────────────────────────────────────┐
 │           Services Layer (Podman)                       │
-│  💾 sanctuary-vector-db:8000 - ChromaDB RAG Database    │
-│  🦙 sanctuary-ollama-mcp:11434 - Sanctuary-Qwen2-7B     │
+│  💾 sanctuary_vector_db:8110 - ChromaDB RAG Database    │
+│  🦙 sanctuary_ollama_mcp:11434 - Sanctuary-Qwen2-7B     │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -270,7 +270,7 @@ Cycle 3 (Triple Recursion):
 
 **Total RAG Cortex Operations:** 5
 
-**Backend Service:** ChromaDB vector database (sanctuary-vector-db:8000)
+**Backend Service:** ChromaDB vector database (sanctuary_vector_db:8000)
 
 ---
 
@@ -544,8 +544,8 @@ The Protocol 056 verification successfully exercised 5 distinct MCP servers acro
 
 ### Services Validated:
 
-- ✅ ChromaDB (sanctuary-vector-db:8000) - 70 chunks stored
-- ℹ️ Ollama (sanctuary-ollama-mcp:11434) - available via Forge MCP
+- ✅ ChromaDB (sanctuary_vector_db:8110) - 70 chunks stored
+- ℹ️ Ollama (sanctuary_ollama_mcp:11434) - available via Forge MCP
 
 ### Strategic Impact:
 
@@ -580,7 +580,7 @@ The Strategic Crucible Loop is **CERTIFIED OPERATIONAL** with demonstrated abili
 ### RAG Cortex MCP
 - **Location:** Infrastructure Layer
 - **Purpose:** Knowledge retrieval and ingestion
-- **Backend:** ChromaDB (sanctuary-vector-db:8000)
+- **Backend:** ChromaDB (sanctuary_vector_db:8000)
 - **Tools:** query, ingest_full, ingest_incremental, get_stats, cache_get, cache_set, cache_warmup, guardian_wakeup
 - **Performance:** 251-1180ms queries, 2-5s ingestion
 - **Status:** ✅ Operational
@@ -602,7 +602,7 @@ The Strategic Crucible Loop is **CERTIFIED OPERATIONAL** with demonstrated abili
 ### Forge LLM MCP
 - **Location:** Infrastructure Layer
 - **Purpose:** Model inference and fine-tuning
-- **Backend:** Ollama (sanctuary-ollama-mcp:11434)
+- **Backend:** Ollama (sanctuary_ollama_mcp:11434)
 - **Model:** Sanctuary-Qwen2-7B (fine-tuned)
 - **Tools:** query_sanctuary_model, check_sanctuary_model_status
 - **Status:** ✅ Available (not used in verification)

@@ -10,7 +10,7 @@
 
 ## 1. Objective
 
-Deploy the sanctuary-network container to the Hybrid Fleet.
+Deploy the sanctuary_network container to the Hybrid Fleet.
 
 ## 2. Deliverables
 

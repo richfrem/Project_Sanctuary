@@ -10,7 +10,7 @@
 
 ## 1. Objective
 
-Deploy the sanctuary-filesystem container to the Hybrid Fleet.
+Deploy the sanctuary_filesystem container to the Hybrid Fleet.
 
 ## 2. Deliverables
 

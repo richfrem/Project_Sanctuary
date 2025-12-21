@@ -62,8 +62,8 @@ graph TB
     end
     
     subgraph "Services (Podman)"
-        OLLAMA["sanctuary-ollama-mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
-        CHROMA["sanctuary-vector-db<br/>:8000<br/>ChromaDB RAG DB"]
+        OLLAMA["sanctuary_ollama_mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
+        CHROMA["sanctuary_vector_db<br/>:8000<br/>ChromaDB RAG DB"]
     end
     
     LLM --> ORCH

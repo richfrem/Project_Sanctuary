@@ -1,0 +1,15 @@
+{
+    "mcpServers": {
+        "cortex": {
+            "command": "python3",
+            "args": [
+                "-m",
+                "mcp_servers.cognitive.cortex.server"
+            ],
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            }
+        }
+    }
+}

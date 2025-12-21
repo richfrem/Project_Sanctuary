@@ -8,12 +8,12 @@ import asyncio
 import sys
 
 FLEET = {
-    "sanctuary-utils": "http://localhost:8100",
-    "sanctuary-filesystem": "http://localhost:8101",
-    "sanctuary-network": "http://localhost:8102",
-    "sanctuary-git": "http://localhost:8103",
-    "sanctuary-cortex": "http://localhost:8104",
-    "sanctuary-domain": "http://localhost:8105",
+    "sanctuary_utils": "http://localhost:8100",
+    "sanctuary_filesystem": "http://localhost:8101",
+    "sanctuary_network": "http://localhost:8102",
+    "sanctuary_git": "http://localhost:8103",
+    "sanctuary_cortex": "http://localhost:8104",
+    "sanctuary_domain": "http://localhost:8105",
 }
 
 async def check_container(name, url):
