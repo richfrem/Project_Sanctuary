@@ -1,6 +1,6 @@
 # TASK: Protocol 127: Session Lifecycle & Autonomous Learning Optimization
 
-**Status:** in-progress
+**Status:** in-review
 **Priority:** High
 **Lead:** Unassigned
 **Dependencies:**
