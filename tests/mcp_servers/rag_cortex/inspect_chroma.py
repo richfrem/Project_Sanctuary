@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
-import chromadb
 import sys
+import chromadb
 from pathlib import Path
 
-# Add project root to sys.path for internal imports
-project_root = Path(__file__).resolve().parent.parent.parent.parent
-sys.path.insert(0, str(project_root))
+# Add project root to sys.path
+# Add project root to sys.path
+# Add project root based on .git marker (Robust)
+current = Path(__file__).resolve().parent
+while not (current / ".git").exists():
+    if current == current.parent:
+        raise RuntimeError("Could not find Project_Sanctuary root (no .git folder found)")
+    current = current.parent
+project_root = current
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from mcp_servers.lib.utils.env_helper import get_env_variable, load_env
-from langchain_nomic import NomicEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 # ============================================================================
 # Configuration (from Environment)
@@ -23,12 +31,13 @@ CHILD_COLLECTION = get_env_variable("CHROMA_CHILD_COLLECTION", required=False) o
 PARENT_STORE = get_env_variable("CHROMA_PARENT_STORE", required=False) or "parent_documents_v5"
 
 def test_embeddings():
-    print("\n=== Nomic (Local) Embedding Check ===")
+    print("\n=== HuggingFace (Local) Embedding Check ===")
     try:
-        print("Initializing NomicEmbeddings in local mode...")
-        embeddings = NomicEmbeddings(
-            model="nomic-embed-text-v1.5",
-            inference_mode="local"
+        print("Initializing HuggingFaceEmbeddings (nomic-embed-text-v1.5)...")
+        embeddings = HuggingFaceEmbeddings(
+            model_name="nomic-ai/nomic-embed-text-v1.5",
+            model_kwargs={'device': 'cpu', 'trust_remote_code': True},
+            encode_kwargs={'normalize_embeddings': True}
         )
         # Test query
         test_text = "Project Sanctuary initialization"
@@ -37,8 +46,8 @@ def test_embeddings():
         print(f"Status: SUCCESS")
         print(f"Vector dimensions: {len(vector)}")
     except Exception as e:
-        print(f"[ERROR] Nomic embedding failed: {e}")
-        print("Tip: Ensure the 'nomic' pip package is installed and you have the model weights locally.")
+        print(f"[ERROR] Embedding generation failed: {e}")
+        print("Tip: Ensure 'sentence-transformers' and 'einops' are installed.")
 
 def test_chroma():
     print("\n=== ChromaDB Status Check ===")

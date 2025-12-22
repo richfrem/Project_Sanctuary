@@ -31,7 +31,7 @@ def test_protocol_validator():
 
 ### Layer 2: Integration Tests (`integration/`)
 - **Focus:** Server operations with real local dependencies
-- **Dependencies:** ChromaDB (port 8000), Ollama (port 11434), Git repo
+- **Dependencies:** ChromaDB (port 8110 for host-mapped Cortex), Ollama (optional), Git repo (if applicable), HuggingFace Local Embeddings
 - **Base Class:** `BaseIntegrationTest` (auto-checks dependencies)
 - **Run:** `pytest tests/mcp_servers/<mcp>/integration/ -v`
 

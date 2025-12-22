@@ -61,7 +61,7 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     from dotenv import load_dotenv
     from langchain_community.document_loaders import DirectoryLoader, TextLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
-    from langchain_nomic import NomicEmbeddings
+    from langchain_huggingface import HuggingFaceEmbeddings
     from langchain_chroma import Chroma
     from mcp_servers.rag_cortex.file_store import SimpleFileStore
     from langchain_core.documents import Document
@@ -96,8 +96,12 @@ class CortexOperations:
         else:
             self.chroma_client = chromadb.HttpClient(host=self.chroma_host, port=self.chroma_port)
         
-        # Initialize embedding model (local mode using pip package weights)
-        self.embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
+        # Initialize embedding model (HuggingFace/sentence-transformers for ARM64 compatibility - ADR 069)
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name="nomic-ai/nomic-embed-text-v1.5",
+            model_kwargs={'device': 'cpu', 'trust_remote_code': True},
+            encode_kwargs={'normalize_embeddings': True}
+        )
 
         # Initialize child splitter (smaller chunks for retrieval)
         self.child_splitter = RecursiveCharacterTextSplitter(
@@ -459,19 +463,33 @@ class CortexOperations:
                 include=['documents', 'metadatas', 'distances']
             )
             
-            # Format results
+            # Format results with Parent Document lookup
             formatted_results = []
             if results and results['documents'] and len(results['documents']) > 0:
                 for i, doc_content in enumerate(results['documents'][0]):
-                    # Reconstruct QueryResult object
+                    metadata = results['metadatas'][0][i]
+                    parent_id = metadata.get("parent_id")
+                    
+                    # If we have a parent_id, retrieve the full document context
+                    final_content = doc_content
+                    if parent_id:
+                        try:
+                            parent_docs = self.store.mget([parent_id])
+                            if parent_docs and parent_docs[0]:
+                                final_content = parent_docs[0].page_content
+                                # Update metadata with parent metadata if needed
+                                metadata.update(parent_docs[0].metadata)
+                        except Exception as e:
+                            logger.warning(f"Failed to retrieve parent doc {parent_id}: {e}")
+                    
                     formatted_results.append(QueryResult(
-                        content=doc_content,
-                        metadata=results['metadatas'][0][i],
+                        content=final_content,
+                        metadata=metadata,
                         relevance_score=results['distances'][0][i] if results.get('distances') else None
                     ))
             
             elapsed_ms = (time.time() - start_time) * 1000
-            logger.info(f"Query '{query[:50]}...' completed in {elapsed_ms:.2f}ms with {len(formatted_results)} results.")
+            logger.info(f"Query '{query[:50]}...' completed in {elapsed_ms:.2f}ms with {len(formatted_results)} results (Parent-Retriever applied).")
             
             return QueryResponse(
                 status="success",

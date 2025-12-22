@@ -61,7 +61,7 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     from dotenv import load_dotenv
     from langchain_community.document_loaders import DirectoryLoader, TextLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
-    from langchain_nomic import NomicEmbeddings
+    from langchain_huggingface import HuggingFaceEmbeddings
     from langchain_chroma import Chroma
     from mcp_servers.rag_cortex.file_store import SimpleFileStore
     from langchain_core.documents import Document
@@ -96,8 +96,12 @@ class CortexOperations:
         else:
             self.chroma_client = chromadb.HttpClient(host=self.chroma_host, port=self.chroma_port)
         
-        # Initialize embedding model (local mode using pip package weights)
-        self.embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
+        # Initialize embedding model (HuggingFace/sentence-transformers for ARM64 compatibility - ADR 069)
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name="nomic-ai/nomic-embed-text-v1.5",
+            model_kwargs={'device': 'cpu', 'trust_remote_code': True},
+            encode_kwargs={'normalize_embeddings': True}
+        )
 
         # Initialize child splitter (smaller chunks for retrieval)
         self.child_splitter = RecursiveCharacterTextSplitter(

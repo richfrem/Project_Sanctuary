@@ -6,9 +6,16 @@ from unittest.mock import MagicMock
 import time
 
 # Ensure project root is in path
+current = Path(__file__).resolve().parent
+while not (current / ".git").exists():
+    if current == current.parent:
+        raise RuntimeError("Could not find Project_Sanctuary root (no .git folder found)")
+    current = current.parent
+project_root = current
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
 from mcp_servers.lib.utils.path_utils import find_project_root
-project_root = find_project_root()
-sys.path.insert(0, project_root)
 
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.models import StatsResponse

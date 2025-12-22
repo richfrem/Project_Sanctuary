@@ -37,13 +37,69 @@ We prefer relative paths and environment-variable expansion for portability. The
 3. **Write Config:** The deployer writes the expanded JSON into the platform-specific client configuration location (e.g., Claude Desktop, VS Code).
 
 - Deployer: `mcp_servers/deploy_mcp_config.py` — expands `${VAR}` placeholders and writes the client config JSON.
-- **Full Guide:** `mcp_servers/mcp_config_guide.md` (see `mcp_servers/config_locations_by_tool.md` for the legacy name) — canonical pointer for where generated config files should be placed on each OS, along with helpers and examples.
+- **Full Guide:** `mcp_servers/mcp_config_guide.md` — canonical pointer for where generated config files should be placed on each OS, along with helpers and examples.
+
+## 🐍 Python Virtual Environments (.venv) Standard
+
+In Project Sanctuary, all Python-based MCP servers **must** use a dedicated virtual environment located in the project root. This is not just a preference; it is the canonical pattern for ensuring dependency isolation and reliable execution across different MCP clients (Claude Desktop, Antigravity, VS Code).
+
+### The .venv Pattern
+The canonical configuration for an MCP server's `command` field is:
+`"/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python"`
+
+### Why This is Mandatory:
+1.  **Dependency Isolation:** Prevents conflicts between server requirements (e.g., specific versions of LangChain or ChromaDB).
+2.  **Explicit Resolution:** MCP servers run as independent background processes; pointing directly to the `.venv` binary ensures they find their specific "Library Closet" without needing an external `source activate` step.
+3.  **Side-by-Side Sync:** For servers that also run in containers (like Cortex), the local `.venv` serves as the **Native Development Mirror**. It must be kept in sync with the container's `requirements.txt` to ensure consistent behavior between "Legacy" and "Gateway" modes.
+
+### Setup & Maintenance:
+```bash
+# Navigate to project root
+cd /Users/richardfremmerlid/Projects/Project_Sanctuary
+
+# Create/Update the environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install all canonical requirements
+pip install -r mcp_servers/rag_cortex/requirements.txt
+# (Repeat for other servers as needed)
+```
 
 ## Configuration - The Environment-First Doctrine
 
 In adherence to the **Doctrine of Successor-State** (Chronicle Entry 308), all MCP server configurations **must** use environment variable expansion (`${VARIABLE}`) rather than hardcoded or absolute paths. This ensures cross-platform compatibility and simplifies setup for future agents.
 
 The canonical method uses Python module paths (`-m mcp_servers.X.server`) and the `${PROJECT_SANCTUARY_ROOT}` variable.
+### Standard Pattern (CORRECT):
+```json
+{
+    "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+    "args": ["-m", "mcp_servers.module_name.server"],
+    "env": {
+        "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+    }
+}
+```
+
+### Anti-Pattern (INCORRECT):
+```json
+{
+    "command": "python",  // ❌ Uses system Python, unstable across machines
+    "args": ["-m", "mcp_servers.module_name.server"]
+}
+```
+
+### ❌ Common Errors (Without proper .venv):
+- `ModuleNotFoundError: No module named 'langchain_huggingface'`
+- `ImportError: cannot import name 'CortexOperations'`
+- Version conflicts between system packages and Project Sanctuary requirements.
+
+### ✅ Verification Checklist:
+- [ ] `.venv` directory exists in project root.
+- [ ] `.venv/bin/python` is the designated interpreter in `mcp_config.json`.
+- [ ] `pip list` inside the `.venv` shows all packages from `rag_cortex/requirements.txt`.
+- [ ] `PYTHONPATH` in the MCP config points to the project root.
 
 To configure an MCP client (e.g., Claude Desktop) to use the servers, add the following structure to your configuration file (e.g., `claude_desktop_config.json`).
 
@@ -142,6 +198,7 @@ After restoring or regenerating the file, restart Claude Desktop so it picks up 
 **Notes:**
 - We keep the Environment‑First Doctrine in the docs and templates because it documents intent and makes future improvements easier.
 - The README documents the practical gap so operators understand why hard‑coded configs are currently in use and how to recover or re-generate configs when needed.
+- **Side-by-Side Synchronization:** When modifying a server that exists both as a local script and a containerized cluster (e.g., `rag_cortex`), you **must** update both the local `.venv` AND the `Dockerfile`/`requirements.txt` in the gateway cluster folder. Failure to do so will result in "Missing Module" errors when switching between Native and Gateway modes.
 
 ## Server Launching
 

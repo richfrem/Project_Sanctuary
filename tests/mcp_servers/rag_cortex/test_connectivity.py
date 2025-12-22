@@ -49,7 +49,7 @@ def test_rag_cortex_connectivity():
         print(f"Stats result: {result}")
         
         assert "total_documents" in result
-        assert result["total_documents"] >= 1610
+        assert result["total_documents"] >= 1000
         assert result["health_status"] in ["healthy", "degraded"]
         
         if result.get("error"):

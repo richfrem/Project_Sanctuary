@@ -21,7 +21,9 @@ Tests data models, validators, and error handling without external dependencies.
 
 ## Prerequisites
 
-Integration and E2E tests require ChromaDB (port 8000) and optionally Ollama (port 11434).
+Integration and E2E tests require ChromaDB (port 8110 for host-mapped Cortex or 8000 internal).
+Embeddings are generated LOCALLY using HuggingFace (nomic-embed-text-v1.5) and do NOT require Ollama or remote APIs.
+Ollama (port 11434) is only required for Forge/Reasoning tests.
 
 ```bash
 # Start required services

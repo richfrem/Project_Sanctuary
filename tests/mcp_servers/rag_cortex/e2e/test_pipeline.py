@@ -7,7 +7,13 @@ import sys
 from pathlib import Path
 
 # Add project root to path
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent
+# Add project root based on .git marker (Robust)
+current = Path(__file__).resolve().parent
+while not (current / ".git").exists():
+    if current == current.parent:
+        raise RuntimeError("Could not find Project_Sanctuary root (no .git folder found)")
+    current = current.parent
+PROJECT_ROOT = current
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from mcp_servers.rag_cortex.operations import CortexOperations

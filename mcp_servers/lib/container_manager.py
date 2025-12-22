@@ -178,7 +178,7 @@ def ensure_chromadb_running(project_root: str) -> tuple[bool, str]:
 
 def ensure_ollama_running(project_root: str) -> tuple[bool, str]:
     """Ensure Ollama is running."""
-    container_name = "sanctuary-ollama-mcp"
+    container_name = "sanctuary_ollama_mcp"
     port = 11434
     
     if not check_podman_available():

@@ -19,9 +19,13 @@ import tempfile
 import argparse
 from pathlib import Path
 
-# Add project root to path
-# tests/mcp_servers/rag_cortex/run_cortex_integration.py -> tests/mcp_servers -> tests -> Project_Sanctuary
-project_root = Path(__file__).resolve().parent.parent.parent.parent
+# Add project root based on .git marker (Robust)
+current = Path(__file__).resolve().parent
+while not (current / ".git").exists():
+    if current == current.parent:
+        raise RuntimeError("Could not find Project_Sanctuary root (no .git folder found)")
+    current = current.parent
+project_root = current
 sys.path.insert(0, str(project_root))
 
 # Now we can import from the parent package

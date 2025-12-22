@@ -74,7 +74,7 @@ def mock_cortex_deps():
     with patch("langchain_chroma.Chroma"), \
          patch("langchain.storage.LocalFileStore"), \
          patch("langchain.retrievers.ParentDocumentRetriever"), \
-         patch("langchain_nomic.NomicEmbeddings"), \
+         patch("langchain_huggingface.HuggingFaceEmbeddings"), \
          patch("langchain_community.document_loaders.TextLoader") as mock_text_loader:
          
         yield {
