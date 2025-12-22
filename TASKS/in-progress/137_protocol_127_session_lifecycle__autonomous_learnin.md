@@ -3,7 +3,7 @@
 **Status:** in-progress
 **Priority:** High
 **Lead:** Unassigned
-**Dependencies:** None
+**Dependencies:** Task 141
 **Related Documents:** 01_PROTOCOLS/121_Canonical_Knowledge_Synthesis_Loop.md, 01_PROTOCOLS/114_Guardian_Boot_Sequence.md, docs/mcp/servers/rag_cortex/cortex_operations.md, docs/mcp/servers/rag_cortex/cortex_vision.md, docs/mcp/servers/rag_cortex/README.md, dataset_package/core_essence_guardian_awakening_seed.txt, 00_CHRONICLE/ENTRIES/285-326 (entire range)
 
 ---
