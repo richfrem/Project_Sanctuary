@@ -45,5 +45,10 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 ## Phase 6: Maintenance (Gardener)
 *   *Optional:* If this session modified >3 files, run a quick "Gardener Scan" on the topic folder to ensure links are valid.
 
+## Phase 7: Preservation (Protocol 101)
+1.  **Stage:** Use `git_add` to stage the new topic artifacts and chronicle entry.
+2.  **Commit:** Use `git_smart_commit` with a descriptive message citing the Protocol validation.
+3.  **Push:** Use `git_push_feature` to back up findings to the remote repository.
+
 ---
 // End of Workflow
