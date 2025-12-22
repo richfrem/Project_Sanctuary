@@ -50,5 +50,12 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 2.  **Commit:** Use `git_smart_commit` with a descriptive message citing the Protocol validation.
 3.  **Push:** Use `git_push_feature` to back up findings to the remote repository.
 
+## Phase 8: Retrospective (Continuous Improvement)
+1.  **Reflect:** Did this session feel efficient? Were there friction points?
+2.  **Optimize:**
+    *   If a tool failed >2 times, note it for Task 139 (Tool Hardening).
+    *   If the workflow felt rigid, update this file (`.agent/workflows/recursive_learning.md`) immediately.
+3.  **Log:** If significant improvements were identified, mention them in the Chronicle Entry.
+
 ---
 // End of Workflow
