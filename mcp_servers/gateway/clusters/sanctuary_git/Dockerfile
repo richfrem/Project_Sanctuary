@@ -28,7 +28,8 @@ RUN pip install --no-cache-dir \
     uvicorn \
     sse-starlette \
     httpx \
-    pydantic
+    pydantic \
+    pytest
 
 ENV PYTHONPATH=/app
 ENV PORT=8000
