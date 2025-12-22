@@ -1,1 +1,15 @@
 fastmcp
+langchain
+langchain-community
+langchain-huggingface
+langchain-chroma
+sentence-transformers
+chromadb
+pydantic
+einops
+fastapi
+uvicorn
+sse-starlette
+httpx
+ollama
+openai

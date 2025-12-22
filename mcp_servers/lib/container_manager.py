@@ -24,7 +24,7 @@ def check_podman_available() -> bool:
         return False
 
 
-def check_container_running(container_name: str = "sanctuary-vector-db") -> bool:
+def check_container_running(container_name: str = "sanctuary_vector_db") -> bool:
     """Check if ChromaDB container is running."""
     try:
         result = subprocess.run(
@@ -151,7 +151,7 @@ def ensure_chromadb_running(project_root: str) -> tuple[bool, str]:
         vector_data_path = project_path / data_dir
     vector_data_path.mkdir(parents=True, exist_ok=True)
     
-    container_name = "sanctuary-vector-db"
+    container_name = "sanctuary_vector_db"
     port = int(os.getenv("CHROMA_PORT", "8000"))
     
     if not check_podman_available():
@@ -172,20 +172,20 @@ def ensure_chromadb_running(project_root: str) -> tuple[bool, str]:
         return False, f"Failed to start ChromaDB: {start_msg}"
         
     # Wait for healthy
-    if check_service_healthy("localhost", port, "chroma", timeout=15):
+    if check_service_healthy("127.0.0.1", port, "chroma", timeout=15):
         return True, "ChromaDB started and healthy"
     return False, "ChromaDB started but unhealthy"
 
 def ensure_ollama_running(project_root: str) -> tuple[bool, str]:
     """Ensure Ollama is running."""
-    container_name = "sanctuary-ollama-mcp"
+    container_name = "sanctuary_ollama_mcp"
     port = 11434
     
     if not check_podman_available():
         return False, "Podman not available"
         
     if check_container_running(container_name):
-        if check_service_healthy("localhost", port, "ollama", timeout=2):
+        if check_service_healthy("127.0.0.1", port, "ollama", timeout=2):
             return True, "Ollama container running"
         # If running but unhealthy, we might want to restart? For now, just report.
         

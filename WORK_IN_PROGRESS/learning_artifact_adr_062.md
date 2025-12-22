@@ -17,7 +17,7 @@ The canonical method for knowledge base updates remains **Protocol 125**. The Ag
 This "Loop of Responsibility" ensures that the Agent remains the primary arbiter of truth within the Sanctuary.
 
 ### 3. The Lean Fleet of 8
-The system architecture has been stabilized as a "Lean Fleet" of 8 core Docker containers (utils, filesystem, network, git, cortex, domain, vector-db, ollama-mcp). All communication is routed via a centralized **SSE Gateway** (Port 4444), eliminating the need for complex external orchestration.
+The system architecture has been stabilized as a "Lean Fleet" of 8 core Docker containers (utils, filesystem, network, git, cortex, domain, vector_db, ollama-mcp). All communication is routed via a centralized **SSE Gateway** (Port 4444), eliminating the need for complex external orchestration.
 
 ## Implications
 - **Protocol 127** (Doctrine of Mechanical Delegation) is **DEPRECATED**.

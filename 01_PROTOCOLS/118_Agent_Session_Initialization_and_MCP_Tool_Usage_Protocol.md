@@ -258,7 +258,7 @@ if "Modified Files:" in status or "Untracked Files:" in status:
 - Session initialization Phase 1 operationalizes P114
 
 ### Protocol 116 (Container Architecture)
-- Forge LLM MCP routes to ollama-model-mcp:11434
+- Forge LLM MCP routes to ollama_model_mcp:11434
 - Compute constraints documented here inform routing decisions
 
 ## Operational Checklist

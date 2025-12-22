@@ -9,7 +9,7 @@ RAG Cortex MCP provides retrieval-augmented generation capabilities for Project 
 The RAG Cortex transitioned from a legacy file-system-based database connection to a persistent **Network Service Model** (Protocol P114).
 
 * **Legacy Model (Deprecated):** The system stored ChromaDB files directly on disk at a path (e.g., `mnemonic_cortex/chroma_db`). This was fragile, slow, and incompatible with distributed agent architecture.
-* **Current MCP Model:** ChromaDB runs as a dedicated server (`vector-db` service in Docker Compose). The RAG Cortex MCP connects to it via a **network address** defined in the root `.env` file (`CHROMA_HOST`, `CHROMA_PORT`).
+* **Current MCP Model:** ChromaDB runs as a dedicated server (`vector_db` service in Docker Compose). The RAG Cortex MCP connects to it via a **network address** defined in the root `.env` file (`CHROMA_HOST`, `CHROMA_PORT`).
 * **Data Persistence:** Database files are persisted via a Docker bind mount to the host directory: **`.vector_data/`**. The core application logic *never* touches this folder; it only communicates over the network.
 
 - **Vector Database:** ChromaDB for semantic search
@@ -41,7 +41,7 @@ External LLM → Cortex MCP (Server)
 - **Server Code:** [mcp_servers/rag_cortex/server.py](../../../mcp_servers/rag_cortex/server.py)
 - **Operations:** [mcp_servers/rag_cortex/operations.py](../../../mcp_servers/rag_cortex/operations.py)
 - **Models:** [mcp_servers/rag_cortex/models.py](../../../mcp_servers/rag_cortex/models.py)
-- **Container Service:** [docker-compose.yml](../../../docker-compose.yml) (`vector-db` service)
+- **Container Service:** [docker-compose.yml](../../../docker-compose.yml) (`vector_db` service)
 
 ## Setup & Installation
 
@@ -55,7 +55,7 @@ Quick start:
     podman machine start
 
     # 2. Start ChromaDB container (REQUIRED)
-    podman compose up -d vector-db
+    podman compose up -d vector_db
     
     # 3. Populate database (first time only)
     python3 mcp_servers/rag_cortex/run_cortex_integration.py --run-full-ingest

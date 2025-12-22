@@ -3,7 +3,7 @@
 **Status:** backlog
 **Priority:** Medium
 **Lead:** Unassigned
-**Dependencies:** Requires #093 (Containerize Ollama Model Service) - The ollama-model-mcp network service must be running before Council can route to it
+**Dependencies:** Requires #093 (Containerize Ollama Model Service) - The ollama_model_mcp network service must be running before Council can route to it
 **Related Documents:** Protocol 108 (Federated Deployment), Protocol 115 (Task Protocol), Task #093
 
 ---
@@ -23,5 +23,5 @@ Restore and enforce Polymorphic Model Routing within the Council MCP. Ensure tha
 
 - All Council MCP methods that call the Forge LLM MCP accept model_preference: Optional[str]
 - Test verifies model_preference='GEMINI' routes to Gemini API
-- Test verifies model_preference='OLLAMA' routes to containerized ollama-model-mcp service
+- Test verifies model_preference='OLLAMA' routes to containerized ollama_model_mcp service
 - Documentation updated with model_preference parameter specification

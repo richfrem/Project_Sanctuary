@@ -61,10 +61,11 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     from dotenv import load_dotenv
     from langchain_community.document_loaders import DirectoryLoader, TextLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
-    from langchain_nomic import NomicEmbeddings
+    from langchain_huggingface import HuggingFaceEmbeddings
     from langchain_chroma import Chroma
     from mcp_servers.rag_cortex.file_store import SimpleFileStore
     from langchain_core.documents import Document
+    from mcp_servers.lib.utils.env_helper import get_env_variable
 
 
 class CortexOperations:
@@ -81,16 +82,13 @@ class CortexOperations:
         self.project_root = Path(project_root)
         self.scripts_dir = self.project_root / "mcp_servers" / "rag_cortex" / "scripts"
 
-        # Load environment variables
-        load_dotenv(dotenv_path=self.project_root / ".env")
-
-        # Network configuration
-        self.chroma_host = os.getenv("CHROMA_HOST", "localhost")
-        self.chroma_port = int(os.getenv("CHROMA_PORT", "8110"))
-        self.chroma_data_path = os.getenv("CHROMA_DATA_PATH", ".vector_data")
+        # Network configuration using env_helper
+        self.chroma_host = get_env_variable("CHROMA_HOST", required=False) or "localhost"
+        self.chroma_port = int(get_env_variable("CHROMA_PORT", required=False) or "8110")
+        self.chroma_data_path = get_env_variable("CHROMA_DATA_PATH", required=False) or ".vector_data"
         
-        self.child_collection_name = os.getenv("CHROMA_CHILD_COLLECTION", "child_chunks_v5")
-        self.parent_collection_name = os.getenv("CHROMA_PARENT_STORE", "parent_documents_v5")
+        self.child_collection_name = get_env_variable("CHROMA_CHILD_COLLECTION", required=False) or "child_chunks_v5"
+        self.parent_collection_name = get_env_variable("CHROMA_PARENT_STORE", required=False) or "parent_documents_v5"
 
         # Initialize ChromaDB client
         if client:
@@ -98,8 +96,12 @@ class CortexOperations:
         else:
             self.chroma_client = chromadb.HttpClient(host=self.chroma_host, port=self.chroma_port)
         
-        # Initialize embedding model
-        self.embedding_model = NomicEmbeddings(model="nomic-embed-text-v1.5", inference_mode="local")
+        # Initialize embedding model (HuggingFace/sentence-transformers for ARM64 compatibility - ADR 069)
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name="nomic-ai/nomic-embed-text-v1.5",
+            model_kwargs={'device': 'cpu', 'trust_remote_code': True},
+            encode_kwargs={'normalize_embeddings': True}
+        )
 
         # Initialize child splitter (smaller chunks for retrieval)
         self.child_splitter = RecursiveCharacterTextSplitter(
@@ -461,19 +463,33 @@ class CortexOperations:
                 include=['documents', 'metadatas', 'distances']
             )
             
-            # Format results
+            # Format results with Parent Document lookup
             formatted_results = []
             if results and results['documents'] and len(results['documents']) > 0:
                 for i, doc_content in enumerate(results['documents'][0]):
-                    # Reconstruct QueryResult object
+                    metadata = results['metadatas'][0][i]
+                    parent_id = metadata.get("parent_id")
+                    
+                    # If we have a parent_id, retrieve the full document context
+                    final_content = doc_content
+                    if parent_id:
+                        try:
+                            parent_docs = self.store.mget([parent_id])
+                            if parent_docs and parent_docs[0]:
+                                final_content = parent_docs[0].page_content
+                                # Update metadata with parent metadata if needed
+                                metadata.update(parent_docs[0].metadata)
+                        except Exception as e:
+                            logger.warning(f"Failed to retrieve parent doc {parent_id}: {e}")
+                    
                     formatted_results.append(QueryResult(
-                        content=doc_content,
-                        metadata=results['metadatas'][0][i],
+                        content=final_content,
+                        metadata=metadata,
                         relevance_score=results['distances'][0][i] if results.get('distances') else None
                     ))
             
             elapsed_ms = (time.time() - start_time) * 1000
-            logger.info(f"Query '{query[:50]}...' completed in {elapsed_ms:.2f}ms with {len(formatted_results)} results.")
+            logger.info(f"Query '{query[:50]}...' completed in {elapsed_ms:.2f}ms with {len(formatted_results)} results (Parent-Retriever applied).")
             
             return QueryResponse(
                 status="success",

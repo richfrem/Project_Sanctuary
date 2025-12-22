@@ -35,7 +35,29 @@ from mcp_servers.gateway.gateway_client import (
 )
 from mcp_servers.gateway.fleet_orchestrator import run_discovery
 from mcp_servers.gateway.fleet_spec import FLEET_SPEC
+from mcp_servers.lib.utils.env_helper import get_env_variable
 import json
+import subprocess
+
+def ensure_gateway_connection():
+    """Ensure mcpgateway is connected to the fleet network."""
+    print_header("NETWORK CHECK")
+    try:
+        # Check if connected
+        check = subprocess.run(
+            ["podman", "network", "inspect", "mcp_network"], 
+            capture_output=True, text=True
+        )
+        if "mcpgateway" not in check.stdout:
+            print("🔗 Connecting mcpgateway to mcp_network...")
+            subprocess.run(
+                ["podman", "network", "connect", "mcp_network", "mcpgateway"],
+                check=False  # Don't crash if already connected/failed
+            )
+        else:
+            print("✅ Gateway already on network")
+    except Exception as e:
+        print(f"⚠️  Network check warning: {e}")
 
 def print_header(title: str):
     """Print a formatted section header."""
@@ -112,6 +134,9 @@ def main():
     print(f"Clean: {args.clean}")
     print(f"Verify: {args.verify}")
     print(f"Server: {args.server or 'ALL'}")
+    
+    # Step 0: Ensure Network Connectivity
+    ensure_gateway_connection()
     
     # Step 1: Clean (if requested)
     if args.clean:

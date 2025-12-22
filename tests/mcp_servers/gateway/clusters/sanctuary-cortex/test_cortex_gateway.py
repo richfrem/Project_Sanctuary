@@ -26,10 +26,10 @@ def test_cortex_gateway_connection(client):
 @pytest.mark.integration
 @pytest.mark.gateway
 @pytest.mark.parametrize("tool, args", [
-    ("sanctuary_cortex-cortex-get-stats", {}),
-    ("sanctuary_cortex-cortex-cache-stats", {}),
-    ("sanctuary_cortex-cortex-query", {"query": "What is Protocol 101?", "max_results": 3}),
-    ("sanctuary_cortex-query-model", {"prompt": "What is Project Sanctuary?"}),
+    ("sanctuary-cortex-cortex-get-stats", {}),
+    ("sanctuary-cortex-cortex-cache-stats", {}),
+    ("sanctuary-cortex-cortex-query", {"query": "What is Protocol 101?", "max_results": 3}),
+    ("sanctuary-cortex-query-sanctuary-model", {"prompt": "What is Project Sanctuary?"}),
 ])
 def test_cortex_rpc_execution(client, tool, args):
     """

@@ -38,19 +38,20 @@ CORTEX_CACHE_DIR=mcp_servers/cognitive/cortex/data/cache
 ```
 
 ### MCP Config
-Add this to your `mcp_config.json`:
+The canonical configuration for Antigravity/Claude Desktop uses the project-root virtual environment:
 
 ```json
-"cortex": {
-  "command": "uv",
+"rag_cortex": {
+  "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
   "args": [
-    "--directory",
-    "mcp_servers/cognitive/cortex",
-    "run",
-    "server.py"
+    "-m",
+    "mcp_servers.rag_cortex.server"
   ],
   "env": {
-    "PYTHONPATH": "${PYTHONPATH}:${PWD}"
+    "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+    "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+    "CHROMA_HOST": "127.0.0.1",
+    "CHROMA_PORT": "8110"
   }
 }
 ```
@@ -179,12 +180,31 @@ Generate Guardian boot digest from cached bundles (Protocol 114).
 cortex_guardian_wakeup()
 ```
 
-## Installation
+## Installation & Synchronization
 
-1. Install dependencies:
+RAG Cortex operates in a **Side-by-Side Architecture**. To ensure stability, dependencies must be installed in the project-root virtual environment.
+
+### 1. Local .venv Setup (Native Mode)
 ```bash
-pip install -r requirements.txt
+# Navigate to project root
+cd /Users/richardfremmerlid/Projects/Project_Sanctuary
+
+# Activate the venv
+source .venv/bin/activate
+
+# Install requirements
+pip install -r mcp_servers/rag_cortex/requirements.txt
 ```
+
+### 2. Synchronization Warning
+If you add a new library (e.g., `langchain-huggingface`), you **must** update both the local `.venv` AND the containerized cluster:
+- **Local**: `pip install <package>` (as above)
+- **Container**: Update `mcp_servers/gateway/clusters/sanctuary_cortex/requirements.txt` and run `podman compose build sanctuary_cortex`.
+
+### 3. Verification Checklist
+- [x] `.venv` exists in project root.
+- [x] `pip list` contains `langchain-huggingface`, `sentence-transformers`, and `chromadb`.
+- [x] `CHROMA_HOST` in `.env` is set correctly for your mode (127.0.0.1 for native, `vector_db` for container).
 
 2. Configure MCP server in `~/.gemini/antigravity/mcp_config.json`:
 ```json
@@ -240,7 +260,7 @@ cortex_ingest_full()
 
 - **ChromaDB:** Vector database
 - **LangChain:** RAG framework
-- **NomicEmbeddings:** Local embedding model
+- **HuggingFaceEmbeddings:** Local embedding model (nomic-ai/nomic-embed-text-v1.5)
 - **FastMCP:** MCP server framework
 
 ## Related Documentation

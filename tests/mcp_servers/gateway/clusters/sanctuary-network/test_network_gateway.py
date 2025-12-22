@@ -26,8 +26,8 @@ def test_network_gateway_connection(client):
 @pytest.mark.integration
 @pytest.mark.gateway
 @pytest.mark.parametrize("tool, args", [
-    ("sanctuary_network-fetch_url", {"url": "https://httpbin.org/get"}),
-    ("sanctuary_network-check_site_status", {"url": "https://example.com"}),
+    ("sanctuary-network-fetch-url", {"url": "https://httpbin.org/get"}),
+    ("sanctuary-network-check-site-status", {"url": "https://example.com"}),
 ])
 def test_network_rpc_execution(client, tool, args):
     """

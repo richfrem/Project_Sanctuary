@@ -27,7 +27,8 @@ import time
 from pathlib import Path
 from tests.mcp_servers.base.base_e2e_test import BaseE2ETest
 
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
+from mcp_servers.lib.utils.path_utils import find_project_root
+PROJECT_ROOT = Path(find_project_root())
 
 @pytest.mark.e2e
 class TestRAGCortexE2E(BaseE2ETest):

@@ -15,8 +15,7 @@ def mock_cortex_deps():
          patch("langchain.storage.LocalFileStore") as mock_lfs, \
          patch("langchain.storage._lc_store.create_kv_docstore") as mock_kv, \
          patch("langchain.retrievers.ParentDocumentRetriever") as mock_pdr, \
-         patch("langchain_nomic.NomicEmbeddings") as mock_nomic, \
-         patch("langchain_nomic.NomicEmbeddings") as mock_nomic, \
+         patch("langchain_huggingface.HuggingFaceEmbeddings") as mock_embeddings, \
          patch("mcp_servers.rag_cortex.operations.DirectoryLoader") as mock_dir_loader, \
          patch("mcp_servers.rag_cortex.operations.TextLoader") as mock_text_loader, \
          patch("langchain_text_splitters.RecursiveCharacterTextSplitter") as mock_splitter:
@@ -33,7 +32,7 @@ def mock_cortex_deps():
             "lfs": mock_lfs,
             "kv": mock_kv,
             "pdr": mock_pdr,
-            "nomic": mock_nomic,
+            "embeddings": mock_embeddings,
             "dir_loader": mock_dir_loader,
             "text_loader": mock_text_loader,
             "splitter": mock_splitter

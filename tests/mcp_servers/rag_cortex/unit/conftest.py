@@ -56,12 +56,12 @@ def mock_missing_modules():
         # Create mock modules
         mock_storage = MagicMock()
         mock_retrievers = MagicMock()
-        mock_nomic = MagicMock()
+        mock_huggingface = MagicMock()
         mock_chroma = MagicMock()
         
         sys.modules["langchain.storage"] = mock_storage
         sys.modules["langchain.retrievers"] = mock_retrievers
-        sys.modules["langchain_nomic"] = mock_nomic
+        sys.modules["langchain_huggingface"] = mock_huggingface
         sys.modules["langchain_chroma"] = mock_chroma
         
         yield

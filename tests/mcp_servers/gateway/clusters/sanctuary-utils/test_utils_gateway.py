@@ -27,9 +27,9 @@ def test_utils_gateway_connection(client):
 @pytest.mark.integration
 @pytest.mark.gateway
 @pytest.mark.parametrize("tool, args", [
-    ("sanctuary_utils-calculator-add", {"a": 10, "b": 5}),
-    ("sanctuary_utils-time-get-current-time", {}),
-    ("sanctuary_utils-uuid-generate-uuid4", {}),
+    ("sanctuary-utils-calculator-add", {"a": 10, "b": 5}),
+    ("sanctuary-utils-time-get-current-time", {}),
+    ("sanctuary-utils-uuid-generate-uuid4", {}),
 ])
 def test_utils_rpc_execution(client, tool, args):
     """
@@ -51,7 +51,7 @@ def test_utils_rpc_execution(client, tool, args):
 @pytest.mark.gateway
 def test_utils_invalid_tool(client):
     """Verify Gateway handles non-existent tools gracefully."""
-    res = client.call("sanctuary_utils-invalid-tool", {})
+    res = client.call("sanctuary-utils-invalid-tool", {})
     assert not res["success"], "Gateway should have rejected invalid tool name."
     assert "error" in res
 

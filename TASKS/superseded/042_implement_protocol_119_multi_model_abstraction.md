@@ -18,7 +18,7 @@ This task has been **superseded by T094** which implemented the multi-model abst
 1. ✅ **Model Abstraction Layer:** Already existed (`LLMClient` abstract base class in `agent_persona/llm_client.py`)
 2. ✅ **Provider Adapters:** `OllamaClient`, `OpenAIClient` implementations
 3. ✅ **Model Router:** `model_preference` parameter enables polymorphic routing:
-   - `model_preference='OLLAMA'` → Routes to `http://ollama-model-mcp:11434` (Protocol 116)
+   - `model_preference='OLLAMA'` → Routes to `http://ollama_model_mcp:11434` (Protocol 116)
    - `model_preference='GEMINI'` → Routes to Gemini API
    - `model_preference='GPT'` → Routes to OpenAI API
 

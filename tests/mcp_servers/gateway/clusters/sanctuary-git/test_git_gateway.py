@@ -2,9 +2,9 @@ import pytest
 from tests.mcp_servers.gateway.gateway_test_client import GatewayTestClient
 
 #=============================================================================
-# TIER 3 (BRIDGE) VERIFICATION: sanctuary_filesystem
+# TIER 3 (BRIDGE) VERIFICATION: sanctuary_git
 #=============================================================================
-# This test suite verifies the Gateway-to-Server bridge for filesystem logic.
+# This test suite verifies the Gateway-to-Server bridge for git logic.
 # It uses the centralized GatewayTestClient for RPC execution.
 #=============================================================================
 
@@ -15,25 +15,24 @@ def client():
 
 @pytest.mark.integration
 @pytest.mark.gateway
-def test_filesystem_gateway_connection(client):
-    """Verify the Gateway can reach the sanctuary_filesystem cluster."""
+def test_git_gateway_connection(client):
+    """Verify the Gateway can reach the sanctuary_git cluster."""
     assert client.health_check(), "Gateway heartbeat failed."
     
-    tools_res = client.list_tools(gateway_slug="sanctuary_filesystem")
-    assert tools_res["success"], f"Failed to list tools for sanctuary_filesystem: {tools_res.get('error')}"
-    assert tools_res["count"] > 0, "No tools discovered for sanctuary_filesystem."
+    tools_res = client.list_tools(gateway_slug="sanctuary_git")
+    assert tools_res["success"], f"Failed to list tools for sanctuary_git: {tools_res.get('error')}"
+    assert tools_res["count"] > 0, "No tools discovered for sanctuary_git."
 
 @pytest.mark.integration
 @pytest.mark.gateway
 @pytest.mark.parametrize("tool, args", [
-    ("sanctuary_filesystem-code-list-files", {"path": "."}),
-    ("sanctuary_filesystem-code-read", {"path": "README.md"}),
-    ("sanctuary_filesystem-code-analyze", {"path": "."}),
-    ("sanctuary_filesystem-code-check-tools", {}),
+    ("sanctuary-git-git-get-status", {}),
+    ("sanctuary-git-git-log", {"max_count": 5}),
+    ("sanctuary-git-git-diff", {}),
 ])
-def test_filesystem_rpc_execution(client, tool, args):
+def test_git_rpc_execution(client, tool, args):
     """
-    Verify RPC execution for filesystem tools via the Gateway bridge.
+    Verify RPC execution for git tools via the Gateway bridge.
     Target: Tier 3 (Bridge)
     """
     print(f"\n[RPC] Executing {tool}...")

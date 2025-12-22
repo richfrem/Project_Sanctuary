@@ -22,6 +22,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Optional
+from mcp_servers.lib.utils.path_utils import find_project_root
 
 
 def parse_python_to_markdown(file_path: str) -> str:
@@ -60,8 +61,9 @@ def parse_python_to_markdown(file_path: str) -> str:
     
     filename = file_path.name
     try:
-        relative_path = file_path.relative_to(Path.cwd()) if file_path.is_absolute() else file_path
-    except ValueError:
+        project_root = Path(find_project_root())
+        relative_path = file_path.relative_to(project_root) if file_path.is_absolute() else file_path
+    except (ValueError, RuntimeError):
         relative_path = file_path
     
     # Header acts like a file summary
@@ -185,8 +187,9 @@ def parse_javascript_to_markdown(file_path: Path) -> str:
         
     filename = file_path.name
     try:
-        relative_path = file_path.relative_to(Path.cwd()) if file_path.is_absolute() else file_path
-    except ValueError:
+        project_root = Path(find_project_root())
+        relative_path = file_path.relative_to(project_root) if file_path.is_absolute() else file_path
+    except (ValueError, RuntimeError):
         relative_path = file_path
         
     # Header

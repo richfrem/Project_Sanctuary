@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # Protocol 116: Ollama Service Endpoint
 # Default to localhost for host-based execution.
-# For container network, set OLLAMA_HOST=http://ollama-model-mcp:11434 in docker-compose.
+# For container network, set OLLAMA_HOST=http://ollama_model_mcp:11434 in docker-compose.
 OLLAMA_ENDPOINT = "http://127.0.0.1:11434"
 
 class LLMClient(ABC):

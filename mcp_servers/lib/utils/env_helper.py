@@ -12,6 +12,7 @@ This ensures consistency with docs/WSL_SECRETS_CONFIGURATION.md
 import os
 from typing import Optional
 from pathlib import Path
+from mcp_servers.lib.utils.path_utils import find_project_root
 
 
 def get_env_variable(key: str, required: bool = True) -> Optional[str]:
@@ -44,10 +45,8 @@ def get_env_variable(key: str, required: bool = True) -> Optional[str]:
     if not value:
         try:
             from dotenv import load_dotenv
-            # Compute project root from this file's location
-            # This file: Project_Sanctuary/mcp_servers/lib/utils/env_helper.py
-            # Project root: ../../../.. from this file
-            project_root = Path(__file__).resolve().parent.parent.parent.parent
+            # Use centralized path utility
+            project_root = Path(find_project_root())
             env_file = project_root / ".env"
             if env_file.exists():
                 load_dotenv(env_file)
@@ -65,3 +64,21 @@ def get_env_variable(key: str, required: bool = True) -> Optional[str]:
         )
     
     return value
+
+def load_env() -> bool:
+    """
+    Explicitly load .env file from project root.
+    
+    Returns:
+        True if loaded, False otherwise
+    """
+    try:
+        from dotenv import load_dotenv
+        project_root = Path(find_project_root())
+        env_file = project_root / ".env"
+        if env_file.exists():
+            load_dotenv(env_file)
+            return True
+    except ImportError:
+        pass
+    return False

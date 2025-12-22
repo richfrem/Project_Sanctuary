@@ -1264,7 +1264,7 @@ graph TB
         
         subgraph "External Services"
             Chroma[ChromaDB<br/>chroma-mcp<br/>Port: 8000]
-            Ollama[Ollama<br/>ollama-model-mcp<br/>Port: 11434]
+            Ollama[Ollama<br/>ollama_model_mcp<br/>Port: 11434]
         end
     end
     
@@ -1364,7 +1364,7 @@ services:
   
   ollama:
     image: ollama/ollama:latest
-    container_name: ollama-model-mcp
+    container_name: ollama_model_mcp
     ports:
       - "11434:11434"
     networks:

@@ -1,4 +1,3 @@
-
 """
 Cortex MCP Server
 Domain: project_sanctuary.cognitive.cortex
@@ -23,6 +22,10 @@ project_root = os.path.dirname(os.path.dirname(current_dir))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
+# Import Utilities (Requested)
+from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.utils.path_utils import find_project_root
+
 try:
     from mcp_servers.lib.sse_adaptor import SSEServer
 except ImportError:
@@ -44,7 +47,7 @@ _cortex_ops = None
 _cortex_validator = None
 _forge_ops = None
 _forge_validator = None
-PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 
 def get_ops():
     global _cortex_ops
@@ -336,7 +339,7 @@ server.register_tool("check_sanctuary_model_status", check_sanctuary_model_statu
 
 if __name__ == "__main__":
     # Ensure Containers are running
-    if not os.environ.get("SKIP_CONTAINER_CHECKS"):
+    if not get_env_variable("SKIP_CONTAINER_CHECKS", required=False):
         logger.info("Checking Container Services...")
 
         # 1. ChromaDB
@@ -360,7 +363,7 @@ if __name__ == "__main__":
     # Dual-mode support:
     # 1. If PORT is set -> Run as SSE (Gateway Mode)
     # 2. If PORT is NOT set -> Run as Stdio (Legacy Mode)
-    port_env = os.environ.get("PORT")
+    port_env = get_env_variable("PORT", required=False)
     transport = "sse" if port_env else "stdio"
     port = int(port_env) if port_env else 8004
     

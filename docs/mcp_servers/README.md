@@ -34,7 +34,7 @@ Project Sanctuary utilizes a unified **"Fleet of 8"** architecture, where core M
 
 ### Architecture Transition (Hybrid -> Unified)
 Previously, the system operated in a **Hybrid Model (ADR 060)**:
-*   **Containers (2)**: Only Heavy Infrastructure (`vector-db` via Chroma Image, `forge_llm` via Ollama Image) ran in Podman.
+*   **Containers (2)**: Only Heavy Infrastructure (`vector_db` via Chroma Image, `forge_llm` via Ollama Image) ran in Podman.
 *   **Stdio (10)**: All other logic (Git, Chronicle, Task, etc.) ran as local Python processes via `start_mcp_servers.py`.
 
 We have now moved to the **Unified Fleet Model (ADR 065)**:

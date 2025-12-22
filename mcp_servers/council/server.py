@@ -75,7 +75,7 @@ def council_dispatch(
     Example - Ollama Routing (Container Network - Protocol 116):
         result = council_dispatch(
             task_description="Analyze Protocol 116",
-            model_preference="OLLAMA"  # Routes to ollama-model-mcp:11434
+            model_preference="OLLAMA"  # Routes to ollama_model_mcp:11434
         )
     
     Example - Single Agent Consultation:

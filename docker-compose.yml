@@ -1,5 +1,5 @@
 services:
-  vector-db:
+  vector_db:
     image: chromadb/chroma:latest
     container_name: sanctuary_vector_db
     ports:
@@ -10,15 +10,18 @@ services:
     environment:
       - IS_PERSISTENT=TRUE
       - ANONYMIZED_TELEMETRY=FALSE
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat" ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
+    networks:
+      - mcp_network
 
-  ollama-model-mcp:
+  ollama_model_mcp:
     image: ollama/ollama:latest
     container_name: sanctuary_ollama_mcp
     ports:
@@ -27,9 +30,10 @@ services:
       # Mount point for models persisted on the host machine
       - ./ollama_models:/root/.ollama
     environment:
-      - OLLAMA_HOST=0.0.0.0
-      # Use OLLAMA_MODEL from the host environment if available, otherwise default
-      - OLLAMA_MODEL=${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest}
+      - OLLAMA_HOST=0.0.0.0 # Use OLLAMA_MODEL from the host environment if available, otherwise default
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M}
+    networks:
+      - mcp_network
     entrypoint: [ "/bin/sh", "-c" ]
     command:
       - |
@@ -50,7 +54,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - mcp-network
+      - mcp_network
     environment:
       - PORT=8000
       - PYTHONPATH=/app
@@ -76,7 +80,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - mcp-network
+      - mcp_network
     environment:
       - PORT=8000
       - PROJECT_ROOT=/app
@@ -101,7 +105,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - mcp-network
+      - mcp_network
     environment:
       - PORT=8000
       - PYTHONPATH=/app
@@ -125,7 +129,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - mcp-network
+      - mcp_network
     environment:
       - PORT=8000
       - PYTHONPATH=/app
@@ -152,16 +156,16 @@ services:
       - PROJECT_ROOT=/app
       - PYTHONPATH=/app
       - PORT=8000
-      - CHROMA_DB_HOST=sanctuary_vector_db
-      - CHROMA_DB_PORT=8000
-      - OLLAMA_HOST=http://sanctuary_ollama_mcp:11434
+      - CHROMA_HOST=vector_db
+      - CHROMA_PORT=8000
+      - OLLAMA_HOST=http://ollama_model_mcp:11434
       - MCP_GATEWAY_URL=https://mcpgateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     networks:
-      - mcp-network
+      - mcp_network
     depends_on:
-      - vector-db
-      - ollama-model-mcp
+      - vector_db
+      - ollama_model_mcp
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_cortex.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
@@ -182,7 +186,7 @@ services:
       # Mount project root to allow tools to access all files (linting, etc.)
       - .:/app
     networks:
-      - mcp-network
+      - mcp_network
     environment:
       - PROJECT_ROOT=/app
       - DOMAIN_SERVER_PORT=8105
@@ -197,5 +201,6 @@ services:
     restart: unless-stopped
 
 networks:
-  mcp-network:
+  mcp_network:
     driver: bridge
+    name: mcp_network

@@ -66,7 +66,7 @@ Before testing orchestration, verify infrastructure **bottom-up**:
 
 ```bash
 # Start Podman services
-podman compose up -d vector-db ollama-model-mcp
+podman compose up -d vector_db ollama_model_mcp
 
 # Verify services
 podman ps --filter "name=sanctuary"
@@ -189,7 +189,7 @@ sequenceDiagram
 | `Failed to connect to Ollama` | Ollama not running or wrong host | Check `OLLAMA_HOST` in `.env`, verify `curl localhost:11434` |
 | `Collection does not exist` | ChromaDB empty | Run `cortex_ingest_full` |
 | `No results` from query | Database not ingested | Run full ingestion script |
-| Container port conflict | Host Ollama + Container | Stop one: `podman compose stop ollama-model-mcp` |
+| Container port conflict | Host Ollama + Container | Stop one: `podman compose stop ollama_model_mcp` |
 
 ---
 

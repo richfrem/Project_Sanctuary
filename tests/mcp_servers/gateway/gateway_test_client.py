@@ -33,7 +33,6 @@ if str(project_root) not in sys.path:
 
 from mcp_servers.lib.utils.env_helper import get_env_variable
 from mcp_servers.gateway.gateway_client import (
-    GatewayClient,
     GatewayConfig,
     get_session,
     execute_mcp_tool,

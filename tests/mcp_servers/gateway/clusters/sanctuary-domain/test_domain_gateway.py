@@ -26,13 +26,13 @@ def test_domain_gateway_connection(client):
 @pytest.mark.integration
 @pytest.mark.gateway
 @pytest.mark.parametrize("tool, args", [
-    ("sanctuary_domain-adr-list", {}),
-    ("sanctuary_domain-adr-search", {"query": "Protocol"}),
-    ("sanctuary_domain-chronicle-list-entries", {"limit": 1}),
-    ("sanctuary_domain-protocol-list", {}),
-    ("sanctuary_domain-list-tasks", {"status": "in-progress"}),
-    ("sanctuary_domain-persona-list-roles", {}),
-    ("sanctuary_domain-config-list", {}),
+    ("sanctuary-domain-adr-list", {}),
+    ("sanctuary-domain-adr-search", {"query": "Protocol"}),
+    ("sanctuary-domain-chronicle-list-entries", {"limit": 1}),
+    ("sanctuary-domain-protocol-list", {}),
+    ("sanctuary-domain-list-tasks", {"status": "in-progress"}),
+    ("sanctuary-domain-persona-list-roles", {}),
+    ("sanctuary-domain-config-list", {}),
 ])
 def test_domain_rpc_execution(client, tool, args):
     """
