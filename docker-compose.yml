@@ -135,6 +135,11 @@ services:
       - PYTHONPATH=/app
       - MCP_GATEWAY_URL=https://mcpgateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME:-Sanctuary Agent}
+      - GIT_AUTHOR_EMAIL=${GIT_AUTHOR_EMAIL:-agent@sanctuary.project}
+      - GIT_COMMITTER_NAME=${GIT_AUTHOR_NAME:-Sanctuary Agent}
+      - GIT_COMMITTER_EMAIL=${GIT_AUTHOR_EMAIL:-agent@sanctuary.project}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_git.server" ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]

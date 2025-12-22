@@ -47,7 +47,7 @@ def temp_repo():
         os.chdir(test_dir)
         
         # Init repo
-        subprocess.run(["git", "init"], check=True, capture_output=True)
+        subprocess.run(["git", "init", "--initial-branch=main"], check=True, capture_output=True)
         subprocess.run(["git", "config", "user.email", "test@sanctuary.ai"], check=True)
         subprocess.run(["git", "config", "user.name", "Integration Test"], check=True)
         subprocess.run(["git", "config", "init.defaultBranch", "main"], check=True)
