@@ -19,10 +19,10 @@ torchaudio==2.9.1+cu126
 # Pinned to a known-good, compatible set.
 transformers>=4.53.0
 peft==0.18.0
-trl==0.26.1
+trl==0.26.2
 bitsandbytes==0.49.0
 triton>=2.3.0
-datasets==4.4.1
+datasets==4.4.2
 accelerate==1.12.0
 xformers
 llama-cpp-python
