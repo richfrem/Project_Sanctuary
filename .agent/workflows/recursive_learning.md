@@ -1,0 +1,49 @@
+---
+description: "Standard operating procedure for the Protocol 125 Recursive Learning Loop (Discover -> Synthesize -> Ingest -> Validate -> Chronicle)."
+---
+
+# Recursive Learning Loop (Protocol 125)
+
+**Objective:** Autonomous acquisition and preservation of new knowledge.
+**Reference:** `01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md`
+**Tools:** Web Search, Code MCP, RAG Cortex, Chronicle
+
+## Phase 1: Discovery
+1.  **Define Research Question:** What exactly are we learning? (e.g., "Latest features of library X")
+2.  **Search:** Use `search_web` to find authoritative sources.
+3.  **Read:** Use `read_url_content` to ingest raw data.
+4.  **Analyze:** Extract key facts, code snippets, and architectural patterns.
+
+## Phase 2: Synthesis
+1.  **Context Check:** Use `code_read` to check existing topic notes (e.g., `LEARNING/topics/...`).
+2.  **Conflict Resolution:**
+    *   New confirms old? > Update/Append.
+    *   New contradicts old? > Create `disputes.md` (Resolution Protocol).
+3.  **Draft Artifacts:** Create the new Markdown note locally using `code_write`.
+    *   **Must** include YAML frontmatter (id, type, status, last_verified).
+
+## Phase 3: Ingestion
+1.  **Ingest:** Use `cortex_ingest_incremental` targeting the new file(s).
+2.  **Wait:** Pause for 2-3 seconds for vector indexing.
+
+## Phase 4: Validation
+1.  **Retrieval Test:** Use `cortex_query` with the original question.
+2.  **Semantic Check:** Does the retrieved context allow you to answer the question accurately?
+    *   *If NO:* Refactor the note (better headers, chunks) and retry Phase 3.
+    *   *If YES:* Proceed.
+
+## Phase 5: Chronicle
+1.  **Log:** Use `chronicle_create_entry` (Classification: INTERNAL).
+2.  **Content:**
+    *   Topic explored.
+    *   Key findings.
+    *   Files created/modified.
+    *   Validation Status: PASS.
+    *   Reference Protocol 125.
+3.  **Status:** PUBLISHED (or CANONICAL if critical).
+
+## Phase 6: Maintenance (Gardener)
+*   *Optional:* If this session modified >3 files, run a quick "Gardener Scan" on the topic folder to ensure links are valid.
+
+---
+// End of Workflow
