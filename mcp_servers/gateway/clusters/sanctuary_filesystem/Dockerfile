@@ -6,6 +6,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     git \
+    git-lfs \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up build context structure

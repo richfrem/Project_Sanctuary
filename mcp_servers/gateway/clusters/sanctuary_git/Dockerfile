@@ -7,7 +7,11 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install git and curl
-RUN apt-get update && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    git \
+    git-lfs \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
