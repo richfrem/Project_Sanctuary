@@ -166,7 +166,8 @@ mcp_config/
 # !dataset_package/all_markdown_snapshot_llm_distilled.txt
 # !dataset_package/core_essence_auditor_awakening_seed.txt
 # !dataset_package/core_essence_coordinator_awakening_seed.txt
-# !dataset_package/core_essence_strategist_awakening_seed.txtdata/cortex/chroma_db/
+# !dataset_package/core_essence_strategist_awakening_seed.txt
 data/cortex/chroma_db/
 data/cortex/cache/
-tests/verify_wslenv_setup.pymcp_config.json
+tests/verify_wslenv_setup.py
+mcp_config.json
