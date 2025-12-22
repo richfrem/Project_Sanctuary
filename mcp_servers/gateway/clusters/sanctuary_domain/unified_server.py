@@ -33,6 +33,7 @@ from mcp_servers.adr.operations import ADROperations
 from mcp_servers.code.code_ops import CodeOperations
 from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
 from mcp_servers.config.config_ops import ConfigOperations
+from mcp_servers.workflow.operations import WorkflowOperations
 
 # Initialize FastMCP
 mcp = FastMCP("project_sanctuary.domain")
@@ -53,7 +54,10 @@ adr_ops = ADROperations(ADRS_DIR)
 code_ops = CodeOperations(PROJECT_ROOT)
 persona_ops = AgentPersonaOperations()
 CONFIG_DIR = os.path.join(PROJECT_ROOT, ".agent/config")
+CONFIG_DIR = os.path.join(PROJECT_ROOT, ".agent/config")
 config_ops = ConfigOperations(CONFIG_DIR)
+WORKFLOW_DIR = os.path.join(PROJECT_ROOT, ".agent/workflows")
+workflow_ops = WorkflowOperations(Path(WORKFLOW_DIR))
 
 # =============================================================================
 # CHRONICLE TOOLS
@@ -589,6 +593,38 @@ def config_delete(filename: str) -> str:
         return f"Successfully deleted config '{filename}'"
     except Exception as e:
         return f"Error deleting config '{filename}': {str(e)}"
+
+# =============================================================================
+# WORKFLOW TOOLS
+# =============================================================================
+
+@mcp.tool()
+def get_available_workflows() -> str:
+    """List all available workflows in the .agent/workflows directory."""
+    try:
+        workflows = workflow_ops.list_workflows()
+        if not workflows:
+            return "No workflows found in .agent/workflows."
+        
+        output = [f"Found {len(workflows)} available workflow(s):"]
+        for wf in workflows:
+            turbo = " [TURBO]" if wf.get('turbo_mode') else ""
+            output.append(f"- {wf['filename']}{turbo}: {wf['description']}")
+        
+        return "\n".join(output)
+    except Exception as e:
+        return f"Error listing workflows: {str(e)}"
+
+@mcp.tool()
+def read_workflow(filename: str) -> str:
+    """Read the content of a specific workflow file."""
+    try:
+        content = workflow_ops.get_workflow_content(filename)
+        if content is None:
+            return f"Workflow '{filename}' not found."
+        return content
+    except Exception as e:
+        return f"Error reading workflow: {str(e)}"
 
 # =============================================================================
 # PYTHON DEV TOOLS (from Code MCP)

@@ -1397,6 +1397,26 @@ class CortexOperations:
         except Exception:
             return "⚠️ Podman Check Failed"
 
+    def _get_available_workflows_summary(self) -> str:
+        """
+        Get summary of available workflows from .agent/workflows.
+        """
+        try:
+            workflow_dir = self.project_root / ".agent" / "workflows"
+            if not workflow_dir.exists():
+                return "* No workflows defined."
+            
+            workflows = []
+            for f in workflow_dir.glob("*.md"):
+                workflows.append(f.name)
+            
+            if not workflows:
+                return "* No workflows found."
+            
+            return "\n".join([f"* `{w}`" for w in sorted(workflows)])
+        except Exception as e:
+            return f"Error listing workflows: {e}"
+
     def guardian_wakeup(self, mode: str = "HOLISTIC"):
         """
         Generate Guardian boot digest (Context Synthesis Engine).
@@ -1461,6 +1481,11 @@ class CortexOperations:
             digest_lines.append("## IV. Successor-State Poka-Yoke")
             digest_lines.append("* **Mandatory Context:** Verified")
             digest_lines.append("* **MCP Tool Guidance:** [Available via `cortex_cache_get`]")
+            digest_lines.append("")
+            
+            # V. Available Workflows (Protocol 127)
+            digest_lines.append("## V. Available Workflows")
+            digest_lines.append(self._get_available_workflows_summary())
             digest_lines.append("")
             digest_lines.append("// This briefing is the single source of context for the LLM session.")
 
