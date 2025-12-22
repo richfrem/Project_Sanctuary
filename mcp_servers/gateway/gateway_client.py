@@ -566,10 +566,14 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Gateway Client CLI")
     parser.add_argument("command", nargs="?", default="pulse",
-                       choices=["pulse", "tools", "servers", "register", "status"],
+                       choices=["pulse", "tools", "servers", "register", "status", "execute"],
                        help="Command to run (default: pulse)")
     parser.add_argument("--server", "-s", type=str, default=None,
                        help="Server name to filter/operate on")
+    parser.add_argument("--tool", "-t", type=str, default=None,
+                       help="Tool name to execute")
+    parser.add_argument("--args", "-a", type=str, default="{}",
+                       help="Tool arguments as JSON string")
     parser.add_argument("--verbose", "-v", action="store_true",
                        help="Verbose output")
     
@@ -595,6 +599,28 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"❌ Connection: FAILED ({e})")
                 sys.exit(1)
+
+    elif args.command == "execute":
+        # Test execute_mcp_tool
+        if not args.tool:
+            print("❌ --tool required for execute command")
+            sys.exit(1)
+            
+        try:
+            tool_args = json.loads(args.args)
+        except json.JSONDecodeError:
+            print("❌ Invalid JSON for --args")
+            sys.exit(1)
+            
+        print(f"🚀 Executing {args.tool} with {tool_args}...")
+        result = execute_mcp_tool(args.tool, tool_args, config=config)
+        
+        if result["success"]:
+            print("✅ Result:")
+            print(json.dumps(result["result"], indent=2))
+        else:
+            print(f"❌ Failed: {result.get('error')}")
+            sys.exit(1)
 
     elif args.command == "tools":
         # Test get_mcp_tools

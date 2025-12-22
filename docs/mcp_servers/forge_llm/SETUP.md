@@ -59,14 +59,14 @@ Ensure your `.env` file contains the Ollama configuration:
 ```bash
 # Model Context Protocol (Model MCP) Configuration - Network Connection
 # Ollama runs as a Podman container service (see docker-compose.yml)
-# Use 'localhost' for local development, 'ollama-model-mcp' for docker-compose networking
+# Use 'localhost' for local development, 'ollama_model_mcp' for docker-compose networking
 OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=Sanctuary-Qwen2-7B:latest
 ```
 
 > [!IMPORTANT]
 > **Critical Configuration**: Set `OLLAMA_HOST=http://localhost:11434` in your `.env` file for local development.
-> For inter-container communication (e.g., from other services in docker-compose), use `http://ollama-model-mcp:11434`.
+> For inter-container communication (e.g., from other services in docker-compose), use `http://ollama_model_mcp:11434`.
 
 ---
 
@@ -78,16 +78,16 @@ Using Docker Compose (recommended):
 
 ```bash
 # Start both critical MCP services (unified application stack)
-docker-compose up -d vector-db ollama-model-mcp
+docker-compose up -d vector_db ollama_model_mcp
 ```
 
 > [!IMPORTANT]
-> **Unified Launch**: This command starts both the RAG Cortex (vector-db) and Forge LLM (ollama-model-mcp) services together. Both services are required for the complete MCP infrastructure.
+> **Unified Launch**: This command starts both the RAG Cortex (vector_db) and Forge LLM (ollama_model_mcp) services together. Both services are required for the complete MCP infrastructure.
 
 Or using Podman Compose:
 
 ```bash
-podman-compose up -d vector-db ollama-model-mcp
+podman-compose up -d vector_db ollama_model_mcp
 ```
 
 ### Step 2: Verify Service Health
@@ -151,7 +151,7 @@ podman run -d \
 
 ```bash
 # Start both MCP services (recommended)
-docker-compose up -d vector-db ollama-model-mcp
+docker-compose up -d vector_db ollama_model_mcp
 # or start individual services
 docker start sanctuary_ollama_mcp
 # or
@@ -308,7 +308,7 @@ OLLAMA_MODEL=mistral:latest
 Then restart the service:
 
 ```bash
-docker-compose restart ollama-model-mcp
+docker-compose restart ollama_model_mcp
 ```
 
 ### Resource Limits
@@ -317,7 +317,7 @@ Add resource constraints to `docker-compose.yml`:
 
 ```yaml
 services:
-  ollama-model-mcp:
+  ollama_model_mcp:
     # ... existing config ...
     deploy:
       resources:

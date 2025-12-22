@@ -27,6 +27,7 @@ from pathlib import Path
 
 from tests.mcp_servers.base.base_integration_test import BaseIntegrationTest
 from mcp_servers.rag_cortex.operations import CortexOperations
+from mcp_servers.lib.utils.env_helper import get_env_variable
 
 
 class TestCortexOperations(BaseIntegrationTest):
@@ -36,9 +37,15 @@ class TestCortexOperations(BaseIntegrationTest):
     """
     
     def get_required_services(self):
+        chroma_host = get_env_variable("CHROMA_HOST", required=False) or "127.0.0.1"
+        chroma_port = int(get_env_variable("CHROMA_PORT", required=False) or "8110")
+        
+        # Ollama is NOT required for RAG operations (Local Nomic used)
+        # But it is required for Forge/Reasoning tools in the same server.
+        # For this specific test suite, we only focus on Cortex (RAG).
+        
         return [
-            ("localhost", 8000, "ChromaDB"),
-            ("localhost", 11434, "Ollama")
+            (chroma_host, chroma_port, "ChromaDB")
         ]
 
     @pytest.fixture
@@ -49,14 +56,18 @@ class TestCortexOperations(BaseIntegrationTest):
         project_root.mkdir()
         
         # Create necessary subdirectories
-        (project_root / ".env").write_text("CHROMA_HOST=localhost\nCHROMA_PORT=8000\n")
+        chroma_host = get_env_variable("CHROMA_HOST", required=False) or "127.0.0.1"
+        chroma_port = get_env_variable("CHROMA_PORT", required=False) or "8110"
+        
+        env_content = f"CHROMA_HOST={chroma_host}\nCHROMA_PORT={chroma_port}\n"
+        (project_root / ".env").write_text(env_content)
         (project_root / "00_CHRONICLE").mkdir()
         (project_root / "01_PROTOCOLS").mkdir()
         (project_root / "TASKS").mkdir()
         
         # Connect to REAL ChromaDB (local server)
-        host = os.getenv("CHROMA_HOST", "localhost")
-        port = int(os.getenv("CHROMA_PORT", "8000"))
+        host = get_env_variable("CHROMA_HOST", required=False) or "127.0.0.1"
+        port = int(get_env_variable("CHROMA_PORT", required=False) or "8110")
         client = chromadb.HttpClient(host=host, port=port)
         
         ops = CortexOperations(str(project_root), client=client)
@@ -78,7 +89,8 @@ class TestCortexOperations(BaseIntegrationTest):
         # TEARDOWN: Delete test collections
         try:
             client.delete_collection(ops.child_collection_name)
-            client.delete_collection(ops.parent_collection_name)
+            # Parent documents are in the FileStore (folder), not a Chroma collection
+            # The cleanup of the tmp_path/project_root is handled by pytest
         except Exception as e:
             print(f"Warning: Failed to cleanup test collections: {e}")
 
@@ -87,8 +99,8 @@ class TestCortexOperations(BaseIntegrationTest):
         heartbeat = cortex_ops.chroma_client.heartbeat()
         assert heartbeat is not None
 
-    def test_ollama_embedding_generation(self, cortex_ops):
-        """Validate Ollama is generating real embeddings."""
+    def test_nomic_embedding_generation(self, cortex_ops):
+        """Validate Nomic (Local) is generating real embeddings."""
         text = "The quick brown fox jumps over the lazy dog."
         embedding = cortex_ops.embedding_model.embed_query(text)
         assert len(embedding) > 0
@@ -266,5 +278,51 @@ function renderDashboard(userId) {
              print(f"DEBUG (JS): Content retrieved:\n{content}")
              
         assert has_js_header or has_snippet, "Failed to retrieve JS structure/content"
+
+    def test_python_structural_search(self, cortex_ops):
+        """
+        Verify that we can search for specific Python structural elements 
+        (signatures and docstrings) extracted by the ingest_code_shim.
+        """
+        print("\nTesting Python Structural Search...")
+        
+        # 1. Create a specialized Python file
+        logic_dir = cortex_ops.project_root / "logic"
+        logic_dir.mkdir()
+        
+        py_code = '''
+def handle_mnemonic_cascade(sequence_id: str, intensity_threshold: float = 0.85):
+    """
+    Handles a high-intensity mnemonic cascade event.
+    
+    This function specifically looks for the intensity_threshold 
+    to trigger Protocol 121.
+    """
+    if intensity_threshold > 0.85:
+        return f"Cascade {sequence_id} active"
+    return "Normal"
+'''
+        (logic_dir / "cascade.py").write_text(py_code, encoding="utf-8")
+        
+        # 2. Ingest
+        cortex_ops.ingest_full(purge_existing=True, source_directories=["logic"])
+        
+        # 3. Query for specific signature concepts
+        print("Searching for specialized signature...")
+        # We query for terms present in the signature and docstring
+        q_res = cortex_ops.query("function handle_mnemonic_cascade intensity_threshold 0.85", max_results=1)
+        
+        assert len(q_res.results) > 0
+        content = q_res.results[0].content
+        
+        # 4. Verify the shim worked as expected
+        # It should have extracted the signature into a clear header
+        assert "handle_mnemonic_cascade" in content
+        assert "sequence_id: str" in content
+        assert "intensity_threshold: float = 0.85" in content
+        assert "Protocol 121" in content
+        print_success = lambda m: print(f"✓ {m}")
+        print_success("Successfully retrieved Python structural content via shim.")
+
 
 

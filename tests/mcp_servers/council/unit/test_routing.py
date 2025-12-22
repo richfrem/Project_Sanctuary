@@ -24,7 +24,7 @@ class TestOllamaClientProtocol116:
         """Verify default Ollama host uses container network addressing"""
         with patch.dict('os.environ', {}, clear=True):
             client = OllamaClient()
-            assert client.host == "http://ollama-model-mcp:11434"
+            assert client.host == "http://ollama_model_mcp:11434"
     
     def test_explicit_ollama_host_parameter(self):
         """Verify explicit ollama_host parameter takes precedence"""
@@ -44,7 +44,7 @@ class TestOllamaClientProtocol116:
         mock_logger.warning.assert_called_once()
         warning_msg = mock_logger.warning.call_args[0][0]
         assert "Protocol 116" in warning_msg
-        assert "ollama-model-mcp:11434" in warning_msg
+        assert "ollama_model_mcp:11434" in warning_msg
 
 
 class TestAgentPersonaModelPreference:
@@ -71,7 +71,7 @@ class TestAgentPersonaModelPreference:
         # Verify get_llm_client was called with ollama_host
         mock_get_client.assert_called_once()
         call_kwargs = mock_get_client.call_args[1]
-        assert call_kwargs['ollama_host'] == "http://ollama-model-mcp:11434"
+        assert call_kwargs['ollama_host'] == "http://ollama_model_mcp:11434"
     
     @patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client')
     @patch('mcp_servers.agent_persona.agent_persona_ops.Agent')

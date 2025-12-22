@@ -25,7 +25,7 @@ Integration and E2E tests require ChromaDB (port 8000) and optionally Ollama (po
 
 ```bash
 # Start required services
-podman compose up -d vector-db
+podman compose up -d vector_db
 ollama serve
 ```
 

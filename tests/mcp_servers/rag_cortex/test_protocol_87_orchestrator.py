@@ -10,8 +10,9 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 # Add project root to path
-project_root = Path(__file__).resolve().parent.parent.parent.parent
-sys.path.insert(0, str(project_root))
+from mcp_servers.lib.utils.path_utils import find_project_root
+project_root = find_project_root()
+sys.path.insert(0, project_root)
 
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.mcp_client import MCPClient
@@ -23,12 +24,12 @@ class TestProtocol87Orchestrator:
     @pytest.fixture
     def ops(self, tmp_path):
         """Create CortexOperations instance."""
-        return CortexOperations(str(project_root))
+        return CortexOperations(project_root)
     
     @pytest.fixture
     def mcp_client(self):
         """Create MCPClient instance."""
-        return MCPClient(str(project_root))
+        return MCPClient(project_root)
     
     def test_parse_protocol_query(self, ops):
         """Test parsing Protocol 87 query string."""

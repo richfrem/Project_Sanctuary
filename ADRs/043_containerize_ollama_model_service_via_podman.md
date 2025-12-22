@@ -31,7 +31,7 @@ We will run the Ollama model service as a containerized service via Podman/Docke
 
 **Implementation (Task T093):**
 
-1. Add `ollama-model-mcp` service to docker-compose.yml with:
+1. Add `ollama_model_mcp` service to docker-compose.yml with:
    - Image: ollama/ollama:latest
    - Container name: sanctuary_ollama_mcp
    - Port mapping: 11434:11434
@@ -41,7 +41,7 @@ We will run the Ollama model service as a containerized service via Podman/Docke
 
 2. Configure environment variables:
    - OLLAMA_HOST=http://localhost:11434 (for host development)
-   - OLLAMA_HOST=http://ollama-model-mcp:11434 (for inter-container, per Protocol 122)
+   - OLLAMA_HOST=http://ollama_model_mcp:11434 (for inter-container, per Protocol 122)
 
 3. Update MCP servers to use container network addressing (enforced by T094)
 
@@ -56,7 +56,7 @@ We will run the Ollama model service as a containerized service via Podman/Docke
 - **Isolation:** Model service runs in isolated container environment, preventing conflicts with host system
 - **Portability:** Same container configuration works across development and production environments
 - **Resource Management:** Container-level resource limits (CPU, memory, GPU) can be enforced
-- **Network Isolation:** Service accessible via predictable network address (ollama-model-mcp:11434)
+- **Network Isolation:** Service accessible via predictable network address (ollama_model_mcp:11434)
 - **Data Persistence:** Model data persisted in ./ollama_models/ directory, survives container restarts
 - **Version Control:** Container image version pinned (ollama/ollama:latest), reproducible deployments
 

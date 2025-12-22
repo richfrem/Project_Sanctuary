@@ -31,7 +31,7 @@ Plan and execute the next phase of gateway integration: registering Project Sanc
 ## Notes
 
 **Current State:**
-- 2/12 MCP servers are containerized (ollama-model-mcp, vector-db/ChromaDB)
+- 2/12 MCP servers are containerized (ollama_model_mcp, vector_db/ChromaDB)
 - 10/12 MCP servers run via Python scripts
 - Gateway is accessible at localhost:4444 with API token auth
 - Basic connectivity tests passing (pulse, circuit breaker, handshake)

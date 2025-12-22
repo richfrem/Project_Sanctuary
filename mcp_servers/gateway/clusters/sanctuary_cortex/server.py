@@ -34,6 +34,8 @@ from .models import to_dict
 from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ollama_running
 from mcp_servers.forge_llm.operations import ForgeOperations
 from mcp_servers.forge_llm.validator import ForgeValidator
+from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.utils.path_utils import find_project_root
 
 # Initialize SSEServer
 server = SSEServer("sanctuary_cortex")
@@ -44,7 +46,7 @@ _cortex_ops = None
 _cortex_validator = None
 _forge_ops = None
 _forge_validator = None
-PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 
 def get_ops():
     global _cortex_ops
@@ -347,21 +349,22 @@ if __name__ == "__main__":
             logger.error(f"✗ {message}")
             logger.warning("RAG operations may fail without ChromaDB")
 
-        # 2. Ollama (for Embeddings/Reasoning)
+        # 2. Ollama (for Forge/Reasoning model)
         success, message = ensure_ollama_running(PROJECT_ROOT)
         if success:
             logger.info(f"✓ {message}")
         else:
             logger.error(f"✗ {message}")
-            logger.warning("Embedding/Reasoning operations may fail without Ollama")
+            logger.warning("Forge/Reasoning tools (query_sanctuary_model) will fail without Ollama")
     else:
         logger.info("Skipping container checks (SKIP_CONTAINER_CHECKS set)")
 
     # Dual-mode support:
     # 1. If PORT is set -> Run as SSE (Gateway Mode)
     # 2. If PORT is NOT set -> Run as Stdio (Legacy Mode)
-    port_env = os.environ.get("PORT")
+    port_env = get_env_variable("PORT", required=False)
     transport = "sse" if port_env else "stdio"
-    port = int(port_env) if port_env else 8004
+    # Default to 8104 as per canonical port plan
+    port = int(port_env) if port_env else int(get_env_variable("SANCTUARY_CORTEX_PORT", required=False) or 8104)
     
     server.run(port=port, transport=transport)

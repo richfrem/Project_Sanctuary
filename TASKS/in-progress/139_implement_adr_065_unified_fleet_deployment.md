@@ -70,7 +70,7 @@ Implement the Unified Fleet Deployment CLI (Iron Root Makefile) as defined in AD
 
 ### Phase 3: The Phoenix Test (Deployment) - COMPLETED ✅
 - [x] **Phase 3.1: Heavy Lift Verification**:
-      1. Brought up `vector-db` and `ollama-model-mcp` first.
+      1. Brought up `vector_db` and `ollama_model_mcp` first.
       2. Verified VectorDB endpoint (v2 heartbeat).
       3. Verified Ollama endpoint.
       4. Confirmed data persistence (volumes mounted correctly).
@@ -117,6 +117,23 @@ The `/tools` API endpoint had a default pagination limit of 50 items. With 84 to
 - sanctuary_utils: 16 tools ✅
 - **TOTAL: 84 tools** ✅
 
+### Phase 3.7: Fleet Network Resolution (CRITICAL) - COMPLETED ✅
+
+**Discovery Date:** 2025-12-21
+
+**Issue:**
+The Gateway (`mcpgateway`) and Fleet Containers (`sanctuary_*`) were physically isolated on different networks due to implicit network prefixing by Podman/Docker Compose (`project_sanctuary_mcp_network` vs `mcp_network`). Additionally, `vector_db` and `ollama_model_mcp` were on the default network, isolated from `sanctuary_cortex`.
+
+**Resolution:**
+1.  **Standardized Network Name**: Enforced `name: mcp_network` in `docker-compose.yml` to prevent prefixing. Sourced of truth is now explicitly `mcp_network`.
+2.  **Auto-Attach Logic**: Updated `mcp_servers/gateway/fleet_setup.py` to automatically detect and connect the external `mcpgateway` container to `mcp_network` before registration.
+3.  **Unified Fleet Network**: Updated `docker-compose.yml` to explicitly attach `vector_db` and `ollama_model_mcp` to `mcp_network`, solving the "Gateway can't reach VectorDB" connectivity failure.
+4.  **Environment Alignment**: Fixed `CHROMA_HOST` vs `CHROMA_DB_HOST` variable mismatch in `sanctuary_cortex`.
+
+**Verification:**
+- `cortex-get-stats` (Gateway Routed) ✅ Success (Connected to VectorDB)
+- `query-sanctuary-model` (Gateway Routed) ✅ Success (Connected to Ollama)
+
 ### Phase 4: Functional Verification - IN PROGRESS
 - [x] **Gateway Pulse**: Verified via CLI (`python -m mcp_servers.gateway.gateway_client pulse`)
 - [x] **Tools Check**: Verified via CLI (`python -m mcp_servers.gateway.gateway_client tools -v`)
@@ -141,8 +158,8 @@ The `/tools` API endpoint had a default pagination limit of 50 items. With 84 to
 1. Makefile ✅
 2. scripts/wait_for_pulse.sh ✅
 3. Updated PODMAN_STARTUP_GUIDE.md ✅
-4. Gateway Client CLI (gateway_client.py) ✅
 5. ADR-066 (FastMCP Standardization) ✅
+6. Fleet Setup Network Logic (Auto-attach mcpgateway) ✅
 
 ## 3. Acceptance Criteria
 
@@ -151,6 +168,7 @@ The `/tools` API endpoint had a default pagination limit of 50 items. With 84 to
 - [x] All 8 containers deploy successfully via 'make up'.
 - [x] All 6 logic containers register with Gateway.
 - [x] All 6 logic containers federate tools correctly (84 tools total).
+- [x] **Network**: Gateway verified attached to `mcp_network` (via fleet_setup.py).
 - [x] ADR 065 status updated to ACCEPTED.
 - [ ] ADR 066 status updated to ACCEPTED (optional - all servers working).
 - [ ] Phase 4 functional verification tests complete.
@@ -189,96 +207,96 @@ The following matrix maps the 12 legacy stdio MCP servers to their Gateway-feder
 
 | Legacy Server | Tool Name | Gateway Tool Slug | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
 |---------------|-----------|-------------------|--------|--------|--------|--------|
-| `mcp_adr` | `adr_list` | `sanctuary-domain-adr-list` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_adr` | `adr_get` | `sanctuary-domain-adr-get` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_adr` | `adr_create` | `sanctuary-domain-adr-create` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_adr` | `adr_search` | `sanctuary-domain-adr-search` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_adr` | `adr_update_status` | `sanctuary-domain-adr-update-status` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_chronicle` | `chronicle_list_entries` | `sanctuary-domain-chronicle-list-entries` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_chronicle` | `chronicle_create_entry` | `sanctuary-domain-chronicle-create-entry` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_chronicle` | `chronicle_get_entry` | `sanctuary-domain-chronicle-get-entry` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_chronicle` | `chronicle_search` | `sanctuary-domain-chronicle-search` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_task` | `list_tasks` | `sanctuary-domain-list-tasks` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_task` | `create_task` | `sanctuary-domain-create-task` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_task` | `get_task` | `sanctuary-domain-get-task` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_task` | `update_task_status` | `sanctuary-domain-update-task-status` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_protocol` | `protocol_list` | `sanctuary-domain-protocol-list` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_protocol` | `protocol_get` | `sanctuary-domain-protocol-get` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_config` | `config_list` | `sanctuary-domain-config-list` | ✅ | ✅ | ⏳ | ⏳ |
-| `mcp_config` | `config_read` | `sanctuary-domain-config-read` | ✅ | ✅ | ⏳ | ⏳ |
+| `mcp_adr` | `adr_list` | `sanctuary-domain-adr-list` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_adr` | `adr_get` | `sanctuary-domain-adr-get` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_adr` | `adr_create` | `sanctuary-domain-adr-create` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_adr` | `adr_search` | `sanctuary-domain-adr-search` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_adr` | `adr_update_status` | `sanctuary-domain-adr-update-status` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_chronicle` | `chronicle_list_entries` | `sanctuary-domain-chronicle-list-entries` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_chronicle` | `chronicle_create_entry` | `sanctuary-domain-chronicle-create-entry` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_chronicle` | `chronicle_get_entry` | `sanctuary-domain-chronicle-get-entry` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_chronicle` | `chronicle_search` | `sanctuary-domain-chronicle-search` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_task` | `list_tasks` | `sanctuary-domain-list-tasks` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_task` | `create_task` | `sanctuary-domain-create-task` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_task` | `get_task` | `sanctuary-domain-get-task` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_task` | `update_task_status` | `sanctuary-domain-update-task-status` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_protocol` | `protocol_list` | `sanctuary-domain-protocol-list` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_protocol` | `protocol_get` | `sanctuary-domain-protocol-get` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_config` | `config_list` | `sanctuary-domain-config-list` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_config` | `config_read` | `sanctuary-domain-config-read` | ✅ | ✅ | ✅ | ✅ |
 
 #### sanctuary_git (9 tools)
 
 | Legacy Server | Tool Name | Gateway Tool Slug | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
 |---------------|-----------|-------------------|--------|--------|--------|--------|
-| `mcp_git_workflow` | `git_get_status` | `sanctuary-git-git-get-status` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_add` | `sanctuary-git-git-add` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_smart_commit` | `sanctuary-git-git-smart-commit` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_push_feature` | `sanctuary-git-git-push-feature` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_start_feature` | `sanctuary-git-git-start-feature` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_finish_feature` | `sanctuary-git-git-finish-feature` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_diff` | `sanctuary-git-git-diff` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_log` | `sanctuary-git-git-log` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_git_workflow` | `git_get_safety_rules` | `sanctuary-git-git-get-safety-rules` | ⏳ | ⏳ | ⏳ | ⏳ |
+| `mcp_git_workflow` | `git_get_status` | `sanctuary-git-git-get-status` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_add` | `sanctuary-git-git-add` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_smart_commit` | `sanctuary-git-git-smart-commit` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_push_feature` | `sanctuary-git-git-push-feature` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_start_feature` | `sanctuary-git-git-start-feature` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_finish_feature` | `sanctuary-git-git-finish-feature` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_diff` | `sanctuary-git-git-diff` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_log` | `sanctuary-git-git-log` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_git_workflow` | `git_get_safety_rules` | `sanctuary-git-git-get-safety-rules` | ✅ | ✅ | ✅ | ✅ |
 
 #### sanctuary_cortex (11 tools)
 
 | Legacy Server | Tool Name | Gateway Tool Slug | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
 |---------------|-----------|-------------------|--------|--------|--------|--------|
-| `mcp_rag_cortex` | `cortex_query` | `sanctuary-cortex-cortex-query` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_ingest_full` | `sanctuary-cortex-cortex-ingest-full` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_ingest_incremental` | `sanctuary-cortex-cortex-ingest-incremental` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_get_stats` | `sanctuary-cortex-cortex-get-stats` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_cache_get` | `sanctuary-cortex-cortex-cache-get` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_cache_set` | `sanctuary-cortex-cortex-cache-set` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_cache_stats` | `sanctuary-cortex-cortex-cache-stats` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_cache_warmup` | `sanctuary-cortex-cortex-cache-warmup` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_rag_cortex` | `cortex_guardian_wakeup` | `sanctuary-cortex-cortex-guardian-wakeup` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_forge_llm` | `check_sanctuary_model_status` | `sanctuary-cortex-check-sanctuary-model-status` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_forge_llm` | `query_sanctuary_model` | `sanctuary-cortex-query-sanctuary-model` | ⏳ | ⏳ | ⏳ | ⏳ |
+| `mcp_rag_cortex` | `cortex_query` | `sanctuary-cortex-cortex-query` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_ingest_full` | `sanctuary-cortex-cortex-ingest-full` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_ingest_incremental` | `sanctuary-cortex-cortex-ingest-incremental` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_get_stats` | `sanctuary-cortex-cortex-get-stats` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_cache_get` | `sanctuary-cortex-cortex-cache-get` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_cache_set` | `sanctuary-cortex-cortex-cache-set` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_cache_stats` | `sanctuary-cortex-cortex-cache-stats` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_cache_warmup` | `sanctuary-cortex-cortex-cache-warmup` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_rag_cortex` | `cortex_guardian_wakeup` | `sanctuary-cortex-cortex-guardian-wakeup` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_forge_llm` | `check_sanctuary_model_status` | `sanctuary-cortex-check-sanctuary-model-status` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_forge_llm` | `query_sanctuary_model` | `sanctuary-cortex-query-sanctuary-model` | ✅ | ✅ | ✅ | ✅ |
 
 #### sanctuary_filesystem (10 tools)
 
 | Legacy Server | Tool Name | Gateway Tool Slug | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
 |---------------|-----------|-------------------|--------|--------|--------|--------|
-| `mcp_code` | `code_read` | `sanctuary-filesystem-code-read` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_write` | `sanctuary-filesystem-code-write` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_analyze` | `sanctuary-filesystem-code-analyze` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_format` | `sanctuary-filesystem-code-format` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_lint` | `sanctuary-filesystem-code-lint` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_search_content` | `sanctuary-filesystem-code-search-content` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_list_files` | `sanctuary-filesystem-code-list-files` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_find_file` | `sanctuary-filesystem-code-find-file` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_get_info` | `sanctuary-filesystem-code-get-info` | ⏳ | ⏳ | ⏳ | ⏳ |
-| `mcp_code` | `code_check_tools` | `sanctuary-filesystem-code-check-tools` | ⏳ | ⏳ | ⏳ | ⏳ |
+| `mcp_code` | `code_read` | `sanctuary-filesystem-code-read` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_write` | `sanctuary-filesystem-code-write` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_analyze` | `sanctuary-filesystem-code-analyze` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_format` | `sanctuary-filesystem-code-format` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_lint` | `sanctuary-filesystem-code-lint` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_search_content` | `sanctuary-filesystem-code-search-content` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_list_files` | `sanctuary-filesystem-code-list-files` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_find_file` | `sanctuary-filesystem-code-find-file` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_get_info` | `sanctuary-filesystem-code-get-info` | ✅ | ✅ | ✅ | ✅ |
+| `mcp_code` | `code_check_tools` | `sanctuary-filesystem-code-check-tools` | ✅ | ✅ | ✅ | ✅ |
 
 #### sanctuary_utils (16 tools)
 
 | Legacy Server | Tool Name | Gateway Tool Slug | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
 |---------------|-----------|-------------------|--------|--------|--------|--------|
-| N/A (New) | `string_replace` | `sanctuary-utils-string-replace` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `string_word_count` | `sanctuary-utils-string-word-count` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `string_reverse` | `sanctuary-utils-string-reverse` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `string_trim` | `sanctuary-utils-string-trim` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `string_to_lower` | `sanctuary-utils-string-to-lower` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `string_to_upper` | `sanctuary-utils-string-to-upper` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `calculator_add` | `sanctuary-utils-calculator-add` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `calculator_subtract` | `sanctuary-utils-calculator-subtract` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `calculator_multiply` | `sanctuary-utils-calculator-multiply` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `calculator_divide` | `sanctuary-utils-calculator-divide` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `time_now` | `sanctuary-utils-time-now` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `time_format` | `sanctuary-utils-time-format` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `uuid_generate` | `sanctuary-utils-uuid-generate` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `json_format` | `sanctuary-utils-json-format` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `json_validate` | `sanctuary-utils-json-validate` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `base64_encode` | `sanctuary-utils-base64-encode` | ⏳ | ⏳ | ⏳ | ⏳ |
+| N/A (New) | `string_replace` | `sanctuary-utils-string-replace` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `string_word_count` | `sanctuary-utils-string-word-count` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `string_reverse` | `sanctuary-utils-string-reverse` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `string_trim` | `sanctuary-utils-string-trim` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `string_to_lower` | `sanctuary-utils-string-to-lower` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `string_to_upper` | `sanctuary-utils-string-to-upper` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `calculator_add` | `sanctuary-utils-calculator-add` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `calculator_subtract` | `sanctuary-utils-calculator-subtract` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `calculator_multiply` | `sanctuary-utils-calculator-multiply` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `calculator_divide` | `sanctuary-utils-calculator-divide` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `time_now` | `sanctuary-utils-time-get-current-time` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `time_format` | `sanctuary-utils-time-format` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `uuid_generate` | `sanctuary-utils-uuid-generate` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `json_format` | `sanctuary-utils-json-format` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `json_validate` | `sanctuary-utils-json-validate` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `base64_encode` | `sanctuary-utils-base64-encode` | ✅ | ✅ | ✅ | ✅ |
 
 #### sanctuary_network (2 tools)
 
 | Legacy Server | Tool Name | Gateway Tool Slug | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
 |---------------|-----------|-------------------|--------|--------|--------|--------|
-| N/A (New) | `fetch_url` | `sanctuary-network-fetch-url` | ⏳ | ⏳ | ⏳ | ⏳ |
-| N/A (New) | `check_site_status` | `sanctuary-network-check-site-status` | ⏳ | ⏳ | ⏳ | ⏳ |
+| N/A (New) | `fetch_url` | `sanctuary-network-fetch-url` | ✅ | ✅ | ✅ | ✅ |
+| N/A (New) | `check_site_status` | `sanctuary-network-check-site-status` | ✅ | ✅ | ✅ | ✅ |
 
 ### Quick Validation Tests (Tier 4 - IDE/Agent)
 

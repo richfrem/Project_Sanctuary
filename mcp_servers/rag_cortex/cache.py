@@ -23,6 +23,8 @@ from typing import Any, Dict, Optional, List, Tuple
 # Configure logging
 logger = logging.getLogger("rag_cortex.cache")
 
+from mcp_servers.lib.utils.env_helper import get_env_variable
+
 
 class MnemonicCache:
     """
@@ -46,7 +48,7 @@ class MnemonicCache:
         # Warm Cache: SQLite database
         if db_path is None:
             # Check env var first
-            env_path = os.getenv("MNEMONIC_CACHE_DB_PATH")
+            env_path = get_env_variable("MNEMONIC_CACHE_DB_PATH", required=False)
             if env_path:
                 db_path = env_path
             else:

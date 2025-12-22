@@ -175,7 +175,7 @@ cp .env.example .env
 
 > [!IMPORTANT]
 > **Critical Configuration**: Set `CHROMA_HOST=localhost` in your `.env` file.
-> The `.env.example` file may show `vector-db` (for docker-compose networking),
+> The `.env.example` file may show `vector_db` (for docker-compose networking),
 > but for local development you **must** use `localhost`.
 
 **Required settings:**
@@ -210,13 +210,13 @@ Using Podman Compose (Docker Compose compatible):
 
 ```bash
 # Start both critical MCP services (unified application stack)
-podman-compose up -d vector-db ollama-model-mcp
+podman-compose up -d vector_db ollama_model_mcp
 ```
 
 > [!TIP]
-> **Unified Launch**: This command starts both the RAG Cortex (vector-db) and Forge LLM (ollama-model-mcp) services together, ensuring the complete MCP infrastructure is available.
+> **Unified Launch**: This command starts both the RAG Cortex (vector_db) and Forge LLM (ollama_model_mcp) services together, ensuring the complete MCP infrastructure is available.
 
-Or using Podman directly for vector-db only:
+Or using Podman directly for vector_db only:
 
 ```bash
 podman run -d \
@@ -284,7 +284,7 @@ cortex_get_stats(include_samples=True)
 
 ```bash
 # Start both MCP services (recommended)
-podman-compose up -d vector-db ollama-model-mcp
+podman-compose up -d vector_db ollama_model_mcp
 # or start individual services
 podman start sanctuary_vector_db
 podman start sanctuary_ollama_mcp
@@ -389,7 +389,7 @@ Add resource constraints to `docker-compose.yml`:
 
 ```yaml
 services:
-  vector-db:
+  vector_db:
     # ... existing config ...
     deploy:
       resources:
@@ -432,7 +432,7 @@ cp -r data/cortex/chroma_db/* .vector_data/
 
 ```bash
 # Start fresh with network architecture
-podman-compose up -d vector-db
+podman-compose up -d vector_db
 python scripts/cortex_ingest_full.py
 ```
 

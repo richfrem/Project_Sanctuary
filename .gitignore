@@ -169,4 +169,4 @@ mcp_config/
 # !dataset_package/core_essence_strategist_awakening_seed.txtdata/cortex/chroma_db/
 data/cortex/chroma_db/
 data/cortex/cache/
-tests/verify_wslenv_setup.py
+tests/verify_wslenv_setup.pymcp_config.json

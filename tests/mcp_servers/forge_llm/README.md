@@ -11,7 +11,7 @@ This directory contains the test suite for the Forge LLM MCP, organized into a 3
 
 1.  **Start Ollama:**
     ```bash
-    podman compose up -d ollama-model-mcp
+    podman compose up -d ollama_model_mcp
     ```
 
 2.  **Verify Model:**

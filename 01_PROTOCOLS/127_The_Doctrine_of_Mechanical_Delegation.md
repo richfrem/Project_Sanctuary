@@ -57,7 +57,7 @@ flowchart TB
 
     subgraph Fleet["🐳 Fleet of 8 (Podman)"]
         subgraph Infra["Infrastructure"]
-            F0["vector-db :8110"]
+            F0["vector_db :8110"]
             F1["ollama-mcp :11434"]
         end
         subgraph Core["Core Fleet"]

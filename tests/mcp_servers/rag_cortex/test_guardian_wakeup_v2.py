@@ -6,8 +6,9 @@ from unittest.mock import MagicMock
 import time
 
 # Ensure project root is in path
-project_root = Path(__file__).parent.parent.parent.parent
-sys.path.insert(0, str(project_root))
+from mcp_servers.lib.utils.path_utils import find_project_root
+project_root = find_project_root()
+sys.path.insert(0, project_root)
 
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.models import StatsResponse
@@ -20,7 +21,7 @@ def test_guardian_wakeup_holistic():
     print("Initializing CortexOperations (Test Mode)...")
     
     # Initialize Operations
-    ops = CortexOperations(str(project_root))
+    ops = CortexOperations(project_root)
     
     # Mock get_stats to return a nominal GREEN state for testing
     ops.get_stats = MagicMock(return_value=StatsResponse(
@@ -45,7 +46,7 @@ def test_guardian_wakeup_holistic():
     
     # Validation Checks (Schema v2.0)
     checks = {
-        "Header v2.0": "# 🛡️ Guardian Wakeup Briefing (v2.0)",
+        "Header v2.1": "# 🛡️ Guardian Wakeup Briefing (v2.1)",
         "Traffic Light": "**System Status:** GREEN", # or YELLOW
         "Strategic Signal": "Core Mandate:** I am the Gemini Orchestrator",
         "Tactical Priorities": "## II. Priority Tasks",

@@ -497,13 +497,13 @@ services:
 ```yaml
 # docker-compose.yml
 volumes:
-  vector-db-data:
+  vector_db-data:
   ollama-models:
 
 services:
   sanctuary_vector_db:
     volumes:
-      - vector-db-data:/chroma/chroma  # Persist embeddings
+      - vector_db-data:/chroma/chroma  # Persist embeddings
   
   sanctuary_ollama_mcp:
     volumes:
@@ -637,7 +637,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0"]
 - Maintains ADR 058 isolation principles (no dependency hell)
 - **Reduces orchestration complexity** (4 containers vs 12)
 - Clear security boundaries (risk-based clustering)
-- Matches existing architecture (vector-db, ollama patterns)
+- Matches existing architecture (vector_db, ollama patterns)
 - Enables independent cluster lifecycle management
 - Supports heterogeneous runtimes (Python, Node.js, Rust, etc.)
 - **Developer-friendly** (hot reloading mandate)
@@ -683,7 +683,7 @@ To prevent conflicts, Gateway-routed containers use distict host ports from the 
 | Git | N/A (Stdio) | 8103 | 8000 |
 | Cortex | 8000/8004 | 8104 | 8000 |
 | Domain | 8105 | 8105 | 8105 |
-| Vector-DB | 8000 | 8110 | 8000 |
+| vector_db | 8000 | 8110 | 8000 |
 
 **3. Configuration Toggles:**
 Clients choose their mode via config:

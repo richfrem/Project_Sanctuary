@@ -20,14 +20,15 @@ import argparse
 from pathlib import Path
 
 # Add project root to path
-# run_cortex_integration.py -> rag_cortex -> mcp_servers -> Project_Sanctuary
-project_root = Path(__file__).resolve().parent.parent.parent
+# tests/mcp_servers/rag_cortex/run_cortex_integration.py -> tests/mcp_servers -> tests -> Project_Sanctuary
+project_root = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Now we can import from the parent package
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.validator import CortexValidator
 from mcp_servers.rag_cortex.models import to_dict
+from mcp_servers.lib.utils.env_helper import get_env_variable, load_env
 
 
 class Colors:
@@ -263,6 +264,8 @@ def main():
     parser = argparse.ArgumentParser(description='Cortex MCP Integration Tests')
     parser.add_argument('--run-full-ingest', action='store_true',
                        help='Run the slow full ingestion test')
+    parser.add_argument('--stats-only', action='store_true',
+                       help='Only run the stats and health check')
     args = parser.parse_args()
     
     print(f"\n{Colors.BOLD}{'='*60}")
@@ -270,11 +273,8 @@ def main():
     print(f"{'='*60}{Colors.RESET}\n")
     
     # Load environment variables
-    from dotenv import load_dotenv
-    env_path = project_root / ".env"
-    if env_path.exists():
-        load_dotenv(dotenv_path=env_path)
-        print_info(f"Loaded environment from {env_path}")
+    load_env()
+    print_info("Loaded environment via env_helper")
     
     # Initialize operations
     ops = CortexOperations(str(project_root))
@@ -291,11 +291,14 @@ def main():
     # Test 2: Get Stats (fastest)
     results['stats'] = test_cortex_get_stats(ops)
     
-    # Test 3: Query (fast)
-    results['query'] = test_cortex_query(ops)
-    
-    # Test 4: Incremental Ingest (medium)
-    results['incremental'] = test_cortex_ingest_incremental(ops)
+    if args.stats_only:
+        print_info("Skipping Query and Incremental tests due to --stats-only")
+    else:
+        # Test 3: Query (fast)
+        results['query'] = test_cortex_query(ops)
+        
+        # Test 4: Incremental Ingest (medium)
+        results['incremental'] = test_cortex_ingest_incremental(ops)
 
     
     # Print summary

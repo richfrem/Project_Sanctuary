@@ -153,7 +153,7 @@ def test_validate_ingest_incremental_not_markdown(temp_project_root):
     test_file = Path(temp_project_root) / "test.txt"
     test_file.write_text("test")
     
-    with pytest.raises(ValidationError, match="not a markdown file"):
+    with pytest.raises(ValidationError, match="File type not supported"):
         validator.validate_ingest_incremental(file_paths=[str(test_file)])
 
 

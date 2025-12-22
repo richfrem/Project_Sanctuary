@@ -348,7 +348,7 @@ The final quantized `.gguf` file will be saved to `models/gguf/`.
 ### 2. Test gguf file locally with ollama
 
 > [!IMPORTANT]
-> **Ollama Usage Context:** This section uses the **host-installed macOS Ollama application** for model testing and validation during the ML training workflow. This is separate from the **containerized `ollama-model-mcp` service** used by the MCP infrastructure (see ADR 043, Protocol 116).
+> **Ollama Usage Context:** This section uses the **host-installed macOS Ollama application** for model testing and validation during the ML training workflow. This is separate from the **containerized `ollama_model_mcp` service** used by the MCP infrastructure (see ADR 043, Protocol 116).
 > 
 > - **For ML Training/Testing:** Use host Ollama (`ollama run`, `ollama create`)
 > - **For MCP Infrastructure:** Use containerized service (`sanctuary_ollama_mcp` in Podman)

@@ -18,14 +18,14 @@ During T093 (Containerize Ollama Model Service) deployment, a critical **port bi
 OLLAMA_HOST = "http://localhost:11434"
 
 # REQUIRED (explicit container network addressing)
-OLLAMA_HOST = "http://ollama-model-mcp:11434"
+OLLAMA_HOST = "http://ollama_model_mcp:11434"
 ```
 
 ### Rationale
 
 1. **Eliminates Port Binding Conflicts:** When host services and containerized services share the same port, localhost addressing creates non-deterministic routing behavior.
 
-2. **Enforces Container Isolation:** Service aliases (e.g., `ollama-model-mcp`, `vector-db`) are resolved via Docker Compose/Podman Compose internal DNS, ensuring requests route to the intended containerized service.
+2. **Enforces Container Isolation:** Service aliases (e.g., `ollama_model_mcp`, `vector_db`) are resolved via Docker Compose/Podman Compose internal DNS, ensuring requests route to the intended containerized service.
 
 3. **Makes Dependencies Explicit:** Using service aliases makes inter-service dependencies visible and verifiable in the docker-compose.yml file.
 
@@ -56,7 +56,7 @@ When MCP servers need to communicate with other containerized services, they MUS
 
 ```python
 # Example: Council MCP connecting to Forge LLM MCP
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama-model-mcp:11434")
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama_model_mcp:11434")
 ```
 
 ### For Local Development (Host to Container)
@@ -75,9 +75,9 @@ Environment variables should document both addressing modes:
 ```bash
 # .env.example
 # Ollama runs as a Podman container service (see docker-compose.yml)
-# Use 'localhost' for local development, 'ollama-model-mcp' for docker-compose networking
+# Use 'localhost' for local development, 'ollama_model_mcp' for docker-compose networking
 OLLAMA_HOST=http://localhost:11434  # For host development
-# OLLAMA_HOST=http://ollama-model-mcp:11434  # For inter-container (uncomment in production)
+# OLLAMA_HOST=http://ollama_model_mcp:11434  # For inter-container (uncomment in production)
 ```
 
 ## Consequences

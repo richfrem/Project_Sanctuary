@@ -9,7 +9,7 @@
 #   1. Podman (4.x+) installed and running (`podman system service` active).
 #   2. 'docker-compose.yml' present in PWD defining the 8-container fleet.
 #   3. '.env' file populated with MCPGATEWAY_BEARER_TOKEN and gateway URLs.
-#   4. 'sanctuary-gateway' running externally (Port 4444).
+#   4. 'sanctuary_gateway' running externally (Port 4444).
 #
 # OUTPUTS:
 #   - Physical: 8 Podman containers running/restarted.
