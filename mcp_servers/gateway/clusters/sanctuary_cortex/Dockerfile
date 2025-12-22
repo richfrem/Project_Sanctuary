@@ -7,7 +7,7 @@ FROM python:3.11
 WORKDIR /app
 
 # Install build deps and curl (cmake removed as gpt4all compilation is no longer needed)
-RUN apt-get update && apt-get install -y curl build-essential git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl build-essential git git-lfs && rm -rf /var/lib/apt/lists/*
 
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
