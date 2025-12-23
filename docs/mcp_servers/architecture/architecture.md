@@ -17,7 +17,8 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 
 ## Ecosystem Overview
 
-### Complete 12-Server Architecture
+### 2.1 Physical Deployment A: Legacy Virtual Environment Deployment
+This deployment mode runs each MCP server as a separate process within a local `.venv`, mapped 1:1 with the logical domains.
 
 ```mermaid
 graph TB
@@ -122,6 +123,39 @@ graph TB
     style Safety fill:#e0e0e0
     style Schema fill:#e0e0e0
     style Vault fill:#e0e0e0
+```
+
+### 2.2 Physical Deployment B: IBM Gateway Fleet Architecture
+The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized services** accessed via a single **IBM ContextForge Gateway**.
+
+- **Reference:** [`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)
+- **Mechanism:** The Gateway acts as a broker, routing client requests to the appropriate backend container via SSE transport.
+
+```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart TB
+    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
+    
+    Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
+    Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
+    Gateway -- SSE Transport --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
+    Gateway -- SSE Transport --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
+    Gateway -- SSE Transport --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
+    Gateway -- SSE Transport --> Cortex["<b>5. sanctuary_cortex</b><br>:8104/sse"]
+    
+    subgraph Backends["<b>Physical Intelligence Fleet</b>"]
+        VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
+        Ollama["<b>8. sanctuary_ollama_mcp</b><br>:11434"]
+    end
+
+    Cortex --> VectorDB
+    Cortex --> Ollama
+    Domain --> Utils
+    Domain --> Filesystem
 ```
 
 ---
