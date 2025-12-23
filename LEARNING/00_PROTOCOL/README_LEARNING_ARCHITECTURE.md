@@ -368,13 +368,13 @@ chronicle_create_entry(
 
 **Purpose:** Share learning artifacts with web-based LLMs (e.g., ChatGPT, Gemini web interface)
 
-**Location:** `scripts/capture_code_snapshot.js`
+**Location:** `scripts/capture_code_snapshot.py`
 
 **Usage:**
 When you need to share a specific learning artifact or research finding with a web-based LLM that doesn't have direct file access:
 
 ```bash
-node scripts/capture_code_snapshot.js LEARNING/topics/vector-databases/notes/chromadb-architecture.md
+node scripts/capture_code_snapshot.py LEARNING/topics/vector-databases/notes/chromadb-architecture.md
 ```
 
 This creates a formatted snapshot that can be copy-pasted into web-based LLM interfaces, enabling:
@@ -554,7 +554,7 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - **Protocol MCP:** `docs/mcp/servers/protocol/README.md`
 
 ### Utilities
-- **Code Snapshot Tool:** `scripts/capture_code_snapshot.js` - Share learning artifacts with web-based LLMs
+- **Code Snapshot Tool:** `scripts/capture_code_snapshot.py` - Share learning artifacts with web-based LLMs
 
 ---
 

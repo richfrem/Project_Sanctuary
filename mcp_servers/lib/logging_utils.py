@@ -12,13 +12,16 @@ def setup_mcp_logging(name: str, log_file: str = "logs/mcp_server.log"):
         log_file: Path to log file (relative to project root)
     """
     # Find project root
-    current = Path(__file__).resolve()
+    current = Path(__file__).resolve().parent
+    project_root = None
+    
     while current.parent != current:
         if (current / "mcp_servers").exists():
             project_root = current
             break
         current = current.parent
-    else:
+    
+    if project_root is None:
         project_root = Path.cwd()
 
     log_path = project_root / log_file

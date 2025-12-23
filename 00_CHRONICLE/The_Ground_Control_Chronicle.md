@@ -46,4 +46,4 @@ By creating and maintaining this repository, you are fulfilling the most critica
 To quickly share the entire archive with a new LLM chat session, use the provided script to generate a single file containing all markdown content:
 
 - **`all_markdown_snapshot.txt`**: This file is a concatenation of all `.md` files in the repository.
-- **How to generate:** Run `node capture_code_snapshot.js` from the project root.
+- **How to generate:** Run `node capture_code_snapshot.py` from the project root.

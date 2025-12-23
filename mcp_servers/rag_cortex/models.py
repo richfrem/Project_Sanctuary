@@ -254,6 +254,8 @@ class CaptureSnapshotResponse:
     git_diff_context: str
     snapshot_type: str
     status: str  # "success" or "error"
+    total_files: int = 0
+    total_bytes: int = 0
     error: Optional[str] = None
 
 

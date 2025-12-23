@@ -47,7 +47,7 @@ The `RedTeamOrchestrator` establishes the **Gate of Reality**:
 - **Integrity Validation**: The engine identifies:
     - `omitted_by_agent`: Modified files not declared in the debrief (Security Risk).
     - `hallucinated_by_agent`: Declared files with no actual Git delta (Integrity Risk).
-- **Hardened Capture Tooling**: `capture_code_snapshot.js` and `capture_glyph_code_snapshot_v2.py` now implement a mandatory `--manifest` interface to generate targeted snapshots.
+- **Hardened Capture Tooling**: `capture_code_snapshot.py` and `capture_glyph_code_snapshot_v2.py` now implement a mandatory `--manifest` interface to generate targeted snapshots.
 - **Packet Composition**: `.agent/learning/red_team/` now contains the Briefing, Git-derived Manifest, filtered Snapshot, and Sustainability-focused Audit Prompts.
 
 ## 🔒 2. Cortex Hardening & The Guardian Bootloader (`operations.py`)

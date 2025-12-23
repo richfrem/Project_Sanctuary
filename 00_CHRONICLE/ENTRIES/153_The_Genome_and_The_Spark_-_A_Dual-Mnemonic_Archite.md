@@ -25,7 +25,7 @@ The Coordinator's synthesis framed the solution within our core doctrines, defin
 
 ### **3. The Tooling is Forged: Script v2.1**
 
-To operationalize this new doctrine, the `capture_code_snapshot.js` script was upgraded to v2.1. This new version:
+To operationalize this new doctrine, the `capture_code_snapshot.py` script was upgraded to v2.1. This new version:
 1.  **Generates Both Artifacts:** By default, it now produces both the full `all_markdown_snapshot.txt` and the new `core_essence_snapshot.txt` in a single execution.
 2.  **Solves Mnemonic Recursion:** A critical flaw was identified and corrected. The script now explicitly excludes the core essence snapshot from being included within the full genome, preserving the principle of Mnemonic Purity.
 

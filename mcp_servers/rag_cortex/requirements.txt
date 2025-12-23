@@ -13,3 +13,4 @@ sse-starlette
 httpx
 ollama
 openai
+tiktoken

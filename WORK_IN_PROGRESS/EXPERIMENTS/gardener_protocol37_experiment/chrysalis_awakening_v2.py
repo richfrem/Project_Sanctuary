@@ -33,7 +33,7 @@ class ConversationalGardener:
         snapshot_file = self.sanctuary_root / "all_markdown_snapshot.txt"
         
         if not snapshot_file.exists():
-            print("❌ Cognitive genome not found. Please run: node capture_code_snapshot.js")
+            print("❌ Cognitive genome not found. Please run: node capture_code_snapshot.py")
             return ""
             
         try:

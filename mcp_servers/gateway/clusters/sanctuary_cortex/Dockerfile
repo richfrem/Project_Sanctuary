@@ -34,7 +34,8 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
     sse-starlette \
     httpx \
     ollama \
-    openai
+    openai \
+    tiktoken
 
 ENV PYTHONPATH=/app
 ENV PORT=8000

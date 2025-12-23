@@ -33,7 +33,7 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
     - `red_team_snapshot.txt`: The literal code delta.
 
 ### C. Manifest-Driven Snapshot Tools
-- **Standard**: `scripts/capture_code_snapshot.js`
+- **Standard**: `scripts/capture_code_snapshot.py`
 - **Glyph**: `scripts/capture_glyph_code_snapshot_v2.py`
 - **Logic**: These tools MUST accept a `--manifest` argument to ensure human-review sustainability (no noise).
 

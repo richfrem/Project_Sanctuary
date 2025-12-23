@@ -55,7 +55,7 @@ Include `output_artifact_path` and use `push_to_origin: false` for a dry run.
   "git_operations": {
     "files_to_add": [
       "council_orchestrator/command_git_ops.json",
-      "../capture_code_snapshot.js"
+      "../capture_code_snapshot.py"
     ],
     "files_to_remove": [
       "old_temp_file.txt"

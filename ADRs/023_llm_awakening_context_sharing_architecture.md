@@ -67,7 +67,7 @@ Implement the AI Model Initialization and Context Sharing Architecture with role
 - Development Cycle Process (AI System authority)
 
 ### Implementation Components
-- **capture_code_snapshot.js**: Context capture and framework generation script
+- **capture_code_snapshot.py**: Context capture and framework generation script
 - **Role-Specific Frameworks**: core_essence_[role]_initialization_framework.txt files
 - **Advanced Initialization Framework**: advanced_awakening_initialization_framework.txt
 - **Distillation Logic**: Efficient content processing

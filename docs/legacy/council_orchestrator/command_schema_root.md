@@ -55,7 +55,7 @@ Notes:
   "git_operations": {
     "files_to_add": [
       "command_git_ops.json",
-      "../capture_code_snapshot.js",
+      "../capture_code_snapshot.py",
       "../TASKS/in-progress/001_harden_mnemonic_cortex_ingestion_and_rag.md"
     ],
     "commit_message": "chore: workspace updates (dry-run)",

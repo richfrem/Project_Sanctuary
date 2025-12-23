@@ -84,7 +84,7 @@ When an agent calls `cortex_learning_debrief`, it triggers a series of autonomou
 ## 🛠️ Rapid-Fire Learning Cycle
 The agent follows these steps to achieve the "Final Seal":
 1. **Refinement**: Update the Recursive Learning SOP with logical optimizations.
-2. **Snapshot**: `node scripts/capture_code_snapshot.js --manifest .agent/learning/manifest.json`
+2. **Snapshot**: `node scripts/capture_code_snapshot.py --manifest .agent/learning/manifest.json`
 3. **The Seal**: Ensure output is saved to `.agent/learning/learning_package_snapshot.md`.
 4. **Persistence**: Use `git_smart_commit` referencing the SEAL to lock in the cognitive delta.
 
