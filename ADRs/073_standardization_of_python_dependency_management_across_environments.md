@@ -212,3 +212,44 @@ pip install --no-cache-dir -r requirements-dev.txt  # optional for dev/test
 - [ ] Confirm all `.txt` files are up-to-date.
 - [ ] Ensure Dockerfiles reference correct files.
 - [ ] Optional: run `make verify` to validate local and container environments.
+## How to Add a New Python Dependency (Standard Practice)
+
+Follow this exact workflow to add or update a dependency in Project Sanctuary. This ensures determinism, consistency across local/container environments, and compliance with the locked-file policy.
+
+### Step-by-Step: Adding a New Requirement
+
+1.  **Identify the correct .in file (human intent file)**
+    *   **Shared baseline** (e.g., fastapi, pydantic, MCP libs): Edit `mcp_servers/gateway/requirements-core.in`
+    *   **Service-specific** (e.g., chromadb, langchain for RAG cortex): Edit the service’s own file, e.g. `mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in`
+    *   **Local development/testing only** (e.g., black, ruff): Edit `requirements-dev.in` (root or appropriate location)
+    *   **Note**: If a service needs testing tools *inside* its container (e.g., for Protocol 101 gates), add them to the service-specific `.in` file.
+
+2.  **Add the dependency intent**
+    Write only the high-level package name and optional version constraint in the `.in` file.
+    *   Examples: `fastapi>=0.110.0`, `chromadb`, `langchain-huggingface`
+    *   Do not add transitive deps or exact pins here.
+
+3.  **Regenerate the locked .txt file(s)**
+    Run `pip-compile` (or `uv`) to produce the deterministic lockfile:
+    ```bash
+    # Example for a specific service
+    pip-compile mcp_servers/gateway/clusters/sanctuary_git/requirements.in \
+      --output-file mcp_servers/gateway/clusters/sanctuary_git/requirements.txt
+    ```
+
+4.  **Commit both files**
+    Commit the edited `.in` file and the regenerated `.txt` file. Never hand-edit `.txt` files.
+
+5.  **Verify installation**
+    *   **Local**: `pip install -r <service>/requirements.txt`
+    *   **Container**: Rebuild the image (`make up force=true TARGET=<service>`).
+
+### Quick Reference Table
+
+| Dependency Type | Edit This File | Regenerate Command Example | Install Command (Local) |
+| :--- | :--- | :--- | :--- |
+| **Shared baseline** | `requirements-core.in` | `pip-compile ... --output-file requirements-core.txt` | `pip install -r requirements-core.txt` |
+| **Service-specific** | `<service>/requirements.in` | `pip-compile <service>/requirements.in --output-file <service>/requirements.txt` | `pip install -r <service>/requirements.txt` |
+| **Dev / testing** | `requirements-dev.in` | `pip-compile requirements-dev.in --output-file requirements-dev.txt` | `pip install -r requirements-dev.txt` |
+
+**Golden Rule**: `.in` = what humans edit (intent). `.txt` = what machines generate and everything installs from (truth).

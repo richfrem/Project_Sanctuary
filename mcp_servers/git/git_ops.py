@@ -54,7 +54,11 @@ class GitOperations:
         if lfs_path:
             candidates.append(os.path.dirname(lfs_path))
             
-        # 2. Add standard system locations (portability fallback)
+        # 2. Dynamically locate project virtual environment (Protocol 101 Efficiency)
+        candidates.append(os.path.join(self.repo_path, ".venv", "bin"))
+        candidates.append(os.path.join(os.getcwd(), ".venv", "bin"))
+            
+        # 3. Add standard system locations (portability fallback)
         standard_paths = [
             "/usr/local/bin",      # Intel Mac / Linux
             "/opt/homebrew/bin",   # Apple Silicon Mac
@@ -63,8 +67,8 @@ class GitOperations:
         ]
         candidates.extend(standard_paths)
         
-        # 3. Prepend valid paths to PATH
-        for path in candidates:
+        # 3. Prepend valid paths to PATH (Specific -> General)
+        for path in reversed(candidates):
              if path and os.path.isdir(path) and path not in current_path:
                  current_path = f"{path}{os.pathsep}{current_path}"
                  
