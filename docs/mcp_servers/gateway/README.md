@@ -100,7 +100,9 @@ Technical reference documentation:
 
 ## Fleet of 8 Architecture (ADR 060)
 
-The **Hybrid Fleet Strategy** consolidates 10 script-based MCP servers into **8 physical containers** organized as **6 front-end clusters** for tool discovery.
+The **Hybrid Fleet Strategy** consolidates 10 script-based MCP servers into **8 physical containers** brokered by the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
+
+This architecture acts as a bridge, where the Gateway service (running in Podman) routes requests to the 6 front-end clusters via SSE.
 
 ```mermaid
 ---
@@ -109,16 +111,16 @@ config:
   layout: dagre
 ---
 flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
+    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
     
-    Gateway -- Docker Network --> Utils["<b>1. sanctuary_utils</b><br>:8100"]
-    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101"]
-    Gateway -- Docker Network --> Network["<b>3. sanctuary_network</b><br>:8102"]
-    Gateway -- Docker Network --> Git["<b>4. sanctuary_git</b><br>:8103"]
-    Gateway -- Docker Network --> Domain["<b>5. sanctuary_domain</b><br>:8105"]
-    Gateway -- Docker Network --> Cortex["<b>6. sanctuary_cortex</b><br>:8104"]
+    Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
+    Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
+    Gateway -- SSE Transport --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
+    Gateway -- SSE Transport --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
+    Gateway -- SSE Transport --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
+    Gateway -- SSE Transport --> Cortex["<b>5. sanctuary_cortex</b><br>:8104/sse"]
     
-    subgraph Backends["<b>Physical Fleet (Backends)</b>"]
+    subgraph Backends["<b>Physical Intelligence Fleet</b>"]
         VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
         Ollama["<b>8. sanctuary_ollama_mcp</b><br>:11434"]
     end
@@ -127,16 +129,6 @@ flowchart TB
     Cortex --> Ollama
     Domain --> Utils
     Domain --> Filesystem
-
-    style Client fill:#e1f5ff,stroke:#0d47a1
-    style Gateway fill:#fff4e1,stroke:#e65100
-    style Utils fill:#e8f5e9,stroke:#2e7d32
-    style Filesystem fill:#fff3e0,stroke:#ef6c00
-    style Network fill:#f3e5f5,stroke:#7b1fa2
-    style Git fill:#ffebee,stroke:#c62828
-    style Domain fill:#e3f2fd,stroke:#1565c0
-    style Cortex fill:#e0f2f1,stroke:#00695c
-    style Backends fill:#f5f5f5,stroke:#9e9e9e
 ```
 
 **Container Inventory:**
@@ -173,7 +165,7 @@ flowchart TB
 - All connectivity tests passing (3/3)
 
 ### ⏳ Phase D: External Deployment (MANUAL)
-- User manages external repo at `../sanctuary-gateway`
+- User manages external repo at `/Users/richardfremmerlid/Projects/sanctuary-gateway`
 - Podman manages the container lifecycle
 
 ---
