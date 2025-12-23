@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies
+COPY mcp_servers/gateway/clusters/sanctuary_git/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
 
@@ -21,15 +25,6 @@ COPY mcp_servers/lib /app/mcp_servers/lib
 # Dest (Container): /app/mcp_servers/gateway/clusters/sanctuary_git (snake_case for Python import)
 COPY mcp_servers/gateway/clusters/sanctuary_git /app/mcp_servers/gateway/clusters/sanctuary_git
 
-# Install Python dependencies (FastMCP for proper MCP protocol - ADR-066)
-RUN pip install --no-cache-dir \
-    fastmcp \
-    fastapi \
-    uvicorn \
-    sse-starlette \
-    httpx \
-    pydantic \
-    pytest
 
 ENV PYTHONPATH=/app
 ENV PORT=8000

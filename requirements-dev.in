@@ -1,0 +1,10 @@
+# LOCAL DEVELOPMENT TOOLS
+# Not for production containers.
+# These are only installed in local .venv or CI test stages.
+
+pytest
+pytest-cov
+ruff
+black
+mypy
+pylint

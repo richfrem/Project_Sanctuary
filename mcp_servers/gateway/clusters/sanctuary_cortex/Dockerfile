@@ -9,6 +9,10 @@ WORKDIR /app
 # Install build deps and curl (cmake removed as gpt4all compilation is no longer needed)
 RUN apt-get update && apt-get install -y curl build-essential git git-lfs && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
+COPY mcp_servers/gateway/clusters/sanctuary_cortex/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
 COPY mcp_servers/rag_cortex /app/mcp_servers/rag_cortex
@@ -17,25 +21,6 @@ COPY mcp_servers/forge_llm /app/mcp_servers/forge_llm
 # Copy the fleet cluster code
 COPY mcp_servers/gateway/clusters/sanctuary_cortex /app/mcp_servers/gateway/clusters/sanctuary_cortex
 
-# Install Python dependencies
-COPY mcp_servers/gateway/clusters/sanctuary_cortex/requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
-    pip install --no-cache-dir \
-    langchain-huggingface \
-    langchain-chroma \
-    sentence-transformers \
-    einops \
-    chromadb \
-    langchain-community \
-    langchain \
-    pydantic \
-    fastapi \
-    uvicorn \
-    sse-starlette \
-    httpx \
-    ollama \
-    openai \
-    tiktoken
 
 ENV PYTHONPATH=/app
 ENV PORT=8000

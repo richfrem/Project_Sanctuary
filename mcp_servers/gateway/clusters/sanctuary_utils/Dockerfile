@@ -13,19 +13,16 @@ WORKDIR /app
 # Install curl for health checks
 RUN apt-get update && apt-get install -y curl git git-lfs && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies
+COPY mcp_servers/gateway/clusters/sanctuary_utils/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
 
 # Copy the fleet cluster code
 COPY mcp_servers/gateway/clusters/sanctuary_utils /app/mcp_servers/gateway/clusters/sanctuary_utils
 
-# Install Python dependencies
-RUN pip install --no-cache-dir \
-    fastapi \
-    uvicorn \
-    sse-starlette \
-    httpx \
-    pydantic
 
 ENV PYTHONPATH=/app
 ENV PORT=8000
