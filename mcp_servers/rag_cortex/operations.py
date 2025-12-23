@@ -1795,23 +1795,31 @@ class CortexOperations:
         learning_dir = self.project_root / ".agent" / "learning"
         output_dir = learning_dir / "red_team" if snapshot_type == "audit" else learning_dir
         output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         
         # 3. Default Manifest Handling (Protocol 128)
         # If 'seal' or 'audit' and no manifest provided, use the predefined manifests
         effective_manifest = list(manifest_files)
+        manifest_file = None
         if not effective_manifest:
             if snapshot_type == "seal":
                 manifest_file = learning_dir / "learning_manifest.json"
             else: # audit
                 manifest_file = output_dir / "red_team_manifest.json"
                 
-            if manifest_file.exists():
+            if manifest_file and manifest_file.exists():
                 try:
                     with open(manifest_file, "r") as f:
                         effective_manifest = json.load(f)
                     logger.info(f"Loaded default {snapshot_type} manifest: {len(effective_manifest)} entries")
                 except Exception as e:
                     logger.warning(f"Failed to load {snapshot_type} manifest: {e}")
+
+        # Define path early for Shadow Manifest exclusions
+        snapshot_filename = f"{snapshot_type}_snapshot_{timestamp}.md"
+        if snapshot_type == "audit":
+            snapshot_filename = "red_team_audit_packet.md"
+        final_snapshot_path = output_dir / snapshot_filename
 
         # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2)
         try:
@@ -1831,17 +1839,29 @@ class CortexOperations:
                 git_changed.add(path)
             
             # Identify discrepancies against the EFFECTIVE manifest
+            # V2.1 FIX: Ignore the output snapshot file itself (prevent recursion / false positive)
+            try:
+                output_rel = final_snapshot_path.relative_to(self.project_root)
+                git_changed.discard(str(output_rel))
+            except ValueError:
+                pass # Not relative to root
+
             untracked_in_manifest = git_changed - set(effective_manifest)
             manifest_verified = True # Default to true for audit if no unverified files
             
             # CORE DIRECTORY ENFORCEMENT
             CORE_DIRS = ["ADRs/", "01_PROTOCOLS/", "mcp_servers/", "scripts/", "prompts/"]
+            TIER2_DIRS = ["TASKS/", "LEARNING/"]
+            
             critical_omissions = []
+            tier2_omissions = []
             
             if snapshot_type == "audit":
                 for untracked in untracked_in_manifest:
                     if any(untracked.startswith(core) for core in CORE_DIRS):
                         critical_omissions.append(untracked)
+                    elif any(untracked.startswith(t2) for t2 in TIER2_DIRS):
+                        tier2_omissions.append(untracked)
             
             if critical_omissions:
                 logger.error(f"STRICT REJECTION: Critical files modified but omitted from manifest: {critical_omissions}")
@@ -1855,6 +1875,9 @@ class CortexOperations:
                 )
             else:
                 git_context = f"Verified: {len(set(effective_manifest))} files. Shadow Manifest (Untracked): {len(untracked_in_manifest)} items."
+                if tier2_omissions:
+                    git_context += f" WARNING: Tier-2 Blindspot detected (Risk Acceptance Required): {tier2_omissions}"
+                
                 # Check for files in manifest NOT in git (the old unverified check)
                 unverified_in_manifest = set(effective_manifest) - git_changed
                 # We skip checking '.' and other untracked artifacts for 'audit'
