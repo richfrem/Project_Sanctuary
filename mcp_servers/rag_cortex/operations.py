@@ -1772,6 +1772,43 @@ class CortexOperations:
             logger.error(f"Error in learning_debrief: {e}")
             return f"Error generating debrief scan: {e}"
 
+    def _get_git_state(self, project_root: Path) -> Dict[str, Any]:
+        """
+        Helper: Captures the current Git state signature for integrity verification.
+        Returns a dict with 'status_lines', 'changed_files', and 'state_hash'.
+        """
+        import subprocess
+        import hashlib
+        
+        try:
+            git_status_proc = subprocess.run(
+                ["git", "status", "--porcelain"],
+                capture_output=True, text=True, cwd=str(project_root)
+            )
+            git_lines = git_status_proc.stdout.splitlines()
+            changed_files = set()
+            
+            for line in git_lines:
+                # Porcelain format is "XY path"
+                # If deleted ('D'), we deal with it, but for our purpose only changes matter
+                status_bits = line[:2]
+                path = line[3:].split(" -> ")[-1].strip()
+                if 'D' not in status_bits:
+                     changed_files.add(path)
+            
+            # Simple state hash
+            state_str = "".join(sorted(git_lines))
+            state_hash = hashlib.sha256(state_str.encode()).hexdigest()
+            
+            return {
+                "lines": git_lines,
+                "changed_files": changed_files,
+                "hash": state_hash
+            }
+        except Exception as e:
+            logger.error(f"Git state capture failed: {e}")
+            return {"lines": [], "changed_files": set(), "hash": "error"}
+
     def capture_snapshot(
         self, 
         manifest_files: List[str], 
@@ -1822,21 +1859,14 @@ class CortexOperations:
         final_snapshot_path = output_dir / snapshot_filename
 
         # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2)
+        # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2 - PRE-FLIGHT CHECK)
         try:
-            git_status_proc = subprocess.run(
-                ["git", "status", "--porcelain"],
-                capture_output=True, text=True, cwd=str(self.project_root)
-            )
-            git_lines = git_status_proc.stdout.splitlines()
-            git_changed = set()
-            for line in git_lines:
-                # Porcelain format is "XY path"
-                # If deleted ('D'), we skip it for manifest inclusion check
-                status_bits = line[:2]
-                if 'D' in status_bits:
-                    continue
-                path = line[3:].split(" -> ")[-1].strip()
-                git_changed.add(path)
+            # PRE-FLIGHT: Capture Git State
+            pre_flight_state = self._get_git_state(self.project_root)
+            if pre_flight_state["hash"] == "error":
+                raise Exception("Failed to capture Git state")
+            
+            git_changed = pre_flight_state["changed_files"]
             
             # Identify discrepancies against the EFFECTIVE manifest
             # V2.1 FIX: Ignore the output snapshot file itself (prevent recursion / false positive)
@@ -1931,8 +1961,34 @@ class CortexOperations:
                         manifest_path=temp_manifest_path,
                         output_file=final_snapshot_path
                     )
+
             except Exception as e:
                 raise Exception(f"Python Snapshot tool failed: {str(e)}")
+
+            # 6. POST-FLIGHT: Sandwich Validation (Race Condition Check)
+            post_flight_state = self._get_git_state(self.project_root)
+            
+            if pre_flight_state["hash"] != post_flight_state["hash"]:
+                # The state changed DURING the snapshot generation
+                drift_diff = post_flight_state["changed_files"] ^ pre_flight_state["changed_files"]
+                # Exclude the artifacts and anything in the output directory
+                try:
+                    rel_output = str(output_dir.relative_to(self.project_root))
+                    # Check for direct matches or children
+                    drift_diff = {d for d in drift_diff if not d.startswith(rel_output) and not rel_output.startswith(d.rstrip('/'))}
+                except:
+                    pass
+                
+                if drift_diff:
+                    logger.error(f"INTEGRITY FAILURE: Repository state changed during snapshot! Drift: {drift_diff}")
+                    return CaptureSnapshotResponse(
+                        snapshot_path="",
+                        manifest_verified=False,
+                        git_diff_context=f"INTEGRITY FAILURE: Race condition detected. Files changed during snapshot: {drift_diff}",
+                        snapshot_type=snapshot_type,
+                        status="failed",
+                        error="Race condition detected during snapshot generation."
+                    )
 
             # 6. Enhance 'audit' packet with metadata if needed
             if snapshot_type == "audit":

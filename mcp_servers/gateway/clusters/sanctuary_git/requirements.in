@@ -6,4 +6,6 @@
 -r ../../../requirements-core.in
 
 # Service-Specific Dependencies:
-# (None currently)
+pytest
+pytest-asyncio
+

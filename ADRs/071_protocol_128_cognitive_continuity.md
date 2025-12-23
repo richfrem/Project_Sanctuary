@@ -1,7 +1,7 @@
 # ADR 071: Protocol 128 (Cognitive Continuity & The Red Team Gate)
 
-**Status:** Draft 3.1 (Alignment with Visual Architecture)
-**Date:** 2025-12-22
+**Status:** Draft 3.2 (Implementing Sandwich Validation)
+**Date:** 2025-12-23
 **Author:** Antigravity (Agent), User (Red Team Lead)
 **Supersedes:** ADR 071 v3.0
 
@@ -135,10 +135,10 @@ The following operations must be exposed and hardened:
         *   **Purpose**: Establishes the Technical Seal (Phase V).
         *   **Two-Factor Integrity**: Implements **Hard Integrity** (HMAC-SHA256) for code/protocols and **Soft Integrity** (Semantic Hashing) for learning notes to reduce brittleness.
         *   **Output**: Generates `.agent/learning/learning_package_snapshot.md`.
-    *   **Logic**:
-        1.  **Zero-Trust Verification**: Cross-references manifest files against actual `git diff` status.
-        2.  **Surgical Filtering**: Only processes files explicitly listed in the manifest.
-        3.  **Shadow Audit**: Detects and reports unauthorized state changes (Blindspots).
+        1.  **Sandwich Validation (Integrity Gate)**: The system captures the Git state hash **BEFORE** and **AFTER** the snapshot generation. If the state changes (Cognitive Drift) during the operation, the snapshot is invalidated immediately.
+        2.  **Zero-Trust Verification**: Cross-references manifest files against actual `git diff` status.
+        3.  **Surgical Filtering**: Only processes files explicitly listed in the manifest.
+        4.  **Shadow Audit**: Detects and reports unauthorized state changes (Blindspots).
 
 ### 2. The Persona/Mechanism Split (Hardened)
 To prevent "Authority Dilution", the Guardian Entity is bound to a **Safe Mode** state if the technical integrity mechanism fails.

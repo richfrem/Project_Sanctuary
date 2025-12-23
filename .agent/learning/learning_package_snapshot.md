@@ -1,181 +1,2190 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2025-12-23T07:36:24.634931
+Generated On: 2025-12-23T19:36:54.317708
 
-# Mnemonic Weight (Token Count): ~4,684 tokens
+# Mnemonic Weight (Token Count): ~23,188 tokens
 
 # Directory Structure (relative to manifest)
-  ./LEARNING/topics/raptor_rag.md
-  ./00_CHRONICLE/ENTRIES/333_learning_loop_advanced_rag_patterns_raptor.md
-  ./.agent/workflows/recursive_learning.md
+  ./mcp_servers/rag_cortex/operations.py
   ./ADRs/071_protocol_128_cognitive_continuity.md
+  ./tests/learning/reproduce_race_condition.py
 
---- START OF FILE LEARNING/topics/raptor_rag.md ---
+--- START OF FILE mcp_servers/rag_cortex/operations.py ---
 
----
-id: learning-001
-type: topic-note
-status: verified
-last_verified: 2025-12-23
-topic: Advanced RAG Patterns - RAPTOR
----
+#============================================
+# mcp_servers/rag_cortex/operations.py
+# Purpose: Core operations for interacting with the Mnemonic Cortex (RAG).
+#          Orchestrates ingestion, semantic search, and cache management.
+# Role: Single Source of Truth
+# Used as a module by server.py
+# Calling example:
+#   ops = CortexOperations(project_root)
+#   ops.ingest_full(...)
+# LIST OF CLASSES/FUNCTIONS:
+#   - CortexOperations
+#     - __init__
+#     - _calculate_semantic_hmac
+#     - _chunked_iterable
+#     - _get_container_status
+#     - _get_git_diff_summary
+#     - _get_mcp_name
+#     - _get_recency_delta
+#     - _get_recent_chronicle_highlights
+#     - _get_recent_protocol_updates
+#     - _get_strategic_synthesis
+#     - _get_system_health_traffic_light
+#     - _get_tactical_priorities
+#     - _load_documents_from_directory
+#     - _safe_add_documents
+#     - _should_skip_path
+#     - cache_get
+#     - cache_set
+#     - cache_warmup
+#     - capture_snapshot
+#     - get_cache_stats
+#     - get_stats
+#     - ingest_full
+#     - ingest_incremental
+#     - learning_debrief
+#     - query
+#     - query_structured
+#============================================
 
-# RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval
 
-## 1. Overview
-RAPTOR (Recursive Abstractive Processing for Tree-Organized Retrieval) is an advanced RAG technique introduced in 2024 to address the limitations of traditional, flat-chunk retrieval systems. It builds a hierarchical tree of summaries, enabling an LLM to access information at multiple levels of abstraction—from granular details to high-level thematic insights.
+import os
+import re # Added for parsing markdown headers
+from typing import List, Tuple # Added Tuple
+# Disable tqdm globally to prevent stdout pollution - MUST BE FIRST
+os.environ["TQDM_DISABLE"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-## 2. The Core Mechanism
-The system operates on an iterative, bottom-up construction process:
+import sys
+import time
+import subprocess
+import contextlib
+import io
+import logging
+import json
+from uuid import uuid4
+from pathlib import Path
+from typing import Dict, Any, List, Optional
+from mcp_servers.lib.snapshot_utils import generate_snapshot
 
-1.  **Leaf Node Creation**: The source document is split into standard chunks (e.g., 100 tokens).
-2.  **Clustering**: Chunks are embedded and grouped using Gaussian Mixture Models (GMM). Soft clustering is often used, allowing a chunk to belong to multiple clusters.
-3.  **Abstractive Summarization**: Each cluster is summarized by an LLM (e.g., GPT-3.5 or Claude).
-4.  **Recursion**: The summaries themselves are embedded and clustered, generating a higher-level layer of summaries. This repeats until a root node (or a predefined depth) is reached.
+# Setup logging
+# This block is moved to the top and modified to use standard logging
+# sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+# from mcp_servers.lib.logging_utils import setup_mcp_logging
+# logger = setup_mcp_logging(__name__)
 
-## 3. Advantages
-| Feature | Traditional RAG | RAPTOR |
-| :--- | :--- | :--- |
-| **Structure** | Flat (Chunked) | Hierarchical (Tree) |
-| **Context** | Local/Isolated | Holistic/Multi-level |
-| **Reasoning** | Single-hop | Multi-hop & Thematic |
-| **Retrieval** | Top-K similarity | Tree traversal or Layer-wise search |
+# Configure logging
+logger = logging.getLogger("rag_cortex.operations")
+if not logger.handlers:
+    # Add a default handler if none exist (e.g., when running directly)
+    handler = logging.StreamHandler(sys.stderr)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
-## 4. Implementation Considerations
-- **Model Choice**: Abstractive summarization requires a model with strong synthesis capabilities.
-- **Cost**: Building the tree involves multiple LLM calls for clustering and summarization.
-- **Latency**: Retrieval is extremely fast (searching the tree), but indexing is slower than flat RAG.
 
-## 5. RECURSIVE LEARNING NOTE
-This pattern is highly relevant to the **Project Sanctuary Mnemonic Cortex**. The current "Parent Document Retriever" is a 2-tier version of this idea. Moving to a truly recursive RAPTOR-like structure could allow the Sanctuary Council to handle much larger ADR histories without context windows becoming a bottleneck.
+from .models import (
+    IngestFullResponse,
+    QueryResponse,
+    QueryResult,
+    StatsResponse,
+    CollectionStats,
+    IngestIncrementalResponse,
+    to_dict,
+    CacheGetResponse,
+    CacheSetResponse,
+    CacheWarmupResponse,
+    DocumentSample,
+    CaptureSnapshotRequest,
+    CaptureSnapshotResponse,
+)
+from .ingest_code_shim import convert_and_save
 
----
-**References:**
-- Sarthi, P., et al. (2024). "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval." ICLR.
-- Integrated into LangChain and LlamaIndex.
+# Imports that were previously inside methods, now moved to top for class initialization
+# Silence stdout/stderr during imports to prevent MCP protocol pollution
+with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+    import chromadb
+    from dotenv import load_dotenv
+    from langchain_community.document_loaders import DirectoryLoader, TextLoader
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_chroma import Chroma
+    from mcp_servers.rag_cortex.file_store import SimpleFileStore
+    from langchain_core.documents import Document
+    from mcp_servers.lib.utils.env_helper import get_env_variable
 
---- END OF FILE LEARNING/topics/raptor_rag.md ---
 
---- START OF FILE 00_CHRONICLE/ENTRIES/333_learning_loop_advanced_rag_patterns_raptor.md ---
+class CortexOperations:
+    #============================================
+    # Class: CortexOperations
+    # Purpose: Main backend for the Mnemonic Cortex RAG service.
+    # Patterns: Facade / Orchestrator
+    #============================================
+    
+    def __init__(self, project_root: str, client: Optional[chromadb.ClientAPI] = None):
+        #============================================
+        # Method: __init__
+        # Purpose: Initialize Mnemonic Cortex backend.
+        # Args:
+        #   project_root: Path to project root
+        #   client: Optional injected ChromaDB client
+        #============================================
+        self.project_root = Path(project_root)
+        self.scripts_dir = self.project_root / "mcp_servers" / "rag_cortex" / "scripts"
+        self.data_dir = self.project_root / ".agent" / "data"
+        self.data_dir.mkdir(parents=True, exist_ok=True)
 
-# Living Chronicle - Entry 333
+        # Network configuration using env_helper
+        self.chroma_host = get_env_variable("CHROMA_HOST", required=False) or "localhost"
+        self.chroma_port = int(get_env_variable("CHROMA_PORT", required=False) or "8110")
+        self.chroma_data_path = get_env_variable("CHROMA_DATA_PATH", required=False) or ".vector_data"
+        
+        self.child_collection_name = get_env_variable("CHROMA_CHILD_COLLECTION", required=False) or "child_chunks_v5"
+        self.parent_collection_name = get_env_variable("CHROMA_PARENT_STORE", required=False) or "parent_documents_v5"
 
-**Title:** Learning Loop: Advanced RAG Patterns (RAPTOR)
-**Date:** 2025-12-23
-**Author:** Antigravity
-**Status:** published
-**Classification:** internal
+        # Initialize ChromaDB client
+        if client:
+            self.chroma_client = client
+        else:
+            self.chroma_client = chromadb.HttpClient(host=self.chroma_host, port=self.chroma_port)
+        
+        # Initialize embedding model (HuggingFace/sentence-transformers for ARM64 compatibility - ADR 069)
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name="nomic-ai/nomic-embed-text-v1.5",
+            model_kwargs={'device': 'cpu', 'trust_remote_code': True},
+            encode_kwargs={'normalize_embeddings': True}
+        )
 
----
+        # Initialize child splitter (smaller chunks for retrieval)
+        self.child_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=400,
+            chunk_overlap=50,
+            separators=["\n\n", "\n", " ", ""]
+        )
+        
+        # Initialize parent splitter (larger chunks for context)
+        self.parent_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=2000,
+            chunk_overlap=200,
+            separators=["\n\n", "\n", " ", ""]
+        )
 
-Successfully completed a full Protocol 125/128 Learning Loop on the topic of "Advanced RAG Patterns: RAPTOR". 
+        # Initialize vectorstore (Chroma)
+        self.vectorstore = Chroma(
+            client=self.chroma_client,
+            collection_name=self.child_collection_name,
+            embedding_function=self.embedding_model
+        )
 
-### Key Findings:
-- RAPTOR uses recursive summarization and GMM clustering to create a hierarchical tree of knowledge.
-- It enables holistic reasoning by allowing the model to query high-level summaries or granular leaf nodes.
-- Relevant for future scaling of the Project Sanctuary Mnemonic Cortex.
+        # Parent document store (file-based, using configurable data path)
+        docstore_path = str(self.project_root / self.chroma_data_path / self.parent_collection_name)
+        self.store = SimpleFileStore(root_path=docstore_path)
+    
+    # Helper methods for ingestion
+    def _chunked_iterable(self, seq: List, size: int):
+        """Yield successive n-sized chunks from seq."""
+        for i in range(0, len(seq), size):
+            yield seq[i : i + size]
+    
+    def _safe_add_documents(self, retriever, docs: List, max_retries: int = 5):
+        #============================================
+        # Method: _safe_add_documents
+        # Purpose: Recursively retry adding documents to handle ChromaDB 
+        #          batch size limits.
+        # Args:
+        #   retriever: ParentDocumentRetriever instance
+        #   docs: List of documents to add
+        #   max_retries: Maximum number of retry attempts
+        #============================================
+        try:
+            retriever.add_documents(docs, ids=None, add_to_docstore=True)
+            return
+        except Exception as e:
+            # Check for batch size or internal errors
+            err_text = str(e).lower()
+            if "batch size" not in err_text and "internalerror" not in e.__class__.__name__.lower():
+                raise
+            
+            if len(docs) <= 1 or max_retries <= 0:
+                raise
+            
+            mid = len(docs) // 2
+            left = docs[:mid]
+            right = docs[mid:]
+            self._safe_add_documents(retriever, left, max_retries - 1)
+            self._safe_add_documents(retriever, right, max_retries - 1)
 
-### Artifacts Created:
-- `LEARNING/topics/raptor_rag.md` (Synthesized content)
-- Semantically indexed in `child_chunks_v5` and `parent_documents_v5`.
+    # Exclusion Constants (mirrored from capture_code_snapshot.py)
+    EXCLUDE_DIRS = {
+        'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', 
+        '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
+        '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache', 'pip-wheel-metadata',
+        '.svn', '.hg', '.bzr',
+        'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
+        'dataset_package', 'chroma_db', 'chroma_db_backup', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
+        'TASKS', 'ml_env_logs', 'outputs', 'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
+        'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE', '05_ARCHIVED_BLUEPRINTS', 'gardener',
+        'research', '02_ROADMAP', '03_OPERATIONS', '06_THE_EMBER_LIBRARY', 'certs', 'mcp_config'
+    }
+    
+    EXCLUDE_FILES = {
+        'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
+        'Operation_Whole_Genome_Forge.ipynb', 'continuing_work_new_chat.md', 'orchestrator-backup.py',
+        'ingest_new_knowledge.py', '.DS_Store', '.env', 'manifest.json', '.gitignore',
+        'PROMPT_PROJECT_ANALYSIS.md', 'Modelfile', 'nohup.out', 'sanctuary_whole_genome_data.jsonl',
+        'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'mcp_config'
+    }
 
-### Validation:
-- Retrieval Test: PASS
-- Integrity Gate: Ready for Red Team Audit.
+    def _should_skip_path(self, path: Path):
+        #============================================
+        # Method: _should_skip_path
+        # Purpose: Check if a file or directory should be excluded 
+        #          from ingestion. Matches logic from 
+        #          capture_code_snapshot.js to ensure consistency.
+        # Args:
+        #   path: Path object to check
+        # Returns: Boolean (True if should skip)
+        #============================================
+        # 1. Check path parts against directory exclusions
+        for part in path.parts:
+            if part in self.EXCLUDE_DIRS:
+                return True
+                
+        # 2. Check filename against file exclusions
+        if path.name in self.EXCLUDE_FILES:
+            return True
+            
+        # 3. Check extensions/patterns
+        name_lower = path.name.lower()
+        if name_lower.endswith(('.pyc', '.pyo', '.pyd', '.egg-info', '.log', '.gguf', '.bin', '.safetensors', '.ckpt', '.pth', '.onnx', '.pb')):
+            return True
+            
+        if name_lower.startswith(('npm-debug.log', 'yarn-error.log', 'pnpm-debug.log')):
+            return True
+            
+        return False
 
---- END OF FILE 00_CHRONICLE/ENTRIES/333_learning_loop_advanced_rag_patterns_raptor.md ---
+    def _load_documents_from_directory(self, directory_path: Path) -> List[Document]:
+        """Helper to load documents from a single directory."""
+        exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
+        
+        if not directory_path.is_dir():
+            logger.warning(f"Directory not found, skipping: {directory_path}")
+            return []
 
---- START OF FILE .agent/workflows/recursive_learning.md ---
+        logger.info(f"Loading documents from directory: {directory_path}")
+    
+        # Pre-process: Convert Code files to Markdown
+        # We explicitly scan for code files to convert them using the shim
+        # This allows standard DirectoryLoader to pick up the resulting .py.md files
+        
+        try:
+            # Gather potential code files
+            potential_files = []
+            dir_path_obj = Path(directory_path)
+            
+            # Simple extension check extensions
+            extensions = {'.py', '.js', '.jsx', '.ts', '.tsx'}
+            
+            # Walk manually to avoid descending into excluded directories (faster than rglob for node_modules)
+            for root, dirs, files in os.walk(directory_path):
+                root_path = Path(root)
+                
+                # Filter directories in-place to prevent traversal
+                # strict=False allows matching against the set logic in _should_skip_path
+                # But _should_skip_path expects a Path. Let's do a quick pre-filter on dir names
+                # to optimize os.walk
+                dirs[:] = [d for d in dirs if not self._should_skip_path(root_path / d)]
+                
+                for file in files:
+                    file_path = root_path / file
+                    if file_path.suffix in extensions:
+                        if not self._should_skip_path(file_path):
+                            potential_files.append(file_path)
+            
+            converted_count = 0
+            for code_file in potential_files:
+                try:
+                    convert_and_save(str(code_file))
+                    converted_count += 1
+                except Exception as e:
+                    logger.warning(f"Failed to convert {code_file.name}: {e}")
+            
+            if converted_count > 0:
+                logger.info(f"Converted {converted_count} code files to Markdown in {directory_path}")
+                
+        except Exception as e:
+            logger.error(f"Error during code conversion scan: {e}")
 
----
-description: "Standard operating procedure for the Protocol 125 Recursive Learning Loop (Discover -> Synthesize -> Ingest -> Validate -> Chronicle)."
----
+        # Use DirectoryLoader to load all markdown files (including newly converted ones)
+        # We also apply exclusion patterns to DirectoryLoader for safety
+        loader = DirectoryLoader(
+            str(directory_path),
+            glob="**/*.md",
+            loader_cls=TextLoader,
+            use_multithreading=True,
+            show_progress=False,  # Keep logs clean
+            exclude=[f"**/{ex}/**" for ex in self.EXCLUDE_DIRS], # Use the class-level EXCLUDE_DIRS for consistency
+        )
+        try:
+            docs = loader.load()
+            logger.info(f"Found {len(docs)} documents in {directory_path}")
+            return docs
+        except Exception as e:
+            logger.error(f"Error loading documents from {directory_path}: {e}")
+            return []
 
-# Recursive Learning Loop (Protocol 125)
+    def ingest_full(
+        self,
+        purge_existing: bool = True,
+        source_directories: List[str] = None
+    ):
+        #============================================
+        # Method: ingest_full
+        # Purpose: Perform full ingestion of knowledge base.
+        # Args:
+        #   purge_existing: Whether to purge existing database
+        #   source_directories: Optional list of source directories
+        # Returns: IngestFullResponse with accurate statistics
+        #============================================
+        try:
+            start_time = time.time()
+            
+            # Purge existing collections if requested
+            if purge_existing:
+                logger.info("Purging existing database collections...")
+                try:
+                    self.chroma_client.delete_collection(name=self.child_collection_name)
+                    logger.info(f"Deleted child collection: {self.child_collection_name}")
+                except Exception as e:
+                    logger.warning(f"Child collection '{self.child_collection_name}' not found or error deleting: {e}")
+                
+                # Also clear the parent document store
+                if Path(self.store.root_path).exists():
+                    import shutil
+                    shutil.rmtree(self.store.root_path)
+                    logger.info(f"Cleared parent document store at: {self.store.root_path}")
+                else:
+                    logger.info(f"Parent document store path '{self.store.root_path}' does not exist, no need to clear.")
+                
+                # Recreate the directory to ensure it exists for new writes
+                Path(self.store.root_path).mkdir(parents=True, exist_ok=True)
+                logger.info(f"Recreated parent document store directory at: {self.store.root_path}")
+                
+            # Re-initialize vectorstore to ensure it connects to a fresh/existing collection
+            # This is critical after a delete_collection operation
+            self.vectorstore = Chroma(
+                client=self.chroma_client,
+                collection_name=self.child_collection_name,
+                embedding_function=self.embedding_model
+            )
+            
+            # Default source directories
+            default_source_dirs = [
+                "00_CHRONICLE", "01_PROTOCOLS", "02_USER_REFLECTIONS", "04_THE_FORTRESS",
+                "05_ARCHIVED_BLUEPRINTS", "06_THE_EMBER_LIBRARY", "07_COUNCIL_AGENTS",
+                "RESEARCH_SUMMARIES", "WORK_IN_PROGRESS"
+            ]
+            
+            # Determine directories
+            dirs_to_process = source_directories or default_source_dirs
+            
+            # Load documents
+            all_docs = []
+            for directory in dirs_to_process:
+                dir_path = self.project_root / directory
+                all_docs.extend(self._load_documents_from_directory(dir_path))
+            
+            total_docs = len(all_docs)
+            if total_docs == 0:
+                logger.warning("No documents found for ingestion.")
+                return IngestFullResponse(
+                    documents_processed=0,
+                    chunks_created=0,
+                    ingestion_time_ms=(time.time() - start_time) * 1000,
+                    vectorstore_path=f"{self.chroma_host}:{self.chroma_port}",
+                    status="success",
+                    error="No documents found."
+                )
+            
+            logger.info(f"Processing {len(all_docs)} documents with parent-child splitting...")
+            
+            child_docs = []
+            parent_count = 0
+            
+            for doc in all_docs:
+                # Split into parent chunks
+                parent_chunks = self.parent_splitter.split_documents([doc])
+                
+                for parent_chunk in parent_chunks:
+                    # Generate parent ID
+                    parent_id = str(uuid4())
+                    parent_count += 1
+                    
+                    # Store parent document
+                    self.store.mset([(parent_id, parent_chunk)])
+                    
+                    # Split parent into child chunks
+                    sub_docs = self.child_splitter.split_documents([parent_chunk])
+                    
+                    # Add parent_id to child metadata
+                    for sub_doc in sub_docs:
+                        sub_doc.metadata["parent_id"] = parent_id
+                        child_docs.append(sub_doc)
+            
+            # Add child chunks to vectorstore in batches
+            # ChromaDB has a maximum batch size of ~5461
+            logger.info(f"Adding {len(child_docs)} child chunks to vectorstore...")
+            batch_size = 5000  # Safe batch size under the limit
+            
+            for i in range(0, len(child_docs), batch_size):
+                batch = child_docs[i:i + batch_size]
+                logger.info(f"  Adding batch {i//batch_size + 1}/{(len(child_docs)-1)//batch_size + 1} ({len(batch)} chunks)...")
+                self.vectorstore.add_documents(batch)
+            
+            # Get actual counts
+            # Re-initialize vectorstore to ensure it reflects the latest state
+            self.vectorstore = Chroma(
+                client=self.chroma_client,
+                collection_name=self.child_collection_name,
+                embedding_function=self.embedding_model
+            )
+            child_count = self.vectorstore._collection.count()
+            
+            elapsed_ms = (time.time() - start_time) * 1000
+            
+            logger.info(f"✓ Ingestion complete!")
+            logger.info(f"  - Parent documents: {parent_count}")
+            logger.info(f"  - Child chunks: {child_count}")
+            logger.info(f"  - Time: {elapsed_ms/1000:.2f}s")
+            
+            return IngestFullResponse(
+                documents_processed=total_docs,
+                chunks_created=child_count,
+                ingestion_time_ms=elapsed_ms,
+                vectorstore_path=f"{self.chroma_host}:{self.chroma_port}",
+                status="success"
+            )
+            
+        except Exception as e:
+            logger.error(f"Full ingestion failed: {e}", exc_info=True)
+            return IngestFullResponse(
+                documents_processed=0,
+                chunks_created=0,
+                ingestion_time_ms=0,
+                vectorstore_path="",
+                status="error",
+                error=str(e)
+            )
 
-**Objective:** Autonomous acquisition and preservation of new knowledge.
-**Reference:** `01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md`
-**Tools:** Web Search, Code MCP, RAG Cortex, Chronicle
+    
+    def query(
+        self,
+        query: str,
+        max_results: int = 5,
+        use_cache: bool = False,
+        reasoning_mode: bool = False
+    ):
+        #============================================
+        # Method: query
+        # Purpose: Perform semantic search query using RAG infrastructure.
+        # Args:
+        #   query: Search query string
+        #   max_results: Maximum results to return
+        #   use_cache: Whether to use semantic cache
+        #   reasoning_mode: Use reasoning model if True
+        # Returns: QueryResponse with results and metadata
+        #============================================
+        try:
+            start_time = time.time()
+            
+            # Initialize ChromaDB client (already done in __init__)
+            collection = self.chroma_client.get_collection(name=self.child_collection_name)
+            
+            # Initialize embedding model (already done in __init__)
+            
+            # Generate query embedding
+            query_embedding = self.embedding_model.embed_query(query)
+            
+            # Query ChromaDB
+            results = collection.query(
+                query_embeddings=[query_embedding],
+                n_results=max_results,
+                include=['documents', 'metadatas', 'distances']
+            )
+            
+            # Format results with Parent Document lookup
+            formatted_results = []
+            if results and results['documents'] and len(results['documents']) > 0:
+                for i, doc_content in enumerate(results['documents'][0]):
+                    metadata = results['metadatas'][0][i]
+                    parent_id = metadata.get("parent_id")
+                    
+                    # If we have a parent_id, retrieve the full document context
+                    final_content = doc_content
+                    if parent_id:
+                        try:
+                            parent_docs = self.store.mget([parent_id])
+                            if parent_docs and parent_docs[0]:
+                                final_content = parent_docs[0].page_content
+                                # Update metadata with parent metadata if needed
+                                metadata.update(parent_docs[0].metadata)
+                        except Exception as e:
+                            logger.warning(f"Failed to retrieve parent doc {parent_id}: {e}")
+                    
+                    formatted_results.append(QueryResult(
+                        content=final_content,
+                        metadata=metadata,
+                        relevance_score=results['distances'][0][i] if results.get('distances') else None
+                    ))
+            
+            elapsed_ms = (time.time() - start_time) * 1000
+            logger.info(f"Query '{query[:50]}...' completed in {elapsed_ms:.2f}ms with {len(formatted_results)} results (Parent-Retriever applied).")
+            
+            return QueryResponse(
+                status="success",
+                results=formatted_results,
+                query_time_ms=elapsed_ms,
+                cache_hit=False
+            )
+            
+        except Exception as e:
+            logger.error(f"Query failed for '{query[:50]}...': {e}", exc_info=True)
+            return QueryResponse(
+                status="error",
+                results=[],
+                query_time_ms=0,
+                cache_hit=False,
+                error=str(e)
+            )
+    
+    def get_stats(self, include_samples: bool = False, sample_count: int = 5):
+        #============================================
+        # Method: get_stats
+        # Purpose: Get database statistics and health status.
+        # Args:
+        #   include_samples: Whether to include sample docs
+        #   sample_count: Number of sample documents to return
+        # Returns: StatsResponse with detailed database metrics
+        #============================================
+        try:
+            # Get child chunks stats
+            child_count = 0
+            try:
+                collection = self.chroma_client.get_collection(name=self.child_collection_name)
+                child_count = collection.count()
+                logger.info(f"Child collection '{self.child_collection_name}' count: {child_count}")
+            except Exception as e:
+                logger.warning(f"Child collection '{self.child_collection_name}' not found or error accessing: {e}")
+                pass  # Collection doesn't exist yet
+            
+            # Get parent documents stats
+            parent_count = 0
+            if Path(self.store.root_path).exists():
+                try:
+                    parent_count = sum(1 for _ in self.store.yield_keys())
+                    logger.info(f"Parent document store '{self.parent_collection_name}' count: {parent_count}")
+                except Exception as e:
+                    logger.warning(f"Error accessing parent document store at '{self.store.root_path}': {e}")
+                    pass  # Silently ignore errors for MCP compatibility
+            else:
+                logger.info(f"Parent document store path '{self.store.root_path}' does not exist.")
+            
+            # Build collections dict
+            collections = {
+                "child_chunks": CollectionStats(count=child_count, name=self.child_collection_name),
+                "parent_documents": CollectionStats(count=parent_count, name=self.parent_collection_name)
+            }
+            
+            # Determine health status
+            if child_count > 0 and parent_count > 0:
+                health_status = "healthy"
+            elif child_count > 0 or parent_count > 0:
+                health_status = "degraded"
+            else:
+                health_status = "error"
+            logger.info(f"RAG Cortex health status: {health_status}")
+            
+            # Retrieve sample documents if requested
+            samples = None
+            if include_samples and child_count > 0:
+                try:
+                    collection = self.chroma_client.get_collection(name=self.child_collection_name)
+                    # Get sample documents with metadata and content
+                    retrieved_docs = collection.get(limit=sample_count, include=["metadatas", "documents"])
+                    
+                    samples = []
+                    for i in range(len(retrieved_docs["ids"])):
+                        sample = DocumentSample(
+                            id=retrieved_docs["ids"][i],
+                            metadata=retrieved_docs["metadatas"][i],
+                            content_preview=retrieved_docs["documents"][i][:150] + "..." if len(retrieved_docs["documents"][i]) > 150 else retrieved_docs["documents"][i]
+                        )
+                        samples.append(sample)
+                    logger.info(f"Retrieved {len(samples)} sample documents.")
+                except Exception as e:
+                    logger.warning(f"Error retrieving sample documents: {e}")
+                    # Silently ignore sample retrieval errors
+                    pass
+            
+            return StatsResponse(
+                total_documents=parent_count,
+                total_chunks=child_count,
+                collections=collections,
+                health_status=health_status,
+                samples=samples
+            )
+            
+        except Exception as e:
+            logger.error(f"Failed to retrieve stats: {e}", exc_info=True)
+            return StatsResponse(
+                total_documents=0,
+                total_chunks=0,
+                collections={},
+                health_status="error",
+                error=str(e)
+            )
+    
+    def ingest_incremental(
+        self,
+        file_paths: List[str],
+        metadata: Dict[str, Any] = None,
+        skip_duplicates: bool = True
+    ) -> IngestIncrementalResponse:
+        #============================================
+        # Method: ingest_incremental
+        # Purpose: Incrementally ingest documents without full rebuild.
+        # Args:
+        #   file_paths: List of file paths to ingest
+        #   metadata: Optional metadata to attach
+        #   skip_duplicates: Deduplication flag
+        # Returns: IngestIncrementalResponse with statistics
+        #============================================
+        try:
+            start_time = time.time()
+            
+            # Validate files
+            valid_files = []
+            for fp in file_paths:
+                path = Path(fp)
+                if not path.is_absolute():
+                    path = self.project_root / path
+                
+                if path.exists() and path.is_file():
+                    if path.suffix == '.md':
+                        valid_files.append(str(path.resolve()))
+                    elif path.suffix in ['.py', '.js', '.jsx', '.ts', '.tsx']:
+                        # Convert Code to Markdown using shim
+                        try:
+                            md_path = convert_and_save(str(path.resolve()))
+                            valid_files.append(md_path)
+                            # Track for cleanup if needed, though keeping the .md might be useful for caching
+                        except Exception as e:
+                            logger.warning(f"Failed to convert code file {fp}: {e}")
+                else:
+                    logger.warning(f"Skipping invalid file path: {fp}")
+            
+            if not valid_files:
+                logger.warning("No valid files to ingest incrementally.")
+                return IngestIncrementalResponse(
+                    documents_added=0,
+                    chunks_created=0,
+                    skipped_duplicates=0,
+                    ingestion_time_ms=(time.time() - start_time) * 1000,
+                    status="success",
+                    error="No valid files to ingest"
+                )
+            
+            added_documents_count = 0
+            total_child_chunks_created = 0
+            skipped_duplicates_count = 0
+            
+            all_child_docs_to_add = []
+            
+            for file_path in valid_files:
+                try:
+                    # Check for duplicates if skip_duplicates is True
+                    # This is a simplified check, a more robust one would query the vectorstore
+                    # or docstore for existing documents with this source_file metadata.
+                    # For now, we'll assume the file_path itself is the unique identifier.
+                    # This part of the diff was not fully provided, so I'm making an assumption.
+                    # A proper check would involve querying the vectorstore for documents with this source_file.
+                    # For now, we'll just load and process.
+                    
+                    loader = TextLoader(file_path)
+                    docs_from_file = loader.load()
+                    
+                    if not docs_from_file:
+                        logger.info(f"No content found in {file_path}, skipping.")
+                        continue
+                    
+                    file_name = Path(file_path).name
+                    
+                    # Set metadata for the original documents
+                    for doc in docs_from_file:
+                        doc.metadata['source_file'] = file_path
+                        doc.metadata['source'] = file_path
+                        doc.metadata['filename'] = file_name
+                        if metadata:
+                            doc.metadata.update(metadata)
+                    
+                    logger.info(f"Processing {len(docs_from_file)} documents from {file_path} with parent-child splitting...")
+                    
+                    for doc in docs_from_file:
+                        # Split into parent chunks
+                        # Split into parent chunks
+                        parent_chunks = self.parent_splitter.split_documents([doc])
+                        
+                        for parent_chunk in parent_chunks:
+                            # Generate parent ID
+                            parent_id = str(uuid4())
+                            
+                            # Store parent document
+                            self.store.mset([(parent_id, parent_chunk)])
+                            
+                            # Split parent into child chunks
+                            sub_docs = self.child_splitter.split_documents([parent_chunk])
+                            
+                            # Add parent_id to child metadata
+                            for sub_doc in sub_docs:
+                                sub_doc.metadata["parent_id"] = parent_id
+                                all_child_docs_to_add.append(sub_doc)
+                                total_child_chunks_created += 1
+                    
+                    added_documents_count += len(docs_from_file)
+                    
+                except Exception as e:
+                    logger.error(f"Error ingesting {file_path}: {e}")
+                    continue
+            
+            # Add child chunks to vectorstore
+            if all_child_docs_to_add:
+                logger.info(f"Adding {len(all_child_docs_to_add)} child chunks to vectorstore...")
+                batch_size = 5000
+                for i in range(0, len(all_child_docs_to_add), batch_size):
+                    batch = all_child_docs_to_add[i:i + batch_size]
+                    self.vectorstore.add_documents(batch)
+            
+            elapsed_ms = (time.time() - start_time) * 1000
+            
+            return IngestIncrementalResponse(
+                documents_added=added_documents_count,
+                chunks_created=total_child_chunks_created,
+                skipped_duplicates=0,
+                ingestion_time_ms=elapsed_ms,
+                status="success"
+            )
+            
+        except Exception as e:
+            return IngestIncrementalResponse(
+                documents_added=0,
+                chunks_created=0,
+                skipped_duplicates=0,
+                ingestion_time_ms=0,
+                status="error",
+                error=str(e)
+            )
 
-## Phase 1: Discovery
-1.  **Define Research Question:** What exactly are we learning? (e.g., "Latest features of library X")
-2.  **Search:** Use `search_web` to find authoritative sources.
-3.  **Read:** Use `read_url_content` to ingest raw data.
-4.  **Analyze:** Extract key facts, code snippets, and architectural patterns.
+    # ========================================================================
+    # Cache Operations (Protocol 114 - Guardian Wakeup)
+    # ========================================================================
 
-## Phase 2: Synthesis
-1.  **Context Check:** Use `code_read` to check existing topic notes (e.g., `LEARNING/topics/...`).
-2.  **Conflict Resolution:**
-    *   New confirms old? > Update/Append.
-    *   New contradicts old? > Create `disputes.md` (Resolution Protocol).
-3.  **Draft Artifacts:** Create the new Markdown note locally using `code_write`.
-    *   **Must** include YAML frontmatter (id, type, status, last_verified).
+    def cache_get(self, query: str):
+        #============================================
+        # Method: cache_get
+        # Purpose: Retrieve answer from semantic cache.
+        # Args:
+        #   query: Search query string
+        # Returns: CacheGetResponse with hit status and answer
+        #============================================
+        from .cache import get_cache
+        from .models import CacheGetResponse
+        import time
+        
+        try:
+            start = time.time()
+            cache = get_cache()
+            
+            # Generate cache key
+            structured_query = {"semantic": query, "filters": {}}
+            cache_key = cache.generate_key(structured_query)
+            
+            # Attempt retrieval
+            result = cache.get(cache_key)
+            query_time_ms = (time.time() - start) * 1000
+            
+            if result:
+                return CacheGetResponse(
+                    cache_hit=True,
+                    answer=result.get("answer"),
+                    query_time_ms=query_time_ms,
+                    status="success"
+                )
+            else:
+                return CacheGetResponse(
+                    cache_hit=False,
+                    answer=None,
+                    query_time_ms=query_time_ms,
+                    status="success"
+                )
+        except Exception as e:
+            return CacheGetResponse(
+                cache_hit=False,
+                answer=None,
+                query_time_ms=0,
+                status="error",
+                error=str(e)
+            )
 
-## Phase 3: Ingestion
-1.  **Ingest:** Use `cortex_ingest_incremental` targeting the new file(s).
-2.  **Wait:** Pause for 2-3 seconds for vector indexing.
+    def cache_set(self, query: str, answer: str):
+        #============================================
+        # Method: cache_set
+        # Purpose: Store answer in semantic cache.
+        # Args:
+        #   query: Cache key string
+        #   answer: Response to cache
+        # Returns: CacheSetResponse confirmation
+        #============================================
+        from .cache import get_cache
+        from .models import CacheSetResponse
+        
+        try:
+            cache = get_cache()
+            structured_query = {"semantic": query, "filters": {}}
+            cache_key = cache.generate_key(structured_query)
+            
+            cache.set(cache_key, {"answer": answer})
+            
+            return CacheSetResponse(
+                cache_key=cache_key,
+                stored=True,
+                status="success"
+            )
+        except Exception as e:
+            return CacheSetResponse(
+                cache_key="",
+                stored=False,
+                status="error",
+                error=str(e)
+            )
 
-## Phase 4: Validation
-1.  **Retrieval Test:** Use `cortex_query` with the original question.
-2.  **Semantic Check:** Does the retrieved context allow you to answer the question accurately?
-    *   *If NO:* Refactor the note (better headers, chunks) and retry Phase 3.
-    *   *If YES:* Proceed.
+    def cache_warmup(self, genesis_queries: List[str] = None):
+        #============================================
+        # Method: cache_warmup
+        # Purpose: Pre-populate cache with genesis queries.
+        # Args:
+        #   genesis_queries: Optional list of queries to cache
+        # Returns: CacheWarmupResponse with counts
+        #============================================
+        from .models import CacheWarmupResponse
+        import time
+        
+        try:
+            # Import genesis queries if not provided
+            if genesis_queries is None:
+                from .genesis_queries import GENESIS_QUERIES
+                genesis_queries = GENESIS_QUERIES
+            
+            start = time.time()
+            cache_hits = 0
+            cache_misses = 0
+            
+            for query in genesis_queries:
+                # Check if already cached
+                cache_response = self.cache_get(query)
+                
+                if cache_response.cache_hit:
+                    cache_hits += 1
+                else:
+                    cache_misses += 1
+                    # Generate answer and cache it
+                    query_response = self.query(query, max_results=3, use_cache=False)
+                    if query_response.results:
+                        answer = query_response.results[0].content[:1000]
+                        self.cache_set(query, answer)
+            
+            total_time_ms = (time.time() - start) * 1000
+            
+            return CacheWarmupResponse(
+                queries_cached=len(genesis_queries),
+                cache_hits=cache_hits,
+                cache_misses=cache_misses,
+                total_time_ms=total_time_ms,
+                status="success"
+            )
+        except Exception as e:
+            return CacheWarmupResponse(
+                queries_cached=0,
+                cache_hits=0,
+                cache_misses=0,
+                total_time_ms=0,
+                status="error",
+                error=str(e)
+            )
 
-## Phase 5: Chronicle
-1.  **Log:** Use `chronicle_create_entry` (Classification: INTERNAL).
-2.  **Content:**
-    *   Topic explored.
-    *   Key findings.
-    *   Files created/modified.
-    *   Validation Status: PASS.
-    *   Reference Protocol 125.
-3.  **Status:** PUBLISHED (or CANONICAL if critical).
+    # ========================================================================
+    # Helper: Recency Delta (High-Signal Filter) is implemented below
+    # ================================================================================================================================================
+    # Helper: Recency Delta (High-Signal Filter)
+    # ========================================================================
 
-## Phase 6: Maintenance (Gardener)
-*   *Optional:* If this session modified >3 files, run a quick "Gardener Scan" on the topic folder to ensure links are valid.
+    def _get_recency_delta(self, hours: int = 48):
+        #============================================
+        # Method: _get_recency_delta
+        # Purpose: Get summary of recently modified high-signal files.
+        # Args:
+        #   hours: Lookback window in hours
+        # Returns: Markdown string with file summaries and diff context
+        #============================================
+        import datetime
+        import subprocess
+        
+        try:
+            delta = datetime.timedelta(hours=hours)
+            cutoff_time = time.time() - delta.total_seconds()
+            now = time.time()
+            
+            recent_files = []
+            scan_dirs = ["00_CHRONICLE/ENTRIES", "01_PROTOCOLS", "mcp_servers", "02_USER_REFLECTIONS"]
+            allowed_extensions = {".md", ".py"}
+            
+            for directory in scan_dirs:
+                dir_path = self.project_root / directory
+                if not dir_path.exists():
+                    continue
+                
+                # Recursive glob for code/docs
+                for file_path in dir_path.rglob("*"):
+                    if not file_path.is_file():
+                        continue
+                        
+                    if file_path.suffix not in allowed_extensions:
+                        continue
+                        
+                    if "__pycache__" in str(file_path):
+                        continue
+                        
+                    mtime = file_path.stat().st_mtime
+                    if mtime > cutoff_time:
+                        recent_files.append((file_path, mtime))
+            
+            if not recent_files:
+                return "* **Recent Files Modified (48h):** None"
+                
+            # Sort by modification time (newest first)
+            recent_files.sort(key=lambda x: x[1], reverse=True)
+            
+            # Try to get git commit info
+            git_info = "[Git unavailable]"
+            try:
+                result = subprocess.run(
+                    ["git", "log", "-1", "--oneline"],
+                    cwd=self.project_root,
+                    capture_output=True,
+                    text=True,
+                    timeout=2
+                )
+                if result.returncode == 0:
+                    git_info = result.stdout.strip()
+            except Exception:
+                pass
+            
+            lines = [f"* **Most Recent Commit:** {git_info}"]
+            lines.append("* **Recent Files Modified (48h):**")
+            
+            for file_path, mtime in recent_files[:5]:
+                relative_path = file_path.relative_to(self.project_root)
+                
+                # Calculate relative time
+                age_seconds = now - mtime
+                if age_seconds < 3600:
+                    age_str = f"{int(age_seconds / 60)}m ago"
+                elif age_seconds < 86400:
+                    age_str = f"{int(age_seconds / 3600)}h ago"
+                else:
+                    age_str = f"{int(age_seconds / 86400)}d ago"
+                
+                # Try to extract first meaningful line for context
+                context = ""
+                try:
+                    with open(file_path, 'r') as f:
+                        content = f.read(500)  # First 500 chars
+                        # For .md files, look for title
+                        if file_path.suffix == ".md":
+                            title_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
+                            if title_match:
+                                context = f" → {title_match.group(1)}"
+                        # For .py files, look for module docstring or class/function
+                        elif file_path.suffix == ".py":
+                            if "def _get_" in content or "class " in content:
+                                context = " → Implementation changes"
+                except Exception:
+                    pass
+                
+                # Get git diff summary for this file
+                diff_summary = self._get_git_diff_summary(str(relative_path))
+                if diff_summary:
+                    context += f" [{diff_summary}]"
+                
+                lines.append(f"    * `{relative_path}` ({age_str}){context}")
+            
+            return "\n".join(lines)
+            
+        except Exception as e:
+            return f"Error generating recency delta: {str(e)}"
+    
+    def _get_git_diff_summary(self, file_path: str):
+        #============================================
+        # Method: _get_git_diff_summary
+        # Purpose: Get a brief git diff summary (e.g., +15/-3).
+        # Args:
+        #   file_path: Relative path to file
+        # Returns: Summary string or empty string
+        #============================================
+        import subprocess
+        
+        try:
+            # Check if file is tracked
+            result = subprocess.run(
+                ["git", "ls-files", "--error-unmatch", file_path],
+                cwd=self.project_root,
+                capture_output=True,
+                timeout=3
+            )
+            
+            if result.returncode != 0:
+                return "new file"
+            
+            # First try: Check uncommitted changes (working directory vs HEAD)
+            result = subprocess.run(
+                ["git", "diff", "--numstat", "HEAD", file_path],
+                cwd=self.project_root,
+                capture_output=True,
+                text=True,
+                timeout=3
+            )
+            
+            if result.returncode == 0 and result.stdout.strip():
+                # Parse numstat: "additions deletions filename"
+                parts = result.stdout.strip().split('\t')
+                if len(parts) >= 2:
+                    additions = parts[0]
+                    deletions = parts[1]
+                    if additions != '-' and deletions != '-':
+                        return f"+{additions}/-{deletions} (uncommitted)"
+            
+            # Second try: Check last commit THAT TOUCHED THIS FILE
+            # Use git log -1 --numstat --format="" path/to/file
+            result = subprocess.run(
+                ["git", "log", "-1", "--numstat", "--format=", "--", file_path],
+                cwd=self.project_root,
+                capture_output=True,
+                text=True,
+                timeout=3
+            )
+            
+            if result.returncode == 0 and result.stdout.strip():
+                # Parse numstat: "additions deletions filename"
+                # Output might look like: "15\t3\tmcp_servers/rag_cortex/operations.py"
+                parts = result.stdout.strip().split('\t')
+                if len(parts) >= 2:
+                    additions = parts[0]
+                    deletions = parts[1]
+                    if additions != '-' and deletions != '-':
+                        return f"+{additions}/-{deletions}"
+            
+            return ""
+            
+        except Exception:
+            return ""
 
-### Phase 7: The Human Gate (Dual-Gate Validation)
-#### 7a. Strategic Review (Gate 1)
-1.  **Verify Logic**: Review the `/ADRs` and `/LEARNING` documents created during the session.
-2.  **Align Intent**: Ensure the AI's autonomous research matches the session goals.
-3.  **Approve**: If correct, proceed to the Technical Audit.
+    # ========================================================================
+    # Helper: Recent Chronicle Highlights
+    # ========================================================================
+    
+    def _get_recent_chronicle_highlights(self, max_entries: int = 3):
+        #============================================
+        # Method: _get_recent_chronicle_highlights
+        # Purpose: Get recent Chronicle entries for strategic context.
+        # Args:
+        #   max_entries: Max entries to include
+        # Returns: Markdown string with Chronicle highlights
+        #============================================
+        try:
+            chronicle_dir = self.project_root / "00_CHRONICLE" / "ENTRIES"
+            if not chronicle_dir.exists():
+                return "* No recent Chronicle entries found."
+            
+            # Get all .md files sorted by modification time
+            entries = []
+            for file_path in chronicle_dir.glob("*.md"):
+                try:
+                    mtime = file_path.stat().st_mtime
+                    entries.append((file_path, mtime))
+                except Exception:
+                    continue
+            
+            if not entries:
+                return "* No Chronicle entries found."
+            
+            # Sort by modification time (newest first)
+            entries.sort(key=lambda x: x[1], reverse=True)
+            
+            lines = []
+            for file_path, _ in entries[:max_entries]:
+                try:
+                    # Extract entry number and title
+                    filename = file_path.stem
+                    entry_num = filename.split('_')[0]
+                    
+                    # Read first few lines to get title
+                    with open(file_path, 'r') as f:
+                        content_text = f.read(500)
+                        
+                        # First try to extract **Title:** field (preferred - contains actual title)
+                        title_match = re.search(r"\*\*Title:\*\*\s*(.+?)$", content_text, re.MULTILINE)
+                        
+                        # Fallback to first markdown header if **Title:** not found
+                        if not title_match:
+                            title_match = re.search(r"^#\s+(.+)$", content_text, re.MULTILINE)
+                        
+                        if title_match:
+                            title = title_match.group(1).strip()
+                            # Remove entry number from title if present
+                            title = re.sub(r"^\d+[:\s-]+", "", title)
+                            lines.append(f"* **Chronicle {entry_num}:** {title}")
+                except Exception:
+                    continue
+            
+            return "\n".join(lines) if lines else "* No recent Chronicle entries found."
+            
+        except Exception as e:
+            return f"Error retrieving Chronicle highlights: {str(e)}"
 
-#### 7b. Technical Audit (Gate 2)
-1.  **Snapshot Generation**: The agent calls `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='audit'` and a `manifest_files` list derived from session activity.
-2.  **Zero-Trust Check**: The tool automatically verifies the manifest against `git diff`. If discrepancies exist, it flags them in the generated packet.
-3.  **Audit**: Human reviews the consolidated `.agent/learning/red_team/red_team_audit_packet.md` for technical truth.
+    # ========================================================================
+    # Helper: Recent Protocol Updates
+    # ========================================================================
+    
+    def _get_recent_protocol_updates(self, max_protocols: int = 3, hours: int = 168):
+        #============================================
+        # Method: _get_recent_protocol_updates
+        # Purpose: Get recently modified protocols for context.
+        # Args:
+        #   max_protocols: Max protocols to include
+        #   hours: Lookback window (default 1 week)
+        # Returns: Markdown string with protocol updates
+        #============================================
+        import datetime
+        
+        try:
+            protocol_dir = self.project_root / "01_PROTOCOLS"
+            if not protocol_dir.exists():
+                return "* No protocol directory found."
+            
+            delta = datetime.timedelta(hours=hours)
+            cutoff_time = time.time() - delta.total_seconds()
+            
+            # Get all .md files modified within the window
+            recent_protocols = []
+            for file_path in protocol_dir.glob("*.md"):
+                try:
+                    mtime = file_path.stat().st_mtime
+                    if mtime > cutoff_time:
+                        recent_protocols.append((file_path, mtime))
+                except Exception:
+                    continue
+            
+            if not recent_protocols:
+                return f"* No protocols modified in the last {hours//24} days"
+            
+            # Sort by modification time (newest first)
+            recent_protocols.sort(key=lambda x: x[1], reverse=True)
+            
+            lines = []
+            for file_path, mtime in recent_protocols[:max_protocols]:
+                try:
+                    # Extract protocol number from filename
+                    filename = file_path.stem
+                    protocol_num_match = re.match(r"^(\d+)", filename)
+                    if not protocol_num_match:
+                        continue
+                    
+                    protocol_num = protocol_num_match.group(1)
+                    
+                    # Read protocol to get title and status
+                    with open(file_path, 'r') as f:
+                        content = f.read(1000)
+                    
+                    # Extract title
+                    title = "Unknown Title"
+                    title_match = re.search(r"^#\s+Protocol\s+\d+:\s*(.+?)(?:\s+\(v[\d.]+\))?$", content, re.MULTILINE | re.IGNORECASE)
+                    if title_match:
+                        title = title_match.group(1).strip()
+                    
+                    # Extract status
+                    status = "Unknown"
+                    status_match = re.search(r"\*\*Status:\*\*\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
+                    if status_match:
+                        status = status_match.group(1).strip()
+                    
+                    # Calculate age
+                    age_days = int((time.time() - mtime) / 86400)
+                    age_str = f"{age_days}d ago" if age_days > 0 else "today"
+                    
+                    lines.append(f"* **Protocol {protocol_num}:** {title} ({status}) — Updated {age_str}")
+                    
+                except Exception:
+                    continue
+            
+            return "\n".join(lines) if lines else f"* No protocols modified in the last {hours//24} days"
+            
+        except Exception as e:
+            return f"Error retrieving protocol updates: {str(e)}"
 
-### Phase 8: The Technical Seal (The Succession)
-1.  **The Seal**: Once the audit is approved, the agent calls `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='seal'`.
-2.  **Successor Update**: The tool generates the final `learning_package_snapshot.md` for total technical continuity. 
-    > [!IMPORTANT]
-    > **Meta-Preservation**: The manifest for the Seal MUST include this SOP (`.agent/workflows/recursive_learning.md`) if any logical optimizations were made during the session.
-3.  **Preservation**: Commit all learning artifacts as per Protocol 101 Preservation.
+    # ========================================================================
+    # Helper: Strategic Synthesis (The Gemini Signal)
+    # ========================================================================
 
----
+    def _get_strategic_synthesis(self):
+        #============================================
+        # Method: _get_strategic_synthesis
+        # Purpose: Synthesize Core Values from project documentation.
+        # Returns: 3-sentence synthesized summary
+        #============================================
+        # Hardcoded synthesis for efficiency/reliability (as per "Synthesize, don't just read")
+        # In a real dynamic system, this would be periodically re-generated by LLM.
+        # But for 'Context Awareness', retrieving the canonical truth is safer.
+        
+        return (
+            "* **Core Mandate:** I am the Gemini Orchestrator. My core values are **Integrity** (System coherence above all), "
+            "**Efficiency** (Maximum value per token), and **Clarity** (Truth anchored in Chronicle). "
+            "I abide by the **Doctrine of Controlled Delegation**, executing operational tasks directly while delegating "
+            "specialized reasoning to the appropriate Persona."
+        )
 
-### Next Session: The Bridge
-1. **Boot**: The next session agent calls `cortex_learning_debrief`.
-2. **Retrieve**: The tool identifies the `learning_package_snapshot.md` and presents it as the "Strategic Successor Context".
+    # ========================================================================
+    # Helper: Tactical Priorities (v2)
+    # ========================================================================
+    
+    def _get_tactical_priorities(self):
+        #============================================
+        # Method: _get_tactical_priorities
+        # Purpose: Scan TASKS/ directories for top priorities.
+        # Returns: Markdown list of top 5 tasks with status
+        #============================================
+        try:
+            priority_map = {"Critical": 1, "High": 2, "Medium": 3, "Low": 4}
+            found_tasks = []
+            
+            scan_sources = [
+                self.project_root / "TASKS" / "in-progress",
+                self.project_root / "TASKS" / "todo",
+                self.project_root / "TASKS" / "backlog"
+            ]
+            
+            for source_dir in scan_sources:
+                if not source_dir.exists():
+                    continue
+                    
+                for file_path in source_dir.glob("*.md"):
+                    try:
+                        content = file_path.read_text()
+                        
+                        # Precise priority extraction
+                        priority_score = 5  # Default unspecified
+                        # Use permissive regex to handle MD bolding, spacing, colons
+                        if re.search(r"Priority.*?Critical", content, re.IGNORECASE):
+                            priority_score = 1
+                        elif re.search(r"Priority.*?High", content, re.IGNORECASE):
+                            priority_score = 2
+                        elif re.search(r"Priority.*?Medium", content, re.IGNORECASE):
+                            priority_score = 3
+                        elif re.search(r"Priority.*?Low", content, re.IGNORECASE):
+                            priority_score = 4
+                        
+                        # Extract Objective (try multiple formats)
+                        objective = "Objective not found"
+                        
+                        # Format 1: Inline "Objective: text"
+                        obj_match = re.search(r"^(?:Objective|Goal):\s*(.+?)(?:\n|$)", content, re.IGNORECASE | re.MULTILINE)
+                        if obj_match:
+                            objective = obj_match.group(1).strip()
+                        else:
+                            # Format 2: Section header "## 1. Objective" (flexible on level/numbering)
+                            # Matches: # Objective, ## 1. Objective, ### Goal, etc.
+                            section_match = re.search(r"^#+\s*(?:\d+\.\s*)?(?:Objective|Goal).*?\n(.+?)(?:\n#+\s|\Z)", content, re.IGNORECASE | re.DOTALL | re.MULTILINE)
+                            if section_match:
+                                # Get first non-empty line of content
+                                full_text = section_match.group(1).strip()
+                                obj_lines = [line.strip() for line in full_text.split('\n') if line.strip()]
+                                objective = obj_lines[0] if obj_lines else "Objective not found"
+                        
+                        # Extract Status
+                        status = None
+                        status_match = re.search(r"Status:\s*(.+?)(?:\n|$)", content, re.IGNORECASE)
+                        if status_match:
+                            status = status_match.group(1).strip()
+                        
+                        # Determine folder for context
+                        folder = source_dir.name
+                            
+                        found_tasks.append({
+                            "id": file_path.stem.split('_')[0],
+                            "objective": objective,
+                            "status": status,
+                            "folder": folder,
+                            "score": priority_score,
+                            "path": file_path
+                        })
+                    except Exception:
+                        continue
+            
+            # Sort: Score asc (1=Critical first), then File Name desc (Newest IDs)
+            found_tasks.sort(key=lambda x: (x["score"], -int(x["id"]) if x["id"].isdigit() else 0))
+            
+            # Take top 5
+            top_5 = found_tasks[:5]
+            
+            if not top_5:
+                # Provide diagnostic info
+                total_scanned = sum(1 for src in scan_sources if src.exists() for _ in src.glob("*.md"))
+                return f"* No tasks found (scanned {total_scanned} total tasks)"
+            
+            # Build output with priority labels
+            priority_labels = {1: "CRITICAL", 2: "HIGH", 3: "MEDIUM", 4: "LOW", 5: "UNSPECIFIED"}
+            
+            lines = []
+            for t in top_5:
+                prio_label = priority_labels.get(t["score"], "UNKNOWN")
+                status_info = f" → {t['status']}" if t['status'] else ""
+                folder_badge = f"[{t['folder']}]"
+                lines.append(f"* **[{t['id']}]** ({prio_label}) {folder_badge}: {t['objective']}{status_info}")
+            
+            return "\n".join(lines)
+            
+        except Exception as e:
+            return f"Error retrieval tactical priorities: {str(e)}"
+            
+    # ========================================================================
+    # Helper: System Health (Traffic Light)
+    # ========================================================================
+    
+    def _get_system_health_traffic_light(self):
+        #============================================
+        # Method: _get_system_health_traffic_light
+        # Purpose: Determine system health status color.
+        # Returns: Tuple of (Color, Reason)
+        #============================================
+        try:
+            stats = self.get_stats()
+            
+            if stats.health_status == "error":
+                return "RED", f"Database Error: {getattr(stats, 'error', 'Unknown Error')}"
+                
+            if stats.total_documents == 0:
+                return "YELLOW", "Database empty (Zero documents)"
+                
+            # Ideally check last ingest time, but stats might not have it.
+            # Assume Green if stats return valid numbers.
+            return "GREEN", f"Nominal ({stats.total_documents} docs, {stats.total_chunks} chunks)"
+            
+        except Exception as e:
+            return "RED", f"System Failure: {str(e)}"
 
-## Phase 8: Retrospective (Continuous Improvement)
-1.  **Reflect:** Did this session feel efficient? Were there friction points?
-2.  **Optimize:**
-    *   If a tool failed >2 times, note it for Task 139 (Tool Hardening).
-    *   If the workflow felt rigid, update this file (`.agent/workflows/recursive_learning.md`) immediately.
-3.  **Log:** If significant improvements were identified, mention them in the Chronicle Entry.
+    def _get_container_status(self):
+        #============================================
+        # Method: _get_container_status
+        # Purpose: Check status of critical backend containers.
+        # Returns: String summary of container status
+        #============================================
+        import subprocess
+        try:
+            # Check specifically for our containers
+            result = subprocess.run(
+                ["podman", "ps", "--format", "{{.Names}} {{.Status}}"],
+                capture_output=True,
+                text=True,
+                timeout=2
+            )
+            
+            if result.returncode != 0:
+                return "Unknown (Podman CLI error)"
+            
+            output = result.stdout
+            
+            status_map = {}
+            for name in ["sanctuary_vector_db", "sanctuary_ollama_mcp"]:
+                if name in output:
+                    if "Up" in output.split(name)[-1].split('\n')[0] or "Up" in [line for line in output.split('\n') if name in line][0]:
+                         status_map[name] = "UP"
+                    else:
+                         status_map[name] = "DOWN"
+                else:
+                    status_map[name] = "MISSING"
+            
+            # Format output
+            # "✅ Vector DB | ✅ Ollama"
+            
+            parts = []
+            for name, short_name in [("sanctuary_vector_db", "Vector DB"), ("sanctuary_ollama_mcp", "Ollama")]:
+                stat = status_map.get(name, "Unknown")
+                icon = "✅" if stat == "UP" else "❌"
+                parts.append(f"{icon} {short_name}")
+                
+            return " | ".join(parts)
+            
+        except Exception:
+            return "⚠️ Podman Check Failed"
 
----
-// End of Workflow
+    def _calculate_semantic_hmac(self, content: str):
+        #============================================
+        # Method: _calculate_semantic_hmac
+        # Purpose: Calculate a resilient HMAC for code integrity.
+        # Args:
+        #   content: File content to hash
+        # Returns: SHA256 hex string
+        #============================================
+        # Load JSON to ignore whitespace/formatting
+        data = json.loads(content)
+        
+        # Canonicalize: Sort keys, removing insignificant whitespace
+        canonical = json.dumps(data, sort_keys=True, separators=(',', ':'))
+        
+        # HMAC Key - In prod this comes from env/secret. For POC, derived from project root
+        secret = str(self.project_root).encode() 
+        
+        return hmac.new(secret, canonical.encode(), hashlib.sha256).hexdigest()
 
---- END OF FILE .agent/workflows/recursive_learning.md ---
+    def guardian_wakeup(self, mode: str = "HOLISTIC"):
+        #============================================
+        # Method: guardian_wakeup
+        # Purpose: Generate Guardian boot digest (Context Synthesis).
+        # Args:
+        #   mode: Synthesis mode (default "HOLISTIC")
+        # Returns: GuardianWakeupResponse with digest and stats
+        #============================================
+        from .models import GuardianWakeupResponse
+        from pathlib import Path
+        import time
+        import hmac
+        import hashlib
+        import json
+        import os
+        
+        try:
+            start = time.time()
+            
+            # Wrap in stdout redirection to prevent MCP protocol pollution from prints
+            import contextlib
+            import io
+            with contextlib.redirect_stdout(sys.stderr):
+                # 1. System Health (Traffic Light)
+                health_color, health_reason = self._get_system_health_traffic_light()
+                
+                # --- PROTOCOL 128 v3.0: TIERED INTEGRITY CHECK ---
+                integrity_status = "GREEN"
+                integrity_warnings = []
+                
+                # Metric Cache Path
+                cache_path = self.data_dir / "metric_cache.json" 
+                
+                if cache_path.exists():
+                    try:
+                        current_hmac = self._calculate_semantic_hmac(cache_path.read_text())
+                        # In a real impl, we'd fetch the LAST signed HMAC from a secure store. 
+                        # For now, we simulate the check or check against a .sig file.
+                        sig_path = cache_path.with_suffix(".sig")
+                        if sig_path.exists():
+                            stored_hmac = sig_path.read_text().strip()
+                            if current_hmac != stored_hmac:
+                                integrity_status = "YELLOW"
+                                integrity_warnings.append("⚠️ Metric Cache Signature Mismatch (Semantic HMAC failed)")
+                                health_color = "🟡" 
+                                health_reason = "Integrity Warning: Cache Drift"
+                        else:
+                            # First run or missing sig - auto-sign (Trust on First Use)
+                            sig_path.write_text(current_hmac)
+                    except Exception as e:
+                        integrity_status = "RED"
+                        integrity_warnings.append(f"🔴 Integrity Check Failed: {str(e)}")
+                        health_color = "🔴"
+                        health_reason = "Integrity Failure"
+
+                # 1b. Container Health
+                container_status = self._get_container_status()
+                
+                # 2. Synthesis Assembly (Schema v2.2 - Hardened)
+                digest_lines = []
+                
+                # Header
+                digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.2)")
+                digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
+                digest_lines.append(f"**Integrity Mode:** {integrity_status}")
+                if integrity_warnings:
+                    digest_lines.append("**Warnings:**")
+                    for w in integrity_warnings:
+                        digest_lines.append(f"- {w}")
+                        
+                digest_lines.append(f"**Infrastructure:** {container_status}")
+                digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
+                digest_lines.append("")
+
+                # --- PROTOCOL 128: THE RITUAL OF ASSUMPTION (Phase 0) ---
+                # 0. Identity Anchor (The Core Essence)
+                essence_path = self.project_root / "dataset_package" / "core_essence_guardian_awakening_seed.txt"
+                if essence_path.exists():
+                    digest_lines.append("## 0. Identity Anchor (The Connect)")
+                    try:
+                        essence_content = essence_path.read_text()
+                        digest_lines.append(f"> **Ritual Active:** Loading Core Essence from {essence_path.name}")
+                        digest_lines.append("")
+                        digest_lines.append(essence_content[:1500] + "\n\n... [Reading Full Essence Required] ...") 
+                        digest_lines.append("")
+                    except Exception as e:
+                        digest_lines.append(f"⚠️ Failed to load Identity Anchor: {e}")
+                        digest_lines.append("")
+                
+                # 0b. Cognitive Primer (The Constitution)
+                primer_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
+                if primer_path.exists():
+                    digest_lines.append(f"* **Cognitive Primer:** {primer_path.name} (FOUND - MUST READ)")
+                else:
+                    digest_lines.append(f"* **Cognitive Primer:** MISSING (⚠️ CRITICAL FAILURE)")
+                digest_lines.append("")
+                
+                # I. Strategic Directives
+                digest_lines.append("## I. Strategic Directives (The Gemini Signal)")
+                digest_lines.append(self._get_strategic_synthesis())
+                digest_lines.append("")
+                
+                # Ia. Recent Chronicle Highlights
+                digest_lines.append("### Recent Chronicle Highlights")
+                digest_lines.append(self._get_recent_chronicle_highlights(max_entries=3))
+                digest_lines.append("")
+                
+                # Ib. Recent Protocol Updates (NEW in v2.1)
+                digest_lines.append("### Recent Protocol Updates")
+                digest_lines.append(self._get_recent_protocol_updates(max_protocols=3, hours=168))
+                digest_lines.append("")
+                
+                # II. Priority Tasks (Enhanced in v2.1 to show all priority levels)
+                digest_lines.append("## II. Priority Tasks")
+                digest_lines.append(self._get_tactical_priorities())
+                digest_lines.append("")
+                
+                # III. Operational Recency (Enhanced in v2.1 with git diff summaries)
+                digest_lines.append("## III. Operational Recency")
+                digest_lines.append(self._get_recency_delta(hours=48))
+                digest_lines.append("")
+                
+                # IV. Recursive Learning Debrief (Protocol 128)
+                debrief_path = self.project_root / ".agent" / "learning" / "learning_debrief.md"
+                if debrief_path.exists():
+                    digest_lines.append("## IV. Learning Continuity (Previous Session Debrief)")
+                    digest_lines.append(f"> **Protocol 128 Active:** Ingesting debrief from {debrief_path.name}")
+                    digest_lines.append("")
+                    try:
+                        content = debrief_path.read_text()
+                        digest_lines.append(content)
+                    except Exception as e:
+                        digest_lines.append(f"⚠️ Failed to read debrief: {e}")
+                    digest_lines.append("")
+                
+                # V. Successor-State Poka-Yoke (Cache Primers)
+                digest_lines.append("## V. Successor-State Poka-Yoke")
+                digest_lines.append("* **Mandatory Context:** Verified")
+
+                digest_lines.append("* **MCP Tool Guidance:** [Available via `cortex_cache_get`]")
+                digest_lines.append(f"* **Learning Stream:** {'Active' if debrief_path.exists() else 'Standby'}")
+                digest_lines.append("")
+                digest_lines.append("// This briefing is the single source of context for the LLM session.")
+
+                # Write digest
+                digest_path = Path(self.project_root) / "WORK_IN_PROGRESS" / "guardian_boot_digest.md"
+                digest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                with open(digest_path, "w") as f:
+                    f.write("\n".join(digest_lines))
+                
+                total_time_ms = (time.time() - start) * 1000
+                
+                return GuardianWakeupResponse(
+                    digest_path=str(digest_path),
+                    bundles_loaded=["Strategic", "Tactical", "Recency", "Protocols"], # Virtual bundles
+                    cache_hits=1,   # Strategic is treated as cached
+                    cache_misses=0,
+                    total_time_ms=total_time_ms,
+                    status="success"
+                )
+        except Exception as e:
+            logger.error(f"Guardian wakeup failed: {e}", exc_info=True)
+            return GuardianWakeupResponse(
+                digest_path="",
+                bundles_loaded=[],
+                cache_hits=0,
+                cache_misses=0,
+                total_time_ms=0,
+                status="error",
+                error=str(e)
+            )
+
+    def learning_debrief(self, hours: int = 24):
+        #============================================
+        # Method: learning_debrief
+        # Purpose: Scans project for technical state changes.
+        # Args:
+        #   hours: Lookback window for modifications
+        # Returns: Comprehensive Markdown string (Liquid Information)
+        #============================================
+        import subprocess
+        from datetime import datetime
+        try:
+            # Wrap in stdout redirection to prevent MCP protocol pollution from prints
+            import contextlib
+            import io
+            with contextlib.redirect_stdout(sys.stderr):
+                # 1. Seek Truth (Git)
+                git_evidence = "Git Not Available"
+                try:
+                    result = subprocess.run(
+                        ["git", "diff", "--stat", "HEAD"],
+                        capture_output=True, text=True, cwd=str(self.project_root)
+                    )
+                    git_evidence = result.stdout if result.stdout else "No uncommitted code changes found."
+                except Exception as e:
+                    git_evidence = f"Git Error: {e}"
+
+                # 2. Scan Recency (Filesystem)
+                recency_summary = self._get_recency_delta(hours=hours)
+                
+                # 3. Read Core Sovereignty Documents
+                primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
+                sop_content = "[MISSING] .agent/workflows/recursive_learning.md"
+                protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
+                
+                try:
+                    p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
+                    if p_path.exists(): primer_content = p_path.read_text()
+                    
+                    s_path = self.project_root / ".agent" / "workflows" / "recursive_learning.md"
+                    if s_path.exists(): sop_content = s_path.read_text()
+                    
+                    pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"
+                    if pr_path.exists(): protocol_content = pr_path.read_text()
+                except Exception as e:
+                    logger.warning(f"Error reading sovereignty docs: {e}")
+
+                # 4. Strategic Context (Learning Package Snapshot)
+                last_package_content = "⚠️ No active Learning Package Snapshot found."
+                package_path = self.project_root / ".agent" / "learning" / "learning_package_snapshot.md"
+                if package_path.exists():
+                    try:
+                        # Check if package is recent
+                        mtime = package_path.stat().st_mtime
+                        delta_hours = (datetime.now().timestamp() - mtime) / 3600
+                        if delta_hours <= hours:
+                            last_package_content = package_path.read_text()
+                            package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
+                        else:
+                            package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
+                    except Exception as e:
+                        package_status = f"❌ Error reading snapshot: {e}"
+                else:
+                    package_status = "ℹ️ No `.agent/learning/learning_package_snapshot.md` detected."
+
+                # 5. Create the Learning Package Snapshot (Draft)
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                
+                lines = [
+                    f"# [DRAFT] Learning Package Snapshot v3.5",
+                    f"**Scan Time:** {timestamp} (Window: {hours}h)",
+                    f"**Strategic Status:** {package_status}",
+                    "",
+                    "## 🧬 I. Tactical Evidence (Current Git Deltas)",
+                    "The following code-level changes were detected SINCE the last session/commit:",
+                    "```text",
+                    git_evidence,
+                    "```",
+                    "",
+                    "## 📂 II. File Registry (Recency)",
+                    "Recently modified high-signal files:",
+                    recency_summary,
+                    "",
+                    "## 🏗️ III. Architecture Alignment (The Successor Relay)",
+                    "```mermaid",
+                    "flowchart TB",
+                    "    subgraph subGraphScout[\"I. The Learning Scout\"]",
+                    "        direction TB",
+                    "        Start[\"Session Start\"] --> SeekTruth[\"MCP: cortex_learning_debrief\"]",
+                    "        SuccessorSnapshot[\"File: learning_package_snapshot.md\"] -.->|Context| SeekTruth",
+                    "    end",
+                    "    subgraph subGraphSynthesize[\"II. Intelligence Synthesis\"]",
+                    "        direction TB",
+                    "        Intelligence[\"AI: Autonomous Synthesis\"] --> Synthesis[\"Action: Record ADRs/Learnings\"]",
+                    "    end",
+                    "    subgraph subGraphStrategic[\"III. Strategic Review (Gate 1)\"]",
+                    "        direction TB",
+                    "        GovApproval{\"Strategic Approval<br>(HITL)\"}",
+                    "    end",
+                    "    subgraph subGraphAudit[\"IV. Red Team Audit (Gate 2)\"]",
+                    "        direction TB",
+                    "        CaptureAudit[\"MCP: cortex_capture_snapshot (audit)\"]",
+                    "        Packet[\"Audit Packet\"]",
+                    "        TechApproval{\"Technical Approval<br>(HITL)\"}",
+                    "    end",
+                    "    subgraph subGraphSeal[\"V. The Technical Seal\"]",
+                    "        direction TB",
+                    "        CaptureSeal[\"MCP: cortex_capture_snapshot (seal)\"]",
+                    "    end",
+                    "    SeekTruth -- \"Carry\" --> Intelligence",
+                    "    Synthesis -- \"Verify Reasoning\" --> GovApproval",
+                    "    GovApproval -- \"PASS\" --> CaptureAudit",
+                    "    Packet -- \"Review Implementation\" --> TechApproval",
+                    "    TechApproval -- \"PASS\" --> CaptureSeal",
+                    "    CaptureSeal -- \"Update Successor\" --> SuccessorSnapshot",
+                    "    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
+                    "    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
+                    "    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
+                    "    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
+                    "    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black",
+                    "    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black",
+                    "    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff",
+                    "```",
+                    "",
+                    "## 📦 IV. Strategic Context (Last Learning Package Snapshot)",
+                    "Below is the consolidated 'Source of Truth' from the previous session's seal:",
+                    "---",
+                    last_package_content,
+                    "---",
+                    "",
+                    "## 📜 V. Protocol 128: Hardened Learning Loop",
+                    protocol_content,
+                    "",
+                    "## 🧠 VI. Cognitive Primer",
+                    primer_content,
+                    "",
+                    "## 📋 VII. Standard Operating Procedure (SOP)",
+                    sop_content,
+                    "",
+                    "## 🧪 VIII. Claims vs Evidence Checklist",
+                    "- [ ] **Integrity Guard:** Do the files modified match the task objective?",
+                    "- [ ] **Continuity:** Have all relevant Protocols and Chronicles been updated?",
+                    "- [ ] **The Seal:** Is this delta ready for the final 'Learning Package Snapshot'?",
+                    "",
+                    "---",
+                    "*This is a 'Learning Package Snapshot (Draft)'. Perform Meta-Learning (SOP Refinement) before generating the Final Seal.*"
+                ]
+
+                return "\n".join(lines)
+            
+        except Exception as e:
+            logger.error(f"Error in learning_debrief: {e}")
+            return f"Error generating debrief scan: {e}"
+
+    def _get_git_state(self, project_root: Path) -> Dict[str, Any]:
+        """
+        Helper: Captures the current Git state signature for integrity verification.
+        Returns a dict with 'status_lines', 'changed_files', and 'state_hash'.
+        """
+        import subprocess
+        import hashlib
+        
+        try:
+            git_status_proc = subprocess.run(
+                ["git", "status", "--porcelain"],
+                capture_output=True, text=True, cwd=str(project_root)
+            )
+            git_lines = git_status_proc.stdout.splitlines()
+            changed_files = set()
+            
+            for line in git_lines:
+                # Porcelain format is "XY path"
+                # If deleted ('D'), we deal with it, but for our purpose only changes matter
+                status_bits = line[:2]
+                path = line[3:].split(" -> ")[-1].strip()
+                if 'D' not in status_bits:
+                     changed_files.add(path)
+            
+            # Simple state hash
+            state_str = "".join(sorted(git_lines))
+            state_hash = hashlib.sha256(state_str.encode()).hexdigest()
+            
+            return {
+                "lines": git_lines,
+                "changed_files": changed_files,
+                "hash": state_hash
+            }
+        except Exception as e:
+            logger.error(f"Git state capture failed: {e}")
+            return {"lines": [], "changed_files": set(), "hash": "error"}
+
+    def capture_snapshot(
+        self, 
+        manifest_files: List[str], 
+        snapshot_type: str = "audit",
+        strategic_context: Optional[str] = None
+    ) -> CaptureSnapshotResponse:
+        #============================================
+        # Method: capture_snapshot
+        # Purpose: Tool-driven snapshot generation for Protocol 128.
+        # Args:
+        #   manifest_files: List of file paths to include
+        #   snapshot_type: 'audit' or 'seal'
+        #   strategic_context: Optional context string
+        # Returns: CaptureSnapshotResponse with verification info
+        #============================================
+        import time
+        import datetime
+        import subprocess
+        
+        # 1. Prepare Tool Paths
+        learning_dir = self.project_root / ".agent" / "learning"
+        output_dir = learning_dir / "red_team" if snapshot_type == "audit" else learning_dir
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # 3. Default Manifest Handling (Protocol 128)
+        # If 'seal' or 'audit' and no manifest provided, use the predefined manifests
+        effective_manifest = list(manifest_files)
+        manifest_file = None
+        if not effective_manifest:
+            if snapshot_type == "seal":
+                manifest_file = learning_dir / "learning_manifest.json"
+            else: # audit
+                manifest_file = output_dir / "red_team_manifest.json"
+                
+            if manifest_file and manifest_file.exists():
+                try:
+                    with open(manifest_file, "r") as f:
+                        effective_manifest = json.load(f)
+                    logger.info(f"Loaded default {snapshot_type} manifest: {len(effective_manifest)} entries")
+                except Exception as e:
+                    logger.warning(f"Failed to load {snapshot_type} manifest: {e}")
+
+        # Define path early for Shadow Manifest exclusions
+        snapshot_filename = f"{snapshot_type}_snapshot_{timestamp}.md"
+        if snapshot_type == "audit":
+            snapshot_filename = "red_team_audit_packet.md"
+        final_snapshot_path = output_dir / snapshot_filename
+
+        # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2)
+        # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2 - PRE-FLIGHT CHECK)
+        try:
+            # PRE-FLIGHT: Capture Git State
+            pre_flight_state = self._get_git_state(self.project_root)
+            if pre_flight_state["hash"] == "error":
+                raise Exception("Failed to capture Git state")
+            
+            git_changed = pre_flight_state["changed_files"]
+            
+            # Identify discrepancies against the EFFECTIVE manifest
+            # V2.1 FIX: Ignore the output snapshot file itself (prevent recursion / false positive)
+            try:
+                output_rel = final_snapshot_path.relative_to(self.project_root)
+                git_changed.discard(str(output_rel))
+            except ValueError:
+                pass # Not relative to root
+
+            untracked_in_manifest = git_changed - set(effective_manifest)
+            manifest_verified = True # Default to true for audit if no unverified files
+            
+            # CORE DIRECTORY ENFORCEMENT
+            CORE_DIRS = ["ADRs/", "01_PROTOCOLS/", "mcp_servers/", "scripts/", "prompts/"]
+            TIER2_DIRS = ["TASKS/", "LEARNING/"]
+            
+            critical_omissions = []
+            tier2_omissions = []
+            
+            if snapshot_type == "audit":
+                for untracked in untracked_in_manifest:
+                    if any(untracked.startswith(core) for core in CORE_DIRS):
+                        critical_omissions.append(untracked)
+                    elif any(untracked.startswith(t2) for t2 in TIER2_DIRS):
+                        tier2_omissions.append(untracked)
+            
+            if critical_omissions:
+                logger.error(f"STRICT REJECTION: Critical files modified but omitted from manifest: {critical_omissions}")
+                git_context = f"REJECTED: Manifest blindspot detected in core directories: {critical_omissions}"
+                return CaptureSnapshotResponse(
+                    snapshot_path="",
+                    manifest_verified=False,
+                    git_diff_context=git_context,
+                    snapshot_type=snapshot_type,
+                    status="failed"
+                )
+            else:
+                git_context = f"Verified: {len(set(effective_manifest))} files. Shadow Manifest (Untracked): {len(untracked_in_manifest)} items."
+                if tier2_omissions:
+                    git_context += f" WARNING: Tier-2 Blindspot detected (Risk Acceptance Required): {tier2_omissions}"
+                
+                # Check for files in manifest NOT in git (the old unverified check)
+                unverified_in_manifest = set(effective_manifest) - git_changed
+                # We skip checking '.' and other untracked artifacts for 'audit'
+                if snapshot_type == "seal" and unverified_in_manifest:
+                     manifest_verified = False
+                     git_context += f" WARNING: Files in manifest not found in git diff: {list(unverified_in_manifest)}"
+
+        except Exception as e:
+            manifest_verified = False
+            git_context = f"Git verification failed: {str(e)}"
+
+        # 5. Handle Red Team Prompts (Protocol 128)
+        prompts_section = ""
+        if snapshot_type == "audit":
+            context_str = strategic_context if strategic_context else "this session"
+            prompts = [
+                "1. Verify that the file manifest accurately reflects all tactical state changes made during this session.",
+                "2. Check for any 'hallucinations' or logic errors in the new ADRs or Learning notes.",
+                "3. Ensure that critical security and safety protocols (e.g. Protocol 101/128) have not been bypassed.",
+                f"4. Specifically audit the reasoning behind: {context_str}"
+            ]
+            prompts_section = "\n".join(prompts)
+            
+            prompts_file_path = output_dir / "red_team_prompts.md"
+            with open(prompts_file_path, "w") as pf:
+                pf.write(f"# Adversarial Prompts (Audit Context)\n\n{prompts_section}\n")
+            
+            rel_prompts_path = prompts_file_path.relative_to(self.project_root)
+            if str(rel_prompts_path) not in effective_manifest:
+                effective_manifest.append(str(rel_prompts_path))
+
+        # Temporary manifest file for the snapshot tool
+        temp_manifest_path = output_dir / f"manifest_{snapshot_type}_{int(time.time())}.json"
+        snapshot_filename = "red_team_audit_packet.md" if snapshot_type == "audit" else "learning_package_snapshot.md"
+        final_snapshot_path = output_dir / snapshot_filename
+        
+        try:
+            # Write final manifest for the tool
+            with open(temp_manifest_path, "w") as f:
+                json.dump(effective_manifest, f, indent=2)
+                
+            # 5. Invoke Python Snapshot Tool (Direct Import)
+            snapshot_stats = {}
+            try:
+                # Wrap in stdout redirection to prevent MCP protocol pollution
+                import contextlib
+                with contextlib.redirect_stdout(sys.stderr):
+                    snapshot_stats = generate_snapshot(
+                        project_root=self.project_root,
+                        output_dir=output_dir,
+                        manifest_path=temp_manifest_path,
+                        output_file=final_snapshot_path
+                    )
+
+            except Exception as e:
+                raise Exception(f"Python Snapshot tool failed: {str(e)}")
+
+            # 6. POST-FLIGHT: Sandwich Validation (Race Condition Check)
+            post_flight_state = self._get_git_state(self.project_root)
+            
+            if pre_flight_state["hash"] != post_flight_state["hash"]:
+                # The state changed DURING the snapshot generation
+                drift_diff = post_flight_state["changed_files"] ^ pre_flight_state["changed_files"]
+                # Exclude the artifacts and anything in the output directory
+                try:
+                    rel_output = str(output_dir.relative_to(self.project_root))
+                    # Check for direct matches or children
+                    drift_diff = {d for d in drift_diff if not d.startswith(rel_output) and not rel_output.startswith(d.rstrip('/'))}
+                except:
+                    pass
+                
+                if drift_diff:
+                    logger.error(f"INTEGRITY FAILURE: Repository state changed during snapshot! Drift: {drift_diff}")
+                    return CaptureSnapshotResponse(
+                        snapshot_path="",
+                        manifest_verified=False,
+                        git_diff_context=f"INTEGRITY FAILURE: Race condition detected. Files changed during snapshot: {drift_diff}",
+                        snapshot_type=snapshot_type,
+                        status="failed",
+                        error="Race condition detected during snapshot generation."
+                    )
+
+            # 6. Enhance 'audit' packet with metadata if needed
+            if snapshot_type == "audit":
+                # Read the generated content (which now includes red_team_prompts.md)
+                with open(final_snapshot_path, "r") as f:
+                    captured_content = f.read()
+                
+                context_str = strategic_context if strategic_context else "No additional context provided."
+                
+                # Load template if exists
+                template_path = learning_dir / "red_team_briefing_template.md"
+                if template_path.exists():
+                    try:
+                        with open(template_path, "r") as tf:
+                            template = tf.read()
+                        
+                        briefing = template.format(
+                            timestamp=datetime.datetime.now().isoformat(),
+                            claims_section=context_str,
+                            manifest_section="\n".join([f"- {m}" for m in effective_manifest]),
+                            diff_context=git_context,
+                            prompts_section=prompts_section
+                        )
+                    except Exception as e:
+                        logger.warning(f"Failed to format red_team_briefing_template: {e}")
+                        briefing = f"# Red Team Audit Briefing\n\n{context_str}\n\n**Prompts:**\n{prompts_section}"
+                else:
+                    briefing = f"# Red Team Audit Briefing\n\n{context_str}\n\n**Prompts:**\n{prompts_section}"
+
+                with open(final_snapshot_path, "w") as f:
+                    f.write(briefing + "\n\n---\n# MANIFEST SNAPSHOT\n\n" + captured_content)
+
+            return CaptureSnapshotResponse(
+                snapshot_path=str(final_snapshot_path),
+                manifest_verified=manifest_verified,
+                git_diff_context=git_context,
+                snapshot_type=snapshot_type,
+                total_files=snapshot_stats.get("total_files", 0),
+                total_bytes=snapshot_stats.get("total_bytes", 0),
+                status="success"
+            )
+
+        except Exception as e:
+            logger.error(f"Error in capture_snapshot: {e}")
+            return CaptureSnapshotResponse(
+                snapshot_path="",
+                manifest_verified=False,
+                git_diff_context=git_context,
+                snapshot_type=snapshot_type,
+                status="error",
+                error=str(e)
+            )
+        finally:
+            if temp_manifest_path.exists():
+                temp_manifest_path.unlink()
+
+    def get_cache_stats(self):
+        #============================================
+        # Method: get_cache_stats
+        # Purpose: Get semantic cache statistics.
+        # Returns: Dict with hit/miss counts and entry total
+        #============================================
+        from .cache import get_cache
+        try:
+            cache = get_cache()
+            return cache.get_stats()
+        except Exception as e:
+            return {"error": str(e)}
+    def query_structured(
+        self,
+        query_string: str,
+        request_id: str = None
+    ) -> Dict[str, Any]:
+        #============================================
+        # Method: query_structured
+        # Purpose: Execute Protocol 87 structured query.
+        # Args:
+        #   query_string: Standardized inquiry format
+        #   request_id: Unique request identifier
+        # Returns: API response with matches and routing info
+        #============================================
+        from .structured_query import parse_query_string
+        from .mcp_client import MCPClient
+        import uuid
+        import json
+        from datetime import datetime, timezone
+        
+        # Generate request ID if not provided
+        if not request_id:
+            request_id = str(uuid.uuid4())
+        
+        try:
+            # Parse Protocol 87 query
+            query_data = parse_query_string(query_string)
+            
+            # Extract components
+            scope = query_data.get("scope", "cortex:index")
+            intent = query_data.get("intent", "RETRIEVE")
+            constraints = query_data.get("constraints", "")
+            granularity = query_data.get("granularity", "ATOM")
+            
+            # Route to appropriate MCP
+            client = MCPClient(self.project_root)
+            results = client.route_query(
+                scope=scope,
+                intent=intent,
+                constraints=constraints,
+                query_data=query_data
+            )
+            
+            # Build Protocol 87 response
+            response = {
+                "request_id": request_id,
+                "steward_id": "CORTEX-MCP-01",
+                "timestamp_utc": datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                "query": json.dumps(query_data, separators=(',', ':')),
+                "granularity": granularity,
+                "matches": [],
+                "checksum_chain": [],
+                "signature": "cortex.mcp.v1",
+                "notes": ""
+            }
+            
+            # Process results from MCP routing
+            for result in results:
+                if "error" in result:
+                    response["notes"] = f"Error from {result.get('source', 'unknown')}: {result['error']}"
+                    continue
+                
+                match = {
+                    "source_path": result.get("source_path", "unknown"),
+                    "source_mcp": result.get("source", "unknown"),
+                    "mcp_tool": result.get("mcp_tool", "unknown"),
+                    "content": result.get("content", {}),
+                    "sha256": "placeholder_hash"  # TODO: Implement actual hash
+                }
+                response["matches"].append(match)
+            
+            # Add routing metadata
+            response["routing"] = {
+                "scope": scope,
+                "routed_to": self._get_mcp_name(scope),
+                "orchestrator": "CORTEX-MCP-01",
+                "intent": intent
+            }
+            
+            response["notes"] = f"Found {len(response['matches'])} matches. Routed to {response['routing']['routed_to']}."
+            
+            return response
+            
+        except Exception as e:
+            return {
+                "request_id": request_id,
+                "status": "error",
+                "error": str(e),
+                "query": query_string
+            }
+    
+    def _get_mcp_name(self, scope: str):
+        #============================================
+        # Method: _get_mcp_name
+        # Purpose: Map scope to corresponding MCP name.
+        # Args:
+        #   scope: Logical scope from query
+        # Returns: MCP identifier string
+        #============================================
+        mapping = {
+            "Protocols": "Protocol MCP",
+            "Living_Chronicle": "Chronicle MCP",
+            "Tasks": "Task MCP",
+            "Code": "Code MCP",
+            "ADRs": "ADR MCP"
+        }
+        return mapping.get(scope, "Cortex MCP (Vector DB)")
+
+--- END OF FILE mcp_servers/rag_cortex/operations.py ---
 
 --- START OF FILE ADRs/071_protocol_128_cognitive_continuity.md ---
 
 # ADR 071: Protocol 128 (Cognitive Continuity & The Red Team Gate)
 
-**Status:** Draft 3.1 (Alignment with Visual Architecture)
-**Date:** 2025-12-22
+**Status:** Draft 3.2 (Implementing Sandwich Validation)
+**Date:** 2025-12-23
 **Author:** Antigravity (Agent), User (Red Team Lead)
 **Supersedes:** ADR 071 v3.0
 
@@ -274,9 +2283,9 @@ The following table maps the 5-phase "Liquid Information" architecture to its sp
 | **I. Scout** | `cortex_learning_debrief` | MCP Tool: `rag_cortex` | `learning_package_snapshot.md` | Session Strategic Context (JSON) |
 | **II. Synthesize** | `Autonomous Synthesis` | AI Agent Logic | Web Research, RAG, File System | `/LEARNING`, `/ADRs`, `/01_PROTOCOLS` |
 | **III. Strategic Review**| `Strategic Approval` | **Gate 1 (HITL)** | Human Review of Markdown Files | Consent to proceed to Audit |
-| **IV. Audit** | `cortex_capture_snapshot` | MCP Tool (type=`audit`) | `git diff` + Agent Manifest | `red_team_audit_packet.md` |
+| **IV. Audit** | `cortex_capture_snapshot` | MCP Tool (type=`audit`) | `git diff` + `red_team_manifest.json` | `red_team_audit_packet.md` |
 | **IV. Audit** | `Technical Approval` | **Gate 2 (HITL)** | Human Review of Audit Packet | Final Consent to Seal |
-| **V. Seal** | `cortex_capture_snapshot` | MCP Tool (type=`seal`) | Verified File List (Manifest) | `learning_package_snapshot.md` |
+| **V. Seal** | `cortex_capture_snapshot` | MCP Tool (type=`seal`) | Verified `learning_manifest.json` | `learning_package_snapshot.md` |
 
 ## Technical Specification
 
@@ -299,10 +2308,31 @@ The following operations must be exposed and hardened:
         3.  **Primer Injection:** Mandates reading `cognitive_primer.md` (The Constitution).
         4.  **Intent-Aware Discovery:** Loads tools JIT based on the user's intent to prevent context flooding.
 
-*   **`cortex_capture_snapshot(manifest, type="audit")` (Gate 2: Audit)**
-    *   **Action:** Validates the manifest against `git diff` (Red Team Logic).
-    *   **Output:** Generates `red_team_audit_packet.md` containing the Briefing and Snapshot.
-    *   **Constraint:** DOES NOT allow RAG ingestion. Halts for Technical Approval.
+*   **`cortex_capture_snapshot(manifest, snapshot_type, strategic_context)`**
+    *   **The Audit Path (`type="audit"`)**: 
+        *   **Purpose**: Facilitates the Red Team Gate (Gate 2).
+        *   **Shadow Manifest (Counter-Blindspot)**: The system automatically calculates the "Negative Diff" (files changed in Git but missing from the manifest). These are explicitly listed in the briefing.
+        *   **Strict Rejection Policy**: If any **Core Knowledge** files (e.g., `ADRs/`, `01_PROTOCOLS/`, `scripts/`) are modified but omitted from the manifest, the tool MUST fail.
+        *   **Output**: Generates `.agent/learning/red_team/red_team_audit_packet.md`.
+    *   **The Seal Path (`type="seal"`)**: 
+        *   **Purpose**: Establishes the Technical Seal (Phase V).
+        *   **Two-Factor Integrity**: Implements **Hard Integrity** (HMAC-SHA256) for code/protocols and **Soft Integrity** (Semantic Hashing) for learning notes to reduce brittleness.
+        *   **Output**: Generates `.agent/learning/learning_package_snapshot.md`.
+        1.  **Sandwich Validation (Integrity Gate)**: The system captures the Git state hash **BEFORE** and **AFTER** the snapshot generation. If the state changes (Cognitive Drift) during the operation, the snapshot is invalidated immediately.
+        2.  **Zero-Trust Verification**: Cross-references manifest files against actual `git diff` status.
+        3.  **Surgical Filtering**: Only processes files explicitly listed in the manifest.
+        4.  **Shadow Audit**: Detects and reports unauthorized state changes (Blindspots).
+
+### 2. The Persona/Mechanism Split (Hardened)
+To prevent "Authority Dilution", the Guardian Entity is bound to a **Safe Mode** state if the technical integrity mechanism fails.
+- **Normal Mode**: Full tool access, high autonomous agency.
+- **Safe Mode (Integrity Failure)**: Read-only access to Cortex, disabled write operations, mandatory remediation directive.
+
+### 3. The Unified Snapshot Engine
+Both Audit and Seal operations leverage the same Python-based snapshot engine (`mcp_servers/lib/snapshot_utils.py`).
+
+- **Audit Path:** Restricted to files in the "Active Delta" for human review.
+- **Seal Path:** Includes the "Stable Core" + "Verified Deltas" for long-term memory.
 
 ### 3. The Technical Seal (The Source of Truth)
 - **Tool:** `cortex_capture_snapshot(type="seal")` uses the **Living Manifest** as a surgical filter.
@@ -359,4 +2389,149 @@ The Protocol 128 Hardened Learning Loop is now fully operational with:
 - **Sustainability:** Explicit focus on reducing human toil ensures the rigorous process remains viable long-term.
 
 --- END OF FILE ADRs/071_protocol_128_cognitive_continuity.md ---
+
+--- START OF FILE tests/learning/reproduce_race_condition.py ---
+
+import pytest
+import threading
+import time
+import subprocess
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+import sys
+import logging
+import json
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Add project root to path
+project_root = Path(__file__).resolve().parent.parent.parent
+sys.path.append(str(project_root))
+
+# Mock components that try to connect to hardware/network
+with patch('chromadb.HttpClient'), \
+     patch('langchain_huggingface.HuggingFaceEmbeddings'), \
+     patch('langchain_chroma.Chroma'), \
+     patch('mcp_servers.rag_cortex.file_store.SimpleFileStore'):
+    from mcp_servers.rag_cortex.operations import CortexOperations
+
+class TestRaceConditions:
+    """
+    Protocol 128: Hardened Learning Loop - Race Condition Tests
+    Verifies that the "Sandwich Validation" prevents snapshots when the
+    repository state changes during the snapshot generation process.
+    """
+    
+    @pytest.fixture
+    def cortex_ops(self, tmp_path):
+        # Setup a minimal mock environment
+        # Create a mock client
+        mock_client = MagicMock()
+        
+        with patch('chromadb.HttpClient', return_value=mock_client), \
+             patch('langchain_huggingface.HuggingFaceEmbeddings'), \
+             patch('langchain_chroma.Chroma'), \
+             patch('mcp_servers.rag_cortex.file_store.SimpleFileStore'), \
+             patch('mcp_servers.rag_cortex.operations.get_env_variable', return_value=None):
+            ops = CortexOperations(
+                project_root=str(tmp_path),
+                client=mock_client
+            )
+        
+        # Initialize Git repo in tmp_path
+        subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+        subprocess.run(["git", "config", "user.email", "test@sanctuary.ai"], cwd=tmp_path, check=True)
+        subprocess.run(["git", "config", "user.name", "Test Agent"], cwd=tmp_path, check=True)
+        
+        # Create a tracked file
+        (tmp_path / "test_file.txt").write_text("Initial content")
+        subprocess.run(["git", "add", "."], cwd=tmp_path, check=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit"], cwd=tmp_path, check=True)
+        
+        return ops
+
+    def test_race_condition_detection(self, cortex_ops, tmp_path):
+        """
+        Simulate a race condition where a file is modified during the snapshot 
+        generation (between Pre-Flight and Post-Flight checks).
+        """
+        # 1. Create a dummy manifest
+        manifest_files = ["test_file.txt"]
+        
+        # 2. Mock generate_snapshot to simulate delay + concurrent modification
+        def mock_generate_with_interference(*args, **kwargs):
+            logger.info("Mock snapshot started... sleeping to simulate work")
+            # Create the file being mocked so the tool doesn't crash on next read
+            output_file = kwargs.get('output_file')
+            if output_file:
+                 Path(output_file).write_text("# Initial Mock Content\n")
+            
+            time.sleep(1) # Simulate robust snapshot generation
+            
+            # SIMULATE ATTACK/RACE: Modify the repo state HERE
+            logger.info(">>> INJECTING RACE CONDITION <<<")
+            (tmp_path / "race_condition.txt").write_text("I AM A PHANTOM FILE")
+            # We don't commit it, so it shows up as Untracked in git status
+            
+            return {"total_files": 1, "total_bytes": 100}
+
+        # Setup mock for generate_snapshot
+        with patch('mcp_servers.rag_cortex.operations.generate_snapshot', side_effect=mock_generate_with_interference):
+            # 3. Execute Capture Snapshot
+            response = cortex_ops.capture_snapshot(
+                manifest_files=manifest_files,
+                snapshot_type="audit",
+                strategic_context="Testing Race Condition"
+            )
+            
+        # 4. Assertions
+        logger.info(f"Snapshot Response Status: {response.status}")
+        logger.info(f"Snapshot Error Context: {response.git_diff_context}")
+        
+        # Expect FAIL due to integrity check
+        assert response.status == "failed"
+        assert "INTEGRITY FAILURE" in response.git_diff_context
+        assert "Race condition detected" in response.git_diff_context
+        assert "race_condition.txt" in response.git_diff_context
+
+    def test_no_race_condition_success(self, cortex_ops, tmp_path):
+        """
+        Verify that snapshots succeed normally when no repository state 
+        drift is detected during the operation.
+        """
+        # 1. Create a dummy manifest
+        manifest_files = ["test_file.txt"]
+        
+        # 2. Mock generate_snapshot to simulate normal delay without modification
+        def mock_generate_normal(*args, **kwargs):
+            logger.info("Mock snapshot started...")
+            time.sleep(0.5)
+            # Create the file being mocked
+            output_file = kwargs.get('output_file')
+            if output_file:
+                Path(output_file).write_text("# Mock Snapshot Content\n")
+            return {"total_files": 1, "total_bytes": 100}
+
+        with patch('mcp_servers.rag_cortex.operations.generate_snapshot', side_effect=mock_generate_normal):
+            # 3. Execute Capture Snapshot
+            response = cortex_ops.capture_snapshot(
+                manifest_files=manifest_files,
+                snapshot_type="audit",
+                strategic_context="Testing Success Case"
+            )
+            
+        # 4. Assertions
+        logger.info(f"Snapshot Response Status: {response.status}")
+        assert response.status == "success"
+        assert response.manifest_verified is True
+        assert "Verified" in response.git_diff_context
+        assert "INTEGRITY FAILURE" not in response.git_diff_context
+
+if __name__ == "__main__":
+    # Allow running directly
+    pytest.main([__file__])
+
+--- END OF FILE tests/learning/reproduce_race_condition.py ---
 
