@@ -168,3 +168,47 @@ We recommend **Option D** (Strict Mapping) enhanced with a **Tiered Policy**:
 - **Determinism**: Builds become reproducible across machines and time (via locking).
 - **Safety**: "Works on my machine" bugs reduced by strict dev/runtime separation.
 - **Risk**: Needs careful audit of `sanctuary_cortex/requirements.txt` to ensuring nothing from the manual list is missing before deletion.
+
+## Developer / Agent Checklist (Future Reference)
+
+**Purpose**: Ensure all environments (Docker, Podman, local .venv) remain consistent with locked requirements.
+
+### Verify Locked Files
+- [ ] **Confirm `.in` files exist** for core, dev, and each service.
+- [ ] **Confirm `.txt` files were generated** via `pip-compile` (or `uv`) from `.in` files.
+- [ ] **Check that Dockerfiles point to the correct `requirements.txt`.**
+
+### Update / Install Dependencies
+#### Local venv / Terminal:
+```bash
+source .venv/bin/activate
+pip install --no-cache-dir -r mcp_servers/requirements-core.txt
+pip install --no-cache-dir -r mcp_servers/gateway/clusters/<service>/requirements.txt
+pip install --no-cache-dir -r requirements-dev.txt  # optional for dev/test
+```
+
+#### Containers:
+- [ ] Ensure Dockerfiles use:
+    ```dockerfile
+    COPY requirements.txt /tmp/requirements.txt
+    RUN pip install --no-cache-dir -r /tmp/requirements.txt
+    ```
+- [ ] **Dev dependencies must not be installed in containers.**
+
+### Check for Drift
+- [ ] Compare `pip freeze` in active environments vs locked `.txt` files.
+- [ ] Warn if any packages or versions differ.
+
+### Regenerate Locks When Updating Dependencies
+1.  Update `.in` files with new intent.
+2.  Run `pip-compile` to produce updated `.txt` files.
+3.  Verify Dockerfiles and local environments still match.
+
+### Automation
+- [ ] Use `make install-env TARGET=<service>` to sync venv for a specific service.
+- [ ] CI pipelines should enforce: no inline `pip install`, only locked files allowed.
+
+### Pre-Commit / Pre-Build
+- [ ] Confirm all `.txt` files are up-to-date.
+- [ ] Ensure Dockerfiles reference correct files.
+- [ ] Optional: run `make verify` to validate local and container environments.
