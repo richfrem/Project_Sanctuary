@@ -9,6 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git-lfs \
     && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies
+COPY mcp_servers/gateway/clusters/sanctuary_filesystem/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
 # Set up build context structure
 COPY mcp_servers/lib /app/mcp_servers/lib
 
@@ -17,13 +21,6 @@ COPY mcp_servers/lib /app/mcp_servers/lib
 # Dest (Container): /app/mcp_servers/gateway/clusters/sanctuary_filesystem (snake_case)
 COPY mcp_servers/gateway/clusters/sanctuary_filesystem /app/mcp_servers/gateway/clusters/sanctuary_filesystem
 
-# Install dependencies
-RUN pip install --no-cache-dir \
-    fastapi \
-    uvicorn \
-    sse-starlette \
-    httpx \
-    pydantic
 
 ENV PYTHONPATH=/app
 ENV PORT=8000

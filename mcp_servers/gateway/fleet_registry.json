@@ -1557,6 +1557,14 @@
       "status": "ready",
       "tools": [
         {
+          "description": "Returns a high-level overview of available MCP servers and their primary functions.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-utils-gateway-get-capabilities"
+        },
+        {
           "description": "Replace occurrences of old with new in text.",
           "inputSchema": {
             "description": "String manipulation utilities",

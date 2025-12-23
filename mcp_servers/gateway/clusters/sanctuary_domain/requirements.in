@@ -1,0 +1,12 @@
+
+# ------------------------------------------------------------------
+# SANCTUARY DOMAIN - REQUIREMENTS
+# ------------------------------------------------------------------
+# Inherits from Core MCP runtime
+-r ../../../requirements-core.in
+
+# Service-Specific Dependencies:
+requests
+python-dateutil
+ollama
+openai

@@ -1,0 +1,10 @@
+# CORE RUNTIME DEPENDENCIES
+# Shared by >80% of fleet services.
+# These libraries define the minimum runtime environment for any Sanctuary MCP server.
+
+fastapi
+uvicorn
+sse-starlette
+httpx
+pydantic
+fastmcp  # MCP SDK – assumed baseline for all Sanctuary services

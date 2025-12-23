@@ -1,0 +1,9 @@
+
+# ------------------------------------------------------------------
+# SANCTUARY UTILS - REQUIREMENTS
+# ------------------------------------------------------------------
+# Inherits from Core MCP runtime
+-r ../../../requirements-core.in
+
+# Service-Specific Dependencies:
+# (None currently - purely core functionality)

@@ -10,19 +10,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Common Python Dependencies
-RUN pip install --no-cache-dir \
-    fastmcp \
-    pydantic \
-    requests \
-    python-dateutil \
-    httpx \
-    ollama \
-    openai \
-    ruff \
-    black \
-    pylint \
-    flake8 \
-    mypy
+# Install dependencies
+COPY mcp_servers/gateway/clusters/sanctuary_domain/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Copy shared lib
 COPY mcp_servers/lib /app/mcp_servers/lib
