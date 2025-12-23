@@ -20,7 +20,7 @@ Implement the technical infrastructure for Learning Continuity (Protocol 127) **
 4. **New Tool:** `gateway_get_capabilities` (Self-documentation)
 5. **Documentation:** Standardized `README.md` files in MCP server clusters
 6. Cache Priming Logic (System Context)
-7. [x] **Protocol 128 Tools:** Manifest-aware `capture_code_snapshot.js` (Completed)
+7. [x] **Protocol 128 Tools:** Manifest-aware `capture_code_snapshot.py` (Completed)
 8. [x] **Red Team Orchestrator:** `cortex_capture_snapshot` tool (Zero-Trust)
 9. [x] **Audit Artifacts:** `red_team_audit_packet.md`
 10. [x] **Hardening:** Zero-Trust Manifest Validation in `red_team.py` (v3.0)
@@ -62,7 +62,7 @@ Implement the technical infrastructure for Learning Continuity (Protocol 127) **
         - Pointer to Protocol 125 (Recursive Learning Loop).
 
 ### Protocol 128: The Red Team Gate (v3.0 Hardening)
-- **Manifest Snapshot**: `capture_code_snapshot.js` accepts `--manifest` and outputs targeted snapshot.
+- **Manifest Snapshot**: `capture_code_snapshot.py` accepts `--manifest` and outputs targeted snapshot.
 - **Tool-Driven Snapshotting**: `cortex_capture_snapshot` tool orchestrates verification and capture.
 - **Zero-Trust Validation**: Tool verifies manifest claims against `git status` truth. REJECTS discrepancies.
 - **Packet Generation**: Tool assembles Git diffs + Manifest Snapshot + Validate Report + Briefing.

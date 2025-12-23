@@ -53,8 +53,9 @@ except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from lib.sse_adaptor import SSEServer
 
-from .validator import CortexValidator, ValidationError
-from .models import to_dict
+from mcp_servers.rag_cortex.validator import CortexValidator, ValidationError
+from mcp_servers.rag_cortex.models import to_dict
+from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ollama_running
 from mcp_servers.forge_llm.operations import ForgeOperations
 from mcp_servers.forge_llm.validator import ForgeValidator

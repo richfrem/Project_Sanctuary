@@ -60,7 +60,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 # Then use for all file access
-script_path = PROJECT_ROOT / "capture_code_snapshot.js"
+script_path = PROJECT_ROOT / "capture_code_snapshot.py"
 ```
 
 ### For Default Parameters

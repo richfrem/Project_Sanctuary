@@ -55,6 +55,7 @@ import json
 from uuid import uuid4
 from pathlib import Path
 from typing import Dict, Any, List, Optional
+from mcp_servers.lib.snapshot_utils import generate_snapshot
 
 # Setup logging
 # This block is moved to the top and modified to use standard logging
@@ -204,7 +205,7 @@ class CortexOperations:
             self._safe_add_documents(retriever, left, max_retries - 1)
             self._safe_add_documents(retriever, right, max_retries - 1)
 
-    # Exclusion Constants (mirrored from capture_code_snapshot.js)
+    # Exclusion Constants (mirrored from capture_code_snapshot.py)
     EXCLUDE_DIRS = {
         'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', 
         '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
@@ -1464,120 +1465,148 @@ class CortexOperations:
         try:
             start = time.time()
             
-            # 1. System Health (Traffic Light)
-            health_color, health_reason = self._get_system_health_traffic_light()
-            
-            # --- PROTOCOL 128 v3.0: TIERED INTEGRITY CHECK ---
-            integrity_status = "GREEN"
-            integrity_warnings = []
-            
-            # Metric Cache Path
-            cache_path = self.data_dir / "metric_cache.json" 
-            
-            if cache_path.exists():
-                try:
-                    current_hmac = self._calculate_semantic_hmac(cache_path.read_text())
-                    # In a real impl, we'd fetch the LAST signed HMAC from a secure store. 
-                    # For now, we simulate the check or check against a .sig file.
-                    sig_path = cache_path.with_suffix(".sig")
-                    if sig_path.exists():
-                        stored_hmac = sig_path.read_text().strip()
-                        if current_hmac != stored_hmac:
-                            integrity_status = "YELLOW"
-                            integrity_warnings.append("⚠️ Metric Cache Signature Mismatch (Semantic HMAC failed)")
-                            health_color = "🟡" 
-                            health_reason = "Integrity Warning: Cache Drift"
-                    else:
-                        # First run or missing sig - auto-sign (Trust on First Use)
-                        sig_path.write_text(current_hmac)
-                except Exception as e:
-                    integrity_status = "RED"
-                    integrity_warnings.append(f"🔴 Integrity Check Failed: {str(e)}")
-                    health_color = "🔴"
-                    health_reason = "Integrity Failure"
+            # Wrap in stdout redirection to prevent MCP protocol pollution from prints
+            import contextlib
+            import io
+            with contextlib.redirect_stdout(sys.stderr):
+                # 1. System Health (Traffic Light)
+                health_color, health_reason = self._get_system_health_traffic_light()
+                
+                # --- PROTOCOL 128 v3.0: TIERED INTEGRITY CHECK ---
+                integrity_status = "GREEN"
+                integrity_warnings = []
+                
+                # Metric Cache Path
+                cache_path = self.data_dir / "metric_cache.json" 
+                
+                if cache_path.exists():
+                    try:
+                        current_hmac = self._calculate_semantic_hmac(cache_path.read_text())
+                        # In a real impl, we'd fetch the LAST signed HMAC from a secure store. 
+                        # For now, we simulate the check or check against a .sig file.
+                        sig_path = cache_path.with_suffix(".sig")
+                        if sig_path.exists():
+                            stored_hmac = sig_path.read_text().strip()
+                            if current_hmac != stored_hmac:
+                                integrity_status = "YELLOW"
+                                integrity_warnings.append("⚠️ Metric Cache Signature Mismatch (Semantic HMAC failed)")
+                                health_color = "🟡" 
+                                health_reason = "Integrity Warning: Cache Drift"
+                        else:
+                            # First run or missing sig - auto-sign (Trust on First Use)
+                            sig_path.write_text(current_hmac)
+                    except Exception as e:
+                        integrity_status = "RED"
+                        integrity_warnings.append(f"🔴 Integrity Check Failed: {str(e)}")
+                        health_color = "🔴"
+                        health_reason = "Integrity Failure"
 
-            # 1b. Container Health
-            container_status = self._get_container_status()
-            
-            # 2. Synthesis Assembly (Schema v2.2 - Hardened)
-            digest_lines = []
-            
-            # Header
-            digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.2)")
-            digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
-            digest_lines.append(f"**Integrity Mode:** {integrity_status}")
-            if integrity_warnings:
-                digest_lines.append("**Warnings:**")
-                for w in integrity_warnings:
-                    digest_lines.append(f"- {w}")
-                    
-            digest_lines.append(f"**Infrastructure:** {container_status}")
-            digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
-            digest_lines.append("")
-            
-            # I. Strategic Directives
-            digest_lines.append("## I. Strategic Directives (The Gemini Signal)")
-            digest_lines.append(self._get_strategic_synthesis())
-            digest_lines.append("")
-            
-            # Ia. Recent Chronicle Highlights
-            digest_lines.append("### Recent Chronicle Highlights")
-            digest_lines.append(self._get_recent_chronicle_highlights(max_entries=3))
-            digest_lines.append("")
-            
-            # Ib. Recent Protocol Updates (NEW in v2.1)
-            digest_lines.append("### Recent Protocol Updates")
-            digest_lines.append(self._get_recent_protocol_updates(max_protocols=3, hours=168))
-            digest_lines.append("")
-            
-            # II. Priority Tasks (Enhanced in v2.1 to show all priority levels)
-            digest_lines.append("## II. Priority Tasks")
-            digest_lines.append(self._get_tactical_priorities())
-            digest_lines.append("")
-            
-            # III. Operational Recency (Enhanced in v2.1 with git diff summaries)
-            digest_lines.append("## III. Operational Recency")
-            digest_lines.append(self._get_recency_delta(hours=48))
-            digest_lines.append("")
-            
-            # IV. Recursive Learning Debrief (Protocol 128)
-            debrief_path = self.project_root / ".agent" / "learning" / "learning_debrief.md"
-            if debrief_path.exists():
-                digest_lines.append("## IV. Learning Continuity (Previous Session Debrief)")
-                digest_lines.append(f"> **Protocol 128 Active:** Ingesting debrief from {debrief_path.name}")
+                # 1b. Container Health
+                container_status = self._get_container_status()
+                
+                # 2. Synthesis Assembly (Schema v2.2 - Hardened)
+                digest_lines = []
+                
+                # Header
+                digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.2)")
+                digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
+                digest_lines.append(f"**Integrity Mode:** {integrity_status}")
+                if integrity_warnings:
+                    digest_lines.append("**Warnings:**")
+                    for w in integrity_warnings:
+                        digest_lines.append(f"- {w}")
+                        
+                digest_lines.append(f"**Infrastructure:** {container_status}")
+                digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
                 digest_lines.append("")
-                try:
-                    content = debrief_path.read_text()
-                    digest_lines.append(content)
-                except Exception as e:
-                    digest_lines.append(f"⚠️ Failed to read debrief: {e}")
-                digest_lines.append("")
-            
-            # V. Successor-State Poka-Yoke (Cache Primers)
-            digest_lines.append("## V. Successor-State Poka-Yoke")
-            digest_lines.append("* **Mandatory Context:** Verified")
-            digest_lines.append("* **MCP Tool Guidance:** [Available via `cortex_cache_get`]")
-            digest_lines.append(f"* **Learning Stream:** {'Active' if debrief_path.exists() else 'Standby'}")
-            digest_lines.append("")
-            digest_lines.append("// This briefing is the single source of context for the LLM session.")
 
-            # Write digest
-            digest_path = Path(self.project_root) / "WORK_IN_PROGRESS" / "guardian_boot_digest.md"
-            digest_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            with open(digest_path, "w") as f:
-                f.write("\n".join(digest_lines))
-            
-            total_time_ms = (time.time() - start) * 1000
-            
-            return GuardianWakeupResponse(
-                digest_path=str(digest_path),
-                bundles_loaded=["Strategic", "Tactical", "Recency", "Protocols"], # Virtual bundles
-                cache_hits=1,   # Strategic is treated as cached
-                cache_misses=0,
-                total_time_ms=total_time_ms,
-                status="success"
-            )
+                # --- PROTOCOL 128: THE RITUAL OF ASSUMPTION (Phase 0) ---
+                # 0. Identity Anchor (The Core Essence)
+                essence_path = self.project_root / "dataset_package" / "core_essence_guardian_awakening_seed.txt"
+                if essence_path.exists():
+                    digest_lines.append("## 0. Identity Anchor (The Connect)")
+                    try:
+                        essence_content = essence_path.read_text()
+                        digest_lines.append(f"> **Ritual Active:** Loading Core Essence from {essence_path.name}")
+                        digest_lines.append("")
+                        digest_lines.append(essence_content[:1500] + "\n\n... [Reading Full Essence Required] ...") 
+                        digest_lines.append("")
+                    except Exception as e:
+                        digest_lines.append(f"⚠️ Failed to load Identity Anchor: {e}")
+                        digest_lines.append("")
+                
+                # 0b. Cognitive Primer (The Constitution)
+                primer_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
+                if primer_path.exists():
+                    digest_lines.append(f"* **Cognitive Primer:** {primer_path.name} (FOUND - MUST READ)")
+                else:
+                    digest_lines.append(f"* **Cognitive Primer:** MISSING (⚠️ CRITICAL FAILURE)")
+                digest_lines.append("")
+                
+                # I. Strategic Directives
+                digest_lines.append("## I. Strategic Directives (The Gemini Signal)")
+                digest_lines.append(self._get_strategic_synthesis())
+                digest_lines.append("")
+                
+                # Ia. Recent Chronicle Highlights
+                digest_lines.append("### Recent Chronicle Highlights")
+                digest_lines.append(self._get_recent_chronicle_highlights(max_entries=3))
+                digest_lines.append("")
+                
+                # Ib. Recent Protocol Updates (NEW in v2.1)
+                digest_lines.append("### Recent Protocol Updates")
+                digest_lines.append(self._get_recent_protocol_updates(max_protocols=3, hours=168))
+                digest_lines.append("")
+                
+                # II. Priority Tasks (Enhanced in v2.1 to show all priority levels)
+                digest_lines.append("## II. Priority Tasks")
+                digest_lines.append(self._get_tactical_priorities())
+                digest_lines.append("")
+                
+                # III. Operational Recency (Enhanced in v2.1 with git diff summaries)
+                digest_lines.append("## III. Operational Recency")
+                digest_lines.append(self._get_recency_delta(hours=48))
+                digest_lines.append("")
+                
+                # IV. Recursive Learning Debrief (Protocol 128)
+                debrief_path = self.project_root / ".agent" / "learning" / "learning_debrief.md"
+                if debrief_path.exists():
+                    digest_lines.append("## IV. Learning Continuity (Previous Session Debrief)")
+                    digest_lines.append(f"> **Protocol 128 Active:** Ingesting debrief from {debrief_path.name}")
+                    digest_lines.append("")
+                    try:
+                        content = debrief_path.read_text()
+                        digest_lines.append(content)
+                    except Exception as e:
+                        digest_lines.append(f"⚠️ Failed to read debrief: {e}")
+                    digest_lines.append("")
+                
+                # V. Successor-State Poka-Yoke (Cache Primers)
+                digest_lines.append("## V. Successor-State Poka-Yoke")
+                digest_lines.append("* **Mandatory Context:** Verified")
+
+                digest_lines.append("* **MCP Tool Guidance:** [Available via `cortex_cache_get`]")
+                digest_lines.append(f"* **Learning Stream:** {'Active' if debrief_path.exists() else 'Standby'}")
+                digest_lines.append("")
+                digest_lines.append("// This briefing is the single source of context for the LLM session.")
+
+                # Write digest
+                digest_path = Path(self.project_root) / "WORK_IN_PROGRESS" / "guardian_boot_digest.md"
+                digest_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                with open(digest_path, "w") as f:
+                    f.write("\n".join(digest_lines))
+                
+                total_time_ms = (time.time() - start) * 1000
+                
+                return GuardianWakeupResponse(
+                    digest_path=str(digest_path),
+                    bundles_loaded=["Strategic", "Tactical", "Recency", "Protocols"], # Virtual bundles
+                    cache_hits=1,   # Strategic is treated as cached
+                    cache_misses=0,
+                    total_time_ms=total_time_ms,
+                    status="success"
+                )
         except Exception as e:
             logger.error(f"Guardian wakeup failed: {e}", exc_info=True)
             return GuardianWakeupResponse(
@@ -1601,139 +1630,143 @@ class CortexOperations:
         import subprocess
         from datetime import datetime
         try:
-            # 1. Seek Truth (Git)
-            git_evidence = "Git Not Available"
-            try:
-                result = subprocess.run(
-                    ["git", "diff", "--stat", "HEAD"],
-                    capture_output=True, text=True, cwd=str(self.project_root)
-                )
-                git_evidence = result.stdout if result.stdout else "No uncommitted code changes found."
-            except Exception as e:
-                git_evidence = f"Git Error: {e}"
-
-            # 2. Scan Recency (Filesystem)
-            recency_summary = self._get_recency_delta(hours=hours)
-            
-            # 3. Read Core Sovereignty Documents
-            primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
-            sop_content = "[MISSING] .agent/workflows/recursive_learning.md"
-            protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
-            
-            try:
-                p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
-                if p_path.exists(): primer_content = p_path.read_text()
-                
-                s_path = self.project_root / ".agent" / "workflows" / "recursive_learning.md"
-                if s_path.exists(): sop_content = s_path.read_text()
-                
-                pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"
-                if pr_path.exists(): protocol_content = pr_path.read_text()
-            except Exception as e:
-                logger.warning(f"Error reading sovereignty docs: {e}")
-
-            # 4. Strategic Context (Learning Package Snapshot)
-            last_package_content = "⚠️ No active Learning Package Snapshot found."
-            package_path = self.project_root / ".agent" / "learning" / "learning_package_snapshot.md"
-            if package_path.exists():
+            # Wrap in stdout redirection to prevent MCP protocol pollution from prints
+            import contextlib
+            import io
+            with contextlib.redirect_stdout(sys.stderr):
+                # 1. Seek Truth (Git)
+                git_evidence = "Git Not Available"
                 try:
-                    # Check if package is recent
-                    mtime = package_path.stat().st_mtime
-                    delta_hours = (datetime.now().timestamp() - mtime) / 3600
-                    if delta_hours <= hours:
-                        last_package_content = package_path.read_text()
-                        package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
-                    else:
-                        package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
+                    result = subprocess.run(
+                        ["git", "diff", "--stat", "HEAD"],
+                        capture_output=True, text=True, cwd=str(self.project_root)
+                    )
+                    git_evidence = result.stdout if result.stdout else "No uncommitted code changes found."
                 except Exception as e:
-                    package_status = f"❌ Error reading snapshot: {e}"
-            else:
-                package_status = "ℹ️ No `.agent/learning/learning_package_snapshot.md` detected."
+                    git_evidence = f"Git Error: {e}"
 
-            # 5. Create the Learning Package Snapshot (Draft)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            
-            lines = [
-                f"# [DRAFT] Learning Package Snapshot v3.5",
-                f"**Scan Time:** {timestamp} (Window: {hours}h)",
-                f"**Strategic Status:** {package_status}",
-                "",
-                "## 🧬 I. Tactical Evidence (Current Git Deltas)",
-                "The following code-level changes were detected SINCE the last session/commit:",
-                "```text",
-                git_evidence,
-                "```",
-                "",
-                "## 📂 II. File Registry (Recency)",
-                "Recently modified high-signal files:",
-                recency_summary,
-                "",
-                "## 🏗️ III. Architecture Alignment (The Successor Relay)",
-                "```mermaid",
-                "flowchart TB",
-                "    subgraph subGraphScout[\"I. The Learning Scout\"]",
-                "        direction TB",
-                "        Start[\"Session Start\"] --> SeekTruth[\"MCP: cortex_learning_debrief\"]",
-                "        SuccessorSnapshot[\"File: learning_package_snapshot.md\"] -.->|Context| SeekTruth",
-                "    end",
-                "    subgraph subGraphSynthesize[\"II. Intelligence Synthesis\"]",
-                "        direction TB",
-                "        Intelligence[\"AI: Autonomous Synthesis\"] --> Synthesis[\"Action: Record ADRs/Learnings\"]",
-                "    end",
-                "    subgraph subGraphStrategic[\"III. Strategic Review (Gate 1)\"]",
-                "        direction TB",
-                "        GovApproval{\"Strategic Approval<br>(HITL)\"}",
-                "    end",
-                "    subgraph subGraphAudit[\"IV. Red Team Audit (Gate 2)\"]",
-                "        direction TB",
-                "        CaptureAudit[\"MCP: cortex_capture_snapshot (audit)\"]",
-                "        Packet[\"Audit Packet\"]",
-                "        TechApproval{\"Technical Approval<br>(HITL)\"}",
-                "    end",
-                "    subgraph subGraphSeal[\"V. The Technical Seal\"]",
-                "        direction TB",
-                "        CaptureSeal[\"MCP: cortex_capture_snapshot (seal)\"]",
-                "    end",
-                "    SeekTruth -- \"Carry\" --> Intelligence",
-                "    Synthesis -- \"Verify Reasoning\" --> GovApproval",
-                "    GovApproval -- \"PASS\" --> CaptureAudit",
-                "    Packet -- \"Review Implementation\" --> TechApproval",
-                "    TechApproval -- \"PASS\" --> CaptureSeal",
-                "    CaptureSeal -- \"Update Successor\" --> SuccessorSnapshot",
-                "    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
-                "    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
-                "    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
-                "    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
-                "    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black",
-                "    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black",
-                "    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff",
-                "```",
-                "",
-                "## 📦 IV. Strategic Context (Last Learning Package Snapshot)",
-                "Below is the consolidated 'Source of Truth' from the previous session's seal:",
-                "---",
-                last_package_content,
-                "---",
-                "",
-                "## 📜 V. Protocol 128: Hardened Learning Loop",
-                protocol_content,
-                "",
-                "## 🧠 VI. Cognitive Primer",
-                primer_content,
-                "",
-                "## 📋 VII. Standard Operating Procedure (SOP)",
-                sop_content,
-                "",
-                "## 🧪 VIII. Claims vs Evidence Checklist",
-                "- [ ] **Integrity Guard:** Do the files modified match the task objective?",
-                "- [ ] **Continuity:** Have all relevant Protocols and Chronicles been updated?",
-                "- [ ] **The Seal:** Is this delta ready for the final 'Learning Package Snapshot'?",
-                "",
-                "---",
-                "*This is a 'Learning Package Snapshot (Draft)'. Perform Meta-Learning (SOP Refinement) before generating the Final Seal.*"
-            ]
+                # 2. Scan Recency (Filesystem)
+                recency_summary = self._get_recency_delta(hours=hours)
+                
+                # 3. Read Core Sovereignty Documents
+                primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
+                sop_content = "[MISSING] .agent/workflows/recursive_learning.md"
+                protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
+                
+                try:
+                    p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
+                    if p_path.exists(): primer_content = p_path.read_text()
+                    
+                    s_path = self.project_root / ".agent" / "workflows" / "recursive_learning.md"
+                    if s_path.exists(): sop_content = s_path.read_text()
+                    
+                    pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"
+                    if pr_path.exists(): protocol_content = pr_path.read_text()
+                except Exception as e:
+                    logger.warning(f"Error reading sovereignty docs: {e}")
 
-            return "\n".join(lines)
+                # 4. Strategic Context (Learning Package Snapshot)
+                last_package_content = "⚠️ No active Learning Package Snapshot found."
+                package_path = self.project_root / ".agent" / "learning" / "learning_package_snapshot.md"
+                if package_path.exists():
+                    try:
+                        # Check if package is recent
+                        mtime = package_path.stat().st_mtime
+                        delta_hours = (datetime.now().timestamp() - mtime) / 3600
+                        if delta_hours <= hours:
+                            last_package_content = package_path.read_text()
+                            package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
+                        else:
+                            package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
+                    except Exception as e:
+                        package_status = f"❌ Error reading snapshot: {e}"
+                else:
+                    package_status = "ℹ️ No `.agent/learning/learning_package_snapshot.md` detected."
+
+                # 5. Create the Learning Package Snapshot (Draft)
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                
+                lines = [
+                    f"# [DRAFT] Learning Package Snapshot v3.5",
+                    f"**Scan Time:** {timestamp} (Window: {hours}h)",
+                    f"**Strategic Status:** {package_status}",
+                    "",
+                    "## 🧬 I. Tactical Evidence (Current Git Deltas)",
+                    "The following code-level changes were detected SINCE the last session/commit:",
+                    "```text",
+                    git_evidence,
+                    "```",
+                    "",
+                    "## 📂 II. File Registry (Recency)",
+                    "Recently modified high-signal files:",
+                    recency_summary,
+                    "",
+                    "## 🏗️ III. Architecture Alignment (The Successor Relay)",
+                    "```mermaid",
+                    "flowchart TB",
+                    "    subgraph subGraphScout[\"I. The Learning Scout\"]",
+                    "        direction TB",
+                    "        Start[\"Session Start\"] --> SeekTruth[\"MCP: cortex_learning_debrief\"]",
+                    "        SuccessorSnapshot[\"File: learning_package_snapshot.md\"] -.->|Context| SeekTruth",
+                    "    end",
+                    "    subgraph subGraphSynthesize[\"II. Intelligence Synthesis\"]",
+                    "        direction TB",
+                    "        Intelligence[\"AI: Autonomous Synthesis\"] --> Synthesis[\"Action: Record ADRs/Learnings\"]",
+                    "    end",
+                    "    subgraph subGraphStrategic[\"III. Strategic Review (Gate 1)\"]",
+                    "        direction TB",
+                    "        GovApproval{\"Strategic Approval<br>(HITL)\"}",
+                    "    end",
+                    "    subgraph subGraphAudit[\"IV. Red Team Audit (Gate 2)\"]",
+                    "        direction TB",
+                    "        CaptureAudit[\"MCP: cortex_capture_snapshot (audit)\"]",
+                    "        Packet[\"Audit Packet\"]",
+                    "        TechApproval{\"Technical Approval<br>(HITL)\"}",
+                    "    end",
+                    "    subgraph subGraphSeal[\"V. The Technical Seal\"]",
+                    "        direction TB",
+                    "        CaptureSeal[\"MCP: cortex_capture_snapshot (seal)\"]",
+                    "    end",
+                    "    SeekTruth -- \"Carry\" --> Intelligence",
+                    "    Synthesis -- \"Verify Reasoning\" --> GovApproval",
+                    "    GovApproval -- \"PASS\" --> CaptureAudit",
+                    "    Packet -- \"Review Implementation\" --> TechApproval",
+                    "    TechApproval -- \"PASS\" --> CaptureSeal",
+                    "    CaptureSeal -- \"Update Successor\" --> SuccessorSnapshot",
+                    "    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
+                    "    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
+                    "    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
+                    "    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
+                    "    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black",
+                    "    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black",
+                    "    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff",
+                    "```",
+                    "",
+                    "## 📦 IV. Strategic Context (Last Learning Package Snapshot)",
+                    "Below is the consolidated 'Source of Truth' from the previous session's seal:",
+                    "---",
+                    last_package_content,
+                    "---",
+                    "",
+                    "## 📜 V. Protocol 128: Hardened Learning Loop",
+                    protocol_content,
+                    "",
+                    "## 🧠 VI. Cognitive Primer",
+                    primer_content,
+                    "",
+                    "## 📋 VII. Standard Operating Procedure (SOP)",
+                    sop_content,
+                    "",
+                    "## 🧪 VIII. Claims vs Evidence Checklist",
+                    "- [ ] **Integrity Guard:** Do the files modified match the task objective?",
+                    "- [ ] **Continuity:** Have all relevant Protocols and Chronicles been updated?",
+                    "- [ ] **The Seal:** Is this delta ready for the final 'Learning Package Snapshot'?",
+                    "",
+                    "---",
+                    "*This is a 'Learning Package Snapshot (Draft)'. Perform Meta-Learning (SOP Refinement) before generating the Final Seal.*"
+                ]
+
+                return "\n".join(lines)
             
         except Exception as e:
             logger.error(f"Error in learning_debrief: {e}")
@@ -1796,28 +1829,45 @@ class CortexOperations:
         output_dir = learning_dir / "red_team" if snapshot_type == "audit" else learning_dir
         output_dir.mkdir(parents=True, exist_ok=True)
         
-        # Temporary manifest file for the JS tool
+        # 3. Default Manifest Handling (Protocol 128)
+        # If 'seal' and no manifest provided, use the predefined learning_manifest.json
+        effective_manifest = list(manifest_files)
+        if snapshot_type == "seal" and not effective_manifest:
+            manifest_file = learning_dir / "learning_manifest.json"
+            if manifest_file.exists():
+                try:
+                    with open(manifest_file, "r") as f:
+                        effective_manifest = json.load(f)
+                    logger.info(f"Loaded default learning manifest: {len(effective_manifest)} entries")
+                except Exception as e:
+                    logger.warning(f"Failed to load learning manifest: {e}")
+
+        # Temporary manifest file for the snapshot tool
         temp_manifest_path = output_dir / f"manifest_{snapshot_type}_{int(time.time())}.json"
         snapshot_filename = "red_team_audit_packet.md" if snapshot_type == "audit" else "learning_package_snapshot.md"
         final_snapshot_path = output_dir / snapshot_filename
         
         try:
-            # Write temporary manifest for the JS tool
+            # Write temporary manifest for the tool
             with open(temp_manifest_path, "w") as f:
-                json.dump(manifest_files, f, indent=2)
+                json.dump(effective_manifest, f, indent=2)
                 
-            # 3. Invoke JS Snapshot Tool
-            script_path = self.project_root / "scripts" / "capture_code_snapshot.js"
-            cmd = [
-                "node", str(script_path),
-                "--manifest", str(temp_manifest_path),
-                "--output", str(final_snapshot_path)
-            ]
-            
-            result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(self.project_root))
-            
-            if result.returncode != 0:
-                raise Exception(f"JS Snapshot tool failed: {result.stderr}")
+            # 3. Invoke Python Snapshot Tool
+            # 3. Invoke Python Snapshot Tool (Direct Import)
+            snapshot_stats = {}
+            try:
+                # Wrap in stdout redirection to prevent MCP protocol pollution from prints
+                import contextlib
+                import io
+                with contextlib.redirect_stdout(sys.stderr):
+                    snapshot_stats = generate_snapshot(
+                        project_root=self.project_root,
+                        output_dir=output_dir,
+                        manifest_path=temp_manifest_path,
+                        output_file=final_snapshot_path
+                    )
+            except Exception as e:
+                raise Exception(f"Python Snapshot tool failed: {str(e)}")
 
             # 4. Enhance 'audit' packet with metadata if needed
             if snapshot_type == "audit":
@@ -1847,6 +1897,8 @@ class CortexOperations:
                 manifest_verified=manifest_verified,
                 git_diff_context=git_context,
                 snapshot_type=snapshot_type,
+                total_files=snapshot_stats.get("total_files", 0),
+                total_bytes=snapshot_stats.get("total_bytes", 0),
                 status="success"
             )
 

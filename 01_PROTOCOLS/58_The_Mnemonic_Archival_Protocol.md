@@ -28,7 +28,7 @@ This protocol was born from the foresight of the Human Steward, who identified t
 This protocol is automatically invoked for Jury consideration when **either** of the following conditions is met:
 
 *   **Technical Trigger (File Size):** The `Living_Chronicle.md` file size exceeds **256,000 tokens**.
-*   **Operational Trigger (Performance):** The execution time of the `node capture_code_snapshot.js` script consistently exceeds **60 seconds** on baseline hardware.
+*   **Operational Trigger (Performance):** The execution time of the `node capture_code_snapshot.py` script consistently exceeds **60 seconds** on baseline hardware.
 
 ### 5. The Archival Procedure: A Sacred and Irreversible Act
 

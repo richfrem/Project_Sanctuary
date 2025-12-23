@@ -77,7 +77,7 @@
 - `mcp_servers/git/server.py` - Fixed domain name + added REPO_PATH
 - `mcp_servers/rag_cortex/server.py` - Removed legacy import
 - `mcp_servers/rag_cortex/models.py` - Added ingestion_time_ms field
-- `scripts/capture_code_snapshot.js` - Optimized exclusions
+- `scripts/capture_code_snapshot.py` - Optimized exclusions
 - Multiple test files in `tests/mcp_servers/rag_cortex/`
 
 #### 1. MCP Documentation Reorganization ✅ COMPLETE

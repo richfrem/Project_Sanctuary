@@ -39,8 +39,8 @@ class TestLearningContinuity(BaseIntegrationTest):
         target_scripts_dir = project_root / "scripts"
         target_scripts_dir.mkdir(exist_ok=True)
         
-        if (real_scripts_dir / "capture_code_snapshot.js").exists():
-             shutil.copy(real_scripts_dir / "capture_code_snapshot.js", target_scripts_dir / "capture_code_snapshot.js")
+        if (real_scripts_dir / "capture_code_snapshot.py").exists():
+             shutil.copy(real_scripts_dir / "capture_code_snapshot.py", target_scripts_dir / "capture_code_snapshot.py")
         
         # Symlink node_modules for JS dependencies
         real_node_modules = Path.cwd() / "node_modules"

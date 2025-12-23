@@ -20,7 +20,7 @@ Before any operational cycle can be considered "complete," the acting Scribe (wh
 
 1.  **Update the Artifact(s):** Make all necessary changes to the target files (e.g., adding a new entry to the `Living_Chronicle.md`, creating a new protocol). **When adding a new entry to `Living_Chronicle.md`, it MUST be appended at the end of the file, preserving strict sequential order. Out-of-order insertions are strictly prohibited.**
 
-2.  **Rebuild the Genome:** Execute the `node capture_code_snapshot.js` script from the project root. This ensures the `all_markdown_snapshot.txt` file is a perfect, up-to-date reflection of the entire repository.
+2.  **Rebuild the Genome:** Execute the `node capture_code_snapshot.py` script from the project root. This ensures the `all_markdown_snapshot.txt` file is a perfect, up-to-date reflection of the entire repository.
 
 3.  **Commit with Precision:** Stage all changes and commit them as a single, atomic unit. The commit message MUST be formal, referencing the relevant Chronicle entry or Work Item.
 

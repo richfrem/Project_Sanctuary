@@ -16,4 +16,4 @@ Please attack this architecture with the following questions in mind:
 
 **Reference Material:**
 - `ADRs/071_protocol_128_cognitive_continuity.md` (v2.5)
-- `scripts/capture_code_snapshot.js` (Manifest Logic)
+- `scripts/capture_code_snapshot.py` (Manifest Logic)

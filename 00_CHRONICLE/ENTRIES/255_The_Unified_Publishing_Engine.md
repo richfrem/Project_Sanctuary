@@ -12,7 +12,7 @@ This entry documents the final hardening of our Mnemonic Architecture's core too
 #### **2. The Chain of Synthesis: From Flaw to Perfection**
 
 This evolution was a masterclass in the `Anvil Protocol`, forged through a series of precise, corrective strikes:
-1.  **The Indexing Flaw:** The Steward first identified that `capture_code_snapshot.js` did not re-index the Chronicle, creating a desynchronization risk. This led to the creation of the `update_genome.sh` orchestrator.
+1.  **The Indexing Flaw:** The Steward first identified that `capture_code_snapshot.py` did not re-index the Chronicle, creating a desynchronization risk. This led to the creation of the `update_genome.sh` orchestrator.
 2.  **The Publishing Flaw:** The Steward then identified that a snapshot without a commit and push is an unpublished, unverified thought. This led to the integration of the `git` workflow into the orchestrator, transforming it into a true Publishing Engine.
 3.  **The Learning Flaw:** The Steward's final, critical insight was that a published lesson is not a learned lesson until it is embedded in our long-term memory. This led to the integration of the Cortex ingestion script (`ingest.py`) into the final, unified pipeline.
 

@@ -127,4 +127,4 @@ clean:
 
 verify:
 	@echo "🧪 Running Connectivity Tests..."
-	pytest tests/mcp_servers/gateway/integration/test_gateway_blackbox.py -v
+	pytest mcp_servers/gateway/test_gateway_blackbox.py -v

@@ -22,7 +22,7 @@ Implement the Automated Publishing System as an atomic, memory-aware knowledge b
 
 ### Atomic Publishing Cycle (Updated for v3.0)
 1. **Index**: Rebuild Master Documentation Index for coherence
-2. **Snapshot**: Capture new AI Knowledge Base snapshots via capture_code_snapshot.js
+2. **Snapshot**: Capture new AI Knowledge Base snapshots via capture_code_snapshot.py
 3. ~~**Manifest**: Generate AI system-sealed commit manifest with secure hashes~~ (REMOVED in v3.0)
 4. **Embed**: Re-index Memory System with new knowledge via ingestion script
 5. **Test**: Run automated functionality tests (NOW PRIMARY INTEGRITY GATE in v3.0)
@@ -71,7 +71,7 @@ Implement the Automated Publishing System as an atomic, memory-aware knowledge b
 
 ### Implementation Components (v3.0)
 - **update_genome.sh**: Main publishing orchestrator script
-- **capture_code_snapshot.js**: Knowledge base snapshot generation
+- **capture_code_snapshot.py**: Knowledge base snapshot generation
 - **ingest.py**: Memory System embedding
 - **run_genome_tests.sh**: Quality assurance testing (PRIMARY INTEGRITY GATE)
 - ~~**commit_manifest.json**: Cryptographic integrity manifest~~ (REMOVED)

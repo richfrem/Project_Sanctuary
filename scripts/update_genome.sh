@@ -56,13 +56,13 @@ echo ""
 # Step 2: Capture the Snapshots (Explicit & Full)
 echo "[Step 2/5] Capturing new Cognitive Genome snapshots..."
 # Full genome capture (generates the seeds and full snapshots)
-node capture_code_snapshot.js
+node capture_code_snapshot.py
 # Subdirectory captures
-node capture_code_snapshot.js council_orchestrator
-node capture_code_snapshot.js docs
-node capture_code_snapshot.js forge
-node capture_code_snapshot.js mcp_servers
-node capture_code_snapshot.js mnemonic_cortex
+node capture_code_snapshot.py council_orchestrator
+node capture_code_snapshot.py docs
+node capture_code_snapshot.py forge
+node capture_code_snapshot.py mcp_servers
+node capture_code_snapshot.py mnemonic_cortex
 
 if [ $? -ne 0 ]; then
     echo "[FATAL] Snapshot creation failed. Halting."

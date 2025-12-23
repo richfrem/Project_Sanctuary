@@ -3,7 +3,7 @@
 **Version:** 2.2 (Fleet Management)  
 **Status:** Canonical  
 **Last Updated:** 2025-12-20  
-**References:** ADR 058, ADR 060, ADR 064
+**References:** ADR 058, ADR 060, ADR 064, ADR 071
 
 ---
 
@@ -65,41 +65,33 @@ flowchart TB
 The management of the Fleet follows a **3-Layer Declarative Pattern**, decoupling design intent from transport and runtime observation. This ensures the system remains resilient even if specific clusters are temporarily unreachable.
 
 ```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
 flowchart LR
-    %% ===== INTENT LAYER =====
     subgraph INTENT["<b>Spec Layer</b> (fleet_spec.py)"]
         FLEET_SPEC["<b>FLEET_SPEC</b><br><i>Design Intent</i><br>• Slugs<br>• Default URLs"]
     end
-
-    %% ===== POLICY LAYER =====
     subgraph POLICY["<b>Resolver Layer</b> (fleet_resolver.py)"]
         RESOLVER["<b>Fleet Resolver</b><br><i>Policy Logic</i><br>• Env Overrides<br>• Docker Context"]
     end
-
-    %% ===== EXECUTION LAYER =====
     subgraph EXECUTION["<b>Execution Layer</b> (Transport)"]
         CLI["<b>CLI Orchestrator</b><br>(fleet_orchestrator.py)"]
         GATEWAY_CLIENT["<b>gateway_client.py</b><br><i>Pure Transport</i>"]
     end
-
-    %% ===== TESTING LAYER =====
     subgraph TESTING["<b>Testing Layer</b> (tests/...)"]
         TEST_CLIENT["<b>gateway_test_client.py</b>"]
         INTEG_TESTS["<b>Integration Tests</b><br>(clusters/...)"]
     end
-
-    %% ===== RUNTIME =====
     subgraph RUNTIME["<b>Runtime System</b>"]
         GATEWAY["<b>Sanctuary Gateway</b>"]
         MCP["<b>Fleet of MCP Servers</b>"]
     end
-
-    %% ===== OBSERVATION =====
     subgraph OBSERVATION["<b>Observation Layer</b> (Non-Authoritative)"]
         REGISTRY_JSON["<b>fleet_registry.json</b><br><i>Discovery Manifest</i>"]
     end
-
-    %% ===== FLOW =====
     FLEET_SPEC -->|intent| RESOLVER
     RESOLVER -->|resolved endpoints| CLI
     RESOLVER -->|resolved endpoints| TEST_CLIENT
@@ -114,8 +106,6 @@ flowchart LR
     MCP -->|handshake| GATEWAY
     GATEWAY -->|observed tools| GATEWAY_CLIENT
     GATEWAY_CLIENT -->|write only| REGISTRY_JSON
-
-    %% ===== FAILURE PATH =====
     MCP -. unreachable .-> GATEWAY
     GATEWAY -. degraded state .-> REGISTRY_JSON
 ```
@@ -134,7 +124,7 @@ flowchart LR
 3.  **sanctuary_network**: External web access (Brave, Fetch). Isolated from filesystem.
 4.  **sanctuary_git**: Dual-permission (Filesystem + Network). Completely isolated container.
 5.  **sanctuary-intelligence**:
-    *   **Cortex (MCP):** The "Brain" that processes queries.
+    *   **Cortex (MCP):** The "Brain" that processes queries, manages **Cognitive Continuity (P128)**, and safeguards the **Guardian Role**.
     *   **VectorDB (Backend):** ChromaDB storage.
     *   **Ollama (Backend):** LLM inference.
 6.  **sanctuary_domain**:
@@ -184,7 +174,9 @@ services:
 
 ---
 
-## 5. Gateway-Routed Learning Loop
+## 5. Gateway-Routed Protocols
+
+### 5.1 Recursive Learning Loop (P125)
 
 The following diagram shows how the Learning Loop (Protocol 125) operates through the Gateway:
 
@@ -232,6 +224,68 @@ sequenceDiagram
     end
 ```
 
+### 5.2 Cognitive Continuity (P128)
+
+Protocol 128 enforces a "Red Team Gate" and persistent identity via the **Guardian Role**.
+
+```mermaid
+---
+config:
+  layout: dagre
+  theme: base
+---
+flowchart TB
+    subgraph subGraphScout["I. The Learning Scout"]
+        direction TB
+        Start["Session Start"] --> SeekTruth["MCP: cortex_learning_debrief"]
+        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read context| SeekTruth
+    end
+
+    subgraph subGraphSynthesize["II. Intelligence Synthesis"]
+        direction TB
+        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs/Learnings"]
+    end
+
+    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
+        direction TB
+        GovApproval{"Strategic Approval<br>(HITL)"}
+    end
+
+    subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
+        direction TB
+        CaptureAudit["MCP: cortex_capture_snapshot (audit)"]
+        Packet["Audit Packet (Snapshot)"]
+        TechApproval{"Technical Approval<br>(HITL)"}
+    end
+
+    subgraph subGraphSeal["V. The Technical Seal"]
+        direction TB
+        CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
+    end
+
+    SeekTruth -- "Carry context" --> Intelligence
+    Synthesis -- "Verify reasoning" --> GovApproval
+    
+    GovApproval -- "PASS" --> CaptureAudit
+    CaptureAudit -- "Validate truth" --> Packet
+    Packet -- "Technical review" --> TechApproval
+    
+    TechApproval -- "PASS" --> CaptureSeal
+    CaptureSeal -- "Final Relay" --> SuccessorSnapshot
+    
+    GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
+    TechApproval -- "FAIL: Backtrack" --> SOP
+    SOP -- "Loop Back" --> Start
+
+    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
+    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
+    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
+    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
+    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
+    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
+    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+```
+
 ---
 
 ## 6. References
@@ -240,3 +294,4 @@ sequenceDiagram
 - **ADR 060:** Hybrid Fleet Architecture (The 5 Clusters)
 - **ADR 059:** JWT Authentication
 - **ADR 062:** Rejection of n8n Automation (Manual Loop Reinforced)
+- **ADR 071:** Protocol 128 (Cognitive Continuity)

@@ -192,8 +192,8 @@ class CortexValidator:
         # Returns: Dictionary of validated parameters
         # Raises: ValidationError if constraints are violated
         #============================================
-        if not manifest_files:
-            raise ValidationError("manifest_files cannot be empty")
+        if manifest_files is None:
+             manifest_files = []
         
         if not isinstance(manifest_files, list):
             raise ValidationError("manifest_files must be a list of strings")

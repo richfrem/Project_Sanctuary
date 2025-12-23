@@ -24,7 +24,7 @@ The **`commit_manifest.json` system and its associated logic are permanently pur
 The seven-step publishing cycle is restructured and reduced to mandate functional integrity:
 
 1.  **Index**: Rebuild Master Documentation Index for coherence.
-2.  **Snapshot**: Capture new AI Knowledge Base snapshots via `capture_code_snapshot.js`.
+2.  **Snapshot**: Capture new AI Knowledge Base snapshots via `capture_code_snapshot.py`.
 3.  **Embed (Synchronization)**: Re-index Memory System with new knowledge via ingestion script (`ingest.py`).
 4.  **Test (Functional Coherence)**: **MANDATORY INTEGRITY GATE.** Run automated functionality tests (`run_genome_tests.sh`) to prevent broken deployments. This step is the **sole verification** for Protocol 101 v3.0 integrity.
 5.  **Commit**: Surgical staging and commit **only if Functional Coherence tests pass**.
