@@ -17,6 +17,7 @@ MCP OPERATIONS:
 | cortex_cache_warmup       | WRITE| Warmup cache from ChromaDB           |
 | cortex_guardian_wakeup    | READ | Generate context briefing            |
 | cortex_get_stats          | READ | Get database statistics              |
+| cortex_learning_debrief   | WRITE| Record session debrief (Protocol 128)|
 
 """
 import pytest
@@ -401,3 +402,14 @@ class TestCortexOperations(BaseIntegrationTest):
 
 
 
+    def test_learning_debrief(self, cortex_ops):
+        """
+        Test the learning_debrief operation (Protocol 128).
+        """
+        # The new learning_debrief (v3.5) is autonomous and returns "Liquid Information" (markdown string)
+        # It takes 'hours' as an argument, not raw content.
+        res = cortex_ops.learning_debrief(hours=1)
+        
+        assert "# [DRAFT] Learning Package Snapshot v3.5" in res
+        assert "**Scan Time:**" in res
+        assert "## 🧬 I. Tactical Evidence" in res

@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
-"""
-Code-to-Markdown Ingestion Shim
-
-This script converts Python code files into markdown format optimized for
-RAG Cortex ingestion. It uses Python's AST module to parse code structure
-and extract metadata without requiring LLM tokens.
-
-Strategy: AST-Based "Pseudo-Markdown" Conversion
-- Zero tokens: Uses built-in ast module (millisecond parsing)
-- No agents: Hard-coded logic, no orchestrator needed
-- Fast: <100ms per file
-- Existing infrastructure: Feeds into cortex_ingest_incremental
-
-Task: 110 - Extend RAG Cortex to Ingest Code Files
-Author: Antigravity AI (based on Gemini 3.0 Pro strategy)
-Date: 2025-12-14
-"""
+#============================================
+# mcp_servers/rag_cortex/ingest_code_shim.py
+# Purpose: Code-to-Markdown Ingestion Shim for RAG Cortex.
+#          Converts code files into markdown optimized for ingestion.
+# Role: Single Source of Truth
+# Used as a module by operations.py and as a CLI script.
+# Strategy: AST-Based "Pseudo-Markdown" Conversion (Zero tokens)
+# Calling example:
+#   from mcp_servers.rag_cortex.ingest_code_shim import convert_and_save
+#   out_path = convert_and_save("script.py")
+# LIST OF FUNCTIONS IMPLEMENTED:
+#   - convert_and_save
+#   - main
+#   - parse_javascript_to_markdown
+#   - parse_python_to_markdown
+#============================================
 
 import ast
 import os
@@ -25,27 +24,17 @@ from typing import Optional
 from mcp_servers.lib.utils.path_utils import find_project_root
 
 
+#============================================
+# Function: parse_python_to_markdown
+# Purpose: Reads a .py file and converts it into a Markdown string optimized for RAG.
+# Args:
+#   file_path: Path to the Python file to convert
+# Returns: Markdown-formatted string ready for RAG ingestion
+# Raises:
+#   FileNotFoundError: If the file doesn't exist
+#   SyntaxError: If the Python file has syntax errors
+#============================================
 def parse_python_to_markdown(file_path: str) -> str:
-    """
-    Reads a .py file and converts it into a Markdown string 
-    optimized for RAG Cortex ingestion.
-    
-    Uses Python's AST module to:
-    - Extract module-level docstrings
-    - Identify functions and classes
-    - Extract docstrings and signatures
-    - Preserve source code with syntax highlighting
-    
-    Args:
-        file_path: Path to the Python file to convert
-        
-    Returns:
-        Markdown-formatted string ready for RAG ingestion
-        
-    Raises:
-        FileNotFoundError: If the file doesn't exist
-        SyntaxError: If the Python file has syntax errors
-    """
     file_path = Path(file_path)
     
     if not file_path.exists():
@@ -170,16 +159,14 @@ def parse_python_to_markdown(file_path: str) -> str:
     return markdown_output
 
 
+#============================================
+# Function: parse_javascript_to_markdown
+# Purpose: Reads a .js/.ts file and converts it into a Markdown string using Regex.
+# Args:
+#   file_path: Path to the JS/TS file
+# Returns: Markdown-formatted string
+#============================================
 def parse_javascript_to_markdown(file_path: Path) -> str:
-    """
-    Reads a .js/.ts file and converts it into a Markdown string using Regex.
-    
-    Args:
-        file_path: Path to the JS/TS file
-        
-    Returns:
-        Markdown-formatted string
-    """
     import re
     
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -250,18 +237,15 @@ def parse_javascript_to_markdown(file_path: Path) -> str:
     return markdown_output
 
 
+#============================================
+# Function: convert_and_save
+# Purpose: Convert a Python file to markdown and optionally save it.
+# Args:
+#   input_file: Path to the Python file
+#   output_file: Optional path to save the markdown output. If None, uses input_file.md.
+# Returns: Path to the output markdown file
+#============================================
 def convert_and_save(input_file: str, output_file: Optional[str] = None) -> str:
-    """
-    Convert a Python file to markdown and optionally save it.
-    
-    Args:
-        input_file: Path to the Python file
-        output_file: Optional path to save the markdown output
-                    If None, uses input_file.md
-                    
-    Returns:
-        Path to the output markdown file
-    """
     input_path = Path(input_file)
     
     if output_file is None:
@@ -290,8 +274,11 @@ def convert_and_save(input_file: str, output_file: Optional[str] = None) -> str:
     return str(output_path)
 
 
+#============================================
+# Function: main
+# Purpose: CLI interface for the code ingestion shim.
+#============================================
 def main():
-    """CLI interface for the code ingestion shim."""
     if len(sys.argv) < 2:
         print("Usage: python ingest_code_shim.py <python_file> [output_file]")
         print("\nExample:")

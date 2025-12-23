@@ -45,10 +45,29 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 ## Phase 6: Maintenance (Gardener)
 *   *Optional:* If this session modified >3 files, run a quick "Gardener Scan" on the topic folder to ensure links are valid.
 
-## Phase 7: Preservation (Protocol 101)
-1.  **Stage:** Use `git_add` to stage the new topic artifacts and chronicle entry.
-2.  **Commit:** Use `git_smart_commit` with a descriptive message citing the Protocol validation.
-3.  **Push:** Use `git_push_feature` to back up findings to the remote repository.
+### Phase 7: The Human Gate (Dual-Gate Validation)
+#### 7a. Strategic Review (Gate 1)
+1.  **Verify Logic**: Review the `/ADRs` and `/LEARNING` documents created during the session.
+2.  **Align Intent**: Ensure the AI's autonomous research matches the session goals.
+3.  **Approve**: If correct, proceed to the Technical Audit.
+
+#### 7b. Technical Audit (Gate 2)
+1.  **Snapshot Generation**: The agent calls `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='audit'` and a `manifest_files` list derived from session activity.
+2.  **Zero-Trust Check**: The tool automatically verifies the manifest against `git diff`. If discrepancies exist, it flags them in the generated packet.
+3.  **Audit**: Human reviews the consolidated `.agent/learning/red_team/red_team_audit_packet.md` for technical truth.
+
+### Phase 8: The Technical Seal (The Succession)
+1.  **The Seal**: Once the audit is approved, the agent calls `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='seal'`.
+2.  **Successor Update**: The tool generates the final `learning_package_snapshot.md` for total technical continuity. 
+    > [!IMPORTANT]
+    > **Meta-Preservation**: The manifest for the Seal MUST include this SOP (`.agent/workflows/recursive_learning.md`) if any logical optimizations were made during the session.
+3.  **Preservation**: Commit all learning artifacts as per Protocol 101 Preservation.
+
+---
+
+### Next Session: The Bridge
+1. **Boot**: The next session agent calls `cortex_learning_debrief`.
+2. **Retrieve**: The tool identifies the `learning_package_snapshot.md` and presents it as the "Strategic Successor Context".
 
 ## Phase 8: Retrospective (Continuous Improvement)
 1.  **Reflect:** Did this session feel efficient? Were there friction points?

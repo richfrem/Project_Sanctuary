@@ -11,10 +11,10 @@ RUN apt-get update && apt-get install -y curl build-essential git git-lfs && rm 
 
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
+COPY mcp_servers/rag_cortex /app/mcp_servers/rag_cortex
+COPY mcp_servers/forge_llm /app/mcp_servers/forge_llm
 
 # Copy the fleet cluster code
-# Source (Host): mcp_servers/gateway/clusters/sanctuary_cortex (kebab-case)
-# Dest (Container): /app/mcp_servers/gateway/clusters/sanctuary_cortex (snake_case)
 COPY mcp_servers/gateway/clusters/sanctuary_cortex /app/mcp_servers/gateway/clusters/sanctuary_cortex
 
 # Install Python dependencies

@@ -268,7 +268,7 @@ Compression Method: Optical (DeepSeek-OCR inspired)
 
         return '\n'.join(formatted_lines)
 
-def collect_code_snapshot_v2(project_root, operation_path=None, include_provenance=True, max_files=None, max_size_mb=50, output_dir=None, exclude_dirs=None, existing_manifest=None, font_size=10, output_dir_str=None):
+def collect_code_snapshot_v2(project_root, operation_path=None, include_provenance=True, max_files=None, max_size_mb=50, output_dir=None, exclude_dirs=None, existing_manifest=None, font_size=10, output_dir_str=None, manifest_path=None):
     """Enhanced code snapshot collection with provenance tracking and size limits"""
 
     if exclude_dirs is None:
@@ -421,6 +421,70 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
             for item in sorted(path_obj.iterdir()):
                 traverse_and_collect(item)
 
+    # Manifest Mode Logic
+    if manifest_path:
+        print(f"[MANIFEST MODE] Loading file list from: {manifest_path}")
+        try:
+            with open(manifest_path, 'r') as f:
+                manifest_data = json.load(f)
+            
+            # Normalize to list of strings
+            file_list = []
+            if isinstance(manifest_data, list):
+                file_list = [item if isinstance(item, str) else item.get('path') for item in manifest_data]
+            else:
+                raise ValueError("Manifest must be a JSON array")
+
+            print(f"[MANIFEST] Processing {len(file_list)} files from manifest directly.")
+            
+            for rel_path in file_list:
+                full_path = Path(project_root) / rel_path
+                
+                # SECURITY HARDENING: Enforce exclusion rules even in Manifest Mode
+                # Verify against exclude files and patterns
+                if full_path.name in exclude_files or should_exclude_file(full_path.name):
+                     print(f"[SECURITY] Skipping excluded file in manifest: {rel_path}")
+                     continue
+                     
+                if full_path.is_file():
+                    # Process file (size checks etc handled in loop or manually here)
+                    # For simplicity reusing traverse logic on single file? 
+                    # traverse_and_collect checks is_dir, but we can bypass recursion.
+                    
+                    # Manual collection to respect size limits
+                    try:
+                        content = full_path.read_text(encoding='utf-8')
+                        file_size = len(content)
+                        
+                        if max_size_mb and (total_size + file_size > max_size_bytes):
+                            print(f"[LIMIT] Skipping {rel_path} (size limit reached)")
+                            continue
+                            
+                        collected_files.append({
+                            'path': rel_path,
+                            'content': content,
+                            'size': file_size,
+                            'hash': hashlib.sha256(content.encode('utf-8')).hexdigest()
+                        })
+                        total_size += file_size
+                        processed_count += 1
+                    except Exception as e:
+                        print(f"[WARN] Could not read manifest file {rel_path}: {e}")
+                else:
+                    print(f"[WARN] Manifest file not found: {rel_path}")
+                    
+        except Exception as e:
+            print(f"[FATAL] Error processing manifest: {e}")
+            # Do not exit, just return what we have? Or fail? 
+            # Protocol 128 implies this is critical.
+            sys.exit(1)
+            
+    else:
+        # Standard Traversal
+        # First pass: get complete inventory (existing logic)
+        pass # We will wrap the existing logic in an else block
+
+
     # Manifest loading moved to main() function
 
     # First pass: get complete inventory of eligible files with metadata
@@ -488,35 +552,36 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
             for item in sorted(path_obj.iterdir()):
                 inventory_eligible_files(item)
 
-    print(f"[INVENTORY] Scanning all eligible files...")
-    inventory_eligible_files(Path(project_root))
+    if not manifest_path:
+        print(f"[INVENTORY] Scanning all eligible files...")
+        inventory_eligible_files(Path(project_root))
 
-    # Sort by size (largest first) for intelligent selection
-    eligible_files_inventory.sort(key=lambda x: x['size'], reverse=True)
+        # Sort by size (largest first) for intelligent selection
+        eligible_files_inventory.sort(key=lambda x: x['size'], reverse=True)
 
-    total_eligible_files = len(eligible_files_inventory)
-    total_size_bytes = sum(f['size'] for f in eligible_files_inventory)
-    total_size_mb = total_size_bytes / 1024 / 1024
+        total_eligible_files = len(eligible_files_inventory)
+        total_size_bytes = sum(f['size'] for f in eligible_files_inventory)
+        total_size_mb = total_size_bytes / 1024 / 1024
 
-    # Analyze change status
-    status_counts = {'new': 0, 'modified': 0, 'unchanged': 0}
-    for file_info in eligible_files_inventory:
-        status_counts[file_info.get('status', 'unknown')] += 1
+        # Analyze change status
+        status_counts = {'new': 0, 'modified': 0, 'unchanged': 0}
+        for file_info in eligible_files_inventory:
+            status_counts[file_info.get('status', 'unknown')] += 1
 
-    print(f"[INVENTORY] Found {total_eligible_files} eligible files, {total_size_mb:.1f}MB total")
-    print(f"[INVENTORY] Change status: {status_counts['new']} new, {status_counts['modified']} modified, {status_counts['unchanged']} unchanged")
-    print(f"[INVENTORY] Top 10 largest files:")
-    for i, file_info in enumerate(eligible_files_inventory[:10]):
-        status_indicator = file_info.get('status', 'unknown')[0].upper()
-        print(f"  {i+1}. [{status_indicator}] {file_info['path']} ({file_info['size_mb']:.2f}MB)")
+        print(f"[INVENTORY] Found {total_eligible_files} eligible files, {total_size_mb:.1f}MB total")
+        print(f"[INVENTORY] Change status: {status_counts['new']} new, {status_counts['modified']} modified, {status_counts['unchanged']} unchanged")
+        print(f"[INVENTORY] Top 10 largest files:")
+        for i, file_info in enumerate(eligible_files_inventory[:10]):
+            status_indicator = file_info.get('status', 'unknown')[0].upper()
+            print(f"  {i+1}. [{status_indicator}] {file_info['path']} ({file_info['size_mb']:.2f}MB)")
 
-    # Select files to process based on limits
-    selected_files = eligible_files_inventory.copy()  # Start with all files
+        # Select files to process based on limits
+        selected_files = eligible_files_inventory.copy()  # Start with all files
 
-    # Apply file count limit first
-    if max_files and max_files < len(selected_files):
-        selected_files = selected_files[:max_files]
-        print(f"[SELECT] Limited to top {max_files} files by size")
+        # Apply file count limit first
+        if max_files and max_files < len(selected_files):
+            selected_files = selected_files[:max_files]
+            print(f"[SELECT] Limited to top {max_files} files by size")
 
     # Then apply size limit to the already selected files
     if max_size_mb:
@@ -535,59 +600,88 @@ def collect_code_snapshot_v2(project_root, operation_path=None, include_provenan
             print(f"[SELECT] Processing {len(selected_files)} files (within {max_size_mb}MB limit)")
 
     # Apply final limits and prioritize changed files
-    if max_files and len(selected_files) > max_files:
-        # Prioritize changed files (new/modified) over unchanged ones
-        changed_files = [f for f in selected_files if f.get('status') in ['new', 'modified']]
-        unchanged_files = [f for f in selected_files if f.get('status') == 'unchanged']
+        if max_files and len(selected_files) > max_files:
+            # Prioritize changed files (new/modified) over unchanged ones
+            changed_files = [f for f in selected_files if f.get('status') in ['new', 'modified']]
+            unchanged_files = [f for f in selected_files if f.get('status') == 'unchanged']
 
-        # Take all changed files first, then fill with unchanged files
-        selected_files = changed_files[:max_files]
-        remaining_slots = max_files - len(selected_files)
-        if remaining_slots > 0:
-            selected_files.extend(unchanged_files[:remaining_slots])
+            # Take all changed files first, then fill with unchanged files
+            selected_files = changed_files[:max_files]
+            remaining_slots = max_files - len(selected_files)
+            if remaining_slots > 0:
+                selected_files.extend(unchanged_files[:remaining_slots])
 
-        print(f"[COLLECT] Final file limit applied: {len(selected_files)} files ({len(changed_files)} changed, {len(selected_files) - len(changed_files)} unchanged)")
+            print(f"[COLLECT] Final file limit applied: {len(selected_files)} files ({len(changed_files)} changed, {len(selected_files) - len(changed_files)} unchanged)")
 
-    if max_size_mb:
-        filtered_files = []
-        current_size = 0
-        for file_info in selected_files:
-            if current_size + file_info['size_mb'] > max_size_mb:
-                break
-            filtered_files.append(file_info)
-            current_size += file_info['size_mb']
-        if len(filtered_files) < len(selected_files):
-            selected_files = filtered_files
-            print(f"[COLLECT] Final size limit applied: {len(selected_files)} files ({current_size:.1f}MB)")
+        if max_size_mb:
+            filtered_files = []
+            current_size = 0
+            for file_info in selected_files:
+                if current_size + file_info['size_mb'] > max_size_mb:
+                    break
+                filtered_files.append(file_info)
+                current_size += file_info['size_mb']
 
-    print(f"[COLLECT] Starting collection of {len(selected_files)} selected files...")
-    for i, file_info in enumerate(selected_files):
-        file_path = Path(project_root) / file_info['path']
+            if len(filtered_files) < len(selected_files):
+                selected_files = filtered_files
+                print(f"[SELECT] Further limited to {len(selected_files)} files to stay under {max_size_mb}MB limit")
+            elif max_files and len(selected_files) <= max_files:
+                print(f"[SELECT] Processing {len(selected_files)} files (within {max_size_mb}MB limit)")
 
-        try:
-            content = file_path.read_text(encoding='utf-8')
-            file_size = len(content)
+        # Apply final limits and prioritize changed files
+            if max_files and len(selected_files) > max_files:
+                # Prioritize changed files (new/modified) over unchanged ones
+                changed_files = [f for f in selected_files if f.get('status') in ['new', 'modified']]
+                unchanged_files = [f for f in selected_files if f.get('status') == 'unchanged']
 
-            collected_files.append({
-                'path': file_info['path'],
-                'content': content,
-                'size': file_size,
-                'hash': hashlib.sha256(content.encode('utf-8')).hexdigest()
-            })
+                # Take all changed files first, then fill with unchanged files
+                selected_files = changed_files[:max_files]
+                remaining_slots = max_files - len(selected_files)
+                if remaining_slots > 0:
+                    selected_files.extend(unchanged_files[:remaining_slots])
 
-            total_size += file_size
-            processed_count += 1
+                print(f"[COLLECT] Final file limit applied: {len(selected_files)} files ({len(changed_files)} changed, {len(selected_files) - len(changed_files)} unchanged)")
 
-            # Progress indicator with file name
-            if (i + 1) % 5 == 0 or (i + 1) == len(selected_files) or i == 0:
-                percentage = ((i + 1) / len(selected_files)) * 100
-                size_mb = total_size / 1024 / 1024
-                print(f"[COLLECT] {i + 1}/{len(selected_files)} files ({percentage:.1f}%) - {file_info['path']}")
+            if max_size_mb:
+                filtered_files = []
+                current_size = 0
+                for file_info in selected_files:
+                    if current_size + file_info['size_mb'] > max_size_mb:
+                        break
+                    filtered_files.append(file_info)
+                    current_size += file_info['size_mb']
+                if len(filtered_files) < len(selected_files):
+                    selected_files = filtered_files
+                    print(f"[COLLECT] Final size limit applied: {len(selected_files)} files ({current_size:.1f}MB)")
 
-        except Exception as e:
-            print(f"[WARN] Could not read {file_info['path']}: {e}")
+        print(f"[COLLECT] Starting collection of {len(selected_files)} selected files...")
+        for i, file_info in enumerate(selected_files):
+            file_path = Path(project_root) / file_info['path']
 
-    print(f"[COLLECT] Finished: {len(collected_files)}/{len(selected_files)} files collected, {total_size/1024/1024:.1f}MB total")
+            try:
+                content = file_path.read_text(encoding='utf-8')
+                file_size = len(content)
+
+                collected_files.append({
+                    'path': file_info['path'],
+                    'content': content,
+                    'size': file_size,
+                    'hash': hashlib.sha256(content.encode('utf-8')).hexdigest()
+                })
+
+                total_size += file_size
+                processed_count += 1
+
+                # Progress indicator with file name
+                if (i + 1) % 5 == 0 or (i + 1) == len(selected_files) or i == 0:
+                    percentage = ((i + 1) / len(selected_files)) * 100
+                    size_mb = total_size / 1024 / 1024
+                    print(f"[COLLECT] {i + 1}/{len(selected_files)} files ({percentage:.1f}%) - {file_info['path']}")
+
+            except Exception as e:
+                print(f"[WARN] Could not read {file_info['path']}: {e}")
+
+        print(f"[COLLECT] Finished: {len(collected_files)}/{len(selected_files)} files collected, {total_size/1024/1024:.1f}MB total")
 
     # Create individual glyphs for each file (true optical compression)
     print(f"[GLYPH FORGE] Creating individual provenance-bound glyphs for {len(collected_files)} files...")
@@ -666,6 +760,7 @@ def main():
     parser.add_argument('--max-files', type=int, help='Maximum number of files to process')
     parser.add_argument('--max-size-mb', type=int, default=10, help='Maximum size in MB (default: 10MB)')
     parser.add_argument('--non-blocking', action='store_true', help='Run in background (non-blocking)')
+    parser.add_argument('--manifest', help='Path to JSON manifest of files to capture (skips traversal)')
 
     args = parser.parse_args()
 
@@ -688,8 +783,19 @@ def main():
         print("[NON-BLOCKING] Glyph forge started in background. Check output directory for results.")
         return
 
-    project_root = Path.cwd()
-    output_dir = Path(args.output_dir)
+    # PATH FIX: Determine project root relative to script location to prevent 'scripts/dataset_code_glyphs' output
+    # If script is in PROJECT/scripts/script.py, project root is parent of parent.
+    script_path = Path(__file__).resolve()
+    project_root = script_path.parent.parent
+    
+    # If output dir is default relative path, anchor it to project root
+    if args.output_dir == DEFAULT_OUTPUT_DIR:
+        output_dir = project_root / DEFAULT_OUTPUT_DIR
+    elif not Path(args.output_dir).is_absolute():
+        output_dir = project_root / args.output_dir
+    else:
+        output_dir = Path(args.output_dir)
+        
     output_dir.mkdir(exist_ok=True)
 
     # Load existing manifest for incremental updates
@@ -741,7 +847,9 @@ def main():
     # Collect content with limits and create individual glyphs
     glyph_files, file_count, total_size, collected_files = collect_code_snapshot_v2(
         project_root, args.operation, not args.no_provenance,
-        max_files=args.max_files, max_size_mb=args.max_size_mb, output_dir=output_dir, exclude_dirs=exclude_dirs, existing_manifest=existing_manifest, font_size=args.font_size, output_dir_str=str(output_dir)
+        max_files=args.max_files, max_size_mb=args.max_size_mb, output_dir=output_dir, 
+        exclude_dirs=exclude_dirs, existing_manifest=existing_manifest, font_size=args.font_size, 
+        output_dir_str=str(output_dir), manifest_path=args.manifest
     )
 
     if not glyph_files:

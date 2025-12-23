@@ -1,28 +1,49 @@
-"""
-Cortex MCP Server - Input Validation
+#============================================
+# mcp_servers/rag_cortex/validator.py
+# Purpose: Input validation for Mnemonic Cortex RAG operations.
+# Role: Single Source of Truth
+# Used as a module by server.py and potentially CLI tools.
+# Calling example:
+#   validator = CortexValidator(project_root)
+#   validated = validator.validate_query(query="...", max_results=5)
+# LIST OF CLASSES/FUNCTIONS:
+#   - CortexValidator
+#     - __init__
+#     - validate_capture_snapshot
+#     - validate_ingest_full
+#     - validate_ingest_incremental
+#     - validate_query
+#     - validate_stats
+#   - ValidationError
+#============================================
 
-Validates inputs for all Cortex MCP tools.
-"""
 import os
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 
 
 class ValidationError(Exception):
-    """Raised when validation fails."""
+    #============================================
+    # Class: ValidationError
+    # Purpose: Custom exception raised when validation fails.
+    #============================================
     pass
 
 
 class CortexValidator:
-    """Validator for Cortex MCP operations."""
-    
+    #============================================
+    # Class: CortexValidator
+    # Purpose: Validator for Cortex MCP operations.
+    # Patterns: Strategy / Validator
+    #============================================
+
     def __init__(self, project_root: str):
-        """
-        Initialize validator.
-        
-        Args:
-            project_root: Absolute path to project root
-        """
+        #============================================
+        # Method: __init__
+        # Purpose: Initialize validator with project context.
+        # Args:
+        #   project_root: Absolute path to project root
+        #============================================
         self.project_root = Path(project_root)
     
     def validate_ingest_full(
@@ -30,19 +51,15 @@ class CortexValidator:
         purge_existing: bool = True,
         source_directories: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Validate full ingestion request.
-        
-        Args:
-            purge_existing: Whether to purge existing database
-            source_directories: Optional list of source directories
-            
-        Returns:
-            Validated parameters
-            
-        Raises:
-            ValidationError: If validation fails
-        """
+        #============================================
+        # Method: validate_ingest_full
+        # Purpose: Validate full ingestion request parameters.
+        # Args:
+        #   purge_existing: Whether to purge existing database
+        #   source_directories: Optional list of source directories
+        # Returns: Dictionary of validated parameters
+        # Raises: ValidationError if path verification fails
+        #============================================
         # Validate source directories if provided
         if source_directories:
             for directory in source_directories:
@@ -63,20 +80,16 @@ class CortexValidator:
         max_results: int = 5,
         use_cache: bool = False
     ) -> Dict[str, Any]:
-        """
-        Validate query request.
-        
-        Args:
-            query: Query string
-            max_results: Maximum number of results
-            use_cache: Whether to use cache (Phase 2)
-            
-        Returns:
-            Validated parameters
-            
-        Raises:
-            ValidationError: If validation fails
-        """
+        #============================================
+        # Method: validate_query
+        # Purpose: Validate query request parameters.
+        # Args:
+        #   query: Search query string
+        #   max_results: Maximum results to return (1-100)
+        #   use_cache: Cache activation flag
+        # Returns: Dictionary of validated parameters
+        # Raises: ValidationError if constraints are violated
+        #============================================
         # Validate query string
         if not query or not query.strip():
             raise ValidationError("Query string cannot be empty")
@@ -103,20 +116,16 @@ class CortexValidator:
         metadata: Optional[Dict[str, Any]] = None,
         skip_duplicates: bool = True
     ) -> Dict[str, Any]:
-        """
-        Validate incremental ingestion request.
-        
-        Args:
-            file_paths: List of file paths to ingest
-            metadata: Optional metadata to attach
-            skip_duplicates: Whether to skip duplicate files
-            
-        Returns:
-            Validated parameters
-            
-        Raises:
-            ValidationError: If validation fails
-        """
+        #============================================
+        # Method: validate_ingest_incremental
+        # Purpose: Validate incremental ingestion parameters.
+        # Args:
+        #   file_paths: List of file paths to ingest
+        #   metadata: Optional metadata to attach
+        #   skip_duplicates: Deduplication flag
+        # Returns: Dictionary of validated parameters
+        # Raises: ValidationError if files are missing or unsupported
+        #============================================
         # Validate file_paths
         if not file_paths:
             raise ValidationError("file_paths cannot be empty")
@@ -160,10 +169,43 @@ class CortexValidator:
         }
     
     def validate_stats(self) -> Dict[str, Any]:
-        """
-        Validate stats request (no parameters needed).
-        
-        Returns:
-            Empty dict (no parameters to validate)
-        """
+        #============================================
+        # Method: validate_stats
+        # Purpose: Validate statistics request (no parameters needed).
+        # Returns: Empty dict
+        #============================================
         return {}
+
+    def validate_capture_snapshot(
+        self,
+        manifest_files: List[str],
+        snapshot_type: str = "audit",
+        strategic_context: Optional[str] = None
+    ) -> Dict[str, Any]:
+        #============================================
+        # Method: validate_capture_snapshot
+        # Purpose: Validate tool-driven snapshot parameters.
+        # Args:
+        #   manifest_files: List of file paths to include
+        #   snapshot_type: 'audit' or 'seal'
+        #   strategic_context: Optional context string
+        # Returns: Dictionary of validated parameters
+        # Raises: ValidationError if constraints are violated
+        #============================================
+        if not manifest_files:
+            raise ValidationError("manifest_files cannot be empty")
+        
+        if not isinstance(manifest_files, list):
+            raise ValidationError("manifest_files must be a list of strings")
+            
+        if snapshot_type not in ["audit", "seal"]:
+            raise ValidationError("snapshot_type must be either 'audit' or 'seal'")
+            
+        if strategic_context and not isinstance(strategic_context, str):
+            raise ValidationError("strategic_context must be a string")
+            
+        return {
+            "manifest_files": manifest_files,
+            "snapshot_type": snapshot_type,
+            "strategic_context": strategic_context
+        }

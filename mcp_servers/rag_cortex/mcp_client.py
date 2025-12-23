@@ -1,24 +1,41 @@
-"""
-MCP Client for Cortex Orchestrator
-
-Enables Cortex to route Protocol 87 queries to specialized MCPs.
-This implements the MCP composition pattern from ADR 039.
-"""
+#============================================
+# mcp_servers/rag_cortex/mcp_client.py
+# Purpose: Client for routing Protocol 87 queries to specialized MCPs.
+#          Implements the MCP composition pattern from ADR 039.
+# Role: Single Source of Truth
+# Used as a module by operations.py (or any other component needing routing)
+# Calling example:
+#   client = MCPClient(project_root)
+#   results = client.route_query(scope="Protocols", intent="RETRIEVE", ...)
+# LIST OF CLASSES/FUNCTIONS:
+#   - MCPClient
+#     - __init__
+#     - route_query
+#     - _query_protocols
+#     - _query_chronicles
+#     - _query_tasks
+#     - _query_code
+#     - _query_adrs
+#============================================
 
 from typing import Dict, Any, List, Optional
 import json
 
 
 class MCPClient:
-    """Client for routing queries to specialized MCP servers."""
-    
+    #============================================
+    # Class: MCPClient
+    # Purpose: Client for routing queries to specialized MCP servers.
+    # Patterns: Router / Composition
+    #============================================
+
     def __init__(self, project_root: str):
-        """
-        Initialize MCP client.
-        
-        Args:
-            project_root: Path to project root directory
-        """
+        #============================================
+        # Method: __init__
+        # Purpose: Initialize MCP client.
+        # Args:
+        #   project_root: Path to project root directory
+        #============================================
         self.project_root = project_root
     
     def route_query(
@@ -28,18 +45,16 @@ class MCPClient:
         constraints: str,
         query_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """
-        Route query to appropriate MCP based on scope.
-        
-        Args:
-            scope: Query scope (Protocols, Living_Chronicle, Tasks, Code, ADRs)
-            intent: Query intent (RETRIEVE, SUMMARIZE, CROSS_COMPARE, VERIFY)
-            constraints: Query constraints string
-            query_data: Full parsed query data
-            
-        Returns:
-            List of results from target MCP
-        """
+        #============================================
+        # Method: route_query
+        # Purpose: Route query to appropriate MCP based on scope.
+        # Args:
+        #   scope: Query scope (Protocols, Living_Chronicle, Tasks, Code, ADRs)
+        #   intent: Query intent (RETRIEVE, SUMMARIZE, CROSS_COMPARE, VERIFY)
+        #   constraints: Query constraints string
+        #   query_data: Full parsed query data
+        # Returns: List of results from target MCP
+        #============================================
         # Route based on scope
         if scope == "Protocols":
             return self._query_protocols(intent, constraints, query_data)
@@ -62,7 +77,15 @@ class MCPClient:
         constraints: str,
         query_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Query Protocol MCP."""
+        #============================================
+        # Method: _query_protocols
+        # Purpose: Query Protocol MCP.
+        # Args:
+        #   intent: Query intent
+        #   constraints: Query constraints
+        #   query_data: Full query data
+        # Returns: List of tool results
+        #============================================
         try:
             from mcp_servers.protocol.operations import ProtocolOperations
             
@@ -111,7 +134,15 @@ class MCPClient:
         constraints: str,
         query_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Query Chronicle MCP."""
+        #============================================
+        # Method: _query_chronicles
+        # Purpose: Query Chronicle MCP.
+        # Args:
+        #   intent: Query intent
+        #   constraints: Query constraints
+        #   query_data: Full query data
+        # Returns: List of tool results
+        #============================================
         try:
             from mcp_servers.chronicle.operations import ChronicleOperations
             
@@ -166,7 +197,15 @@ class MCPClient:
         constraints: str,
         query_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Query Task MCP."""
+        #============================================
+        # Method: _query_tasks
+        # Purpose: Query Task MCP.
+        # Args:
+        #   intent: Query intent
+        #   constraints: Query constraints
+        #   query_data: Full query data
+        # Returns: List of tool results
+        #============================================
         try:
             from mcp_servers.task.operations import TaskOperations
             
@@ -217,7 +256,15 @@ class MCPClient:
         constraints: str,
         query_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Query Code MCP."""
+        #============================================
+        # Method: _query_code
+        # Purpose: Query Code MCP.
+        # Args:
+        #   intent: Query intent
+        #   constraints: Query constraints
+        #   query_data: Full query data
+        # Returns: List of tool results
+        #============================================
         try:
             from mcp_servers.code.operations import CodeOperations
             
@@ -249,7 +296,15 @@ class MCPClient:
         constraints: str,
         query_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Query ADR MCP."""
+        #============================================
+        # Method: _query_adrs
+        # Purpose: Query ADR MCP.
+        # Args:
+        #   intent: Query intent
+        #   constraints: Query constraints
+        #   query_data: Full query data
+        # Returns: List of tool results
+        #============================================
         try:
             from mcp_servers.adr.operations import ADROperations
             

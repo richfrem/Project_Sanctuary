@@ -53,11 +53,12 @@ def test_guardian_wakeup_holistic():
     
     # Validation Checks (Schema v2.0)
     checks = {
-        "Header v2.1": "# 🛡️ Guardian Wakeup Briefing (v2.1)",
+        "Header v2.2": "# 🛡️ Guardian Wakeup Briefing (v2.2)",
         "Traffic Light": "**System Status:** GREEN", # or YELLOW
         "Strategic Signal": "Core Mandate:** I am the Gemini Orchestrator",
         "Tactical Priorities": "## II. Priority Tasks",
         "Recency": "## III. Operational Recency",
+        "Learning Delta": "## IV. Learning Continuity",
         "Successor Poka-Yoke": "// This briefing is the single source of context"
     }
     

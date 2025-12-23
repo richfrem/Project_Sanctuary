@@ -1,11 +1,29 @@
-
-"""
-Cortex MCP Server
-Domain: project_sanctuary.cognitive.cortex
-
-Provides MCP tools for interacting with the Mnemonic Cortex RAG system.
-Refactored to use SSEServer for Gateway integration (202 Accepted + Async SSE).
-"""
+#============================================
+# Path: mcp_servers/gateway/clusters/sanctuary_cortex/server.py
+# Purpose: Cluster entry point aggregating Cortex RAG and Forge LLM operations.
+# Role: Cluster Aggregator (Gateway Node #6)
+# Used as: Primary server for the sanctuary_cortex service at port 8104.
+# Calling example:
+#   python3 -m mcp_servers.gateway.clusters.sanctuary_cortex.server
+# LIST OF FUNCTIONS:
+#   - check_sanctuary_model_status
+#   - cortex_cache_get
+#   - cortex_cache_set
+#   - cortex_cache_stats
+#   - cortex_cache_warmup
+#   - cortex_capture_snapshot
+#   - cortex_get_stats
+#   - cortex_guardian_wakeup
+#   - cortex_ingest_full
+#   - cortex_ingest_incremental
+#   - cortex_learning_debrief
+#   - cortex_query
+#   - get_forge_ops
+#   - get_forge_validator
+#   - get_ops
+#   - get_validator
+#   - query_sanctuary_model
+#============================================
 import os
 import json
 import sys
@@ -23,19 +41,22 @@ project_root = os.path.dirname(os.path.dirname(current_dir))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
+# Import Utilities (Requested)
+from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.utils.path_utils import find_project_root
+
 try:
     from mcp_servers.lib.sse_adaptor import SSEServer
 except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from lib.sse_adaptor import SSEServer
 
-from .validator import CortexValidator, ValidationError
-from .models import to_dict
+from mcp_servers.rag_cortex.validator import CortexValidator, ValidationError
+from mcp_servers.rag_cortex.models import to_dict
+from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.lib.container_manager import ensure_chromadb_running, ensure_ollama_running
 from mcp_servers.forge_llm.operations import ForgeOperations
 from mcp_servers.forge_llm.validator import ForgeValidator
-from mcp_servers.lib.utils.env_helper import get_env_variable
-from mcp_servers.lib.utils.path_utils import find_project_root
 
 # Initialize SSEServer
 server = SSEServer("sanctuary_cortex")
@@ -48,25 +69,44 @@ _forge_ops = None
 _forge_validator = None
 PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 
+#============================================
+# Function: get_ops
+# Purpose: Lazy initialization of CortexOperations.
+# Returns: CortexOperations instance
+#============================================
 def get_ops():
     global _cortex_ops
     if _cortex_ops is None:
-        from .operations import CortexOperations
         _cortex_ops = CortexOperations(PROJECT_ROOT)
     return _cortex_ops
 
+#============================================
+# Function: get_validator
+# Purpose: Lazy initialization of CortexValidator.
+# Returns: CortexValidator instance
+#============================================
 def get_validator():
     global _cortex_validator
     if _cortex_validator is None:
         _cortex_validator = CortexValidator(PROJECT_ROOT)
     return _cortex_validator
 
+#============================================
+# Function: get_forge_ops
+# Purpose: Lazy initialization of ForgeOperations.
+# Returns: ForgeOperations instance
+#============================================
 def get_forge_ops():
     global _forge_ops
     if _forge_ops is None:
         _forge_ops = ForgeOperations(PROJECT_ROOT)
     return _forge_ops
 
+#============================================
+# Function: get_forge_validator
+# Purpose: Lazy initialization of ForgeValidator.
+# Returns: ForgeValidator instance
+#============================================
 def get_forge_validator():
     global _forge_validator
     if _forge_validator is None:
@@ -85,16 +125,18 @@ logger = logging.getLogger("rag_cortex")
 # Tool Handlers
 # ----------------------------------------------------------------------
 
+#============================================
+# Function: cortex_ingest_full
+# Purpose: Perform full re-ingestion of the knowledge base.
+# Args:
+#   purge_existing: Whether to purge existing database
+#   source_directories: Optional list of source directories
+# Returns: JSON string with results
+#============================================
 async def cortex_ingest_full(
     purge_existing: bool = True,
     source_directories: Optional[List[str]] = None
 ) -> str:
-    """
-    Perform full re-ingestion of the knowledge base.
-    
-    This operation purges the existing database and rebuilds it from scratch
-    by processing all canonical documents. Use with caution.
-    """
     try:
         # Validate inputs
         validated = get_validator().validate_ingest_full(
@@ -117,18 +159,22 @@ async def cortex_ingest_full(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_query
+# Purpose: Perform semantic search query against the knowledge base.
+# Args:
+#   query: Search inquiry string
+#   max_results: Maximum results to return
+#   use_cache: Whether to use semantic cache
+#   reasoning_mode: Whether to enable reasoning
+# Returns: JSON string with query results
+#============================================
 async def cortex_query(
     query: str,
     max_results: int = 5,
     use_cache: bool = False,
     reasoning_mode: bool = False
 ) -> str:
-    """
-    Perform semantic search query against the knowledge base.
-    
-    Uses the Parent Document Retriever pattern to return full documents
-    rather than fragmented chunks, providing complete context.
-    """
     try:
         # Validate inputs
         validated = get_validator().validate_query(
@@ -155,8 +201,12 @@ async def cortex_query(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_get_stats
+# Purpose: Get database statistics and health status.
+# Returns: JSON string with statistics
+#============================================
 async def cortex_get_stats() -> str:
-    """Get database statistics and health status."""
     try:
         get_validator().validate_stats()
         response = get_ops().get_stats()
@@ -165,12 +215,20 @@ async def cortex_get_stats() -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_ingest_incremental
+# Purpose: Incrementally ingest documents into the database.
+# Args:
+#   file_paths: List of file paths to ingest
+#   metadata: Optional metadata to attach
+#   skip_duplicates: Skip already ingested files
+# Returns: JSON string with results
+#============================================
 async def cortex_ingest_incremental(
     file_paths: List[str],
     metadata: Optional[dict] = None,
     skip_duplicates: bool = True
 ) -> str:
-    """Incrementally ingest documents without rebuilding the entire database."""
     try:
         validated = get_validator().validate_ingest_incremental(
             file_paths=file_paths,
@@ -192,8 +250,14 @@ async def cortex_ingest_incremental(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_cache_get
+# Purpose: Retrieve cached answer for a query.
+# Args:
+#   query: Cache key query string
+# Returns: JSON string with cached result
+#============================================
 async def cortex_cache_get(query: str) -> str:
-    """Retrieve cached answer for a query."""
     try:
         response = get_ops().cache_get(query)
         result = to_dict(response)
@@ -201,8 +265,15 @@ async def cortex_cache_get(query: str) -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_cache_set
+# Purpose: Store answer in cache for future retrieval.
+# Args:
+#   query: Cache key query string
+#   answer: Answer content to cache
+# Returns: JSON string with status
+#============================================
 async def cortex_cache_set(query: str, answer: str) -> str:
-    """Store answer in cache for future retrieval."""
     try:
         response = get_ops().cache_set(query, answer)
         result = to_dict(response)
@@ -210,8 +281,14 @@ async def cortex_cache_set(query: str, answer: str) -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_cache_warmup
+# Purpose: Pre-populate cache with genesis queries.
+# Args:
+#   genesis_queries: Optional list of queries
+# Returns: JSON string with status
+#============================================
 async def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> str:
-    """Pre-populate cache with genesis queries."""
     try:
         response = get_ops().cache_warmup(genesis_queries)
         result = to_dict(response)
@@ -219,8 +296,14 @@ async def cortex_cache_warmup(genesis_queries: Optional[List[str]] = None) -> st
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_guardian_wakeup
+# Purpose: Generate Guardian boot digest from cached bundles.
+# Args:
+#   mode: Synthesis mode (default "HOLISTIC")
+# Returns: JSON string with digest results
+#============================================
 async def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
-    """Generate Guardian boot digest from cached bundles (Protocol 114)."""
     try:
         response = get_ops().guardian_wakeup(mode=mode)
         result = to_dict(response)
@@ -228,11 +311,67 @@ async def cortex_guardian_wakeup(mode: str = "HOLISTIC") -> str:
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: cortex_cache_stats
+# Purpose: Get Mnemonic Cache (CAG) statistics.
+# Returns: JSON string with statistics
+#============================================
 async def cortex_cache_stats() -> str:
-    """Get Mnemonic Cache (CAG) statistics."""
     try:
         stats = get_ops().get_cache_stats()
         return json.dumps(stats, indent=2)
+    except Exception as e:
+        return json.dumps({"status": "error", "error": str(e)}, indent=2)
+
+#============================================
+# Function: cortex_learning_debrief
+# Purpose: Scans repository for technical state changes.
+# Args:
+#   hours: Lookback window in hours
+# Returns: JSON string with debrief evidence
+#============================================
+async def cortex_learning_debrief(hours: int = 24) -> str:
+    try:
+        response = get_ops().learning_debrief(hours=hours)
+        return json.dumps({"status": "success", "debrief": response}, indent=2)
+    except Exception as e:
+        return json.dumps({"status": "error", "error": str(e)}, indent=2)
+
+#============================================
+# Function: cortex_capture_snapshot
+# Purpose: Tool-driven snapshot generation for Protocol 128.
+# Args:
+#   manifest_files: List of file paths to include
+#   snapshot_type: 'audit' or 'seal'
+#   strategic_context: Optional context string
+# Returns: JSON string with snapshot results
+#============================================
+async def cortex_capture_snapshot(
+    manifest_files: List[str],
+    snapshot_type: str = "audit",
+    strategic_context: Optional[str] = None
+) -> str:
+    try:
+        # Validate inputs
+        validated = get_validator().validate_capture_snapshot(
+            manifest_files=manifest_files,
+            snapshot_type=snapshot_type,
+            strategic_context=strategic_context
+        )
+        
+        # Perform snapshot
+        response = get_ops().capture_snapshot(
+            manifest_files=validated["manifest_files"],
+            snapshot_type=validated["snapshot_type"],
+            strategic_context=validated["strategic_context"]
+        )
+        
+        # Convert to dict and return as JSON
+        result = to_dict(response)
+        return json.dumps(result, indent=2)
+        
+    except ValidationError as e:
+        return json.dumps({"status": "error", "error": f"Validation error: {str(e)}"}, indent=2)
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
@@ -240,13 +379,22 @@ async def cortex_cache_stats() -> str:
 # Forge LLM Tools
 # ----------------------------------------------------------------------
 
+#============================================
+# Function: query_sanctuary_model
+# Purpose: Query the fine-tuned Sanctuary model.
+# Args:
+#   prompt: Target prompt string
+#   temperature: Sampling temperature
+#   max_tokens: Recovery token limit
+#   system_prompt: Optional system context
+# Returns: JSON string with response
+#============================================
 async def query_sanctuary_model(
     prompt: str,
     temperature: float = 0.7,
     max_tokens: int = 2048,
     system_prompt: Optional[str] = None
 ) -> str:
-    """Query the fine-tuned Sanctuary model for specialized knowledge."""
     try:
         validated = get_forge_validator().validate_query_sanctuary_model(
             prompt=prompt, temperature=temperature, max_tokens=max_tokens, system_prompt=system_prompt
@@ -256,8 +404,12 @@ async def query_sanctuary_model(
     except Exception as e:
         return json.dumps({"status": "error", "error": str(e)}, indent=2)
 
+#============================================
+# Function: check_sanctuary_model_status
+# Purpose: Check model availability and readiness.
+# Returns: JSON string with status
+#============================================
 async def check_sanctuary_model_status() -> str:
-    """Check if the Sanctuary model is available and ready to use."""
     try:
         result = get_forge_ops().check_model_availability()
         return json.dumps(result, indent=2)
@@ -322,6 +474,23 @@ server.register_tool("cortex_guardian_wakeup", cortex_guardian_wakeup, {
 })
 server.register_tool("cortex_cache_stats", cortex_cache_stats, {"type": "object", "properties": {}})
 
+server.register_tool("cortex_learning_debrief", cortex_learning_debrief, {
+    "type": "object",
+    "properties": {
+        "hours": {"type": "integer", "default": 24}
+    }
+})
+
+server.register_tool("cortex_capture_snapshot", cortex_capture_snapshot, {
+    "type": "object",
+    "properties": {
+        "manifest_files": {"type": "array", "items": {"type": "string"}},
+        "snapshot_type": {"type": "string", "enum": ["audit", "seal"], "default": "audit"},
+        "strategic_context": {"type": "string"}
+    },
+    "required": ["manifest_files"]
+})
+
 # Forge Tools
 server.register_tool("query_sanctuary_model", query_sanctuary_model, {
     "type": "object",
@@ -338,7 +507,7 @@ server.register_tool("check_sanctuary_model_status", check_sanctuary_model_statu
 
 if __name__ == "__main__":
     # Ensure Containers are running
-    if not os.environ.get("SKIP_CONTAINER_CHECKS"):
+    if not get_env_variable("SKIP_CONTAINER_CHECKS", required=False):
         logger.info("Checking Container Services...")
 
         # 1. ChromaDB
@@ -349,13 +518,13 @@ if __name__ == "__main__":
             logger.error(f"✗ {message}")
             logger.warning("RAG operations may fail without ChromaDB")
 
-        # 2. Ollama (for Forge/Reasoning model)
+        # 2. Ollama (for Embeddings/Reasoning)
         success, message = ensure_ollama_running(PROJECT_ROOT)
         if success:
             logger.info(f"✓ {message}")
         else:
             logger.error(f"✗ {message}")
-            logger.warning("Forge/Reasoning tools (query_sanctuary_model) will fail without Ollama")
+            logger.warning("Embedding/Reasoning operations may fail without Ollama")
     else:
         logger.info("Skipping container checks (SKIP_CONTAINER_CHECKS set)")
 
@@ -364,7 +533,6 @@ if __name__ == "__main__":
     # 2. If PORT is NOT set -> Run as Stdio (Legacy Mode)
     port_env = get_env_variable("PORT", required=False)
     transport = "sse" if port_env else "stdio"
-    # Default to 8104 as per canonical port plan
-    port = int(port_env) if port_env else int(get_env_variable("SANCTUARY_CORTEX_PORT", required=False) or 8104)
+    port = int(port_env) if port_env else 8004
     
     server.run(port=port, transport=transport)
