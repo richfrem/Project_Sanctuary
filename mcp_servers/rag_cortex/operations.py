@@ -1791,56 +1791,100 @@ class CortexOperations:
         import datetime
         import subprocess
         
-        # 1. Zero-Trust Verification: Get actual git changes
-        try:
-            git_diff_proc = subprocess.run(
-                ["git", "diff", "--name-only", "HEAD"],
-                capture_output=True, text=True, cwd=str(self.project_root)
-            )
-            git_changed = set(git_diff_proc.stdout.splitlines())
-            
-            # Check for staged changes too
-            git_staged_proc = subprocess.run(
-                ["git", "diff", "--cached", "--name-only"],
-                capture_output=True, text=True, cwd=str(self.project_root)
-            )
-            git_changed.update(git_staged_proc.stdout.splitlines())
-            
-            manifest_set = set(manifest_files)
-            
-            # Identify discrepancies
-            untracked_in_manifest = git_changed - manifest_set
-            unverified_in_manifest = manifest_set - git_changed
-            
-            # We strictly enforce that manifest files must exist in git diff for 'audit'
-            # though some files (like newly created ones not yet tracked) might be ok
-            manifest_verified = len(unverified_in_manifest) == 0
-            
-            git_context = f"Verified: {len(manifest_set)} files. Untracked diffs: {len(untracked_in_manifest)}."
-            if unverified_in_manifest:
-                git_context += f" WARNING: Files in manifest not found in git diff: {list(unverified_in_manifest)}"
-
-        except Exception as e:
-            manifest_verified = False
-            git_context = f"Git verification failed: {str(e)}"
-
-        # 2. Prepare Tool Paths
+        # 1. Prepare Tool Paths
         learning_dir = self.project_root / ".agent" / "learning"
         output_dir = learning_dir / "red_team" if snapshot_type == "audit" else learning_dir
         output_dir.mkdir(parents=True, exist_ok=True)
         
         # 3. Default Manifest Handling (Protocol 128)
-        # If 'seal' and no manifest provided, use the predefined learning_manifest.json
+        # If 'seal' or 'audit' and no manifest provided, use the predefined manifests
         effective_manifest = list(manifest_files)
-        if snapshot_type == "seal" and not effective_manifest:
-            manifest_file = learning_dir / "learning_manifest.json"
+        if not effective_manifest:
+            if snapshot_type == "seal":
+                manifest_file = learning_dir / "learning_manifest.json"
+            else: # audit
+                manifest_file = output_dir / "red_team_manifest.json"
+                
             if manifest_file.exists():
                 try:
                     with open(manifest_file, "r") as f:
                         effective_manifest = json.load(f)
-                    logger.info(f"Loaded default learning manifest: {len(effective_manifest)} entries")
+                    logger.info(f"Loaded default {snapshot_type} manifest: {len(effective_manifest)} entries")
                 except Exception as e:
-                    logger.warning(f"Failed to load learning manifest: {e}")
+                    logger.warning(f"Failed to load {snapshot_type} manifest: {e}")
+
+        # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2)
+        try:
+            git_status_proc = subprocess.run(
+                ["git", "status", "--porcelain"],
+                capture_output=True, text=True, cwd=str(self.project_root)
+            )
+            git_lines = git_status_proc.stdout.splitlines()
+            git_changed = set()
+            for line in git_lines:
+                # Porcelain format is "XY path"
+                # If deleted ('D'), we skip it for manifest inclusion check
+                status_bits = line[:2]
+                if 'D' in status_bits:
+                    continue
+                path = line[3:].split(" -> ")[-1].strip()
+                git_changed.add(path)
+            
+            # Identify discrepancies against the EFFECTIVE manifest
+            untracked_in_manifest = git_changed - set(effective_manifest)
+            manifest_verified = True # Default to true for audit if no unverified files
+            
+            # CORE DIRECTORY ENFORCEMENT
+            CORE_DIRS = ["ADRs/", "01_PROTOCOLS/", "mcp_servers/", "scripts/", "prompts/"]
+            critical_omissions = []
+            
+            if snapshot_type == "audit":
+                for untracked in untracked_in_manifest:
+                    if any(untracked.startswith(core) for core in CORE_DIRS):
+                        critical_omissions.append(untracked)
+            
+            if critical_omissions:
+                logger.error(f"STRICT REJECTION: Critical files modified but omitted from manifest: {critical_omissions}")
+                git_context = f"REJECTED: Manifest blindspot detected in core directories: {critical_omissions}"
+                return CaptureSnapshotResponse(
+                    snapshot_path="",
+                    manifest_verified=False,
+                    git_diff_context=git_context,
+                    snapshot_type=snapshot_type,
+                    status="failed"
+                )
+            else:
+                git_context = f"Verified: {len(set(effective_manifest))} files. Shadow Manifest (Untracked): {len(untracked_in_manifest)} items."
+                # Check for files in manifest NOT in git (the old unverified check)
+                unverified_in_manifest = set(effective_manifest) - git_changed
+                # We skip checking '.' and other untracked artifacts for 'audit'
+                if snapshot_type == "seal" and unverified_in_manifest:
+                     manifest_verified = False
+                     git_context += f" WARNING: Files in manifest not found in git diff: {list(unverified_in_manifest)}"
+
+        except Exception as e:
+            manifest_verified = False
+            git_context = f"Git verification failed: {str(e)}"
+
+        # 5. Handle Red Team Prompts (Protocol 128)
+        prompts_section = ""
+        if snapshot_type == "audit":
+            context_str = strategic_context if strategic_context else "this session"
+            prompts = [
+                "1. Verify that the file manifest accurately reflects all tactical state changes made during this session.",
+                "2. Check for any 'hallucinations' or logic errors in the new ADRs or Learning notes.",
+                "3. Ensure that critical security and safety protocols (e.g. Protocol 101/128) have not been bypassed.",
+                f"4. Specifically audit the reasoning behind: {context_str}"
+            ]
+            prompts_section = "\n".join(prompts)
+            
+            prompts_file_path = output_dir / "red_team_prompts.md"
+            with open(prompts_file_path, "w") as pf:
+                pf.write(f"# Adversarial Prompts (Audit Context)\n\n{prompts_section}\n")
+            
+            rel_prompts_path = prompts_file_path.relative_to(self.project_root)
+            if str(rel_prompts_path) not in effective_manifest:
+                effective_manifest.append(str(rel_prompts_path))
 
         # Temporary manifest file for the snapshot tool
         temp_manifest_path = output_dir / f"manifest_{snapshot_type}_{int(time.time())}.json"
@@ -1848,17 +1892,15 @@ class CortexOperations:
         final_snapshot_path = output_dir / snapshot_filename
         
         try:
-            # Write temporary manifest for the tool
+            # Write final manifest for the tool
             with open(temp_manifest_path, "w") as f:
                 json.dump(effective_manifest, f, indent=2)
                 
-            # 3. Invoke Python Snapshot Tool
-            # 3. Invoke Python Snapshot Tool (Direct Import)
+            # 5. Invoke Python Snapshot Tool (Direct Import)
             snapshot_stats = {}
             try:
-                # Wrap in stdout redirection to prevent MCP protocol pollution from prints
+                # Wrap in stdout redirection to prevent MCP protocol pollution
                 import contextlib
-                import io
                 with contextlib.redirect_stdout(sys.stderr):
                     snapshot_stats = generate_snapshot(
                         project_root=self.project_root,
@@ -1869,28 +1911,36 @@ class CortexOperations:
             except Exception as e:
                 raise Exception(f"Python Snapshot tool failed: {str(e)}")
 
-            # 4. Enhance 'audit' packet with metadata if needed
+            # 6. Enhance 'audit' packet with metadata if needed
             if snapshot_type == "audit":
+                # Read the generated content (which now includes red_team_prompts.md)
                 with open(final_snapshot_path, "r") as f:
                     captured_content = f.read()
                 
                 context_str = strategic_context if strategic_context else "No additional context provided."
                 
-                enhanced_header = f"""# Red Team Audit Packet (Protocol 128 v3.5)
-**Status:** 🛑 WAITING FOR GATE 2 APPROVAL
-**Generated:** {datetime.datetime.now().isoformat()}
-**Type:** Technical Audit
+                # Load template if exists
+                template_path = learning_dir / "red_team_briefing_template.md"
+                if template_path.exists():
+                    try:
+                        with open(template_path, "r") as tf:
+                            template = tf.read()
+                        
+                        briefing = template.format(
+                            timestamp=datetime.datetime.now().isoformat(),
+                            claims_section=context_str,
+                            manifest_section="\n".join([f"- {m}" for m in effective_manifest]),
+                            diff_context=git_context,
+                            prompts_section=prompts_section
+                        )
+                    except Exception as e:
+                        logger.warning(f"Failed to format red_team_briefing_template: {e}")
+                        briefing = f"# Red Team Audit Briefing\n\n{context_str}\n\n**Prompts:**\n{prompts_section}"
+                else:
+                    briefing = f"# Red Team Audit Briefing\n\n{context_str}\n\n**Prompts:**\n{prompts_section}"
 
-## 🎯 Strategic Context
-{context_str}
-
-## 🛡️ Zero-Trust Verification
-{git_context}
-
----
-"""
                 with open(final_snapshot_path, "w") as f:
-                    f.write(enhanced_header + captured_content)
+                    f.write(briefing + "\n\n---\n# MANIFEST SNAPSHOT\n\n" + captured_content)
 
             return CaptureSnapshotResponse(
                 snapshot_path=str(final_snapshot_path),

@@ -100,9 +100,9 @@ The following table maps the 5-phase "Liquid Information" architecture to its sp
 | **I. Scout** | `cortex_learning_debrief` | MCP Tool: `rag_cortex` | `learning_package_snapshot.md` | Session Strategic Context (JSON) |
 | **II. Synthesize** | `Autonomous Synthesis` | AI Agent Logic | Web Research, RAG, File System | `/LEARNING`, `/ADRs`, `/01_PROTOCOLS` |
 | **III. Strategic Review**| `Strategic Approval` | **Gate 1 (HITL)** | Human Review of Markdown Files | Consent to proceed to Audit |
-| **IV. Audit** | `cortex_capture_snapshot` | MCP Tool (type=`audit`) | `git diff` + Agent Manifest | `red_team_audit_packet.md` |
+| **IV. Audit** | `cortex_capture_snapshot` | MCP Tool (type=`audit`) | `git diff` + `red_team_manifest.json` | `red_team_audit_packet.md` |
 | **IV. Audit** | `Technical Approval` | **Gate 2 (HITL)** | Human Review of Audit Packet | Final Consent to Seal |
-| **V. Seal** | `cortex_capture_snapshot` | MCP Tool (type=`seal`) | Verified File List (Manifest) | `learning_package_snapshot.md` |
+| **V. Seal** | `cortex_capture_snapshot` | MCP Tool (type=`seal`) | Verified `learning_manifest.json` | `learning_package_snapshot.md` |
 
 ## Technical Specification
 
@@ -125,10 +125,31 @@ The following operations must be exposed and hardened:
         3.  **Primer Injection:** Mandates reading `cognitive_primer.md` (The Constitution).
         4.  **Intent-Aware Discovery:** Loads tools JIT based on the user's intent to prevent context flooding.
 
-*   **`cortex_capture_snapshot(manifest, type="audit")` (Gate 2: Audit)**
-    *   **Action:** Validates the manifest against `git diff` (Red Team Logic).
-    *   **Output:** Generates `red_team_audit_packet.md` containing the Briefing and Snapshot.
-    *   **Constraint:** DOES NOT allow RAG ingestion. Halts for Technical Approval.
+*   **`cortex_capture_snapshot(manifest, snapshot_type, strategic_context)`**
+    *   **The Audit Path (`type="audit"`)**: 
+        *   **Purpose**: Facilitates the Red Team Gate (Gate 2).
+        *   **Shadow Manifest (Counter-Blindspot)**: The system automatically calculates the "Negative Diff" (files changed in Git but missing from the manifest). These are explicitly listed in the briefing.
+        *   **Strict Rejection Policy**: If any **Core Knowledge** files (e.g., `ADRs/`, `01_PROTOCOLS/`, `scripts/`) are modified but omitted from the manifest, the tool MUST fail.
+        *   **Output**: Generates `.agent/learning/red_team/red_team_audit_packet.md`.
+    *   **The Seal Path (`type="seal"`)**: 
+        *   **Purpose**: Establishes the Technical Seal (Phase V).
+        *   **Two-Factor Integrity**: Implements **Hard Integrity** (HMAC-SHA256) for code/protocols and **Soft Integrity** (Semantic Hashing) for learning notes to reduce brittleness.
+        *   **Output**: Generates `.agent/learning/learning_package_snapshot.md`.
+    *   **Logic**:
+        1.  **Zero-Trust Verification**: Cross-references manifest files against actual `git diff` status.
+        2.  **Surgical Filtering**: Only processes files explicitly listed in the manifest.
+        3.  **Shadow Audit**: Detects and reports unauthorized state changes (Blindspots).
+
+### 2. The Persona/Mechanism Split (Hardened)
+To prevent "Authority Dilution", the Guardian Entity is bound to a **Safe Mode** state if the technical integrity mechanism fails.
+- **Normal Mode**: Full tool access, high autonomous agency.
+- **Safe Mode (Integrity Failure)**: Read-only access to Cortex, disabled write operations, mandatory remediation directive.
+
+### 3. The Unified Snapshot Engine
+Both Audit and Seal operations leverage the same Python-based snapshot engine (`mcp_servers/lib/snapshot_utils.py`).
+
+- **Audit Path:** Restricted to files in the "Active Delta" for human review.
+- **Seal Path:** Includes the "Stable Core" + "Verified Deltas" for long-term memory.
 
 ### 3. The Technical Seal (The Source of Truth)
 - **Tool:** `cortex_capture_snapshot(type="seal")` uses the **Living Manifest** as a surgical filter.

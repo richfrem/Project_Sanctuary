@@ -12,6 +12,8 @@
 | `cortex_get_stats` | Get statistics about the knowledge base. | None |
 | `cortex_guardian_wakeup` | Generate Guardian boot digest from cached bundles (Protocol 114). | None |
 | `cortex_cache_warmup` | Pre-load high-priority documents into cache. | `priority_tags` (List[str], optional): Tags to prioritize. |
+| `cortex_learning_debrief` | Generate a session summary for cognitive continuity (Protocol 127). | `hours` (int): Lookback period (default: 24). |
+| `cortex_capture_snapshot` | Create a verified snapshot for the Red Team Gate (Protocol 128). | `manifest_files` (List[str]): Files to include.<br>`snapshot_type` (str): 'audit' or 'seal' (default: 'audit').<br>`strategic_context` (str, optional): Purpose of change. |
 
 ## Resources
 
