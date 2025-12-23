@@ -65,6 +65,20 @@ server.register_tool("string.reverse", string_tool.reverse, string_tool.TOOL_MAN
 server.register_tool("string.word_count", string_tool.word_count, string_tool.TOOL_MANIFEST)
 server.register_tool("string.replace", string_tool.replace, string_tool.TOOL_MANIFEST)
 
+# Meta Tools (Capabilities)
+from mcp_servers.lib.capabilities_utils import get_gateway_capabilities
+async def gateway_get_capabilities() -> str:
+    """Returns a high-level overview of available MCP servers and their primary functions."""
+    import json
+    # Use the PROJECT_ROOT defined in the server's scope
+    res = get_gateway_capabilities(project_root)
+    return json.dumps(res, indent=2)
+
+server.register_tool("gateway_get_capabilities", gateway_get_capabilities, {
+    "type": "object",
+    "properties": {}
+})
+
 # Expose app for uvicorn
 app = server.app
 
