@@ -58,5 +58,12 @@ GENESIS_QUERIES = [
     "How do I run the tests?",
     "What is the update_genome.sh script?",
     "How does ingestion work?",
-    "What is the cognitive genome?"
+    "What is the cognitive genome?",
+
+    # Protocol 128 & Cognitive Continuity (The Red Team Gate)
+    "What is Protocol 128?",
+    "What is the Red Team Gate?",
+    "How does the cognitive continuity loop work?",
+    "What is a Technical Seal?",
+    "Explain the dual-gate audit process."
 ]
