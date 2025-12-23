@@ -88,6 +88,40 @@ To achieve deterministic builds, we use tools like `pip-compile` (from `pip-tool
     pip install -r requirements.txt
     ```
 
+### Local Environment Synchronization
+
+ADR 073 mandates that **Core Principle #2 ("Execution environment does not change dependency logic")** applies strictly to local `.venv` and terminal execution. Pure Docker consistency is insufficient.
+
+1.  **Policy**:
+    *   Docker, Podman, and Local `.venv` must instal from the exact same locked artifacts.
+    *   Local environments MAY additionally install `requirements-dev.txt` (which containers MUST skip).
+
+2.  **Setup Strategies**:
+
+    *   **Option A: Single Service Mode** (Focus on one component):
+        ```bash
+        source .venv/bin/activate
+        # Install runtime
+        pip install -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.txt
+        # Install dev tooling
+        pip install -r requirements-dev.txt
+        ```
+
+    *   **Option B: Full Monorepo Mode** (Shared venv):
+        ```bash
+        source .venv/bin/activate
+        # Install shared baseline
+        pip install -r mcp_servers/requirements-core.txt
+        # Install all service extras (potentially conflicting, use with care)
+        pip install -r mcp_servers/gateway/clusters/*/requirements.txt
+        # Install dev tooling
+        pip install -r requirements-dev.txt
+        ```
+
+3.  **Automation & Enforcement**:
+    *   We will introduce a Makefile target `install-env` to standardize this.
+    *   Agents must detect drift between `pip freeze` and locked requirements in active environments.
+
 ## Reference Directory Structure (Example)
 
 ```
