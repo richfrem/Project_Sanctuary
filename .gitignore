@@ -109,7 +109,14 @@ dataset_package/
 *.py.md
 tests/mcp_servers/operations_instrumentation.json
 
-ResearchPapers
+Search .gitignore for 'red_team' -> Not found.
+Adding rules.
+
+# Protocol 128: Red Team Artifacts (Local Only)
+.agent/learning/red_team/
+.agent/learning/*.snapshot.txt
+dataset_package/
+
 
 # --- Sensitive Information ---
 

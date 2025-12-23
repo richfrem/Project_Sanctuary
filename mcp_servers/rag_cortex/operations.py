@@ -1,8 +1,42 @@
-"""
-RAG Cortex Operations Module
+#============================================
+# mcp_servers/rag_cortex/operations.py
+# Purpose: Core operations for interacting with the Mnemonic Cortex (RAG).
+#          Orchestrates ingestion, semantic search, and cache management.
+# Role: Single Source of Truth
+# Used as a module by server.py
+# Calling example:
+#   ops = CortexOperations(project_root)
+#   ops.ingest_full(...)
+# LIST OF CLASSES/FUNCTIONS:
+#   - CortexOperations
+#     - __init__
+#     - _calculate_semantic_hmac
+#     - _chunked_iterable
+#     - _get_container_status
+#     - _get_git_diff_summary
+#     - _get_mcp_name
+#     - _get_recency_delta
+#     - _get_recent_chronicle_highlights
+#     - _get_recent_protocol_updates
+#     - _get_strategic_synthesis
+#     - _get_system_health_traffic_light
+#     - _get_tactical_priorities
+#     - _load_documents_from_directory
+#     - _safe_add_documents
+#     - _should_skip_path
+#     - cache_get
+#     - cache_set
+#     - cache_warmup
+#     - capture_snapshot
+#     - get_cache_stats
+#     - get_stats
+#     - ingest_full
+#     - ingest_incremental
+#     - learning_debrief
+#     - query
+#     - query_structured
+#============================================
 
-Handles all core RAG operations including ingestion, querying, and statistics.
-"""
 
 import os
 import re # Added for parsing markdown headers
@@ -51,6 +85,8 @@ from .models import (
     CacheSetResponse,
     CacheWarmupResponse,
     DocumentSample,
+    CaptureSnapshotRequest,
+    CaptureSnapshotResponse,
 )
 from .ingest_code_shim import convert_and_save
 
@@ -69,18 +105,24 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
 
 
 class CortexOperations:
-    """Core operations for Cortex MCP server."""
+    #============================================
+    # Class: CortexOperations
+    # Purpose: Main backend for the Mnemonic Cortex RAG service.
+    # Patterns: Facade / Orchestrator
+    #============================================
     
     def __init__(self, project_root: str, client: Optional[chromadb.ClientAPI] = None):
-        """
-        Initialize operations.
-        
-        Args:
-            project_root: Absolute path to project root
-            client: Optional injected ChromaDB client (for testing)
-        """
+        #============================================
+        # Method: __init__
+        # Purpose: Initialize Mnemonic Cortex backend.
+        # Args:
+        #   project_root: Path to project root
+        #   client: Optional injected ChromaDB client
+        #============================================
         self.project_root = Path(project_root)
         self.scripts_dir = self.project_root / "mcp_servers" / "rag_cortex" / "scripts"
+        self.data_dir = self.project_root / ".agent" / "data"
+        self.data_dir.mkdir(parents=True, exist_ok=True)
 
         # Network configuration using env_helper
         self.chroma_host = get_env_variable("CHROMA_HOST", required=False) or "localhost"
@@ -135,14 +177,15 @@ class CortexOperations:
             yield seq[i : i + size]
     
     def _safe_add_documents(self, retriever, docs: List, max_retries: int = 5):
-        """
-        Recursively retry adding documents to handle ChromaDB batch size limits.
-        
-        Args:
-            retriever: ParentDocumentRetriever instance
-            docs: List of documents to add
-            max_retries: Maximum number of retry attempts
-        """
+        #============================================
+        # Method: _safe_add_documents
+        # Purpose: Recursively retry adding documents to handle ChromaDB 
+        #          batch size limits.
+        # Args:
+        #   retriever: ParentDocumentRetriever instance
+        #   docs: List of documents to add
+        #   max_retries: Maximum number of retry attempts
+        #============================================
         try:
             retriever.add_documents(docs, ids=None, add_to_docstore=True)
             return
@@ -182,11 +225,16 @@ class CortexOperations:
         'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'mcp_config'
     }
 
-    def _should_skip_path(self, path: Path) -> bool:
-        """
-        Check if a file or directory should be excluded from ingestion.
-        Mirrors logic from capture_code_snapshot.js to avoid noise.
-        """
+    def _should_skip_path(self, path: Path):
+        #============================================
+        # Method: _should_skip_path
+        # Purpose: Check if a file or directory should be excluded 
+        #          from ingestion. Matches logic from 
+        #          capture_code_snapshot.js to ensure consistency.
+        # Args:
+        #   path: Path object to check
+        # Returns: Boolean (True if should skip)
+        #============================================
         # 1. Check path parts against directory exclusions
         for part in path.parts:
             if part in self.EXCLUDE_DIRS:
@@ -280,19 +328,15 @@ class CortexOperations:
         self,
         purge_existing: bool = True,
         source_directories: List[str] = None
-    ) -> IngestFullResponse:
-        """
-        Perform full ingestion of knowledge base.
-        
-        Directly implements batching and retry logic (no service layer delegation).
-        
-        Args:
-            purge_existing: Whether to purge existing database
-            source_directories: Optional list of source directories
-            
-        Returns:
-            IngestFullResponse with accurate statistics
-        """
+    ):
+        #============================================
+        # Method: ingest_full
+        # Purpose: Perform full ingestion of knowledge base.
+        # Args:
+        #   purge_existing: Whether to purge existing database
+        #   source_directories: Optional list of source directories
+        # Returns: IngestFullResponse with accurate statistics
+        #============================================
         try:
             start_time = time.time()
             
@@ -430,21 +474,17 @@ class CortexOperations:
         max_results: int = 5,
         use_cache: bool = False,
         reasoning_mode: bool = False
-    ) -> QueryResponse:
-        """
-        Perform semantic search query.
-        
-        Uses: Cortex MCP RAG infrastructure directly
-        
-        Args:
-            query: Query string
-            max_results: Maximum number of results
-            use_cache: Whether to use cache (Phase 2)
-            reasoning_mode: Whether to use LLM to structure the query
-            
-        Returns:
-            QueryResponse with results
-        """
+    ):
+        #============================================
+        # Method: query
+        # Purpose: Perform semantic search query using RAG infrastructure.
+        # Args:
+        #   query: Search query string
+        #   max_results: Maximum results to return
+        #   use_cache: Whether to use semantic cache
+        #   reasoning_mode: Use reasoning model if True
+        # Returns: QueryResponse with results and metadata
+        #============================================
         try:
             start_time = time.time()
             
@@ -508,17 +548,15 @@ class CortexOperations:
                 error=str(e)
             )
     
-    def get_stats(self, include_samples: bool = False, sample_count: int = 5) -> StatsResponse:
-        """
-        Get database statistics and health status.
-        
-        Args:
-            include_samples: If True, include sample documents with metadata
-            sample_count: Number of sample documents to return (if include_samples=True)
-            
-        Returns:
-            StatsResponse with database statistics
-        """
+    def get_stats(self, include_samples: bool = False, sample_count: int = 5):
+        #============================================
+        # Method: get_stats
+        # Purpose: Get database statistics and health status.
+        # Args:
+        #   include_samples: Whether to include sample docs
+        #   sample_count: Number of sample documents to return
+        # Returns: StatsResponse with detailed database metrics
+        #============================================
         try:
             # Get child chunks stats
             child_count = 0
@@ -603,19 +641,15 @@ class CortexOperations:
         metadata: Dict[str, Any] = None,
         skip_duplicates: bool = True
     ) -> IngestIncrementalResponse:
-        """
-        Incrementally ingest documents without rebuilding the database.
-        
-        Directly implements incremental ingestion logic (no service layer delegation).
-        
-        Args:
-            file_paths: List of markdown file paths to ingest
-            metadata: Optional metadata to attach to documents
-            skip_duplicates: Whether to skip files already in database
-            
-        Returns:
-            IngestIncrementalResponse with accurate statistics
-        """
+        #============================================
+        # Method: ingest_incremental
+        # Purpose: Incrementally ingest documents without full rebuild.
+        # Args:
+        #   file_paths: List of file paths to ingest
+        #   metadata: Optional metadata to attach
+        #   skip_duplicates: Deduplication flag
+        # Returns: IngestIncrementalResponse with statistics
+        #============================================
         try:
             start_time = time.time()
             
@@ -746,15 +780,13 @@ class CortexOperations:
     # ========================================================================
 
     def cache_get(self, query: str):
-        """
-        Retrieve answer from cache.
-        
-        Args:
-            query: Query string to look up
-            
-        Returns:
-            CacheGetResponse with cache hit status and answer
-        """
+        #============================================
+        # Method: cache_get
+        # Purpose: Retrieve answer from semantic cache.
+        # Args:
+        #   query: Search query string
+        # Returns: CacheGetResponse with hit status and answer
+        #============================================
         from .cache import get_cache
         from .models import CacheGetResponse
         import time
@@ -795,16 +827,14 @@ class CortexOperations:
             )
 
     def cache_set(self, query: str, answer: str):
-        """
-        Store answer in cache.
-        
-        Args:
-            query: Query string (cache key)
-            answer: Answer to cache
-            
-        Returns:
-            CacheSetResponse with storage confirmation
-        """
+        #============================================
+        # Method: cache_set
+        # Purpose: Store answer in semantic cache.
+        # Args:
+        #   query: Cache key string
+        #   answer: Response to cache
+        # Returns: CacheSetResponse confirmation
+        #============================================
         from .cache import get_cache
         from .models import CacheSetResponse
         
@@ -829,16 +859,13 @@ class CortexOperations:
             )
 
     def cache_warmup(self, genesis_queries: List[str] = None):
-        """
-        Pre-populate cache with frequently asked genesis queries.
-        
-        Args:
-            genesis_queries: Optional list of queries to cache. 
-                           If None, uses default genesis queries.
-        
-        Returns:
-            CacheWarmupResponse with warmup statistics
-        """
+        #============================================
+        # Method: cache_warmup
+        # Purpose: Pre-populate cache with genesis queries.
+        # Args:
+        #   genesis_queries: Optional list of queries to cache
+        # Returns: CacheWarmupResponse with counts
+        #============================================
         from .models import CacheWarmupResponse
         import time
         
@@ -891,17 +918,14 @@ class CortexOperations:
     # Helper: Recency Delta (High-Signal Filter)
     # ========================================================================
 
-    def _get_recency_delta(self, hours: int = 48) -> str:
-        """
-        Get summary of recently modified high-signal files with change context.
-        Filter: .md, .py only. Ignore .log, .tmp, __pycache__.
-        
-        Args:
-            hours: Lookback window in hours
-            
-        Returns:
-            Markdown string with recent file summaries and git diff context
-        """
+    def _get_recency_delta(self, hours: int = 48):
+        #============================================
+        # Method: _get_recency_delta
+        # Purpose: Get summary of recently modified high-signal files.
+        # Args:
+        #   hours: Lookback window in hours
+        # Returns: Markdown string with file summaries and diff context
+        #============================================
         import datetime
         import subprocess
         
@@ -999,16 +1023,14 @@ class CortexOperations:
         except Exception as e:
             return f"Error generating recency delta: {str(e)}"
     
-    def _get_git_diff_summary(self, file_path: str) -> str:
-        """
-        Get a brief git diff summary for a file from the most recent commit.
-        
-        Args:
-            file_path: Relative path to file from project root
-            
-        Returns:
-            Brief summary like "+15/-3" or "new file" or ""
-        """
+    def _get_git_diff_summary(self, file_path: str):
+        #============================================
+        # Method: _get_git_diff_summary
+        # Purpose: Get a brief git diff summary (e.g., +15/-3).
+        # Args:
+        #   file_path: Relative path to file
+        # Returns: Summary string or empty string
+        #============================================
         import subprocess
         
         try:
@@ -1070,15 +1092,14 @@ class CortexOperations:
     # Helper: Recent Chronicle Highlights
     # ========================================================================
     
-    def _get_recent_chronicle_highlights(self, max_entries: int = 3) -> str:
-        """Get recent Chronicle entries for strategic context.
-        
-        Args:
-            max_entries: Maximum number of recent entries to include
-            
-        Returns:
-            Markdown string with recent Chronicle highlights
-        """
+    def _get_recent_chronicle_highlights(self, max_entries: int = 3):
+        #============================================
+        # Method: _get_recent_chronicle_highlights
+        # Purpose: Get recent Chronicle entries for strategic context.
+        # Args:
+        #   max_entries: Max entries to include
+        # Returns: Markdown string with Chronicle highlights
+        #============================================
         try:
             chronicle_dir = self.project_root / "00_CHRONICLE" / "ENTRIES"
             if not chronicle_dir.exists():
@@ -1134,16 +1155,15 @@ class CortexOperations:
     # Helper: Recent Protocol Updates
     # ========================================================================
     
-    def _get_recent_protocol_updates(self, max_protocols: int = 3, hours: int = 168) -> str:
-        """Get recently modified protocols for operational compliance context.
-        
-        Args:
-            max_protocols: Maximum number of protocols to include
-            hours: Lookback window in hours (default: 7 days)
-            
-        Returns:
-            Markdown string with recent protocol updates
-        """
+    def _get_recent_protocol_updates(self, max_protocols: int = 3, hours: int = 168):
+        #============================================
+        # Method: _get_recent_protocol_updates
+        # Purpose: Get recently modified protocols for context.
+        # Args:
+        #   max_protocols: Max protocols to include
+        #   hours: Lookback window (default 1 week)
+        # Returns: Markdown string with protocol updates
+        #============================================
         import datetime
         
         try:
@@ -1215,13 +1235,12 @@ class CortexOperations:
     # Helper: Strategic Synthesis (The Gemini Signal)
     # ========================================================================
 
-    def _get_strategic_synthesis(self) -> str:
-        """
-        Synthesize Core Values from Gemini Signal (311) and DCD (310).
-        Uses simple caching strategy for speed.
-        
-        Returns: 3-sentence synthesized summary.
-        """
+    def _get_strategic_synthesis(self):
+        #============================================
+        # Method: _get_strategic_synthesis
+        # Purpose: Synthesize Core Values from project documentation.
+        # Returns: 3-sentence synthesized summary
+        #============================================
         # Hardcoded synthesis for efficiency/reliability (as per "Synthesize, don't just read")
         # In a real dynamic system, this would be periodically re-generated by LLM.
         # But for 'Context Awareness', retrieving the canonical truth is safer.
@@ -1237,14 +1256,12 @@ class CortexOperations:
     # Helper: Tactical Priorities (v2)
     # ========================================================================
     
-    def _get_tactical_priorities(self) -> str:
-        """
-        Scan TASKS/todo, TASKS/in-progress, TASKS/backlog for top 5 tasks.
-        Shows Critical/High first, then Medium/Low if space permits.
-        Extract OBJECTIVE and STATUS for context.
-        
-        Returns: Markdown list of top 5 priorities with status.
-        """
+    def _get_tactical_priorities(self):
+        #============================================
+        # Method: _get_tactical_priorities
+        # Purpose: Scan TASKS/ directories for top priorities.
+        # Returns: Markdown list of top 5 tasks with status
+        #============================================
         try:
             priority_map = {"Critical": 1, "High": 2, "Medium": 3, "Low": 4}
             found_tasks = []
@@ -1342,13 +1359,12 @@ class CortexOperations:
     # Helper: System Health (Traffic Light)
     # ========================================================================
     
-    def _get_system_health_traffic_light(self) -> Tuple[str, str]:
-        """
-        Determine system health color and reason.
-        
-        Returns: (Color, Reason)
-            Color: Green, Yellow, Red
-        """
+    def _get_system_health_traffic_light(self):
+        #============================================
+        # Method: _get_system_health_traffic_light
+        # Purpose: Determine system health status color.
+        # Returns: Tuple of (Color, Reason)
+        #============================================
         try:
             stats = self.get_stats()
             
@@ -1365,13 +1381,12 @@ class CortexOperations:
         except Exception as e:
             return "RED", f"System Failure: {str(e)}"
 
-    def _get_container_status(self) -> str:
-        """
-        Check status of critical podman containers.
-        
-        Returns:
-            String summary of container status.
-        """
+    def _get_container_status(self):
+        #============================================
+        # Method: _get_container_status
+        # Purpose: Check status of critical backend containers.
+        # Returns: String summary of container status
+        #============================================
         import subprocess
         try:
             # Check specifically for our containers
@@ -1411,21 +1426,40 @@ class CortexOperations:
         except Exception:
             return "⚠️ Podman Check Failed"
 
+    def _calculate_semantic_hmac(self, content: str):
+        #============================================
+        # Method: _calculate_semantic_hmac
+        # Purpose: Calculate a resilient HMAC for code integrity.
+        # Args:
+        #   content: File content to hash
+        # Returns: SHA256 hex string
+        #============================================
+        # Load JSON to ignore whitespace/formatting
+        data = json.loads(content)
+        
+        # Canonicalize: Sort keys, removing insignificant whitespace
+        canonical = json.dumps(data, sort_keys=True, separators=(',', ':'))
+        
+        # HMAC Key - In prod this comes from env/secret. For POC, derived from project root
+        secret = str(self.project_root).encode() 
+        
+        return hmac.new(secret, canonical.encode(), hashlib.sha256).hexdigest()
+
     def guardian_wakeup(self, mode: str = "HOLISTIC"):
-        """
-        Generate Guardian boot digest (Context Synthesis Engine).
-        
-        Modes:
-        - "HOLISTIC" (Default): Generates Guardian Briefing Schema v2.1
-          (Strategic Synthesis, Chronicle Highlights, Protocol Updates, 
-           Tactical Priorities, Recency with Git Diffs, Health)
-        
-        Returns:
-            GuardianWakeupResponse with digest path and statistics
-        """
+        #============================================
+        # Method: guardian_wakeup
+        # Purpose: Generate Guardian boot digest (Context Synthesis).
+        # Args:
+        #   mode: Synthesis mode (default "HOLISTIC")
+        # Returns: GuardianWakeupResponse with digest and stats
+        #============================================
         from .models import GuardianWakeupResponse
         from pathlib import Path
         import time
+        import hmac
+        import hashlib
+        import json
+        import os
         
         try:
             start = time.time()
@@ -1433,15 +1467,50 @@ class CortexOperations:
             # 1. System Health (Traffic Light)
             health_color, health_reason = self._get_system_health_traffic_light()
             
+            # --- PROTOCOL 128 v3.0: TIERED INTEGRITY CHECK ---
+            integrity_status = "GREEN"
+            integrity_warnings = []
+            
+            # Metric Cache Path
+            cache_path = self.data_dir / "metric_cache.json" 
+            
+            if cache_path.exists():
+                try:
+                    current_hmac = self._calculate_semantic_hmac(cache_path.read_text())
+                    # In a real impl, we'd fetch the LAST signed HMAC from a secure store. 
+                    # For now, we simulate the check or check against a .sig file.
+                    sig_path = cache_path.with_suffix(".sig")
+                    if sig_path.exists():
+                        stored_hmac = sig_path.read_text().strip()
+                        if current_hmac != stored_hmac:
+                            integrity_status = "YELLOW"
+                            integrity_warnings.append("⚠️ Metric Cache Signature Mismatch (Semantic HMAC failed)")
+                            health_color = "🟡" 
+                            health_reason = "Integrity Warning: Cache Drift"
+                    else:
+                        # First run or missing sig - auto-sign (Trust on First Use)
+                        sig_path.write_text(current_hmac)
+                except Exception as e:
+                    integrity_status = "RED"
+                    integrity_warnings.append(f"🔴 Integrity Check Failed: {str(e)}")
+                    health_color = "🔴"
+                    health_reason = "Integrity Failure"
+
             # 1b. Container Health
             container_status = self._get_container_status()
             
-            # 2. Synthesis Assembly (Schema v2.1)
+            # 2. Synthesis Assembly (Schema v2.2 - Hardened)
             digest_lines = []
             
             # Header
-            digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.1)")
+            digest_lines.append("# 🛡️ Guardian Wakeup Briefing (v2.2)")
             digest_lines.append(f"**System Status:** {health_color} - {health_reason}")
+            digest_lines.append(f"**Integrity Mode:** {integrity_status}")
+            if integrity_warnings:
+                digest_lines.append("**Warnings:**")
+                for w in integrity_warnings:
+                    digest_lines.append(f"- {w}")
+                    
             digest_lines.append(f"**Infrastructure:** {container_status}")
             digest_lines.append(f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC")
             digest_lines.append("")
@@ -1471,10 +1540,24 @@ class CortexOperations:
             digest_lines.append(self._get_recency_delta(hours=48))
             digest_lines.append("")
             
-            # IV. Successor-State Poka-Yoke (Cache Primers)
-            digest_lines.append("## IV. Successor-State Poka-Yoke")
+            # IV. Recursive Learning Debrief (Protocol 128)
+            debrief_path = self.project_root / ".agent" / "learning" / "learning_debrief.md"
+            if debrief_path.exists():
+                digest_lines.append("## IV. Learning Continuity (Previous Session Debrief)")
+                digest_lines.append(f"> **Protocol 128 Active:** Ingesting debrief from {debrief_path.name}")
+                digest_lines.append("")
+                try:
+                    content = debrief_path.read_text()
+                    digest_lines.append(content)
+                except Exception as e:
+                    digest_lines.append(f"⚠️ Failed to read debrief: {e}")
+                digest_lines.append("")
+            
+            # V. Successor-State Poka-Yoke (Cache Primers)
+            digest_lines.append("## V. Successor-State Poka-Yoke")
             digest_lines.append("* **Mandatory Context:** Verified")
             digest_lines.append("* **MCP Tool Guidance:** [Available via `cortex_cache_get`]")
+            digest_lines.append(f"* **Learning Stream:** {'Active' if debrief_path.exists() else 'Standby'}")
             digest_lines.append("")
             digest_lines.append("// This briefing is the single source of context for the LLM session.")
 
@@ -1507,13 +1590,286 @@ class CortexOperations:
                 error=str(e)
             )
 
-    def get_cache_stats(self):
-        """
-        Get cache statistics.
+    def learning_debrief(self, hours: int = 24):
+        #============================================
+        # Method: learning_debrief
+        # Purpose: Scans project for technical state changes.
+        # Args:
+        #   hours: Lookback window for modifications
+        # Returns: Comprehensive Markdown string (Liquid Information)
+        #============================================
+        import subprocess
+        from datetime import datetime
+        try:
+            # 1. Seek Truth (Git)
+            git_evidence = "Git Not Available"
+            try:
+                result = subprocess.run(
+                    ["git", "diff", "--stat", "HEAD"],
+                    capture_output=True, text=True, cwd=str(self.project_root)
+                )
+                git_evidence = result.stdout if result.stdout else "No uncommitted code changes found."
+            except Exception as e:
+                git_evidence = f"Git Error: {e}"
+
+            # 2. Scan Recency (Filesystem)
+            recency_summary = self._get_recency_delta(hours=hours)
+            
+            # 3. Read Core Sovereignty Documents
+            primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
+            sop_content = "[MISSING] .agent/workflows/recursive_learning.md"
+            protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
+            
+            try:
+                p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
+                if p_path.exists(): primer_content = p_path.read_text()
+                
+                s_path = self.project_root / ".agent" / "workflows" / "recursive_learning.md"
+                if s_path.exists(): sop_content = s_path.read_text()
+                
+                pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"
+                if pr_path.exists(): protocol_content = pr_path.read_text()
+            except Exception as e:
+                logger.warning(f"Error reading sovereignty docs: {e}")
+
+            # 4. Strategic Context (Learning Package Snapshot)
+            last_package_content = "⚠️ No active Learning Package Snapshot found."
+            package_path = self.project_root / ".agent" / "learning" / "learning_package_snapshot.md"
+            if package_path.exists():
+                try:
+                    # Check if package is recent
+                    mtime = package_path.stat().st_mtime
+                    delta_hours = (datetime.now().timestamp() - mtime) / 3600
+                    if delta_hours <= hours:
+                        last_package_content = package_path.read_text()
+                        package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
+                    else:
+                        package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
+                except Exception as e:
+                    package_status = f"❌ Error reading snapshot: {e}"
+            else:
+                package_status = "ℹ️ No `.agent/learning/learning_package_snapshot.md` detected."
+
+            # 5. Create the Learning Package Snapshot (Draft)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            
+            lines = [
+                f"# [DRAFT] Learning Package Snapshot v3.5",
+                f"**Scan Time:** {timestamp} (Window: {hours}h)",
+                f"**Strategic Status:** {package_status}",
+                "",
+                "## 🧬 I. Tactical Evidence (Current Git Deltas)",
+                "The following code-level changes were detected SINCE the last session/commit:",
+                "```text",
+                git_evidence,
+                "```",
+                "",
+                "## 📂 II. File Registry (Recency)",
+                "Recently modified high-signal files:",
+                recency_summary,
+                "",
+                "## 🏗️ III. Architecture Alignment (The Successor Relay)",
+                "```mermaid",
+                "flowchart TB",
+                "    subgraph subGraphScout[\"I. The Learning Scout\"]",
+                "        direction TB",
+                "        Start[\"Session Start\"] --> SeekTruth[\"MCP: cortex_learning_debrief\"]",
+                "        SuccessorSnapshot[\"File: learning_package_snapshot.md\"] -.->|Context| SeekTruth",
+                "    end",
+                "    subgraph subGraphSynthesize[\"II. Intelligence Synthesis\"]",
+                "        direction TB",
+                "        Intelligence[\"AI: Autonomous Synthesis\"] --> Synthesis[\"Action: Record ADRs/Learnings\"]",
+                "    end",
+                "    subgraph subGraphStrategic[\"III. Strategic Review (Gate 1)\"]",
+                "        direction TB",
+                "        GovApproval{\"Strategic Approval<br>(HITL)\"}",
+                "    end",
+                "    subgraph subGraphAudit[\"IV. Red Team Audit (Gate 2)\"]",
+                "        direction TB",
+                "        CaptureAudit[\"MCP: cortex_capture_snapshot (audit)\"]",
+                "        Packet[\"Audit Packet\"]",
+                "        TechApproval{\"Technical Approval<br>(HITL)\"}",
+                "    end",
+                "    subgraph subGraphSeal[\"V. The Technical Seal\"]",
+                "        direction TB",
+                "        CaptureSeal[\"MCP: cortex_capture_snapshot (seal)\"]",
+                "    end",
+                "    SeekTruth -- \"Carry\" --> Intelligence",
+                "    Synthesis -- \"Verify Reasoning\" --> GovApproval",
+                "    GovApproval -- \"PASS\" --> CaptureAudit",
+                "    Packet -- \"Review Implementation\" --> TechApproval",
+                "    TechApproval -- \"PASS\" --> CaptureSeal",
+                "    CaptureSeal -- \"Update Successor\" --> SuccessorSnapshot",
+                "    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
+                "    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
+                "    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
+                "    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
+                "    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black",
+                "    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black",
+                "    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff",
+                "```",
+                "",
+                "## 📦 IV. Strategic Context (Last Learning Package Snapshot)",
+                "Below is the consolidated 'Source of Truth' from the previous session's seal:",
+                "---",
+                last_package_content,
+                "---",
+                "",
+                "## 📜 V. Protocol 128: Hardened Learning Loop",
+                protocol_content,
+                "",
+                "## 🧠 VI. Cognitive Primer",
+                primer_content,
+                "",
+                "## 📋 VII. Standard Operating Procedure (SOP)",
+                sop_content,
+                "",
+                "## 🧪 VIII. Claims vs Evidence Checklist",
+                "- [ ] **Integrity Guard:** Do the files modified match the task objective?",
+                "- [ ] **Continuity:** Have all relevant Protocols and Chronicles been updated?",
+                "- [ ] **The Seal:** Is this delta ready for the final 'Learning Package Snapshot'?",
+                "",
+                "---",
+                "*This is a 'Learning Package Snapshot (Draft)'. Perform Meta-Learning (SOP Refinement) before generating the Final Seal.*"
+            ]
+
+            return "\n".join(lines)
+            
+        except Exception as e:
+            logger.error(f"Error in learning_debrief: {e}")
+            return f"Error generating debrief scan: {e}"
+
+    def capture_snapshot(
+        self, 
+        manifest_files: List[str], 
+        snapshot_type: str = "audit",
+        strategic_context: Optional[str] = None
+    ) -> CaptureSnapshotResponse:
+        #============================================
+        # Method: capture_snapshot
+        # Purpose: Tool-driven snapshot generation for Protocol 128.
+        # Args:
+        #   manifest_files: List of file paths to include
+        #   snapshot_type: 'audit' or 'seal'
+        #   strategic_context: Optional context string
+        # Returns: CaptureSnapshotResponse with verification info
+        #============================================
+        import time
+        import datetime
+        import subprocess
         
-        Returns:
-            Dict with cache stats
-        """
+        # 1. Zero-Trust Verification: Get actual git changes
+        try:
+            git_diff_proc = subprocess.run(
+                ["git", "diff", "--name-only", "HEAD"],
+                capture_output=True, text=True, cwd=str(self.project_root)
+            )
+            git_changed = set(git_diff_proc.stdout.splitlines())
+            
+            # Check for staged changes too
+            git_staged_proc = subprocess.run(
+                ["git", "diff", "--cached", "--name-only"],
+                capture_output=True, text=True, cwd=str(self.project_root)
+            )
+            git_changed.update(git_staged_proc.stdout.splitlines())
+            
+            manifest_set = set(manifest_files)
+            
+            # Identify discrepancies
+            untracked_in_manifest = git_changed - manifest_set
+            unverified_in_manifest = manifest_set - git_changed
+            
+            # We strictly enforce that manifest files must exist in git diff for 'audit'
+            # though some files (like newly created ones not yet tracked) might be ok
+            manifest_verified = len(unverified_in_manifest) == 0
+            
+            git_context = f"Verified: {len(manifest_set)} files. Untracked diffs: {len(untracked_in_manifest)}."
+            if unverified_in_manifest:
+                git_context += f" WARNING: Files in manifest not found in git diff: {list(unverified_in_manifest)}"
+
+        except Exception as e:
+            manifest_verified = False
+            git_context = f"Git verification failed: {str(e)}"
+
+        # 2. Prepare Tool Paths
+        learning_dir = self.project_root / ".agent" / "learning"
+        output_dir = learning_dir / "red_team" if snapshot_type == "audit" else learning_dir
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Temporary manifest file for the JS tool
+        temp_manifest_path = output_dir / f"manifest_{snapshot_type}_{int(time.time())}.json"
+        snapshot_filename = "red_team_audit_packet.md" if snapshot_type == "audit" else "learning_package_snapshot.md"
+        final_snapshot_path = output_dir / snapshot_filename
+        
+        try:
+            # Write temporary manifest for the JS tool
+            with open(temp_manifest_path, "w") as f:
+                json.dump(manifest_files, f, indent=2)
+                
+            # 3. Invoke JS Snapshot Tool
+            script_path = self.project_root / "scripts" / "capture_code_snapshot.js"
+            cmd = [
+                "node", str(script_path),
+                "--manifest", str(temp_manifest_path),
+                "--output", str(final_snapshot_path)
+            ]
+            
+            result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(self.project_root))
+            
+            if result.returncode != 0:
+                raise Exception(f"JS Snapshot tool failed: {result.stderr}")
+
+            # 4. Enhance 'audit' packet with metadata if needed
+            if snapshot_type == "audit":
+                with open(final_snapshot_path, "r") as f:
+                    captured_content = f.read()
+                
+                context_str = strategic_context if strategic_context else "No additional context provided."
+                
+                enhanced_header = f"""# Red Team Audit Packet (Protocol 128 v3.5)
+**Status:** 🛑 WAITING FOR GATE 2 APPROVAL
+**Generated:** {datetime.datetime.now().isoformat()}
+**Type:** Technical Audit
+
+## 🎯 Strategic Context
+{context_str}
+
+## 🛡️ Zero-Trust Verification
+{git_context}
+
+---
+"""
+                with open(final_snapshot_path, "w") as f:
+                    f.write(enhanced_header + captured_content)
+
+            return CaptureSnapshotResponse(
+                snapshot_path=str(final_snapshot_path),
+                manifest_verified=manifest_verified,
+                git_diff_context=git_context,
+                snapshot_type=snapshot_type,
+                status="success"
+            )
+
+        except Exception as e:
+            logger.error(f"Error in capture_snapshot: {e}")
+            return CaptureSnapshotResponse(
+                snapshot_path="",
+                manifest_verified=False,
+                git_diff_context=git_context,
+                snapshot_type=snapshot_type,
+                status="error",
+                error=str(e)
+            )
+        finally:
+            if temp_manifest_path.exists():
+                temp_manifest_path.unlink()
+
+    def get_cache_stats(self):
+        #============================================
+        # Method: get_cache_stats
+        # Purpose: Get semantic cache statistics.
+        # Returns: Dict with hit/miss counts and entry total
+        #============================================
         from .cache import get_cache
         try:
             cache = get_cache()
@@ -1525,33 +1881,14 @@ class CortexOperations:
         query_string: str,
         request_id: str = None
     ) -> Dict[str, Any]:
-        """
-        Execute Protocol 87 structured query with MCP orchestration.
-        
-        Routes queries to specialized MCPs based on scope:
-        - Protocols -> Protocol MCP
-        - Living_Chronicle -> Chronicle MCP
-        - Tasks -> Task MCP
-        - Code -> Code MCP
-        - ADRs -> ADR MCP
-        - Fallback -> Vector DB (cortex_query)
-        
-        Args:
-            query_string: Protocol 87 formatted query (INTENT :: SCOPE :: CONSTRAINTS)
-            request_id: Optional request ID for tracing
-            
-        Returns:
-            Protocol 87 compliant response with routing metadata
-            
-        Example:
-            >>> ops.query_structured("RETRIEVE :: Protocols :: Name=\\"Protocol 101\\"")
-            {
-                "request_id": "...",
-                "steward_id": "CORTEX-MCP-01",
-                "matches": [...],
-                "routing": {"scope": "Protocols", "routed_to": "Protocol MCP"}
-            }
-        """
+        #============================================
+        # Method: query_structured
+        # Purpose: Execute Protocol 87 structured query.
+        # Args:
+        #   query_string: Standardized inquiry format
+        #   request_id: Unique request identifier
+        # Returns: API response with matches and routing info
+        #============================================
         from .structured_query import parse_query_string
         from .mcp_client import MCPClient
         import uuid
@@ -1629,8 +1966,14 @@ class CortexOperations:
                 "query": query_string
             }
     
-    def _get_mcp_name(self, scope: str) -> str:
-        """Map scope to MCP name."""
+    def _get_mcp_name(self, scope: str):
+        #============================================
+        # Method: _get_mcp_name
+        # Purpose: Map scope to corresponding MCP name.
+        # Args:
+        #   scope: Logical scope from query
+        # Returns: MCP identifier string
+        #============================================
         mapping = {
             "Protocols": "Protocol MCP",
             "Living_Chronicle": "Chronicle MCP",

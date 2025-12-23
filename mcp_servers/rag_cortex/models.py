@@ -1,8 +1,31 @@
-"""
-Cortex MCP Server - Data Models
+#============================================
+# mcp_servers/rag_cortex/models.py
+# Purpose: Pydantic/Dataclass models for RAG operations in the Mnemonic Cortex.
+# Role: Single Source of Truth
+# Used as a module by operations.py and server.py
+# Calling example:
+#   from mcp_servers.rag_cortex.models import to_dict
+# LIST OF MODELS:
+#   - IngestFullRequest
+#   - IngestFullResponse
+#   - QueryRequest
+#   - QueryResult
+#   - QueryResponse
+#   - DocumentSample
+#   - CollectionStats
+#   - StatsResponse
+#   - IngestIncrementalRequest
+#   - IngestIncrementalResponse
+#   - CacheGetResponse
+#   - CacheSetResponse
+#   - CacheWarmupResponse
+#   - GuardianWakeupResponse
+#   - CaptureSnapshotRequest
+#   - CaptureSnapshotResponse
+# LIST OF FUNCTIONS:
+#   - to_dict
+#============================================
 
-Pydantic models for RAG operations in the Mnemonic Cortex.
-"""
 from dataclasses import dataclass
 from typing import List, Optional, Dict, Any
 from datetime import datetime
@@ -14,14 +37,23 @@ from datetime import datetime
 
 @dataclass
 class IngestFullRequest:
-    """Request model for full ingestion."""
+    #============================================
+    # Model: IngestFullRequest
+    # Purpose: Request model for full ingestion.
+    # Fields:
+    #   purge_existing: Whether to purge existing database
+    #   source_directories: Optional specific directories to ingest
+    #============================================
     purge_existing: bool = True
     source_directories: Optional[List[str]] = None
 
 
 @dataclass
 class IngestFullResponse:
-    """Response model for full ingestion."""
+    #============================================
+    # Model: IngestFullResponse
+    # Purpose: Response model for full ingestion.
+    #============================================
     documents_processed: int
     chunks_created: int
     ingestion_time_ms: float
@@ -36,7 +68,10 @@ class IngestFullResponse:
 
 @dataclass
 class QueryRequest:
-    """Request model for RAG query."""
+    #============================================
+    # Model: QueryRequest
+    # Purpose: Request model for RAG query.
+    #============================================
     query: str
     max_results: int = 5
     use_cache: bool = False  # Phase 2 feature
@@ -44,7 +79,10 @@ class QueryRequest:
 
 @dataclass
 class QueryResult:
-    """Individual query result."""
+    #============================================
+    # Model: QueryResult
+    # Purpose: Individual query result.
+    #============================================
     content: str
     metadata: Dict[str, Any]
     relevance_score: Optional[float] = None
@@ -52,7 +90,10 @@ class QueryResult:
 
 @dataclass
 class QueryResponse:
-    """Response model for RAG query."""
+    #============================================
+    # Model: QueryResponse
+    # Purpose: Response model for RAG query.
+    #============================================
     results: List[QueryResult]
     query_time_ms: float
     status: str  # "success" or "error"
@@ -66,7 +107,10 @@ class QueryResponse:
 
 @dataclass
 class DocumentSample:
-    """Sample document for diagnostics."""
+    #============================================
+    # Model: DocumentSample
+    # Purpose: Sample document for diagnostics.
+    #============================================
     id: str
     metadata: Dict[str, Any]
     content_preview: str  # First 150 chars
@@ -74,14 +118,20 @@ class DocumentSample:
 
 @dataclass
 class CollectionStats:
-    """Statistics for a single collection."""
+    #============================================
+    # Model: CollectionStats
+    # Purpose: Statistics for a single collection.
+    #============================================
     count: int
     name: str
 
 
 @dataclass
 class StatsResponse:
-    """Response model for database statistics."""
+    #============================================
+    # Model: StatsResponse
+    # Purpose: Response model for database statistics.
+    #============================================
     total_documents: int
     total_chunks: int
     collections: Dict[str, CollectionStats]
@@ -97,7 +147,10 @@ class StatsResponse:
 
 @dataclass
 class IngestIncrementalRequest:
-    """Request model for incremental ingestion."""
+    #============================================
+    # Model: IngestIncrementalRequest
+    # Purpose: Request model for incremental ingestion.
+    #============================================
     file_paths: List[str]
     metadata: Optional[Dict[str, Any]] = None
     skip_duplicates: bool = True
@@ -105,7 +158,10 @@ class IngestIncrementalRequest:
 
 @dataclass
 class IngestIncrementalResponse:
-    """Response model for incremental ingestion."""
+    #============================================
+    # Model: IngestIncrementalResponse
+    # Purpose: Response model for incremental ingestion.
+    #============================================
     documents_added: int
     chunks_created: int
     skipped_duplicates: int
@@ -120,7 +176,10 @@ class IngestIncrementalResponse:
 
 @dataclass
 class CacheGetResponse:
-    """Response from cache retrieval operation."""
+    #============================================
+    # Model: CacheGetResponse
+    # Purpose: Response from cache retrieval operation.
+    #============================================
     cache_hit: bool
     answer: Optional[str]
     query_time_ms: float
@@ -130,7 +189,10 @@ class CacheGetResponse:
 
 @dataclass
 class CacheSetResponse:
-    """Response from cache storage operation."""
+    #============================================
+    # Model: CacheSetResponse
+    # Purpose: Response from cache storage operation.
+    #============================================
     cache_key: str
     stored: bool
     status: str  # "success" or "error"
@@ -139,7 +201,10 @@ class CacheSetResponse:
 
 @dataclass
 class CacheWarmupResponse:
-    """Response from cache warmup operation."""
+    #============================================
+    # Model: CacheWarmupResponse
+    # Purpose: Response from cache warmup operation.
+    #============================================
     queries_cached: int
     cache_hits: int
     cache_misses: int
@@ -150,7 +215,10 @@ class CacheWarmupResponse:
 
 @dataclass
 class GuardianWakeupResponse:
-    """Response from Guardian wakeup digest generation."""
+    #============================================
+    # Model: GuardianWakeupResponse
+    # Purpose: Response from Guardian wakeup digest generation.
+    #============================================
     digest_path: str
     bundles_loaded: List[str]
     cache_hits: int
@@ -161,11 +229,46 @@ class GuardianWakeupResponse:
 
 
 # ============================================================================
+# Capture Snapshot Models (Protocol 128 v3.5)
+# ============================================================================
+
+@dataclass
+class CaptureSnapshotRequest:
+    #============================================
+    # Model: CaptureSnapshotRequest
+    # Purpose: Request model for tool-driven snapshotting.
+    #============================================
+    manifest_files: List[str]
+    snapshot_type: str = "audit"  # "audit" or "seal"
+    strategic_context: Optional[str] = None
+
+
+@dataclass
+class CaptureSnapshotResponse:
+    #============================================
+    # Model: CaptureSnapshotResponse
+    # Purpose: Response model for tool-driven snapshotting.
+    #============================================
+    snapshot_path: str
+    manifest_verified: bool
+    git_diff_context: str
+    snapshot_type: str
+    status: str  # "success" or "error"
+    error: Optional[str] = None
+
+
+# ============================================================================
 # Helper Functions
 # ============================================================================
 
 def to_dict(obj: Any) -> Dict[str, Any]:
-    """Convert dataclass to dictionary."""
+    #============================================
+    # Function: to_dict
+    # Purpose: Convert dataclass to dictionary recursively.
+    # Args:
+    #   obj: The dataclass object to convert
+    # Returns: Dictionary representation
+    #============================================
     if hasattr(obj, '__dataclass_fields__'):
         result = {}
         for field_name in obj.__dataclass_fields__:

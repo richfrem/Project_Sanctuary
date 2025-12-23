@@ -1,31 +1,31 @@
-"""
-Protocol 87 Query Support for Cortex MCP
-
-Implements Protocol 87: The Mnemonic Inquiry Protocol
-Structured query format: INTENT :: SCOPE :: CONSTRAINTS
-
-This is Phase 2 of the RAG architecture (Self-Querying Retriever).
-"""
+#============================================
+# mcp_servers/rag_cortex/structured_query.py
+# Purpose: Protocol 87 Query Support for Cortex MCP.
+#          Implements the Mnemonic Inquiry Protocol.
+# Role: Single Source of Truth
+# Used as a module by operations.py.
+# Calling example:
+#   from mcp_servers.rag_cortex.structured_query import parse_query_string
+#   query_data = parse_query_string("RETRIEVE :: Protocols :: Name=\"Protocol 101\"")
+# LIST OF FUNCTIONS:
+#   - build_protocol_87_response
+#   - build_search_query
+#   - parse_query_string
+#============================================
 
 from typing import Dict, Any
 
 
 def parse_query_string(query_str: str) -> Dict[str, str]:
-    """
-    Parse Protocol 87 query string format.
-    
-    Format: INTENT :: SCOPE :: CONSTRAINTS ; KEY=VALUE ; ...
-    
-    Args:
-        query_str: Protocol 87 formatted query string
-        
-    Returns:
-        Dict with parsed components (intent, scope, constraints, and key-value pairs)
-        
-    Example:
-        >>> parse_query_string("RETRIEVE :: Protocols :: Name=\"Protocol 101\"")
-        {'intent': 'RETRIEVE', 'scope': 'Protocols', 'constraints': 'Name="Protocol 101"'}
-    """
+    #============================================
+    # Function: parse_query_string
+    # Purpose: Parse Protocol 87 query string format.
+    # Args:
+    #   query_str: Protocol 87 formatted query string
+    #              (Format: INTENT :: SCOPE :: CONSTRAINTS)
+    # Returns: Dict with parsed components and key-value pairs
+    # Raises: ValueError if format is invalid
+    #============================================
     parts = [part.strip() for part in query_str.split('::')]
     if len(parts) != 3:
         raise ValueError("Query must have format: INTENT :: SCOPE :: CONSTRAINTS")
@@ -52,20 +52,13 @@ def parse_query_string(query_str: str) -> Dict[str, str]:
 
 
 def build_search_query(query_data: Dict[str, Any]) -> str:
-    """
-    Convert Protocol 87 query to natural language for RAG system.
-    
-    Args:
-        query_data: Parsed Protocol 87 query components
-        
-    Returns:
-        Natural language query string for vector search
-        
-    Example:
-        >>> build_search_query({'intent': 'RETRIEVE', 'scope': 'Protocols', 
-        ...                     'constraints': 'Name="Protocol 101"'})
-        'What is Protocol 101?'
-    """
+    #============================================
+    # Function: build_search_query
+    # Purpose: Convert Protocol 87 query to natural language for RAG system.
+    # Args:
+    #   query_data: Parsed Protocol 87 query components
+    # Returns: Natural language query string for vector search
+    #============================================
     # Check if it's a direct question
     if 'question' in query_data:
         return query_data['question']
@@ -107,18 +100,16 @@ def build_protocol_87_response(
     retrieved_docs: list,
     granularity: str = "ATOM"
 ) -> Dict[str, Any]:
-    """
-    Build Protocol 87 compliant response structure.
-    
-    Args:
-        request_id: Unique request identifier
-        query_data: Original query data
-        retrieved_docs: Documents retrieved from RAG
-        granularity: Response granularity level
-        
-    Returns:
-        Protocol 87 structured response
-    """
+    #============================================
+    # Function: build_protocol_87_response
+    # Purpose: Build Protocol 87 compliant response structure.
+    # Args:
+    #   request_id: Unique request identifier
+    #   query_data: Original query data
+    #   retrieved_docs: Documents retrieved from RAG
+    #   granularity: Response granularity level
+    # Returns: Protocol 87 structured response dictionary
+    #============================================
     import json
     from datetime import datetime, timezone
     

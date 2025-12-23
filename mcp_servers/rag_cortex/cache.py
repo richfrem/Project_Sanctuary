@@ -1,16 +1,30 @@
-"""
-Mnemonic Cache (core/cache.py)
-Implements the Cached Augmented Generation (CAG) layer for the Mnemonic Cortex.
-    result = cache.get(key)
-    if result:
-        return result  # Cache hit
-
-    # Cache miss - compute answer
-    answer = generate_rag_answer(structured_query_json)
-    cache.set(key, answer)
-    return answer
-"""
-
+#============================================
+# mcp_servers/rag_cortex/cache.py
+# Purpose: Implements the Cached Augmented Generation (CAG) layer for the Mnemonic Cortex.
+#          Caches final generated answers keyed by structured query hash.
+# Role: Single Source of Truth
+# Used as a module by operations.py 
+# Calling example: 
+#   result = cache.get(key)
+#   if result:
+#       return result  # Cache hit
+#
+#   # Cache miss - compute answer
+#   answer = generate_rag_answer(structured_query_json)
+#   cache.set(key, answer)
+#   return answer
+# LIST OF FUNCTIONS IMPLEMENTED:
+#   - __init__
+#   - _init_warm_cache
+#   - _update_access_stats
+#   - clear_hot_cache
+#   - clear_warm_cache
+#   - generate_key
+#   - get
+#   - get_cache
+#   - get_stats
+#   - set
+#============================================
 import hashlib
 import json
 import os
@@ -26,21 +40,22 @@ logger = logging.getLogger("rag_cortex.cache")
 from mcp_servers.lib.utils.env_helper import get_env_variable
 
 
+#============================================
+# Class: MnemonicCache
+# Purpose: Two-tier caching system for Mnemonic Cortex queries.
+# Components:
+#   Hot Cache: In-memory dict for instant access
+#   Warm Cache: SQLite database for persistence
+#============================================
 class MnemonicCache:
-    """
-    Two-tier caching system for Mnemonic Cortex queries.
 
-    Hot Cache: In-memory dict for instant access
-    Warm Cache: SQLite database for persistence
-    """
-
+    #============================================
+    # Method: __init__
+    # Purpose: Initialize the two-tier cache system.
+    # Args:
+    #   db_path: Path to SQLite database for warm cache. Defaults to project cache dir.
+    #============================================
     def __init__(self, db_path: str = None):
-        """
-        Initialize the two-tier cache system.
-
-        Args:
-            db_path: Path to SQLite database for warm cache. Defaults to project cache dir.
-        """
         # Hot Cache: In-memory dictionary
         self.hot_cache: Dict[str, Any] = {}
         self.hot_cache_lock = threading.Lock()
@@ -62,8 +77,11 @@ class MnemonicCache:
         self.db_path = db_path
         self._init_warm_cache()
 
+    #============================================
+    # Method: _init_warm_cache
+    # Purpose: Initialize the SQLite warm cache database.
+    #============================================
     def _init_warm_cache(self):
-        """Initialize the SQLite warm cache database."""
         with sqlite3.connect(self.db_path) as conn:
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS warm_cache (
@@ -77,30 +95,26 @@ class MnemonicCache:
             # Create index for faster lookups
             conn.execute('CREATE INDEX IF NOT EXISTS idx_key ON warm_cache(key)')
 
+    #============================================
+    # Method: generate_key
+    # Purpose: Generate a deterministic cache key from a structured query.
+    # Args:
+    #   structured_query: JSON-serializable dict containing query and filters
+    # Returns: SHA-256 hash of the JSON representation
+    #============================================
     def generate_key(self, structured_query: Dict[str, Any]) -> str:
-        """
-        Generate a deterministic cache key from a structured query.
-
-        Args:
-            structured_query: JSON-serializable dict containing query and filters
-
-        Returns:
-            SHA-256 hash of the JSON representation
-        """
         # Sort keys for consistent hashing
         query_json = json.dumps(structured_query, sort_keys=True)
         return hashlib.sha256(query_json.encode('utf-8')).hexdigest()
 
+    #============================================
+    # Method: get
+    # Purpose: Retrieve a value from the cache (Hot cache first, then Warm cache).
+    # Args:
+    #   key: Cache key
+    # Returns: Cached value if found, None otherwise
+    #============================================
     def get(self, key: str) -> Optional[Any]:
-        """
-        Retrieve a value from the cache (Hot cache first, then Warm cache).
-
-        Args:
-            key: Cache key
-
-        Returns:
-            Cached value if found, None otherwise
-        """
         # Check Hot Cache first
         with self.hot_cache_lock:
             if key in self.hot_cache:
@@ -133,15 +147,15 @@ class MnemonicCache:
             logger.warning(f"[CACHE] Warning: Error reading from warm cache: {e}")
             return None
 
+    #============================================
+    # Method: set
+    # Purpose: Store a value in the cache.
+    # Args:
+    #   key: Cache key
+    #   value: Value to cache (must be JSON serializable)
+    #   promote_to_hot: Whether to also store in hot cache
+    #============================================
     def set(self, key: str, value: Any, promote_to_hot: bool = True) -> None:
-        """
-        Store a value in the cache.
-
-        Args:
-            key: Cache key
-            value: Value to cache (must be JSON serializable)
-            promote_to_hot: Whether to also store in hot cache
-        """
         # Store in Hot Cache
         if promote_to_hot:
             with self.hot_cache_lock:
@@ -161,13 +175,19 @@ class MnemonicCache:
         except Exception as e:
             logger.warning(f"[CACHE] Warning: Error writing to warm cache: {e}")
 
+    #============================================
+    # Method: clear_hot_cache
+    # Purpose: Clear the in-memory hot cache.
+    #============================================
     def clear_hot_cache(self) -> None:
-        """Clear the in-memory hot cache."""
         with self.hot_cache_lock:
             self.hot_cache.clear()
 
+    #============================================
+    # Method: clear_warm_cache
+    # Purpose: Clear the persistent warm cache.
+    #============================================
     def clear_warm_cache(self) -> None:
-        """Clear the persistent warm cache."""
         try:
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.cursor()
@@ -176,8 +196,11 @@ class MnemonicCache:
         except Exception as e:
             logger.warning(f"[CACHE] Warning: Error clearing warm cache: {e}")
 
+    #============================================
+    # Method: get_stats
+    # Purpose: Get cache statistics.
+    #============================================
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics."""
         stats = {
             'hot_cache_size': len(self.hot_cache),
         }
@@ -194,8 +217,13 @@ class MnemonicCache:
             logger.warning(f"[CACHE] Warning: Error getting warm cache stats: {e}")
             return {"error": str(e)}
 
+    #============================================
+    # Method: _update_access_stats
+    # Purpose: Update access statistics for a cache entry.
+    # Args:
+    #   key: Cache key
+    #============================================
     def _update_access_stats(self, key: str) -> None:
-        """Update access statistics for a cache entry."""
         try:
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.cursor()
@@ -214,8 +242,12 @@ _cache_instance: Optional[MnemonicCache] = None
 _cache_lock = threading.Lock()
 
 
+#============================================
+# Function: get_cache
+# Purpose: Get the global cache instance (singleton pattern).
+# Returns: MnemonicCache instance
+#============================================
 def get_cache() -> MnemonicCache:
-    """Get the global cache instance (singleton pattern)."""
     global _cache_instance
     if _cache_instance is None:
         with _cache_lock:

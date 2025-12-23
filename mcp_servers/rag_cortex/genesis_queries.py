@@ -1,14 +1,22 @@
-"""
-Genesis Queries for Mnemonic Cache Warm-Up
+#============================================
+# mcp_servers/rag_cortex/genesis_queries.py
+# Purpose: Definition of canonical queries for Mnemonic Cache Warm-Up.
+#          These are the queries that should always be cached for instant response.
+# Role: Single Source of Truth
+# Used as a module by operations.py (for cache warmup)
+# Calling example:
+#   from mcp_servers.rag_cortex.genesis_queries import GENESIS_QUERIES
+# LIST OF EXPORTS:
+#   - GENESIS_QUERIES
+#============================================
 
-These are the canonical queries that should always be cached for instant response.
-Pre-loading these queries ensures the Guardian and other agents have immediate access
-to core knowledge without RAG pipeline latency.
-
-Used by: cortex_cache_warmup() MCP tool
-"""
-
-# Genesis queries that should always be cached for instant response
+#============================================
+# Constant: GENESIS_QUERIES
+# Purpose: List of canonical queries used to pre-warm the Mnemonic Cache (CAG).
+# Usage:
+#   Used by clean_and_rebuild_kdb.py and cortex_cache_warmup tool.
+#   Ensures zero-latency responses for critical system knowledge.
+#============================================
 GENESIS_QUERIES = [
     # Core Identity & Architecture
     "What is Project Sanctuary?",

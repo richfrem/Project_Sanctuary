@@ -1,9 +1,16 @@
-"""
-Forge MCP Operations
-Domain: project_sanctuary.system.forge
-
-Core operations for interacting with the fine-tuned Sanctuary model.
-"""
+#============================================
+# Path: mcp_servers/forge_llm/operations.py
+# Purpose: Core operations for interacting with the fine-tuned Sanctuary model.
+# Role: Library Operations
+# Used as: Implementation for Sanctuary Forge LLM tools.
+# Calling example:
+#   from mcp_servers.forge_llm.operations import ForgeOperations
+# LIST OF CLASSES/FUNCTIONS:
+#   - ForgeOperations
+#   - ForgeOperations.__init__
+#   - ForgeOperations.check_model_availability
+#   - ForgeOperations.query_sanctuary_model
+#============================================
 from pathlib import Path
 import sys
 import os
@@ -22,15 +29,26 @@ from .models import ModelQueryResponse
 class ForgeOperations:
     """Operations for Forge MCP server."""
     
+    #============================================
+    # Method: __init__
+    # Purpose: Initialize Forge operations.
+    # Args:
+    #   project_root: Path to project root directory
+    #============================================
     def __init__(self, project_root: str):
-        """Initialize Forge operations.
-        
-        Args:
-            project_root: Path to project root directory
-        """
         self.project_root = project_root
         self.sanctuary_model = "hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M"
     
+    #============================================
+    # Method: query_sanctuary_model
+    # Purpose: Query the fine-tuned Sanctuary model via Ollama.
+    # Args:
+    #   prompt: The user prompt/question
+    #   temperature: Sampling temperature (0.0-2.0)
+    #   max_tokens: Maximum tokens to generate
+    #   system_prompt: Optional system prompt for context
+    # Returns: ModelQueryResponse with the model's answer
+    #============================================
     def query_sanctuary_model(
         self,
         prompt: str,
@@ -38,17 +56,6 @@ class ForgeOperations:
         max_tokens: int = 2048,
         system_prompt: Optional[str] = None
     ) -> ModelQueryResponse:
-        """Query the fine-tuned Sanctuary model via Ollama.
-        
-        Args:
-            prompt: The user prompt/question
-            temperature: Sampling temperature (0.0-2.0)
-            max_tokens: Maximum tokens to generate
-            system_prompt: Optional system prompt for context
-            
-        Returns:
-            ModelQueryResponse with the model's answer
-        """
         try:
             import ollama
             
@@ -101,12 +108,12 @@ class ForgeOperations:
                 error=f"Failed to query model: {str(e)}"
             )
     
+    #============================================
+    # Method: check_model_availability
+    # Purpose: Check if the Sanctuary model is available in Ollama.
+    # Returns: Dictionary with availability status
+    #============================================
     def check_model_availability(self) -> Dict[str, Any]:
-        """Check if the Sanctuary model is available in Ollama.
-        
-        Returns:
-            Dictionary with availability status
-        """
         try:
             import ollama
             

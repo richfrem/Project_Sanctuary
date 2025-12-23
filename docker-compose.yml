@@ -38,9 +38,14 @@ services:
     command:
       - |
         ollama serve &
-        sleep 10
+        # Wait for Ollama to be ready
+        echo "Waiting for Ollama API..."
+        until ollama list > /dev/null 2>&1; do
+          sleep 1
+        done
+        echo "Ollama is ready. Pulling model..."
         ollama pull $${OLLAMA_MODEL:-Sanctuary-Qwen2-7B:latest}
-        wait -n
+        wait
     restart: unless-stopped
 
   # Fleet of 8 - Container #1: sanctuary_utils (ADR 060)

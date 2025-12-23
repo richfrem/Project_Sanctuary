@@ -1,28 +1,53 @@
-"""
-Forge MCP Validator
-Domain: project_sanctuary.system.forge
-
-Validation logic for Forge MCP operations.
-"""
+#============================================
+# Path: mcp_servers/forge_llm/validator.py
+# Purpose: Validation logic for Forge MCP operations.
+# Role: Library Validator
+# Used as: Input validation for Forge LLM tools.
+# Calling example:
+#   from mcp_servers.forge_llm.validator import ForgeValidator
+# LIST OF CLASSES/FUNCTIONS:
+#   - ForgeValidator
+#   - ForgeValidator.__init__
+#   - ForgeValidator.validate_query_sanctuary_model
+#   - ValidationError
+#============================================
 from typing import Optional
 
 
+#============================================
+# Class: ValidationError
+# Purpose: Raised when validation fails.
+#============================================
 class ValidationError(Exception):
-    """Raised when validation fails."""
     pass
 
 
+#============================================
+# Class: ForgeValidator
+# Purpose: Validator for Forge MCP operations.
+#============================================
 class ForgeValidator:
-    """Validator for Forge MCP operations."""
     
+    #============================================
+    # Method: __init__
+    # Purpose: Initialize validator.
+    # Args:
+    #   project_root: Path to project root directory
+    #============================================
     def __init__(self, project_root: str):
-        """Initialize validator.
-        
-        Args:
-            project_root: Path to project root directory
-        """
         self.project_root = project_root
     
+    #============================================
+    # Method: validate_query_sanctuary_model
+    # Purpose: Validate query_sanctuary_model parameters.
+    # Args:
+    #   prompt: User prompt
+    #   temperature: Sampling temperature
+    #   max_tokens: Maximum tokens
+    #   system_prompt: Optional system prompt
+    # Returns: Validated parameters dictionary
+    # Raises: ValidationError if validation fails
+    #============================================
     def validate_query_sanctuary_model(
         self,
         prompt: str,
@@ -30,20 +55,6 @@ class ForgeValidator:
         max_tokens: int,
         system_prompt: Optional[str]
     ) -> dict:
-        """Validate query_sanctuary_model parameters.
-        
-        Args:
-            prompt: User prompt
-            temperature: Sampling temperature
-            max_tokens: Maximum tokens
-            system_prompt: Optional system prompt
-            
-        Returns:
-            Validated parameters dictionary
-            
-        Raises:
-            ValidationError: If validation fails
-        """
         # Validate prompt
         if not prompt or not prompt.strip():
             raise ValidationError("Prompt cannot be empty")

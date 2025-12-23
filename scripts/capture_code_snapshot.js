@@ -62,6 +62,7 @@ try {
         .usage("node capture_code_snapshot.js [options]")
         .option("role", { type: "string", default: "guardian" })
         .option("out", { type: "string", default: "dataset_package" })
+        .option("manifest", { type: "string", description: "Path to JSON manifest of files to capture (skips traversal)" })
         .help()
         .argv;
 } catch (e) {
@@ -80,7 +81,7 @@ const subfolderName = subfolderArg ? subfolderArg.replace(/\//g, '_').replace(/\
 const datasetPackageDir = path.join(projectRoot, 'dataset_package');
 
 // --- DYNAMIC ARTIFACT PATHS & CONFIGURATION ---
-const humanReadableOutputFile = path.join(datasetPackageDir, `markdown_snapshot_${subfolderName}_human_readable.txt`);
+const humanReadableOutputFile = argv.output ? path.resolve(argv.output) : path.join(datasetPackageDir, `markdown_snapshot_${subfolderName}_human_readable.txt`);
 const distilledOutputFile = path.join(datasetPackageDir, `markdown_snapshot_${subfolderName}_llm_distilled.txt`);
 
 const ROLES_TO_FORGE = ['Auditor', 'Coordinator', 'Strategist', 'Guardian'];
@@ -575,7 +576,60 @@ try {
         console.log(`[FULL GENOME MODE] Processing entire project from: ${projectRoot}`);
     }
 
-    traverseAndCapture(targetRoot);
+    if (argv.manifest) {
+        console.log(`[MANIFEST MODE] Loading file list from: ${argv.manifest}`);
+        try {
+            const manifestPath = path.resolve(argv.manifest);
+            if (!fs.existsSync(manifestPath)) {
+                throw new Error(`Manifest file not found: ${manifestPath}`);
+            }
+            const manifestData = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+            // Normalize manifest to array of strings
+            let fileList = [];
+            if (Array.isArray(manifestData)) {
+                fileList = manifestData.map(item => typeof item === 'string' ? item : item.path);
+            } else {
+                throw new Error("Manifest must be a JSON array.");
+            }
+
+            console.log(`[MANIFEST] Processing ${fileList.length} files from manifest directly.`);
+
+            for (const relPath of fileList) {
+                const fullPath = path.join(projectRoot, relPath);
+
+                // Existence check
+                if (fs.existsSync(fullPath)) {
+                    const stats = fs.statSync(fullPath);
+                    if (stats.isFile()) {
+                        const baseName = path.basename(fullPath);
+
+                        // SECURITY HARDENING: Enforce exclusion rules even in Manifest Mode
+                        if (shouldExcludeFile(baseName)) {
+                            console.log(`[SECURITY] Skipping excluded file in manifest: ${relPath}`);
+                            humanReadableMarkdownContent += `[SECURITY EXCLUDED] ${relPath}\n`;
+                            continue;
+                        }
+
+                        fileTreeLines.push(relPath);
+                        humanReadableMarkdownContent += appendFileContent(fullPath, projectRoot, false) + '\n';
+                        distilledMarkdownContent += appendFileContent(fullPath, projectRoot, true) + '\n';
+                        filesCaptured++;
+                    } else {
+                        console.log(`[WARN] Manifest entry is not a file: ${relPath}`);
+                    }
+                } else {
+                    console.log(`[WARN] Manifest file not found: ${relPath}`);
+                    humanReadableMarkdownContent += `[MISSING] ${relPath}\n`;
+                }
+            }
+        } catch (err) {
+            console.error(`[FATAL] Error processing manifest: ${err.message}`);
+            process.exit(1);
+        }
+    } else {
+        traverseAndCapture(targetRoot);
+    }
 
     const fileTreeContent = `# Directory Structure (relative to ${subfolderArg ? subfolderArg + ' subfolder' : 'project root'})\n` + fileTreeLines.map(line => `  ./${subfolderArg ? subfolderArg + '/' : ''}${line}`).join('\n') + '\n\n';
 

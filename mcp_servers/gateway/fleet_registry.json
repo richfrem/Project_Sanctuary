@@ -8,7 +8,7 @@
       "status": "ready",
       "tools": [
         {
-          "description": "Check if the Sanctuary model is available and ready to use.",
+          "description": "No description",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -16,7 +16,7 @@
           "name": "sanctuary-cortex-check-sanctuary-model-status"
         },
         {
-          "description": "Query the fine-tuned Sanctuary model for specialized knowledge.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "max_tokens": {
@@ -42,7 +42,49 @@
           "name": "sanctuary-cortex-query-sanctuary-model"
         },
         {
-          "description": "Get Mnemonic Cache (CAG) statistics.",
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "manifest_files": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "snapshot_type": {
+                "default": "audit",
+                "enum": [
+                  "audit",
+                  "seal"
+                ],
+                "type": "string"
+              },
+              "strategic_context": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "manifest_files"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-capture-snapshot"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "hours": {
+                "default": 24,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-learning-debrief"
+        },
+        {
+          "description": "No description",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -50,7 +92,7 @@
           "name": "sanctuary-cortex-cortex-cache-stats"
         },
         {
-          "description": "Generate Guardian boot digest from cached bundles (Protocol 114).",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "mode": {
@@ -63,7 +105,7 @@
           "name": "sanctuary-cortex-cortex-guardian-wakeup"
         },
         {
-          "description": "Pre-populate cache with genesis queries.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "genesis_queries": {
@@ -78,7 +120,7 @@
           "name": "sanctuary-cortex-cortex-cache-warmup"
         },
         {
-          "description": "Store answer in cache for future retrieval.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "answer": {
@@ -97,7 +139,7 @@
           "name": "sanctuary-cortex-cortex-cache-set"
         },
         {
-          "description": "Retrieve cached answer for a query.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "query": {
@@ -112,7 +154,7 @@
           "name": "sanctuary-cortex-cortex-cache-get"
         },
         {
-          "description": "Incrementally ingest documents without rebuilding the entire database.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "file_paths": {
@@ -137,7 +179,7 @@
           "name": "sanctuary-cortex-cortex-ingest-incremental"
         },
         {
-          "description": "Get database statistics and health status.",
+          "description": "No description",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -145,7 +187,7 @@
           "name": "sanctuary-cortex-cortex-get-stats"
         },
         {
-          "description": "Perform semantic search query against the knowledge base.\n    \n    Uses the Parent Document Retriever pattern to return full documents\n    rather than fragmented chunks, providing complete context.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "max_results": {
@@ -172,7 +214,7 @@
           "name": "sanctuary-cortex-cortex-query"
         },
         {
-          "description": "Perform full re-ingestion of the knowledge base.\n    \n    This operation purges the existing database and rebuilds it from scratch\n    by processing all canonical documents. Use with caution.",
+          "description": "No description",
           "inputSchema": {
             "properties": {
               "purge_existing": {
@@ -264,6 +306,29 @@
             "type": "object"
           },
           "name": "sanctuary-domain-code-lint"
+        },
+        {
+          "description": "Read the content of a specific workflow file.",
+          "inputSchema": {
+            "properties": {
+              "filename": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filename"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-read-workflow"
+        },
+        {
+          "description": "List all available workflows in the .agent/workflows directory.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-domain-get-available-workflows"
         },
         {
           "description": "Delete a configuration file.",

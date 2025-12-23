@@ -1,8 +1,15 @@
-#!/usr/bin/env python3
-"""
-Test script for Forge MCP server.
-Verifies that the query_sanctuary_model tool works correctly.
-"""
+#============================================
+# Path: mcp_servers/forge_llm/test_forge.py
+# Purpose: Test script for Forge MCP server.
+# Role: Library Tests
+# Used as: Verification script for Forge LLM operations.
+# Calling example:
+#   python3 -m mcp_servers.forge_llm.test_forge
+# LIST OF FUNCTIONS:
+#   - main
+#   - test_model_availability
+#   - test_model_query
+#============================================
 import sys
 import os
 
@@ -12,8 +19,13 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from mcp_servers.system.forge.operations import ForgeOperations
 
+
+#============================================
+# Function: test_model_availability
+# Purpose: Test if the Sanctuary model is available.
+# Returns: Boolean success status
+#============================================
 def test_model_availability():
-    """Test if the Sanctuary model is available."""
     print("=" * 60)
     print("Testing Sanctuary Model Availability")
     print("=" * 60)
@@ -33,8 +45,13 @@ def test_model_availability():
     
     return result['status'] == 'success' and result.get('available', False)
 
+
+#============================================
+# Function: test_model_query
+# Purpose: Test querying the Sanctuary model.
+# Returns: Boolean success status
+#============================================
 def test_model_query():
-    """Test querying the Sanctuary model."""
     print("\n" + "=" * 60)
     print("Testing Sanctuary Model Query")
     print("=" * 60)
@@ -62,8 +79,13 @@ def test_model_query():
     
     return response.status == "success"
 
+
+#============================================
+# Function: main
+# Purpose: Run all tests.
+# Returns: Exit code
+#============================================
 def main():
-    """Run all tests."""
     print("\n🔥 Forge MCP Server Test Suite 🔥\n")
     
     # Test 1: Model availability
@@ -92,6 +114,7 @@ def main():
     else:
         print("\n❌ Some tests failed. Please review errors above.")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
