@@ -2,62 +2,1582 @@
   "fleet_servers": {
     "cortex": {
       "description": "RAG, Forge LLM",
-      "error": "HTTPSConnectionPool(host='localhost', port=4444): Max retries exceeded with url: /gateways (Caused by ResponseError('too many 503 error responses'))",
       "required": true,
       "slug": "sanctuary_cortex",
       "source": "spec",
-      "status": "error",
-      "tools": [],
+      "status": "ready",
+      "tools": [
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-check-sanctuary-model-status"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "max_tokens": {
+                "type": "integer"
+              },
+              "prompt": {
+                "type": "string"
+              },
+              "system_prompt": {
+                "type": "string"
+              },
+              "temperature": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "prompt"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-query-sanctuary-model"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "manifest_files": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "snapshot_type": {
+                "type": "string"
+              },
+              "strategic_context": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-capture-snapshot"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "hours": {
+                "description": "Hours to look back",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-learning-debrief"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-cache-stats"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "mode": {
+                "description": "full, fast, or minimal",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-guardian-wakeup"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "genesis_queries": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "genesis_queries"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-cache-warmup"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "answer": {
+                "type": "string"
+              },
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query",
+              "answer"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-cache-set"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "query": {
+                "description": "Query to look up",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-cache-get"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "file_paths": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "metadata": {
+                "type": "object"
+              },
+              "skip_duplicates": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "file_paths"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-ingest-incremental"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-get-stats"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "max_results": {
+                "description": "Max results to return",
+                "type": "integer"
+              },
+              "query": {
+                "description": "Semantic search query",
+                "type": "string"
+              },
+              "reasoning_mode": {
+                "description": "Reasoning mode",
+                "type": "string"
+              },
+              "use_cache": {
+                "description": "Use cached results",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-query"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "purge_existing": {
+                "description": "Clear existing data first",
+                "type": "boolean"
+              },
+              "source_directories": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-ingest-full"
+        }
+      ],
       "url": "http://sanctuary_cortex:8000/sse"
     },
     "domain": {
       "description": "Chronicle, ADR, Protocol, Task",
-      "error": "HTTPSConnectionPool(host='localhost', port=4444): Max retries exceeded with url: /gateways (Caused by ResponseError('too many 503 error responses'))",
       "required": true,
       "slug": "sanctuary_domain",
       "source": "spec",
-      "status": "error",
-      "tools": [],
+      "status": "ready",
+      "tools": [
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "filename": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filename"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-read-workflow"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-domain-get-available-workflows"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "filename": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filename"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-config-delete"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "content": {
+                "type": "string"
+              },
+              "filename": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filename",
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-config-write"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "filename": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filename"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-config-read"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-domain-config-list"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "persona_definition": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "role",
+              "persona_definition"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-persona-create-custom"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "role": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-persona-reset-state"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "role": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-persona-get-state"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-domain-persona-list-roles"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "context": {
+                "type": "string"
+              },
+              "custom_persona_file": {
+                "type": "string"
+              },
+              "engine": {
+                "type": "string"
+              },
+              "maintain_state": {
+                "type": "boolean"
+              },
+              "model_name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "task": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "role",
+              "task"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-persona-dispatch"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-adr-search"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "status": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-domain-adr-list"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "number": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "number"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-adr-get"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "new_status": {
+                "type": "string"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "number",
+              "new_status",
+              "reason"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-adr-update-status"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "author": {
+                "type": "string"
+              },
+              "consequences": {
+                "type": "string"
+              },
+              "context": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "decision": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "supersedes": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "context",
+              "decision",
+              "consequences"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-adr-create"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-search-tasks"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "priority": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-domain-list-tasks"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "task_number": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "task_number"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-get-task"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "new_status": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "task_number": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "task_number",
+              "new_status"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-update-task-status"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "task_number": {
+                "type": "integer"
+              },
+              "updates": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "task_number",
+              "updates"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-update-task"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "acceptance_criteria": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "deliverables": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "dependencies": {
+                "type": "array"
+              },
+              "lead": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "objective": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string"
+              },
+              "related_documents": {
+                "type": "array"
+              },
+              "status": {
+                "type": "string"
+              },
+              "task_number": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "objective"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-create-task"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-protocol-search"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "status": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-domain-protocol-list"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "number": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "number"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-protocol-get"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "number": {
+                "type": "integer"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "updates": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "number",
+              "updates"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-protocol-update"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "authority": {
+                "type": "string"
+              },
+              "classification": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              },
+              "linked_protocols": {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-protocol-create"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-search"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "limit": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-read-latest-entries"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "limit": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-list-entries"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "entry_number": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "entry_number"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-get-entry"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "entry_number": {
+                "type": "integer"
+              },
+              "override_approval_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "updates": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "entry_number",
+              "updates"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-update-entry"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "author": {
+                "type": "string"
+              },
+              "classification": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-append-entry"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "author": {
+                "type": "string"
+              },
+              "classification": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-create-entry"
+        }
+      ],
       "url": "http://sanctuary_domain:8105/sse"
     },
     "filesystem": {
       "description": "High-risk file operations. Isolated from network.",
-      "error": "HTTPSConnectionPool(host='localhost', port=4444): Max retries exceeded with url: /gateways (Caused by ResponseError('too many 503 error responses'))",
       "required": true,
       "slug": "sanctuary_filesystem",
       "source": "spec",
-      "status": "error",
-      "tools": [],
+      "status": "ready",
+      "tools": [
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "path": {
+                "description": "File path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-get-info"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "backup": {
+                "description": "Create backup first",
+                "type": "boolean"
+              },
+              "content": {
+                "description": "Content to write",
+                "type": "string"
+              },
+              "create_dirs": {
+                "description": "Create parent dirs",
+                "type": "boolean"
+              },
+              "path": {
+                "description": "File path to write",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-write"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "max_size_mb": {
+                "description": "Max file size in MB",
+                "type": "number"
+              },
+              "path": {
+                "description": "File path to read",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-read"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "case_sensitive": {
+                "description": "Case-sensitive search",
+                "type": "boolean"
+              },
+              "file_pattern": {
+                "description": "Optional file pattern",
+                "type": "string"
+              },
+              "query": {
+                "description": "Text/pattern to search",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-search-content"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "path": {
+                "description": "Directory to list",
+                "type": "string"
+              },
+              "pattern": {
+                "description": "Optional glob pattern",
+                "type": "string"
+              },
+              "recursive": {
+                "description": "Search recursively",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-list-files"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "name_pattern": {
+                "description": "Glob pattern for filename",
+                "type": "string"
+              },
+              "path": {
+                "description": "Directory to search",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name_pattern"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-find-file"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-check-tools"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "path": {
+                "description": "File or directory to analyze",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-analyze"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "check_only": {
+                "description": "Only check, don't modify",
+                "type": "boolean"
+              },
+              "path": {
+                "description": "File or directory to format",
+                "type": "string"
+              },
+              "tool": {
+                "description": "Format tool (black, ruff)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-format"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "path": {
+                "description": "File or directory to lint",
+                "type": "string"
+              },
+              "tool": {
+                "description": "Lint tool (ruff, pylint, flake8)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-lint"
+        }
+      ],
       "url": "http://sanctuary_filesystem:8000/sse"
     },
     "git": {
       "description": "Dual-permission (Filesystem + Network). Completely isolated container.",
-      "error": "HTTPSConnectionPool(host='localhost', port=4444): Max retries exceeded with url: /gateways (Caused by ResponseError('too many 503 error responses'))",
       "required": true,
       "slug": "sanctuary_git",
       "source": "spec",
-      "status": "error",
-      "tools": [],
+      "status": "ready",
+      "tools": [
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "max_count": {
+                "description": "Max commits",
+                "type": "integer"
+              },
+              "oneline": {
+                "description": "One line per commit",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-log"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "cached": {
+                "description": "Show staged changes",
+                "type": "boolean"
+              },
+              "file_path": {
+                "description": "Specific file",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-diff"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "branch_name": {
+                "description": "Branch to finish",
+                "type": "string"
+              },
+              "force": {
+                "description": "Force delete",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "branch_name"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-finish-feature"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "description": {
+                "description": "Brief description",
+                "type": "string"
+              },
+              "task_id": {
+                "description": "Task ID number",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "task_id",
+              "description"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-start-feature"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "force": {
+                "description": "Force push",
+                "type": "boolean"
+              },
+              "no_verify": {
+                "description": "Skip pre-push hooks",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-push-feature"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "files": {
+                "description": "Files to stage",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-add"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-get-status"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-get-safety-rules"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "message": {
+                "description": "Commit message",
+                "type": "string"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-git-git-smart-commit"
+        }
+      ],
       "url": "http://sanctuary_git:8000/sse"
     },
     "network": {
       "description": "External web access (Brave, Fetch). Isolated from filesystem.",
-      "error": "HTTPSConnectionPool(host='localhost', port=4444): Max retries exceeded with url: /gateways (Caused by ResponseError('too many 503 error responses'))",
       "required": true,
       "slug": "sanctuary_network",
       "source": "spec",
-      "status": "error",
-      "tools": [],
+      "status": "ready",
+      "tools": [
+        {
+          "description": "Check if a site is up (HEAD request).",
+          "inputSchema": {
+            "properties": {
+              "url": {
+                "description": "URL to check status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-network-check-site-status"
+        },
+        {
+          "description": "Fetch content from a URL via HTTP GET.",
+          "inputSchema": {
+            "properties": {
+              "url": {
+                "description": "URL to fetch content from",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-network-fetch-url"
+        }
+      ],
       "url": "http://sanctuary_network:8000/sse"
     },
     "utils": {
       "description": "Low-risk, stateless tools (Time, Calc, UUID, String).",
-      "error": "HTTPSConnectionPool(host='localhost', port=4444): Max retries exceeded with url: /gateways (Caused by ResponseError('too many 503 error responses'))",
       "required": true,
       "slug": "sanctuary_utils",
       "source": "spec",
-      "status": "error",
-      "tools": [],
+      "status": "ready",
+      "tools": [
+        {
+          "description": "Returns a high-level overview of available MCP servers.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-utils-gateway-get-capabilities"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "new": {
+                "description": "Replacement substring",
+                "type": "string"
+              },
+              "old": {
+                "description": "Substring to replace",
+                "type": "string"
+              },
+              "text": {
+                "description": "Original text",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "old",
+              "new"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-string-replace"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-string-word-count"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-string-reverse"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-string-trim"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-string-to-lower"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-string-to-upper"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "uuid_string": {
+                "description": "UUID string to validate",
+                "type": "string"
+              }
+            },
+            "required": [
+              "uuid_string"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-uuid-validate-uuid"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-utils-uuid-generate-uuid1"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-utils-uuid-generate-uuid4"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
+              },
+              "b": {
+                "description": "Second number",
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-calculator-divide"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
+              },
+              "b": {
+                "description": "Second number",
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-calculator-multiply"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
+              },
+              "b": {
+                "description": "Second number",
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-calculator-subtract"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
+              },
+              "b": {
+                "description": "Second number",
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-calculator-add"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "expression": {
+                "description": "Math expression to evaluate",
+                "type": "string"
+              }
+            },
+            "required": [
+              "expression"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-utils-calculator-calculate"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-utils-time-get-timezone-info"
+        },
+        {
+          "description": "No description",
+          "inputSchema": {
+            "properties": {
+              "timezone_name": {
+                "description": "Timezone name (default: UTC)",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-utils-time-get-current-time"
+        }
+      ],
       "url": "http://sanctuary_utils:8000/sse"
     }
   }
