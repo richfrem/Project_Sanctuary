@@ -1,25 +1,57 @@
-from fastmcp import FastMCP
+#============================================
+# mcp_servers/config/server.py
+# Purpose: MCP Server for Configuration Management.
+#          Allows reading, writing, and listing agent configuration files.
+# Role: Interface Layer
+# Used as: Main service entry point for the mcp_servers.config module.
+#============================================
+
 import os
+import sys
+import json
+import logging
 from typing import Optional, Dict, Any, Union
-from mcp_servers.config.config_ops import ConfigOperations
+from fastmcp import FastMCP
+from fastmcp.exceptions import ToolError
 
-# Initialize FastMCP
-mcp = FastMCP("project_sanctuary.config")
+# Local/Library Imports
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.path_utils import find_project_root
+from mcp_servers.lib.logging_utils import setup_mcp_logging
+from mcp_servers.config.operations import ConfigOperations
+from .models import (
+    ConfigReadRequest,
+    ConfigWriteRequest,
+    ConfigDeleteRequest
+)
 
-# Configuration
-PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
+# 1. Initialize Logging
+logger = setup_mcp_logging("project_sanctuary.config")
+
+# 2. Initialize FastMCP with Sanctuary Metadata
+mcp = FastMCP(
+    "project_sanctuary.config",
+    instructions="""
+    Use this server to manage agent configuration files in .agent/config.
+    - List configuration files to see what is available.
+    - Read configuration to understand agent behavior or settings.
+    - Write or update configuration to change system parameters.
+    """
+)
+
+# 3. Initialize Operations
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 CONFIG_DIR = os.path.join(PROJECT_ROOT, ".agent/config")
-
-# Initialize operations
 ops = ConfigOperations(CONFIG_DIR)
 
+#============================================
+# Standardized Tool Implementations
+#============================================
+
 @mcp.tool()
-def config_list() -> str:
+async def config_list() -> str:
     """
     List all configuration files in the .agent/config directory.
-    
-    Returns:
-        Formatted list of config files with sizes and modification times.
     """
     try:
         configs = ops.list_configs()
@@ -31,73 +63,70 @@ def config_list() -> str:
             output.append(f"- {c['name']} ({c['size']} bytes, {c['modified']})")
         return "\n".join(output)
     except Exception as e:
-        return f"Error listing configs: {str(e)}"
+        logger.error(f"Error in config_list: {e}")
+        raise ToolError(f"List failed: {str(e)}")
 
 @mcp.tool()
-def config_read(filename: str) -> str:
+async def config_read(request: ConfigReadRequest) -> str:
     """
     Read a configuration file.
-    
-    Args:
-        filename: Name of the config file (e.g., 'mcp_config.json')
-        
-    Returns:
-        Content of the configuration file.
     """
     try:
-        content = ops.read_config(filename)
+        content = ops.read_config(request.filename)
         if isinstance(content, (dict, list)):
-            import json
             return json.dumps(content, indent=2)
         return str(content)
     except Exception as e:
-        return f"Error reading config '{filename}': {str(e)}"
+        logger.error(f"Error in config_read '{request.filename}': {e}")
+        raise ToolError(f"Read failed: {str(e)}")
 
 @mcp.tool()
-def config_write(filename: str, content: str) -> str:
+async def config_write(request: ConfigWriteRequest) -> str:
     """
     Write a configuration file.
-    
-    Args:
-        filename: Name of the config file
-        content: Content to write (string or JSON string)
-        
-    Returns:
-        Status message with path to written file.
     """
     try:
         # Try to parse content as JSON if file extension implies it
-        import json
-        if filename.endswith('.json'):
+        if request.filename.endswith('.json'):
             try:
-                data = json.loads(content)
-                path = ops.write_config(filename, data)
+                data = json.loads(request.content)
+                path = ops.write_config(request.filename, data)
             except json.JSONDecodeError:
                 # Write as raw string if not valid JSON
-                path = ops.write_config(filename, content)
+                path = ops.write_config(request.filename, request.content)
         else:
-            path = ops.write_config(filename, content)
+            path = ops.write_config(request.filename, request.content)
             
         return f"Successfully wrote config to {path}"
     except Exception as e:
-        return f"Error writing config '{filename}': {str(e)}"
+        logger.error(f"Error in config_write '{request.filename}': {e}")
+        raise ToolError(f"Write failed: {str(e)}")
 
 @mcp.tool()
-def config_delete(filename: str) -> str:
+async def config_delete(request: ConfigDeleteRequest) -> str:
     """
     Delete a configuration file.
-    
-    Args:
-        filename: Name of the config file to delete
-        
-    Returns:
-        Status message.
     """
     try:
-        ops.delete_config(filename)
-        return f"Successfully deleted config '{filename}'"
+        ops.delete_config(request.filename)
+        return f"Successfully deleted config '{request.filename}'"
     except Exception as e:
-        return f"Error deleting config '{filename}': {str(e)}"
+        logger.error(f"Error in config_delete '{request.filename}': {e}")
+        raise ToolError(f"Delete failed: {str(e)}")
+
+#============================================
+# Main Execution Entry Point
+#============================================
 
 if __name__ == "__main__":
-    mcp.run()
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Local/CLI Mode)
+    port_env = get_env_variable("PORT", required=False)
+    transport = "sse" if port_env else "stdio"
+    
+    if transport == "sse":
+        port = int(port_env) if port_env else 8006
+        mcp.run(port=port, transport=transport)
+    else:
+        mcp.run(transport=transport)

@@ -14,7 +14,7 @@ import logging # Added correct import
 try:
     import httpx
     # Use project standard helper
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
 except ImportError:
     # If dotenv is missing, we proceed; token must be in env vars
     pass

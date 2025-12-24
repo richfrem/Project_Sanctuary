@@ -1,149 +1,194 @@
-"""
-Orchestrator MCP Server
-Domain: project_sanctuary.orchestrator
+#============================================
+# mcp_servers/orchestrator/server.py
+# Purpose: Orchestrator MCP Server.
+#          Central mission control for the Agentic swarm.
+# Role: Interface Layer
+# Used as: Main service entry point.
+#============================================
 
-Provides MCP tools for the Sanctuary Council (Strategist, Auditor, etc.) to
-orchestrate high-level missions and decisions.
-"""
-from fastmcp import FastMCP
 import os
 import sys
 import json
-from pathlib import Path
-from typing import Optional, List
-from mcp.server.fastmcp import FastMCP
+import logging
+from typing import Optional, List, Dict, Any
+from fastmcp import FastMCP
+from fastmcp.exceptions import ToolError
 
-# Add project root to path
-project_root = Path(__file__).resolve().parent.parent.parent
-sys.path.insert(0, str(project_root))
-
-# Import tools
-from mcp_servers.orchestrator.tools.cognitive import (
-    create_cognitive_task,
-    create_development_cycle,
-    query_mnemonic_cortex
-)
-from mcp_servers.orchestrator.tools.mechanical import (
-    create_file_write_task,
-    create_git_commit_task
-)
-from mcp_servers.orchestrator.tools.query import (
-    get_orchestrator_status,
-    list_recent_tasks,
-    get_task_result
+# Local/Library Imports
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.path_utils import find_project_root
+from mcp_servers.lib.logging_utils import setup_mcp_logging
+from mcp_servers.orchestrator.operations import OrchestratorOperations
+from .models import (
+    OrchestratorDispatchMissionRequest,
+    OrchestratorStrategicCycleRequest,
+    CreateCognitiveTaskRequest,
+    CreateDevelopmentCycleRequest,
+    QueryMnemonicCortexRequest,
+    CreateFileWriteTaskRequest,
+    CreateGitCommitTaskRequest,
+    ListRecentTasksRequest,
+    GetTaskResultRequest
 )
 
-# Initialize MCP Server
-mcp = FastMCP("orchestrator")
+# 1. Initialize Logging
+logger = setup_mcp_logging("project_sanctuary.orchestrator")
 
-# Configuration
-PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
+# 2. Initialize FastMCP with Sanctuary Metadata
+mcp = FastMCP(
+    "project_sanctuary.orchestrator",
+    instructions="""
+    Use this server to orchestrate missions and development cycles.
+    - Dispatch high-level missions to specialized agents.
+    - Run strategic cycles for synthesis and adaptation.
+    - Generate command.json artifacts for Council deliberation.
+    """
+)
 
-# Load Config
-CONFIG_PATH = Path(__file__).parent / "config" / "mcp_config.json"
-try:
-    with open(CONFIG_PATH, "r") as f:
-        MCP_CONFIG = json.load(f)
-except Exception as e:
-    print(f"Warning: Could not load config from {CONFIG_PATH}: {e}")
-    MCP_CONFIG = {}
+# 3. Initialize Operations
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
+ops = OrchestratorOperations(PROJECT_ROOT)
 
-# TODO: On server startup, call cortex_guardian_wakeup() to initialize the cache
-# and generate the boot digest for the Council.
-
+#============================================
+# Standardized Tool Implementations
+#============================================
 
 @mcp.tool()
-def orchestrator_dispatch_mission(
-    mission_id: str,
-    objective: str,
-    assigned_agent: str = "Kilo"
-) -> str:
-    """
-    Dispatch a mission to an agent.
-    
-    Args:
-        mission_id: Unique mission identifier
-        objective: The objective of the mission
-        assigned_agent: The agent assigned to the mission
-    """
-    # TODO: Connect to task management or agent dispatch system
-    return f"Mission '{mission_id}' dispatched to {assigned_agent}. Objective: {objective}"
-
-
-# ============================================================================
-# Strategic Crucible Loop
-# ============================================================================
+async def orchestrator_dispatch_mission(request: OrchestratorDispatchMissionRequest) -> str:
+    """Dispatch a mission to an agent."""
+    try:
+        return ops.dispatch_mission(
+            request.mission_id,
+            request.objective,
+            request.assigned_agent
+        )
+    except Exception as e:
+        logger.error(f"Error in orchestrator_dispatch_mission: {e}")
+        raise ToolError(f"Dispatch failed: {str(e)}")
 
 @mcp.tool()
-def orchestrator_run_strategic_cycle(
-    gap_description: str,
-    research_report_path: str,
-    days_to_synthesize: int = 1
-) -> str:
-    """
-    Execute a full Strategic Crucible Loop: Ingest -> Synthesize -> Adapt -> Cache.
-    
-    Args:
-        gap_description: Description of the strategic gap being addressed.
-        research_report_path: Path to the new research report (markdown).
-        days_to_synthesize: Window for adaptation packet generation.
-        
-    Returns:
-        Summary of the cycle execution.
-    """
-    # Lazy import to prevent heavy startup cost
-    from mcp_servers.rag_cortex.operations import CortexOperations
-
-    results = []
-    results.append(f"--- Strategic Crucible Cycle: {gap_description} ---")
-    
-    # 1. Ingestion (Medium Memory Update)
+async def orchestrator_run_strategic_cycle(request: OrchestratorStrategicCycleRequest) -> str:
+    """Execute a full Strategic Crucible Loop: Ingest -> Synthesize -> Adapt -> Cache."""
     try:
-        results.append(f"1. Ingesting Report: {research_report_path}")
-        cortex_ops = CortexOperations(PROJECT_ROOT)
-        # We assume incremental ingest for a single report
-        ingest_stats = cortex_ops.ingest_incremental([research_report_path])
-        results.append(f"   - Ingestion Complete: {ingest_stats}")
+        return ops.run_strategic_cycle(
+            request.gap_description,
+            request.research_report_path,
+            request.days_to_synthesize
+        )
     except Exception as e:
-        return "\n".join(results) + f"\n[CRITICAL FAIL] Ingestion failed: {e}"
+        logger.error(f"Error in orchestrator_run_strategic_cycle: {e}")
+        raise ToolError(f"Strategic cycle failed: {str(e)}")
 
-    # 2. Adaptation (Slow Memory Update Prep)
+@mcp.tool()
+async def create_cognitive_task(request: CreateCognitiveTaskRequest) -> dict:
+    """Generate a command.json for Council deliberation."""
     try:
-        results.append(f"2. Generating Adaptation Packet (Window: {days_to_synthesize} days)")
-        # generator = SynthesisGenerator(PROJECT_ROOT)
-        # packet = generator.generate_packet(days=days_to_synthesize)
-        # packet_path = generator.save_packet(packet)
-        packet_path = "TODO: Re-implement SynthesisGenerator in Cortex MCP"
-        results.append(f"   - Packet Generated: {packet_path}")
-        # results.append(f"   - Packet ID: {packet.packet_id}")
+        return ops.create_cognitive_task(
+            request.description,
+            request.output_path,
+            request.max_rounds,
+            request.force_engine,
+            request.max_cortex_queries,
+            request.input_artifacts
+        )
     except Exception as e:
-        return "\n".join(results) + f"\n[CRITICAL FAIL] Adaptation failed: {e}"
+        logger.error(f"Error in create_cognitive_task: {e}")
+        raise ToolError(f"Task creation failed: {str(e)}")
 
-    # 3. Cache Update (Fast Memory Update)
+@mcp.tool()
+async def create_development_cycle(request: CreateDevelopmentCycleRequest) -> dict:
+    """Generate a command.json for a staged development cycle."""
     try:
-        results.append(f"3. Waking Guardian Cache")
-        # Initialize Cortex Ops to access cache logic
-        # cortex_ops already initialized above
-        
-        # We call guardian_wakeup. In a real scenario, this might be an async tool call.
-        # Here we call the method directly if available, or simulate it.
-        # Looking at cortex/operations.py, guardian_wakeup is a method.
-        # Note: guardian_wakeup calls cache_warmup internally or similar logic
-        if hasattr(cortex_ops, 'guardian_wakeup'):
-             wakeup_stats = cortex_ops.guardian_wakeup()
-             results.append(f"   - Cache Updated: {wakeup_stats}")
-        else:
-             results.append(f"   - [WARN] guardian_wakeup not found on CortexOperations")
-
+        return ops.create_development_cycle(
+            request.description,
+            request.project_name,
+            request.output_path,
+            request.max_rounds
+        )
     except Exception as e:
-        results.append(f"   - [WARN] Cache update failed (non-critical): {e}")
+        logger.error(f"Error in create_development_cycle: {e}")
+        raise ToolError(f"Cycle creation failed: {str(e)}")
+
+@mcp.tool()
+async def query_mnemonic_cortex(request: QueryMnemonicCortexRequest) -> dict:
+    """Generate a command.json for a RAG query task."""
+    try:
+        return ops.query_mnemonic_cortex(
+            request.query,
+            request.output_path,
+            request.max_results
+        )
     except Exception as e:
-        results.append(f"   - [WARN] Cache update failed (non-critical): {e}")
+        logger.error(f"Error in query_mnemonic_cortex: {e}")
+        raise ToolError(f"Query task creation failed: {str(e)}")
 
-    results.append("--- Cycle Complete ---")
-    return "\n".join(results)
+@mcp.tool()
+async def create_file_write_task(request: CreateFileWriteTaskRequest) -> dict:
+    """Generate a command.json for writing a file."""
+    try:
+        return ops.create_file_write_task(
+            request.content,
+            request.output_path,
+            request.description
+        )
+    except Exception as e:
+        logger.error(f"Error in create_file_write_task: {e}")
+        raise ToolError(f"File write task creation failed: {str(e)}")
 
+@mcp.tool()
+async def create_git_commit_task(request: CreateGitCommitTaskRequest) -> dict:
+    """Generate a command.json for a git commit (P101 compliant)."""
+    try:
+        return ops.create_git_commit_task(
+            request.files,
+            request.message,
+            request.description,
+            request.push
+        )
+    except Exception as e:
+        logger.error(f"Error in create_git_commit_task: {e}")
+        raise ToolError(f"Commit task creation failed: {str(e)}")
+
+@mcp.tool()
+async def get_orchestrator_status() -> dict:
+    """Check if the orchestrator is running and healthy."""
+    try:
+        return ops.get_orchestrator_status()
+    except Exception as e:
+        logger.error(f"Error in get_orchestrator_status: {e}")
+        raise ToolError(f"Status check failed: {str(e)}")
+
+@mcp.tool()
+async def list_recent_tasks(request: ListRecentTasksRequest) -> list:
+    """List recent tasks from the orchestrator logs/results."""
+    try:
+        return ops.list_recent_tasks(request.limit)
+    except Exception as e:
+        logger.error(f"Error in list_recent_tasks: {e}")
+        raise ToolError(f"List failed: {str(e)}")
+
+@mcp.tool()
+async def get_task_result(request: GetTaskResultRequest) -> dict:
+    """Retrieve the result of a specific task."""
+    try:
+        return ops.get_task_result(request.task_id)
+    except Exception as e:
+        logger.error(f"Error in get_task_result: {e}")
+        raise ToolError(f"Result retrieval failed: {str(e)}")
+
+#============================================
+# Main Execution Entry Point
+#============================================
 
 if __name__ == "__main__":
-    mcp.run()
-
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Local/CLI Mode)
+    port_env = get_env_variable("PORT", required=False)
+    transport = "sse" if port_env else "stdio"
+    
+    if transport == "sse":
+        port = int(port_env) if port_env else 8008
+        mcp.run(port=port, transport=transport)
+    else:
+        mcp.run(transport=transport)

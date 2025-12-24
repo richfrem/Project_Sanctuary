@@ -115,7 +115,7 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     from langchain_chroma import Chroma
     from mcp_servers.rag_cortex.file_store import SimpleFileStore
     from langchain_core.documents import Document
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
 
 
 class CortexOperations:

@@ -22,8 +22,8 @@ These 8 containers are defined in the root [docker-compose.yml](../../docker-com
 | `sanctuary_ollama_mcp` | Ollama | 11434 | Ollama LLM / Embedding compute backend. |
 
 ### 2. Infrastructure Services (External)
-- **`mcpgateway`**: The IBM ContextForge Gateway (Port 4444).
-- **`helloworld-mcp`**: Demo tool for gateway validation (Port 8005).
+- **`mcp_gateway`**: The IBM ContextForge Gateway (Port 4444).
+- **`helloworld_mcp`**: Demo tool for gateway validation (Port 8005).
 
 ---
 

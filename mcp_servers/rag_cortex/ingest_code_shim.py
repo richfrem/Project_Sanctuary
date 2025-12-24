@@ -21,7 +21,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Optional
-from mcp_servers.lib.utils.path_utils import find_project_root
+from mcp_servers.lib.path_utils import find_project_root
 
 
 #============================================

@@ -18,7 +18,6 @@ from typing import Optional, List, Dict, Any
 from ollama import Client # New import
 
 # Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)

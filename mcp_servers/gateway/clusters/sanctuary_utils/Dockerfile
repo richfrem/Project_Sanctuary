@@ -2,7 +2,7 @@
 # Fleet of 8 - Container #1: Low-risk utility tools
 # Designed to run with context at project root
 
-FROM python:3.11-slim
+FROM python:3.11
 
 LABEL maintainer="Project Sanctuary"
 LABEL description="Fleet of 8 - sanctuary_utils: Low-risk utility tools"

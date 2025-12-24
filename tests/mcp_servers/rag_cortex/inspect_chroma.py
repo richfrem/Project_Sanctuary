@@ -15,7 +15,7 @@ project_root = current
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from mcp_servers.lib.utils.env_helper import get_env_variable, load_env
+from mcp_servers.lib.env_helper import get_env_variable, load_env
 from langchain_huggingface import HuggingFaceEmbeddings
 
 # ============================================================================

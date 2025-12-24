@@ -5,11 +5,12 @@ services:
     ports:
       - "8110:8000"
     volumes:
-      # Use CHROMA_DATA_PATH from .env, default to .vector_data if not set
-      - ${CHROMA_DATA_PATH:-.vector_data}:/chroma/chroma
+      # Chroma writes to /data by default in current image version
+      - ${CHROMA_DATA_PATH:-.vector_data}:/data
     environment:
       - IS_PERSISTENT=TRUE
       - ANONYMIZED_TELEMETRY=FALSE
+      - PERSIST_DIRECTORY=/chroma/chroma
       - CHROMA_SERVER_HOST=0.0.0.0
       - CHROMA_SERVER_HTTP_PORT=8000
     restart: unless-stopped
@@ -62,12 +63,13 @@ services:
       - mcp_network
     environment:
       - PORT=8000
+      - MCP_TRANSPORT=sse
       - PYTHONPATH=/app
-      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_utils.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -88,13 +90,14 @@ services:
       - mcp_network
     environment:
       - PORT=8000
+      - MCP_TRANSPORT=sse
       - PROJECT_ROOT=/app
       - PYTHONUNBUFFERED=1
-      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_filesystem.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
@@ -113,12 +116,13 @@ services:
       - mcp_network
     environment:
       - PORT=8000
+      - MCP_TRANSPORT=sse
       - PYTHONPATH=/app
-      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_network.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
@@ -137,8 +141,9 @@ services:
       - mcp_network
     environment:
       - PORT=8000
+      - MCP_TRANSPORT=sse
       - PYTHONPATH=/app
-      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME:-Sanctuary Agent}
@@ -147,7 +152,7 @@ services:
       - GIT_COMMITTER_EMAIL=${GIT_AUTHOR_EMAIL:-agent@sanctuary.project}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_git.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
@@ -166,10 +171,11 @@ services:
       - PROJECT_ROOT=/app
       - PYTHONPATH=/app
       - PORT=8000
+      - MCP_TRANSPORT=sse
       - CHROMA_HOST=vector_db
       - CHROMA_PORT=8000
       - OLLAMA_HOST=http://ollama_model_mcp:11434
-      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     networks:
       - mcp_network
@@ -178,7 +184,7 @@ services:
       - ollama_model_mcp
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_cortex.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
       interval: 30s
       retries: 3
     restart: unless-stopped
@@ -199,18 +205,21 @@ services:
       - mcp_network
     environment:
       - PROJECT_ROOT=/app
-      - DOMAIN_SERVER_PORT=8105
-      - MCP_GATEWAY_URL=https://mcpgateway:4444
+      - PORT=8105
+      - MCP_TRANSPORT=sse
+      - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     deploy:
       resources:
         limits:
           cpus: '1.0'
           memory: '512M'
-    command: [ "python", "mcp_servers/gateway/clusters/sanctuary_domain/unified_server.py", "--port", "8105", "--transport", "sse" ]
+    command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_domain.server" ]
     restart: unless-stopped
 
 networks:
   mcp_network:
+    # bridge driver required for container-to-container communication
     driver: bridge
+    external: true
     name: mcp_network

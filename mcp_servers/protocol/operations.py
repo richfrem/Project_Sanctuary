@@ -1,3 +1,13 @@
+#============================================
+# mcp_servers/protocol/operations.py
+# Purpose: Core business logic for Protocol MCP.
+#          Handles creation, updating, retrieval, and search of protocols.
+# Role: Business Logic Layer
+# Used as: Helper module by server.py
+# LIST OF CLASSES:
+#   - ProtocolOperations
+#============================================
+
 """
 File operations for Protocol MCP.
 """
@@ -8,9 +18,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 
-# Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from lib.logging_utils import setup_mcp_logging
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
 from .models import Protocol, ProtocolStatus, PROTOCOL_TEMPLATE

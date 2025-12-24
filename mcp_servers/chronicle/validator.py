@@ -1,3 +1,17 @@
+#============================================
+# mcp_servers/chronicle/validator.py
+# Purpose: Validation logic for Chronicle entries.
+#          Enforces data integrity, uniqueness, and modification windows.
+# Role: Validation Layer
+# Used as: Helper module by operations.py
+# LIST OF CLASSES/FUNCTIONS:
+#   - ChronicleValidator
+#     - __init__
+#     - get_next_entry_number
+#     - validate_entry_number
+#     - validate_modification_window
+#     - validate_required_fields
+#============================================
 """
 Validation logic for Chronicle MCP.
 """
@@ -11,6 +25,11 @@ class ChronicleValidator:
     def __init__(self, base_dir: str):
         self.base_dir = base_dir
 
+    #============================================
+    # Method: get_next_entry_number
+    # Purpose: Determine the next sequential entry number.
+    # Returns: Next available integer ID
+    #============================================
     def get_next_entry_number(self) -> int:
         """Determine the next sequential entry number."""
         if not os.path.exists(self.base_dir):
@@ -25,6 +44,13 @@ class ChronicleValidator:
         
         return max(numbers) + 1 if numbers else 1
 
+    #============================================
+    # Method: validate_entry_number
+    # Purpose: Ensure entry number is unique for creation.
+    # Args:
+    #   number: Entry ID to check
+    # Throws: ValueError if exists
+    #============================================
     def validate_entry_number(self, number: int) -> None:
         """Ensure entry number is unique for creation."""
         if not os.path.exists(self.base_dir):
@@ -35,6 +61,13 @@ class ChronicleValidator:
             if f.startswith(f"{number:03d}_"):
                 raise ValueError(f"Entry {number} already exists: {f}")
 
+    #============================================
+    # Method: validate_modification_window
+    # Purpose: Enforce 7-day modification window.
+    # Args:
+    #   file_path: Path to entry file
+    #   override_approval_id: Optional override ID
+    #============================================
     def validate_modification_window(self, file_path: str, override_approval_id: Optional[str] = None) -> None:
         """
         Enforce 7-day modification window.
@@ -58,6 +91,12 @@ class ChronicleValidator:
                     "Modification requires 'override_approval_id'."
                 )
 
+    #============================================
+    # Method: validate_required_fields
+    # Purpose: Validate that required fields are present and not empty.
+    # Args:
+    #   title, content, author
+    #============================================
     def validate_required_fields(self, title: str, content: str, author: str) -> None:
         """Validate that required fields are present and not empty."""
         if not title or not title.strip():

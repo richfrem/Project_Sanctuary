@@ -7,28 +7,56 @@ Run headless ADR tests:
 pytest tests/mcp_servers/adr/e2e -m headless -q
 
 Note: These tests use `MCPClient.route_query` to simulate headless client routing. They are intended for CI/nightly runs and do not make servers available to the IDE/Copilot.
-# ADR MCP Tests
+# ADR Server Test Suite
 
-This directory contains tests for the ADR MCP server, organized into a 3-layer pyramid.
+## Overview
+This directory contains the test suite for the `mcp_servers.adr` module, ensuring compliance with **Protocol 122** (Schema Validation) and sequential integrity rules.
 
 ## Structure
 
-### Layer 1: Unit Tests (`unit/`)
--   **Focus:** Validator logic, status transitions, constraints.
--   **Run:** `pytest tests/mcp_servers/adr/unit/ -v`
+```
+tests/mcp_servers/adr/
+├── conftest.py              # Shared fixtures (Temp ADR directory)
+├── e2e/                     # End-to-End Tests
+│   └── test_adr_e2e.py      # Full lifecycle verification
+├── integration/             # Integration Tests
+│   └── test_operations.py   # ADROperations class integration
+├── unit/                    # Unit Tests
+│   └── test_validator.py    # Validator logic checks
+└── test_adr_connectivity.py # Basic server connectivity check
+```
 
-### Layer 2: Integration Tests (`integration/`)
--   **Focus:** File I/O for creating/reading/listing ADRs.
--   **Dependencies:** Filesystem (safe via `tmp_path` fixture in `conftest.py`).
--   **Run:** `pytest tests/mcp_servers/adr/integration/ -v`
+## Running Tests
 
-### Layer 3: MCP Operations (End-to-End)
--   **Focus:** Full MCP tool execution via Client.
--   **Run:** Use Antigravity or Claude Desktop to call:
-    -   `adr_create`
-    -   `adr_list`
-    -   `adr_get`
-    -   `adr_update_status`
+Run the full suite from the project root:
 
-## Key Files
--   `conftest.py`: Defines `adr_root` fixture for safe temp dir testing.
+```bash
+pytest tests/mcp_servers/adr/ -v
+```
+
+### Specific Categories
+
+**Integration Tests:**
+```bash
+pytest tests/mcp_servers/adr/integration/ -v
+```
+
+**Unit Tests:**
+```bash
+pytest tests/mcp_servers/adr/unit/ -v
+```
+
+## Key Test Cases
+
+### Lifecycle (`e2e/test_adr_e2e.py`)
+- **Creation:** Verifies auto-numbering (001, 002...).
+- **Status Updates:** Checks valid transitions (Proposed -> Accepted).
+- **Search:** Verifies context indexing.
+
+### Integrity
+- **Immutability:** Ensures ADRs cannot be deleted via standard tools.
+- **Numbering:** Ensures no gaps or duplicates in ADR sequence.
+
+## Requirements
+- `pytest`
+- `fastmcp`

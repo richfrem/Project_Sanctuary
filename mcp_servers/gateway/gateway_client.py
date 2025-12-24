@@ -91,7 +91,7 @@ if str(project_root) not in sys.path:
 
 # Import Fleet logic with defensive try-except
 try:
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
     from mcp_servers.gateway.fleet_spec import FleetSpec, ServerSpec, ToolSpec
     from mcp_servers.gateway.fleet_resolver import FleetResolver
 except ImportError:

@@ -1,5 +1,5 @@
 import pytest
-from mcp_servers.git.git_ops import GitOperations
+from mcp_servers.git.operations import GitOperations
 
 class TestGitValidator:
     def test_validate_branch_name_valid(self, git_root):

@@ -1,3 +1,11 @@
+#============================================
+# mcp_servers/task/models.py
+# Purpose: Data models for the Task MCP server.
+#          Defines TaskSchema, TaskStatus, TaskPriority, and FileOperationResult.
+# Role: Data Layer
+# Used as: Data structure definitions.
+#============================================
+
 """
 Task MCP Server - Data Models
 Defines schemas for tasks and operation results
@@ -5,12 +13,16 @@ Defines schemas for tasks and operation results
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 
 class TaskStatus(str, Enum):
-    """Task status following task_schema.md"""
+    #----------------------------------------------------------------------
+    # TaskStatus
+    # Purpose: Enum for task status states
+    # Values: backlog, todo, in-progress, complete, blocked
+    #----------------------------------------------------------------------
     BACKLOG = "backlog"
     TODO = "todo"
     IN_PROGRESS = "in-progress"
@@ -19,7 +31,11 @@ class TaskStatus(str, Enum):
 
 
 class TaskPriority(str, Enum):
-    """Task priority levels"""
+    #----------------------------------------------------------------------
+    # TaskPriority
+    # Purpose: Enum for task priority levels
+    # Values: Critical, High, Medium, Low
+    #----------------------------------------------------------------------
     CRITICAL = "Critical"
     HIGH = "High"
     MEDIUM = "Medium"
@@ -28,9 +44,6 @@ class TaskPriority(str, Enum):
 
 @dataclass
 class TaskSchema:
-    """
-    Task schema following TASKS/task_schema.md
-    """
     number: int
     title: str
     status: TaskStatus
@@ -52,10 +65,6 @@ class TaskSchema:
 
 @dataclass
 class FileOperationResult:
-    """
-    Result of a file operation (following separation of concerns)
-    Returns file path for Git Workflow MCP to commit
-    """
     file_path: str
     content: str
     operation: str  # "created", "updated", "moved"
@@ -72,3 +81,40 @@ class FileOperationResult:
             "status": self.status,
             "message": self.message
         }
+
+#============================================
+# FastMCP Request Models
+#============================================
+from pydantic import BaseModel, Field
+
+class TaskCreateRequest(BaseModel):
+    title: str = Field(..., description="Task title")
+    objective: str = Field(..., description="Core objective of the task")
+    deliverables: List[str] = Field(..., description="List of concrete outputs")
+    acceptance_criteria: List[str] = Field(..., description="List of completion conditions")
+    priority: str = Field("Medium", description="Priority level (Critical, High, Medium, Low)")
+    status: str = Field("backlog", description="Initial status (backlog, todo, in-progress, complete, blocked)")
+    lead: str = Field("Unassigned", description="Assigned lead for the task")
+    dependencies: Optional[str] = Field(None, description="Task dependencies (e.g., 'Requires #012')")
+    related_documents: Optional[str] = Field(None, description="Related files or protocols")
+    notes: Optional[str] = Field(None, description="Additional context or notes")
+    task_number: Optional[int] = Field(None, description="Specific task number (auto-generated if omitted)")
+
+class TaskUpdateRequest(BaseModel):
+    task_number: int = Field(..., description="The task number to update")
+    updates: Dict[str, Any] = Field(..., description="Dictionary of fields to update")
+
+class TaskUpdateStatusRequest(BaseModel):
+    task_number: int = Field(..., description="The task number to move")
+    new_status: str = Field(..., description="New status (backlog, todo, in-progress, complete, blocked)")
+    notes: Optional[str] = Field(None, description="Reason for status change")
+
+class TaskGetRequest(BaseModel):
+    task_number: int = Field(..., description="Task number to retrieve")
+
+class TaskListRequest(BaseModel):
+    status: Optional[str] = Field(None, description="Filter by status")
+    priority: Optional[str] = Field(None, description="Filter by priority")
+
+class TaskSearchRequest(BaseModel):
+    query: str = Field(..., description="Search term or regex pattern")

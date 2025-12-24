@@ -26,7 +26,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from mcp_servers.config.config_ops import ConfigOperations
+from mcp_servers.config.operations import ConfigOperations
 
 # Use REAL config directory
 REAL_CONFIG_DIR = project_root / ".agent" / "config"

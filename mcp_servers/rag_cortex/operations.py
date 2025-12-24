@@ -102,7 +102,7 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     from langchain_chroma import Chroma
     from mcp_servers.rag_cortex.file_store import SimpleFileStore
     from langchain_core.documents import Document
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
 
 
 class CortexOperations:
@@ -171,9 +171,15 @@ class CortexOperations:
         docstore_path = str(self.project_root / self.chroma_data_path / self.parent_collection_name)
         self.store = SimpleFileStore(root_path=docstore_path)
     
-    # Helper methods for ingestion
+    #============================================
+    # Method: _chunked_iterable
+    # Purpose: Yield successive n-sized chunks from seq.
+    # Args:
+    #   seq: Sequence to chunk
+    #   size: Chunk size
+    # Returns: Generator of chunks
+    #============================================
     def _chunked_iterable(self, seq: List, size: int):
-        """Yield successive n-sized chunks from seq."""
         for i in range(0, len(seq), size):
             yield seq[i : i + size]
     
@@ -255,8 +261,14 @@ class CortexOperations:
             
         return False
 
+    #============================================
+    # Method: _load_documents_from_directory
+    # Purpose: Helper to load documents from a single directory.
+    # Args:
+    #   directory_path: Path to directory
+    # Returns: List of loaded Documents
+    #============================================
     def _load_documents_from_directory(self, directory_path: Path) -> List[Document]:
-        """Helper to load documents from a single directory."""
         exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
         
         if not directory_path.is_dir():

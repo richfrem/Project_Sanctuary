@@ -1,3 +1,23 @@
+#============================================
+# mcp_servers/chronicle/operations.py
+# Purpose: Core business logic for the Living Chronicle.
+#          Handles file I/O, entry parsing, and content management.
+# Role: Business Logic Layer
+# Used as: Helper module by server.py
+# Calling example:
+#   ops = ChronicleOperations(base_dir)
+#   ops.create_entry(...)
+# LIST OF CLASSES/FUNCTIONS:
+#   - ChronicleOperations
+#     - __init__
+#     - create_entry
+#     - update_entry
+#     - get_entry
+#     - list_entries
+#     - search_entries
+#     - _find_entry_file
+#     - _parse_entry
+#============================================
 """
 File operations for Chronicle MCP.
 """
@@ -9,8 +29,8 @@ from pathlib import Path
 import sys
 
 # Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from lib.logging_utils import setup_mcp_logging
+# Setup logging
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
 
@@ -19,6 +39,12 @@ from .validator import ChronicleValidator
 
 
 class ChronicleOperations:
+    #============================================
+    # Method: __init__
+    # Purpose: Initialize Chronicle Operations.
+    # Args:
+    #   base_dir: Directory for chronicle entries
+    #============================================
     def __init__(self, base_dir: str):
         self.base_dir = base_dir
         self.validator = ChronicleValidator(base_dir)
@@ -27,6 +53,18 @@ class ChronicleOperations:
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
+    #============================================
+    # Method: create_entry
+    # Purpose: Create a new chronicle entry.
+    # Args:
+    #   title: Entry title
+    #   content: Entry content
+    #   author: Author name
+    #   date_str: Optional date string
+    #   status: Entry status
+    #   classification: Entry classification
+    # Returns: Dict with entry info
+    #============================================
     def create_entry(
         self,
         title: str,
@@ -80,6 +118,16 @@ class ChronicleOperations:
             "status": entry.status.value
         }
 
+    #============================================
+    # Method: update_entry
+    # Purpose: Update an existing chronicle entry.
+    # Args:
+    #   entry_number: Entry ID
+    #   updates: Dict of fields to update
+    #   reason: Update reason
+    #   override_approval_id: Optional override ID
+    # Returns: Dict with update info
+    #============================================
     def update_entry(
         self,
         entry_number: int,
@@ -131,6 +179,13 @@ class ChronicleOperations:
             "updated_fields": list(updates.keys())
         }
 
+    #============================================
+    # Method: get_entry
+    # Purpose: Retrieve a chronicle entry.
+    # Args:
+    #   entry_number: Entry ID
+    # Returns: Entry data dict
+    #============================================
     def get_entry(self, entry_number: int) -> Dict[str, Any]:
         """Retrieve a chronicle entry."""
         file_path = self._find_entry_file(entry_number)
@@ -142,6 +197,13 @@ class ChronicleOperations:
             
         return self._parse_entry(content, entry_number)
 
+    #============================================
+    # Method: list_entries
+    # Purpose: List recent chronicle entries.
+    # Args:
+    #   limit: Max entries to return
+    # Returns: List of entry dicts
+    #============================================
     def list_entries(self, limit: int = 10) -> List[Dict[str, Any]]:
         """List recent chronicle entries."""
         if not os.path.exists(self.base_dir):
@@ -167,6 +229,13 @@ class ChronicleOperations:
                 
         return entries
 
+    #============================================
+    # Method: search_entries
+    # Purpose: Search chronicle entries.
+    # Args:
+    #   query: Search string
+    # Returns: List of matching entries
+    #============================================
     def search_entries(self, query: str) -> List[Dict[str, Any]]:
         """Search chronicle entries."""
         if not os.path.exists(self.base_dir):

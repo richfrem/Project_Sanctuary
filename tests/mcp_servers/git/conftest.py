@@ -41,13 +41,13 @@ def git_root(tmp_path):
 @pytest.fixture
 def git_ops_mock(git_root):
     """Create GitOperations instance with local root (legacy)."""
-    from mcp_servers.git.git_ops import GitOperations
+    from mcp_servers.git.operations import GitOperations
     ops = GitOperations(git_root)
     return ops
 
 @pytest.fixture
 def git_ops_with_remote(git_roots):
     """Create GitOperations instance connected to a local 'remote'."""
-    from mcp_servers.git.git_ops import GitOperations
+    from mcp_servers.git.operations import GitOperations
     ops = GitOperations(git_roots["local"])
     return ops

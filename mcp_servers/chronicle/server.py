@@ -1,107 +1,116 @@
-from fastmcp import FastMCP
+#============================================
+# mcp_servers/chronicle/server.py
+# Purpose: MCP Server for the Living Chronicle.
+#          Provides tools for creating, updating, retrieving, and listing chronicle entries.
+# Role: Interface Layer
+# Used as: Main service entry point for the mcp_servers.chronicle module.
+#============================================
+
 import os
+import sys
+import json
 from typing import Optional, List, Dict, Any
+from fastmcp import FastMCP
+from fastmcp.exceptions import ToolError
+
+# Local/Library Imports
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.path_utils import find_project_root
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 from mcp_servers.chronicle.operations import ChronicleOperations
+from .models import (
+    ChronicleCreateRequest,
+    ChronicleUpdateRequest,
+    ChronicleGetRequest,
+    ChronicleListRequest,
+    ChronicleSearchRequest
+)
 
-# Initialize FastMCP
-mcp = FastMCP("project_sanctuary.chronicle")
+# 1. Initialize Logging
+logger = setup_mcp_logging("project_sanctuary.chronicle")
 
-# Configuration
-PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
+# 2. Initialize FastMCP with Sanctuary Metadata
+mcp = FastMCP(
+    "project_sanctuary.chronicle",
+    instructions="""
+    Use this server to manage the Living Chronicle.
+    - Create new entries for significant events or decisions.
+    - Update existing entries with reason and approval if needed.
+    - List and search the chronicle to maintain project context.
+    """
+)
+
+# 3. Initialize Operations
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 CHRONICLE_DIR = os.path.join(PROJECT_ROOT, "00_CHRONICLE/ENTRIES")
-
-# Initialize operations
 ops = ChronicleOperations(CHRONICLE_DIR)
 
+#============================================
+# Standardized Tool Implementations
+#============================================
 
 @mcp.tool()
-def chronicle_create_entry(
-    title: str,
-    content: str,
-    author: str,
-    date: Optional[str] = None,
-    status: str = "draft",
-    classification: str = "internal"
-) -> str:
+async def chronicle_create_entry(request: ChronicleCreateRequest) -> str:
     """
     Create a new chronicle entry.
-    
-    Args:
-        title: Entry title
-        content: Entry content (markdown)
-        author: Author name/ID
-        date: Date string (YYYY-MM-DD), defaults to today
-        status: draft, published, canonical, deprecated
-        classification: public, internal, confidential
     """
     try:
-        result = ops.create_entry(title, content, author, date, status, classification)
+        result = ops.create_entry(
+            title=request.title,
+            content=request.content,
+            author=request.author,
+            date=request.date,
+            status=request.status,
+            classification=request.classification
+        )
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
     except Exception as e:
-        return f"Error creating entry: {str(e)}"
-
+        logger.error(f"Error creating entry: {e}")
+        raise ToolError(f"Creation failed: {str(e)}")
 
 @mcp.tool()
-def chronicle_append_entry(
-    title: str,
-    content: str,
-    author: str,
-    date: Optional[str] = None,
-    status: str = "draft",
-    classification: str = "internal"
-) -> str:
+async def chronicle_append_entry(request: ChronicleCreateRequest) -> str:
     """
     Append a new entry to the Chronicle (Alias for create_entry).
-    
-    Args:
-        title: Entry title
-        content: Entry content
-        author: Author name
-        date: Date string
-        status: Status
-        classification: Classification
     """
     try:
-        result = ops.create_entry(title, content, author, date, status, classification)
+        result = ops.create_entry(
+            title=request.title,
+            content=request.content,
+            author=request.author,
+            date=request.date,
+            status=request.status,
+            classification=request.classification
+        )
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
     except Exception as e:
-        return f"Error creating entry: {str(e)}"
-
-
+        logger.error(f"Error appending entry: {e}")
+        raise ToolError(f"Append failed: {str(e)}")
 
 @mcp.tool()
-def chronicle_update_entry(
-    entry_number: int,
-    updates: Dict[str, Any],
-    reason: str,
-    override_approval_id: Optional[str] = None
-) -> str:
+async def chronicle_update_entry(request: ChronicleUpdateRequest) -> str:
     """
     Update an existing chronicle entry.
-    
-    Args:
-        entry_number: The entry number to update
-        updates: Dictionary of fields to update (title, content, status, classification)
-        reason: Reason for the update
-        override_approval_id: Required if entry is older than 7 days
     """
     try:
-        result = ops.update_entry(entry_number, updates, reason, override_approval_id)
+        result = ops.update_entry(
+            entry_number=request.entry_number,
+            updates=request.updates,
+            reason=request.reason,
+            override_approval_id=request.override_approval_id
+        )
         return f"Updated Chronicle Entry {result['entry_number']}. Fields: {', '.join(result['updated_fields'])}"
     except Exception as e:
-        return f"Error updating entry: {str(e)}"
-
+        logger.error(f"Error updating entry: {e}")
+        raise ToolError(f"Update failed: {str(e)}")
 
 @mcp.tool()
-def chronicle_get_entry(entry_number: int) -> str:
+async def chronicle_get_entry(request: ChronicleGetRequest) -> str:
     """
     Retrieve a specific chronicle entry.
-    
-    Args:
-        entry_number: The entry number to retrieve
     """
     try:
-        entry = ops.get_entry(entry_number)
+        entry = ops.get_entry(request.entry_number)
         return f"""Entry {entry['number']}: {entry['title']}
 Date: {entry['date']}
 Author: {entry['author']}
@@ -110,19 +119,16 @@ Classification: {entry['classification']}
 
 {entry['content']}"""
     except Exception as e:
-        return f"Error retrieving entry: {str(e)}"
-
+        logger.error(f"Error retrieving entry: {e}")
+        raise ToolError(f"Retrieval failed: {str(e)}")
 
 @mcp.tool()
-def chronicle_list_entries(limit: int = 10) -> str:
+async def chronicle_list_entries(request: ChronicleListRequest) -> str:
     """
     List recent chronicle entries.
-    
-    Args:
-        limit: Maximum number of entries to return (default 10)
     """
     try:
-        entries = ops.list_entries(limit)
+        entries = ops.list_entries(request.limit)
         if not entries:
             return "No entries found."
             
@@ -131,19 +137,16 @@ def chronicle_list_entries(limit: int = 10) -> str:
             output.append(f"- {e['number']:03d}: {e['title']} [{e['status']}] ({e['date']})")
         return "\n".join(output)
     except Exception as e:
-        return f"Error listing entries: {str(e)}"
-
+        logger.error(f"Error listing entries: {e}")
+        raise ToolError(f"List failed: {str(e)}")
 
 @mcp.tool()
-def chronicle_read_latest_entries(limit: int = 10) -> str:
+async def chronicle_read_latest_entries(request: ChronicleListRequest) -> str:
     """
     Read the latest entries from the Chronicle (Alias for list_entries).
-    
-    Args:
-        limit: Number of entries to read
     """
     try:
-        entries = ops.list_entries(limit)
+        entries = ops.list_entries(request.limit)
         if not entries:
             return "No entries found."
             
@@ -152,30 +155,40 @@ def chronicle_read_latest_entries(limit: int = 10) -> str:
             output.append(f"- {e['number']:03d}: {e['title']} [{e['status']}] ({e['date']})")
         return "\n".join(output)
     except Exception as e:
-        return f"Error listing entries: {str(e)}"
-
-
+        logger.error(f"Error reading latest entries: {e}")
+        raise ToolError(f"Read failed: {str(e)}")
 
 @mcp.tool()
-def chronicle_search(query: str) -> str:
+async def chronicle_search(request: ChronicleSearchRequest) -> str:
     """
     Search chronicle entries by content.
-    
-    Args:
-        query: Search query string
     """
     try:
-        results = ops.search_entries(query)
+        results = ops.search_entries(request.query)
         if not results:
-            return f"No entries found matching '{query}'"
+            return f"No entries found matching '{request.query}'"
             
-        output = [f"Found {len(results)} entries matching '{query}':"]
+        output = [f"Found {len(results)} entries matching '{request.query}':"]
         for r in results:
             output.append(f"- {r['number']:03d}: {r['title']}")
         return "\n".join(output)
     except Exception as e:
-        return f"Error searching entries: {str(e)}"
+        logger.error(f"Error searching entries: {e}")
+        raise ToolError(f"Search failed: {str(e)}")
 
+#============================================
+# Main Execution Entry Point
+#============================================
 
 if __name__ == "__main__":
-    mcp.run()
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Local/CLI Mode)
+    port_env = get_env_variable("PORT", required=False)
+    transport = "sse" if port_env else "stdio"
+    
+    if transport == "sse":
+        port = int(port_env) if port_env else 8004
+        mcp.run(port=port, transport=transport)
+    else:
+        mcp.run(transport=transport)

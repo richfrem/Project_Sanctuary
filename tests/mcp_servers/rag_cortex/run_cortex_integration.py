@@ -32,7 +32,7 @@ sys.path.insert(0, str(project_root))
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.validator import CortexValidator
 from mcp_servers.rag_cortex.models import to_dict
-from mcp_servers.lib.utils.env_helper import get_env_variable, load_env
+from mcp_servers.lib.env_helper import get_env_variable, load_env
 
 
 class Colors:

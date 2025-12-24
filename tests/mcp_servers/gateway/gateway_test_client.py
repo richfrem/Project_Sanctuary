@@ -31,7 +31,7 @@ project_root = Path(__file__).resolve().parent.parents[3]
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.env_helper import get_env_variable
 from mcp_servers.gateway.gateway_client import (
     GatewayConfig,
     get_session,

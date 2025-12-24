@@ -1,21 +1,20 @@
-"""
-Calculator Tool for sanctuary_utils
-Provides basic math operations with fault containment.
-"""
+#============================================
+# mcp_servers/gateway/clusters/sanctuary_utils/tools/calculator_tool.py
+# Purpose: Basic math operations with fault containment.
+# Role: Functional Tool
+#============================================
 from typing import Any, Union
 import math
 
 
+#============================================
+# Function: calculate
+# Purpose: Evaluate a mathematical expression safely.
+# Args:
+#   expression: Math expression (e.g., "2 + 2", "sqrt(16)")
+# Returns: Dictionary with result or error
+#============================================
 def calculate(expression: str) -> dict[str, Any]:
-    """
-    Evaluate a mathematical expression safely.
-    
-    Args:
-        expression: Math expression (e.g., "2 + 2", "sqrt(16)", "10 * 5")
-        
-    Returns:
-        Dictionary with result or error.
-    """
     try:
         # Safe evaluation - only allow math operations
         allowed_names = {
@@ -57,32 +56,44 @@ def calculate(expression: str) -> dict[str, Any]:
         }
 
 
+#============================================
+# Function: add
+# Purpose: Add two numbers.
+#============================================
 def add(a: Union[int, float], b: Union[int, float]) -> dict[str, Any]:
-    """Add two numbers."""
     try:
         return {"success": True, "result": a + b}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: subtract
+# Purpose: Subtract b from a.
+#============================================
 def subtract(a: Union[int, float], b: Union[int, float]) -> dict[str, Any]:
-    """Subtract b from a."""
     try:
         return {"success": True, "result": a - b}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: multiply
+# Purpose: Multiply two numbers.
+#============================================
 def multiply(a: Union[int, float], b: Union[int, float]) -> dict[str, Any]:
-    """Multiply two numbers."""
     try:
         return {"success": True, "result": a * b}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: divide
+# Purpose: Divide a by b.
+#============================================
 def divide(a: Union[int, float], b: Union[int, float]) -> dict[str, Any]:
-    """Divide a by b."""
     try:
         if b == 0:
             return {"success": False, "error": "Division by zero"}

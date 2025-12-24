@@ -40,3 +40,14 @@ def to_dict(obj: Any) -> Dict[str, Any]:
     if hasattr(obj, '__dataclass_fields__'):
         return {k: v for k, v in obj.__dict__.items() if v is not None}
     return obj
+
+#============================================
+# FastMCP Request Models
+#============================================
+from pydantic import BaseModel, Field
+
+class ForgeQueryRequest(BaseModel):
+    prompt: str = Field(..., description="The textual prompt for the Sanctuary model")
+    temperature: float = Field(0.7, description="Sampling temperature (0.0 to 1.0)")
+    max_tokens: int = Field(2048, description="Maximum number of tokens to generate")
+    system_prompt: Optional[str] = Field(None, description="Optional system context to guide behavioral alignment")

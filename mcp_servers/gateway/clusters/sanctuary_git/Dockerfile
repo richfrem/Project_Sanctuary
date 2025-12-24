@@ -2,7 +2,7 @@
 # Fleet of 8 - Container #4: Git workflow tools
 # Designed to run with context at project root
 
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 
@@ -19,11 +19,11 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Copy shared libraries (CRITICAL REQUIREMENT)
 COPY mcp_servers/lib /app/mcp_servers/lib
+COPY mcp_servers/git /app/mcp_servers/git
 
 # Copy the fleet cluster code
 # Source (Host): mcp_servers/gateway/clusters/sanctuary_git (kebab-case)
 # Dest (Container): /app/mcp_servers/gateway/clusters/sanctuary_git (snake_case for Python import)
-COPY mcp_servers/gateway/clusters/sanctuary_git /app/mcp_servers/gateway/clusters/sanctuary_git
 
 
 ENV PYTHONPATH=/app

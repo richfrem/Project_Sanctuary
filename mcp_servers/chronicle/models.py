@@ -1,3 +1,14 @@
+#============================================
+# mcp_servers/chronicle/models.py
+# Purpose: Data models and constants for the Living Chronicle.
+# Role: Data Definition Layer
+# Used as: Type definition module by operations.py and server.py
+# LIST OF CLASSES/CONSTANTS:
+#   - ChronicleStatus (Enum)
+#   - ChronicleClassification (Enum)
+#   - ChronicleEntry (DataClass)
+#   - CHRONICLE_TEMPLATE (Constant)
+#============================================
 """
 Data models for the Chronicle MCP server.
 """
@@ -20,6 +31,11 @@ class ChronicleClassification(str, Enum):
     CONFIDENTIAL = "confidential"
 
 
+#============================================
+#============================================
+# DataClass: ChronicleEntry
+# Purpose: Represents a single chronicle entry.
+#============================================
 @dataclass
 class ChronicleEntry:
     entry_number: int
@@ -30,6 +46,11 @@ class ChronicleEntry:
     status: ChronicleStatus = ChronicleStatus.DRAFT
     classification: ChronicleClassification = ChronicleClassification.INTERNAL
     
+    #============================================
+    # Property: filename
+    # Purpose: Generate filename for the entry.
+    # Returns: Formatted filename string
+    #============================================
     @property
     def filename(self) -> str:
         """Generate filename for the entry."""
@@ -52,3 +73,32 @@ CHRONICLE_TEMPLATE = """# Living Chronicle - Entry {number}
 
 {content}
 """
+
+#============================================
+# FastMCP Request Models
+#============================================
+from pydantic import BaseModel, Field
+from typing import Dict, Any
+
+class ChronicleCreateRequest(BaseModel):
+    title: str = Field(..., description="Entry title")
+    content: str = Field(..., description="Entry content (markdown)")
+    author: str = Field(..., description="Author name/ID")
+    date: Optional[str] = Field(None, description="Date string (YYYY-MM-DD), defaults to today")
+    status: str = Field("draft", description="draft, published, canonical, deprecated")
+    classification: str = Field("internal", description="public, internal, confidential")
+
+class ChronicleUpdateRequest(BaseModel):
+    entry_number: int = Field(..., description="The entry number to update")
+    updates: Dict[str, Any] = Field(..., description="Dictionary of fields to update")
+    reason: str = Field(..., description="Reason for the update")
+    override_approval_id: Optional[str] = Field(None, description="Required if entry is older than 7 days")
+
+class ChronicleGetRequest(BaseModel):
+    entry_number: int = Field(..., description="The entry number to retrieve")
+
+class ChronicleListRequest(BaseModel):
+    limit: int = Field(10, description="Maximum number of entries to return")
+
+class ChronicleSearchRequest(BaseModel):
+    query: str = Field(..., description="Search query string")

@@ -15,7 +15,7 @@ project_root = current
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from mcp_servers.lib.utils.path_utils import find_project_root
+from mcp_servers.lib.path_utils import find_project_root
 
 from mcp_servers.rag_cortex.operations import CortexOperations
 from mcp_servers.rag_cortex.models import StatsResponse

@@ -1,122 +1,89 @@
-"""
-Council MCP Server
+#============================================
+# mcp_servers/council/server.py
+# Purpose: Council MCP Server.
+#          Exposes Sanctuary Council Orchestrator capabilities.
+# Role: Interface Layer
+# Used as: Main service entry point.
+#============================================
 
-Exposes Sanctuary Council Orchestrator capabilities via Model Context Protocol.
-
-DESIGN PRINCIPLE: Separation of Concerns
-- This MCP focuses ONLY on multi-agent deliberation (the Council's unique capability)
-- File operations → Use Code MCP (code_write, code_read)
-- Memory queries → Use Cortex MCP (cortex_query)
-- Git operations → Use Git MCP (git_add, git_smart_commit)
-- Protocol docs → Use Protocol MCP (protocol_create)
-- Task management → Use Task MCP (create_task)
-
-The Council MCP is a HIGH-LEVEL ORCHESTRATOR, not a duplicate of existing services.
-"""
-
-from mcp.server.fastmcp import FastMCP
-from pathlib import Path
+import os
 import sys
+import logging
+from pathlib import Path
+from typing import Optional, List, Dict, Any
+from fastmcp import FastMCP
+from fastmcp.exceptions import ToolError
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Local/Library Imports
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.path_utils import find_project_root
+from mcp_servers.lib.logging_utils import setup_mcp_logging
+from mcp_servers.council.operations import CouncilOperations
+from mcp_servers.council.models import CouncilDispatchRequest
 
-from council.council_ops import CouncilOperations
+# 1. Initialize Logging
+logger = setup_mcp_logging("project_sanctuary.council")
 
-# Initialize FastMCP server
-mcp = FastMCP("Council Orchestrator")
+# 2. Initialize FastMCP with Sanctuary Metadata
+mcp = FastMCP(
+    "project_sanctuary.council",
+    instructions="""
+    Sanctuary Council Orchestrator.
+    - specialized in multi-agent deliberation.
+    - Use this for high-level cognitive tasks, auditing, and strategy.
+    """
+)
 
-# Initialize operations
+# 3. Initialize Operations
 council_ops = CouncilOperations()
 
+#============================================
+# Standardized Tool Implementations
+#============================================
+
 @mcp.tool()
-def council_dispatch(
-    task_description: str,
-    agent: str | None = None,
-    max_rounds: int = 3,
-    force_engine: str | None = None,
-    model_preference: str | None = None,
-    output_path: str | None = None
-) -> dict:
+async def council_dispatch(request: CouncilDispatchRequest) -> Dict[str, Any]:
     """
     Dispatch a task to the Sanctuary Council for multi-agent deliberation.
     
     This is the CORE capability of the Council MCP - multi-agent cognitive processing.
-    For other operations, use the appropriate specialized MCP server:
-    - File I/O: Code MCP (code_write, code_read)
-    - Memory: Cortex MCP (cortex_query, cortex_ingest_incremental)
-    - Git: Git MCP (git_add, git_smart_commit, git_push_feature)
-    - Protocols: Protocol MCP (protocol_create, protocol_get)
-    - Tasks: Task MCP (create_task, update_task_status)
-    
-    Args:
-        task_description: The task for the council to deliberate on
-        agent: Optional specific agent ("coordinator", "strategist", "auditor"). 
-               If None, full council deliberation is used.
-        max_rounds: Maximum number of deliberation rounds (default: 3)
-        force_engine: Force specific AI engine ("gemini", "openai", "ollama")
-        model_preference: Model routing preference ("OLLAMA", "GEMINI", "GPT")
-                         OLLAMA routes to container network (Protocol 116)
-        output_path: Optional output file path (relative to project root)
-    
-    Returns:
-        Dictionary containing:
-        - status: "success" or "error"
-        - decision: Council's deliberation output
-        - session_id: Unique session identifier
-        - output_path: Path to output file (if generated)
-    
-    Example - Full Council Deliberation:
-        result = council_dispatch(
-            task_description="Review the architecture for Protocol 115 and provide recommendations",
-            max_rounds=3
-        )
-    
-    Example - Ollama Routing (Container Network - Protocol 116):
-        result = council_dispatch(
-            task_description="Analyze Protocol 116",
-            model_preference="OLLAMA"  # Routes to ollama_model_mcp:11434
-        )
-    
-    Example - Single Agent Consultation:
-        result = council_dispatch(
-            task_description="Audit the test coverage for the Git MCP server",
-    Example - Single Agent Consultation:
-        result = council_dispatch(
-            task_description="Audit the test coverage for the Git MCP server",
-            agent="auditor"
-        )
     """
-    return council_ops.dispatch_task(
-        task_description=task_description,
-        agent=agent,
-        max_rounds=max_rounds,
-        force_engine=force_engine,
-        model_preference=model_preference,
-        output_path=output_path
-    )
+    try:
+        result = council_ops.dispatch_task(
+            task_description=request.task_description,
+            agent=request.agent,
+            max_rounds=request.max_rounds,
+            force_engine=request.force_engine,
+            model_preference=request.model_preference,
+            output_path=request.output_path
+        )
+        return result
+    except Exception as e:
+        logger.error(f"Error in council_dispatch: {e}")
+        raise ToolError(f"Dispatch failed: {str(e)}")
 
 @mcp.tool()
-def council_list_agents() -> list:
-    """
-    List all available Council agents and their current status.
-    
-    Returns:
-        List of agent dictionaries with:
-        - name: Agent identifier
-        - status: Current availability status
-        - persona: Agent's role and specialty
-    
-    Example:
-        agents = council_list_agents()
-        # Returns: [
-        #   {"name": "coordinator", "status": "available", "persona": "Task planning and execution oversight"},
-        #   {"name": "strategist", "status": "available", "persona": "Long-term planning and risk assessment"},
-        #   {"name": "auditor", "status": "available", "persona": "Quality assurance and compliance verification"}
-        # ]
-    """
-    return council_ops.list_agents()
+async def council_list_agents() -> List[Dict[str, Any]]:
+    """List all available Council agents and their current status."""
+    try:
+        return council_ops.list_agents()
+    except Exception as e:
+        logger.error(f"Error in council_list_agents: {e}")
+        raise ToolError(f"Listing agents failed: {str(e)}")
+
+#============================================
+# Main Execution Entry Point
+#============================================
 
 if __name__ == "__main__":
-    # Run the MCP server
-    mcp.run()
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Local/CLI Mode)
+    port_env = get_env_variable("PORT", required=False)
+    transport = "sse" if port_env else "stdio"
+    
+    if transport == "sse":
+        port = int(port_env) if port_env else 8003
+        mcp.run(port=port, transport=transport)
+    else:
+        mcp.run(transport=transport)

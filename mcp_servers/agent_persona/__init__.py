@@ -1,4 +1,4 @@
 """Agent Persona operations library"""
-from .agent_persona_ops import AgentPersonaOperations
+from .operations import PersonaOperations
 
-__all__ = ["AgentPersonaOperations"]
+__all__ = ["PersonaOperations"]

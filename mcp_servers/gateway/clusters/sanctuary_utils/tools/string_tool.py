@@ -1,44 +1,60 @@
-"""
-String Tool for sanctuary_utils
-Provides string manipulation utilities.
-"""
+#============================================
+# mcp_servers/gateway/clusters/sanctuary_utils/tools/string_tool.py
+# Purpose: String manipulation utilities.
+# Role: Functional Tool
+#============================================
 from typing import Any
 
 
+#============================================
+# Function: to_upper
+# Purpose: Convert text to uppercase.
+#============================================
 def to_upper(text: str) -> dict[str, Any]:
-    """Convert text to uppercase."""
     try:
         return {"success": True, "result": text.upper()}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: to_lower
+# Purpose: Convert text to lowercase.
+#============================================
 def to_lower(text: str) -> dict[str, Any]:
-    """Convert text to lowercase."""
     try:
         return {"success": True, "result": text.lower()}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: trim
+# Purpose: Remove leading and trailing whitespace.
+#============================================
 def trim(text: str) -> dict[str, Any]:
-    """Remove leading and trailing whitespace."""
     try:
         return {"success": True, "result": text.strip()}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: reverse
+# Purpose: Reverse a string.
+#============================================
 def reverse(text: str) -> dict[str, Any]:
-    """Reverse a string."""
     try:
         return {"success": True, "result": text[::-1]}
     except Exception as e:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: word_count
+# Purpose: Count words in text.
+#============================================
 def word_count(text: str) -> dict[str, Any]:
-    """Count words in text."""
     try:
         words = text.split()
         return {
@@ -51,8 +67,11 @@ def word_count(text: str) -> dict[str, Any]:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: replace
+# Purpose: Replace occurrences of old with new in text.
+#============================================
 def replace(text: str, old: str, new: str) -> dict[str, Any]:
-    """Replace occurrences of old with new in text."""
     try:
         result = text.replace(old, new)
         return {"success": True, "result": result}

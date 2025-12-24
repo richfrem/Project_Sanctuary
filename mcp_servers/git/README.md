@@ -39,11 +39,11 @@ GIT_BASE_DIR=/path/to/Project_Sanctuary # Security sandbox
 Add this to your `mcp_config.json`:
 
 ```json
-"git_workflow": {
+"git": {
   "command": "uv",
   "args": [
     "--directory",
-    "mcp_servers/system/git_workflow",
+    "mcp_servers/git",
     "run",
     "server.py"
   ],
@@ -61,7 +61,7 @@ Add this to your `mcp_config.json`:
 Run the test suite for this server:
 
 ```bash
-pytest mcp_servers/system/git_workflow/tests
+pytest tests/mcp_servers/git/
 ```
 
 ### Manual Verification
@@ -72,12 +72,18 @@ pytest mcp_servers/system/git_workflow/tests
 ## Architecture
 
 ### Overview
-This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3.0). It acts as a safety layer between the agent and the raw git command line.
+This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3.0) using a standardized **4-Layer Architecture**:
 
-**Safety Features:**
-- ⛔ **Main Branch Protection:** Blocks direct commits to `main`.
-- ✅ **Test-Driven Commits:** `git_smart_commit` runs tests before allowing a commit.
-- 🔄 **Workflow Enforcement:** Enforces `Start -> Feature -> PR -> Merge -> Finish` cycle.
+1.  **Interface Layer (`server.py`):** Handles tool registration and uses FastMCP.
+2.  **Business Logic Layer (`operations.py`):** Centralized `GitOperations` class for all git actions.
+3.  **Safety Layer (`validator.py`):** Enforces branch naming, clean state, and operation validity.
+4.  **Data Layer (`models.py`):** Pydantic models for status and configuration.
+
+### Safety Features
+- ⛔ **Main Branch Protection:** Blocks direct commits to `main` and other protected branches.
+- ✅ **Clean State Enforcement:** Ensures working directory is clean before starting features or switching.
+- 🔄 **Feature Workflow:** Enforces structured feature branch lifecycle.
+- 🛡️ **Poka-Yoke:** Validates branch context and operations to prevent mistakes.
 
 ### Workflow
 ```mermaid
@@ -88,14 +94,17 @@ graph TD
     C --> D
     D --> E[git_diff to verify]
     E --> F[git_smart_commit]
-    F --> G[git_push_feature]
-    G --> H[Create PR on GitHub]
-    H --> I[Wait for user to merge PR]
-    I --> J[git_finish_feature]
-    J --> K[Back to main]
+    F --> G[Validator: Poka-Yoke Scan]
+    G -->|Fail| H[Block Commit]
+    G -->|Pass| I[git_push_feature]
+    I --> J[Create PR on GitHub]
+    J --> K[Wait for user to merge PR]
+    K --> L[git_finish_feature]
+    L --> M[Back to main]
 ```
 
 ## Dependencies
 
 - `mcp`
 - `git` (System binary)
+- `pydantic`

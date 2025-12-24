@@ -27,7 +27,7 @@ import time
 from pathlib import Path
 from tests.mcp_servers.base.base_e2e_test import BaseE2ETest
 
-from mcp_servers.lib.utils.path_utils import find_project_root
+from mcp_servers.lib.path_utils import find_project_root
 PROJECT_ROOT = Path(find_project_root())
 
 @pytest.mark.e2e

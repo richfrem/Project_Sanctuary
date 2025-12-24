@@ -1,3 +1,11 @@
+#============================================
+# mcp_servers/task/validator.py
+# Purpose: Validation logic for Task MCP.
+#          Validates task schema, unique IDs, and dependencies.
+# Role: Validation Layer
+# Used as: Helper for Operations.
+#============================================
+
 """
 Task MCP Server - Schema Validator
 Validates tasks against TASKS/task_schema.md
@@ -16,11 +24,14 @@ class TaskValidator:
         self.project_root = project_root
         self.tasks_dir = project_root / "TASKS"
         
+    #----------------------------------------------------------------------
+    # validate_task_number
+    # Purpose: Validate task number is unique across all task directories
+    # Args:
+    #   number: The task number to check
+    # Returns: (is_valid, error_message)
+    #----------------------------------------------------------------------
     def validate_task_number(self, number: int) -> Tuple[bool, str]:
-        """
-        Validate task number is unique across all task directories
-        Returns: (is_valid, error_message)
-        """
         task_dirs = [
             self.tasks_dir / "backlog",
             self.tasks_dir / "todo", 
@@ -40,8 +51,12 @@ class TaskValidator:
         
         return True, ""
     
+    #----------------------------------------------------------------------
+    # get_next_task_number
+    # Purpose: Get the next sequential task number by scanning all task directories.
+    # Returns: The next available task integer
+    #----------------------------------------------------------------------
     def get_next_task_number(self) -> int:
-        """Get the next sequential task number by scanning all task directories."""
         existing_numbers = []
         
         # Scan all status directories
@@ -68,11 +83,14 @@ class TaskValidator:
             return 1
         return max(existing_numbers) + 1
     
+    #----------------------------------------------------------------------
+    # validate_task_schema
+    # Purpose: Validate task follows required schema
+    # Args:
+    #   task: The TaskSchema object to validate
+    # Returns: (is_valid, list_of_errors)
+    #----------------------------------------------------------------------
     def validate_task_schema(self, task: TaskSchema) -> Tuple[bool, List[str]]:
-        """
-        Validate task follows required schema
-        Returns: (is_valid, list_of_errors)
-        """
         errors = []
         
         # Required fields
@@ -102,11 +120,14 @@ class TaskValidator:
         
         return len(errors) == 0, errors
     
+    #----------------------------------------------------------------------
+    # validate_dependencies
+    # Purpose: Validate task dependencies format and check for circular dependencies
+    # Args:
+    #   dependencies_str: The dependencies string to validate
+    # Returns: (is_valid, error_message)
+    #----------------------------------------------------------------------
     def validate_dependencies(self, dependencies_str: str) -> Tuple[bool, str]:
-        """
-        Validate task dependencies format and check for circular dependencies
-        Returns: (is_valid, error_message)
-        """
         if not dependencies_str or dependencies_str.lower() == "none":
             return True, ""
         
@@ -125,11 +146,14 @@ class TaskValidator:
         
         return True, ""
     
+    #----------------------------------------------------------------------
+    # task_exists
+    # Purpose: Check if a task exists in any directory
+    # Args:
+    #   number: The task number to look for
+    # Returns: (exists, directory_path)
+    #----------------------------------------------------------------------
     def task_exists(self, number: int) -> Tuple[bool, str]:
-        """
-        Check if a task exists in any directory
-        Returns: (exists, directory_path)
-        """
         task_dirs = [
             self.tasks_dir / "backlog",
             self.tasks_dir / "todo",
@@ -149,11 +173,14 @@ class TaskValidator:
         
         return False, ""
     
+    #----------------------------------------------------------------------
+    # validate_file_path
+    # Purpose: Validate file path is within TASKS directory
+    # Args:
+    #   file_path: The path to validate
+    # Returns: (is_valid, error_message)
+    #----------------------------------------------------------------------
     def validate_file_path(self, file_path: Path) -> Tuple[bool, str]:
-        """
-        Validate file path is within TASKS directory
-        Returns: (is_valid, error_message)
-        """
         try:
             file_path.resolve().relative_to(self.tasks_dir.resolve())
             return True, ""

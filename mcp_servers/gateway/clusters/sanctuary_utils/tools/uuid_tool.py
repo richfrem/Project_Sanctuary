@@ -1,13 +1,17 @@
-"""
-UUID Tool for sanctuary_utils
-Provides UUID generation utilities.
-"""
+#============================================
+# mcp_servers/gateway/clusters/sanctuary_utils/tools/uuid_tool.py
+# Purpose: UUID generation utilities.
+# Role: Functional Tool
+#============================================
 import uuid
 from typing import Any
 
 
+#============================================
+# Function: generate_uuid4
+# Purpose: Generate a random UUID (version 4).
+#============================================
 def generate_uuid4() -> dict[str, Any]:
-    """Generate a random UUID (version 4)."""
     try:
         return {
             "success": True,
@@ -18,8 +22,11 @@ def generate_uuid4() -> dict[str, Any]:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: generate_uuid1
+# Purpose: Generate a UUID based on host ID and current time (version 1).
+#============================================
 def generate_uuid1() -> dict[str, Any]:
-    """Generate a UUID based on host ID and current time (version 1)."""
     try:
         return {
             "success": True,
@@ -30,8 +37,11 @@ def generate_uuid1() -> dict[str, Any]:
         return {"success": False, "error": str(e)}
 
 
+#============================================
+# Function: validate_uuid
+# Purpose: Validate if a string is a valid UUID.
+#============================================
 def validate_uuid(uuid_string: str) -> dict[str, Any]:
-    """Validate if a string is a valid UUID."""
     try:
         parsed = uuid.UUID(uuid_string)
         return {

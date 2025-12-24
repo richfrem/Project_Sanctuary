@@ -1,189 +1,146 @@
-"""
-Task MCP Server - FastMCP Implementation
-Exposes task operations via Model Context Protocol using FastMCP
-"""
+#============================================
+# mcp_servers/task/server.py
+# Purpose: Task MCP Server.
+#          Provides tools for managing Project Tasks.
+# Role: Interface Layer
+# Used as: Main service entry point.
+#============================================
 
-from fastmcp import FastMCP
-from pathlib import Path
+import os
 import sys
+import json
+import logging
 from typing import Optional, List, Dict, Any
+from fastmcp import FastMCP
+from fastmcp.exceptions import ToolError
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
-
+# Local/Library Imports
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.path_utils import find_project_root
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 from mcp_servers.task.operations import TaskOperations
-from mcp_servers.task.models import TaskStatus, TaskPriority
+from mcp_servers.task.models import (
+    TaskStatus, 
+    TaskPriority,
+    TaskCreateRequest,
+    TaskUpdateRequest,
+    TaskUpdateStatusRequest,
+    TaskGetRequest,
+    TaskListRequest,
+    TaskSearchRequest
+)
 
-# Initialize FastMCP
-mcp = FastMCP("project_sanctuary.task")
+# 1. Initialize Logging
+logger = setup_mcp_logging("project_sanctuary.task")
 
-# Initialize operations
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-task_ops = TaskOperations(PROJECT_ROOT)
+# 2. Initialize FastMCP with Sanctuary Metadata
+mcp = FastMCP(
+    "project_sanctuary.task",
+    instructions="""
+    Use this server to manage project tasks within the TASKS/ directory.
+    - Create new tasks with objectives, deliverables, and criteria.
+    - Update task metadata and content as work progresses.
+    - Change task status to move them through the workflow (backlog -> todo -> in-progress -> done).
+    - Query and list tasks to understand project state.
+    """
+)
 
+# 3. Initialize Operations
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
+ops = TaskOperations(PROJECT_ROOT)
+
+#============================================
+# Standardized Tool Implementations
+#============================================
 
 @mcp.tool()
-def create_task(
-    title: str,
-    objective: str,
-    deliverables: List[str],
-    acceptance_criteria: List[str],
-    priority: str = "Medium",
-    status: str = "backlog",
-    lead: str = "Unassigned",
-    dependencies: Optional[str] = None,
-    related_documents: Optional[str] = None,
-    notes: Optional[str] = None,
-    task_number: Optional[int] = None
-) -> str:
-    """
-    Create a new task file in TASKS/ directory.
-    
-    Args:
-        title: Task title
-        objective: What and why of the task
-        deliverables: List of concrete outputs
-        acceptance_criteria: List of completion conditions
-        priority: Task priority (default: Medium)
-        status: Initial status (default: backlog)
-        lead: Assigned person/agent (default: Unassigned)
-        dependencies: Task dependencies (e.g., 'Requires #012')
-        related_documents: Related files/protocols
-        notes: Additional context
-        task_number: Specific task number (auto-generated if not provided)
-    """
+async def task_create(request: TaskCreateRequest) -> str:
+    """Create a new task file in TASKS/ directory."""
     try:
-        result = task_ops.create_task(
-            title=title,
-            objective=objective,
-            deliverables=deliverables,
-            acceptance_criteria=acceptance_criteria,
-            priority=TaskPriority(priority),
-            status=TaskStatus(status),
-            lead=lead,
-            dependencies=dependencies,
-            related_documents=related_documents,
-            notes=notes,
-            task_number=task_number
+        result = ops.create_task(
+            title=request.title,
+            objective=request.objective,
+            deliverables=request.deliverables,
+            acceptance_criteria=request.acceptance_criteria,
+            priority=TaskPriority(request.priority),
+            status=TaskStatus(request.status),
+            lead=request.lead,
+            dependencies=request.dependencies,
+            related_documents=request.related_documents,
+            notes=request.notes,
+            task_number=request.task_number
         )
-        
+        if result.status == "error":
+            raise ToolError(result.message)
         return f"Created Task {result.task_number:03d}: {result.file_path}"
     except Exception as e:
-        return f"Error creating task: {str(e)}"
-
+        logger.error(f"Error in task_create: {e}")
+        raise ToolError(f"Creation failed: {str(e)}")
 
 @mcp.tool()
-def update_task(
-    task_number: int,
-    updates: Dict[str, Any]
-) -> str:
-    """
-    Update an existing task's metadata or content.
-    
-    Args:
-        task_number: Task number to update
-        updates: Dictionary of fields to update
-    """
+async def task_update(request: TaskUpdateRequest) -> str:
+    """Update an existing task's metadata or content."""
     try:
-        result = task_ops.update_task(task_number, updates)
-        # Extract updated fields from the updates dict
-        updated_fields = list(updates.keys())
-        return f"Updated Task {result.task_number:03d}. Fields: {', '.join(updated_fields)}"
+        result = ops.update_task(request.task_number, request.updates)
+        if result.status == "error":
+            raise ToolError(result.message)
+        return f"Updated Task {result.task_number:03d}. Fields: {', '.join(request.updates.keys())}"
     except Exception as e:
-        return f"Error updating task: {str(e)}"
-
+        logger.error(f"Error in task_update: {e}")
+        raise ToolError(f"Update failed: {str(e)}")
 
 @mcp.tool()
-def update_task_status(
-    task_number: int,
-    new_status: str,
-    notes: Optional[str] = None
-) -> str:
-    """
-    Change task status (moves file between directories).
-    
-    Args:
-        task_number: Task number
-        new_status: New status (backlog, todo, in-progress, complete, blocked)
-        notes: Optional notes about status change
-    """
+async def task_update_status(request: TaskUpdateStatusRequest) -> str:
+    """Change task status (moves file between directories)."""
     try:
-        result = task_ops.update_task_status(
-            task_number,
-            TaskStatus(new_status),
-            notes
+        result = ops.update_task_status(
+            request.task_number,
+            TaskStatus(request.new_status),
+            request.notes
         )
-        # Extract status info from result
-        return f"Updated Task {result.task_number:03d} status to {new_status}"
+        if result.status == "error":
+            raise ToolError(result.message)
+        return f"Updated Task {result.task_number:03d} status to {request.new_status}"
     except Exception as e:
-        return f"Error updating task status: {str(e)}"
-
+        logger.error(f"Error in task_update_status: {e}")
+        raise ToolError(f"Status update failed: {str(e)}")
 
 @mcp.tool()
-def get_task(task_number: int) -> str:
-    """
-    Retrieve a specific task by number.
-    
-    Args:
-        task_number: Task number to retrieve
-    """
+async def task_get(request: TaskGetRequest) -> str:
+    """Retrieve a specific task by number."""
     try:
-        task = task_ops.get_task(task_number)
-        
+        task = ops.get_task(request.task_number)
         if task is None:
-            return f"Task #{task_number:03d} not found"
+            raise ToolError(f"Task #{request.task_number:03d} not found")
         
-        # Build output safely, handling missing fields
         output = []
-        output.append(f"Task {task.get('number', task_number):03d}: {task.get('title', 'Untitled')}")
+        output.append(f"Task {task.get('number', request.task_number):03d}: {task.get('title', 'Untitled')}")
         output.append(f"Status: {task.get('status', 'unknown')}")
         output.append(f"Priority: {task.get('priority', 'unknown')}")
         output.append(f"Lead: {task.get('lead', 'Unassigned')}")
         
-        if 'objective' in task and task['objective']:
-            output.append(f"\nObjective:\n{task['objective']}")
+        # We could also return the full content or specific fields
+        # return task.get('content', '')
         
-        if 'deliverables' in task and task['deliverables']:
-            output.append(f"\nDeliverables:")
-            for d in task['deliverables']:
-                output.append(f"- {d}")
+        # Following existing server.py logic:
+        # (Though we could return a dict if we wanted discovery to be easier)
+        return task.get('content', "No content available")
         
-        if 'acceptance_criteria' in task and task['acceptance_criteria']:
-            output.append(f"\nAcceptance Criteria:")
-            for c in task['acceptance_criteria']:
-                output.append(f"- {c}")
-        
-        return "\n".join(output)
     except Exception as e:
-        return f"Error retrieving task: {str(e)}"
-
+        logger.error(f"Error in task_get: {e}")
+        raise ToolError(f"Retrieval failed: {str(e)}")
 
 @mcp.tool()
-def list_tasks(
-    status: Optional[str] = None,
-    priority: Optional[str] = None
-) -> str:
-    """
-    List tasks with optional filters.
-    
-    Args:
-        status: Filter by status (backlog, todo, in-progress, done, blocked)
-        priority: Filter by priority (Critical, High, Medium, Low)
-    """
+async def task_list(request: TaskListRequest) -> str:
+    """List tasks with optional filters."""
     try:
-        status_filter = TaskStatus(status) if status else None
-        priority_filter = TaskPriority(priority) if priority else None
+        status_filter = TaskStatus(request.status) if request.status else None
+        priority_filter = TaskPriority(request.priority) if request.priority else None
         
-        tasks = task_ops.list_tasks(status_filter, priority_filter)
+        tasks = ops.list_tasks(status_filter, priority_filter)
         
         if not tasks:
-            filter_desc = []
-            if status:
-                filter_desc.append(f"status={status}")
-            if priority:
-                filter_desc.append(f"priority={priority}")
-            filter_str = f" ({', '.join(filter_desc)})" if filter_desc else ""
-            return f"No tasks found{filter_str}"
+            return "No tasks found matching criteria"
         
         output = [f"Found {len(tasks)} task(s):"]
         for task in tasks:
@@ -191,31 +148,40 @@ def list_tasks(
         
         return "\n".join(output)
     except Exception as e:
-        return f"Error listing tasks: {str(e)}"
-
+        logger.error(f"Error in task_list: {e}")
+        raise ToolError(f"List failed: {str(e)}")
 
 @mcp.tool()
-def search_tasks(query: str) -> str:
-    """
-    Search tasks by content (full-text search).
-    
-    Args:
-        query: Search query
-    """
+async def task_search(request: TaskSearchRequest) -> str:
+    """Search tasks by content (full-text search)."""
     try:
-        results = task_ops.search_tasks(query)
+        results = ops.search_tasks(request.query)
         
         if not results:
-            return f"No tasks found matching '{query}'"
+            return f"No tasks found matching '{request.query}'"
         
-        output = [f"Found {len(results)} task(s) matching '{query}':"]
+        output = [f"Found {len(results)} task(s) matching '{request.query}':"]
         for task in results:
             output.append(f"- {task['number']:03d}: {task['title']} [{task['status']}]")
         
         return "\n".join(output)
     except Exception as e:
-        return f"Error searching tasks: {str(e)}"
+        logger.error(f"Error in task_search: {e}")
+        raise ToolError(f"Search failed: {str(e)}")
 
+#============================================
+# Main Execution Entry Point
+#============================================
 
 if __name__ == "__main__":
-    mcp.run()
+    # Dual-mode support:
+    # 1. If PORT is set -> Run as SSE (Gateway Mode)
+    # 2. If PORT is NOT set -> Run as Stdio (Local/CLI Mode)
+    port_env = get_env_variable("PORT", required=False)
+    transport = "sse" if port_env else "stdio"
+    
+    if transport == "sse":
+        port = int(port_env) if port_env else 8010
+        mcp.run(port=port, transport=transport)
+    else:
+        mcp.run(transport=transport)
