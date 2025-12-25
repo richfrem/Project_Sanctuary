@@ -1,0 +1,154 @@
+{
+    "mcpServers": {
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.git.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "REPO_PATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "GIT_BASE_DIR": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "task": {
+            "displayName": "Task MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.task.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.adr.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.chronicle.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.protocol.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "rag_cortex": {
+            "displayName": "RAG Cortex MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.rag_cortex.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "CHROMA_HOST": "localhost",
+                "CHROMA_PORT": "8000",
+                "CHROMA_CHILD_COLLECTION": "child_chunks_v5",
+                "CHROMA_PARENT_STORE": "parent_documents_v5",
+                "CHROMA_DATA_PATH": ".vector_data"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "council": {
+            "displayName": "Council MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.council.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.agent_persona.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "forge_llm": {
+            "displayName": "Forge LLM MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.forge_llm.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.config.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.code.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "orchestrator": {
+            "displayName": "Orchestrator MCP",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.orchestrator.server"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+            "disabled": true
+        },
+        "sanctuary_gateway": {
+            "displayName": "Sanctuary Gateway (84 Federated Tools)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": ["-m", "mcp_servers.gateway.bridge"],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "MCPGATEWAY_BEARER_TOKEN": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyZnJlbW1lckBob3RtYWlsLmNvbSIsImlzcyI6Im1jcGdhdGV3YXkiLCJhdWQiOiJtY3BnYXRld2F5LWFwaSIsImlhdCI6MTc2NjU1NzcxNSwianRpIjoiZjBjYjI3MmItY2Y0NS00NGVjLWExMjYtYjAxY2UxZWUxMThjIiwidXNlciI6eyJlbWFpbCI6InJmcmVtbWVyQGhvdG1haWwuY29tIiwiZnVsbF9uYW1lIjoiQVBJIFRva2VuIFVzZXIiLCJpc19hZG1pbiI6dHJ1ZSwiYXV0aF9wcm92aWRlciI6ImFwaV90b2tlbiJ9LCJ0ZWFtcyI6W10sIm5hbWVzcGFjZXMiOlsidXNlcjpyZnJlbW1lckBob3RtYWlsLmNvbSIsInB1YmxpYyJdLCJleHAiOjE3OTgwOTM3MTUsInNjb3BlcyI6eyJzZXJ2ZXJfaWQiOm51bGwsInBlcm1pc3Npb25zIjpbIioiXSwiaXBfcmVzdHJpY3Rpb25zIjpbXSwidGltZV9yZXN0cmljdGlvbnMiOnt9fX0.S5nniHDxoWGnFmFIJbNsuASmK8GbSKxby8J-Jbqi9w5BwNI6nwVYqY8924jyIA9hkCA0-xXAc5Xmgc2j-UBfvCvIGwOuL8FnSSYNPMWzuN7iBeZPK1KAT9YeuBn231tWbepU9-HnxW3ApHkC5sHfbafG7DsKiUqNeXoQs1aIEfjZkSd0eWv1GVM0_AapGEVEFpnyHNk909VWBw4654e7PaFtW6a8ZTdEIYxTiZ0sd7SocA4dabDpJInF8FSUFmHiXJNG-ZNV-tLKJGSXi3b7iz_1zvk9uAWh1fPHKI9t1uwJWmsxpR02jKcuUZ24vHhMMmq-HHNJy16VHvQ-nKnxk5iqCZQOR2NMHUtjkpfnl9iZ9itg9zKpAJlux-0EtwS8E8ZDnfh4sEFB9k1FP6PFSEnKwQIeEpol1cSeQGjh6s4NIffOd5nb20kIgzbnJ-tm2jDCPFGwq5jQUOhpQb8d5kYMay2vOIDgVZHm3ZqSR6igvMQkeHnLE4iow4qW1jJqDHdWcI-9BXLGRHbhyhoDJQ5h4ZrpY8bVoJ_swy7EK2gToFw3gRn_k0jdvgILoOeoGg4uV_i3opVLj-FDOQ4uDoX2-evvG5u7zxl6Dy7_mgku9-_d60TCXOSFv0vyde3115qkWKCHX8W8aNyhxUOBS7ISbYYLoU7t-wiVcQcV780"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        }
+    }
+}

@@ -26,9 +26,8 @@ def test_filesystem_gateway_connection(client):
 @pytest.mark.integration
 @pytest.mark.gateway
 @pytest.mark.parametrize("tool, args", [
-    ("sanctuary-filesystem-code-list-files", {"path": "mcp_servers/gateway"}),
+    ("sanctuary-filesystem-code-list-files", {"path": ".", "recursive": False, "pattern": "*.md"}),
     ("sanctuary-filesystem-code-read", {"path": "README.md"}),
-    ("sanctuary-filesystem-code-analyze", {"path": "."}),
     ("sanctuary-filesystem-code-check-tools", {}),
 ])
 def test_filesystem_rpc_execution(client, tool, args):

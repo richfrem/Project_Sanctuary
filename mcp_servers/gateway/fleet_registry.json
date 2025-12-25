@@ -8,7 +8,7 @@
       "status": "ready",
       "tools": [
         {
-          "description": "No description",
+          "description": "Check Sanctuary model availability and status.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -16,7 +16,7 @@
           "name": "sanctuary-cortex-check-sanctuary-model-status"
         },
         {
-          "description": "No description",
+          "description": "Query the fine-tuned Sanctuary model.",
           "inputSchema": {
             "properties": {
               "max_tokens": {
@@ -40,7 +40,7 @@
           "name": "sanctuary-cortex-query-sanctuary-model"
         },
         {
-          "description": "No description",
+          "description": "Tool-driven snapshot generation (Protocol 128 v3.5).",
           "inputSchema": {
             "properties": {
               "manifest_files": {
@@ -61,7 +61,7 @@
           "name": "sanctuary-cortex-cortex-capture-snapshot"
         },
         {
-          "description": "No description",
+          "description": "Scans repository for technical state changes (Protocol 128).",
           "inputSchema": {
             "properties": {
               "hours": {
@@ -74,7 +74,7 @@
           "name": "sanctuary-cortex-cortex-learning-debrief"
         },
         {
-          "description": "No description",
+          "description": "Get Mnemonic Cache (CAG) statistics.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -82,7 +82,7 @@
           "name": "sanctuary-cortex-cortex-cache-stats"
         },
         {
-          "description": "No description",
+          "description": "Generate Guardian boot digest (Protocol 114).",
           "inputSchema": {
             "properties": {
               "mode": {
@@ -95,7 +95,7 @@
           "name": "sanctuary-cortex-cortex-guardian-wakeup"
         },
         {
-          "description": "No description",
+          "description": "Pre-populate cache with genesis queries.",
           "inputSchema": {
             "properties": {
               "genesis_queries": {
@@ -113,7 +113,7 @@
           "name": "sanctuary-cortex-cortex-cache-warmup"
         },
         {
-          "description": "No description",
+          "description": "Store answer in cache.",
           "inputSchema": {
             "properties": {
               "answer": {
@@ -132,7 +132,7 @@
           "name": "sanctuary-cortex-cortex-cache-set"
         },
         {
-          "description": "No description",
+          "description": "Retrieve cached answer for a query.",
           "inputSchema": {
             "properties": {
               "query": {
@@ -148,7 +148,7 @@
           "name": "sanctuary-cortex-cortex-cache-get"
         },
         {
-          "description": "No description",
+          "description": "Incrementally ingest documents into the knowledge base.",
           "inputSchema": {
             "properties": {
               "file_paths": {
@@ -172,7 +172,7 @@
           "name": "sanctuary-cortex-cortex-ingest-incremental"
         },
         {
-          "description": "No description",
+          "description": "Get database statistics and health status.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -180,7 +180,7 @@
           "name": "sanctuary-cortex-cortex-get-stats"
         },
         {
-          "description": "No description",
+          "description": "Perform semantic search query against the knowledge base.",
           "inputSchema": {
             "properties": {
               "max_results": {
@@ -208,7 +208,7 @@
           "name": "sanctuary-cortex-cortex-query"
         },
         {
-          "description": "No description",
+          "description": "Perform full re-ingestion of the knowledge base.",
           "inputSchema": {
             "properties": {
               "purge_existing": {
@@ -237,7 +237,19 @@
       "status": "ready",
       "tools": [
         {
-          "description": "No description",
+          "description": "List recent chronicle entries.",
+          "inputSchema": {
+            "properties": {
+              "limit": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "name": "sanctuary-domain-chronicle-list-entries"
+        },
+        {
+          "description": "Read the content of a specific workflow file.",
           "inputSchema": {
             "properties": {
               "filename": {
@@ -252,7 +264,7 @@
           "name": "sanctuary-domain-read-workflow"
         },
         {
-          "description": "No description",
+          "description": "List all available workflows in the .agent/workflows directory.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -260,7 +272,7 @@
           "name": "sanctuary-domain-get-available-workflows"
         },
         {
-          "description": "No description",
+          "description": "Delete a configuration file.",
           "inputSchema": {
             "properties": {
               "filename": {
@@ -275,7 +287,7 @@
           "name": "sanctuary-domain-config-delete"
         },
         {
-          "description": "No description",
+          "description": "Write a configuration file.",
           "inputSchema": {
             "properties": {
               "content": {
@@ -294,7 +306,7 @@
           "name": "sanctuary-domain-config-write"
         },
         {
-          "description": "No description",
+          "description": "Read a configuration file.",
           "inputSchema": {
             "properties": {
               "filename": {
@@ -309,7 +321,7 @@
           "name": "sanctuary-domain-config-read"
         },
         {
-          "description": "No description",
+          "description": "List all configuration files in the .agent/config directory.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -317,7 +329,7 @@
           "name": "sanctuary-domain-config-list"
         },
         {
-          "description": "No description",
+          "description": "Create a new custom persona.",
           "inputSchema": {
             "properties": {
               "description": {
@@ -339,7 +351,7 @@
           "name": "sanctuary-domain-persona-create-custom"
         },
         {
-          "description": "No description",
+          "description": "Reset conversation state for a specific persona role.",
           "inputSchema": {
             "properties": {
               "role": {
@@ -354,7 +366,7 @@
           "name": "sanctuary-domain-persona-reset-state"
         },
         {
-          "description": "No description",
+          "description": "Get conversation state for a specific persona role.",
           "inputSchema": {
             "properties": {
               "role": {
@@ -369,7 +381,7 @@
           "name": "sanctuary-domain-persona-get-state"
         },
         {
-          "description": "No description",
+          "description": "List all available persona roles.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -377,7 +389,7 @@
           "name": "sanctuary-domain-persona-list-roles"
         },
         {
-          "description": "No description",
+          "description": "Dispatch a task to a specific persona agent.",
           "inputSchema": {
             "properties": {
               "context": {
@@ -411,7 +423,7 @@
           "name": "sanctuary-domain-persona-dispatch"
         },
         {
-          "description": "No description",
+          "description": "Full-text search across all ADRs.",
           "inputSchema": {
             "properties": {
               "query": {
@@ -426,7 +438,7 @@
           "name": "sanctuary-domain-adr-search"
         },
         {
-          "description": "No description",
+          "description": "List all ADRs with optional status filter.",
           "inputSchema": {
             "properties": {
               "status": {
@@ -438,7 +450,7 @@
           "name": "sanctuary-domain-adr-list"
         },
         {
-          "description": "No description",
+          "description": "Retrieve a specific ADR by number.",
           "inputSchema": {
             "properties": {
               "number": {
@@ -453,7 +465,7 @@
           "name": "sanctuary-domain-adr-get"
         },
         {
-          "description": "No description",
+          "description": "Update the status of an existing ADR.",
           "inputSchema": {
             "properties": {
               "new_status": {
@@ -476,7 +488,7 @@
           "name": "sanctuary-domain-adr-update-status"
         },
         {
-          "description": "No description",
+          "description": "Create a new ADR with automatic sequential numbering.",
           "inputSchema": {
             "properties": {
               "author": {
@@ -515,7 +527,7 @@
           "name": "sanctuary-domain-adr-create"
         },
         {
-          "description": "No description",
+          "description": "Search tasks by content (full-text search).",
           "inputSchema": {
             "properties": {
               "query": {
@@ -530,7 +542,7 @@
           "name": "sanctuary-domain-search-tasks"
         },
         {
-          "description": "No description",
+          "description": "List tasks with optional filters.",
           "inputSchema": {
             "properties": {
               "priority": {
@@ -545,7 +557,7 @@
           "name": "sanctuary-domain-list-tasks"
         },
         {
-          "description": "No description",
+          "description": "Retrieve a specific task by number.",
           "inputSchema": {
             "properties": {
               "task_number": {
@@ -560,7 +572,7 @@
           "name": "sanctuary-domain-get-task"
         },
         {
-          "description": "No description",
+          "description": "Change task status (moves file between directories).",
           "inputSchema": {
             "properties": {
               "new_status": {
@@ -582,7 +594,7 @@
           "name": "sanctuary-domain-update-task-status"
         },
         {
-          "description": "No description",
+          "description": "Update an existing task&#x27;s metadata or content.",
           "inputSchema": {
             "properties": {
               "task_number": {
@@ -601,7 +613,7 @@
           "name": "sanctuary-domain-update-task"
         },
         {
-          "description": "No description",
+          "description": "Create a new task file in TASKS/ directory.",
           "inputSchema": {
             "properties": {
               "acceptance_criteria": {
@@ -653,7 +665,7 @@
           "name": "sanctuary-domain-create-task"
         },
         {
-          "description": "No description",
+          "description": "Search protocols by content.",
           "inputSchema": {
             "properties": {
               "query": {
@@ -668,7 +680,7 @@
           "name": "sanctuary-domain-protocol-search"
         },
         {
-          "description": "No description",
+          "description": "List protocols.",
           "inputSchema": {
             "properties": {
               "status": {
@@ -680,7 +692,7 @@
           "name": "sanctuary-domain-protocol-list"
         },
         {
-          "description": "No description",
+          "description": "Retrieve a specific protocol.",
           "inputSchema": {
             "properties": {
               "number": {
@@ -695,7 +707,7 @@
           "name": "sanctuary-domain-protocol-get"
         },
         {
-          "description": "No description",
+          "description": "Update an existing protocol.",
           "inputSchema": {
             "properties": {
               "number": {
@@ -717,7 +729,7 @@
           "name": "sanctuary-domain-protocol-update"
         },
         {
-          "description": "No description",
+          "description": "Create a new protocol.",
           "inputSchema": {
             "properties": {
               "authority": {
@@ -757,7 +769,7 @@
           "name": "sanctuary-domain-protocol-create"
         },
         {
-          "description": "No description",
+          "description": "Search chronicle entries by content.",
           "inputSchema": {
             "properties": {
               "query": {
@@ -772,7 +784,7 @@
           "name": "sanctuary-domain-chronicle-search"
         },
         {
-          "description": "No description",
+          "description": "Read the latest entries from the Chronicle.",
           "inputSchema": {
             "properties": {
               "limit": {
@@ -784,19 +796,7 @@
           "name": "sanctuary-domain-chronicle-read-latest-entries"
         },
         {
-          "description": "No description",
-          "inputSchema": {
-            "properties": {
-              "limit": {
-                "type": "integer"
-              }
-            },
-            "type": "object"
-          },
-          "name": "sanctuary-domain-chronicle-list-entries"
-        },
-        {
-          "description": "No description",
+          "description": "Retrieve a specific chronicle entry.",
           "inputSchema": {
             "properties": {
               "entry_number": {
@@ -811,7 +811,7 @@
           "name": "sanctuary-domain-chronicle-get-entry"
         },
         {
-          "description": "No description",
+          "description": "Update an existing chronicle entry.",
           "inputSchema": {
             "properties": {
               "entry_number": {
@@ -836,7 +836,7 @@
           "name": "sanctuary-domain-chronicle-update-entry"
         },
         {
-          "description": "No description",
+          "description": "Append a new entry to the Chronicle (Alias for create_entry).",
           "inputSchema": {
             "properties": {
               "author": {
@@ -867,7 +867,7 @@
           "name": "sanctuary-domain-chronicle-append-entry"
         },
         {
-          "description": "No description",
+          "description": "Create a new chronicle entry.",
           "inputSchema": {
             "properties": {
               "author": {
@@ -908,7 +908,7 @@
       "status": "ready",
       "tools": [
         {
-          "description": "No description",
+          "description": "Get file metadata.",
           "inputSchema": {
             "properties": {
               "path": {
@@ -924,7 +924,7 @@
           "name": "sanctuary-filesystem-code-get-info"
         },
         {
-          "description": "No description",
+          "description": "Write/update file with automatic backup.",
           "inputSchema": {
             "properties": {
               "backup": {
@@ -953,7 +953,7 @@
           "name": "sanctuary-filesystem-code-write"
         },
         {
-          "description": "No description",
+          "description": "Read file contents.",
           "inputSchema": {
             "properties": {
               "max_size_mb": {
@@ -973,7 +973,7 @@
           "name": "sanctuary-filesystem-code-read"
         },
         {
-          "description": "No description",
+          "description": "Search for text/patterns in code files.",
           "inputSchema": {
             "properties": {
               "case_sensitive": {
@@ -997,7 +997,7 @@
           "name": "sanctuary-filesystem-code-search-content"
         },
         {
-          "description": "No description",
+          "description": "List files in a directory with optional pattern.",
           "inputSchema": {
             "properties": {
               "path": {
@@ -1021,7 +1021,7 @@
           "name": "sanctuary-filesystem-code-list-files"
         },
         {
-          "description": "No description",
+          "description": "Find files by name or glob pattern.",
           "inputSchema": {
             "properties": {
               "name_pattern": {
@@ -1041,7 +1041,7 @@
           "name": "sanctuary-filesystem-code-find-file"
         },
         {
-          "description": "No description",
+          "description": "Check which code quality tools are available.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1049,7 +1049,7 @@
           "name": "sanctuary-filesystem-code-check-tools"
         },
         {
-          "description": "No description",
+          "description": "Perform static analysis on code.",
           "inputSchema": {
             "properties": {
               "path": {
@@ -1065,7 +1065,7 @@
           "name": "sanctuary-filesystem-code-analyze"
         },
         {
-          "description": "No description",
+          "description": "Format code in a file or directory.",
           "inputSchema": {
             "properties": {
               "check_only": {
@@ -1089,7 +1089,7 @@
           "name": "sanctuary-filesystem-code-format"
         },
         {
-          "description": "No description",
+          "description": "Run linting on a file or directory.",
           "inputSchema": {
             "properties": {
               "path": {
@@ -1119,7 +1119,7 @@
       "status": "ready",
       "tools": [
         {
-          "description": "No description",
+          "description": "Show commit history.",
           "inputSchema": {
             "properties": {
               "max_count": {
@@ -1136,7 +1136,7 @@
           "name": "sanctuary-git-git-log"
         },
         {
-          "description": "No description",
+          "description": "Show changes (diff).",
           "inputSchema": {
             "properties": {
               "cached": {
@@ -1153,7 +1153,7 @@
           "name": "sanctuary-git-git-diff"
         },
         {
-          "description": "No description",
+          "description": "Finish feature (cleanup/delete).",
           "inputSchema": {
             "properties": {
               "branch_name": {
@@ -1173,7 +1173,7 @@
           "name": "sanctuary-git-git-finish-feature"
         },
         {
-          "description": "No description",
+          "description": "Start a new feature branch.",
           "inputSchema": {
             "properties": {
               "description": {
@@ -1194,7 +1194,7 @@
           "name": "sanctuary-git-git-start-feature"
         },
         {
-          "description": "No description",
+          "description": "Push feature branch to origin.",
           "inputSchema": {
             "properties": {
               "force": {
@@ -1211,7 +1211,7 @@
           "name": "sanctuary-git-git-push-feature"
         },
         {
-          "description": "No description",
+          "description": "Stage files for commit.",
           "inputSchema": {
             "properties": {
               "files": {
@@ -1227,7 +1227,7 @@
           "name": "sanctuary-git-git-add"
         },
         {
-          "description": "No description",
+          "description": "Get standard git status.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1235,7 +1235,7 @@
           "name": "sanctuary-git-git-get-status"
         },
         {
-          "description": "No description",
+          "description": "Return Protocol 101 safety rules.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1243,7 +1243,7 @@
           "name": "sanctuary-git-git-get-safety-rules"
         },
         {
-          "description": "No description",
+          "description": "Commit with automated Protocol 101 checks.",
           "inputSchema": {
             "properties": {
               "message": {
@@ -1319,7 +1319,7 @@
           "name": "sanctuary-utils-gateway-get-capabilities"
         },
         {
-          "description": "No description",
+          "description": "Replace occurrences of old with new in text.",
           "inputSchema": {
             "properties": {
               "new": {
@@ -1345,7 +1345,7 @@
           "name": "sanctuary-utils-string-replace"
         },
         {
-          "description": "No description",
+          "description": "Count words in text.",
           "inputSchema": {
             "properties": {
               "text": {
@@ -1361,7 +1361,7 @@
           "name": "sanctuary-utils-string-word-count"
         },
         {
-          "description": "No description",
+          "description": "Reverse a string.",
           "inputSchema": {
             "properties": {
               "text": {
@@ -1377,7 +1377,7 @@
           "name": "sanctuary-utils-string-reverse"
         },
         {
-          "description": "No description",
+          "description": "Remove leading and trailing whitespace.",
           "inputSchema": {
             "properties": {
               "text": {
@@ -1393,7 +1393,7 @@
           "name": "sanctuary-utils-string-trim"
         },
         {
-          "description": "No description",
+          "description": "Convert text to lowercase.",
           "inputSchema": {
             "properties": {
               "text": {
@@ -1409,7 +1409,7 @@
           "name": "sanctuary-utils-string-to-lower"
         },
         {
-          "description": "No description",
+          "description": "Convert text to uppercase.",
           "inputSchema": {
             "properties": {
               "text": {
@@ -1425,7 +1425,7 @@
           "name": "sanctuary-utils-string-to-upper"
         },
         {
-          "description": "No description",
+          "description": "Validate if a string is a valid UUID.",
           "inputSchema": {
             "properties": {
               "uuid_string": {
@@ -1441,7 +1441,7 @@
           "name": "sanctuary-utils-uuid-validate-uuid"
         },
         {
-          "description": "No description",
+          "description": "Generate a UUID based on host ID and current time (version 1).",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1449,7 +1449,7 @@
           "name": "sanctuary-utils-uuid-generate-uuid1"
         },
         {
-          "description": "No description",
+          "description": "Generate a random UUID (version 4).",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1457,7 +1457,7 @@
           "name": "sanctuary-utils-uuid-generate-uuid4"
         },
         {
-          "description": "No description",
+          "description": "Divide a by b.",
           "inputSchema": {
             "properties": {
               "a": {
@@ -1478,7 +1478,7 @@
           "name": "sanctuary-utils-calculator-divide"
         },
         {
-          "description": "No description",
+          "description": "Multiply two numbers.",
           "inputSchema": {
             "properties": {
               "a": {
@@ -1499,7 +1499,7 @@
           "name": "sanctuary-utils-calculator-multiply"
         },
         {
-          "description": "No description",
+          "description": "Subtract b from a.",
           "inputSchema": {
             "properties": {
               "a": {
@@ -1520,7 +1520,7 @@
           "name": "sanctuary-utils-calculator-subtract"
         },
         {
-          "description": "No description",
+          "description": "Add two numbers.",
           "inputSchema": {
             "properties": {
               "a": {
@@ -1541,7 +1541,7 @@
           "name": "sanctuary-utils-calculator-add"
         },
         {
-          "description": "No description",
+          "description": "Evaluate a mathematical expression safely.",
           "inputSchema": {
             "properties": {
               "expression": {
@@ -1557,7 +1557,7 @@
           "name": "sanctuary-utils-calculator-calculate"
         },
         {
-          "description": "No description",
+          "description": "Get information about available timezones.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1565,7 +1565,7 @@
           "name": "sanctuary-utils-time-get-timezone-info"
         },
         {
-          "description": "No description",
+          "description": "Get the current time in UTC or specified timezone.",
           "inputSchema": {
             "properties": {
               "timezone_name": {

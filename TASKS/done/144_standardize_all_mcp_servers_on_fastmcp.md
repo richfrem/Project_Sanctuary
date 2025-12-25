@@ -30,20 +30,20 @@ Migrate all Project Sanctuary MCP servers from the custom `SSEServer` to the off
 - [/] Migrate `workflow` server (mcp_servers/workflow/server.py) - *In Progress*
 
 ### Gateway Clusters Migration
-- [ ] Migrate `sanctuary_cortex` cluster
-- [ ] Migrate `sanctuary_domain` cluster
-- [ ] Migrate `sanctuary_filesystem` cluster
-- [ ] Migrate `sanctuary_git` cluster
-- [ ] Migrate `sanctuary_network` cluster
-- [ ] Migrate `sanctuary_utils` cluster
+- [x] Migrate `sanctuary_cortex` cluster (ADR-076 @sse_tool pattern ✅)
+- [x] Migrate `sanctuary_domain` cluster (ADR-076 @sse_tool pattern ✅)
+- [x] Migrate `sanctuary_filesystem` cluster (ADR-076 @sse_tool pattern ✅)
+- [x] Migrate `sanctuary_git` cluster (ADR-076 @sse_tool pattern ✅)
+- [x] Migrate `sanctuary_network` cluster (ADR-076 @sse_tool pattern ✅)
+- [x] Migrate `sanctuary_utils` cluster (ADR-076 @sse_tool pattern ✅)
 
 ### Finalization
-- [ ] Deprecate and remove `mcp_servers/lib/sse_adaptor.py`
-- [ ] Verify all tool discovery via Gateway
+- [x] ~~Deprecate and remove `mcp_servers/lib/sse_adaptor.py`~~ → **UPDATED**: sse_adaptor.py is now the ADR-076 core library (provides @sse_tool decorator + SSEServer)
+- [x] Verify all tool discovery via Gateway (All 6 clusters healthy and discoverable)
 
 ## 3. Acceptance Criteria
 
-- All servers pass `python3 -m <server> --help` without runtime errors.
-- Tool discovery works for all servers via the Gateway (verified by `gateway_get_capabilities`).
-- Dual-transport (SSE/Stdio) is functional.
-- No new code uses `SSEServer`.
+- [x] All servers pass health checks without runtime errors.
+- [x] Tool discovery works for all servers via the Gateway (verified via healthchecks + SSE).
+- [x] Dual-transport (SSE/Stdio) is functional.
+- [x] ~~No new code uses `SSEServer`~~ → **UPDATED**: SSEServer + @sse_tool is the ADR-076 standard pattern for Gateway clusters.

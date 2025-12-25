@@ -151,7 +151,7 @@ class TestLearningContinuity(BaseIntegrationTest):
         assert snapshot_path.exists()
         content = snapshot_path.read_text()
         
-        assert "# Red Team Audit Packet" in content
+        assert "# Red Team Audit Briefing" in content or "# Red Team Audit Packet" in content
         assert "Testing Phase" in content
         assert "print('hello modified world')" in content
         

@@ -1,5 +1,5 @@
 services:
-  vector_db:
+  sanctuary_vector_db:
     image: chromadb/chroma:latest
     container_name: sanctuary_vector_db
     ports:
@@ -22,9 +22,9 @@ services:
     networks:
       - mcp_network
 
-  ollama_model_mcp:
+  sanctuary_ollama:
     image: ollama/ollama:latest
-    container_name: sanctuary_ollama_mcp
+    container_name: sanctuary_ollama
     ports:
       - "11434:11434"
     volumes:
@@ -69,11 +69,11 @@ services:
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_utils.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 10s
     restart: unless-stopped
 
   # Fleet of 8 - Container #2: sanctuary_filesystem (Task 128)
@@ -97,9 +97,11 @@ services:
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_filesystem.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
+      timeout: 10s
       retries: 3
+      start_period: 10s
     restart: unless-stopped
 
   # Fleet of 8 - Container #3: sanctuary_network (Task 129)
@@ -122,9 +124,11 @@ services:
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_network.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
+      timeout: 10s
       retries: 3
+      start_period: 10s
     restart: unless-stopped
 
   # Fleet of 8 - Container #4: sanctuary_git (Task 130)
@@ -152,9 +156,11 @@ services:
       - GIT_COMMITTER_EMAIL=${GIT_AUTHOR_EMAIL:-agent@sanctuary.project}
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_git.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
+      timeout: 10s
       retries: 3
+      start_period: 10s
     restart: unless-stopped
 
   # Fleet of 8 - Container #5: sanctuary_cortex (Task 131)
@@ -172,21 +178,23 @@ services:
       - PYTHONPATH=/app
       - PORT=8000
       - MCP_TRANSPORT=sse
-      - CHROMA_HOST=vector_db
+      - CHROMA_HOST=sanctuary_vector_db
       - CHROMA_PORT=8000
-      - OLLAMA_HOST=http://ollama_model_mcp:11434
+      - OLLAMA_HOST=http://sanctuary_ollama:11434
       - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
     networks:
       - mcp_network
     depends_on:
-      - vector_db
-      - ollama_model_mcp
+      - sanctuary_vector_db
+      - sanctuary_ollama
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_cortex.server" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/sse" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
+      timeout: 10s
       retries: 3
+      start_period: 10s
     restart: unless-stopped
 
   # Fleet of 8 - Container #6: sanctuary_domain (ADR 061)
@@ -215,6 +223,12 @@ services:
           cpus: '1.0'
           memory: '512M'
     command: [ "python", "-m", "mcp_servers.gateway.clusters.sanctuary_domain.server" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8105/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     restart: unless-stopped
 
 networks:

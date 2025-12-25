@@ -218,8 +218,15 @@ class CodeOperations:
     #   recursive: Deep search flag
     # Returns: List of file metadata dicts
     #============================================
-    def list_files(self, directory: str = ".", pattern: str = "*", recursive: bool = True) -> List[Dict[str, Any]]:
-        """List files in a directory with optional pattern."""
+    def list_files(self, directory: str = ".", pattern: str = "*", recursive: bool = True, max_files: int = 5000) -> List[Dict[str, Any]]:
+        """List files in a directory with optional pattern.
+        
+        Args:
+            directory: Directory to search
+            pattern: Glob pattern to match
+            recursive: Whether to search subdirectories (iterative tree walk, not recursive calls)
+            max_files: Maximum number of files to return (default 5000, prevents unbounded scans)
+        """
         search_dir = self.validator.validate_path(directory)
         
         if not search_dir.exists():
@@ -228,16 +235,33 @@ class CodeOperations:
         files = []
         glob_method = search_dir.rglob if recursive else search_dir.glob
         
-        for file_path in glob_method(pattern):
-            if file_path.is_file():
-                stat = file_path.stat()
-                files.append({
-                    "path": str(file_path.relative_to(self.project_root)),
-                    "size": stat.st_size,
-                    "modified": stat.st_mtime
-                })
+        # Pre-compute project root for faster relative path calculations
+        project_root = self.project_root
         
-        return sorted(files, key=lambda x: x["path"])
+        for file_path in glob_method(pattern):
+            # Skip symlinks first (fastest check)
+            if file_path.is_symlink():
+                continue
+            
+            # Then check if it's a file (requires stat call)
+            if file_path.is_file():
+                try:
+                    stat = file_path.stat()
+                    files.append({
+                        "path": str(file_path.relative_to(project_root)),
+                        "size": stat.st_size,
+                        "modified": stat.st_mtime
+                    })
+                except (OSError, ValueError):
+                    # Skip files we can't stat or get relative path for
+                    continue
+                
+                # Safety limit to prevent unbounded scans
+                if len(files) >= max_files:
+                    break
+        
+        # Return unsorted - filesystem order is fine and much faster
+        return files
 
     #============================================
     # Method: search_content

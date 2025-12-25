@@ -110,14 +110,20 @@ EMPTY_SCHEMA = {"type": "object", "properties": {}}
 
 #============================================
 # SSE Transport Implementation (Gateway Mode)
+# Migrated to @sse_tool decorator pattern per ADR-076
 #============================================
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
-    from mcp_servers.lib.sse_adaptor import SSEServer
+    from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
     
     server = SSEServer("sanctuary_git", version="1.0.0")
     ops = get_ops()
     
+    @sse_tool(
+        name="git_smart_commit",
+        description="Commit with automated Protocol 101 checks.",
+        schema=SMART_COMMIT_SCHEMA
+    )
     def git_smart_commit(message: str):
         status = ops.status()
         if status.branch == "main":
@@ -130,6 +136,11 @@ def run_sse_server(port: int):
         commit_hash = ops.commit(message)
         return f"Commit successful. Hash: {commit_hash}"
     
+    @sse_tool(
+        name="git_get_safety_rules",
+        description="Return Protocol 101 safety rules.",
+        schema=EMPTY_SCHEMA
+    )
     def git_get_safety_rules():
         return """🛡️ GIT SAFETY PRIMER: UNBREAKABLE RULES FOR AGENTS 🛡️
 1. SYNCHRONIZATION FIRST: Pull main before starting.
@@ -139,6 +150,11 @@ def run_sse_server(port: int):
 5. DESTRUCTIVE ACTION GATE: No force pushes without approval.
 6. NO GHOST EDITS: Verify branch before editing."""
     
+    @sse_tool(
+        name="git_get_status",
+        description="Get standard git status.",
+        schema=EMPTY_SCHEMA
+    )
     def git_get_status():
         status = ops.status()
         return (
@@ -148,6 +164,11 @@ def run_sse_server(port: int):
             f"Untracked Files: {', '.join(status.untracked)}"
         )
     
+    @sse_tool(
+        name="git_add",
+        description="Stage files for commit.",
+        schema=ADD_SCHEMA
+    )
     def git_add(files: List[str] = None):
         status = ops.status()
         if status.branch == "main":
@@ -159,6 +180,11 @@ def run_sse_server(port: int):
             return f"Staged {len(files)} file(s) on {status.branch}"
         return f"Staged all changes on {status.branch}"
     
+    @sse_tool(
+        name="git_push_feature",
+        description="Push feature branch to origin.",
+        schema=PUSH_FEATURE_SCHEMA
+    )
     def git_push_feature(force: bool = False, no_verify: bool = False):
         current = ops.get_current_branch()
         if current == "main":
@@ -176,32 +202,44 @@ def run_sse_server(port: int):
         pr_url = f"https://github.com/richfrem/Project_Sanctuary/pull/new/{current}"
         return f"Verified push to {current} (Hash: {local_hash[:8]}).\nLink: {pr_url}"
     
+    @sse_tool(
+        name="git_start_feature",
+        description="Start a new feature branch.",
+        schema=START_FEATURE_SCHEMA
+    )
     def git_start_feature(task_id: int, description: str):
         req_error = check_requirements()
         if req_error:
             return req_error
         return ops.start_feature(task_id, description)
     
+    @sse_tool(
+        name="git_finish_feature",
+        description="Finish feature (cleanup/delete).",
+        schema=FINISH_FEATURE_SCHEMA
+    )
     def git_finish_feature(branch_name: str, force: bool = False):
         return ops.finish_feature(branch_name, force=force)
     
+    @sse_tool(
+        name="git_diff",
+        description="Show changes (diff).",
+        schema=DIFF_SCHEMA
+    )
     def git_diff(cached: bool = False, file_path: str = None):
         diff = ops.diff(cached=cached, file_path=file_path)
         return diff if diff else "No changes."
     
+    @sse_tool(
+        name="git_log",
+        description="Show commit history.",
+        schema=LOG_SCHEMA
+    )
     def git_log(max_count: int = 10, oneline: bool = True):
         return ops.log(max_count=max_count, oneline=oneline)
     
-    # Register tools
-    server.register_tool("git_smart_commit", git_smart_commit, SMART_COMMIT_SCHEMA)
-    server.register_tool("git_get_safety_rules", git_get_safety_rules, EMPTY_SCHEMA)
-    server.register_tool("git_get_status", git_get_status, EMPTY_SCHEMA)
-    server.register_tool("git_add", git_add, ADD_SCHEMA)
-    server.register_tool("git_push_feature", git_push_feature, PUSH_FEATURE_SCHEMA)
-    server.register_tool("git_start_feature", git_start_feature, START_FEATURE_SCHEMA)
-    server.register_tool("git_finish_feature", git_finish_feature, FINISH_FEATURE_SCHEMA)
-    server.register_tool("git_diff", git_diff, DIFF_SCHEMA)
-    server.register_tool("git_log", git_log, LOG_SCHEMA)
+    # Auto-register all decorated tools (ADR-076)
+    server.register_decorated_tools(locals())
     
     logger.info(f"Starting SSEServer on port {port} (Gateway Mode)")
     server.run(port=port, transport="sse")

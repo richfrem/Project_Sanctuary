@@ -21,7 +21,7 @@ def mock_project_root(code_root):
 @pytest.fixture
 def code_ops(code_root):
     """Create CodeOperations instance."""
-    from mcp_servers.code.code_ops import CodeOperations
+    from mcp_servers.code.operations import CodeOperations
     ops = CodeOperations(code_root)
     
     # Create a test Python file

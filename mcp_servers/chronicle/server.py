@@ -59,7 +59,7 @@ async def chronicle_create_entry(request: ChronicleCreateRequest) -> str:
             title=request.title,
             content=request.content,
             author=request.author,
-            date=request.date,
+            date_str=request.date,
             status=request.status,
             classification=request.classification
         )
@@ -78,7 +78,7 @@ async def chronicle_append_entry(request: ChronicleCreateRequest) -> str:
             title=request.title,
             content=request.content,
             author=request.author,
-            date=request.date,
+            date_str=request.date,
             status=request.status,
             classification=request.classification
         )

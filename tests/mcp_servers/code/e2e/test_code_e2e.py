@@ -49,7 +49,7 @@ class TestCodeE2E(BaseE2ETest):
         assert "code_lint" in names
 
         # 2. List Files
-        list_res = mcp_client.call_tool("code_list_files", {"directory": ".", "recursive": False})
+        list_res = mcp_client.call_tool("code_list_files", {"request": {"directory": ".", "recursive": False}})
         list_text = list_res.get("content", [])[0]["text"]
         print(f"📋 code_list_files: Listing received")
         assert "README.md" in list_text or "mcp_servers" in list_text
@@ -59,9 +59,11 @@ class TestCodeE2E(BaseE2ETest):
         content = "def hello():\n    print('Hello E2E')"
         
         write_res = mcp_client.call_tool("code_write", {
-            "path": file_path,
-            "content": content,
-            "backup": False
+            "request": {
+                "path": file_path,
+                "content": content,
+                "backup": False
+            }
         })
         write_text = write_res.get("content", [])[0]["text"]
         print(f"\n🆕 code_write: {write_text}")
@@ -69,19 +71,19 @@ class TestCodeE2E(BaseE2ETest):
 
         try:
             # 4. Read File
-            read_res = mcp_client.call_tool("code_read", {"path": file_path})
+            read_res = mcp_client.call_tool("code_read", {"request": {"path": file_path}})
             read_text = read_res.get("content", [])[0]["text"]
             assert content in read_text
             print("📄 code_read: Verified content")
             
             # 5. Get Info
-            info_res = mcp_client.call_tool("code_get_info", {"path": file_path})
+            info_res = mcp_client.call_tool("code_get_info", {"request": {"path": file_path}})
             info_text = info_res.get("content", [])[0]["text"]
             print(f"ℹ️ code_get_info: {info_text}")
             assert "Size" in info_text
 
             # 6. Find File
-            find_res = mcp_client.call_tool("code_find_file", {"name_pattern": file_path})
+            find_res = mcp_client.call_tool("code_find_file", {"request": {"name_pattern": file_path}})
             find_text = find_res.get("content", [])[0]["text"]
             print(f"🔎 code_find_file: {find_text}")
             assert file_path in find_text
@@ -89,35 +91,35 @@ class TestCodeE2E(BaseE2ETest):
             # 7. Search Content
             # Wait briefly for file system
             time.sleep(1)
-            search_res = mcp_client.call_tool("code_search_content", {"query": "Hello E2E", "file_pattern": "*.py"})
+            search_res = mcp_client.call_tool("code_search_content", {"request": {"query": "Hello E2E", "file_pattern": "*.py"}})
             search_text = search_res.get("content", [])[0]["text"]
             print(f"🔍 search content result: {search_text}") # Debug print
             assert file_path in search_text
             print("   code_search_content: Verified match")
 
             # 8. Check Tools
-            check_res = mcp_client.call_tool("code_check_tools", {})
+            check_res = mcp_client.call_tool("code_check_tools", {"request": {}})
             check_text = check_res.get("content", [])[0]["text"]
             print(f"🛠️ code_check_tools: {check_text}")
             
             # 9. Format (Check only)
             # Use 'black' or 'ruff' (might fail if not installed, handle gracefully)
             try:
-                fmt_res = mcp_client.call_tool("code_format", {"path": file_path, "check_only": True})
+                fmt_res = mcp_client.call_tool("code_format", {"request": {"path": file_path, "check_only": True}})
                 print(f"🖊️ code_format: {fmt_res.get('content', [])[0]['text']}")
             except Exception as e:
                 print(f"⚠️ code_format skipped/failed: {e}")
 
             # 10. Lint
             try:
-                lint_res = mcp_client.call_tool("code_lint", {"path": file_path})
+                lint_res = mcp_client.call_tool("code_lint", {"request": {"path": file_path}})
                 print(f"🧹 code_lint: {lint_res.get('content', [])[0]['text']}")
             except Exception as e:
                 print(f"⚠️ code_lint skipped/failed: {e}")
 
             # 11. Analyze
             try:
-                analyze_res = mcp_client.call_tool("code_analyze", {"path": file_path})
+                analyze_res = mcp_client.call_tool("code_analyze", {"request": {"path": file_path}})
                 print(f"📊 code_analyze: {analyze_res.get('content', [])[0]['text']}")
             except Exception as e:
                 print(f"⚠️ code_analyze skipped/failed: {e}")

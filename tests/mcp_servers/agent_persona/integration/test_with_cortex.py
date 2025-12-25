@@ -16,8 +16,8 @@ mock_vector_service = MagicMock()
 sys.modules["mnemonic_cortex.app.services.vector_db_service"] = mock_vector_service
 sys.modules["mnemonic_cortex.app.services.llm_service"] = MagicMock()
 
-from mcp_servers.council.council_ops import CouncilOperations
-from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.council.operations import CouncilOperations
+from mcp_servers.agent_persona.operations import PersonaOperations
 from mcp_servers.rag_cortex.operations import CortexOperations
 
 
@@ -29,7 +29,7 @@ class TestAgentPersonaCortexIntegration:
         """
         Test that Agent Persona MCP can query Cortex MCP for context
         """
-        with patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client') as mock_llm:
+        with patch('mcp_servers.agent_persona.operations.get_llm_client') as mock_llm:
             # Mock LLM response
             mock_client = MagicMock()
             mock_client.generate.return_value = "Based on the context provided, Protocol 101 defines..."
@@ -48,7 +48,7 @@ class TestAgentPersonaCortexIntegration:
                 )
                 
                 # Initialize operations
-                persona_ops = AgentPersonaOperations()
+                persona_ops = PersonaOperations()
                 
                 # Dispatch task with context query
                 result = persona_ops.dispatch(
@@ -71,7 +71,7 @@ class TestCouncilAgentPersonaCortexFlow:
         """
         Test complete flow from Council through Agent Persona to Cortex
         """
-        with patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client') as mock_llm, \
+        with patch('mcp_servers.agent_persona.operations.get_llm_client') as mock_llm, \
              patch.object(CortexOperations, 'cache_warmup'): # Prevent warmup side effects
             
             # Mock LLM responses
@@ -115,7 +115,7 @@ class TestCouncilAgentPersonaCortexFlow:
         """
         Test full council deliberation (3 agents, multiple rounds) with Cortex context
         """
-        with patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client') as mock_llm, \
+        with patch('mcp_servers.agent_persona.operations.get_llm_client') as mock_llm, \
              patch.object(CortexOperations, 'cache_warmup'): # Prevent warmup side effects
             
             # Mock LLM responses for different agents

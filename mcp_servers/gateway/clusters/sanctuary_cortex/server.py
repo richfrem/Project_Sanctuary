@@ -139,89 +139,175 @@ FORGE_QUERY_SCHEMA = {
 EMPTY_SCHEMA = {"type": "object", "properties": {}}
 
 def to_dict(obj):
-    """Convert response objects to dict."""
+    """Convert response objects to dict recursively (handles nested dataclasses)."""
+    # Handle Pydantic models
     if hasattr(obj, 'model_dump'):
         return obj.model_dump()
-    if hasattr(obj, '__dict__'):
-        return obj.__dict__
+    # Handle dataclasses (recursive)
+    if hasattr(obj, '__dataclass_fields__'):
+        result = {}
+        for field_name in obj.__dataclass_fields__:
+            value = getattr(obj, field_name)
+            if isinstance(value, list):
+                result[field_name] = [to_dict(item) for item in value]
+            elif isinstance(value, dict):
+                result[field_name] = {k: to_dict(v) for k, v in value.items()}
+            else:
+                result[field_name] = to_dict(value)
+        return result
+    # Handle plain dicts
+    if isinstance(obj, dict):
+        return {k: to_dict(v) for k, v in obj.items()}
+    # Handle lists
+    if isinstance(obj, list):
+        return [to_dict(item) for item in obj]
     return obj
 
 
 #============================================
 # SSE Transport Implementation (Gateway Mode)
+# Migrated to @sse_tool decorator pattern per ADR-076
 #============================================
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
-    from mcp_servers.lib.sse_adaptor import SSEServer
+    from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
     
     server = SSEServer("sanctuary_cortex", version="1.0.0")
     
+    # =============================================================================
+    # CORTEX INGESTION TOOLS (ADR-076 Decorator Pattern)
+    # =============================================================================
+    @sse_tool(
+        name="cortex_ingest_full",
+        description="Perform full re-ingestion of the knowledge base.",
+        schema=INGEST_FULL_SCHEMA
+    )
     def cortex_ingest_full(purge_existing: bool = False, source_directories: List[str] = None):
         response = get_ops().ingest_full(purge_existing=purge_existing, source_directories=source_directories)
         return json.dumps(to_dict(response), indent=2)
     
-    def cortex_query(query: str, max_results: int = 5, use_cache: bool = True, reasoning_mode: str = "standard"):
-        response = get_ops().query(query=query, max_results=max_results, use_cache=use_cache, reasoning_mode=reasoning_mode)
-        return json.dumps(to_dict(response), indent=2)
-    
-    def cortex_get_stats():
-        response = get_ops().get_stats()
-        return json.dumps(to_dict(response), indent=2)
-    
+    @sse_tool(
+        name="cortex_ingest_incremental",
+        description="Incrementally ingest documents into the knowledge base.",
+        schema=INGEST_INCREMENTAL_SCHEMA
+    )
     def cortex_ingest_incremental(file_paths: List[str], metadata: Dict = None, skip_duplicates: bool = True):
         response = get_ops().ingest_incremental(file_paths=file_paths, metadata=metadata, skip_duplicates=skip_duplicates)
         return json.dumps(to_dict(response), indent=2)
     
+    # =============================================================================
+    # CORTEX QUERY TOOLS
+    # =============================================================================
+    @sse_tool(
+        name="cortex_query",
+        description="Perform semantic search query against the knowledge base.",
+        schema=QUERY_SCHEMA
+    )
+    def cortex_query(query: str, max_results: int = 5, use_cache: bool = True, reasoning_mode: str = "standard"):
+        response = get_ops().query(query=query, max_results=max_results, use_cache=use_cache, reasoning_mode=reasoning_mode)
+        return json.dumps(to_dict(response), indent=2)
+    
+    @sse_tool(
+        name="cortex_get_stats",
+        description="Get database statistics and health status.",
+        schema=EMPTY_SCHEMA
+    )
+    def cortex_get_stats():
+        response = get_ops().get_stats()
+        return json.dumps(to_dict(response), indent=2)
+    
+    # =============================================================================
+    # CORTEX CACHE TOOLS
+    # =============================================================================
+    @sse_tool(
+        name="cortex_cache_get",
+        description="Retrieve cached answer for a query.",
+        schema=CACHE_GET_SCHEMA
+    )
     def cortex_cache_get(query: str):
         response = get_ops().cache_get(query)
         return json.dumps(to_dict(response), indent=2)
     
+    @sse_tool(
+        name="cortex_cache_set",
+        description="Store answer in cache.",
+        schema=CACHE_SET_SCHEMA
+    )
     def cortex_cache_set(query: str, answer: str):
         response = get_ops().cache_set(query, answer)
         return json.dumps(to_dict(response), indent=2)
     
+    @sse_tool(
+        name="cortex_cache_warmup",
+        description="Pre-populate cache with genesis queries.",
+        schema=CACHE_WARMUP_SCHEMA
+    )
     def cortex_cache_warmup(genesis_queries: List[str]):
         response = get_ops().cache_warmup(genesis_queries)
         return json.dumps(to_dict(response), indent=2)
     
-    def cortex_guardian_wakeup(mode: str = "full"):
-        response = get_ops().guardian_wakeup(mode=mode)
-        return json.dumps(to_dict(response), indent=2)
-    
+    @sse_tool(
+        name="cortex_cache_stats",
+        description="Get Mnemonic Cache (CAG) statistics.",
+        schema=EMPTY_SCHEMA
+    )
     def cortex_cache_stats():
         stats = get_ops().get_cache_stats()
         return json.dumps(stats, indent=2)
     
+    # =============================================================================
+    # CORTEX PROTOCOL TOOLS (Guardian, Learning, Snapshot)
+    # =============================================================================
+    @sse_tool(
+        name="cortex_guardian_wakeup",
+        description="Generate Guardian boot digest (Protocol 114).",
+        schema=GUARDIAN_WAKEUP_SCHEMA
+    )
+    def cortex_guardian_wakeup(mode: str = "full"):
+        response = get_ops().guardian_wakeup(mode=mode)
+        return json.dumps(to_dict(response), indent=2)
+    
+    @sse_tool(
+        name="cortex_learning_debrief",
+        description="Scans repository for technical state changes (Protocol 128).",
+        schema=LEARNING_DEBRIEF_SCHEMA
+    )
     def cortex_learning_debrief(hours: int = 24):
         response = get_ops().learning_debrief(hours=hours)
         return json.dumps({"status": "success", "debrief": response}, indent=2)
     
+    @sse_tool(
+        name="cortex_capture_snapshot",
+        description="Tool-driven snapshot generation (Protocol 128 v3.5).",
+        schema=CAPTURE_SNAPSHOT_SCHEMA
+    )
     def cortex_capture_snapshot(manifest_files: List[str] = None, snapshot_type: str = "checkpoint", strategic_context: str = None):
         response = get_ops().capture_snapshot(manifest_files=manifest_files, snapshot_type=snapshot_type, strategic_context=strategic_context)
         return json.dumps(to_dict(response), indent=2)
     
+    # =============================================================================
+    # FORGE LLM TOOLS (Sanctuary Model)
+    # =============================================================================
+    @sse_tool(
+        name="query_sanctuary_model",
+        description="Query the fine-tuned Sanctuary model.",
+        schema=FORGE_QUERY_SCHEMA
+    )
     def query_sanctuary_model(prompt: str, temperature: float = 0.7, max_tokens: int = 2048, system_prompt: str = None):
         response = get_forge_ops().query_sanctuary_model(prompt=prompt, temperature=temperature, max_tokens=max_tokens, system_prompt=system_prompt)
         return json.dumps(to_dict(response), indent=2)
     
+    @sse_tool(
+        name="check_sanctuary_model_status",
+        description="Check Sanctuary model availability and status.",
+        schema=EMPTY_SCHEMA
+    )
     def check_sanctuary_model_status():
         result = get_forge_ops().check_model_availability()
         return json.dumps(result, indent=2)
     
-    # Register tools
-    server.register_tool("cortex_ingest_full", cortex_ingest_full, INGEST_FULL_SCHEMA)
-    server.register_tool("cortex_query", cortex_query, QUERY_SCHEMA)
-    server.register_tool("cortex_get_stats", cortex_get_stats, EMPTY_SCHEMA)
-    server.register_tool("cortex_ingest_incremental", cortex_ingest_incremental, INGEST_INCREMENTAL_SCHEMA)
-    server.register_tool("cortex_cache_get", cortex_cache_get, CACHE_GET_SCHEMA)
-    server.register_tool("cortex_cache_set", cortex_cache_set, CACHE_SET_SCHEMA)
-    server.register_tool("cortex_cache_warmup", cortex_cache_warmup, CACHE_WARMUP_SCHEMA)
-    server.register_tool("cortex_guardian_wakeup", cortex_guardian_wakeup, GUARDIAN_WAKEUP_SCHEMA)
-    server.register_tool("cortex_cache_stats", cortex_cache_stats, EMPTY_SCHEMA)
-    server.register_tool("cortex_learning_debrief", cortex_learning_debrief, LEARNING_DEBRIEF_SCHEMA)
-    server.register_tool("cortex_capture_snapshot", cortex_capture_snapshot, CAPTURE_SNAPSHOT_SCHEMA)
-    server.register_tool("query_sanctuary_model", query_sanctuary_model, FORGE_QUERY_SCHEMA)
-    server.register_tool("check_sanctuary_model_status", check_sanctuary_model_status, EMPTY_SCHEMA)
+    # Auto-register all decorated tools (ADR-076)
+    server.register_decorated_tools(locals())
     
     logger.info(f"Starting SSEServer on port {port} (Gateway Mode)")
     server.run(port=port, transport="sse")

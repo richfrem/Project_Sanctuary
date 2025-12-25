@@ -40,16 +40,33 @@ SITE_STATUS_SCHEMA = {
 
 #============================================
 # SSE Transport Implementation (Gateway Mode)
+# Migrated to @sse_tool decorator pattern per ADR-076
 #============================================
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
-    from mcp_servers.lib.sse_adaptor import SSEServer
+    from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
     from mcp_servers.gateway.clusters.sanctuary_network import tools
     
     server = SSEServer("sanctuary_network", version="1.0.0")
     
-    server.register_tool("fetch_url", tools.fetch_url, FETCH_URL_SCHEMA)
-    server.register_tool("check_site_status", tools.check_site_status, SITE_STATUS_SCHEMA)
+    @sse_tool(
+        name="fetch_url",
+        description="Fetch content from a URL via HTTP GET.",
+        schema=FETCH_URL_SCHEMA
+    )
+    async def fetch_url(url: str):
+        return await tools.fetch_url(url)
+    
+    @sse_tool(
+        name="check_site_status",
+        description="Check if a site is up (HEAD request).",
+        schema=SITE_STATUS_SCHEMA
+    )
+    async def check_site_status(url: str):
+        return await tools.check_site_status(url)
+    
+    # Auto-register all decorated tools (ADR-076)
+    server.register_decorated_tools(locals())
     
     logger.info(f"Starting SSEServer on port {port} (Gateway Mode)")
     server.run(port=port, transport="sse")

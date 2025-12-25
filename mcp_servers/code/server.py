@@ -145,7 +145,7 @@ async def code_find_file(request: CodeFindFileRequest) -> str:
 async def code_list_files(request: CodeListFilesRequest) -> str:
     """List files in a directory with pattern support."""
     try:
-        files = ops.list_files(request.path, request.pattern, request.recursive)
+        files = ops.list_files(request.path, request.pattern, request.recursive, request.max_files)
         if not files:
             return f"No files found in '{request.path}' matching '{request.pattern}'"
         output = [f"Found {len(files)} file(s) in '{request.path}':", ""]

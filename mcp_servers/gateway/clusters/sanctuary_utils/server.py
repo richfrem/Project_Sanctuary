@@ -93,53 +93,167 @@ EMPTY_SCHEMA = {"type": "object", "properties": {}}
 
 #============================================
 # SSE Transport Implementation (Gateway Mode)
+# Migrated to @sse_tool decorator pattern per ADR-076
 #============================================
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
-    from mcp_servers.lib.sse_adaptor import SSEServer
+    from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
     
     server = SSEServer("sanctuary_utils", version="1.0.0")
     
     # =============================================================================
-    # TIME TOOLS
+    # TIME TOOLS (ADR-076 Decorator Pattern)
     # =============================================================================
-    server.register_tool("time_get_current_time", time_tool.get_current_time, TIME_CURRENT_SCHEMA)
-    server.register_tool("time_get_timezone_info", time_tool.get_timezone_info, EMPTY_SCHEMA)
+    @sse_tool(
+        name="time_get_current_time",
+        description="Get the current time in UTC or specified timezone.",
+        schema=TIME_CURRENT_SCHEMA
+    )
+    def time_get_current_time(timezone_name: str = "UTC"):
+        return time_tool.get_current_time(timezone_name)
+    
+    @sse_tool(
+        name="time_get_timezone_info",
+        description="Get information about available timezones.",
+        schema=EMPTY_SCHEMA
+    )
+    def time_get_timezone_info():
+        return time_tool.get_timezone_info()
     
     # =============================================================================
     # CALCULATOR TOOLS
     # =============================================================================
-    server.register_tool("calculator_calculate", calculator_tool.calculate, CALC_EXPRESSION_SCHEMA)
-    server.register_tool("calculator_add", calculator_tool.add, CALC_BINARY_SCHEMA)
-    server.register_tool("calculator_subtract", calculator_tool.subtract, CALC_BINARY_SCHEMA)
-    server.register_tool("calculator_multiply", calculator_tool.multiply, CALC_BINARY_SCHEMA)
-    server.register_tool("calculator_divide", calculator_tool.divide, CALC_BINARY_SCHEMA)
+    @sse_tool(
+        name="calculator_calculate",
+        description="Evaluate a mathematical expression safely.",
+        schema=CALC_EXPRESSION_SCHEMA
+    )
+    def calculator_calculate(expression: str):
+        return calculator_tool.calculate(expression)
+    
+    @sse_tool(
+        name="calculator_add",
+        description="Add two numbers.",
+        schema=CALC_BINARY_SCHEMA
+    )
+    def calculator_add(a: float, b: float):
+        return calculator_tool.add(a, b)
+    
+    @sse_tool(
+        name="calculator_subtract",
+        description="Subtract b from a.",
+        schema=CALC_BINARY_SCHEMA
+    )
+    def calculator_subtract(a: float, b: float):
+        return calculator_tool.subtract(a, b)
+    
+    @sse_tool(
+        name="calculator_multiply",
+        description="Multiply two numbers.",
+        schema=CALC_BINARY_SCHEMA
+    )
+    def calculator_multiply(a: float, b: float):
+        return calculator_tool.multiply(a, b)
+    
+    @sse_tool(
+        name="calculator_divide",
+        description="Divide a by b.",
+        schema=CALC_BINARY_SCHEMA
+    )
+    def calculator_divide(a: float, b: float):
+        return calculator_tool.divide(a, b)
     
     # =============================================================================
     # UUID TOOLS
     # =============================================================================
-    server.register_tool("uuid_generate_uuid4", uuid_tool.generate_uuid4, EMPTY_SCHEMA)
-    server.register_tool("uuid_generate_uuid1", uuid_tool.generate_uuid1, EMPTY_SCHEMA)
-    server.register_tool("uuid_validate_uuid", uuid_tool.validate_uuid, UUID_VALIDATE_SCHEMA)
+    @sse_tool(
+        name="uuid_generate_uuid4",
+        description="Generate a random UUID (version 4).",
+        schema=EMPTY_SCHEMA
+    )
+    def uuid_generate_uuid4():
+        return uuid_tool.generate_uuid4()
+    
+    @sse_tool(
+        name="uuid_generate_uuid1",
+        description="Generate a UUID based on host ID and current time (version 1).",
+        schema=EMPTY_SCHEMA
+    )
+    def uuid_generate_uuid1():
+        return uuid_tool.generate_uuid1()
+    
+    @sse_tool(
+        name="uuid_validate_uuid",
+        description="Validate if a string is a valid UUID.",
+        schema=UUID_VALIDATE_SCHEMA
+    )
+    def uuid_validate_uuid(uuid_string: str):
+        return uuid_tool.validate_uuid(uuid_string)
     
     # =============================================================================
     # STRING TOOLS
     # =============================================================================
-    server.register_tool("string_to_upper", string_tool.to_upper, STRING_SINGLE_SCHEMA)
-    server.register_tool("string_to_lower", string_tool.to_lower, STRING_SINGLE_SCHEMA)
-    server.register_tool("string_trim", string_tool.trim, STRING_SINGLE_SCHEMA)
-    server.register_tool("string_reverse", string_tool.reverse, STRING_SINGLE_SCHEMA)
-    server.register_tool("string_word_count", string_tool.word_count, STRING_SINGLE_SCHEMA)
-    server.register_tool("string_replace", string_tool.replace, STRING_REPLACE_SCHEMA)
+    @sse_tool(
+        name="string_to_upper",
+        description="Convert text to uppercase.",
+        schema=STRING_SINGLE_SCHEMA
+    )
+    def string_to_upper(text: str):
+        return string_tool.to_upper(text)
+    
+    @sse_tool(
+        name="string_to_lower",
+        description="Convert text to lowercase.",
+        schema=STRING_SINGLE_SCHEMA
+    )
+    def string_to_lower(text: str):
+        return string_tool.to_lower(text)
+    
+    @sse_tool(
+        name="string_trim",
+        description="Remove leading and trailing whitespace.",
+        schema=STRING_SINGLE_SCHEMA
+    )
+    def string_trim(text: str):
+        return string_tool.trim(text)
+    
+    @sse_tool(
+        name="string_reverse",
+        description="Reverse a string.",
+        schema=STRING_SINGLE_SCHEMA
+    )
+    def string_reverse(text: str):
+        return string_tool.reverse(text)
+    
+    @sse_tool(
+        name="string_word_count",
+        description="Count words in text.",
+        schema=STRING_SINGLE_SCHEMA
+    )
+    def string_word_count(text: str):
+        return string_tool.word_count(text)
+    
+    @sse_tool(
+        name="string_replace",
+        description="Replace occurrences of old with new in text.",
+        schema=STRING_REPLACE_SCHEMA
+    )
+    def string_replace(text: str, old: str, new: str):
+        return string_tool.replace(text, old, new)
     
     # =============================================================================
     # META TOOLS
     # =============================================================================
+    @sse_tool(
+        name="gateway_get_capabilities",
+        description="Returns a high-level overview of available MCP servers.",
+        schema=EMPTY_SCHEMA
+    )
     async def gateway_get_capabilities_handler():
-        """Returns a high-level overview of available MCP servers."""
         return get_gateway_capabilities(PROJECT_ROOT)
     
-    server.register_tool("gateway_get_capabilities", gateway_get_capabilities_handler, EMPTY_SCHEMA)
+    # Auto-register all decorated tools (ADR-076)
+    server.register_decorated_tools(locals())
     
     logger.info(f"Starting SSEServer on port {port} (Gateway Mode)")
     server.run(port=port, transport="sse")

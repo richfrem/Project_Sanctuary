@@ -12,7 +12,7 @@ def persona_root(tmp_path):
     root = tmp_path / "persona_test_root"
     root.mkdir()
     
-    # Create required subdirs matching AgentPersonaOperations expectations
+    # Create required subdirs matching PersonaOperations expectations
     (root / "mcp_servers" / "agent_persona" / "personas").mkdir(parents=True)
     (root / ".agent" / "memory" / "persona_state").mkdir(parents=True)
     

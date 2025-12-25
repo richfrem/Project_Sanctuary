@@ -54,17 +54,19 @@ class TestADRE2E(BaseE2ETest):
         # 2. Create ADR
         title = "[E2E TEST] Protocol 999: Automated Verification"
         create_res = mcp_client.call_tool("adr_create", {
-            "title": title,
-            "context": "Running E2E verification suite.",
-            "decision": "Implement comprehensive protocol testing.",
-            "consequences": "Temporary file created."
+            "request": {
+                "title": title,
+                "context": "Running E2E verification suite.",
+                "decision": "Implement comprehensive protocol testing.",
+                "consequences": "Temporary file created."
+            }
         })
         
-        # Parse Create Response (String format: "Created ADR {03d}: {path}")
+        # Parse Create Response (String format: "Successfully created ADR {03d}: {path}")
         content_text = create_res.get("content", [])[0]["text"]
         
         # Extract number and path
-        match = re.search(r"Created ADR (\d+): (.+)", content_text)
+        match = re.search(r"Successfully created ADR (\d+): (.+)", content_text)
         assert match, f"Failed to parse creation response: {content_text}"
         
         adr_number = int(match.group(1))
@@ -75,7 +77,7 @@ class TestADRE2E(BaseE2ETest):
 
         try:
             # 3. Verify Creation via adr_get
-            get_res = mcp_client.call_tool("adr_get", {"number": adr_number})
+            get_res = mcp_client.call_tool("adr_get", {"request": {"number": adr_number}})
             get_text = get_res.get("content", [])[0]["text"]
             
             # Parse Get Response (Human readable string)
@@ -85,7 +87,7 @@ class TestADRE2E(BaseE2ETest):
             print(f"📄 adr_get: Verified title and status.")
 
             # 4. Verify Search (New)
-            search_res = mcp_client.call_tool("adr_search", {"query": "Automated Verification"})
+            search_res = mcp_client.call_tool("adr_search", {"request": {"query": "Automated Verification"}})
             search_text = search_res.get("content", [])[0]["text"]
             
             # Format: "Found X ADR(s)... \nADR 00X: Title..."
@@ -94,16 +96,18 @@ class TestADRE2E(BaseE2ETest):
 
             # 5. Update Status
             update_res = mcp_client.call_tool("adr_update_status", {
-                "number": adr_number,
-                "new_status": "deprecated",
-                "reason": "E2E Test Cleanup"
+                "request": {
+                    "number": adr_number,
+                    "new_status": "deprecated",
+                    "reason": "E2E Test Cleanup"
+                }
             })
             update_text = update_res.get("content", [])[0]["text"]
             print(f"🔄 adr_update_status: {update_text}")
             assert "deprecated" in update_text
 
             # 6. Verify Update
-            get_res_2 = mcp_client.call_tool("adr_get", {"number": adr_number})
+            get_res_2 = mcp_client.call_tool("adr_get", {"request": {"number": adr_number}})
             get_text_2 = get_res_2.get("content", [])[0]["text"]
             assert "Status: deprecated" in get_text_2
 

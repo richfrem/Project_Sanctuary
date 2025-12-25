@@ -11,6 +11,7 @@ podman images | grep ollama
 podman compose -f docker-compose.yml up -d vector_db
 podman images | grep chromadb
 #4. add santuary_filesystem
+# podman stop sanctuary_filesystem && podman rm sanctuary_filesystem
 podman compose -f docker-compose.yml up -d sanctuary_filesystem
 podman images | grep sanctuary_filesystem
 #5. add sanctuary_network

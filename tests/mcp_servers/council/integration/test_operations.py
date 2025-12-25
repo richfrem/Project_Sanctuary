@@ -25,7 +25,7 @@ from unittest.mock import MagicMock, patch
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 
-from mcp_servers.council.council_ops import CouncilOperations
+from mcp_servers.council.operations import CouncilOperations
 
 
 def is_ollama_running():

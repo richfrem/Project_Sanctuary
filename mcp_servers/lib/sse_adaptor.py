@@ -43,6 +43,46 @@ JsonRpcMessage = Dict[str, Any]
 HEARTBEAT_INTERVAL = int(os.getenv("SSE_HEARTBEAT_SECONDS", 15))
 
 
+#============================================
+# Decorator: @sse_tool (ADR-076)
+# Purpose: Attach metadata to SSE handler functions for Gateway tool discovery.
+# Usage:
+#   @sse_tool(
+#       name="cortex_query",
+#       description="Perform semantic search query.",
+#       schema=QUERY_SCHEMA
+#   )
+#   def cortex_query(query: str, max_results: int = 5):
+#       ...
+#============================================
+def sse_tool(
+    name: str = None,
+    description: str = None,
+    schema: dict = None
+):
+    """
+    Decorator to mark functions as SSE tools with explicit metadata.
+    
+    Per ADR-076, this is the SSE-transport counterpart to FastMCP's @mcp.tool().
+    Both decorators delegate to shared operations.py logic.
+    
+    Args:
+        name: Tool name (uses function name if not provided)
+        description: Tool description for LLM discovery (uses docstring fallback)
+        schema: JSON Schema for input validation
+    
+    Returns:
+        Decorated function with _sse_tool metadata attributes
+    """
+    def decorator(func):
+        func._sse_tool = True
+        func._sse_name = name or func.__name__
+        func._sse_description = description or (func.__doc__.strip() if func.__doc__ else "No description")
+        func._sse_schema = schema or {"type": "object", "properties": {}}
+        return func
+    return decorator
+
+
 class SSEServer:
     """
     Gateway-Compatible MCP Server using the Deferred Response Pattern.
@@ -83,15 +123,50 @@ class SSEServer:
     #   name: Tool name (should use domain prefix, e.g., "time.get_current_time")
     #   handler: Async function that implements the tool logic
     #   schema: JSON Schema for input validation (optional)
+    #   description: Explicit description (optional, falls back to handler docstring)
     # Returns: None
     #============================================
-    def register_tool(self, name: str, handler: Callable[..., Awaitable[Any]], schema: Optional[Dict] = None):
+    def register_tool(
+        self, 
+        name: str, 
+        handler: Callable[..., Awaitable[Any]], 
+        schema: Optional[Dict] = None,
+        description: str = None
+    ):
         self.tools[name] = {
             "handler": handler,
             "schema": schema,
-            "description": handler.__doc__.strip() if handler.__doc__ else "No description"
+            "description": description or (handler.__doc__.strip() if handler.__doc__ else "No description")
         }
         self.logger.info(f"Registered tool: {name}")
+
+    #============================================
+    # Method: register_decorated_tools (ADR-076)
+    # Purpose: Auto-register all functions decorated with @sse_tool.
+    # Args:
+    #   namespace: Dict from locals() containing decorated functions
+    # Returns: None
+    # Note: Implements namespace safety - ignores private functions (starting with _)
+    #============================================
+    def register_decorated_tools(self, namespace: dict):
+        """
+        Auto-register all functions decorated with @sse_tool.
+        
+        Usage:
+            server.register_decorated_tools(locals())
+        """
+        for name, obj in namespace.items():
+            # Namespace safety: skip private functions (Red Team hardening)
+            if name.startswith('_'):
+                continue
+            if callable(obj) and getattr(obj, '_sse_tool', False):
+                self.register_tool(
+                    name=obj._sse_name,
+                    handler=obj,
+                    schema=obj._sse_schema,
+                    description=obj._sse_description
+                )
+                self.logger.info(f"Auto-registered decorated tool: {obj._sse_name}")
 
     #============================================
     # Method: handle_sse

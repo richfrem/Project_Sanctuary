@@ -1,5 +1,5 @@
 import pytest
-from mcp_servers.config.config_ops import ConfigOperations
+from mcp_servers.config.operations import ConfigOperations
 
 class TestConfigValidator:
     def test_security_path_traversal(self, config_root):
@@ -14,5 +14,5 @@ class TestConfigValidator:
     def test_valid_path(self, config_root):
         """Test valid path resolution."""
         ops = ConfigOperations(config_root)
-        path = ops._validate_path("valid.json")
+        path = ops.validator.validate_path("valid.json")
         assert path == config_root / "valid.json"

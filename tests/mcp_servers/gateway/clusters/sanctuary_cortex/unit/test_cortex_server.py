@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 
 class TestSanctuaryCortex:
     def test_server_import(self):
-        """Verify server can be imported and mcp object exists."""
+        """Verify server can be imported and SSE transport function exists."""
         # Mock dependencies that might be heavy or not present
         with patch.dict(sys.modules, {
             "mcp_servers.rag_cortex.operations": MagicMock(),
@@ -17,8 +17,7 @@ class TestSanctuaryCortex:
             "ollama": MagicMock()
         }):
             from mcp_servers.gateway.clusters.sanctuary_cortex import server
-            assert server.mcp is not None
-            assert server.mcp.name == "sanctuary_cortex"
+            assert hasattr(server, 'run_sse_server'), "Server must have run_sse_server for Gateway mode"
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

@@ -91,6 +91,7 @@ class CodeListFilesRequest(BaseModel):
     path: str = Field(".", description="Directory path to list")
     pattern: str = Field("*", description="Glob pattern filter")
     recursive: bool = Field(True, description="Whether to search subdirectories recursively")
+    max_files: int = Field(5000, description="Maximum number of files to return (prevents unbounded scans)")
 
 class CodeSearchContentRequest(BaseModel):
     query: str = Field(..., description="Text or regex pattern to search for")

@@ -32,7 +32,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from mcp_servers.code.code_ops import CodeOperations
+from mcp_servers.code.operations import CodeOperations
 
 # Use project root for real file operations
 ops = CodeOperations(str(project_root))
@@ -109,10 +109,11 @@ def test_code_search_content(code_ops):
 
 def test_code_analyze(code_ops):
     """Test code_analyze - static analysis."""
-    result = code_ops.analyze("mcp_servers/code/code_ops.py")
-    
+    result = code_ops.analyze("mcp_servers/code/operations.py")
+    assert "path" in result
     print(f"\n📈 code_analyze:")
-    print(f"   Analyzed: mcp_servers/code/code_ops.py")
+    print(f"   Analyzed: mcp_servers/code/operations.py")
+    print(f"   Success: {result.get('success', False)}")
     
     assert result is not None
     print("✅ PASSED")
@@ -122,10 +123,11 @@ def test_code_analyze(code_ops):
 
 def test_code_lint(code_ops):
     """Test code_lint - lint code."""
-    result = code_ops.lint("mcp_servers/code/code_ops.py")
-    
+    result = code_ops.lint("mcp_servers/code/operations.py")
+    assert "path" in result
     print(f"\n🔍 code_lint:")
-    print(f"   Linted: mcp_servers/code/code_ops.py")
+    print(f"   Linted: mcp_servers/code/operations.py")
+    print(f"   Issues found: {result.get('issues_found', False)}")
     
     assert result is not None
     print("✅ PASSED")
@@ -133,10 +135,11 @@ def test_code_lint(code_ops):
 
 def test_code_format(code_ops):
     """Test code_format - format check only (no changes)."""
-    result = code_ops.format_code("mcp_servers/code/code_ops.py", check_only=True)
-    
+    result = code_ops.format_code("mcp_servers/code/operations.py", check_only=True)
+    assert "path" in result
     print(f"\n🎨 code_format (check_only):")
-    print(f"   Checked: mcp_servers/code/code_ops.py")
+    print(f"   Checked: mcp_servers/code/operations.py")
+    print(f"   Would modify: {not result.get('success', True)}")
     
     assert result is not None
     print("✅ PASSED")

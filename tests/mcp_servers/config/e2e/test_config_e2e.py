@@ -55,8 +55,10 @@ class TestConfigE2E(BaseE2ETest):
         content_str = json.dumps(content)
         
         write_res = mcp_client.call_tool("config_write", {
-            "filename": filename,
-            "content": content_str
+            "request": {
+                "filename": filename,
+                "content": content_str
+            }
         })
         write_text = write_res.get("content", [])[0]["text"]
         print(f"\n🆕 config_write: {write_text}")
@@ -64,7 +66,7 @@ class TestConfigE2E(BaseE2ETest):
 
         try:
             # 3. Read Config
-            read_res = mcp_client.call_tool("config_read", {"filename": filename})
+            read_res = mcp_client.call_tool("config_read", {"request": {"filename": filename}})
             read_text = read_res.get("content", [])[0]["text"]
             print(f"📄 config_read: Retrieved content length {len(read_text)}")
             
@@ -82,7 +84,7 @@ class TestConfigE2E(BaseE2ETest):
         finally:
             # 5. Delete Config (Cleanup via Tool)
             # Config server HAS specific delete tool!
-            delete_res = mcp_client.call_tool("config_delete", {"filename": filename})
+            delete_res = mcp_client.call_tool("config_delete", {"request": {"filename": filename}})
             delete_text = delete_res.get("content", [])[0]["text"]
             print(f"🗑️ config_delete: {delete_text}")
             assert "deleted" in delete_text.lower()

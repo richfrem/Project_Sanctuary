@@ -1416,7 +1416,7 @@ class CortexOperations:
             output = result.stdout
             
             status_map = {}
-            for name in ["sanctuary_vector_db", "sanctuary_ollama_mcp"]:
+            for name in ["sanctuary_vector_db", "sanctuary_ollama"]:
                 if name in output:
                     if "Up" in output.split(name)[-1].split('\n')[0] or "Up" in [line for line in output.split('\n') if name in line][0]:
                          status_map[name] = "UP"
@@ -1429,7 +1429,7 @@ class CortexOperations:
             # "✅ Vector DB | ✅ Ollama"
             
             parts = []
-            for name, short_name in [("sanctuary_vector_db", "Vector DB"), ("sanctuary_ollama_mcp", "Ollama")]:
+            for name, short_name in [("sanctuary_vector_db", "Vector DB"), ("sanctuary_ollama", "Ollama")]:
                 stat = status_map.get(name, "Unknown")
                 icon = "✅" if stat == "UP" else "❌"
                 parts.append(f"{icon} {short_name}")

@@ -75,7 +75,8 @@ LIST_FILES_SCHEMA = {
     "properties": {
         "path": {"type": "string", "description": "Directory to list"},
         "pattern": {"type": "string", "description": "Optional glob pattern"},
-        "recursive": {"type": "boolean", "description": "Search recursively"}
+        "recursive": {"type": "boolean", "description": "Search recursively"},
+        "max_files": {"type": "integer", "description": "Maximum files to return (default 5000)"}
     },
     "required": ["path"]
 }
@@ -123,15 +124,23 @@ EMPTY_SCHEMA = {"type": "object", "properties": {}}
 
 #============================================
 # SSE Transport Implementation (Gateway Mode)
+# Migrated to @sse_tool decorator pattern per ADR-076
 #============================================
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
-    from mcp_servers.lib.sse_adaptor import SSEServer
+    from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
     
     server = SSEServer("sanctuary_filesystem", version="1.0.0")
     ops = get_ops()
     
-    # Wrapper functions for SSE (sync wrappers around the operations)
+    # =============================================================================
+    # CODE QUALITY TOOLS
+    # =============================================================================
+    @sse_tool(
+        name="code_lint",
+        description="Run linting on a file or directory.",
+        schema=LINT_SCHEMA
+    )
     def code_lint(path: str, tool: str = "ruff"):
         result = ops.lint(path, tool)
         output = [f"Linting {result['path']} with {result['tool']}:", ""]
@@ -142,6 +151,11 @@ def run_sse_server(port: int):
             output.append("✅ No issues found")
         return "\n".join(output)
     
+    @sse_tool(
+        name="code_format",
+        description="Format code in a file or directory.",
+        schema=FORMAT_SCHEMA
+    )
     def code_format(path: str, tool: str = "black", check_only: bool = False):
         result = ops.format_code(path, tool, check_only)
         output = [f"Formatting {result['path']} with {result['tool']}:", ""]
@@ -158,24 +172,47 @@ def run_sse_server(port: int):
                 output.append("❌ Formatting failed or no changes needed")
         return "\n".join(output)
     
+    @sse_tool(
+        name="code_analyze",
+        description="Perform static analysis on code.",
+        schema=ANALYZE_SCHEMA
+    )
     def code_analyze(path: str):
         result = ops.analyze(path)
         return f"Analyzing {result['path']}:\n\n{result['statistics']}"
     
+    @sse_tool(
+        name="code_check_tools",
+        description="Check which code quality tools are available.",
+        schema=EMPTY_SCHEMA
+    )
     def code_check_tools():
         tools = ["ruff", "black", "pylint", "flake8", "mypy"]
         available = [f"✅ {t}" for t in tools if ops.check_tool_available(t)]
         unavailable = [f"❌ {t}" for t in tools if not ops.check_tool_available(t)]
         return "Available code tools:\n\n" + "\n".join(available + unavailable)
     
+    # =============================================================================
+    # FILE DISCOVERY TOOLS
+    # =============================================================================
+    @sse_tool(
+        name="code_find_file",
+        description="Find files by name or glob pattern.",
+        schema=FIND_FILE_SCHEMA
+    )
     def code_find_file(name_pattern: str, path: str = "."):
         matches = ops.find_file(name_pattern, path)
         if not matches:
             return f"No files found matching '{name_pattern}'"
         return f"Found {len(matches)} file(s):\n" + "\n".join(f"  {m}" for m in matches)
     
-    def code_list_files(path: str, pattern: str = "*", recursive: bool = False):
-        files = ops.list_files(path, pattern, recursive)
+    @sse_tool(
+        name="code_list_files",
+        description="List files in a directory with optional pattern.",
+        schema=LIST_FILES_SCHEMA
+    )
+    def code_list_files(path: str, pattern: str = "*", recursive: bool = False, max_files: int = 5000):
+        files = ops.list_files(path, pattern, recursive, max_files)
         if not files:
             return f"No files found in '{path}'"
         output = [f"Found {len(files)} file(s) in '{path}':"]
@@ -183,6 +220,11 @@ def run_sse_server(port: int):
             output.append(f"  {f['path']} ({f['size']/1024:.1f} KB)")
         return "\n".join(output)
     
+    @sse_tool(
+        name="code_search_content",
+        description="Search for text/patterns in code files.",
+        schema=SEARCH_CONTENT_SCHEMA
+    )
     def code_search_content(query: str, file_pattern: str = "*.py", case_sensitive: bool = False):
         matches = ops.search_content(query, file_pattern, case_sensitive)
         if not matches:
@@ -196,10 +238,23 @@ def run_sse_server(port: int):
             output.append(f"  Line {m['line']}: {m['content']}")
         return "\n".join(output)
     
+    # =============================================================================
+    # FILE I/O TOOLS
+    # =============================================================================
+    @sse_tool(
+        name="code_read",
+        description="Read file contents.",
+        schema=READ_SCHEMA
+    )
     def code_read(path: str, max_size_mb: float = 5.0):
         content = ops.read_file(path, max_size_mb)
         return f"Contents of {path}:\n{'='*60}\n{content}\n{'='*60}"
     
+    @sse_tool(
+        name="code_write",
+        description="Write/update file with automatic backup.",
+        schema=WRITE_SCHEMA
+    )
     def code_write(path: str, content: str, backup: bool = True, create_dirs: bool = True):
         result = ops.write_file(path, content, backup, create_dirs)
         output = [f"{'Created' if result['created'] else 'Updated'} file: {result['path']}"]
@@ -208,6 +263,11 @@ def run_sse_server(port: int):
             output.append(f"Backup: {result['backup']}")
         return "\n".join(output)
     
+    @sse_tool(
+        name="code_get_info",
+        description="Get file metadata.",
+        schema=GET_INFO_SCHEMA
+    )
     def code_get_info(path: str):
         import time
         info = ops.get_file_info(path)
@@ -218,17 +278,8 @@ def run_sse_server(port: int):
   Lines: {info['lines'] if info['lines'] else 'N/A'}
   Modified: {time.ctime(info['modified'])}"""
     
-    # Register tools
-    server.register_tool("code_lint", code_lint, LINT_SCHEMA)
-    server.register_tool("code_format", code_format, FORMAT_SCHEMA)
-    server.register_tool("code_analyze", code_analyze, ANALYZE_SCHEMA)
-    server.register_tool("code_check_tools", code_check_tools, EMPTY_SCHEMA)
-    server.register_tool("code_find_file", code_find_file, FIND_FILE_SCHEMA)
-    server.register_tool("code_list_files", code_list_files, LIST_FILES_SCHEMA)
-    server.register_tool("code_search_content", code_search_content, SEARCH_CONTENT_SCHEMA)
-    server.register_tool("code_read", code_read, READ_SCHEMA)
-    server.register_tool("code_write", code_write, WRITE_SCHEMA)
-    server.register_tool("code_get_info", code_get_info, GET_INFO_SCHEMA)
+    # Auto-register all decorated tools (ADR-076)
+    server.register_decorated_tools(locals())
     
     logger.info(f"Starting SSEServer on port {port} (Gateway Mode)")
     server.run(port=port, transport="sse")
@@ -318,7 +369,7 @@ def run_stdio_server():
     async def code_list_files(request: CodeListFilesRequest) -> str:
         """List files in a directory with optional pattern."""
         try:
-            files = get_ops().list_files(request.path, request.pattern, request.recursive)
+            files = get_ops().list_files(request.path, request.pattern, request.recursive, request.max_files)
             if not files:
                 return f"No files found in '{request.path}'"
             output = [f"Found {len(files)} file(s):"]

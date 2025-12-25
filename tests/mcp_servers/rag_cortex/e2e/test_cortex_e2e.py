@@ -64,8 +64,10 @@ class TestRAGCortexE2E(BaseE2ETest):
             
         try:
             ingest_res = mcp_client.call_tool("cortex_ingest_incremental", {
-                "file_paths": [str(test_file)],
-                "skip_duplicates": False
+                "request": {
+                    "file_paths": [str(test_file)],
+                    "skip_duplicates": False
+                }
             })
             ingest_text = ingest_res.get("content", [])[0]["text"]
             print(f"📥 cortex_ingest_incremental: {ingest_text}")
@@ -76,8 +78,10 @@ class TestRAGCortexE2E(BaseE2ETest):
             # time.sleep(1)
             
             query_res = mcp_client.call_tool("cortex_query", {
-                "query": "CortexE2E verification sequence",
-                "max_results": 1
+                "request": {
+                    "query": "CortexE2E verification sequence",
+                    "max_results": 1
+                }
             })
             query_text = query_res.get("content", [])[0]["text"]
             print(f"🔍 cortex_query: {query_text}")
@@ -87,12 +91,14 @@ class TestRAGCortexE2E(BaseE2ETest):
 
             # 5. Cache Operations
             cache_res = mcp_client.call_tool("cortex_cache_set", {
-                "query": "E2E Cache Key",
-                "answer": "Cached Answer 123"
+                "request": {
+                    "query": "E2E Cache Key",
+                    "answer": "Cached Answer 123"
+                }
             })
             print(f"💾 cortex_cache_set: {cache_res.get('content', [])[0]['text']}")
             
-            get_cache = mcp_client.call_tool("cortex_cache_get", {"query": "E2E Cache Key"})
+            get_cache = mcp_client.call_tool("cortex_cache_get", {"request": {"query": "E2E Cache Key"}})
             get_text = get_cache.get("content", [])[0]["text"]
             print(f"📂 cortex_cache_get: {get_text}")
             assert "Cached Answer" in get_text

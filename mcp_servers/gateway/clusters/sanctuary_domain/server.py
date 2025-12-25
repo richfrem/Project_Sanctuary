@@ -43,8 +43,8 @@ def get_op(op_type):
             from mcp_servers.adr.operations import ADROperations
             _ops[op_type] = ADROperations(os.path.join(PROJECT_ROOT, "ADRs"))
         elif op_type == "persona":
-            from mcp_servers.agent_persona.operations import AgentPersonaOperations
-            _ops[op_type] = AgentPersonaOperations()
+            from mcp_servers.agent_persona.operations import PersonaOperations
+            _ops[op_type] = PersonaOperations()
         elif op_type == "config":
             from mcp_servers.config.operations import ConfigOperations
             _ops[op_type] = ConfigOperations(os.path.join(PROJECT_ROOT, ".agent/config"))
@@ -177,10 +177,11 @@ EMPTY_SCHEMA = {"type": "object", "properties": {}}
 
 #============================================
 # SSE Transport Implementation (Gateway Mode)
+# Migrated to @sse_tool decorator pattern per ADR-076
 #============================================
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
-    from mcp_servers.lib.sse_adaptor import SSEServer
+    from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
     from mcp_servers.task.models import TaskStatus, TaskPriority
     
     server = SSEServer("sanctuary_domain", version="1.0.0")
@@ -188,18 +189,27 @@ def run_sse_server(port: int):
     # =============================================================================
     # CHRONICLE TOOLS
     # =============================================================================
+    @sse_tool(name="chronicle_create_entry", description="Create a new chronicle entry.", schema=CHRONICLE_CREATE_SCHEMA)
     def chronicle_create_entry(title: str, content: str, author: str = "Agent", date: str = None, status: str = "draft", classification: str = "internal"):
         result = get_op("chronicle").create_entry(title=title, content=content, author=author, date=date, status=status, classification=classification)
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
     
+    @sse_tool(name="chronicle_append_entry", description="Append a new entry to the Chronicle (Alias for create_entry).", schema=CHRONICLE_CREATE_SCHEMA)
+    def chronicle_append_entry(title: str, content: str, author: str = "Agent", date: str = None, status: str = "draft", classification: str = "internal"):
+        result = get_op("chronicle").create_entry(title=title, content=content, author=author, date=date, status=status, classification=classification)
+        return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
+    
+    @sse_tool(name="chronicle_update_entry", description="Update an existing chronicle entry.", schema=CHRONICLE_UPDATE_SCHEMA)
     def chronicle_update_entry(entry_number: int, updates: dict, reason: str = None, override_approval_id: str = None):
         result = get_op("chronicle").update_entry(entry_number=entry_number, updates=updates, reason=reason, override_approval_id=override_approval_id)
         return f"Updated Chronicle Entry {result['entry_number']}. Fields: {', '.join(result['updated_fields'])}"
     
+    @sse_tool(name="chronicle_get_entry", description="Retrieve a specific chronicle entry.", schema=CHRONICLE_GET_SCHEMA)
     def chronicle_get_entry(entry_number: int):
         entry = get_op("chronicle").get_entry(entry_number)
         return f"Entry {entry['number']}: {entry['title']}\nDate: {entry['date']}\nAuthor: {entry['author']}\nStatus: {entry['status']}\n\n{entry['content']}"
     
+    @sse_tool(name="chronicle_list_entries", description="List recent chronicle entries.", schema=CHRONICLE_LIST_SCHEMA)
     def chronicle_list_entries(limit: int = 10):
         entries = get_op("chronicle").list_entries(limit)
         if not entries: return "No entries found."
@@ -208,6 +218,11 @@ def run_sse_server(port: int):
             output.append(f"- {e['number']:03d}: {e['title']} [{e['status']}] ({e['date']})")
         return "\n".join(output)
     
+    @sse_tool(name="chronicle_read_latest_entries", description="Read the latest entries from the Chronicle.", schema=CHRONICLE_LIST_SCHEMA)
+    def chronicle_read_latest_entries(limit: int = 10):
+        return chronicle_list_entries(limit)
+    
+    @sse_tool(name="chronicle_search", description="Search chronicle entries by content.", schema=CHRONICLE_SEARCH_SCHEMA)
     def chronicle_search(query: str):
         results = get_op("chronicle").search_entries(query)
         if not results: return f"No entries found matching '{query}'"
@@ -219,18 +234,22 @@ def run_sse_server(port: int):
     # =============================================================================
     # PROTOCOL TOOLS
     # =============================================================================
+    @sse_tool(name="protocol_create", description="Create a new protocol.", schema=PROTOCOL_CREATE_SCHEMA)
     def protocol_create(title: str, content: str, number: int = None, status: str = "proposed", classification: str = "internal", version: str = "1.0.0", authority: str = "System", linked_protocols: list = None):
         result = get_op("protocol").create_protocol(number=number, title=title, status=status, classification=classification, version=version, authority=authority, content=content, linked_protocols=linked_protocols)
         return f"Created Protocol {result['protocol_number']}: {result['file_path']}"
     
+    @sse_tool(name="protocol_update", description="Update an existing protocol.", schema=PROTOCOL_UPDATE_SCHEMA)
     def protocol_update(number: int, updates: dict, reason: str = None):
         result = get_op("protocol").update_protocol(number=number, updates=updates, reason=reason)
         return f"Updated Protocol {result['protocol_number']}. Fields: {', '.join(result['updated_fields'])}"
     
+    @sse_tool(name="protocol_get", description="Retrieve a specific protocol.", schema=PROTOCOL_GET_SCHEMA)
     def protocol_get(number: int):
         protocol = get_op("protocol").get_protocol(number)
         return f"Protocol {protocol['number']}: {protocol['title']}\nStatus: {protocol['status']}\nVersion: {protocol['version']}\n\n{protocol['content']}"
     
+    @sse_tool(name="protocol_list", description="List protocols.", schema=PROTOCOL_LIST_SCHEMA)
     def protocol_list(status: str = None):
         protocols = get_op("protocol").list_protocols(status)
         if not protocols: return "No protocols found."
@@ -239,6 +258,7 @@ def run_sse_server(port: int):
             output.append(f"- {p['number']:03d}: {p['title']} [{p['status']}] v{p['version']}")
         return "\n".join(output)
     
+    @sse_tool(name="protocol_search", description="Search protocols by content.", schema=PROTOCOL_SEARCH_SCHEMA)
     def protocol_search(query: str):
         results = get_op("protocol").search_protocols(query)
         if not results: return f"No protocols found matching '{query}'"
@@ -250,23 +270,28 @@ def run_sse_server(port: int):
     # =============================================================================
     # TASK TOOLS
     # =============================================================================
+    @sse_tool(name="create_task", description="Create a new task file in TASKS/ directory.", schema=TASK_CREATE_SCHEMA)
     def create_task(title: str, objective: str, deliverables: list = None, acceptance_criteria: list = None, priority: str = "medium", status: str = "backlog", lead: str = None, dependencies: list = None, related_documents: list = None, notes: str = None, task_number: int = None):
         result = get_op("task").create_task(title=title, objective=objective, deliverables=deliverables, acceptance_criteria=acceptance_criteria, priority=TaskPriority(priority), status=TaskStatus(status), lead=lead, dependencies=dependencies, related_documents=related_documents, notes=notes, task_number=task_number)
         return f"Created Task {result.task_number:03d}: {result.file_path}"
     
+    @sse_tool(name="update_task", description="Update an existing task's metadata or content.", schema=TASK_UPDATE_SCHEMA)
     def update_task(task_number: int, updates: dict):
         result = get_op("task").update_task(task_number, updates)
         return f"Updated Task {result.task_number:03d}. Fields: {', '.join(updates.keys())}"
     
+    @sse_tool(name="update_task_status", description="Change task status (moves file between directories).", schema=TASK_UPDATE_STATUS_SCHEMA)
     def update_task_status(task_number: int, new_status: str, notes: str = None):
         result = get_op("task").update_task_status(task_number, TaskStatus(new_status), notes)
         return f"Updated Task {result.task_number:03d} status to {new_status}"
     
+    @sse_tool(name="get_task", description="Retrieve a specific task by number.", schema=TASK_GET_SCHEMA)
     def get_task(task_number: int):
         task = get_op("task").get_task(task_number)
         if not task: return f"Task #{task_number:03d} not found"
         return f"Task {task.get('number', task_number):03d}: {task.get('title', 'Untitled')}\nStatus: {task.get('status')}\nPriority: {task.get('priority')}\n\nObjective:\n{task.get('objective', '')}"
     
+    @sse_tool(name="list_tasks", description="List tasks with optional filters.", schema=TASK_LIST_SCHEMA)
     def list_tasks(status: str = None, priority: str = None):
         status_filter = TaskStatus(status) if status else None
         priority_filter = TaskPriority(priority) if priority else None
@@ -277,6 +302,7 @@ def run_sse_server(port: int):
             output.append(f"- {t['number']:03d}: {t['title']} [{t['status']}] ({t['priority']})")
         return "\n".join(output)
     
+    @sse_tool(name="search_tasks", description="Search tasks by content (full-text search).", schema=TASK_SEARCH_SCHEMA)
     def search_tasks(query: str):
         results = get_op("task").search_tasks(query)
         if not results: return f"No tasks found matching '{query}'"
@@ -288,18 +314,22 @@ def run_sse_server(port: int):
     # =============================================================================
     # ADR TOOLS
     # =============================================================================
+    @sse_tool(name="adr_create", description="Create a new ADR with automatic sequential numbering.", schema=ADR_CREATE_SCHEMA)
     def adr_create(title: str, context: str, decision: str, consequences: str, date: str = None, status: str = "proposed", author: str = "Agent", supersedes: int = None):
         result = get_op("adr").create_adr(title=title, context=context, decision=decision, consequences=consequences, date=date, status=status, author=author, supersedes=supersedes)
         return f"Created ADR {result['adr_number']:03d}: {result['file_path']}"
     
+    @sse_tool(name="adr_update_status", description="Update the status of an existing ADR.", schema=ADR_UPDATE_STATUS_SCHEMA)
     def adr_update_status(number: int, new_status: str, reason: str):
         result = get_op("adr").update_adr_status(number, new_status, reason)
         return f"Updated ADR {result['adr_number']:03d}: {result['old_status']} → {result['new_status']}"
     
+    @sse_tool(name="adr_get", description="Retrieve a specific ADR by number.", schema=ADR_GET_SCHEMA)
     def adr_get(number: int):
         adr = get_op("adr").get_adr(number)
         return f"ADR {adr['number']:03d}: {adr['title']}\nStatus: {adr['status']}\nDate: {adr['date']}\n\nContext:\n{adr['context']}\n\nDecision:\n{adr['decision']}"
     
+    @sse_tool(name="adr_list", description="List all ADRs with optional status filter.", schema=ADR_LIST_SCHEMA)
     def adr_list(status: str = None):
         adrs = get_op("adr").list_adrs(status)
         if not adrs: return "No ADRs found"
@@ -308,6 +338,7 @@ def run_sse_server(port: int):
             result += f"ADR {adr['number']:03d}: {adr['title']} [{adr['status']}]\n"
         return result
     
+    @sse_tool(name="adr_search", description="Full-text search across all ADRs.", schema=ADR_SEARCH_SCHEMA)
     def adr_search(query: str):
         results = get_op("adr").search_adrs(query)
         if not results: return f"No ADRs found matching '{query}'"
@@ -319,25 +350,31 @@ def run_sse_server(port: int):
     # =============================================================================
     # PERSONA TOOLS
     # =============================================================================
+    @sse_tool(name="persona_dispatch", description="Dispatch a task to a specific persona agent.", schema=PERSONA_DISPATCH_SCHEMA)
     def persona_dispatch(role: str, task: str, context: str = None, maintain_state: bool = True, engine: str = None, model_name: str = None, custom_persona_file: str = None):
         result = get_op("persona").dispatch(role=role, task=task, context=context, maintain_state=maintain_state, engine=engine, model_name=model_name, custom_persona_file=custom_persona_file)
         return json.dumps(result, indent=2)
     
+    @sse_tool(name="persona_list_roles", description="List all available persona roles.", schema=EMPTY_SCHEMA)
     def persona_list_roles():
         return json.dumps(get_op("persona").list_roles(), indent=2)
     
+    @sse_tool(name="persona_get_state", description="Get conversation state for a specific persona role.", schema=PERSONA_ROLE_SCHEMA)
     def persona_get_state(role: str):
         return json.dumps(get_op("persona").get_state(role=role), indent=2)
     
+    @sse_tool(name="persona_reset_state", description="Reset conversation state for a specific persona role.", schema=PERSONA_ROLE_SCHEMA)
     def persona_reset_state(role: str):
         return json.dumps(get_op("persona").reset_state(role=role), indent=2)
     
+    @sse_tool(name="persona_create_custom", description="Create a new custom persona.", schema=PERSONA_CREATE_CUSTOM_SCHEMA)
     def persona_create_custom(role: str, persona_definition: str, description: str = None):
         return json.dumps(get_op("persona").create_custom(role=role, persona_definition=persona_definition, description=description), indent=2)
     
     # =============================================================================
     # CONFIG TOOLS
     # =============================================================================
+    @sse_tool(name="config_list", description="List all configuration files in the .agent/config directory.", schema=EMPTY_SCHEMA)
     def config_list():
         configs = get_op("config").list_configs()
         if not configs: return "No configuration files found."
@@ -346,16 +383,19 @@ def run_sse_server(port: int):
             output.append(f"- {c['name']} ({c['size']} bytes)")
         return "\n".join(output)
     
+    @sse_tool(name="config_read", description="Read a configuration file.", schema=CONFIG_READ_SCHEMA)
     def config_read(filename: str):
         content = get_op("config").read_config(filename)
         if isinstance(content, (dict, list)):
             return json.dumps(content, indent=2)
         return str(content)
     
+    @sse_tool(name="config_write", description="Write a configuration file.", schema=CONFIG_WRITE_SCHEMA)
     def config_write(filename: str, content: str):
         path = get_op("config").write_config(filename, content)
         return f"Successfully wrote config to {path}"
     
+    @sse_tool(name="config_delete", description="Delete a configuration file.", schema=CONFIG_DELETE_SCHEMA)
     def config_delete(filename: str):
         get_op("config").delete_config(filename)
         return f"Successfully deleted config '{filename}'"
@@ -363,6 +403,7 @@ def run_sse_server(port: int):
     # =============================================================================
     # WORKFLOW TOOLS
     # =============================================================================
+    @sse_tool(name="get_available_workflows", description="List all available workflows in the .agent/workflows directory.", schema=EMPTY_SCHEMA)
     def get_available_workflows():
         workflows = get_op("workflow").list_workflows()
         if not workflows: return "No workflows found."
@@ -372,55 +413,17 @@ def run_sse_server(port: int):
             output.append(f"- {wf['filename']}{turbo}: {wf['description']}")
         return "\n".join(output)
     
+    @sse_tool(name="read_workflow", description="Read the content of a specific workflow file.", schema=WORKFLOW_READ_SCHEMA)
     def read_workflow(filename: str):
         content = get_op("workflow").get_workflow_content(filename)
         if content is None:
             return f"Workflow '{filename}' not found."
         return content
     
-    # Register all tools
-    server.register_tool("chronicle_create_entry", chronicle_create_entry, CHRONICLE_CREATE_SCHEMA)
-    server.register_tool("chronicle_append_entry", chronicle_create_entry, CHRONICLE_CREATE_SCHEMA)
-    server.register_tool("chronicle_update_entry", chronicle_update_entry, CHRONICLE_UPDATE_SCHEMA)
-    server.register_tool("chronicle_get_entry", chronicle_get_entry, CHRONICLE_GET_SCHEMA)
-    server.register_tool("chronicle_list_entries", chronicle_list_entries, CHRONICLE_LIST_SCHEMA)
-    server.register_tool("chronicle_read_latest_entries", chronicle_list_entries, CHRONICLE_LIST_SCHEMA)
-    server.register_tool("chronicle_search", chronicle_search, CHRONICLE_SEARCH_SCHEMA)
+    # Auto-register all decorated tools (ADR-076)
+    server.register_decorated_tools(locals())
     
-    server.register_tool("protocol_create", protocol_create, PROTOCOL_CREATE_SCHEMA)
-    server.register_tool("protocol_update", protocol_update, PROTOCOL_UPDATE_SCHEMA)
-    server.register_tool("protocol_get", protocol_get, PROTOCOL_GET_SCHEMA)
-    server.register_tool("protocol_list", protocol_list, PROTOCOL_LIST_SCHEMA)
-    server.register_tool("protocol_search", protocol_search, PROTOCOL_SEARCH_SCHEMA)
-    
-    server.register_tool("create_task", create_task, TASK_CREATE_SCHEMA)
-    server.register_tool("update_task", update_task, TASK_UPDATE_SCHEMA)
-    server.register_tool("update_task_status", update_task_status, TASK_UPDATE_STATUS_SCHEMA)
-    server.register_tool("get_task", get_task, TASK_GET_SCHEMA)
-    server.register_tool("list_tasks", list_tasks, TASK_LIST_SCHEMA)
-    server.register_tool("search_tasks", search_tasks, TASK_SEARCH_SCHEMA)
-    
-    server.register_tool("adr_create", adr_create, ADR_CREATE_SCHEMA)
-    server.register_tool("adr_update_status", adr_update_status, ADR_UPDATE_STATUS_SCHEMA)
-    server.register_tool("adr_get", adr_get, ADR_GET_SCHEMA)
-    server.register_tool("adr_list", adr_list, ADR_LIST_SCHEMA)
-    server.register_tool("adr_search", adr_search, ADR_SEARCH_SCHEMA)
-    
-    server.register_tool("persona_dispatch", persona_dispatch, PERSONA_DISPATCH_SCHEMA)
-    server.register_tool("persona_list_roles", persona_list_roles, EMPTY_SCHEMA)
-    server.register_tool("persona_get_state", persona_get_state, PERSONA_ROLE_SCHEMA)
-    server.register_tool("persona_reset_state", persona_reset_state, PERSONA_ROLE_SCHEMA)
-    server.register_tool("persona_create_custom", persona_create_custom, PERSONA_CREATE_CUSTOM_SCHEMA)
-    
-    server.register_tool("config_list", config_list, EMPTY_SCHEMA)
-    server.register_tool("config_read", config_read, CONFIG_READ_SCHEMA)
-    server.register_tool("config_write", config_write, CONFIG_WRITE_SCHEMA)
-    server.register_tool("config_delete", config_delete, CONFIG_DELETE_SCHEMA)
-    
-    server.register_tool("get_available_workflows", get_available_workflows, EMPTY_SCHEMA)
-    server.register_tool("read_workflow", read_workflow, WORKFLOW_READ_SCHEMA)
-    
-    logger.info(f"Starting SSEServer on port {port} (Gateway Mode) with 37 tools")
+    logger.info(f"Starting SSEServer on port {port} (Gateway Mode) with 34 tools")
     server.run(port=port, transport="sse")
 
 

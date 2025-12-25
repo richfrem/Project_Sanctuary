@@ -41,7 +41,7 @@ class TestChronicleToolIntegration:
             title="Deployment",
             content="We deployed.",
             author="DevOps",
-            date=None,
+            date_str=None,
             status="published",
             classification="internal" # Default value
         )

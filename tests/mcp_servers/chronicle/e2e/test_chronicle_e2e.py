@@ -44,11 +44,13 @@ class TestChronicleE2E(BaseE2ETest):
         # 2. Create Entry
         title = "E2E Test Entry"
         create_res = mcp_client.call_tool("chronicle_create_entry", {
-            "title": title,
-            "content": "Test Content",
-            "author": "E2E Bot",
-            "classification": "public",
-            "status": "draft"
+            "request": {
+                "title": title,
+                "content": "Test Content",
+                "author": "E2E Bot",
+                "classification": "public",
+                "status": "draft"
+            }
         })
         create_text = create_res.get("content", [])[0]["text"]
         print(f"\n🆕 Create: {create_text}")
@@ -69,30 +71,32 @@ class TestChronicleE2E(BaseE2ETest):
 
         try:
             # 3. Get Entry
-            get_res = mcp_client.call_tool("chronicle_get_entry", {"entry_number": entry_number})
+            get_res = mcp_client.call_tool("chronicle_get_entry", {"request": {"entry_number": entry_number}})
             get_text = get_res.get("content", [])[0]["text"]
             assert f"Entry {entry_number}" in get_text
             assert title in get_text
             print("📄 chronicle_get_entry: Verified content")
 
             # 4. List Entries
-            list_res = mcp_client.call_tool("chronicle_list_entries", {"limit": 5})
+            list_res = mcp_client.call_tool("chronicle_list_entries", {"request": {"limit": 5}})
             list_text = list_res.get("content", [])[0]["text"]
             # Format: "- {03d}: {title}..."
             assert f"{entry_number:03d}" in list_text or f"{entry_number}:" in list_text
             print(f"📋 chronicle_list_entries: Verified listing")
 
             # 5. Search
-            search_res = mcp_client.call_tool("chronicle_search", {"query": "Test Entry"})
+            search_res = mcp_client.call_tool("chronicle_search", {"request": {"query": "Test Entry"}})
             search_text = search_res.get("content", [])[0]["text"]
             assert f"{entry_number:03d}" in search_text or f"{entry_number}:" in search_text
             print(f"🔍 chronicle_search: Found entry")
 
             # 6. Update
             update_res = mcp_client.call_tool("chronicle_update_entry", {
-                "entry_number": entry_number,
-                "updates": {"status": "deprecated"},
-                "reason": "Test Cleanup"
+                "request": {
+                    "entry_number": entry_number,
+                    "updates": {"status": "deprecated"},
+                    "reason": "Test Cleanup"
+                }
             })
             update_text = update_res.get("content", [])[0]["text"]
             print(f"🔄 chronicle_update_entry: {update_text}")

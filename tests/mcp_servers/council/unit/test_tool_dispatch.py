@@ -1,12 +1,12 @@
 import pytest
 from unittest.mock import MagicMock, patch
-from mcp_servers.lib.council.council_ops import CouncilOperations
+from mcp_servers.council.operations import CouncilOperations
 
 @pytest.mark.integration
 def test_council_git_flow():
     """Test Council directing Git operations."""
     # Mock Git MCP client
-    with patch('mcp_servers.lib.council.council_ops.get_mcp_client') as mock_get_client:
+    with patch('mcp_servers.council.operations.get_mcp_client') as mock_get_client:
         # Setup mock client
         mock_client = MagicMock()
         mock_get_client.return_value = mock_client

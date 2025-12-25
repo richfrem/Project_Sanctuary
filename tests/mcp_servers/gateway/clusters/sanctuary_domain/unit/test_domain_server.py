@@ -19,8 +19,8 @@ class TestSanctuaryDomain:
             "mcp_servers.workflow.operations": MagicMock(),
         }):
             from mcp_servers.gateway.clusters.sanctuary_domain import server
-            assert server.mcp is not None
-            assert server.mcp.name == "sanctuary_domain"
+            assert hasattr(server, 'run_sse_server')
+            # Server uses SSE transport, not FastMCP mcp object
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

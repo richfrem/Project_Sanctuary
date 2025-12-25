@@ -170,7 +170,84 @@ flowchart TB
 
 **Benefits:** 88% context reduction, 100+ server scalability, centralized auth & routing.
 
-**Documentation:** [ADR 060](./ADRs/060_gateway_integration_patterns__hybrid_fleet.md) | [Gateway README](./docs/mcp_gateway/README.md) | [Podman Guide](./docs/PODMAN_STARTUP_GUIDE.md)
+#### 2.3.1 Dual-Transport Architecture
+The Fleet supports two transport modes to enable both local development and Gateway-federated deployments:
+
+- **STDIO (Local):** FastMCP for Claude Desktop/IDE direct connections
+- **SSE (Fleet):** SSEServer for Gateway federation via IBM ContextForge
+
+> [!IMPORTANT]
+> **FastMCP SSE is NOT compatible with the IBM ContextForge Gateway.** Fleet containers must use SSEServer (`mcp_servers/lib/sse_adaptor.py`) for Gateway integration. See [ADR 066](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for details.
+
+```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart TB
+ subgraph subGraph0["Local Workstation (Client & Test Context)"]
+        direction TB
+        LLM["LLM Chat Sessions<br/>(Antigravity, Claude, etc.)"]
+        IDE["Direct Developer Access<br/>(Terminal / IDE)"]
+        Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
+        
+        subgraph subGraphTest["Testing Suite"]
+            E2E_Test{{E2E Tests}}
+            Int_Test{{Integration Tests}}
+        end
+  end
+
+ subgraph subGraph1["server.py (Entry Point)"]
+        Selector{"MCP_TRANSPORT<br/>Selector"}
+        StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
+        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'" }
+  end
+
+ subgraph subGraph2["Core Logic Layers"]
+        Ops@{ label: "Operations Layer<br/>'operations.py'" }
+        Models@{ label: "Data Models<br/>'models.py'" }
+  end
+
+ subgraph subGraph3["MCP Cluster Container"]
+    direction TB
+        subGraph1
+        subGraph2
+  end
+
+ subgraph subGraph4["Podman Network (Fleet Context)"]
+        Gateway@{ label: "IBM ContextForge Gateway<br/>'mcpgateway:4444'" }
+        subGraph3
+  end
+
+    %% E2E / Production Flow
+    LLM -- "Stdio" --> Bridge
+    E2E_Test -- "Simulates Stdio Session" --> Bridge
+    Bridge -- "HTTP / RPC" --> Gateway
+    Gateway -- "SSE Handshake" --> SSEWrap
+    SSEWrap -- "Execute" --> subGraph2
+
+    %% Integration / Developer Flow
+    IDE -- "Direct Stdio Call" --> StdioWrap
+    Int_Test -- "Validates Stdio & SSE Schemas" --> subGraph1
+    StdioWrap -- "Execute" --> subGraph2
+
+    %% Logic Selection
+    Selector -- "If 'stdio'" --> StdioWrap
+    Selector -- "If 'sse'" --> SSEWrap
+
+    style Bridge fill:#f9f,stroke:#333,stroke-width:2px
+    style Gateway fill:#69f,stroke:#333,stroke-width:2px
+    style E2E_Test fill:#fdd,stroke:#f66,stroke-width:2px
+    style Int_Test fill:#ddf,stroke:#66f,stroke-width:2px
+    style Selector fill:#fff,stroke:#333,stroke-dasharray: 5 5
+```
+
+**Architecture Decisions:**
+- [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
+- [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
+
+**Documentation:** [Gateway README](./docs/mcp_gateway/README.md) | [Podman Guide](./docs/PODMAN_STARTUP_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
