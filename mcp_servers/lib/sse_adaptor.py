@@ -390,4 +390,4 @@ class SSEServer:
             env_port = int(os.getenv("PORT", port))
             
             self.logger.info(f"Starting SSE server on port {env_port}")
-            uvicorn.run(self.app, host="0.0.0.0", port=env_port, log_level="info")
+            uvicorn.run(self.app, host="0.0.0.0", port=env_port, log_level="info", timeout_keep_alive=75)

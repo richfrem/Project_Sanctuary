@@ -342,7 +342,7 @@ def execute_mcp_tool(
             "params": {"name": tool_name, "arguments": arguments},
             "id": 1,
         }
-        resp = inner_session.post(f"{config.url}/rpc", json=payload, timeout=30)
+        resp = inner_session.post(f"{config.url}/rpc", json=payload, timeout=90)
         
         if resp.status_code == 200:
             data = resp.json()

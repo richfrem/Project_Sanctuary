@@ -170,7 +170,8 @@ class TestCortexForgeLLMTools:
         
         assert result["success"], f"Failed: {result.get('error')}"
     
-    @pytest.mark.timeout(60)
+    @pytest.mark.slow
+    @pytest.mark.timeout(90)
     def test_query_sanctuary_model(self, logged_call):
         """
         Test query-sanctuary-model queries Ollama model.
