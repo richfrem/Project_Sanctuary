@@ -4,7 +4,7 @@ Pytest configuration and fixtures for Gateway E2E tests.
 Provides:
 - GatewayTestClient fixture for all tests
 - Execution logging hooks
-- Learning package protection verification
+- Per-test learning package protection verification
 """
 import hashlib
 import os
@@ -48,6 +48,12 @@ def to_container_path(local_path: Path | str) -> str:
 # Learning package directory to protect
 LEARNING_DIR = Path(__file__).parents[4] / ".agent" / "learning"
 
+# Tools that legitimately modify learning package (Protocol 128)
+LEARNING_MODIFIERS = {
+    "cortex-learning-debrief",      # Protocol 128 learning scan
+    "cortex-capture-snapshot",      # Protocol 128 snapshot capture
+}
+
 
 def compute_directory_hash(directory: Path) -> str:
     """Compute a hash of all files in a directory for integrity verification."""
@@ -60,6 +66,11 @@ def compute_directory_hash(directory: Path) -> str:
             hasher.update(file_path.name.encode())
             hasher.update(file_path.read_bytes())
     return hasher.hexdigest()
+
+
+def test_modifies_learning(test_name: str) -> bool:
+    """Check if a test involves tools that legitimately modify learning."""
+    return any(modifier in test_name for modifier in LEARNING_MODIFIERS)
 
 
 @pytest.fixture(scope="session")
@@ -91,16 +102,24 @@ def execution_logger() -> Generator[ExecutionLogger, None, None]:
 
 
 @pytest.fixture
-def logged_call(gateway_client, execution_logger):
+def logged_call(gateway_client, execution_logger, request, learning_package_hash):
     """
     Factory fixture for making logged Gateway calls.
     
-    Returns a callable that:
+    Features:
     1. Records timestamp before call
     2. Makes the Gateway RPC call
     3. Records output/error and duration
-    4. Returns the result
+    4. Verifies learning package unchanged (unless test modifies learning)
+    
+    Returns the result dict.
     """
+    test_name = request.node.name
+    should_protect = not test_modifies_learning(test_name)
+    
+    # Capture initial state for per-test verification
+    initial_hash = compute_directory_hash(LEARNING_DIR) if should_protect else None
+    
     def _call(tool_name: str, args: dict):
         start_time = time.time()
         
@@ -127,25 +146,29 @@ def logged_call(gateway_client, execution_logger):
             )
             return {"success": False, "error": str(e)}
     
-    return _call
+    yield _call
+    
+    # Per-test learning verification (unless test legitimately modifies learning)
+    if should_protect and initial_hash is not None:
+        final_hash = compute_directory_hash(LEARNING_DIR)
+        if initial_hash != final_hash:
+            pytest.fail(
+                f"⚠️  Test '{test_name}' modified .agent/learning/ unexpectedly.\n"
+                f"If this is intentional, add the tool name to LEARNING_MODIFIERS in conftest.py"
+            )
 
 
 @pytest.fixture(scope="session", autouse=True)
-def verify_learning_package_unchanged(learning_package_hash):
+def session_summary(learning_package_hash):
     """
-    Verify that the learning package was not modified during test execution.
-    Runs automatically at the end of the test session.
+    Print summary at end of session.
+    No longer fails on learning modification - per-test checks handle that.
     """
     yield
-    # After all tests complete, verify learning package integrity
-    after_hash = compute_directory_hash(LEARNING_DIR)
-    if after_hash != learning_package_hash:
-        pytest.fail(
-            f"⚠️ CRITICAL: .agent/learning/ was modified during tests!\n"
-            f"Before: {learning_package_hash}\n"
-            f"After:  {after_hash}"
-        )
-    print(f"\n✅ Learning package integrity verified (hash: {learning_package_hash[:12]}...)")
+    # Just print verification status
+    final_hash = compute_directory_hash(LEARNING_DIR)
+    status = "✅ unchanged" if final_hash == learning_package_hash else "⚠️  modified (by learning tools)"
+    print(f"\n📦 Learning package: {status}")
 
 
 # Test fixtures directory

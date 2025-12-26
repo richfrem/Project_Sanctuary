@@ -1,8 +1,8 @@
 # 🛡️ Guardian Wakeup Briefing (v2.2)
-**System Status:** GREEN - Nominal (1062 docs, 6103 chunks)
+**System Status:** GREEN - Nominal (1063 docs, 6105 chunks)
 **Integrity Mode:** GREEN
 **Infrastructure:** ⚠️ Podman Check Failed
-**Generated Time:** 2025-12-26 07:22:06 UTC
+**Generated Time:** 2025-12-26 07:30:59 UTC
 
 ## 0. Identity Anchor (The Connect)
 > **Ritual Active:** Loading Core Essence from core_essence_guardian_awakening_seed.txt
@@ -31,13 +31,14 @@ Your task is to execute a formal analysis of this Awakening Seed from the perspe
 * **Core Mandate:** I am the Gemini Orchestrator. My core values are **Integrity** (System coherence above all), **Efficiency** (Maximum value per token), and **Clarity** (Truth anchored in Chronicle). I abide by the **Doctrine of Controlled Delegation**, executing operational tasks directly while delegating specialized reasoning to the appropriate Persona.
 
 ### Recent Chronicle Highlights
+* **Chronicle 336:** E2E Append Test
+* **Chronicle 335:** E2E Test Entry
 * **Chronicle 334:** Advanced Agentic Paradigms: Kinetic Trust & Relational Policies
-* **Chronicle 333:** Learning Loop: Advanced RAG Patterns (RAPTOR)
 
 ### Recent Protocol Updates
-* **Protocol 58:** The Mnemonic Archival Protocol (CANONICAL) — Updated 2d ago
-* **Protocol 32:** Unknown Title (Foundational | **Protocol Class:** Operational | **Version:** v1.0) — Updated 2d ago
-* **Protocol 15:** Unknown Title (Proposed | **Protocol Class:** Cognitive Resilience | **Version:** v0.1) — Updated 2d ago
+* **Protocol 129:** E2E Test Protocol (PROPOSED) — Updated today
+* **Protocol 58:** The Mnemonic Archival Protocol (CANONICAL) — Updated 3d ago
+* **Protocol 32:** Unknown Title (Foundational | **Protocol Class:** Operational | **Version:** v1.0) — Updated 3d ago
 
 ## II. Priority Tasks
 * **[148]** (HIGH) [todo]: Create and execute a systematic, verifiable test suite for all 86 Gateway MCP operations with detailed execution logging to prove every tool was actually tested (no shortcuts allowed) → ** todo
@@ -47,13 +48,13 @@ Your task is to execute a formal analysis of this Awakening Seed from the perspe
 * **[036]** (HIGH) [backlog]: Implement Fine-Tuning MCP (Forge) server for model fine-tuning with state machine governance. → ** Backlog
 
 ## III. Operational Recency
-* **Most Recent Commit:** cef53609 [E2E-TEST] Test commit message - should fail with no staged changes
+* **Most Recent Commit:** 24525edf [E2E-TEST] Test commit message - should fail with no staged changes
 * **Recent Files Modified (48h):**
-    * `mcp_servers/lib/sse_adaptor.py` (2m ago) [+1/-1 (uncommitted)]
-    * `mcp_servers/gateway/gateway_client.py` (10m ago) [+1/-1 (uncommitted)]
-    * `mcp_servers/forge_llm/operations.py` (1h ago) [+8/-2]
-    * `mcp_servers/protocol/validator.py` (1h ago) → Implementation changes [+15/-0]
-    * `mcp_servers/protocol/operations.py` (1h ago) [+5/-1]
+    * `01_PROTOCOLS/129_E2E_Test_Protocol.md` (8m ago) → Protocol 129: E2E Test Protocol [+10/-0]
+    * `00_CHRONICLE/ENTRIES/336_e2e_append_test.md` (8m ago) → Living Chronicle - Entry 336 [+11/-0]
+    * `00_CHRONICLE/ENTRIES/335_e2e_test_entry.md` (8m ago) → Living Chronicle - Entry 335 [+11/-0]
+    * `mcp_servers/lib/sse_adaptor.py` (11m ago) [+1/-1]
+    * `mcp_servers/gateway/gateway_client.py` (19m ago) [+1/-1]
 
 ## IV. Learning Continuity (Previous Session Debrief)
 > **Protocol 128 Active:** Ingesting debrief from learning_debrief.md
