@@ -89,7 +89,7 @@ importlib-metadata==8.7.1
     # via opentelemetry-api
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==6.0.1
+jaraco-context==6.0.2
     # via keyring
 jaraco-functools==4.4.0
     # via keyring
@@ -164,7 +164,7 @@ pydantic-core==2.41.5
     # via pydantic
 pydantic-settings==2.12.0
     # via mcp
-pydocket==0.16.1
+pydocket==0.16.3
     # via fastmcp
 pygments==2.19.2
     # via rich
@@ -220,7 +220,7 @@ starlette==0.50.0
     #   fastapi
     #   mcp
     #   sse-starlette
-typer==0.20.1
+typer==0.21.0
     # via pydocket
 typing-extensions==4.15.0
     # via
