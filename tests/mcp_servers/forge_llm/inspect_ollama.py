@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
 """
 Project Sanctuary - Ollama Inspector
-Tests both localhost and container network connectivity.
+Tests Ollama connectivity from localhost and/or container network.
+
+Usage:
+  python inspect_ollama.py                 # Test localhost only (default from host)
+  python inspect_ollama.py --host all      # Test both (container will fail from host)
+  python inspect_ollama.py --host container # Test container network only
 """
 import sys
-import json
 import time
 import argparse
 from pathlib import Path
 
-# Try to import requests, fallback to urllib if necessary or fail gracefully
 try:
     import requests
 except ImportError:
-    print("Error: 'requests' module not found. Please install it with 'pip install requests'")
+    print("Error: 'requests' module not found. Install with: pip install requests")
     sys.exit(1)
 
-# Add project root based on .git marker (Robust)
+# Add project root based on .git marker
 current = Path(__file__).resolve().parent
 while not (current / ".git").exists():
     if current == current.parent:
@@ -29,25 +32,28 @@ if str(project_root) not in sys.path:
 from mcp_servers.lib.env_helper import get_env_variable, load_env
 
 # ============================================================================
-# Configuration
+# Configuration (from Environment)
 # ============================================================================
 load_env()
 
-# The model we expect to find and use for testing
+# Get host from env or use localhost as default
+OLLAMA_HOST_ENV = get_env_variable("OLLAMA_HOST", required=False) or "http://127.0.0.1:11434"
+
+# Container network host (for containers, not accessible from host machine)
+CONTAINER_HOST = "http://sanctuary_ollama:11434"
+
+# The model we expect to find
 TARGET_MODEL = get_env_variable("OLLAMA_MODEL", required=False) or "hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M"
 
-# Hosts to test
-HOSTS = {
-    "localhost": "http://127.0.0.1:11434",
-    "container": "http://sanctuary_ollama:11434"
-}
 
-def print_header(title):
+def print_header(title: str):
     print(f"\n{'='*60}")
     print(f" {title}")
     print(f"{'='*60}")
 
-def check_connection(base_url: str, host_name: str):
+
+def check_connection(base_url: str, host_name: str) -> bool:
+    """Check if Ollama is reachable at the given URL."""
     print(f"\n--- Testing {host_name}: {base_url} ---")
     
     try:
@@ -64,12 +70,16 @@ def check_connection(base_url: str, host_name: str):
             
     except requests.exceptions.ConnectionError:
         print(f"  Status: ❌ FAILED (Connection Refused)")
+        if host_name == "container":
+            print(f"  Note: Container hostnames only resolve from inside containers")
         return False
     except Exception as e:
         print(f"  Status: ❌ ERROR ({e})")
         return False
 
+
 def list_models(base_url: str):
+    """List models available on Ollama."""
     url = f"{base_url}/api/tags"
     
     try:
@@ -107,7 +117,9 @@ def list_models(base_url: str):
         print(f"  Error listing models: {e}")
         return None
 
-def test_generation(base_url: str, model_name: str):
+
+def test_generation(base_url: str, model_name: str) -> bool:
+    """Test model generation."""
     url = f"{base_url}/api/generate"
     
     prompt = "Hello! Respond with just 'OK' if you're working."
@@ -146,28 +158,33 @@ def test_generation(base_url: str, model_name: str):
         print(f"  [ERROR] Generation failed: {e}")
         return False
 
-def run_tests(host_filter: str = "all"):
+
+def run_tests(host_filter: str = "localhost") -> dict:
     """Run tests on specified hosts."""
-    print("Project Sanctuary - Ollama Inspector (Multi-Host)")
+    print("Project Sanctuary - Ollama Inspector")
+    print(f"OLLAMA_HOST from .env: {OLLAMA_HOST_ENV}")
     
-    hosts_to_test = HOSTS.copy()
-    if host_filter != "all":
-        if host_filter in HOSTS:
-            hosts_to_test = {host_filter: HOSTS[host_filter]}
-        else:
-            print(f"Unknown host: {host_filter}. Use 'localhost', 'container', or 'all'.")
-            return
+    # Build host list based on filter
+    hosts = {}
+    if host_filter in ("all", "localhost"):
+        hosts["localhost"] = OLLAMA_HOST_ENV
+    if host_filter in ("all", "container"):
+        hosts["container"] = CONTAINER_HOST
+    
+    if not hosts:
+        print(f"Unknown host: {host_filter}. Use 'localhost', 'container', or 'all'.")
+        return {}
     
     results = {}
     
     # 1. Connectivity Check
     print_header("1. Connectivity Check")
-    for name, url in hosts_to_test.items():
+    for name, url in hosts.items():
         results[name] = {"connected": check_connection(url, name)}
     
     # 2. Model Availability (only for connected hosts)
     print_header("2. Model Availability")
-    for name, url in hosts_to_test.items():
+    for name, url in hosts.items():
         if results[name]["connected"]:
             results[name]["model"] = list_models(url)
         else:
@@ -176,7 +193,7 @@ def run_tests(host_filter: str = "all"):
     
     # 3. Generation Test (only for hosts with models)
     print_header("3. Generation Test")
-    for name, url in hosts_to_test.items():
+    for name, url in hosts.items():
         if results[name].get("model"):
             print(f"\n--- Testing {name} ---")
             results[name]["generation"] = test_generation(url, results[name]["model"])
@@ -186,16 +203,18 @@ def run_tests(host_filter: str = "all"):
     
     # Summary
     print_header("Summary")
-    for name in hosts_to_test:
+    for name in hosts:
         status = "✅ PASS" if results[name].get("generation") else "❌ FAIL"
         print(f"  {name}: {status}")
     
     return results
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ollama Inspector - Test connectivity")
-    parser.add_argument("--host", default="all", choices=["all", "localhost", "container"],
-                        help="Which host to test (default: all)")
+    parser.add_argument("--host", default="localhost", 
+                        choices=["all", "localhost", "container"],
+                        help="Which host to test (default: localhost)")
     args = parser.parse_args()
     
     results = run_tests(args.host)
@@ -205,4 +224,3 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         sys.exit(1)
-

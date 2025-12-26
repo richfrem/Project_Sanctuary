@@ -1,34 +1,30 @@
 {
   "test_run": {
-    "started": "2025-12-26T06:10:12.394665Z",
-    "completed": "2025-12-26T06:10:42.276131Z",
+    "started": "2025-12-26T06:12:36.860042Z",
+    "completed": "2025-12-26T06:12:36.978007Z",
     "total_executions": 1,
     "passed": 1,
     "failed": 0
   },
   "executions": [
     {
-      "tool_name": "sanctuary-cortex-query-sanctuary-model",
-      "timestamp": "2025-12-26T06:10:42.266594Z",
-      "input_args": {
-        "prompt": "Hello, this is an E2E test. Respond briefly.",
-        "max_tokens": 50,
-        "temperature": 0.1
-      },
+      "tool_name": "sanctuary-utils-gateway-get-capabilities",
+      "timestamp": "2025-12-26T06:12:36.976004Z",
+      "input_args": {},
       "output": {
         "success": true,
         "result": {
           "content": [
             {
               "type": "text",
-              "text": "{\n  \"model\": \"hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M\",\n  \"response\": \"\",\n  \"prompt_tokens\": null,\n  \"completion_tokens\": null,\n  \"total_tokens\": null,\n  \"temperature\": null,\n  \"status\": \"error\",\n  \"error\": \"Failed to query model: llama runner process has terminated: signal: killed (status code: 500)\"\n}"
+              "text": "{\n  \"error\": \"Clusters directory not found at /Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/gateway/clusters\"\n}"
             }
           ],
           "isError": false
         }
       },
       "error": null,
-      "duration_ms": 29865.993976593018,
+      "duration_ms": 111.07397079467773,
       "success": true
     }
   ]
