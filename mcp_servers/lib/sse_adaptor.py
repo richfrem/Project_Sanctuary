@@ -307,26 +307,33 @@ class SSEServer:
                 tool_name = params.get("name")
                 tool_args = params.get("arguments", {})
                 
-                if tool_name in self.tools:
+                # ADR-076: Normalize tool name (Gateway uses hyphens, servers use underscores)
+                # e.g. "code-read" -> "code_read"
+                normalized_name = tool_name.replace("-", "_") if tool_name else tool_name
+                
+                # Try normalized name first, then original
+                if normalized_name in self.tools:
+                    handler = self.tools[normalized_name]["handler"]
+                elif tool_name in self.tools:
                     handler = self.tools[tool_name]["handler"]
-                    
-                    # Call handler (async or sync)
-                    if asyncio.iscoroutinefunction(handler):
-                        result_content = await handler(**tool_args)
-                    else:
-                        result_content = handler(**tool_args)
-                    
-                    content_list = []
-                    if isinstance(result_content, str):
-                        content_list.append({"type": "text", "text": result_content})
-                    elif isinstance(result_content, (dict, list)):
-                        content_list.append({"type": "text", "text": json.dumps(result_content, indent=2)})
-                    else:
-                        content_list.append({"type": "text", "text": str(result_content)})
-                        
-                    response["result"] = {"content": content_list}
                 else:
-                    raise Exception(f"Tool not found: {tool_name}")
+                    raise Exception(f"Tool not found: {tool_name} (tried: {normalized_name})")
+                
+                # Call handler (async or sync)
+                if asyncio.iscoroutinefunction(handler):
+                    result_content = await handler(**tool_args)
+                else:
+                    result_content = handler(**tool_args)
+                
+                content_list = []
+                if isinstance(result_content, str):
+                    content_list.append({"type": "text", "text": result_content})
+                elif isinstance(result_content, (dict, list)):
+                    content_list.append({"type": "text", "text": json.dumps(result_content, indent=2)})
+                else:
+                    content_list.append({"type": "text", "text": str(result_content)})
+                    
+                response["result"] = {"content": content_list}
             
             elif method == "initialize":
                 response["result"] = {

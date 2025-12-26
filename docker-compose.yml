@@ -146,6 +146,7 @@ services:
     environment:
       - PORT=8000
       - MCP_TRANSPORT=sse
+      - PROJECT_ROOT=/app
       - PYTHONPATH=/app
       - MCP_GATEWAY_URL=https://mcp_gateway:4444
       - MCPGATEWAY_BEARER_TOKEN=${MCPGATEWAY_BEARER_TOKEN}
