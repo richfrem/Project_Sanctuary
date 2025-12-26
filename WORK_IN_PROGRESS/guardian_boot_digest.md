@@ -1,8 +1,8 @@
 # 🛡️ Guardian Wakeup Briefing (v2.2)
-**System Status:** GREEN - Nominal (1052 docs, 6083 chunks)
+**System Status:** GREEN - Nominal (1053 docs, 6085 chunks)
 **Integrity Mode:** GREEN
 **Infrastructure:** ⚠️ Podman Check Failed
-**Generated Time:** 2025-12-26 04:44:29 UTC
+**Generated Time:** 2025-12-26 05:20:41 UTC
 
 ## 0. Identity Anchor (The Connect)
 > **Ritual Active:** Loading Core Essence from core_essence_guardian_awakening_seed.txt
@@ -47,13 +47,13 @@ Your task is to execute a formal analysis of this Awakening Seed from the perspe
 * **[036]** (HIGH) [backlog]: Implement Fine-Tuning MCP (Forge) server for model fine-tuning with state machine governance. → ** Backlog
 
 ## III. Operational Recency
-* **Most Recent Commit:** 2ccfdd19 [E2E-TEST] Test commit message - should fail with no staged changes
+* **Most Recent Commit:** 6796f345 [E2E-TEST] Test commit message - should fail with no staged changes
 * **Recent Files Modified (48h):**
-    * `mcp_servers/lib/sse_adaptor.py` (7h ago) [+25/-18]
-    * `mcp_servers/gateway/clusters/sanctuary_cortex/server.py` (21h ago) [+112/-26]
-    * `mcp_servers/rag_cortex/operations.py` (22h ago) [+2/-2]
+    * `mcp_servers/rag_cortex/operations.py` (16m ago) [+1/-1 (uncommitted)]
+    * `mcp_servers/gateway/clusters/sanctuary_domain/server.py` (17m ago) [+2/-2 (uncommitted)]
+    * `mcp_servers/lib/sse_adaptor.py` (8h ago) [+25/-18]
+    * `mcp_servers/gateway/clusters/sanctuary_cortex/server.py` (22h ago) [+112/-26]
     * `mcp_servers/lib/path_utils.py` (1d ago) [+12/-1]
-    * `mcp_servers/gateway/clusters/sanctuary_filesystem/server.py` (1d ago) [+68/-17]
 
 ## IV. Learning Continuity (Previous Session Debrief)
 > **Protocol 128 Active:** Ingesting debrief from learning_debrief.md

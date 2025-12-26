@@ -1848,7 +1848,7 @@ class CortexOperations:
         
         # 3. Default Manifest Handling (Protocol 128)
         # If 'seal' or 'audit' and no manifest provided, use the predefined manifests
-        effective_manifest = list(manifest_files)
+        effective_manifest = list(manifest_files or [])
         manifest_file = None
         if not effective_manifest:
             if snapshot_type == "seal":

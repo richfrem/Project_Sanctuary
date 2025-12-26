@@ -191,12 +191,12 @@ def run_sse_server(port: int):
     # =============================================================================
     @sse_tool(name="chronicle_create_entry", description="Create a new chronicle entry.", schema=CHRONICLE_CREATE_SCHEMA)
     def chronicle_create_entry(title: str, content: str, author: str = "Agent", date: str = None, status: str = "draft", classification: str = "internal"):
-        result = get_op("chronicle").create_entry(title=title, content=content, author=author, date=date, status=status, classification=classification)
+        result = get_op("chronicle").create_entry(title=title, content=content, author=author, date_str=date, status=status, classification=classification)
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
     
     @sse_tool(name="chronicle_append_entry", description="Append a new entry to the Chronicle (Alias for create_entry).", schema=CHRONICLE_CREATE_SCHEMA)
     def chronicle_append_entry(title: str, content: str, author: str = "Agent", date: str = None, status: str = "draft", classification: str = "internal"):
-        result = get_op("chronicle").create_entry(title=title, content=content, author=author, date=date, status=status, classification=classification)
+        result = get_op("chronicle").create_entry(title=title, content=content, author=author, date_str=date, status=status, classification=classification)
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
     
     @sse_tool(name="chronicle_update_entry", description="Update an existing chronicle entry.", schema=CHRONICLE_UPDATE_SCHEMA)

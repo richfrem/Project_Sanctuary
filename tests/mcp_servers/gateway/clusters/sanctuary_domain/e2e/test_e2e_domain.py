@@ -118,7 +118,7 @@ class TestProtocolTools:
         result = logged_call("sanctuary-domain-protocol-create", {
             "title": "E2E Test Protocol",
             "content": "This protocol was created by E2E tests.",
-            "status": "draft"
+            "status": "PROPOSED"
         })
         
         assert result["success"], f"Failed: {result.get('error')}"
@@ -171,7 +171,7 @@ class TestTaskTools:
             "title": "E2E Test Task",
             "objective": "Verify task creation works via E2E tests",
             "status": "todo",
-            "priority": "low"
+            "priority": "Low"
         })
         
         assert result["success"], f"Failed: {result.get('error')}"
