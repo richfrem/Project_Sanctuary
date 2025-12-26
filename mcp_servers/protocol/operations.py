@@ -36,7 +36,7 @@ class ProtocolOperations:
 
     def create_protocol(
         self,
-        number: int,
+        number: Optional[int],
         title: str,
         status: str,
         classification: str,
@@ -46,6 +46,10 @@ class ProtocolOperations:
         linked_protocols: Optional[str] = None
     ) -> Dict[str, Any]:
         """Create a new protocol."""
+        # Auto-generate number if not provided
+        if number is None:
+            number = self.validator.get_next_protocol_number()
+        
         # Validate inputs
         self.validator.validate_required_fields(title, classification, version, authority, content)
         self.validator.validate_protocol_number(number)

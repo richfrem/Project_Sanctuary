@@ -31,6 +31,21 @@ class ProtocolValidator:
             if match and int(match.group(1)) == number:
                 raise ValueError(f"Protocol {number} already exists: {f}")
 
+    def get_next_protocol_number(self) -> int:
+        """Get next available protocol number."""
+        if not os.path.exists(self.base_dir):
+            return 1
+            
+        max_number = 0
+        files = os.listdir(self.base_dir)
+        for f in files:
+            match = re.match(r"(\d+)_", f)
+            if match:
+                num = int(match.group(1))
+                if num > max_number:
+                    max_number = num
+        return max_number + 1
+
     def validate_required_fields(
         self, 
         title: str, 
