@@ -49,9 +49,10 @@ def to_container_path(local_path: Path | str) -> str:
 LEARNING_DIR = Path(__file__).parents[4] / ".agent" / "learning"
 
 # Tools that legitimately modify learning package (Protocol 128)
+# Pattern matches test method names (use underscores, not hyphens)
 LEARNING_MODIFIERS = {
-    "cortex-learning-debrief",      # Protocol 128 learning scan
-    "cortex-capture-snapshot",      # Protocol 128 snapshot capture
+    "learning_debrief",     # Protocol 128 learning scan
+    "capture_snapshot",     # Protocol 128 snapshot capture
 }
 
 

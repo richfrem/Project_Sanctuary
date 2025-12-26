@@ -1,19 +1,18 @@
 {
   "test_run": {
-    "started": "2025-12-26T07:23:57.444009Z",
-    "completed": "2025-12-26T07:24:13.829342Z",
+    "started": "2025-12-26T07:32:13.550059Z",
+    "completed": "2025-12-26T07:32:14.180960Z",
     "total_executions": 1,
     "passed": 1,
     "failed": 0
   },
   "executions": [
     {
-      "tool_name": "sanctuary-cortex-query-sanctuary-model",
-      "timestamp": "2025-12-26T07:24:13.825336Z",
+      "tool_name": "sanctuary-cortex-cortex-capture-snapshot",
+      "timestamp": "2025-12-26T07:32:14.177882Z",
       "input_args": {
-        "prompt": "Hello, this is an E2E test. Respond briefly.",
-        "max_tokens": 50,
-        "temperature": 0.1
+        "snapshot_type": "minimal",
+        "strategic_context": "E2E test snapshot"
       },
       "output": {
         "success": true,
@@ -21,14 +20,14 @@
           "content": [
             {
               "type": "text",
-              "text": "{\n  \"model\": \"hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M\",\n  \"response\": \"\",\n  \"prompt_tokens\": null,\n  \"completion_tokens\": null,\n  \"total_tokens\": null,\n  \"temperature\": null,\n  \"status\": \"error\",\n  \"error\": \"Failed to query model: llama runner process has terminated: signal: killed (status code: 500)\"\n}"
+              "text": "{\n  \"snapshot_path\": \"/app/.agent/learning/learning_package_snapshot.md\",\n  \"manifest_verified\": true,\n  \"git_diff_context\": \"Verified: 0 files. Shadow Manifest (Untracked): 2 items.\",\n  \"snapshot_type\": \"minimal\",\n  \"status\": \"success\",\n  \"total_files\": 0,\n  \"total_bytes\": 171,\n  \"error\": null\n}"
             }
           ],
           "isError": false
         }
       },
       "error": null,
-      "duration_ms": 16376.21021270752,
+      "duration_ms": 622.0378875732422,
       "success": true
     }
   ]
