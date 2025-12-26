@@ -1,6 +1,6 @@
 """
 Integration tests for sanctuary_filesystem cluster.
-Tests direct SSE communication (no Gateway).
+Tests direct SSE communication via MCP SDK.
 """
 import pytest
 import sys
@@ -11,20 +11,18 @@ from integration_conftest import *
 
 
 @pytest.mark.integration
+@pytest.mark.asyncio
 class TestFilesystemClusterHealth:
     """Test sanctuary_filesystem cluster connectivity."""
     
-    def test_cluster_health(self, filesystem_cluster):
+    async def test_cluster_health(self, filesystem_cluster):
         """Verify cluster health endpoint."""
-        assert filesystem_cluster.health_check()
+        assert await filesystem_cluster.health_check()
     
-    def test_list_tools(self, filesystem_cluster):
+    async def test_list_tools(self, filesystem_cluster):
         """Verify filesystem tools are exposed."""
-        result = filesystem_cluster.list_tools()
-        assert result["success"]
-        
-        tools = result["tools"]
-        tool_names = [t["name"] for t in tools]
+        result = await filesystem_cluster.list_tools()
+        tool_names = [t.name for t in result.tools]
         
         expected_tools = ["code-read", "code-write", "code-list-files"]
         for tool in expected_tools:
@@ -32,23 +30,25 @@ class TestFilesystemClusterHealth:
 
 
 @pytest.mark.integration
+@pytest.mark.asyncio
 class TestFilesystemReadTools:
     """Test sanctuary_filesystem read tools via direct SSE."""
     
-    def test_code_read(self, filesystem_cluster):
+    async def test_code_read(self, filesystem_cluster):
         """Test reading a file via direct SSE."""
-        result = filesystem_cluster.call_tool("code-read", {"path": "/app/README.md"})
+        # Read the README.md in the container
+        result = await filesystem_cluster.call_tool("code-read", {"path": "/app/README.md"})
         
-        assert result["success"], f"Tool call failed: {result.get('error')}"
-        content = result["result"]["content"]
-        assert len(content) > 0
+        assert len(result.content) > 0
+        assert "Sanctuary" in result.content[0].text or "Project" in result.content[0].text
     
-    def test_code_list_files(self, filesystem_cluster):
+    async def test_code_list_files(self, filesystem_cluster):
         """Test listing files via direct SSE."""
-        result = filesystem_cluster.call_tool("code-list-files", {
+        result = await filesystem_cluster.call_tool("code-list-files", {
             "path": "/app",
             "pattern": "*.md",
             "recursive": False
         })
         
-        assert result["success"], f"Tool call failed: {result.get('error')}"
+        assert len(result.content) > 0
+        assert "README.md" in result.content[0].text

@@ -1,6 +1,6 @@
 """
 Integration tests for sanctuary_git cluster.
-Tests direct SSE communication (no Gateway).
+Tests direct SSE communication via MCP SDK.
 """
 import pytest
 import sys
@@ -11,20 +11,18 @@ from integration_conftest import *
 
 
 @pytest.mark.integration
+@pytest.mark.asyncio
 class TestGitClusterHealth:
     """Test sanctuary_git cluster connectivity."""
     
-    def test_cluster_health(self, git_cluster):
+    async def test_cluster_health(self, git_cluster):
         """Verify cluster health endpoint."""
-        assert git_cluster.health_check()
+        assert await git_cluster.health_check()
     
-    def test_list_tools(self, git_cluster):
+    async def test_list_tools(self, git_cluster):
         """Verify git tools are exposed."""
-        result = git_cluster.list_tools()
-        assert result["success"]
-        
-        tools = result["tools"]
-        tool_names = [t["name"] for t in tools]
+        result = await git_cluster.list_tools()
+        tool_names = [t.name for t in result.tools]
         
         expected_tools = ["git-get-status", "git-log", "git-diff"]
         for tool in expected_tools:
@@ -32,19 +30,21 @@ class TestGitClusterHealth:
 
 
 @pytest.mark.integration
+@pytest.mark.asyncio
 class TestGitReadTools:
     """Test sanctuary_git read tools via direct SSE."""
     
-    def test_git_get_status(self, git_cluster):
+    async def test_git_get_status(self, git_cluster):
         """Test git status via direct SSE."""
-        result = git_cluster.call_tool("git-get-status", {})
+        result = await git_cluster.call_tool("git-get-status", {})
         
-        assert result["success"], f"Tool call failed: {result.get('error')}"
-        content = result["result"]["content"]
-        assert len(content) > 0
+        assert len(result.content) > 0
+        # Should return text status
+        assert isinstance(result.content[0].text, str)
     
-    def test_git_log(self, git_cluster):
+    async def test_git_log(self, git_cluster):
         """Test git log via direct SSE."""
-        result = git_cluster.call_tool("git-log", {"max_count": 5})
+        result = await git_cluster.call_tool("git-log", {"max_count": 5})
         
-        assert result["success"], f"Tool call failed: {result.get('error')}"
+        assert len(result.content) > 0
+        assert "commit" in result.content[0].text or "Date:" in result.content[0].text

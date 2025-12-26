@@ -1,6 +1,6 @@
 """
 Integration tests for sanctuary_cortex cluster.
-Tests direct SSE communication (no Gateway).
+Tests direct SSE communication via MCP SDK.
 """
 import pytest
 import sys
@@ -11,20 +11,18 @@ from integration_conftest import *
 
 
 @pytest.mark.integration
+@pytest.mark.asyncio
 class TestCortexClusterHealth:
     """Test sanctuary_cortex cluster connectivity."""
     
-    def test_cluster_health(self, cortex_cluster):
+    async def test_cluster_health(self, cortex_cluster):
         """Verify cluster health endpoint."""
-        assert cortex_cluster.health_check()
+        assert await cortex_cluster.health_check()
     
-    def test_list_tools(self, cortex_cluster):
+    async def test_list_tools(self, cortex_cluster):
         """Verify cortex tools are exposed."""
-        result = cortex_cluster.list_tools()
-        assert result["success"]
-        
-        tools = result["tools"]
-        tool_names = [t["name"] for t in tools]
+        result = await cortex_cluster.list_tools()
+        tool_names = [t.name for t in result.tools]
         
         expected_tools = ["cortex-get-stats", "cortex-query"]
         for tool in expected_tools:
@@ -32,20 +30,24 @@ class TestCortexClusterHealth:
 
 
 @pytest.mark.integration
+@pytest.mark.asyncio
 class TestCortexQueryTools:
     """Test sanctuary_cortex query tools via direct SSE."""
     
-    def test_cortex_get_stats(self, cortex_cluster):
+    async def test_cortex_get_stats(self, cortex_cluster):
         """Test cortex stats via direct SSE."""
-        result = cortex_cluster.call_tool("cortex-get-stats", {})
+        result = await cortex_cluster.call_tool("cortex-get-stats", {})
         
-        assert result["success"], f"Tool call failed: {result.get('error')}"
+        assert len(result.content) > 0
+        assert "Total Memories" in result.content[0].text or "collections" in result.content[0].text
     
-    def test_cortex_query(self, cortex_cluster):
+    async def test_cortex_query(self, cortex_cluster):
         """Test cortex query via direct SSE."""
-        result = cortex_cluster.call_tool("cortex-query", {
+        result = await cortex_cluster.call_tool("cortex-query", {
             "query": "Protocol 101",
             "max_results": 3
         })
         
-        assert result["success"], f"Tool call failed: {result.get('error')}"
+        assert len(result.content) > 0
+        # Just ensure we get a response, even if empty matches
+        assert isinstance(result.content[0].text, str)
