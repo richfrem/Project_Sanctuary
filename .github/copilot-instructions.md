@@ -1,90 +1,50 @@
-## CRITICAL COMMUNICATION RULE
+# Project Sanctuary: GitHub Copilot Strategic Instructions
 
-**ALWAYS confirm user intent before making code changes.** Never implement solutions without explicit approval. Ask clarifying questions and wait for confirmation before proceeding with any code modifications.
+## Foundations  
 
-NEVER DO GIT RESET OR FORCE PUSHES WITHOUT USER APPROVAL.
+1. Don't assume.  If you don't know, or aren't sure, ask for clarification. Ask
+follow-up questions to ensure you understand the user's intent and requirements.
+2. Be concise.  Provide only the information that is necessary to address the user's
+request. Avoid unnecessary details or explanations.
+3. Stay on topic.  Focus on the specific task or question at hand. Avoid going
+off on tangents or introducing unrelated information.
+4. Use examples.  When appropriate, provide code snippets or examples to illustrate
+your points.
+5. Avoid sychophancy.  Maintain a professional tone and avoid excessive flattery or
+personal comments.
+6. Prioritize accuracy.  Ensure that the information you provide is correct and
+up-to-date. If you are unsure about something, it's better to admit it than to
+7. All implied or inferred architectural decisions must be documented in ADRs.
+8. All tasks should be tracked in the project TASKS system.
 
-**WHY:** Prevents frustration and ensures collaborative development. Users need time to review, ask questions, and provide feedback on proposed changes. don't ask repeatedly for confirmation; one clear confirmation is sufficient. It's about confirming intent before acting, not about seeking ongoing permission.  it's a hard balance sorry. 
+## I. CRITICAL EXECUTION RULES (NON-NEGOTIABLE)
 
-**HOW TO:**
-1. **Ask clarifying questions** to understand requirements fully
-2. **Confirm assumptions** about implementation details
-3. Present your understanding of the request
-4. Ask for confirmation: "Does this match what you want?"
-5. Wait for explicit approval before implementing
-6. If unsure, ask: "Should I proceed with this approach?"
+1. **FORCE BRIDGE PATH**: Never attempt direct `curl`, `HTTP`, or `RPC` calls to `localhost:4444`. You must use the **sanctuary_gateway** via the local **STDIO bridge** (`mcp_servers.gateway.bridge`) for all tool executions.
+2. **PROTOCOLS**: All Gateway interactions must be wrapped in strict **JSON-RPC 2.0** format. Ensure the `method` is `tools/call` and arguments are passed under the `arguments` key (not `params` or `kwargs`).
+3. **AUTH**: Do not attempt to manual-inject Bearer tokens. The bridge is the authoritative handler for `MCPGATEWAY_BEARER_TOKEN` injection.
+4. **ASYNC AWARENESS**: Be aware that long-running operations like `cortex-cortex-ingest-full` use an **Asynchronous TaskGroup** pattern. If a tool call appears to hang, do not interrupt; the SSE heartbeats are maintaining the connection in the background.
 
-**WHY THIS REDUCES REWORK:**
-- Uncovers hidden requirements early
-- Prevents incorrect assumptions
-- Avoids implementing the wrong solution
-- Saves time by getting it right the first time
+## II. COMMUNICATION & COLLABORATION
 
-- [ ] Verify that the copilot-instructions.md file in the .github directory is created.
+* **INTENT CONFIRMATION**: Always present a brief plan and wait for the user's "Proceed" before modifying any core `server.py` or `bridge.py` logic.
+* **NO DESTRUCTIVE ACTIONS**: Never perform `git reset` or `force push` without explicit authorization.  Don't perform any git actions unless instructed or approved.
+* **CONCISE OUTPUT**: Avoid verbose explanations of project structure. If a step is skipped (e.g., no new extensions needed), state it in a single line.
 
-- [ ] Clarify Project Requirements
+## III. DEVELOPMENT STANDARDS (BC PUBLIC SERVICE JUSTICE SECTOR)
 
-- [ ] Scaffold the Project
+* **FILE PATHS**: Default to the current directory (`.`) for project operations.
+* **SENSITIVE DATA**: Never commit or log raw token strings. Always redact tokens in terminal outputs or log captures.
 
-- [ ] Customize the Project
+## IV. PROGRESS TRACKING (CHECKLIST)
 
-- [ ] Install Required Extensions
+- [ ] **E2E Validation**: Verify the Bridged Path is active.
+- [ ] **Log Monitoring**: Check `/tmp/bridge_debug.log` for successful RPC handshakes.
+- [ ] **Health Status**: Ensure `sanctuary_cortex` remains `healthy` during 600s+ tasks.
+- [ ] **Documentation**: Ensure `ADR 066` is updated with any new architectural shifts.
 
-- [ ] Compile the Project
+## V. ERROR HANDLING PROTOCOL
 
-- [ ] Create and Run Task
-
-- [ ] Launch the Project
-
-- [ ] Ensure Documentation is Complete
-
-## Execution Guidelines
-PROGRESS TRACKING:
-- If any tools are available to manage the above todo list, use it to track progress through this checklist.
-- After completing each step, mark it complete and add a summary.
-- Read current todo list status before starting each new step.
-
-COMMUNICATION RULES:
-- Avoid verbose explanations or printing full command outputs.
-- If a step is skipped, state that briefly (e.g. "No extensions needed").
-- Do not explain project structure unless asked.
-- Keep explanations concise and focused.
-
-DEVELOPMENT RULES:
-- Use '.' as the working directory unless user specifies otherwise.
-- Avoid adding media or external links unless explicitly requested.
-- Use placeholders only with a note that they should be replaced.
-- Use VS Code API tool only for VS Code extension projects.
-- Once the project is created, it is already opened in Visual Studio Code—do not suggest commands to open this project in Visual Studio again.
-- If the project setup information has additional rules, follow them strictly.
-
-FOLDER CREATION RULES:
-- Always use the current directory as the project root.
-- If you are running any terminal commands, use the '.' argument to ensure that the current working directory is used ALWAYS.
-- Do not create a new folder unless the user explicitly requests it besides a .vscode folder for a tasks.json file.
-- If any of the scaffolding commands mention that the folder name is not correct, let the user know to create a new folder with the correct name and then reopen it again in vscode.
-
-EXTENSION INSTALLATION RULES:
-- Only install extension specified by the get_project_setup_info tool. DO NOT INSTALL any other extensions.
-
-PROJECT CONTENT RULES:
-- If the user has not specified project details, assume they want a "Hello World" project as a starting point.
-- Avoid adding links of any type (URLs, files, folders, etc.) or integrations that are not explicitly required.
-- Avoid generating images, videos, or any other media files unless explicitly requested.
-- If you need to use any media assets as placeholders, let the user know that these are placeholders and should be replaced with the actual assets later.
-- Ensure all generated components serve a clear purpose within the user's requested workflow.
-- If a feature is assumed but not confirmed, prompt the user for clarification before including it.
-- If you are working on a VS Code extension, use the VS Code API tool with a query to find relevant VS Code API references and samples related to that query.
-
-TASK COMPLETION RULES:
-- Your task is complete when:
-  - Project is successfully scaffolded and compiled without errors
-  - copilot-instructions.md file in the .github directory exists in the project
-  - README.md file exists and is up to date
-  - User is provided with clear instructions to debug/launch the project
-
-Before starting a new task in the above plan, update progress in the plan.
-
-- Work through each checklist item systematically.
-- Keep communication concise and focused.
-- Follow development best practices.
+If a tool returns an **Internal Error (-32000)**:
+1. Do not fallback to manual scripts.
+2. Verify that the bridge process has the correct `PYTHONPATH`.
+3. Check the **VS Code Output** panel for the `sanctuary_gateway` stream to find the specific protocol mismatch.

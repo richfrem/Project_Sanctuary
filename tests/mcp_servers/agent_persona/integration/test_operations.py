@@ -55,7 +55,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.agent_persona.operations import PersonaOperations
 
 
 def is_ollama_running():
@@ -74,8 +74,8 @@ def is_ollama_running():
 
 @pytest.fixture
 def ops():
-    """Create AgentPersonaOperations instance."""
-    return AgentPersonaOperations()
+    """Create PersonaOperations instance."""
+    return PersonaOperations()
 
 
 # =============================================================================

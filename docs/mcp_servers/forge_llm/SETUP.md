@@ -96,9 +96,9 @@ Check that Ollama is running:
 
 ```bash
 # Check container status
-docker ps | grep sanctuary_ollama_mcp
+docker ps | grep sanctuary_ollama
 # or
-podman ps | grep sanctuary_ollama_mcp
+podman ps | grep sanctuary_ollama
 
 # Check Ollama API version
 curl http://localhost:11434/api/version
@@ -129,7 +129,7 @@ If not using docker-compose, run Ollama manually with Podman:
 ```bash
 # IMPORTANT: Ensure OLLAMA_MODEL is set in the shell before running
 podman run -d \
-  --name sanctuary_ollama_mcp \
+  --name sanctuary_ollama \
   -p 11434:11434 \
   -v ./ollama_models:/root/.ollama:Z \
   -e OLLAMA_HOST=0.0.0.0 \
@@ -153,9 +153,9 @@ podman run -d \
 # Start both MCP services (recommended)
 docker-compose up -d vector_db ollama_model_mcp
 # or start individual services
-docker start sanctuary_ollama_mcp
+docker start sanctuary_ollama
 # or
-podman start sanctuary_ollama_mcp
+podman start sanctuary_ollama
 ```
 
 ### Stopping the Service
@@ -163,17 +163,17 @@ podman start sanctuary_ollama_mcp
 ```bash
 docker-compose down
 # or
-docker stop sanctuary_ollama_mcp
+docker stop sanctuary_ollama
 # or
-podman stop sanctuary_ollama_mcp
+podman stop sanctuary_ollama
 ```
 
 ### Viewing Logs
 
 ```bash
-docker logs -f sanctuary_ollama_mcp
+docker logs -f sanctuary_ollama
 # or
-podman logs -f sanctuary_ollama_mcp
+podman logs -f sanctuary_ollama
 ```
 
 ### Testing Inference
@@ -209,9 +209,9 @@ lsof -i :11434
 
 **Check container logs:**
 ```bash
-docker logs sanctuary_ollama_mcp
+docker logs sanctuary_ollama
 # or
-podman logs sanctuary_ollama_mcp
+podman logs sanctuary_ollama
 ```
 
 ### GPU Not Detected
@@ -223,9 +223,9 @@ nvidia-smi
 
 **Check GPU access in container:**
 ```bash
-docker exec sanctuary_ollama_mcp nvidia-smi
+docker exec sanctuary_ollama nvidia-smi
 # or
-podman exec sanctuary_ollama_mcp nvidia-smi
+podman exec sanctuary_ollama nvidia-smi
 ```
 
 **For AMD GPUs**, modify the `docker-compose.yml` deploy section:
@@ -248,9 +248,9 @@ curl https://ollama.ai
 
 **Manually pull model:**
 ```bash
-docker exec sanctuary_ollama_mcp ollama pull Sanctuary-Qwen2-7B:latest
+docker exec sanctuary_ollama ollama pull Sanctuary-Qwen2-7B:latest
 # or
-podman exec sanctuary_ollama_mcp ollama pull Sanctuary-Qwen2-7B:latest
+podman exec sanctuary_ollama ollama pull Sanctuary-Qwen2-7B:latest
 ```
 
 ### Connection Refused
@@ -267,18 +267,18 @@ curl http://localhost:11434/api/version
 
 **Check network configuration:**
 ```bash
-docker inspect sanctuary_ollama_mcp | grep IPAddress
+docker inspect sanctuary_ollama | grep IPAddress
 # or
-podman inspect sanctuary_ollama_mcp | grep IPAddress
+podman inspect sanctuary_ollama | grep IPAddress
 ```
 
 ### Data Persistence Issues
 
 **Verify bind mount:**
 ```bash
-docker inspect sanctuary_ollama_mcp | grep -A 5 Mounts
+docker inspect sanctuary_ollama | grep -A 5 Mounts
 # or
-podman inspect sanctuary_ollama_mcp | grep -A 5 Mounts
+podman inspect sanctuary_ollama | grep -A 5 Mounts
 ```
 
 **Check directory permissions:**

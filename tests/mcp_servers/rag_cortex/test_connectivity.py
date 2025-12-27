@@ -3,7 +3,7 @@ import sys
 import os
 import json
 from tests.mcp_servers.base.mcp_test_client import MCPTestClient
-from mcp_servers.lib.utils.path_utils import find_project_root
+from mcp_servers.lib.path_utils import find_project_root
 
 @pytest.mark.e2e
 def test_rag_cortex_connectivity():
@@ -20,7 +20,7 @@ def test_rag_cortex_connectivity():
     env["SKIP_CONTAINER_CHECKS"] = "1" # Crucial!
     
     # Use env_helper to get values from .env
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
     
     # RAG env vars from .env
     env["CHROMA_HOST"] = get_env_variable("CHROMA_HOST", required=False) or "127.0.0.1"

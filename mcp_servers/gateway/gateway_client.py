@@ -91,7 +91,7 @@ if str(project_root) not in sys.path:
 
 # Import Fleet logic with defensive try-except
 try:
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
     from mcp_servers.gateway.fleet_spec import FleetSpec, ServerSpec, ToolSpec
     from mcp_servers.gateway.fleet_resolver import FleetResolver
 except ImportError:
@@ -342,7 +342,7 @@ def execute_mcp_tool(
             "params": {"name": tool_name, "arguments": arguments},
             "id": 1,
         }
-        resp = inner_session.post(f"{config.url}/rpc", json=payload, timeout=30)
+        resp = inner_session.post(f"{config.url}/rpc", json=payload, timeout=90)
         
         if resp.status_code == 200:
             data = resp.json()

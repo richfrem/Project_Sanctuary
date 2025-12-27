@@ -37,7 +37,7 @@ from typing import Any, Dict, Optional, List, Tuple
 # Configure logging
 logger = logging.getLogger("rag_cortex.cache")
 
-from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.env_helper import get_env_variable
 
 
 #============================================

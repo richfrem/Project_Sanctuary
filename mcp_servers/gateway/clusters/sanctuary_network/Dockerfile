@@ -2,7 +2,7 @@
 # Fleet of 8 - Container #3: Network tools
 # Designed to run with context at project root
 
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 

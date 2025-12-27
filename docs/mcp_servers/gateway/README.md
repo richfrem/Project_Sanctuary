@@ -122,7 +122,7 @@ flowchart TB
     
     subgraph Backends["<b>Physical Intelligence Fleet</b>"]
         VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama_mcp</b><br>:11434"]
+        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
     end
 
     Cortex --> VectorDB
@@ -141,7 +141,7 @@ flowchart TB
 | 5 | `sanctuary_cortex` | NEW | RAG MCP Server | 8104 | ✅ |
 | 6 | `sanctuary_domain` | NEW | Business Logic | 8105 | ✅ |
 | 7 | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 | ❌ |
-| 8 | `sanctuary_ollama_mcp` | EXISTING | Ollama backend | 11434 | ❌ |
+| 8 | `sanctuary_ollama` | EXISTING | Ollama backend | 11434 | ❌ |
 
 **See:** [ADR 060: Gateway Integration Patterns - Hybrid Fleet](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md)
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
+#============================================
+# mcp_servers/deploy_mcp_config.py
+# Purpose: Deploy MCP config from env-template (cross-platform).
+# Role: Deployment Script
+#============================================
 """
 Deploy MCP config from env-template (cross-platform)
-
-This is a rename of the previous `update_mcp_config.py` to a clearer verb `deploy_`.
-Functionality is unchanged: expand `${VAR}` placeholders from the environment and write
-the expanded JSON into platform-specific locations. Supports backups and dry-run.
-"""
 from __future__ import annotations
 
 import argparse
@@ -16,6 +16,17 @@ import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
+
+# Import Utilities
+project_root_search = os.path.dirname(os.path.abspath(__file__))
+if os.path.dirname(project_root_search) not in sys.path:
+    sys.path.append(os.path.dirname(project_root_search))
+
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.logging_utils import setup_mcp_logging
+
+# Setup Logging (optional for CLI, but good for consistency/debug)
+logger = setup_mcp_logging("deploy_mcp_config")
 
 
 def get_defaults() -> dict:
@@ -42,16 +53,16 @@ def resolve_dest(target: str, project_root: Path) -> Path:
             # otherwise return the default path (will be created)
             return default
         elif sysplt == "Windows":
-            appdata = os.getenv("APPDATA", "%APPDATA%")
+            appdata = get_env_variable("APPDATA", default="%APPDATA%")
             return Path(appdata) / "Claude" / "claude_desktop_config.json"
         else:
-            appdata = os.getenv("XDG_CONFIG_HOME", home / ".config")
+            appdata = get_env_variable("XDG_CONFIG_HOME", default=str(home / ".config"))
             return Path(appdata) / "Claude" / "claude_desktop_config.json"
     if t == "antigravity":
         if sysplt in ("Darwin", "Linux"):
             return home / ".gemini" / "antigravity" / "mcp_config.json"
         else:
-            appdata = os.getenv("APPDATA", "%APPDATA%")
+            appdata = get_env_variable("APPDATA", default="%APPDATA%")
             return Path(appdata) / "Gemini" / "Antigravity" / "mcp_config.json"
     if t == "relativemcp":
         return home / "mcp"
@@ -61,7 +72,7 @@ def resolve_dest(target: str, project_root: Path) -> Path:
         if sysplt == "Darwin":
             return home / "Library" / "Application Support" / "Code" / "User" / "mcp.json"
         elif sysplt == "Windows":
-            appdata = os.getenv("APPDATA", home / "AppData" / "Roaming")
+            appdata = get_env_variable("APPDATA", default=str(home / "AppData" / "Roaming"))
             return Path(appdata) / "Code" / "User" / "mcp.json"
         else:
             return home / ".config" / "Code" / "User" / "mcp.json"
@@ -149,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
         pr = str(project_root)
         expanded = expanded.replace(pr, '${PROJECT_SANCTUARY_ROOT}')
         # Replace known virtualenv python path with placeholder if present
-        pyenv = os.getenv('PYTHON_EXEC')
+        pyenv = get_env_variable('PYTHON_EXEC', required=False)
         if pyenv:
             expanded = expanded.replace(pyenv, '${PYTHON_EXEC}')
         else:
@@ -204,7 +215,7 @@ def main(argv: list[str] | None = None) -> int:
             settings = home / "Library" / "Application Support" / "Code" / "User" / "settings.json"
             mcp_user = home / "Library" / "Application Support" / "Code" / "User" / "mcp.json"
         elif sysplt == "Windows":
-            appdata = os.getenv("APPDATA", str(home / "AppData" / "Roaming"))
+            appdata = get_env_variable("APPDATA", default=str(home / "AppData" / "Roaming"))
             settings = Path(appdata) / "Code" / "User" / "settings.json"
             mcp_user = Path(appdata) / "Code" / "User" / "mcp.json"
         else:

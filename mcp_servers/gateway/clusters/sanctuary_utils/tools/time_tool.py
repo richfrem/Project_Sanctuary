@@ -1,21 +1,20 @@
-"""
-Time Tool for sanctuary_utils
-Provides current time and timezone information.
-"""
+#============================================
+# mcp_servers/gateway/clusters/sanctuary_utils/tools/time_tool.py
+# Purpose: Provides current time and timezone information.
+# Role: Functional Tool
+#============================================
 from datetime import datetime, timezone
 from typing import Any
 
 
+#============================================
+# Function: get_current_time
+# Purpose: Get the current time in the specified timezone.
+# Args:
+#   timezone_name: Timezone name (default: UTC).
+# Returns: Dictionary with current time information.
+#============================================
 def get_current_time(timezone_name: str = "UTC") -> dict[str, Any]:
-    """
-    Get the current time in the specified timezone.
-    
-    Args:
-        timezone_name: Timezone name (default: UTC). Currently only supports UTC.
-        
-    Returns:
-        Dictionary with current time information.
-    """
     try:
         now = datetime.now(timezone.utc)
         return {
@@ -32,13 +31,12 @@ def get_current_time(timezone_name: str = "UTC") -> dict[str, Any]:
         }
 
 
+#============================================
+# Function: get_timezone_info
+# Purpose: Get information about available timezones.
+# Returns: Dictionary with timezone information.
+#============================================
 def get_timezone_info() -> dict[str, Any]:
-    """
-    Get information about available timezones.
-    
-    Returns:
-        Dictionary with timezone information.
-    """
     return {
         "success": True,
         "available_timezones": ["UTC"],

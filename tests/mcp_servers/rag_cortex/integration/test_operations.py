@@ -30,7 +30,7 @@ from pathlib import Path
 
 from tests.mcp_servers.base.base_integration_test import BaseIntegrationTest
 from mcp_servers.rag_cortex.operations import CortexOperations
-from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.env_helper import get_env_variable
 
 
 # ============================================================================

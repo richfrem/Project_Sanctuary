@@ -35,12 +35,12 @@ from mcp_servers.gateway.gateway_client import (
 )
 from mcp_servers.gateway.fleet_orchestrator import run_discovery
 from mcp_servers.gateway.fleet_spec import FLEET_SPEC
-from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.env_helper import get_env_variable
 import json
 import subprocess
 
 def ensure_gateway_connection():
-    """Ensure mcpgateway is connected to the fleet network."""
+    """Ensure mcp_gateway is connected to the fleet network."""
     print_header("NETWORK CHECK")
     try:
         # Check if connected
@@ -48,10 +48,10 @@ def ensure_gateway_connection():
             ["podman", "network", "inspect", "mcp_network"], 
             capture_output=True, text=True
         )
-        if "mcpgateway" not in check.stdout:
-            print("🔗 Connecting mcpgateway to mcp_network...")
+        if "mcp_gateway" not in check.stdout:
+            print("🔗 Connecting mcp_gateway to mcp_network...")
             subprocess.run(
-                ["podman", "network", "connect", "mcp_network", "mcpgateway"],
+                ["podman", "network", "connect", "mcp_network", "mcp_gateway"],
                 check=False  # Don't crash if already connected/failed
             )
         else:

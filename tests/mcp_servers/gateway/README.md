@@ -40,6 +40,81 @@ The `execute_mcp_tool` function in `mcp_servers/gateway/gateway_client.py` is a 
 
 ---
 
+## 🔀 Test Execution Flow Diagram
+
+> **Key Insight:** Both Integration and E2E tests run **locally** (on your machine) but execute code **inside containers** via HTTP requests.
+
+```mermaid
+---
+config:
+  theme: base
+  layout: elk
+---
+flowchart LR
+    subgraph Local["🖥️ Local Host"]
+        direction TB
+        subgraph TestSuites["📊 Testing Hierarchy"]
+            Unit{{"Tier 1: Unit Tests"}}
+            Int{{"Tier 2: Integration Tests"}}
+            E2E{{"Tier 3: E2E Tests"}}
+        end
+        Client["LLM Chat / Developer IDE"]
+        Bridge["MCP Gateway Bridge<br/>mcp_servers/gateway/bridge.py"]
+        
+        subgraph LocalDev["🔧 Local Dev Mode"]
+            LocalServer["python -m server<br/>(MCP_TRANSPORT=stdio)"]
+            StdioWrap["FastMCP Wrapper<br/>fastmcp library"]
+        end
+    end
+
+    subgraph Containers["🐳 Podman Network"]
+        direction LR
+        Gateway["sanctuary_gateway<br/>IBM MCP Cortex Gateway Clone<br/>localhost:4444"]
+        
+        subgraph Cluster["📦 MCP Cluster Container<br/>(MCP_TRANSPORT=sse)"]
+            direction TB
+            SSEWrap["SSEServer Wrapper<br/>lib/sse_adaptor.py"]
+            Logic["🧠 operations.py<br/>(Shared Logic Layer)"]
+        end
+    end
+    Unit -. "Import & Mock" .-> Logic
+    Int -. "Local Stdio<br/>⏳ Not Implemented" .-> LocalServer
+    Int -- "HTTP/SSE :8100-8105<br/>✅ Health ✅ Tools" --> SSEWrap
+    E2E -- "Simulates Stdio" --> Bridge
+    Client -- "Stdio" --> Bridge
+    Bridge -- "HTTPS (Auth + SSL)" --> Gateway
+    Gateway -- "SSE Handshake" --> SSEWrap
+    LocalServer --> StdioWrap
+    StdioWrap --> Logic
+    SSEWrap --> Logic
+    style Bridge fill:#f9f,stroke:#333
+    style Gateway fill:#69f,stroke:#333
+    style LocalDev fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style TestSuites fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style Unit fill:#e1f5fe,stroke:#01579b
+    style Int fill:#fff9c4,stroke:#fbc02d
+    style E2E fill:#ffebee,stroke:#c62828
+    style Cluster fill:#eceff1,stroke:#455a64,stroke-width:2px
+```
+
+### 📊 Deep Dive into the Three Levels
+
+| Level | Path Taken | Goal | Status |
+|-------|------------|------|--------|
+| **Tier 1: Unit** | Internal Process | Verifies pure business logic in `operations.py` | ✅ 100% Success |
+| **Tier 2: Integration** | Direct to Cluster | Validates `server.py` entry points and ADR 076 metadata | ✅ Cluster ready |
+| **Tier 3: E2E** | Full Nervous System | Proves Gateway can discover and route to entire fleet | ✅ 85/85 passing |
+
+### 🚀 Key Takeaway for Optimization
+
+- **Direct vs. Federated**: Unit and Integration tests are lightning-fast because they bypass Gateway's SSL and SSE handshake overhead
+- **Gateway Latency**: The 28s+ hangs seen in E2E are strictly Tier 3 issues
+- **Diagnosis Rule**: 
+  - If Integration test fails → **Code bug** in cluster
+  - If only E2E test fails → **Network/infrastructure** timeout
+
+---
+
 ## Architecture & Integration Context
 
 ### The Hybrid Fleet (ADR 060)
@@ -58,7 +133,7 @@ The system uses a "Controller-Worker" architecture where the IBM Gateway (Contro
 | **Git** | `sanctuary_git` | `8003` | Git operations |
 | **Cortex** | `sanctuary_cortex` | `8004` | RAG/Memory Coordinator |
 | *VectorDB* | `sanctuary_vector_db` | `8000`* | ChromaDB Backend |
-| *Ollama* | `sanctuary_ollama_mcp` | `11434`* | AI Backend |
+| *Ollama* | `sanctuary_ollama` | `11434`* | AI Backend |
 
 *\*Internal backend ports. Do not expose 8000/11434 on host to avoid conflicts.*
 

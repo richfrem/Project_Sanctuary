@@ -8,8 +8,8 @@ from unittest.mock import MagicMock
 # Add project root to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from mcp_servers.council.council_ops import CouncilOperations
-from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.council.operations import CouncilOperations
+from mcp_servers.agent_persona.operations import PersonaOperations
 
 class TestChainCouncilAgent(unittest.TestCase):
     """

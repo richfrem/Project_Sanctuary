@@ -40,20 +40,22 @@ class TestTaskE2E(BaseE2ETest):
         tools = mcp_client.list_tools()
         names = [t["name"] for t in tools]
         print(f"✅ Tools Available: {names}")
-        assert "create_task" in names
+        assert "task_create" in names
 
         # 2. Create Task
         # Use high number 999 to avoid conflict.
         task_num = 999
         title = "E2E Test Task"
         
-        create_res = mcp_client.call_tool("create_task", {
-            "title": title,
-            "objective": "Verify E2E",
-            "deliverables": ["Report"],
-            "acceptance_criteria": ["Passed"],
-            "task_number": task_num,
-            "status": "todo"
+        create_res = mcp_client.call_tool("task_create", {
+            "request": {
+                "title": title,
+                "objective": "Verify E2E",
+                "deliverables": ["Report"],
+                "acceptance_criteria": ["Passed"],
+                "task_number": task_num,
+                "status": "todo"
+            }
         })
         create_text = create_res.get("content", [])[0]["text"]
         print(f"\n🆕 create_task: {create_text}")
@@ -77,28 +79,30 @@ class TestTaskE2E(BaseE2ETest):
 
         try:
             # 3. Get Task
-            get_res = mcp_client.call_tool("get_task", {"task_number": task_num})
+            get_res = mcp_client.call_tool("task_get", {"request": {"task_number": task_num}})
             get_text = get_res.get("content", [])[0]["text"]
             assert title in get_text
-            assert "Status: todo" in get_text
+            assert "**Status:** todo" in get_text
             print("📄 get_task: Verified content")
 
             # 4. List Tasks
-            list_res = mcp_client.call_tool("list_tasks", {"status": "todo"})
+            list_res = mcp_client.call_tool("task_list", {"request": {"status": "todo"}})
             list_text = list_res.get("content", [])[0]["text"]
             assert f"{task_num:03d}" in list_text or f"{task_num}" in list_text
             print(f"📋 list_tasks: Found task in todo")
 
             # 5. Search
-            search_res = mcp_client.call_tool("search_tasks", {"query": "Verify E2E"})
+            search_res = mcp_client.call_tool("task_search", {"request": {"query": "Verify E2E"}})
             search_text = search_res.get("content", [])[0]["text"]
             assert f"{task_num:03d}" in search_text or f"{task_num}" in search_text
             print(f"🔍 search_tasks: Found task")
 
             # 6. Update Task Metadata
-            update_res = mcp_client.call_tool("update_task", {
-                "task_number": task_num,
-                "updates": {"priority": "Critical"}
+            update_res = mcp_client.call_tool("task_update", {
+                "request": {
+                    "task_number": task_num,
+                    "updates": {"priority": "Critical"}
+                }
             })
             update_text = update_res.get("content", [])[0]["text"]
             print(f"🔄 update_task: {update_text}")
@@ -106,18 +110,20 @@ class TestTaskE2E(BaseE2ETest):
 
             # 7. Update Status (Moves file)
             # todo -> complete
-            status_res = mcp_client.call_tool("update_task_status", {
-                "task_number": task_num,
-                "new_status": "complete",
-                "notes": "Completed by E2E"
+            status_res = mcp_client.call_tool("task_update_status", {
+                "request": {
+                    "task_number": task_num,
+                    "new_status": "complete",
+                    "notes": "Completed by E2E"
+                }
             })
             status_text = status_res.get("content", [])[0]["text"]
             print(f"🚚 update_task_status: {status_text}")
             
             # Verify status update
-            get_res_2 = mcp_client.call_tool("get_task", {"task_number": task_num})
+            get_res_2 = mcp_client.call_tool("task_get", {"request": {"task_number": task_num}})
             get_text_2 = get_res_2.get("content", [])[0]["text"]
-            assert "Status: complete" in get_text_2
+            assert "**Status:** complete" in get_text_2
             
         finally:
             # 8. Cleanup

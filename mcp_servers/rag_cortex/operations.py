@@ -102,7 +102,7 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     from langchain_chroma import Chroma
     from mcp_servers.rag_cortex.file_store import SimpleFileStore
     from langchain_core.documents import Document
-    from mcp_servers.lib.utils.env_helper import get_env_variable
+    from mcp_servers.lib.env_helper import get_env_variable
 
 
 class CortexOperations:
@@ -171,9 +171,15 @@ class CortexOperations:
         docstore_path = str(self.project_root / self.chroma_data_path / self.parent_collection_name)
         self.store = SimpleFileStore(root_path=docstore_path)
     
-    # Helper methods for ingestion
+    #============================================
+    # Method: _chunked_iterable
+    # Purpose: Yield successive n-sized chunks from seq.
+    # Args:
+    #   seq: Sequence to chunk
+    #   size: Chunk size
+    # Returns: Generator of chunks
+    #============================================
     def _chunked_iterable(self, seq: List, size: int):
-        """Yield successive n-sized chunks from seq."""
         for i in range(0, len(seq), size):
             yield seq[i : i + size]
     
@@ -255,8 +261,14 @@ class CortexOperations:
             
         return False
 
+    #============================================
+    # Method: _load_documents_from_directory
+    # Purpose: Helper to load documents from a single directory.
+    # Args:
+    #   directory_path: Path to directory
+    # Returns: List of loaded Documents
+    #============================================
     def _load_documents_from_directory(self, directory_path: Path) -> List[Document]:
-        """Helper to load documents from a single directory."""
         exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
         
         if not directory_path.is_dir():
@@ -1404,7 +1416,7 @@ class CortexOperations:
             output = result.stdout
             
             status_map = {}
-            for name in ["sanctuary_vector_db", "sanctuary_ollama_mcp"]:
+            for name in ["sanctuary_vector_db", "sanctuary_ollama"]:
                 if name in output:
                     if "Up" in output.split(name)[-1].split('\n')[0] or "Up" in [line for line in output.split('\n') if name in line][0]:
                          status_map[name] = "UP"
@@ -1417,7 +1429,7 @@ class CortexOperations:
             # "✅ Vector DB | ✅ Ollama"
             
             parts = []
-            for name, short_name in [("sanctuary_vector_db", "Vector DB"), ("sanctuary_ollama_mcp", "Ollama")]:
+            for name, short_name in [("sanctuary_vector_db", "Vector DB"), ("sanctuary_ollama", "Ollama")]:
                 stat = status_map.get(name, "Unknown")
                 icon = "✅" if stat == "UP" else "❌"
                 parts.append(f"{icon} {short_name}")
@@ -1836,7 +1848,7 @@ class CortexOperations:
         
         # 3. Default Manifest Handling (Protocol 128)
         # If 'seal' or 'audit' and no manifest provided, use the predefined manifests
-        effective_manifest = list(manifest_files)
+        effective_manifest = list(manifest_files or [])
         manifest_file = None
         if not effective_manifest:
             if snapshot_type == "seal":

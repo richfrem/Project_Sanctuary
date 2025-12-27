@@ -1,10 +1,17 @@
-
-"""
-Agent Implementation for Agent Persona MCP
-
-Represents an AI agent with a specific persona and conversation state.
-Replaces the legacy 'PersonaAgent' class.
-"""
+#============================================
+# mcp_servers/agent_persona/agent.py
+# Purpose: Agent Implementation for Agent Persona MCP.
+#          Represents an AI agent with a specific persona and conversation state.
+# Role: Core Logic Layer (Entity)
+# Used as: Helper module by operations.py
+# LIST OF CLASSES/FUNCTIONS:
+#   - Agent
+#     - __init__
+#     - _extract_role_from_filename
+#     - _load_history
+#     - save_history
+#     - query
+#============================================
 
 import json
 import logging
@@ -14,20 +21,21 @@ from .llm_client import LLMClient
 
 logger = logging.getLogger(__name__)
 
+#============================================
+# Class: Agent
+# Purpose: An AI agent with a specific persona (system prompt) and conversation history.
+#============================================
 class Agent:
-    """
-    An AI agent with a specific persona (system prompt) and conversation history.
-    """
     
+    #============================================
+    # Method: __init__
+    # Purpose: Initialize an Agent.
+    # Args:
+    #   client: The LLM client to use for generation
+    #   persona_file: Path to the persona definition file
+    #   state_file: Path to the conversation state file (optional)
+    #============================================
     def __init__(self, client: LLMClient, persona_file: Path, state_file: Path = None):
-        """
-        Initialize an Agent.
-        
-        Args:
-            client: The LLM client to use for generation
-            persona_file: Path to the persona definition file
-            state_file: Path to the conversation state file (optional)
-        """
         self.client = client
         self.persona_file = persona_file
         self.state_file = state_file
@@ -38,8 +46,14 @@ class Agent:
         
         logger.info(f"Initialized {self.role} agent with {type(client).__name__}")
 
+    #============================================
+    # Method: _extract_role_from_filename
+    # Purpose: Extract role name from filename, handling legacy and new formats
+    # Args:
+    #   filename: Filename string
+    # Returns: Role name string
+    #============================================
     def _extract_role_from_filename(self, filename: str) -> str:
-        """Extract role name from filename, handling legacy and new formats"""
         try:
             # Try legacy format: core_essence_{ROLE}_awakening_seed.txt
             if "core_essence_" in filename and "_awakening_seed.txt" in filename:
@@ -50,8 +64,11 @@ class Agent:
         except Exception:
             return "UNKNOWN"
 
+    #============================================
+    # Method: _load_history
+    # Purpose: Load conversation history from state file.
+    #============================================
     def _load_history(self):
-        """Load conversation history from state file"""
         if self.state_file and self.state_file.exists():
             try:
                 content = self.state_file.read_text(encoding="utf-8")
@@ -70,8 +87,11 @@ class Agent:
                 logger.error(f"Failed to read persona file {self.persona_file}: {e}")
                 self.messages.append({"role": "system", "content": f"You are the {self.role}."})
 
+    #============================================
+    # Method: save_history
+    # Purpose: Save conversation history to state file.
+    #============================================
     def save_history(self):
-        """Save conversation history to state file"""
         if self.state_file:
             try:
                 self.state_file.parent.mkdir(parents=True, exist_ok=True)
@@ -80,16 +100,14 @@ class Agent:
             except Exception as e:
                 logger.error(f"Failed to save history for {self.role}: {e}")
 
+    #============================================
+    # Method: query
+    # Purpose: Send a message to the agent and get a response.
+    # Args:
+    #   message: The user message
+    # Returns: The agent's response
+    #============================================
     def query(self, message: str) -> str:
-        """
-        Send a message to the agent and get a response.
-        
-        Args:
-            message: The user message
-            
-        Returns:
-            The agent's response
-        """
         logger.info(f"[{self.role}] query() called with message length: {len(message)}")
         
         # Add user message

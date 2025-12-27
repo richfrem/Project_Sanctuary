@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-# ------------------------------------------------------------------------------
-# Project Sanctuary MCP Server Launcher for VS Code (GitHub Copilot)
-# ------------------------------------------------------------------------------
+#============================================
+# mcp_servers/start_mcp_servers.py
+# Purpose: Project Sanctuary MCP Server Launcher for VS Code (GitHub Copilot)
+# Role: Orchestration Script
+#============================================
 from __future__ import annotations
 
 import subprocess

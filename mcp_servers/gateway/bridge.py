@@ -13,13 +13,18 @@ import logging # Added correct import
 
 try:
     import httpx
-    # Use project standard helper
-    from mcp_servers.lib.utils.env_helper import get_env_variable
 except ImportError:
-    # If dotenv is missing, we proceed; token must be in env vars
     pass
-except Exception:
-    pass
+
+# Try to import env helper, provide fallback if missing
+try:
+    from mcp_servers.lib.env_helper import get_env_variable
+except ImportError:
+    def get_env_variable(key: str, required: bool = True) -> Optional[str]:
+        val = os.getenv(key)
+        if required and not val:
+            raise ValueError(f"Environment variable {key} not found")
+        return val
 
 if "httpx" not in sys.modules:
     try:
@@ -31,20 +36,24 @@ if "httpx" not in sys.modules:
 
 class GatewayBridge:
     def __init__(self):
-        # Use helper used across project for consistency
-        self.gateway_url = get_env_variable("MCP_GATEWAY_URL", required=False) or "https://localhost:4444"
-        self.token = get_env_variable("MCPGATEWAY_BEARER_TOKEN", required=True)
-        
-        ssl_val = get_env_variable("MCP_GATEWAY_VERIFY_SSL", required=False)
-        self.verify_ssl = str(ssl_val).lower() != "false" if ssl_val else False
-        
-        # Setup debug logging to file
+        # Setup debug logging to file - DO THIS FIRST
         logging.basicConfig(
             filename='/tmp/bridge_debug.log',
             level=logging.DEBUG,
             format='%(asctime)s - %(levelname)s - %(message)s'
         )
         self.logger = logging.getLogger(__name__)
+
+        # Use helper used across project for consistency
+        try:
+            self.gateway_url = get_env_variable("MCP_GATEWAY_URL", required=False) or "https://localhost:4444"
+            self.token = get_env_variable("MCPGATEWAY_BEARER_TOKEN", required=True)
+        except Exception as e:
+            self.logger.error(f"Startup Config Error: {e}")
+            raise
+
+        ssl_val = get_env_variable("MCP_GATEWAY_VERIFY_SSL", required=False)
+        self.verify_ssl = str(ssl_val).lower() != "false" if ssl_val else False
         
         if not self.token:
             raise ValueError("MCPGATEWAY_BEARER_TOKEN environment variable is required")
@@ -186,10 +195,14 @@ class GatewayBridge:
                 # Strip 'sanctuary-' prefix to shorten name for client validation
                 short_name = original_name.replace("sanctuary-", "", 1) if original_name.startswith("sanctuary-") else original_name
                 
+                # ADR 076: Gateway might return 'schema' (SSEServer) or 'inputSchema' (Standard)
+                # We map both to 'inputSchema' for Claude Desktop
+                schema = tool.get("inputSchema") or tool.get("schema") or {"type": "object", "properties": {}}
+                
                 mcp_tools.append({
                     "name": short_name,
                     "description": tool.get("description", ""),
-                    "inputSchema": tool.get("inputSchema", {"type": "object", "properties": {}})
+                    "inputSchema": schema
                 })
             
             return {

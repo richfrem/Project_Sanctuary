@@ -1,4 +1,4 @@
-.PHONY: up down restart status verify build logs exec clean
+.PHONY: up down restart status verify build logs exec clean prune
 
 # Unified Fleet Operations Makefile (ADR 065 v1.3)
 # "The Iron Root" - Single Source of Truth for Fleet Management
@@ -120,6 +120,14 @@ clean:
 	@echo "⚠️  WARNING: This will delete all fleet data (ChromeDB, etc)."
 	@read -p "Are you sure? [y/N] " ans && [ $${ans:-N} = y ]
 	podman compose -f $(COMPOSE_FILE) down -v --rmi all
+
+# Safe prune (removes stopped containers, build cache, dangling images - NOT volumes)
+prune:
+	@echo "🧹 Pruning build cache and stopped containers..."
+	podman container prune -f
+	podman image prune -f
+	podman builder prune -f
+	@echo "✅ Prune complete. Data volumes preserved."
 
 # ----------------------------------------------------------------------------
 # VERIFICATION

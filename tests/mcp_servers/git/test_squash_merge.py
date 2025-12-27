@@ -4,10 +4,11 @@ import shutil
 import os
 import subprocess
 from pathlib import Path
-from mcp_servers.git.git_ops import GitOperations
+from unittest import IsolatedAsyncioTestCase
+from mcp_servers.git.operations import GitOperations
 from mcp_servers.git.server import git_finish_feature
 
-class TestSquashMerge(unittest.TestCase):
+class TestSquashMerge(IsolatedAsyncioTestCase):
     def setUp(self):
         # Create a temporary directory for the repos
         self.test_dir = tempfile.mkdtemp()
@@ -47,12 +48,12 @@ class TestSquashMerge(unittest.TestCase):
         
         # Import the actual function (not the FastMCP tool wrapper)
         from mcp_servers.git import server as git_server
-        self.git_finish_feature_fn = git_server.git_finish_feature.fn
+        self.git_finish_feature_fn = git_server.git_finish_feature
 
     def tearDown(self):
         shutil.rmtree(self.test_dir)
 
-    def test_finish_feature_squash_merge(self):
+    async def test_finish_feature_squash_merge(self):
         """Test finishing a feature branch that was squash merged."""
         # 1. Start feature branch
         branch_name = "feature/task-001-squash-test"
@@ -84,12 +85,14 @@ class TestSquashMerge(unittest.TestCase):
         # - feature branch has the content
         # - BUT git log graph shows they are diverged (no common merge commit)
         
-        # Verify git thinks it's NOT merged
-        is_merged = self.server.git_ops.is_branch_merged(branch_name, "main")
-        self.assertFalse(is_merged, "Git should NOT consider this merged yet")
+        # Verify git thinks it's NOT merged (using manual check since is_branch_merged is internal)
+        # merge-base --is-ancestor returns 0 if true, 1 if false
+        feature_commit = subprocess.check_output(["git", "rev-parse", branch_name], cwd=self.repo_path, text=True).strip()
+        is_ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", feature_commit, "main"], cwd=self.repo_path).returncode == 0
+        self.assertFalse(is_ancestor, "Git should NOT consider this merged yet")
         
         # 4. Try to finish feature WITHOUT force (should now auto-detect and succeed!)
-        result = self.git_finish_feature_fn(branch_name)
+        result = await self.git_finish_feature_fn(branch_name)
         print(f"\nResult without force (auto-detect): {result}")
         # Should succeed due to auto-detection
         self.assertIn("Finished feature", result)

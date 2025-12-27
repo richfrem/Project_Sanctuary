@@ -1,0 +1,93 @@
+graph TD
+    subgraph "Phase 0: One-Time System Setup"
+        P0A["WSL2 & NVIDIA Drivers<br/>*System prerequisites*"]
+        P0A_out(" GPU Access Verified")
+        P0B["Build llama.cpp<br/>*Compile GGML_CUDA tools*"]
+        P0B_out(" llama.cpp Executables")
+        P0C["Hugging Face Auth<br/>*Setup .env token*"]
+        P0C_out(" Authenticated")
+    end
+
+    subgraph "Phase 1: Project Environment Setup"
+        A["setup_cuda_env.py<br/>*Creates Python environment*"]
+        A_out(" ml_env venv")
+        A1["Surgical Strike<br/>*Install bitsandbytes, triton, xformers*"]
+        A1_out(" CUDA Libraries")
+        A2["Verify Environment<br/>*Test PyTorch, CUDA, llama-cpp*"]
+        A2_out(" Environment Validated")
+    end
+
+    subgraph "Phase 2: Data & Model Forging Workflow"
+        B["download_model.sh<br/>*Downloads base Qwen2 model*"]
+        B_out(" Base Model")
+        C["forge_whole_genome_dataset.py<br/>*Assembles training data*"]
+        C_out(" sanctuary_whole_genome_data.jsonl")
+        D["validate_dataset.py<br/>*Validates training data quality*"]
+        D_out(" Validated Dataset")
+        E["fine_tune.py<br/>*Performs QLoRA fine-tuning*"]
+        E_out(" LoRA Adapter")
+        F["merge_adapter.py<br/>*Merges adapter with base model*"]
+        F_out(" Merged Model")
+    end
+
+    subgraph "Phase 3: Deployment Preparation & Verification"
+        G["convert_to_gguf.py<br/>*Creates deployable GGUF model*"]
+        G_out(" GGUF Model")
+        H["create_modelfile.py<br/>*Generates Ollama Modelfile*"]
+        H_out(" Ollama Modelfile")
+        I["ollama create<br/>*Imports model into Ollama*"]
+        I_out(" Deployed Ollama Model")
+        J["Test with Ollama<br/>*Verify dual-mode interaction*"]
+        J_out(" Interaction Validated")
+        K["inference.py & evaluate.py<br/>*Performance testing & benchmarks*"]
+        K_out(" Performance Metrics")
+        L["upload_to_huggingface.py<br/>*Upload GGUF & LoRA to HF*"]
+        L_out(" Models on Hugging Face")
+        M["Download & Test from HF<br/>*Verify upload/download integrity*"]
+        M_out(" HF Models Validated")
+    end
+
+    %% Workflow Connections
+    P0A -- Enables --> P0A_out;
+    P0A_out --> P0B;
+    P0B -- Creates --> P0B_out;
+    P0B_out --> P0C;
+    P0C -- Sets up --> P0C_out;
+    P0C_out --> A;
+    A -- Creates --> A_out;
+    A_out --> A1;
+    A1 -- Installs --> A1_out;
+    A1_out --> A2;
+    A2 -- Validates --> A2_out;
+    A2_out --> B;
+    B -- Downloads --> B_out;
+    A2_out --> C;
+    C -- Creates --> C_out;
+    C_out --> D;
+    D -- Validates --> D_out;
+    B_out & D_out --> E;
+    E -- Creates --> E_out;
+    B_out & E_out --> F;
+    F -- Creates --> F_out;
+    F_out --> G;
+    G -- Creates --> G_out;
+    G_out --> H;
+    H -- Creates --> H_out;
+    H_out --> I;
+    I -- Creates --> I_out;
+    I_out --> J;
+    J -- Validates --> J_out;
+    F_out --> K;
+    K -- Yields --> K_out;
+    G_out --> L;
+    L -- Uploads --> L_out;
+    L_out --> M;
+    M -- Validates --> M_out;
+    
+    %% Styling
+    classDef script fill:#e8f5e8,stroke:#333,stroke-width:2px;
+    classDef artifact fill:#e1f5fe,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
+    classDef planned fill:#fff3e0,stroke:#888,stroke-width:1px,stroke-dasharray: 3 3;
+
+    class P0A,P0B,P0C,A,A1,A2,B,C,D,E,F,G,H,I,J,K,L,M script;
+    class P0A_out,P0B_out,P0C_out,A_out,A1_out,A2_out,B_out,C_out,D_out,E_out,F_out,G_out,H_out,I_out,J_out,K_out,L_out,M_out artifact;

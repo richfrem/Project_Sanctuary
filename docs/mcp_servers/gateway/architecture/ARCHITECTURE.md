@@ -47,7 +47,7 @@ flowchart TB
     
     subgraph Backends["<b>Physical Intelligence Fleet</b>"]
         VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama_mcp</b><br>:11434"]
+        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
     end
 
     Cortex --> VectorDB

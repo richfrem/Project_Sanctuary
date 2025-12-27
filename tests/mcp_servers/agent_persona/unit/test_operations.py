@@ -1,106 +1,108 @@
 """
-Tests for Agent Persona MCP Server
+Unit tests for Agent Persona Operations.
+Verifies business logic with mocked LLM interactions.
 """
-
 import pytest
+from unittest.mock import MagicMock, patch
 from pathlib import Path
-import sys
-
-# Add parent directories to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
-from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.agent_persona.operations import PersonaOperations
 
 @pytest.fixture
-def persona_ops():
-    """Create AgentPersonaOperations instance"""
-    return AgentPersonaOperations()
+def mock_root(tmp_path):
+    """Create a mock project root with necessary structure."""
+    # Setup structure expected by PersonaOperations:
+    # project_root/mcp_servers/agent_persona/{personas,state}
+    base = tmp_path / "mcp_servers" / "agent_persona"
+    personas = base / "personas"
+    personas.mkdir(parents=True)
+    
+    # Create dummy built-in persona files
+    (personas / "coordinator.txt").write_text("You are the Coordinator.")
+    (personas / "strategist.txt").write_text("You are the Strategist.")
+    (personas / "auditor.txt").write_text("You are the Auditor.")
+    
+    return tmp_path
 
-def test_persona_ops_initialization(persona_ops):
-    """Test that AgentPersonaOperations initializes correctly"""
-    assert persona_ops.project_root.exists()
+@pytest.fixture
+def persona_ops(mock_root):
+    """Initialize PersonaOperations with mock root."""
+    return PersonaOperations(project_root=mock_root)
+
+def test_initialization(persona_ops, mock_root):
+    """Test directory creation."""
     assert persona_ops.persona_dir.exists()
     assert persona_ops.state_dir.exists()
+    assert persona_ops.persona_dir == mock_root / "mcp_servers" / "agent_persona" / "personas"
 
 def test_list_roles(persona_ops):
-    """Test listing available persona roles"""
+    """Test listing roles picks up files."""
     roles = persona_ops.list_roles()
-    
-    assert "built_in" in roles
-    assert "custom" in roles
-    assert "total" in roles
-    
-    # Should have at least the 3 built-in roles
-    assert len(roles["built_in"]) >= 3
+    # Check built-ins are detected (based on PersonaConstants, and we created files)
     assert "coordinator" in roles["built_in"]
     assert "strategist" in roles["built_in"]
-    assert "auditor" in roles["built_in"]
 
 def test_create_custom_persona(persona_ops):
-    """Test creating a custom persona"""
+    """Test creating a custom persona file."""
     result = persona_ops.create_custom(
-        role="test_persona",
-        persona_definition="You are a test persona for unit testing.",
-        description="Test persona for validation"
+        role="tester",
+        persona_definition="You are a tester.",
+        description="A test persona."
     )
     
     assert result["status"] == "created"
-    assert result["role"] == "test_persona"
-    assert "file_path" in result
-    
-    # Verify file was created
-    persona_file = Path(result["file_path"])
-    assert persona_file.exists()
-    
-    # Cleanup
-    persona_file.unlink()
+    assert (persona_ops.persona_dir / "tester.txt").exists()
+    assert (persona_ops.persona_dir / "tester.txt").read_text() == "You are a tester."
 
-def test_create_duplicate_persona(persona_ops):
-    """Test that creating duplicate persona fails"""
-    # Create first persona
-    result1 = persona_ops.create_custom(
-        role="duplicate_test",
-        persona_definition="Test",
-        description="Test"
-    )
-    assert result1["status"] == "created"
-    
-    # Try to create duplicate
-    result2 = persona_ops.create_custom(
-        role="duplicate_test",
-        persona_definition="Test",
-        description="Test"
-    )
-    assert result2["status"] == "error"
-    assert "already exists" in result2["error"]
-    
-    # Cleanup
-    Path(result1["file_path"]).unlink()
+def test_dispatch_success(persona_ops):
+    """Test dispatch flow with mocked agent creation."""
+    with patch.object(persona_ops, '_create_agent') as mock_create:
+        # Setup mock agent
+        mock_agent = MagicMock()
+        mock_agent.query.return_value = "Plan executed."
+        mock_create.return_value = mock_agent
+        
+        result = persona_ops.dispatch(
+            role="coordinator",
+            task="Make a plan",
+            maintain_state=True
+        )
+        
+        # Verify
+        assert result["status"] == "success"
+        assert result["role"] == "coordinator"
+        assert result["response"] == "Plan executed."
+        assert result["state_preserved"] is True
+        
+        # Check calls
+        mock_create.assert_called_once()
+        mock_agent.query.assert_called()
+        mock_agent.save_history.assert_called_once()
 
-def test_get_state_no_history(persona_ops):
-    """Test getting state when no history exists"""
-    result = persona_ops.get_state(role="nonexistent_role")
-    
-    assert result["role"] == "nonexistent_role"
-    assert result["state"] == "no_history"
-    assert result["messages"] == []
+def test_dispatch_error_handling(persona_ops):
+    """Test dispatch handles agent errors gracefully."""
+    with patch.object(persona_ops, '_create_agent') as mock_create:
+        mock_agent = MagicMock()
+        mock_agent.query.side_effect = Exception("LLM connection failed")
+        mock_create.return_value = mock_agent
+        
+        result = persona_ops.dispatch("coordinator", "Task")
+        
+        assert result["status"] == "error"
+        assert "LLM connection failed" in result["error"]
 
 def test_reset_state(persona_ops):
-    """Test resetting persona state"""
-    result = persona_ops.reset_state(role="coordinator")
+    """Test state file deletion."""
+    role = "coordinator"
+    state_file = persona_ops.state_dir / f"{role}_session.json"
+    state_file.write_text("[]")
     
-    assert result["role"] == "coordinator"
-    assert result["status"] in ["reset", "error"]  # May not have state to reset
+    result = persona_ops.reset_state(role)
+    
+    assert result["status"] == "reset"
+    assert not state_file.exists()
 
-def test_dispatch_structure(persona_ops):
-    """Test that dispatch method exists with correct signature"""
-    # This is a structure test only - we won't actually execute
-    # the orchestrator in CI/CD to avoid long-running tests
-    
-    assert hasattr(persona_ops, "dispatch")
-    
-    # Test parameter validation would go here
-    # (actual execution tests should be manual or integration tests)
-
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+def test_get_state_empty(persona_ops):
+    """Test getting state for new session."""
+    state = persona_ops.get_state("coordinator")
+    assert state["state"] == "no_history"
+    assert state["messages"] == []

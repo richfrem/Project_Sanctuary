@@ -287,7 +287,7 @@ cortex_get_stats(include_samples=True)
 podman-compose up -d vector_db ollama_model_mcp
 # or start individual services
 podman start sanctuary_vector_db
-podman start sanctuary_ollama_mcp
+podman start sanctuary_ollama
 ```
 
 ### Stopping the Service

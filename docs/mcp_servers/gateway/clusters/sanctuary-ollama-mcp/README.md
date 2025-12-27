@@ -1,4 +1,4 @@
-# Cluster: sanctuary_ollama_mcp (Backend)
+# Cluster: sanctuary_ollama (Backend)
 
 **Role:** Specialized inference engine for fine-tuned Sanctuary models.  
 **Port:** 11434  
@@ -15,5 +15,5 @@ This backend cluster provides the local LLM environment (Ollama). It hosts the `
 ## Legacy Mapping Table
 | Legacy Logic | Fleet Component | Cluster | Notes |
 | :--- | :--- | :--- | :--- |
-| Local Ollama Service | `sanctuary_ollama_mcp` | Backend | Integrated into Gateway network |
+| Local Ollama Service | `sanctuary_ollama` | Backend | Integrated into Gateway network |
 | `query_sanctuary_model` | `ollama_infer` | Backend | Logic offloaded to cluster |

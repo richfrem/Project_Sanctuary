@@ -104,7 +104,7 @@ graph TB
     end
     
     subgraph "Services (Podman)"
-        OLLAMA["sanctuary_ollama_mcp<br/>:11434<br/>Custom Fine-tuned LLM"]
+        OLLAMA["sanctuary_ollama<br/>:11434<br/>Custom Fine-tuned LLM"]
         CHROMA["sanctuary_vector_db<br/>:8110<br/>ChromaDB RAG DB"]
     end
     
@@ -149,7 +149,7 @@ flowchart TB
     
     subgraph Backends["<b>Physical Intelligence Fleet</b>"]
         VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama_mcp</b><br>:11434"]
+        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
     end
 
     Cortex --> VectorDB
@@ -166,11 +166,97 @@ flowchart TB
 | 5 | `sanctuary_cortex` | NEW | RAG MCP Server | 8104 | ✅ |
 | 6 | `sanctuary_domain` | NEW | Business Logic | 8105 | ✅ |
 | 7 | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 | ❌ |
-| 8 | `sanctuary_ollama_mcp` | EXISTING | Ollama backend | 11434 | ❌ |
+| 8 | `sanctuary_ollama` | EXISTING | Ollama backend | 11434 | ❌ |
 
 **Benefits:** 88% context reduction, 100+ server scalability, centralized auth & routing.
 
-**Documentation:** [ADR 060](./ADRs/060_gateway_integration_patterns__hybrid_fleet.md) | [Gateway README](./docs/mcp_gateway/README.md) | [Podman Guide](./docs/PODMAN_STARTUP_GUIDE.md)
+#### 2.3.1 Dual-Transport Architecture
+The Fleet supports two transport modes to enable both local development and Gateway-federated deployments:
+
+- **STDIO (Local):** FastMCP for Claude Desktop/IDE direct connections
+- **SSE (Fleet):** SSEServer for Gateway federation via IBM ContextForge
+
+> [!IMPORTANT]
+> **FastMCP SSE is NOT compatible with the IBM ContextForge Gateway.** Fleet containers must use SSEServer (`mcp_servers/lib/sse_adaptor.py`) for Gateway integration. See [ADR 066](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for details.
+
+```mermaid
+---
+config:
+  theme: base
+  layout: dagre
+---
+flowchart TB
+ subgraph subGraph0["Local Workstation (Client & Test Context)"]
+        direction TB
+        Claude["Claude Desktop<br/>(Bridged Session)"]
+        VSCode["VS Code Agent<br/>(Direct Attempt)"]
+        Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
+        
+        subgraph subGraphTest["Testing Suite"]
+            E2E_Test{{E2E Tests}}
+            Int_Test{{Integration Tests}}
+        end
+  end
+
+ subgraph subGraph1["server.py (Entry Point)"]
+        Selector{"MCP_TRANSPORT<br/>Selector"}
+        StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
+        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
+  end
+
+ subgraph subGraph2["Core Logic (Asynchronous)"]
+        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
+        Ops@{ label: "Operations Layer<br/>'operations.py'" }
+        Models@{ label: "Data Models<br/>'models.py'" }
+  end
+
+ subgraph subGraph3["Cortex Cluster Container"]
+    direction TB
+        subGraph1
+        subGraph2
+        Health["Healthcheck Config<br/>(600s Start Period)"]
+  end
+
+ subgraph subGraph4["Podman Network (Fleet Context)"]
+        Gateway@{ label: "IBM ContextForge Gateway<br/>'mcpgateway:4444'" }
+        subGraph3
+  end
+
+    %% COMPLIANT PATH (Claude / Production)
+    Claude -- "Stdio" --> Bridge
+    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
+    E2E_Test -- "Simulates Stdio" --> Bridge
+
+    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
+    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
+
+    %% EXECUTION FLOW
+    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
+    SSEWrap -- "Offload Task" --> Worker
+    Worker -- "Execute Blocking RAG" --> Ops
+    SSEWrap -- "Concurrent Heartbeats" --> Gateway
+
+    %% Integration / Developer Flow
+    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
+    Int_Test -- "Validates Schemas" --> subGraph1
+    StdioWrap -- "Execute" --> subGraph2
+
+    %% Logic Selection
+    Selector -- "If 'stdio'" --> StdioWrap
+    Selector -- "If 'sse'" --> SSEWrap
+
+    style Bridge fill:#f9f,stroke:#333,stroke-width:2px
+    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+    style Gateway fill:#69f,stroke:#333,stroke-width:2px
+    style Worker fill:#dfd,stroke:#333,stroke-dasharray: 5 5
+    style Health fill:#fff,stroke:#333,stroke-dasharray: 5 5
+```
+
+**Architecture Decisions:**
+- [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
+- [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
+
+**Documentation:** [Gateway README](./docs/mcp_gateway/README.md) | [Podman Guide](./docs/PODMAN_STARTUP_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)

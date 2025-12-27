@@ -1,3 +1,13 @@
+#============================================
+# mcp_servers/protocol/operations.py
+# Purpose: Core business logic for Protocol MCP.
+#          Handles creation, updating, retrieval, and search of protocols.
+# Role: Business Logic Layer
+# Used as: Helper module by server.py
+# LIST OF CLASSES:
+#   - ProtocolOperations
+#============================================
+
 """
 File operations for Protocol MCP.
 """
@@ -8,9 +18,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 
-# Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from lib.logging_utils import setup_mcp_logging
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
 from .models import Protocol, ProtocolStatus, PROTOCOL_TEMPLATE
@@ -28,7 +36,7 @@ class ProtocolOperations:
 
     def create_protocol(
         self,
-        number: int,
+        number: Optional[int],
         title: str,
         status: str,
         classification: str,
@@ -38,6 +46,10 @@ class ProtocolOperations:
         linked_protocols: Optional[str] = None
     ) -> Dict[str, Any]:
         """Create a new protocol."""
+        # Auto-generate number if not provided
+        if number is None:
+            number = self.validator.get_next_protocol_number()
+        
         # Validate inputs
         self.validator.validate_required_fields(title, classification, version, authority, content)
         self.validator.validate_protocol_number(number)

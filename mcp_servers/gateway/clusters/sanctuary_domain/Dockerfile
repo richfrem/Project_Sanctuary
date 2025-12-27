@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 
@@ -39,4 +39,4 @@ ENV DOMAIN_SERVER_PORT=8105
 EXPOSE 8105
 
 # Run the Unified Server
-CMD ["python", "mcp_servers/gateway/clusters/sanctuary_domain/unified_server.py"]
+CMD ["python", "-m", "mcp_servers.gateway.clusters.sanctuary_domain.server"]

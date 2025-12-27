@@ -18,7 +18,6 @@ from typing import Optional, List, Dict, Any
 from ollama import Client # New import
 
 # Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
@@ -57,7 +56,13 @@ class ForgeOperations:
         system_prompt: Optional[str] = None
     ) -> ModelQueryResponse:
         try:
-            import ollama
+            from ollama import Client
+            
+            # Get Ollama host from environment (for container network support)
+            ollama_host = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434")
+            
+            # Create client with explicit host
+            client = Client(host=ollama_host)
             
             # Build messages
             messages = []
@@ -66,7 +71,7 @@ class ForgeOperations:
             messages.append({"role": "user", "content": prompt})
             
             # Query Ollama
-            response = ollama.chat(
+            response = client.chat(
                 model=self.sanctuary_model,
                 messages=messages,
                 options={

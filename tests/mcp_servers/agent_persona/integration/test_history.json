@@ -1,6 +1,320 @@
 {
   "runs": [
     {
+      "timestamp": "2025-12-24T18:14:27.525534",
+      "passed": 40,
+      "failed": 6,
+      "skipped": 0,
+      "total": 46,
+      "result": "FAIL",
+      "tests": {
+        "test_agent_persona_lifecycle": {
+          "status": "PASSED",
+          "duration": 0.015
+        },
+        "test_dispatch_valid": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_dispatch_missing_role": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_role_params": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_valid": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_missing_definition": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_list_roles": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_persona_dispatch_integration": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_persona_queries_cortex_for_context": {
+          "status": "PASSED",
+          "duration": 0.005
+        },
+        "test_cortex_query_returns_results": {
+          "status": "PASSED",
+          "duration": 5.272
+        },
+        "test_persona_ops_initialization": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_persona": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_no_history": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_dispatch_structure": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_empty_role": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_invalid_characters": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_empty_role": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state_empty_role": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state_active_agent": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_with_valid_history": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_corrupted_json": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_large_history": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state_removes_file": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state_nonexistent": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_unicode_content": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_large_definition": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_special_characters": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_list_roles_empty_custom": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_initialization": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_dispatch_success": {
+          "status": "PASSED",
+          "duration": 0.001
+        },
+        "test_dispatch_error_handling": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_empty": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_council_dispatch_full_flow": {
+          "status": "FAILED",
+          "duration": 0.001
+        },
+        "test_multi_agent_deliberation_with_context": {
+          "status": "FAILED",
+          "duration": 0.001
+        },
+        "test_create_duplicate_persona": {
+          "status": "FAILED",
+          "duration": 0.001
+        },
+        "test_create_custom_empty_definition": {
+          "status": "FAILED",
+          "duration": 0.0
+        },
+        "test_list_roles_with_custom_personas": {
+          "status": "FAILED",
+          "duration": 0.001
+        },
+        "test_create_custom_role_normalization": {
+          "status": "FAILED",
+          "duration": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-24T18:13:46.591772",
+      "passed": 11,
+      "failed": 1,
+      "skipped": 0,
+      "total": 12,
+      "result": "FAIL",
+      "tests": {
+        "test_agent_persona_lifecycle": {
+          "status": "PASSED",
+          "duration": 0.014
+        },
+        "test_dispatch_valid": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_dispatch_missing_role": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_role_params": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_valid": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_missing_definition": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_list_roles": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_persona_dispatch_integration": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_persona_queries_cortex_for_context": {
+          "status": "FAILED",
+          "duration": 0.0
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-24T18:12:34.352753",
+      "passed": 15,
+      "failed": 3,
+      "skipped": 0,
+      "total": 18,
+      "result": "FAIL",
+      "tests": {
+        "test_agent_persona_lifecycle": {
+          "status": "PASSED",
+          "duration": 0.016
+        },
+        "test_dispatch_valid": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_dispatch_missing_role": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_role_params": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_valid": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_missing_definition": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_persona_dispatch_integration": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_cortex_query_returns_results": {
+          "status": "PASSED",
+          "duration": 5.701
+        },
+        "test_initialization": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_list_roles": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_create_custom_persona": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_dispatch_success": {
+          "status": "PASSED",
+          "duration": 0.001
+        },
+        "test_dispatch_error_handling": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_reset_state": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_get_state_empty": {
+          "status": "PASSED",
+          "duration": 0.0
+        },
+        "test_persona_queries_cortex_for_context": {
+          "status": "FAILED",
+          "duration": 0.0
+        },
+        "test_council_dispatch_full_flow": {
+          "status": "FAILED",
+          "duration": 0.0
+        },
+        "test_multi_agent_deliberation_with_context": {
+          "status": "FAILED",
+          "duration": 0.0
+        }
+      }
+    },
+    {
       "timestamp": "2025-12-14T13:51:58.886897",
       "passed": 2,
       "failed": 0,
@@ -125,5 +439,5 @@
       }
     }
   ],
-  "last_updated": "2025-12-14T13:51:58.886929"
+  "last_updated": "2025-12-24T18:14:27.525589"
 }

@@ -35,7 +35,7 @@ curl -k -s -X POST https://localhost:4444/rpc \
 | Setting | Value |
 |---------|-------|
 | **External URL** | `https://localhost:4444` |
-| **Container URL** | `http://mcpgateway:8000` |
+| **Container URL** | `http://mcp_gateway:8000` |
 | **Auth Header** | `Authorization: Bearer <TOKEN>` |
 | **Admin UI** | `https://localhost:4444/admin` |
 

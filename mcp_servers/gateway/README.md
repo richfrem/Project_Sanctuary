@@ -8,9 +8,9 @@ This module contains the primary client and management interfaces for the Sanctu
 Before interacting with the Gateway, ensure the following infrastructure is operational:
 - **Podman**: The "Fleet of 8" runs in isolated containers via Podman.
 - **Docker Compose**: Managed via [docker-compose.yml](../../docker-compose.yml).
-- **Network**: The external Gateway service (`mcpgateway`) MUST be connected to the fleet network (`mcp_network`):
+- **Network**: The external Gateway service (`mcp_gateway`) MUST be connected to the fleet network (`mcp_network`):
   ```bash
-  podman network connect mcp_network mcpgateway
+  podman network connect mcp_network mcp_gateway
   ```
 - **Environment**: Root `.env` must define `MCP_GATEWAY_URL` and `MCPGATEWAY_BEARER_TOKEN`.
 
@@ -50,4 +50,4 @@ make status
 ## Documentation
 - **[Gateway Architecture](../../docs/mcp_servers/gateway/architecture/ARCHITECTURE.md)**: Deep dive into the 3-layer pattern.
 - **[ADR 064](../../ADRs/064_centralized_registry_for_fleet_of_8_mcp_servers.md)**: Design decision for centralized registry.
-- **[Podman Startup Guide](../../docs/PODMAN_STARTUP_GUIDE.md)**: Detailed container management instructions.
+- **[Podman Operations Guide](../../docs/PODMAN_OPERATIONS_GUIDE.md)**: Detailed container management instructions.

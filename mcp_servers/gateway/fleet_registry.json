@@ -8,7 +8,7 @@
       "status": "ready",
       "tools": [
         {
-          "description": "No description",
+          "description": "Check Sanctuary model availability and status.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -16,11 +16,10 @@
           "name": "sanctuary-cortex-check-sanctuary-model-status"
         },
         {
-          "description": "No description",
+          "description": "Query the fine-tuned Sanctuary model.",
           "inputSchema": {
             "properties": {
               "max_tokens": {
-                "default": 2048,
                 "type": "integer"
               },
               "prompt": {
@@ -30,7 +29,6 @@
                 "type": "string"
               },
               "temperature": {
-                "default": 0.7,
                 "type": "number"
               }
             },
@@ -42,7 +40,7 @@
           "name": "sanctuary-cortex-query-sanctuary-model"
         },
         {
-          "description": "No description",
+          "description": "Tool-driven snapshot generation (Protocol 128 v3.5).",
           "inputSchema": {
             "properties": {
               "manifest_files": {
@@ -52,30 +50,22 @@
                 "type": "array"
               },
               "snapshot_type": {
-                "default": "audit",
-                "enum": [
-                  "audit",
-                  "seal"
-                ],
                 "type": "string"
               },
               "strategic_context": {
                 "type": "string"
               }
             },
-            "required": [
-              "manifest_files"
-            ],
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-capture-snapshot"
         },
         {
-          "description": "No description",
+          "description": "Scans repository for technical state changes (Protocol 128).",
           "inputSchema": {
             "properties": {
               "hours": {
-                "default": 24,
+                "description": "Hours to look back",
                 "type": "integer"
               }
             },
@@ -84,19 +74,11 @@
           "name": "sanctuary-cortex-cortex-learning-debrief"
         },
         {
-          "description": "No description",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-cortex-cortex-cache-stats"
-        },
-        {
-          "description": "No description",
+          "description": "Generate Guardian boot digest (Protocol 114).",
           "inputSchema": {
             "properties": {
               "mode": {
-                "default": "HOLISTIC",
+                "description": "full, fast, or minimal",
                 "type": "string"
               }
             },
@@ -105,7 +87,15 @@
           "name": "sanctuary-cortex-cortex-guardian-wakeup"
         },
         {
-          "description": "No description",
+          "description": "Get Mnemonic Cache (CAG) statistics.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-cache-stats"
+        },
+        {
+          "description": "Pre-populate cache with genesis queries.",
           "inputSchema": {
             "properties": {
               "genesis_queries": {
@@ -115,12 +105,15 @@
                 "type": "array"
               }
             },
+            "required": [
+              "genesis_queries"
+            ],
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-cache-warmup"
         },
         {
-          "description": "No description",
+          "description": "Store answer in cache.",
           "inputSchema": {
             "properties": {
               "answer": {
@@ -139,10 +132,11 @@
           "name": "sanctuary-cortex-cortex-cache-set"
         },
         {
-          "description": "No description",
+          "description": "Retrieve cached answer for a query.",
           "inputSchema": {
             "properties": {
               "query": {
+                "description": "Query to look up",
                 "type": "string"
               }
             },
@@ -154,7 +148,43 @@
           "name": "sanctuary-cortex-cortex-cache-get"
         },
         {
-          "description": "No description",
+          "description": "Get database statistics and health status.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-get-stats"
+        },
+        {
+          "description": "Perform semantic search query against the knowledge base.",
+          "inputSchema": {
+            "properties": {
+              "max_results": {
+                "description": "Max results to return",
+                "type": "integer"
+              },
+              "query": {
+                "description": "Semantic search query",
+                "type": "string"
+              },
+              "reasoning_mode": {
+                "description": "Reasoning mode",
+                "type": "string"
+              },
+              "use_cache": {
+                "description": "Use cached results",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-query"
+        },
+        {
+          "description": "Incrementally ingest documents into the knowledge base.",
           "inputSchema": {
             "properties": {
               "file_paths": {
@@ -167,7 +197,6 @@
                 "type": "object"
               },
               "skip_duplicates": {
-                "default": true,
                 "type": "boolean"
               }
             },
@@ -179,46 +208,11 @@
           "name": "sanctuary-cortex-cortex-ingest-incremental"
         },
         {
-          "description": "No description",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-cortex-cortex-get-stats"
-        },
-        {
-          "description": "No description",
-          "inputSchema": {
-            "properties": {
-              "max_results": {
-                "default": 5,
-                "type": "integer"
-              },
-              "query": {
-                "type": "string"
-              },
-              "reasoning_mode": {
-                "default": false,
-                "type": "boolean"
-              },
-              "use_cache": {
-                "default": false,
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "query"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-cortex-cortex-query"
-        },
-        {
-          "description": "No description",
+          "description": "Perform full re-ingestion of the knowledge base.",
           "inputSchema": {
             "properties": {
               "purge_existing": {
-                "default": true,
+                "description": "Clear existing data first",
                 "type": "boolean"
               },
               "source_directories": {
@@ -243,69 +237,16 @@
       "status": "ready",
       "tools": [
         {
-          "description": "Check which code quality tools are available.",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-domain-code-check-tools"
-        },
-        {
-          "description": "Perform static analysis on code.",
+          "description": "List recent chronicle entries.",
           "inputSchema": {
             "properties": {
-              "path": {
-                "type": "string"
+              "limit": {
+                "type": "integer"
               }
             },
-            "required": [
-              "path"
-            ],
             "type": "object"
           },
-          "name": "sanctuary-domain-code-analyze"
-        },
-        {
-          "description": "Format code in a file or directory.",
-          "inputSchema": {
-            "properties": {
-              "check_only": {
-                "default": false,
-                "type": "boolean"
-              },
-              "path": {
-                "type": "string"
-              },
-              "tool": {
-                "default": "ruff",
-                "type": "string"
-              }
-            },
-            "required": [
-              "path"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-domain-code-format"
-        },
-        {
-          "description": "Run linting on a file or directory.",
-          "inputSchema": {
-            "properties": {
-              "path": {
-                "type": "string"
-              },
-              "tool": {
-                "default": "ruff",
-                "type": "string"
-              }
-            },
-            "required": [
-              "path"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-domain-code-lint"
+          "name": "sanctuary-domain-chronicle-list-entries"
         },
         {
           "description": "Read the content of a specific workflow file.",
@@ -403,8 +344,7 @@
             },
             "required": [
               "role",
-              "persona_definition",
-              "description"
+              "persona_definition"
             ],
             "type": "object"
           },
@@ -441,7 +381,7 @@
           "name": "sanctuary-domain-persona-get-state"
         },
         {
-          "description": "List all available persona roles (built-in and custom).",
+          "description": "List all available persona roles.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -453,53 +393,19 @@
           "inputSchema": {
             "properties": {
               "context": {
-                "anyOf": [
-                  {
-                    "additionalProperties": true,
-                    "type": "object"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "custom_persona_file": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "engine": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "maintain_state": {
-                "default": true,
                 "type": "boolean"
               },
               "model_name": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "role": {
                 "type": "string"
@@ -536,15 +442,7 @@
           "inputSchema": {
             "properties": {
               "status": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               }
             },
             "type": "object"
@@ -594,7 +492,6 @@
           "inputSchema": {
             "properties": {
               "author": {
-                "default": "AI Assistant",
                 "type": "string"
               },
               "consequences": {
@@ -604,33 +501,16 @@
                 "type": "string"
               },
               "date": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "decision": {
                 "type": "string"
               },
               "status": {
-                "default": "proposed",
                 "type": "string"
               },
               "supersedes": {
-                "anyOf": [
-                  {
-                    "type": "integer"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "integer"
               },
               "title": {
                 "type": "string"
@@ -666,26 +546,10 @@
           "inputSchema": {
             "properties": {
               "priority": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "status": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               }
             },
             "type": "object"
@@ -715,15 +579,7 @@
                 "type": "string"
               },
               "notes": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "task_number": {
                 "type": "integer"
@@ -745,7 +601,6 @@
                 "type": "integer"
               },
               "updates": {
-                "additionalProperties": true,
                 "type": "object"
               }
             },
@@ -774,63 +629,28 @@
                 "type": "array"
               },
               "dependencies": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "array"
               },
               "lead": {
-                "default": "Unassigned",
                 "type": "string"
               },
               "notes": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "objective": {
                 "type": "string"
               },
               "priority": {
-                "default": "Medium",
                 "type": "string"
               },
               "related_documents": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "array"
               },
               "status": {
-                "default": "backlog",
                 "type": "string"
               },
               "task_number": {
-                "anyOf": [
-                  {
-                    "type": "integer"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "integer"
               },
               "title": {
                 "type": "string"
@@ -838,9 +658,7 @@
             },
             "required": [
               "title",
-              "objective",
-              "deliverables",
-              "acceptance_criteria"
+              "objective"
             ],
             "type": "object"
           },
@@ -866,15 +684,7 @@
           "inputSchema": {
             "properties": {
               "status": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               }
             },
             "type": "object"
@@ -907,14 +717,12 @@
                 "type": "string"
               },
               "updates": {
-                "additionalProperties": true,
                 "type": "object"
               }
             },
             "required": [
               "number",
-              "updates",
-              "reason"
+              "updates"
             ],
             "type": "object"
           },
@@ -934,15 +742,10 @@
                 "type": "string"
               },
               "linked_protocols": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
               },
               "number": {
                 "type": "integer"
@@ -958,12 +761,7 @@
               }
             },
             "required": [
-              "number",
               "title",
-              "status",
-              "classification",
-              "version",
-              "authority",
               "content"
             ],
             "type": "object"
@@ -986,30 +784,16 @@
           "name": "sanctuary-domain-chronicle-search"
         },
         {
-          "description": "Read the latest entries from the Chronicle (Alias for list_entries).",
+          "description": "Read the latest entries from the Chronicle.",
           "inputSchema": {
             "properties": {
               "limit": {
-                "default": 10,
                 "type": "integer"
               }
             },
             "type": "object"
           },
           "name": "sanctuary-domain-chronicle-read-latest-entries"
-        },
-        {
-          "description": "List recent chronicle entries.",
-          "inputSchema": {
-            "properties": {
-              "limit": {
-                "default": 10,
-                "type": "integer"
-              }
-            },
-            "type": "object"
-          },
-          "name": "sanctuary-domain-chronicle-list-entries"
         },
         {
           "description": "Retrieve a specific chronicle entry.",
@@ -1034,28 +818,18 @@
                 "type": "integer"
               },
               "override_approval_id": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "reason": {
                 "type": "string"
               },
               "updates": {
-                "additionalProperties": true,
                 "type": "object"
               }
             },
             "required": [
               "entry_number",
-              "updates",
-              "reason"
+              "updates"
             ],
             "type": "object"
           },
@@ -1069,25 +843,15 @@
                 "type": "string"
               },
               "classification": {
-                "default": "internal",
                 "type": "string"
               },
               "content": {
                 "type": "string"
               },
               "date": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "status": {
-                "default": "draft",
                 "type": "string"
               },
               "title": {
@@ -1096,8 +860,7 @@
             },
             "required": [
               "title",
-              "content",
-              "author"
+              "content"
             ],
             "type": "object"
           },
@@ -1111,25 +874,15 @@
                 "type": "string"
               },
               "classification": {
-                "default": "internal",
                 "type": "string"
               },
               "content": {
                 "type": "string"
               },
               "date": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "type": "string"
               },
               "status": {
-                "default": "draft",
                 "type": "string"
               },
               "title": {
@@ -1138,8 +891,7 @@
             },
             "required": [
               "title",
-              "content",
-              "author"
+              "content"
             ],
             "type": "object"
           },
@@ -1156,10 +908,31 @@
       "status": "ready",
       "tools": [
         {
+          "description": "Delete a file with safety checks.",
+          "inputSchema": {
+            "properties": {
+              "force": {
+                "description": "Force delete protected patterns",
+                "type": "boolean"
+              },
+              "path": {
+                "description": "File path to delete",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-delete"
+        },
+        {
           "description": "Get file metadata.",
           "inputSchema": {
             "properties": {
               "path": {
+                "description": "File path",
                 "type": "string"
               }
             },
@@ -1175,17 +948,19 @@
           "inputSchema": {
             "properties": {
               "backup": {
-                "default": true,
+                "description": "Create backup first",
                 "type": "boolean"
               },
               "content": {
+                "description": "Content to write",
                 "type": "string"
               },
               "create_dirs": {
-                "default": true,
+                "description": "Create parent dirs",
                 "type": "boolean"
               },
               "path": {
+                "description": "File path to write",
                 "type": "string"
               }
             },
@@ -1202,10 +977,11 @@
           "inputSchema": {
             "properties": {
               "max_size_mb": {
-                "default": 10,
-                "type": "integer"
+                "description": "Max file size in MB",
+                "type": "number"
               },
               "path": {
+                "description": "File path to read",
                 "type": "string"
               }
             },
@@ -1221,14 +997,15 @@
           "inputSchema": {
             "properties": {
               "case_sensitive": {
-                "default": false,
+                "description": "Case-sensitive search",
                 "type": "boolean"
               },
               "file_pattern": {
-                "default": "*.py",
+                "description": "Optional file pattern",
                 "type": "string"
               },
               "query": {
+                "description": "Text/pattern to search",
                 "type": "string"
               }
             },
@@ -1243,19 +1020,26 @@
           "description": "List files in a directory with optional pattern.",
           "inputSchema": {
             "properties": {
+              "max_files": {
+                "description": "Maximum files to return (default 5000)",
+                "type": "integer"
+              },
               "path": {
-                "default": ".",
+                "description": "Directory to list",
                 "type": "string"
               },
               "pattern": {
-                "default": "*",
+                "description": "Optional glob pattern",
                 "type": "string"
               },
               "recursive": {
-                "default": true,
+                "description": "Search recursively",
                 "type": "boolean"
               }
             },
+            "required": [
+              "path"
+            ],
             "type": "object"
           },
           "name": "sanctuary-filesystem-code-list-files"
@@ -1265,10 +1049,11 @@
           "inputSchema": {
             "properties": {
               "name_pattern": {
+                "description": "Glob pattern for filename",
                 "type": "string"
               },
               "path": {
-                "default": ".",
+                "description": "Directory to search",
                 "type": "string"
               }
             },
@@ -1292,6 +1077,7 @@
           "inputSchema": {
             "properties": {
               "path": {
+                "description": "File or directory to analyze",
                 "type": "string"
               }
             },
@@ -1307,14 +1093,15 @@
           "inputSchema": {
             "properties": {
               "check_only": {
-                "default": false,
+                "description": "Only check, don't modify",
                 "type": "boolean"
               },
               "path": {
+                "description": "File or directory to format",
                 "type": "string"
               },
               "tool": {
-                "default": "ruff",
+                "description": "Format tool (black, ruff)",
                 "type": "string"
               }
             },
@@ -1330,10 +1117,11 @@
           "inputSchema": {
             "properties": {
               "path": {
+                "description": "File or directory to lint",
                 "type": "string"
               },
               "tool": {
-                "default": "ruff",
+                "description": "Lint tool (ruff, pylint, flake8)",
                 "type": "string"
               }
             },
@@ -1359,11 +1147,11 @@
           "inputSchema": {
             "properties": {
               "max_count": {
-                "default": 10,
+                "description": "Max commits",
                 "type": "integer"
               },
               "oneline": {
-                "default": false,
+                "description": "One line per commit",
                 "type": "boolean"
               }
             },
@@ -1372,23 +1160,16 @@
           "name": "sanctuary-git-git-log"
         },
         {
-          "description": "Show changes in the working directory.",
+          "description": "Show changes (diff).",
           "inputSchema": {
             "properties": {
               "cached": {
-                "default": false,
+                "description": "Show staged changes",
                 "type": "boolean"
               },
               "file_path": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "description": "Specific file",
+                "type": "string"
               }
             },
             "type": "object"
@@ -1396,14 +1177,15 @@
           "name": "sanctuary-git-git-diff"
         },
         {
-          "description": "Finish a feature branch.",
+          "description": "Finish feature (cleanup/delete).",
           "inputSchema": {
             "properties": {
               "branch_name": {
+                "description": "Branch to finish",
                 "type": "string"
               },
               "force": {
-                "default": false,
+                "description": "Force delete",
                 "type": "boolean"
               }
             },
@@ -1419,10 +1201,12 @@
           "inputSchema": {
             "properties": {
               "description": {
+                "description": "Brief description",
                 "type": "string"
               },
               "task_id": {
-                "type": "string"
+                "description": "Task ID number",
+                "type": "integer"
               }
             },
             "required": [
@@ -1434,15 +1218,15 @@
           "name": "sanctuary-git-git-start-feature"
         },
         {
-          "description": "Push the current feature branch to origin.",
+          "description": "Push feature branch to origin.",
           "inputSchema": {
             "properties": {
               "force": {
-                "default": false,
+                "description": "Force push",
                 "type": "boolean"
               },
               "no_verify": {
-                "default": false,
+                "description": "Skip pre-push hooks",
                 "type": "boolean"
               }
             },
@@ -1455,18 +1239,11 @@
           "inputSchema": {
             "properties": {
               "files": {
-                "anyOf": [
-                  {
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "default": null
+                "description": "Files to stage",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
               }
             },
             "type": "object"
@@ -1474,7 +1251,7 @@
           "name": "sanctuary-git-git-add"
         },
         {
-          "description": "Get the current status of the repository.",
+          "description": "Get standard git status.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1482,7 +1259,7 @@
           "name": "sanctuary-git-git-get-status"
         },
         {
-          "description": "Get the unbreakable Git safety rules (Protocol 101).",
+          "description": "Return Protocol 101 safety rules.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1490,10 +1267,11 @@
           "name": "sanctuary-git-git-get-safety-rules"
         },
         {
-          "description": "Commit staged files with automatic Protocol 101 v3.0 enforcement.",
+          "description": "Commit with automated Protocol 101 checks.",
           "inputSchema": {
             "properties": {
               "message": {
+                "description": "Commit message",
                 "type": "string"
               }
             },
@@ -1519,7 +1297,7 @@
           "inputSchema": {
             "properties": {
               "url": {
-                "description": "The URL to check",
+                "description": "URL to check status",
                 "type": "string"
               }
             },
@@ -1535,7 +1313,7 @@
           "inputSchema": {
             "properties": {
               "url": {
-                "description": "The URL to fetch",
+                "description": "URL to fetch content from",
                 "type": "string"
               }
             },
@@ -1557,7 +1335,7 @@
       "status": "ready",
       "tools": [
         {
-          "description": "Returns a high-level overview of available MCP servers and their primary functions.",
+          "description": "Returns a high-level overview of available MCP servers.",
           "inputSchema": {
             "properties": {},
             "type": "object"
@@ -1567,1436 +1345,259 @@
         {
           "description": "Replace occurrences of old with new in text.",
           "inputSchema": {
-            "description": "String manipulation utilities",
-            "functions": [
-              {
-                "description": "Convert text to uppercase",
-                "name": "to_upper",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "new": {
+                "description": "Replacement substring",
+                "type": "string"
               },
-              {
-                "description": "Convert text to lowercase",
-                "name": "to_lower",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
+              "old": {
+                "description": "Substring to replace",
+                "type": "string"
               },
-              {
-                "description": "Remove leading and trailing whitespace",
-                "name": "trim",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to trim",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Reverse a string",
-                "name": "reverse",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to reverse",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Count words and characters in text",
-                "name": "word_count",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to analyze",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Replace occurrences in text",
-                "name": "replace",
-                "parameters": {
-                  "properties": {
-                    "new": {
-                      "description": "Replacement substring",
-                      "type": "string"
-                    },
-                    "old": {
-                      "description": "Substring to replace",
-                      "type": "string"
-                    },
-                    "text": {
-                      "description": "Original text",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "old",
-                    "new"
-                  ],
-                  "type": "object"
-                }
+              "text": {
+                "description": "Original text",
+                "type": "string"
               }
+            },
+            "required": [
+              "text",
+              "old",
+              "new"
             ],
-            "name": "string"
+            "type": "object"
           },
           "name": "sanctuary-utils-string-replace"
         },
         {
           "description": "Count words in text.",
           "inputSchema": {
-            "description": "String manipulation utilities",
-            "functions": [
-              {
-                "description": "Convert text to uppercase",
-                "name": "to_upper",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Convert text to lowercase",
-                "name": "to_lower",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Remove leading and trailing whitespace",
-                "name": "trim",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to trim",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Reverse a string",
-                "name": "reverse",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to reverse",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Count words and characters in text",
-                "name": "word_count",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to analyze",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Replace occurrences in text",
-                "name": "replace",
-                "parameters": {
-                  "properties": {
-                    "new": {
-                      "description": "Replacement substring",
-                      "type": "string"
-                    },
-                    "old": {
-                      "description": "Substring to replace",
-                      "type": "string"
-                    },
-                    "text": {
-                      "description": "Original text",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "old",
-                    "new"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
               }
+            },
+            "required": [
+              "text"
             ],
-            "name": "string"
+            "type": "object"
           },
           "name": "sanctuary-utils-string-word-count"
         },
         {
           "description": "Reverse a string.",
           "inputSchema": {
-            "description": "String manipulation utilities",
-            "functions": [
-              {
-                "description": "Convert text to uppercase",
-                "name": "to_upper",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Convert text to lowercase",
-                "name": "to_lower",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Remove leading and trailing whitespace",
-                "name": "trim",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to trim",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Reverse a string",
-                "name": "reverse",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to reverse",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Count words and characters in text",
-                "name": "word_count",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to analyze",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Replace occurrences in text",
-                "name": "replace",
-                "parameters": {
-                  "properties": {
-                    "new": {
-                      "description": "Replacement substring",
-                      "type": "string"
-                    },
-                    "old": {
-                      "description": "Substring to replace",
-                      "type": "string"
-                    },
-                    "text": {
-                      "description": "Original text",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "old",
-                    "new"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
               }
+            },
+            "required": [
+              "text"
             ],
-            "name": "string"
+            "type": "object"
           },
           "name": "sanctuary-utils-string-reverse"
         },
         {
           "description": "Remove leading and trailing whitespace.",
           "inputSchema": {
-            "description": "String manipulation utilities",
-            "functions": [
-              {
-                "description": "Convert text to uppercase",
-                "name": "to_upper",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Convert text to lowercase",
-                "name": "to_lower",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Remove leading and trailing whitespace",
-                "name": "trim",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to trim",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Reverse a string",
-                "name": "reverse",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to reverse",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Count words and characters in text",
-                "name": "word_count",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to analyze",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Replace occurrences in text",
-                "name": "replace",
-                "parameters": {
-                  "properties": {
-                    "new": {
-                      "description": "Replacement substring",
-                      "type": "string"
-                    },
-                    "old": {
-                      "description": "Substring to replace",
-                      "type": "string"
-                    },
-                    "text": {
-                      "description": "Original text",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "old",
-                    "new"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
               }
+            },
+            "required": [
+              "text"
             ],
-            "name": "string"
+            "type": "object"
           },
           "name": "sanctuary-utils-string-trim"
         },
         {
           "description": "Convert text to lowercase.",
           "inputSchema": {
-            "description": "String manipulation utilities",
-            "functions": [
-              {
-                "description": "Convert text to uppercase",
-                "name": "to_upper",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Convert text to lowercase",
-                "name": "to_lower",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Remove leading and trailing whitespace",
-                "name": "trim",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to trim",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Reverse a string",
-                "name": "reverse",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to reverse",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Count words and characters in text",
-                "name": "word_count",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to analyze",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Replace occurrences in text",
-                "name": "replace",
-                "parameters": {
-                  "properties": {
-                    "new": {
-                      "description": "Replacement substring",
-                      "type": "string"
-                    },
-                    "old": {
-                      "description": "Substring to replace",
-                      "type": "string"
-                    },
-                    "text": {
-                      "description": "Original text",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "old",
-                    "new"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
               }
+            },
+            "required": [
+              "text"
             ],
-            "name": "string"
+            "type": "object"
           },
           "name": "sanctuary-utils-string-to-lower"
         },
         {
           "description": "Convert text to uppercase.",
           "inputSchema": {
-            "description": "String manipulation utilities",
-            "functions": [
-              {
-                "description": "Convert text to uppercase",
-                "name": "to_upper",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Convert text to lowercase",
-                "name": "to_lower",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to convert",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Remove leading and trailing whitespace",
-                "name": "trim",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to trim",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Reverse a string",
-                "name": "reverse",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to reverse",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Count words and characters in text",
-                "name": "word_count",
-                "parameters": {
-                  "properties": {
-                    "text": {
-                      "description": "Text to analyze",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Replace occurrences in text",
-                "name": "replace",
-                "parameters": {
-                  "properties": {
-                    "new": {
-                      "description": "Replacement substring",
-                      "type": "string"
-                    },
-                    "old": {
-                      "description": "Substring to replace",
-                      "type": "string"
-                    },
-                    "text": {
-                      "description": "Original text",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "text",
-                    "old",
-                    "new"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "text": {
+                "description": "Text to process",
+                "type": "string"
               }
+            },
+            "required": [
+              "text"
             ],
-            "name": "string"
+            "type": "object"
           },
           "name": "sanctuary-utils-string-to-upper"
         },
         {
           "description": "Validate if a string is a valid UUID.",
           "inputSchema": {
-            "description": "UUID generation and validation utilities",
-            "functions": [
-              {
-                "description": "Generate a random UUID (version 4)",
-                "name": "generate_uuid4",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Generate a UUID based on host ID and time (version 1)",
-                "name": "generate_uuid1",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Validate if a string is a valid UUID",
-                "name": "validate_uuid",
-                "parameters": {
-                  "properties": {
-                    "uuid_string": {
-                      "description": "UUID string to validate",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "uuid_string"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "uuid_string": {
+                "description": "UUID string to validate",
+                "type": "string"
               }
+            },
+            "required": [
+              "uuid_string"
             ],
-            "name": "uuid"
+            "type": "object"
           },
           "name": "sanctuary-utils-uuid-validate-uuid"
         },
         {
           "description": "Generate a UUID based on host ID and current time (version 1).",
           "inputSchema": {
-            "description": "UUID generation and validation utilities",
-            "functions": [
-              {
-                "description": "Generate a random UUID (version 4)",
-                "name": "generate_uuid4",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Generate a UUID based on host ID and time (version 1)",
-                "name": "generate_uuid1",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Validate if a string is a valid UUID",
-                "name": "validate_uuid",
-                "parameters": {
-                  "properties": {
-                    "uuid_string": {
-                      "description": "UUID string to validate",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "uuid_string"
-                  ],
-                  "type": "object"
-                }
-              }
-            ],
-            "name": "uuid"
+            "properties": {},
+            "type": "object"
           },
           "name": "sanctuary-utils-uuid-generate-uuid1"
         },
         {
           "description": "Generate a random UUID (version 4).",
           "inputSchema": {
-            "description": "UUID generation and validation utilities",
-            "functions": [
-              {
-                "description": "Generate a random UUID (version 4)",
-                "name": "generate_uuid4",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Generate a UUID based on host ID and time (version 1)",
-                "name": "generate_uuid1",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Validate if a string is a valid UUID",
-                "name": "validate_uuid",
-                "parameters": {
-                  "properties": {
-                    "uuid_string": {
-                      "description": "UUID string to validate",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "uuid_string"
-                  ],
-                  "type": "object"
-                }
-              }
-            ],
-            "name": "uuid"
+            "properties": {},
+            "type": "object"
           },
           "name": "sanctuary-utils-uuid-generate-uuid4"
         },
         {
           "description": "Divide a by b.",
           "inputSchema": {
-            "description": "Basic math operations and expression evaluation",
-            "functions": [
-              {
-                "description": "Evaluate a mathematical expression",
-                "name": "calculate",
-                "parameters": {
-                  "properties": {
-                    "expression": {
-                      "description": "Math expression to evaluate (e.g., '2 + 2', 'sqrt(16)')",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "expression"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
               },
-              {
-                "description": "Add two numbers",
-                "name": "add",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Subtract b from a",
-                "name": "subtract",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Number to subtract",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Multiply two numbers",
-                "name": "multiply",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Divide a by b",
-                "name": "divide",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "Dividend",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Divisor",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
+              "b": {
+                "description": "Second number",
+                "type": "number"
               }
+            },
+            "required": [
+              "a",
+              "b"
             ],
-            "name": "calculator"
+            "type": "object"
           },
           "name": "sanctuary-utils-calculator-divide"
         },
         {
           "description": "Multiply two numbers.",
           "inputSchema": {
-            "description": "Basic math operations and expression evaluation",
-            "functions": [
-              {
-                "description": "Evaluate a mathematical expression",
-                "name": "calculate",
-                "parameters": {
-                  "properties": {
-                    "expression": {
-                      "description": "Math expression to evaluate (e.g., '2 + 2', 'sqrt(16)')",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "expression"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
               },
-              {
-                "description": "Add two numbers",
-                "name": "add",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Subtract b from a",
-                "name": "subtract",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Number to subtract",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Multiply two numbers",
-                "name": "multiply",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Divide a by b",
-                "name": "divide",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "Dividend",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Divisor",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
+              "b": {
+                "description": "Second number",
+                "type": "number"
               }
+            },
+            "required": [
+              "a",
+              "b"
             ],
-            "name": "calculator"
+            "type": "object"
           },
           "name": "sanctuary-utils-calculator-multiply"
         },
         {
           "description": "Subtract b from a.",
           "inputSchema": {
-            "description": "Basic math operations and expression evaluation",
-            "functions": [
-              {
-                "description": "Evaluate a mathematical expression",
-                "name": "calculate",
-                "parameters": {
-                  "properties": {
-                    "expression": {
-                      "description": "Math expression to evaluate (e.g., '2 + 2', 'sqrt(16)')",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "expression"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
               },
-              {
-                "description": "Add two numbers",
-                "name": "add",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Subtract b from a",
-                "name": "subtract",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Number to subtract",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Multiply two numbers",
-                "name": "multiply",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Divide a by b",
-                "name": "divide",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "Dividend",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Divisor",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
+              "b": {
+                "description": "Second number",
+                "type": "number"
               }
+            },
+            "required": [
+              "a",
+              "b"
             ],
-            "name": "calculator"
+            "type": "object"
           },
           "name": "sanctuary-utils-calculator-subtract"
         },
         {
           "description": "Add two numbers.",
           "inputSchema": {
-            "description": "Basic math operations and expression evaluation",
-            "functions": [
-              {
-                "description": "Evaluate a mathematical expression",
-                "name": "calculate",
-                "parameters": {
-                  "properties": {
-                    "expression": {
-                      "description": "Math expression to evaluate (e.g., '2 + 2', 'sqrt(16)')",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "expression"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "a": {
+                "description": "First number",
+                "type": "number"
               },
-              {
-                "description": "Add two numbers",
-                "name": "add",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Subtract b from a",
-                "name": "subtract",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Number to subtract",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Multiply two numbers",
-                "name": "multiply",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Divide a by b",
-                "name": "divide",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "Dividend",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Divisor",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
+              "b": {
+                "description": "Second number",
+                "type": "number"
               }
+            },
+            "required": [
+              "a",
+              "b"
             ],
-            "name": "calculator"
+            "type": "object"
           },
           "name": "sanctuary-utils-calculator-add"
         },
         {
-          "description": "Evaluate a mathematical expression safely.\n    \n    Args:\n        expression: Math expression (e.g., &quot;2 + 2&quot;, &quot;sqrt(16)&quot;, &quot;10 * 5&quot;)\n        \n    Returns:\n        Dictionary with result or error.",
+          "description": "Evaluate a mathematical expression safely.",
           "inputSchema": {
-            "description": "Basic math operations and expression evaluation",
-            "functions": [
-              {
-                "description": "Evaluate a mathematical expression",
-                "name": "calculate",
-                "parameters": {
-                  "properties": {
-                    "expression": {
-                      "description": "Math expression to evaluate (e.g., '2 + 2', 'sqrt(16)')",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "expression"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Add two numbers",
-                "name": "add",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Subtract b from a",
-                "name": "subtract",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Number to subtract",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Multiply two numbers",
-                "name": "multiply",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "First number",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Second number",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Divide a by b",
-                "name": "divide",
-                "parameters": {
-                  "properties": {
-                    "a": {
-                      "description": "Dividend",
-                      "type": "number"
-                    },
-                    "b": {
-                      "description": "Divisor",
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "a",
-                    "b"
-                  ],
-                  "type": "object"
-                }
+            "properties": {
+              "expression": {
+                "description": "Math expression to evaluate",
+                "type": "string"
               }
+            },
+            "required": [
+              "expression"
             ],
-            "name": "calculator"
+            "type": "object"
           },
           "name": "sanctuary-utils-calculator-calculate"
         },
         {
-          "description": "Get information about available timezones.\n    \n    Returns:\n        Dictionary with timezone information.",
+          "description": "Get information about available timezones.",
           "inputSchema": {
-            "description": "Get current time and timezone information",
-            "functions": [
-              {
-                "description": "Get the current time in UTC or specified timezone",
-                "name": "get_current_time",
-                "parameters": {
-                  "properties": {
-                    "timezone_name": {
-                      "default": "UTC",
-                      "description": "Timezone name (default: UTC)",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Get information about available timezones",
-                "name": "get_timezone_info",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
-              }
-            ],
-            "name": "time"
+            "properties": {},
+            "type": "object"
           },
           "name": "sanctuary-utils-time-get-timezone-info"
         },
         {
-          "description": "Get the current time in the specified timezone.\n    \n    Args:\n        timezone_name: Timezone name (default: UTC). Currently only supports UTC.\n        \n    Returns:\n        Dictionary with current time information.",
+          "description": "Get the current time in UTC or specified timezone.",
           "inputSchema": {
-            "description": "Get current time and timezone information",
-            "functions": [
-              {
-                "description": "Get the current time in UTC or specified timezone",
-                "name": "get_current_time",
-                "parameters": {
-                  "properties": {
-                    "timezone_name": {
-                      "default": "UTC",
-                      "description": "Timezone name (default: UTC)",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              },
-              {
-                "description": "Get information about available timezones",
-                "name": "get_timezone_info",
-                "parameters": {
-                  "properties": {},
-                  "type": "object"
-                }
+            "properties": {
+              "timezone_name": {
+                "description": "Timezone name (default: UTC)",
+                "type": "string"
               }
-            ],
-            "name": "time"
+            },
+            "type": "object"
           },
           "name": "sanctuary-utils-time-get-current-time"
         }

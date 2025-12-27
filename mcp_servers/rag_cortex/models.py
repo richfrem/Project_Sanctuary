@@ -260,6 +260,54 @@ class CaptureSnapshotResponse:
 
 
 # ============================================================================
+# FastMCP Request Models
+# ============================================================================
+from pydantic import BaseModel, Field
+
+class CortexIngestFullRequest(BaseModel):
+    purge_existing: bool = Field(True, description="Whether to purge existing data")
+    source_directories: Optional[List[str]] = Field(None, description="Paths to directories to ingest")
+
+class CortexQueryRequest(BaseModel):
+    query: str = Field(..., description="Semantic search query")
+    max_results: int = Field(5, description="Maximum number of context fragments")
+    use_cache: bool = Field(False, description="Whether to use Mnemonic Cache")
+    reasoning_mode: bool = Field(False, description="Whether to use reasoning model")
+
+class CortexIngestIncrementalRequest(BaseModel):
+    file_paths: List[str] = Field(..., description="Paths to files to ingest")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="Metadata for documents")
+    skip_duplicates: bool = Field(True, description="Skip if already in store")
+
+class CortexCacheGetRequest(BaseModel):
+    query: str = Field(..., description="Query key to look up")
+
+class CortexCacheSetRequest(BaseModel):
+    query: str = Field(..., description="Query key")
+    answer: str = Field(..., description="Answer to cache")
+
+class CortexCacheWarmupRequest(BaseModel):
+    genesis_queries: Optional[List[str]] = Field(None, description="Queries to pre-warm the cache")
+
+class CortexGuardianWakeupRequest(BaseModel):
+    mode: str = Field("HOLISTIC", description="Synthesis mode")
+
+class CortexCaptureSnapshotRequest(BaseModel):
+    manifest_files: List[str] = Field(..., description="Files to include in snapshot")
+    snapshot_type: str = Field("audit", description="'audit' or 'seal'")
+    strategic_context: Optional[str] = Field(None, description="Context for snapshot")
+
+class CortexLearningDebriefRequest(BaseModel):
+    hours: int = Field(24, description="Lookback window in hours")
+
+class ForgeQueryRequest(BaseModel):
+    prompt: str = Field(..., description="Model prompt")
+    temperature: float = Field(0.7, description="Sampling temperature")
+    max_tokens: int = Field(2048, description="Max tokens to generate")
+    system_prompt: Optional[str] = Field(None, description="System persona prompt")
+
+
+# ============================================================================
 # Helper Functions
 # ============================================================================
 

@@ -10,7 +10,7 @@
 > [!NOTE]
 > **Red Team Review Complete.** All four AI reviewers approved this architecture with mandatory guardrails.
 > 
-> **Grok 4 Critical Finding:** Modified based on Grok 4's identification of the "RAG Frontend Gap" - `sanctuary_vector_db` and `sanctuary_ollama_mcp` are backends, NOT MCP servers. Added `sanctuary_cortex` as the actual MCP server layer.
+> **Grok 4 Critical Finding:** Modified based on Grok 4's identification of the "RAG Frontend Gap" - `sanctuary_vector_db` and `sanctuary_ollama` are backends, NOT MCP servers. Added `sanctuary_cortex` as the actual MCP server layer.
 
 
 ---
@@ -20,7 +20,7 @@
 With the Gateway successfully deployed as an external service (ADR 058), we must decide how to connect Project Sanctuary's 10 script-based MCP servers without violating the decoupling mandate.
 
 **Current State:**
-- 2/12 servers containerized: `sanctuary_vector_db`, `sanctuary_ollama_mcp`
+- 2/12 servers containerized: `sanctuary_vector_db`, `sanctuary_ollama`
 - 10/12 servers run as Python scripts via stdio
 - Gateway is a black box at `https://localhost:4444`
 
@@ -95,10 +95,10 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 | 4 | `sanctuary_git` | **NEW** | Git (Dual-Permission) | MCP Server | Git Workflow |
 | 5a | `sanctuary_cortex` | **NEW** | Intelligence (Heavy) | MCP Server | RAG Query, Ingest, Cache |
 | 5b | `sanctuary_vector_db` | **EXISTING** | Intelligence (Heavy) | Backend Storage | ChromaDB |
-| 5c | `sanctuary_ollama_mcp` | **EXISTING** | Intelligence (Heavy) | Backend Compute | Ollama LLM |
+| 5c | `sanctuary_ollama` | **EXISTING** | Intelligence (Heavy) | Backend Compute | Ollama LLM |
 
 > [!IMPORTANT]
-> **Grok 4's "RAG Frontend Gap" Fix:** `sanctuary_vector_db` and `sanctuary_ollama_mcp` are **backends** (storage & compute). They do NOT expose MCP tools. `sanctuary_cortex` is the **MCP Server** that connects to these backends and exposes the tools via SSE.
+> **Grok 4's "RAG Frontend Gap" Fix:** `sanctuary_vector_db` and `sanctuary_ollama` are **backends** (storage & compute). They do NOT expose MCP tools. `sanctuary_cortex` is the **MCP Server** that connects to these backends and exposes the tools via SSE.
 
 **Summary:**
 - **5 NEW containers** to build (including `sanctuary_cortex`)
@@ -121,7 +121,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 **Current State:**
 - ✅ 2 containers **already containerized** (no changes needed):
   - `sanctuary_vector_db` (ChromaDB)
-  - `sanctuary_ollama_mcp` (Ollama)
+  - `sanctuary_ollama` (Ollama)
 - ⏳ 10 script-based MCP servers (need containerization)
 
 **Options Evaluated:**
@@ -173,7 +173,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 **Total Containers:** 5 (2 existing + 3 new)
 - **Existing (unchanged):**
   - `sanctuary_vector_db` (ChromaDB)
-  - `sanctuary_ollama_mcp` (Ollama)
+  - `sanctuary_ollama` (Ollama)
 - **New:**
   - `sanctuary_utils` (time, calculator, uuid, string)
   - `sanctuary_filesystem` (file ops, grep, patch, code)
@@ -300,7 +300,7 @@ async def handle_tool_call(request: ToolRequest):
 **Tools:** RAG Cortex, Memory, Embeddings
 
 **Architecture:**
-- **Already handled** by existing `sanctuary_vector_db` and `sanctuary_ollama_mcp`
+- **Already handled** by existing `sanctuary_vector_db` and `sanctuary_ollama`
 - No changes needed (these are already containerized)
 - Existing security boundaries maintained
 
@@ -326,7 +326,7 @@ flowchart TB
     subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
         Cortex["<b>5a. sanctuary_cortex</b><br>(MCP Server) NEW<br>:8104/sse<br><br>• RAG Query<br>• Ingest<br>• Cache"]
         VectorDB["<b>5b. sanctuary_vector_db</b><br>(Backend Storage) EXISTING<br>:8110<br><br>• ChromaDB"]
-        Ollama["<b>5c. sanctuary_ollama_mcp</b><br>(Backend Compute) EXISTING<br>:11434<br><br>• Ollama LLM"]
+        Ollama["<b>5c. sanctuary_ollama</b><br>(Backend Compute) EXISTING<br>:11434<br><br>• Ollama LLM"]
         
         Cortex -- "Embeddings/Query" --> VectorDB
         Cortex -- "LLM Inference" --> Ollama
@@ -483,7 +483,7 @@ services:
 | sanctuary_git | 0.5 | 512M | Git operations need memory |
 | sanctuary_cortex | 1.0 | 1G | RAG embedding, heavier |
 | sanctuary_vector_db | 1.0 | 2G | Database operations |
-| sanctuary_ollama_mcp | 2.0 | 4G | LLM inference is heavy |
+| sanctuary_ollama | 2.0 | 4G | LLM inference is heavy |
 
 **Rationale:** 7 containers running without limits can exhaust system resources. Explicit caps prevent runaway processes and ensure fair resource sharing.
 
@@ -505,7 +505,7 @@ services:
     volumes:
       - vector_db-data:/chroma/chroma  # Persist embeddings
   
-  sanctuary_ollama_mcp:
+  sanctuary_ollama:
     volumes:
       - ollama-models:/root/.ollama    # Persist downloaded models
 ```

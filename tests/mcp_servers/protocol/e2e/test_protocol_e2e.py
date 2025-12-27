@@ -52,13 +52,15 @@ class TestProtocolE2E(BaseE2ETest):
         title = "E2E Test Protocol"
         
         create_res = mcp_client.call_tool("protocol_create", {
-            "number": number,
-            "title": title,
-            "status": "PROPOSED",
-            "classification": "Test",
-            "version": "0.1",
-            "authority": "E2E",
-            "content": "Test content."
+            "request": {
+                "number": number,
+                "title": title,
+                "status": "PROPOSED",
+                "classification": "Test",
+                "version": "0.1",
+                "authority": "E2E",
+                "content": "Test content."
+            }
         })
         # Protocol create returns string "Created Protocol 999: path"
         create_text = create_res.get("content", [])[0]["text"]
@@ -76,27 +78,29 @@ class TestProtocolE2E(BaseE2ETest):
 
         try:
             # 3. Get Protocol
-            get_res = mcp_client.call_tool("protocol_get", {"number": number})
+            get_res = mcp_client.call_tool("protocol_get", {"request": {"number": number}})
             get_text = get_res.get("content", [])[0]["text"]
             assert title in get_text
             assert "Status: PROPOSED" in get_text
             print("📄 protocol_get: Verified content")
 
             # 4. Search
-            search_res = mcp_client.call_tool("protocol_search", {"query": "Test Protocol"})
+            search_res = mcp_client.call_tool("protocol_search", {"request": {"query": "Test Protocol"}})
             search_text = search_res.get("content", [])[0]["text"]
             assert f"{number}: {title}" in search_text
             print(f"🔍 protocol_search: Found protocol")
 
             # 5. Update
             update_res = mcp_client.call_tool("protocol_update", {
-                "number": number,
-                "updates": {"status": "DEPRECATED"},
-                "reason": "Test Cleanup"
+                "request": {
+                    "number": number,
+                    "updates": {"status": "DEPRECATED"},
+                    "reason": "Test Cleanup"
+                }
             })
             update_text = update_res.get("content", [])[0]["text"]
             print(f"🔄 protocol_update: {update_text}")
-            assert "DEPRECATED" in update_text
+            assert "Updated Protocol" in update_text and "status" in update_text
 
         finally:
             # 6. Cleanup

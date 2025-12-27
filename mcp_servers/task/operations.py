@@ -1,3 +1,13 @@
+#============================================
+# mcp_servers/task/operations.py
+# Purpose: Core business logic for Task MCP.
+#          Handles task file CRUD operations (create, update, status change).
+# Role: Business Logic Layer
+# Used as: Helper module by server.py
+# LIST OF CLASSES:
+#   - TaskOperations
+#============================================
+
 """
 Task MCP Server - File Operations
 Handles all task file operations (create, update, move, read, list, search)
@@ -11,9 +21,7 @@ from datetime import datetime
 import sys
 import os
 
-# Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from lib.logging_utils import setup_mcp_logging
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
 
@@ -22,12 +30,17 @@ from .validator import TaskValidator
 
 
 class TaskOperations:
-    """Handles all task file operations"""
-    
+
+    #----------------------------------------------------------------------
+    # __init__
+    # Purpose: Initialize TaskOperations with project root and validator.
+    # Args:
+    #   project_root: Root directory of the project
+    #----------------------------------------------------------------------
     def __init__(self, project_root: Path):
-        self.project_root = project_root
-        self.tasks_dir = project_root / "TASKS"
-        self.validator = TaskValidator(project_root)
+        self.project_root = Path(project_root)
+        self.tasks_dir = self.project_root / "TASKS"
+        self.validator = TaskValidator(self.project_root)
         
         # Status to directory mapping
         self.status_dirs = {
@@ -38,6 +51,23 @@ class TaskOperations:
             TaskStatus.BLOCKED: self.tasks_dir / "in-progress"  # Blocked tasks stay in in-progress
         }
     
+    #----------------------------------------------------------------------
+    # create_task
+    # Purpose: Create a new task file
+    # Args:
+    #   title: Task title
+    #   objective: What and why
+    #   deliverables: List of concrete outputs
+    #   acceptance_criteria: List of completion conditions
+    #   priority: Task priority (default: MEDIUM)
+    #   status: Initial status (default: BACKLOG)
+    #   lead: Assigned person/agent (default: Unassigned)
+    #   dependencies: Task dependencies (e.g., 'Requires #012')
+    #   related_documents: Related files/protocols
+    #   notes: Additional context
+    #   task_number: Specific task number (auto-generated if None)
+    # Returns: FileOperationResult with file path and content
+    #----------------------------------------------------------------------
     def create_task(
         self,
         title: str,
@@ -52,25 +82,6 @@ class TaskOperations:
         notes: Optional[str] = None,
         task_number: Optional[int] = None
     ) -> FileOperationResult:
-        """
-        Create a new task file
-        
-        Args:
-            title: Task title
-            objective: What and why
-            deliverables: List of concrete outputs
-            acceptance_criteria: List of completion conditions
-            priority: Task priority (default: MEDIUM)
-            status: Initial status (default: BACKLOG)
-            lead: Assigned person/agent (default: Unassigned)
-            dependencies: Task dependencies (e.g., "Requires #012")
-            related_documents: Related files/protocols
-            notes: Additional context
-            task_number: Specific task number (auto-generated if None)
-        
-        Returns:
-            FileOperationResult with file path and content
-        """
         # Get next task number if not provided
         if task_number is None:
             task_number = self.validator.get_next_task_number()
@@ -149,21 +160,19 @@ class TaskOperations:
             message=f"Task #{task_number:03d} created successfully"
         )
     
+    #----------------------------------------------------------------------
+    # update_task
+    # Purpose: Update an existing task
+    # Args:
+    #   task_number: Task number to update
+    #   updates: Dictionary of fields to update
+    # Returns: FileOperationResult with updated file path and content
+    #----------------------------------------------------------------------
     def update_task(
         self,
         task_number: int,
-        updates: Dict[str, any]
+        updates: Dict[str, Any]
     ) -> FileOperationResult:
-        """
-        Update an existing task
-        
-        Args:
-            task_number: Task number to update
-            updates: Dictionary of fields to update
-        
-        Returns:
-            FileOperationResult with updated file path and content
-        """
         # Find existing task
         exists, current_dir = self.validator.task_exists(task_number)
         if not exists:
@@ -225,23 +234,21 @@ class TaskOperations:
             message=f"Task #{task_number:03d} updated successfully"
         )
     
+    #----------------------------------------------------------------------
+    # update_task_status
+    # Purpose: Update task status (moves file between directories)
+    # Args:
+    #   task_number: Task number
+    #   new_status: New status
+    #   notes: Optional notes about status change
+    # Returns: FileOperationResult with new file path
+    #----------------------------------------------------------------------
     def update_task_status(
         self,
         task_number: int,
         new_status: TaskStatus,
         notes: Optional[str] = None
     ) -> FileOperationResult:
-        """
-        Update task status (moves file between directories)
-        
-        Args:
-            task_number: Task number
-            new_status: New status
-            notes: Optional notes about status change
-        
-        Returns:
-            FileOperationResult with new file path
-        """
         # Find current task
         exists, current_dir = self.validator.task_exists(task_number)
         if not exists:
@@ -304,8 +311,14 @@ class TaskOperations:
             message=f"Task #{task_number:03d} moved to {new_status.value}"
         )
     
+    #----------------------------------------------------------------------
+    # get_task
+    # Purpose: Get task by number
+    # Args:
+    #   task_number: Task number to retrieve
+    # Returns: Dictionary of task details or None
+    #----------------------------------------------------------------------
     def get_task(self, task_number: int) -> Optional[Dict]:
-        """Get task by number"""
         exists, task_dir = self.validator.task_exists(task_number)
         if not exists:
             return None
@@ -327,12 +340,19 @@ class TaskOperations:
             "content": content
         }
     
+    #----------------------------------------------------------------------
+    # list_tasks
+    # Purpose: List tasks with optional filters
+    # Args:
+    #   status: Filter by status
+    #   priority: Filter by priority
+    # Returns: List of task dictionaries
+    #----------------------------------------------------------------------
     def list_tasks(
         self,
         status: Optional[TaskStatus] = None,
         priority: Optional[TaskPriority] = None
     ) -> List[Dict]:
-        """List tasks with optional filters"""
         tasks = []
         
         # Determine which directories to search
@@ -373,8 +393,14 @@ class TaskOperations:
         tasks.sort(key=lambda x: x["number"])
         return tasks
     
+    #----------------------------------------------------------------------
+    # search_tasks
+    # Purpose: Search tasks by content
+    # Args:
+    #   query: Search string
+    # Returns: List of matching tasks with snippets
+    #----------------------------------------------------------------------
     def search_tasks(self, query: str) -> List[Dict]:
-        """Search tasks by content"""
         results = []
         query_lower = query.lower()
         
@@ -404,8 +430,14 @@ class TaskOperations:
     
     # Helper methods
     
+    #----------------------------------------------------------------------
+    # _generate_task_markdown
+    # Purpose: Generate markdown content from task schema
+    # Args:
+    #   task: The TaskSchema object
+    # Returns: Formatted markdown string
+    #----------------------------------------------------------------------
     def _generate_task_markdown(self, task: TaskSchema) -> str:
-        """Generate markdown content from task schema"""
         # Handle both enum and string values for status/priority
         status_value = task.status.value if isinstance(task.status, TaskStatus) else task.status
         priority_value = task.priority.value if isinstance(task.priority, TaskPriority) else task.priority
@@ -452,8 +484,15 @@ class TaskOperations:
         lines.append("")  # Final newline
         return "\n".join(lines)
     
+    #----------------------------------------------------------------------
+    # _parse_task_markdown
+    # Purpose: Parse markdown content into task schema
+    # Args:
+    #   content: Markdown content string
+    #   task_number: Task number
+    # Returns: TaskSchema object
+    #----------------------------------------------------------------------
     def _parse_task_markdown(self, content: str, task_number: int) -> TaskSchema:
-        """Parse markdown content into task schema"""
         lines = content.split("\n")
         
         # Extract metadata
@@ -541,8 +580,14 @@ class TaskOperations:
             notes=notes.strip() if notes else None
         )
     
+    #----------------------------------------------------------------------
+    # _title_to_filename
+    # Purpose: Convert title to filename-safe format
+    # Args:
+    #   title: Task title
+    # Returns: Safe filename string
+    #----------------------------------------------------------------------
     def _title_to_filename(self, title: str) -> str:
-        """Convert title to filename-safe format"""
         # Lowercase
         filename = title.lower()
         # Replace spaces with underscores
@@ -552,14 +597,28 @@ class TaskOperations:
         # Limit length
         return filename[:50]
     
+    #----------------------------------------------------------------------
+    # _find_task_file
+    # Purpose: Find task file by number in directory
+    # Args:
+    #   task_number: Task number
+    #   directory: Directory to search
+    # Returns: Path to file or None
+    #----------------------------------------------------------------------
     def _find_task_file(self, task_number: int, directory: Path) -> Optional[Path]:
-        """Find task file by number in directory"""
         pattern = f"{task_number:03d}_*.md"
         files = list(directory.glob(pattern))
         return files[0] if files else None
     
+    #----------------------------------------------------------------------
+    # _find_matches
+    # Purpose: Find matching lines in content
+    # Args:
+    #   content: Text content to search
+    #   query: Search string
+    # Returns: List of matching lines (max 3)
+    #----------------------------------------------------------------------
     def _find_matches(self, content: str, query: str) -> List[str]:
-        """Find matching lines in content"""
         matches = []
         query_lower = query.lower()
         

@@ -26,6 +26,6 @@ def mock_project_root(config_root):
 @pytest.fixture
 def config_ops(config_root):
     """Create ConfigOperations instance."""
-    from mcp_servers.config.config_ops import ConfigOperations
+    from mcp_servers.config.operations import ConfigOperations
     ops = ConfigOperations(config_root)
     return ops

@@ -5,7 +5,7 @@
 
 ## Context
 
-During T093 (Containerize Ollama Model Service) deployment, a critical **port binding conflict** was discovered between the host-installed macOS Ollama application and the containerized `sanctuary_ollama_mcp` service. Both services bind to the same network address (`localhost:11434`), creating routing ambiguity that undermines the Federated Deployment architecture (Protocol P108).
+During T093 (Containerize Ollama Model Service) deployment, a critical **port binding conflict** was discovered between the host-installed macOS Ollama application and the containerized `sanctuary_ollama` service. Both services bind to the same network address (`localhost:11434`), creating routing ambiguity that undermines the Federated Deployment architecture (Protocol P108).
 
 ## Decision
 
@@ -35,7 +35,7 @@ OLLAMA_HOST = "http://ollama_model_mcp:11434"
 
 ```bash
 # 1. Stop the containerized Ollama service
-podman stop sanctuary_ollama_mcp
+podman stop sanctuary_ollama
 
 # 2. Verify container is stopped
 podman ps

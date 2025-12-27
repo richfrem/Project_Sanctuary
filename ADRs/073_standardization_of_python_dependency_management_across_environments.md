@@ -253,3 +253,19 @@ Follow this exact workflow to add or update a dependency in Project Sanctuary. T
 | **Dev / testing** | `requirements-dev.in` | `pip-compile requirements-dev.in --output-file requirements-dev.txt` | `pip install -r requirements-dev.txt` |
 
 **Golden Rule**: `.in` = what humans edit (intent). `.txt` = what machines generate and everything installs from (truth).
+
+## How to Update Dependencies (e.g., Security Fixes / Dependabot)
+
+When security vulnerabilities (CVEs) are reported or Dependabot suggests updates:
+
+1.  **Do NOT edit .txt files manually.**
+    *   Dependabot often tries to edit `requirements.txt` directly. This breaks the link with `.in` files.
+    *   You must update via the `.in` file -> `pip-compile` workflow.
+
+2.  **Workflow**:
+    *   **Option A: Update All**: Run `pip-compile --upgrade mcp_servers/requirements-core.in` to pull latest compatible versions for everything.
+    *   **Option B: Targeted Update**: Run `pip-compile --upgrade-package <package_name> mcp_servers/requirements-core.in` (e.g., `pip-compile --upgrade-package uvicorn mcp_servers/requirements-core.in`).
+
+3.  **Verify**:
+    *   Check the generated `requirements-core.txt` to confirm the version bump.
+    *   Rebuild affected containers or reinstall local environment.

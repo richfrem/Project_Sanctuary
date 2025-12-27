@@ -34,7 +34,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from mcp_servers.git.git_ops import GitOperations
+from mcp_servers.git.operations import GitOperations
 
 
 @pytest.fixture
@@ -79,11 +79,11 @@ def test_git_status(ops):
     status = ops.status()
     
     print(f"\n📋 git_status:")
-    print(f"   Branch: {status['branch']}")
+    print(f"   Branch: {status.branch}")
     
-    assert status['branch'] == "main"
-    assert len(status['modified']) == 0
-    assert len(status['staged']) == 0
+    assert status.branch == "main"
+    assert len(status.modified) == 0
+    assert len(status.staged) == 0
     print("✅ PASSED")
 
 
@@ -119,8 +119,7 @@ def test_git_diff(ops):
 def test_git_add_commit(ops):
     """Test git_add and git_commit."""
     # Switch to feature branch first (safety barrier)
-    ops.create_branch("feature/test-add-commit")
-    ops.checkout("feature/test-add-commit")
+    ops.start_feature("add-commit", "test")
     
     # Create file
     test_file = "test_file.txt"
@@ -129,7 +128,7 @@ def test_git_add_commit(ops):
     # Add
     ops.add([test_file])
     status = ops.status()
-    assert test_file in status['staged']
+    assert test_file in status.staged
     print(f"\n➕ git_add verified")
     
     # Commit (using subprocess to verify basic commit)
@@ -142,32 +141,31 @@ def test_git_add_commit(ops):
 
 def test_git_start_feature(ops):
     """Test git_start_feature - create branch."""
-    branch = "feature/test-123-description"
+    # branch variable not needed for start_feature input, it returns status message
+    # branch = "feature/test-123-description"
     
-    ops.create_branch(branch)
-    ops.checkout(branch)
+    ops.start_feature("123", "description")
     
     current = ops.get_current_branch()
     print(f"\n🌿 git_start_feature:")
     print(f"   Current: {current}")
     
-    assert current == branch
+    assert current.startswith("feature/task-123-description")
     print("✅ PASSED")
 
 
 def test_git_ops_workflow(ops):
     """Test full workflow using GitOperations methods."""
     # 1. Start Feature
-    branch = "feature/workflow-test"
-    ops.create_branch(branch)
-    ops.checkout(branch)
+    ops.start_feature("workflow-test", "test")
+    branch = ops.get_current_branch()
     assert ops.get_current_branch() == branch
     
     # 2. Add File
     Path("new_feature.py").write_text("print('feature')")
     ops.add(["new_feature.py"])
     status = ops.status()
-    assert "new_feature.py" in status['staged']
+    assert "new_feature.py" in status.staged
     
     # 3. Commit (simulated manual commit since ops might not have commit method exposure)
     subprocess.run(["git", "commit", "-m", "feat: new feature"], check=True, capture_output=True)
@@ -178,7 +176,7 @@ def test_git_ops_workflow(ops):
     
     # 5. Finish (cleanup)
     ops.checkout("main")
-    ops.delete_branch(branch, force=True)
+    ops.delete_local_branch(branch, force=True)
     
     assert ops.get_current_branch() == "main"
     print("\n✅ Full Workflow PASSED")

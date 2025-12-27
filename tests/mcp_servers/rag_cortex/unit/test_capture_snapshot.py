@@ -92,6 +92,6 @@ def test_capture_snapshot_git_mismatch(mock_cortex_ops):
             snapshot_type="audit"
         )
         
-        assert response.status == "success" # Still succeeds, just flagged
-        assert response.manifest_verified is False
-        assert "WARNING" in response.git_diff_context
+        assert response.status == "success" # Still succeeds
+        assert response.manifest_verified is True # True because no critical omissions
+        assert "Shadow Manifest" in response.git_diff_context

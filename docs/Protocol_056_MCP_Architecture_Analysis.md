@@ -45,7 +45,7 @@ This document provides a comprehensive analysis of the MCP (Model Context Protoc
 ┌─────────────────────────────────────────────────────────┐
 │           Services Layer (Podman)                       │
 │  💾 sanctuary_vector_db:8110 - ChromaDB RAG Database    │
-│  🦙 sanctuary_ollama_mcp:11434 - Sanctuary-Qwen2-7B     │
+│  🦙 sanctuary_ollama:11434 - Sanctuary-Qwen2-7B     │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -545,7 +545,7 @@ The Protocol 056 verification successfully exercised 5 distinct MCP servers acro
 ### Services Validated:
 
 - ✅ ChromaDB (sanctuary_vector_db:8110) - 70 chunks stored
-- ℹ️ Ollama (sanctuary_ollama_mcp:11434) - available via Forge MCP
+- ℹ️ Ollama (sanctuary_ollama:11434) - available via Forge MCP
 
 ### Strategic Impact:
 
@@ -602,7 +602,7 @@ The Strategic Crucible Loop is **CERTIFIED OPERATIONAL** with demonstrated abili
 ### Forge LLM MCP
 - **Location:** Infrastructure Layer
 - **Purpose:** Model inference and fine-tuning
-- **Backend:** Ollama (sanctuary_ollama_mcp:11434)
+- **Backend:** Ollama (sanctuary_ollama:11434)
 - **Model:** Sanctuary-Qwen2-7B (fine-tuned)
 - **Tools:** query_sanctuary_model, check_sanctuary_model_status
 - **Status:** ✅ Available (not used in verification)

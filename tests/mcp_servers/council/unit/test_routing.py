@@ -13,8 +13,8 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 from mcp_servers.agent_persona.llm_client import OllamaClient, get_llm_client
-from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
-from mcp_servers.council.council_ops import CouncilOperations
+from mcp_servers.agent_persona.operations import PersonaOperations
+from mcp_servers.council.operations import CouncilOperations
 
 
 class TestOllamaClientProtocol116:
@@ -50,11 +50,11 @@ class TestOllamaClientProtocol116:
 class TestAgentPersonaModelPreference:
     """Test Agent Persona MCP model_preference routing"""
     
-    @patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client')
-    @patch('mcp_servers.agent_persona.agent_persona_ops.Agent')
+    @patch('mcp_servers.agent_persona.operations.get_llm_client')
+    @patch('mcp_servers.agent_persona.operations.Agent')
     def test_ollama_preference_uses_container_network(self, mock_agent, mock_get_client):
         """Verify model_preference='OLLAMA' routes to container network"""
-        ops = AgentPersonaOperations()
+        ops = PersonaOperations()
         
         # Mock agent query
         mock_agent_instance = Mock()
@@ -73,11 +73,11 @@ class TestAgentPersonaModelPreference:
         call_kwargs = mock_get_client.call_args[1]
         assert call_kwargs['ollama_host'] == "http://ollama_model_mcp:11434"
     
-    @patch('mcp_servers.agent_persona.agent_persona_ops.get_llm_client')
-    @patch('mcp_servers.agent_persona.agent_persona_ops.Agent')
+    @patch('mcp_servers.agent_persona.operations.get_llm_client')
+    @patch('mcp_servers.agent_persona.operations.Agent')
     def test_no_preference_no_ollama_host(self, mock_agent, mock_get_client):
         """Verify no model_preference doesn't set ollama_host"""
-        ops = AgentPersonaOperations()
+        ops = PersonaOperations()
         
         mock_agent_instance = Mock()
         mock_agent_instance.query.return_value = "Test response"
@@ -96,7 +96,7 @@ class TestAgentPersonaModelPreference:
 class TestCouncilModelPreference:
     """Test Council MCP model_preference parameter threading"""
     
-    @patch('mcp_servers.agent_persona.agent_persona_ops.AgentPersonaOperations')
+    @patch('mcp_servers.agent_persona.operations.PersonaOperations')
     @patch('mcp_servers.rag_cortex.operations.CortexOperations')
     def test_model_preference_passed_to_persona_ops(self, mock_cortex, mock_persona):
         """Verify model_preference is passed through to Agent Persona MCP"""

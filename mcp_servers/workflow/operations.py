@@ -1,9 +1,14 @@
+#============================================
+# mcp_servers/workflow/operations.py
+# Purpose: Operations for managing Agent Workflows.
+# Role: Business Logic Layer
+#============================================
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 import yaml
-import logging
+from mcp_servers.lib.logging_utils import setup_mcp_logging
 
-logger = logging.getLogger(__name__)
+logger = setup_mcp_logging(__name__)
 
 class WorkflowOperations:
     """
@@ -11,12 +16,22 @@ class WorkflowOperations:
     Workflows are defined as markdown files with YAML frontmatter in .agent/workflows/
     """
 
+    #============================================
+    # Method: __init__
+    # Purpose: Initialize Workflow Operations.
+    # Args:
+    #   workflow_dir: Path to workflow directory
+    #============================================
     def __init__(self, workflow_dir: Path):
         self.workflow_dir = workflow_dir
         self.workflow_dir.mkdir(parents=True, exist_ok=True)
 
+    #============================================
+    # Method: list_workflows
+    # Purpose: List all available workflows in the directory.
+    # Returns: List of workflow metadata dicts
+    #============================================
     def list_workflows(self) -> List[Dict[str, Any]]:
-        """List all available workflows in the directory."""
         workflows = []
         if not self.workflow_dir.exists():
             return []
@@ -41,6 +56,13 @@ class WorkflowOperations:
         
         return sorted(workflows, key=lambda x: x['filename'])
 
+    #============================================
+    # Method: get_workflow_content
+    # Purpose: Get the raw content of a specific workflow.
+    # Args:
+    #   filename: Workflow filename
+    # Returns: Content string or None
+    #============================================
     def get_workflow_content(self, filename: str) -> Optional[str]:
         """Get the raw content of a specific workflow."""
         path = self.workflow_dir / filename

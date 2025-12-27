@@ -38,7 +38,7 @@ Add this to your `mcp_config.json`:
   "command": "uv",
   "args": [
     "--directory",
-    "mcp_servers/document/adr",
+    "mcp_servers/adr",
     "run",
     "server.py"
   ],
@@ -55,7 +55,7 @@ Add this to your `mcp_config.json`:
 Run the test suite for this server:
 
 ```bash
-pytest mcp_servers/document/adr/tests
+pytest tests/mcp_servers/adr/
 ```
 
 ### Manual Verification
@@ -66,14 +66,19 @@ pytest mcp_servers/document/adr/tests
 ## Architecture
 
 ### Overview
-This server manages the `ADRs/` directory.
+This server manages the `ADRs/` directory using a standardized **3-Layer Architecture**:
 
-**Safety Rules:**
-1.  **Sequential Numbering:** Auto-assigned.
-2.  **No Deletion:** Supersede only.
-3.  **Valid Transitions:** Status changes must follow allowed transitions.
-4.  **Schema Compliance:** Enforced format.
+1.  **Interface Layer (`server.py`):** Handles tool registration and uses FastMCP.
+2.  **Business Logic Layer (`operations.py`):** Centralized `ADROperations` class for file I/O and status logic.
+3.  **Safety Layer (`validator.py`):** Enforces sequential numbering and valid status transitions.
+
+### Safety Features
+- 🔢 **Sequential Integrity:** Auto-assigns numbers to prevent collisions.
+- 🔒 **Immutable History:** Prevents deletion; supports replacement via "Superseded" status.
+- ✅ **Schema Compliance:** Enforces Context/Decision/Consequences format.
+- 🔄 **State Machine:** Validates status transitions (e.g., Proposed -> Accepted).
 
 ## Dependencies
 
 - `mcp`
+- `fastmcp`

@@ -42,19 +42,19 @@ import sys
 # Add parent directories to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from mcp_servers.agent_persona.agent_persona_ops import AgentPersonaOperations
+from mcp_servers.agent_persona.operations import PersonaOperations
 
 @pytest.fixture
 def persona_ops():
-    """Create AgentPersonaOperations instance"""
-    return AgentPersonaOperations()
+    """Create PersonaOperations instance"""
+    return PersonaOperations()
 
 # ============================================================================
 # EXISTING TESTS (7 tests - keep these)
 # ============================================================================
 
 def test_persona_ops_initialization(persona_ops):
-    """Test that AgentPersonaOperations initializes correctly"""
+    """Test that PersonaOperations initializes correctly"""
     assert persona_ops.project_root.exists()
     assert persona_ops.persona_dir.exists()
     assert persona_ops.state_dir.exists()

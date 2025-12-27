@@ -1,42 +1,63 @@
+#============================================
+# mcp_servers/code/server.py
+# Purpose: MCP Server for FileSystem and Code Operations.
+#          Provides tools for listing, reading, writing, and analyzing code.
+# Role: Interface Layer
+# Used as: Main service entry point for the mcp_servers.code module.
+#============================================
 
-"""
-Sanctuary FileSystem / Code Server
-Domain: project_sanctuary.code / sanctuary_filesystem
-
-Refactored to use SSEServer for Gateway integration (202 Accepted + Async SSE).
-Also maps to "sanctuary_filesystem" in the topology.
-"""
 import os
 import sys
+import json
 import logging
+from typing import Optional, List, Dict, Any
+from fastmcp import FastMCP
+from fastmcp.exceptions import ToolError
 
-# Import SSEServer
-current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(os.path.dirname(current_dir))
-if project_root not in sys.path:
-    sys.path.append(project_root)
+# Local/Library Imports
+from mcp_servers.lib.env_helper import get_env_variable
+from mcp_servers.lib.path_utils import find_project_root
+from mcp_servers.lib.logging_utils import setup_mcp_logging
+from mcp_servers.code.operations import CodeOperations
+from .models import (
+    CodeAnalysisRequest,
+    CodeLintRequest,
+    CodeFormatRequest,
+    CodeFindFileRequest,
+    CodeListFilesRequest,
+    CodeSearchContentRequest,
+    CodeReadRequest,
+    CodeWriteRequest,
+    CodeGetInfoRequest
+)
 
-try:
-    from mcp_servers.lib.sse_adaptor import SSEServer
-except ImportError:
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from lib.sse_adaptor import SSEServer
+# 1. Initialize Logging
+logger = setup_mcp_logging("sanctuary_filesystem")
 
-from mcp_servers.code.code_ops import CodeOperations
+# 2. Initialize FastMCP with Sanctuary Metadata
+mcp = FastMCP(
+    "project_sanctuary.filesystem.code",
+    instructions="""
+    Use this server for all file system and code quality operations.
+    - Read, write, and list files in the workspace.
+    - Run linting (ruff) and formatting (ruff/black) on source code.
+    - Search for content across files and perform static analysis.
+    """
+)
 
-# Initialize
-server = SSEServer("sanctuary_filesystem") # Maps to code folder
-app = server.app
-
-# Operations
-PROJECT_ROOT = os.environ.get("PROJECT_ROOT", ".")
+# 3. Initialize Operations
+PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 ops = CodeOperations(PROJECT_ROOT)
 
-# Tool Wrappers (Async wrappers for synchronous ops)
-async def code_lint(path: str, tool: str = "ruff") -> str:
+#============================================
+# Standardized Tool Implementations
+#============================================
+
+@mcp.tool()
+async def code_lint(request: CodeLintRequest) -> str:
     """Run linting on a file or directory."""
     try:
-        result = ops.lint(path, tool)
+        result = ops.lint(request.path, request.tool)
         output = [f"Linting {result['path']} with {result['tool']}:", ""]
         if result['issues_found']:
             output.append("❌ Issues found:")
@@ -45,14 +66,16 @@ async def code_lint(path: str, tool: str = "ruff") -> str:
             output.append("✅ No issues found")
         return "\n".join(output)
     except Exception as e:
-        return f"Error linting '{path}': {str(e)}"
+        logger.error(f"Error in code_lint: {e}")
+        raise ToolError(f"Linting failed: {str(e)}")
 
-async def code_format(path: str, tool: str = "ruff", check_only: bool = False) -> str:
+@mcp.tool()
+async def code_format(request: CodeFormatRequest) -> str:
     """Format code in a file or directory."""
     try:
-        result = ops.format_code(path, tool, check_only)
+        result = ops.format_code(request.path, request.tool, request.check_only)
         output = [f"Formatting {result['path']} with {result['tool']}:", ""]
-        if check_only:
+        if request.check_only:
             if result['success']:
                 output.append("✅ Code is properly formatted")
             else:
@@ -66,69 +89,82 @@ async def code_format(path: str, tool: str = "ruff", check_only: bool = False) -
                 output.append(result['output'])
         return "\n".join(output)
     except Exception as e:
-        return f"Error formatting '{path}': {str(e)}"
+        logger.error(f"Error in code_format: {e}")
+        raise ToolError(f"Formatting failed: {str(e)}")
 
-async def code_analyze(path: str) -> str:
+@mcp.tool()
+async def code_analyze(request: CodeAnalysisRequest) -> str:
     """Perform static analysis on code."""
     try:
-        result = ops.analyze(path)
+        result = ops.analyze(request.path)
         output = [f"Analyzing {result['path']}:", "", result['statistics']]
         return "\n".join(output)
     except Exception as e:
-        return f"Error analyzing '{path}': {str(e)}"
+        logger.error(f"Error in code_analyze: {e}")
+        raise ToolError(f"Analysis failed: {str(e)}")
 
+@mcp.tool()
 async def code_check_tools() -> str:
     """Check which code quality tools are available."""
-    tools = ["ruff", "black", "pylint", "flake8", "mypy"]
-    available = []
-    unavailable = []
-    for tool in tools:
-        if ops.check_tool_available(tool):
-            available.append(f"✅ {tool}")
-        else:
-            unavailable.append(f"❌ {tool}")
-    output = ["Available code tools:", ""]
-    output.extend(available)
-    if unavailable:
-        output.append("")
-        output.append("Unavailable:")
-        output.extend(unavailable)
-    return "\n".join(output)
+    try:
+        tools = ["ruff", "black", "pylint", "flake8", "mypy"]
+        available = []
+        unavailable = []
+        for tool in tools:
+            if ops.check_tool_available(tool):
+                available.append(f"✅ {tool}")
+            else:
+                unavailable.append(f"❌ {tool}")
+        output = ["Available code tools:", ""]
+        output.extend(available)
+        if unavailable:
+            output.append("")
+            output.append("Unavailable:")
+            output.extend(unavailable)
+        return "\n".join(output)
+    except Exception as e:
+        logger.error(f"Error in code_check_tools: {e}")
+        raise ToolError(f"Tool check failed: {str(e)}")
 
-async def code_find_file(name_pattern: str, path: str = ".") -> str:
+@mcp.tool()
+async def code_find_file(request: CodeFindFileRequest) -> str:
     """Find files by name or glob pattern."""
     try:
-        matches = ops.find_file(name_pattern, path)
+        matches = ops.find_file(request.name_pattern, request.path)
         if not matches:
-            return f"No files found matching '{name_pattern}' in '{path}'"
-        output = [f"Found {len(matches)} file(s) matching '{name_pattern}':", ""]
+            return f"No files found matching '{request.name_pattern}' in '{request.path}'"
+        output = [f"Found {len(matches)} file(s) matching '{request.name_pattern}':", ""]
         for match in matches:
             output.append(f"  {match}")
         return "\n".join(output)
     except Exception as e:
-        return f"Error finding files: {str(e)}"
+        logger.error(f"Error in code_find_file: {e}")
+        raise ToolError(f"Find file failed: {str(e)}")
 
-async def code_list_files(path: str = ".", pattern: str = "*", recursive: bool = True) -> str:
-    """List files in a directory with optional pattern."""
+@mcp.tool()
+async def code_list_files(request: CodeListFilesRequest) -> str:
+    """List files in a directory with pattern support."""
     try:
-        files = ops.list_files(path, pattern, recursive)
+        files = ops.list_files(request.path, request.pattern, request.recursive, request.max_files)
         if not files:
-            return f"No files found in '{path}' matching '{pattern}'"
-        output = [f"Found {len(files)} file(s) in '{path}':", ""]
+            return f"No files found in '{request.path}' matching '{request.pattern}'"
+        output = [f"Found {len(files)} file(s) in '{request.path}':", ""]
         for file_info in files:
             size_kb = file_info['size'] / 1024
             output.append(f"  {file_info['path']} ({size_kb:.1f} KB)")
         return "\n".join(output)
     except Exception as e:
-        return f"Error listing files: {str(e)}"
+        logger.error(f"Error in code_list_files: {e}")
+        raise ToolError(f"List files failed: {str(e)}")
 
-async def code_search_content(query: str, file_pattern: str = "*.py", case_sensitive: bool = False) -> str:
+@mcp.tool()
+async def code_search_content(request: CodeSearchContentRequest) -> str:
     """Search for text/patterns in code files."""
     try:
-        matches = ops.search_content(query, file_pattern, case_sensitive)
+        matches = ops.search_content(request.query, request.file_pattern, request.case_sensitive)
         if not matches:
-            return f"No matches found for '{query}' in files matching '{file_pattern}'"
-        output = [f"Found {len(matches)} match(es) for '{query}':", ""]
+            return f"No matches found for '{request.query}' in files matching '{request.file_pattern}'"
+        output = [f"Found {len(matches)} match(es) for '{request.query}':", ""]
         current_file = None
         for match in matches[:50]:
             if match['file'] != current_file:
@@ -139,34 +175,40 @@ async def code_search_content(query: str, file_pattern: str = "*.py", case_sensi
             output.append(f"\n... and {len(matches) - 50} more matches")
         return "\n".join(output)
     except Exception as e:
-        return f"Error searching content: {str(e)}"
+        logger.error(f"Error in code_search_content: {e}")
+        raise ToolError(f"Search content failed: {str(e)}")
 
-async def code_read(path: str, max_size_mb: int = 10) -> str:
+@mcp.tool()
+async def code_read(request: CodeReadRequest) -> str:
     """Read file contents."""
     try:
-        content = ops.read_file(path, max_size_mb)
-        output = [f"Contents of {path}:", "=" * 60, content, "=" * 60]
-        return "\n".join(output)
+        content = ops.read_file(request.path, request.max_size_mb)
+        # We don't wrap in decorators anymore, just return string
+        return content
     except Exception as e:
-        return f"Error reading file '{path}': {str(e)}"
+        logger.error(f"Error in code_read: {e}")
+        raise ToolError(f"Read failed: {str(e)}")
 
-async def code_write(path: str, content: str, backup: bool = True, create_dirs: bool = True) -> str:
+@mcp.tool()
+async def code_write(request: CodeWriteRequest) -> str:
     """Write/update file with automatic backup."""
     try:
-        result = ops.write_file(path, content, backup, create_dirs)
+        result = ops.write_file(request.path, request.content, request.backup, request.create_dirs)
         output = [f"{'Created' if result['created'] else 'Updated'} file: {result['path']}"]
         output.append(f"Size: {result['size']} bytes")
         if result['backup']:
             output.append(f"Backup: {result['backup']}")
         return "\n".join(output)
     except Exception as e:
-        return f"Error writing file '{path}': {str(e)}"
+        logger.error(f"Error in code_write: {e}")
+        raise ToolError(f"Write failed: {str(e)}")
 
-async def code_get_info(path: str) -> str:
+@mcp.tool()
+async def code_get_info(request: CodeGetInfoRequest) -> str:
     """Get file metadata."""
     try:
         import time
-        info = ops.get_file_info(path)
+        info = ops.get_file_info(request.path)
         output = [f"File info for {info['path']}:", ""]
         output.append(f"  Language: {info['language']}")
         output.append(f"  Size: {info['size']} bytes ({info['size']/1024:.1f} KB)")
@@ -174,89 +216,22 @@ async def code_get_info(path: str) -> str:
         output.append(f"  Modified: {time.ctime(info['modified'])}")
         return "\n".join(output)
     except Exception as e:
-        return f"Error getting file info for '{path}': {str(e)}"
+        logger.error(f"Error in code_get_info: {e}")
+        raise ToolError(f"Get info failed: {str(e)}")
 
-
-# Register Tools
-server.register_tool("code_lint", code_lint, {
-    "type": "object",
-    "properties": {
-        "path": {"type": "string"},
-        "tool": {"type": "string", "default": "ruff"}
-    },
-    "required": ["path"]
-})
-server.register_tool("code_format", code_format, {
-    "type": "object",
-    "properties": {
-        "path": {"type": "string"},
-        "tool": {"type": "string", "default": "ruff"},
-        "check_only": {"type": "boolean", "default": False}
-    },
-    "required": ["path"]
-})
-server.register_tool("code_analyze", code_analyze, {
-    "type": "object",
-    "properties": {"path": {"type": "string"}},
-    "required": ["path"]
-})
-server.register_tool("code_check_tools", code_check_tools, {"type": "object", "properties": {}})
-server.register_tool("code_find_file", code_find_file, {
-    "type": "object",
-    "properties": {
-        "name_pattern": {"type": "string"},
-        "path": {"type": "string", "default": "."}
-    },
-    "required": ["name_pattern"]
-})
-server.register_tool("code_list_files", code_list_files, {
-    "type": "object",
-    "properties": {
-        "path": {"type": "string", "default": "."},
-        "pattern": {"type": "string", "default": "*"},
-        "recursive": {"type": "boolean", "default": True}
-    }
-})
-server.register_tool("code_search_content", code_search_content, {
-    "type": "object",
-    "properties": {
-        "query": {"type": "string"},
-        "file_pattern": {"type": "string", "default": "*.py"},
-        "case_sensitive": {"type": "boolean", "default": False}
-    },
-    "required": ["query"]
-})
-server.register_tool("code_read", code_read, {
-    "type": "object",
-    "properties": {
-        "path": {"type": "string"},
-        "max_size_mb": {"type": "integer", "default": 10}
-    },
-    "required": ["path"]
-})
-server.register_tool("code_write", code_write, {
-    "type": "object",
-    "properties": {
-        "path": {"type": "string"},
-        "content": {"type": "string"},
-        "backup": {"type": "boolean", "default": True},
-        "create_dirs": {"type": "boolean", "default": True}
-    },
-    "required": ["path", "content"]
-})
-server.register_tool("code_get_info", code_get_info, {
-    "type": "object",
-    "properties": {"path": {"type": "string"}},
-    "required": ["path"]
-})
+#============================================
+# Main Execution Entry Point
+#============================================
 
 if __name__ == "__main__":
     # Dual-mode support:
     # 1. If PORT is set -> Run as SSE (Gateway Mode)
-    # 2. If PORT is NOT set -> Run as Stdio (Legacy Mode)
-    import os
-    port_env = os.getenv("PORT")
+    # 2. If PORT is NOT set -> Run as Stdio (Local/CLI Mode)
+    port_env = get_env_variable("PORT", required=False)
     transport = "sse" if port_env else "stdio"
-    port = int(port_env) if port_env else 8001
     
-    server.run(port=port, transport=transport)
+    if transport == "sse":
+        port = int(port_env) if port_env else 8005
+        mcp.run(port=port, transport=transport)
+    else:
+        mcp.run(transport=transport)

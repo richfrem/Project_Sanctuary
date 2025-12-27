@@ -1,6 +1,22 @@
-"""
-ADR MCP Server - File Operations
-"""
+#============================================
+# mcp_servers/adr/operations.py
+# Purpose: Core business logic for ADR Operations.
+#          Handles file I/O, parsing, and state transitions for ADRs.
+# Role: Business Logic Layer
+# Used as: Helper module by server.py
+# Calling example:
+#   ops = ADROperations(adrs_dir="ADRs")
+#   ops.create_adr(title="My Decision", ...)
+# LIST OF CLASSES/FUNCTIONS:
+#   - ADROperations
+#     - __init__
+#     - create_adr
+#     - update_adr_status
+#     - get_adr
+#     - list_adrs
+#     - search_adrs
+#     - _find_adr_file
+#============================================
 import os
 import re
 from datetime import datetime
@@ -9,7 +25,6 @@ from pathlib import Path
 import sys
 
 # Setup logging
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
@@ -19,7 +34,10 @@ from .validator import ADRValidator
 
 
 class ADROperations:
-    """Handles ADR file operations."""
+    """
+    Class: ADROperations
+    Purpose: Handles File I/O and Business Logic for ADRs.
+    """
     
     def __init__(self, adrs_dir: str = "ADRs"):
         self.adrs_dir = adrs_dir
@@ -28,6 +46,17 @@ class ADROperations:
         # Ensure directory exists
         os.makedirs(self.adrs_dir, exist_ok=True)
     
+    #============================================
+    # Method: create_adr
+    # Purpose: Create a new ADR file from arguments.
+    # Args:
+    #   title: ADR title
+    #   context: Background
+    #   decision: Decision details
+    #   consequences: Outcome analysis
+    #   date, status, author, supersedes: Metadata
+    # Returns: Dict with new ADR info
+    #============================================
     def create_adr(
         self,
         title: str,
@@ -40,7 +69,6 @@ class ADROperations:
         supersedes: Optional[int] = None
     ) -> Dict[str, Any]:
         """Create a new ADR."""
-        # Validate inputs
         self.validator.validate_required_fields(title, context, decision, consequences)
         self.validator.validate_supersedes(supersedes)
         
@@ -84,6 +112,15 @@ class ADROperations:
             "status": status
         }
     
+    #============================================
+    # Method: update_adr_status
+    # Purpose: Update status and add status log entry.
+    # Args:
+    #   number: ADR number
+    #   new_status: Target status enum string
+    #   reason: Justification for change
+    # Returns: Dict with update confirmation
+    #============================================
     def update_adr_status(
         self,
         number: int,
@@ -133,8 +170,15 @@ class ADROperations:
             "updated_at": datetime.now().strftime("%Y-%m-%d")
         }
     
+    #============================================
+    # Method: get_adr
+    # Purpose: Parse and retrieve ADR content.
+    # Args:
+    #   number: ADR number
+    # Returns: Dict with parsed sections
+    #============================================
     def get_adr(self, number: int) -> Dict[str, Any]:
-        """Get a specific ADR."""
+        """Retrieve and parse an ADR."""
         filepath = self._find_adr_file(number)
         if not filepath:
             raise FileNotFoundError(f"ADR {number:03d} not found")
@@ -164,6 +208,13 @@ class ADROperations:
             "file_path": filepath
         }
     
+    #============================================
+    # Method: list_adrs
+    # Purpose: List all valid ADRs in directory.
+    # Args:
+    #   status: Optional status filter
+    # Returns: List of ADR dict summaries
+    #============================================
     def list_adrs(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
         """List all ADRs."""
         adrs = []
@@ -195,8 +246,15 @@ class ADROperations:
         
         return adrs
     
+    #============================================
+    # Method: search_adrs
+    # Purpose: Grep-like search across ADR contents.
+    # Args:
+    #   query: Search string
+    # Returns: List of matches with context
+    #============================================
     def search_adrs(self, query: str) -> List[Dict[str, Any]]:
-        """Search ADRs by content."""
+        """Search ADRs."""
         results = []
         query_lower = query.lower()
         

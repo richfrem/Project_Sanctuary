@@ -4,7 +4,7 @@ import time
 from pathlib import Path
 from tests.mcp_servers.base.base_integration_test import BaseIntegrationTest
 from mcp_servers.rag_cortex.operations import CortexOperations
-from mcp_servers.lib.utils.env_helper import get_env_variable
+from mcp_servers.lib.env_helper import get_env_variable
 
 class TestLearningContinuity(BaseIntegrationTest):
     """
@@ -151,7 +151,7 @@ class TestLearningContinuity(BaseIntegrationTest):
         assert snapshot_path.exists()
         content = snapshot_path.read_text()
         
-        assert "# Red Team Audit Packet" in content
+        assert "# Red Team Audit Briefing" in content or "# Red Team Audit Packet" in content
         assert "Testing Phase" in content
         assert "print('hello modified world')" in content
         

@@ -35,7 +35,7 @@ The Lean Fleet architecture is confirmed as 8 containers only:
 5. sanctuary_cortex (8104)
 6. sanctuary_domain (8105)
 7. sanctuary_vector_db (8110)
-8. sanctuary_ollama_mcp (11434)
+8. sanctuary_ollama (11434)
 
 **Protocol Status:**
 - Protocol 127 (Mechanical Delegation): DEPRECATED

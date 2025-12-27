@@ -5,7 +5,7 @@ This directory contains the test suite for the Forge LLM MCP, organized into a 3
 ## Structure
 
 - **`unit/`**: Fast, mocked tests. Run these frequently. No external dependencies.
-- **`integration/`**: Real tests against the Ollama container. Accesses the actual `sanctuary_ollama_mcp` service.
+- **`integration/`**: Real tests against the Ollama container. Accesses the actual `sanctuary_ollama` service.
 
 ## Prerequisites for Integration Tests
 

@@ -1,3 +1,11 @@
+#============================================
+# mcp_servers/protocol/models.py
+# Purpose: Data models for the Protocol MCP server.
+#          Defines Protocol dataclass and Status enum.
+# Role: Data Layer
+# Used as: Data structure definitions.
+#============================================
+
 """
 Data models for the Protocol MCP server.
 """
@@ -44,3 +52,33 @@ PROTOCOL_TEMPLATE = """# Protocol {number}: {title}
 
 {content}
 """
+
+#============================================
+# FastMCP Request Models
+#============================================
+from pydantic import BaseModel, Field
+from typing import Dict, Any
+
+class ProtocolCreateRequest(BaseModel):
+    number: int = Field(..., description="Unique protocol number")
+    title: str = Field(..., description="Descriptive title of the protocol")
+    status: str = Field(..., description="Status (PROPOSED, CANONICAL, DEPRECATED)")
+    classification: str = Field(..., description="Classification (Internal, Public, etc.)")
+    version: str = Field(..., description="Version string (e.g., 1.0)")
+    authority: str = Field(..., description="Authorizing entity or role")
+    content: str = Field(..., description="Full protocol content in markdown")
+    linked_protocols: Optional[str] = Field(None, description="Comma-separated list of related protocol numbers")
+
+class ProtocolUpdateRequest(BaseModel):
+    number: int = Field(..., description="Protocol number to update")
+    updates: Dict[str, Any] = Field(..., description="Dictionary of fields to change")
+    reason: str = Field(..., description="Justification for the update")
+
+class ProtocolGetRequest(BaseModel):
+    number: int = Field(..., description="Protocol number to retrieve")
+
+class ProtocolListRequest(BaseModel):
+    status: Optional[str] = Field(None, description="Filter protocols by status")
+
+class ProtocolSearchRequest(BaseModel):
+    query: str = Field(..., description="Search term or regex pattern")

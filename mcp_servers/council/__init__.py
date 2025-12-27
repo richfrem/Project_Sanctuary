@@ -1,4 +1,4 @@
 """Council operations library"""
-from .council_ops import CouncilOperations
+from .operations import CouncilOperations
 
 __all__ = ["CouncilOperations"]

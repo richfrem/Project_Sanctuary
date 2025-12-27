@@ -6,11 +6,16 @@ This file documents all environment variables used across the Project Sanctuary 
 
 ```bash
 # Option 1: Source the .env file
-source .env
+# use mcp_servers/lib/env_helper.py
 
-# Option 2: Use python-dotenv (recommended for Python scripts)
-pip install python-dotenv
+#read information about approach and three
+#environments terminal, .venv and podman
+# see ADRs/073_standardization_of_python_dependency_management_across_environments.md
+
+# user secrets and api keys stored in user profile .zshrc
 ```
+
+
 
 ## Environment Variables Reference
 
