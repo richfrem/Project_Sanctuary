@@ -24,7 +24,7 @@ To prevent conflicts with legacy services (8000-8099), the Fleet is pinned to th
 | **sanctuary_cortex** | `8104` | `8000` | Intelligence |
 | **sanctuary_domain** | `8105` | `8105` | Business/Domain |
 | **sanctuary_vector_db** | `8110` | `8000` | Knowledge Backend |
-| **sanctuary_ollama_mcp**| `11434` | `11434` | Model Backend |
+| **sanctuary_ollama**| `11434` | `11434` | Model Backend |
 
 ### 3. Legacy & External Services (Script-based)
 | Service | Host Port | Range | Usage |

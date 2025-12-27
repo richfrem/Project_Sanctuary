@@ -162,8 +162,8 @@ config:
 flowchart TB
  subgraph subGraph0["Local Workstation (Client & Test Context)"]
         direction TB
-        LLM["LLM Chat Sessions<br/>(Antigravity, Claude, etc.)"]
-        IDE["Direct Developer Access<br/>(Terminal / IDE)"]
+        Claude["Claude Desktop<br/>(Bridged Session)"]
+        VSCode["VS Code Agent<br/>(Direct Attempt)"]
         Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
         
         subgraph subGraphTest["Testing Suite"]
@@ -175,18 +175,20 @@ flowchart TB
  subgraph subGraph1["server.py (Entry Point)"]
         Selector{"MCP_TRANSPORT<br/>Selector"}
         StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
-        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'" }
+        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
   end
 
- subgraph subGraph2["Core Logic Layers"]
+ subgraph subGraph2["Core Logic (Asynchronous)"]
+        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
         Ops@{ label: "Operations Layer<br/>'operations.py'" }
         Models@{ label: "Data Models<br/>'models.py'" }
   end
 
- subgraph subGraph3["MCP Cluster Container"]
+ subgraph subGraph3["Cortex Cluster Container"]
     direction TB
         subGraph1
         subGraph2
+        Health["Healthcheck Config<br/>(600s Start Period)"]
   end
 
  subgraph subGraph4["Podman Network (Fleet Context)"]
@@ -194,16 +196,23 @@ flowchart TB
         subGraph3
   end
 
-    %% E2E / Production Flow
-    LLM -- "Stdio" --> Bridge
-    E2E_Test -- "Simulates Stdio Session" --> Bridge
-    Bridge -- "HTTP / RPC" --> Gateway
-    Gateway -- "SSE Handshake" --> SSEWrap
-    SSEWrap -- "Execute" --> subGraph2
+    %% COMPLIANT PATH (Claude / Production)
+    Claude -- "Stdio" --> Bridge
+    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
+    E2E_Test -- "Simulates Stdio" --> Bridge
+
+    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
+    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
+
+    %% EXECUTION FLOW
+    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
+    SSEWrap -- "Offload Task" --> Worker
+    Worker -- "Execute Blocking RAG" --> Ops
+    SSEWrap -- "Concurrent Heartbeats" --> Gateway
 
     %% Integration / Developer Flow
-    IDE -- "Direct Stdio Call" --> StdioWrap
-    Int_Test -- "Validates Stdio & SSE Schemas" --> subGraph1
+    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
+    Int_Test -- "Validates Schemas" --> subGraph1
     StdioWrap -- "Execute" --> subGraph2
 
     %% Logic Selection
@@ -211,10 +220,10 @@ flowchart TB
     Selector -- "If 'sse'" --> SSEWrap
 
     style Bridge fill:#f9f,stroke:#333,stroke-width:2px
+    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
     style Gateway fill:#69f,stroke:#333,stroke-width:2px
-    style E2E_Test fill:#fdd,stroke:#f66,stroke-width:2px
-    style Int_Test fill:#ddf,stroke:#66f,stroke-width:2px
-    style Selector fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    style Worker fill:#dfd,stroke:#333,stroke-dasharray: 5 5
+    style Health fill:#fff,stroke:#333,stroke-dasharray: 5 5
 ```
 
 ---
@@ -476,6 +485,36 @@ If issues arise post-implementation:
 
 ---
 
+## Audit Resolution Log
+
+### 2025-12-26: SSEServer Healthcheck Starvation Fix
+
+**Issue:** `sanctuary_cortex` container entered "unhealthy" state (FailingStreak: 7, ExitCode 125) during `cortex-cortex-ingest-full` operations (~687s runtime).
+
+**Root Cause:** The SSEServer Scalability Constraint (documented above) was triggered — synchronous blocking of the event loop during 6,000+ chunk ingestion prevented the healthcheck endpoint from responding within the 10s timeout.
+
+**Resolution (Dual-Stack Fix):**
+
+| Layer | Change | Rationale |
+|-------|--------|-----------|
+| **Infrastructure** | `docker-compose.yml` healthcheck: `start_period: 600s`, `interval: 60s`, `timeout: 30s`, `retries: 5` | Accommodate 11-minute ingestion window |
+| **Code** | `server.py`: `cortex_ingest_full` and `cortex_ingest_incremental` converted to `async` using `asyncio.to_thread()` | Offload blocking I/O to thread pool, keep SSE event loop responsive |
+
+**Verification:**
+```bash
+$ podman inspect --format='{{json .State.Health}}' sanctuary_cortex | jq '.Status, .FailingStreak'
+"healthy"
+0
+```
+
+**Files Modified:**
+- `docker-compose.yml` (lines 192-199)
+- `mcp_servers/gateway/clusters/sanctuary_cortex/server.py` (lines 180-210)
+
+**Status:** ✅ Resolved
+
+---
+
 ## Red Team Review Sign-Off
 
 | Reviewer | Verdict | Date |
@@ -484,3 +523,5 @@ If issues arise post-implementation:
 | ChatGPT (Red Team) | 🟡 Conditionally Acceptable | 2025-12-24 |
 | Grok 4 (Red Team) | 🟡 Approve with Revisions | 2025-12-24 |
 | Antigravity | ✅ Hardened v1.3 | 2025-12-24 |
+| Antigravity | ✅ Audit Resolution (Healthcheck Fix) | 2025-12-26 |
+

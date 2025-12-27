@@ -10,7 +10,7 @@ The `sanctuary_cortex` cluster provides the neural foundation for Project Sanctu
 ## Verification Specs (Tier 3: Bridge)
 *   **Target:** Gateway Bridge & RPC Routing
 *   **Method:** `pytest tests/mcp_servers/gateway/clusters/cortex/test_gateway.py`
-*   **Backends**: Interfaces with `sanctuary_vector_db` (:8110) and `sanctuary_ollama_mcp` (:11434).
+*   **Backends**: Interfaces with `sanctuary_vector_db` (:8110) and `sanctuary_ollama` (:11434).
 
 ## Tool Inventory & Legacy Mapping
 | Category | Gateway Tool Name | Legacy Operation | T1/T2 Method |

@@ -133,7 +133,7 @@ The system uses a "Controller-Worker" architecture where the IBM Gateway (Contro
 | **Git** | `sanctuary_git` | `8003` | Git operations |
 | **Cortex** | `sanctuary_cortex` | `8004` | RAG/Memory Coordinator |
 | *VectorDB* | `sanctuary_vector_db` | `8000`* | ChromaDB Backend |
-| *Ollama* | `sanctuary_ollama_mcp` | `11434`* | AI Backend |
+| *Ollama* | `sanctuary_ollama` | `11434`* | AI Backend |
 
 *\*Internal backend ports. Do not expose 8000/11434 on host to avoid conflicts.*
 

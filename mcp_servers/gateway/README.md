@@ -50,4 +50,4 @@ make status
 ## Documentation
 - **[Gateway Architecture](../../docs/mcp_servers/gateway/architecture/ARCHITECTURE.md)**: Deep dive into the 3-layer pattern.
 - **[ADR 064](../../ADRs/064_centralized_registry_for_fleet_of_8_mcp_servers.md)**: Design decision for centralized registry.
-- **[Podman Startup Guide](../../docs/PODMAN_STARTUP_GUIDE.md)**: Detailed container management instructions.
+- **[Podman Operations Guide](../../docs/PODMAN_OPERATIONS_GUIDE.md)**: Detailed container management instructions.

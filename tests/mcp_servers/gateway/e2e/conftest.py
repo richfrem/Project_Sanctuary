@@ -174,3 +174,65 @@ def session_summary(learning_package_hash):
 
 # Test fixtures directory
 TEST_FIXTURES_DIR = Path(__file__).parents[3] / "fixtures" / "test_docs"
+
+
+# =============================================================================
+# ARTIFACT CLEANUP FIXTURES (Task 149)
+# =============================================================================
+
+# Known E2E test artifact patterns for cleanup after tests
+E2E_ARTIFACT_PATTERNS = {
+    "ADRs": [
+        "*e2e*test*.md", "*E2E*Test*.md", "*_e2e_*.md"
+    ],
+    "00_CHRONICLE/ENTRIES": [
+        "*e2e*test*.md", "*E2E*Test*.md", "*_e2e_*.md"
+    ],
+    "PROTOCOLS": [
+        "*e2e*test*.md", "*E2E*Test*.md"
+    ],
+    "TASKS": [
+        "*/???_e2e*test*.md", "*/???_E2E*Test*.md"
+    ],
+    ".": [
+        "e2e_*.txt", "e2e_*.py", "e2e_test_*.json"
+    ]
+}
+
+
+@pytest.fixture(scope="session", autouse=True)
+def cleanup_e2e_artifacts():
+    """
+    Session-scoped fixture that cleans up E2E test artifacts after all tests.
+    
+    Per Task 149:
+    - Only deletes generated outputs (not test scripts)
+    - Uses targeted patterns (e2e, test, etc.)
+    - Runs after all tests complete
+    """
+    yield  # All tests run first
+    
+    # Cleanup after session
+    print("\n🧹 Cleaning E2E test artifacts...")
+    cleaned = 0
+    
+    for rel_dir, patterns in E2E_ARTIFACT_PATTERNS.items():
+        directory = PROJECT_ROOT / rel_dir
+        if not directory.exists():
+            continue
+        
+        for pattern in patterns:
+            for match in directory.glob(pattern):
+                if match.is_file():
+                    try:
+                        os.remove(match)
+                        print(f"   🧹 Removed: {match.name}")
+                        cleaned += 1
+                    except Exception as e:
+                        print(f"   ⚠️  Failed to remove {match.name}: {e}")
+    
+    if cleaned > 0:
+        print(f"   ✅ Cleaned {cleaned} E2E artifacts")
+    else:
+        print("   ✅ No stale E2E artifacts found")
+

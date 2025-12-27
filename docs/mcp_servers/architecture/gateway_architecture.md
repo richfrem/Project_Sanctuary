@@ -83,8 +83,8 @@ config:
 flowchart TB
  subgraph subGraph0["Local Workstation (Client & Test Context)"]
         direction TB
-        LLM["LLM Chat Sessions<br/>(Antigravity, Claude, etc.)"]
-        IDE["Direct Developer Access<br/>(Terminal / IDE)"]
+        Claude["Claude Desktop<br/>(Bridged Session)"]
+        VSCode["VS Code Agent<br/>(Direct Attempt)"]
         Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
         
         subgraph subGraphTest["Testing Suite"]
@@ -96,18 +96,20 @@ flowchart TB
  subgraph subGraph1["server.py (Entry Point)"]
         Selector{"MCP_TRANSPORT<br/>Selector"}
         StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
-        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'" }
+        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
   end
 
- subgraph subGraph2["Core Logic Layers"]
+ subgraph subGraph2["Core Logic (Asynchronous)"]
+        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
         Ops@{ label: "Operations Layer<br/>'operations.py'" }
         Models@{ label: "Data Models<br/>'models.py'" }
   end
 
- subgraph subGraph3["MCP Cluster Container"]
+ subgraph subGraph3["Cortex Cluster Container"]
     direction TB
         subGraph1
         subGraph2
+        Health["Healthcheck Config<br/>(600s Start Period)"]
   end
 
  subgraph subGraph4["Podman Network (Fleet Context)"]
@@ -115,24 +117,34 @@ flowchart TB
         subGraph3
   end
 
-    LLM -- "Stdio" --> Bridge
-    E2E_Test -- "Simulates Stdio Session" --> Bridge
-    Bridge -- "HTTP / RPC" --> Gateway
-    Gateway -- "SSE Handshake" --> SSEWrap
-    SSEWrap -- "Execute" --> subGraph2
+    %% COMPLIANT PATH (Claude / Production)
+    Claude -- "Stdio" --> Bridge
+    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
+    E2E_Test -- "Simulates Stdio" --> Bridge
 
-    IDE -- "Direct Stdio Call" --> StdioWrap
-    Int_Test -- "Validates Stdio & SSE Schemas" --> subGraph1
+    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
+    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
+
+    %% EXECUTION FLOW
+    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
+    SSEWrap -- "Offload Task" --> Worker
+    Worker -- "Execute Blocking RAG" --> Ops
+    SSEWrap -- "Concurrent Heartbeats" --> Gateway
+
+    %% Integration / Developer Flow
+    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
+    Int_Test -- "Validates Schemas" --> subGraph1
     StdioWrap -- "Execute" --> subGraph2
 
+    %% Logic Selection
     Selector -- "If 'stdio'" --> StdioWrap
     Selector -- "If 'sse'" --> SSEWrap
 
     style Bridge fill:#f9f,stroke:#333,stroke-width:2px
+    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
     style Gateway fill:#69f,stroke:#333,stroke-width:2px
-    style E2E_Test fill:#fdd,stroke:#f66,stroke-width:2px
-    style Int_Test fill:#ddf,stroke:#66f,stroke-width:2px
-    style Selector fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    style Worker fill:#dfd,stroke:#333,stroke-dasharray: 5 5
+    style Health fill:#fff,stroke:#333,stroke-dasharray: 5 5
 ```
 
 ---

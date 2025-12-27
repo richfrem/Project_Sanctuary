@@ -1,26 +1,26 @@
 graph TB
     subgraph "User Interface"
-        Client[Claude Desktop / Antigravity]
+        Client["Claude Desktop / Antigravity"]
     end
 
     subgraph "Cognitive Layer"
-        Council[Council MCP<br/>(Orchestrator)]
-        Cortex[Cortex MCP<br/>(Memory/RAG)]
-        Persona[Agent Persona MCP<br/>(Roles)]
-        Forge[Forge MCP<br/>(Model Fine-Tuning)]
+        Council["Council MCP<br/>(Orchestrator)"]
+        Cortex["Cortex MCP<br/>(Memory/RAG)"]
+        Persona["Agent Persona MCP<br/>(Roles)"]
+        Forge["Forge MCP<br/>(Model Fine-Tuning)"]
     end
 
     subgraph "Content Layer"
-        Chronicle[Chronicle MCP<br/>(Journal)]
-        Protocol[Protocol MCP<br/>(Rules)]
-        ADR[ADR MCP<br/>(Decisions)]
-        Task[Task MCP<br/>(Work)]
+        Chronicle["Chronicle MCP<br/>(Journal)"]
+        Protocol["Protocol MCP<br/>(Rules)"]
+        ADR["ADR MCP<br/>(Decisions)"]
+        Task["Task MCP<br/>(Work)"]
     end
 
     subgraph "System Layer"
-        Code[Code MCP<br/>(File I/O)]
-        Config[Config MCP<br/>(Settings)]
-        Git[Git MCP<br/>(Version Control)]
+        Code["Code MCP<br/>(File I/O)"]
+        Config["Config MCP<br/>(Settings)"]
+        Git["Git MCP<br/>(Version Control)"]
     end
 
     Client --> Council

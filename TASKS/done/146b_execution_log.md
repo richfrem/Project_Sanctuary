@@ -38,7 +38,7 @@
 
 ### 22:28-22:33 - Container Cleanup & Restart
 **Issue:** Lingering containers from previous session blocked startup
-**Fix:** Force removed `sanctuary_vector_db` and `sanctuary_ollama_mcp`
+**Fix:** Force removed `sanctuary_vector_db` and `sanctuary_ollama`
 **Result:** All 8 containers started successfully
 
 ### 22:34 - Container Health Check
@@ -132,7 +132,7 @@ sanctuary_ollama      Up
 
 ```bash
 cd /Users/richardfremmerlid/Projects/Project_Sanctuary
-podman rm -f sanctuary_ollama_mcp 2>/dev/null  # Remove old container
+podman rm -f sanctuary_ollama 2>/dev/null  # Remove old container
 podman compose up -d
 ```
 

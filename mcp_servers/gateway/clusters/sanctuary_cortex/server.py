@@ -182,8 +182,15 @@ def run_sse_server(port: int):
         description="Perform full re-ingestion of the knowledge base.",
         schema=INGEST_FULL_SCHEMA
     )
-    def cortex_ingest_full(purge_existing: bool = False, source_directories: List[str] = None):
-        response = get_ops().ingest_full(purge_existing=purge_existing, source_directories=source_directories)
+    async def cortex_ingest_full(purge_existing: bool = False, source_directories: List[str] = None):
+        """Perform full re-ingestion (backgrounded to prevent SSE heartbeat starvation per ADR 066)."""
+        import asyncio
+        # Offload blocking ingestion to thread pool per ADR 066 Section 5.1
+        response = await asyncio.to_thread(
+            get_ops().ingest_full,
+            purge_existing=purge_existing,
+            source_directories=source_directories
+        )
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -191,8 +198,16 @@ def run_sse_server(port: int):
         description="Incrementally ingest documents into the knowledge base.",
         schema=INGEST_INCREMENTAL_SCHEMA
     )
-    def cortex_ingest_incremental(file_paths: List[str], metadata: Dict = None, skip_duplicates: bool = True):
-        response = get_ops().ingest_incremental(file_paths=file_paths, metadata=metadata, skip_duplicates=skip_duplicates)
+    async def cortex_ingest_incremental(file_paths: List[str], metadata: Dict = None, skip_duplicates: bool = True):
+        """Incrementally ingest documents (backgrounded to prevent SSE heartbeat starvation per ADR 066)."""
+        import asyncio
+        # Offload blocking ingestion to thread pool per ADR 066 Section 5.1
+        response = await asyncio.to_thread(
+            get_ops().ingest_incremental,
+            file_paths=file_paths,
+            metadata=metadata,
+            skip_duplicates=skip_duplicates
+        )
         return json.dumps(to_dict(response), indent=2)
     
     # =============================================================================

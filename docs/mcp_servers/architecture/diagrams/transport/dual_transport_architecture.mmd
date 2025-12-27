@@ -6,8 +6,8 @@ config:
 flowchart TB
  subgraph subGraph0["Local Workstation (Client & Test Context)"]
         direction TB
-        LLM["LLM Chat Sessions<br/>(Antigravity, Claude, etc.)"]
-        IDE["Direct Developer Access<br/>(Terminal / IDE)"]
+        Claude["Claude Desktop<br/>(Bridged Session)"]
+        VSCode["VS Code Agent<br/>(Direct Attempt)"]
         Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
         
         subgraph subGraphTest["Testing Suite"]
@@ -38,16 +38,21 @@ flowchart TB
         subGraph3
   end
 
-    %% E2E / Production Flow
-    LLM -- "Stdio" --> Bridge
-    E2E_Test -- "Simulates Stdio Session" --> Bridge
-    Bridge -- "HTTP / RPC" --> Gateway
-    Gateway -- "SSE Handshake" --> SSEWrap
+    %% COMPLIANT PATH (Claude / Production)
+    Claude -- "Stdio" --> Bridge
+    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
+    E2E_Test -- "Simulates Stdio" --> Bridge
+
+    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
+    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
+
+    %% EXECUTION FLOW
+    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
     SSEWrap -- "Execute" --> subGraph2
 
     %% Integration / Developer Flow
-    IDE -- "Direct Stdio Call" --> StdioWrap
-    Int_Test -- "Validates Stdio & SSE Schemas" --> subGraph1
+    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
+    Int_Test -- "Validates Schemas" --> subGraph1
     StdioWrap -- "Execute" --> subGraph2
 
     %% Logic Selection
@@ -55,7 +60,6 @@ flowchart TB
     Selector -- "If 'sse'" --> SSEWrap
 
     style Bridge fill:#f9f,stroke:#333,stroke-width:2px
+    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
     style Gateway fill:#69f,stroke:#333,stroke-width:2px
-    style E2E_Test fill:#fdd,stroke:#f66,stroke-width:2px
-    style Int_Test fill:#ddf,stroke:#66f,stroke-width:2px
     style Selector fill:#fff,stroke:#333,stroke-dasharray: 5 5

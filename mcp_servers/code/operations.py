@@ -18,6 +18,7 @@
 #     - write_file
 #     - get_file_info
 #     - _run_command
+#     - delete_file
 #============================================
 
 import subprocess
@@ -405,3 +406,54 @@ class CodeOperations:
             "lines": line_count,
             "language": ext_to_lang.get(file_path.suffix, "Unknown")
         }
+
+    #============================================
+    # Method: delete_file
+    # Purpose: Delete a file with safety checks.
+    # Args:
+    #   path: Relative file path
+    #   force: Skip confirmation for protected patterns
+    # Returns: Dict with deletion status
+    #============================================
+    def delete_file(self, path: str, force: bool = False) -> Dict[str, Any]:
+        """Delete a file with safety checks.
+        
+        Safety constraints:
+        - Path must be within project root
+        - File must exist and be a file (not directory)
+        - Protected patterns (*.py test files, config) require force=True
+        """
+        file_path = self.validator.validate_path(path)
+        
+        if not file_path.exists():
+            raise FileNotFoundError(f"File not found: {path}")
+            
+        if not file_path.is_file():
+            raise ValueError(f"Path is not a file (use rmdir for directories): {path}")
+        
+        # Protected patterns - require force=True
+        protected_patterns = [
+            "*.pyc", "__pycache__/*",  # Never delete compiled files this way
+            ".git/*", ".env",          # Never delete git or env
+            "server.py", "operations.py", "models.py",  # Never delete core modules
+        ]
+        
+        rel_path = str(file_path.relative_to(self.project_root))
+        
+        for pattern in protected_patterns:
+            if file_path.match(pattern) and not force:
+                raise ValueError(
+                    f"Protected file pattern '{pattern}' matched. Use force=True to override."
+                )
+        
+        # Perform the deletion
+        file_size = file_path.stat().st_size
+        file_path.unlink()
+        
+        return {
+            "path": rel_path,
+            "deleted": True,
+            "size": file_size,
+            "message": f"Deleted: {rel_path}"
+        }
+

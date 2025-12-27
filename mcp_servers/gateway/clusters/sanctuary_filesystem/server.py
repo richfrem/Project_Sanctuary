@@ -119,6 +119,15 @@ GET_INFO_SCHEMA = {
     "required": ["path"]
 }
 
+DELETE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "path": {"type": "string", "description": "File path to delete"},
+        "force": {"type": "boolean", "description": "Force delete protected patterns"}
+    },
+    "required": ["path"]
+}
+
 EMPTY_SCHEMA = {"type": "object", "properties": {}}
 
 
@@ -278,6 +287,15 @@ def run_sse_server(port: int):
   Lines: {info['lines'] if info['lines'] else 'N/A'}
   Modified: {time.ctime(info['modified'])}"""
     
+    @sse_tool(
+        name="code_delete",
+        description="Delete a file with safety checks.",
+        schema=DELETE_SCHEMA
+    )
+    def code_delete(path: str, force: bool = False):
+        result = ops.delete_file(path, force)
+        return result['message']
+    
     # Auto-register all decorated tools (ADR-076)
     server.register_decorated_tools(locals())
     
@@ -429,6 +447,15 @@ def run_stdio_server():
   Modified: {time.ctime(info['modified'])}"""
         except Exception as e:
             raise ToolError(f"Info retrieval failed: {str(e)}")
+    
+    @mcp.tool()
+    async def code_delete(path: str, force: bool = False) -> str:
+        """Delete a file with safety checks."""
+        try:
+            result = get_ops().delete_file(path, force)
+            return result['message']
+        except Exception as e:
+            raise ToolError(f"Delete failed: {str(e)}")
     
     logger.info("Starting FastMCP server (STDIO Mode)")
     mcp.run(transport="stdio")

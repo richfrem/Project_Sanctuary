@@ -74,14 +74,6 @@
           "name": "sanctuary-cortex-cortex-learning-debrief"
         },
         {
-          "description": "Get Mnemonic Cache (CAG) statistics.",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-cortex-cortex-cache-stats"
-        },
-        {
           "description": "Generate Guardian boot digest (Protocol 114).",
           "inputSchema": {
             "properties": {
@@ -93,6 +85,14 @@
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-guardian-wakeup"
+        },
+        {
+          "description": "Get Mnemonic Cache (CAG) statistics.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-cache-stats"
         },
         {
           "description": "Pre-populate cache with genesis queries.",
@@ -148,30 +148,6 @@
           "name": "sanctuary-cortex-cortex-cache-get"
         },
         {
-          "description": "Incrementally ingest documents into the knowledge base.",
-          "inputSchema": {
-            "properties": {
-              "file_paths": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "metadata": {
-                "type": "object"
-              },
-              "skip_duplicates": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "file_paths"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-cortex-cortex-ingest-incremental"
-        },
-        {
           "description": "Get database statistics and health status.",
           "inputSchema": {
             "properties": {},
@@ -206,6 +182,30 @@
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-query"
+        },
+        {
+          "description": "Incrementally ingest documents into the knowledge base.",
+          "inputSchema": {
+            "properties": {
+              "file_paths": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "metadata": {
+                "type": "object"
+              },
+              "skip_duplicates": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "file_paths"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-ingest-incremental"
         },
         {
           "description": "Perform full re-ingestion of the knowledge base.",
@@ -908,6 +908,26 @@
       "status": "ready",
       "tools": [
         {
+          "description": "Delete a file with safety checks.",
+          "inputSchema": {
+            "properties": {
+              "force": {
+                "description": "Force delete protected patterns",
+                "type": "boolean"
+              },
+              "path": {
+                "description": "File path to delete",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-filesystem-code-delete"
+        },
+        {
           "description": "Get file metadata.",
           "inputSchema": {
             "properties": {
@@ -1000,6 +1020,10 @@
           "description": "List files in a directory with optional pattern.",
           "inputSchema": {
             "properties": {
+              "max_files": {
+                "description": "Maximum files to return (default 5000)",
+                "type": "integer"
+              },
               "path": {
                 "description": "Directory to list",
                 "type": "string"

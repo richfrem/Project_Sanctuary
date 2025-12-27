@@ -2,8 +2,8 @@
 
 This document tracks the **complete verification status** of every operation across the Hybrid Fleet.
 
-**Last Updated:** 2025-12-24  
-**Total Tools:** 86 (from fleet_registry.json)  
+**Last Updated:** 2025-12-26  
+**Total Tools:** 87 (from fleet_registry.json)  
 **Reference:** ADR-066 v1.3, ADR-076
 
 ---
@@ -110,8 +110,8 @@ config:
 flowchart TB
  subgraph subGraph0["Local Workstation (Client & Test Context)"]
         direction TB
-        LLM["LLM Chat Sessions<br/>(Antigravity, Claude, etc.)"]
-        IDE["Direct Developer Access<br/>(Terminal / IDE)"]
+        Claude["Claude Desktop<br/>(Bridged Session)"]
+        VSCode["VS Code Agent<br/>(Direct Attempt)"]
         Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
         
         subgraph subGraphTest["Testing Suite"]
@@ -123,18 +123,20 @@ flowchart TB
  subgraph subGraph1["server.py (Entry Point)"]
         Selector{"MCP_TRANSPORT<br/>Selector"}
         StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
-        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'" }
+        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
   end
 
- subgraph subGraph2["Core Logic Layers"]
+ subgraph subGraph2["Core Logic (Asynchronous)"]
+        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
         Ops@{ label: "Operations Layer<br/>'operations.py'" }
         Models@{ label: "Data Models<br/>'models.py'" }
   end
 
- subgraph subGraph3["MCP Cluster Container"]
+ subgraph subGraph3["Cortex Cluster Container"]
     direction TB
         subGraph1
         subGraph2
+        Health["Healthcheck Config<br/>(600s Start Period)"]
   end
 
  subgraph subGraph4["Podman Network (Fleet Context)"]
@@ -142,16 +144,23 @@ flowchart TB
         subGraph3
   end
 
-    %% E2E / Production Flow
-    LLM -- "Stdio" --> Bridge
-    E2E_Test -- "Simulates Stdio Session" --> Bridge
-    Bridge -- "HTTP / RPC" --> Gateway
-    Gateway -- "SSE Handshake" --> SSEWrap
-    SSEWrap -- "Execute" --> subGraph2
+    %% COMPLIANT PATH (Claude / Production)
+    Claude -- "Stdio" --> Bridge
+    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
+    E2E_Test -- "Simulates Stdio" --> Bridge
+
+    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
+    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
+
+    %% EXECUTION FLOW
+    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
+    SSEWrap -- "Offload Task" --> Worker
+    Worker -- "Execute Blocking RAG" --> Ops
+    SSEWrap -- "Concurrent Heartbeats" --> Gateway
 
     %% Integration / Developer Flow
-    IDE -- "Direct Stdio Call" --> StdioWrap
-    Int_Test -- "Validates Stdio & SSE Schemas" --> subGraph1
+    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
+    Int_Test -- "Validates Schemas" --> subGraph1
     StdioWrap -- "Execute" --> subGraph2
 
     %% Logic Selection
@@ -159,10 +168,10 @@ flowchart TB
     Selector -- "If 'sse'" --> SSEWrap
 
     style Bridge fill:#f9f,stroke:#333,stroke-width:2px
+    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
     style Gateway fill:#69f,stroke:#333,stroke-width:2px
-    style E2E_Test fill:#fdd,stroke:#f66,stroke-width:2px
-    style Int_Test fill:#ddf,stroke:#66f,stroke-width:2px
-    style Selector fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    style Worker fill:#dfd,stroke:#333,stroke-dasharray: 5 5
+    style Health fill:#fff,stroke:#333,stroke-dasharray: 5 5
 ```
 
 ### Transport Implementation
@@ -188,12 +197,12 @@ flowchart TB
 | Cluster | Port | Tools | Health | SSE | Gateway | Unit | Integration | STDIO |
 |:--------|:----:|:-----:|:------:|:---:|:-------:|:----:|:-----------:|:-----:|
 | sanctuary_utils | 8100 | 17 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| sanctuary_filesystem | 8101 | 10 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| sanctuary_filesystem | 8101 | 11 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | sanctuary_network | 8102 | 2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | sanctuary_git | 8103 | 9 | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ✅ |
 | sanctuary_cortex | 8104 | 13 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | sanctuary_domain | 8105 | 35 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Total** | - | **86** | **6/6** | **6/6** | **5/6** | **6/6** | **5/6** | **6/6** |
+| **Total** | - | **87** | **6/6** | **6/6** | **5/6** | **6/6** | **5/6** | **6/6** |
 
 > **Note:** Git Gateway RPC tests timeout due to Gateway SSL handshake (not tool logic).
 > Direct SSE and health tests all pass.
@@ -232,7 +241,7 @@ flowchart TB
 
 ---
 
-## 2. sanctuary_filesystem (Port 8101) - 10 Tools
+## 2. sanctuary_filesystem (Port 8101) - 11 Tools
 
 | Tool | Gateway Registered | Unit | Integration | SSE | STDIO | LLM |
 |:-----|:------------------:|:----:|:-----------:|:---:|:-----:|:---:|
@@ -242,6 +251,7 @@ flowchart TB
 | **File I/O** |||||||
 | `code-read` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `code-write` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `code-delete` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `code-get-info` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Discovery** |||||||
 | `code-list-files` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
