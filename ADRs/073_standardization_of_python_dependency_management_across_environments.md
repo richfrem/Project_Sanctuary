@@ -1,7 +1,7 @@
 # Standardization of Python Dependency Management Across Environments
 
-**Status:** Proposed
-**Date:** 2025-12-23
+**Status:** Approved
+**Date:** 2025-12-26
 **Author:** AI Assistant
 **Related Tasks:** Task 146, Task 147
 
@@ -23,13 +23,13 @@
 
 ## Context
 
-We are facing significant "Dependency Chaos" across the Project Sanctuary fleet.
-Currently, Python requirements are managed ad-hoc across:
-1.  **Container Dockerfiles**: 8 separate Dockerfiles (Sanctuary Cortex, Git, Filesystem, etc.), some defining dependencies manually via `pip install`, others using local `requirements.txt`.
-2.  **Local Environments**: A root `/requirements.txt` exists but doesn't match container environments.
-3.  **Source Code Directories**: Individual generic server codes (e.g., `mcp_servers/rag_cortex/requirements.txt`) have their own lists.
-4.  **Redundancy**: `sanctuary_cortex/Dockerfile` currently installs from `requirements.txt` AND executes a manual `pip install` list of the exact same packages, increasing maintenance burden and confusion.
-5.  **Build Efficiency**: Dockerfiles were previously ordered incorrectly (`COPY code` -> `RUN pip install`), invalidating caches on every code change. (Fixed in `sanctuary_{cortex,filesystem,git,network,utils}` on 2025-12-23).
+To reduce "Dependency Chaos" across the Project Sanctuary fleet, we are standardizing Python requirements management. This ADR addresses the following problems:
+
+1.  **Fragmented Container Dependencies**: 8 separate Dockerfiles with inconsistent approaches — some use manual `pip install`, others use `requirements.txt`. *Solved: Single source of truth per service.*
+2.  **Local/Container Drift**: Root `/requirements.txt` doesn't match container environments. *Solved: Locked files guarantee identical versions everywhere.*
+3.  **Scattered Requirements**: Individual directories maintain their own lists with no coordination. *Solved: Tiered hierarchy with shared baseline.*
+4.  **Redundant Installations**: `sanctuary_cortex/Dockerfile` installs from both `requirements.txt` AND inline `pip install`. *Solved: No manual installs in Dockerfiles.*
+5.  **Cache Invalidation**: Incorrect Dockerfile ordering (`COPY code` → `RUN pip install`) broke caching. *Solved: Proper layer ordering.*
 
 **Scope**: This policy applies equally to:
 *   Docker / Podman
@@ -76,7 +76,13 @@ To achieve deterministic builds, we use tools like `pip-compile` (from `pip-tool
     *   **Prevention**: Eliminates the class of bugs where a transitive dependency updates silently and breaks a service ("works on my machine" but fails in prod).
     *   **Alignment**: Supports the core principle that "every service defines one runtime world."
 
-3.  **Workflow Example**:
+3.  **Understanding Transitive Dependencies**:
+    *   `.in` files list only **direct dependencies** — packages your code explicitly imports (e.g., `langchain`, `chromadb`).
+    *   `pip-compile` resolves the **entire dependency tree**, discovering all sub-dependencies automatically.
+    *   Example: `chromadb` depends on `kubernetes`, which depends on `urllib3`. You never list `urllib3` in your `.in` file — pip-compile finds it and locks a specific version in the `.txt` file.
+    *   **Security fixes for transitive deps**: Use `--upgrade-package <name>` to force an upgrade without polluting your `.in` file with packages you don't directly use.
+
+4.  **Workflow Example**:
     ```bash
     # Generate locked requirements (Do this when dependencies change)
     pip-compile requirements-core.in --output-file requirements-core.txt
@@ -159,6 +165,49 @@ We recommend **Option D** (Strict Mapping) enhanced with a **Tiered Policy**:
     *   Avoids the "Superset" risk where local logic relies on tools missing in production.
 5.  **CI Enforcement**: CI pipelines must fail if any Dockerfile contains inline `pip install` commands not referencing a requirements file.
 6.  **Clean Up**: Remove the redundant manual `pip install` block from `sanctuary_cortex/Dockerfile` immediately.
+
+## Sanctuary Dependency Update Workflow
+
+This is the "Tiered Policy" approach (Option D) to maintain consistency across local Mac and Podman containers.
+
+```mermaid
+graph TD
+    A[Human: Edit .in File] -->|Declare Intent| B(pip-compile)
+    B -->|Generate Lock| C[.txt Lockfile]
+    
+    subgraph "Execution Environments"
+        C -->|pip install -r| D[Local .venv]
+        C -->|COPY & RUN pip install| E[Podman Container]
+    end
+
+    D -.->|Identical Versions| E
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#dfd
+    style E fill:#dfd
+```
+
+### Step-by-Step Process
+
+1. **Identify Intent**: Open the relevant `.in` file (e.g., `requirements-core.in` for shared tools or `sanctuary_cortex/requirements.in` for RAG-specific tools).
+
+2. **Declare Dependency**: Add the package name (e.g., `langchain`). This is the "Human Intent" phase.
+
+3. **Generate Lockfile**: Run the compilation command:
+   ```bash
+   pip-compile <path_to_in_file> --output-file <path_to_txt_file>
+   ```
+   This resolves all sub-dependencies and creates a deterministic "Machine Truth" file.
+
+4. **Local Sync**: Update your local `.venv` by running `pip install -r <path_to_txt_file>`.
+
+5. **Container Sync**: Rebuild the Podman container. Because the Dockerfile uses `COPY requirements.txt`, it will automatically pull the exact same versions you just locked locally.
+
+6. **Commitment**: Commit both the `.in` (Intent) and `.txt` (Lock) files to Git.
+
+### Why This is the "Sanctuary Way"
+
+- **No Manual Installs**: You never run `pip install <package>` directly in a Dockerfile; everything is declared in the requirements file.
+- **No Drift**: If a tool works on your MacBook Pro, it is mathematically guaranteed to work inside the `sanctuary_cortex` container because they share the same `.txt` lock.
 
 ## Consequences
 
@@ -269,3 +318,33 @@ When security vulnerabilities (CVEs) are reported or Dependabot suggests updates
 3.  **Verify**:
     *   Check the generated `requirements-core.txt` to confirm the version bump.
     *   Rebuild affected containers or reinstall local environment.
+
+4.  **Troubleshooting Dependency Conflicts**:
+    *   If `pip-compile --upgrade-package` fails with `ResolutionImpossible`, a transitive dependency has a conflicting constraint.
+    *   **Identify the constraint**:
+        ```bash
+        # Check what requires the problem package
+        pip show <package> | grep -i required-by
+        # Check what version constraints exist
+        pip index versions <package>
+        ```
+    *   **Common pattern**: Package A (e.g., `kubernetes`) pins package B (e.g., `urllib3<2.6`). Fix requires upgrading both A and B together: `pip-compile --upgrade-package kubernetes --upgrade-package urllib3 ...`
+    *   **If still blocked**: The constraint is upstream. File an issue with the constraining package or wait for their release.
+
+### Real-World Example: urllib3 Security Advisory (2025-12-26)
+
+**Situation**: Dependabot flagged 4 urllib3 vulnerabilities (CVE-2025-66418, CVE-2025-66471, etc.) requiring urllib3 ≥2.6.0. Current lock has urllib3==2.3.0.
+
+**Attempted fixes**:
+1. `pip-compile --upgrade-package urllib3` → No change (stayed at 2.3.0)
+2. `pip-compile --upgrade-package 'urllib3>=2.6.0'` → `ResolutionImpossible`
+3. `pip-compile --upgrade` (full upgrade) → Still 2.3.0
+
+**Root cause**: `chromadb` → `kubernetes` has an upstream version constraint incompatible with urllib3 2.6+. The kubernetes Python client had breaking changes with urllib3 2.6.0 (removed `getheaders()` method).
+
+**Resolution options**:
+- **Wait for upstream**: Monitor kubernetes-client/python for a release compatible with urllib3 2.6+
+- **Security override** (if critical): Add `urllib3>=2.6.0` to `.in` file, then investigate which direct dependency to upgrade/replace
+- **Accept risk with mitigation**: Document the advisory, monitor for upstream fix, apply when available
+
+**Status**: Blocked pending upstream kubernetes/chromadb compatibility update.

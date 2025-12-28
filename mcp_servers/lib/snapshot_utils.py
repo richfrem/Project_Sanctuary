@@ -150,6 +150,14 @@ DEFAULT_CORE_ESSENCE_FILES = {
     'Socratic_Key_User_Guide.md'
 }
 
+PROTECTED_SEEDS = {
+    'dataset_package/seed_of_ascendance_awakening_seed.txt',
+    'dataset_package/core_essence_guardian_awakening_seed.txt',
+    'dataset_package/core_essence_auditor_awakening_seed.txt',
+    'dataset_package/core_essence_coordinator_awakening_seed.txt',
+    'dataset_package/core_essence_strategist_awakening_seed.txt'
+}
+
 # ---------------------------------------------
 # Helpers
 # ---------------------------------------------
@@ -162,15 +170,40 @@ def get_token_count(text: str) -> int:
         # Fallback approximation: typical English word is ~1.3 tokens or 4 chars/token
         return len(text) // 4
 
-def should_exclude_file(base_name: str) -> bool:
+
+#=====================================================
+# Function: should_exclude_file 
+# Purpose: Check if a file should be excluded from the snapshot.
+#          Implements Protocol 128: Manifest Priority Bypass.
+# Args:
+#     base_name: The file's basename (e.g., 'seed_of_ascendance_awakening_seed.txt')
+#     in_manifest: If True, the file was explicitly requested in a manifest 
+#                  and should bypass standard exclusion rules.
+# Returns:
+#      True if the file should be excluded, False if it should be included.
+#=====================================================
+def should_exclude_file(base_name: str, in_manifest: bool = False) -> bool:
+    # --- Protocol 128: Manifest Priority Bypass ---
+    # In manifest mode, we explicitly allow core essence seeds that would
+    # otherwise be blocked by the ALWAYS_EXCLUDE_FILES list.
+    if in_manifest:
+        # Check if the filename (base_name) is part of any path in PROTECTED_SEEDS
+        if any(base_name == Path(p).name for p in PROTECTED_SEEDS):
+            return False  # Force inclusion
+    
+    # Standard Exclusion Logic: Iterate through the global exclusion list.
+    # This list contains both literal strings and compiled regex patterns.
     for pattern in ALWAYS_EXCLUDE_FILES:
         if isinstance(pattern, str):
+            # Direct string comparison for exact filenames
             if pattern == base_name:
                 return True
-        elif hasattr(pattern, 'match'): # Regex
+        elif hasattr(pattern, 'match'): 
+            # Regular Expression matching for patterns (e.g., .pyc, .log)
             if pattern.match(base_name):
                 return True
-    return False
+                
+    return False # File is allowed
 
 def generate_header(title: str, token_count: int = None) -> str:
     token_line = f"# Mnemonic Weight (Token Count): ~{token_count:,} tokens" if token_count is not None else '{TOKEN_COUNT_PLACEHOLDER}'
@@ -399,6 +432,7 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
     Core function to generate the LLM-distilled code snapshot.
     """
     is_full_genome = not (subfolder or manifest_path)
+    is_manifest_mode = manifest_path is not None
     
     if subfolder:
         target_root = project_root / subfolder
@@ -482,7 +516,7 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
              except PermissionError:
                  logger.warning(f"[WARN] Permission denied accessing {current_path}")
         elif current_path.is_file():
-             if should_exclude_file(base_name):
+             if should_exclude_file(base_name, in_manifest=False):
                  items_skipped += 1
                  return
                  
@@ -546,7 +580,8 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
 
                 if full_path.is_file():
                     base_name = full_path.name
-                    if should_exclude_file(base_name):
+                    # In manifest mode, be more permissive with exclusions
+                    if should_exclude_file(base_name, in_manifest=True):
                          logger.info(f"[SECURITY] Skipping excluded file: {rel_path}")
                          continue
                     file_tree_lines.append(rel_path)
@@ -557,10 +592,10 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
                     # Reuse part of the traverse logic if possible or just walk
                     for root, dirs, files in os.walk(full_path):
                         # Filter directories
-                        dirs[:] = [d for d in dirs if not should_exclude_file(d)]
+                        dirs[:] = [d for d in dirs if not should_exclude_file(d, in_manifest=True)]
                         
                         for file in files:
-                            if not should_exclude_file(file):
+                            if not should_exclude_file(file, in_manifest=True):
                                 file_path = Path(root) / file
                                 if file_path.suffix.lower() in MARKDOWN_EXTENSIONS:
                                     relative_to_root = file_path.relative_to(project_root)
@@ -575,7 +610,7 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
             sys.exit(1)
     else:
         traverse_and_capture(target_root)
-        
+  
     # --- Final Output Generation ---
     prefix = f"{subfolder} subfolder" if subfolder else ("manifest" if manifest_path else "project root")
     file_tree_str = "\n".join([f"  ./{item}" for item in file_tree_lines])

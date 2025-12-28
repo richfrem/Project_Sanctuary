@@ -61,15 +61,16 @@ def get_op(op_type):
 CHRONICLE_CREATE_SCHEMA = {
     "type": "object",
     "properties": {
-        "title": {"type": "string"},
-        "content": {"type": "string"},
-        "author": {"type": "string"},
-        "date": {"type": "string"},
-        "status": {"type": "string"},
-        "classification": {"type": "string"}
+        "title": {"type": "string", "description": "Entry title"},
+        "content": {"type": "string", "description": "Entry content (markdown supported)"},
+        "author": {"type": "string", "description": "Author name or identifier"},
+        "date": {"type": "string", "description": "Date string (YYYY-MM-DD), defaults to today"},
+        "status": {"type": "string", "description": "Entry status: draft, published, canonical, or deprecated"},
+        "classification": {"type": "string", "description": "Visibility level: public, internal, or confidential"}
     },
     "required": ["title", "content"]
 }
+
 
 CHRONICLE_UPDATE_SCHEMA = {
     "type": "object",
@@ -189,12 +190,12 @@ def run_sse_server(port: int):
     # =============================================================================
     # CHRONICLE TOOLS
     # =============================================================================
-    @sse_tool(name="chronicle_create_entry", description="Create a new chronicle entry.", schema=CHRONICLE_CREATE_SCHEMA)
+    @sse_tool(name="chronicle_create_entry", description="Create a new chronicle entry. Status must be: draft, published, canonical, or deprecated. Classification: public, internal, or confidential.", schema=CHRONICLE_CREATE_SCHEMA)
     def chronicle_create_entry(title: str, content: str, author: str = "Agent", date: str = None, status: str = "draft", classification: str = "internal"):
         result = get_op("chronicle").create_entry(title=title, content=content, author=author, date_str=date, status=status, classification=classification)
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"
     
-    @sse_tool(name="chronicle_append_entry", description="Append a new entry to the Chronicle (Alias for create_entry).", schema=CHRONICLE_CREATE_SCHEMA)
+    @sse_tool(name="chronicle_append_entry", description="Append a new entry to the Chronicle (Alias for create_entry). Status must be: draft, published, canonical, or deprecated. Classification: public, internal, or confidential.", schema=CHRONICLE_CREATE_SCHEMA)
     def chronicle_append_entry(title: str, content: str, author: str = "Agent", date: str = None, status: str = "draft", classification: str = "internal"):
         result = get_op("chronicle").create_entry(title=title, content=content, author=author, date_str=date, status=status, classification=classification)
         return f"Created Chronicle Entry {result['entry_number']}: {result['file_path']}"

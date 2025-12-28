@@ -23,6 +23,7 @@
     "docs/mcp_servers/gateway/guides/protocol_128_guide.md",
     "docs/mcp_servers/gateway/guides/agent_gateway_guide.md",
     "docs/mcp_servers/gateway/guides/README.md",
+    "docs/mcp_servers/architecture/diagrams/workflows/p128_hardened_learning_loop.mmd",
     "LEARNING/README.md",
     "mcp_servers/gateway/fleet_registry.json",
     "mcp_servers/gateway/clusters/sanctuary_cortex/README.md"

@@ -30,7 +30,7 @@ flowchart TB
 
     subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
         direction TB
-        CaptureAudit["MCP: cortex_capture_snapshot (audit)"]
+        CaptureAudit["MCP: cortex_capture_snapshot<br>(audit | learning_audit)"]
         Packet["Audit Packet (Snapshot)"]
         TechApproval{"Technical Approval<br>(HITL)"}
     end

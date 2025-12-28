@@ -113,7 +113,10 @@ CAPTURE_SNAPSHOT_SCHEMA = {
     "type": "object",
     "properties": {
         "manifest_files": {"type": "array", "items": {"type": "string"}},
-        "snapshot_type": {"type": "string"},
+        "snapshot_type": {
+            "type": "string",
+            "description": "Snapshot type: 'audit' (code/architecture red team review), 'seal' (successor session relay), or 'learning_audit' (self-directed knowledge validation). Default: 'audit'."
+        },
         "strategic_context": {"type": "string"}
     }
 }
@@ -293,7 +296,7 @@ def run_sse_server(port: int):
     
     @sse_tool(
         name="cortex_capture_snapshot",
-        description="Tool-driven snapshot generation (Protocol 128 v3.5).",
+        description="Tool-driven snapshot generation (Protocol 128 v3.5). Types: 'audit' (code/architecture review → red_team_audit_packet.md), 'seal' (successor relay → learning_package_snapshot.md), 'learning_audit' (knowledge validation → learning_audit_packet.md).",
         schema=CAPTURE_SNAPSHOT_SCHEMA
     )
     def cortex_capture_snapshot(manifest_files: List[str] = None, snapshot_type: str = "checkpoint", strategic_context: str = None):
