@@ -55,7 +55,15 @@ import json
 from uuid import uuid4
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from mcp_servers.lib.snapshot_utils import generate_snapshot
+
+# --- Protocol 128: Centralized Source of Truth Imports ---
+from mcp_servers.lib.snapshot_utils import (
+    generate_snapshot,
+    EXCLUDE_DIR_NAMES,
+    ALWAYS_EXCLUDE_FILES,
+    PROTECTED_SEEDS,
+    should_exclude_file
+)
 
 # Setup logging
 # This block is moved to the top and modified to use standard logging
@@ -211,55 +219,56 @@ class CortexOperations:
             self._safe_add_documents(retriever, left, max_retries - 1)
             self._safe_add_documents(retriever, right, max_retries - 1)
 
-    # Exclusion Constants (mirrored from capture_code_snapshot.py)
-    EXCLUDE_DIRS = {
-        'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', 
-        '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
-        '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache', 'pip-wheel-metadata',
-        '.svn', '.hg', '.bzr',
-        'models', 'weights', 'checkpoints', 'ckpt', 'safetensors',
-        'dataset_package', 'chroma_db', 'chroma_db_backup', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
-        'TASKS', 'ml_env_logs', 'outputs', 'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
-        'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE', '05_ARCHIVED_BLUEPRINTS', 'gardener',
-        'research', '02_ROADMAP', '03_OPERATIONS', '06_THE_EMBER_LIBRARY', 'certs', 'mcp_config'
-    }
+    #============================================
+    # Protocol 128: Centralized Source of Truth
+    # These constants are now derived from snapshot_utils.py
+    #============================================
+    EXCLUDE_DIRS = EXCLUDE_DIR_NAMES
     
-    EXCLUDE_FILES = {
-        'capture_code_snapshot.js', 'capture_glyph_code_snapshot.py', 'capture_glyph_code_snapshot_v2.py',
-        'Operation_Whole_Genome_Forge.ipynb', 'continuing_work_new_chat.md', 'orchestrator-backup.py',
-        'ingest_new_knowledge.py', '.DS_Store', '.env', 'manifest.json', '.gitignore',
-        'PROMPT_PROJECT_ANALYSIS.md', 'Modelfile', 'nohup.out', 'sanctuary_whole_genome_data.jsonl',
-        'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'mcp_config'
-    }
+    # Filter ALWAYS_EXCLUDE_FILES for simple string name matching
+    EXCLUDE_FILES = {f for f in ALWAYS_EXCLUDE_FILES if isinstance(f, str)}
+    
+    # Priority bypass authorized via PROTECTED_SEEDS
+    ALLOWED_FILES = PROTECTED_SEEDS
 
+    #============================================
+    # Method: _should_skip_path (Hardened)
+    # Purpose: Check if a path should be excluded.
+    #          Uses shared utility logic for consistency.
+    #============================================
     def _should_skip_path(self, path: Path):
-        #============================================
-        # Method: _should_skip_path
-        # Purpose: Check if a file or directory should be excluded 
-        #          from ingestion. Matches logic from 
-        #          capture_code_snapshot.js to ensure consistency.
-        # Args:
-        #   path: Path object to check
-        # Returns: Boolean (True if should skip)
-        #============================================
-        # 1. Check path parts against directory exclusions
+        try:
+            # 1. AGGRESSIVE NORMALIZATION
+            # Force resolution to absolute paths to handle host/container mismatches
+            abs_path = path.resolve()
+            abs_root = self.project_root.resolve()
+            
+            if abs_root in abs_path.parents or abs_path == abs_root:
+                rel_path_str = str(abs_path.relative_to(abs_root))
+            else:
+                # Fallback: clean relative strings
+                rel_path_str = str(path).replace("./", "", 1) if str(path).startswith("./") else str(path)
+            
+            # 2. IMMEDIATE ALLOWLIST BYPASS (Priority 1)
+            # This ensures dataset_package seeds are always included if in PROTECTED_SEEDS
+            # Standardize rel_path_str for matching PROTECTED_SEEDS (which use forward slashes)
+            normalized_rel_path = rel_path_str.replace("\\", "/")
+            if normalized_rel_path in self.ALLOWED_FILES:
+                logger.info(f"Allowlist hit: Including {normalized_rel_path}")
+                return False
+                
+        except Exception as e:
+            logger.debug(f"Normalization failed for {path}: {e}")
+            return True
+            
+        # 3. DIRECTORY EXCLUSIONS (Imported from Utils)
         for part in path.parts:
             if part in self.EXCLUDE_DIRS:
                 return True
                 
-        # 2. Check filename against file exclusions
-        if path.name in self.EXCLUDE_FILES:
-            return True
-            
-        # 3. Check extensions/patterns
-        name_lower = path.name.lower()
-        if name_lower.endswith(('.pyc', '.pyo', '.pyd', '.egg-info', '.log', '.gguf', '.bin', '.safetensors', '.ckpt', '.pth', '.onnx', '.pb')):
-            return True
-            
-        if name_lower.startswith(('npm-debug.log', 'yarn-error.log', 'pnpm-debug.log')):
-            return True
-            
-        return False
+        # 4. FILE & PATTERN EXCLUSIONS (Imported Logic)
+        # Delegate name and regex pattern checks to the centralized utility
+        return should_exclude_file(path.name, in_manifest=False)
 
     #============================================
     # Method: _load_documents_from_directory
@@ -668,9 +677,46 @@ class CortexOperations:
             
             # Validate files
             valid_files = []
+            
+            # Known host path prefixes that should be stripped for container compatibility
+            # This handles cases where absolute host paths are passed to the containerized service
+            HOST_PATH_MARKERS = [
+                "/Users/",      # macOS
+                "/home/",       # Linux
+                "/root/",       # Linux root
+                "C:\\Users\\",  # Windows
+                "C:/Users/",    # Windows forward slash
+            ]
+            
             for fp in file_paths:
                 path = Path(fp)
-                if not path.is_absolute():
+                
+                # Handle absolute host paths by converting to relative paths
+                # This enables proper resolution when running in containers
+                if path.is_absolute():
+                    fp_str = str(fp)
+                    # Check if this looks like a host absolute path (not container /app path)
+                    is_host_path = any(fp_str.startswith(marker) for marker in HOST_PATH_MARKERS)
+                    
+                    if is_host_path:
+                        # Try to extract the relative path after common project markers
+                        # Look for 'Project_Sanctuary/' or similar project root markers in the path
+                        project_markers = ["Project_Sanctuary/", "project_sanctuary/", "/app/"]
+                        for marker in project_markers:
+                            if marker in fp_str:
+                                # Extract the relative path after the project marker
+                                relative_part = fp_str.split(marker, 1)[1]
+                                path = self.project_root / relative_part
+                                logger.info(f"Translated host path to container path: {fp} -> {path}")
+                                break
+                        else:
+                            # No marker found, log warning and try the path as-is
+                            logger.warning(f"Could not translate host path: {fp}")
+                    # If it starts with /app, it's already a container path - use as-is
+                    elif fp_str.startswith("/app"):
+                        pass  # path is already correct
+                else:
+                    # Relative path - prepend project root
                     path = self.project_root / path
                 
                 if path.exists() and path.is_file():
@@ -1731,7 +1777,7 @@ class CortexOperations:
                     "    end",
                     "    subgraph subGraphAudit[\"IV. Red Team Audit (Gate 2)\"]",
                     "        direction TB",
-                    "        CaptureAudit[\"MCP: cortex_capture_snapshot (audit)\"]",
+                    "        CaptureAudit[\"MCP: cortex_capture_snapshot<br>(audit | learning_audit)\"]",
                     "        Packet[\"Audit Packet\"]",
                     "        TechApproval{\"Technical Approval<br>(HITL)\"}",
                     "    end",
@@ -1832,7 +1878,7 @@ class CortexOperations:
         # Purpose: Tool-driven snapshot generation for Protocol 128.
         # Args:
         #   manifest_files: List of file paths to include
-        #   snapshot_type: 'audit' or 'seal'
+        #   snapshot_type: 'audit', 'seal', or 'learning_audit'
         #   strategic_context: Optional context string
         # Returns: CaptureSnapshotResponse with verification info
         #============================================
@@ -1842,7 +1888,12 @@ class CortexOperations:
         
         # 1. Prepare Tool Paths
         learning_dir = self.project_root / ".agent" / "learning"
-        output_dir = learning_dir / "red_team" if snapshot_type == "audit" else learning_dir
+        if snapshot_type == "audit":
+            output_dir = learning_dir / "red_team"
+        elif snapshot_type == "learning_audit":
+            output_dir = learning_dir / "learning_audit"
+        else:  # seal, learning_debrief
+            output_dir = learning_dir
         output_dir.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         
@@ -1853,7 +1904,9 @@ class CortexOperations:
         if not effective_manifest:
             if snapshot_type == "seal":
                 manifest_file = learning_dir / "learning_manifest.json"
-            else: # audit
+            elif snapshot_type == "learning_audit":
+                manifest_file = output_dir / "learning_audit_manifest.json"
+            else:  # audit
                 manifest_file = output_dir / "red_team_manifest.json"
                 
             if manifest_file and manifest_file.exists():
@@ -1868,6 +1921,8 @@ class CortexOperations:
         snapshot_filename = f"{snapshot_type}_snapshot_{timestamp}.md"
         if snapshot_type == "audit":
             snapshot_filename = "red_team_audit_packet.md"
+        elif snapshot_type == "learning_audit":
+            snapshot_filename = "learning_audit_packet.md"
         final_snapshot_path = output_dir / snapshot_filename
 
         # 4. Shadow Manifest & Strict Rejection (Protocol 128 v3.2)
@@ -1953,7 +2008,7 @@ class CortexOperations:
 
         # Temporary manifest file for the snapshot tool
         temp_manifest_path = output_dir / f"manifest_{snapshot_type}_{int(time.time())}.json"
-        snapshot_filename = "red_team_audit_packet.md" if snapshot_type == "audit" else "learning_package_snapshot.md"
+        snapshot_filename = "red_team_audit_packet.md" if snapshot_type == "audit" else ("learning_audit_packet.md" if snapshot_type == "learning_audit" else "learning_package_snapshot.md")
         final_snapshot_path = output_dir / snapshot_filename
         
         try:

@@ -1,7 +1,8 @@
 # Protocol 128 Execution Strategy for Cortex Snapshot
 
-**Status:** PROPOSED
-**Date:** 2025-12-23
+**Status:** SUPERSEDED  
+**Resolution:** The `cortex_capture_snapshot` MCP tool was implemented as a native Python solution in `mcp_servers/rag_cortex/operations.py`, eliminating the Node.js dependency (Option B chosen).  
+**Date:** 2025-12-23 (Proposed) → 2025-12-27 (Superseded)  
 **Author:** Antigravity
 
 

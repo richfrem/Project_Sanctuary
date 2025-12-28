@@ -836,25 +836,31 @@
           "name": "sanctuary-domain-chronicle-update-entry"
         },
         {
-          "description": "Append a new entry to the Chronicle (Alias for create_entry).",
+          "description": "Append a new entry to the Chronicle (Alias for create_entry). Status must be: draft, published, canonical, or deprecated. Classification: public, internal, or confidential.",
           "inputSchema": {
             "properties": {
               "author": {
+                "description": "Author name or identifier",
                 "type": "string"
               },
               "classification": {
+                "description": "Visibility level: public, internal, or confidential",
                 "type": "string"
               },
               "content": {
+                "description": "Entry content (markdown supported)",
                 "type": "string"
               },
               "date": {
+                "description": "Date string (YYYY-MM-DD), defaults to today",
                 "type": "string"
               },
               "status": {
+                "description": "Entry status: draft, published, canonical, or deprecated",
                 "type": "string"
               },
               "title": {
+                "description": "Entry title",
                 "type": "string"
               }
             },
@@ -867,25 +873,31 @@
           "name": "sanctuary-domain-chronicle-append-entry"
         },
         {
-          "description": "Create a new chronicle entry.",
+          "description": "Create a new chronicle entry. Status must be: draft, published, canonical, or deprecated. Classification: public, internal, or confidential.",
           "inputSchema": {
             "properties": {
               "author": {
+                "description": "Author name or identifier",
                 "type": "string"
               },
               "classification": {
+                "description": "Visibility level: public, internal, or confidential",
                 "type": "string"
               },
               "content": {
+                "description": "Entry content (markdown supported)",
                 "type": "string"
               },
               "date": {
+                "description": "Date string (YYYY-MM-DD), defaults to today",
                 "type": "string"
               },
               "status": {
+                "description": "Entry status: draft, published, canonical, or deprecated",
                 "type": "string"
               },
               "title": {
+                "description": "Entry title",
                 "type": "string"
               }
             },
@@ -1333,275 +1345,7 @@
       "slug": "sanctuary_utils",
       "source": "spec",
       "status": "ready",
-      "tools": [
-        {
-          "description": "Returns a high-level overview of available MCP servers.",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-utils-gateway-get-capabilities"
-        },
-        {
-          "description": "Replace occurrences of old with new in text.",
-          "inputSchema": {
-            "properties": {
-              "new": {
-                "description": "Replacement substring",
-                "type": "string"
-              },
-              "old": {
-                "description": "Substring to replace",
-                "type": "string"
-              },
-              "text": {
-                "description": "Original text",
-                "type": "string"
-              }
-            },
-            "required": [
-              "text",
-              "old",
-              "new"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-string-replace"
-        },
-        {
-          "description": "Count words in text.",
-          "inputSchema": {
-            "properties": {
-              "text": {
-                "description": "Text to process",
-                "type": "string"
-              }
-            },
-            "required": [
-              "text"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-string-word-count"
-        },
-        {
-          "description": "Reverse a string.",
-          "inputSchema": {
-            "properties": {
-              "text": {
-                "description": "Text to process",
-                "type": "string"
-              }
-            },
-            "required": [
-              "text"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-string-reverse"
-        },
-        {
-          "description": "Remove leading and trailing whitespace.",
-          "inputSchema": {
-            "properties": {
-              "text": {
-                "description": "Text to process",
-                "type": "string"
-              }
-            },
-            "required": [
-              "text"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-string-trim"
-        },
-        {
-          "description": "Convert text to lowercase.",
-          "inputSchema": {
-            "properties": {
-              "text": {
-                "description": "Text to process",
-                "type": "string"
-              }
-            },
-            "required": [
-              "text"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-string-to-lower"
-        },
-        {
-          "description": "Convert text to uppercase.",
-          "inputSchema": {
-            "properties": {
-              "text": {
-                "description": "Text to process",
-                "type": "string"
-              }
-            },
-            "required": [
-              "text"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-string-to-upper"
-        },
-        {
-          "description": "Validate if a string is a valid UUID.",
-          "inputSchema": {
-            "properties": {
-              "uuid_string": {
-                "description": "UUID string to validate",
-                "type": "string"
-              }
-            },
-            "required": [
-              "uuid_string"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-uuid-validate-uuid"
-        },
-        {
-          "description": "Generate a UUID based on host ID and current time (version 1).",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-utils-uuid-generate-uuid1"
-        },
-        {
-          "description": "Generate a random UUID (version 4).",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-utils-uuid-generate-uuid4"
-        },
-        {
-          "description": "Divide a by b.",
-          "inputSchema": {
-            "properties": {
-              "a": {
-                "description": "First number",
-                "type": "number"
-              },
-              "b": {
-                "description": "Second number",
-                "type": "number"
-              }
-            },
-            "required": [
-              "a",
-              "b"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-calculator-divide"
-        },
-        {
-          "description": "Multiply two numbers.",
-          "inputSchema": {
-            "properties": {
-              "a": {
-                "description": "First number",
-                "type": "number"
-              },
-              "b": {
-                "description": "Second number",
-                "type": "number"
-              }
-            },
-            "required": [
-              "a",
-              "b"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-calculator-multiply"
-        },
-        {
-          "description": "Subtract b from a.",
-          "inputSchema": {
-            "properties": {
-              "a": {
-                "description": "First number",
-                "type": "number"
-              },
-              "b": {
-                "description": "Second number",
-                "type": "number"
-              }
-            },
-            "required": [
-              "a",
-              "b"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-calculator-subtract"
-        },
-        {
-          "description": "Add two numbers.",
-          "inputSchema": {
-            "properties": {
-              "a": {
-                "description": "First number",
-                "type": "number"
-              },
-              "b": {
-                "description": "Second number",
-                "type": "number"
-              }
-            },
-            "required": [
-              "a",
-              "b"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-calculator-add"
-        },
-        {
-          "description": "Evaluate a mathematical expression safely.",
-          "inputSchema": {
-            "properties": {
-              "expression": {
-                "description": "Math expression to evaluate",
-                "type": "string"
-              }
-            },
-            "required": [
-              "expression"
-            ],
-            "type": "object"
-          },
-          "name": "sanctuary-utils-calculator-calculate"
-        },
-        {
-          "description": "Get information about available timezones.",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-utils-time-get-timezone-info"
-        },
-        {
-          "description": "Get the current time in UTC or specified timezone.",
-          "inputSchema": {
-            "properties": {
-              "timezone_name": {
-                "description": "Timezone name (default: UTC)",
-                "type": "string"
-              }
-            },
-            "type": "object"
-          },
-          "name": "sanctuary-utils-time-get-current-time"
-        }
-      ],
+      "tools": [],
       "url": "http://sanctuary_utils:8000/sse"
     }
   }

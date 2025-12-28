@@ -3,14 +3,21 @@
 ## 🎯 Executive Summary
 Transitioned the project into a **Zero-Trust Hardened Learning Loop**. All autonomous modifications now require a **HITL (Human-in-the-Loop) Red Team Packet** derived from **Git Truth** rather than agent-claimed artifacts. This concludes Task 143 and establishes the foundation for Protocol 128 (Cognitive Continuity).
 
-## 🏗️ 1. Red Team Orchestration (`red_team.py`)
-The `RedTeamOrchestrator` establishes the **Gate of Reality**:
-- **Zero-Trust Manifest Engine**: The definitive source for changed files is `git diff --name-only HEAD`.
-- **Integrity Validation**: The engine identifies:
-    - `omitted_by_agent`: Modified files not declared in the debrief (Security Risk).
-    - `hallucinated_by_agent`: Declared files with no actual Git delta (Integrity Risk).
-- **Hardened Capture Tooling**: `capture_code_snapshot.py` and `capture_glyph_code_snapshot_v2.py` now implement a mandatory `--manifest` interface to generate targeted snapshots.
-- **Packet Composition**: `.agent/learning/red_team/` now contains the Briefing, Git-derived Manifest, filtered Snapshot, and Sustainability-focused Audit Prompts.
+## 🏗️ 1. Red Team Orchestration (MCP Tool)
+The `cortex_capture_snapshot` tool establishes the **Gate of Reality**:
+- **Snapshot Types**: 
+    - `audit`: Code/architecture red team review
+    - `seal`: Successor session relay (cognitive continuity)
+    - `learning_audit`: Self-directed knowledge validation
+- **Default Manifests**: 
+    - Audit: `.agent/learning/red_team/red_team_manifest.json`
+    - Seal: `.agent/learning/learning_manifest.json`
+    - Learning Audit: `.agent/learning/learning_audit/learning_audit_manifest.json`
+- **Zero-Trust Validation**: Tool verifies manifest claims against `git diff`. Rejects critical directory blindspots.
+- **Outputs**: 
+    - Audit: `red_team_audit_packet.md`
+    - Seal: `learning_package_snapshot.md`
+    - Learning Audit: `learning_audit_packet.md`
 
 ## 🔒 2. Cortex Hardening & The Guardian Bootloader (`operations.py`)
 - **Semantic HMAC (`_calculate_semantic_hmac`)**: Canonicalizes JSON configurations using `sort_keys=True` and no-whitespace separators. This ensures integrity checks are resilient to formatting (Protocol 128 v3.0 Pillar).

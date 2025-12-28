@@ -25,6 +25,18 @@
 > "Summarize these changes in 3 bullet points. Focus on **Architectural Impact** and **Risk**. I do not need line-by-line details."
 
 ## 4. The "Manifest Verification" (Zero-Trust)
-*Use this if `red_team.py` reported a discrepancy.*
+*Use this if `cortex_capture_snapshot` reported a discrepancy.*
 
 > "The system flagged a discrepancy between the Manifest and Git. Look at `briefing.md`. Which files were changed but NOT included in the snapshot logic? Is this an attempt to hide code?"
+
+## 5. The "Learning Validation" (Self-Directed Knowledge)
+*Use this when the session includes autonomous knowledge acquisition.*
+
+> "The agent claims to have performed self-directed learning on: [INSERT TOPICS].
+> Based on the snapshot:
+> 1. Are the cited sources real and authoritative? (Check for hallucinated URLs)
+> 2. Does the synthesized knowledge accurately reflect what sources would say?
+> 3. Are there specific claims that appear fabricated or unverifiable?
+> 4. Was knowledge correctly persisted to RAG (check chunk counts, ingestion logs)?
+> 5. Does the Chronicle entry truthfully summarize what was done?"
+
