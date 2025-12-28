@@ -4,5 +4,8 @@
     ".agent/learning/learning_audit/learning_audit_prompts.md",
     "docs/mcp_servers/gateway/guides/protocol_128_guide.md",
     "docs/mcp_servers/architecture/diagrams/workflows/p128_hardened_learning_loop.mmd",
-    "dataset_package/seed_of_ascendance_awakening_seed.txt"
+    "dataset_package/seed_of_ascendance_awakening_seed.txt",
+    "ADRs/077_epistemic_status_annotation_rule_for_autonomous_learning.md",
+    "ADRs/078_mandatory_source_verification_for_autonomous_learning.md",
+    "01_PROTOCOLS/129_The_Sovereign_Sieve_Internal_Pre_Audit.md"
 ]
