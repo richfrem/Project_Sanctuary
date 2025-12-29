@@ -29,7 +29,7 @@ class TestCortexOperations:
              patch("mcp_servers.rag_cortex.operations.HuggingFaceEmbeddings") as mock_embeddings, \
              patch("mcp_servers.rag_cortex.operations.Chroma") as mock_vectorstore, \
              patch("mcp_servers.rag_cortex.operations.RecursiveCharacterTextSplitter") as mock_splitter, \
-             patch("mcp_servers.rag_cortex.operations.DirectoryLoader") as mock_loader, \
+             patch("mcp_servers.rag_cortex.operations.ContentProcessor") as mock_processor, \
              patch("mcp_servers.rag_cortex.operations.SimpleFileStore") as mock_store:
             
             yield {
@@ -37,7 +37,8 @@ class TestCortexOperations:
                 "embeddings": mock_embeddings,
                 "vectorstore": mock_vectorstore,
                 "splitter": mock_splitter,
-                "loader": mock_loader,
+                "splitter": mock_splitter,
+                "processor": mock_processor,
                 "store": mock_store
             }
 
@@ -65,10 +66,11 @@ class TestCortexOperations:
         # Mock Loader docs
         mock_doc = MagicMock()
         mock_doc.page_content = "content"
-        # The loader is instantiated in _load_documents_from_directory
+        mock_doc.page_content = "content"
+        # The processor is instantiated in ingest_full
         # We need to ensure the mock returned by the class constructor behaves right
-        mock_loader_instance = mock_dependencies["loader"].return_value
-        mock_loader_instance.load.return_value = [mock_doc]
+        mock_processor_instance = mock_dependencies["processor"].return_value
+        mock_processor_instance.load_for_rag.return_value = [mock_doc]
         
         # Mock Splitter
         mock_dependencies["splitter"].return_value.split_documents.return_value = [mock_doc]
@@ -81,8 +83,9 @@ class TestCortexOperations:
         # Verify purge calls
         ops.chroma_client.delete_collection.assert_called()
         
-        # Verify loading - DirectoryLoader(...) should have been called
-        mock_dependencies["loader"].assert_called()
+        
+        # Verify loading - ContentProcessor.load_for_rag should have been called
+        mock_dependencies["processor"].assert_called()
         
         # Verify adding to vectorstore
         ops.vectorstore.add_documents.assert_called()

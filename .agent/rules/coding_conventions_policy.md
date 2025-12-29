@@ -1,5 +1,5 @@
 ---
-trigger: always_on
+trigger: manual
 ---
 
 ## 💻 Project Sanctuary: Coding Conventions & Documentation Rules

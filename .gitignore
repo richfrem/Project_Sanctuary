@@ -117,6 +117,9 @@ Adding rules.
 .agent/learning/*.snapshot.txt
 dataset_package/
 
+# ADR 079: HF Soul Metadata Staging (Local Only)
+.agent/learning/hf_soul_metadata/
+
 
 # --- Sensitive Information ---
 

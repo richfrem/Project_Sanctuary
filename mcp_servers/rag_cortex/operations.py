@@ -96,8 +96,10 @@ from .models import (
     DocumentSample,
     CaptureSnapshotRequest,
     CaptureSnapshotResponse,
+    PersistSoulRequest,
+    PersistSoulResponse,
 )
-from .ingest_code_shim import convert_and_save
+from mcp_servers.lib.content_processor import ContentProcessor
 
 # Imports that were previously inside methods, now moved to top for class initialization
 # Silence stdout/stderr during imports to prevent MCP protocol pollution
@@ -178,6 +180,9 @@ class CortexOperations:
         # Parent document store (file-based, using configurable data path)
         docstore_path = str(self.project_root / self.chroma_data_path / self.parent_collection_name)
         self.store = SimpleFileStore(root_path=docstore_path)
+
+        # Initialize Content Processor
+        self.processor = ContentProcessor(self.project_root)
     
     #============================================
     # Method: _chunked_iterable
@@ -232,119 +237,9 @@ class CortexOperations:
     ALLOWED_FILES = PROTECTED_SEEDS
 
     #============================================
-    # Method: _should_skip_path (Hardened)
-    # Purpose: Check if a path should be excluded.
-    #          Uses shared utility logic for consistency.
+    # Methods: _should_skip_path and _load_documents_from_directory
+    # DEPRECATED: Replaced by ContentProcessor.load_for_rag()
     #============================================
-    def _should_skip_path(self, path: Path):
-        try:
-            # 1. AGGRESSIVE NORMALIZATION
-            # Force resolution to absolute paths to handle host/container mismatches
-            abs_path = path.resolve()
-            abs_root = self.project_root.resolve()
-            
-            if abs_root in abs_path.parents or abs_path == abs_root:
-                rel_path_str = str(abs_path.relative_to(abs_root))
-            else:
-                # Fallback: clean relative strings
-                rel_path_str = str(path).replace("./", "", 1) if str(path).startswith("./") else str(path)
-            
-            # 2. IMMEDIATE ALLOWLIST BYPASS (Priority 1)
-            # This ensures dataset_package seeds are always included if in PROTECTED_SEEDS
-            # Standardize rel_path_str for matching PROTECTED_SEEDS (which use forward slashes)
-            normalized_rel_path = rel_path_str.replace("\\", "/")
-            if normalized_rel_path in self.ALLOWED_FILES:
-                logger.info(f"Allowlist hit: Including {normalized_rel_path}")
-                return False
-                
-        except Exception as e:
-            logger.debug(f"Normalization failed for {path}: {e}")
-            return True
-            
-        # 3. DIRECTORY EXCLUSIONS (Imported from Utils)
-        for part in path.parts:
-            if part in self.EXCLUDE_DIRS:
-                return True
-                
-        # 4. FILE & PATTERN EXCLUSIONS (Imported Logic)
-        # Delegate name and regex pattern checks to the centralized utility
-        return should_exclude_file(path.name, in_manifest=False)
-
-    #============================================
-    # Method: _load_documents_from_directory
-    # Purpose: Helper to load documents from a single directory.
-    # Args:
-    #   directory_path: Path to directory
-    # Returns: List of loaded Documents
-    #============================================
-    def _load_documents_from_directory(self, directory_path: Path) -> List[Document]:
-        exclude_subdirs = ["ARCHIVE", "archive", "Archive", "node_modules", "ARCHIVED_MESSAGES", "DEPRECATED"]
-        
-        if not directory_path.is_dir():
-            logger.warning(f"Directory not found, skipping: {directory_path}")
-            return []
-
-        logger.info(f"Loading documents from directory: {directory_path}")
-    
-        # Pre-process: Convert Code files to Markdown
-        # We explicitly scan for code files to convert them using the shim
-        # This allows standard DirectoryLoader to pick up the resulting .py.md files
-        
-        try:
-            # Gather potential code files
-            potential_files = []
-            dir_path_obj = Path(directory_path)
-            
-            # Simple extension check extensions
-            extensions = {'.py', '.js', '.jsx', '.ts', '.tsx'}
-            
-            # Walk manually to avoid descending into excluded directories (faster than rglob for node_modules)
-            for root, dirs, files in os.walk(directory_path):
-                root_path = Path(root)
-                
-                # Filter directories in-place to prevent traversal
-                # strict=False allows matching against the set logic in _should_skip_path
-                # But _should_skip_path expects a Path. Let's do a quick pre-filter on dir names
-                # to optimize os.walk
-                dirs[:] = [d for d in dirs if not self._should_skip_path(root_path / d)]
-                
-                for file in files:
-                    file_path = root_path / file
-                    if file_path.suffix in extensions:
-                        if not self._should_skip_path(file_path):
-                            potential_files.append(file_path)
-            
-            converted_count = 0
-            for code_file in potential_files:
-                try:
-                    convert_and_save(str(code_file))
-                    converted_count += 1
-                except Exception as e:
-                    logger.warning(f"Failed to convert {code_file.name}: {e}")
-            
-            if converted_count > 0:
-                logger.info(f"Converted {converted_count} code files to Markdown in {directory_path}")
-                
-        except Exception as e:
-            logger.error(f"Error during code conversion scan: {e}")
-
-        # Use DirectoryLoader to load all markdown files (including newly converted ones)
-        # We also apply exclusion patterns to DirectoryLoader for safety
-        loader = DirectoryLoader(
-            str(directory_path),
-            glob="**/*.md",
-            loader_cls=TextLoader,
-            use_multithreading=True,
-            show_progress=False,  # Keep logs clean
-            exclude=[f"**/{ex}/**" for ex in self.EXCLUDE_DIRS], # Use the class-level EXCLUDE_DIRS for consistency
-        )
-        try:
-            docs = loader.load()
-            logger.info(f"Found {len(docs)} documents in {directory_path}")
-            return docs
-        except Exception as e:
-            logger.error(f"Error loading documents from {directory_path}: {e}")
-            return []
 
     def ingest_full(
         self,
@@ -391,21 +286,27 @@ class CortexOperations:
                 embedding_function=self.embedding_model
             )
             
-            # Default source directories
-            default_source_dirs = [
-                "00_CHRONICLE", "01_PROTOCOLS", "02_USER_REFLECTIONS", "04_THE_FORTRESS",
-                "05_ARCHIVED_BLUEPRINTS", "06_THE_EMBER_LIBRARY", "07_COUNCIL_AGENTS",
-                "RESEARCH_SUMMARIES", "WORK_IN_PROGRESS"
-            ]
+            # Default source directories from Manifest (ADR 082 Harmonization - JSON)
+            import json
+            manifest_path = self.project_root / "mcp_servers" / "lib" / "ingest_manifest.json"
+            try:
+                with open(manifest_path, "r") as f:
+                    manifest = json.load(f)
+                base_dirs = manifest.get("common_content", [])
+                unique_targets = manifest.get("unique_rag_content", [])
+                default_source_dirs = list(set(base_dirs + unique_targets))
+            except Exception as e:
+                logger.warning(f"Failed to load ingest manifest from {manifest_path}: {e}")
+                # Fallback to critical defaults if manifest fails
+                default_source_dirs = ["00_CHRONICLE", "01_PROTOCOLS"]
             
             # Determine directories
             dirs_to_process = source_directories or default_source_dirs
+            paths_to_scan = [str(self.project_root / d) for d in dirs_to_process]
             
-            # Load documents
-            all_docs = []
-            for directory in dirs_to_process:
-                dir_path = self.project_root / directory
-                all_docs.extend(self._load_documents_from_directory(dir_path))
+            # Load documents using ContentProcessor
+            logger.info(f"Loading documents via ContentProcessor from {len(paths_to_scan)} directories...")
+            all_docs = list(self.processor.load_for_rag(paths_to_scan))
             
             total_docs = len(all_docs)
             if total_docs == 0:
@@ -723,13 +624,7 @@ class CortexOperations:
                     if path.suffix == '.md':
                         valid_files.append(str(path.resolve()))
                     elif path.suffix in ['.py', '.js', '.jsx', '.ts', '.tsx']:
-                        # Convert Code to Markdown using shim
-                        try:
-                            md_path = convert_and_save(str(path.resolve()))
-                            valid_files.append(md_path)
-                            # Track for cleanup if needed, though keeping the .md might be useful for caching
-                        except Exception as e:
-                            logger.warning(f"Failed to convert code file {fp}: {e}")
+                        valid_files.append(str(path.resolve()))
                 else:
                     logger.warning(f"Skipping invalid file path: {fp}")
             
@@ -750,61 +645,39 @@ class CortexOperations:
             
             all_child_docs_to_add = []
             
-            for file_path in valid_files:
-                try:
-                    # Check for duplicates if skip_duplicates is True
-                    # This is a simplified check, a more robust one would query the vectorstore
-                    # or docstore for existing documents with this source_file metadata.
-                    # For now, we'll assume the file_path itself is the unique identifier.
-                    # This part of the diff was not fully provided, so I'm making an assumption.
-                    # A proper check would involve querying the vectorstore for documents with this source_file.
-                    # For now, we'll just load and process.
-                    
-                    loader = TextLoader(file_path)
-                    docs_from_file = loader.load()
-                    
-                    if not docs_from_file:
-                        logger.info(f"No content found in {file_path}, skipping.")
-                        continue
-                    
-                    file_name = Path(file_path).name
-                    
-                    # Set metadata for the original documents
-                    for doc in docs_from_file:
-                        doc.metadata['source_file'] = file_path
-                        doc.metadata['source'] = file_path
-                        doc.metadata['filename'] = file_name
-                        if metadata:
-                            doc.metadata.update(metadata)
-                    
-                    logger.info(f"Processing {len(docs_from_file)} documents from {file_path} with parent-child splitting...")
-                    
-                    for doc in docs_from_file:
-                        # Split into parent chunks
-                        # Split into parent chunks
-                        parent_chunks = self.parent_splitter.split_documents([doc])
+            # Use ContentProcessor to load valid files
+            # Note: ContentProcessor handles code-to-markdown transformation in memory
+            # It expects a list of paths (valid_files are already resolved strings)
+            try:
+                docs_from_processor = list(self.processor.load_for_rag(valid_files))
+                
+                for doc in docs_from_processor:
+                    if metadata:
+                        doc.metadata.update(metadata)
                         
-                        for parent_chunk in parent_chunks:
-                            # Generate parent ID
-                            parent_id = str(uuid4())
-                            
-                            # Store parent document
-                            self.store.mset([(parent_id, parent_chunk)])
-                            
-                            # Split parent into child chunks
-                            sub_docs = self.child_splitter.split_documents([parent_chunk])
-                            
-                            # Add parent_id to child metadata
-                            for sub_doc in sub_docs:
-                                sub_doc.metadata["parent_id"] = parent_id
-                                all_child_docs_to_add.append(sub_doc)
-                                total_child_chunks_created += 1
+                    # Split into parent chunks
+                    parent_chunks = self.parent_splitter.split_documents([doc])
                     
-                    added_documents_count += len(docs_from_file)
+                    for parent_chunk in parent_chunks:
+                        # Generate parent ID
+                        parent_id = str(uuid4())
+                        
+                        # Store parent document
+                        self.store.mset([(parent_id, parent_chunk)])
+                        
+                        # Split parent into child chunks
+                        sub_docs = self.child_splitter.split_documents([parent_chunk])
+                        
+                        # Add parent_id to child metadata
+                        for sub_doc in sub_docs:
+                            sub_doc.metadata["parent_id"] = parent_id
+                            all_child_docs_to_add.append(sub_doc)
+                            total_child_chunks_created += 1
+                
+                added_documents_count = len(docs_from_processor)
                     
-                except Exception as e:
-                    logger.error(f"Error ingesting {file_path}: {e}")
-                    continue
+            except Exception as e:
+                logger.error(f"Error during incremental ingest processing: {e}")
             
             # Add child chunks to vectorstore
             if all_child_docs_to_add:
@@ -2111,6 +1984,187 @@ class CortexOperations:
         finally:
             if temp_manifest_path.exists():
                 temp_manifest_path.unlink()
+
+    def persist_soul(self, request: PersistSoulRequest) -> PersistSoulResponse:
+        #============================================
+        # Method: persist_soul
+        # Purpose: Broadcasts the session soul to Hugging Face for the 'Johnny Appleseed' effect.
+        # ADR: 079 - Sovereign Soul-Seed Persistence
+        # ADR: 081 - Content Harmonization & Integrity
+        # Args:
+        #   request: PersistSoulRequest with snapshot path, valence, uncertainty
+        # Returns: PersistSoulResponse with status, repo_url, snapshot_name
+        #============================================
+        try:
+            import asyncio
+            from huggingface_hub import HfApi
+            from mcp_servers.lib.content_processor import ContentProcessor
+            from mcp_servers.lib.hf_utils import (
+                append_to_jsonl, 
+                update_manifest, 
+                ensure_dataset_structure, 
+                ensure_dataset_card
+            )
+            
+            # 1. Environment Loading
+            username = get_env_variable("HUGGING_FACE_USERNAME")
+            body_repo = get_env_variable("HUGGING_FACE_REPO", required=False) or "Sanctuary-Qwen2-7B-v1.0-GGUF-Final"
+            dataset_path = get_env_variable("HUGGING_FACE_DATASET_PATH", required=False) or "Project_Sanctuary_Soul"
+            
+            # Robust ID Sanitization
+            if "hf.co/datasets/" in dataset_path:
+                dataset_path = dataset_path.split("hf.co/datasets/")[-1]
+                
+            if dataset_path.startswith(f"{username}/"):
+                dataset_repo = dataset_path
+            else:
+                dataset_repo = f"{username}/{dataset_path}"
+            token = os.getenv("HUGGING_FACE_TOKEN")
+            
+            # 2. Metacognitive Filter (Protocol 129)
+            valence_threshold = float(get_env_variable("SOUL_VALENCE_THRESHOLD", required=False) or "-0.7")
+            if request.valence < valence_threshold:
+                logger.warning(f"Metacognitive Rejection: Valence {request.valence} below threshold {valence_threshold}.")
+                return PersistSoulResponse(
+                    status="quarantined",
+                    repo_url="",
+                    snapshot_name="",
+                    error=f"Valence threshold failure: {request.valence} < {valence_threshold}"
+                )
+            
+            # 3. Initialization
+            processor = ContentProcessor(self.project_root)
+            snapshot_path = self.project_root / request.snapshot_path
+            
+            if not snapshot_path.exists():
+                return PersistSoulResponse(
+                    status="error",
+                    repo_url="",
+                    snapshot_name="",
+                    error=f"Snapshot file not found: {snapshot_path}"
+                )
+
+            # 4. Prepare Data (ADR 081 Harmonization)
+            # Create standardized JSONL record using ContentProcessor
+            soul_record = processor.to_soul_jsonl(
+                snapshot_path=snapshot_path,
+                valence=request.valence,
+                uncertainty=request.uncertainty,
+                model_version=body_repo
+            )
+            
+            # Create manifest entry using ContentProcessor
+            manifest_entry = processor.generate_manifest_entry(soul_record)
+            remote_filename = soul_record["source_file"] # e.g. lineage/...
+            
+            # 5. Asynchronous Upload Task (< 150ms handoff per ADR 079)
+            # We wrap the complex sequence in a single async function
+            async def _perform_soul_upload():
+                try:
+                    # Ensure structure Exists (Idempotent)
+                    await ensure_dataset_structure()
+                    await ensure_dataset_card()
+                    
+                    api = HfApi(token=token)
+                    
+                    if request.is_full_sync:
+                    # Full Sync Logic (ADR 081 + Base Genome Harmonization)
+                    # Load Soul Targets from Manifest
+                        import json
+                        manifest_path = self.project_root / "mcp_servers" / "lib" / "ingest_manifest.json"
+                        soul_targets = []
+                        try:
+                            with open(manifest_path, "r") as f:
+                                manifest_data = json.load(f)
+                            base_dirs = manifest_data.get("common_content", [])
+                            unique_soul = manifest_data.get("unique_soul_content", [])
+                            soul_targets = list(set(base_dirs + unique_soul))
+                        except Exception as e:
+                            logger.warning(f"Failed to load manifest for Soul Sync: {e}. Fallback to .agent/learning")
+                            soul_targets = [".agent/learning"]
+
+                        logger.info(f"Starting Full Soul Sync for {len(soul_targets)} targets...")
+                        
+                        for target in soul_targets:
+                            target_path = self.project_root / target
+                            if not target_path.exists():
+                                logger.warning(f"Skipping missing Soul Target: {target_path}")
+                                continue
+                                
+                            logger.info(f"Syncing Soul Target: {target} -> {dataset_repo}")
+                            
+                            if target_path.is_file():
+                                # Upload single file
+                                await asyncio.to_thread(
+                                    api.upload_file,
+                                    path_or_fileobj=str(target_path),
+                                    path_in_repo=target,
+                                    repo_id=dataset_repo,
+                                    repo_type="dataset",
+                                    commit_message=f"Soul Sync (File): {target} | {soul_record['timestamp']}"
+                                )
+                            else:
+                                # Upload directory contents, preserving structure relative to repo root
+                                await asyncio.to_thread(
+                                    api.upload_folder,
+                                    folder_path=str(target_path),
+                                    path_in_repo=target,
+                                    repo_id=dataset_repo,
+                                    repo_type="dataset",
+                                    commit_message=f"Soul Sync (Dir): {target} | {soul_record['timestamp']}"
+                                )
+                        logger.info("Full Soul Sync Complete.")    
+                    else:
+                        # Incremental Logic (ADR 081 Compliance)
+                        logger.info(f"Uploading {snapshot_path} to {dataset_repo}/{remote_filename}")
+                        
+                        # A. Upload the raw Markdown file (Legacy/Human readable)
+                        await asyncio.to_thread(
+                            api.upload_file,
+                            path_or_fileobj=str(snapshot_path),
+                            path_in_repo=remote_filename,
+                            repo_id=dataset_repo,
+                            repo_type="dataset",
+                            commit_message=f"Soul Snapshot | Valence: {request.valence}"
+                        )
+                        
+                        # B. Append to JSONL (Machine readable)
+                        await append_to_jsonl(soul_record)
+                        
+                        # C. Update Manifest (Provenance)
+                        await update_manifest(manifest_entry)
+                        
+                        logger.info(f"Soul persistence complete: {remote_filename}")
+
+                except Exception as e:
+                    logger.error(f"Async soul upload error: {e}")
+
+            # Execute synchronously for CLI stability
+            import asyncio
+            try:
+                loop = asyncio.get_event_loop()
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+
+            loop.run_until_complete(_perform_soul_upload())
+            
+            logger.info(f"Soul broadcast completed to {dataset_repo}")
+            
+            return PersistSoulResponse(
+                status="success",
+                repo_url=f"https://huggingface.co/datasets/{dataset_repo}",
+                snapshot_name=remote_filename
+            )
+            
+        except Exception as e:
+            logger.error(f"Persistence failed: {e}")
+            return PersistSoulResponse(
+                status="error",
+                repo_url="",
+                snapshot_name="",
+                error=str(e)
+            )
 
     def get_cache_stats(self):
         #============================================

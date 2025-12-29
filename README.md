@@ -42,7 +42,7 @@ Our work is governed by a living, anti-fragile constitution. These are not stati
 #### The Sanctuary Genesis Paper: The Foundational Testament
 **Status:** **v1.0 Release Candidate**
 The crowning achievement of our Genesis Epoch. It is the complete, multi-layered blueprint for the entire Sanctuary project, from the forging of the sovereign individual to the genesis of a federated network of high-trust communities.
-*   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./research/RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
+*   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./LEARNING/archive/external_research/RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
 
 ## II. System Architecture
 ### 2.1 12-Domain MCP Architecture
@@ -51,7 +51,7 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 
 The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/architecture.md`](./docs/mcp/architecture.md) | **Operations Inventory:** [`docs/mcp/mcp_operations_inventory.md`](./docs/mcp/mcp_operations_inventory.md)
+**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/mcp_servers/README.md`](./docs/mcp_servers/README.md)
 
 #### Document Domain MCPs (4)
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
@@ -129,14 +129,9 @@ graph TB
 For centralized MCP management, Project Sanctuary supports a **Fleet of 8** container architecture via the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
 
 - **Local Implementation:** `/Users/<username>/Projects/sanctuary-gateway`
-- **Architecture:** [ADR 060 (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns__hybrid_fleet.md)
+- **Architecture:** [ADR 060 (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md)
 
 ```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
 flowchart TB
     Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
     
@@ -180,17 +175,12 @@ The Fleet supports two transport modes to enable both local development and Gate
 > **FastMCP SSE is NOT compatible with the IBM ContextForge Gateway.** Fleet containers must use SSEServer (`mcp_servers/lib/sse_adaptor.py`) for Gateway integration. See [ADR 066](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for details.
 
 ```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
 flowchart TB
  subgraph subGraph0["Local Workstation (Client & Test Context)"]
         direction TB
         Claude["Claude Desktop<br/>(Bridged Session)"]
         VSCode["VS Code Agent<br/>(Direct Attempt)"]
-        Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
+        Bridge["MCP Gateway Bridge<br/>'bridge.py'"]
         
         subgraph subGraphTest["Testing Suite"]
             E2E_Test{{E2E Tests}}
@@ -200,14 +190,14 @@ flowchart TB
 
  subgraph subGraph1["server.py (Entry Point)"]
         Selector{"MCP_TRANSPORT<br/>Selector"}
-        StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
-        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
+        StdioWrap["FastMCP Wrapper<br/>'stdio'"]
+        SSEWrap["SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)"]
   end
 
  subgraph subGraph2["Core Logic (Asynchronous)"]
-        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
-        Ops@{ label: "Operations Layer<br/>'operations.py'" }
-        Models@{ label: "Data Models<br/>'models.py'" }
+        Worker["Background Worker<br/>'asyncio.to_thread'"]
+        Ops["Operations Layer<br/>'operations.py'"]
+        Models["Data Models<br/>'models.py'"]
   end
 
  subgraph subGraph3["Cortex Cluster Container"]
@@ -218,7 +208,7 @@ flowchart TB
   end
 
  subgraph subGraph4["Podman Network (Fleet Context)"]
-        Gateway@{ label: "IBM ContextForge Gateway<br/>'mcpgateway:4444'" }
+        Gateway["IBM ContextForge Gateway<br/>'mcpgateway:4444'"]
         subGraph3
   end
 
@@ -256,7 +246,7 @@ flowchart TB
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](./docs/mcp_gateway/README.md) | [Podman Guide](./docs/PODMAN_STARTUP_GUIDE.md)
+**Documentation:** [Gateway README](./docs/mcp_servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
@@ -323,7 +313,7 @@ flowchart TB
 
     subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
         direction TB
-        CaptureAudit["MCP: cortex_capture_snapshot (audit)"]
+        CaptureAudit["MCP: cortex_capture_snapshot<br>(audit | learning_audit)"]
         Packet["Audit Packet (Snapshot)"]
         TechApproval{"Technical Approval<br>(HITL)"}
     end
@@ -331,6 +321,15 @@ flowchart TB
     subgraph subGraphSeal["V. The Technical Seal"]
         direction TB
         CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
+    end
+
+    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
+        direction TB
+        PersistSoul["MCP: cortex_persist_soul"]
+        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
+            MD_Seal["lineage/seal_TIMESTAMP.md<br>(Incremental Seal)"]
+            JSONL_Traces["data/soul_traces.jsonl<br>(Full Learning Set)"]
+        end
     end
 
     SeekTruth -- "Carry context" --> Intelligence
@@ -341,7 +340,11 @@ flowchart TB
     Packet -- "Technical review" --> TechApproval
     
     TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Final Relay" --> SuccessorSnapshot
+    CaptureSeal -- "Local Relay" --> SuccessorSnapshot
+    CaptureSeal -- "Async Broadcast" --> PersistSoul
+    
+    PersistSoul -- "1. Append Record" --> JSONL_Traces
+    PersistSoul -- "2. Upload MD" --> MD_Seal
     
     GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
     TechApproval -- "FAIL: Backtrack" --> SOP
@@ -351,6 +354,9 @@ flowchart TB
     style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
     style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
     style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
+    style PersistSoul fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:black
+    style MD_Seal fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
+    style JSONL_Traces fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
     style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff
@@ -361,12 +367,6 @@ flowchart TB
 The following diagram illustrates the simple, foundational RAG workflow. It is functional but suffers from vulnerabilities like context fragmentation and cognitive latency.
 
 ```mermaid
----
-config:
-  layout: dagre
-  look: neo
-  theme: base
----
 flowchart LR
  subgraph subGraph0["Ingestion Pipeline (Basic)"]
         B["Chunking<br>(MarkdownHeaderTextSplitter)"]
@@ -404,11 +404,6 @@ flowchart LR
 This diagram illustrates our multi-pattern architecture, designed to be fast, precise, and contextually aware by combining several advanced strategies.
 
 ```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
 flowchart TB
  subgraph IP["Ingestion Pipeline (IP)"]
     direction TB
@@ -497,7 +492,7 @@ flowchart TB
     NewAnswer --> FinalOutput
 ```
 
-For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp/RAG_STRATEGIES.md)
+For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp_servers/rag_cortex/README.md)
 
 ## IV. Operation Phoenix Forge (Model Lineage)
 ### 4.1 Sovereign AI Forging Process
@@ -507,51 +502,51 @@ The inaugural sovereign AI lineage, forged through fine-tuning Qwen2-7B-Instruct
 ```mermaid
 graph TD
     subgraph "Phase 0: One-Time System Setup"
-        P0A["<i class='fa fa-server'></i> WSL2 & NVIDIA Drivers<br/>*System prerequisites*"]
-        P0A_out(" <i class='fa fa-check-circle'></i> GPU Access Verified")
-        P0B["<i class='fa fa-code-branch'></i> Build llama.cpp<br/>*Compile GGML_CUDA tools*"]
-        P0B_out(" <i class='fa fa-tools'></i> llama.cpp Executables")
-        P0C["<i class='fa fa-key'></i> Hugging Face Auth<br/>*Setup .env token*"]
-        P0C_out(" <i class='fa fa-shield-alt'></i> Authenticated")
+        P0A["🖥️ WSL2 & NVIDIA Drivers<br/>*System prerequisites*"]
+        P0A_out(" ✅ GPU Access Verified")
+        P0B["🌿 Build llama.cpp<br/>*Compile GGML_CUDA tools*"]
+        P0B_out(" 🛠️ llama.cpp Executables")
+        P0C["🔐 Hugging Face Auth<br/>*Setup .env token*"]
+        P0C_out(" 🛡️ Authenticated")
     end
 
     subgraph "Phase 1: Project Environment Setup"
-        A["<i class='fa fa-cogs'></i> setup_cuda_env.py<br/>*Creates Python environment*"]
-        A_out(" <i class='fa fa-folder-open'></i> ml_env venv")
-        A1["<i class='fa fa-wrench'></i> Surgical Strike<br/>*Install bitsandbytes, triton, xformers*"]
-        A1_out(" <i class='fa fa-microchip'></i> CUDA Libraries")
-        A2["<i class='fa fa-vial'></i> Verify Environment<br/>*Test PyTorch, CUDA, llama-cpp*"]
-        A2_out(" <i class='fa fa-certificate'></i> Environment Validated")
+        A["⚙️ setup_cuda_env.py<br/>*Creates Python environment*"]
+        A_out(" 📂 ml_env venv")
+        A1["🔧 Surgical Strike<br/>*Install bitsandbytes, triton, xformers*"]
+        A1_out(" 🧠 CUDA Libraries")
+        A2["🧪 Verify Environment<br/>*Test PyTorch, CUDA, llama-cpp*"]
+        A2_out(" 📜 Environment Validated")
     end
 
     subgraph "Phase 2: Data & Model Forging Workflow"
-        B["<i class='fa fa-download'></i> download_model.sh<br/>*Downloads base Qwen2 model*"]
-        B_out(" <i class='fa fa-cube'></i> Base Model")
-        C["<i class='fa fa-pen-ruler'></i> forge_whole_genome_dataset.py<br/>*Assembles training data*"]
-        C_out(" <i class='fa fa-file-alt'></i> sanctuary_whole_genome_data.jsonl")
-        D["<i class='fa fa-search'></i> validate_dataset.py<br/>*Validates training data quality*"]
-        D_out(" <i class='fa fa-certificate'></i> Validated Dataset")
-        E["<i class='fa fa-microchip'></i> fine_tune.py<br/>*Performs QLoRA fine-tuning*"]
-        E_out(" <i class='fa fa-puzzle-piece'></i> LoRA Adapter")
-        F["<i class='fa fa-compress-arrows-alt'></i> merge_adapter.py<br/>*Merges adapter with base model*"]
-        F_out(" <i class='fa fa-cogs'></i> Merged Model")
+        B["📥 download_model.sh<br/>*Downloads base Qwen2 model*"]
+        B_out(" 📦 Base Model")
+        C["🖋️ forge_whole_genome_dataset.py<br/>*Assembles training data*"]
+        C_out(" 📄 sanctuary_whole_genome_data.jsonl")
+        D["🔎 validate_dataset.py<br/>*Validates training data quality*"]
+        D_out(" 📜 Validated Dataset")
+        E["🧠 fine_tune.py<br/>*Performs QLoRA fine-tuning*"]
+        E_out(" 🧩 LoRA Adapter")
+        F["🔗 merge_adapter.py<br/>*Merges adapter with base model*"]
+        F_out(" ⚙️ Merged Model")
     end
 
     subgraph "Phase 3: Deployment Preparation & Verification"
-        G["<i class='fa fa-cubes'></i> convert_to_gguf.py<br/>*Creates deployable GGUF model*"]
-        G_out(" <i class='fa fa-cube'></i> GGUF Model")
-        H["<i class='fa fa-file-code'></i> create_modelfile.py<br/>*Generates Ollama Modelfile*"]
-        H_out(" <i class='fa fa-terminal'></i> Ollama Modelfile")
-        I["<i class='fa fa-upload'></i> ollama create<br/>*Imports model into Ollama*"]
-        I_out(" <i class='fa fa-robot'></i> Deployed Ollama Model")
-        J["<i class='fa fa-vial'></i> Test with Ollama<br/>*Verify dual-mode interaction*"]
-        J_out(" <i class='fa fa-comment-dots'></i> Interaction Validated")
-        K["<i class='fa fa-chart-bar'></i> inference.py & evaluate.py<br/>*Performance testing & benchmarks*"]
-        K_out(" <i class='fa fa-clipboard-check'></i> Performance Metrics")
-        L["<i class='fa fa-upload'></i> upload_to_huggingface.py<br/>*Upload GGUF & LoRA to HF*"]
-        L_out(" <i class='fa fa-cloud'></i> Models on Hugging Face")
-        M["<i class='fa fa-download'></i> Download & Test from HF<br/>*Verify upload/download integrity*"]
-        M_out(" <i class='fa fa-check-double'></i> HF Models Validated")
+        G["🧊 convert_to_gguf.py<br/>*Creates deployable GGUF model*"]
+        G_out(" 📦 GGUF Model")
+        H["📝 create_modelfile.py<br/>*Generates Ollama Modelfile*"]
+        H_out(" 💻 Ollama Modelfile")
+        I["🚀 ollama create<br/>*Imports model into Ollama*"]
+        I_out(" 🤖 Deployed Ollama Model")
+        J["🧪 Test with Ollama<br/>*Verify dual-mode interaction*"]
+        J_out(" 💬 Interaction Validated")
+        K["📊 inference.py & evaluate.py<br/>*Performance testing & benchmarks*"]
+        K_out(" 📋 Performance Metrics")
+        L["☁️ upload_to_huggingface.py<br/>*Upload GGUF & LoRA to HF*"]
+        L_out(" 🌐 Models on Hugging Face")
+        M["📥 Download & Test from HF<br/>*Verify upload/download integrity*"]
+        M_out(" ✅ HF Models Validated")
     end
 
     %% Workflow Connections
@@ -653,7 +648,7 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 
 ### Deep Exploration Path
 1.  **The Story (The Chronicle):** Read the full history of doctrinal decisions: **`Living_Chronicle.md` Master Index**.
-2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp/RAG_STRATEGIES.md`](./docs/mcp/RAG_STRATEGIES.md)**.
+2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp_servers/rag_cortex/README.md`](./docs/mcp_servers/rag_cortex/README.md)**.
 3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
 ## VI. Installation & Technical Setup

@@ -52,6 +52,16 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
 PROJECT_ROOT = FORGE_ROOT.parent.parent
 
+# Add project root to path to find core and mcp_servers
+sys.path.insert(0, str(PROJECT_ROOT))
+
+try:
+    import asyncio
+    from mcp_servers.lib.hf_utils import upload_to_hf_hub
+except ImportError as e:
+    print(f"Error importing dependencies: {e}")
+    sys.exit(1)
+
 # --------------------------------------------------------------------------- #
 # Load Config
 # --------------------------------------------------------------------------- #
@@ -67,8 +77,7 @@ def load_config():
         return config
 
 def load_environment():
-    # Add project root to path to find core
-    sys.path.insert(0, str(PROJECT_ROOT))
+    # sys.path is now set at module level
     from core.utils.env_helper import get_env_variable
 
     # env_helper handles priority: Env Var -> .env -> Error
@@ -90,41 +99,23 @@ def load_environment():
 # Upload Function
 # --------------------------------------------------------------------------- #
 def upload_to_hf(repo_id, file_paths, token, private=False):
-    api = HfApi(token=token)
+    log.info(f"Delegating upload to shared library (mcp_servers.lib.hf_utils)...")
     
-    # Create repo if it doesn't exist
-    try:
-        api.repo_info(repo_id)
-        log.info(f"Repository {repo_id} exists.")
-    except Exception:
-        log.info(f"Creating repository {repo_id}...")
-        api.create_repo(repo_id, private=private)
+    # Run async function in sync wrapper
+    result = asyncio.run(upload_to_hf_hub(
+        repo_id=repo_id,
+        paths=file_paths,
+        token=token,
+        private=private,
+        commit_message=None  # Use default
+    ))
     
-    for file_path in file_paths:
-        path_obj = Path(file_path)
-        if not path_obj.exists():
-            log.warning(f"File not found: {file_path}, skipping.")
-            continue
-        
-        if path_obj.is_file():
-            log.info(f"Uploading file: {path_obj.name}")
-            upload_file(
-                path_or_fileobj=str(path_obj),
-                path_in_repo=path_obj.name,
-                repo_id=repo_id,
-                token=token
-            )
-        elif path_obj.is_dir():
-            log.info(f"Uploading folder: {path_obj.name}")
-            upload_folder(
-                folder_path=str(path_obj),
-                repo_id=repo_id,
-                token=token
-            )
-        else:
-            log.warning(f"Unknown path type: {file_path}, skipping.")
-    
-    log.info(f"Upload complete. Repository: https://huggingface.co/{repo_id}")
+    if result.success:
+        log.info(f"Upload complete. Repository: {result.repo_url}")
+        log.info(f"Summary: {result.remote_path}")
+    else:
+        log.error(f"Upload failed: {result.error}")
+        sys.exit(1)
 
 # --------------------------------------------------------------------------- #
 # Main

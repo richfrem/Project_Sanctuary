@@ -233,7 +233,7 @@ class SanctuaryEnvironment(gym.Env if GYMNASIUM_AVAILABLE else object):
     - Protocol 36: Victory through invitation to better collaboration
     """
     
-    def __init__(self, repo_path: str = None  # Computed from Path(__file__)):
+    def __init__(self, repo_path: str = None):  # Computed from Path(__file__)
         """
         Initialize the Sanctuary environment for The Gardener
         

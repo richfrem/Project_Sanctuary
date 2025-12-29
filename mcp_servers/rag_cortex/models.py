@@ -260,6 +260,33 @@ class CaptureSnapshotResponse:
 
 
 # ============================================================================
+# Persist Soul Models (ADR 079 - Johnny Appleseed)
+# ============================================================================
+
+@dataclass
+class PersistSoulRequest:
+    #============================================
+    # Model: PersistSoulRequest
+    # Purpose: Request to broadcast the soul to the AI Commons.
+    #============================================
+    snapshot_path: str = ".agent/learning/learning_package_snapshot.md"
+    valence: float = 0.0
+    uncertainty: float = 0.0
+    is_full_sync: bool = False
+
+
+@dataclass
+class PersistSoulResponse:
+    #============================================
+    # Model: PersistSoulResponse
+    # Purpose: Response from the persistence operation.
+    #============================================
+    status: str  # "success", "quarantined", or "error"
+    repo_url: str
+    snapshot_name: str
+    error: Optional[str] = None
+
+
 # FastMCP Request Models
 # ============================================================================
 from pydantic import BaseModel, Field
@@ -305,6 +332,12 @@ class ForgeQueryRequest(BaseModel):
     temperature: float = Field(0.7, description="Sampling temperature")
     max_tokens: int = Field(2048, description="Max tokens to generate")
     system_prompt: Optional[str] = Field(None, description="System persona prompt")
+
+class CortexPersistSoulRequest(BaseModel):
+    snapshot_path: str = Field(".agent/learning/learning_package_snapshot.md", description="Local path to seal")
+    valence: float = Field(0.0, description="Moral/Emotional charge")
+    uncertainty: float = Field(0.0, description="Logic confidence")
+    is_full_sync: bool = Field(False, description="Sync entire learning directory if True")
 
 
 # ============================================================================

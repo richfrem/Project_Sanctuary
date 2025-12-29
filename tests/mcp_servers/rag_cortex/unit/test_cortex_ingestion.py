@@ -16,8 +16,7 @@ def mock_cortex_deps():
          patch("langchain.storage._lc_store.create_kv_docstore") as mock_kv, \
          patch("langchain.retrievers.ParentDocumentRetriever") as mock_pdr, \
          patch("langchain_huggingface.HuggingFaceEmbeddings") as mock_embeddings, \
-         patch("mcp_servers.rag_cortex.operations.DirectoryLoader") as mock_dir_loader, \
-         patch("mcp_servers.rag_cortex.operations.TextLoader") as mock_text_loader, \
+         patch("mcp_servers.rag_cortex.operations.ContentProcessor") as mock_processor, \
          patch("langchain_text_splitters.RecursiveCharacterTextSplitter") as mock_splitter:
         
         # Mock splitter to return predictable chunks
@@ -33,8 +32,8 @@ def mock_cortex_deps():
             "kv": mock_kv,
             "pdr": mock_pdr,
             "embeddings": mock_embeddings,
-            "dir_loader": mock_dir_loader,
-            "text_loader": mock_text_loader,
+            "embeddings": mock_embeddings,
+            "processor": mock_processor,
             "splitter": mock_splitter
         }
 
@@ -48,9 +47,9 @@ def test_ingest_full(mock_cortex_deps, temp_project_root):
     """Test full ingestion flow with accurate chunk counting."""
     ops = CortexOperations(str(temp_project_root))
     
-    # Mock DirectoryLoader to return documents
-    mock_loader_instance = mock_cortex_deps["dir_loader"].return_value
-    mock_loader_instance.load.return_value = [
+    # Mock ContentProcessor to return documents
+    mock_processor_instance = mock_cortex_deps["processor"].return_value
+    mock_processor_instance.load_for_rag.return_value = [
         Document(page_content="Test content 1", metadata={"source": "doc1.md"}),
         Document(page_content="Test content 2", metadata={"source": "doc2.md"})
     ]
@@ -80,9 +79,9 @@ def test_ingest_incremental(mock_cortex_deps, temp_project_root):
     dummy_file = temp_project_root / "test_doc.md"
     dummy_file.write_text("Test content")
     
-    # Mock TextLoader
-    mock_loader_instance = mock_cortex_deps["text_loader"].return_value
-    mock_loader_instance.load.return_value = [
+    # Mock ContentProcessor
+    mock_processor_instance = mock_cortex_deps["processor"].return_value
+    mock_processor_instance.load_for_rag.return_value = [
         Document(page_content="Test content", metadata={"source": str(dummy_file)})
     ]
     
@@ -108,9 +107,9 @@ def test_chunks_created_accuracy(mock_cortex_deps, temp_project_root):
     """Test that chunks_created is accurately calculated, not hardcoded to 0."""
     ops = CortexOperations(str(temp_project_root))
     
-    # Mock DirectoryLoader
-    mock_loader_instance = mock_cortex_deps["dir_loader"].return_value
-    mock_loader_instance.load.return_value = [
+    # Mock ContentProcessor
+    mock_processor_instance = mock_cortex_deps["processor"].return_value
+    mock_processor_instance.load_for_rag.return_value = [
         Document(page_content="Test content", metadata={"source": "doc.md"})
     ]
     
