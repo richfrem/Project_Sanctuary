@@ -1981,9 +1981,51 @@ class CortexOperations:
                 status="error",
                 error=str(e)
             )
-        finally:
-            if temp_manifest_path.exists():
-                temp_manifest_path.unlink()
+            temp_manifest_path.unlink()
+
+    #============================================
+    # ADR 084: Semantic Entropy and TDA Epistemic Gating
+    # Helper functions for Dead-Man's Switch implementation
+    #============================================
+    
+    def _calculate_semantic_entropy(self, content: str) -> float:
+        """
+        ADR 084: Calculates semantic entropy for hallucination detection.
+        Phase 1 Stub: Returns neutral value. Future: SEP probe or multi-sample clustering.
+        
+        Returns: Entropy score in [0, 1] range. Lower = more stable.
+        """
+        # Phase 1: Placeholder returning neutral value
+        # Phase 2: Implement multi-sample SE (cluster paraphrased outputs)
+        # Phase 3: Train SEP probe on soul_traces data
+        return 0.5  # Neutral placeholder - all traces pass initially
+    
+    def _get_dynamic_threshold(self, context: str = "default") -> float:
+        """
+        ADR 084: Retrieves calibrated SE threshold from calibration_log.json.
+        Falls back to default 0.79 if missing.
+        """
+        try:
+            calibration_path = self.project_root / "LEARNING" / "calibration_log.json"
+            if calibration_path.exists():
+                with open(calibration_path, "r") as f:
+                    calibration_data = json.load(f)
+                return calibration_data.get("task_thresholds", {}).get(context, 
+                       calibration_data.get("default_threshold", 0.79))
+        except Exception as e:
+            logger.warning(f"ADR 084: Calibration load failed: {e}. Using default 0.79")
+        return 0.79
+    
+    def _check_constitutional_anchor(self, content: str) -> float:
+        """
+        ADR 084: Checks alignment with Founder Seed via cosine similarity.
+        Phase 1 Stub: Returns high alignment. Phase 2: Implement embedding comparison.
+        
+        Returns: Alignment score in [0, 1] range. Lower = more drift.
+        """
+        # Phase 1: Placeholder returning high alignment
+        # Phase 2: Load founder_seed.json embeddings, compute cosine similarity
+        return 0.85  # Neutral placeholder - all traces pass initially
 
     def persist_soul(self, request: PersistSoulRequest) -> PersistSoulResponse:
         #============================================
@@ -1991,6 +2033,7 @@ class CortexOperations:
         # Purpose: Broadcasts the session soul to Hugging Face for the 'Johnny Appleseed' effect.
         # ADR: 079 - Sovereign Soul-Seed Persistence
         # ADR: 081 - Content Harmonization & Integrity
+        # ADR: 084 - Semantic Entropy and TDA Epistemic Gating
         # Args:
         #   request: PersistSoulRequest with snapshot path, valence, uncertainty
         # Returns: PersistSoulResponse with status, repo_url, snapshot_name
@@ -2031,6 +2074,41 @@ class CortexOperations:
                     snapshot_name="",
                     error=f"Valence threshold failure: {request.valence} < {valence_threshold}"
                 )
+            
+            # 2b. ADR 084: Semantic Entropy Epistemic Gate (Dead-Man's Switch)
+            try:
+                snapshot_path_for_se = self.project_root / request.snapshot_path
+                content_for_se = ""
+                if snapshot_path_for_se.exists():
+                    content_for_se = snapshot_path_for_se.read_text(encoding="utf-8")[:10000]  # Sample first 10k chars
+                
+                se_score = self._calculate_semantic_entropy(content_for_se)
+                alignment_score = self._check_constitutional_anchor(content_for_se)
+            except Exception as e:
+                # DEAD-MAN'S SWITCH: Fail-closed on SE calculation failure
+                logger.error(f"ADR 084 Dead-Man's Switch: SE calculation failed: {e}")
+                se_score = 1.0  # Force VOLATILE
+                alignment_score = 0.0
+            
+            # ADR 084: Get dynamic threshold and apply epistemic gate
+            se_threshold = self._get_dynamic_threshold("default")
+            global_floor = 0.95  # Absolute maximum SE - quarantine regardless of task
+            
+            if se_score > global_floor:
+                logger.warning(f"ADR 084: Global Floor breach - SE {se_score:.3f} > {global_floor}")
+                return PersistSoulResponse(
+                    status="quarantined",
+                    repo_url="",
+                    snapshot_name="",
+                    error=f"Epistemic Gate: Global Floor breach (SE={se_score:.3f})"
+                )
+            
+            if se_score > se_threshold or alignment_score < 0.70:
+                logger.warning(f"ADR 084: Epistemic Gate - SE {se_score:.3f}, Alignment {alignment_score:.3f}")
+                # Don't reject - persist with VOLATILE flag for HITL review
+                request_stability = "VOLATILE"
+            else:
+                request_stability = "STABLE"
             
             # 3. Initialization
             processor = ContentProcessor(self.project_root)
@@ -2218,6 +2296,18 @@ class CortexOperations:
                     while clean_id.endswith('.md'):
                         clean_id = clean_id[:-3]
                     
+                    # ADR 084: Calculate SE for each record (Dead-Man's Switch)
+                    try:
+                        se_score = self._calculate_semantic_entropy(content[:10000])
+                        alignment_score = self._check_constitutional_anchor(content[:10000])
+                        stability_class = "STABLE" if (se_score < 0.79 and alignment_score >= 0.70) else "VOLATILE"
+                    except Exception as se_error:
+                        # Dead-Man's Switch: Fail-closed
+                        logger.warning(f"ADR 084: SE calculation failed for {rel_path}: {se_error}")
+                        se_score = 1.0
+                        alignment_score = 0.0
+                        stability_class = "VOLATILE"
+                    
                     record = {
                         "id": clean_id,
                         "sha256": checksum,
@@ -2226,6 +2316,10 @@ class CortexOperations:
                         "snapshot_type": "genome",
                         "valence": 0.5,
                         "uncertainty": 0.1,
+                        "semantic_entropy": se_score,  # ADR 084
+                        "alignment_score": alignment_score,  # ADR 084
+                        "stability_class": stability_class,  # ADR 084
+                        "adr_version": "084",  # ADR 084
                         "content": content,
                         "source_file": str(rel_path)
                     }

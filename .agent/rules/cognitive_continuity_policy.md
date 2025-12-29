@@ -1,8 +1,10 @@
 ---
-trigger: manual
+trigger: always_on
 ---
 
 ## 🧠 Project Sanctuary: Cognitive Continuity & Learning Loop Rules
+
+> *Operations can be executed via CLI commands or MCP tools (when gateway is running).*
 
 ### 1. Phase I: The Learning Scout (Orientation)
 
@@ -35,3 +37,28 @@ trigger: manual
 ### 5. Failure and Backtracking
 
 * **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `recursive_learning.md` to fix the underlying discrepancy.
+### 6. Phase VI: Soul Persistence (ADR 079/081)
+
+* **Dual-Path Broadcast**: After the seal, execute `sanctuary-cortex-cortex-persist-soul` to broadcast learnings to Hugging Face.
+* **Incremental Mode**: Appends 1 record to `data/soul_traces.jsonl` AND uploads MD to `lineage/seal_TIMESTAMP_*.md`.
+* **Full Sync Mode**: Use `cortex-persist-soul-full` to regenerate the entire JSONL from all project files (~1200 records).
+
+---
+
+## CLI Quick Reference
+
+| Phase | Command |
+|-------|---------|
+| I. Scout | `python3 scripts/cortex_cli.py debrief --hours 24` |
+
+---
+
+## Quick Reference
+
+| Phase | CLI Command | MCP Tool |
+|-------|-------------|----------|
+| I. Scout | `python3 scripts/cortex_cli.py debrief --hours 24` | `cortex_learning_debrief` |
+| IV. Audit | `python3 scripts/cortex_cli.py snapshot --type learning_audit` | `cortex_capture_snapshot` |
+| V. Seal | `python3 scripts/cortex_cli.py snapshot --type seal` | `cortex_capture_snapshot` |
+| VI. Persist (Incremental) | `python3 scripts/cortex_cli.py persist-soul` | `cortex_persist_soul` |
+| VI. Persist (Full) | `python3 scripts/cortex_cli.py persist-soul-full` | `cortex_persist_soul_full` |

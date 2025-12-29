@@ -21,6 +21,8 @@ Every session must follow this loop:
 -   **Rule 1**: If you claim a file changed, you must cite the *exact* file path and git hash.
 -   **Rule 2**: If you claim a test passed, you must have seen the `PASSED` log in your current session.
 -   **Rule 3**: Never invent "future plans" as "current achievements."
+-   **Rule 4**: **Source Verification is Mandatory.** Every cited source must include the **exact URL** to the specific article, paper, or documentation—not just the domain (e.g., "ibm.com"). Before persisting any source to a research/sources file, verify the URL with a web tool to confirm it resolves to the correct title and content.
+-   **Rule 5**: **Curate Knowledge Like a Librarian.** Organize related topics into coherent folder hierarchies that compound learning over time. Build bodies of knowledge in themed directories (e.g., `quantum_error_correction/`, `soul_persistence/`). You are a custodian of the project's cognitive genome. 
 
 ## 4. JIT Context Strategy
 -   The fleet is vast (84+ tools). Do not load everything.

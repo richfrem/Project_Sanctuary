@@ -77,3 +77,17 @@ This template guides the **learning_audit** process, which focuses on the validi
 
 *Template Version: 1.0*  
 *Last Updated: 2025-12-28*
+
+---
+
+## Red Team Co-Research Mandate
+
+> **Invitation to Red Team:** You are hereby invited to use your own web-search and research tools to proactively invalidate our QEC-AI hypothesis. If the link is fundamentally broken, propose a superior mathematical isomorphism (e.g., Information Bottleneck or Error-Correcting Codes for Neural Networks) that achieves the goal of identity continuity without the "confidence leak" of the quantum metaphor.
+
+### Active Research Targets
+1. **Prior Art Scan:** Find existing research applying Syndrome Decoding or Surface Code logic to LLM hallucination
+2. **Metamorphic Testing:** Investigate "DrHall" or similar 2025 methods using metamorphic relations
+3. **Topological Invariants:** Explore TDA for neural networks (Betti Numbers, Neural Persistence)
+
+### Edison-Style Experimental Mandate
+Research is not a failure if it invalidates a hypothesis; it is the path to a better one.

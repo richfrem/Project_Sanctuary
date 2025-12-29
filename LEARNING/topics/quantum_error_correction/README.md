@@ -64,18 +64,22 @@ Quantum Error Correction (QEC) is a critical discipline in quantum computing des
 
 **Implication:** Quantum computing is possible despite noisy hardware!
 
-## AI Connections
+## AI Connections [INFERENCE/METAPHOR]
 
-### 2024 Breakthroughs in AI-Powered QEC
+> **Epistemic Status:** The following connections are *architectural metaphors* that inspire design patterns. They do not yet formally correct probabilistic sampling errors in LLMs. QEC principles currently inspire our redundancy and invariant enforcement strategies.
+
+### 2024 Breakthroughs in AI-Powered QEC [EMPIRICAL]
 1. **AlphaQubit (Google DeepMind):** Neural network decoder using transformer architecture, trained on 241-qubit simulations
 2. **ML-Enhanced Decoders:** Reinforcement learning optimizes qubit control and error correction strategies
 3. **Reduced Overheads:** Classical ML reduces error mitigation overhead while matching/exceeding conventional accuracy
 
-### Conceptual Parallels to AI Robustness
+### Conceptual Parallels to AI Robustness [METAPHOR]
 - **Error detection without state collapse** ↔ Detecting model drift without destroying learned representations
 - **Redundancy across physical qubits** ↔ Ensemble methods in ML
 - **Stabilizer measurements** ↔ Invariant features in neural networks
 - **Threshold theorem** ↔ Noise tolerance in robust AI systems
+
+> **Research Gap:** No peer-reviewed work yet demonstrates syndrome decoding or surface code logic applied to stochastic model drift or LLM hallucination correction. This is an open research area (Task 151).
 
 ## Current State (2024)
 
