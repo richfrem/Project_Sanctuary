@@ -23,10 +23,13 @@
 #   python3 scripts/cortex_cli.py cache-stats               # Check semantic cache (CAG) efficiency
 #   python3 scripts/cortex_cli.py cache-warmup              # Pre-populate CAG with genesis queries
 #
-# SOUL PERSISTENCE (ADR 079):
-#   python3 scripts/cortex_cli.py persist-soul              # Broadcast latest snapshot to HF
-#   python3 scripts/cortex_cli.py persist-soul --full-sync  # Sync entire learning directory
-#   python3 scripts/cortex_cli.py persist-soul --valence 0.8 --snapshot .agent/learning/learning_package_snapshot.md
+# SOUL PERSISTENCE (ADR 079 / 081):
+#   Incremental (append 1 seal to JSONL + upload MD to lineage/):
+#     python3 scripts/cortex_cli.py persist-soul
+#     python3 scripts/cortex_cli.py persist-soul --valence 0.8 --snapshot .agent/learning/learning_package_snapshot.md
+#
+#   Full Sync (regenerate entire JSONL from all files + deploy data/):
+#     python3 scripts/cortex_cli.py persist-soul-full
 #============================================
 import argparse
 import sys
@@ -85,6 +88,9 @@ def main():
     soul_parser.add_argument("--valence", type=float, default=0.0, help="Moral/emotional charge")
     soul_parser.add_argument("--uncertainty", type=float, default=0.0, help="Logic confidence")
     soul_parser.add_argument("--full-sync", action="store_true", help="Sync entire learning directory")
+
+    # Command: persist-soul-full (ADR 081)
+    subparsers.add_parser("persist-soul-full", help="Regenerate full JSONL and deploy to HF (ADR 081)")
 
     args = parser.parse_args()
     
@@ -238,5 +244,18 @@ def main():
             print(f"❌ Error: {res.error}")
             sys.exit(1)
 
+    elif args.command == "persist-soul-full":
+        print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace...")
+        res = ops.persist_soul_full()
+        
+        if res.status == "success":
+            print(f"✅ Full sync complete!")
+            print(f"🔗 Repository: {res.repo_url}")
+            print(f"📄 Output: {res.snapshot_name}")
+        else:
+            print(f"❌ Error: {res.error}")
+            sys.exit(1)
+
 if __name__ == "__main__":
     main()
+

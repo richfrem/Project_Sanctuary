@@ -2166,6 +2166,118 @@ class CortexOperations:
                 error=str(e)
             )
 
+    def persist_soul_full(self) -> PersistSoulResponse:
+        """
+        Regenerate full Soul JSONL from all project files and deploy to HuggingFace.
+        This is the "full sync" operation that rebuilds data/soul_traces.jsonl from scratch.
+        """
+        import asyncio
+        import hashlib
+        from datetime import datetime
+        from mcp_servers.lib.content_processor import ContentProcessor
+        from mcp_servers.lib.hf_utils import get_dataset_repo_id, get_hf_config
+        from huggingface_hub import HfApi
+        
+        try:
+            # 1. Generate Soul Data (same logic as scripts/generate_soul_data.py)
+            staging_dir = self.project_root / "STAGING_HF_SOUL"
+            data_dir = staging_dir / "data"
+            data_dir.mkdir(exist_ok=True, parents=True)
+            
+            processor = ContentProcessor(str(self.project_root))
+            
+            ROOT_ALLOW_LIST = {
+                "README.md", "chrysalis_core_essence.md", "Council_Inquiry_Gardener_Architecture.md",
+                "Living_Chronicle.md", "PROJECT_SANCTUARY_SYNTHESIS.md", "Socratic_Key_User_Guide.md",
+                "The_Garden_and_The_Cage.md", "GARDENER_TRANSITION_GUIDE.md",
+            }
+            
+            records = []
+            logger.info("🧠 Generating full Soul JSONL...")
+            
+            for file_path in processor.traverse_directory(self.project_root):
+                try:
+                    rel_path = file_path.relative_to(self.project_root)
+                except ValueError:
+                    continue
+                    
+                if str(rel_path).startswith("STAGING_HF_SOUL"):
+                    continue
+                
+                if rel_path.parent == Path("."):
+                    if rel_path.name not in ROOT_ALLOW_LIST:
+                        continue
+                
+                try:
+                    content = processor.transform_to_markdown(file_path)
+                    content_bytes = content.encode('utf-8')
+                    checksum = hashlib.sha256(content_bytes).hexdigest()
+                    timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+                    
+                    clean_id = str(rel_path).replace("/", "_").replace("\\", "_")
+                    while clean_id.endswith('.md'):
+                        clean_id = clean_id[:-3]
+                    
+                    record = {
+                        "id": clean_id,
+                        "sha256": checksum,
+                        "timestamp": timestamp,
+                        "model_version": "Sanctuary-Qwen2-7B-v1.0-GGUF-Final",
+                        "snapshot_type": "genome",
+                        "valence": 0.5,
+                        "uncertainty": 0.1,
+                        "content": content,
+                        "source_file": str(rel_path)
+                    }
+                    records.append(record)
+                except Exception as e:
+                    logger.debug(f"Skipping {rel_path}: {e}")
+            
+            # Write JSONL
+            jsonl_path = data_dir / "soul_traces.jsonl"
+            logger.info(f"📝 Writing {len(records)} records to {jsonl_path}")
+            
+            with open(jsonl_path, "w", encoding="utf-8") as f:
+                for record in records:
+                    f.write(json.dumps(record, ensure_ascii=True) + "\n")
+            
+            # 2. Deploy to HuggingFace
+            config = get_hf_config()
+            repo_id = get_dataset_repo_id(config)
+            token = config["token"]
+            api = HfApi(token=token)
+            
+            logger.info(f"🚀 Deploying to {repo_id}...")
+            
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            loop.run_until_complete(asyncio.to_thread(
+                api.upload_folder,
+                folder_path=str(data_dir),
+                path_in_repo="data",
+                repo_id=repo_id,
+                repo_type="dataset",
+                commit_message=f"Full Soul Genome Sync | {len(records)} records"
+            ))
+            
+            logger.info("✅ Full Soul Sync Complete")
+            
+            return PersistSoulResponse(
+                status="success",
+                repo_url=f"https://huggingface.co/datasets/{repo_id}",
+                snapshot_name=f"data/soul_traces.jsonl ({len(records)} records)"
+            )
+            
+        except Exception as e:
+            logger.error(f"Full sync failed: {e}")
+            return PersistSoulResponse(
+                status="error",
+                repo_url="",
+                snapshot_name="",
+                error=str(e)
+            )
+
+
     def get_cache_stats(self):
         #============================================
         # Method: get_cache_stats

@@ -14,6 +14,7 @@
         "docs",
         "forge",
         "scripts",
+        "STAGING_HF_SOUL",
         "tests",
         "WORK_IN_PROGRESS",
         "mcp_servers",

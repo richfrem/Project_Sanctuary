@@ -99,6 +99,7 @@
         "nohup.out",
         "orchestrator-backup.py",
         "sanctuary_whole_genome_data.jsonl",
+        "STAGING_HF_SOUL/data/soul_traces.jsonl",
         "package.json",
         "package-lock.json"
     ],

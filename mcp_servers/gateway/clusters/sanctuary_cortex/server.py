@@ -306,7 +306,7 @@ def run_sse_server(port: int):
     
     @sse_tool(
         name="cortex_capture_snapshot",
-        description="Tool-driven snapshot generation (Protocol 128 v3.5). Types: 'audit' (code/architecture review → red_team_audit_packet.md), 'seal' (successor relay → learning_package_snapshot.md), 'learning_audit' (knowledge validation → learning_audit_packet.md).",
+        description="Snapshot generation (Protocol 128). Types: audit (red_team_audit_packet.md), seal (learning_package_snapshot.md), learning_audit (learning_audit_packet.md).",
         schema=CAPTURE_SNAPSHOT_SCHEMA
     )
     def cortex_capture_snapshot(manifest_files: List[str] = None, snapshot_type: str = "checkpoint", strategic_context: str = None):
@@ -315,7 +315,7 @@ def run_sse_server(port: int):
     
     @sse_tool(
         name="cortex_persist_soul",
-        description="Broadcasts the sealed learning snapshot to the Hugging Face AI Commons (ADR 079).",
+        description="Incremental Soul persistence (ADR 079). Uploads snapshot MD to lineage/ folder and appends 1 record to data/soul_traces.jsonl on HuggingFace.",
         schema=PERSIST_SOUL_SCHEMA
     )
     def cortex_persist_soul(snapshot_path: str = None, valence: float = 0.0, uncertainty: float = 0.0, is_full_sync: bool = False):
@@ -327,6 +327,15 @@ def run_sse_server(port: int):
             is_full_sync=is_full_sync
         )
         response = get_ops().persist_soul(request)
+        return json.dumps(to_dict(response), indent=2)
+    
+    @sse_tool(
+        name="cortex_persist_soul_full",
+        description="Full Soul genome sync (ADR 081). Regenerates data/soul_traces.jsonl from all project files (~1200 records) and deploys to HuggingFace.",
+        schema=EMPTY_SCHEMA
+    )
+    def cortex_persist_soul_full():
+        response = get_ops().persist_soul_full()
         return json.dumps(to_dict(response), indent=2)
     
     # =============================================================================

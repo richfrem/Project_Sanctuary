@@ -40,7 +40,15 @@
           "name": "sanctuary-cortex-query-sanctuary-model"
         },
         {
-          "description": "Broadcasts the sealed learning snapshot to the Hugging Face AI Commons (ADR 079).",
+          "description": "Full Soul genome sync (ADR 081). Regenerates data/soul_traces.jsonl from all project files (~1200 records) and deploys to HuggingFace.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-persist-soul-full"
+        },
+        {
+          "description": "Incremental Soul persistence (ADR 079). Uploads snapshot MD to lineage/ folder and appends 1 record to data/soul_traces.jsonl on HuggingFace.",
           "inputSchema": {
             "properties": {
               "is_full_sync": {
@@ -65,7 +73,7 @@
           "name": "sanctuary-cortex-cortex-persist-soul"
         },
         {
-          "description": "Tool-driven snapshot generation (Protocol 128 v3.5). Types: &#x27;audit&#x27; (code/architecture review \u2192 red_team_audit_packet.md), &#x27;seal&#x27; (successor relay \u2192 learning_package_snapshot.md), &#x27;learning_audit&#x27; (knowledge validation \u2192 learning_audit_packet.md).",
+          "description": "Snapshot generation (Protocol 128). Types: audit (red_team_audit_packet.md), seal (learning_package_snapshot.md), learning_audit (learning_audit_packet.md).",
           "inputSchema": {
             "properties": {
               "manifest_files": {

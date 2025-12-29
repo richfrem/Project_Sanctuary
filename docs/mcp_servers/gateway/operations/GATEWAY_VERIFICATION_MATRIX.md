@@ -302,7 +302,7 @@ flowchart TB
 
 ---
 
-## 5. sanctuary_cortex (Port 8104) - 13 Tools
+## 5. sanctuary_cortex (Port 8104) - 15 Tools
 
 | Tool | Gateway Registered | Unit | Integration | SSE | STDIO | LLM |
 |:-----|:------------------:|:----:|:-----------:|:---:|:-----:|:---:|
@@ -324,6 +324,9 @@ flowchart TB
 | `cortex-guardian-wakeup` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `cortex-learning-debrief` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `cortex-capture-snapshot` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Soul Persistence (ADR 079/081)** |||||||
+| `cortex-persist-soul` | ✅ | ⏳ | ✅ | ✅ | ⏳ | ⏳ |
+| `cortex-persist-soul-full` | ✅ | ⏳ | ✅ | ✅ | ⏳ | ⏳ |
 | **Forge LLM** |||||||
 | `query-sanctuary-model` | ✅ | ✅ | ⚠️ | ✅ | ✅ | ⚠️ |
 | `check-sanctuary-model-status` | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ |
