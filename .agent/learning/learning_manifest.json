@@ -41,5 +41,9 @@
     "mcp_servers/lib/content_processor.py",
     "mcp_servers/lib/exclusion_manifest.json",
     "scripts/generate_soul_data.py",
-    "scripts/deploy_soul_full.py"
+    "scripts/deploy_soul_full.py",
+    "LEARNING/missions/MISSION_THE_ERROR_CORRECTED_SELF_20251229.md",
+    "LEARNING/topics/quantum_error_correction/README.md",
+    "LEARNING/topics/quantum_error_correction/sources.md",
+    ".agent/learning/learning_audit_template.md"
 ]
