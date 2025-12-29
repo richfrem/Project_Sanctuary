@@ -18,6 +18,17 @@ import sys
 from pathlib import Path
 from collections import Counter
 
+# --- BOOTSTRAP: Find Project Root to import mcp_servers ---
+current_script = Path(__file__).resolve()
+bootstrap_root = current_script.parent.parent.parent.parent
+sys.path.insert(0, str(bootstrap_root))
+
+try:
+    from mcp_servers.lib.path_utils import find_project_root
+except ImportError as e:
+    print(f"❌ FATAL ERROR: Could not import core libraries. {e}")
+    sys.exit(1)
+
 def validate_jsonl_syntax(file_path):
     """Checks if each line in the file is a valid JSON object."""
     errors = []

@@ -7,6 +7,11 @@
     "ADRs/072_protocol_128_execution_strategy_for_cortex_snapshot.md",
     "ADRs/077_epistemic_status_annotation_rule_for_autonomous_learning.md",
     "ADRs/078_mandatory_source_verification_for_autonomous_learning.md",
+    "ADRs/079_soul_persistence_hugging_face.md",
+    "ADRs/080_registry_of_reasoning_traces.md",
+    "ADRs/081_soul_dataset_structure.md",
+    "ADRs/082_harmonized_content_processing.md",
+    "ADRs/083_manifest_centric_architecture.md",
     "01_PROTOCOLS/00_Prometheus_Protocol.md",
     "01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md",
     "01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md",
@@ -32,5 +37,13 @@
     "LEARNING/README.md",
     "LEARNING/topics/autonomous_curiosity_exploration_2024-12-27.md",
     "mcp_servers/gateway/fleet_registry.json",
-    "mcp_servers/gateway/clusters/sanctuary_cortex/README.md"
+    "mcp_servers/gateway/clusters/sanctuary_cortex/README.md",
+    "mcp_servers/lib/content_processor.py",
+    "mcp_servers/lib/exclusion_manifest.json",
+    "scripts/generate_soul_data.py",
+    "scripts/deploy_soul_full.py",
+    "LEARNING/missions/MISSION_THE_ERROR_CORRECTED_SELF_20251229.md",
+    "LEARNING/topics/quantum_error_correction/README.md",
+    "LEARNING/topics/quantum_error_correction/sources.md",
+    ".agent/learning/learning_audit_template.md"
 ]

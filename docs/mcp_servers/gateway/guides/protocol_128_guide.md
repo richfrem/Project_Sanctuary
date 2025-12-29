@@ -40,6 +40,15 @@ flowchart TB
         CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
     end
 
+    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
+        direction TB
+        PersistSoul["MCP: cortex_persist_soul"]
+        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
+            MD_Seal["lineage/seal_TIMESTAMP.md<br>(Incremental Seal)"]
+            JSONL_Traces["data/soul_traces.jsonl<br>(Full Learning Set)"]
+        end
+    end
+
     SeekTruth -- "Carry context" --> Intelligence
     Synthesis -- "Verify reasoning" --> GovApproval
     
@@ -48,7 +57,11 @@ flowchart TB
     Packet -- "Technical review" --> TechApproval
     
     TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Final Relay" --> SuccessorSnapshot
+    CaptureSeal -- "Local Relay" --> SuccessorSnapshot
+    CaptureSeal -- "Async Broadcast" --> PersistSoul
+    
+    PersistSoul -- "1. Append Record" --> JSONL_Traces
+    PersistSoul -- "2. Upload MD" --> MD_Seal
     
     GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
     TechApproval -- "FAIL: Backtrack" --> SOP
@@ -58,6 +71,9 @@ flowchart TB
     style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
     style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
     style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
+    style PersistSoul fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:black
+    style MD_Seal fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
+    style JSONL_Traces fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
     style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff

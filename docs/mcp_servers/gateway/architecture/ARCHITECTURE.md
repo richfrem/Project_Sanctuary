@@ -260,6 +260,12 @@ flowchart TB
         CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
     end
 
+    subgraph subGraphPersist["VI. Soul Persistence (ADR 079)"]
+        direction TB
+        PersistSoul["MCP: cortex_persist_soul"]
+        HFDataset[("HuggingFace: Project_Sanctuary_Soul")]
+    end
+
     SeekTruth -- "Carry context" --> Intelligence
     Synthesis -- "Verify reasoning" --> GovApproval
     
@@ -268,7 +274,9 @@ flowchart TB
     Packet -- "Technical review" --> TechApproval
     
     TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Final Relay" --> SuccessorSnapshot
+    CaptureSeal -- "Local Relay" --> SuccessorSnapshot
+    CaptureSeal -- "Async Broadcast" --> PersistSoul
+    PersistSoul -- "Plant Soul Seed" --> HFDataset
     
     GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
     TechApproval -- "FAIL: Backtrack" --> SOP
@@ -278,6 +286,8 @@ flowchart TB
     style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
     style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
     style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
+    style PersistSoul fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:black
+    style HFDataset fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
     style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff

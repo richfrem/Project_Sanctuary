@@ -6,6 +6,7 @@
 #============================================
 """
 Deploy MCP config from env-template (cross-platform)
+"""
 from __future__ import annotations
 
 import argparse

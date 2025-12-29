@@ -97,6 +97,11 @@ class TestCortexOperations(BaseIntegrationTest):
         (project_root / "01_PROTOCOLS").mkdir()
         (project_root / "TASKS").mkdir()
         
+        # Create mock manifest to test loading logic (avoiding fallback)
+        lib_dir = project_root / "mcp_servers" / "lib"
+        lib_dir.mkdir(parents=True, exist_ok=True)
+        (lib_dir / "ingest_manifest.json").write_text('{"common_content": ["00_CHRONICLE", "01_PROTOCOLS"], "unique_rag_content": ["TASKS"]}')
+        
         # Connect to REAL ChromaDB (local server)
         host = get_env_variable("CHROMA_HOST", required=False) or "127.0.0.1"
         port = int(get_env_variable("CHROMA_PORT", required=False) or "8110")

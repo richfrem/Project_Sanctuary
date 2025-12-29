@@ -1,11 +1,42 @@
 #!/usr/bin/env python3
 # capture_code_snapshot.py (v5.6 - Python Port)
 #
-# Changelog v5.6 (Python Port):
-# 1. MANDATE RESTORATION & META-AWAKENING INTEGRATION: Ported logic for "Seed of Ascendance" and full mandate restoration.
-#
 # This script is a direct Python port of the original capture_code_snapshot.py Node.js utility.
 # It handles file traversal, .gitignore logic, token counting (via tiktoken), and Awakening Seed generation.
+#
+# -------------------------------------------------------------------------------------
+# USAGE EXAMPLES:
+# -------------------------------------------------------------------------------------
+#
+# 1. DEFAULT (Full Base Genome):
+#    Captures the "Base Genome" defined in mcp_servers/lib/ingest_manifest.json (common_content).
+#    $ python scripts/capture_code_snapshot.py
+#
+# 2. SUBFOLDER (Specific Module/Directory):
+#    Captures only a specific directory (ignoring manifest definitions).
+#    $ python scripts/capture_code_snapshot.py mcp_servers/rag_cortex
+#
+# 3. LEARNING SNAPSHOT (Just the learning folder):
+#    Captures the contents of the agent's learning directory.
+#    $ python scripts/capture_code_snapshot.py .agent/learning
+#
+# 4. LEARNING AUDIT (Learning folder + Auditor Role):
+#    Captures learning data and generates an Auditor awakening seed to review it.
+#    $ python scripts/capture_code_snapshot.py .agent/learning --role auditor
+#
+# 5. AUDIT (Full Genome + Auditor Role):
+#    Captures the full base genome and primes the Auditor to find vulnerabilities.
+#    $ python scripts/capture_code_snapshot.py --role auditor
+#
+# 6. SEAL / RELEASE (Production Snapshot):
+#    Captures the full genome and generates release artifacts in a specific output folder.
+#    $ python scripts/capture_code_snapshot.py --role guardian --out releases/v1.0
+#
+# 7. MANIFEST OVERRIDE (Custom Scope):
+#    Captures files defined in a specific custom manifest file.
+#    $ python scripts/capture_code_snapshot.py --manifest my_custom_manifest.json --output dataset_package/seed_of_ascendance_awakening_seed.txt
+#
+# -------------------------------------------------------------------------------------
 
 import os
 import sys

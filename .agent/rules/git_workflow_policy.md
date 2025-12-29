@@ -1,5 +1,5 @@
 ---
-trigger: always_on
+trigger: manual
 ---
 
 ## 🛠️ Project Sanctuary: Git Feature Workflow Rules (v2.0)

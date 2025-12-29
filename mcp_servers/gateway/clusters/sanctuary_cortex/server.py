@@ -128,6 +128,16 @@ LEARNING_DEBRIEF_SCHEMA = {
     }
 }
 
+PERSIST_SOUL_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "snapshot_path": {"type": "string", "description": "Path to sealed snapshot"},
+        "valence": {"type": "number", "description": "Moral/Emotional charge"},
+        "uncertainty": {"type": "number", "description": "Logic confidence"},
+        "is_full_sync": {"type": "boolean", "description": "Full learning directory sync"}
+    }
+}
+
 FORGE_QUERY_SCHEMA = {
     "type": "object",
     "properties": {
@@ -296,11 +306,36 @@ def run_sse_server(port: int):
     
     @sse_tool(
         name="cortex_capture_snapshot",
-        description="Tool-driven snapshot generation (Protocol 128 v3.5). Types: 'audit' (code/architecture review → red_team_audit_packet.md), 'seal' (successor relay → learning_package_snapshot.md), 'learning_audit' (knowledge validation → learning_audit_packet.md).",
+        description="Snapshot generation (Protocol 128). Types: audit (red_team_audit_packet.md), seal (learning_package_snapshot.md), learning_audit (learning_audit_packet.md).",
         schema=CAPTURE_SNAPSHOT_SCHEMA
     )
     def cortex_capture_snapshot(manifest_files: List[str] = None, snapshot_type: str = "checkpoint", strategic_context: str = None):
         response = get_ops().capture_snapshot(manifest_files=manifest_files, snapshot_type=snapshot_type, strategic_context=strategic_context)
+        return json.dumps(to_dict(response), indent=2)
+    
+    @sse_tool(
+        name="cortex_persist_soul",
+        description="Incremental Soul persistence (ADR 079). Uploads snapshot MD to lineage/ folder and appends 1 record to data/soul_traces.jsonl on HuggingFace.",
+        schema=PERSIST_SOUL_SCHEMA
+    )
+    def cortex_persist_soul(snapshot_path: str = None, valence: float = 0.0, uncertainty: float = 0.0, is_full_sync: bool = False):
+        from mcp_servers.rag_cortex.models import PersistSoulRequest
+        request = PersistSoulRequest(
+            snapshot_path=snapshot_path or ".agent/learning/learning_package_snapshot.md",
+            valence=valence,
+            uncertainty=uncertainty,
+            is_full_sync=is_full_sync
+        )
+        response = get_ops().persist_soul(request)
+        return json.dumps(to_dict(response), indent=2)
+    
+    @sse_tool(
+        name="cortex_persist_soul_full",
+        description="Full Soul genome sync (ADR 081). Regenerates data/soul_traces.jsonl from all project files (~1200 records) and deploys to HuggingFace.",
+        schema=EMPTY_SCHEMA
+    )
+    def cortex_persist_soul_full():
+        response = get_ops().persist_soul_full()
         return json.dumps(to_dict(response), indent=2)
     
     # =============================================================================
@@ -343,7 +378,7 @@ def run_stdio_server():
         CortexIngestFullRequest, CortexQueryRequest, CortexIngestIncrementalRequest,
         CortexCacheGetRequest, CortexCacheSetRequest, CortexCacheWarmupRequest,
         CortexGuardianWakeupRequest, CortexCaptureSnapshotRequest,
-        CortexLearningDebriefRequest, ForgeQueryRequest
+        CortexLearningDebriefRequest, ForgeQueryRequest, CortexPersistSoulRequest
     )
     
     mcp = FastMCP(
@@ -454,6 +489,22 @@ def run_stdio_server():
             return json.dumps(to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Snapshot capture failed: {str(e)}")
+    
+    @mcp.tool()
+    async def cortex_persist_soul(request: CortexPersistSoulRequest) -> str:
+        """Broadcasts the sealed learning snapshot to the Hugging Face AI Commons (ADR 079)."""
+        try:
+            from mcp_servers.rag_cortex.models import PersistSoulRequest
+            internal_req = PersistSoulRequest(
+                snapshot_path=request.snapshot_path,
+                valence=request.valence,
+                uncertainty=request.uncertainty,
+                is_full_sync=request.is_full_sync
+            )
+            response = get_ops().persist_soul(internal_req)
+            return json.dumps(to_dict(response), indent=2)
+        except Exception as e:
+            raise ToolError(f"Soul persistence failed: {str(e)}")
     
     @mcp.tool()
     async def query_sanctuary_model(request: ForgeQueryRequest) -> str:

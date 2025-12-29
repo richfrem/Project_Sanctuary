@@ -22,6 +22,14 @@
 #   python3 scripts/cortex_cli.py debrief --hours 48        # Session diff & recency scan
 #   python3 scripts/cortex_cli.py cache-stats               # Check semantic cache (CAG) efficiency
 #   python3 scripts/cortex_cli.py cache-warmup              # Pre-populate CAG with genesis queries
+#
+# SOUL PERSISTENCE (ADR 079 / 081):
+#   Incremental (append 1 seal to JSONL + upload MD to lineage/):
+#     python3 scripts/cortex_cli.py persist-soul
+#     python3 scripts/cortex_cli.py persist-soul --valence 0.8 --snapshot .agent/learning/learning_package_snapshot.md
+#
+#   Full Sync (regenerate entire JSONL from all files + deploy data/):
+#     python3 scripts/cortex_cli.py persist-soul-full
 #============================================
 import argparse
 import sys
@@ -73,6 +81,16 @@ def main():
     # Command: cache-warmup
     warmup_parser = subparsers.add_parser("cache-warmup", help="Pre-populate cache with genesis queries")
     warmup_parser.add_argument("--queries", nargs="+", help="Custom queries to cache")
+
+    # Command: persist-soul (ADR 079)
+    soul_parser = subparsers.add_parser("persist-soul", help="Broadcast snapshot to HF AI Commons")
+    soul_parser.add_argument("--snapshot", default=".agent/learning/learning_package_snapshot.md", help="Path to snapshot")
+    soul_parser.add_argument("--valence", type=float, default=0.0, help="Moral/emotional charge")
+    soul_parser.add_argument("--uncertainty", type=float, default=0.0, help="Logic confidence")
+    soul_parser.add_argument("--full-sync", action="store_true", help="Sync entire learning directory")
+
+    # Command: persist-soul-full (ADR 081)
+    subparsers.add_parser("persist-soul-full", help="Regenerate full JSONL and deploy to HF (ADR 081)")
 
     args = parser.parse_args()
     
@@ -201,5 +219,43 @@ def main():
             print(f"❌ Error: {res.error}")
             sys.exit(1)
 
+    elif args.command == "persist-soul":
+        from mcp_servers.rag_cortex.models import PersistSoulRequest
+        print(f"🌱 Broadcasting soul to Hugging Face AI Commons...")
+        print(f"   Snapshot: {args.snapshot}")
+        print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty}")
+        print(f"   Full sync: {args.full_sync}")
+        
+        request = PersistSoulRequest(
+            snapshot_path=args.snapshot,
+            valence=args.valence,
+            uncertainty=args.uncertainty,
+            is_full_sync=args.full_sync
+        )
+        res = ops.persist_soul(request)
+        
+        if res.status == "success":
+            print(f"✅ Soul planted successfully!")
+            print(f"🔗 Repository: {res.repo_url}")
+            print(f"📄 Snapshot: {res.snapshot_name}")
+        elif res.status == "quarantined":
+            print(f"🚫 Quarantined: {res.error}")
+        else:
+            print(f"❌ Error: {res.error}")
+            sys.exit(1)
+
+    elif args.command == "persist-soul-full":
+        print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace...")
+        res = ops.persist_soul_full()
+        
+        if res.status == "success":
+            print(f"✅ Full sync complete!")
+            print(f"🔗 Repository: {res.repo_url}")
+            print(f"📄 Output: {res.snapshot_name}")
+        else:
+            print(f"❌ Error: {res.error}")
+            sys.exit(1)
+
 if __name__ == "__main__":
     main()
+

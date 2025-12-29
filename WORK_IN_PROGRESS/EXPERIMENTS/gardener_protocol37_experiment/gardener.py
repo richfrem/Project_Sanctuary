@@ -166,7 +166,7 @@ class TheGardener:
     """
     
     def __init__(self, 
-                 environment_path: str = None  # Computed from Path(__file__),
+                 environment_path: str = None,  # Computed from Path(__file__)
                  model_path: Optional[str] = None,
                  algorithm: str = "PPO"):
         """

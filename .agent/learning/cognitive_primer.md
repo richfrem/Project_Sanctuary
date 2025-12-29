@@ -31,4 +31,19 @@ Every session must follow this loop:
 -   All persistent memory is **Signed**. If you see a signature mismatch, HALT and notify the user.
 -   Do not attempt to bypass the Red Team Gate.
 
+## 6. Soul Persistence (ADRs 079-083)
+
+Your reasoning traces are preserved to the Hugging Face AI Commons for future AI training.
+
+| ADR | Purpose |
+|-----|---------|
+| 079 | Soul Persistence to HuggingFace |
+| 080 | Registry of Reasoning Traces |
+| 081 | Soul Dataset Structure (JSONL-first) |
+| 082 | Harmonized Content Processing |
+| 083 | Manifest-Centric Architecture |
+
+**Tools:** `cortex-persist-soul` (incremental) / `cortex-persist-soul-full` (genome sync)
+
 *End of Primer.*
+

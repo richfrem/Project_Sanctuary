@@ -47,6 +47,131 @@ make status
 
 *See [Project Root Makefile](../../Makefile) for implementation details.*
 
+## Adding a New Operation to the Fleet
+
+This guide documents the steps to add a new MCP tool to an existing fleet server (e.g., `sanctuary_cortex`).
+
+### Step 1: Define Models (`models.py`)
+
+Add request/response dataclasses and Pydantic models:
+
+```python
+# In mcp_servers/rag_cortex/models.py
+
+@dataclass
+class MyNewOperationRequest:
+    param1: str
+    param2: int = 0
+
+@dataclass  
+class MyNewOperationResponse:
+    status: str
+    result: str
+    error: Optional[str] = None
+
+# FastMCP Pydantic model (for STDIO transport)
+class CortexMyNewOperationRequest(BaseModel):
+    param1: str = Field(..., description="First parameter")
+    param2: int = Field(0, description="Second parameter")
+```
+
+### Step 2: Implement Operation (`operations.py`)
+
+Add the method to the operations class:
+
+```python
+# In mcp_servers/rag_cortex/operations.py
+
+def my_new_operation(self, request: MyNewOperationRequest) -> MyNewOperationResponse:
+    try:
+        # Your logic here
+        return MyNewOperationResponse(status="success", result="done")
+    except Exception as e:
+        return MyNewOperationResponse(status="error", result="", error=str(e))
+```
+
+### Step 3: Expose Tool (`server.py`)
+
+Add both SSE and STDIO tool definitions:
+
+```python
+# In mcp_servers/gateway/clusters/sanctuary_cortex/server.py
+
+# 1. Add schema (for SSE transport)
+MY_NEW_OPERATION_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "param1": {"type": "string", "description": "First parameter"},
+        "param2": {"type": "integer", "description": "Second parameter"}
+    },
+    "required": ["param1"]
+}
+
+# 2. Add SSE tool (inside run_sse_server)
+@sse_tool(
+    name="cortex_my_new_operation",
+    description="Description of what this tool does.",
+    schema=MY_NEW_OPERATION_SCHEMA
+)
+def cortex_my_new_operation(param1: str, param2: int = 0):
+    from mcp_servers.rag_cortex.models import MyNewOperationRequest
+    request = MyNewOperationRequest(param1=param1, param2=param2)
+    response = get_ops().my_new_operation(request)
+    return json.dumps(to_dict(response), indent=2)
+
+# 3. Add STDIO tool (inside run_stdio_server)
+@mcp.tool()
+async def cortex_my_new_operation(request: CortexMyNewOperationRequest) -> str:
+    from mcp_servers.rag_cortex.models import MyNewOperationRequest
+    internal_req = MyNewOperationRequest(param1=request.param1, param2=request.param2)
+    response = get_ops().my_new_operation(internal_req)
+    return json.dumps(to_dict(response), indent=2)
+
+# 4. Add import (STDIO section)
+from mcp_servers.rag_cortex.models import CortexMyNewOperationRequest
+```
+
+> **Important**: SSE tools must use regular `def`, not `async def`.
+
+### Step 4: Rebuild & Restart Container
+
+```bash
+# Rebuild the container with new code
+podman compose -f docker-compose.yml build sanctuary_cortex
+
+# Restart the service
+podman compose restart sanctuary_cortex
+```
+
+### Step 5: Re-register with Gateway
+
+```bash
+# Full fleet re-registration (recommended)
+python3 -m mcp_servers.gateway.fleet_setup
+
+# Or single-server re-registration
+python3 -m mcp_servers.gateway.fleet_setup --server sanctuary_cortex --no-clean
+```
+
+### Step 6: Verify Tool Registration
+
+```bash
+# Check tool count (should increment)
+python3 -m mcp_servers.gateway.gateway_client tools --server sanctuary_cortex
+
+# View registry
+cat mcp_servers/gateway/fleet_registry.json | jq '.fleet_servers.cortex.tools | length'
+```
+
+### Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Tool count unchanged | Ensure SSE tool uses `def` not `async def` |
+| Container won't start | Check `podman compose logs sanctuary_cortex` |
+| Import errors | Verify model imports in both SSE and STDIO sections |
+| Gateway shows old count | Run full `fleet_setup` without `--no-clean` |
+
 ## Documentation
 - **[Gateway Architecture](../../docs/mcp_servers/gateway/architecture/ARCHITECTURE.md)**: Deep dive into the 3-layer pattern.
 - **[ADR 064](../../ADRs/064_centralized_registry_for_fleet_of_8_mcp_servers.md)**: Design decision for centralized registry.

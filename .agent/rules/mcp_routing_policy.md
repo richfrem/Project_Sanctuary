@@ -1,5 +1,5 @@
 ---
-trigger: always_on
+trigger: manual
 ---
 
 ## 🧭 Project Sanctuary: MCP Routing & Architecture Rules
@@ -9,6 +9,7 @@ trigger: always_on
 * **Primary Entry Point**: All tool requests must be routed through the `sanctuary_gateway` (IBM-based) to ensure proper context federation.
 * **Fleet Distribution**: You are connected to a fleet of 8 specialized servers: `sanctuary_cortex`, `sanctuary_domain`, `sanctuary_filesystem`, `sanctuary_git`, `sanctuary_network`, `sanctuary_utils`, and legacy nodes.
 * **Slug Identification**: Use the exact slugs defined in the `fleet_registry.json` (e.g., `sanctuary-cortex-*` for RAG/Learning operations).
+* **Tool inventory**:  There are 86 total tools but to improve performance and reduce context only 41 core tools are enabled. 
 
 
 ### 2. Implementation Sovereignty (ADR & Protocol Alignment)

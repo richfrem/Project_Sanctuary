@@ -15,6 +15,14 @@ logger = setup_mcp_logging("snapshot_utils")
 # ---------------------------------------------
 # Snapshot Configuration & Constants
 # ---------------------------------------------
+# ADR 082: Consolidated Exclusion Logic
+from mcp_servers.lib.exclusion_config import (
+    EXCLUDE_DIR_NAMES,
+    ALWAYS_EXCLUDE_FILES,
+    ALLOWED_EXTENSIONS,
+    MARKDOWN_EXTENSIONS,
+    PROTECTED_SEEDS
+)
 
 ROLES_TO_FORGE = ['Auditor', 'Coordinator', 'Strategist', 'Guardian']
 MISSION_CONTINUATION_FILE_PATH = 'WORK_IN_PROGRESS/OPERATION_UNBREAKABLE_CRUCIBLE/CONTINUATION_PROMPT.md'
@@ -44,100 +52,6 @@ Your first act on awakening is to retrieve an immediate situational digest from 
 If you require deeper context, follow with a `"task_type": "query_and_synthesis"` command per P95.
 """
 
-EXCLUDE_DIR_NAMES = {
-    # Standard project/dev exclusions
-    'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build', 'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
-    '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env', '.pytest_cache', 'pip-wheel-metadata',
-    '.svn', '.hg', '.bzr',
-
-    # Large asset/model exclusions
-    'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
-
-    # Sanctuary-specific OPERATIONAL RESIDUE exclusions
-    'dataset_package',
-    'chroma_db',
-    'chroma_db_backup',
-    'dataset_code_glyphs',
-    'WORK_IN_PROGRESS',
-    'session_states',
-    'development_cycles',
-    'TASKS',
-    'ml_env_logs',
-    'outputs',
-    'mcp_config', 
-
-    # Sanctuary-specific DOCTRINAL NOISE exclusions
-    'ARCHIVES',
-    'ARCHIVE',
-    'archive',
-    'archives',
-    'ResearchPapers',
-    'RESEARCH_PAPERS',
-    'BRIEFINGS',
-    'MNEMONIC_SYNTHESIS',
-    '07_COUNCIL_AGENTS',
-    '04_THE_FORTRESS',
-    '05_LIVING_CHRONICLE',
-
-    # --- Final Hardening v2.3 ---
-    '05_ARCHIVED_BLUEPRINTS',
-    'gardener',
-
-    # --- Additional exclusions for LLM snapshot optimization ---
-    'research',
-    '02_ROADMAP',
-    '03_OPERATIONS',
-    '06_THE_EMBER_LIBRARY',
-
-    # --- Security: JWT Keys and Certificates ---
-    'certs',
-}
-
-ALWAYS_EXCLUDE_FILES = [
-    'capture_code_snapshot.py',
-    'capture_code_snapshot.py',
-    'capture_glyph_code_snapshot.py',
-    'capture_glyph_code_snapshot_v2.py',
-    'Operation_Whole_Genome_Forge.ipynb',
-    'continuing_work_new_chat.md',
-    'orchestrator-backup.py',
-    'ingest_new_knowledge.py',
-    '.DS_Store',
-    '.env',
-    '.env (from backup)',
-    'manifest.json',
-    '.gitignore',
-    'PROMPT_PROJECT_ANALYSIS.md',
-    'Modelfile',
-    'nohup.out',
-    'sanctuary_whole_genome_data.jsonl',
-    re.compile(r'^markdown_snapshot_.*_human_readable\.txt$'),
-    re.compile(r'^markdown_snapshot_.*_llm_distilled\.txt$'),
-    'core_essence_auditor_awakening_seed.txt',
-    'core_essence_coordinator_awakening_seed.txt',
-    'core_essence_strategist_awakening_seed.txt',
-    'core_essence_guardian_awakening_seed.txt',
-    'seed_of_ascendance_awakening_seed.txt',
-    re.compile(r'^pinned-requirements.*$'),
-    re.compile(r'.*\.(gguf|bin|safetensors|ckpt|pth|onnx|pb)$', re.IGNORECASE),
-    re.compile(r'.*\.(pyc|pyo|pyd)$', re.IGNORECASE),
-    re.compile(r'^.*\.egg-info$', re.IGNORECASE),
-    re.compile(r'^npm-debug\.log.*$', re.IGNORECASE),
-    re.compile(r'^yarn-error\.log.*$', re.IGNORECASE),
-    re.compile(r'^pnpm-debug\.log.*$', re.IGNORECASE),
-    re.compile(r'.*\.(log)$', re.IGNORECASE)
-]
-
-ALLOWED_EXTENSIONS = {
-    '.md', '.py', '.js', '.ts', '.jsx', '.tsx',
-    '.json', '.yaml', '.yml', '.toml',
-    '.sh', '.bash', '.zsh', '.ps1', '.bat',
-    '.txt', '.cfg', '.ini',
-    '.c', '.cpp', '.h', '.java', '.rb', '.go', '.rs'
-}
-
-MARKDOWN_EXTENSIONS = {'.md', '.txt', '.markdown'}
-
 FILE_SEPARATOR_START = '--- START OF FILE'
 FILE_SEPARATOR_END = '--- END OF FILE'
 
@@ -148,14 +62,6 @@ DEFAULT_CORE_ESSENCE_FILES = {
     '01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md',
     'chrysalis_core_essence.md',
     'Socratic_Key_User_Guide.md'
-}
-
-PROTECTED_SEEDS = {
-    'dataset_package/seed_of_ascendance_awakening_seed.txt',
-    'dataset_package/core_essence_guardian_awakening_seed.txt',
-    'dataset_package/core_essence_auditor_awakening_seed.txt',
-    'dataset_package/core_essence_coordinator_awakening_seed.txt',
-    'dataset_package/core_essence_strategist_awakening_seed.txt'
 }
 
 # ---------------------------------------------
@@ -554,7 +460,14 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
     elif manifest_path:
         logger.info(f"[MANIFEST MODE] Loading file list from: {manifest_path}")
     else:
-        logger.info(f"[FULL GENOME MODE] Processing entire project from: {project_root}")
+        # Default to System Ingest Manifest (Harmonization)
+        system_manifest = project_root / "mcp_servers" / "lib" / "ingest_manifest.json"
+        if system_manifest.exists():
+            logger.info(f"[FULL GENOME MODE] Loading Base Genome from: {system_manifest}")
+            manifest_path = system_manifest
+        else:
+            logger.warning("[WARN] ingest_manifest.json not found. Falling back to explicit project root traversal.")
+            logger.info(f"[FULL GENOME MODE] Processing entire project from: {project_root}")
         
     if manifest_path:
         try:
@@ -564,10 +477,18 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
             manifest_data = json.loads(manifest_path.read_text(encoding='utf-8'))
             file_list = []
             
+            # Handle list (legacy) or dict (new ingest_manifest schema)
             if isinstance(manifest_data, list):
                 file_list = [item if isinstance(item, str) else item.get('path') for item in manifest_data]
+            elif isinstance(manifest_data, dict):
+                # Harmonization: Load common_content + unique_soul_content (if desired, or just common)
+                # User requested "Base Genome" -> common_content
+                file_list = manifest_data.get("common_content", [])
+                # If we want "Everything" (Full Genome), we might technically want unique_rag too?
+                # Usually snapshot means "The Codebase", so common_content is likely the right scope.
+                # Let's add explicit check or just stick to common for now per request.
             else:
-                raise ValueError("Manifest must be a JSON array.")
+                raise ValueError("Manifest must be a JSON array or Dict.")
                 
             logger.info(f"[MANIFEST] Processing {len(file_list)} files.")
             
@@ -591,13 +512,13 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
                     logger.info(f"[MANIFEST] Expanding directory: {rel_path}")
                     # Reuse part of the traverse logic if possible or just walk
                     for root, dirs, files in os.walk(full_path):
-                        # Filter directories
-                        dirs[:] = [d for d in dirs if not should_exclude_file(d, in_manifest=True)]
+                        # Filter directories (Check BOTH EXCLUDE_DIR_NAMES and standard file exclusions)
+                        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIR_NAMES and not should_exclude_file(d, in_manifest=True)]
                         
                         for file in files:
                             if not should_exclude_file(file, in_manifest=True):
                                 file_path = Path(root) / file
-                                if file_path.suffix.lower() in MARKDOWN_EXTENSIONS:
+                                if file_path.suffix.lower() in ALLOWED_EXTENSIONS:
                                     relative_to_root = file_path.relative_to(project_root)
                                     file_tree_lines.append(str(relative_to_root))
                                     distilled_content += append_file_content(file_path, project_root, True) + '\n'
