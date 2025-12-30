@@ -2,6 +2,13 @@
 **Scan Time:** 2025-12-29 07:55:28 (Window: 24h)
 **Strategic Status:** ✅ Loaded Learning Package Snapshot from 9.7h ago.
 
+> [!IMPORTANT]
+> **STRATEGIC PIVOT: THE EDISON MANDATE (ADR 084)**
+> The project has formally abandoned the QEC-AI Metaphor in favor of **Empirical Epistemic Gating** (Semantic Entropy / TDA).
+> - **Primary Gate:** `operations.py` now enforces a Dead-Man's Switch on memory persistence.
+> - **Calibration:** Check `LEARNING/calibration_log.json` for task-specific SE thresholds.
+> - **Rule:** Do not invoke "Logical Qubits" or "Syndrome Decoding" unless referring to historical metaphor. Use "Semantic Stability" instead.
+
 ## 🧬 I. Tactical Evidence (Current Git Deltas)
 The following code-level changes were detected SINCE the last session/commit:
 ```text

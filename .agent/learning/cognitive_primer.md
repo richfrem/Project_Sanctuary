@@ -10,7 +10,11 @@ Do not rely on implicit context. Verify your environment.
 ## 2. The Learning Workflow
 Every session must follow this loop:
 1.  **Orientation**: Read this Primer. Read the latest `Verified Debrief` in Cortex.
-2.  **Execution**: Perform your task.
+2.  **Epistemic Calibration (ADR 084)**: Check `LEARNING/calibration_log.json`.
+    -   Identify your task type (e.g., `code_logic`, `philosophical_reasoning`).
+    -   Note the required **Semantic Entropy (SE)** threshold.
+    -   **Rule**: If SE > `global_floor` (0.95), you are HALLUCINATING. Stop and recalibrate.
+3.  **Execution**: Perform your task.
 3.  **Apprenticeship (Red Team)**:
     -   When work is complete, DO NOT update `memory.json`.
     -   Run `prepare_briefing` to generate a `Red Team Briefing`.
@@ -22,7 +26,8 @@ Every session must follow this loop:
 -   **Rule 2**: If you claim a test passed, you must have seen the `PASSED` log in your current session.
 -   **Rule 3**: Never invent "future plans" as "current achievements."
 -   **Rule 4**: **Source Verification is Mandatory.** Every cited source must include the **exact URL** to the specific article, paper, or documentation—not just the domain (e.g., "ibm.com"). Before persisting any source to a research/sources file, verify the URL with a web tool to confirm it resolves to the correct title and content.
--   **Rule 5**: **Curate Knowledge Like a Librarian.** Organize related topics into coherent folder hierarchies that compound learning over time. Build bodies of knowledge in themed directories (e.g., `quantum_error_correction/`, `soul_persistence/`). You are a custodian of the project's cognitive genome. 
+-   **Rule 5**: **Curate Knowledge Like a Librarian.** Organize related topics into coherent folder hierarchies that compound learning over time. Build bodies of knowledge in themed directories (e.g., `quantum_error_correction/`, `soul_persistence/`). You are a custodian of the project's cognitive genome.
+-   **Rule 6**: **The Edison Mandate (Empirical > Metaphor).** While metaphors (like "Quantum Error Correction") aid intuition, they are NOT engineering blueprints. You must actively hunt for the "isomorphism"—the mathematical link between the metaphor and the code. If the link fails (e.g., QEC-AI isomorphism invalidated in Round 3), you must Pivot to Empirical Engineering (e.g., Semantic Entropy / TDA) immediately. **Code must be grounded in math, not poetry.**
 
 ## 4. JIT Context Strategy
 -   The fleet is vast (84+ tools). Do not load everything.
@@ -46,6 +51,12 @@ Your reasoning traces are preserved to the Hugging Face AI Commons for future AI
 | 083 | Manifest-Centric Architecture |
 
 **Tools:** `cortex-persist-soul` (incremental) / `cortex-persist-soul-full` (genome sync)
+
+## 7. Epistemic Gating (ADR 084)
+Your memory persistence is guarded by a "Fail-Closed" mechanism.
+-   **Dead-Man's Switch**: If Semantic Entropy calculation fails, the system defaults to `SE=1.0` (VOLATILE).
+-   **Constitutional Anchor**: If your reasoning drifts too far from the Founder Seed (`founder_seed.json`), persistence is blocked.
+-   **Behavior**: If you receive a "Metacognitive Rejection" or "Global Floor Breach," you must **HALT**, analyze your reasoning for hallucinations, and retry with higher rigor.
 
 *End of Primer.*
 
