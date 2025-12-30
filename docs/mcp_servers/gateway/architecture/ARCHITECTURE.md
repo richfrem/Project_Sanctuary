@@ -232,65 +232,69 @@ config:
   theme: base
 ---
 flowchart TB
-    subgraph subGraphScout["I. The Learning Scout"]
+    subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
         direction TB
-        Start["Session Start"] --> SeekTruth["MCP: cortex_learning_debrief"]
-        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read context| SeekTruth
+        Start["Session Start"] --> Wakeup["MCP: cortex_guardian_wakeup<br>(Verify Semantic HMAC)"]
+        Wakeup --> SeekTruth["Scripts: python3 scripts/cortex_cli.py debrief --hours 24<br>(Tool: cortex_learning_debrief)"]
+        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read Context| SeekTruth
     end
 
     subgraph subGraphSynthesize["II. Intelligence Synthesis"]
         direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs/Learnings"]
+        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update learning_manifest.json)"]
     end
 
     subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
         direction TB
-        GovApproval{"Strategic Approval<br>(HITL)"}
+        GovApproval{"Strategic Approval<br>(HITL Required)"}
     end
 
     subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
         direction TB
-        CaptureAudit["MCP: cortex_capture_snapshot<br>(audit | learning_audit)"]
-        Packet["Audit Packet (Snapshot)"]
+        CaptureAudit["Scripts: python3 scripts/cortex_cli.py snapshot --type audit<br>(Tool: cortex_capture_snapshot)"]
+        Packet["Audit Packet<br>(Git Hash Comparison)"]
         TechApproval{"Technical Approval<br>(HITL)"}
     end
 
     subgraph subGraphSeal["V. The Technical Seal"]
         direction TB
-        CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
+        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates learning_package_snapshot.md)"]
     end
 
-    subgraph subGraphPersist["VI. Soul Persistence (ADR 079)"]
+    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
         direction TB
-        PersistSoul["MCP: cortex_persist_soul"]
-        HFDataset[("HuggingFace: Project_Sanctuary_Soul")]
+        choice{Persistence Type}
+        choice -- Incremental --> Inc["Tool: cortex-persist-soul<br>(Append 1 Record)"]
+        choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
+        
+        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
+            MD_Seal["lineage/seal_TIMESTAMP.md"]
+            JSONL_Traces["data/soul_traces.jsonl"]
+        end
     end
 
-    SeekTruth -- "Carry context" --> Intelligence
-    Synthesis -- "Verify reasoning" --> GovApproval
+    SeekTruth -- "Carry Context" --> Intelligence
+    Synthesis -- "Verify Reasoning" --> GovApproval
     
     GovApproval -- "PASS" --> CaptureAudit
-    CaptureAudit -- "Validate truth" --> Packet
-    Packet -- "Technical review" --> TechApproval
+    CaptureAudit -- "Validate Truth" --> Packet
+    Packet -- "Technical Review" --> TechApproval
     
     TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Local Relay" --> SuccessorSnapshot
-    CaptureSeal -- "Async Broadcast" --> PersistSoul
-    PersistSoul -- "Plant Soul Seed" --> HFDataset
+    CaptureSeal -- "Local Continuity" --> SuccessorSnapshot
+    CaptureSeal -- "Broadcast" --> choice
+    
+    Inc --> JSONL_Traces
+    Inc --> MD_Seal
+    Full --> JSONL_Traces
     
     GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
     TechApproval -- "FAIL: Backtrack" --> SOP
     SOP -- "Loop Back" --> Start
 
-    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
-    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
-    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
-    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
-    style PersistSoul fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:black
-    style HFDataset fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
+    style Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
-    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 ---

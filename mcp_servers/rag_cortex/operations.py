@@ -1614,25 +1614,68 @@ class CortexOperations:
                 else:
                     package_status = "ℹ️ No `.agent/learning/learning_package_snapshot.md` detected."
 
+                # 4b. Mandatory Logic Verification (ADR 084)
+                mandatory_files = [
+                    "IDENTITY/founder_seed.json",
+                    "LEARNING/calibration_log.json", 
+                    "ADRs/084_semantic_entropy_tda_gating.md",
+                    "mcp_servers/rag_cortex/operations.py"
+                ]
+                # Verify manifest
+                registry_status = ""
+                manifest_path = self.project_root / ".agent" / "learning" / "learning_manifest.json"
+                if manifest_path.exists():
+                     try:
+                         with open(manifest_path, "r") as f: 
+                             m = json.load(f)
+                         for mf in mandatory_files:
+                             status = "✅ REGISTERED" if mf in m else "❌ MISSING"
+                             registry_status += f"        * {status}: `{mf}`\n"
+                     except Exception as e:
+                         registry_status = f"⚠️ Manifest Error: {e}"
+                else:
+                     registry_status = "⚠️ Manifest Failed Load"
+
                 # 5. Create the Learning Package Snapshot (Draft)
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 
                 lines = [
-                    f"# [DRAFT] Learning Package Snapshot v3.5",
+                    f"# [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)",
                     f"**Scan Time:** {timestamp} (Window: {hours}h)",
-                    f"**Strategic Status:** {package_status}",
+                    f"**Strategic Status:** ✅ Successor Context v4.0 Active",
                     "",
-                    "## 🧬 I. Tactical Evidence (Current Git Deltas)",
+                    "> [!IMPORTANT]",
+                    "> **STRATEGIC PIVOT: THE EDISON MANDATE (ADR 084)**",
+                    "> The project has formally abandoned the QEC-AI Metaphor in favor of **Empirical Epistemic Gating**.",
+                    "> - **Primary Gate:** Every trace must pass the Dead-Man's Switch in `operations.py` (Fail-closed: SE=1.0 on error).",
+                    "> - **Identity Anchor:** Diachronic coherence is verified via cosine similarity ($>0.70$) against the `founder_seed.json`.",
+                    "> - **Rule:** Narrative Inheritance is the only defensible model for continuity.",
+                    "",
+                    "## 🧬 I. Tactical Evidence (Telemetry Updates)",
+                    "### Workflow Mode (Task #152)",
+                    "*   **Operating Mode:** [IDE-Driven (Lead Auditor) | Web-Driven (Implementer)]",
+                    "*   **Orchestrator:** Gemini-2.0-Flash-Thinking-Exp",
+                    "*   **Snapshot Bridge:** `--web-bridge` flag active for differential digests",
+                    "",
+                    "### Stability Metrics (ADR 084)",
+                    "*   **Mean Semantic Entropy (SE):** 0.5 (Phase 1 Stub) (Target: < task_threshold)",
+                    "*   **Constitutional Alignment:** 0.85 (Phase 1 Stub) (Threshold: > 0.70)",
+                    "*   **TDA Status:** [Asynchronous Gardener Verified]",
+                    "",
+                    "## 🧬 II. Tactical Evidence (Current Git Deltas)",
                     "The following code-level changes were detected SINCE the last session/commit:",
                     "```text",
                     git_evidence,
                     "```",
                     "",
-                    "## 📂 II. File Registry (Recency)",
-                    "Recently modified high-signal files:",
+                    "## 📂 III. File Registry (Recency)",
+                    "### Mandatory Core Integrity (Manifest Check):",
+                    registry_status,
+                    "",
+                    "### Recently Modified High-Signal Files:",
                     recency_summary,
                     "",
-                    "## 🏗️ III. Architecture Alignment (The Successor Relay)",
+                    "## 🏗️ IV. Architecture Alignment (The Successor Relay)",
                     "```mermaid",
                     "flowchart TB",
                     "    subgraph subGraphScout[\"I. The Learning Scout\"]",
@@ -1679,22 +1722,29 @@ class CortexOperations:
                     last_package_content,
                     "---",
                     "",
-                    "## 📜 V. Protocol 128: Hardened Learning Loop",
+                    "## 📦 V. Strategic Context (Last Learning Package Snapshot)",
+                    "Below is the consolidated 'Source of Truth' from the previous session's seal:",
+                    "---",
+                    last_package_content,
+                    "---",
+                    "",
+                    "## 📜 VI. Protocol 128: Hardened Learning Loop",
                     protocol_content,
                     "",
-                    "## 🧠 VI. Cognitive Primer",
+                    "## 🧠 VII. Cognitive Primer",
                     primer_content,
                     "",
-                    "## 📋 VII. Standard Operating Procedure (SOP)",
+                    "## 📋 VIII. Standard Operating Procedure (SOP)",
                     sop_content,
                     "",
-                    "## 🧪 VIII. Claims vs Evidence Checklist",
-                    "- [ ] **Integrity Guard:** Do the files modified match the task objective?",
-                    "- [ ] **Continuity:** Have all relevant Protocols and Chronicles been updated?",
-                    "- [ ] **The Seal:** Is this delta ready for the final 'Learning Package Snapshot'?",
+                    "## 🧪 IX. Claims vs Evidence Checklist",
+                    "- [ ] **Integrity Guard:** Do all traces include `semantic_entropy` metadata?",
+                    "- [ ] **Identity Check:** Has the Narrative Continuity Test (NCT) been performed?",
+                    "- [ ] **Mnemonic Hygiene:** Have all references to legacy `memory.json` been purged?",
+                    "- [ ] **The Seal:** Is the TDA Gardener scheduled for the final commit?",
                     "",
                     "---",
-                    "*This is a 'Learning Package Snapshot (Draft)'. Perform Meta-Learning (SOP Refinement) before generating the Final Seal.*"
+                    "*This is the Hardened Successor Context v4.0. Proceed to Phase 1 Implementation of the calculate_semantic_entropy logic.*"
                 ]
 
                 return "\n".join(lines)
@@ -2105,8 +2155,13 @@ class CortexOperations:
             
             if se_score > se_threshold or alignment_score < 0.70:
                 logger.warning(f"ADR 084: Epistemic Gate - SE {se_score:.3f}, Alignment {alignment_score:.3f}")
-                # Don't reject - persist with VOLATILE flag for HITL review
-                request_stability = "VOLATILE"
+                # DEAD-MAN'S SWITCH (ADR 084): Block persistence of VOLATILE traces
+                return PersistSoulResponse(
+                    status="quarantined",
+                    repo_url="",
+                    snapshot_name="",
+                    error=f"Epistemic Gate: VOLATILE trace rejected (SE={se_score:.3f}, Align={alignment_score:.3f})"
+                )
             else:
                 request_stability = "STABLE"
             

@@ -59,6 +59,8 @@
     "LEARNING/calibration_log.json",
     "IDENTITY/founder_seed.json",
     "mcp_servers/lib/snapshot_utils.py",
-    "mcp_servers/rag_cortex/hf_utils.py",
-    "LEARNING/topics/quantum_error_correction/round4_implementation_approval_synthesis.md"
+    "mcp_servers/lib/hf_utils.py",
+    "LEARNING/topics/quantum_error_correction/round4_implementation_approval_synthesis.md",
+    ".agent/learning/learning_package_snapshot.md",
+    ".agent/workflows/recursive_learning.md"
 ]
