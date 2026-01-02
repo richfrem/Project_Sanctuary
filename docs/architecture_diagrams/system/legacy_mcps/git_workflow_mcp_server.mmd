@@ -1,0 +1,47 @@
+---
+config:
+  theme: base
+---
+%% Name: Git Workflow MCP Server Architecture
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/git_workflow_mcp_server.mmd
+%% Description: Architecture and tool flow for Git Workflow MCP Server
+
+graph LR
+    subgraph "Git Workflow Tools"
+        A[create_feature_branch]
+        B[switch_branch]
+        C[push_current_branch]
+        D[get_repo_status]
+        E[list_branches]
+        F[compare_branches]
+    end
+
+    subgraph "Safety Ops"
+        G[Auto-Stash]
+        H[Branch Protection Check]
+        I[Destructive Op Block]
+    end
+
+    subgraph "Git Repository"
+        J[.git/]
+        K[Remote Origin]
+    end
+
+    A --> H
+    B --> G
+    C --> H
+    H --> J
+    G --> J
+    C --> K
+
+    D --> J
+    E --> J
+    F --> J
+
+    style A fill:#ccffcc
+    style B fill:#ffffcc
+    style C fill:#ffffcc
+    style D fill:#ccccff
+    style E fill:#ccccff
+    style F fill:#ccccff

@@ -15,52 +15,9 @@ This workflow represents the standard "Loop" for handling a complex user request
 
 ### Sequence Diagram
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Council as Council MCP (Orchestrator)
-    participant Cortex as Cortex MCP (Memory/RAG)
-    participant Persona as Agent Persona MCP (LLM)
-    participant Tools as Tool MCPs (Code/Protocol)
+![council_task_execution_loop](docs/architecture_diagrams/workflows/council_task_execution_loop.png)
 
-    User->>Council: Dispatch Task (e.g., "Update Protocol 101")
-    
-    rect rgb(240, 248, 255)
-        note right of Council: 1. Initialization & Context Gathering
-        Council->>Council: Initialize
-        alt Context = Knowledge Base
-            Council->>Cortex: Query(Topic)
-            Cortex-->>Council: Return Documents
-        else Context = Codebase
-            Council->>Tools: code_read(File)
-            Tools-->>Council: Return Code
-        else Context = Protocol
-            Council->>Tools: protocol_get(Number)
-            Tools-->>Council: Return Protocol
-        end
-    end
-
-    rect rgb(255, 248, 240)
-        note right of Council: 2. Deliberation
-        Council->>Persona: Dispatch(Role="Strategist", Task, Context)
-        Persona-->>Council: Return Analysis/Plan
-        
-        Council->>Persona: Dispatch(Role="Coordinator", Plan, Context)
-        Persona-->>Council: Return Concrete Actions
-    end
-
-    rect rgb(240, 255, 240)
-        note right of Council: 3. Action / Side Effects
-        alt Action = Write Code
-            Council->>Tools: code_write(File, Content)
-        else Action = Update Protocol
-            Council->>Tools: protocol_update(Number, Content)
-        end
-        Tools-->>Council: Confirmation
-    end
-
-    Council-->>User: Task Complete (with Summary)
-```
+*[Source: council_task_execution_loop.mmd](docs/architecture_diagrams/workflows/council_task_execution_loop.mmd)*
 
 ### Detailed Steps
 

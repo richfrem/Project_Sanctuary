@@ -41,39 +41,9 @@ The C-KSL is considered a success when:
 
 #### MCP Architecture Diagram
 
-```mermaid
-graph TB
-    subgraph "External Layer"
-        LLM["External LLM<br/>(Claude/Gemini/GPT)"]
-    end
-    
-    subgraph "Orchestration Layer"
-        ORCH["Orchestrator MCP<br/>Strategic Missions"]
-        COUNCIL["Council MCP<br/>Multi-Agent Deliberation"]
-    end
-    
-    subgraph "Agent Layer"
-        PERSONA["Agent Persona MCP<br/>Individual Agents"]
-    end
-    
-    subgraph "Infrastructure Layer"
-        FORGE["Forge LLM MCP<br/>Model Inference"]
-        CORTEX["RAG Cortex MCP<br/>Knowledge Retrieval"]
-    end
-    
-    subgraph "Services (Podman)"
-        OLLAMA["sanctuary_ollama<br/>:11434<br/>Custom Fine-tuned LLM"]
-        CHROMA["sanctuary_vector_db<br/>:8000<br/>ChromaDB RAG DB"]
-    end
-    
-    LLM --> ORCH
-    ORCH --> COUNCIL
-    COUNCIL --> PERSONA
-    COUNCIL --> CORTEX
-    PERSONA --> FORGE
-    FORGE --> OLLAMA
-    CORTEX --> CHROMA
-```
+![council_orchestration_stack](docs/architecture_diagrams/system/council_orchestration_stack.png)
+
+*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/council_orchestration_stack.mmd)*
 
 ### 3. Continuous Learning Pipeline
 **Status:** `Active` - Automated Knowledge Update Loop Operational
@@ -88,42 +58,6 @@ The system evolves through every interaction via an automated feedback loop:
 4.  **Incremental Ingestion:** The ingestion service automatically detects and indexes new `.md` files into the ChromaDB vector database.
 5.  **Knowledge Availability:** Updated knowledge becomes immediately queryable via RAG, enabling the system to learn from its own execution history in near real-time.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant O as Council Orchestrator<BR>(Orchestrator MCP Server)
-    participant C as Cortex<BR>(Cortex MCP Server)
-    participant G as Guardian Cache<BR>(Cortex MCP - CAG)
-    participant F as Forge<BR>(Forge MCP Server)
+![legacy_learning_loop_orchestrator](docs/architecture_diagrams/workflows/legacy_learning_loop_orchestrator.png)
 
-    Note over O: 1. Gap Analysis & Research
-    O->>O: Identify Strategic Gap
-    O->>O: Conduct Research (Intelligence Forge)
-    O->>O: Generate Research Report
-
-    Note over O, C: 2. Knowledge Ingestion (RAG Update)
-    Note right of O: Operation: cortex_ingest_incremental()
-    O->>C: ingest_incremental(report)
-    C-->>O: Ingestion Complete (Chunks Created)
-
-    Note over O, G: 3. Cache Synthesis (CAG Update)
-    Note right of O: Operation: cortex_guardian_wakeup()
-    O->>G: guardian_wakeup()
-    G->>C: Query High-Priority Context
-    C-->>G: Return Context
-    G->>G: Update Hot Cache
-    G-->>O: Cache Warm & Ready
-
-    Note over O: Regular Cycle Complete
-
-    rect rgb(255, 250, 205)
-        Note over O, F: 4. Periodic Fine-Tuning (Manual/Scheduled)
-        Note right of F: Operation: forge_fine_tune()<br/>Triggered manually or on major milestones
-        O->>F: Request Adaptation Packet
-        F->>C: Query Recent Learnings (cortex_query)
-        C-->>F: Return Documents
-        F->>F: Synthesize Training Data (forge_create_dataset)
-        F-->>O: Dataset Ready
-        Note over F: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new Constitutional Mind
-    end
-```
+*[Source: legacy_learning_loop_orchestrator.mmd](docs/architecture_diagrams/workflows/legacy_learning_loop_orchestrator.mmd)*

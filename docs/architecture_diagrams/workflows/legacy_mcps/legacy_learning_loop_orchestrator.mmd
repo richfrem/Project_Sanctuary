@@ -1,0 +1,42 @@
+%% Name: Legacy Learning Loop (Orchestrator Pattern)
+%% Source: Protocol 121 (Legacy)
+%% Location: docs/architecture_diagrams/workflows/legacy_learning_loop_orchestrator.mmd
+%% Description: Legacy loop using Council Orchestrator. Superseded by Protocol 128.
+
+sequenceDiagram
+    autonumber
+    participant O as Council Orchestrator<BR>(Orchestrator MCP Server)
+    participant C as Cortex<BR>(Cortex MCP Server)
+    participant G as Guardian Cache<BR>(Cortex MCP - CAG)
+    participant F as Forge<BR>(Forge MCP Server)
+
+    Note over O: 1. Gap Analysis & Research
+    O->>O: Identify Strategic Gap
+    O->>O: Conduct Research (Intelligence Forge)
+    O->>O: Generate Research Report
+
+    Note over O, C: 2. Knowledge Ingestion (RAG Update)
+    Note right of O: Operation: cortex_ingest_incremental()
+    O->>C: ingest_incremental(report)
+    C-->>O: Ingestion Complete (Chunks Created)
+
+    Note over O, G: 3. Cache Synthesis (CAG Update)
+    Note right of O: Operation: cortex_guardian_wakeup()
+    O->>G: guardian_wakeup()
+    G->>C: Query High-Priority Context
+    C-->>G: Return Context
+    G->>G: Update Hot Cache
+    G-->>O: Cache Warm & Ready
+
+    Note over O: Regular Cycle Complete
+
+    rect rgb(255, 250, 205)
+        Note over O, F: 4. Periodic Fine-Tuning (Manual/Scheduled)
+        Note right of F: Operation: forge_fine_tune()<br/>Triggered manually or on major milestones
+        O->>F: Request Adaptation Packet
+        F->>C: Query Recent Learnings (cortex_query)
+        C-->>F: Return Documents
+        F->>F: Synthesize Training Data (forge_create_dataset)
+        F-->>O: Dataset Ready
+        Note over F: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new Constitutional Mind
+    end

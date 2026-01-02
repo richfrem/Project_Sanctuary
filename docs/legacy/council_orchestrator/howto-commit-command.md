@@ -12,16 +12,9 @@ Create a `command.json` with `git_operations` specifying the files to commit. Th
 
 The original manifest verification step is **permanently purged** and replaced by the mandatory test execution step.
 
-```mermaid
-flowchart TD
-    A[Start: Files to commit] --> B[Create command.json with git_operations]
-    B --> C[Run orchestrator]
-    C --> D[Orchestrator executes Functional Coherence Test Suite]
-    D --> E{Tests Pass?}
-    E -->|Yes (P101 v3.0 Compliant)| F[Orchestrator executes git add/commit/push]
-    E -->|No (Protocol Violation)| G[Commit Aborted - Fix Tests]
-    F --> H[End: Files committed and pushed]
-```
+![Legacy Protocol 101 Commit Process](../../architecture_diagrams/workflows/legacy_protocol_101_commit_process.png)
+
+*[Source: legacy_protocol_101_commit_process.mmd](../../architecture_diagrams/workflows/legacy_protocol_101_commit_process.mmd)*
 
 ## 1\) Create command.json (Functional Integrity Mandate)
 

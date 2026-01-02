@@ -1,0 +1,23 @@
+---
+title: MCP Gateway Error Handling Flow
+description: Sequence diagram of how the Gateway handles errors with the Circuit Breaker pattern.
+---
+sequenceDiagram
+    participant Claude
+    participant Gateway
+    participant Backend
+
+    Claude->>Gateway: Request
+    Gateway->>Backend: Forward Request
+    alt Success
+        Backend-->>Gateway: Result
+        Gateway-->>Claude: Result
+    else Failure (Timeout / 500)
+        Backend--xGateway: Error
+        Gateway->>Gateway: Record Failure
+        Gateway->>Gateway: Check Circuit Threshold
+        alt Threshold Exceeded
+            Gateway->>Gateway: Open Circuit
+        end
+        Gateway-->>Claude: Error (Circuit Breaker Active)
+    end

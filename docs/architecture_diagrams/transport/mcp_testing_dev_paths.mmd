@@ -1,0 +1,36 @@
+---
+config:
+  theme: base
+  layout: dagre
+---
+
+%% Name: MCP Testing & Development Paths
+%% Description: Testing and development invocation paths: Terminal, pytest, integration, E2E, curl
+%% Location: docs/architecture_diagrams/transport/mcp_testing_dev_paths.mmd
+
+flowchart LR
+    subgraph Testing["🧪 Testing & Development"]
+        Terminal["Terminal<br/>(python -m server)"]
+        Unit["Unit Tests<br/>(pytest)"]
+        Integration["Integration Tests"]
+        E2E["E2E Tests<br/>(headless)"]
+    end
+    
+    subgraph Direct["⚡ Direct Invocation"]
+        STDIO_Server["MCP Server<br/>(STDIO mode)"]
+        SSE_Server["MCP Server<br/>(SSE mode)"]
+    end
+    
+    subgraph Curl["🔧 Manual Testing"]
+        Health["curl /health"]
+        SSE_Test["curl /sse"]
+    end
+    
+    Terminal ---|"STDIO<br/>(MCP_TRANSPORT=stdio)"| STDIO_Server
+    Unit ---|"Import & Mock"| STDIO_Server
+    Integration ---|"HTTP"| SSE_Server
+    E2E ---|"STDIO via bridge"| STDIO_Server
+    Health ---|"HTTP GET"| SSE_Server
+    SSE_Test ---|"HTTP Stream"| SSE_Server
+
+

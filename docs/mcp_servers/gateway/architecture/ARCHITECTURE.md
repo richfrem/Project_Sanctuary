@@ -23,89 +23,18 @@ This document defines the technical architecture for the **Sanctuary MCP Gateway
 
 The architecture consolidates individual tools into risk-based clusters to prevent orchestration fatigue while maintaining security boundaries.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
-    
-    Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
-    Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
-    Gateway -- SSE Transport --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
-    Gateway -- SSE Transport --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
-    Gateway -- SSE Transport --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
-    Gateway -- SSE Transport --> Cortex["<b>5. sanctuary_cortex</b><br>:8104/sse"]
-    
-    subgraph Backends["<b>Physical Intelligence Fleet</b>"]
-        VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
-    end
+![mcp_gateway_fleet](../../../../architecture_diagrams/system/mcp_gateway_fleet.png)
 
-    Cortex --> VectorDB
-    Cortex --> Ollama
-    Domain --> Utils
-    Domain --> Filesystem
-```
+*[Source: mcp_gateway_fleet.mmd](../../../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 ```
 
 ### 2.2 Fleet Management (Registration & Discovery)
 
 The management of the Fleet follows a **3-Layer Declarative Pattern**, decoupling design intent from transport and runtime observation. This ensures the system remains resilient even if specific clusters are temporarily unreachable.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart LR
-    subgraph INTENT["<b>Spec Layer</b> (fleet_spec.py)"]
-        FLEET_SPEC["<b>FLEET_SPEC</b><br><i>Design Intent</i><br>• Slugs<br>• Default URLs"]
-    end
-    subgraph POLICY["<b>Resolver Layer</b> (fleet_resolver.py)"]
-        RESOLVER["<b>Fleet Resolver</b><br><i>Policy Logic</i><br>• Env Overrides<br>• Docker Context"]
-    end
-    subgraph EXECUTION["<b>Execution Layer</b> (Transport)"]
-        CLI["<b>CLI Orchestrator</b><br>(fleet_orchestrator.py)"]
-        GATEWAY_CLIENT["<b>gateway_client.py</b><br><i>Pure Transport</i>"]
-    end
-    subgraph TESTING["<b>Testing Layer</b> (tests/...)"]
-        TEST_CLIENT["<b>gateway_test_client.py</b>"]
-        INTEG_TESTS["<b>Integration Tests</b><br>(clusters/...)"]
-    end
-    subgraph RUNTIME["<b>Runtime System</b>"]
-        GATEWAY["<b>Sanctuary Gateway</b>"]
-        MCP["<b>Fleet of MCP Servers</b>"]
-    end
-    subgraph OBSERVATION["<b>Observation Layer</b> (Non-Authoritative)"]
-        REGISTRY_JSON["<b>fleet_registry.json</b><br><i>Discovery Manifest</i>"]
-    end
-    FLEET_SPEC -->|intent| RESOLVER
-    RESOLVER -->|resolved endpoints| CLI
-    RESOLVER -->|resolved endpoints| TEST_CLIENT
-    
-    CLI -->|invoke| GATEWAY_CLIENT
-    TEST_CLIENT -->|wrap| GATEWAY_CLIENT
-    TEST_CLIENT --> INTEG_TESTS
-    
-    GATEWAY_CLIENT -->|HTTP / SSE| GATEWAY
-    GATEWAY --> MCP
+![mcp_fleet_resolution_flow](../../../../architecture_diagrams/system/mcp_fleet_resolution_flow.png)
 
-    MCP -->|handshake| GATEWAY
-    GATEWAY -->|observed tools| GATEWAY_CLIENT
-    GATEWAY_CLIENT -->|write only| REGISTRY_JSON
-    MCP -. unreachable .-> GATEWAY
-    GATEWAY -. degraded state .-> REGISTRY_JSON
-```
+*[Source: mcp_fleet_resolution_flow.mmd](../../../../architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
 
 ### 2.3 Component Responsibilities
 
@@ -177,125 +106,17 @@ services:
 
 The following diagram shows how the Learning Loop (Protocol 125) operates through the Gateway:
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant A as 🧠 Cognitive Agent<br>(Claude/Gemini)
-    participant GW as 🌐 MCP Gateway<br>(Port 4444)
-    participant Fleet as 🐳 Fleet of 8<br>(Podman)
-    participant VDB as 📊 Vector DB
-    participant LLM as 🤖 Ollama
+![recursive_learning_gateway_flow](docs/architecture_diagrams/workflows/recursive_learning_gateway_flow.png)
 
-    Note over A: Agent identifies learning opportunity
-    
-    rect rgb(230, 245, 255)
-        Note over A, GW: 1. Tool Discovery
-        A->>GW: GET /sse (Connect)
-        GW-->>A: Available Tools (180+)
-    end
-
-    rect rgb(255, 245, 230)
-        Note over A, Fleet: 2. Knowledge Ingestion
-        A->>GW: cortex_ingest_incremental(doc)
-        GW->>Fleet: Route to cortex:8104
-        Fleet->>VDB: Embed → Store
-        Fleet-->>GW: {doc_id}
-        GW-->>A: Ingestion Complete
-    end
-
-    rect rgb(230, 255, 230)
-        Note over A, LLM: 3. Semantic Verification (P125)
-        A->>GW: cortex_query(topic)
-        GW->>Fleet: Route to cortex:8104
-        Fleet->>VDB: Similarity Search
-        Fleet->>LLM: Augment Response
-        Fleet-->>GW: {score: 0.94}
-        GW-->>A: Echo-Back Verified
-    end
-
-    rect rgb(255, 230, 255)
-        Note over A, Fleet: 4. Chronicle Entry
-        A->>GW: chronicle_create_entry()
-        GW->>Fleet: Route to domain:8105
-        GW-->>A: Learning Loop Complete ✅
-    end
-```
+*[Source: recursive_learning_gateway_flow.mmd](docs/architecture_diagrams/workflows/recursive_learning_gateway_flow.mmd)*
 
 ### 5.2 Cognitive Continuity (P128)
 
 Protocol 128 enforces a "Red Team Gate" and persistent identity via the **Guardian Role**.
 
-```mermaid
----
-config:
-  layout: dagre
-  theme: base
----
-flowchart TB
-    subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
-        direction TB
-        Start["Session Start"] --> Wakeup["MCP: cortex_guardian_wakeup<br>(Verify Semantic HMAC)"]
-        Wakeup --> SeekTruth["Scripts: python3 scripts/cortex_cli.py debrief --hours 24<br>(Tool: cortex_learning_debrief)"]
-        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read Context| SeekTruth
-    end
+![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-    subgraph subGraphSynthesize["II. Intelligence Synthesis"]
-        direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update learning_manifest.json)"]
-    end
-
-    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
-        direction TB
-        GovApproval{"Strategic Approval<br>(HITL Required)"}
-    end
-
-    subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
-        direction TB
-        CaptureAudit["Scripts: python3 scripts/cortex_cli.py snapshot --type audit<br>(Tool: cortex_capture_snapshot)"]
-        Packet["Audit Packet<br>(Git Hash Comparison)"]
-        TechApproval{"Technical Approval<br>(HITL)"}
-    end
-
-    subgraph subGraphSeal["V. The Technical Seal"]
-        direction TB
-        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates learning_package_snapshot.md)"]
-    end
-
-    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
-        direction TB
-        choice{Persistence Type}
-        choice -- Incremental --> Inc["Tool: cortex-persist-soul<br>(Append 1 Record)"]
-        choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
-        
-        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/seal_TIMESTAMP.md"]
-            JSONL_Traces["data/soul_traces.jsonl"]
-        end
-    end
-
-    SeekTruth -- "Carry Context" --> Intelligence
-    Synthesis -- "Verify Reasoning" --> GovApproval
-    
-    GovApproval -- "PASS" --> CaptureAudit
-    CaptureAudit -- "Validate Truth" --> Packet
-    Packet -- "Technical Review" --> TechApproval
-    
-    TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Local Continuity" --> SuccessorSnapshot
-    CaptureSeal -- "Broadcast" --> choice
-    
-    Inc --> JSONL_Traces
-    Inc --> MD_Seal
-    Full --> JSONL_Traces
-    
-    GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
-    TechApproval -- "FAIL: Backtrack" --> SOP
-    SOP -- "Loop Back" --> Start
-
-    style Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
-    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
-    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
-```
+*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ---
 

@@ -1,0 +1,80 @@
+---
+config:
+  theme: base
+---
+%% Name: Chronicle Ecosystem Context
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/chronicle_ecosystem_context.mmd
+%% Description: Living Chronicle entry management context
+
+graph TB
+    subgraph "LLM Assistants"
+        LLM[Gemini/Claude/GPT/etc]
+    end
+   
+    subgraph "MCP Ecosystem"
+        Chronicle[Chronicle MCP Server]
+        Protocol[Protocol MCP Server]
+        ADR[ADR MCP Server]
+        Task[Task MCP Server]
+        Cortex["RAG MCP (Cortex)"]
+        Council["Agent Orchestrator MCP (Council)"]
+    end
+   
+    subgraph "Shared Infrastructure"
+        Git[Git Operations<br/>P101 Compliance]
+        Safety[Safety Validator]
+        Schema[Schema Validator]
+    end
+   
+    subgraph "Project Sanctuary"
+        ChronicleDir[00_CHRONICLE/]
+        ProtocolDir[01_PROTOCOLS/]
+        ADRDir[ADRs/]
+        TaskDir[TASKS/]
+        CortexDir[mnemonic_cortex/]
+        CouncilDir[council_orchestrator/]
+    end
+   
+    LLM -->|MCP Protocol| Chronicle
+    LLM -->|MCP Protocol| Protocol
+    LLM -->|MCP Protocol| ADR
+    LLM -->|MCP Protocol| Task
+    LLM -->|MCP Protocol| Cortex
+    LLM -->|MCP Protocol| Council
+   
+    Chronicle --> Git
+    Protocol --> Git
+    ADR --> Git
+    Task --> Git
+   
+    Chronicle --> Safety
+    Protocol --> Safety
+    ADR --> Safety
+    Task --> Safety
+    Cortex --> Safety
+    Council --> Safety
+   
+    Chronicle --> Schema
+    Protocol --> Schema
+    ADR --> Schema
+    Task --> Schema
+    Cortex --> Schema
+    Council --> Schema
+   
+    Chronicle --> ChronicleDir
+    Protocol --> ProtocolDir
+    ADR --> ADRDir
+    Task --> TaskDir
+    Cortex --> CortexDir
+    Council --> CouncilDir
+   
+    style Chronicle fill:#e8f5e8
+    style Protocol fill:#e8f5e8
+    style ADR fill:#e8f5e8
+    style Task fill:#e8f5e8
+    style Cortex fill:#fff3e0
+    style Council fill:#f3e5f5
+    style Git fill:#ffcccc
+    style Safety fill:#ffcccc
+    style Schema fill:#ffcccc

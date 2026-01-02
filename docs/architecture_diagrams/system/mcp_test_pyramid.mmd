@@ -1,0 +1,18 @@
+%% Name: MCP Server Test Pyramid
+%% Source: tests/README.md
+%% Location: docs/architecture_diagrams/system/mcp_test_pyramid.mmd
+%% Description: Architecture diagram showing the three layers of the MCP testing strategy (E2E, Integration, Unit).
+
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ff6b6b', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#edf2f4'}}}%%
+flowchart TB
+ subgraph MCP_Test_Pyramid["Model Context Protocol (MCP) Server Test Pyramid"]
+        E2E["🔝 Layer 3: E2E Tests<br>Full MCP Protocol Lifecycle<br>Base: BaseE2ETest<br>Deps: All 12 MCP servers<br>Speed: Slow (min)"]
+        INT["🔗 Layer 2: Integration Tests<br>Server ↔ Local Services<br>Base: BaseIntegrationTest<br>Deps: ChromaDB, Ollama, Git<br>Speed: Medium (sec)"]
+        UNIT["⚡ Layer 1: Unit Tests<br>Atomic Logic in Isolation<br>Base: None (isolated)<br>Deps: None (mocked)<br>Speed: Fast (ms)"]
+  end
+    E2E --> INT
+    INT --> UNIT
+
+    style E2E fill:#ff6b6b,stroke:#333,stroke-width:2px,color:#fff
+    style INT fill:#ffd93d,stroke:#333,stroke-width:2px
+    style UNIT fill:#6bcb77,stroke:#333,stroke-width:2px

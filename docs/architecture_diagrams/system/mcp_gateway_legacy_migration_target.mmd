@@ -1,0 +1,75 @@
+---
+config:
+  theme: base
+---
+%% Name: Gateway Legacy Migration Target
+%% Source: docs/mcp_servers/gateway/research/07_implementation_plan.md
+%% Location: docs/architecture_diagrams/system/mcp_gateway_legacy_migration_target.mmd
+%% Description: Architecture diagram showing the target state for migrating the legacy 12-server fleet to the MCP Gateway.
+
+graph TB
+    subgraph "User Environment"
+        User[User]
+        Claude[Claude Desktop]
+    end
+    
+    subgraph "Podman Container Network - sanctuary-internal"
+        Gateway[Sanctuary Gateway<br/>sanctuary-broker-mcp<br/>Port: stdio]
+        
+        subgraph "Backend MCP Servers"
+            RAG[RAG Cortex MCP<br/>rag-cortex-mcp<br/>Port: 8001]
+            Task[Task MCP<br/>task-mcp<br/>Port: 8002]
+            Git[Git Workflow MCP<br/>git-workflow-mcp<br/>Port: 8003]
+            ADR[ADR MCP<br/>adr-mcp<br/>Port: 8004]
+            Chronicle[Chronicle MCP<br/>chronicle-mcp<br/>Port: 8005]
+            Protocol[Protocol MCP<br/>protocol-mcp<br/>Port: 8006]
+            Council[Council MCP<br/>council-mcp<br/>Port: 8007]
+            Persona[Agent Persona MCP<br/>persona-mcp<br/>Port: 8008]
+            Forge[Forge LLM MCP<br/>forge-llm-mcp<br/>Port: 8009]
+            Config[Config MCP<br/>config-mcp<br/>Port: 8010]
+            Code[Code MCP<br/>code-mcp<br/>Port: 8011]
+            Orch[Orchestrator MCP<br/>orchestrator-mcp<br/>Port: 8012]
+        end
+        
+        subgraph "Gateway Components"
+            Registry[(SQLite Registry<br/>registry.db)]
+            Cache[(Response Cache<br/>In-Memory)]
+            AuditLog[(Audit Log<br/>audit.db)]
+        end
+        
+        subgraph "External Services"
+            Chroma[ChromaDB<br/>chroma-mcp<br/>Port: 8000]
+            Ollama[Ollama<br/>ollama_model_mcp<br/>Port: 11434]
+        end
+    end
+    
+    User -->|Prompts| Claude
+    Claude -->|stdio| Gateway
+    
+    Gateway -->|HTTP| RAG
+    Gateway -->|HTTP| Task
+    Gateway -->|HTTP| Git
+    Gateway -->|HTTP| ADR
+    Gateway -->|HTTP| Chronicle
+    Gateway -->|HTTP| Protocol
+    Gateway -->|HTTP| Council
+    Gateway -->|HTTP| Persona
+    Gateway -->|HTTP| Forge
+    Gateway -->|HTTP| Config
+    Gateway -->|HTTP| Code
+    Gateway -->|HTTP| Orch
+    
+    Gateway -.->|Query| Registry
+    Gateway -.->|Cache| Cache
+    Gateway -.->|Log| AuditLog
+    
+    RAG -->|Query| Chroma
+    RAG -->|Embeddings| Ollama
+    Forge -->|Inference| Ollama
+    
+    style Gateway fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    style Registry fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    style Cache fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    style AuditLog fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+    style Chroma fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    style Ollama fill:#795548,stroke:#4E342E,stroke-width:2px,color:#fff

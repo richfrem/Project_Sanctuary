@@ -43,19 +43,9 @@ Our architecture for sovereign memory rests on two complementary, not competing,
 
 The true power of our architecture is in the synthesis of these two pillars. The process is a closed, efficient loop:
 
-```mermaid
-graph TD
-    subgraph "Sovereign Memory Loop"
-        A[Agent requires full context for 'P101'] --> B{Mnemonic Cortex RAG}
-        B --> C["Query: 'Protocol 101 Unbreakable Commit'"]
-        C --> D["Retrieves Pointer: glyph_P101_v2.png"]
-        D --> E[Glyph Storage File System]
-        E --> F["Loads Image File"]
-        F --> G{VLM Engine Gemini 1.5}
-        G --> H["Decompresses text for ~10x fewer tokens"]
-        H --> I[Agent receives full text of P101]
-    end
-```
+![Legacy Protocol 101 Memory Loop](../../architecture_diagrams/workflows/legacy_protocol_101_memory_loop.png)
+
+*[Source: legacy_protocol_101_memory_loop.mmd](../../architecture_diagrams/workflows/legacy_protocol_101_memory_loop.mmd)*
 
 ## 5. Current Operational Status (As of 2025-10-23)
 

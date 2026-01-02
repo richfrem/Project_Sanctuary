@@ -1,0 +1,58 @@
+---
+config:
+  theme: base
+---
+%% Name: Task MCP Server Architecture
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/task_mcp_server.mmd
+%% Description: Architecture and tool flow for Task MCP Server
+
+graph LR
+    subgraph "Task MCP Tools"
+        A[create_task]
+        B[update_task_status]
+        C[update_task]
+        D[get_task]
+        E[list_tasks]
+        F[search_tasks]
+    end
+    
+    subgraph "Operations"
+        G[Validate Schema]
+        H[Status Management]
+        I[Generate Markdown]
+        J[Git Commit + P101]
+    end
+    
+    subgraph "Storage"
+        K[TASKS/backlog/]
+        L[TASKS/active/]
+        M[TASKS/completed/]
+    end
+    
+    A --> G
+    B --> G
+    C --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    J --> L
+    J --> M
+    
+    D --> K
+    D --> L
+    D --> M
+    E --> K
+    E --> L
+    E --> M
+    F --> K
+    F --> L
+    F --> M
+    
+    style A fill:#ccffcc
+    style B fill:#ffffcc
+    style C fill:#ffffcc
+    style D fill:#ccccff
+    style E fill:#ccccff
+    style F fill:#ccccff

@@ -64,26 +64,9 @@ Per [ADR 066](./066_standardize_on_fastmcp_for_all_mcp_server_implementations.md
 
 This ADR proposes `@sse_tool()` as the **SSE-transport counterpart** to FastMCP's `@mcp.tool()`:
 
-```mermaid
-flowchart LR
-    subgraph STDIO["STDIO Transport (FastMCP)"]
-        MCP["@mcp.tool()"]
-    end
-    
-    subgraph SSE["SSE Transport (SSEServer)"]
-        SSE_T["@sse_tool()"]
-    end
-    
-    subgraph Logic["Shared Logic Layer"]
-        Ops["operations.py"]
-    end
-    
-    MCP --> Ops
-    SSE_T --> Ops
-    
-    style MCP fill:#dfd,stroke:#333
-    style SSE_T fill:#bbf,stroke:#333
-```
+![MCP Tool Decorator Pattern](../../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.png)
+
+*[Source: mcp_tool_decorator_pattern.mmd](../../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.mmd)*
 
 **Key Alignment Points:**
 - Both decorators attach metadata at function definition site

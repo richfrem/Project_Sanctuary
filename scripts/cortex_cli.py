@@ -52,6 +52,8 @@ def main():
     ingest_parser = subparsers.add_parser("ingest", help="Perform full ingestion")
     ingest_parser.add_argument("--no-purge", action="store_false", dest="purge", help="Skip purging DB")
     ingest_parser.add_argument("--dirs", nargs="+", help="Specific directories to ingest")
+    ingest_parser.add_argument("--incremental", action="store_true", help="Incremental ingestion mode")
+    ingest_parser.add_argument("--hours", type=int, default=24, help="Hours to look back (for incremental mode)")
 
     # Command: snapshot
     snapshot_parser = subparsers.add_parser("snapshot", help="Capture a Protocol 128 snapshot")
@@ -102,13 +104,56 @@ def main():
     ops = CortexOperations(project_root=args.root)
 
     if args.command == "ingest":
-        print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
-        res = ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
-        if res.status == "success":
-            print(f"✅ Success: {res.documents_processed} docs, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
+        if args.incremental:
+            print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
+            # Find files modified in the last N hours
+            import time
+            from datetime import timedelta
+            
+            cutoff_time = time.time() - (args.hours * 3600)
+            modified_files = []
+            
+            # Walk project root to find modified files
+            # Exclude known heavy/irrelevant dirs
+            exclude_dirs = {'.git', '.vector_data', '__pycache__', 'node_modules', 'venv', 'env', 
+                            'dataset_package', 'docs/site', 'training_logs'}
+            
+            for path in ops.project_root.rglob('*'):
+                if path.is_file():
+                    # Check exclusions
+                    if any(part in exclude_dirs for part in path.parts):
+                        continue
+                        
+                    # Check extension
+                    if path.suffix not in ['.md', '.py', '.js', '.ts', '.txt', '.json']:
+                        continue
+                        
+                    # Check mtime
+                    if path.stat().st_mtime > cutoff_time:
+                        modified_files.append(str(path))
+            
+            if not modified_files:
+                print(f"⚠️ No files modified in the last {args.hours} hours. Skipping ingestion.")
+                sys.exit(0)
+                
+            print(f"📄 Found {len(modified_files)} modified files.")
+            res = ops.ingest_incremental(file_paths=modified_files)
+            
+            if res.status == "success":
+                print(f"✅ Success: {res.documents_added} added, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
+            else:
+                print(f"❌ Error: {res.error}")
+                sys.exit(1)
+        
         else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+            # Full Ingestion
+            print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
+            res = ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
+            if res.status == "success":
+                print(f"✅ Success: {res.documents_processed} docs, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
+            else:
+                print(f"❌ Error: {res.error}")
+                sys.exit(1)
 
     elif args.command == "snapshot":
         manifest = []

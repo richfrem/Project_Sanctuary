@@ -8,47 +8,9 @@
 A polymorphic AI orchestration system that enables sovereign control over multiple cognitive engines through a unified interface. **Version 11.0 introduces Complete Modular Architecture with Sovereign Concurrency, enabling clean separation of concerns and maintainable codebase.**
 ## 🏗️ Architecture Overview
 
-```mermaid
-graph TB
-    subgraph "Entry Point"
-        M[main.py] --> A[app.py]
-    end
+![Legacy Polymorphic Orchestrator (v11)](../../architecture_diagrams/system/legacy_polymorphic_orchestrator_v11.png)
 
-    subgraph "Core Orchestrator"
-        A --> SM[engines/monitor.py]
-        A --> PA[council/agent.py]
-        A --> DE[engines/ollama_engine.py]
-    end
-
-    subgraph "Engine Selection"
-        SM --> T1P[engines/gemini_engine.py]
-        SM --> T1S[engines/openai_engine.py]
-        SM --> T2S[engines/ollama_engine.py]
-    end
-
-    subgraph "Modular Components"
-        A --> MEM[memory/cortex.py]
-        A --> EVT[events.py]
-        A --> REG[regulator.py]
-        A --> OPT[optical.py]
-        A --> PKT[packets/schema.py]
-    end
-
-    subgraph "Data Flow"
-        CMD[command.json] --> A
-        A --> LOG[logs/orchestrator.log]
-        A --> PKT
-    end
-
-    subgraph "Configuration"
-        CFG[schemas/engine_config.json]
-        SCH[schemas/round_packet_schema.json]
-    end
-
-    style A fill:#f3e5f5
-    style SM fill:#e8f5e8
-    style CFG fill:#fff3e0
-```
+*[Source: legacy_polymorphic_orchestrator_v11.mmd](../../architecture_diagrams/system/legacy_polymorphic_orchestrator_v11.mmd)*
 
 ## 🏗️ Modular Architecture Benefits
 
@@ -506,26 +468,9 @@ The orchestrator integrates a comprehensive **Sovereign Memory Architecture** th
 
 The true power emerges from synthesis:
 
-```mermaid
-graph TD
-    subgraph "Sovereign Memory Loop"
-        A[Agent needs full context] --> B{Mnemonic Cortex}
-        B --> C["Query: 'Protocol 101 Unbreakable Commit'"]
-        C --> D["Retrieves Pointer: glyph_P101_v2.png"]
-        D --> E[Glyph Storage File System]
-        E --> F["Loads Image File"]
-        F --> G{VLM Engine Gemini 1.5}
-        G --> H["Decompresses text for ~10x fewer tokens"]
-        H --> I[Agent receives full text of P101]
-    end
+![Legacy Protocol 101 Memory Loop](../../architecture_diagrams/workflows/legacy_protocol_101_memory_loop.png)
 
-    subgraph "Ingestion Pipeline"
-        J[New Knowledge] --> K[Text-to-Vector<br/>RAG Database]
-        J --> L[Text-to-Image<br/>Optical Anvil]
-        K --> M[Fast Retrieval Index]
-        L --> N[Compressed Storage]
-    end
-```
+*[Source: legacy_protocol_101_memory_loop.mmd](../../architecture_diagrams/workflows/legacy_protocol_101_memory_loop.mmd)*
 
 **Strategic Doctrine**: "RAG finds, Glyphs deliver" - Use vector search to locate content, optical compression to ingest it efficiently.
 

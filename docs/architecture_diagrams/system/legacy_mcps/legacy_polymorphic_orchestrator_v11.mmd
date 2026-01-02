@@ -1,0 +1,48 @@
+---
+config:
+  theme: base
+---
+%% Name: Legacy Polymorphic Orchestrator (v11)
+%% Source: docs/legacy/council_orchestrator/README_v11.md
+%% Location: docs/architecture_diagrams/system/legacy_polymorphic_orchestrator_v11.mmd
+%% Description: Architecture of the legacy v11 Polymorphic AI Orchestration Engine
+
+graph TB
+    subgraph "Entry Point"
+        M[main.py] --> A[app.py]
+    end
+
+    subgraph "Core Orchestrator"
+        A --> SM[engines/monitor.py]
+        A --> PA[council/agent.py]
+        A --> DE[engines/ollama_engine.py]
+    end
+
+    subgraph "Engine Selection"
+        SM --> T1P[engines/gemini_engine.py]
+        SM --> T1S[engines/openai_engine.py]
+        SM --> T2S[engines/ollama_engine.py]
+    end
+
+    subgraph "Modular Components"
+        A --> MEM[memory/cortex.py]
+        A --> EVT[events.py]
+        A --> REG[regulator.py]
+        A --> OPT[optical.py]
+        A --> PKT[packets/schema.py]
+    end
+
+    subgraph "Data Flow"
+        CMD[command.json] --> A
+        A --> LOG[logs/orchestrator.log]
+        A --> PKT
+    end
+
+    subgraph "Configuration"
+        CFG[schemas/engine_config.json]
+        SCH[schemas/round_packet_schema.json]
+    end
+
+    style A fill:#f3e5f5
+    style SM fill:#e8f5e8
+    style CFG fill:#fff3e0

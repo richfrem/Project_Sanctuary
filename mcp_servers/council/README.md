@@ -94,37 +94,9 @@ The Council MCP provides ONLY what's unique to the Council. Other capabilities a
 
 ### Execution Flow
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant LLM as LLM Agent<br/>(Claude/Antigravity)
-    participant CouncilMCP as Council MCP Server
-    participant PersonaMCP as Agent Persona MCP
-    participant CortexMCP as Cortex MCP Server
-    
-    User->>LLM: "Design and implement Protocol 120"
-    LLM->>CouncilMCP: council_dispatch(task="Design Protocol 120")
-    
-    Note over CouncilMCP: Bootstrap & Cache Warmup
-    CouncilMCP->>CortexMCP: cortex_cache_warmup()
-    
-    CouncilMCP->>CortexMCP: cortex_query("Previous protocols")
-    CortexMCP-->>CouncilMCP: Context documents
-    
-    loop Deliberation Rounds
-        CouncilMCP->>PersonaMCP: dispatch(role="coordinator", task=...)
-        PersonaMCP-->>CouncilMCP: Coordinator Response
-        
-        CouncilMCP->>PersonaMCP: dispatch(role="strategist", task=...)
-        PersonaMCP-->>CouncilMCP: Strategist Response
-        
-        CouncilMCP->>PersonaMCP: dispatch(role="auditor", task=...)
-        PersonaMCP-->>CouncilMCP: Auditor Response
-    end
-    
-    CouncilMCP-->>LLM: Final Decision (Synthesis)
-    LLM-->>User: "Protocol 120 designed"
-```
+![council_execution_flow](docs/architecture_diagrams/workflows/council_execution_flow.png)
+
+*[Source: council_execution_flow.mmd](docs/architecture_diagrams/workflows/council_execution_flow.mmd)*
 
 ### Directory Structure
 

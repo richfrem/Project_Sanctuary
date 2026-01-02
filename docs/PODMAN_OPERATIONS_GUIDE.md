@@ -31,28 +31,9 @@ Project Sanctuary operates a consolidated **Fleet of 8** containers, managed as 
 
 The fleet has critical dependencies that affect startup order:
 
-```mermaid
-flowchart TB
-    subgraph Backends["Backend Services (Start First)"]
-        VDB["sanctuary_vector_db<br/>:8110<br/>⏱️ ~10-15s startup"]
-        Ollama["sanctuary_ollama<br/>:11434<br/>⏱️ ~30-60s (pulls model)"]
-    end
-    
-    subgraph Independent["Independent Services (No Dependencies)"]
-        Utils["sanctuary_utils :8100"]
-        FS["sanctuary_filesystem :8101"]
-        Net["sanctuary_network :8102"]
-        Git["sanctuary_git :8103"]
-        Domain["sanctuary_domain :8105"]
-    end
-    
-    subgraph Dependent["Dependent Services (Start Last)"]
-        Cortex["sanctuary_cortex<br/>:8104<br/>⚠️ Requires backends"]
-    end
-    
-    VDB --> Cortex
-    Ollama --> Cortex
-```
+![podman_fleet_dependency_graph](architecture_diagrams/system/podman_fleet_dependency_graph.png)
+
+*[Source: podman_fleet_dependency_graph.mmd](architecture_diagrams/system/podman_fleet_dependency_graph.mmd)*
 
 ### Why Order Matters
 
@@ -181,6 +162,26 @@ make exec TARGET=sanctuary_git
 ## Manual Podman Commands
 
 For granular control without the Makefile:
+
+### 3. Usage: Targeted Rebuilds (Preferred)
+
+To save time, **only rebuild the specific service you modified**:
+
+```bash
+# Rebuild ONLY the cortex service
+podman compose -f docker-compose.yml up -d --build sanctuary_cortex
+
+# Rebuild ONLY the filesystem service
+podman compose -f docker-compose.yml up -d --build sanctuary_filesystem
+```
+
+### 4. Build & Run (Full Fleet - Slow)
+
+Use this ONLY if you have modified shared core libraries or the gateway itself.
+
+```bash
+podman compose -f docker-compose.yml up -d --build
+```
 
 ### Start Individual Services (Sequential Order)
 
@@ -359,24 +360,9 @@ The fleet is registered with the IBM ContextForge Gateway via the **3-Layer Decl
 
 ### How Registration Works
 
-```mermaid
-flowchart LR
-    subgraph SPEC["Layer 1: fleet_spec.py"]
-        Intent["FLEET_SPEC<br/>• 6 Cluster Slugs<br/>• Default URLs"]
-    end
-    
-    subgraph RESOLVER["Layer 2: fleet_resolver.py"]
-        Policy["Resolver<br/>• ENV overrides<br/>• Docker context"]
-    end
-    
-    subgraph EXECUTION["Layer 3: fleet_setup.py"]
-        Setup["Master Orchestrator<br/>• Clean old servers<br/>• Register new<br/>• Discover tools<br/>• Write registry"]
-    end
-    
-    Intent --> Policy --> Setup
-    Setup --> Gateway["IBM Gateway<br/>:4444"]
-    Gateway --> Registry["fleet_registry.json<br/>(OUTPUT ONLY)"]
-```
+![mcp_fleet_resolution_flow](architecture_diagrams/system/mcp_fleet_resolution_flow.png)
+
+*[Source: mcp_fleet_resolution_flow.mmd](architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
 
 ### Fleet Spec (Canonical Definitions)
 

@@ -1,0 +1,89 @@
+---
+config:
+  theme: base
+---
+%% Name: CI/CD Pipeline Sequence
+%% Source: docs/cicd/overview.md
+%% Location: docs/architecture_diagrams/workflows/cicd_pipeline_sequence.mmd
+%% Description: End-to-end CI/CD workflow from local development to main branch merge
+
+sequenceDiagram
+    autonumber
+    participant Dev as Developer
+    participant Local as Local Workstation
+    participant FeatBranch as Remote Feature Branch
+    participant PR as Pull Request
+    participant CI as GitHub Actions (CI)
+    participant MainBranch as Remote Main Branch
+
+    Note over Dev, Local: 1. Feature Start
+    Dev->>Local: git checkout -b feature/new-feature
+
+    Note over Dev, Local: 2. Development Loop
+    loop Coding & Local Testing
+        Dev->>Local: Write Code
+        Dev->>Local: npm run lint (Check Style)
+        Dev->>Local: npm run test:unit (Verify Logic)
+        Dev->>Local: (Optional) Manual Security Scan
+    end
+
+    Note over Dev, Local: 3. Commit & Push (Defense in Depth)
+    Dev->>Local: git add .
+    Local->>Local: Pre-commit Hook (Secret Detection)
+    Note right of Local: 🛑 Blocking Gate:<br/>- No .env files<br/>- No hardcoded secrets<br/>- Blocks commit if violations found
+
+    Dev->>Local: git commit -m "feat: add new feature"
+
+    rect rgb(255, 255, 240)
+        Note right of Local: ⚠️ Post-Commit Hook (Informational):<br/>- Auto-runs 'npm audit' (High Severity)<br/>- Checks local Dependabot status<br/>- Warns Dev immediately (does not block)
+        Local-->>Dev: Display "Security Health Report"
+    end
+
+    Dev->>Local: git push -u origin feature/new-feature
+    Local->>FeatBranch: Create/Update Branch
+
+    Note over Dev, PR: 4. Pull Request
+    Dev->>PR: Create PR (Feature -> Main)
+
+    Note over PR, CI: 5. Automated Checks
+    PR->>CI: Trigger "CI Pipeline" Workflow
+
+    par CI Pipeline
+        rect rgb(240, 248, 255)
+            Note right of CI: CI Execution
+            CI->>CI: Checkout Code
+            CI->>CI: Install Dependencies
+            CI->>CI: Linting & Tests
+            CI->>CI: Build Frontend
+        end
+        CI-->>PR: Report Status (✅/❌)
+    and Security Checks
+        rect rgb(255, 240, 245)
+            Note right of PR: GitHub Security
+            PR->>PR: Dependabot Scan
+            PR->>PR: CodeQL Analysis
+            PR->>PR: Secret Scanning
+        end
+        PR-->>Dev: Report Vulnerabilities (in PR Interface)
+    end
+
+    alt Checks Fail
+        PR-->>Dev: Notify Failure
+        Dev->>Local: Fix Code & Push Again
+        Local->>FeatBranch: Update Branch
+        FeatBranch->>PR: Update PR
+        PR->>CI: Re-trigger CI
+    else Checks Pass
+        Note over Dev, MainBranch: 6. Review & Merge
+        Dev->>PR: Request Review
+        PR->>MainBranch: Merge PR to 'main'
+
+        Note over MainBranch, FeatBranch: 7. Cleanup
+        MainBranch->>FeatBranch: Delete Remote Branch
+    end
+
+    Note over Dev, Local: 8. Local Cleanup
+    Dev->>Local: git checkout main
+    Dev->>Local: git pull origin main
+    Local->>MainBranch: Fetch Latest
+    Dev->>Local: git branch -d feature/new-feature

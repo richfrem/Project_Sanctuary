@@ -1,0 +1,54 @@
+---
+config:
+  theme: base
+---
+%% Name: Config MCP Server Architecture
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/config_mcp_server.mmd
+%% Description: Architecture and tool flow for Config MCP Server
+
+graph LR
+    subgraph "Config MCP Tools"
+        A[request_config_change]
+        B[apply_config_change]
+        C[set_secret]
+        D[get_secret]
+        E[get_config]
+        F[list_config_files]
+    end
+
+    subgraph "Operations"
+        G[Two-Step Approval]
+        H[Risk Assessment]
+        I[Automatic Backup]
+        J[Vault Encryption]
+    end
+
+    subgraph "Storage"
+        K[.env]
+        L[.agent/config/]
+        M[Secret Vault]
+    end
+
+    A --> H
+    H --> G
+    B --> G
+    G --> I
+    I --> K
+    I --> L
+
+    C --> J
+    J --> M
+    D --> M
+
+    E --> K
+    E --> L
+    F --> K
+    F --> L
+
+    style A fill:#ffcccc
+    style B fill:#ff9999
+    style C fill:#ffcccc
+    style D fill:#ccccff
+    style E fill:#ccccff
+    style F fill:#ccccff
