@@ -85,6 +85,7 @@
     "always_exclude_files": [
         ".DS_Store",
         ".env",
+        ".env.bak",
         ".env (from backup)",
         ".gitignore",
         "Modelfile",

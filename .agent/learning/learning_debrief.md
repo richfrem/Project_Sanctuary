@@ -1,5 +1,5 @@
 # [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)
-**Scan Time:** 2026-01-02 07:55:51 (Window: 24h)
+**Scan Time:** 2026-01-02 08:32:51 (Window: 24h)
 **Strategic Status:** ✅ Successor Context v4.0 Active
 
 > [!IMPORTANT]
@@ -23,113 +23,9 @@
 ## 🧬 II. Tactical Evidence (Current Git Deltas)
 The following code-level changes were detected SINCE the last session/commit:
 ```text
- .agent/learning/cognitive_primer.md                |     47 +-
- .../learning_audit_followup_prompt.md              |    110 -
- .../learning_audit/learning_audit_manifest.json    |     13 +-
- .../learning_audit/learning_audit_packet.md        |  90396 +-----------
- .../learning_audit/learning_audit_prompts.md       |    218 +-
- .../learning_audit/learning_audit_round3_prompt.md |    104 -
- .../learning_audit/learning_audit_round4_prompt.md |     94 -
- .../manifest_learning_audit_1767075046.json        |     23 -
- .agent/learning/learning_debrief.md                |  86357 +----------
- .agent/learning/learning_manifest.json             |     17 +-
- .agent/learning/learning_package_snapshot.md       | 135105 +-----------------
- .agent/learning/manifest_seal_1767034783.json      |     64 -
- .agent/learning/manifest_seal_1767073489.json      |     66 -
- .agent/learning/manifest_seal_1767075331.json      |     66 -
- .agent/rules/cognitive_continuity_policy.md        |      8 +
- .../121_Canonical_Knowledge_Synthesis_Loop.md      |     78 +-
- 01_PROTOCOLS/122_Dynamic_Server_Binding.md         |     38 +-
- 02_CORE_LOGIC/107_VIRTUAL_COGNITIVE_CORE.py        |     71 -
- 02_CORE_LOGIC/109_COGNITIVE_DATA_MAPPER.py         |    143 -
- 02_CORE_LOGIC/110_COGNITIVE_GENOME_AUDITOR.py      |    109 -
- 02_CORE_LOGIC/cognitive_genome_draft.jsonl         |      4 -
- ADRs/060_gateway_integration_patterns.md           |     38 +-
- ...tralized_registry_for_fleet_of_8_mcp_servers.md |     58 +-
- ...n_fastmcp_for_all_mcp_server_implementations.md |     75 +-
- ADRs/068_decide_on_approach_for_sse_bridge.md      |     37 +-
- ADRs/071_protocol_128_cognitive_continuity.md      |     74 +-
- ...on_dependency_management_across_environments.md |     18 +-
- ADRs/076_sse_tool_metadata_decorator_pattern.md    |     23 +-
- ..._source_verification_for_autonomous_learning.md |      6 +
- ADRs/082_harmonized_content_processing.md          |     59 +-
- .../round3_responses.md                            |     20 +-
- .../soul_persistence/pathology_heuristics.md       |     10 +-
- README.md                                          |    427 +-
- README_HF.md                                       |    448 +-
- STAGING_HF_SOUL/README.md                          |    427 +-
- STAGING_HF_SOUL/data/soul_traces.jsonl             |   2431 +-
- TASKS/done/027_mcp_ecosystem_strategy.md           |      4 +
- .../056_Harden_Self_Evolving_Loop_Validation.md    |      4 +
- .../086B_verify_multi_round_deliberation_logic.md  |      4 +
- TASKS/todo/154_mermaid_rationalization.md          |     45 -
- .../gardener_protocol37_experiment/README.md       |     30 +-
- WORK_IN_PROGRESS/guardian_boot_digest.md           |    426 +-
- cortex_freeze.txt                                  |    184 -
- cortex_tools_discovery.txt                         |     15 -
- debug_content_processor.py                         |     59 -
- docs/PODMAN_OPERATIONS_GUIDE.md                    |     46 +-
- docs/cicd/overview.md                              |     89 +-
- .../OPERATION_OPTICAL_ANVIL_BLUEPRINT.md           |     16 +-
- .../council_orchestrator/README_GUARDIAN_WAKEUP.md |     96 +-
- docs/legacy/council_orchestrator/README_v11.md     |     67 +-
- .../council_orchestrator/howto-commit-command.md   |     13 +-
- .../orchestrator_architecture_package.md           |     67 +-
- docs/mcp/TIER_4_DEPLOYMENT_MANUAL.md               |     55 +-
- .../architecture/advanced_rag_architecture.mmd     |     91 -
- .../architecture/basic_rag_architecture.mmd        |     37 -
- .../architecture/domain_architecture_v1.mmd        |     93 -
- .../architecture/domain_architecture_v2.mmd        |    117 -
- .../architecture/domain_architecture_v3.mmd        |    138 -
- .../architecture/domain_architecture_v4.mmd        |    147 -
- .../diagrams/architecture/gateway_deployment.mmd   |     22 -
- .../diagrams/architecture/gateway_fleet_of_8.mmd   |     22 -
- .../architecture/gateway_testing_architecture.mmd  |     50 -
- .../architecture/mcp_layer_architecture.mmd        |     31 -
- .../diagrams/architecture/system_overview_v2.mmd   |     50 -
- .../architecture/diagrams/class/adr_mcp_class.mmd  |     48 -
- .../diagrams/class/agent_persona_mcp_class.mmd     |     57 -
- .../diagrams/class/chronicle_mcp_class.mmd         |     47 -
- .../architecture/diagrams/class/code_mcp_class.mmd |     67 -
- .../diagrams/class/config_mcp_class.mmd            |     63 -
- .../diagrams/class/fine_tuning_mcp_forge_class.mmd |     92 -
- .../diagrams/class/git_workflow_mcp_class.mmd      |     48 -
- .../diagrams/class/mcp_ecosystem_class.mmd         |    231 -
- .../diagrams/class/protocol_mcp_class.mmd          |     49 -
- .../diagrams/class/rag_mcp_cortex_class.mmd        |     54 -
- .../architecture/diagrams/class/task_mcp_class.mmd |     50 -
- .../transport/dual_transport_architecture.mmd      |     65 -
- .../transport/transport_production_path.mmd        |     26 -
- .../diagrams/transport/transport_testing_path.mmd  |     31 -
- .../diagrams/workflows/orchestration_workflows.md  |    152 -
- .../workflows/p128_hardened_learning_loop.mmd      |     69 -
- .../diagrams/workflows/phoenix_forge_pipeline.mmd  |     93 -
- .../workflows/rag_advanced_architecture.mmd        |     91 -
- .../diagrams/workflows/rag_basic_architecture.mmd  |     37 -
- .../diagrams/workflows/request_flow_middleware.mmd |     41 -
- .../architecture/gateway_architecture.md           |    140 +-
- .../architecture/mcp_ecosystem_architecture_v3.md  |    471 +-
- .../mcp_servers/council/orchestration_workflows.md |     49 +-
- docs/mcp_servers/gateway/README.md                 |     29 +-
- .../gateway/architecture/ARCHITECTURE.md           |    203 +-
- .../gateway/guides/protocol_128_guide.md           |     72 +-
- .../operations/GATEWAY_VERIFICATION_MATRIX.md      |    140 +-
- .../gateway/research/07_implementation_plan.md     |     71 +-
- .../research/09_gateway_operations_reference.md    |     50 +-
- .../operations/mcp_operations_inventory.md         |     17 +-
- docs/mcp_servers/research/RAG_STRATEGIES.md        |    241 +-
- .../research/test_forge_mcp_and_RAG_mcp.md         |     73 +-
- forge/OPERATION_PHOENIX_FORGE/README.md            |     98 +-
- mcp_servers/council/README.md                      |     34 +-
- .../gateway/clusters/sanctuary_git/README.md       |     17 +-
- .../gateway/clusters/sanctuary_git/SAFETY.md       |     17 +-
- mcp_servers/git/README.md                          |     19 +-
- mcp_servers/git/SAFETY.md                          |     17 +-
- mcp_servers/lib/exclusion_manifest.json            |      1 +
- mcp_servers/rag_cortex/operations.py               |     58 +-
- tests/README.md                                    |     22 +-
- tests/mcp_servers/gateway/README.md                |     55 +-
- 106 files changed, 6832 insertions(+), 315773 deletions(-)
+ .agent/learning/learning_debrief.md     | 123 +++-----------------------------
+ mcp_servers/lib/exclusion_manifest.json |   1 +
+ 2 files changed, 10 insertions(+), 114 deletions(-)
 
 ```
 
@@ -142,19 +38,19 @@ The following code-level changes were detected SINCE the last session/commit:
 
 
 ### Recently Modified High-Signal Files:
-* **Most Recent Commit:** 134bfabd feat: homogenize hf readme links and deploy cortex updates
+* **Most Recent Commit:** 30d2dd24 Merge remote-tracking branch 'origin/main' into feat/docs-readme-updates
 * **Recent Files Modified (48h):**
+    * `01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md` (30m ago) → Protocol 125: Autonomous AI Learning System Architecture [+2/-2]
+    * `mcp_servers/gateway/README.md` (31m ago) → Sanctuary Gateway Module [+1/-1]
     * `mcp_servers/rag_cortex/operations.py` (12h ago) [+2/-2]
-    * `mcp_servers/lib/hf_utils.py` (12h ago) [+2/-2]
-    * `mcp_servers/lib/debug_content_processor.py` (13h ago) [+59/-0]
-    * `mcp_servers/git/SAFETY.md` (13h ago) → Git Workflow MCP - Safety Features Documentation [+3/-14]
-    * `mcp_servers/git/README.md` (13h ago) → Git Workflow MCP Server [+3/-16]
+    * `mcp_servers/lib/hf_utils.py` (13h ago) [+2/-2]
+    * `mcp_servers/lib/debug_content_processor.py` (14h ago) [+59/-0]
 
 ## 🏗️ IV. Architecture Alignment (The Successor Relay)
 ![Recursive Learning Flowchart](docs/architecture_diagrams/workflows/recursive_learning_flowchart.png)
 
 ## 📦 V. Strategic Context (Last Learning Package Snapshot)
-**Status:** ✅ Loaded Learning Package Snapshot from 12.0h ago.
+**Status:** ✅ Loaded Learning Package Snapshot from 12.7h ago.
 
 > **Note:** Full snapshot content is NOT embedded to prevent recursive bloat.
 > See: `.agent/learning/learning_package_snapshot.md`
