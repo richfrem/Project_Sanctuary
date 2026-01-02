@@ -23,7 +23,7 @@
 
 ## Objective
 
-Implement Task MCP server for workflow management in `TASKS/`.
+Implement Task MCP server for workflow management in `tasks/`.
 
 ---
 
@@ -62,12 +62,12 @@ search_tasks(query)
 - [x] Podman machine running
 - [x] Test container working (http://localhost:5003)
 - [x] Created ADR #034 (Podman containerization decision)
-- [x] Created `docs/mcp/prerequisites.md`
+- [x] Created `docs/architecture/mcp/prerequisites.md`
 - [x] Created `mcp_servers/task/README.md`
 
 ### ✅ Phase 2: Core Modules
 - [x] Created `mcp_servers/task/__init__.py`
-- [x] Created `models.py` (TaskSchema, FileOperationResult, enums)
+- [x] Created `models.py` (taskschema, FileOperationResult, enums)
 - [x] Created `validator.py` (schema validation, uniqueness checks, dependency validation)
 - [x] Created `operations.py` (all 6 file operations)
 
@@ -105,7 +105,7 @@ search_tasks(query)
 
 ## Files Created
 - `mcp_servers/task/__init__.py`
-- `mcp_servers/task/models.py` (TaskSchema, FileOperationResult, enums)
+- `mcp_servers/task/models.py` (taskschema, FileOperationResult, enums)
 - `mcp_servers/task/validator.py` (schema validation, dependency checks)
 - `mcp_servers/task/operations.py` (500+ lines, all 6 file operations)
 - `mcp_servers/task/server.py` (MCP protocol, all 6 tools)
@@ -115,7 +115,7 @@ search_tasks(query)
 - `tests/mcp_servers/task/test_operations.py` (14 unit tests)
 - `tests/mcp_servers/task/test_e2e_workflow.py` (end-to-end workflow)
 - `ADRs/034_containerize_mcp_servers_with_podman.md`
-- `docs/mcp/prerequisites.md`
+- `docs/architecture/mcp/prerequisites.md`
 - `tests/podman/` (test container)
 
 ## Current Status

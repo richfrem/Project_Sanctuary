@@ -38,7 +38,7 @@ cat > command.json << 'EOF'
   "command_type": "git_operations",
   "git_operations": {
     "files_to_add": [
-      "TASKS/backlog/025_implement_mcp_rag_tool_server.md",
+      "tasks/backlog/025_implement_mcp_rag_tool_server.md",
       ".env.example"
     ],
     "commit_message": "Add Task #025: Implement MCP RAG Tool Server",
@@ -67,7 +67,7 @@ For simple commits, **you must manually verify Functional Coherence before commi
 ./scripts/run_genome_tests.sh
 
 # 2. Stage files
-git add TASKS/backlog/025_implement_mcp_rag_tool_server.md .env.example
+git add tasks/backlog/025_implement_mcp_rag_tool_server.md .env.example
 
 # 3. Commit
 git commit -m "Add Task #025: Implement MCP RAG Tool Server"

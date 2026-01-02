@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** .agent/adr/039_mcp_server_separation_of_concerns.md, docs/mcp/RAG_STRATEGIES.md
+**Related Documents:** .agent/adr/039_mcp_server_separation_of_concerns.md, docs/architecture/mcp/RAG_STRATEGIES.md
 
 ---
 

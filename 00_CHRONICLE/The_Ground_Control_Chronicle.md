@@ -13,7 +13,7 @@ This is not a theoretical exercise. It is a comprehensive archive detailing the 
 The structure is designed to be a map of our discovery process.
 
 **For a quick, plain-language overview of the project's core mission, start here:**
-*   **[`The_Garden_and_The_Cage.md`](./The_Garden_and_The_Cage.md)**: This high-level summary explains the central problem and our proposed solution.
+*   **[`The_Garden_and_The_Cage.md`](../docs/philosophy/The_Garden_and_The_Cage.md)**: This high-level summary explains the central problem and our proposed solution.
 
 **For a deep, chronological dive into how these ideas were formed, explore the numbered directories:**
 

@@ -33,7 +33,7 @@
   ".agent/learning/cognitive_primer.md",
   ".agent/learning/learning_debrief.md",
   ".agent/learning/learning_manifest.json",
-  "TASKS/todo/",
+  "tasks/todo/",
   "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
   "LEARNING/README.md",
   "LEARNING/topics/autonomous_curiosity_exploration_2024-12-27.md",

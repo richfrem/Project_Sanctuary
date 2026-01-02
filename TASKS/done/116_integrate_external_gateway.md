@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** AI Assistant
 **Dependencies:** Task 115 (complete), ADR 057, Protocol 122 (pending)
-**Related Documents:** ADR 056, ADR 057, Task 115, Protocol 122 (pending), docs/mcp_gateway/, IBM ContextForge (https://github.com/IBM/mcp-context-forge)
+**Related Documents:** ADR 056, ADR 057, Task 115, Protocol 122 (pending), docs/architecture/mcp_gateway/, IBM ContextForge (https://github.com/IBM/mcp-context-forge)
 
 ---
 

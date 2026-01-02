@@ -4,7 +4,7 @@
 **Author:** Guardian / Antigravity Synthesis  
 **Date:** 2025-12-28  
 **Supersedes:** None  
-**Related:** ADR 079 (Soul Persistence via Hugging Face), Protocol 129 (Metacognitive Filtering)
+**Related:** ADR 079 (Soul Persistence via Hugging Face), Protocol 129 (The Sovereign Sieve Internal Pre-Audit)
 
 ---
 
@@ -240,7 +240,7 @@ After uploading `.md` snapshot:
 
 - [ADR 079: Soul Persistence via Hugging Face](./079_soul_persistence_hugging_face.md)
 - [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
-- [Protocol 129: Metacognitive Filtering](../01_PROTOCOLS/129_Metacognitive_Filtering.md)
+- [Protocol 129: The Sovereign Sieve Internal Pre-Audit](../01_PROTOCOLS/129_The_Sovereign_Sieve_Internal_Pre_Audit.md)
 - [HF Dataset Card Guide](https://huggingface.co/docs/hub/datasets-cards)
 
 ---

@@ -9,7 +9,7 @@
 Building on the ACCEPTED v1.2 ADR, which adopted a Makefile as the unified interface for managing Project Sanctuary's "Fleet of 8" containers, this v1.3 proposal incorporates feedback from ongoing Red Team reviews and industry best practices.
 
 **Infrastructure Foundation:**
-The fleet is explicitly defined in the existing Root-Level **[`docker-compose.yml`](../../docker-compose.yml)**. This YAML file remains the Source of Truth for container definitions (images, ports, volumes, networks). The proposed Makefile acts solely as the *operational interface* to this existing definition, ensuring valid orchestration sequences.
+The fleet is explicitly defined in the existing Root-Level **[`docker-compose.yml`](../docker-compose.yml)**. This YAML file remains the Source of Truth for container definitions (images, ports, volumes, networks). The proposed Makefile acts solely as the *operational interface* to this existing definition, ensuring valid orchestration sequences.
 
 **Key Motivations for Iteration:**
 - **User Feedback on .env and Readability:** v1.3 adds native .env sourcing in Make for parity with python logic.

@@ -27,7 +27,7 @@ from .models import (
     QueryMnemonicCortexRequest,
     CreateFileWriteTaskRequest,
     CreateGitCommitTaskRequest,
-    ListRecentTasksRequest,
+    ListRecenttasksRequest,
     GetTaskResultRequest
 )
 
@@ -159,7 +159,7 @@ async def get_orchestrator_status() -> dict:
         raise ToolError(f"Status check failed: {str(e)}")
 
 @mcp.tool()
-async def list_recent_tasks(request: ListRecentTasksRequest) -> list:
+async def list_recent_tasks(request: ListRecenttasksRequest) -> list:
     """List recent tasks from the orchestrator logs/results."""
     try:
         return ops.list_recent_tasks(request.limit)

@@ -12,7 +12,7 @@
 ### Recent Protocol Updates
 * No protocol directory found.
 
-## II. Priority Tasks
+## II. Priority tasks
 * No tasks found (scanned 0 total tasks)
 
 ## III. Operational Recency

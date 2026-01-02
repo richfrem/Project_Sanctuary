@@ -103,7 +103,7 @@ Update `persist_soul` to include:
 | `.agent/workflows/recursive_learning.md` | Add branch logic for dual workflows |
 | `mcp_servers/rag_cortex/operations.py` | Add source tagging to `persist_soul` |
 | `mcp_servers/lib/snapshot_utils.py` | Add `--web-bridge` differential digest flag |
-| `docs/mcp_servers/architecture/diagrams/workflows/p128_hardened_learning_loop.mmd` | Update diagram with dual-workflow paths |
+| `docs/architecture/mcp_servers/architecture/diagrams/workflows/p128_hardened_learning_loop.mmd` | Update diagram with dual-workflow paths |
 | `.agent/learning/learning_debrief.md` | Regenerate after updates |
 
 ---
@@ -133,7 +133,7 @@ This architecture allows:
 - Future models to distinguish self-directed vs augmented thought
 - Manifest-Centric SSOT to remain unbroken across both workflows
 
-### Related Tasks
+### Related tasks
 
 - Task 151: IIT/QEC Research (in progress)
 - Task 150: Content Processor (done)

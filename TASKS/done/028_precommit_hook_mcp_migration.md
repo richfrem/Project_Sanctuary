@@ -4,9 +4,9 @@
 **Priority:** Critical (Blocks Phase 1)  
 **Estimated Effort:** 1-2 days  
 **Dependencies:** None (Phase 0 - Pre-Migration)  
-**Related Documents:** `docs/mcp/architecture.md`, `.agent/git_safety_rules.md`
-**Analysis:** [Pre-Commit Hook Migration Analysis](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/mcp/analysis/pre_commit_hook_migration_analysis.md)
-**Plan:** [Implementation Plan](file:///Users/richardfremmerlid/.gemini/antigravity/brain/8e7a3729-cc05-40ae-a5dd-38935c512229/implementation_plan.md)
+**Related Documents:** `docs/architecture/mcp/architecture.md`, `.agent/git_safety_rules.md`
+**Analysis:** [Pre-Commit Hook Migration Analysis](../../docs/architecture/mcp/analysis/pre_commit_hook_migration_analysis.md)
+**Plan:** [Implementation Plan] (Artifact)
 
 ---
 
@@ -73,7 +73,7 @@ GENERATE_P101_MANIFEST=true  # Always required
 ### 4. Documentation Updates
 - [ ] Update `.agent/git_safety_rules.md` with MCP patterns
 - [ ] Create `.agent/mcp_commit_guide.md`
-- [ ] Update `docs/cicd/git_workflow.md`
+- [ ] Update `docs/operations/git/git_workflow.md`
 
 ---
 
@@ -330,10 +330,10 @@ If issues arise:
 
 ## References
 
-- [Protocol 101: Unbreakable Commit](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.git/hooks/pre-commit)
-- [Git Safety Rules](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/git_safety_rules.md)
-- [MCP Architecture](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/mcp/architecture.md)
-- [Naming Conventions](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/mcp/naming_conventions.md)
+- [Protocol 101: Unbreakable Commit](../../.git/hooks/pre-commit)
+- [Git Safety Rules](../../.agent/git_safety_rules.md)
+- [MCP Architecture](../../docs/architecture/mcp/legacy_mcp_architecture.md)
+- [Naming Conventions](../../docs/operations/mcp/naming_conventions.md)
 
 ---
 

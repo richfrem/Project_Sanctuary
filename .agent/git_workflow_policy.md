@@ -64,7 +64,7 @@ git diff --cached --name-status | grep "^D"
    - Protected by git safety rules
    - Critical for AI workflows
 
-4. **`TASKS/done/`** - Completed tasks
+4. **`tasks/done/`** - Completed tasks
    - Archive of finished work
    - Keep for historical reference
 
@@ -75,7 +75,7 @@ git diff --cached --name-status | grep "^D"
    - Must verify no active work
    - Create archive before deletion
 
-2. **`TASKS/backlog/`**
+2. **`tasks/backlog/`**
    - Can move to `done/` or archive
    - Don't delete, relocate
 

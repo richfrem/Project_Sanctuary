@@ -153,9 +153,9 @@ else:
 
 ## Architecture
 
-![mcp_sse_stdio_transport](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.png)
+![mcp_sse_stdio_transport](../docs/architecture_diagrams/transport/mcp_sse_stdio_transport.png)
 
-*[Source: mcp_sse_stdio_transport.mmd](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
+*[Source: mcp_sse_stdio_transport.mmd](../docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
 
 ---
 

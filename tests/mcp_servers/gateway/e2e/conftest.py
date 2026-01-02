@@ -191,7 +191,7 @@ E2E_ARTIFACT_PATTERNS = {
     "PROTOCOLS": [
         "*e2e*test*.md", "*E2E*Test*.md"
     ],
-    "TASKS": [
+    "tasks": [
         "*/???_e2e*test*.md", "*/???_E2E*Test*.md"
     ],
     ".": [

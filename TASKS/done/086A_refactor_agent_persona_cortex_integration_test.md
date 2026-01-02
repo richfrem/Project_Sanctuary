@@ -32,7 +32,7 @@ The original integration test (`tests/integration/test_council_orchestrator_with
 - ⚠️ Tests currently deselected by pytest config
 - ⏭️ Need to enable in pytest.ini
 
-## Tasks
+## tasks
 
 ### Phase 1: Enable Tests ✅ DONE
 - [x] Create new integration test file
@@ -121,7 +121,7 @@ cortex_ops.query → ChromaDB → returns results
 - ✅ Council MCP implementation
 - ⏭️ pytest.ini configuration update
 
-## Related Tasks
+## Related tasks
 
 - Task #077: Council MCP Server (DONE)
 - Task #078: Agent Persona MCP & Orchestrator Refactoring (DONE)

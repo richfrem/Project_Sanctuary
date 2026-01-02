@@ -1,3 +1,6 @@
+> [!WARNING]
+> **ARCHIVED**: This protocol is superseded or deprecated. Verified by Refactor Agent.
+
 # 17_The_Augmented_Scribe_Protocol.md
 
 ## The Augmented Scribe Protocol: A Framework for AI-Assisted Genome Maintenance - v1.0

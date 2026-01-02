@@ -29,7 +29,7 @@ Update Tier 2 (Integration) and Tier 3 (E2E) test scripts to reliably clean up t
 2. **Gateway E2E Tests** (`tests/mcp_servers/gateway/clusters/*/e2e/test_e2e_*.py`):
    - Added `cleanup_e2e_artifacts` session-scoped fixture in `gateway/e2e/conftest.py`
    - Auto-cleans artifacts matching patterns: `*e2e*test*.md`, `*E2E*Test*.md`, `e2e_*.txt`
-   - Cleans: ADRs, Chronicle entries, Protocols, Tasks, test files in project root
+   - Cleans: ADRs, Chronicle entries, Protocols, tasks, test files in project root
 
 3. **Cleanup Utilities** (`tests/mcp_servers/base/cleanup_fixtures.py`):
    - Created `CleanupRegistry` class for explicit file registration

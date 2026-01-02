@@ -80,9 +80,9 @@ This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3
 - 🔄 **Workflow Enforcement:** Enforces `Start -> Feature -> PR -> Merge -> Finish` cycle.
 
 ### Workflow
-![git_workflow_sequence](docs/architecture_diagrams/workflows/git_workflow_sequence.png)
+![git_workflow_sequence](../../../../docs/architecture_diagrams/workflows/git_workflow_sequence.png)
 
-*[Source: git_workflow_sequence.mmd](docs/architecture_diagrams/workflows/git_workflow_sequence.mmd)*
+*[Source: git_workflow_sequence.mmd](../../../../docs/architecture_diagrams/workflows/git_workflow_sequence.mmd)*
 
 ## Dependencies
 

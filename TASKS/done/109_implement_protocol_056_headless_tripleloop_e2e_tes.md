@@ -4,7 +4,7 @@
 **Priority:** Critical
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** TASKS/108_E2E_Testing_Plan.md
+**Related Documents:** tasks/108_E2E_Testing_Plan.md
 
 ---
 

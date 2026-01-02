@@ -1,6 +1,7 @@
 # AI System Startup Cache Architecture Evolution
 
-**Status:** accepted
+**Status:** Superseded
+**Superseded By:** ADR 071 (Protocol 128)
 **Date:** 2025-11-15
 **Deciders:** AI Council (System Initialization Process v2.0 implementation)
 **Technical Story:** Improve system startup performance and operational clarity

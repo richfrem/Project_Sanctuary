@@ -25,7 +25,7 @@ from mcp_servers.lib.logging_utils import setup_mcp_logging
 
 logger = setup_mcp_logging(__name__)
 
-from .models import TaskSchema, TaskStatus, TaskPriority, FileOperationResult
+from .models import taskschema, taskstatus, TaskPriority, FileOperationResult
 from .validator import TaskValidator
 
 
@@ -39,16 +39,16 @@ class TaskOperations:
     #----------------------------------------------------------------------
     def __init__(self, project_root: Path):
         self.project_root = Path(project_root)
-        self.tasks_dir = self.project_root / "TASKS"
+        self.tasks_dir = self.project_root / "tasks"
         self.validator = TaskValidator(self.project_root)
         
         # Status to directory mapping
         self.status_dirs = {
-            TaskStatus.BACKLOG: self.tasks_dir / "backlog",
-            TaskStatus.TODO: self.tasks_dir / "todo",
-            TaskStatus.IN_PROGRESS: self.tasks_dir / "in-progress",
-            TaskStatus.COMPLETE: self.tasks_dir / "done",
-            TaskStatus.BLOCKED: self.tasks_dir / "in-progress"  # Blocked tasks stay in in-progress
+            taskstatus.BACKLOG: self.tasks_dir / "backlog",
+            taskstatus.TODO: self.tasks_dir / "todo",
+            taskstatus.IN_PROGRESS: self.tasks_dir / "in-progress",
+            taskstatus.COMPLETE: self.tasks_dir / "done",
+            taskstatus.BLOCKED: self.tasks_dir / "in-progress"  # Blocked tasks stay in in-progress
         }
     
     #----------------------------------------------------------------------
@@ -75,7 +75,7 @@ class TaskOperations:
         deliverables: List[str],
         acceptance_criteria: List[str],
         priority: TaskPriority = TaskPriority.MEDIUM,
-        status: TaskStatus = TaskStatus.BACKLOG,
+        status: taskstatus = taskstatus.BACKLOG,
         lead: str = "Unassigned",
         dependencies: Optional[str] = None,
         related_documents: Optional[str] = None,
@@ -99,7 +99,7 @@ class TaskOperations:
             )
         
         # Create task schema
-        task = TaskSchema(
+        task = taskschema(
             number=task_number,
             title=title,
             status=status,
@@ -246,7 +246,7 @@ class TaskOperations:
     def update_task_status(
         self,
         task_number: int,
-        new_status: TaskStatus,
+        new_status: taskstatus,
         notes: Optional[str] = None
     ) -> FileOperationResult:
         # Find current task
@@ -350,7 +350,7 @@ class TaskOperations:
     #----------------------------------------------------------------------
     def list_tasks(
         self,
-        status: Optional[TaskStatus] = None,
+        status: Optional[taskstatus] = None,
         priority: Optional[TaskPriority] = None
     ) -> List[Dict]:
         tasks = []
@@ -434,12 +434,12 @@ class TaskOperations:
     # _generate_task_markdown
     # Purpose: Generate markdown content from task schema
     # Args:
-    #   task: The TaskSchema object
+    #   task: The taskschema object
     # Returns: Formatted markdown string
     #----------------------------------------------------------------------
-    def _generate_task_markdown(self, task: TaskSchema) -> str:
+    def _generate_task_markdown(self, task: taskschema) -> str:
         # Handle both enum and string values for status/priority
-        status_value = task.status.value if isinstance(task.status, TaskStatus) else task.status
+        status_value = task.status.value if isinstance(task.status, taskstatus) else task.status
         priority_value = task.priority.value if isinstance(task.priority, TaskPriority) else task.priority
         
         lines = [
@@ -490,14 +490,14 @@ class TaskOperations:
     # Args:
     #   content: Markdown content string
     #   task_number: Task number
-    # Returns: TaskSchema object
+    # Returns: taskschema object
     #----------------------------------------------------------------------
-    def _parse_task_markdown(self, content: str, task_number: int) -> TaskSchema:
+    def _parse_task_markdown(self, content: str, task_number: int) -> taskschema:
         lines = content.split("\n")
         
         # Extract metadata
         title = ""
-        status = TaskStatus.BACKLOG
+        status = taskstatus.BACKLOG
         priority = TaskPriority.MEDIUM
         lead = "Unassigned"
         dependencies = "None"
@@ -519,10 +519,10 @@ class TaskOperations:
                 status_str = line.split("**Status:**")[1].strip()
                 # Case-insensitive lookup
                 try:
-                    status = TaskStatus(status_str.lower())
+                    status = taskstatus(status_str.lower())
                 except ValueError:
                     # Try to match by value (case-insensitive)
-                    for s in TaskStatus:
+                    for s in taskstatus:
                         if s.value.lower() == status_str.lower():
                             status = s
                             break
@@ -566,7 +566,7 @@ class TaskOperations:
             elif current_section == "notes" and line.strip():
                 notes += line + "\n"
         
-        return TaskSchema(
+        return taskschema(
             number=task_number,
             title=title,
             status=status,

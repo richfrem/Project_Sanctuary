@@ -15,7 +15,7 @@ To create a sovereign scaffold that provides the next available sequential task 
 ## 2. Deliverables
 
 1.  A new Python script is created at `scripts/get_next_task_number.py`.
-2.  The script scans all `TASKS` subdirectories, finds the highest existing number, and prints the next number in the sequence.
+2.  The script scans all `tasks` subdirectories, finds the highest existing number, and prints the next number in the sequence.
 3.  Protocol 115 is updated to mandate the use of this script for all new task creation.
 
 ## 3. Acceptance Criteria

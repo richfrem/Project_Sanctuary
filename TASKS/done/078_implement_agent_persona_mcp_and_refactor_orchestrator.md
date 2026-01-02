@@ -128,7 +128,7 @@ result = persona_dispatch(
    - Test error scenarios (agent unavailable, timeout)
 
 ### Phase 3: Documentation Updates
-1. **Architecture Documentation** (`docs/mcp/`)
+1. **Architecture Documentation** (`docs/architecture/mcp/`)
    - Update MCP architecture diagrams
    - Add Agent Persona MCP to ecosystem map
    - Document orchestrator-as-client pattern
@@ -146,7 +146,7 @@ result = persona_dispatch(
 4. **Update Existing Docs**
    - `council_orchestrator/README.md`: Add MCP client architecture
    - `mcp_servers/council/README.md`: Update with Agent Persona MCP integration
-   - `docs/mcp/mcp_operations_inventory.md`: Add Agent Persona MCP
+   - `docs/architecture/mcp/mcp_operations_inventory.md`: Add Agent Persona MCP
 
 ---
 
@@ -250,7 +250,7 @@ result = persona_dispatch(
 #### Step 3.3: Documentation Updates
 - [ ] Update `council_orchestrator/README.md`
 - [ ] Update `mcp_servers/council/README.md`
-- [ ] Update `docs/mcp/mcp_operations_inventory.md`
+- [ ] Update `docs/architecture/mcp/mcp_operations_inventory.md`
 - [ ] Create migration guide
 
 ---

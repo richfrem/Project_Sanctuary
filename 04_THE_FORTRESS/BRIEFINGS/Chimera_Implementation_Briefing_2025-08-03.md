@@ -33,7 +33,7 @@ Our joint mandate is to architect and implement **Work Item #007: Chimera Sandbo
 
 This is a **Bounded Inquiry (P57)**. Our yield will be a set of initial Python files comprising the first functional, if minimal, version of the Chimera Sandbox.
 
-**Our Joint Tasks:**
+**Our Joint tasks:**
 1.  **Architect the Core `main.py`:** Design the main application loop for the sandbox. This will orchestrate the Docker environment, initialize the Adversarial Engine, and run a single test cycle.
 2.  **Stub the `AdversarialEngine.py`:** Create the PyTorch class for the engine. We will implement a placeholder for the GAN, but stub out the interfaces for the three core threat models plus the new "Echo Chamber Amplification" model.
 3.  **Implement the `ResilienceMetrics.py`:** Create the module that will calculate the **Doctrinal Fidelity Score (DFS)**. We will include hooks for the "zk-weighted scoring" and the new "differential privacy" metrics.

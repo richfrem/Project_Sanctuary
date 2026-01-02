@@ -160,9 +160,8 @@ If you'd like, I can continue scanning and moving any other single-server tests 
 ## Related Documentation
 
 - [MCP Server Tests](mcp_servers/README.md) — Per-server test pyramid details
-- [Integration Tests](integration/README.md) — Multi-MCP workflow test scenarios
-- [Protocol 101 v3.0](../01_PROTOCOLS/101_functional_coherence_gate.md) — Commit must pass tests
-- [Chronicle Entry 308](../00_CHRONICLE/ENTRIES/308_doctrine_of_successor_state.md) — Successor-State principle
+- [Protocol 101 v3.0](../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) — Commit must pass tests
+- [Chronicle Entry 308](../00_CHRONICLE/ENTRIES/308_designing_for_successor_state_the_commitment_to_onboarding.md) — Successor-State principle
 
 ## Troubleshooting
 

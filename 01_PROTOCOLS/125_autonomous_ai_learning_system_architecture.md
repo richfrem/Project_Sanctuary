@@ -425,7 +425,7 @@ related_ids:
   - "vector_db_chromadb_v2"
 ---
 
-> ⚠️ **DEPRECATED:** This guide covers ChromaDB v1.0. See [ChromaDB v2.0 Guide](./chromadb_v2.md) for current information.
+> ⚠️ **DEPRECATED:** This guide covers ChromaDB v1.0. See [ChromaDB v2.0 Guide](#) for current information.
 
 # [Original Content]
 ```
@@ -442,8 +442,8 @@ related_ids:
 **Date Identified:** 2025-12-14
 
 **Conflicting Sources:**
-- [Source A](link) claims 10k docs/sec
-- [Source B](link) claims 50k docs/sec
+- [Source A](#) claims 10k docs/sec
+- [Source B](#) claims 50k docs/sec
 
 **Resolution:**
 - Source B used different hardware (GPU vs CPU)
@@ -459,9 +459,9 @@ related_ids:
 **Date Identified:** 2025-12-14
 
 **Conflicting Sources:**
-- [Source A](link) recommends FastAPI
-- [Source B](link) recommends Django
-- [Source C](link) recommends Flask
+- [Source A](#) recommends FastAPI
+- [Source B](#) recommends Django
+- [Source C](#) recommends Flask
 
 **Resolution Attempts:**
 - Attempted synthesis: "Use case dependent"
@@ -508,9 +508,9 @@ Every topic folder MUST contain:
 
 ## Related Work and References
 
-### Foundational Tasks
+### Foundational tasks
 - **Task 056:** Harden Self-Evolving Loop Validation (Strategic Crucible Loop validation)
-  - `TASKS/done/056_Harden_Self_Evolving_Loop_Validation.md`
+  - `tasks/done/056_Harden_Self_Evolving_Loop_Validation.md`
 
 ### Chronicle Documentation (Autonomous Learning Journey)
 The original Strategic Crucible Loop validation produced a series of Chronicle entries documenting Claude's autonomous learning experience and philosophical reflections:
@@ -544,14 +544,14 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - **Claude 4.5 Learning Loops:** Original framework for autonomous learning
 
 ### Technical Documentation
-- `docs/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
-- `docs/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
+- `docs/operations/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
+- `docs/operations/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
 
 ### MCP Server Documentation
-- **Code MCP:** `docs/mcp/servers/code/README.md`
-- **RAG Cortex MCP:** `docs/mcp/servers/rag_cortex/README.md`
-- **Chronicle MCP:** `docs/mcp/servers/chronicle/README.md`
-- **Protocol MCP:** `docs/mcp/servers/protocol/README.md`
+- **Code MCP:** `docs/architecture/mcp/servers/code/README.md`
+- **RAG Cortex MCP:** `docs/architecture/mcp/servers/rag_cortex/README.md`
+- **Chronicle MCP:** `docs/architecture/mcp/servers/chronicle/README.md`
+- **Protocol MCP:** `docs/architecture/mcp/servers/protocol/README.md`
 
 ### Utilities
 - **Code Snapshot Tool:** `scripts/capture_code_snapshot.py` - Share learning artifacts with web-based LLMs

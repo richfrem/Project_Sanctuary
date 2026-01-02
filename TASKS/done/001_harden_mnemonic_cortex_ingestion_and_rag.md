@@ -8,7 +8,7 @@
 ## Objective
 Diagnose and repair the catastrophic failure of the Mnemonic Cortex ingestion and query pipeline. Ensure the system is fully operational and its integrity is verifiable.
 
-## Sub-Tasks
+## Sub-tasks
 - [x] Diagnose root cause of ingestion failures (batch size, serialization, imports).
 - [x] Reforge `ingest.py` with disciplined batch processing and correct serialization.
 - [x] Reforge `vector_db_service.py` to align with the persistent, serialized architecture.

@@ -16,13 +16,13 @@ Operationalize the session initialization framework (Protocol 118) to prevent Gi
 
 1. Canonical Protocol 118 document
 2. Updated `README.md`
-3. Updated `docs/mcp/prerequisites.md`
-4. Updated `docs/mcp/QUICKSTART.md`
+3. Updated `docs/architecture/mcp/prerequisites.md`
+4. Updated `docs/architecture/mcp/QUICKSTART.md`
 
 ## 3. Acceptance Criteria
 
 - Protocol 118 is marked CANONICAL in 01_PROTOCOLS/
-- README.md and docs/mcp/prerequisites.md explicitly mandate agent session initialization steps
+- README.md and docs/architecture/mcp/prerequisites.md explicitly mandate agent session initialization steps
 - Agents demonstrate correct git_start_feature usage before content creation
 - Cache usage for foundational knowledge is verified
 

@@ -12,7 +12,7 @@ Project Sanctuary is transitioning to a Gateway-orchestrated architecture ("Flee
 
 ## Requirements
 
-1. **Total Mirror Symmetry**: The physical path of a component (e.g., the `utils` cluster) must be identical across `mcp_servers/`, `tests/mcp_servers/`, and `docs/mcp_servers/`.
+1. **Total Mirror Symmetry**: The physical path of a component (e.g., the `utils` cluster) must be identical across `mcp_servers/`, `tests/mcp_servers/`, and `docs/architecture/mcp_servers/`.
 2. **Preemptive Deconfliction**: Prevent naming collisions (e.g., `git`) between the Legacy 12 and the Fleet of 8.
 3. **Legacy Integrity**: While documentation indices may be renamed for consistency, the legacy server code remains functionally untouched.
 
@@ -48,7 +48,7 @@ We will implement the **Total Mirror Architecture**. This structure creates perf
 │       │   └── sanctuary_domain/
 │       └── gateway_test_client.py
 │
-└── docs/mcp_servers/ (Documentation Mirror)
+└── docs/architecture/mcp_servers/ (Documentation Mirror)
     ├── adr/ (Legacy Doc - Peers with mcp_servers/adr/)
     ├── git/ (Legacy Doc)
     └── gateway/
@@ -58,7 +58,7 @@ We will implement the **Total Mirror Architecture**. This structure creates perf
 ```
 
 ### Implementation Details:
-1. **Directory Consolidation**: `docs/mcp/` and `docs/mcp_gateway/` are consolidated into `docs/mcp_servers/` ensuring the documentation root matches the code root.
+1. **Directory Consolidation**: `docs/architecture/mcp/` and `docs/architecture/mcp_gateway/` are consolidated into `docs/architecture/mcp_servers/` ensuring the documentation root matches the code root.
 2. **Cluster Prefixing**: Fleet clusters that share names with legacy servers (e.g., `git`) will use the `sanctuary-` prefix in the directory name to avoid Python import collisions and mental ambiguity.
 3. **Shared Utility Location**: `tests/mcp_servers/gateway/gateway_test_client.py` serves as the central engine for all cluster bridge tests.
 

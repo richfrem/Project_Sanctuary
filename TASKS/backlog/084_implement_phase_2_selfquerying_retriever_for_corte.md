@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** docs/mcp/cortex_evolution.md, docs/mcp/RAG_STRATEGIES.md, ARCHIVE/mnemonic_cortex/app/services/llm_service.py
+**Related Documents:** docs/architecture/mcp/cortex_evolution.md, docs/architecture/mcp/RAG_STRATEGIES.md, ARCHIVE/mnemonic_cortex/app/services/llm_service.py
 
 ---
 
@@ -32,4 +32,4 @@ Implement Phase 2 of Cortex evolution (Self-Querying Retriever) to enable LLM-po
 
 ## Notes
 
-Reference implementation in ARCHIVE/mnemonic_cortex/app/services/llm_service.py after archival. This is Phase 2 of the Cortex evolution plan (see docs/mcp/cortex_evolution.md). Requires LLM integration for query structuring and JSON output parsing.
+Reference implementation in ARCHIVE/mnemonic_cortex/app/services/llm_service.py after archival. This is Phase 2 of the Cortex evolution plan (see docs/architecture/mcp/cortex_evolution.md). Requires LLM integration for query structuring and JSON output parsing.

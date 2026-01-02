@@ -71,7 +71,7 @@ During the migration from `mnemonic_cortex/` to `mcp_servers.rag_cortex/`, some 
 
 Searched for "RAG DB" in all Cortex MCP files - no results found.
 
-## Tasks
+## tasks
 
 ### Phase 1: Investigation
 - [ ] Verify if `mnemonic_cortex/` directory exists
@@ -159,7 +159,7 @@ scope = query_data.get("scope", "cortex:index")
 - ⏭️ Verification of legacy directory status
 - ⏭️ Decision on backward compatibility strategy
 
-## Related Tasks
+## Related tasks
 
 - Task #086: Post-Migration Validation (IN PROGRESS)
 - Task #086A: Integration Test Refactoring (IN PROGRESS)

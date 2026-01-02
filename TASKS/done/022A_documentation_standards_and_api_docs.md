@@ -17,7 +17,7 @@ Establish documentation standards for the MCP ecosystem, create templates for MC
 
 ## Deliverables
 
-1. Create `docs/mcp/DOCUMENTATION_STANDARDS.md`
+1. Create `docs/architecture/mcp/DOCUMENTATION_STANDARDS.md`
 2. Create MCP documentation templates:
    - MCP Server README template (with Operations Table)
    - MCP Tool Docstring template
@@ -28,7 +28,7 @@ Establish documentation standards for the MCP ecosystem, create templates for MC
 
 ## Acceptance Criteria
 
-- [x] `docs/mcp/DOCUMENTATION_STANDARDS.md` created with clear guidelines for MCPs
+- [x] `docs/architecture/mcp/DOCUMENTATION_STANDARDS.md` created with clear guidelines for MCPs
 - [x] MCP Server README template created and applied to at least 1 server as example
 - [x] Docstring standards defined and verified across core MCPs (Council, Cortex, Agent Persona)
 - [x] `mcp_operations_inventory.md` structure finalized and documented

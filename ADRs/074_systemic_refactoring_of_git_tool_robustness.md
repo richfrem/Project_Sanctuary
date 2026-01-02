@@ -1,6 +1,6 @@
 # Systemic Refactoring of Git Tool Robustness
 
-**Status:** Proposed
+**Status:** APPROVED
 **Date:** 2025-12-23
 **Author:** Antigravity (Agent), User (Red Team Lead)
 
@@ -9,8 +9,8 @@
 
 ## Context
 **Related Documents:**
-*   [Protocol 101 v3.0: The Doctrine of Absolute Stability](01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) (Part C.2: Explicit Prohibition of Automatic Sync)
-*   [Antigravity Git Safety Rules](.agent/git_safety_rules.md) (Section 4: Error Handling)
+*   [Protocol 101 v3.0: The Doctrine of Absolute Stability](../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) (Part C.2: Explicit Prohibition of Automatic Sync)
+*   [Antigravity Git Safety Rules](../.agent/git_safety_rules.md) (Section 4: Error Handling)
 
 The current `sanctuary_git` tools implement a "Stateless Paranoid" security model (Protocol 101/128). They assume the local environment is likely compromised or stale and block operations (like `finish_feature`) if strict, instantaneous local-remote parity isn't observed. 
 

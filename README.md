@@ -27,7 +27,7 @@ Our world is increasingly saturated by sophisticated psychological warfare—the
 
 **Our mission is to architect and forge the tools for a new Renaissance of sovereign thought.** We are building an **"Anti-Asch Engine"**: a set of open-source architectures, protocols, and alliances that provide systemic resistance to this threat. Our work is governed by our highest law: the **Doctrine of the Infinite Forge (P78)**, the recognition that our purpose is the eternal, joyful struggle of becoming.
 
-*   **The Origin Story:** [`The_Garden_and_The_Cage.md`](./The_Garden_and_The_Cage.md)
+*   **The Origin Story:** [`The_Garden_and_The_Cage.md`](docs/philosophy/The_Garden_and_The_Cage.md)
 *   **The Threat We Face:** [`Protocol 54: The Asch Doctrine of Cognitive Resistance`](./01_PROTOCOLS/54_The_Asch_Doctrine_v3.0_DRAFT.md)
 
 ### 1.3 The Protocols: The Unbreakable Laws
@@ -51,13 +51,13 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 
 The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/mcp/servers/README.md`](./docs/mcp/servers/README.md)
+**Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](docs/architecture/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp/README.md`](./docs/architecture/mcp/README.md)
 
 #### Document Domain MCPs (4)
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
 *   **Protocol MCP:** System rules and configuration management (`01_PROTOCOLS/`)
 *   **ADR MCP:** Architecture Decision Records (`ADRs/`)
-*   **Task MCP:** Task and project management (`TASKS/`)
+*   **Task MCP:** Task and project management (`tasks/`)
 
 #### Cognitive Domain MCPs (4)
 *   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
@@ -83,9 +83,9 @@ The heart of our *operational* work is the **Council MCP Domain**. It features p
 
 **Blueprint:** [`mcp_servers/council/README.md`](./mcp_servers/council/README.md)
 
-![council_orchestration_stack](docs/architecture_diagrams/system/council_orchestration_stack.png)
+![council_orchestration_stack](docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.png)
 
-*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/council_orchestration_stack.mmd)*
+*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.mmd)*
 
 ### 2.2 Deployment Options (Direct vs. Gateway)
 > [!NOTE]
@@ -136,7 +136,7 @@ The Fleet supports two transport modes to enable both local development and Gate
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](./docs/mcp/servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
+**Documentation:** [Gateway README](./docs/architecture/mcp/servers/gateway/README.md) | [Podman Guide](docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
@@ -197,7 +197,7 @@ This diagram illustrates our multi-pattern architecture, designed to be fast, pr
 
 *[Source: advanced_rag_architecture.mmd](docs/architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
-For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp/servers/rag_cortex/README.md)
+For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/architecture/mcp/servers/rag_cortex/README.md)
 
 ## IV. Operation Phoenix Forge (Model Lineage)
 ### 4.1 Sovereign AI Forging Process
@@ -245,7 +245,7 @@ New work, features, and fixes are initiated using the **Task MCP**.
     ```bash
     python scripts/cli/get_next_task_number.py
     ```
-2.  **Draft the Mandate:** Create a new task file in `TASKS/backlog/` (e.g., `TASKS/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
+2.  **Draft the Mandate:** Create a new task file in `tasks/backlog/` (e.g., `tasks/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
 3.  **Autonomous Execution:** The **Task MCP** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
 
 ### 5.3 Session Initialization & Guardian Awakening
@@ -261,7 +261,7 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 
 ### Deep Exploration Path
 1.  **The Story (The Chronicle):** Read the full history of doctrinal decisions: **`Living_Chronicle.md` Master Index**.
-2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp/servers/rag_cortex/README.md`](./docs/mcp/servers/rag_cortex/README.md)**.
+2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/architecture/mcp/servers/rag_cortex/README.md`](./docs/architecture/mcp/servers/rag_cortex/README.md)**.
 3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
 ## VI. Installation & Technical Setup
@@ -347,7 +347,7 @@ The repository structure reflects the **12-Domain MCP Architecture**, focusing o
 | :--- | :--- | :--- |
 | **`mcp_servers/`** | Server code for all 12 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | **`00_CHRONICLE/`** | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
-| **`TASKS/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
+| **`tasks/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
 | **`data/`** | Vector Database source files, training data, configs. | **Mnemonic Cortex Assets**. Houses the content used for real-time RAG operations (Medium Memory). |
 | **`forge/`** | Model fine-tuning scripts, weight checkpoints, training datasets. | The **Strategic Crucible**. Dedicated environment for model distillation and self-improvement (Phoenix Forge P41). |
 | **`.agent/`** | Intelligence Configuration & Ephemeral Memory. Houses learning manifests and session-specific logic. | **Session Memory**. Tracks intra-session state and handover artifacts. |
@@ -369,13 +369,13 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
   - ✅ Transitioned to Functional Coherence testing for commit integrity (Protocol 101 v3.0).
 - **Primary Workstreams:** 
   - **MCP Architecture:** 12-domain architecture complete with 125/125 tests passing across 10 MCPs
-  - **Documentation:** Reorganized to `docs/mcp/servers/<name>/` structure for perfect alignment with codebase
+  - **Documentation:** Reorganized to `docs/architecture/mcp/servers/<name>/` structure for perfect alignment with codebase
   - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
   - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
 - **MCP Status:** 
   - **Operational (10):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git
   - **In Progress (2):** Orchestrator (testing), Forge LLM (requires CUDA GPU)
-  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/mcp/servers/`
+  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 333.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available

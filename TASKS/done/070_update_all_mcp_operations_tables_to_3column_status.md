@@ -4,13 +4,13 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** docs/mcp/mcp_operations_inventory.md, Task 066: Complete MCP Operations Testing and Inventory Maintenance
+**Related Documents:** docs/architecture/mcp/mcp_operations_inventory.md, Task 066: Complete MCP Operations Testing and Inventory Maintenance
 
 ---
 
 ## 1. Objective
 
-Update all remaining MCP server operations tables in `docs/mcp/mcp_operations_inventory.md` to use the new 3-column status format that separates: 1) 🧪 Test Harness - Direct pytest testing of underlying operations, 2) 📝 Documentation - Operation documented in README, 3) 🤖 MCP Tool Test - Operation tested via LLM using MCP tool interface. The inventory has been updated with a new status tracking system that provides more granular visibility into the validation state of each operation. Currently, only Chronicle and Forge sections have been updated to the new format.
+Update all remaining MCP server operations tables in `docs/architecture/mcp/mcp_operations_inventory.md` to use the new 3-column status format that separates: 1) 🧪 Test Harness - Direct pytest testing of underlying operations, 2) 📝 Documentation - Operation documented in README, 3) 🤖 MCP Tool Test - Operation tested via LLM using MCP tool interface. The inventory has been updated with a new status tracking system that provides more granular visibility into the validation state of each operation. Currently, only Chronicle and Forge sections have been updated to the new format.
 
 ## 2. Deliverables
 

@@ -19,14 +19,14 @@ This parent task has been split into 2 focused sub-tasks to establish performanc
 - **Protocol 89**: The Clean Forge - Performance is part of quality
 - **Protocol 97**: Generative Development Cycle - Continuous improvement
 
-## Sub-Tasks
+## Sub-tasks
 
 ### Task 024A: Performance Baseline Establishment & Profiling
 - **Status**: backlog
 - **Priority**: Medium
 - **Effort**: 4-6 hours
 - **Dependencies**: 021A (Mnemonic Cortex tests)
-- **File**: `TASKS/backlog/024A_performance_baseline_and_profiling.md`
+- **File**: `tasks/backlog/024A_performance_baseline_and_profiling.md`
 
 **Objective**: Establish performance baselines for critical operations, implement profiling infrastructure, and identify top bottlenecks for optimization.
 
@@ -48,7 +48,7 @@ This parent task has been split into 2 focused sub-tasks to establish performanc
 - **Priority**: Medium
 - **Effort**: 4-6 hours
 - **Dependencies**: 024A
-- **File**: `TASKS/backlog/024B_performance_optimization_and_monitoring.md`
+- **File**: `tasks/backlog/024B_performance_optimization_and_monitoring.md`
 
 **Objective**: Implement performance optimizations for identified bottlenecks, establish resource monitoring, and achieve 20%+ improvement in critical path latency.
 

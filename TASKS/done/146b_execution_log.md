@@ -164,7 +164,7 @@ curl http://localhost:8104/sse   → event: endpoint ✅
 
 ### 22:53 - Phase 4: Legacy vs Gateway Architecture Documentation
 
-**File Created:** `docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`
+**File Created:** `docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`
 
 **Decision:** Legacy servers are NOT deprecated - they serve STDIO transport for Claude Desktop while Gateway clusters serve SSE transport. Both share the same operations libraries.
 

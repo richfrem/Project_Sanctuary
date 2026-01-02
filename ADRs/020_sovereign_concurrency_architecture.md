@@ -16,18 +16,18 @@ The AI system required non-blocking task execution to maintain responsiveness wh
 Implement the Independent Parallel Processing Approach with dual processing modes and selective learning:
 
 ### Dual Processing Architecture
-1. **Automatic Tasks**: Immediate, non-AI execution bypassing deliberation
+1. **Automatic tasks**: Immediate, non-AI execution bypassing deliberation
    - File writes, git operations, cache wakeups
    - Execute instantly, return to idle state
    - Skip information retrieval updates by default for performance
 
-2. **AI Tasks**: Multi-round deliberation with background learning
+2. **AI tasks**: Multi-round deliberation with background learning
    - AI Council member discussions and synthesis
    - Deliberation completes, then learning happens asynchronously
    - Information retrieval updates configurable via update_rag parameter
 
 ### Independent Parallel Processing Principles
-1. **Non-blocking Execution**: Tasks process without blocking system controller responsiveness
+1. **Non-blocking Execution**: tasks process without blocking system controller responsiveness
 2. **Background Learning**: Information retrieval updates and review generation happen asynchronously
 3. **Selective Learning**: Configurable information retrieval updates prevent unnecessary database operations
 4. **Concurrent Processing**: Multiple background learning cycles can run simultaneously

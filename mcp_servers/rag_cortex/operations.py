@@ -1191,7 +1191,7 @@ class CortexOperations:
     def _get_tactical_priorities(self):
         #============================================
         # Method: _get_tactical_priorities
-        # Purpose: Scan TASKS/ directories for top priorities.
+        # Purpose: Scan tasks/ directories for top priorities.
         # Returns: Markdown list of top 5 tasks with status
         #============================================
         try:
@@ -1199,9 +1199,9 @@ class CortexOperations:
             found_tasks = []
             
             scan_sources = [
-                self.project_root / "TASKS" / "in-progress",
-                self.project_root / "TASKS" / "todo",
-                self.project_root / "TASKS" / "backlog"
+                self.project_root / "tasks" / "in-progress",
+                self.project_root / "tasks" / "todo",
+                self.project_root / "tasks" / "backlog"
             ]
             
             for source_dir in scan_sources:
@@ -1489,8 +1489,8 @@ class CortexOperations:
                 digest_lines.append(self._get_recent_protocol_updates(max_protocols=3, hours=168))
                 digest_lines.append("")
                 
-                # II. Priority Tasks (Enhanced in v2.1 to show all priority levels)
-                digest_lines.append("## II. Priority Tasks")
+                # II. Priority tasks (Enhanced in v2.1 to show all priority levels)
+                digest_lines.append("## II. Priority tasks")
                 digest_lines.append(self._get_tactical_priorities())
                 digest_lines.append("")
                 
@@ -1522,7 +1522,7 @@ class CortexOperations:
                 digest_lines.append("// This briefing is the single source of context for the LLM session.")
 
                 # Write digest
-                digest_path = Path(self.project_root) / "WORK_IN_PROGRESS" / "guardian_boot_digest.md"
+                digest_path = Path(self.project_root) / "dataset_package" / "guardian_boot_digest.md"
                 digest_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 with open(digest_path, "w") as f:
@@ -1827,7 +1827,7 @@ class CortexOperations:
             
             # CORE DIRECTORY ENFORCEMENT
             CORE_DIRS = ["ADRs/", "01_PROTOCOLS/", "mcp_servers/", "scripts/", "prompts/"]
-            TIER2_DIRS = ["TASKS/", "LEARNING/"]
+            TIER2_DIRS = ["tasks/", "LEARNING/"]
             
             critical_omissions = []
             tier2_omissions = []
@@ -2567,7 +2567,7 @@ class CortexOperations:
         mapping = {
             "Protocols": "Protocol MCP",
             "Living_Chronicle": "Chronicle MCP",
-            "Tasks": "Task MCP",
+            "tasks": "Task MCP",
             "Code": "Code MCP",
             "ADRs": "ADR MCP"
         }

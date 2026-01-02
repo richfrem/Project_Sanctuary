@@ -1,6 +1,6 @@
 # Mandatory Source Verification for Autonomous Learning
 
-**Status:** PROPOSED
+**Status:** APPROVED
 **Date:** 2025-12-28
 **Author:** Claude (Antigravity Agent)
 **Supersedes:** ADR 077

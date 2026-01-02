@@ -33,9 +33,9 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 - **Verification:** The system will reject any memory artifact that lacks a valid signature or user approval token.
 
 ## Visual Architecture
-![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![protocol_128_learning_loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 
@@ -135,7 +135,7 @@ The "Constitution" for the agent.
 **Guardian Mandate:** The `guardian_wakeup` operation MUST check for this file and inject a directive to read it immediately.
 
 ### C. Red Team Briefing Template
-Located at `[.agent/learning/red_team_briefing_template.md](../.agent/learning/red_team_briefing_template.md)`.
+Located at `[.agent/learning/templates/red_team_briefing_template.md](../.agent/learning/templates/red_team_briefing_template.md)`.
 Defines the structure of the briefing.
 
 ## 🏁 Operational Readiness (Phase 4 Final)

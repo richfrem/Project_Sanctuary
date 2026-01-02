@@ -183,7 +183,7 @@ EMPTY_SCHEMA = {"type": "object", "properties": {}}
 def run_sse_server(port: int):
     """Run using SSEServer for Gateway compatibility (ADR-066 v1.3)."""
     from mcp_servers.lib.sse_adaptor import SSEServer, sse_tool
-    from mcp_servers.task.models import TaskStatus, TaskPriority
+    from mcp_servers.task.models import taskstatus, TaskPriority
     
     server = SSEServer("sanctuary_domain", version="1.0.0")
     
@@ -271,9 +271,9 @@ def run_sse_server(port: int):
     # =============================================================================
     # TASK TOOLS
     # =============================================================================
-    @sse_tool(name="create_task", description="Create a new task file in TASKS/ directory.", schema=TASK_CREATE_SCHEMA)
+    @sse_tool(name="create_task", description="Create a new task file in tasks/ directory.", schema=TASK_CREATE_SCHEMA)
     def create_task(title: str, objective: str, deliverables: list = None, acceptance_criteria: list = None, priority: str = "medium", status: str = "backlog", lead: str = None, dependencies: list = None, related_documents: list = None, notes: str = None, task_number: int = None):
-        result = get_op("task").create_task(title=title, objective=objective, deliverables=deliverables, acceptance_criteria=acceptance_criteria, priority=TaskPriority(priority), status=TaskStatus(status), lead=lead, dependencies=dependencies, related_documents=related_documents, notes=notes, task_number=task_number)
+        result = get_op("task").create_task(title=title, objective=objective, deliverables=deliverables, acceptance_criteria=acceptance_criteria, priority=TaskPriority(priority), status=taskstatus(status), lead=lead, dependencies=dependencies, related_documents=related_documents, notes=notes, task_number=task_number)
         return f"Created Task {result.task_number:03d}: {result.file_path}"
     
     @sse_tool(name="update_task", description="Update an existing task's metadata or content.", schema=TASK_UPDATE_SCHEMA)
@@ -283,7 +283,7 @@ def run_sse_server(port: int):
     
     @sse_tool(name="update_task_status", description="Change task status (moves file between directories).", schema=TASK_UPDATE_STATUS_SCHEMA)
     def update_task_status(task_number: int, new_status: str, notes: str = None):
-        result = get_op("task").update_task_status(task_number, TaskStatus(new_status), notes)
+        result = get_op("task").update_task_status(task_number, taskstatus(new_status), notes)
         return f"Updated Task {result.task_number:03d} status to {new_status}"
     
     @sse_tool(name="get_task", description="Retrieve a specific task by number.", schema=TASK_GET_SCHEMA)
@@ -294,7 +294,7 @@ def run_sse_server(port: int):
     
     @sse_tool(name="list_tasks", description="List tasks with optional filters.", schema=TASK_LIST_SCHEMA)
     def list_tasks(status: str = None, priority: str = None):
-        status_filter = TaskStatus(status) if status else None
+        status_filter = taskstatus(status) if status else None
         priority_filter = TaskPriority(priority) if priority else None
         tasks = get_op("task").list_tasks(status_filter, priority_filter)
         if not tasks: return "No tasks found."
@@ -437,7 +437,7 @@ def run_stdio_server():
     from fastmcp.exceptions import ToolError
     from mcp_servers.chronicle.models import ChronicleCreateRequest, ChronicleUpdateRequest, ChronicleGetRequest, ChronicleListRequest, ChronicleSearchRequest
     from mcp_servers.protocol.models import ProtocolCreateRequest, ProtocolUpdateRequest, ProtocolGetRequest, ProtocolListRequest, ProtocolSearchRequest
-    from mcp_servers.task.models import TaskCreateRequest, TaskUpdateRequest, TaskUpdateStatusRequest, TaskGetRequest, TaskListRequest, TaskSearchRequest, TaskStatus, TaskPriority
+    from mcp_servers.task.models import TaskCreateRequest, TaskUpdateRequest, TaskUpdateStatusRequest, TaskGetRequest, TaskListRequest, tasksearchRequest, taskstatus, TaskPriority
     from mcp_servers.adr.models import ADRCreateRequest, ADRUpdateStatusRequest, ADRGetRequest, ADRListRequest, ADRSearchRequest
     from mcp_servers.agent_persona.models import PersonaDispatchParams, PersonaRoleParams, PersonaCreateCustomParams
     from mcp_servers.config.models import ConfigReadRequest, ConfigWriteRequest, ConfigDeleteRequest
@@ -575,9 +575,9 @@ def run_stdio_server():
     # Task Tools
     @mcp.tool()
     async def create_task(request: TaskCreateRequest) -> str:
-        """Create a new task file in TASKS/ directory."""
+        """Create a new task file in tasks/ directory."""
         try:
-            result = get_op("task").create_task(title=request.title, objective=request.objective, deliverables=request.deliverables, acceptance_criteria=request.acceptance_criteria, priority=TaskPriority(request.priority), status=TaskStatus(request.status), lead=request.lead, dependencies=request.dependencies, related_documents=request.related_documents, notes=request.notes, task_number=request.task_number)
+            result = get_op("task").create_task(title=request.title, objective=request.objective, deliverables=request.deliverables, acceptance_criteria=request.acceptance_criteria, priority=TaskPriority(request.priority), status=taskstatus(request.status), lead=request.lead, dependencies=request.dependencies, related_documents=request.related_documents, notes=request.notes, task_number=request.task_number)
             return f"Created Task {result.task_number:03d}: {result.file_path}"
         except Exception as e:
             raise ToolError(f"Creation failed: {str(e)}")
@@ -595,7 +595,7 @@ def run_stdio_server():
     async def update_task_status(request: TaskUpdateStatusRequest) -> str:
         """Change task status (moves file between directories)."""
         try:
-            result = get_op("task").update_task_status(request.task_number, TaskStatus(request.new_status), request.notes)
+            result = get_op("task").update_task_status(request.task_number, taskstatus(request.new_status), request.notes)
             return f"Updated Task {result.task_number:03d} status to {request.new_status}"
         except Exception as e:
             raise ToolError(f"Status update failed: {str(e)}")
@@ -615,7 +615,7 @@ def run_stdio_server():
         """List tasks with optional filters."""
         request = request or TaskListRequest()
         try:
-            status_filter = TaskStatus(request.status) if request.status else None
+            status_filter = taskstatus(request.status) if request.status else None
             priority_filter = TaskPriority(request.priority) if request.priority else None
             tasks = get_op("task").list_tasks(status_filter, priority_filter)
             if not tasks: return "No tasks found."
@@ -627,7 +627,7 @@ def run_stdio_server():
             raise ToolError(f"List failed: {str(e)}")
     
     @mcp.tool()
-    async def search_tasks(request: TaskSearchRequest) -> str:
+    async def search_tasks(request: tasksearchRequest) -> str:
         """Search tasks by content (full-text search)."""
         try:
             results = get_op("task").search_tasks(request.query)

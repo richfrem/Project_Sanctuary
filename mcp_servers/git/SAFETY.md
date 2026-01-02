@@ -179,9 +179,9 @@ The Git Workflow MCP implements a **strict safety system** to prevent dangerous 
 
 ### Required Sequence
 
-![git_workflow_sequence](docs/architecture_diagrams/workflows/git_workflow_sequence.png)
+![git_workflow_sequence](../../docs/architecture_diagrams/workflows/git_workflow_sequence.png)
 
-*[Source: git_workflow_sequence.mmd](docs/architecture_diagrams/workflows/git_workflow_sequence.mmd)*
+*[Source: git_workflow_sequence.mmd](../../docs/architecture_diagrams/workflows/git_workflow_sequence.mmd)*
 
 ### Out-of-Sequence Prevention
 
@@ -316,8 +316,8 @@ git_finish_feature("feature/task-123-test")  # Syncs main automatically
 ## Related Documentation
 
 - [Git Workflow MCP README](README.md)
-- [MCP Operations Inventory](../../../docs/mcp/mcp_operations_inventory.md)
-- [Protocol 101 v3.0](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md)
+- [Protocol 101 v3.0](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
 
 ---
 

@@ -62,7 +62,7 @@ class TestDomainTaskTools:
         """Test task list via direct SSE."""
         result = await domain_cluster.call_tool("task-list-tasks", {})
         assert len(result.content) > 0
-        assert "Tasks" in result.content[0].text
+        assert "tasks" in result.content[0].text
 
 
 @pytest.mark.integration

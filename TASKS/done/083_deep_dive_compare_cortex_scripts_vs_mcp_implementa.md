@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** TASKS/done/080_migrate_and_archive_legacy_council_orchestrator.md
+**Related Documents:** tasks/done/080_migrate_and_archive_legacy_council_orchestrator.md
 
 ---
 
@@ -15,7 +15,7 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 ## 2. Deliverables
 
 1.  **Refactored Cortex MCP:** `CortexOperations` updated to match `ingest.py` logic (batching, error handling).
-2.  **Migrated Documentation:** Cortex docs moved to `docs/mcp/cortex/`.
+2.  **Migrated Documentation:** Cortex docs moved to `docs/architecture/mcp/cortex/`.
 3.  **Migrated Tests:** Tests moved to `tests/mcp_servers.rag_cortex/` and updated.
 4.  **Archived Legacy Code:** `mnemonic_cortex/` moved to `ARCHIVE/mnemonic_cortex/`.
 5.  **Updated Operations Inventory:** Reflecting the new structure.
@@ -28,7 +28,7 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 - [x] Verify `cortex_ingest_full` matches legacy script performance and reliability.
 
 ### Phase 2: Asset Migration
-- [x] Move documentation from `mnemonic_cortex/` to `docs/mcp/cortex/`.
+- [x] Move documentation from `mnemonic_cortex/` to `docs/architecture/mcp/cortex/`.
 - [x] Move tests to `tests/mcp_servers.rag_cortex/`.
 - [x] Update import paths in tests and server code.
 

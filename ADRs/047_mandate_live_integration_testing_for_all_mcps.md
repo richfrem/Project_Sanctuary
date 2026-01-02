@@ -1,7 +1,11 @@
 # Mandate Live Integration Testing for All MCPs
 
-**Status:** proposed
+> [!WARNING]
+> **SUPERSEDED**: This ADR is superseded by **ADR 048** (Detailed Specification).
+
+**Status:** Superseded
 **Date:** 2025-12-05
+**Superseded By:** ADR 048
 **Author:** AI Assistant
 
 

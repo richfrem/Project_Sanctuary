@@ -26,7 +26,7 @@ import pytest
 from pathlib import Path
 
 from mcp_servers.task.operations import TaskOperations
-from mcp_servers.task.models import TaskStatus, TaskPriority
+from mcp_servers.task.models import taskstatus, TaskPriority
 
 
 @pytest.fixture
@@ -58,13 +58,13 @@ class TestCreateTask:
             deliverables=["Deliverable 1", "Deliverable 2"],
             acceptance_criteria=["Criterion 1", "Criterion 2"],
             priority=TaskPriority.HIGH,
-            status=TaskStatus.BACKLOG
+            status=taskstatus.BACKLOG
         )
         
         assert result.status == "success"
         assert result.operation == "created"
         assert result.task_number > 0  # Just verify a task number was assigned
-        assert "TASKS/backlog/" in result.file_path
+        assert "tasks/backlog/" in result.file_path
         assert "_test_task.md" in result.file_path
         assert "# TASK: Test Task" in result.content
     
@@ -182,7 +182,7 @@ class TestUpdateTask:
     def test_parse_capitalized_status(self, task_ops, task_root):
         """Test parsing task files with capitalized status values"""
         # Create a task file with capitalized status
-        task_file = task_root / "TASKS" / "backlog" / "001_test_capitalized.md"
+        task_file = task_root / "tasks" / "backlog" / "001_test_capitalized.md"
         task_file.write_text("""# TASK: Test Capitalized Status
 
 **Status:** Backlog
@@ -207,7 +207,7 @@ Test objective
 """)
         
         # Should be able to read and list this task
-        tasks = task_ops.list_tasks(status=TaskStatus.BACKLOG)
+        tasks = task_ops.list_tasks(status=taskstatus.BACKLOG)
         assert len(tasks) >= 1
         
         # Should be able to get this task
@@ -216,7 +216,7 @@ Test objective
         assert task["status"] == "backlog"
 
 
-class TestUpdateTaskStatus:
+class TestUpdatetaskstatus:
     """Test update_task_status operation"""
     
     def test_move_task_to_in_progress(self, task_ops):
@@ -227,14 +227,14 @@ class TestUpdateTaskStatus:
             objective="Test",
             deliverables=["D1"],
             acceptance_criteria=["C1"],
-            status=TaskStatus.BACKLOG,
+            status=taskstatus.BACKLOG,
             task_number=1
         )
         
         # Move to in-progress
         result = task_ops.update_task_status(
             task_number=1,
-            new_status=TaskStatus.IN_PROGRESS,
+            new_status=taskstatus.IN_PROGRESS,
             notes="Starting work"
         )
         
@@ -256,7 +256,7 @@ class TestUpdateTaskStatus:
         
         result = task_ops.update_task_status(
             task_number=1,
-            new_status=TaskStatus.COMPLETE
+            new_status=taskstatus.COMPLETE
         )
         
         assert result.status == "success"
@@ -270,14 +270,14 @@ class TestUpdateTaskStatus:
             objective="Test",
             deliverables=["D1"],
             acceptance_criteria=["C1"],
-            status=TaskStatus.BACKLOG,
+            status=taskstatus.BACKLOG,
             task_number=1
         )
         
         # Move to todo
         result = task_ops.update_task_status(
             task_number=1,
-            new_status=TaskStatus.TODO
+            new_status=taskstatus.TODO
         )
         
         assert result.status == "success"
@@ -313,7 +313,7 @@ class TestGetTask:
         assert task is None
 
 
-class TestListTasks:
+class TestListtasks:
     """Test list_tasks operation"""
     
     def test_list_all_tasks(self, task_ops):
@@ -339,7 +339,7 @@ class TestListTasks:
             objective="Test",
             deliverables=["D1"],
             acceptance_criteria=["C1"],
-            status=TaskStatus.BACKLOG,
+            status=taskstatus.BACKLOG,
             task_number=1
         )
         
@@ -348,12 +348,12 @@ class TestListTasks:
             objective="Test",
             deliverables=["D1"],
             acceptance_criteria=["C1"],
-            status=TaskStatus.IN_PROGRESS,
+            status=taskstatus.IN_PROGRESS,
             task_number=2
         )
         
         # List only backlog tasks
-        backlog_tasks = task_ops.list_tasks(status=TaskStatus.BACKLOG)
+        backlog_tasks = task_ops.list_tasks(status=taskstatus.BACKLOG)
         assert len(backlog_tasks) == 1
         assert backlog_tasks[0]["title"] == "Backlog Task"
     
@@ -384,7 +384,7 @@ class TestListTasks:
         assert high_tasks[0]["title"] == "High Priority"
 
 
-class TestSearchTasks:
+class TestSearchtasks:
     """Test search_tasks operation"""
     
     def test_search_by_title(self, task_ops):

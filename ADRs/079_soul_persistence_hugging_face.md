@@ -130,9 +130,9 @@ def persist_soul(
 
 ## Related Documents
 
-- [ADR 077: Epistemic Status Annotation Rule](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/077-epistemic-status-annotation-rule.md)
-- [ADR 078: Mandatory Source Verification](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/078-mandatory-source-verification.md)
-- [Option Analysis: External Soul Persistence](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/knowledge_preservation_red_team/option_analysis.md)
+- [ADR 077: Epistemic Status Annotation Rule](077_epistemic_status_annotation_rule_for_autonomous_learning.md)
+- [ADR 078: Mandatory Source Verification](078_mandatory_source_verification_for_autonomous_learning.md)
+- [Option Analysis: External Soul Persistence](../LEARNING/topics/knowledge_preservation_red_team/option_analysis.md)
 - Protocol 128: Hardened Learning Loop
 - Protocol 129: Metacognitive Safety Standards
 

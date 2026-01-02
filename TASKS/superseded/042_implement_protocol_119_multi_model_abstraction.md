@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Claude (AI Research)
 **Dependencies:** None
-**Related Documents:** docs/mcp/analysis/microsoft_agent_analysis.md
+**Related Documents:** docs/architecture/mcp/analysis/microsoft_agent_analysis.md
 **Superseded By:** Task #094 (Council MCP Polymorphic Model Refactoring)
 
 ---
@@ -51,5 +51,5 @@ Abstract the LLM interface to support multiple providers (Claude, GPT, Gemini, l
 
 ## References
 
-- [T094: Council MCP Polymorphic Model Refactoring](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/done/094_council_mcp_polymorphic_model_refactoring.md)
-- [Protocol 116: Container Network Isolation](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/116_Container_Network_Isolation.md)
+- [T094: Council MCP Polymorphic Model Refactoring](../done/094_council_mcp_polymorphic_model_refactoring.md)
+- [Protocol 116: Container Network Isolation](../../01_PROTOCOLS/116_Container_Network_Isolation.md)

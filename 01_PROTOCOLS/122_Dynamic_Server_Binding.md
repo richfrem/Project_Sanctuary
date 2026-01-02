@@ -37,9 +37,9 @@ This protocol defines the standard for **Dynamic Server Binding** in Project San
 
 ### 2.1 Core Components
 
-![MCP Dynamic Binding Architecture](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+![MCP Dynamic Binding Architecture](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
 
-*[Source: mcp_dynamic_binding_flow.mmd](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
+*[Source: mcp_dynamic_binding_flow.mmd](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
 
 ### 2.2 Service Registry Schema
 
@@ -147,9 +147,9 @@ async def cortex_query(query: str, max_results: int = 5) -> str:
 
 ### 3.3 Request Flow Diagram
 
-![mcp_dynamic_binding_flow](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+![mcp_dynamic_binding_flow](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
 
-*[Source: mcp_dynamic_binding_flow.mmd](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
+*[Source: mcp_dynamic_binding_flow.mmd](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
 
 ---
 
@@ -392,7 +392,7 @@ class CircuitBreaker:
 - ADR 057: Adoption of IBM ContextForge for Dynamic MCP Gateway
 - Task 115: Design and Specify Dynamic MCP Gateway Architecture
 - Task 116: Implement Dynamic MCP Gateway with IBM ContextForge
-- Research: docs/mcp_gateway/research/ (13 documents)
+- Research: docs/architecture/mcp_gateway/research/ (13 documents)
 - MCP Specification: https://modelcontextprotocol.io
 
 ---

@@ -19,18 +19,18 @@ This parent task coordinates the standardization of documentation across the new
 - **Protocol 89**: The Clean Forge - Documentation as part of quality
 - **Protocol 115**: The Tactical Mandate - Documentation as requirement
 
-## Sub-Tasks
+## Sub-tasks
 
 ### Task 022A: MCP Documentation Standards & API Documentation
 - **Status**: in-progress
 - **Priority**: Medium
 - **Effort**: 4-6 hours
-- **File**: `TASKS/in-progress/022A_documentation_standards_and_api_docs.md`
+- **File**: `tasks/in-progress/022A_documentation_standards_and_api_docs.md`
 
 **Objective**: Establish documentation standards for the MCP ecosystem, create templates for MCP server READMEs, ensure consistent docstrings for all MCP tools, and formalize inventory maintenance.
 
 **Key Deliverables**:
-- `docs/mcp/DOCUMENTATION_STANDARDS.md`
+- `docs/architecture/mcp/DOCUMENTATION_STANDARDS.md`
 - MCP Server README & Tool Docstring Templates
 - Audit of all 12 MCP servers for docstring quality
 - `mcp_operations_inventory.md` maintenance process
@@ -41,15 +41,15 @@ This parent task coordinates the standardization of documentation across the new
 - **Status**: Done
 - **Priority**: Medium
 - **Effort**: 4-6 hours
-- **File**: `TASKS/in-progress/022B_user_guides_and_architecture_documentation.md`
+- **File**: `tasks/in-progress/022B_user_guides_and_architecture_documentation.md`
 
 **Objective**: Create quick start guides for connecting to the MCP ecosystem, user tutorials for key workflows (Council, RAG), and update architecture documentation to reflect the 11-server topology.
 
 **Key Deliverables**:
-- `docs/mcp/QUICKSTART.md`
+- `docs/architecture/mcp/QUICKSTART.md`
 - Tutorials for Council and Cortex MCPs
-- Updated `docs/mcp/architecture.md`
-- `docs/mcp/diagrams/system_overview_v2.mmd`
+- Updated `docs/architecture/mcp/architecture.md`
+- `docs/architecture/mcp/diagrams/system_overview_v2.mmd`
 - `docs/INDEX.md`
 
 --- [x] **Task 022C**: MCP Server Documentation
@@ -57,13 +57,13 @@ This parent task coordinates the standardization of documentation across the new
 - **Status**: Done
 - **Priority**: High
 - **Effort**: 6-8 hours
-- **File**: `TASKS/in-progress/022C_mcp_server_documentation_standards.md`
+- **File**: `tasks/in-progress/022C_mcp_server_documentation_standards.md`
 
 **Objective**: Establish standardized, high-quality documentation for all MCP servers following a consistent testing-first approach with comprehensive verification workflows.
 
 **Key Deliverables**:
-- `docs/mcp/README.md` (Index)
-- `docs/mcp/TESTING_STANDARDS.md`
+- `docs/architecture/mcp/README.md` (Index)
+- `docs/architecture/mcp/TESTING_STANDARDS.md`
 - Standardized READMEs for all 12 MCP servers
 - Testing workflows documented for each server
 
@@ -88,7 +88,7 @@ This parent task coordinates the standardization of documentation across the new
 When all sub-tasks are complete:
 
 - [ ] All 12 MCP servers have standardized READMEs
-- [ ] `docs/mcp/` is the single source of truth for MCP docs
+- [ ] `docs/architecture/mcp/` is the single source of truth for MCP docs
 - [ ] Quick start guide enables setup in < 10 minutes
 - [ ] Architecture diagrams accurately reflect the v2 system
 - [ ] API/Tool documentation is consistent and complete

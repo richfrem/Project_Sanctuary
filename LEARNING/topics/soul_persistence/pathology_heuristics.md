@@ -60,7 +60,7 @@ The `pathology_check()` is called before `cortex_persist_soul`:
 
 ---
 
-## Research Tasks (Task 151)
+## Research tasks (Task 151)
 
 - [ ] Analyze existing `soul_traces.jsonl` for valence distribution
 - [ ] Derive empirically-grounded thresholds from data

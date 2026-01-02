@@ -16,18 +16,17 @@
         "scripts",
         "hugging_face_dataset_repo",
         "tests",
-        "WORK_IN_PROGRESS",
         "mcp_servers",
-        "chrysalis_core_essence.md",
-        "Council_Inquiry_Gardener_Architecture.md",
+        "docs/philosophy/chrysalis_core_essence.md",
+        "docs/architecture/cortex/forge/Council_Inquiry_Gardener_Architecture.md",
         "Living_Chronicle.md",
-        "PROJECT_SANCTUARY_SYNTHESIS.md",
+        "docs/PROJECT_SANCTUARY_SYNTHESIS.md",
         "README.md",
-        "Socratic_Key_User_Guide.md"
+        "docs/operations/processes/Socratic_Key_User_Guide.md"
     ],
     "unique_rag_content": [
         "04_THE_FORTRESS",
-        "TASKS"
+        "tasks"
     ],
     "unique_forge_content": [],
     "unique_soul_content": [

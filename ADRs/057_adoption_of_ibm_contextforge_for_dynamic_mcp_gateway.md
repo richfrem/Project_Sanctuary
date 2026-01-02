@@ -1,6 +1,7 @@
 # Adoption of IBM ContextForge for Dynamic MCP Gateway
 
-**Status: SUPERSEDED by [ADR 058](./058_decouple_ibm_gateway_to_external_podman_service.md)**
+**Status:** Superseded
+**Superseded By:** ADR 058 & ADR 060SUPERSEDED by [ADR 058](./058_decouple_ibm_gateway_to_external_podman_service.md)**
 **Date:** 2025-12-15
 **Author:** Project Sanctuary Core Team
 
@@ -153,7 +154,7 @@ Architecture is container-runtime agnostic:
 **Decision Matrix Score:** 92% (highest among all options)
 
 **Validation:**
-Decision validated by Gemini 2.0 Flash Experimental (frontier model) and documented in formal decision document (docs/mcp_gateway/research/12_decision_document_gateway_adoption.md).
+Decision validated by Gemini 2.0 Flash Experimental (frontier model) and documented in formal decision document (docs/architecture/mcp_gateway/research/12_decision_document_gateway_adoption.md).
 
 ## Consequences
 
@@ -250,7 +251,7 @@ Decision validated by Gemini 2.0 Flash Experimental (frontier model) and documen
 - ✅ Documentation complete
 
 **Related Documentation:**
-- Research: docs/mcp_gateway/research/ (12 documents)
-- Decision Document: docs/mcp_gateway/research/12_decision_document_gateway_adoption.md
-- Architecture: docs/mcp_gateway/architecture/ARCHITECTURE.md
-- Task: TASKS/in-progress/115_design_and_specify_dynamic_mcp_gateway_architectur.md
+- Research: docs/architecture/mcp_gateway/research/ (12 documents)
+- Decision Document: docs/architecture/mcp_gateway/research/12_decision_document_gateway_adoption.md
+- Architecture: docs/architecture/mcp_gateway/architecture/ARCHITECTURE.md
+- Task: tasks/in-progress/115_design_and_specify_dynamic_mcp_gateway_architectur.md

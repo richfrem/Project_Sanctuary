@@ -47,9 +47,9 @@ What the Gateway discovers during handshakes (Tools, Schemas).
 
 ## Architectural Flow
 
-![mcp_fleet_resolution_flow](docs/architecture_diagrams/system/mcp_fleet_resolution_flow.png)
+![mcp_fleet_resolution_flow](../docs/architecture_diagrams/system/mcp_fleet_resolution_flow.png)
 
-*[Source: mcp_fleet_resolution_flow.mmd](docs/architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
+*[Source: mcp_fleet_resolution_flow.mmd](../docs/architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
 
 ## Consequences
 

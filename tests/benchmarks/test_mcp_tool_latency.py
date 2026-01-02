@@ -27,7 +27,7 @@ def test_chronicle_list_latency(benchmark, tmp_path):
 def test_task_list_latency(benchmark, tmp_path):
     """Benchmark Task list_tasks latency."""
     # Setup
-    task_dir = tmp_path / "TASKS"
+    task_dir = tmp_path / "tasks"
     task_dir.mkdir()
     (task_dir / "backlog").mkdir()
     (task_dir / "todo").mkdir()

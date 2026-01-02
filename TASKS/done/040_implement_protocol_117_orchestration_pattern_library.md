@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Claude (AI Research)
 **Dependencies:** Council MCP, Task MCP
-**Related Documents:** docs/mcp/analysis/microsoft_agent_analysis.md
+**Related Documents:** docs/architecture/mcp/analysis/microsoft_agent_analysis.md
 
 ---
 

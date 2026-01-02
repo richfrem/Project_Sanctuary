@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Unassigned
 **Dependencies:** Requires Task 055 (Git Operations Verification) completion
-**Related Documents:** docs/mcp/mcp_operations_inventory.md, TASKS/in-progress/055_verify_git_operations_and_mcp_tools_after_core_rel.md, TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md
+**Related Documents:** docs/architecture/mcp/mcp_operations_inventory.md, tasks/in-progress/055_verify_git_operations_and_mcp_tools_after_core_rel.md, tasks/in-progress/056_Harden_Self_Evolving_Loop_Validation.md
 
 ---
 

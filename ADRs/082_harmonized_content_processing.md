@@ -30,9 +30,9 @@ Project Sanctuary has evolved three distinct content processing pipelines that s
 
 **Shared Concerns (Chain of Dependency)**:
 
-![Harmonized Content Processing](../../docs/architecture_diagrams/system/harmonized_content_processing.png)
+![Harmonized Content Processing](../docs/architecture_diagrams/system/harmonized_content_processing.png)
 
-*[Source: harmonized_content_processing.mmd](../../docs/architecture_diagrams/system/harmonized_content_processing.mmd)*
+*[Source: harmonized_content_processing.mmd](../docs/architecture_diagrams/system/harmonized_content_processing.mmd)*
 
 **Key Finding:** Forge already consumes `snapshot_utils.generate_snapshot()` output!
 

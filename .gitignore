@@ -10,6 +10,7 @@ Thumbs.db
 
 # --- Python Environment & Artifacts ---
 # Ignore virtual environments
+.venv/
 venv/
 # Secrets and environment
 .env
@@ -38,6 +39,8 @@ eggs/
 .benchmarks/
 .tox/
 pip-wheel-metadata/
+.coverage
+logs/
 
 # Pinned requirements snapshots - Generated artifacts, not source code
 pinned-requirements*
@@ -70,12 +73,13 @@ MEDIUM_BLOG_STEWARD/
 # Agent Directives - These are ephemeral, operational files, not canonical doctrines.
 07_COUNCIL_AGENTS/directives/
 
-# Local Vector Database - This is generated locally by each user and should not be
-# version controlled, as per the Iron Root Doctrine of sovereign local instances.
-chroma_db/ 
+# Local Model State & Vector DBs
+chroma_db/
 chroma_db_backup*/
 .vector_data/
-ollama_models/ 
+data/cortex/chroma_db/
+data/cortex/cache/
+ollama_models/
 .ollama_models/
 
 # Cognitive Glyphs - Optical compression artifacts for LLM sharing.
@@ -87,7 +91,7 @@ dataset_code_glyphs/
 MNEMONIC_SYNTHESIS/
 
 # Task Management - Operational task tracking files
-#TASKS/
+#tasks/
 
 
 
@@ -101,8 +105,8 @@ wandb/
 ARCHIVE/
 ARCHIVES/
 archive/
-!archive/council_orchestrator/
 archives/
+!ARCHIVE/council_orchestrator/
 research/RESEARCH_PAPERS/
 *.log
 nohup.out
@@ -113,13 +117,10 @@ debug_logs/
 *.py.md
 tests/mcp_servers/operations_instrumentation.json
 
-Search .gitignore for 'red_team' -> Not found.
-Adding rules.
-
 # Protocol 128: Red Team Artifacts (Local Only)
 .agent/learning/red_team/
 .agent/learning/*.snapshot.txt
-dataset_package/
+# dataset_package already ignored above
 
 # ADR 079: HF Soul Metadata Staging (Local Only)
 .agent/learning/hf_soul_metadata/
@@ -141,11 +142,6 @@ debug_cdp_failure.png
 
 # Fine-tuning Artifacts - Generated during model training, should not be committed
 outputs/
-*.safetensors
-*.pt
-*.bin
-*.gguf
-*.mlx
 #sanctuary_whole_genome_data.jsonl
 
 # Colab Notebooks - Generated artifac# Jupyter Notebooks
@@ -172,16 +168,9 @@ mcp_config/
 #temp notes etc
 #continuing_work_new_chat.md
 
-# --- EXPLICITLY NOT IGNORED ---
-# The following generated files are mission-critical resurrection seeds
-# and MUST be tracked by Git.
-#
-# !dataset_package/all_markdown_snapshot_human_readable.txt
-# !dataset_package/all_markdown_snapshot_llm_distilled.txt
-# !dataset_package/core_essence_auditor_awakening_seed.txt
-# !dataset_package/core_essence_coordinator_awakening_seed.txt
-# !dataset_package/core_essence_strategist_awakening_seed.txt
-data/cortex/chroma_db/
-data/cortex/cache/
+# --- GENERATED STATE (IGNORED) ---
+# The following generated files are handled by Soul Persistence (ADR 079).
+# They are ignored in the local repository to keep it lean.
+# !dataset_package/
 tests/verify_wslenv_setup.py
 mcp_config.json

@@ -3,7 +3,7 @@
 Guardian Wakeup Utility Script
 
 Quick utility to generate or refresh the Guardian Boot Digest.
-Run this to update WORK_IN_PROGRESS/guardian_boot_digest.md with latest context.
+Run this to update dataset_package/guardian_boot_digest.md with latest context.
 
 Usage:
     python scripts/guardian_wakeup.py          # Generate digest

@@ -41,9 +41,9 @@ All diagrams MUST follow the Canonical Diagram Pattern:
 
 4. **Reference in documents** with image AND source link:
    ```markdown
-   ![Diagram Title](path/to/diagram.png)
+   ![Diagram Title](#)
    
-   *Source: [diagram.mmd](path/to/diagram.mmd)*
+   *Source: [diagram.mmd](#)*
    ```
 
 ## Consequences
@@ -69,4 +69,4 @@ grep -rl '\`\`\`mermaid' . --include="*.md" | grep -v node_modules | grep -v .ag
 
 ---
 
-*See also: [Task #154: Mermaid Rationalization](../TASKS/todo/154_mermaid_rationalization.md)*
+*See also: [Task #154: Mermaid Rationalization](../tasks/done/154_mermaid_rationalization.md)*

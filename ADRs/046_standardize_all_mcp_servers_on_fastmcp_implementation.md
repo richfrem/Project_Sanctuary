@@ -3,6 +3,7 @@
 **Status:** accepted
 **Date:** 2025-12-05
 **Author:** Antigravity Agent & Human Steward
+**Modified By:** ADR 066 (Dual-Stack Transport)
 
 
 ---

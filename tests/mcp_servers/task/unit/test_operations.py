@@ -8,17 +8,17 @@ import os
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 from mcp_servers.task.operations import TaskOperations
-from mcp_servers.task.models import TaskPriority, TaskStatus
+from mcp_servers.task.models import TaskPriority, taskstatus
 
 class TestTaskOperations:
     @pytest.fixture
     def setup_ops(self, tmp_path):
         # Create necessary directories
-        (tmp_path / "TASKS").mkdir()
-        (tmp_path / "TASKS" / "backlog").mkdir()
-        (tmp_path / "TASKS" / "todo").mkdir()
-        (tmp_path / "TASKS" / "in-progress").mkdir()
-        (tmp_path / "TASKS" / "done").mkdir()
+        (tmp_path / "tasks").mkdir()
+        (tmp_path / "tasks" / "backlog").mkdir()
+        (tmp_path / "tasks" / "todo").mkdir()
+        (tmp_path / "tasks" / "in-progress").mkdir()
+        (tmp_path / "tasks" / "done").mkdir()
         
         ops = TaskOperations(project_root=tmp_path)
         
@@ -39,7 +39,7 @@ class TestTaskOperations:
             objective="Do things",
             deliverables=["Item 1"],
             acceptance_criteria=["Works"],
-            status=TaskStatus.BACKLOG
+            status=taskstatus.BACKLOG
         )
 
         assert res.status == "success"
@@ -58,7 +58,7 @@ class TestTaskOperations:
     def test_update_task(self, setup_ops):
         """Test updating a task."""
         # Create initial task
-        setup_ops.create_task("Old", "Obj", ["Del"], ["Crit"], status=TaskStatus.BACKLOG)
+        setup_ops.create_task("Old", "Obj", ["Del"], ["Crit"], status=taskstatus.BACKLOG)
         
         # Mock task existence for update
         setup_ops.validator.task_exists.return_value = (True, str(setup_ops.tasks_dir / "backlog"))
@@ -82,13 +82,13 @@ class TestTaskOperations:
     def test_update_task_status_move(self, setup_ops):
         """Test moving task file on status change."""
         # Create in Backlog
-        setup_ops.create_task("Move Me", "Obj", ["Del"], ["Crit"], status=TaskStatus.BACKLOG)
+        setup_ops.create_task("Move Me", "Obj", ["Del"], ["Crit"], status=taskstatus.BACKLOG)
         
         # Mock task existence
         setup_ops.validator.task_exists.return_value = (True, str(setup_ops.tasks_dir / "backlog"))
         
         # Move to Todo
-        res = setup_ops.update_task_status(1, TaskStatus.TODO, "Moving up")
+        res = setup_ops.update_task_status(1, taskstatus.TODO, "Moving up")
         
         assert res.status == "success"
         

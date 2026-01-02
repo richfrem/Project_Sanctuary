@@ -44,9 +44,9 @@ The `execute_mcp_tool` function in `mcp_servers/gateway/gateway_client.py` is a 
 
 > **Key Insight:** Both Integration and E2E tests run **locally** (on your machine) but execute code **inside containers** via HTTP requests.
 
-![gateway_testing_architecture](docs/architecture_diagrams/system/gateway_testing_architecture.png)
+![gateway_testing_architecture](../../../docs/architecture_diagrams/system/gateway_testing_architecture.png)
 
-*[Source: gateway_testing_architecture.mmd](docs/architecture_diagrams/system/gateway_testing_architecture.mmd)*
+*[Source: gateway_testing_architecture.mmd](../../../docs/architecture_diagrams/system/gateway_testing_architecture.mmd)*
 
 ### 📊 Deep Dive into the Three Levels
 

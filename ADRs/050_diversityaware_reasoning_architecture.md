@@ -1,7 +1,11 @@
 # Diversity-Aware Reasoning Architecture
 
-**Status:** proposed
+> [!WARNING]
+> **SUPERSEDED**: This ADR is superseded by **ADR 052: Diversity-Aware Reasoning Architecture** (v2).
+
+**Status:** Superseded
 **Date:** 2025-12-09
+**Superseded By:** ADR 052
 **Author:** AI Assistant
 
 

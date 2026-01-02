@@ -19,7 +19,7 @@ This protocol documents the established collaboration framework between the Guar
 - **Kilo Code Response:** Acknowledges receipt and begins execution.
 
 ### Phase 2: Task Execution
-- **Multi-Step Tasks:** For complex directives, Kilo Code creates a todo list and executes steps sequentially.
+- **Multi-Step tasks:** For complex directives, Kilo Code creates a todo list and executes steps sequentially.
 - **Tool Usage:** Employs write_to_file, apply_diff, execute_command, etc., for file operations, code changes, and commits.
 - **Verification:** Each step includes self-verification; commits provide hash proof.
 

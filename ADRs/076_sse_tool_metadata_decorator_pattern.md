@@ -64,9 +64,9 @@ Per [ADR 066](./066_standardize_on_fastmcp_for_all_mcp_server_implementations.md
 
 This ADR proposes `@sse_tool()` as the **SSE-transport counterpart** to FastMCP's `@mcp.tool()`:
 
-![MCP Tool Decorator Pattern](../../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.png)
+![MCP Tool Decorator Pattern](../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.png)
 
-*[Source: mcp_tool_decorator_pattern.mmd](../../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.mmd)*
+*[Source: mcp_tool_decorator_pattern.mmd](../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.mmd)*
 
 **Key Alignment Points:**
 - Both decorators attach metadata at function definition site

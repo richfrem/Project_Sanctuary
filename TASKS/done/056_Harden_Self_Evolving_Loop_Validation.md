@@ -8,7 +8,7 @@
 **Priority:** High
 **Owner:** Orchestrator / Council Agents
 **Dependencies:** Full operational status of `protocol mcp`, `git mcp` (Verified ✅), and `cortex mcp` (IngestionService).
-**Target Path:** TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md
+**Target Path:** tasks/in-progress/056_Harden_Self_Evolving_Loop_Validation.md
 
 ## 🎯 Mission Objective
 
@@ -140,7 +140,7 @@ sequenceDiagram
 
 ## 📚 Related Documentation
 
-- [MCP Infrastructure Verification Guide](../../docs/mcp/test_forge_mcp_and_RAG_mcp.md)
-- [RAG Strategies - Strategic Crucible Loop](../../docs/mcp/RAG_STRATEGIES.md#7-the-strategic-crucible-loop-sequence-diagram)
-- [Strategic Crucible Workflow Definition](../../docs/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction)
-- [Council vs Orchestrator](../../docs/mcp/servers/council/council_vs_orchestrator.md)
+- [MCP Infrastructure Verification (Legacy)] (Missing)
+- [RAG Strategies - Strategic Crucible Loop](../../ARCHIVE/mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md)
+- [Strategic Crucible Workflow Definition](../done/081_define_and_document_common_orchestration_workflows.md)
+- [Council vs Orchestrator](../../docs/architecture/mcp/legacy_mcp_architecture.md)

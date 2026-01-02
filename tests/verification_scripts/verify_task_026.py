@@ -57,7 +57,7 @@ def verify_task_026():
     # 3. Test Safety Guardrails (Invalid Commit Message)
     print("\n3. Testing Safety Guardrails (Invalid Commit Message)...")
     result = create_git_commit_task(
-        files=["TASKS/backlog/test.md"],
+        files=["tasks/backlog/test.md"],
         message="bad message",
         description="Attempt bad commit"
     )

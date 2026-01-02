@@ -1,7 +1,7 @@
 #============================================
 # mcp_servers/task/server.py
 # Purpose: Task MCP Server.
-#          Provides tools for managing Project Tasks.
+#          Provides tools for managing Project tasks.
 # Role: Interface Layer
 # Used as: Main service entry point.
 #============================================
@@ -20,14 +20,14 @@ from mcp_servers.lib.path_utils import find_project_root
 from mcp_servers.lib.logging_utils import setup_mcp_logging
 from mcp_servers.task.operations import TaskOperations
 from mcp_servers.task.models import (
-    TaskStatus, 
+    taskstatus, 
     TaskPriority,
     TaskCreateRequest,
     TaskUpdateRequest,
     TaskUpdateStatusRequest,
     TaskGetRequest,
     TaskListRequest,
-    TaskSearchRequest
+    tasksearchRequest
 )
 
 # 1. Initialize Logging
@@ -37,7 +37,7 @@ logger = setup_mcp_logging("project_sanctuary.task")
 mcp = FastMCP(
     "project_sanctuary.task",
     instructions="""
-    Use this server to manage project tasks within the TASKS/ directory.
+    Use this server to manage project tasks within the tasks/ directory.
     - Create new tasks with objectives, deliverables, and criteria.
     - Update task metadata and content as work progresses.
     - Change task status to move them through the workflow (backlog -> todo -> in-progress -> done).
@@ -55,7 +55,7 @@ ops = TaskOperations(PROJECT_ROOT)
 
 @mcp.tool()
 async def task_create(request: TaskCreateRequest) -> str:
-    """Create a new task file in TASKS/ directory."""
+    """Create a new task file in tasks/ directory."""
     try:
         result = ops.create_task(
             title=request.title,
@@ -63,7 +63,7 @@ async def task_create(request: TaskCreateRequest) -> str:
             deliverables=request.deliverables,
             acceptance_criteria=request.acceptance_criteria,
             priority=TaskPriority(request.priority),
-            status=TaskStatus(request.status),
+            status=taskstatus(request.status),
             lead=request.lead,
             dependencies=request.dependencies,
             related_documents=request.related_documents,
@@ -95,7 +95,7 @@ async def task_update_status(request: TaskUpdateStatusRequest) -> str:
     try:
         result = ops.update_task_status(
             request.task_number,
-            TaskStatus(request.new_status),
+            taskstatus(request.new_status),
             request.notes
         )
         if result.status == "error":
@@ -134,7 +134,7 @@ async def task_get(request: TaskGetRequest) -> str:
 async def task_list(request: TaskListRequest) -> str:
     """List tasks with optional filters."""
     try:
-        status_filter = TaskStatus(request.status) if request.status else None
+        status_filter = taskstatus(request.status) if request.status else None
         priority_filter = TaskPriority(request.priority) if request.priority else None
         
         tasks = ops.list_tasks(status_filter, priority_filter)
@@ -152,7 +152,7 @@ async def task_list(request: TaskListRequest) -> str:
         raise ToolError(f"List failed: {str(e)}")
 
 @mcp.tool()
-async def task_search(request: TaskSearchRequest) -> str:
+async def task_search(request: tasksearchRequest) -> str:
     """Search tasks by content (full-text search)."""
     try:
         results = ops.search_tasks(request.query)

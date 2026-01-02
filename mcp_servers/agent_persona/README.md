@@ -317,9 +317,9 @@ python -m mcp_servers.agent_persona.server
 
 ## Related Documentation
 
-- [Council Orchestrator README](../../council_orchestrator/README.md)
+- [Council Orchestrator README](../../ARCHIVE/docs_council_orchestrator_legacy/README_v11.md)
 - [Council MCP README](../council/README.md)
-- [MCP Operations Inventory](../../docs/mcp/mcp_operations_inventory.md)
+- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md)
 - [ADR 040: Agent Persona MCP Architecture](../../ADRs/040_agent_persona_mcp_architecture__modular_council_members.md)
 - [ADR 039: MCP Server Separation of Concerns](../../ADRs/039_mcp_server_separation_of_concerns.md)
 

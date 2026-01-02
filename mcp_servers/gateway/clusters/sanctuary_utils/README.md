@@ -2,7 +2,7 @@
 
 **Fleet of 7 - Container #1: Low-risk utility tools**
 
-Part of the [Fleet of 7 Architecture](../../ADRs/060_gateway_integration_patterns.md) for containerized MCP servers.
+Part of the [Fleet of 7 Architecture](../../../../ADRs/060_gateway_integration_patterns.md) for containerized MCP servers.
 
 ## Overview
 

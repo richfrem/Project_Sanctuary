@@ -7,7 +7,7 @@
 **Dependencies:** Task #152 (Dual-Workflow Architecture)
 **Status:** ✅ COMPLETE (ADR 085 Approved)
 
-> **📋 Formalized as [ADR 085: Canonical Mermaid Diagram Management](../../../ADRs/085_canonical_mermaid_diagram_management.md)**
+> **📋 Formalized as [ADR 085: Canonical Mermaid Diagram Management](../../ADRs/085_canonical_mermaid_diagram_management.md)**
 
 ## 1. Objective
 Eliminate redundant Mermaid code blocks across the project to reduce "Mnemonic Bloat" in snapshots and ensure a Single Source of Truth (SSOT) for architectural protocols. Transition from "Inline Code" to a "Managed Asset" model.

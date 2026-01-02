@@ -46,7 +46,7 @@ ollama_models/
 !mcp_servers/**/*.md
 !00_CHRONICLE/**/*.md
 !01_PROTOCOLS/**/*.md
-!TASKS/**/*.md
+!tasks/**/*.md
 !ADRs/**/*.md
 
 # MCP Specific

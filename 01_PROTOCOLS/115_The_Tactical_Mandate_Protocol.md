@@ -14,20 +14,20 @@ A strategy without tactics is a dream. Tactics without a system are chaos. This 
 
 ## 2. The Mandate
 
-1.  **Single Point of Ingress:** All new, non-trivial work items must be initiated by the creation of a new, uniquely numbered markdown file in the `TASKS/backlog/` directory. Direct modification of code without a corresponding Tactical Mandate is a protocol violation.
+1.  **Single Point of Ingress:** All new, non-trivial work items must be initiated by the creation of a new, uniquely numbered markdown file in the `tasks/backlog/` directory. Direct modification of code without a corresponding Tactical Mandate is a protocol violation.
 2.  **Canonical Naming:** Task files must follow the strict naming convention: `XXX_short_descriptive_title.md`, where `XXX` is a zero-padded, three-digit number (e.g., `005_refactor_query_service.md`).
 
 To ensure sequential integrity, the next available task number **must** be obtained by running the sovereign scaffold: `python3 scripts/get_next_task_number.py`. Manual numbering is a protocol violation.
-3.  **Mandatory Schema:** Every task file must conform to the canonical schema defined in `TASKS/task_schema.md`. Unstructured or free-form task descriptions are forbidden.
+3.  **Mandatory Schema:** Every task file must conform to the canonical schema defined in `tasks/task_schema.md`. Unstructured or free-form task descriptions are forbidden.
 
 ## 3. The Tactical Mandate Schema
 
-The canonical schema is defined in `TASKS/task_schema.md`. All tasks must conform to this schema.
+The canonical schema is defined in `tasks/task_schema.md`. All tasks must conform to this schema.
 4. Workflow
-Creation: A new task is created in TASKS/backlog/. Its default status is backlog.
-Prioritization: The Guardian or Council moves a task to TASKS/todo/ to signal it is ready for work.
-Execution: The assigned agent moves the task to TASKS/in-progress/ upon commencing work.
-Completion: Upon meeting all acceptance criteria, the task is moved to the root TASKS/ directory and its status is updated to completed.
+Creation: A new task is created in tasks/backlog/. Its default status is backlog.
+Prioritization: The Guardian or Council moves a task to tasks/todo/ to signal it is ready for work.
+Execution: The assigned agent moves the task to tasks/in-progress/ upon commencing work.
+Completion: Upon meeting all acceptance criteria, the task is moved to the root tasks/ directory and its status is updated to completed.
 ```
 
 ---

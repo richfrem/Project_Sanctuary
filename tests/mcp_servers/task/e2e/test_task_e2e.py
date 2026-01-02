@@ -61,7 +61,7 @@ class TestTaskE2E(BaseE2ETest):
         print(f"\n🆕 create_task: {create_text}")
         
         # Parse path
-        # Output: "Created Task 999: TASKS/todo/999_E2E_Test_Task.md"
+        # Output: "Created Task 999: tasks/todo/999_E2E_Test_Task.md"
         match = re.search(r"Created Task (\d+): (.+)", create_text)
         assert match, f"Failed to parse creation response: {create_text}"
         
@@ -85,7 +85,7 @@ class TestTaskE2E(BaseE2ETest):
             assert "**Status:** todo" in get_text
             print("📄 get_task: Verified content")
 
-            # 4. List Tasks
+            # 4. List tasks
             list_res = mcp_client.call_tool("task_list", {"request": {"status": "todo"}})
             list_text = list_res.get("content", [])[0]["text"]
             assert f"{task_num:03d}" in list_text or f"{task_num}" in list_text
@@ -132,10 +132,10 @@ class TestTaskE2E(BaseE2ETest):
             # Check likely locations
             possible_paths = [
                 task_path,
-                PROJECT_ROOT / "TASKS/todo" / task_path.name,
-                PROJECT_ROOT / "TASKS/done" / task_path.name,
-                PROJECT_ROOT / "TASKS/backlog" / task_path.name,
-                PROJECT_ROOT / "TASKS/archive" / task_path.name
+                PROJECT_ROOT / "tasks/todo" / task_path.name,
+                PROJECT_ROOT / "tasks/done" / task_path.name,
+                PROJECT_ROOT / "tasks/backlog" / task_path.name,
+                PROJECT_ROOT / "tasks/archive" / task_path.name
             ]
             
             cleaned = False
@@ -147,7 +147,7 @@ class TestTaskE2E(BaseE2ETest):
             
             if not cleaned:
                 # Fallback glob cleanup for safety
-                found = list(PROJECT_ROOT.glob(f"TASKS/*/*{task_num}*.md"))
+                found = list(PROJECT_ROOT.glob(f"tasks/*/*{task_num}*.md"))
                 for f in found:
                     os.remove(f)
                     print(f"🧹 Cleaned up found file: {f}")
