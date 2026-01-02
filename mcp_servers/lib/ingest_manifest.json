@@ -14,7 +14,7 @@
         "docs",
         "forge",
         "scripts",
-        "STAGING_HF_SOUL",
+        "hugging_face_dataset_repo",
         "tests",
         "WORK_IN_PROGRESS",
         "mcp_servers",

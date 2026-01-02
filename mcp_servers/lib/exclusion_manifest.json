@@ -71,13 +71,13 @@
         "research",
         "safensors",
         "session_states",
-        "STAGING_HF_SOUL",
+        "hugging_face_dataset_repo",
         "temp",
         "tmp",
         "venv",
         "weights",
         "debug_logs",
-        "STAGING_HF_SOUL"
+        "hugging_face_dataset_repo"
     ],
     "always_exclude_files": [
         ".DS_Store",
@@ -100,7 +100,7 @@
         "nohup.out",
         "orchestrator-backup.py",
         "sanctuary_whole_genome_data.jsonl",
-        "STAGING_HF_SOUL/data/soul_traces.jsonl",
+        "hugging_face_dataset_repo/data/soul_traces.jsonl",
         "package.json",
         "package-lock.json"
     ],
