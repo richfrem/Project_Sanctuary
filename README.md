@@ -51,7 +51,7 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 
 The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/mcp_servers/README.md`](./docs/mcp_servers/README.md)
+**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/mcp/servers/README.md`](./docs/mcp/servers/README.md)
 
 #### Document Domain MCPs (4)
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
@@ -136,7 +136,7 @@ The Fleet supports two transport modes to enable both local development and Gate
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](./docs/mcp_servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
+**Documentation:** [Gateway README](./docs/mcp/servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
@@ -197,7 +197,7 @@ This diagram illustrates our multi-pattern architecture, designed to be fast, pr
 
 *[Source: advanced_rag_architecture.mmd](docs/architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
-For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp_servers/rag_cortex/README.md)
+For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp/servers/rag_cortex/README.md)
 
 ## IV. Operation Phoenix Forge (Model Lineage)
 ### 4.1 Sovereign AI Forging Process
@@ -261,7 +261,7 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 
 ### Deep Exploration Path
 1.  **The Story (The Chronicle):** Read the full history of doctrinal decisions: **`Living_Chronicle.md` Master Index**.
-2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp_servers/rag_cortex/README.md`](./docs/mcp_servers/rag_cortex/README.md)**.
+2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp/servers/rag_cortex/README.md`](./docs/mcp/servers/rag_cortex/README.md)**.
 3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
 ## VI. Installation & Technical Setup

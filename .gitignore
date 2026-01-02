@@ -34,6 +34,8 @@ __pycache__/
 eggs/
 *.egg-info/
 .pytest_cache/
+.ruff_cache/
+.benchmarks/
 .tox/
 pip-wheel-metadata/
 
@@ -74,6 +76,7 @@ chroma_db/
 chroma_db_backup*/
 .vector_data/
 ollama_models/ 
+.ollama_models/
 
 # Cognitive Glyphs - Optical compression artifacts for LLM sharing.
 # These are generated locally and contain massive content in compressed image format.
@@ -106,6 +109,7 @@ nohup.out
 mcp_servers/agent_persona/state/
 mcp_servers/rag_cortex/data/
 dataset_package/
+debug_logs/
 *.py.md
 tests/mcp_servers/operations_instrumentation.json
 
@@ -157,7 +161,7 @@ Modelfile
 WORK_IN_PROGRESS/AGORA_PoC_Core/
 
 # debug logs
-debug_logs/
+# Duplicate removed
 
 # MCP configuration files
 mcp_config/

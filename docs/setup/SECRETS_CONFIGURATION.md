@@ -9,7 +9,52 @@
 
 Project Sanctuary requires several API keys (OpenAI, Gemini, Hugging Face) to function. **NEVER** store these keys directly in `.env` files or commit them to the repository.
 
-Instead, we use **Environment Variables** injected into the shell session.
+## 📋 Canonical Environment Variables List
+
+To run Project Sanctuary on any machine, you must configure the following variables. Use `.env.example` as your template for the non-sensitive values.
+
+### 🔐 The Secrets (Export these in `.zshrc`, `.bashrc`, or Windows `WSLENV`)
+These are sensitive keys that should **never** be hardcoded in files.
+
+| Variable | Source | Purpose |
+| :--- | :--- | :--- |
+| `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/app/apikey) | Core reasoning engine (Bicameral logic) |
+| `OPENAI_API_KEY` | [OpenAI Dashboard](https://platform.openai.com/api-keys) | Alternative reasoning engine |
+| `HUGGING_FACE_TOKEN` | [HF Settings](https://huggingface.co/settings/tokens) | Soul Persistence & model downloads (Write access required) |
+| `GITHUB_TOKEN` | [GitHub PAT](https://github.com/settings/tokens) | Automated Git operations (MCP Git cluster) |
+| `MCPGATEWAY_BEARER_TOKEN` | Generated per instance | Secure authentication for the Fleet Gateway |
+
+### ⚙️ The Configuration (Set these in your local `.env`)
+These are project-specific paths and settings that are generally safe to keep in a locally ignored `.env`.
+
+| Variable | Recommended Value | Purpose |
+| :--- | :--- | :--- |
+| `PROJECT_ROOT` | `/path/to/Project_Sanctuary` | Absolute path to the repository root |
+| `PYTHONPATH` | `${PROJECT_ROOT}` | Ensures internal modules are importable |
+| `HUGGING_FACE_USERNAME` | your_hf_username | Used for automated uploads to your Hub |
+| `GIT_AUTHOR_NAME` | Your Name | Used by the `sanctuary_git` MCP container |
+| `GIT_AUTHOR_EMAIL` | your@email.com | Used by the `sanctuary_git` MCP container |
+| `OLLAMA_HOST` | `http://127.0.0.1:11434` | API endpoint for local LLM compute |
+| `CHROMA_HOST` | `127.0.0.1` | Host for the Mnemonic Cortex vector store |
+
+---
+
+## 🚀 Setup on a New Machine: The Checklist
+
+If you are moving to a new machine, follow this sequence to reach "Sanctuary parity":
+
+1.  **Clone the Repo**: `git clone <repo_url>`
+2.  **Initialize Environment**:
+    *   `cp .env.example .env`
+    *   Update `PROJECT_ROOT` and `PYTHONPATH` in `.env` to match the new local path.
+3.  **Inject Secrets**:
+    *   Follow the OS-specific guides below to export your `GEMINI_API_KEY`, `OPENAI_API_KEY`, `HUGGING_FACE_TOKEN`, `GITHUB_TOKEN`, and `MCPGATEWAY_BEARER_TOKEN`.
+4.  **Verify Secrets**:
+    *   Run `printenv GEMINI_API_KEY` to confirm availability.
+5.  **Build the Fleet**:
+    *   Run `make up` to build and start the Podman containers.
+6.  **Awaken the Guardian**:
+    *   Run `python3 scripts/init_session.py` to verify the complete connection chain.
 
 ---
 
@@ -36,6 +81,8 @@ Add the following lines to the bottom of the file:
 export GEMINI_API_KEY="your_gemini_key_here"
 export OPENAI_API_KEY="your_openai_key_here"
 export HUGGING_FACE_TOKEN="your_hf_token_here"
+export GITHUB_TOKEN="your_github_token_here"
+export MCPGATEWAY_BEARER_TOKEN="your_gateway_token_here"
 ```
 
 ### 3. Apply changes
@@ -81,7 +128,7 @@ Run this command in PowerShell to share your variables. This persists across res
 *   This tells Windows to share `VAR1`, `VAR2`, and `VAR3` with WSL.
 
 ```powershell
-[Environment]::SetEnvironmentVariable("WSLENV", "HUGGING_FACE_TOKEN:GEMINI_API_KEY:OPENAI_API_KEY", "User")
+[Environment]::SetEnvironmentVariable("WSLENV", "HUGGING_FACE_TOKEN:GEMINI_API_KEY:OPENAI_API_KEY:GITHUB_TOKEN:MCPGATEWAY_BEARER_TOKEN", "User")
 ```
 
 *Note: If you have other variables in `WSLENV` already, append them instead of overwriting.*
@@ -97,7 +144,7 @@ If you prefer clicking through menus instead of using PowerShell:
 3.  Enter the following details:
     *   **Variable name:** `WSLENV`
     *   **Variable value:** A colon-separated list of the *names* of the variables you want to share.
-    *   *Example Value:* `HUGGING_FACE_TOKEN:GEMINI_API_KEY:OPENAI_API_KEY`
+    *   *Example Value:* `HUGGING_FACE_TOKEN:GEMINI_API_KEY:OPENAI_API_KEY:GITHUB_TOKEN:MCPGATEWAY_BEARER_TOKEN`
 4.  Click **OK** to save.
 
 ## Step 3: Verify in WSL
@@ -154,6 +201,8 @@ macOS users can store secrets securely in their shell profile and make them avai
    export HUGGING_FACE_TOKEN="your_token_here"
    export OPENAI_API_KEY="your_key_here"
    export GEMINI_API_KEY="your_key_here"
+   export GITHUB_TOKEN="your_token_here"
+   export MCPGATEWAY_BEARER_TOKEN="your_token_here"
    ```
 3. Save the file and reload the configuration:
    ```bash
@@ -168,6 +217,8 @@ Terminal sessions inherit environment variables from the shell, but GUI applicat
 launchctl setenv HUGGING_FACE_TOKEN "$HUGGING_FACE_TOKEN"
 launchctl setenv OPENAI_API_KEY "$OPENAI_API_KEY"
 launchctl setenv GEMINI_API_KEY "$GEMINI_API_KEY"
+launchctl setenv GITHUB_TOKEN "$GITHUB_TOKEN"
+launchctl setenv MCPGATEWAY_BEARER_TOKEN "$MCPGATEWAY_BEARER_TOKEN"
 ```
 
 You may add these commands to the end of `~/.zprofile` so they run at login.
@@ -179,6 +230,8 @@ Open a new terminal window and run:
 printenv HUGGING_FACE_TOKEN
 printenv OPENAI_API_KEY
 printenv GEMINI_API_KEY
+printenv GITHUB_TOKEN
+printenv MCPGATEWAY_BEARER_TOKEN
 ```
 You should see the values you set.
 

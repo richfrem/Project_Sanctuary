@@ -544,8 +544,8 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - **Claude 4.5 Learning Loops:** Original framework for autonomous learning
 
 ### Technical Documentation
-- `docs/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
-- `docs/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
+- `docs/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
+- `docs/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
 
 ### MCP Server Documentation
 - **Code MCP:** `docs/mcp/servers/code/README.md`
