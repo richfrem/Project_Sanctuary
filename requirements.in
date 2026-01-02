@@ -1,0 +1,29 @@
+# Project Sanctuary - Core Dependencies
+# This file contains only the dependencies required for general development and CI/CD.
+# For ML fine-tuning dependencies, see requirements-finetuning.txt
+
+# --- CORE RAG & ORCHESTRATOR STACK ---
+langchain
+chromadb
+google-generativeai
+ollama
+
+# --- MCP SERVER DEPENDENCIES ---
+# Model Context Protocol SDK
+mcp>=1.0.0
+fastapi
+uvicorn
+sse-starlette
+
+# --- TESTING & DEVELOPMENT ---
+pytest>=8.0.0
+pytest-cov>=4.0.0
+pytest-anyio>=0.0.0
+
+# --- UTILITIES ---
+pyyaml
+python-dotenv
+
+# NOTE: Heavy ML dependencies (PyTorch, transformers, etc.) have been moved to
+# requirements-finetuning.txt to avoid conflicts and reduce CI/CD installation time.
+# Install those separately only when needed for model fine-tuning tasks.
