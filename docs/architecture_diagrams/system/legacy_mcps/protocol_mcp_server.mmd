@@ -1,0 +1,48 @@
+---
+config:
+  theme: base
+---
+%% Name: Protocol MCP Server Architecture
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/protocol_mcp_server.mmd
+%% Description: Architecture and tool flow for Protocol MCP Server
+
+graph LR
+    subgraph "Protocol MCP Tools"
+        A[create_protocol]
+        B[update_protocol]
+        C[get_protocol]
+        D[list_protocols]
+        E[search_protocols]
+        F[archive_protocol]
+    end
+    
+    subgraph "Operations"
+        G[Validate Schema]
+        H[Version Management]
+        I[Generate Markdown]
+        J[Git Commit + P101]
+    end
+    
+    subgraph "Storage"
+        K[01_PROTOCOLS/]
+    end
+    
+    A --> G
+    B --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    
+    C --> K
+    D --> K
+    E --> K
+    F --> K
+    
+    style A fill:#ccffcc
+    style B fill:#ffffcc
+    style C fill:#ccccff
+    style D fill:#ccccff
+    style E fill:#ccccff
+    style F fill:#ffcccc

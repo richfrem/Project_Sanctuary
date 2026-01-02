@@ -308,41 +308,9 @@ async def handle_tool_call(request: ToolRequest):
 
 ## Fleet of 7 Architecture Diagram
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>IBM ContextForge<br>localhost:4444<br>Stateless HTTP Proxy"]
-    
-    Gateway -- Docker Network --> Utils["<b>1. sanctuary_utils</b><br>(Low Risk) NEW<br>:8100/sse<br><br>• Time<br>• Calculator<br>• UUID<br>• String"]
-    Gateway -- Docker Network --> Filesystem["<b>2. sanctuary_filesystem</b><br>(Privileged) NEW<br>:8101/sse<br><br>• File Ops<br>• Grep<br>• Patch<br>• Code"]
-    Gateway -- Docker Network --> Network["<b>3. sanctuary_network</b><br>(External) NEW<br>:8102/sse<br><br>• Brave<br>• Fetch<br>• HTTP"]
-    Gateway -- Docker Network --> Git["<b>4. sanctuary_git</b><br>(Dual-Perm) NEW<br>:8103/sse<br><br>• Git Workflow"]
-    Gateway -- Docker Network --> Cortex
-    
-    subgraph Intelligence["<b>5. Intelligence Cluster</b>"]
-        Cortex["<b>5a. sanctuary_cortex</b><br>(MCP Server) NEW<br>:8104/sse<br><br>• RAG Query<br>• Ingest<br>• Cache"]
-        VectorDB["<b>5b. sanctuary_vector_db</b><br>(Backend Storage) EXISTING<br>:8110<br><br>• ChromaDB"]
-        Ollama["<b>5c. sanctuary_ollama</b><br>(Backend Compute) EXISTING<br>:11434<br><br>• Ollama LLM"]
-        
-        Cortex -- "Embeddings/Query" --> VectorDB
-        Cortex -- "LLM Inference" --> Ollama
-    end
+![mcp_gateway_fleet_detailed](docs/architecture_diagrams/system/mcp_gateway_fleet_detailed.png)
 
-    style Client fill:#e1f5ff,stroke:#0d47a1,stroke-width:2px
-    style Gateway fill:#fff4e1,stroke:#e65100,stroke-width:2px
-    style Utils fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    style Filesystem fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
-    style Network fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style Git fill:#ffebee,stroke:#c62828,stroke-width:2px
-    style Intelligence fill:#e0f2f1,stroke:#00695c,stroke-width:2px
-    style Cortex fill:#80cbc4,stroke:#00695c,stroke-width:2px
-    style VectorDB fill:#b2dfdb,stroke:#00695c,stroke-width:1px
-    style Ollama fill:#b2dfdb,stroke:#00695c,stroke-width:1px
-```
+*[Source: mcp_gateway_fleet_detailed.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet_detailed.mmd)*
 
 
 **Legend:**

@@ -1,0 +1,30 @@
+---
+config:
+  theme: base
+---
+%% Name: MCP Tool Decorator Pattern
+%% Source: ADR 076
+%% Location: docs/architecture_diagrams/system/mcp_tool_decorator_pattern.mmd
+%% Description: Sequence diagram showing how @sse_tool decorates functions and enables auto-registration with metadata
+
+sequenceDiagram
+    participant Dev as Developer
+    participant Func as Decorated Function
+    participant Dec as @sse_tool Decorator
+    participant Server as SSEServer
+    
+    Note over Dev, Func: 1. Definition Phase
+    Dev->>Func: Define function
+    Dev->>Dec: Apply @sse_tool(name, desc, schema)
+    Dec->>Func: Attach attributes (_sse_tool=True, _sse_name, _sse_desc)
+    
+    Note over Server, Func: 2. Registration Phase
+    Server->>Server: register_decorated_tools(locals())
+    loop For each object in namespace
+        Server->>Func: Check internal attribute: _sse_tool?
+        alt is decorated
+            Func-->>Server: Yes
+            Server->>Server: register_tool(name, handler, schema, description)
+            Note right of Server: Tool is registered with <br/>explicit metadata
+        end
+    end

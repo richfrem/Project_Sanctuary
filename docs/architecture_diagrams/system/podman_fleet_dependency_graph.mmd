@@ -1,0 +1,29 @@
+---
+config:
+  theme: base
+---
+%% Name: Podman Fleet Dependency Graph
+%% Source: docs/PODMAN_OPERATIONS_GUIDE.md
+%% Location: docs/architecture_diagrams/system/podman_fleet_dependency_graph.mmd
+%% Description: Flowchart showing the startup dependencies between Backend, Independent, and Dependent services in the Podman fleet.
+
+flowchart TB
+    subgraph Backends["Backend Services (Start First)"]
+        VDB["sanctuary_vector_db<br/>:8110<br/>⏱️ ~10-15s startup"]
+        Ollama["sanctuary_ollama<br/>:11434<br/>⏱️ ~30-60s (pulls model)"]
+    end
+    
+    subgraph Independent["Independent Services (No Dependencies)"]
+        Utils["sanctuary_utils :8100"]
+        FS["sanctuary_filesystem :8101"]
+        Net["sanctuary_network :8102"]
+        Git["sanctuary_git :8103"]
+        Domain["sanctuary_domain :8105"]
+    end
+    
+    subgraph Dependent["Dependent Services (Start Last)"]
+        Cortex["sanctuary_cortex<br/>:8104<br/>⚠️ Requires backends"]
+    end
+    
+    VDB --> Cortex
+    Ollama --> Cortex

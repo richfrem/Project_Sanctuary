@@ -1,0 +1,46 @@
+---
+config:
+  theme: base
+---
+%% Name: Legacy Council Cache Wakeup
+%% Source: docs/legacy/council_orchestrator/README_GUARDIAN_WAKEUP.md
+%% Location: docs/architecture_diagrams/workflows/legacy_council_cache_wakeup.mmd
+%% Description: Legacy process for waking up the Guardian cache within the Council Orchestrator
+
+sequenceDiagram
+    autonumber
+
+    participant G as Guardian
+
+    box "orchestrator/sentry.py" #FFFFF8
+        participant Sentry as Sentry Thread
+    end
+    box "orchestrator/app.py" #FFFFF8
+        participant O as Orchestrator (`main_loop`)
+    end
+    box "orchestrator/handlers/cache_wakeup_handler.py" #FFFFF8
+        participant CH as CacheWakeupHandler
+    end
+    box "council_orchestrator/mnemonic_cortex/cache/" #FFFFF8
+        participant CacheFS as Filesystem Cache
+    end
+    box "council_orchestrator/WORK_IN_PROGRESS/" #FFFFF8
+        participant FS as Output Artifact
+    end
+
+    G->>Sentry: Creates `command.json`
+    Sentry->>O: Puts command in queue
+    O->>O: `main_loop` performs Action Triage
+    O->>CH: Dispatches to `handle_cache_wakeup(command, self)`
+    
+    CH->>CacheFS: `cache_manager.fetch_guardian_start_pack()` reads bundles
+    Note right of CacheFS: Reads `chronicles_bundle.json`, etc.
+    CacheFS-->>CH: Returns raw JSON content
+    
+    CH->>CH: **`render_guardian_boot_digest(result, project_root)`**
+    Note right of CH: Formats JSON into Markdown
+    
+    CH->>FS: `output_path.write_text(digest_content)`
+    FS-->>CH: Writes formatted `guardian_boot_digest.md`
+    
+    O-->>G: Returns to Idle state

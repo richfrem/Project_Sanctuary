@@ -1,5 +1,9 @@
 # Task #027: Project Sanctuary MCP Ecosystem Strategy
 
+> [!NOTE]
+> **ADR 085 Compliance Note:** This completed task predates [ADR 085](../../ADRs/085_canonical_mermaid_diagram_management.md). Inline Mermaid diagrams are preserved for historical accuracy.
+
+
 **Status:** Backlog  
 **Priority:** Critical  
 **Estimated Effort:** 2-3 weeks (across all MCP servers)  

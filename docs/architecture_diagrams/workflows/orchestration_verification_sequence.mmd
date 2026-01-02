@@ -1,0 +1,41 @@
+---
+config:
+  theme: base
+---
+%% Name: Orchestration Verification Sequence
+%% Source: docs/mcp_servers/research/test_forge_mcp_and_RAG_mcp.md
+%% Location: docs/architecture_diagrams/workflows/orchestration_verification_sequence.mmd
+%% Description: Sequence diagram for verifying the orchestration flow involving User, Orchestrator, Council, Persona, Cortex, and Forge.
+
+sequenceDiagram
+    participant User
+    participant Orchestrator
+    participant Council
+    participant Persona as Agent Persona
+    participant Cortex as RAG Cortex
+    participant Forge as Forge LLM
+    participant Ollama
+
+    User->>Orchestrator: dispatch_mission("Review Protocol 101")
+    
+    Orchestrator->>Council: dispatch("Analyze Protocol 101")
+    
+    Council->>Cortex: query("Protocol 101")
+    Cortex-->>Council: Document content
+    
+    Council->>Persona: dispatch(role="auditor", task, context)
+    Persona->>Forge: query_model(prompt)
+    Forge->>Ollama: chat(model, messages)
+    Ollama-->>Forge: response
+    Forge-->>Persona: response
+    Persona-->>Council: audit findings
+    
+    Council->>Persona: dispatch(role="strategist", task, context)
+    Persona->>Forge: query_model(prompt)
+    Forge->>Ollama: chat(model, messages)
+    Ollama-->>Forge: response
+    Forge-->>Persona: response
+    Persona-->>Council: strategic recommendations
+    
+    Council-->>Orchestrator: deliberation result
+    Orchestrator-->>User: mission complete

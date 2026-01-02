@@ -179,20 +179,9 @@ The Git Workflow MCP implements a **strict safety system** to prevent dangerous 
 
 ### Required Sequence
 
-```mermaid
-graph TD
-    A[git_get_status] --> B{On feature branch?}
-    B -->|No| C[git_start_feature]
-    B -->|Yes| D[git_add files]
-    C --> D
-    D --> E[git_diff to verify]
-    E --> F[git_smart_commit]
-    F --> G[git_push_feature]
-    G --> H[Create PR on GitHub]
-    H --> I[Wait for user to merge PR]
-    I --> J[git_finish_feature]
-    J --> K[Back to main]
-```
+![git_workflow_sequence](docs/architecture_diagrams/workflows/git_workflow_sequence.png)
+
+*[Source: git_workflow_sequence.mmd](docs/architecture_diagrams/workflows/git_workflow_sequence.mmd)*
 
 ### Out-of-Sequence Prevention
 

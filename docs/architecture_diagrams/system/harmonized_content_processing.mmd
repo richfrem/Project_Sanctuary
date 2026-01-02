@@ -1,0 +1,45 @@
+---
+config:
+  theme: base
+  layout: dagre
+---
+%% Name: Harmonized Content Processing
+%% Description: Unified content processing ecosystem showing the ContentProcessor orchestrator and consumer systems (Forge, RAG, Soul)
+%% Location: docs/architecture_diagrams/system/harmonized_content_processing.mmd
+
+flowchart TB
+    subgraph consumers["Consumer Systems (Input/Output)"]
+        Forge["Forge Fine-Tuning<br/>(Dataset Generation)"]
+        RAG["RAG Vector DB<br/>(Initial Ingestion)"]
+        Soul["Soul Persistence<br/>(Context Broadcasting)"]
+    end
+    
+    subgraph lib["mcp_servers/lib/ (Harmonized Layer)"]
+        CP["<b>ContentProcessor</b><br/>(Main Orchestrator)"]
+        EC["<b>exclusion_config</b><br/>(Pattern Rules)"]
+        CTM["<b>code_to_markdown</b><br/>(AST Processing)"]
+        SU["<b>snapshot_utils</b><br/>(Snapshot Generation)"]
+        HF["<b>hf_utils</b><br/>(HF Interaction)"]
+    end
+    
+    Forge --> CP
+    RAG --> CP
+    Soul --> CP
+    
+    CP --> EC
+    CP --> CTM
+    CP --> SU
+    SU --> HF
+    
+    subgraph outputs["Artifact Generation"]
+        FullGenome["markdown_snapshot_full_genome.txt"]
+        Distilled["llm_distilled_context.txt"]
+    end
+    
+    SU --> FullGenome
+    SU --> Distilled
+
+    style CP fill:#4CAF50,color:#fff,stroke-width:2px
+    style EC fill:#2196F3,color:#fff
+    style consumers fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5
+    style lib fill:#fff,stroke:#333,stroke-width:2px

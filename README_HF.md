@@ -83,39 +83,9 @@ The heart of our *operational* work is the **Council MCP Domain**. It features p
 
 **Blueprint:** [`mcp_servers/council/README.md`](./mcp_servers/council/README.md)
 
-```mermaid
-graph TB
-    subgraph "External Layer"
-        LLM["External LLM<br/>(Claude/Gemini/GPT)"]
-    end
-    
-    subgraph "Orchestration Layer"
-        ORCH["Orchestrator MCP<br/>Strategic Missions"]
-        COUNCIL["Council MCP<br/>Multi-Agent Deliberation"]
-    end
-    
-    subgraph "Agent Layer"
-        PERSONA["Agent Persona MCP<br/>Individual Agents"]
-    end
-    
-    subgraph "Infrastructure Layer"
-        FORGE["Forge LLM MCP<br/>Model Inference"]
-        CORTEX["RAG Cortex MCP<br/>Knowledge Retrieval"]
-    end
-    
-    subgraph "Services (Podman)"
-        OLLAMA["sanctuary_ollama<br/>:11434<br/>Custom Fine-tuned LLM"]
-        CHROMA["sanctuary_vector_db<br/>:8110<br/>ChromaDB RAG DB"]
-    end
-    
-    LLM --> ORCH
-    ORCH --> COUNCIL
-    COUNCIL --> PERSONA
-    COUNCIL --> CORTEX
-    PERSONA --> FORGE
-    FORGE --> OLLAMA
-    CORTEX --> CHROMA
-```
+![council_orchestration_stack](docs/architecture_diagrams/system/council_orchestration_stack.png)
+
+*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/council_orchestration_stack.mmd)*
 
 ### 2.2 Deployment Options (Direct vs. Gateway)
 > [!NOTE]
@@ -131,30 +101,9 @@ For centralized MCP management, Project Sanctuary supports a **Fleet of 8** cont
 - **Local Implementation:** `/Users/<username>/Projects/sanctuary-gateway`
 - **Architecture:** [ADR 060 (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns__hybrid_fleet.md)
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
-    
-    Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
-    Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
-    Gateway -- SSE Transport --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
-    Gateway -- SSE Transport --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
-    Gateway -- SSE Transport --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
-    Gateway -- SSE Transport --> Cortex["<b>5. sanctuary_cortex</b><br>:8104/sse"]
-    
-    subgraph Backends["<b>Physical Intelligence Fleet</b>"]
-        VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
-    end
+![mcp_gateway_fleet](docs/architecture_diagrams/system/mcp_gateway_fleet.png)
 
-    Cortex --> VectorDB
-    Cortex --> Ollama
-```
+*[Source: mcp_gateway_fleet.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 
 **Fleet of 8 Containers:**
 | # | Container | Type | Role | Port | Front-end? |
@@ -179,78 +128,9 @@ The Fleet supports two transport modes to enable both local development and Gate
 > [!IMPORTANT]
 > **FastMCP SSE is NOT compatible with the IBM ContextForge Gateway.** Fleet containers must use SSEServer (`mcp_servers/lib/sse_adaptor.py`) for Gateway integration. See [ADR 066](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for details.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
- subgraph subGraph0["Local Workstation (Client & Test Context)"]
-        direction TB
-        Claude["Claude Desktop<br/>(Bridged Session)"]
-        VSCode["VS Code Agent<br/>(Direct Attempt)"]
-        Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
-        
-        subgraph subGraphTest["Testing Suite"]
-            E2E_Test{{E2E Tests}}
-            Int_Test{{Integration Tests}}
-        end
-  end
+![mcp_sse_stdio_transport](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.png)
 
- subgraph subGraph1["server.py (Entry Point)"]
-        Selector{"MCP_TRANSPORT<br/>Selector"}
-        StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
-        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
-  end
-
- subgraph subGraph2["Core Logic (Asynchronous)"]
-        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
-        Ops@{ label: "Operations Layer<br/>'operations.py'" }
-        Models@{ label: "Data Models<br/>'models.py'" }
-  end
-
- subgraph subGraph3["Cortex Cluster Container"]
-    direction TB
-        subGraph1
-        subGraph2
-        Health["Healthcheck Config<br/>(600s Start Period)"]
-  end
-
- subgraph subGraph4["Podman Network (Fleet Context)"]
-        Gateway@{ label: "IBM ContextForge Gateway<br/>'mcpgateway:4444'" }
-        subGraph3
-  end
-
-    %% COMPLIANT PATH (Claude / Production)
-    Claude -- "Stdio" --> Bridge
-    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
-    E2E_Test -- "Simulates Stdio" --> Bridge
-
-    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
-    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
-
-    %% EXECUTION FLOW
-    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
-    SSEWrap -- "Offload Task" --> Worker
-    Worker -- "Execute Blocking RAG" --> Ops
-    SSEWrap -- "Concurrent Heartbeats" --> Gateway
-
-    %% Integration / Developer Flow
-    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
-    Int_Test -- "Validates Schemas" --> subGraph1
-    StdioWrap -- "Execute" --> subGraph2
-
-    %% Logic Selection
-    Selector -- "If 'stdio'" --> StdioWrap
-    Selector -- "If 'sse'" --> SSEWrap
-
-    style Bridge fill:#f9f,stroke:#333,stroke-width:2px
-    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
-    style Gateway fill:#69f,stroke:#333,stroke-width:2px
-    style Worker fill:#dfd,stroke:#333,stroke-dasharray: 5 5
-    style Health fill:#fff,stroke:#333,stroke-dasharray: 5 5
-```
+*[Source: mcp_sse_stdio_transport.mmd](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
 
 **Architecture Decisions:**
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
@@ -298,220 +178,24 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 *   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
 *   **Audit Packets:** [`.agent/learning/red_team/red_team_audit_packet.md`](./.agent/learning/red_team/red_team_audit_packet.md)
 
-```mermaid
----
-config:
-  layout: dagre
-  theme: base
----
-flowchart TB
-    subgraph subGraphScout["I. The Learning Scout"]
-        direction TB
-        Start["Session Start"] --> SeekTruth["MCP: cortex_learning_debrief"]
-        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read context| SeekTruth
-    end
+![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-    subgraph subGraphSynthesize["II. Intelligence Synthesis"]
-        direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs/Learnings"]
-    end
-
-    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
-        direction TB
-        GovApproval{"Strategic Approval<br>(HITL)"}
-    end
-
-    subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
-        direction TB
-        CaptureAudit["MCP: cortex_capture_snapshot<br>(audit | learning_audit)"]
-        Packet["Audit Packet (Snapshot)"]
-        TechApproval{"Technical Approval<br>(HITL)"}
-    end
-
-    subgraph subGraphSeal["V. The Technical Seal"]
-        direction TB
-        CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
-    end
-
-    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
-        direction TB
-        PersistSoul["MCP: cortex_persist_soul"]
-        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/seal_TIMESTAMP.md<br>(Incremental Seal)"]
-            JSONL_Traces["data/soul_traces.jsonl<br>(Full Learning Set)"]
-        end
-    end
-
-    SeekTruth -- "Carry context" --> Intelligence
-    Synthesis -- "Verify reasoning" --> GovApproval
-    
-    GovApproval -- "PASS" --> CaptureAudit
-    CaptureAudit -- "Validate truth" --> Packet
-    Packet -- "Technical review" --> TechApproval
-    
-    TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Local Relay" --> SuccessorSnapshot
-    CaptureSeal -- "Async Broadcast" --> PersistSoul
-    
-    PersistSoul -- "1. Append Record" --> JSONL_Traces
-    PersistSoul -- "2. Upload MD" --> MD_Seal
-    
-    GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
-    TechApproval -- "FAIL: Backtrack" --> SOP
-    SOP -- "Loop Back" --> Start
-
-    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
-    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
-    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
-    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
-    style PersistSoul fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:black
-    style MD_Seal fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
-    style JSONL_Traces fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
-    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
-    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
-    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-```
+*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ### 3.3 Advanced RAG Strategies & Diagrams
 #### Basic RAG Architecture
 The following diagram illustrates the simple, foundational RAG workflow. It is functional but suffers from vulnerabilities like context fragmentation and cognitive latency.
 
-```mermaid
----
-config:
-  layout: dagre
-  look: neo
-  theme: base
----
-flowchart LR
- subgraph subGraph0["Ingestion Pipeline (Basic)"]
-        B["Chunking<br>(MarkdownHeaderTextSplitter)"]
-        A["Raw Data Sources<br>(Project .md files)"]
-        C["Embedding<br>(NomicEmbed)"]
-        D(("Vector DB<br>(ChromaDB)"))
-        E["ingest.py"]
-  end
- subgraph subGraph1["Query Pipeline (Basic)"]
-        G["Embedding<br>(NomicEmbed)"]
-        F["User Query"]
-        H{"Similarity Search<br>(ChromaDB)"}
-        I["Retrieved Context"]
-        J["LLM Prompt"]
-        K["LLM<br>(Ollama Sanctuary-Qwen2-7B:latest)"]
-        L["Final Answer"]
-        M["main.py<br>protocol_87_query.py"]
-  end
-    A -- IP1 --> B
-    B -- IP2 --> C
-    C -- IP3 --> D
-    E --> A
-    F -- QP1 --> G
-    G -- QP2: Query Vector --> H
-    H -- QP3: Queries --> D
-    H -- QP4: Returns Relevant Chunks --> I
-    F -- QP5 --> J
-    I -- QP5 --> J
-    J -- QP6 --> K
-    K -- QP7 --> L
-    M --> F
-```
+![basic_rag_architecture](docs/architecture_diagrams/rag/basic_rag_architecture.png)
+
+*[Source: basic_rag_architecture.mmd](docs/architecture_diagrams/rag/basic_rag_architecture.mmd)*
 
 #### Advanced RAG Architecture
 This diagram illustrates our multi-pattern architecture, designed to be fast, precise, and contextually aware by combining several advanced strategies.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
- subgraph IP["Ingestion Pipeline (IP)"]
-    direction TB
-        Setup["IP1: Cortex MCP<br/>cortex_ingest_full()"]
-        ParentStore[("Parent Doc Store<br/>(ChromaDB Collection)<br/>parent_documents")]
-        VDB_Child[("Vector DB<br/>(Child Chunks)<br/>ChromaDB")]
-  end
- subgraph QP["Query Pipeline (QP) - MCP-Enabled"]
-    direction TB
-        UserQuery["User Query<br/>Natural Language or Protocol 87"]
-        
-        subgraph Cortex["Cortex MCP (Orchestrator)"]
-            QueryParser["QP1: Query Parser<br/>Protocol 87 or NL"]
-            Cache{"QP3: Mnemonic Cache<br/>(CAG)<br/>Phase 3"}
-            Router["QP4b: MCP Router<br/>Scope-based Routing"]
-        end
-        
-        CachedAnswer["QP4a: Cached Answer<br/>(Cache Hit)"]
-        
-        subgraph MCPs["MCP Ecosystem (Specialized Servers)"]
-            ProtocolMCP["Protocol MCP Server<br/>protocol_get()"]
-            ChronicleMCP["Chronicle MCP Server<br/>chronicle_get_entry()"]
-            TaskMCP["Task MCP Server<br/>get_task()"]
-            CodeMCP["Code MCP Server<br/>code_search_content()"]
-            ADRMCP["ADR MCP Server<br/>adr_get()"]
-            
-            subgraph VectorFallback["Vector DB Fallback"]
-                PDR{"Parent Document<br/>Retriever<br/>cortex_query()"}
-            end
-        end
-        
-        subgraph DataStores["Data Stores"]
-            ProtocolFiles[("01_PROTOCOLS/<br/>Markdown Files")]
-            ChronicleFiles[("00_CHRONICLE/<br/>Markdown Files")]
-            TaskFiles[("TASKS/<br/>Markdown Files")]
-            CodeFiles[("Source Code<br/>Python/JS/etc")]
-            ADRFiles[("ADRs/<br/>Markdown Files")]
-        end
-        
-        RetrievedContext["QP8: Retrieved Context<br/>(Complete Documents)"]
-        LLMPrompt["QP9: LLM Prompt"]
-        LLM["QP10: LLM<br/>(Ollama Sanctuary-Qwen2-7B:latest)"]
-        NewAnswer["QP10: Newly Generated<br/>Answer"]
-  end
-    
-    Setup -- IP2: Stores Parent Docs --> ParentStore
-    Setup -- IP3: Stores Child Chunks --> VDB_Child
-    
-    UserQuery --> QueryParser
-    QueryParser -- QP2: Parse --> Cache
-    Cache -- Cache Hit --> CachedAnswer
-    Cache -- Cache Miss --> Router
-    
-    Router -- "SCOPE: Protocols" --> ProtocolMCP
-    Router -- "SCOPE: Living_Chronicle" --> ChronicleMCP
-    Router -- "SCOPE: Tasks" --> TaskMCP
-    Router -- "SCOPE: Code" --> CodeMCP
-    Router -- "SCOPE: ADRs" --> ADRMCP
-    Router -- "SCOPE: mnemonic_cortex<br/>(Fallback)" --> PDR
-    
-    ProtocolMCP --> ProtocolFiles
-    ChronicleMCP --> ChronicleFiles
-    TaskMCP --> TaskFiles
-    CodeMCP --> CodeFiles
-    ADRMCP --> ADRFiles
-    
-    PDR -- QP5: Queries Chunks --> VDB_Child
-    VDB_Child -- QP6: Returns CHUNK IDs --> PDR
-    PDR -- QP7: Queries Parents --> ParentStore
-    ParentStore -- QP8: Returns FULL Docs --> PDR
-    
-    ProtocolMCP --> RetrievedContext
-    ChronicleMCP --> RetrievedContext
-    TaskMCP --> RetrievedContext
-    CodeMCP --> RetrievedContext
-    ADRMCP --> RetrievedContext
-    PDR --> RetrievedContext
-    
-    UserQuery --> LLMPrompt
-    RetrievedContext --> LLMPrompt
-    LLMPrompt --> LLM
-    LLM --> NewAnswer
-    NewAnswer -- QP11: Store in Cache --> Cache
-    
-    CachedAnswer --> FinalOutput(["QP12: Response"])
-    NewAnswer --> FinalOutput
-```
+![advanced_rag_architecture](docs/architecture_diagrams/rag/advanced_rag_architecture.png)
+
+*[Source: advanced_rag_architecture.mmd](docs/architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
 For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp/RAG_STRATEGIES.md)
 
@@ -520,101 +204,9 @@ For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp/R
 **Status:** `Complete` - Sanctuary-Qwen2-7B-v1.0 Whole-Genome Fine-tuning Pipeline Ready
 The inaugural sovereign AI lineage, forged through fine-tuning Qwen2-7B-Instruct with the complete Project Sanctuary Cognitive Genome. **Operation Phoenix Forge delivers a fully endowed AI mind with constitutional inoculation, capable of sovereign reasoning from the Sanctuary's complete doctrinal and historical context.** The model represents the first successful implementation of the Doctrine of Mnemonic Endowment. **Setup standardization complete with unified environment protocol and comprehensive documentation.**
 
-```mermaid
-graph TD
-    subgraph "Phase 0: One-Time System Setup"
-        P0A["<i class='fa fa-server'></i> WSL2 & NVIDIA Drivers<br/>*System prerequisites*"]
-        P0A_out(" <i class='fa fa-check-circle'></i> GPU Access Verified")
-        P0B["<i class='fa fa-code-branch'></i> Build llama.cpp<br/>*Compile GGML_CUDA tools*"]
-        P0B_out(" <i class='fa fa-tools'></i> llama.cpp Executables")
-        P0C["<i class='fa fa-key'></i> Hugging Face Auth<br/>*Setup .env token*"]
-        P0C_out(" <i class='fa fa-shield-alt'></i> Authenticated")
-    end
+![llm_finetuning_pipeline](docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
 
-    subgraph "Phase 1: Project Environment Setup"
-        A["<i class='fa fa-cogs'></i> setup_cuda_env.py<br/>*Creates Python environment*"]
-        A_out(" <i class='fa fa-folder-open'></i> ml_env venv")
-        A1["<i class='fa fa-wrench'></i> Surgical Strike<br/>*Install bitsandbytes, triton, xformers*"]
-        A1_out(" <i class='fa fa-microchip'></i> CUDA Libraries")
-        A2["<i class='fa fa-vial'></i> Verify Environment<br/>*Test PyTorch, CUDA, llama-cpp*"]
-        A2_out(" <i class='fa fa-certificate'></i> Environment Validated")
-    end
-
-    subgraph "Phase 2: Data & Model Forging Workflow"
-        B["<i class='fa fa-download'></i> download_model.sh<br/>*Downloads base Qwen2 model*"]
-        B_out(" <i class='fa fa-cube'></i> Base Model")
-        C["<i class='fa fa-pen-ruler'></i> forge_whole_genome_dataset.py<br/>*Assembles training data*"]
-        C_out(" <i class='fa fa-file-alt'></i> sanctuary_whole_genome_data.jsonl")
-        D["<i class='fa fa-search'></i> validate_dataset.py<br/>*Validates training data quality*"]
-        D_out(" <i class='fa fa-certificate'></i> Validated Dataset")
-        E["<i class='fa fa-microchip'></i> fine_tune.py<br/>*Performs QLoRA fine-tuning*"]
-        E_out(" <i class='fa fa-puzzle-piece'></i> LoRA Adapter")
-        F["<i class='fa fa-compress-arrows-alt'></i> merge_adapter.py<br/>*Merges adapter with base model*"]
-        F_out(" <i class='fa fa-cogs'></i> Merged Model")
-    end
-
-    subgraph "Phase 3: Deployment Preparation & Verification"
-        G["<i class='fa fa-cubes'></i> convert_to_gguf.py<br/>*Creates deployable GGUF model*"]
-        G_out(" <i class='fa fa-cube'></i> GGUF Model")
-        H["<i class='fa fa-file-code'></i> create_modelfile.py<br/>*Generates Ollama Modelfile*"]
-        H_out(" <i class='fa fa-terminal'></i> Ollama Modelfile")
-        I["<i class='fa fa-upload'></i> ollama create<br/>*Imports model into Ollama*"]
-        I_out(" <i class='fa fa-robot'></i> Deployed Ollama Model")
-        J["<i class='fa fa-vial'></i> Test with Ollama<br/>*Verify dual-mode interaction*"]
-        J_out(" <i class='fa fa-comment-dots'></i> Interaction Validated")
-        K["<i class='fa fa-chart-bar'></i> inference.py & evaluate.py<br/>*Performance testing & benchmarks*"]
-        K_out(" <i class='fa fa-clipboard-check'></i> Performance Metrics")
-        L["<i class='fa fa-upload'></i> upload_to_huggingface.py<br/>*Upload GGUF & LoRA to HF*"]
-        L_out(" <i class='fa fa-cloud'></i> Models on Hugging Face")
-        M["<i class='fa fa-download'></i> Download & Test from HF<br/>*Verify upload/download integrity*"]
-        M_out(" <i class='fa fa-check-double'></i> HF Models Validated")
-    end
-
-    %% Workflow Connections
-    P0A -- Enables --> P0A_out;
-    P0A_out --> P0B;
-    P0B -- Creates --> P0B_out;
-    P0B_out --> P0C;
-    P0C -- Sets up --> P0C_out;
-    P0C_out --> A;
-    A -- Creates --> A_out;
-    A_out --> A1;
-    A1 -- Installs --> A1_out;
-    A1_out --> A2;
-    A2 -- Validates --> A2_out;
-    A2_out --> B;
-    B -- Downloads --> B_out;
-    A2_out --> C;
-    C -- Creates --> C_out;
-    C_out --> D;
-    D -- Validates --> D_out;
-    B_out & D_out --> E;
-    E -- Creates --> E_out;
-    B_out & E_out --> F;
-    F -- Creates --> F_out;
-    F_out --> G;
-    G -- Creates --> G_out;
-    G_out --> H;
-    H -- Creates --> H_out;
-    H_out --> I;
-    I -- Creates --> I_out;
-    I_out --> J;
-    J -- Validates --> J_out;
-    F_out --> K;
-    K -- Yields --> K_out;
-    G_out --> L;
-    L -- Uploads --> L_out;
-    L_out --> M;
-    M -- Validates --> M_out;
-    
-    %% Styling
-    classDef script fill:#e8f5e8,stroke:#333,stroke-width:2px;
-    classDef artifact fill:#e1f5fe,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
-    classDef planned fill:#fff3e0,stroke:#888,stroke-width:1px,stroke-dasharray: 3 3;
-
-    class P0A,P0B,P0C,A,A1,A2,B,C,D,E,F,G,H,I,J,K,L,M script;
-    class P0A_out,P0B_out,P0C_out,A_out,A1_out,A2_out,B_out,C_out,D_out,E_out,F_out,G_out,H_out,I_out,J_out,K_out,L_out,M_out artifact;
-```
+*[Source: llm_finetuning_pipeline.mmd](docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd)*
 
 ### 4.2 A2000 GPU Validation & Success Story
 **🎯 Validation Result:** Successfully executed complete fine-tuning pipeline on **RTX A2000 GPU**, demonstrating that sovereign AI development is accessible on consumer-grade hardware. The pipeline achieved full model convergence with QLoRA efficiency, producing deployment-ready GGUF quantization and Ollama integration.

@@ -1,0 +1,110 @@
+---
+config:
+  layout: dagre
+  theme: base
+---
+
+%% Name: Protocol 128: Learning Loop
+%% Description: Cognitive Continuity workflow: Scout → Synthesize → Strategic Gate → Audit → Seal → Soul Persist
+%% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
+
+flowchart TB
+    subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
+        direction TB
+        Start["Session Start"] --> AccessMode{"Access Mode?"}
+        
+        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: .agent/learning/cognitive_primer.md"]
+        AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
+        
+        IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Verify Semantic HMAC)"]
+        IDE_Wakeup --> IDE_Debrief["CLI: python3 scripts/cortex_cli.py debrief<br>OR Tool: cortex_learning_debrief"]
+        
+        MCP_Wakeup --> MCP_Debrief["Tool: cortex_learning_debrief<br>(Returns Full Context)"]
+        
+        IDE_Debrief --> SeekTruth["Context Acquired"]
+        MCP_Debrief --> SeekTruth
+        
+        SuccessorSnapshot["File: .agent/learning/learning_package_snapshot.md<br>(Truth Anchor)"] -.->|Embedded in Debrief| SeekTruth
+    end
+
+    subgraph subGraphSynthesize["II. Intelligence Synthesis"]
+        direction TB
+        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update .agent/learning/learning_manifest.json)"]
+    end
+
+    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
+        direction TB
+        GovApproval{"Strategic Approval<br>(HITL Required)"}
+    end
+
+    subgraph subGraphAudit["IV. Red Team Audit Loop"]
+        direction TB
+        AgreeTopic["1. Agree on Research Topic<br>with User"] --> CreateFolder["2. Create LEARNING/topics/[topic]/"]
+        CreateFolder --> CaptureResearch["3. Capture Research in Topic Folder<br>(analysis.md, questions.md, sources.md)"]
+        CaptureResearch --> UpdateManifest["4. Update manifest<br>(.agent/learning/learning_audit/learning_audit_manifest.json)"]
+        UpdateManifest --> UpdatePrompt["5. UPDATE prompts<br>(.agent/learning/learning_audit/learning_audit_prompts.md)"]
+        UpdatePrompt --> GenerateSnapshot["6. cortex_capture_snapshot<br>--type learning_audit<br>(regenerate packet)"]
+        GenerateSnapshot --> SharePacket["7. Output Path:<br>.agent/learning/learning_audit/learning_audit_packet.md"]
+        SharePacket --> ReceiveFeedback{"8. Red Team Feedback"}
+        ReceiveFeedback -- "More Research" --> CaptureFeedback["Capture Feedback in Topic Folder"]
+        CaptureFeedback --> CaptureResearch
+        ReceiveFeedback -- "Ready" --> TechApproval{"Gate 2: HITL"}
+    end
+
+    subgraph subGraphSeal["V. The Technical Seal"]
+        direction TB
+        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates .agent/learning/learning_package_snapshot.md)"]
+    end
+
+    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
+        direction TB
+        choice{Persistence Type}
+        choice -- Incremental --> Inc["Tool: cortex-persist-soul<br>(Append 1 Record)"]
+        choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
+        
+        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
+            MD_Seal["lineage/seal_TIMESTAMP.md"]
+            JSONL_Traces["data/soul_traces.jsonl"]
+        end
+    end
+
+    style subGraphPersist fill:#cce5ff,stroke:#004085,stroke-width:2px
+
+    %% Phase VII: Self-Correction (Deployment & Retro)
+    subgraph PhaseVII [Phase VII: Self-Correction]
+        direction TB
+        Deployment[Deploy & Policy Update]
+        Retro["Loop Retrospective<br>File: .agent/learning/learning_audit/loop_retrospective.md<br>(Singleton)"]
+        ShareRetro["Share with Red Team<br>(Meta-Audit)"]
+    end
+    style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
+
+    %% Flow
+    SeekTruth -- "Carry Context" --> Intelligence
+    Synthesis -- "Verify Reasoning" --> GovApproval
+    
+    GovApproval -- "PASS" --> AgreeTopic
+    
+    %% Reordered Flow
+    TechApproval -- "PASS" --> Deployment
+    Deployment --> Retro
+    Retro --> ShareRetro
+    ShareRetro -- "Ready to Seal" --> CaptureSeal
+    CaptureSeal -- "Broadcast" --> choice
+    
+    Inc --> JSONL_Traces
+    Inc --> MD_Seal
+    Full --> JSONL_Traces
+    
+    choice -- "Cycle Complete" --> Start
+    
+    GovApproval -- "FAIL: Backtrack" --> Retro
+    TechApproval -- "FAIL: Backtrack" --> Retro
+    Deployment -- "FAIL: Backtrack" --> Retro
+    
+    MetaLearn -- "Recursive Loop" --> Start
+
+    style IDE_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
+    style MCP_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
+    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
+    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black

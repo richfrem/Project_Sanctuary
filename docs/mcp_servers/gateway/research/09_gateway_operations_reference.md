@@ -329,53 +329,15 @@ The Gateway proxies all 63 tools from 12 backend servers. See [TOOLS_CATALOG.md]
 
 ### 3.1 Tool Call Flow
 
-```mermaid
-sequenceDiagram
-    participant Claude
-    participant Gateway
-    participant Registry
-    participant Security
-    participant Cache
-    participant Backend
-    participant Audit
+![mcp_gateway_tool_call_flow](docs/architecture_diagrams/workflows/mcp_gateway_tool_call_flow.png)
 
-    Claude->>Gateway: call_tool("cortex_query", {...})
-    Gateway->>Security: validate("cortex_query", {...})
-    Security->>Registry: is_allowed("cortex_query")
-    Registry-->>Security: true
-    Security-->>Gateway: validated
-    
-    Gateway->>Cache: get("cortex_query", {...})
-    Cache-->>Gateway: cache_miss
-    
-    Gateway->>Registry: route("cortex_query")
-    Registry-->>Gateway: "rag_cortex"
-    
-    Gateway->>Backend: proxy("rag_cortex", "cortex_query", {...})
-    Backend-->>Gateway: response
-    
-    Gateway->>Cache: set("cortex_query", {...}, response)
-    Gateway->>Audit: log(tool, server, latency, status)
-    
-    Gateway-->>Claude: response
-```
+*[Source: mcp_gateway_tool_call_flow.mmd](docs/architecture_diagrams/workflows/mcp_gateway_tool_call_flow.mmd)*
 
 ### 3.2 Error Handling Flow
 
-```mermaid
-sequenceDiagram
-    participant Claude
-    participant Gateway
-    participant CircuitBreaker
-    participant Backend
-    participant Audit
+![mcp_gateway_error_flow](docs/architecture_diagrams/workflows/mcp_gateway_error_flow.png)
 
-    Claude->>Gateway: call_tool("task_create", {...})
-    Gateway->>CircuitBreaker: check("task")
-    CircuitBreaker-->>Gateway: state=open
-    Gateway-->>Claude: error: "Circuit breaker open for task server"
-    Gateway->>Audit: log(tool, server, 0, "circuit_open")
-```
+*[Source: mcp_gateway_error_flow.mmd](docs/architecture_diagrams/workflows/mcp_gateway_error_flow.mmd)*
 
 ---
 

@@ -1,0 +1,20 @@
+%% Name: MCP Dynamic Binding Flow
+%% Source: Protocol 122
+%% Location: docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd
+%% Description: Architecture of Gateway request resolution (Registry -> Allowlist -> Backend)
+
+sequenceDiagram
+    participant C as Claude Desktop
+    participant G as Gateway
+    participant R as Registry
+    participant A as Allowlist
+    participant B as Backend Server
+    
+    C->>G: cortex_query("What is Protocol 101?")
+    G->>R: get_server_for_tool("cortex_query")
+    R-->>G: "rag_cortex" @ http://localhost:8001
+    G->>A: validate_tool("cortex_query")
+    A-->>G: ✅ Allowed
+    G->>B: HTTP POST /cortex_query
+    B-->>G: {"results": [...]}
+    G-->>C: JSON response

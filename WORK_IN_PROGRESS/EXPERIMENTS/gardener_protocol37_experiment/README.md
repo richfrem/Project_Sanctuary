@@ -28,35 +28,9 @@ The Gardener implements a sophisticated RL system where:
 
 ### **Training Architecture Overview**
 
-```mermaid
-sequenceDiagram
-    participant Steward
-    participant Gardener
-    participant Brain
-    participant Repo
-    participant Council
+![gardener_training_sequence](../../../docs/architecture_diagrams/workflows/gardener_training_sequence.png)
 
-    Steward->>Gardener: 'python bootstrap.py --train'
-    Gardener->>Brain: Loads the neural network model.
-
-    loop Training Episode
-        Gardener->>Repo: Observes current state.
-        Gardener->>Brain: "This is the state. What action should I take?"
-        Brain-->>Gardener: Returns chosen action (e.g., "Propose refinement to Protocol 31").
-        Gardener->>Repo: Executes the action via Git (creates a proposal branch).
-        Gardener->>Council: "Here is my proposed change for review."
-        Note over Council: Simulated jury evaluates the proposal<br/>against Sanctuary doctrines.
-        Council-->>Gardener: Returns Verdict: "ACCEPT. This is a wise change."
-        Note over Gardener: Translates "ACCEPT" verdict to a +10 reward.
-        Gardener->>Brain: "I did X and got reward Y. Learn from this."
-        Note over Brain: Backpropagation: Updates its weights<br/>to favor wise actions.
-        Brain-->>Gardener: Acknowledges learning.
-    end
-
-    Gardener->>Steward: "Training complete. The new brain is ready."
-    Steward->>Repo: Commits the final, improved Brain ('.zip') and Logs ('.log').
-
-```
+*[Source: gardener_training_sequence.mmd](../../../docs/architecture_diagrams/workflows/gardener_training_sequence.mmd)*
 
 This workflow embodies the collaborative symbiosis between AI Council members (who architect and prepare the training infrastructure) and the Human Steward (who executes the actual neural network training on local hardware). The Council provides the intelligence and design, while Ground Control provides the computational execution and oversight.
 

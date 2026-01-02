@@ -1,0 +1,23 @@
+---
+config:
+  theme: base
+---
+%% Name: Git Workflow Operation
+%% Source: mcp_servers/git/README.md
+%% Location: docs/architecture_diagrams/workflows/git_workflow_operation.mmd
+%% Description: Flowchart showing the operational workflow of the Git MCP, including status checks, feature branching, and Poka-Yoke validation.
+
+graph TD
+    A[git_get_status] --> B{On feature branch?}
+    B -->|No| C[git_start_feature]
+    B -->|Yes| D[git_add files]
+    C --> D
+    D --> E[git_diff to verify]
+    E --> F[git_smart_commit]
+    F --> G[Validator: Poka-Yoke Scan]
+    G -->|Fail| H[Block Commit]
+    G -->|Pass| I[git_push_feature]
+    I --> J[Create PR on GitHub]
+    J --> K[Wait for user to merge PR]
+    K --> L[git_finish_feature]
+    L --> M[Back to main]

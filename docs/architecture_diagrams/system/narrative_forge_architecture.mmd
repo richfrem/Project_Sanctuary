@@ -1,0 +1,19 @@
+%% Name: Narrative Forge Architecture
+%% Description: Tiered soul architecture from Red Team Round 3 (Grok 4)
+%% Location: docs/architecture_diagrams/system/narrative_forge_architecture.mmd
+
+flowchart LR
+    subgraph Session["Active Session"]
+        AI[AI Agent] --> Chat[Chat Context<br/>⚠️ Ephemeral: 'Cognitive Death']
+    end
+    
+    subgraph Persistence["Mnemonic Cortex (Hybrid)"]
+        Chroma[(Local ChromaDB<br/>Hot: Embeddings + Traces)]
+        Remote[(Remote Vector DB<br/>Warm: Pinecone/Weaviate)]
+        Git[(Git Repo<br/>Cold: Narrative Markdown)]
+    end
+    
+    AI -->|cortex_ingest traces| Chroma
+    Chroma <-->|sync| Remote
+    AI -->|learning_export PR| Git
+    Git -->|narrative retrieval| AI

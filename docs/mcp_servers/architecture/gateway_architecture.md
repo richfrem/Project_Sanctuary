@@ -11,34 +11,9 @@
 
 The Sanctuary MCP Gateway provides a **federated access layer** to 86 tools across 6 containerized clusters. This architecture enables any MCP-compatible client to access the complete tool ecosystem through a single Gateway endpoint.
 
-```mermaid
----
-config:
-  theme: base
-  layout: elk
----
-flowchart LR
-    subgraph Clients["🖥️ MCP Clients"]
-        Claude["Claude Desktop"]
-        Cursor["Cursor IDE"]
-        Antigravity["Antigravity"]
-    end
-    
-    subgraph Transport["🔄 Transport Layer"]
-        Bridge["bridge.py<br/>(STDIO→HTTP)"]
-        Gateway["IBM Gateway<br/>:4444"]
-    end
-    
-    subgraph Fleet["🐳 Container Fleet"]
-        Container["MCP Server<br/>(SSE mode)"]
-    end
-    
-    Claude ---|"STDIO"| Bridge
-    Cursor ---|"STDIO"| Bridge
-    Antigravity ---|"STDIO"| Bridge
-    Bridge ---|"HTTP/RPC"| Gateway
-    Gateway ---|"SSE<br/>(streaming)"| Container
-```
+![gateway_production_flow](docs/architecture_diagrams/transport/gateway_production_flow.png)
+
+*[Source: gateway_production_flow.mmd](docs/architecture_diagrams/transport/gateway_production_flow.mmd)*
 
 ---
 
@@ -74,78 +49,9 @@ Each Gateway cluster implements **two transport modes**:
 
 > **Important:** FastMCP's SSE is NOT compatible with the IBM ContextForge Gateway. Fleet containers MUST use SSEServer (`mcp_servers/lib/sse_adaptor.py`).
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
- subgraph subGraph0["Local Workstation (Client & Test Context)"]
-        direction TB
-        Claude["Claude Desktop<br/>(Bridged Session)"]
-        VSCode["VS Code Agent<br/>(Direct Attempt)"]
-        Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
-        
-        subgraph subGraphTest["Testing Suite"]
-            E2E_Test{{E2E Tests}}
-            Int_Test{{Integration Tests}}
-        end
-  end
+![mcp_sse_stdio_transport](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.png)
 
- subgraph subGraph1["server.py (Entry Point)"]
-        Selector{"MCP_TRANSPORT<br/>Selector"}
-        StdioWrap@{ label: "FastMCP Wrapper<br/>'stdio'" }
-        SSEWrap@{ label: "SSEServer Wrapper<br/>'sse'<br/>(Async Event Loop)" }
-  end
-
- subgraph subGraph2["Core Logic (Asynchronous)"]
-        Worker@{ label: "Background Worker<br/>'asyncio.to_thread'"}
-        Ops@{ label: "Operations Layer<br/>'operations.py'" }
-        Models@{ label: "Data Models<br/>'models.py'" }
-  end
-
- subgraph subGraph3["Cortex Cluster Container"]
-    direction TB
-        subGraph1
-        subGraph2
-        Health["Healthcheck Config<br/>(600s Start Period)"]
-  end
-
- subgraph subGraph4["Podman Network (Fleet Context)"]
-        Gateway@{ label: "IBM ContextForge Gateway<br/>'mcpgateway:4444'" }
-        subGraph3
-  end
-
-    %% COMPLIANT PATH (Claude / Production)
-    Claude -- "Stdio" --> Bridge
-    Bridge -- "HTTP / JSON-RPC 2.0<br/>(Token Injected)" --> Gateway
-    E2E_Test -- "Simulates Stdio" --> Bridge
-
-    %% NON-COMPLIANT SHORTCUT (The 'Efficiency Trap')
-    VSCode -. "Direct RPC / SSE<br/>(Handshake Mismatch)" .-> Gateway
-
-    %% EXECUTION FLOW
-    Gateway -- "SSE Handshake<br/>(endpoint event)" --> SSEWrap
-    SSEWrap -- "Offload Task" --> Worker
-    Worker -- "Execute Blocking RAG" --> Ops
-    SSEWrap -- "Concurrent Heartbeats" --> Gateway
-
-    %% Integration / Developer Flow
-    IDE["Terminal / IDE"] -- "Direct Stdio Call" --> StdioWrap
-    Int_Test -- "Validates Schemas" --> subGraph1
-    StdioWrap -- "Execute" --> subGraph2
-
-    %% Logic Selection
-    Selector -- "If 'stdio'" --> StdioWrap
-    Selector -- "If 'sse'" --> SSEWrap
-
-    style Bridge fill:#f9f,stroke:#333,stroke-width:2px
-    style VSCode fill:#fdd,stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
-    style Gateway fill:#69f,stroke:#333,stroke-width:2px
-    style Worker fill:#dfd,stroke:#333,stroke-dasharray: 5 5
-    style Health fill:#fff,stroke:#333,stroke-dasharray: 5 5
-```
+*[Source: mcp_sse_stdio_transport.mmd](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
 
 ---
 
@@ -205,37 +111,9 @@ if __name__ == "__main__":
 
 ## Testing Architecture
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart LR
-    subgraph Testing["🧪 Testing & Development"]
-        Terminal["Terminal<br/>(python -m server)"]
-        Unit["Unit Tests<br/>(pytest)"]
-        Integration["Integration Tests"]
-        E2E["E2E Tests<br/>(headless)"]
-    end
-    
-    subgraph Direct["⚡ Direct Invocation"]
-        STDIO_Server["MCP Server<br/>(STDIO mode)"]
-        SSE_Server["MCP Server<br/>(SSE mode)"]
-    end
-    
-    subgraph Curl["🔧 Manual Testing"]
-        Health["curl /health"]
-        SSE_Test["curl /sse"]
-    end
-    
-    Terminal ---|"STDIO<br/>(MCP_TRANSPORT=stdio)"| STDIO_Server
-    Unit ---|"Import & Mock"| STDIO_Server
-    Integration ---|"HTTP"| SSE_Server
-    E2E ---|"STDIO via bridge"| STDIO_Server
-    Health ---|"HTTP GET"| SSE_Server
-    SSE_Test ---|"HTTP Stream"| SSE_Server
-```
+![mcp_testing_dev_paths](docs/architecture_diagrams/transport/mcp_testing_dev_paths.png)
+
+*[Source: mcp_testing_dev_paths.mmd](docs/architecture_diagrams/transport/mcp_testing_dev_paths.mmd)*
 
 ### Test Tiers
 

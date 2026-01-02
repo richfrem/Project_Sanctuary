@@ -1,0 +1,33 @@
+---
+title: MCP Architecture Overview
+description: Overview of the MCP Service Layer, Core Tools, and Mnemonic Cortex integration.
+---
+graph TB
+    User[User / IDE] -->|Connects to| Gateway[MCP Gateway]
+    
+    subgraph MCPEcosystem[MCP Service Layer]
+        Gateway -->|Routes| Config[Configuration]
+        Gateway -->|Routes| Security[Security]
+        Gateway -->|Routes| Tools[Tool Registry]
+    end
+    
+    subgraph CoreMCPs[Core MCP Tools]
+        Tools -->|exec| FileSys[FileSystem MCP]
+        Tools -->|exec| Git[Git MCP]
+        Tools -->|exec| Search[Search MCP]
+        Tools -->|exec| Memory[Memory MCP]
+    end
+    
+    subgraph CognitiveLayer[Mnemonic Cortex]
+        Memory -->|R/W| VectorDB[(ChromaDB)]
+        Memory -->|R/W| DocStore[(File Store)]
+        Memory -->|Analysis| GraphDB[(Graph View)]
+    end
+    
+    subgraph Clients
+        Claude[Claude Desktop]
+        Cursor[Cursor IDE]
+        Custom[Custom Apps]
+    end
+    
+    Clients -->|MCP Protocol| Gateway

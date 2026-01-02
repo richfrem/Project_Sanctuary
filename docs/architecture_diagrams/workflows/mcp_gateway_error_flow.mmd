@@ -1,0 +1,21 @@
+---
+config:
+  theme: base
+---
+%% Name: Gateway Error Handling Flow
+%% Source: docs/mcp_servers/gateway/research/09_gateway_operations_reference.md
+%% Location: docs/architecture_diagrams/workflows/mcp_gateway_error_flow.mmd
+%% Description: Sequence diagram illustrating how the Gateway handles errors, specifically focusing on the circuit breaker mechanism.
+
+sequenceDiagram
+    participant Claude
+    participant Gateway
+    participant CircuitBreaker
+    participant Backend
+    participant Audit
+
+    Claude->>Gateway: call_tool("task_create", {...})
+    Gateway->>CircuitBreaker: check("task")
+    CircuitBreaker-->>Gateway: state=open
+    Gateway-->>Claude: error: "Circuit breaker open for task server"
+    Gateway->>Audit: log(tool, server, 0, "circuit_open")

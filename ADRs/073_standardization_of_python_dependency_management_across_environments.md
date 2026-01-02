@@ -170,21 +170,9 @@ We recommend **Option D** (Strict Mapping) enhanced with a **Tiered Policy**:
 
 This is the "Tiered Policy" approach (Option D) to maintain consistency across local Mac and Podman containers.
 
-```mermaid
-graph TD
-    A[Human: Edit .in File] -->|Declare Intent| B(pip-compile)
-    B -->|Generate Lock| C[.txt Lockfile]
-    
-    subgraph "Execution Environments"
-        C -->|pip install -r| D[Local .venv]
-        C -->|COPY & RUN pip install| E[Podman Container]
-    end
+![python_dependency_workflow](docs/architecture_diagrams/workflows/python_dependency_workflow.png)
 
-    D -.->|Identical Versions| E
-    style C fill:#f9f,stroke:#333,stroke-width:2px
-    style D fill:#dfd
-    style E fill:#dfd
-```
+*[Source: python_dependency_workflow.mmd](docs/architecture_diagrams/workflows/python_dependency_workflow.mmd)*
 
 ### Step-by-Step Process
 

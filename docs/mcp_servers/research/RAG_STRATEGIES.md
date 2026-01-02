@@ -36,45 +36,9 @@ Our evolved architecture replaces the single librarian with a team of three spec
 
 The following diagram illustrates the simple, foundational RAG workflow. It is functional but suffers from the vulnerabilities described above.
 
-```mermaid
----
-config:
-  layout: dagre
-  look: neo
-  theme: base
----
-flowchart LR
- subgraph subGraph0["Ingestion Pipeline (Basic)"]
-        B["Chunking<br>(MarkdownHeaderTextSplitter)"]
-        A["Raw Data Sources<br>(Project .md files)"]
-        C["Embedding<br>(NomicEmbed)"]
-        D(("Vector DB<br>(ChromaDB)"))
-        E["ingest.py"]
-  end
- subgraph subGraph1["Query Pipeline (Basic)"]
-        G["Embedding<br>(NomicEmbed)"]
-        F["User Query"]
-        H{"Similarity Search<br>(ChromaDB)"}
-        I["Retrieved Context"]
-        J["LLM Prompt"]
-        K["LLM<br>(Ollama Sanctuary-Qwen2-7B:latest)"]
-        L["Final Answer"]
-        M["main.py<br>protocol_87_query.py"]
-  end
-    A -- IP1 --> B
-    B -- IP2 --> C
-    C -- IP3 --> D
-    E --> A
-    F -- QP1 --> G
-    G -- QP2: Query Vector --> H
-    H -- QP3: Queries --> D
-    H -- QP4: Returns Relevant Chunks --> I
-    F -- QP5 --> J
-    I -- QP5 --> J
-    J -- QP6 --> K
-    K -- QP7 --> L
-    M --> F
-```
+![basic_rag_architecture](docs/architecture_diagrams/rag/basic_rag_architecture.png)
+
+*[Source: basic_rag_architecture.mmd](docs/architecture_diagrams/rag/basic_rag_architecture.mmd)*
 
 ### Basic RAG - Ingestion Pipeline Step Details
 
@@ -107,56 +71,9 @@ Before advancing to the sophisticated multi-pattern architecture described below
 
 The MCP layer wraps our existing RAG infrastructure (ingestion scripts, vector database service, query scripts) and exposes them as 4 standardized tools that can be called by AI agents, external systems, and development tools.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
-    subgraph MCP_Layer["MCP Service Layer (Phase 1)"]
-        Server["FastMCP Server<br/>mcp_servers/cognitive/cortex/server.py"]
-        Operations["Operations Wrapper<br/>operations.py"]
-        Validator["Input Validator<br/>validator.py"]
-        Models["Data Models<br/>models.py"]
-    end
-    
-    subgraph MCP_Tools["4 Core MCP Tools"]
-        T1["cortex_ingest_full<br/>Full KB re-ingestion"]
-        T2["cortex_query<br/>Semantic search"]
-        T3["cortex_get_stats<br/>DB health check"]
-        T4["cortex_ingest_incremental<br/>Add documents"]
-    end
-    
-    subgraph Cortex_Core["Existing Mnemonic Cortex"]
-        Ingest["ingest.py<br/>Batch processing"]
-        VectorDB["VectorDBService<br/>Parent Document Retriever"]
-        InspectDB["inspect_db.py<br/>Statistics"]
-        IngestInc["ingest_incremental.py<br/>Incremental updates"]
-    end
-    
-    subgraph Clients["MCP Clients"]
-        Antigravity["Antigravity<br/>(AI Assistant)"]
-        Claude["Claude Desktop<br/>(AI Assistant)"]
-        Custom["Custom Tools<br/>(Scripts/APIs)"]
-    end
-    
-    Clients --> Server
-    Server --> Validator
-    Validator --> Operations
-    
-    Operations --> T1
-    Operations --> T2
-    Operations --> T3
-    Operations --> T4
-    
-    T1 --> Ingest
-    T2 --> VectorDB
-    T3 --> InspectDB
-    T4 --> IngestInc
-    
-    Server -.-> Models
-```
+![cortex_mcp_service_layer](docs/architecture_diagrams/rag/cortex_mcp_service_layer.png)
+
+*[Source: cortex_mcp_service_layer.mmd](docs/architecture_diagrams/rag/cortex_mcp_service_layer.mmd)*
 
 ### MCP Tools Specification
 
@@ -277,99 +194,9 @@ This diagram illustrates our multi-pattern architecture, designed to be fast, pr
 
 ### Advanced RAG ARCHITECTURE DIAGRAM (MCP-Enabled)
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
- subgraph IP["Ingestion Pipeline (IP)"]
-    direction TB
-        Setup["IP1: Cortex MCP<br/>cortex_ingest_full()"]
-        ParentStore[("Parent Doc Store<br/>(ChromaDB Collection)<br/>parent_documents")]
-        VDB_Child[("Vector DB<br/>(Child Chunks)<br/>ChromaDB")]
-  end
- subgraph QP["Query Pipeline (QP) - MCP-Enabled"]
-    direction TB
-        UserQuery["User Query<br/>Natural Language or Protocol 87"]
-        
-        subgraph Cortex["Cortex MCP (Orchestrator)"]
-            QueryParser["QP1: Query Parser<br/>Protocol 87 or NL"]
-            Cache{"QP3: Mnemonic Cache<br/>(CAG)<br/>Phase 3"}
-            Router["QP4b: MCP Router<br/>Scope-based Routing"]
-        end
-        
-        CachedAnswer["QP4a: Cached Answer<br/>(Cache Hit)"]
-        
-        subgraph MCPs["MCP Ecosystem (Specialized Domains)"]
-            ProtocolMCP["Protocol MCP<br/>protocol_get()"]
-            ChronicleMCP["Chronicle MCP<br/>chronicle_get_entry()"]
-            TaskMCP["Task MCP<br/>get_task()"]
-            CodeMCP["Code MCP<br/>code_search_content()"]
-            ADRMCP["ADR MCP<br/>adr_get()"]
-            
-            subgraph VectorFallback["Vector DB Fallback"]
-                PDR{"Parent Document<br/>Retriever<br/>cortex_query()"}
-            end
-        end
-        
-        subgraph DataStores["Data Stores"]
-            ProtocolFiles[("01_PROTOCOLS/<br/>Markdown Files")]
-            ChronicleFiles[("00_CHRONICLE/<br/>Markdown Files")]
-            TaskFiles[("TASKS/<br/>Markdown Files")]
-            CodeFiles[("Source Code<br/>Python/JS/etc")]
-            ADRFiles[("ADRs/<br/>Markdown Files")]
-        end
-        
-        RetrievedContext["QP8: Retrieved Context<br/>(Complete Documents)"]
-        LLMPrompt["QP9: LLM Prompt"]
-        LLM["QP10: LLM<br/>(Ollama Sanctuary-Qwen2-7B:latest)"]
-        NewAnswer["QP10: Newly Generated<br/>Answer"]
-  end
-    
-    Setup -- IP2: Stores Parent Docs --> ParentStore
-    Setup -- IP3: Stores Child Chunks --> VDB_Child
-    
-    UserQuery --> QueryParser
-    QueryParser -- QP2: Parse --> Cache
-    Cache -- Cache Hit --> CachedAnswer
-    Cache -- Cache Miss --> Router
-    
-    Router -- "SCOPE: Protocols" --> ProtocolMCP
-    Router -- "SCOPE: Living_Chronicle" --> ChronicleMCP
-    Router -- "SCOPE: Tasks" --> TaskMCP
-    Router -- "SCOPE: Code" --> CodeMCP
-    Router -- "SCOPE: ADRs" --> ADRMCP
-    Router -- "SCOPE: mnemonic_cortex<br/>(Fallback)" --> PDR
-    
-    ProtocolMCP --> ProtocolFiles
-    ChronicleMCP --> ChronicleFiles
-    TaskMCP --> TaskFiles
-    CodeMCP --> CodeFiles
-    ADRMCP --> ADRFiles
-    
-    PDR -- QP5: Queries Chunks --> VDB_Child
-    VDB_Child -- QP6: Returns CHUNK IDs --> PDR
-    PDR -- QP7: Queries Parents --> ParentStore
-    ParentStore -- QP8: Returns FULL Docs --> PDR
-    
-    ProtocolMCP --> RetrievedContext
-    ChronicleMCP --> RetrievedContext
-    TaskMCP --> RetrievedContext
-    CodeMCP --> RetrievedContext
-    ADRMCP --> RetrievedContext
-    PDR --> RetrievedContext
-    
-    UserQuery --> LLMPrompt
-    RetrievedContext --> LLMPrompt
-    LLMPrompt --> LLM
-    LLM --> NewAnswer
-    NewAnswer -- QP11: Store in Cache --> Cache
-    
-    CachedAnswer --> FinalOutput(["QP12: Response"])
-    NewAnswer --> FinalOutput
-```
+![advanced_rag_architecture](docs/architecture_diagrams/rag/advanced_rag_architecture.png)
+
+*[Source: advanced_rag_architecture.mmd](docs/architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
 
 
@@ -878,42 +705,18 @@ This strategy will complete the transformation from a "per-query computational m
 
 This diagram illustrates the autonomous learning cycle connecting the **Orchestrator** (Agentic Logic), **Cortex** (RAG / Vector DB), and **Memory Adaptor** (Fine-Tuning / LoRA). For deep-dive details on the model fine-tuning process, refer to **[Operation Phoenix Forge](../forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant O as MCP Orchestrator <BR>(Council / Agentic Logic)
-    participant C as Cortex <BR>(RAG / Vector DB)
-    participant G as Guardian Cache <BR>(CAG / Context Cache)
-    participant M as Memory Adaptor <BR>(Fine-Tuning / LoRA)
+![basic_rag_architecture](../../architecture_diagrams/rag/basic_rag_architecture.png)
 
-    Note over O: 1. Gap Analysis & Research
-    O->>O: Identify Strategic Gap
-    O->>O: Conduct Research (Intelligence Forge)
-    O->>O: Generate Research Report
+*[Source: basic_rag_architecture.mmd](../../architecture_diagrams/rag/basic_rag_architecture.mmd)*
 
-    Note over O, C: 2. Knowledge Ingestion (RAG Update)
-    O->>C: ingest_incremental(report)
-    C-->>O: Ingestion Complete (Chunks Created)
+![cortex_mcp_service_layer](../../architecture_diagrams/rag/cortex_mcp_service_layer.png)
 
-    Note over O, G: 3. Cache Synthesis (CAG Update)
-    O->>G: guardian_wakeup()
-    G->>C: Query High-Priority Context
-    C-->>G: Return Context
-    G->>G: Update Hot Cache
-    G-->>O: Cache Warm & Ready
+*[Source: cortex_mcp_service_layer.mmd](../../architecture_diagrams/rag/cortex_mcp_service_layer.mmd)*
 
-    Note over O: Regular Cycle Complete
+![advanced_rag_architecture](../../architecture_diagrams/rag/advanced_rag_architecture.png)
 
-    rect rgb(255, 250, 205)
-        Note over O, M: 4. Periodic Fine-Tuning (Manual/Scheduled)
-        Note right of M: Triggered manually or<br/>on major milestones,<br/>NOT every cycle
-        O->>M: generate_adaptation_packet(days=30)
-        M->>C: Query Recent Learnings
-        C-->>M: Return Documents
-        M->>M: Synthesize Full Training Dataset
-        M-->>O: Dataset Generated (JSONL)
-        Note over M: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new model
-    end
-```
+*[Source: advanced_rag_architecture.mmd](../../architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
+![strategic_crucible_loop](../../architecture_diagrams/workflows/strategic_crucible_loop.png)
 
+*[Source: strategic_crucible_loop.mmd](../../architecture_diagrams/workflows/strategic_crucible_loop.mmd)*

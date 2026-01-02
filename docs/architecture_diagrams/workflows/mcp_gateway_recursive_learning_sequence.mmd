@@ -1,0 +1,29 @@
+---
+title: MCP Gateway Recursive Learning Sequence
+description: Sequence diagram of the Recursive Learning Loop detailed in Protocol 125.
+---
+sequenceDiagram
+    participant Agent as Cognitive Agent
+    participant Gateway as MCP Gateway
+    participant Fleet as MCP Fleet
+    participant VectorDB as Vector Database
+    participant LLM as LLM Inference
+
+    Agent->>Gateway: intent("Learn new pattern")
+    Gateway->>Fleet: dispatch_task("Analyze codebase")
+    Fleet-->>Gateway: Analysis Results
+    
+    Gateway->>VectorDB: query_similar_patterns(analysis)
+    VectorDB-->>Gateway: Relevant Context
+    
+    Gateway->>LLM: synthesize_learning(context, new_data)
+    LLM-->>Gateway: Synthesis (ADR Candidate)
+    
+    Gateway->>Agent: propose_adr(content)
+    Agent->>Gateway: approve_adr()
+    
+    Gateway->>Fleet: write_file("ADRs/XXXX_new_pattern.md")
+    Gateway->>VectorDB: ingest_document("ADRs/XXXX_new_pattern.md")
+    VectorDB-->>Gateway: Acknowledge
+    
+    Gateway-->>Agent: Learning Cycle Complete

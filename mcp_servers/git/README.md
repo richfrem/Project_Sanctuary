@@ -86,22 +86,9 @@ This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3
 - 🛡️ **Poka-Yoke:** Validates branch context and operations to prevent mistakes.
 
 ### Workflow
-```mermaid
-graph TD
-    A[git_get_status] --> B{On feature branch?}
-    B -->|No| C[git_start_feature]
-    B -->|Yes| D[git_add files]
-    C --> D
-    D --> E[git_diff to verify]
-    E --> F[git_smart_commit]
-    F --> G[Validator: Poka-Yoke Scan]
-    G -->|Fail| H[Block Commit]
-    G -->|Pass| I[git_push_feature]
-    I --> J[Create PR on GitHub]
-    J --> K[Wait for user to merge PR]
-    K --> L[git_finish_feature]
-    L --> M[Back to main]
-```
+![git_workflow_operation](../../docs/architecture_diagrams/workflows/git_workflow_operation.png)
+
+*[Source: git_workflow_operation.mmd](../../docs/architecture_diagrams/workflows/git_workflow_operation.mmd)*
 
 ## Dependencies
 

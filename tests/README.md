@@ -6,25 +6,9 @@ This directory contains the comprehensive test suite for Project Sanctuary. We a
 
 Our testing strategy follows a three-layer pyramid, applied consistently across all components:
 
-```mermaid
----
-config:
-  look: classic
-  layout: elk
----
-flowchart TB
- subgraph MCP_Test_Pyramid["Model Context Protocol (MCP) Server Test Pyramid"]
-        E2E["🔝 Layer 3: E2E Tests<br>Full MCP Protocol Lifecycle<br>Base: BaseE2ETest<br>Deps: All 12 MCP servers<br>Speed: Slow (min)"]
-        INT["🔗 Layer 2: Integration Tests<br>Server ↔ Local Services<br>Base: BaseIntegrationTest<br>Deps: ChromaDB, Ollama, Git<br>Speed: Medium (sec)"]
-        UNIT["⚡ Layer 1: Unit Tests<br>Atomic Logic in Isolation<br>Base: None (isolated)<br>Deps: None (mocked)<br>Speed: Fast (ms)"]
-  end
-    E2E --> INT
-    INT --> UNIT
+![mcp_test_pyramid](../docs/architecture_diagrams/system/mcp_test_pyramid.png)
 
-    style E2E fill:#ff6b6b,stroke:#333,stroke-width:2px,color:#fff
-    style INT fill:#ffd93d,stroke:#333,stroke-width:2px
-    style UNIT fill:#6bcb77,stroke:#333,stroke-width:2px
-```
+*[Source: mcp_test_pyramid.mmd](../docs/architecture_diagrams/system/mcp_test_pyramid.mmd)*
 
 | Layer | Scope | Goal | Speed |
 |-------|-------|------|----------|

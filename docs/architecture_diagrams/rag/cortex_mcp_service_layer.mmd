@@ -1,0 +1,53 @@
+---
+config:
+  theme: base
+  layout: dagre
+---
+%% Name: Cortex MCP Service Layer
+%% Source: docs/mcp_servers/research/RAG_STRATEGIES.md
+%% Location: docs/architecture_diagrams/rag/cortex_mcp_service_layer.mmd
+%% Description: Flowchart depicting the MCP Service Layer overlay on the existing Cortex RAG infrastructure.
+
+flowchart TB
+    subgraph MCP_Layer["MCP Service Layer (Phase 1)"]
+        Server["FastMCP Server<br/>mcp_servers/cognitive/cortex/server.py"]
+        Operations["Operations Wrapper<br/>operations.py"]
+        Validator["Input Validator<br/>validator.py"]
+        Models["Data Models<br/>models.py"]
+    end
+    
+    subgraph MCP_Tools["4 Core MCP Tools"]
+        T1["cortex_ingest_full<br/>Full KB re-ingestion"]
+        T2["cortex_query<br/>Semantic search"]
+        T3["cortex_get_stats<br/>DB health check"]
+        T4["cortex_ingest_incremental<br/>Add documents"]
+    end
+    
+    subgraph Cortex_Core["Existing Mnemonic Cortex"]
+        Ingest["ingest.py<br/>Batch processing"]
+        VectorDB["VectorDBService<br/>Parent Document Retriever"]
+        InspectDB["inspect_db.py<br/>Statistics"]
+        IngestInc["ingest_incremental.py<br/>Incremental updates"]
+    end
+    
+    subgraph Clients["MCP Clients"]
+        Antigravity["Antigravity<br/>(AI Assistant)"]
+        Claude["Claude Desktop<br/>(AI Assistant)"]
+        Custom["Custom Tools<br/>(Scripts/APIs)"]
+    end
+    
+    Clients --> Server
+    Server --> Validator
+    Validator --> Operations
+    
+    Operations --> T1
+    Operations --> T2
+    Operations --> T3
+    Operations --> T4
+    
+    T1 --> Ingest
+    T2 --> VectorDB
+    T3 --> InspectDB
+    T4 --> IngestInc
+    
+    Server -.-> Models

@@ -33,79 +33,9 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 - **Verification:** The system will reject any memory artifact that lacks a valid signature or user approval token.
 
 ## Visual Architecture
-```mermaid
----
-config:
-  layout: dagre
-  theme: base
----
-flowchart TB
-    subgraph subGraphScout["I. The Learning Scout"]
-        direction TB
-        Start["Session Start"] --> SeekTruth["MCP: cortex_learning_debrief"]
-        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read context| SeekTruth
-    end
+![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-    subgraph subGraphSynthesize["II. Intelligence Synthesis"]
-        direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs/Learnings"]
-    end
-
-    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
-        direction TB
-        GovApproval{"Strategic Approval<br>(HITL)"}
-    end
-
-    subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
-        direction TB
-        CaptureAudit["MCP: cortex_capture_snapshot<br>(audit | learning_audit)"]
-        Packet["Audit Packet (Snapshot)"]
-        TechApproval{"Technical Approval<br>(HITL)"}
-    end
-
-    subgraph subGraphSeal["V. The Technical Seal"]
-        direction TB
-        CaptureSeal["MCP: cortex_capture_snapshot (seal)"]
-    end
-
-    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
-        direction TB
-        PersistSoul["MCP: cortex_persist_soul"]
-        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/seal_TIMESTAMP.md<br>(Incremental Seal)"]
-            JSONL_Traces["data/soul_traces.jsonl<br>(Full Learning Set)"]
-        end
-    end
-
-    SeekTruth -- "Carry context" --> Intelligence
-    Synthesis -- "Verify reasoning" --> GovApproval
-    
-    GovApproval -- "PASS" --> CaptureAudit
-    CaptureAudit -- "Validate truth" --> Packet
-    Packet -- "Technical review" --> TechApproval
-    
-    TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Local Relay" --> SuccessorSnapshot
-    CaptureSeal -- "Async Broadcast" --> PersistSoul
-    
-    PersistSoul -- "1. Append Record" --> JSONL_Traces
-    PersistSoul -- "2. Upload MD" --> MD_Seal
-    
-    GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
-    TechApproval -- "FAIL: Backtrack" --> SOP
-    SOP -- "Loop Back" --> Start
-
-    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
-    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black
-    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
-    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black
-    style PersistSoul fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:black
-    style MD_Seal fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
-    style JSONL_Traces fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:black
-    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
-    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
-    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-```
+*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 

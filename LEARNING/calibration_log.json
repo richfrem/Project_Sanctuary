@@ -1,0 +1,26 @@
+{
+    "_metadata": {
+        "description": "Dynamic SE Threshold Calibration Log",
+        "adr_reference": "ADR 084",
+        "created": "2025-12-29",
+        "purpose": "Task-specific AUROC-calibrated thresholds for Semantic Entropy"
+    },
+    "default_threshold": 0.79,
+    "global_floor": 0.95,
+    "alignment_threshold": 0.70,
+    "task_thresholds": {
+        "default": 0.79,
+        "code_logic": 0.85,
+        "philosophical_reasoning": 0.75,
+        "factual_retrieval": 0.90,
+        "creative_synthesis": 0.70,
+        "protocol_compliance": 0.95
+    },
+    "calibration_history": [],
+    "notes": {
+        "0.79": "Initial benchmark from TriviaQA/BioASQ (Farquhar 2024)",
+        "0.95": "Global Floor - absolute maximum, quarantine regardless of task",
+        "0.70": "Alignment threshold - Constitutional Anchor minimum",
+        "conformal_prediction": "Future: Implement adaptive thresholds per-session"
+    }
+}

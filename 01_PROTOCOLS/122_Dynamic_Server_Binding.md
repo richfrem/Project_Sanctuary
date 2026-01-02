@@ -37,21 +37,9 @@ This protocol defines the standard for **Dynamic Server Binding** in Project San
 
 ### 2.1 Core Components
 
-```mermaid
-graph TB
-    Client["Claude Desktop<br/>(MCP Client)"]
-    Gateway["Sanctuary Gateway<br/>(Broker)"]
-    Registry[("Service Registry<br/>(SQLite)")]
-    Backend1["RAG Cortex<br/>MCP Server"]
-    Backend2["Task<br/>MCP Server"]
-    Backend3["Git Workflow<br/>MCP Server"]
-    
-    Client -->|"stdio (JSON-RPC 2.0)"| Gateway
-    Gateway --> Registry
-    Gateway -->|"HTTP/stdio"| Backend1
-    Gateway -->|"HTTP/stdio"| Backend2
-    Gateway -->|"HTTP/stdio"| Backend3
-```
+![MCP Dynamic Binding Architecture](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+
+*[Source: mcp_dynamic_binding_flow.mmd](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
 
 ### 2.2 Service Registry Schema
 
@@ -159,23 +147,9 @@ async def cortex_query(query: str, max_results: int = 5) -> str:
 
 ### 3.3 Request Flow Diagram
 
-```mermaid
-sequenceDiagram
-    participant C as Claude Desktop
-    participant G as Gateway
-    participant R as Registry
-    participant A as Allowlist
-    participant B as Backend Server
-    
-    C->>G: cortex_query("What is Protocol 101?")
-    G->>R: get_server_for_tool("cortex_query")
-    R-->>G: "rag_cortex" @ http://localhost:8001
-    G->>A: validate_tool("cortex_query")
-    A-->>G: ✅ Allowed
-    G->>B: HTTP POST /cortex_query
-    B-->>G: {"results": [...]}
-    G-->>C: JSON response
-```
+![mcp_dynamic_binding_flow](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+
+*[Source: mcp_dynamic_binding_flow.mmd](../../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
 
 ---
 
