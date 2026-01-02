@@ -32,23 +32,9 @@
 
 ### Architecture Analysis (Updated)
 
-```mermaid
-flowchart LR
-    subgraph Session["Active Session"]
-        AI[AI Agent] --> Chat[Chat Context<br/>⚠️ Ephemeral: 'Cognitive Death']
-    end
-    
-    subgraph Persistence["Mnemonic Cortex (Hybrid)"]
-        Chroma[(Local ChromaDB<br/>Hot: Embeddings + Traces)]
-        Remote[(Remote Vector DB<br/>Warm: Pinecone/Weaviate)]
-        Git[(Git Repo<br/>Cold: Narrative Markdown)]
-    end
-    
-    AI -->|cortex_ingest traces| Chroma
-    Chroma <-->|sync| Remote
-    AI -->|learning_export PR| Git
-    Git -->|narrative retrieval| AI
-```
+![Narrative Forge Architecture](../../../docs/architecture_diagrams/system/narrative_forge_architecture.png)
+
+*Source: [narrative_forge_architecture.mmd](../../../docs/architecture_diagrams/system/narrative_forge_architecture.mmd)*
 
 ### Tiered Soul Architecture
 

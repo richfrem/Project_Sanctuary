@@ -30,33 +30,9 @@ Project Sanctuary has evolved three distinct content processing pipelines that s
 
 **Shared Concerns (Chain of Dependency)**:
 
-```mermaid
-flowchart LR
-    subgraph snapshot_utils["snapshot_utils.py"]
-        EU["Exclusion Lists"]
-        TRV["Traversal Logic"]
-        GEN["generate_snapshot()"]
-    end
-    
-    subgraph forge["Forge (Consumer)"]
-        FWG["forge_whole_genome_dataset.py"]
-    end
-    
-    subgraph rag["RAG (Consumer)"]
-        OPS["operations.py"]
-        SHIM["ingest_code_shim.py"]
-    end
-    
-    subgraph soul["Soul (Consumer)"]
-        HF["hf_utils.py"]
-    end
-    
-    GEN --> |"markdown_snapshot_full_genome_llm_distilled.txt"| FWG
-    EU --> OPS
-    TRV --> OPS
-    SHIM --> OPS
-    GEN --> soul
-```
+![Harmonized Content Processing](../../docs/architecture_diagrams/system/harmonized_content_processing.png)
+
+*[Source: harmonized_content_processing.mmd](../../docs/architecture_diagrams/system/harmonized_content_processing.mmd)*
 
 **Key Finding:** Forge already consumes `snapshot_utils.generate_snapshot()` output!
 
@@ -230,34 +206,7 @@ We adopt a **consumer-driven rollout** starting with the newest code (lowest ris
 
 ## Architecture Diagram
 
-```mermaid
-flowchart TB
-    subgraph consumers["Consumer Systems"]
-        Forge["Forge Fine-Tuning<br/>(JSONL Output)"]
-        RAG["RAG Vector DB<br/>(ChromaDB)"]
-        Soul["Soul Persistence<br/>(HF Commons)"]
-    end
-    
-    subgraph lib["mcp_servers/lib/ (Unified)"]
-        CP["ContentProcessor<br/>(Main Orchestrator)"]
-        EC["exclusion_config<br/>(Patterns)"]
-        CTM["code_to_markdown<br/>(AST/Regex)"]
-        SU["snapshot_utils<br/>(Generators)"]
-        HF["hf_utils<br/>(HF Upload)"]
-    end
-    
-    Forge --> CP
-    RAG --> CP
-    Soul --> CP
-    
-    CP --> EC
-    CP --> CTM
-    CP --> SU
-    SU --> HF
-    
-    style CP fill:#4CAF50,color:#fff
-    style EC fill:#2196F3,color:#fff
-```
+*(See harmonized diagram above)*
 
 ---
 

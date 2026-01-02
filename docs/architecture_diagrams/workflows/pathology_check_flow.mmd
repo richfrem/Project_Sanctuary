@@ -1,0 +1,9 @@
+%% Name: Pathology Check Flow
+%% Description: Flow showing pathology check gate before soul persistence
+%% Location: docs/architecture_diagrams/workflows/pathology_check_flow.mmd
+
+flowchart LR
+    A[Seal Snapshot] --> B{pathology_check}
+    B -->|PASS| C[cortex_persist_soul]
+    B -->|FAIL| D[Reject + Log]
+    C --> E[HuggingFace]

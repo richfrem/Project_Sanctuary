@@ -1,0 +1,37 @@
+---
+config:
+  theme: base
+---
+%% Name: Gateway Tool Call Flow
+%% Source: docs/mcp_servers/gateway/research/09_gateway_operations_reference.md
+%% Location: docs/architecture_diagrams/workflows/mcp_gateway_tool_call_flow.mmd
+%% Description: Sequence diagram illustrating the flow of a tool call through the Gateway, involving security, registry, cache, and backend execution.
+
+sequenceDiagram
+    participant Claude
+    participant Gateway
+    participant Registry
+    participant Security
+    participant Cache
+    participant Backend
+    participant Audit
+
+    Claude->>Gateway: call_tool("cortex_query", {...})
+    Gateway->>Security: validate("cortex_query", {...})
+    Security->>Registry: is_allowed("cortex_query")
+    Registry-->>Security: true
+    Security-->>Gateway: validated
+    
+    Gateway->>Cache: get("cortex_query", {...})
+    Cache-->>Gateway: cache_miss
+    
+    Gateway->>Registry: route("cortex_query")
+    Registry-->>Gateway: "rag_cortex"
+    
+    Gateway->>Backend: proxy("rag_cortex", "cortex_query", {...})
+    Backend-->>Gateway: response
+    
+    Gateway->>Cache: set("cortex_query", {...}, response)
+    Gateway->>Audit: log(tool, server, latency, status)
+    
+    Gateway-->>Claude: response

@@ -1676,57 +1676,13 @@ class CortexOperations:
                     recency_summary,
                     "",
                     "## 🏗️ IV. Architecture Alignment (The Successor Relay)",
-                    "```mermaid",
-                    "flowchart TB",
-                    "    subgraph subGraphScout[\"I. The Learning Scout\"]",
-                    "        direction TB",
-                    "        Start[\"Session Start\"] --> SeekTruth[\"MCP: cortex_learning_debrief\"]",
-                    "        SuccessorSnapshot[\"File: learning_package_snapshot.md\"] -.->|Context| SeekTruth",
-                    "    end",
-                    "    subgraph subGraphSynthesize[\"II. Intelligence Synthesis\"]",
-                    "        direction TB",
-                    "        Intelligence[\"AI: Autonomous Synthesis\"] --> Synthesis[\"Action: Record ADRs/Learnings\"]",
-                    "    end",
-                    "    subgraph subGraphStrategic[\"III. Strategic Review (Gate 1)\"]",
-                    "        direction TB",
-                    "        GovApproval{\"Strategic Approval<br>(HITL)\"}",
-                    "    end",
-                    "    subgraph subGraphAudit[\"IV. Red Team Audit (Gate 2)\"]",
-                    "        direction TB",
-                    "        CaptureAudit[\"MCP: cortex_capture_snapshot<br>(audit | learning_audit)\"]",
-                    "        Packet[\"Audit Packet\"]",
-                    "        TechApproval{\"Technical Approval<br>(HITL)\"}",
-                    "    end",
-                    "    subgraph subGraphSeal[\"V. The Technical Seal\"]",
-                    "        direction TB",
-                    "        CaptureSeal[\"MCP: cortex_capture_snapshot (seal)\"]",
-                    "    end",
-                    "    SeekTruth -- \"Carry\" --> Intelligence",
-                    "    Synthesis -- \"Verify Reasoning\" --> GovApproval",
-                    "    GovApproval -- \"PASS\" --> CaptureAudit",
-                    "    Packet -- \"Review Implementation\" --> TechApproval",
-                    "    TechApproval -- \"PASS\" --> CaptureSeal",
-                    "    CaptureSeal -- \"Update Successor\" --> SuccessorSnapshot",
-                    "    style TechApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
-                    "    style GovApproval fill:#ffcccc,stroke:#333,stroke-width:2px,color:black",
-                    "    style CaptureAudit fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
-                    "    style CaptureSeal fill:#bbdefb,stroke:#0056b3,stroke-width:2px,color:black",
-                    "    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black",
-                    "    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black",
-                    "    style Intelligence fill:#000,stroke:#fff,stroke-width:2px,color:#fff",
-                    "```",
-                    "",
-                    "## 📦 IV. Strategic Context (Last Learning Package Snapshot)",
-                    "Below is the consolidated 'Source of Truth' from the previous session's seal:",
-                    "---",
-                    last_package_content,
-                    "---",
+                    "![Recursive Learning Flowchart](docs/architecture_diagrams/workflows/recursive_learning_flowchart.png)",
                     "",
                     "## 📦 V. Strategic Context (Last Learning Package Snapshot)",
-                    "Below is the consolidated 'Source of Truth' from the previous session's seal:",
-                    "---",
-                    last_package_content,
-                    "---",
+                    f"**Status:** {package_status}",
+                    "",
+                    "> **Note:** Full snapshot content is NOT embedded to prevent recursive bloat.",
+                    "> See: `.agent/learning/learning_package_snapshot.md`",
                     "",
                     "## 📜 VI. Protocol 128: Hardened Learning Loop",
                     protocol_content,
@@ -1929,8 +1885,8 @@ class CortexOperations:
             if str(rel_prompts_path) not in effective_manifest:
                 effective_manifest.append(str(rel_prompts_path))
 
-        # Temporary manifest file for the snapshot tool
-        temp_manifest_path = output_dir / f"manifest_{snapshot_type}_{int(time.time())}.json"
+        # Static manifest file for the snapshot tool (overwrites each loop - seals preserved to HuggingFace)
+        temp_manifest_path = output_dir / f"manifest_{snapshot_type}.json"
         snapshot_filename = "red_team_audit_packet.md" if snapshot_type == "audit" else ("learning_audit_packet.md" if snapshot_type == "learning_audit" else "learning_package_snapshot.md")
         final_snapshot_path = output_dir / snapshot_filename
         
@@ -2144,6 +2100,17 @@ class CortexOperations:
             se_threshold = self._get_dynamic_threshold("default")
             global_floor = 0.95  # Absolute maximum SE - quarantine regardless of task
             
+            # 1. Rigidity Check (Asch Risk)
+            if se_score < 0.2:
+                 logger.warning(f"ADR 084: Edison Breaker TRIPPED - Rigidity Detected (SE {se_score:.3f} < 0.2)")
+                 return PersistSoulResponse(
+                    status="quarantined",
+                    repo_url="",
+                    snapshot_name="",
+                    error=f"Edison Breaker: RIGIDITY trip (SE={se_score:.3f}). Switch to ASC Audit."
+                )
+
+            # 2. Hallucination Check (High Entropy)
             if se_score > global_floor:
                 logger.warning(f"ADR 084: Global Floor breach - SE {se_score:.3f} > {global_floor}")
                 return PersistSoulResponse(
@@ -2529,7 +2496,67 @@ class CortexOperations:
                 "query": query_string
             }
     
-    def _get_mcp_name(self, scope: str):
+    # ADR 084: Epistemic Gating (The Edison Mandate)
+    # Replaces simple valence checks with Topological Data Analysis (TDA) proxies.
+    
+    def _calculate_semantic_entropy(self, content: str) -> float:
+        """
+        ADR 084 Deep Implementation: The 'Edison Breaker'
+        
+        Measures 'Epistemic Uncertainty' to control Dynamic Coupling.
+        
+        Ranges:
+        - 0.0 - 0.2: [DANGER] Echo Chamber / Rigidity. Risk of 'Asch' conformity.
+        - 0.3 - 0.7: [OPTIMAL] Healthy reasoning flow.
+        - 0.8 - 1.0: [DANGER] High Uncertainty / Hallucination.
+        
+        Returns: Entropy score (float).
+        """
+        # 1. Identify "Epistemic Absolutes" (Rigidity/Echo Risk)
+        absolutes = ["proven", "indisputable", "always", "never", "guaranteed", "100%", "obvious"]
+        # 2. Identify "Epistemic Hedges" (Uncertainty/Hallucination Risk)
+        hedges = ["likely", "suggests", "indicates", "potential", "hypothesized", "estimated", "maybe"]
+        
+        content_lower = content.lower()
+        abs_count = sum(1 for w in absolutes if w in content_lower)
+        hedge_count = sum(1 for w in hedges if w in content_lower)
+        
+        # 3. Citation Check (The Reality Anchor)
+        has_citation = "[cite:" in content or "http" in content or "arXiv:" in content
+        
+        # Base entropy
+        entropy = 0.5
+        
+        # LOGIC:
+        
+        # A. The Hallucination Trap (High Hedges, No Sources)
+        if hedge_count > 2 and not has_citation:
+            entropy += 0.3  # push towards 0.8+
+            
+        # B. The Asch Trap (High Absolutes, No Nuance)
+        if abs_count > 2:
+            entropy -= 0.3 # push towards 0.2- (Rigidity)
+            
+        # C. The Anchor Bonus (Citations stabilize entropy toward the middle)
+        if has_citation:
+            # Move towards 0.5 (Ideal)
+            if entropy > 0.5: entropy -= 0.1
+            if entropy < 0.5: entropy += 0.1
+            
+        return max(0.0, min(1.0, entropy))
+
+    def _check_circuit_breaker(self, se_score: float) -> str:
+        """
+        Determines if we need to 'Decouple' based on Entropy.
+        """
+        if se_score < 0.2:
+            return "TRIP: RIGIDITY_DETECTED (Switch to ASC)"
+        elif se_score > 0.8:
+            return "TRIP: UNCERTAINTY_DETECTED (Switch to ASC)"
+        else:
+            return "FLOW: LATENT_MAS_PERMITTED"
+
+    def _get_mcp_name(self, mcp_class_str: str) -> str:
         #============================================
         # Method: _get_mcp_name
         # Purpose: Map scope to corresponding MCP name.

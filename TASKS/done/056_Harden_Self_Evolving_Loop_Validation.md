@@ -1,5 +1,9 @@
 # 056: Harden Self-Evolving Loop Validation Protocol
 
+> [!NOTE]
+> **ADR 085 Compliance Note:** This completed task predates [ADR 085](../../ADRs/085_canonical_mermaid_diagram_management.md). Inline Mermaid diagrams are preserved for historical accuracy.
+
+
 **Status:** In Progress
 **Priority:** High
 **Owner:** Orchestrator / Council Agents

@@ -1,0 +1,29 @@
+---
+title: MCP Orchestration Sequence
+description: Sequence diagram showing the flow from User to Orchestrator, Council, and underlying services.
+---
+sequenceDiagram
+    participant User
+    participant Orch as Orchestrator
+    participant Council as Council MCP
+    participant Persona as Agent Persona
+    participant Cortex as Cortex Memory
+    participant Forge as Forge (Tools)
+    participant Ollama as Ollama (LLM)
+
+    User->>Orch: Submit Task
+    Orch->>Code: Read Config
+    Orch->>Cortex: Recall Context
+    
+    Orch->>Council: Convene Council
+    Council->>Persona: Assign Roles (Planner, Critic)
+    Persona->>Ollama: Generate Plan
+    Ollama-->>Council: Proposed Plan
+    
+    Council->>Forge: Execute Plan Step
+    Forge->>Forge: Run Tool
+    Forge-->>Council: Step Result
+    
+    Council->>Cortex: Store Result
+    Council-->>Orch: Task Complete
+    Orch-->>User: Final Report

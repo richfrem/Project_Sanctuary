@@ -1,0 +1,40 @@
+---
+config:
+  theme: base
+---
+%% Name: MCP SSE Bridge Approach
+%% Description: Comparison of Option A (Official Library) vs Option B (Custom Bridge) from ADR 068 for stdio-to-SSE translation
+%% Location: docs/architecture_diagrams/transport/mcp_sse_bridge_approach.mmd
+
+sequenceDiagram
+    participant IDE as IDE / Claude Desktop
+    participant VENV as Project_Sanctuary .venv (Shared)
+    participant EXT as sanctuary-gateway (Option A)
+    participant LOCAL as bridge.py (Option B - SELECTED)
+    participant GW as Gateway Container (Podman)
+
+    rect rgb(245, 245, 245)
+        Note over IDE, GW: Option A: The "Official Library" Way
+        IDE->>VENV: Launch "python -m mcpgateway.translate"
+        Note right of IDE: Config points to 'command',<br/>not 'serverUrl'
+        VENV->>EXT: Load code from external path (via pip install -e)
+        EXT-->>IDE: Stdio Server Started
+        
+        IDE->>EXT: {"method": "tools/list"} (Stdio)
+        EXT->>GW: GET https://localhost:4444/tools (HTTP)
+        GW-->>EXT: JSON Response
+        EXT-->>IDE: JSON Response (Stdio)
+    end
+
+    rect rgb(240, 255, 244)
+        Note over IDE, GW: Option B: Custom Bridge (SELECTED)
+        IDE->>LOCAL: Launch "python -m mcp_servers.gateway.bridge"
+        Note right of IDE: Config points to local file
+        LOCAL-->>IDE: Stdio Server Started
+        
+        IDE->>LOCAL: {"method": "tools/list"} (Stdio)
+        LOCAL->>GW: GET https://localhost:4444/tools (HTTP)
+        Note right of LOCAL: Handles Auth & SSL internally
+        GW-->>LOCAL: JSON Response
+        LOCAL-->>IDE: JSON Response (Stdio)
+    end

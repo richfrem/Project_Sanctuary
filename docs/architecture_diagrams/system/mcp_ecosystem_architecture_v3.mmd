@@ -1,0 +1,111 @@
+---
+config:
+  theme: base
+---
+%% Name: MCP Ecosystem Architecture (Deployment A)
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd
+%% Description: Legacy Virtual Environment Deployment of the MCP Ecosystem
+
+graph TB
+    subgraph "LLM Assistants"
+        LLM[Gemini/Claude/GPT/etc]
+    end
+    
+    subgraph "Document Domains - Content Management"
+        Chronicle[Chronicle MCP<br/>00_CHRONICLE/]
+        Protocol[Protocol MCP<br/>01_PROTOCOLS/]
+        ADR[ADR MCP<br/>ADRs/]
+        Task[Task MCP<br/>TASKS/]
+    end
+    
+    subgraph "Cognitive Domains - Non-Mechanical"
+        Cortex["RAG Cortex MCP<br/>mcp_servers/rag_cortex/"]
+        AgentPersona["Agent Persona MCP<br/>mcp_servers/agent_persona/"]
+        Council["Council MCP<br/>mcp_servers/council/"]
+        Orchestrator["Orchestrator MCP<br/>mcp_servers/orchestrator/"]
+    end
+    
+    subgraph "System Domains - High Safety"
+        Config[Config MCP<br/>.agent/config/]
+        Code[Code MCP<br/>src/, scripts/, tools/]
+        Git[Git MCP<br/>.git/]
+    end
+    
+    subgraph "Model Domain - Specialized Hardware"
+        Forge["Forge LLM MCP<br/>mcp_servers/forge_llm/<br/>⚡ CUDA GPU Required"]
+    end
+    
+    subgraph "Shared Infrastructure"
+        GitOps[Git Operations<br/>P101 Compliance]
+        Safety[Safety Validator<br/>Protection Levels]
+        Schema[Schema Validator<br/>Domain Schemas]
+        Vault[Secret Vault<br/>API Keys & Secrets]
+    end
+    
+    LLM -->|MCP Protocol| Chronicle
+    LLM -->|MCP Protocol| Protocol
+    LLM -->|MCP Protocol| ADR
+    LLM -->|MCP Protocol| Task
+    LLM -->|MCP Protocol| Cortex
+    LLM -->|MCP Protocol| AgentPersona
+    LLM -->|MCP Protocol| Council
+    LLM -->|MCP Protocol| Orchestrator
+    LLM -->|MCP Protocol| Config
+    LLM -->|MCP Protocol| Code
+    LLM -->|MCP Protocol| Git
+    LLM -->|MCP Protocol| Forge
+    
+    Chronicle --> GitOps
+    Protocol --> GitOps
+    ADR --> GitOps
+    Task --> GitOps
+    Config --> GitOps
+    Code --> GitOps
+    Forge --> GitOps
+    
+    Git --> GitOps
+    
+    Chronicle --> Safety
+    Protocol --> Safety
+    ADR --> Safety
+    Task --> Safety
+    Cortex --> Safety
+    AgentPersona --> Safety
+    Council --> Safety
+    Orchestrator --> Safety
+    Config --> Safety
+    Code --> Safety
+    Git --> Safety
+    Forge --> Safety
+    
+    Chronicle --> Schema
+    Protocol --> Schema
+    ADR --> Schema
+    Task --> Schema
+    Cortex --> Schema
+    AgentPersona --> Schema
+    Council --> Schema
+    Orchestrator --> Schema
+    Config --> Schema
+    Code --> Schema
+    Git --> Schema
+    Forge --> Schema
+    
+    Config --> Vault
+    Forge --> Vault
+    
+    style Chronicle fill:#e8f5e8
+    style Protocol fill:#e8f5e8
+    style ADR fill:#e8f5e8
+    style Task fill:#e8f5e8
+    style Cortex fill:#fff3e0
+    style AgentPersona fill:#f3e5f5
+    style Config fill:#ffcccc
+    style Code fill:#ffcccc
+    style Git fill:#ffcccc
+    style Forge fill:#ff9999
+    style GitOps fill:#e0e0e0
+    style Safety fill:#e0e0e0
+    style Schema fill:#e0e0e0
+    style Vault fill:#e0e0e0

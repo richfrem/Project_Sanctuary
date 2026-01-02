@@ -47,61 +47,9 @@ What the Gateway discovers during handshakes (Tools, Schemas).
 
 ## Architectural Flow
 
-```mermaid
-flowchart LR
-    %% ===== INTENT LAYER =====
-    subgraph INTENT["<b>Spec Layer</b> (fleet_spec.py)"]
-        FLEET_SPEC["<b>FLEET_SPEC</b><br><i>Design Intent</i><br>• Slugs<br>• Default URLs"]
-    end
+![mcp_fleet_resolution_flow](docs/architecture_diagrams/system/mcp_fleet_resolution_flow.png)
 
-    %% ===== POLICY LAYER =====
-    subgraph POLICY["<b>Resolver Layer</b> (fleet_resolver.py)"]
-        RESOLVER["<b>Fleet Resolver</b><br><i>Policy Logic</i><br>• Env Overrides<br>• Docker Context"]
-    end
-
-    %% ===== EXECUTION LAYER =====
-    subgraph EXECUTION["<b>Execution Layer</b> (Transport)"]
-        CLI["<b>CLI Orchestrator</b><br>(fleet_orchestrator.py)"]
-        GATEWAY_CLIENT["<b>gateway_client.py</b><br><i>Pure Transport</i>"]
-    end
-
-    %% ===== TESTING LAYER =====
-    subgraph TESTING["<b>Testing Layer</b> (tests/...)"]
-        TEST_CLIENT["<b>gateway_test_client.py</b>"]
-        INTEG_TESTS["<b>Integration Tests</b><br>(clusters/...)"]
-    end
-
-    %% ===== RUNTIME =====
-    subgraph RUNTIME["<b>Runtime System</b>"]
-        GATEWAY["<b>Sanctuary Gateway</b>"]
-        MCP["<b>Fleet of MCP Servers</b>"]
-    end
-
-    %% ===== OBSERVATION =====
-    subgraph OBSERVATION["<b>Observation Layer</b> (Non-Authoritative)"]
-        REGISTRY_JSON["<b>fleet_registry.json</b><br><i>Discovery Manifest</i>"]
-    end
-
-    %% ===== FLOW =====
-    FLEET_SPEC -->|intent| RESOLVER
-    RESOLVER -->|resolved endpoints| CLI
-    RESOLVER -->|resolved endpoints| TEST_CLIENT
-    
-    CLI -->|invoke| GATEWAY_CLIENT
-    TEST_CLIENT -->|wrap| GATEWAY_CLIENT
-    TEST_CLIENT --> INTEG_TESTS
-    
-    GATEWAY_CLIENT -->|HTTP / SSE| GATEWAY
-    GATEWAY --> MCP
-
-    MCP -->|handshake| GATEWAY
-    GATEWAY -->|observed tools| GATEWAY_CLIENT
-    GATEWAY_CLIENT -->|write only| REGISTRY_JSON
-
-    %% ===== FAILURE PATH =====
-    MCP -. unreachable .-> GATEWAY
-    GATEWAY -. degraded state .-> REGISTRY_JSON
-```
+*[Source: mcp_fleet_resolution_flow.mmd](docs/architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
 
 ## Consequences
 

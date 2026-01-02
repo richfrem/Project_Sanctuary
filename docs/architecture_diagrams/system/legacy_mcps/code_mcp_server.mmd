@@ -1,0 +1,56 @@
+---
+config:
+  theme: base
+---
+%% Name: Code MCP Server Architecture
+%% Source: docs/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/system/code_mcp_server.mmd
+%% Description: Architecture and tool flow for Code MCP Server
+
+graph LR
+    subgraph "Code MCP Tools"
+        A[write_code_file]
+        B[execute_code]
+        C[refactor_code]
+        D[get_code_file]
+        E[search_code]
+    end
+
+    subgraph "Pipeline Operations"
+        F[Syntax Check]
+        G[Linting]
+        H[Unit Tests]
+        I[Dependency Check]
+        J[Sandbox Execution]
+    end
+
+    subgraph "Storage"
+        K[src/]
+        L[scripts/]
+        M[tools/]
+    end
+
+    A --> F
+    C --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> K
+    I --> L
+    I --> M
+
+    B --> J
+    J --> K
+
+    D --> K
+    D --> L
+    D --> M
+    E --> K
+    E --> L
+    E --> M
+
+    style A fill:#ffcccc
+    style B fill:#ffcccc
+    style C fill:#ffcccc
+    style D fill:#ccccff
+    style E fill:#ccccff

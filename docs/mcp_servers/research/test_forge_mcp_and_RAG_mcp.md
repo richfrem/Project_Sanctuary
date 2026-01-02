@@ -8,39 +8,9 @@ This guide provides commands to verify core MCP infrastructure is operational be
 
 ## Architecture Overview
 
-```mermaid
-graph TB
-    subgraph "External Layer"
-        LLM["External LLM<br/>(Claude/Gemini/GPT)"]
-    end
-    
-    subgraph "Orchestration Layer"
-        ORCH["Orchestrator MCP<br/>#10 - Strategic Missions"]
-        COUNCIL["Council MCP<br/>#9 - Multi-Agent Deliberation"]
-    end
-    
-    subgraph "Agent Layer"
-        PERSONA["Agent Persona MCP<br/>#8 - Individual Agents"]
-    end
-    
-    subgraph "Infrastructure Layer"
-        FORGE["Forge LLM MCP<br/>Model Inference"]
-        CORTEX["RAG Cortex MCP<br/>Knowledge Retrieval"]
-    end
-    
-    subgraph "Services (Podman)"
-        OLLAMA["sanctuary_ollama<br/>:11434<br/>Custom Fine-tuned LLM"]
-        CHROMA["sanctuary_vector_db<br/>:8000<br/>ChromaDB RAG DB"]
-    end
-    
-    LLM --> ORCH
-    ORCH --> COUNCIL
-    COUNCIL --> PERSONA
-    COUNCIL --> CORTEX
-    PERSONA --> FORGE
-    FORGE --> OLLAMA
-    CORTEX --> CHROMA
-```
+![council_orchestration_stack](docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.png)
+
+*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.mmd)*
 
 > **Note:** The LLM can also call any MCP directly (Agent Persona, Forge LLM, RAG Cortex, etc.) — not just through Orchestrator.
 
@@ -120,40 +90,9 @@ print(result.results[0].content[:200] if result.results else 'No results')
 
 ## Orchestration Sequence
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Orchestrator
-    participant Council
-    participant Persona as Agent Persona
-    participant Cortex as RAG Cortex
-    participant Forge as Forge LLM
-    participant Ollama
+![orchestration_verification_sequence](docs/architecture_diagrams/workflows/orchestration_verification_sequence.png)
 
-    User->>Orchestrator: dispatch_mission("Review Protocol 101")
-    
-    Orchestrator->>Council: dispatch("Analyze Protocol 101")
-    
-    Council->>Cortex: query("Protocol 101")
-    Cortex-->>Council: Document content
-    
-    Council->>Persona: dispatch(role="auditor", task, context)
-    Persona->>Forge: query_model(prompt)
-    Forge->>Ollama: chat(model, messages)
-    Ollama-->>Forge: response
-    Forge-->>Persona: response
-    Persona-->>Council: audit findings
-    
-    Council->>Persona: dispatch(role="strategist", task, context)
-    Persona->>Forge: query_model(prompt)
-    Forge->>Ollama: chat(model, messages)
-    Ollama-->>Forge: response
-    Forge-->>Persona: response
-    Persona-->>Council: strategic recommendations
-    
-    Council-->>Orchestrator: deliberation result
-    Orchestrator-->>User: mission complete
-```
+*[Source: orchestration_verification_sequence.mmd](docs/architecture_diagrams/workflows/orchestration_verification_sequence.mmd)*
 
 ---
 

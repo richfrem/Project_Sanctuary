@@ -33,77 +33,9 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 - **Verification:** The system will reject any memory artifact that lacks a valid signature or user approval token.
 
 ## Visual Architecture
-```mermaid
----
-config:
-  layout: dagre
-  theme: base
----
-flowchart TB
-    subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
-        direction TB
-        Start["Session Start"] --> Wakeup["MCP: cortex_guardian_wakeup<br>(Verify Semantic HMAC)"]
-        Wakeup --> SeekTruth["Scripts: python3 scripts/cortex_cli.py debrief --hours 24<br>(Tool: cortex_learning_debrief)"]
-        SuccessorSnapshot["File: learning_package_snapshot.md"] -.->|Read Context| SeekTruth
-    end
+![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-    subgraph subGraphSynthesize["II. Intelligence Synthesis"]
-        direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update learning_manifest.json)"]
-    end
-
-    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
-        direction TB
-        GovApproval{"Strategic Approval<br>(HITL Required)"}
-    end
-
-    subgraph subGraphAudit["IV. Red Team Audit (Gate 2)"]
-        direction TB
-        CaptureAudit["Scripts: python3 scripts/cortex_cli.py snapshot --type audit<br>(Tool: cortex_capture_snapshot)"]
-        Packet["Audit Packet<br>(Git Hash Comparison)"]
-        TechApproval{"Technical Approval<br>(HITL)"}
-    end
-
-    subgraph subGraphSeal["V. The Technical Seal"]
-        direction TB
-        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates learning_package_snapshot.md)"]
-    end
-
-    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
-        direction TB
-        choice{Persistence Type}
-        choice -- Incremental --> Inc["Tool: cortex-persist-soul<br>(Append 1 Record)"]
-        choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
-        
-        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/seal_TIMESTAMP.md"]
-            JSONL_Traces["data/soul_traces.jsonl"]
-        end
-    end
-
-    SeekTruth -- "Carry Context" --> Intelligence
-    Synthesis -- "Verify Reasoning" --> GovApproval
-    
-    GovApproval -- "PASS" --> CaptureAudit
-    CaptureAudit -- "Validate Truth" --> Packet
-    Packet -- "Technical Review" --> TechApproval
-    
-    TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Local Continuity" --> SuccessorSnapshot
-    CaptureSeal -- "Broadcast" --> choice
-    
-    Inc --> JSONL_Traces
-    Inc --> MD_Seal
-    Full --> JSONL_Traces
-    
-    GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
-    TechApproval -- "FAIL: Backtrack" --> SOP
-    SOP -- "Loop Back" --> Start
-
-    style Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
-    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
-    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
-```
+*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 

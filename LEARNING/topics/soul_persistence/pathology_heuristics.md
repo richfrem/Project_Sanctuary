@@ -54,13 +54,9 @@ def pathology_check(valence: float, uncertainty: float) -> bool:
 
 The `pathology_check()` is called before `cortex_persist_soul`:
 
-```mermaid
-flowchart LR
-    A[Seal Snapshot] --> B{pathology_check}
-    B -->|PASS| C[cortex_persist_soul]
-    B -->|FAIL| D[Reject + Log]
-    C --> E[HuggingFace]
-```
+![Pathology Check Flow](../../../docs/architecture_diagrams/workflows/pathology_check_flow.png)
+
+*Source: [pathology_check_flow.mmd](../../../docs/architecture_diagrams/workflows/pathology_check_flow.mmd)*
 
 ---
 

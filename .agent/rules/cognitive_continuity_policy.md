@@ -17,6 +17,7 @@ trigger: always_on
 * **Autonomous Synthesis**: Record all architectural changes as ADRs and process learnings into the `LEARNING/` directory.
 * **Strategic Approval (Gate 1)**: You must receive explicit **Human-in-the-Loop (HITL)** approval for the strategy before proceeding to the technical audit.
 * **Backtrack Logic**: If strategic approval is denied, you must revert to `SOP: recursive_learning.md` to re-scout and re-synthesize.
+* **Content Hygiene (ADR 085)**: **No inline Mermaid diagrams**. All diagrams must be `.mmd` files in `docs/architecture_diagrams/`, rendered to PNG, and referenced via image links.
 
 ### 3. Phase IV: The Red Team Audit (Gate 2)
 
@@ -43,6 +44,24 @@ trigger: always_on
 * **Incremental Mode**: Appends 1 record to `data/soul_traces.jsonl` AND uploads MD to `lineage/seal_TIMESTAMP_*.md`.
 * **Full Sync Mode**: Use `cortex-persist-soul-full` to regenerate the entire JSONL from all project files (~1200 records).
 
+### 7. Source Verification (ADR 078)
+
+* **Rule 7**: **MUST VERIFY ALL LINKS.** Test every URL with `read_url_content`.
+* **Rule 8**: **MUST MATCH 100% (Title/Author/Date).** Credibility is lost with even one error.
+* **Rule 9**: **MUST NOT INCLUDE BROKEN/UNVERIFIED LINKS.** Zero tolerance for 404s.
+* **Template**: All research sources must follow `LEARNING/templates/sources_template.md`.
+
+---
+
+## Protocol 128: Pre-Departure Checklist
+*You must verify these steps before ending the session:*
+
+1. [ ] **Deployment**: Are containers running the new code? (ADR 087)
+2. [ ] **Retrospective**: Did you fill `loop_retrospective.md` with Red Team verdict?
+3. [ ] **Seal**: Did you re-run `cortex_capture_snapshot --type seal` *after* the Retro?
+4. [ ] **Persist**: Did you run `cortex-persist-soul` *after* the Seal?
+5. [ ] **Ingest**: Did you run `ingest --incremental --hours 24` to index changes?
+
 ---
 
 ## CLI Quick Reference
@@ -61,4 +80,4 @@ trigger: always_on
 | IV. Audit | `python3 scripts/cortex_cli.py snapshot --type learning_audit` | `cortex_capture_snapshot` |
 | V. Seal | `python3 scripts/cortex_cli.py snapshot --type seal` | `cortex_capture_snapshot` |
 | VI. Persist (Incremental) | `python3 scripts/cortex_cli.py persist-soul` | `cortex_persist_soul` |
-| VI. Persist (Full) | `python3 scripts/cortex_cli.py persist-soul-full` | `cortex_persist_soul_full` |
+| VII. Optimization | `python3 scripts/cortex_cli.py ingest --incremental --hours 24` | (CLI Only) |

@@ -1,0 +1,52 @@
+---
+title: Gateway Future State Architecture
+description: Detailed flowchart of the user environment, Podman container network, and backend MCP servers.
+---
+graph TB
+    subgraph UserEnv[User Environment]
+        IDE[IDE / Claude Desktop]
+        Browser[Browser / Localhost]
+        CLI[Terminal / CLI]
+    end
+
+    subgraph PodmanNetwork[Podman Container Network]
+        direction TB
+        
+        subgraph GatewayGroup[Gateway Layer]
+            Gateway[MCP Gateway Server]
+            Registry[Service Registry]
+            Security[Security Enforcer]
+        end
+
+        subgraph BackendServices[Backend MCP Servers]
+            direction LR
+            FileSystem[File System MCP]
+            Postgres[Postgres MCP]
+            Memory[Memory/Cognitive MCP]
+            Search[Search/Fetch MCP]
+            Specialized[Specialized Agents]
+        end
+    end
+
+    subgraph ExternalServices[External / Cloud]
+        LLM_API[LLM Provider API]
+        Ext_DB[Cloud Database]
+    end
+
+    IDE -->|SSE / Stdio| Gateway
+    CLI -->|Stdio| Gateway
+    Gateway -->|Service Discovery| Registry
+    Gateway -->|Auth/Policy| Security
+    Gateway -->|Route Request| FileSystem
+    Gateway -->|Route Request| Postgres
+    Gateway -->|Route Request| Memory
+    Gateway -->|Route Request| Search
+    Gateway -->|Route Request| Specialized
+
+    FileSystem -->|Read/Write| LocalDisk[(Local Disk)]
+    Postgres -->|SQL| LocalPg[(Postgres DB)]
+    Memory -->|Vector Search| LocalVector[(Vector DB)]
+    
+    Gateway -->|Audit Log| AuditFile[(Audit Logs)]
+    
+    Specialized -.->|API Call| LLM_API

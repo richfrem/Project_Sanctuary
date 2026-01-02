@@ -19,53 +19,9 @@ This diagram shows how the cache is populated from the Mnemonic Cortex (RAG DB) 
 
 #### Cache population Mnemonic Cortex (RAG DB)
 
-```mermaid
----
-config:
-  theme: base
----
-sequenceDiagram
-    autonumber
+![Legacy Council Cache Population](../../architecture_diagrams/workflows/legacy_council_cache_population.png)
 
-    participant U as User/System
-
-    box "orchestrator/app.py" #FFFFF8
-        participant O as Orchestrator
-    end
-    box "orchestrator/memory/cortex.py" #FFFFF8
-        participant CM as CortexManager
-    end
-    box "orchestrator/memory/cache.py" #FFFFF8
-        participant CacheMgr as CacheManager
-    end
-    box "mnemonic_cortex/chroma_db/" #FFFFF8
-        participant RAG as RAG DB (ChromaDB)
-    end
-    box "council_orchestrator/mnemonic_cortex/cache/" #FFFFF8
-        participant CacheFS as Filesystem Cache
-    end
-
-    U->>O: Starts `orchestrator.main`
-    O->>O: Orchestrator.__init__() is called
-    Note right of O: `self.cortex_manager = CortexManager(...)` is created
-    O->>CM: **Invoke `prefill_guardian_start_pack()`**
-    Note over CM, RAG: Queries RAG DB for latest documents...
-    CM->>CacheMgr: `cache_manager.query_cortex("latest chronicles", limit=15)`
-    CacheMgr->>RAG: Executes similarity search
-    RAG-->>CacheMgr: Returns document data
-    Note right of CacheMgr: Data for 'chronicles' received
-    CacheMgr->>CacheFS: `_write_bundle_to_cache('chronicles', data)`
-    CacheFS-->>CacheMgr: Writes `chronicles_bundle.json`
-    CM->>CacheMgr: `cache_manager.query_cortex("latest protocols", limit=15)`
-    CacheMgr->>RAG: Executes similarity search
-    RAG-->>CacheMgr: Returns document data
-    Note right of CacheMgr: Data for 'protocols' received
-    CacheMgr->>CacheFS: `_write_bundle_to_cache('protocols', data)`
-    CacheFS-->>CacheMgr: Writes `protocols_bundle.json`
-    Note over O: Orchestrator signals completion
-    O-->>U: Displays console log: "[CACHE] Pre-fill complete. Cache is warm."
-    O-->>U: Displays console log: "--- Orchestrator Idle. ---"
-```
+*[Source: legacy_council_cache_population.mmd](../../architecture_diagrams/workflows/legacy_council_cache_population.mmd)*
 
 ---
 
@@ -74,49 +30,9 @@ This diagram shows what happens when a cache_wakeup command is issued. Note that
 
 #### Cache wakeup process
 
-```mermaid
----
-config:
-  theme: base
----
-sequenceDiagram
-    autonumber
+![Legacy Council Cache Wakeup](../../architecture_diagrams/workflows/legacy_council_cache_wakeup.png)
 
-    participant G as Guardian
-
-    box "orchestrator/sentry.py" #FFFFF8
-        participant Sentry as Sentry Thread
-    end
-    box "orchestrator/app.py" #FFFFF8
-        participant O as Orchestrator (`main_loop`)
-    end
-    box "orchestrator/handlers/cache_wakeup_handler.py" #FFFFF8
-        participant CH as CacheWakeupHandler
-    end
-    box "council_orchestrator/mnemonic_cortex/cache/" #FFFFF8
-        participant CacheFS as Filesystem Cache
-    end
-    box "council_orchestrator/WORK_IN_PROGRESS/" #FFFFF8
-        participant FS as Output Artifact
-    end
-
-    G->>Sentry: Creates `command.json`
-    Sentry->>O: Puts command in queue
-    O->>O: `main_loop` performs Action Triage
-    O->>CH: Dispatches to `handle_cache_wakeup(command, self)`
-    
-    CH->>CacheFS: `cache_manager.fetch_guardian_start_pack()` reads bundles
-    Note right of CacheFS: Reads `chronicles_bundle.json`, etc.
-    CacheFS-->>CH: Returns raw JSON content
-    
-    CH->>CH: **`render_guardian_boot_digest(result, project_root)`**
-    Note right of CH: Formats JSON into Markdown
-    
-    CH->>FS: `output_path.write_text(digest_content)`
-    FS-->>CH: Writes formatted `guardian_boot_digest.md`
-    
-    O-->>G: Returns to Idle state
-```
+*[Source: legacy_council_cache_wakeup.mmd](../../architecture_diagrams/workflows/legacy_council_cache_wakeup.mmd)*
 
 ---
 

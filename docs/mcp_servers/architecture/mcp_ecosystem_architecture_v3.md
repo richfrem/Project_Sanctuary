@@ -20,110 +20,9 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 ### 2.1 Physical Deployment A: Legacy Virtual Environment Deployment
 This deployment mode runs each MCP server as a separate process within a local `.venv`, mapped 1:1 with the logical domains.
 
-```mermaid
-graph TB
-    subgraph "LLM Assistants"
-        LLM[Gemini/Claude/GPT/etc]
-    end
-    
-    subgraph "Document Domains - Content Management"
-        Chronicle[Chronicle MCP<br/>00_CHRONICLE/]
-        Protocol[Protocol MCP<br/>01_PROTOCOLS/]
-        ADR[ADR MCP<br/>ADRs/]
-        Task[Task MCP<br/>TASKS/]
-    end
-    
-    subgraph "Cognitive Domains - Non-Mechanical"
-        Cortex["RAG Cortex MCP<br/>mcp_servers/rag_cortex/"]
-        AgentPersona["Agent Persona MCP<br/>mcp_servers/agent_persona/"]
-        Council["Council MCP<br/>mcp_servers/council/"]
-        Orchestrator["Orchestrator MCP<br/>mcp_servers/orchestrator/"]
-    end
-    
-    subgraph "System Domains - High Safety"
-        Config[Config MCP<br/>.agent/config/]
-        Code[Code MCP<br/>src/, scripts/, tools/]
-        Git[Git MCP<br/>.git/]
-    end
-    
-    subgraph "Model Domain - Specialized Hardware"
-        Forge["Forge LLM MCP<br/>mcp_servers/forge_llm/<br/>⚡ CUDA GPU Required"]
-    end
-    
-    subgraph "Shared Infrastructure"
-        GitOps[Git Operations<br/>P101 Compliance]
-        Safety[Safety Validator<br/>Protection Levels]
-        Schema[Schema Validator<br/>Domain Schemas]
-        Vault[Secret Vault<br/>API Keys & Secrets]
-    end
-    
-    LLM -->|MCP Protocol| Chronicle
-    LLM -->|MCP Protocol| Protocol
-    LLM -->|MCP Protocol| ADR
-    LLM -->|MCP Protocol| Task
-    LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| AgentPersona
-    LLM -->|MCP Protocol| Council
-    LLM -->|MCP Protocol| Orchestrator
-    LLM -->|MCP Protocol| Config
-    LLM -->|MCP Protocol| Code
-    LLM -->|MCP Protocol| Git
-    LLM -->|MCP Protocol| Forge
-    
-    Chronicle --> GitOps
-    Protocol --> GitOps
-    ADR --> GitOps
-    Task --> GitOps
-    Config --> GitOps
-    Code --> GitOps
-    Forge --> GitOps
-    
-    Git --> GitOps
-    
-    Chronicle --> Safety
-    Protocol --> Safety
-    ADR --> Safety
-    Task --> Safety
-    Cortex --> Safety
-    AgentPersona --> Safety
-    Council --> Safety
-    Orchestrator --> Safety
-    Config --> Safety
-    Code --> Safety
-    Git --> Safety
-    Forge --> Safety
-    
-    Chronicle --> Schema
-    Protocol --> Schema
-    ADR --> Schema
-    Task --> Schema
-    Cortex --> Schema
-    AgentPersona --> Schema
-    Council --> Schema
-    Orchestrator --> Schema
-    Config --> Schema
-    Code --> Schema
-    Git --> Schema
-    Forge --> Schema
-    
-    Config --> Vault
-    Forge --> Vault
-    
-    style Chronicle fill:#e8f5e8
-    style Protocol fill:#e8f5e8
-    style ADR fill:#e8f5e8
-    style Task fill:#e8f5e8
-    style Cortex fill:#fff3e0
-    style AgentPersona fill:#f3e5f5
-    style Config fill:#ffcccc
-    style Code fill:#ffcccc
-    style Git fill:#ffcccc
-    style Forge fill:#ff9999
-    style GitOps fill:#e0e0e0
-    style Safety fill:#e0e0e0
-    style Schema fill:#e0e0e0
-    style Vault fill:#e0e0e0
-```
+![mcp_ecosystem_architecture_v3](docs/architecture_diagrams/system/mcp_ecosystem_architecture_v3.png)
+
+*[Source: mcp_ecosystem_architecture_v3.mmd](docs/architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd)*
 
 ### 2.2 Physical Deployment B: IBM Gateway Fleet Architecture
 The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized services** accessed via a single **IBM ContextForge Gateway**.
@@ -131,32 +30,9 @@ The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized
 - **Reference:** [`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)
 - **Mechanism:** The Gateway acts as a broker, routing client requests to the appropriate backend container via SSE transport.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
-    
-    Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
-    Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
-    Gateway -- SSE Transport --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
-    Gateway -- SSE Transport --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
-    Gateway -- SSE Transport --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
-    Gateway -- SSE Transport --> Cortex["<b>5. sanctuary_cortex</b><br>:8104/sse"]
-    
-    subgraph Backends["<b>Physical Intelligence Fleet</b>"]
-        VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
-    end
+![mcp_gateway_fleet](docs/architecture_diagrams/system/mcp_gateway_fleet.png)
 
-    Cortex --> VectorDB
-    Cortex --> Ollama
-    Domain --> Utils
-    Domain --> Filesystem
-```
+*[Source: mcp_gateway_fleet.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 
 ---
 
@@ -168,34 +44,9 @@ flowchart TB
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create and manage chronicle entries (file operations only)
 
-```mermaid
-graph LR
-    subgraph "Chronicle MCP Tools"
-        A[create_chronicle_entry]
-        B[update_chronicle_entry]
-        C[get_chronicle_entry]
-        D[list_recent_entries]
-        E[search_chronicle]
-    end
-    
-    subgraph "Operations"
-        F[Validate Schema]
-        G[Check Entry Age]
-        H[Generate Markdown]
-        I[Write to Disk]
-    end
-    
-    subgraph "Storage"
-        J[00_CHRONICLE/ENTRIES/]
-    end
-    
-    A --> F
-    B --> F
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-```
+![chronicle_mcp_server](docs/architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.png)
+
+*[Source: chronicle_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -247,79 +98,9 @@ git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create, read, update chronicle entries with automatic git commits
 
-```mermaid
-graph TB
-    subgraph "LLM Assistants"
-        LLM[Gemini/Claude/GPT/etc]
-    end
-   
-    subgraph "MCP Ecosystem"
-        Chronicle[Chronicle MCP Server]
-        Protocol[Protocol MCP Server]
-        ADR[ADR MCP Server]
-        Task[Task MCP Server]
-        Cortex["RAG MCP (Cortex)"]
-        Council["Agent Orchestrator MCP (Council)"]
-    end
-   
-    subgraph "Shared Infrastructure"
-        Git[Git Operations<br/>P101 Compliance]
-        Safety[Safety Validator]
-        Schema[Schema Validator]
-    end
-   
-    subgraph "Project Sanctuary"
-        ChronicleDir[00_CHRONICLE/]
-        ProtocolDir[01_PROTOCOLS/]
-        ADRDir[ADRs/]
-        TaskDir[TASKS/]
-        CortexDir[mnemonic_cortex/]
-        CouncilDir[council_orchestrator/]
-    end
-   
-    LLM -->|MCP Protocol| Chronicle
-    LLM -->|MCP Protocol| Protocol
-    LLM -->|MCP Protocol| ADR
-    LLM -->|MCP Protocol| Task
-    LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| Council
-   
-    Chronicle --> Git
-    Protocol --> Git
-    ADR --> Git
-    Task --> Git
-   
-    Chronicle --> Safety
-    Protocol --> Safety
-    ADR --> Safety
-    Task --> Safety
-    Cortex --> Safety
-    Council --> Safety
-   
-    Chronicle --> Schema
-    Protocol --> Schema
-    ADR --> Schema
-    Task --> Schema
-    Cortex --> Schema
-    Council --> Schema
-   
-    Chronicle --> ChronicleDir
-    Protocol --> ProtocolDir
-    ADR --> ADRDir
-    Task --> TaskDir
-    Cortex --> CortexDir
-    Council --> CouncilDir
-   
-    style Chronicle fill:#e8f5e8
-    style Protocol fill:#e8f5e8
-    style ADR fill:#e8f5e8
-    style Task fill:#e8f5e8
-    style Cortex fill:#fff3e0
-    style Council fill:#f3e5f5
-    style Git fill:#ffcccc
-    style Safety fill:#ffcccc
-    style Schema fill:#ffcccc
-```
+![chronicle_ecosystem_context](docs/architecture_diagrams/system/chronicle_ecosystem_context.png)
+
+*[Source: chronicle_ecosystem_context.mmd](docs/architecture_diagrams/system/chronicle_ecosystem_context.mmd)*
 
 **Tool Signatures:**
 
@@ -373,47 +154,9 @@ search_chronicle(query: string) => ChronicleEntry[]
 **Directory:** `01_PROTOCOLS/`  
 **Purpose:** Create, read, update protocols with versioning and changelog
 
-```mermaid
-graph LR
-    subgraph "Protocol MCP Tools"
-        A[create_protocol]
-        B[update_protocol]
-        C[get_protocol]
-        D[list_protocols]
-        E[search_protocols]
-        F[archive_protocol]
-    end
-    
-    subgraph "Operations"
-        G[Validate Schema]
-        H[Version Management]
-        I[Generate Markdown]
-        J[Git Commit + P101]
-    end
-    
-    subgraph "Storage"
-        K[01_PROTOCOLS/]
-    end
-    
-    A --> G
-    B --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-    
-    C --> K
-    D --> K
-    E --> K
-    F --> K
-    
-    style A fill:#ccffcc
-    style B fill:#ffffcc
-    style C fill:#ccccff
-    style D fill:#ccccff
-    style E fill:#ccccff
-    style F fill:#ffcccc
-```
+![protocol_mcp_server](docs/architecture_diagrams/system/legacy_mcps/protocol_mcp_server.png)
+
+*[Source: protocol_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/protocol_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -475,42 +218,9 @@ archive_protocol(number: number, reason: string) => {
 **Directory:** `ADRs/`  
 **Purpose:** Document architectural decisions with status tracking
 
-```mermaid
-graph LR
-    subgraph "ADR MCP Tools"
-        A[create_adr]
-        B[update_adr_status]
-        C[get_adr]
-        D[list_adrs]
-        E[search_adrs]
-    end
-    
-    subgraph "Operations"
-        F[Validate Schema]
-        G[Generate Markdown]
-        H[Git Commit + P101]
-    end
-    
-    subgraph "Storage"
-        I[ADRs/]
-    end
-    
-    A --> F
-    B --> F
-    F --> G
-    G --> H
-    H --> I
-    
-    C --> I
-    D --> I
-    E --> I
-    
-    style A fill:#ccffcc
-    style B fill:#ffffcc
-    style C fill:#ccccff
-    style D fill:#ccccff
-    style E fill:#ccccff
-```
+![adr_mcp_server](docs/architecture_diagrams/system/legacy_mcps/adr_mcp_server.png)
+
+*[Source: adr_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/adr_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -561,57 +271,9 @@ search_adrs(query: string) => ADR[]
 **Directory:** `TASKS/`  
 **Purpose:** Create, update, track tasks across backlog/active/completed
 
-```mermaid
-graph LR
-    subgraph "Task MCP Tools"
-        A[create_task]
-        B[update_task_status]
-        C[update_task]
-        D[get_task]
-        E[list_tasks]
-        F[search_tasks]
-    end
-    
-    subgraph "Operations"
-        G[Validate Schema]
-        H[Status Management]
-        I[Generate Markdown]
-        J[Git Commit + P101]
-    end
-    
-    subgraph "Storage"
-        K[TASKS/backlog/]
-        L[TASKS/active/]
-        M[TASKS/completed/]
-    end
-    
-    A --> G
-    B --> G
-    C --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-    J --> L
-    J --> M
-    
-    D --> K
-    D --> L
-    D --> M
-    E --> K
-    E --> L
-    E --> M
-    F --> K
-    F --> L
-    F --> M
-    
-    style A fill:#ccffcc
-    style B fill:#ffffcc
-    style C fill:#ffffcc
-    style D fill:#ccccff
-    style E fill:#ccccff
-    style F fill:#ccccff
-```
+![task_mcp_server](docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.png)
+
+*[Source: task_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -676,50 +338,9 @@ search_tasks(query: string) => Task[]
 **Directory:** `mcp_servers/rag_cortex/`  
 **Purpose:** Query vector database, ingest documents, manage knowledge
 
-```mermaid
-graph LR
-    subgraph "RAG MCP Tools"
-        A[query_cortex]
-        B[ingest_document]
-        C[update_index]
-        D[get_stats]
-        E[search_by_metadata]
-    end
-    
-    subgraph "Operations"
-        F[Embedding Generation]
-        G[Vector Search]
-        H[Metadata Filtering]
-        I[Index Management]
-    end
-    
-    subgraph "Storage"
-        J[ChromaDB]
-        K[Document Store]
-    end
-    
-    A --> F
-    A --> G
-    A --> H
-    B --> F
-    B --> I
-    C --> I
-    E --> H
-    
-    F --> J
-    G --> J
-    H --> J
-    I --> J
-    I --> K
-    
-    D --> J
-    
-    style A fill:#ccccff
-    style B fill:#ccffcc
-    style C fill:#ffffcc
-    style D fill:#ccccff
-    style E fill:#ccccff
-```
+![rag_cortex_mcp_server](docs/architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.png)
+
+*[Source: rag_cortex_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -1295,47 +916,15 @@ class SchemaValidator {
 
 ### Example 1: Protocol Creation with Documentation
 
-```mermaid
-sequenceDiagram
-    participant LLM as LLM Assistant
-    participant Protocol as Protocol MCP
-    participant Chronicle as Chronicle MCP
-    participant Git as Git Operations
-    
-    LLM->>Protocol: create_protocol(115, "MCP Ecosystem", ...)
-    Protocol->>Git: commit_with_manifest(...)
-    Git-->>Protocol: commit_hash
-    Protocol-->>LLM: {file_path, commit_hash}
-    
-    LLM->>Chronicle: create_chronicle_entry(279, "P115 Canonized", ...)
-    Chronicle->>Git: commit_with_manifest(...)
-    Git-->>Chronicle: commit_hash
-    Chronicle-->>LLM: {file_path, commit_hash}
-```
+![mcp_protocol_creation_workflow](docs/architecture_diagrams/workflows/mcp_protocol_creation_workflow.png)
+
+*[Source: mcp_protocol_creation_workflow.mmd](docs/architecture_diagrams/workflows/mcp_protocol_creation_workflow.mmd)*
 
 ### Example 2: Research → Deliberation → Decision
 
-```mermaid
-sequenceDiagram
-    participant LLM as LLM Assistant
-    participant Cortex as RAG MCP (Cortex)
-    participant Council as Agent Orchestrator MCP (Council)
-    participant ADR as ADR MCP
-    
-    LLM->>Cortex: query_cortex("MCP patterns")
-    Cortex-->>LLM: {results: [...]}
-    
-    LLM->>Council: create_deliberation("Analyze MCP patterns", ...)
-    Council-->>LLM: {command_file, status: "queued"}
-    
-    Note over Council: Council deliberates...
-    
-    LLM->>Council: get_result(task_id)
-    Council-->>LLM: {output_path, content}
-    
-    LLM->>ADR: create_adr(35, "MCP Composition", ...)
-    ADR-->>LLM: {file_path, commit_hash}
-```
+![mcp_deliberation_workflow](docs/architecture_diagrams/workflows/mcp_deliberation_workflow.png)
+
+*[Source: mcp_deliberation_workflow.mmd](docs/architecture_diagrams/workflows/mcp_deliberation_workflow.mmd)*
 
 ---
 

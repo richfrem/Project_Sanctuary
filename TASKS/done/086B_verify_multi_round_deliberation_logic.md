@@ -1,5 +1,9 @@
 # Task 086B: Verify Multi-Round Deliberation Logic Integrity
 
+> [!NOTE]
+> **ADR 085 Compliance Note:** This completed task predates [ADR 085](../../ADRs/085_canonical_mermaid_diagram_management.md). Inline Mermaid diagrams are preserved for historical accuracy.
+
+
 **Status:** TODO  
 **Priority:** HIGH 🟠  
 **Created:** 2025-12-01  

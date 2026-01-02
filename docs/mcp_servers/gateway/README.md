@@ -104,32 +104,9 @@ The **Hybrid Fleet Strategy** consolidates 10 script-based MCP servers into **8 
 
 This architecture acts as a bridge, where the Gateway service (running in Podman) routes requests to the 6 front-end clusters via SSE.
 
-```mermaid
----
-config:
-  theme: base
-  layout: dagre
----
-flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
-    
-    Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
-    Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
-    Gateway -- SSE Transport --> Network["<b>3. sanctuary_network</b><br>:8102/sse"]
-    Gateway -- SSE Transport --> Git["<b>4. sanctuary_git</b><br>:8103/sse"]
-    Gateway -- SSE Transport --> Domain["<b>6. sanctuary_domain</b><br>:8105/sse"]
-    Gateway -- SSE Transport --> Cortex["<b>5. sanctuary_cortex</b><br>:8104/sse"]
-    
-    subgraph Backends["<b>Physical Intelligence Fleet</b>"]
-        VectorDB["<b>7. sanctuary_vector_db</b><br>:8110"]
-        Ollama["<b>8. sanctuary_ollama</b><br>:11434"]
-    end
+![mcp_gateway_fleet](docs/architecture_diagrams/system/mcp_gateway_fleet.png)
 
-    Cortex --> VectorDB
-    Cortex --> Ollama
-    Domain --> Utils
-    Domain --> Filesystem
-```
+*[Source: mcp_gateway_fleet.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 
 **Container Inventory:**
 | # | Container | Type | Role | Port | Front-end? |

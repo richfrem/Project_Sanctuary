@@ -42,23 +42,9 @@ Use the official `mcpgateway.translate` module provided by the IBM/ContextForge 
 
 #### Workflow Diagram (Option A)
 
-```mermaid
-sequenceDiagram
-    participant IDE as IDE / Claude Desktop
-    participant VENV as Project_Sanctuary .venv (Shared)
-    participant EXT as ../sanctuary-gateway (External Repo)
-    participant GW as Gateway Container (Podman)
+![MCP SSE Bridge Approach](../../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.png)
 
-    IDE->>VENV: Launch "python -m mcpgateway.translate"
-    Note right of IDE: Config points to 'command',<br/>not 'serverUrl'
-    VENV->>EXT: Load code from external path (via pip install -e)
-    EXT-->>IDE: Stdio Server Started
-    
-    IDE->>EXT: {"method": "tools/list"} (Stdio)
-    EXT->>GW: GET https://localhost:4444/tools (HTTP)
-    GW-->>EXT: JSON Response
-    EXT-->>IDE: JSON Response (Stdio)
-```
+*[Source: mcp_sse_bridge_approach.mmd](../../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.mmd)*
 
 ### Option B: The "Single File" Way (Custom Bridge)
 Implement a self-contained, single-file Python script (`mcp_servers/gateway/bridge.py`) within this project.
@@ -71,22 +57,7 @@ Implement a self-contained, single-file Python script (`mcp_servers/gateway/brid
 
 #### Workflow Diagram (Option B)
 
-```mermaid
-sequenceDiagram
-    participant IDE as IDE / Claude Desktop
-    participant LOCAL as mcp_servers.gateway.bridge.py (Local File)
-    participant GW as Gateway Container (Podman)
-
-    IDE->>LOCAL: Launch "python -m mcp_servers.gateway.bridge"
-    Note right of IDE: Config points to local file
-    LOCAL-->>IDE: Stdio Server Started
-    
-    IDE->>LOCAL: {"method": "tools/list"} (Stdio)
-    LOCAL->>GW: GET https://localhost:4444/tools (HTTP)
-    Note right of LOCAL: Handles Auth & SSL internally
-    GW-->>LOCAL: JSON Response
-    LOCAL-->>IDE: JSON Response (Stdio)
-```
+*(See combined diagram above)*
 
 
 ## Decision

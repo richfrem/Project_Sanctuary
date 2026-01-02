@@ -1,0 +1,50 @@
+---
+config:
+  theme: base
+---
+%% Name: Recursive Learning Gateway Flow
+%% Source: docs/mcp_servers/gateway/architecture/ARCHITECTURE.md
+%% Location: docs/architecture_diagrams/workflows/recursive_learning_gateway_flow.mmd
+%% Description: Sequence diagram illustrating how the Recursive Learning Loop (Protocol 125) operates through the MCP Gateway.
+
+sequenceDiagram
+    autonumber
+    participant A as 🧠 Cognitive Agent<br>(Claude/Gemini)
+    participant GW as 🌐 MCP Gateway<br>(Port 4444)
+    participant Fleet as 🐳 Fleet of 8<br>(Podman)
+    participant VDB as 📊 Vector DB
+    participant LLM as 🤖 Ollama
+
+    Note over A: Agent identifies learning opportunity
+    
+    rect rgb(230, 245, 255)
+        Note over A, GW: 1. Tool Discovery
+        A->>GW: GET /sse (Connect)
+        GW-->>A: Available Tools (180+)
+    end
+
+    rect rgb(255, 245, 230)
+        Note over A, Fleet: 2. Knowledge Ingestion
+        A->>GW: cortex_ingest_incremental(doc)
+        GW->>Fleet: Route to cortex:8104
+        Fleet->>VDB: Embed → Store
+        Fleet-->>GW: {doc_id}
+        GW-->>A: Ingestion Complete
+    end
+
+    rect rgb(230, 255, 230)
+        Note over A, LLM: 3. Semantic Verification (P125)
+        A->>GW: cortex_query(topic)
+        GW->>Fleet: Route to cortex:8104
+        Fleet->>VDB: Similarity Search
+        Fleet->>LLM: Augment Response
+        Fleet-->>GW: {score: 0.94}
+        GW-->>A: Echo-Back Verified
+    end
+
+    rect rgb(255, 230, 255)
+        Note over A, Fleet: 4. Chronicle Entry
+        A->>GW: chronicle_create_entry()
+        GW->>Fleet: Route to domain:8105
+        GW-->>A: Learning Loop Complete ✅
+    end
