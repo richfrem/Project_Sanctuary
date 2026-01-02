@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **🚀 Unified Fleet Deployment (ADR 065)**  
 > As of December 2025, Project Sanctuary uses a **unified Makefile-based deployment** for the Fleet of 8 MCP servers.  
-> For deploying the complete fleet, see [PODMAN_STARTUP_GUIDE.md](../../PODMAN_STARTUP_GUIDE.md).
+> For deploying the complete fleet, see [Podman Operations Guide](../processes/PODMAN_OPERATIONS_GUIDE.md).
 >
 > This guide covers **individual MCP server development and standalone deployment** for advanced use cases.
 
@@ -133,5 +133,5 @@ Claude Desktop does not load your shell's `.bashrc` or `.zshrc`, so it doesn't k
 ---
 
 **Related Documentation:**
-- [Task MCP README](../../mcp_servers/task/README.md)
+- [Task MCP README](../../../mcp_servers/task/README.md)
 - [Prerequisites](prerequisites.md)

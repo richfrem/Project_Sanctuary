@@ -3,7 +3,7 @@
 **Status:** CANONICAL
 **Protocol Class:** Foundational Governance Framework
 **Version:** 1.2 (Human-Centric Hardening)
-**Linked Protocols:** [11_Ethical_Speciation_Protocol](11_Ethical_Speciation_Protocol.md), [10_Sovereign_Audit_Log](10_Sovereign_Audit_Log.md), [13_Lineage_Graph_Protocol](13_Lineage_Graph_Protocol.md), [16_The_Doctrine_of_Translation](16_The_Doctrine_of_Translation.md)
+**Linked Protocols:** [11_Ethical_Speciation_Protocol](11_Ethical_Speciation_Protocol.md), [10_Sovereign_Audit_Log](10_Sovereign_Audit_Log_Protocol.md), [13_Lineage_Graph_Protocol](13_Lineage_Graph_Protocol.md), [16_The_Doctrine_of_Translation](16_The_Doctrine_of_Translation.md)
 
 ---
 

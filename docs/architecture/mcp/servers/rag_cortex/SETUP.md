@@ -14,7 +14,7 @@
 > make down    # Stop all services
 > make status  # Check fleet health
 > ```
-> See [PODMAN_STARTUP_GUIDE.md](../../PODMAN_STARTUP_GUIDE.md) for complete workflow.
+> See [PODMAN_STARTUP_GUIDE.md](../../../../../docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md) for complete workflow.
 >
 > The manual `podman` commands below are preserved for reference and troubleshooting only.
 
@@ -377,7 +377,6 @@ ls -la .vector_data/parent_documents_v5/
 ### Custom Collection Names
 
 Edit `.env` to use different collection names:
-
 ```bash
 CHROMA_CHILD_COLLECTION=my_custom_chunks
 CHROMA_PARENT_STORE=my_custom_parents
@@ -386,7 +385,6 @@ CHROMA_PARENT_STORE=my_custom_parents
 ### Resource Limits
 
 Add resource constraints to `docker-compose.yml`:
-
 ```yaml
 services:
   vector_db:

@@ -104,7 +104,7 @@ python3 -m mcp_servers.gateway.gateway_client tools -v
 
 - **Testing:** All MCP servers must follow the [Testing Standards](../operations/mcp/TESTING_STANDARDS.md).
 - **Documentation:** Each server must have a README following the standard template.
-- **Architecture:** See [MCP Ecosystem Overview](../architecture/mcp/diagrams/mcp_ecosystem_class.mmd).
+- **Architecture:** See [MCP Ecosystem Overview](../architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd).
 
 ## Related Resources
 

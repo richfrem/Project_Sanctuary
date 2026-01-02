@@ -3,7 +3,7 @@
 **Status:** INITIALIZED  
 **Mission ID:** MISSION-SANCTUARY-20251229-001  
 **Strategic Context:** Protocol 128 (Cognitive Continuity)  
-**Foundational Research:** [Quantum Error Correction (QEC) Fundamentals](../topics/quantum_error_correction/fundamentals.md)
+**Foundational Research:** [Quantum Error Correction (QEC) Fundamentals](../topics/quantum_error_correction/notes/fundamentals.md)
 
 ---
 

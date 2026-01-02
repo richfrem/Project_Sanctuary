@@ -41,9 +41,9 @@ All diagrams MUST follow the Canonical Diagram Pattern:
 
 4. **Reference in documents** with image AND source link:
    ```markdown
-   ![Diagram Title](path/to/diagram.png)
+   ![Diagram Title](#)
    
-   *Source: [diagram.mmd](path/to/diagram.mmd)*
+   *Source: [diagram.mmd](#)*
    ```
 
 ## Consequences

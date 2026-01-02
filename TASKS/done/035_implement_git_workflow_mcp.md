@@ -4,7 +4,7 @@
 **Priority:** Medium  
 **Estimated Effort:** 2-3 days  
 **Dependencies:** Task #028, Shared Infrastructure, **Task #045 (Smart Git MCP)**
-**Related ADR:** [ADR 037: MCP Git Migration Strategy](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/037_mcp_git_migration_strategy.md)
+**Related ADR:** [ADR 037: MCP Git Migration Strategy](../../ADRs/037_mcp_git_migration_strategy.md)
 **Domain:** `project_sanctuary.system.git_workflow`
 
 ---

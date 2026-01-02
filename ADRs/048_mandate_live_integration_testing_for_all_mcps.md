@@ -12,8 +12,6 @@ The current testing architecture relies heavily on **mocked unit/component tests
 
 ### Testing Pyramid Gap
 
-![Testing Pyramid](/Users/richardfremmerlid/.gemini/antigravity/brain/e3cb1192-d826-4a0a-9d39-6b9982b2227b/uploaded_image_1764990649257.png)
-
 **What we have:**
 - ✅ **Unit/Component Tests** (with mocks) - valid for fast syntax validation
 

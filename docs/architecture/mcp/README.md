@@ -56,14 +56,14 @@ architecture/
 
 | ADR | Title | Summary |
 |-----|-------|---------|
-| [060](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md) | Hybrid Fleet | 6 clusters + 6 guardrails |
+| [060](../../../ADRs/060_gateway_integration_patterns.md) | Hybrid Fleet | 6 clusters + 6 guardrails |
 | [066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | Dual-Transport | FastMCP STDIO + SSEServer for Gateway |
-| [076](../../ADRs/076_sse_tool_decorator_pattern.md) | @sse_tool Pattern | Decorator-based tool registration |
+| [076](../../../ADRs/076_sse_tool_metadata_decorator_pattern.md) | @sse_tool Pattern | Decorator-based tool registration |
 
 ---
 
 ## Related Documentation
 
-- [Gateway Operations](../gateway/operations/) - Verification matrix & operations inventory
+- [Gateway Operations](servers/gateway/operations/README.md) - Verification matrix & operations inventory
 - [Main README](../../../README.md) - Project overview with architecture diagrams
-- [Podman Guide](../../PODMAN_STARTUP_GUIDE.md) - Fleet deployment instructions
+- [Podman Guide](../../../docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md) - Fleet deployment instructions

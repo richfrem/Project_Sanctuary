@@ -127,9 +127,9 @@ All diagrams must follow this workflow:
 
 4.  **Reference in documents** with image AND source link:
     ```markdown
-    ![Diagram Title](path/to/diagram.png)
+    ![Diagram Title](path/to/diagram_placeholder.png)
     
-    *Source: [diagram.mmd](path/to/diagram.mmd)*
+    *Source: [diagram.mmd](path/to/diagram_placeholder.mmd)*
     ```
 
 ### 7.2 Violation Detection

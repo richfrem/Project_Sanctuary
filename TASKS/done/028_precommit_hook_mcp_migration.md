@@ -6,7 +6,7 @@
 **Dependencies:** None (Phase 0 - Pre-Migration)  
 **Related Documents:** `docs/architecture/mcp/architecture.md`, `.agent/git_safety_rules.md`
 **Analysis:** [Pre-Commit Hook Migration Analysis](../../docs/architecture/mcp/analysis/pre_commit_hook_migration_analysis.md)
-**Plan:** [Implementation Plan](file:///Users/richardfremmerlid/.gemini/antigravity/brain/8e7a3729-cc05-40ae-a5dd-38935c512229/implementation_plan.md)
+**Plan:** [Implementation Plan] (Artifact)
 
 ---
 
@@ -330,9 +330,9 @@ If issues arise:
 
 ## References
 
-- [Protocol 101: Unbreakable Commit](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.git/hooks/pre-commit)
-- [Git Safety Rules](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/git_safety_rules.md)
-- [MCP Architecture](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/architecture/mcp/architecture.md)
+- [Protocol 101: Unbreakable Commit](../../.git/hooks/pre-commit)
+- [Git Safety Rules](../../.agent/git_safety_rules.md)
+- [MCP Architecture](../../docs/architecture/mcp/legacy_mcp_architecture.md)
 - [Naming Conventions](../../docs/operations/mcp/naming_conventions.md)
 
 ---

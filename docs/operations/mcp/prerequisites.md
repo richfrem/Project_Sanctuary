@@ -322,7 +322,7 @@ This includes:
 
 Once all prerequisites are met:
 
-1. ✅ Review [architecture.md](./architecture.md)
+1. ✅ Review [System Architecture](../../architecture/mcp/README.md)
 2. ✅ Review [naming_conventions.md](./naming_conventions.md)
 3. ✅ For RAG Cortex: Follow [RAG Cortex Setup Guide](../../architecture/mcp/servers/rag_cortex/SETUP.md)
 4. ✅ For other MCPs: Start with Task #031: Implement Task MCP
@@ -332,7 +332,7 @@ Once all prerequisites are met:
 
 ## References
 
-- [ADR 034: Containerize MCP Servers with Podman](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/034_containerize_mcp_servers_with_podman.md)
+- [ADR 034: Containerize MCP Servers with Podman](../../../ADRs/034_containerize_mcp_servers_with_podman.md)
 - [Podman Documentation](https://docs.podman.io/)
 - [MCP Specification](https://modelcontextprotocol.io/)
 - [RAG Cortex Setup Guide](../../architecture/mcp/servers/rag_cortex/SETUP.md)

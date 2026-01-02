@@ -18,9 +18,9 @@ This document outlines the Continuous Integration (CI) pipeline and the standard
 - **[GitHub Repository Setup Guide](./github_setup.md)** - Configure GitHub Actions, security scanning, and branch protection
 - **[How to Commit Changes](./how_to_commit.md)** - Step-by-step commit guide with pre-commit hook testing
 - **[Git Workflow Guide](./git_workflow.md)** - Detailed guide on git commands, conventional commits, and pre-commit hooks
-- **[ADR-039: CI/CD Pipeline Strategy](../../docs/adr/039_ci_cd_pipeline.md)** - Architectural decision for CI/CD approach
-- **[ADR-040: Security Scanning Strategy](../../docs/adr/040_security_scanning_strategy.md)** - Security scanning tools and philosophy
-- **[ADR-041: Git Workflow Automation](../../docs/adr/041_git_workflow_automation.md)** - Git workflow best practices
+
+- **[Security Scanning Strategy](./security_scanning.md)** - Security scanning tools and philosophy
+- **[Git Workflow Automation](./git_workflow.md)** - Git workflow best practices
 
 ## Branching Strategy
 

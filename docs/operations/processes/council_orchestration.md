@@ -3,9 +3,9 @@
 This document outlines the standard workflows for using the **Council MCP** and **Orchestrator MCP** within the 12-Domain Architecture. It is structured progressively, starting from basic building blocks and moving to complex self-evolving loops.
 
 **Related Documentation:**
-- [Standard Orchestration Workflows](../mcp/orchestration_workflows.md) (The Definitive Sequence Diagrams)
-- [MCP Architecture & Testing](../mcp/test_forge_mcp_and_RAG_mcp.md) (Contains Full System Diagrams)
-- [Main Project README](../../README.md) (Architecture Diagram)
+- Standard Orchestration Workflows (Pending)
+- MCP Architecture & Testing (Pending)
+- [Main Project README](../../../README.md) (Architecture Diagram)
 
 ---
 
@@ -100,8 +100,8 @@ The system operates on three levels of abstraction:
 - `research_report_path`: "00_CHRONICLE/..."
 
 **Reference Diagrams:**
-- [Continuous Learning Pipeline](../../README.md#3-continuous-learning-pipeline) (Full Loop Interaction)
-- [MCP Architecture Diagram](../../README.md#mcp-architecture-diagram) (System Components)
+- [Continuous Learning Pipeline](../../../README.md#3-continuous-learning-pipeline) (Full Loop Interaction)
+- [MCP Architecture Diagram](../../../README.md#mcp-architecture-diagram) (System Components)
 
 ---
 

@@ -11,7 +11,7 @@
 
 ## Guardian Procedure
 
-- Issue a `cache_wakeup` command to retrieve an immediate digest in `WORK_IN_PROGRESS/guardian_boot_digest.md`.
+- Issue a `cache_wakeup` command to retrieve an immediate digest in `dataset_package/guardian_boot_digest.md`.
 - If higher fidelity is needed, issue a `query_and_synthesis` cognitive task (P95) after reviewing the digest.
 
 ## Safety & Integrity

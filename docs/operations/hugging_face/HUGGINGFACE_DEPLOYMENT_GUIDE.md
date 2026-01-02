@@ -68,8 +68,8 @@ ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 
 ### Related Docs
 - [Forge Operations Guide](../forge/FORGE_OPERATIONS_GUIDE.md)
-- [Phoenix Forge README](../forge/OPERATION_PHOENIX_FORGE/README.md)
-- [GGUF Model Card](../forge/OPERATION_PHOENIX_FORGE/huggingface/README.md)
+- [Phoenix Forge README](../../../forge/OPERATION_PHOENIX_FORGE/README.md)
+- [GGUF Model Card](../../../forge/OPERATION_PHOENIX_FORGE/huggingface/README.md)
 
 ---
 

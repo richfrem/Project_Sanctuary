@@ -120,7 +120,7 @@ This architecture acts as a bridge, where the Gateway service (running in Podman
 | 7 | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 | ❌ |
 | 8 | `sanctuary_ollama` | EXISTING | Ollama backend | 11434 | ❌ |
 
-**See:** [ADR 060: Gateway Integration Patterns - Hybrid Fleet](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md)
+**See:** [ADR 060: Gateway Integration Patterns - Hybrid Fleet](../../../../../ADRs/060_gateway_integration_patterns.md)
 
 ---
 

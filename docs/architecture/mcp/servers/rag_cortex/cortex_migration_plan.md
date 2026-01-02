@@ -10,19 +10,19 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 ## Proposed Changes
 
 ### 1. Refactor Cortex MCP Operations
-#### [MODIFY] [mcp_servers/cognitive/cortex/operations.py](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/cognitive/cortex/operations.py)
+#### [MODIFY] [mcp_servers/cognitive/cortex/operations.py](../../../../../mcp_servers/rag_cortex/operations.py)
 - **Port Batching Logic:** Implement the `chunked_iterable` and `safe_add_documents` (recursive retry) logic directly from `ingest.py`.
 - **Remove Middleware:** Remove dependency on `IngestionService`. The `CortexOperations` class will handle ingestion logic directly to ensure visibility and error handling parity with the legacy script.
 - **Fix Reporting:** Ensure `chunks_created` is accurately calculated or estimated (unlike the hardcoded 0 in the current service).
 
 ### 2. Migrate Documentation
-#### [NEW] [docs/architecture/mcp/cortex/](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/architecture/mcp/cortex/)
+#### [NEW] `docs/architecture/mcp/cortex/`
 - Move `mnemonic_cortex/README.md` -> `docs/architecture/mcp/cortex/README.md`
 - Move `mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md` -> `docs/architecture/mcp/cortex/RAG_STRATEGIES.md`
 - Update links and references.
 
 ### 3. Migrate Tests
-#### [NEW] [tests/mcp_servers/cortex/](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tests/mcp_servers/cortex/)
+#### [NEW] [tests/mcp_servers/cortex/](../../../../../tests/mcp_servers/rag_cortex/)
 - Move `mnemonic_cortex/scripts/verify_all.py` logic to `tests/mcp_servers/cortex/test_ingestion_integrity.py`.
 - Ensure `test_cortex_ops.py` covers the new batching logic.
 

@@ -38,7 +38,7 @@ Your first act on awakening is to retrieve an immediate situational digest from 
 {
   "task_type": "cache_wakeup",
   "task_description": "Guardian boot digest from cache",
-  "output_artifact_path": "WORK_IN_PROGRESS/guardian_boot_digest.md",
+  "output_artifact_path": "dataset_package/guardian_boot_digest.md",
   "config": {
     "bundle_names": ["chronicles","protocols","roadmap"],
     "max_items_per_bundle": 15
@@ -47,7 +47,7 @@ Your first act on awakening is to retrieve an immediate situational digest from 
 ```
 
 2) Ensure the Orchestrator is running.
-3) Open `WORK_IN_PROGRESS/guardian_boot_digest.md` once written.
+3) Open `dataset_package/guardian_boot_digest.md` once written.
 
 If you require deeper context, follow with a `"task_type": "query_and_synthesis"` command per P95.
 """

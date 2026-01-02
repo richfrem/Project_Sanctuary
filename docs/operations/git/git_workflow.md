@@ -357,7 +357,7 @@ git push
 - [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
 - [ADR-019: Cognitive Genome Publishing Architecture (Reforged)](../../../ADRs/019_protocol_101_unbreakable_commit.md)
 - [Council Orchestrator GitOps Documentation](../../../ARCHIVE/howto-commit-command.md)
-- [Git Safety Rules](../../.agent/git_safety_rules.md)
+- [Git Safety Rules](../../../.agent/git_safety_rules.md)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Git Documentation](https://git-scm.com/doc)
 - [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)

@@ -51,7 +51,7 @@ tasks use a standardized format with metadata header:
 ## Related MCP Server
 
 The **Task MCP** server provides programmatic access to task management:
-- [Task MCP README](../mcp_servers/task/README.md)
+- [Task MCP README](../../../mcp_servers/task/README.md)
 
 ## Related Documents
 

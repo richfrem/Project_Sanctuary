@@ -154,10 +154,10 @@ podman ps                 # Check status
 | Document | Purpose |
 |----------|---------|
 | [GATEWAY_VERIFICATION_MATRIX.md](servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md) | Complete 86-tool verification status |
-| [README.md](../gateway/operations/README.md) | Operations inventory |
-| [ADR-060](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md) | Hybrid Fleet strategy |
+| [README.md](servers/gateway/operations/README.md) | Operations inventory |
+| [ADR-060](../../../ADRs/060_gateway_integration_patterns.md) | Hybrid Fleet strategy |
 | [ADR-066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | Dual-transport standards |
-| [ADR-076](../../ADRs/076_sse_tool_decorator_pattern.md) | @sse_tool pattern |
+| [ADR-076](../../../ADRs/076_sse_tool_metadata_decorator_pattern.md) | @sse_tool pattern |
 
 ---
 

@@ -303,7 +303,7 @@ gateway_request_latency_seconds_bucket{tool_name="cortex_query",server_name="rag
 
 ## 2. Backend Tool Operations (Proxied)
 
-The Gateway proxies all 63 tools from 12 backend servers. See [TOOLS_CATALOG.md](TOOLS_CATALOG.md) for complete list.
+The Gateway proxies all 63 tools from 12 backend servers. See `TOOLS_CATALOG.md` (pending) for complete list.
 
 **Summary by Server:**
 
@@ -375,7 +375,7 @@ AUDIT_LOG_PATH=/app/logs/audit.log
 
 ### 4.2 Registry Configuration
 
-See [REGISTRY_SCHEMA.md](../reference/REGISTRY_SCHEMA.md) for database schema.
+See `REGISTRY_SCHEMA.md` (pending) for database schema.
 
 ---
 
@@ -471,7 +471,7 @@ Error: Tool git_smart_commit is not in allowlist
 
 ## 8. API Reference
 
-See [API_SPEC.md](../reference/API_SPEC.md) for complete API specification.
+See `API_SPEC.md` (pending) for complete API specification.
 
 ---
 

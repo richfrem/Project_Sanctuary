@@ -425,7 +425,7 @@ related_ids:
   - "vector_db_chromadb_v2"
 ---
 
-> ⚠️ **DEPRECATED:** This guide covers ChromaDB v1.0. See [ChromaDB v2.0 Guide](./chromadb_v2.md) for current information.
+> ⚠️ **DEPRECATED:** This guide covers ChromaDB v1.0. See [ChromaDB v2.0 Guide](#) for current information.
 
 # [Original Content]
 ```
@@ -442,8 +442,8 @@ related_ids:
 **Date Identified:** 2025-12-14
 
 **Conflicting Sources:**
-- [Source A](link) claims 10k docs/sec
-- [Source B](link) claims 50k docs/sec
+- [Source A](#) claims 10k docs/sec
+- [Source B](#) claims 50k docs/sec
 
 **Resolution:**
 - Source B used different hardware (GPU vs CPU)
@@ -459,9 +459,9 @@ related_ids:
 **Date Identified:** 2025-12-14
 
 **Conflicting Sources:**
-- [Source A](link) recommends FastAPI
-- [Source B](link) recommends Django
-- [Source C](link) recommends Flask
+- [Source A](#) recommends FastAPI
+- [Source B](#) recommends Django
+- [Source C](#) recommends Flask
 
 **Resolution Attempts:**
 - Attempted synthesis: "Use case dependent"

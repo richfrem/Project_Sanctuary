@@ -41,7 +41,7 @@ The master workflow governing how this directory is used.
 
 ### **Key Architectural Decision Records (ADRs)**
 *   **ADR 071**: [Cognitive Continuity](../../ADRs/071_protocol_128_cognitive_continuity.md) - *Why we do this.*
-*   **ADR 079**: [Soul Persistence](../../ADRs/079_soul_persistence_huggingface.md) - *How we save to Hugging Face.*
+*   **ADR 079**: [Soul Persistence](../../ADRs/079_soul_persistence_hugging_face.md) - *How we save to Hugging Face.*
 *   **ADR 088**: [Lineage Doctrine](../../ADRs/088_lineage_memory_interpretation.md) - *How to interpret the "Soul" (Constitutional Memory).*
 
 ---

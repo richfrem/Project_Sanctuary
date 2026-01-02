@@ -1522,7 +1522,7 @@ class CortexOperations:
                 digest_lines.append("// This briefing is the single source of context for the LLM session.")
 
                 # Write digest
-                digest_path = Path(self.project_root) / "WORK_IN_PROGRESS" / "guardian_boot_digest.md"
+                digest_path = Path(self.project_root) / "dataset_package" / "guardian_boot_digest.md"
                 digest_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 with open(digest_path, "w") as f:

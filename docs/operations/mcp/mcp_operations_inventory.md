@@ -1,22 +1,22 @@
 # MCP Operations Inventory
 
-**Version:** 1.0  
+**Version:** 2.0  
 **Status:** Living Document  
-**Last Updated:** 2025-11-30  
-**Purpose:** Comprehensive inventory of all MCP server operations with testing status and documentation links
+**Last Updated:** 2026-01-02  
+**Purpose:** Comprehensive inventory of **Legacy MCP Server operations** and **Gateway Hosted Tools**, enabling a unified view of the hybrid fleet.
 
 ---
 
 ## Overview
 
-This document tracks all MCP server operations across the Project Sanctuary ecosystem, their testing status, associated test suites, and relevant documentation.
+This document tracks all operations across the Project Sanctuary ecosystem, mapping **Legacy Python Functions** to their modern **Gateway Tool** equivalents. It serves as the definitive source of truth for tool availability, testing status (Unit/Integration), and documentation.
 
 **MCP Configuration Locations:**
 - **Template:** [docs/architecture/mcp/claude_desktop_config_template.json](claude_desktop_config_template.json)
 - **Claude Desktop:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Antigravity:** `~/.gemini/` (Antigravity MCP configuration)
 
-**Architecture Diagram:** [MCP Ecosystem Overview](diagrams/mcp_ecosystem_class.mmd)
+**Architecture Diagram:** [MCP Ecosystem Overview](../../architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd)
 
 ---
 
@@ -34,6 +34,8 @@ This document tracks all MCP server operations across the Project Sanctuary ecos
 - [10. Orchestrator MCP Server](#10-orchestrator-mcp-server)
 - [11. Config MCP Server](#11-config-mcp-server)
 - [12. Code MCP Server](#12-code-mcp-server)
+- [13. Network MCP Server](#13-network-mcp-server)
+- [14. Utils MCP Server](#14-utils-mcp-server)
 - [Testing Strategy](#testing-strategy)
 - [Test Execution Commands](#test-execution-commands)
 - [Related Documentation](#related-documentation)
@@ -61,9 +63,9 @@ This document tracks all MCP server operations across the Project Sanctuary ecos
 
 **Domain:** Historical truth and canonical records  
 **Directory:** `00_CHRONICLE/ENTRIES/`  
-**Server Code:** [mcp_servers/chronicle/server.py](../../mcp_servers/chronicle/server.py)  
-**README:** [Chronicle MCP README](../../mcp_servers/chronicle/README.md)  
-**Class Diagram:** [diagrams/chronicle_mcp_class.mmd](diagrams/chronicle_mcp_class.mmd)
+**Server Code:** [mcp_servers/chronicle/server.py](../../../mcp_servers/chronicle/server.py)  
+**README:** [Chronicle MCP README](../../../mcp_servers/chronicle/README.md)  
+**Class Diagram:** [../../../docs/architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.mmd](../../../docs/architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -89,17 +91,17 @@ pytest tests/mcp_servers/chronicle/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `chronicle_create_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Create new chronicle entry with auto-numbering |
-| `chronicle_append_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for create_entry (fixed) |
-| `chronicle_update_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Update existing entry (7-day rule) |
-| `chronicle_get_entry` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Retrieve specific entry by number |
-| `chronicle_list_entries` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | List recent entries with filters |
-| `chronicle_read_latest_entries` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Alias for list_entries (fixed) |
-| `chronicle_search` | ✅ | ✅ | ✅ | [test_chronicle_operations.py](../../tests/mcp_servers/chronicle/test_chronicle_operations.py) | Full-text search across entries |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | � Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `chronicle_create_entry` | `sanctuary-domain-chronicle-create-entry` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Create new chronicle entry with auto-numbering |
+| `chronicle_append_entry` | `sanctuary-domain-chronicle-append-entry` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Alias for create_entry (fixed) |
+| `chronicle_update_entry` | `sanctuary-domain-chronicle-update-entry` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Update existing entry (7-day rule) |
+| `chronicle_get_entry` | `sanctuary-domain-chronicle-get-entry` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Retrieve specific entry by number |
+| `chronicle_list_entries` | `sanctuary-domain-chronicle-list-entries` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List recent entries with filters |
+| `chronicle_read_latest_entries` | `sanctuary-domain-chronicle-read-latest-entries` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Alias for list_entries (fixed) |
+| `chronicle_search` | `sanctuary-domain-chronicle-search` | [test_operations.py](../../../tests/mcp_servers/chronicle/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Full-text search across entries |
 
-**Prerequisite Tests:** [test_chronicle_validator.py](../../tests/mcp_servers/chronicle/test_chronicle_validator.py)
+**Prerequisite Tests:** [unit/test_validator.py](../../../tests/mcp_servers/chronicle/unit/test_validator.py)
 
 ---
 
@@ -107,9 +109,9 @@ pytest tests/mcp_servers/chronicle/ -v
 
 **Domain:** Protocol creation and management  
 **Directory:** `01_PROTOCOLS/`  
-**Server Code:** [mcp_servers/protocol/server.py](../../mcp_servers/protocol/server.py)  
-**README:** [Protocol MCP README](../../mcp_servers/protocol/README.md)  
-**Class Diagram:** [diagrams/protocol_mcp_class.mmd](diagrams/protocol_mcp_class.mmd)
+**Server Code:** [mcp_servers/protocol/server.py](../../../mcp_servers/protocol/server.py)  
+**README:** [Protocol MCP README](../../../mcp_servers/protocol/README.md)  
+**Class Diagram:** [../../../docs/architecture_diagrams/system/legacy_mcps/protocol_mcp_server.mmd](../../../docs/architecture_diagrams/system/legacy_mcps/protocol_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -135,15 +137,15 @@ pytest tests/mcp_servers/protocol/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `protocol_create` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Create new protocol with versioning |
-| `protocol_update` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Update protocol (requires version bump for canonical) |
-| `protocol_get` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Retrieve specific protocol by number |
-| `protocol_list` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | List protocols with optional filters |
-| `protocol_search` | ✅ | ✅ | ✅ | [test_protocol_operations.py](../../tests/mcp_servers/protocol/test_protocol_operations.py) | Full-text search across protocols |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | � Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `protocol_create` | `sanctuary-domain-protocol-create` | [test_operations.py](../../../tests/mcp_servers/protocol/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Create new protocol with versioning |
+| `protocol_update` | `sanctuary-domain-protocol-update` | [test_operations.py](../../../tests/mcp_servers/protocol/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Update protocol (requires version bump) |
+| `protocol_get` | `sanctuary-domain-protocol-get` | [test_operations.py](../../../tests/mcp_servers/protocol/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Retrieve specific protocol by number |
+| `protocol_list` | `sanctuary-domain-protocol-list` | [test_operations.py](../../../tests/mcp_servers/protocol/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List protocols with optional filters |
+| `protocol_search` | `sanctuary-domain-protocol-search` | [test_operations.py](../../../tests/mcp_servers/protocol/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Full-text search across protocols |
 
-**Prerequisite Tests:** [test_protocol_validator.py](../../tests/mcp_servers/protocol/test_protocol_validator.py)
+**Prerequisite Tests:** [unit/test_validator.py](../../../tests/mcp_servers/protocol/unit/test_validator.py)
 
 ---
 
@@ -151,9 +153,9 @@ pytest tests/mcp_servers/protocol/ -v
 
 **Domain:** Architecture Decision Records  
 **Directory:** `mcp_servers/adr/`  
-**Server Code:** [mcp_servers/adr/server.py](../../mcp_servers/adr/server.py)  
-**README:** [ADR MCP README](../../mcp_servers/adr/README.md)  
-**Class Diagram:** [diagrams/adr_mcp_class.mmd](diagrams/adr_mcp_class.mmd)
+**Server Code:** [mcp_servers/adr/server.py](../../../mcp_servers/adr/server.py)  
+**README:** [ADR MCP README](../../../mcp_servers/adr/README.md)  
+**Class Diagram:** [../../../docs/architecture_diagrams/system/legacy_mcps/adr_mcp_server.mmd](../../../docs/architecture_diagrams/system/legacy_mcps/adr_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -179,15 +181,15 @@ pytest tests/mcp_servers/adr/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `adr_create` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Create new ADR with auto-numbering |
-| `adr_update_status` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Update ADR status with transition validation |
-| `adr_get` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Retrieve specific ADR by number |
-| `adr_list` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | List ADRs with optional status filter |
-| `adr_search` | ✅ | ✅ | ✅ | [test_adr_operations.py](../../tests/mcp_servers/adr/test_adr_operations.py) | Full-text search across ADRs |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | � Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `adr_create` | `sanctuary-domain-adr-create` | [test_operations.py](../../../tests/mcp_servers/adr/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Create new ADR with auto-numbering |
+| `adr_update_status` | `sanctuary-domain-adr-update-status` | [test_operations.py](../../../tests/mcp_servers/adr/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Update ADR status with transition validation |
+| `adr_get` | `sanctuary-domain-adr-get` | [test_operations.py](../../../tests/mcp_servers/adr/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Retrieve specific ADR by number |
+| `adr_list` | `sanctuary-domain-adr-list` | [test_operations.py](../../../tests/mcp_servers/adr/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List ADRs with optional status filter |
+| `adr_search` | `sanctuary-domain-adr-search` | [test_operations.py](../../../tests/mcp_servers/adr/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Full-text search across ADRs |
 
-**Prerequisite Tests:** [test_adr_validator.py](../../tests/mcp_servers/adr/test_adr_validator.py)
+**Prerequisite Tests:** [unit/test_validator.py](../../../tests/mcp_servers/adr/unit/test_validator.py)
 
 ---
 
@@ -195,9 +197,9 @@ pytest tests/mcp_servers/adr/ -v
 
 **Domain:** Task management  
 **Directory:** `tasks/`  
-**Server Code:** [mcp_servers/task/server.py](../../mcp_servers/task/server.py)  
-**README:** [Task MCP README](../../mcp_servers/task/README.md)  
-**Class Diagram:** [diagrams/task_mcp_class.mmd](diagrams/task_mcp_class.mmd)
+**Server Code:** [mcp_servers/task/server.py](../../../mcp_servers/task/server.py)  
+**README:** [Task MCP README](../../../mcp_servers/task/README.md)  
+**Class Diagram:** [../../../docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.mmd](../../../docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -223,16 +225,16 @@ pytest tests/mcp_servers/task/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `create_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Create new task with auto-numbering |
-| `update_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Verified content update via T100 |
-| `update_task_status` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Verified status movement via T100 |
-| `get_task` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Retrieve specific task by number |
-| `list_tasks` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | List tasks with optional filters |
-| `search_tasks` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/task/test_operations.py) | Full-text search across tasks |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | � Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `create_task` | `sanctuary-domain-create-task` | [test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Create new task with auto-numbering |
+| `update_task` | `sanctuary-domain-update-task` | [test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Verified content update via T100 |
+| `update_task_status` | `sanctuary-domain-update-task-status` | [test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Verified status movement via T100 |
+| `get_task` | `sanctuary-domain-get-task` | [test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Retrieve specific task by number |
+| `list_tasks` | `sanctuary-domain-list-tasks` | [test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List tasks with optional filters |
+| `search_tasks` | `sanctuary-domain-search-tasks` | [test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Full-text search across tasks |
 
-**Prerequisite Tests:** [tests/mcp_servers/task/test_operations.py](../../tests/mcp_servers/task/test_operations.py)
+**Prerequisite Tests:** [tests/mcp_servers/task/unit/test_operations.py](../../../tests/mcp_servers/task/unit/test_operations.py)
 
 ---
 
@@ -240,9 +242,9 @@ pytest tests/mcp_servers/task/ -v
 
 **Domain:** Protocol 101 v3.0-compliant git operations  
 **Directory:** `.git/`  
-**Server Code:** [mcp_servers/git/server.py](../../mcp_servers/git/server.py)  
-**README:** [Git MCP README](../../mcp_servers/git/README.md)  
-**Class Diagram:** [diagrams/git_workflow_mcp_class.mmd](diagrams/git_workflow_mcp_class.mmd)
+**Server Code:** [mcp_servers/git/server.py](../../../mcp_servers/git/server.py)  
+**README:** [Git MCP README](../../../mcp_servers/git/README.md)  
+**Class Diagram:** [../../../docs/architecture_diagrams/system/legacy_mcps/git_workflow_mcp_server.mmd](../../../docs/architecture_diagrams/system/legacy_mcps/git_workflow_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -269,19 +271,19 @@ pytest tests/mcp_servers/git/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `git_get_status` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Get current repository status |
-| `git_diff` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Show changes in working directory |
-| `git_log` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Show commit history |
-| `git_start_feature` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Start new feature branch (idempotent) |
-| `git_add` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Stage files for commit |
-| `git_smart_commit` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Commit with Protocol 101 v3.0 enforcement |
-| `git_push_feature` | ✅ | ✅ | ✅ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Push feature branch to origin |
-| `git_finish_feature` | ✅ | ✅ | ⏳ | [test_git_operations.py](../../tests/mcp_servers/git/test_git_operations.py) | Finish feature branch (cleanup) |(Verifies PR Merge) |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | � Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `git_get_status` | `sanctuary-git-git-get-status` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Get current repository status |
+| `git_diff` | `sanctuary-git-git-diff` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Show changes in working directory |
+| `git_log` | `sanctuary-git-git-log` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Show commit history |
+| `git_start_feature` | `sanctuary-git-git-start-feature` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Start new feature branch (idempotent) |
+| `git_add` | `sanctuary-git-git-add` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Stage files for commit |
+| `git_smart_commit` | `sanctuary-git-git-smart-commit` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Commit with Protocol 101 v3.0 enforcement |
+| `git_push_feature` | `sanctuary-git-git-push-feature` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Push feature branch to origin |
+| `git_finish_feature` | `sanctuary-git-git-finish-feature` | [test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) | [test_git_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_git/test_git_gateway.py) | Finish feature branch (cleanup) |(Verifies PR Merge) |
 
 **Prerequisite Tests:**
-- Unit Tests: [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) (10/10 passing)
+- Unit Tests: [unit/test_operations.py](../../../tests/mcp_servers/git/unit/test_operations.py) (10/10 passing)
 - Safety Tests: [test_tool_safety.py](../../../tests/mcp_servers/git/test_tool_safety.py) (13/13 passing)
 - **Total:** 23/23 Passing ✅
 
@@ -351,9 +353,9 @@ pytest tests/mcp_servers/git/ -v
 
 **Domain:** Retrieval-Augmented Generation  
 **Directory:** `mcp_servers/rag_cortex/`  
-**Server Code:** [mcp_servers/rag_cortex/server.py](../../mcp_servers/rag_cortex/server.py)  
-**README:** [RAG Cortex MCP README](../../mcp_servers/rag_cortex/README.md)  
-**Class Diagram:** [diagrams/rag_mcp_cortex_class.mmd](diagrams/rag_mcp_cortex_class.mmd)
+**Server Code:** [mcp_servers/rag_cortex/server.py](../../../mcp_servers/rag_cortex/server.py)  
+**README:** [RAG Cortex MCP README](../../../mcp_servers/rag_cortex/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/rag_mcp_architecture_overview.mmd](../../architecture_diagrams/system/rag_mcp_architecture_overview.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -380,23 +382,22 @@ pytest tests/mcp_servers/rag_cortex/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `cortex_query` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Semantic search against knowledge base |
-| `cortex_ingest_full` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../../tests/mcp_servers/rag_cortex/unit/test_cortex_ingestion.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../../tests/mcp_servers/rag_cortex/unit/test_cortex_ingestion.py) | Add new documents without purge |
-| `cortex_get_stats` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Generate Guardian boot digest (P114) |
-
-**Prerequisite Tests:** [tests/mcp_servers/rag_cortex/](../../tests/mcp_servers/rag_cortex/)
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `cortex_query` | `sanctuary-cortex-cortex-query` | [test_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_operations_mocked.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Semantic search against knowledge base |
+| `cortex_ingest_full` | `sanctuary-cortex-cortex-ingest-full` | [test_cortex_ingestion.py](../../../tests/mcp_servers/rag_cortex/unit/test_cortex_ingestion.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Full re-ingestion (purge + rebuild) |
+| `cortex_ingest_incremental` | `sanctuary-cortex-cortex-ingest-incremental` | [test_cortex_ingestion.py](../../../tests/mcp_servers/rag_cortex/unit/test_cortex_ingestion.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Add new documents without purge |
+| `cortex_get_stats` | `sanctuary-cortex-cortex-get-stats` | [test_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_operations_mocked.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Database health and statistics |
+| `cortex_cache_get` | `sanctuary-cortex-cortex-cache-get` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Retrieve cached answer |
+| `cortex_cache_set` | `sanctuary-cortex-cortex-cache-set` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Store answer in cache |
+| `cortex_cache_stats` | `sanctuary-cortex-cortex-cache-stats` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Cache performance metrics |
+| `cortex_cache_warmup` | `sanctuary-cortex-cortex-cache-warmup` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Pre-populate cache |
+| `cortex_guardian_wakeup` | `sanctuary-cortex-cortex-guardian-wakeup` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Generate Guardian boot digest (P114) |
+**Prerequisite Tests:** [tests/mcp_servers/rag_cortex/](../../../tests/mcp_servers/rag_cortex/)
 
 **Related Protocols:**
 - [Protocol 102: Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
-- [Protocol 114: Guardian Boot Sequence](../../01_PROTOCOLS/114_Guardian_Boot_Sequence.md)
+- [Protocol 114: Guardian Boot Sequence](../../../01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md)
 
 ---
 
@@ -404,9 +405,9 @@ pytest tests/mcp_servers/rag_cortex/ -v
 
 **Domain:** Model fine-tuning and Sanctuary model queries  
 **Directory:** `mcp_servers.forge_llm_llm/`  
-**Server Code:** [mcp_servers.forge_llm_llm/server.py](../../mcp_servers.forge_llm_llm/server.py)  
-**README:** [Forge LLM MCP README](../../mcp_servers.forge_llm_llm/README.md)  
-**Class Diagram:** [diagrams/fine_tuning_mcp_forge_class.mmd](diagrams/fine_tuning_mcp_forge_class.mmd)
+**Server Code:** [mcp_servers/forge_llm/server.py](../../../mcp_servers/forge_llm/server.py)  
+**README:** [Forge LLM MCP README](../../../mcp_servers/forge_llm/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/forge_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/forge_mcp_server.mmd)
 
 ### Prerequisites
 
@@ -451,12 +452,12 @@ pytest tests/integration/test_forge_integration.py -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `query_sanctuary_model` | ✅ | ✅ | ❌ | [test_forge_integration.py](../../tests/integration/test_forge_integration.py) | Query fine-tuned Sanctuary-Qwen2 model |
-| `check_sanctuary_model_status` | ✅ | ✅ | ❌ | [test_forge_integration.py](../../tests/integration/test_forge_integration.py) | Verify model availability in Ollama |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `query_sanctuary_model` | `sanctuary-cortex-query-sanctuary-model` | [test_operations.py](../../../tests/mcp_servers/forge_llm/integration/test_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Query fine-tuned Sanctuary-Qwen2 model |
+| `check_sanctuary_model_status` | `sanctuary-cortex-check-sanctuary-model-status` | [test_operations.py](../../../tests/mcp_servers/forge_llm/integration/test_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Verify model availability in Ollama |
 
-**Prerequisite Tests:** [tests/integration/test_forge_integration.py](../../tests/integration/test_forge_integration.py)
+**Prerequisite Tests:** [tests/mcp_servers/forge_llm/integration/test_operations.py](../../../tests/mcp_servers/forge_llm/integration/test_operations.py)
 
 **Hardware Requirements:** CUDA GPU for fine-tuning operations
 
@@ -471,8 +472,8 @@ pytest tests/integration/test_forge_integration.py -v
 
 **Domain:** Agent persona management and execution  
 **Directory:** `mcp_servers/agent_persona/`  
-**Server Code:** [mcp_servers/agent_persona/server.py](../../mcp_servers/agent_persona/server.py)  
-**README:** [Agent Persona MCP README](../../mcp_servers/agent_persona/README.md)  
+**Server Code:** [mcp_servers/agent_persona/server.py](../../../mcp_servers/agent_persona/server.py)  
+**README:** [Agent Persona MCP README](../../../mcp_servers/agent_persona/README.md)  
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -502,15 +503,15 @@ pytest tests/mcp_servers/agent_persona/ -v
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `persona_dispatch` | ✅ | ✅ | ❌ | [test_agent_persona_comprehensive.py](../../tests/mcp_servers/agent_persona/test_agent_persona_comprehensive.py) | Dispatch task to specific persona agent |
-| `persona_list_roles` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | List available persona roles (built-in + custom) |
-| `persona_get_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Get conversation state for specific role |
-| `persona_reset_state` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Reset conversation state for specific role |
-| `persona_create_custom` | ✅ | ✅ | ❌ | [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py) | Create new custom persona |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `persona_dispatch` | `sanctuary-domain-persona-dispatch` | [unit/test_operations.py](../../../tests/mcp_servers/agent_persona/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Dispatch task to specific persona agent |
+| `persona_list_roles` | `sanctuary-domain-persona-list-roles` | [unit/test_operations.py](../../../tests/mcp_servers/agent_persona/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List available persona roles |
+| `persona_get_state` | `sanctuary-domain-persona-get-state` | [unit/test_operations.py](../../../tests/mcp_servers/agent_persona/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Get conversation state for specific role |
+| `persona_reset_state` | `sanctuary-domain-persona-reset-state` | [unit/test_operations.py](../../../tests/mcp_servers/agent_persona/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Reset conversation state for specific role |
+| `persona_create_custom` | `sanctuary-domain-persona-create-custom` | [unit/test_operations.py](../../../tests/mcp_servers/agent_persona/unit/test_operations.py) | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Create new custom persona |
 
-**Prerequisite Tests:** [test_agent_persona_ops.py](../../tests/mcp_servers/agent_persona/test_agent_persona_ops.py)
+**Prerequisite Tests:** [unit/test_operations.py](../../../tests/mcp_servers/agent_persona/unit/test_operations.py)
 
 **Model Verification:** Successfully tested with `Sanctuary-Qwen2-7B:latest` via Ollama (53s avg response time for strategic analysis)
 
@@ -526,9 +527,9 @@ pytest tests/mcp_servers/agent_persona/ -v
 
 **Domain:** Multi-agent deliberation orchestration  
 **Directory:** `mcp_servers/council/`  
-**Server Code:** [mcp_servers/council/server.py](../../mcp_servers/council/server.py)  
-**README:** [Council MCP README](../../mcp_servers/council/README.md)  
-**Class Diagram:** [diagrams/council_mcp_class.mmd](diagrams/council_mcp_class.mmd)
+**Server Code:** [mcp_servers/council/server.py](../../../mcp_servers/council/server.py)  
+**README:** [Council MCP README](../../../mcp_servers/council/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/council_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/council_mcp_server.mmd)
 
 **Purpose:** Council MCP is a **specialized orchestrator** focused on one specific capability: **multi-agent deliberation workflows**. It orchestrates multiple agent calls across deliberation rounds, manages conversation state, and synthesizes consensus.
 
@@ -577,8 +578,10 @@ pytest tests/mcp_servers/council/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py) | Execute task through multi-agent deliberation |
-| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py) | List available council agents |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | Status |
+|---|---|---|---|
+| `council_dispatch` | N/A (Internal) | [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py) | ⚠️ Legacy (Not exposed via Gateway) |
+| `council_list_agents` | N/A (Internal) | [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py) | ⚠️ Legacy (Not exposed via Gateway) |
 
 **Design Principle:** Separation of Concerns
 - Council MCP provides ONLY multi-agent deliberation
@@ -607,8 +610,8 @@ pytest tests/mcp_servers/council/ -v
 
 **Domain:** Strategic mission orchestration and multi-phase workflow coordination  
 **Directory:** `mcp_servers/orchestrator/`  
-**Server Code:** [mcp_servers/orchestrator/server.py](../../mcp_servers/orchestrator/server.py)  
-**README:** [Orchestrator MCP README](../../mcp_servers/orchestrator/README.md)
+**Server Code:** [mcp_servers/orchestrator/server.py](../../../mcp_servers/orchestrator/server.py)  
+**README:** [Orchestrator MCP README](../../../tests/mcp_servers/orchestrator/README.md)
 
 **Purpose:** Orchestrator MCP is a **general-purpose orchestrator** that coordinates strategic missions across ALL MCPs. It manages multi-phase workflows, task lifecycle, and cross-domain coordination.
 
@@ -642,8 +645,8 @@ Orchestrator MCP: "Implement Protocol 120"
   Phase 5: Document → Calls Chronicle MCP
 ```
 **Directory:** `mcp_servers/orchestrator/`
-**Server Code:** [mcp_servers/orchestrator/server.py](../../mcp_servers/orchestrator/server.py)
-**README:** [Orchestrator MCP README](../../mcp_servers/orchestrator/README.md)
+**Server Code:** [mcp_servers/orchestrator/server.py](../../../mcp_servers/orchestrator/server.py)
+**README:** [Orchestrator MCP README](../../../tests/mcp_servers/orchestrator/README.md)
 
 ### Script Validation (Run First) 🧪
 ```bash
@@ -671,8 +674,10 @@ pytest tests/mcp_servers/orchestrator/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `orchestrator_dispatch_mission` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../../tests/mcp_servers/orchestrator/unit/test_mcp_operations.py) | Dispatch a high-level mission to an agent |
-| `orchestrator_run_strategic_cycle` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../../tests/mcp_servers/orchestrator/unit/test_mcp_operations.py) | Execute a full Strategic Crucible Loop |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | Status |
+|---|---|---|---|
+| `orchestrator_dispatch_mission` | N/A (Internal) | [test_mcp_operations.py](../../../tests/mcp_servers/orchestrator/unit/test_mcp_operations.py) | ⚠️ Legacy (Not exposed via Gateway) |
+| `orchestrator_run_strategic_cycle` | N/A (Internal) | [test_mcp_operations.py](../../../tests/mcp_servers/orchestrator/unit/test_mcp_operations.py) | ⚠️ Legacy (Not exposed via Gateway) |
 
 **Note:** Only 2 operations are currently implemented in server.py. Other operations listed in documentation may be planned but not yet implemented.
 
@@ -682,13 +687,13 @@ pytest tests/mcp_servers/orchestrator/ -v
 
 **Domain:** Configuration management  
 **Directory:** `.agent/config/`  
-**Server Code:** [mcp_servers/config/server.py](../../mcp_servers/config/server.py)  
-**README:** [Config MCP README](../../mcp_servers/config/README.md)  
-**Class Diagram:** [diagrams/config_mcp_class.mmd](diagrams/config_mcp_class.mmd)
+**Server Code:** [mcp_servers/config/server.py](../../../mcp_servers/config/server.py)  
+**README:** [Config MCP README](../../../mcp_servers/config/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/config_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/config_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
+PYTHONPATH=. python3 tests/mcp_servers/config/unit/test_operations.py
 ```
 **Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
 
@@ -710,12 +715,12 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `config_list` | ✅ | ✅ | ❌ | `test_operations.py` | List configuration files |
-| `config_read` | ✅ | ✅ | ❌ | `test_operations.py` | Read config file content |
-| `config_write` | ✅ | ✅ | ❌ | `test_operations.py` | Write config file with backup |
-| `config_delete` | ✅ | ✅ | ❌ | `test_operations.py` | Delete config file |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `config_list` | `sanctuary-domain-config-list` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List configuration files |
+| `config_read` | `sanctuary-domain-config-read` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Read config file content |
+| `config_write` | `sanctuary-domain-config-write` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Write config file with backup |
+| `config_delete` | `sanctuary-domain-config-delete` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Delete config file |
 
 ---
 
@@ -723,13 +728,13 @@ PYTHONPATH=. python3 tests/mcp_servers/config/test_operations.py
 
 **Domain:** Code operations  
 **Directory:** `src/, scripts/, tools/`  
-**Server Code:** [mcp_servers/code/server.py](../../mcp_servers/code/server.py)  
-**README:** [Code MCP README](../../mcp_servers/code/README.md)  
-**Class Diagram:** [diagrams/code_mcp_class.mmd](diagrams/code_mcp_class.mmd)
+**Server Code:** [mcp_servers/code/server.py](../../../mcp_servers/code/server.py)  
+**README:** [Code MCP README](../../../mcp_servers/code/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd)
 
 ### Script Validation (Run First) 🧪
 ```bash
-PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
+PYTHONPATH=. python3 tests/mcp_servers/code/unit/test_operations.py
 ```
 **Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
 
@@ -751,18 +756,45 @@ PYTHONPATH=. python3 tests/mcp_servers/code/test_operations.py
 
 ### Operations
 
-| Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
-|-----------|---------|---------|--------|------------|-------------|
-| `code_lint` | ✅ | ✅ | ❌ | `test_operations.py` | Run linting on files/directories |
-| `code_format` | ✅ | ✅ | ❌ | `test_operations.py` | Format code with optional check-only mode |
-| `code_analyze` | ✅ | ✅ | ❌ | `test_operations.py` | Perform static analysis |
-| `code_check_tools` | ✅ | ✅ | ❌ | `test_operations.py` | Check available code quality tools |
-| `code_find_file` | ✅ | ✅ | ❌ | `test_operations.py` | Find files by name or glob pattern |
-| `code_list_files` | ✅ | ✅ | ❌ | `test_operations.py` | List files in directory with pattern |
-| `code_search_content` | ✅ | ✅ | ❌ | `test_operations.py` | Search for text/patterns in code |
-| `code_read` | ✅ | ✅ | ❌ | `test_operations.py` | Read file contents |
-| `code_write` | ✅ | ✅ | ❌ | `test_operations.py` | Write/update file with backup |
-| `code_get_info` | ✅ | ✅ | ❌ | `test_operations.py` | Get file metadata |
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `code_lint` | `sanctuary-filesystem-code-lint` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Run linting on files/directories |
+| `code_format` | `sanctuary-filesystem-code-format` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Format code with optional check-only mode |
+| `code_analyze` | `sanctuary-filesystem-code-analyze` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Perform static analysis |
+| `code_check_tools` | `sanctuary-filesystem-code-check-tools` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Check available code quality tools |
+| `code_find_file` | `sanctuary-filesystem-code-find-file` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Find files by name or glob pattern |
+| `code_list_files` | `sanctuary-filesystem-code-list-files` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | List files in directory with pattern |
+| `code_search_content` | `sanctuary-filesystem-code-search-content` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Search for text/patterns in code |
+| `code_read` | `sanctuary-filesystem-code-read` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Read file contents |
+| `code_write` | `sanctuary-filesystem-code-write` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Write/update file with backup |
+| `code_get_info` | `sanctuary-filesystem-code-get-info` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Get file metadata |
+| `code_delete` | `sanctuary-filesystem-code-delete` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Delete a file (careful!) |
+
+---
+
+## 13. Network MCP Server
+
+**Domain:** External network access (isolated)  
+**Cluster:** `sanctuary_network` (Port 8102)
+
+| Legacy Operation | Gateway Tool | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|
+| `fetch_url` | `sanctuary-network-fetch-url` | [test_network_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_network/test_network_gateway.py) | Fetch URL content |
+| `check_site_status` | `sanctuary-network-check-site-status` | [test_network_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_network/test_network_gateway.py) | Check site availability |
+
+---
+
+## 14. Utils MCP Server
+
+**Domain:** Core utilities (Time, Math, UUID, String)  
+**Cluster:** `sanctuary_utils` (Port 8100)
+
+| Legacy Operation | Gateway Tool | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|
+| `time_get_current_time` | `sanctuary-utils-time-get-current-time` | [test_utils_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_utils/test_utils_gateway.py) | Get current time |
+| `calculator_add` | `sanctuary-utils-calculator-add` | [test_utils_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_utils/test_utils_gateway.py) | Basic math op |
+| `uuid_generate_uuid4` | `sanctuary-utils-uuid-generate-uuid4` | [test_utils_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_utils/test_utils_gateway.py) | Generate UUID4 |
+| `string_replace` | `sanctuary-utils-string-replace` | [test_utils_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_utils/test_utils_gateway.py) | String manipulation |
 
 ---
 
@@ -828,11 +860,11 @@ pytest tests/integration/ -v
 
 ## Related Documentation
 
-- [MCP Architecture](architecture.md)
+- [System Architecture](../../architecture/mcp/README.md)
 - [MCP Setup Guide](setup_guide.md)
 - [Naming Conventions](naming_conventions.md)
 - [Prerequisites](prerequisites.md)
-- [Domain Architecture Diagrams](diagrams/)
+- [Domain Architecture Diagrams](../../../docs/architecture_diagrams/system/)
 
 ---
 
@@ -862,5 +894,5 @@ Before marking an operation as ✅:
 
 ---
 
-**Last Updated:** 2025-11-30  
+**Last Updated:** 2026-01-02  
 **Maintainer:** Project Sanctuary Team

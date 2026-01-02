@@ -35,7 +35,7 @@ The Hugging Face repository uses the following structure and sources.
 
 ## 3. Core Operations (Cortex Server)
 
-The following methods in [operations.py](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/rag_cortex/operations.py) govern the persistence logic:
+The following methods in [operations.py](../../../mcp_servers/rag_cortex/operations.py) govern the persistence logic:
 
 ### `persist_soul(PersistSoulRequest)`
 - **Role**: Tactical/Incremental update.

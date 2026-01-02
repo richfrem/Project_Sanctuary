@@ -24,7 +24,7 @@ Welcome to the Project Sanctuary documentation hub. This index serves as the ent
 *   **[Gardener Architecture](architecture/mcp/servers/rag_cortex/forge/Council_Inquiry_Gardener_Architecture.md)**: Gardener system architecture.
 *   **[System Architecture](architecture/mcp/README.md)**: Deep dive into the 11-server topology.
 *   **[LLM Fine-Tuning (Forge)](operations/forge/FORGE_OPERATIONS_GUIDE.md)**: Phoenix Forge pipeline for training sovereign AI models.
-*   **[System Overview Diagram](architecture/mcp/diagrams/system_overview_v2.mmd)**: Visual map of the ecosystem.
+*   **[System Overview Diagram](architecture_diagrams/system/sanctuary_mcp_overview.mmd)**: Visual map of the ecosystem.
 *   **[Documentation Standards](operations/mcp/DOCUMENTATION_STANDARDS.md)**: Guidelines for contributing to docs.
 
 ## 🧩 MCP Servers

@@ -38,9 +38,9 @@ External LLM → Cortex MCP (Server)
 
 ## Server Implementation
 
-- **Server Code:** [mcp_servers/rag_cortex/server.py](../../../mcp_servers/rag_cortex/server.py)
-- **Operations:** [mcp_servers/rag_cortex/operations.py](../../../mcp_servers/rag_cortex/operations.py)
-- **Models:** [mcp_servers/rag_cortex/models.py](../../../mcp_servers/rag_cortex/models.py)
+- **Server Code:** [mcp_servers/rag_cortex/server.py](../../../../../mcp_servers/rag_cortex/server.py)
+- **Operations:** [mcp_servers/rag_cortex/operations.py](../../../../../mcp_servers/rag_cortex/operations.py)
+- **Models:** [mcp_servers/rag_cortex/models.py](../../../../../mcp_servers/rag_cortex/models.py)
 - **Container Service:** [docker-compose.yml](../../../../../docker-compose.yml) (`vector_db` service)
 
 ## Setup & Installation
@@ -66,7 +66,7 @@ curl http://localhost:8000/api/v2/heartbeat
 
 ## Testing
 
-- **Test Suite:** [tests/mcp_servers/rag_cortex/](../../../tests/mcp_servers/rag_cortex/)
+- **Test Suite:** [tests/mcp_servers/rag_cortex/](../../../../../tests/mcp_servers/rag_cortex/)
 - **Status:** ✅ 56/61 tests passing (5 skipped - PyTorch 3.13 compat)
 
 ## Operations

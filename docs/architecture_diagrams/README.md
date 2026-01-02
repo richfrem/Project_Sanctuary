@@ -70,7 +70,7 @@ The render script uses [mermaid-cli](https://github.com/mermaid-js/mermaid-cli).
        ...
    ```
 3. Run `python3 scripts/render_diagrams.py` to generate the image
-4. Reference the image in docs: `![Diagram](docs/architecture_diagrams/folder/my_diagram.png)`
+4. Reference the image in docs: `![Diagram](#)`
 
 ## Single Source of Truth (SSOT)
 

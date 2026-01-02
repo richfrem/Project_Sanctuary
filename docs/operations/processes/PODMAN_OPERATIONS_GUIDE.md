@@ -639,4 +639,4 @@ make verify
 - **[Makefile](../../../Makefile)** — Unified fleet operations ("The Iron Root", ADR 065)
 - **[Gateway Verification Matrix](../../architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md)** — Full tool verification status
 - **[Architecture Spec](../../architecture/mcp/servers/gateway/architecture/ARCHITECTURE.md)** — Fleet architecture details
-- **[MCP Servers README](../mcp_servers/README.md)** — Canonical MCP server guide
+- **[MCP Servers README](../../../mcp_servers/README.md)** — Canonical MCP server guide

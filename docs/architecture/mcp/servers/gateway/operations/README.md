@@ -3,7 +3,7 @@
 **Status:** ✅ Fully Operational  
 **Last Updated:** 2024-12-24  
 **Total Operations:** 86 tools across 6 clusters  
-**Source:** [`fleet_registry.json`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/gateway/fleet_registry.json)
+**Source:** [`fleet_registry.json`](../../../../../../mcp_servers/gateway/fleet_registry.json)
 
 ---
 

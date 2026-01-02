@@ -85,7 +85,7 @@ Before starting your first interaction, you must initialize the session context.
 python scripts/init_session.py
 ```
 
-This will generate a **Guardian Briefing** (`WORK_IN_PROGRESS/guardian_boot_digest.md`) which serves as the "strategic signal" for the session.
+This will generate a **Guardian Briefing** (`dataset_package/guardian_boot_digest.md`) which serves as the "strategic signal" for the session.
 
 
 ## Step 5: Verify Connection
@@ -108,4 +108,4 @@ This will generate a **Guardian Briefing** (`WORK_IN_PROGRESS/guardian_boot_dige
 
 *   **[Using the Council](../processes/01_using_council_mcp.md)**: Learn how to orchestrate multi-agent tasks.
 *   **[Using the Cortex](../processes/02_using_cortex_mcp.md)**: Learn how to query the knowledge base.
-*   **[Architecture Overview](architecture.md)**: Understand the 11-server ecosystem.
+*   **[Architecture Overview](../../../docs/architecture/mcp/README.md)**: Understand the 11-server ecosystem.

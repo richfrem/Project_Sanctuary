@@ -15,10 +15,10 @@ The system establishes a **Zero-Trust Gate** between the agent's work and the pr
 > 2. **Technical Audit (Gate 2)**: You verify the AI's *implementation* (Code Snapshot/Red Team Packet).
 
 ## 🔗 Key Resources
-- **[ADR 071: Decision Record](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/071_protocol_128_cognitive_continuity.md)**: Why we chose the Red Team Gate and how the architecture works.
-- **[Protocol 128: Constitutional Mandate](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/128_Hardened_Learning_Loop.md)**: The unbreakable rules for cognitive continuity.
-- **[Recursive Learning SOP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/recursive_learning.md)**: The step-by-step guide for agents to acquire and preserve knowledge.
-- **[Cognitive Primer](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/learning/cognitive_primer.md)**: The "Rules of Reality" that agents must follow on every boot.
+- **[ADR 071: Decision Record](../../../../../../ADRs/071_protocol_128_cognitive_continuity.md)**: Why we chose the Red Team Gate and how the architecture works.
+- **[Protocol 128: Constitutional Mandate](../../../../../../01_PROTOCOLS/128_Hardened_Learning_Loop.md)**: The unbreakable rules for cognitive continuity.
+- **[Recursive Learning SOP](../../../../../../.agent/workflows/recursive_learning.md)**: The step-by-step guide for agents to acquire and preserve knowledge.
+- **[Cognitive Primer](../../../../../../.agent/learning/cognitive_primer.md)**: The "Rules of Reality" that agents must follow on every boot.
 
 ## 💓 The "Learning Package Snapshot" Pulse
 When an agent calls `cortex_learning_debrief`, it triggers a series of autonomous observations:

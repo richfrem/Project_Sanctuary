@@ -72,5 +72,5 @@ council_dispatch(
 
 ## Next Steps
 
-*   Learn about **[Agent Personas](../mcp_servers/agent_persona/README.md)** to create custom agents.
+*   Learn about **[Agent Personas](../../../mcp_servers/agent_persona/README.md)** to create custom agents.
 *   Explore **[Cortex](02_using_cortex_mcp.md)** to give the Council access to long-term memory.

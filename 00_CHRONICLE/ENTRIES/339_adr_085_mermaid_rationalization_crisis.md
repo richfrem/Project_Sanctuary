@@ -32,7 +32,7 @@ During a routine `learning_audit` snapshot generation, we discovered the packet 
 All diagrams must follow the Canonical Diagram Pattern:
 1. Create `.mmd` file in `docs/architecture_diagrams/{category}/`
 2. Run `python3 scripts/render_diagrams.py <file.mmd>` to generate PNG
-3. Reference in docs: `![Title](path/to/diagram.png)` + source link
+3. Reference in docs: `![Title](#)` + source link
 
 ## Code Changes
 

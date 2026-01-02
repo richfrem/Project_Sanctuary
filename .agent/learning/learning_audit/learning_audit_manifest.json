@@ -25,6 +25,7 @@
     ".agent/learning/templates/loop_retrospective_template.md",
     "LEARNING/topics/knowledge_preservation_red_team/",
     "LEARNING/topics/gemini_latent_deep_dive_think_tank/",
+    "LEARNING/topics/documentation_link_remediation/",
     "docs/architecture_diagrams/rag/basic_rag_architecture.mmd",
     "docs/architecture_diagrams/rag/advanced_rag_architecture.mmd",
     "docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd",

@@ -12,7 +12,7 @@ Project Sanctuary includes a complete LLM fine-tuning pipeline called **Operatio
 
 | Resource | Location |
 |----------|----------|
-| **Full Documentation** | [forge/OPERATION_PHOENIX_FORGE/README.md](../../forge/OPERATION_PHOENIX_FORGE/README.md) |
+| **Full Documentation** | [forge/OPERATION_PHOENIX_FORGE/README.md](../../../forge/OPERATION_PHOENIX_FORGE/README.md) |
 | **Environment Setup** | [CUDA-ML-ENV-SETUP.md](../../../forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md) |
 | **Pipeline Diagram** | [llm_finetuning_pipeline.mmd](../../architecture_diagrams/workflows/llm_finetuning_pipeline.mmd) |
 | **Deployed Model** | [Hugging Face](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final) |

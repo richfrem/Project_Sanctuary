@@ -381,5 +381,5 @@ Check the **Actions** tab and **Security** tab on GitHub to verify all checks pa
 
 - [Git Workflow Quick Reference](./git_workflow.md)
 - [CI/CD Pipeline Documentation](./overview.md)
-- [ADR-041: Git Workflow Automation](../../docs/adr/041_git_workflow_automation.md)
+- [Git Workflow Operations](git_workflow.md)
 - [Conventional Commits Specification](https://www.conventionalcommits.org/)
