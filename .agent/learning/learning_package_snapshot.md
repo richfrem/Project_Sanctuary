@@ -139,7 +139,7 @@ The Sanctuary uses a modular microservices architecture powered by the Model Con
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
 *   **Protocol MCP:** System rules and configuration management (`01_PROTOCOLS/`)
 *   **ADR MCP:** Architecture Decision Records (`ADRs/`)
-*   **Task MCP:** Task and project management (`TASKS/`)
+*   **Task MCP:** Task and project management (`tasks/`)
 
 #### Cognitive Domain MCPs (4)
 *   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
@@ -327,7 +327,7 @@ New work, features, and fixes are initiated using the **Task MCP**.
     ```bash
     python scripts/cli/get_next_task_number.py
     ```
-2.  **Draft the Mandate:** Create a new task file in `TASKS/backlog/` (e.g., `TASKS/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
+2.  **Draft the Mandate:** Create a new task file in `tasks/backlog/` (e.g., `tasks/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
 3.  **Autonomous Execution:** The **Task MCP** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
 
 ### 5.3 Session Initialization & Guardian Awakening
@@ -429,7 +429,7 @@ The repository structure reflects the **12-Domain MCP Architecture**, focusing o
 | :--- | :--- | :--- |
 | **`mcp_servers/`** | Server code for all 12 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | **`00_CHRONICLE/`** | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
-| **`TASKS/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
+| **`tasks/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
 | **`data/`** | Vector Database source files, training data, configs. | **Mnemonic Cortex Assets**. Houses the content used for real-time RAG operations (Medium Memory). |
 | **`forge/`** | Model fine-tuning scripts, weight checkpoints, training datasets. | The **Strategic Crucible**. Dedicated environment for model distillation and self-improvement (Phoenix Forge P41). |
 | **`.agent/`** | Intelligence Configuration & Ephemeral Memory. Houses learning manifests and session-specific logic. | **Session Memory**. Tracks intra-session state and handover artifacts. |
@@ -2047,7 +2047,7 @@ grep -rl '\`\`\`mermaid' . --include="*.md" | grep -v node_modules | grep -v .ag
 
 ---
 
-*See also: [Task #154: Mermaid Rationalization](../TASKS/todo/154_mermaid_rationalization.md)*
+*See also: [Task #154: Mermaid Rationalization](../tasks/todo/154_mermaid_rationalization.md)*
 
 --- END OF FILE ADRs/085_canonical_mermaid_diagram_management.md ---
 
@@ -2935,9 +2935,9 @@ Every topic folder MUST contain:
 
 ## Related Work and References
 
-### Foundational Tasks
+### Foundational tasks
 - **Task 056:** Harden Self-Evolving Loop Validation (Strategic Crucible Loop validation)
-  - `TASKS/done/056_Harden_Self_Evolving_Loop_Validation.md`
+  - `tasks/done/056_Harden_Self_Evolving_Loop_Validation.md`
 
 ### Chronicle Documentation (Autonomous Learning Journey)
 The original Strategic Crucible Loop validation produced a series of Chronicle entries documenting Claude's autonomous learning experience and philosophical reflections:
@@ -3897,7 +3897,7 @@ Immediately following the function definition, you must include a standard PEP 2
 * **Variable Naming**: Use `snake_case` for functions/variables and `PascalCase` for classes (PEP 8).
 * **Logic Decoupling**: If a method exceeds 40 lines of logic, it must be refactored into smaller, private helper methods (prefixed with `_`) to maintain scannability.
 * **Context Tags**: Use specific tags to link code to the project state:
-* `# TODO (Task-XXX):` Links directly to the `TASKS/` directory.
+* `# TODO (Task-XXX):` Links directly to the `tasks/` directory.
 * `# NOTE (ADR-XXX):` Explains the architectural "why" behind a specific implementation.
 * `# FIX-ONCE:` Marks core logic shared between the gateway and test suite.
 
@@ -4161,10 +4161,10 @@ The following code-level changes were detected SINCE the last session/commit:
  README_HF.md                                       |    448 +-
  hugging_face_dataset_repo/README.md                          |    427 +-
  hugging_face_dataset_repo/data/soul_traces.jsonl             |   2431 +-
- TASKS/done/027_mcp_ecosystem_strategy.md           |      4 +
+ tasks/done/027_mcp_ecosystem_strategy.md           |      4 +
  .../056_Harden_Self_Evolving_Loop_Validation.md    |      4 +
  .../086B_verify_multi_round_deliberation_logic.md  |      4 +
- TASKS/todo/154_mermaid_rationalization.md          |     45 -
+ tasks/todo/154_mermaid_rationalization.md          |     45 -
  .../gardener_protocol37_experiment/README.md       |     30 +-
  WORK_IN_PROGRESS/guardian_boot_digest.md           |    426 +-
  cortex_freeze.txt                                  |    184 -
@@ -4541,7 +4541,7 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
     ".agent/learning/cognitive_primer.md",
     ".agent/learning/learning_debrief.md",
     ".agent/learning/learning_manifest.json",
-    "TASKS/todo/",
+    "tasks/todo/",
     "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
     "LEARNING/README.md",
     "LEARNING/topics/autonomous_curiosity_exploration_2024-12-27.md",
@@ -5615,7 +5615,7 @@ Both represent humanity's fascination with **complexity that generates meaning**
           "name": "sanctuary-domain-update-task"
         },
         {
-          "description": "Create a new task file in TASKS/ directory.",
+          "description": "Create a new task file in tasks/ directory.",
           "inputSchema": {
             "properties": {
               "acceptance_criteria": {
@@ -7214,7 +7214,7 @@ class ContentProcessor:
         "MNEMONIC_SYNTHESIS",
         "RESEARCH_PAPERS",
         "ResearchPapers",
-        "TASKS",
+        "tasks",
         "WORK_IN_PROGRESS",
         "__pycache__",
         "archive",
@@ -9261,7 +9261,7 @@ class CortexOperations:
     def _get_tactical_priorities(self):
         #============================================
         # Method: _get_tactical_priorities
-        # Purpose: Scan TASKS/ directories for top priorities.
+        # Purpose: Scan tasks/ directories for top priorities.
         # Returns: Markdown list of top 5 tasks with status
         #============================================
         try:
@@ -9269,9 +9269,9 @@ class CortexOperations:
             found_tasks = []
             
             scan_sources = [
-                self.project_root / "TASKS" / "in-progress",
-                self.project_root / "TASKS" / "todo",
-                self.project_root / "TASKS" / "backlog"
+                self.project_root / "tasks" / "in-progress",
+                self.project_root / "tasks" / "todo",
+                self.project_root / "tasks" / "backlog"
             ]
             
             for source_dir in scan_sources:
@@ -9559,8 +9559,8 @@ class CortexOperations:
                 digest_lines.append(self._get_recent_protocol_updates(max_protocols=3, hours=168))
                 digest_lines.append("")
                 
-                # II. Priority Tasks (Enhanced in v2.1 to show all priority levels)
-                digest_lines.append("## II. Priority Tasks")
+                # II. Priority tasks (Enhanced in v2.1 to show all priority levels)
+                digest_lines.append("## II. Priority tasks")
                 digest_lines.append(self._get_tactical_priorities())
                 digest_lines.append("")
                 
@@ -9897,7 +9897,7 @@ class CortexOperations:
             
             # CORE DIRECTORY ENFORCEMENT
             CORE_DIRS = ["ADRs/", "01_PROTOCOLS/", "mcp_servers/", "scripts/", "prompts/"]
-            TIER2_DIRS = ["TASKS/", "LEARNING/"]
+            TIER2_DIRS = ["tasks/", "LEARNING/"]
             
             critical_omissions = []
             tier2_omissions = []
@@ -10637,7 +10637,7 @@ class CortexOperations:
         mapping = {
             "Protocols": "Protocol MCP",
             "Living_Chronicle": "Chronicle MCP",
-            "Tasks": "Task MCP",
+            "tasks": "Task MCP",
             "Code": "Code MCP",
             "ADRs": "ADR MCP"
         }
@@ -10709,7 +10709,7 @@ The `pathology_check()` is called before `cortex_persist_soul`:
 
 ---
 
-## Research Tasks (Task 151)
+## Research tasks (Task 151)
 
 - [ ] Analyze existing `soul_traces.jsonl` for valence distribution
 - [ ] Derive empirically-grounded thresholds from data
@@ -10786,7 +10786,7 @@ The `pathology_check()` is called before `cortex_persist_soul`:
 
 ---
 
-## Research Tasks (Task 151)
+## Research tasks (Task 151)
 
 - [ ] Analyze existing `soul_traces.jsonl` for valence distribution
 - [ ] Derive empirically-grounded thresholds from data
@@ -13177,7 +13177,7 @@ flowchart TB
         subgraph DataStores["Data Stores"]
             ProtocolFiles[("01_PROTOCOLS/<br/>Markdown Files")]
             ChronicleFiles[("00_CHRONICLE/<br/>Markdown Files")]
-            TaskFiles[("TASKS/<br/>Markdown Files")]
+            TaskFiles[("tasks/<br/>Markdown Files")]
             CodeFiles[("Source Code<br/>Python/JS/etc")]
             ADRFiles[("ADRs/<br/>Markdown Files")]
         end
@@ -13198,7 +13198,7 @@ flowchart TB
     
     Router -- "SCOPE: Protocols" --> ProtocolMCP
     Router -- "SCOPE: Living_Chronicle" --> ChronicleMCP
-    Router -- "SCOPE: Tasks" --> TaskMCP
+    Router -- "SCOPE: tasks" --> TaskMCP
     Router -- "SCOPE: Code" --> CodeMCP
     Router -- "SCOPE: ADRs" --> ADRMCP
     Router -- "SCOPE: mnemonic_cortex<br/>(Fallback)" --> PDR

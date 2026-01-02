@@ -95,12 +95,12 @@ class TestCortexOperations(BaseIntegrationTest):
         (project_root / ".env").write_text(env_content)
         (project_root / "00_CHRONICLE").mkdir()
         (project_root / "01_PROTOCOLS").mkdir()
-        (project_root / "TASKS").mkdir()
+        (project_root / "tasks").mkdir()
         
         # Create mock manifest to test loading logic (avoiding fallback)
         lib_dir = project_root / "mcp_servers" / "lib"
         lib_dir.mkdir(parents=True, exist_ok=True)
-        (lib_dir / "ingest_manifest.json").write_text('{"common_content": ["00_CHRONICLE", "01_PROTOCOLS"], "unique_rag_content": ["TASKS"]}')
+        (lib_dir / "ingest_manifest.json").write_text('{"common_content": ["00_CHRONICLE", "01_PROTOCOLS"], "unique_rag_content": ["tasks"]}')
         
         # Connect to REAL ChromaDB (local server)
         host = get_env_variable("CHROMA_HOST", required=False) or "127.0.0.1"
@@ -251,7 +251,7 @@ class TestCortexOperations(BaseIntegrationTest):
     def test_guardian_wakeup_basic(self, cortex_ops):
         # Create some basic files to be found
         (cortex_ops.project_root / "WORK_IN_PROGRESS").mkdir(exist_ok=True)
-        (cortex_ops.project_root / "TASKS" / "test_task.md").write_text("- [ ] Task 1")
+        (cortex_ops.project_root / "tasks" / "test_task.md").write_text("- [ ] Task 1")
         
         print("\nRunning guardian_wakeup...")
         res = cortex_ops.guardian_wakeup(mode="HOLISTIC")

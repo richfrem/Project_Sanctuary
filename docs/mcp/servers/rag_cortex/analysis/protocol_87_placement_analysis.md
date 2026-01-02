@@ -16,7 +16,7 @@ Protocol 87's structured query orchestration is fundamentally about **knowledge 
 
 **Example**: `RETRIEVE :: Protocols :: Name="Protocol 101"`
 
-**Scopes**: Protocols, Living_Chronicle, Tasks, Code, ADRs
+**Scopes**: Protocols, Living_Chronicle, tasks, Code, ADRs
 
 ---
 

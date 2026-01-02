@@ -100,7 +100,7 @@ The Sanctuary uses a modular microservices architecture powered by the Model Con
 *   **Chronicle MCP:** Historical record management and event logging ([`00_CHRONICLE/`](https://github.com/richfrem/Project_Sanctuary/tree/main/00_CHRONICLE/))
 *   **Protocol MCP:** System rules and configuration management ([`01_PROTOCOLS/`](https://github.com/richfrem/Project_Sanctuary/tree/main/01_PROTOCOLS/))
 *   **ADR MCP:** Architecture Decision Records ([`ADRs/`](https://github.com/richfrem/Project_Sanctuary/tree/main/ADRs/))
-*   **Task MCP:** Task and project management ([`TASKS/`](https://github.com/richfrem/Project_Sanctuary/tree/main/TASKS/))
+*   **Task MCP:** Task and project management ([`tasks/`](https://github.com/richfrem/Project_Sanctuary/tree/main/tasks/))
 
 #### Cognitive Domain MCPs (4)
 *   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database ([`mcp_servers/rag_cortex/`](https://github.com/richfrem/Project_Sanctuary/tree/main/mcp_servers/rag_cortex/))
@@ -288,7 +288,7 @@ New work, features, and fixes are initiated using the **Task MCP**.
     ```bash
     python scripts/cli/get_next_task_number.py
     ```
-2.  **Draft the Mandate:** Create a new task file in `TASKS/backlog/` (e.g., `TASKS/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
+2.  **Draft the Mandate:** Create a new task file in `tasks/backlog/` (e.g., `tasks/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
 3.  **Autonomous Execution:** The **Task MCP** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
 
 ### 5.3 Session Initialization & Guardian Awakening
@@ -390,7 +390,7 @@ The repository structure reflects the **12-Domain MCP Architecture**, focusing o
 | :--- | :--- | :--- |
 | [**`mcp_servers/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/mcp_servers/) | Server code for all 12 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | [**`00_CHRONICLE/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/00_CHRONICLE/) | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
-| [**`TASKS/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/TASKS/) | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
+| [**`tasks/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/tasks/) | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
 | [**`data/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/data/) | Vector Database source files, training data, configs. | **Mnemonic Cortex Assets**. Houses the content used for real-time RAG operations (Medium Memory). |
 | [**`forge/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/forge/) | Model fine-tuning scripts, weight checkpoints, training datasets. | The **Strategic Crucible**. Dedicated environment for model distillation and self-improvement (Phoenix Forge P41). |
 | [**`.agent/`**](https://github.com/richfrem/Project_Sanctuary/tree/main/.agent/) | Intelligence Configuration & Ephemeral Memory. Houses learning manifests and session-specific logic. | **Session Memory**. Tracks intra-session state and handover artifacts. |

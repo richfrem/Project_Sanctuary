@@ -85,7 +85,7 @@
 | `get-task` | Retrieve a specific task by number |
 | `update-task-status` | Change task status (moves file between directories) |
 | `update-task` | Update an existing task's metadata or content |
-| `create-task` | Create a new task file in TASKS/ directory |
+| `create-task` | Create a new task file in tasks/ directory |
 
 #### Persona (5)
 | Tool Name | Description |

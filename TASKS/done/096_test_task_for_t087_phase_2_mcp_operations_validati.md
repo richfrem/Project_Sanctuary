@@ -15,7 +15,7 @@ Validate the Task MCP create_task operation as part of T087 Phase 2 comprehensiv
 ## 2. Deliverables
 
 1. Validation of Task MCP create_task operation
-2. Test task file in TASKS/backlog/
+2. Test task file in tasks/backlog/
 
 ## 3. Acceptance Criteria
 

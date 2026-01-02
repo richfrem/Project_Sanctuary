@@ -1,6 +1,7 @@
 # AI System Startup and Cache Preparation Architecture
 
-**Status:** accepted
+**Status:** Superseded
+**Superseded By:** ADR 018 (Evolution)
 **Date:** 2025-11-15
 **Deciders:** AI Council (System Initialization Process implementation)
 **Technical Story:** Efficient system startup and caching for fast AI responses

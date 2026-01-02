@@ -41,7 +41,7 @@
         "MNEMONIC_SYNTHESIS",
         "RESEARCH_PAPERS",
         "ResearchPapers",
-        "TASKS",
+        "tasks",
         "WORK_IN_PROGRESS",
         "__pycache__",
         "archive",

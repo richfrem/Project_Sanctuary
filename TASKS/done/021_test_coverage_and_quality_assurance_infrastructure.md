@@ -19,14 +19,14 @@ This parent task has been split into 3 focused sub-tasks to establish comprehens
 - **Protocol 101**: The Unbreakable Commit - Verification before commit
 - **Protocol 115**: The Tactical Mandate - Structured execution
 
-## Sub-Tasks
+## Sub-tasks
 
 ### Task 021A: Mnemonic Cortex Test Suite
 - **Status**: backlog
 - **Priority**: High
 - **Effort**: 4-6 hours
 - **Dependencies**: None
-- **File**: `TASKS/backlog/021A_mnemonic_cortex_test_suite.md`
+- **File**: `tasks/backlog/021A_mnemonic_cortex_test_suite.md`
 
 **Objective**: Create comprehensive unit test suite for `mnemonic_cortex/` with 80%+ coverage, isolated fixtures, and fast execution.
 
@@ -44,7 +44,7 @@ This parent task has been split into 3 focused sub-tasks to establish comprehens
 - **Priority**: High
 - **Effort**: 4-6 hours
 - **Dependencies**: None
-- **File**: `TASKS/backlog/021B_forge_test_suite_and_cicd_pipeline.md`
+- **File**: `tasks/backlog/021B_forge_test_suite_and_cicd_pipeline.md`
 
 **Objective**: Create test suite for `forge/` scripts and establish GitHub Actions CI/CD pipeline with automated testing and coverage reporting.
 
@@ -63,7 +63,7 @@ This parent task has been split into 3 focused sub-tasks to establish comprehens
 - **Priority**: Medium
 - **Effort**: 4-6 hours
 - **Dependencies**: 021A, 021B
-- **File**: `TASKS/backlog/021C_integration_and_performance_test_suite.md`
+- **File**: `tasks/backlog/021C_integration_and_performance_test_suite.md`
 
 **Objective**: Create integration tests for cross-module workflows and performance benchmarks for critical operations.
 
@@ -80,7 +80,7 @@ This parent task has been split into 3 focused sub-tasks to establish comprehens
 ## Execution Strategy
 
 ### Phase 1: Unit Tests (Week 1)
-**Tasks**: 021A, 021B (can be done in parallel)
+**tasks**: 021A, 021B (can be done in parallel)
 - Establish test infrastructure for core modules
 - Set up CI/CD pipeline
 - Achieve baseline code coverage

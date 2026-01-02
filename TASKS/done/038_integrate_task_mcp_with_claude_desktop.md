@@ -88,7 +88,7 @@ When Claude Desktop connects to the Task MCP server, it performs a "handshake" w
 ```json
 {
   "name": "create_task",
-  "description": "Create a new task file in TASKS/ directory",
+  "description": "Create a new task file in tasks/ directory",
   "inputSchema": {
     "type": "object",
     "properties": {

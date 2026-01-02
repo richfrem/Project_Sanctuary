@@ -63,7 +63,7 @@ Use the Chronicle to preserve decision context that would otherwise be lost:
 
 ### 4. Task Coherence
 
-Keep `TASKS/` organized:
+Keep `tasks/` organized:
 - `backlog/` for pending work
 - `in-progress/` for active work
 - `complete/` for finished work

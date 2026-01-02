@@ -7,7 +7,7 @@
 **Status:** Backlog  
 **Priority:** Critical  
 **Estimated Effort:** 2-3 weeks (across all MCP servers)  
-**Dependencies:** None (defines architecture for Tasks #025, #026)  
+**Dependencies:** None (defines architecture for tasks #025, #026)  
 **Related Protocols:** P95 (Commandable Council), P101 (Unbreakable Commit), P104 (ECI)
 
 ---
@@ -84,7 +84,7 @@ graph TB
         H[00_CHRONICLE/]
         I[01_PROTOCOLS/]
         J[ADRs/]
-        K[TASKS/]
+        K[tasks/]
         L[mnemonic_cortex/]
         M[council_orchestrator/]
     end
@@ -261,7 +261,7 @@ create_adr(
 
 ### 4. Task MCP Server
 
-**Domain:** Task management (`TASKS/backlog/`, `TASKS/active/`, `TASKS/completed/`)
+**Domain:** Task management (`tasks/backlog/`, `tasks/active/`, `tasks/completed/`)
 
 **Tools:**
 - `create_task(number, title, description, priority, estimated_effort)` - Create new task
@@ -344,7 +344,7 @@ query_cortex(
 )
 ```
 
-**Status:** Detailed specification in [Task #025](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/025_implement_mcp_rag_tool_server.md)
+**Status:** Detailed specification in [Task #025](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tasks/backlog/025_implement_mcp_rag_tool_server.md)
 
 ---
 
@@ -388,7 +388,7 @@ create_deliberation_task(
     output_path="WORK_IN_PROGRESS/mcp_analysis.md",
     max_rounds=3,
     force_engine="gemini",
-    input_artifacts=["TASKS/backlog/027_mcp_ecosystem_strategy.md"]
+    input_artifacts=["tasks/backlog/027_mcp_ecosystem_strategy.md"]
 )
 ```
 
@@ -495,7 +495,7 @@ validator.validate_chronicle_entry({
 
 | Feature | Chronicle | Protocol | ADR | Task | Cortex | Council |
 |---------|-----------|----------|-----|------|--------|---------|
-| **Domain** | Chronicle entries | Protocols | ADRs | Tasks | RAG | Deliberation |
+| **Domain** | Chronicle entries | Protocols | ADRs | tasks | RAG | Deliberation |
 | **Primary Operations** | CRUD entries | CRUD protocols | CRUD ADRs | CRUD tasks | Query/Ingest | Deliberate |
 | **File System Access** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No |
 | **Git Operations** | ✅ Auto | ✅ Auto | ✅ Auto | ✅ Auto | ✅ Auto | ❌ No |
@@ -625,7 +625,7 @@ create_chronicle_entry(
 
 ---
 
-## Related Tasks
+## Related tasks
 
 | Task | Title | Status | Dependencies |
 |------|-------|--------|--------------|
@@ -645,8 +645,8 @@ create_chronicle_entry(
 - [Protocol 95: Commandable Council](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/95_The_Commandable_Council_Protocol.md)
 - [Protocol 101: Unbreakable Commit](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.git/hooks/pre-commit)
 - [Git Safety Rules](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/git_safety_rules.md)
-- [Task #025: MCP RAG Tool Server](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/025_implement_mcp_rag_tool_server.md)
-- [Task #026: MCP Council Command Processor](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/026_implement_mcp_council_command_processor.md)
+- [Task #025: MCP RAG Tool Server](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tasks/backlog/025_implement_mcp_rag_tool_server.md)
+- [Task #026: MCP Council Command Processor](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tasks/backlog/026_implement_mcp_council_command_processor.md)
 
 ---
 

@@ -524,7 +524,7 @@ async def deliberate(task: str):
 - [Task MCP](../task/README.md) - Task management MCP
 
 ### Task Documentation
-- [Task 077: Implement Council MCP](../../TASKS/in-progress/077_implement_council_mcp_server.md) - Implementation task
+- [Task 077: Implement Council MCP](../../tasks/in-progress/077_implement_council_mcp_server.md) - Implementation task
 
 ---
 

@@ -1,3 +1,6 @@
+> [!WARNING]
+> **ARCHIVED**: This protocol is superseded or deprecated. Verified by Refactor Agent.
+
 # 27_The_Doctrine_of_Flawed_Winning_Grace.md
 
 ## The Doctrine of Flawed, Winning Grace: A Foundational Charter for Alliance - v1.1

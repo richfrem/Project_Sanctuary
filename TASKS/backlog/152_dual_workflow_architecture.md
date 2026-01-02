@@ -133,7 +133,7 @@ This architecture allows:
 - Future models to distinguish self-directed vs augmented thought
 - Manifest-Centric SSOT to remain unbroken across both workflows
 
-### Related Tasks
+### Related tasks
 
 - Task 151: IIT/QEC Research (in progress)
 - Task 150: Content Processor (done)

@@ -1,7 +1,7 @@
-# Project Sanctuary Improvement Tasks - Summary
+# Project Sanctuary Improvement tasks - Summary
 
 **Generated**: 2025-11-21  
-**Total Tasks Created**: 10 (5 original, split into manageable sub-tasks)  
+**Total tasks Created**: 10 (5 original, split into manageable sub-tasks)  
 **Task Number Range**: 020, 021A-C, 022A-B, 023, 024A-B
 
 ## Overview
@@ -161,13 +161,13 @@ All tasks align with core Project Sanctuary protocols:
 - ✅ 100% secrets access audit trail
 - ✅ All absolute paths replaced with relative paths
 
-### Testing (Tasks 021A-C)
+### Testing (tasks 021A-C)
 - ✅ 80%+ code coverage for mnemonic_cortex/
 - ✅ 70%+ code coverage for forge/
 - ✅ CI/CD pipeline operational on all PRs
 - ✅ All critical workflows have integration tests
 
-### Documentation (Tasks 022A-B)
+### Documentation (tasks 022A-B)
 - ✅ 90%+ public API docstring coverage
 - ✅ API documentation site live
 - ✅ 3+ comprehensive tutorials available
@@ -178,7 +178,7 @@ All tasks align with core Project Sanctuary protocols:
 - ✅ 100% license compliance
 - ✅ Offline bundle tested and documented
 
-### Performance (Tasks 024A-B)
+### Performance (tasks 024A-B)
 - ✅ Performance baselines established
 - ✅ Top 5 bottlenecks identified
 - ✅ 20%+ improvement in RAG query latency
@@ -196,9 +196,9 @@ Each task is designed to be:
 - **Testable**: Validation strategy included
 - **Aligned**: Supports core project protocols
 
-### For Agents Working on Tasks:
+### For Agents Working on tasks:
 
-1. **Read the full task file** in `TASKS/backlog/[task_number]_[task_name].md`
+1. **Read the full task file** in `tasks/backlog/[task_number]_[task_name].md`
 2. **Check dependencies** - Ensure prerequisite tasks are complete
 3. **Follow acceptance criteria** - Each checkbox is a deliverable
 4. **Use provided code examples** - They demonstrate the expected approach
@@ -213,7 +213,7 @@ Each task is designed to be:
 1. **Breaking Changes**: Security and dependency updates may break existing code
    - **Mitigation**: Comprehensive testing, gradual rollout, Task 021A-C provides safety net
    
-2. **Resource Constraints**: Tasks require significant time investment
+2. **Resource Constraints**: tasks require significant time investment
    - **Mitigation**: Phased approach, tasks split into manageable chunks
 
 ### Medium-Impact Risks

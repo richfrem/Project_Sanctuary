@@ -1,6 +1,7 @@
 # Implement Hybrid Information Retrieval Architecture with Multi-Pattern Integration
 
-**Status:** accepted
+**Status:** Superseded
+**Superseded By:** ADR 084 (Mnemonic Cortex)
 **Date:** 2025-11-15
 **Deciders:** AI System Lead, AI Council
 **Technical Story:** AI reasoning system architecture development

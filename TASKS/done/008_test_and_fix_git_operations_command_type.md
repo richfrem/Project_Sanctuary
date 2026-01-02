@@ -54,7 +54,7 @@ Acceptance criteria
 
 - The orchestrator no longer throws KeyError for missing `output_artifact_path`; instead it either writes to a default artifact path or validator forces the caller to provide it.
 
-- A short README section (in `council_orchestrator/README.md` or `TASKS/backlog/008_*`) documents the expected command JSON schema for `git_operations`.
+- A short README section (in `council_orchestrator/README.md` or `tasks/backlog/008_*`) documents the expected command JSON schema for `git_operations`.
 
 Implementation notes / proposed approach
 
@@ -63,7 +63,7 @@ Implementation notes / proposed approach
 3. Alternatively (preferred): Tighten the validator in `orchestrator/commands.py` so MECHANICAL_GIT requires `output_artifact_path`. This keeps behavior explicit and surfaces missing fields earlier.
 4. Add pytest cases under `council_orchestrator/tests/test_commands_gitops.py` verifying both validation and execution flows (mock filesystem or use tmp_path fixtures to create files).
 5. Run the tests and ensure orchestrator processes a `command_git_ops.json` sample successfully in dry-run mode (push_to_origin:false).
-6. Update TASKS/backlog and PR notes describing the change.
+6. Update tasks/backlog and PR notes describing the change.
 
 Notes
 

@@ -271,7 +271,7 @@ This is the foundation for autonomous AI systems with self-validating knowledge 
 
 ---
 
-## Related Tasks
+## Related tasks
 
 - **Task 108:** Establish Robust MCP E2E Testing Framework
 - **Task 109:** Implement Protocol 056 Headless Triple-Loop E2E Test

@@ -1,4 +1,4 @@
-# ADR 084: Empirical Epistemic Gating (The Edison Mandate)
+# ADR 086: Empirical Epistemic Gating (The Edison Mandate)
 
 **Status:** APPROVED
 **Date:** 2026-01-01

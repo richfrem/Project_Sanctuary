@@ -268,7 +268,7 @@ search_adrs(query: string) => ADR[]
 ### 4. Task MCP Server
 
 **Domain:** Task management  
-**Directory:** `TASKS/`  
+**Directory:** `tasks/`  
 **Purpose:** Create, update, track tasks across backlog/active/completed
 
 ![task_mcp_server](docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.png)

@@ -40,26 +40,44 @@ Every MCP server MUST have a `README.md` in its root directory (e.g., `mcp_serve
 
 **Template:** See `docs/mcp/templates/mcp_server_readme.md`
 
-## 4. Docstring Standards
+## 4. Docstring Standards & Hybrid Mandate (ADR 075)
 
-All Python code MUST use **Google Style** docstrings.
+All Python code MUST use **Google Style** docstrings AND **ASCII Banners** (The Hybrid Mandate).
 
-### 4.1 MCP Tools
+### 4.1 The Hybrid Mandate
+Code must be readable by both Humans (scrolling) and Machines (indexing).
 
+1.  **File Headers**: Every file must start with:
+    ```python
+    #============================================
+    # path/to/file.py
+    # Purpose: Brief description.
+    # Role: Architecture Layer.
+    #============================================
+    ```
+
+2.  **Method Headers** (The Signpost): Immediately above `def`:
+    ```python
+    #============================================
+    # Method: my_function
+    # Purpose: What it does.
+    # Returns: What it gives back.
+    #============================================
+    def my_function(): ...
+    ```
+
+### 4.2 MCP Tools
 Every function decorated as an MCP tool (`@mcp.tool()`) MUST have a docstring that includes:
 
-*   **Summary**: A concise one-line description of what the tool does.
-*   **Description**: Detailed explanation of behavior, side effects, and edge cases.
-*   **Args**: List of arguments with types and descriptions.
-*   **Returns**: Description of the return value and structure.
-*   **Example**: A usage example (optional but recommended).
+*   **Summary**: A concise one-line description.
+*   **Description**: Detailed explanation.
+*   **Args**: List of arguments.
+*   **Returns**: Description of return value.
 
-**Template:** See `docs/mcp/templates/mcp_tool_docstring.md`
+### 4.3 Internal Functions
 
-### 4.2 Internal Functions
-
-*   Public functions/classes: Full docstrings required.
-*   Private functions (`_func`): Brief summary required.
+*   Public functions/classes: Full docstrings + Banners required.
+*   Private functions (`_func`): Brief docstring required.
 
 ## 5. Inventory Maintenance
 
@@ -77,3 +95,48 @@ The `docs/mcp/mcp_operations_inventory.md` file tracks the implementation and te
 
 *   Documentation updates should be committed alongside code changes.
 *   Major architectural changes require updating `docs/mcp/architecture.md`.
+
+## 7. Diagram Standards (ADR 085)
+
+> **IMPORTANT**: Inline Mermaid blocks are **PROHIBITED** to prevent mnemonic bloat in learning snapshots.
+
+### 7.1 The Canonical Pattern
+
+All diagrams must follow this workflow:
+
+1.  **Create `.mmd` file** in `docs/architecture_diagrams/{category}/`:
+    ```
+    docs/architecture_diagrams/
+    ├── rag/           # RAG architecture
+    ├── system/        # Infrastructure/fleet
+    ├── transport/     # MCP transport
+    └── workflows/     # Process/workflow
+    ```
+
+2.  **Add header metadata** to the `.mmd` file:
+    ```text
+    %% Name: My Diagram Title
+    %% Description: What this diagram shows
+    %% Location: docs/architecture_diagrams/category/my_diagram.mmd
+    ```
+
+3.  **Generate PNG** using the render script:
+    ```bash
+    python3 scripts/render_diagrams.py docs/architecture_diagrams/category/my_diagram.mmd
+    ```
+
+4.  **Reference in documents** with image AND source link:
+    ```markdown
+    ![Diagram Title](path/to/diagram.png)
+    
+    *Source: [diagram.mmd](path/to/diagram.mmd)*
+    ```
+
+### 7.2 Violation Detection
+
+Use this command to find inline mermaid violations:
+```bash
+grep -rl '\`\`\`mermaid' . --include="*.md" | grep -v node_modules | grep -v .agent/learning/
+```
+
+**Reference**: [ADR 085](../../../ADRs/085_canonical_mermaid_diagram_management.md)

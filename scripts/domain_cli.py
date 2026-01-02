@@ -35,7 +35,7 @@ if str(project_root) not in sys.path:
 from mcp_servers.lib.env_helper import get_env_variable
 from mcp_servers.lib.path_utils import find_project_root
 from mcp_servers.task.operations import TaskOperations
-from mcp_servers.task.models import TaskStatus
+from mcp_servers.task.models import taskstatus
 from mcp_servers.adr.operations import ADROperations
 from mcp_servers.chronicle.operations import ChronicleOperations
 from mcp_servers.protocol.operations import ProtocolOperations
@@ -56,7 +56,7 @@ def main():
     search_chron.add_argument("query")
 
     # --- TASK ---
-    task_parser = subparsers.add_parser("task", help="Manage Tasks")
+    task_parser = subparsers.add_parser("task", help="Manage tasks")
     task_subs = task_parser.add_subparsers(dest="action")
     list_task = task_subs.add_parser("list")
     list_task.add_argument("--status", help="Task status (backlog, todo, in-progress, done)")
@@ -100,11 +100,11 @@ def main():
             ops = TaskOperations(PROJECT_ROOT_PATH)
             if args.action == "list":
                 # FIXED: Argument is 'status', not 'status_filter'
-                status_obj = TaskStatus(args.status) if args.status else None
+                status_obj = taskstatus(args.status) if args.status else None
                 res = ops.list_tasks(status=status_obj)
                 for t in res: print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
             elif args.action == "update-status":
-                ops.update_task_status(args.number, TaskStatus(args.new_status), args.notes)
+                ops.update_task_status(args.number, taskstatus(args.new_status), args.notes)
                 print(f"✅ Task {args.number} moved to {args.new_status}")
 
         elif args.subcommand == "adr":

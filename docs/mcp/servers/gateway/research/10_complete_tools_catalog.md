@@ -177,7 +177,7 @@ cortex_query("What is Protocol 101?", max_results=3)
 ### 3.1 Create & Update
 
 #### `create_task(title: str, objective: str, deliverables: list, acceptance_criteria: list, ...)`
-**Purpose:** Create a new task file in TASKS/ directory  
+**Purpose:** Create a new task file in tasks/ directory  
 **Read-Only:** No  
 **Approval Required:** No  
 **Rate Limit:** 50/min

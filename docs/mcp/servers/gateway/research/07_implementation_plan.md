@@ -1283,7 +1283,7 @@ services:
     networks:
       - sanctuary-internal
     volumes:
-      - ./TASKS:/app/TASKS
+      - ./tasks:/app/tasks
   
   # ... (10 more backend servers)
   

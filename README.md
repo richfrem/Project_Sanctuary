@@ -57,7 +57,7 @@ The Sanctuary uses a modular microservices architecture powered by the Model Con
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
 *   **Protocol MCP:** System rules and configuration management (`01_PROTOCOLS/`)
 *   **ADR MCP:** Architecture Decision Records (`ADRs/`)
-*   **Task MCP:** Task and project management (`TASKS/`)
+*   **Task MCP:** Task and project management (`tasks/`)
 
 #### Cognitive Domain MCPs (4)
 *   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
@@ -136,7 +136,7 @@ The Fleet supports two transport modes to enable both local development and Gate
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](./docs/mcp/servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
+**Documentation:** [Gateway README](./docs/mcp/servers/gateway/README.md) | [Podman Guide](./docs/operations/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
@@ -245,7 +245,7 @@ New work, features, and fixes are initiated using the **Task MCP**.
     ```bash
     python scripts/cli/get_next_task_number.py
     ```
-2.  **Draft the Mandate:** Create a new task file in `TASKS/backlog/` (e.g., `TASKS/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
+2.  **Draft the Mandate:** Create a new task file in `tasks/backlog/` (e.g., `tasks/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
 3.  **Autonomous Execution:** The **Task MCP** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
 
 ### 5.3 Session Initialization & Guardian Awakening
@@ -347,7 +347,7 @@ The repository structure reflects the **12-Domain MCP Architecture**, focusing o
 | :--- | :--- | :--- |
 | **`mcp_servers/`** | Server code for all 12 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | **`00_CHRONICLE/`** | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
-| **`TASKS/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
+| **`tasks/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
 | **`data/`** | Vector Database source files, training data, configs. | **Mnemonic Cortex Assets**. Houses the content used for real-time RAG operations (Medium Memory). |
 | **`forge/`** | Model fine-tuning scripts, weight checkpoints, training datasets. | The **Strategic Crucible**. Dedicated environment for model distillation and self-improvement (Phoenix Forge P41). |
 | **`.agent/`** | Intelligence Configuration & Ephemeral Memory. Houses learning manifests and session-specific logic. | **Session Memory**. Tracks intra-session state and handover artifacts. |

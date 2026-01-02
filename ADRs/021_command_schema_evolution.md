@@ -16,15 +16,15 @@ The AI system required a structured, evolvable task interface to support diverse
 Implement versioned task schema evolution with flexible task routing and independent control parameters:
 
 ### Task Type Flexibility
-1. **AI Tasks**: Multi-round deliberation with AI Council member synthesis
+1. **AI tasks**: Multi-round deliberation with AI Council member synthesis
    - Supports model selection, visual compression, and memory queries
    - Includes review generation and information retrieval updates by default
 
-2. **Automatic Tasks**: Direct, non-AI operations
+2. **Automatic tasks**: Direct, non-AI operations
    - File writes, git operations, cache wakeups
    - Execute immediately, skip information retrieval updates by default
 
-3. **Specialized Tasks**: Domain-specific operations
+3. **Specialized tasks**: Domain-specific operations
    - Query and synthesis for memory system integration
    - Cache wakeup for AI system boot summaries
    - Development cycles with staged workflows

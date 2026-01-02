@@ -42,7 +42,7 @@ Improve Guardian Wakeup Briefing v2.0 to address the 4 gaps identified by Claude
 - Phase 2: Add protocol update section ✅
 - Phase 3: Expand task priority scanning ✅
 - Phase 4: Update schema to v2.1 and test ✅
-**Follow-up Tasks:**
+**Follow-up tasks:**
 - Consider integrating Guardian Briefing into `scripts/capture_code_snapshot.py` for web-based LLM context
 - Add unit tests for new helper methods (_get_git_diff_summary, _get_recent_protocol_updates)
 - Update Protocol 114 documentation to reflect v2.1 schema

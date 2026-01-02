@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** TASKS/done/080_migrate_and_archive_legacy_council_orchestrator.md
+**Related Documents:** tasks/done/080_migrate_and_archive_legacy_council_orchestrator.md
 
 ---
 

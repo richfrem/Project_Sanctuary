@@ -371,7 +371,7 @@ print(result)
 
 ## References
 
-- [Task T093: Containerize Ollama Model Service](../../../TASKS/in-progress/093_containerize_ollama_model_service_podman.md)
+- [Task T093: Containerize Ollama Model Service](../../../tasks/in-progress/093_containerize_ollama_model_service_podman.md)
 - [Ollama Documentation](https://ollama.ai/docs)
 - [Podman Documentation](https://docs.podman.io/)
 - [Docker Documentation](https://docs.docker.com/)

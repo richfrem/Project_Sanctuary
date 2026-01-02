@@ -54,7 +54,7 @@ podman build -t task-mcp:latest .
 ```bash
 podman run -d \
   --name task-mcp \
-  -v $(pwd)/TASKS:/app/TASKS:rw \
+  -v $(pwd)/tasks:/app/tasks:rw \
   -p 3004:8080 \
   task-mcp:latest
 ```

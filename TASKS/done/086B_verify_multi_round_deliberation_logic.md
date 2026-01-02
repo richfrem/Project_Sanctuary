@@ -79,7 +79,7 @@ assert result["final_synthesis"]  # Not empty
 print("✅ Multi-round deliberation logic verified!")
 ```
 
-**Tasks:**
+**tasks:**
 - [ ] Run manual test script
 - [ ] Verify 3 rounds execute
 - [ ] Verify all 3 agents participate
@@ -103,7 +103,7 @@ print("✅ Multi-round deliberation logic verified!")
 
 ### Phase 4: Workflow Validation
 
-**Workflow to Test:** Workflow 3 from `docs/workflows/council_orchestration.md`
+**Workflow to Test:** Workflow 3 from `docs/process_guides/council_orchestration.md`
 
 **Description:** Full Council Deliberation
 
@@ -166,7 +166,7 @@ context += f"\n\n**{agent_role.capitalize()}:** {agent_response}"
 - ✅ CouncilOperations refactoring
 - ⏭️ pytest.ini configuration (for integration tests)
 
-## Related Tasks
+## Related tasks
 
 - Task #077: Council MCP Server (DONE)
 - Task #078: Agent Persona MCP & Orchestrator Refactoring (DONE)

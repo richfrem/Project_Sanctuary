@@ -33,7 +33,7 @@ project_sanctuary.<category>.<server_name>
 | Chronicle MCP | `project_sanctuary.document.chronicle` | 3001 | `00_CHRONICLE/` |
 | Protocol MCP | `project_sanctuary.document.protocol` | 3002 | `01_PROTOCOLS/` |
 | ADR MCP | `project_sanctuary.document.adr` | 3003 | `ADRs/` |
-| Task MCP | `project_sanctuary.document.task` | 3004 | `TASKS/` |
+| Task MCP | `project_sanctuary.document.task` | 3004 | `tasks/` |
 
 ### Cognitive Domain Servers (2)
 

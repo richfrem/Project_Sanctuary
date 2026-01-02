@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** GUARDIAN-01
 **Dependencies:** "Requires #013"
-**Related Documents:** "TASKS/task_schema.md, P115"
+**Related Documents:** "tasks/task_schema.md, P115"
 
 ---
 

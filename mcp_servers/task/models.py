@@ -1,7 +1,7 @@
 #============================================
 # mcp_servers/task/models.py
 # Purpose: Data models for the Task MCP server.
-#          Defines TaskSchema, TaskStatus, TaskPriority, and FileOperationResult.
+#          Defines taskschema, taskstatus, TaskPriority, and FileOperationResult.
 # Role: Data Layer
 # Used as: Data structure definitions.
 #============================================
@@ -17,9 +17,9 @@ from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 
-class TaskStatus(str, Enum):
+class taskstatus(str, Enum):
     #----------------------------------------------------------------------
-    # TaskStatus
+    # taskstatus
     # Purpose: Enum for task status states
     # Values: backlog, todo, in-progress, complete, blocked
     #----------------------------------------------------------------------
@@ -43,10 +43,10 @@ class TaskPriority(str, Enum):
 
 
 @dataclass
-class TaskSchema:
+class taskschema:
     number: int
     title: str
-    status: TaskStatus
+    status: taskstatus
     priority: TaskPriority
     lead: str
     dependencies: Optional[str] = None
@@ -116,5 +116,5 @@ class TaskListRequest(BaseModel):
     status: Optional[str] = Field(None, description="Filter by status")
     priority: Optional[str] = Field(None, description="Filter by priority")
 
-class TaskSearchRequest(BaseModel):
+class tasksearchRequest(BaseModel):
     query: str = Field(..., description="Search term or regex pattern")

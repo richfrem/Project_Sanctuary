@@ -60,6 +60,15 @@ All fleet operations are centralized in the **Project Root Makefile**. This ensu
 **Key Commands:**
 - **`make up`**: Deploys the full fleet (Physical) and registers tools (Logical).
 - **`make status`**: Displays physical container health and logical registry state.
+
+### Transport Standards (ADR 066)
+
+> [!CAUTION]
+> **FastMCP SSE is PROHIBITED** for Gateway connections. Fleet containers use a **Dual-Transport** architecture:
+> 1. **STDIO**: FastMCP (Local/Claude Desktop).
+> 2. **SSE**: `SSEServer` or `MCP SDK` (Gateway).
+
+See [ADR 066](../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for the mandatory transport selector pattern.
 - **`make down`**: Safely stops the fleet.
 - **`make restart`**: Restarts the fleet (or specific targets) and re-orchestrates.
 

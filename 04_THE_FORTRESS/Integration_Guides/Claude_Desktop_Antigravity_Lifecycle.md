@@ -24,7 +24,7 @@ The `guardian_wakeup` tool returns a **Startup Digest** containing:
 1.  **System Health**: Traffic light status of the Gateway/DB.
 2.  **Strategic Directives**: The core "Gemini Signal" (Values & Mission).
 3.  **Recent Chronicle Highlights**: What happened recently?
-4.  **Priority Tasks**: Top 5 tracked tasks from the backlog/in-progress.
+4.  **Priority tasks**: Top 5 tracked tasks from the backlog/in-progress.
 5.  **Operational Recency**: Files modified in the last 48h (with git diffs).
 6.  **Available Workflows**: A list of executable "Macro Strategies" found in `.agent/workflows`.
 

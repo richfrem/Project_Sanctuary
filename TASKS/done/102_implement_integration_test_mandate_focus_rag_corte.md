@@ -4,7 +4,7 @@
 **Priority:** Critical
 **Lead:** Guardian AI
 **Dependencies:** ADR 048, Task 087 Phase 4 Complete
-**Related Documents:** ADRs/048_mandate_live_integration_testing_for_all_mcps.md, TASKS/087_comprehensive_mcp_operations_testing.md
+**Related Documents:** ADRs/048_mandate_live_integration_testing_for_all_mcps.md, tasks/087_comprehensive_mcp_operations_testing.md
 
 ---
 

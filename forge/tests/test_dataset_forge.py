@@ -29,7 +29,7 @@ class TestInstructionDetermination:
 
     def test_determine_instruction_task(self):
         """Test instruction generation for Task files."""
-        filename = "TASKS/done/001_setup.md"
+        filename = "tasks/done/001_setup.md"
         instruction = forge.determine_instruction(filename)
         assert "Task" in instruction
         assert "execution record" in instruction

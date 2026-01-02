@@ -23,7 +23,7 @@ These domains share similar toolsets (CRUD, Git, Schema validation) but manage e
 | 1 | **Chronicle MCP** | `00_CHRONICLE/` | Historical Truth | Sequential, canonical, rarely-modified entries |
 | 2 | **Protocol MCP** | `01_PROTOCOLS/` | Governing Rules | Versioning, formal review, status transitions |
 | 3 | **ADR MCP** | `ADRs/` | Decision History | Problem/solution pairs, supersession tracking |
-| 4 | **Task MCP** | `TASKS/` | Execution Planning | Workflow state transitions, dependency management |
+| 4 | **Task MCP** | `tasks/` | Execution Planning | Workflow state transitions, dependency management |
 
 **Shared Characteristics:**
 - Markdown-based content

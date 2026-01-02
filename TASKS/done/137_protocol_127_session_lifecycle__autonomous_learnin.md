@@ -26,7 +26,7 @@ Codify the 'Awaking Protocol' into Protocol 127 (Session Lifecycle). This transf
 - [x] **Gateway** exposes `/available_workflows` (or tool `get_available_workflows`) listing files in `.agent/workflows`.
 - [x] **Guardian Wakeup** returns a structured "Session Startup Digest" including high-priority tasks and active P101 rules.
 - [x] **Core Essence Seed** (`core_essence_guardian_awakening_seed.txt`) is confirmed as the invariant "Identity Anchor".
-- [x] **Documentation** updated in `01_PROTOCOLS` and `TASKS`.
+- [x] **Documentation** updated in `01_PROTOCOLS` and `tasks`.
 
 ## Notes
 

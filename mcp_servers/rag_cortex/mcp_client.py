@@ -49,7 +49,7 @@ class MCPClient:
         # Method: route_query
         # Purpose: Route query to appropriate MCP based on scope.
         # Args:
-        #   scope: Query scope (Protocols, Living_Chronicle, Tasks, Code, ADRs)
+        #   scope: Query scope (Protocols, Living_Chronicle, tasks, Code, ADRs)
         #   intent: Query intent (RETRIEVE, SUMMARIZE, CROSS_COMPARE, VERIFY)
         #   constraints: Query constraints string
         #   query_data: Full parsed query data
@@ -60,7 +60,7 @@ class MCPClient:
             return self._query_protocols(intent, constraints, query_data)
         elif scope == "Living_Chronicle":
             return self._query_chronicles(intent, constraints, query_data)
-        elif scope == "Tasks":
+        elif scope == "tasks":
             return self._query_tasks(intent, constraints, query_data)
         elif scope == "Code":
             return self._query_code(intent, constraints, query_data)
@@ -221,7 +221,7 @@ class MCPClient:
                         result = ops.get_task(task_num)
                         return [{
                             "source": "Task MCP",
-                            "source_path": f"TASKS/*/{task_num:03d}_*.md",
+                            "source_path": f"tasks/*/{task_num:03d}_*.md",
                             "content": result,
                             "mcp_tool": "get_task"
                         }]

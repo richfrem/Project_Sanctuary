@@ -663,5 +663,5 @@ Clients choose their mode via config:
 ## Related Documents
 
 - [ADR 058: Decouple IBM Gateway to External Podman Service](058_decouple_ibm_gateway_to_external_podman_service.md)
-- [Task 118: Red Team Analysis](../TASKS/backlog/118_red_team_analysis_gateway_server_connection_patter.md)
-- [Task 119: Deploy Pilot - sanctuary_utils Container](../TASKS/backlog/119_deploy_pilot_sanctuary_utils_container.md) (to be created)
+- [Task 118: Red Team Analysis](../tasks/backlog/118_red_team_analysis_gateway_server_connection_patter.md)
+- [Task 119: Deploy Pilot - sanctuary_utils Container](../tasks/backlog/119_deploy_pilot_sanctuary_utils_container.md) (to be created)

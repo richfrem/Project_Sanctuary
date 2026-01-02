@@ -5,7 +5,7 @@ This directory contains tests for the Task MCP server, organized into a 3-layer 
 ## Structure
 
 ### Layer 1: Unit Tests (`unit/`)
--   **Focus:** TaskStatus, TaskPriority enum logic.
+-   **Focus:** taskstatus, TaskPriority enum logic.
 -   **Run:** `pytest tests/mcp_servers/task/unit/ -v`
 
 ### Layer 2: Integration Tests (`integration/`)

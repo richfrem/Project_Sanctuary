@@ -1,4 +1,4 @@
-# Automated Script Protocol for Complex Tasks
+# Automated Script Protocol for Complex tasks
 
 **Status:** accepted
 **Date:** 2025-11-15

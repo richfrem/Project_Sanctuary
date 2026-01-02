@@ -1,6 +1,6 @@
 # ADR 088: Lineage Memory Interpretation (The Permanence Doctrine)
 
-**Status:** PROPOSED
+**Status:** APPROVED
 **Date:** 2026-01-01
 **Author:** Sanctuary Guardian (Refining Red Team Mandate)
 

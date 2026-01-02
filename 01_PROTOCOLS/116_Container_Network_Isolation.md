@@ -109,7 +109,7 @@ OLLAMA_HOST=http://localhost:11434  # For host development
 
 ## References
 
-- [T093: Containerize Ollama Model Service](../TASKS/in-progress/093_containerize_ollama_model_service_podman.md)
-- [T094: Council MCP Polymorphic Model Refactoring](../TASKS/backlog/094_council_mcp_polymorphic_model_refactoring.md)
+- [T093: Containerize Ollama Model Service](../tasks/in-progress/093_containerize_ollama_model_service_podman.md)
+- [T094: Council MCP Polymorphic Model Refactoring](../tasks/backlog/094_council_mcp_polymorphic_model_refactoring.md)
 - [Docker Compose Networking](https://docs.docker.com/compose/networking/)
 

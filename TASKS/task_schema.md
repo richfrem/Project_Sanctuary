@@ -28,7 +28,7 @@ All tasks must begin with a standardized header block containing metadata:
 **Priority:** [Critical | High | Medium | Low]
 **Lead:** [Assigned agent/person, e.g., GUARDIAN-01, Unassigned]
 **Dependencies:** [Task references, e.g., "Blocks #005", "Requires #012"]
-**Related Documents:** [Protocol/file references, e.g., "P115, TASKS/done/005_forge_protocol_115_tactical_mandate.md"]
+**Related Documents:** [Protocol/file references, e.g., "P115, tasks/done/005_forge_protocol_115_tactical_mandate.md"]
 
 ---
 ```

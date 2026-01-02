@@ -1,62 +1,50 @@
 # MCP Testing Standards
+**(Based on ADR 053 & Protocol 115)**
 
-**Protocol 115: The Tactical Mandate - Documentation as Requirement**
+## 1. The 3-Layer Test Pyramid (ADR 053)
 
-## Overview
+All MCP servers must adhere to the standardized 3-layer test pyramid.
 
-Reliability is paramount for the Sanctuary's Nervous System. This document establishes the standard workflow for testing and verifying MCP servers.
+### Layer 1: Unit Tests (`unit/`)
+- **Purpose:** Test atomic logic in complete isolation (functions, classes).
+- **Dependencies:** None (mock all external interactions).
+- **Speed:** Fast (< 10ms).
+- **Location:** `tests/mcp_servers/<server>/unit/`.
 
-## The Testing Workflow
+### Layer 2: Integration Tests (`integration/`)
+- **Purpose:** Test server operations with *real local dependencies*.
+- **Dependencies:** 
+    - Real Vector DB (Port 8000).
+    - Real Ollama (Port 11434).
+    - Real Filesystem (via tmp_path).
+- **Base Class:** Must inherit from `BaseIntegrationTest`.
+- **Speed:** Medium (Seconds).
+- **Location:** `tests/mcp_servers/<server>/integration/`.
 
-All MCP servers must adhere to this 4-layer testing pyramid:
+### Layer 3: End-to-End Tests (`e2e/`)
+- **Purpose:** Test full MCP protocol lifecycle (Client -> Server -> Tool -> Result).
+- **Dependencies:** All 12 MCP servers running via `start_mcp_servers.py`.
+- **Base Class:** Must inherit from `BaseE2ETest`.
+- **Speed:** Slow (Minutes).
+- **Location:** `tests/mcp_servers/<server>/e2e/`.
 
-### 1. Script/Unit Testing (The Foundation) 🧪
-**Goal:** Verify the underlying logic *before* it is wrapped in an MCP tool.
-**Method:** Pytest unit tests.
-**Location:** `tests/mcp_servers/<server_name>/` or `tests/test_<domain>_operations.py`
+## 2. Test Execution
 
+### Running Tests
 ```bash
-# Example
-pytest tests/mcp_servers/cortex/test_operations.py -v
+# Run all tests (fast)
+pytest
+
+# Run including integration (requires services up)
+pytest tests/mcp_servers/cortex/integration/
+
+# Run slow E2E tests
+pytest -m e2e
 ```
 
-### 2. Integration Testing 🔗
-**Goal:** Verify interactions between components (e.g., Database, Git, Filesystem).
-**Method:** Pytest integration tests.
-**Location:** `tests/integration/`
+## 3. Documentation Requirements
 
-```bash
-# Example
-pytest tests/integration/test_forge_integration.py -v
-```
-
-### 3. MCP Tool Verification 🤖
-**Goal:** Verify the MCP tool interface (arguments, returns, error handling) works as expected when called by an LLM.
-**Method:** Manual verification via Claude Desktop or Antigravity, or automated tool tests.
-
-**Verification Prompt Template:**
-> "Please [perform action] using the [tool_name] tool to verify its functionality."
-
-### 4. End-to-End Orchestration 🎼
-**Goal:** Verify complex workflows involving multiple MCPs.
-**Method:** Council Orchestrator missions.
-
-## Documentation Requirements
-
-Every MCP Server README must include a **Testing** section with:
-
-1.  **Command:** Exact command to run unit tests.
-2.  **Results:** A snapshot of passing test output (or link to CI logs).
-3.  **Verification:** Instructions for manual verification.
-
-## Test Data Management
-
-- Use `tests/fixtures/` for static test data.
-- Clean up any artifacts created during testing (use `tmp_path` fixture in pytest).
-- **NEVER** commit test artifacts to the main repository (use `.gitignore`).
-
-## Continuous Integration
-
-(Future Phase)
-- All tests must pass before merging to `main`.
-- Protocol 101 v3.0 enforces this for Git operations.
+Every MCP Server `README.md` must include a **Testing** section answering:
+1.  **Unit:** How to run unit tests?
+2.  **Integration:** What services must be running?
+3.  **Verification:** How to manually verify via Claude Desktop?

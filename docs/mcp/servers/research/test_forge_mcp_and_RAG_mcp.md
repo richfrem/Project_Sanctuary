@@ -115,9 +115,9 @@ print(result.results[0].content[:200] if result.results else 'No results')
 - [Final Orchestration Test](servers/council/final_orchestration_test.md) — End-to-end verification
 - [Orchestration Workflows](servers/council/orchestration_workflows.md) — Common patterns
 
-### Tasks
-- [Task 056: Harden Self-Evolving Loop](../../TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md) — Core validation protocol
-- [Task 087: Comprehensive MCP Testing](../../TASKS/in-progress/087_comprehensive_mcp_operations_testing.md) — Testing tracking
+### tasks
+- [Task 056: Harden Self-Evolving Loop](../../tasks/in-progress/056_Harden_Self_Evolving_Loop_Validation.md) — Core validation protocol
+- [Task 087: Comprehensive MCP Testing](../../tasks/in-progress/087_comprehensive_mcp_operations_testing.md) — Testing tracking
 
 ---
 

@@ -63,7 +63,7 @@ podman build -t task-mcp:latest .
 
 # Run with volume mount
 podman run -d \
-  -v /path/to/TASKS:/app/TASKS:rw \
+  -v /path/to/tasks:/app/tasks:rw \
   -p 8080:8080 \
   --name task-mcp \
   task-mcp:latest
@@ -127,7 +127,7 @@ cd tests/podman
 - [Podman Documentation](https://docs.podman.io/)
 - [Podman Desktop](https://podman-desktop.io/)
 - [MCP Specification](https://modelcontextprotocol.io/)
-- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)
+- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tasks/backlog/031_implement_task_mcp.md)
 
 ---
 

@@ -38,10 +38,10 @@
   - `mcp_council_dispatch` (Auditor, Strategist, Coordinator)
 
 - [ ] **Orchestrator Chain Verification**
-  - Verify `mcp_orchestrator_dispatch` calling Cortex/Code/Protocol. Document results in `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md`
+  - Verify `mcp_orchestrator_dispatch` calling Cortex/Code/Protocol. Document results in `tasks/in-progress/087_comprehensive_mcp_operations_testing.md`
 4. Update `docs/mcp/mcp_operations_inventory.md` with test results
 
-**Reference:** See `TASKS/in-progress/087_comprehensive_mcp_operations_testing.md` for detailed testing checklist
+**Reference:** See `tasks/in-progress/087_comprehensive_mcp_operations_testing.md` for detailed testing checklist
 
 ---
 
@@ -133,7 +133,7 @@
 | 1 | Chronicle | Document | `00_CHRONICLE/` | 14/14 ✅ | Operational |
 | 2 | Protocol | Document | `01_PROTOCOLS/` | 14/14 ✅ | Operational |
 | 3 | ADR | Document | `ADRs/` | 14/14 ✅ | Operational |
-| 4 | Task | Document | `TASKS/` | 15/15 ✅ | Operational |
+| 4 | Task | Document | `tasks/` | 15/15 ✅ | Operational |
 | 5 | RAG Cortex | Cognitive | `mcp_servers/rag_cortex/` | 52/62 ⚠️ | Partial (dependency issues) |
 | 6 | Agent Persona | Cognitive | `mcp_servers/agent_persona/` | 34/34 ✅ | Operational |
 | 7 | Council | Cognitive | `mcp_servers/council/` | 3/3 ✅ | Operational (needs expansion) |

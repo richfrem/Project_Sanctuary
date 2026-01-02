@@ -30,7 +30,7 @@ The new canonical law is **Protocol 101 v3.0: The Doctrine of Absolute Stability
 * **Positive:** **Immediate and Permanent Compliance.** Development of MCP servers is unblocked without the temporary security relaxation. All agent commits immediately adhere to the stable, canonical integrity framework (Functional Coherence).
 * **Negative:** None. The purge removes a structurally unsound dependency and its associated complexity.
 
-## Related Tasks
+## Related tasks
 
 * **Task #028:** Pre-Commit Hook Migration (Status: **Obsolete/Completed by Purge**)
 * **Task #035:** Git Workflow MCP (Status: **Obsolete/Superseded**)

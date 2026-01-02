@@ -12,7 +12,7 @@
 
 Create a unified content processing library (`mcp_servers/lib/content_processor.py`) to eliminate triple-maintenance and logic drift between the Forge, RAG, and Soul Persistence pipelines.
 
-## 2. Implementation Sub-Tasks
+## 2. Implementation Sub-tasks
 
 ### Phase 1: Create ContentProcessor + HF Consumer (Current)
 

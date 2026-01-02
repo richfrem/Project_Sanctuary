@@ -2,7 +2,7 @@
 
 ## Overview
 
-Task MCP manages tasks in the `TASKS/` directory, organized by status (backlog, todo, in-progress, done, blocked). It provides operations to create, retrieve, search, and update tasks.
+Task MCP manages tasks in the `tasks/` directory, organized by status (backlog, todo, in-progress, done, blocked). It provides operations to create, retrieve, search, and update tasks.
 
 ## Key Concepts
 
@@ -26,7 +26,7 @@ Task MCP manages tasks in the `TASKS/` directory, organized by status (backlog, 
 ## Operations
 
 ### `create_task`
-Create a new task file in TASKS/ directory
+Create a new task file in tasks/ directory
 
 **Example:**
 ```python
@@ -59,7 +59,7 @@ Change task status (moves file between directories)
 ## Directory Structure
 
 ```
-TASKS/
+tasks/
 ├── backlog/
 ├── todo/
 ├── in-progress/

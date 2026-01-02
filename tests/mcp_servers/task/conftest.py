@@ -13,7 +13,7 @@ def task_root(tmp_path):
     root.mkdir()
     
     # Create required subdirs
-    tasks_dir = root / "TASKS"
+    tasks_dir = root / "tasks"
     tasks_dir.mkdir()
     (tasks_dir / "backlog").mkdir()
     (tasks_dir / "todo").mkdir()

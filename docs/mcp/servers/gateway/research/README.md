@@ -197,7 +197,7 @@ This directory contains comprehensive research findings for the Dynamic MCP Gate
 - **Protocol 101:** Functional Coherence (testing mandate)
 - **Protocol 114:** Guardian Wakeup (context efficiency)
 
-### Sanctuary Tasks
+### Sanctuary tasks
 - **Task 110:** Design and Specify Dynamic MCP Gateway Architecture (this initiative)
 - **Task 087:** Comprehensive MCP Operations Testing
 

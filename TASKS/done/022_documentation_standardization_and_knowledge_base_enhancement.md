@@ -19,13 +19,13 @@ This parent task coordinates the standardization of documentation across the new
 - **Protocol 89**: The Clean Forge - Documentation as part of quality
 - **Protocol 115**: The Tactical Mandate - Documentation as requirement
 
-## Sub-Tasks
+## Sub-tasks
 
 ### Task 022A: MCP Documentation Standards & API Documentation
 - **Status**: in-progress
 - **Priority**: Medium
 - **Effort**: 4-6 hours
-- **File**: `TASKS/in-progress/022A_documentation_standards_and_api_docs.md`
+- **File**: `tasks/in-progress/022A_documentation_standards_and_api_docs.md`
 
 **Objective**: Establish documentation standards for the MCP ecosystem, create templates for MCP server READMEs, ensure consistent docstrings for all MCP tools, and formalize inventory maintenance.
 
@@ -41,7 +41,7 @@ This parent task coordinates the standardization of documentation across the new
 - **Status**: Done
 - **Priority**: Medium
 - **Effort**: 4-6 hours
-- **File**: `TASKS/in-progress/022B_user_guides_and_architecture_documentation.md`
+- **File**: `tasks/in-progress/022B_user_guides_and_architecture_documentation.md`
 
 **Objective**: Create quick start guides for connecting to the MCP ecosystem, user tutorials for key workflows (Council, RAG), and update architecture documentation to reflect the 11-server topology.
 
@@ -57,7 +57,7 @@ This parent task coordinates the standardization of documentation across the new
 - **Status**: Done
 - **Priority**: High
 - **Effort**: 6-8 hours
-- **File**: `TASKS/in-progress/022C_mcp_server_documentation_standards.md`
+- **File**: `tasks/in-progress/022C_mcp_server_documentation_standards.md`
 
 **Objective**: Establish standardized, high-quality documentation for all MCP servers following a consistent testing-first approach with comprehensive verification workflows.
 

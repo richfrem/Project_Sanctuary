@@ -69,4 +69,4 @@ grep -rl '\`\`\`mermaid' . --include="*.md" | grep -v node_modules | grep -v .ag
 
 ---
 
-*See also: [Task #154: Mermaid Rationalization](../TASKS/todo/154_mermaid_rationalization.md)*
+*See also: [Task #154: Mermaid Rationalization](../tasks/todo/154_mermaid_rationalization.md)*

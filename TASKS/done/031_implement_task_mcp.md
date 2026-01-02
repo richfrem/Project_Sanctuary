@@ -23,7 +23,7 @@
 
 ## Objective
 
-Implement Task MCP server for workflow management in `TASKS/`.
+Implement Task MCP server for workflow management in `tasks/`.
 
 ---
 
@@ -67,7 +67,7 @@ search_tasks(query)
 
 ### ✅ Phase 2: Core Modules
 - [x] Created `mcp_servers/task/__init__.py`
-- [x] Created `models.py` (TaskSchema, FileOperationResult, enums)
+- [x] Created `models.py` (taskschema, FileOperationResult, enums)
 - [x] Created `validator.py` (schema validation, uniqueness checks, dependency validation)
 - [x] Created `operations.py` (all 6 file operations)
 
@@ -105,7 +105,7 @@ search_tasks(query)
 
 ## Files Created
 - `mcp_servers/task/__init__.py`
-- `mcp_servers/task/models.py` (TaskSchema, FileOperationResult, enums)
+- `mcp_servers/task/models.py` (taskschema, FileOperationResult, enums)
 - `mcp_servers/task/validator.py` (schema validation, dependency checks)
 - `mcp_servers/task/operations.py` (500+ lines, all 6 file operations)
 - `mcp_servers/task/server.py` (MCP protocol, all 6 tools)

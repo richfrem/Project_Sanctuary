@@ -65,7 +65,7 @@ EXCLUDE_DIR_NAMES = {
     'WORK_IN_PROGRESS',
     'session_states',
     'development_cycles',
-    'TASKS',
+    'tasks',
     'ml_env_logs',
     'outputs',
     'mcp_config', 

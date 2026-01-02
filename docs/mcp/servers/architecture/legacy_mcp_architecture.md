@@ -13,7 +13,7 @@
 | 1 | **Chronicle MCP** | Document | `00_CHRONICLE/` | MODERATE | Standard |
 | 2 | **Protocol MCP** | Document | `01_PROTOCOLS/` | HIGH | Standard |
 | 3 | **ADR MCP** | Document | `ADRs/` | MODERATE | Standard |
-| 4 | **Task MCP** | Document | `TASKS/` | MODERATE | Standard |
+| 4 | **Task MCP** | Document | `tasks/` | MODERATE | Standard |
 | 5 | **RAG MCP** (Cortex) | Cognitive | `mnemonic_cortex/` | MODERATE | Standard |
 | 6 | **Agent Persona MCP** | Cognitive | `mcp_servers/agent_persona/` | SAFE | Standard |
 | 7 | **Council MCP** | Cognitive | `mcp_servers/council/` | SAFE | Standard |

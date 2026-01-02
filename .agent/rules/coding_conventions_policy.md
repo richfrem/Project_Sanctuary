@@ -75,6 +75,6 @@ Immediately following the function definition, you must include a standard PEP 2
 * **Variable Naming**: Use `snake_case` for functions/variables and `PascalCase` for classes (PEP 8).
 * **Logic Decoupling**: If a method exceeds 40 lines of logic, it must be refactored into smaller, private helper methods (prefixed with `_`) to maintain scannability.
 * **Context Tags**: Use specific tags to link code to the project state:
-* `# TODO (Task-XXX):` Links directly to the `TASKS/` directory.
+* `# TODO (Task-XXX):` Links directly to the `tasks/` directory.
 * `# NOTE (ADR-XXX):` Explains the architectural "why" behind a specific implementation.
 * `# FIX-ONCE:` Marks core logic shared between the gateway and test suite.

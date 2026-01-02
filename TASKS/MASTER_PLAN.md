@@ -96,7 +96,7 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 - Protocol 125: Autonomous AI Learning System
 - Protocol 056 E2E: Strategic Crucible Loop validation
 
-**Tasks Completed:** 9 tasks marked complete (2025-12-14 cleanup)
+**tasks Completed:** 9 tasks marked complete (2025-12-14 cleanup)
 - Superseded: 040, 041, 043
 - Verified: 003, 017, 025, 026, 113, 114
 

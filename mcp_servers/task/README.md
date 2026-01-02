@@ -1,6 +1,6 @@
 # Task MCP Server
 
-**Description:** The Task MCP server manages task files in the `TASKS/` directory structure. It provides tools for creating, updating, moving, reading, listing, and searching tasks following the canonical task schema.
+**Description:** The Task MCP server manages task files in the `tasks/` directory structure. It provides tools for creating, updating, moving, reading, listing, and searching tasks following the canonical task schema.
 
 ## Tools
 
@@ -67,14 +67,14 @@ pytest mcp_servers/task/tests
 ## Architecture
 
 ### Overview
-This server manages the `TASKS/` directory structure (`backlog`, `todo`, `in-progress`, `done`).
+This server manages the `tasks/` directory structure (`backlog`, `todo`, `in-progress`, `done`).
 
 **Safety Rules:**
 1.  **Task Number Uniqueness:** Cannot create duplicate task numbers.
 2.  **Circular Dependencies:** Validates dependency references exist.
-3.  **Schema Compliance:** All tasks must follow `TASKS/task_schema.md`.
-4.  **File Path Safety:** All operations restricted to `TASKS/` directory.
-5.  **No Deletion:** Tasks cannot be deleted (archive by moving to done).
+3.  **Schema Compliance:** All tasks must follow `tasks/task_schema.md`.
+4.  **File Path Safety:** All operations restricted to `tasks/` directory.
+5.  **No Deletion:** tasks cannot be deleted (archive by moving to done).
 6.  **No Git Operations:** File operations only.
 
 ## Dependencies

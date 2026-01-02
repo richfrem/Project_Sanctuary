@@ -1,6 +1,7 @@
 # Adoption of Dynamic MCP Gateway Pattern
 
-**Status:** proposed
+**Status:** Superseded
+**Superseded By:** ADR 060
 **Date:** 2025-12-15
 **Author:** Antigravity (Research: Task 110)
 

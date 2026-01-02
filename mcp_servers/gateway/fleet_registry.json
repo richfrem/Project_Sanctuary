@@ -647,7 +647,7 @@
           "name": "sanctuary-domain-update-task"
         },
         {
-          "description": "Create a new task file in TASKS/ directory.",
+          "description": "Create a new task file in tasks/ directory.",
           "inputSchema": {
             "properties": {
               "acceptance_criteria": {

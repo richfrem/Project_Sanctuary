@@ -8,7 +8,7 @@
 **Priority:** High
 **Owner:** Orchestrator / Council Agents
 **Dependencies:** Full operational status of `protocol mcp`, `git mcp` (Verified ✅), and `cortex mcp` (IngestionService).
-**Target Path:** TASKS/in-progress/056_Harden_Self_Evolving_Loop_Validation.md
+**Target Path:** tasks/in-progress/056_Harden_Self_Evolving_Loop_Validation.md
 
 ## 🎯 Mission Objective
 

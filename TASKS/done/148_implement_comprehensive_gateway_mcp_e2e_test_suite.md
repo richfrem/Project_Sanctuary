@@ -9,7 +9,7 @@
 - [ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md)
 - [GATEWAY_VERIFICATION_MATRIX.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/mcp_servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md)
 - [mcp_servers/gateway/fleet_registry.json](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/mcp_servers/gateway/fleet_registry.json)
-- TASKS/146_fix_issues_with_gateway_mcp_operations.md
+- tasks/146_fix_issues_with_gateway_mcp_operations.md
 
 ---
 

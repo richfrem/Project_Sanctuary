@@ -71,7 +71,7 @@ class CreateGitCommitTaskRequest(BaseModel):
     description: str = Field(..., description="Reason for the commit")
     push: bool = Field(False, description="Whether to push to origin after commit")
 
-class ListRecentTasksRequest(BaseModel):
+class ListRecenttasksRequest(BaseModel):
     limit: int = Field(10, description="Number of recent tasks to return")
 
 class GetTaskResultRequest(BaseModel):

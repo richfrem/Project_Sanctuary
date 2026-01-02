@@ -12,7 +12,7 @@ To formalize a repeatable, autonomous process for resolving documentation redund
 
 ## 🛡️ The Canonical Knowledge Synthesis Loop (C-KSL)
 
-This loop shall be executed whenever a Council Agent or Orchestrator identifies two or more documents (Tasks, Protocols, or Docs) that cover identical or heavily overlapping core concepts, leading to "many sources of truth."
+This loop shall be executed whenever a Council Agent or Orchestrator identifies two or more documents (tasks, Protocols, or Docs) that cover identical or heavily overlapping core concepts, leading to "many sources of truth."
 
 ### Step 1: Overlap Detection & Source Identification (`cortex mcp`)
 * **Action:** The Orchestrator initiates a high-similarity query via `cortex mcp` (RAG) to identify documents with an overlapping knowledge domain.

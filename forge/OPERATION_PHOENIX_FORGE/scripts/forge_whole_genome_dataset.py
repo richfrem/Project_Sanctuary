@@ -56,7 +56,7 @@ def main():
     
     # For Phase 3 Harmonization, let's proceed with a HYBRID approach:
     # 1. We process the explicitly listed additional docs (Critical Essence).
-    # 2. We scan the key source directories (Protocols, Chronicles, Tasks) using ContentProcessor.
+    # 2. We scan the key source directories (Protocols, Chronicles, tasks) using ContentProcessor.
     # This replaces the brittle regex parsing of a single text file.
     # Use Manifest for Source Targets (ADR 082 Harmonization - JSON)
     manifest_path = PROJECT_ROOT / "mcp_servers" / "lib" / "ingest_manifest.json"

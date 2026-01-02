@@ -90,7 +90,7 @@ Enhance dependency management and environment reproducibility with focus on:
 - [ ] Generate environment health report
 
 ### 7. Documentation Updates
-- [ ] Update `DEPENDENCY_MANIFEST.md` with security info
+- [ ] Update `docs/operations/DEPENDENCY_MANIFEST.md` with security info
 - [ ] Create `docs/DEPENDENCY_MANAGEMENT.md` guide
 - [ ] Document dependency update workflow
 - [ ] Create troubleshooting guide for dependency issues

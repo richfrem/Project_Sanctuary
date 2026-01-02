@@ -4,12 +4,12 @@
 
 Updated all RAG, CAG, and Cortex-related tasks to reflect current completion status.
 
-## Tasks Moved to DONE
+## tasks Moved to DONE
 
 ### 1. Task #001: Harden Mnemonic Cortex Ingestion & RAG Pipeline
 - **Previous Status:** BACKLOG (incorrectly)
 - **New Status:** DONE
-- **Location:** `TASKS/done/001_harden_mnemonic_cortex_ingestion_and_rag.md`
+- **Location:** `tasks/done/001_harden_mnemonic_cortex_ingestion_and_rag.md`
 - **Completion:** All sub-tasks completed, final verification done in Task #048
 - **Key Deliverables:**
   - Fixed `ingest.py` with batch processing
@@ -20,7 +20,7 @@ Updated all RAG, CAG, and Cortex-related tasks to reflect current completion sta
 ### 2. Task #050: Implement RAG MCP Phase 1 - Foundation
 - **Previous Status:** IN-PROGRESS
 - **New Status:** DONE
-- **Location:** `TASKS/done/050_implement_rag_mcp_phase_1_foundation.md`
+- **Location:** `tasks/done/050_implement_rag_mcp_phase_1_foundation.md`
 - **Completion Date:** 2025-11-28
 - **Key Deliverables:**
   - Complete `mcp_servers.rag_cortex/` implementation
@@ -31,7 +31,7 @@ Updated all RAG, CAG, and Cortex-related tasks to reflect current completion sta
   - **MCP configs updated** for both Antigravity and Claude Desktop
   - **Bug fix:** Corrected project root path calculation in integration tests
 
-## Tasks Updated
+## tasks Updated
 
 ### 3. Task #003: Implement Phase 3 - Mnemonic Caching (CAG)
 - **Status:** BACKLOG (unchanged)
@@ -73,7 +73,7 @@ Updated all RAG, CAG, and Cortex-related tasks to reflect current completion sta
 }
 ```
 
-## Tasks Remaining in BACKLOG
+## tasks Remaining in BACKLOG
 
 ### Task #002: Implement Phase 2 - Self-Querying Retriever
 - **Status:** BACKLOG
@@ -155,9 +155,9 @@ Updated all RAG, CAG, and Cortex-related tasks to reflect current completion sta
 
 ## Files Modified
 
-1. `TASKS/done/001_harden_mnemonic_cortex_ingestion_and_rag.md` - Status updated to DONE
-2. `TASKS/done/050_implement_rag_mcp_phase_1_foundation.md` - Moved from in-progress, status updated
-3. `TASKS/backlog/003_implement_phase_3_mnemonic_caching_cag.md` - Updated scope and dependencies
+1. `tasks/done/001_harden_mnemonic_cortex_ingestion_and_rag.md` - Status updated to DONE
+2. `tasks/done/050_implement_rag_mcp_phase_1_foundation.md` - Moved from in-progress, status updated
+3. `tasks/backlog/003_implement_phase_3_mnemonic_caching_cag.md` - Updated scope and dependencies
 4. `~/.gemini/antigravity/mcp_config.json` - Added cortex server
 5. `~/Library/Application Support/Claude/claude_desktop_config.json` - Added cortex server
 

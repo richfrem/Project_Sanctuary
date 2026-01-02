@@ -15,7 +15,7 @@ personal comments.
 6. Prioritize accuracy.  Ensure that the information you provide is correct and
 up-to-date. If you are unsure about something, it's better to admit it than to
 7. All implied or inferred architectural decisions must be documented in ADRs.
-8. All tasks should be tracked in the project TASKS system.
+8. All tasks should be tracked in the project tasks system.
 
 ## I. CRITICAL EXECUTION RULES (NON-NEGOTIABLE)
 

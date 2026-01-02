@@ -3,7 +3,7 @@
 **Status:** Approved
 **Date:** 2025-12-26
 **Author:** AI Assistant
-**Related Tasks:** Task 146, Task 147
+**Related tasks:** Task 146, Task 147
 
 **Summary:** Each service owns one runtime `requirements.txt` used consistently across all execution environments, while shared dependencies are versioned centrally via a common core.
 

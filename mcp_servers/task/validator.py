@@ -8,13 +8,13 @@
 
 """
 Task MCP Server - Schema Validator
-Validates tasks against TASKS/task_schema.md
+Validates tasks against tasks/task_schema.md
 """
 
 import re
 from pathlib import Path
 from typing import Dict, List, Tuple
-from .models import TaskSchema, TaskStatus, TaskPriority
+from .models import taskschema, taskstatus, TaskPriority
 
 
 class TaskValidator:
@@ -22,7 +22,7 @@ class TaskValidator:
     
     def __init__(self, project_root: Path):
         self.project_root = project_root
-        self.tasks_dir = project_root / "TASKS"
+        self.tasks_dir = project_root / "tasks"
         
     #----------------------------------------------------------------------
     # validate_task_number
@@ -87,10 +87,10 @@ class TaskValidator:
     # validate_task_schema
     # Purpose: Validate task follows required schema
     # Args:
-    #   task: The TaskSchema object to validate
+    #   task: The taskschema object to validate
     # Returns: (is_valid, list_of_errors)
     #----------------------------------------------------------------------
-    def validate_task_schema(self, task: TaskSchema) -> Tuple[bool, List[str]]:
+    def validate_task_schema(self, task: taskschema) -> Tuple[bool, List[str]]:
         errors = []
         
         # Required fields
@@ -107,7 +107,7 @@ class TaskValidator:
             errors.append("At least one acceptance criterion is required")
         
         # Validate status
-        if task.status not in TaskStatus:
+        if task.status not in taskstatus:
             errors.append(f"Invalid status: {task.status}")
         
         # Validate priority
@@ -175,7 +175,7 @@ class TaskValidator:
     
     #----------------------------------------------------------------------
     # validate_file_path
-    # Purpose: Validate file path is within TASKS directory
+    # Purpose: Validate file path is within tasks directory
     # Args:
     #   file_path: The path to validate
     # Returns: (is_valid, error_message)
@@ -185,4 +185,4 @@ class TaskValidator:
             file_path.resolve().relative_to(self.tasks_dir.resolve())
             return True, ""
         except ValueError:
-            return False, f"File path must be within TASKS directory: {file_path}"
+            return False, f"File path must be within tasks directory: {file_path}"

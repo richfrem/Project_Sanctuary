@@ -127,3 +127,4 @@ Protocol 128 enforces a "Red Team Gate" and persistent identity via the **Guardi
 - **ADR 059:** JWT Authentication
 - **ADR 062:** Rejection of n8n Automation (Manual Loop Reinforced)
 - **ADR 071:** Protocol 128 (Cognitive Continuity)
+- **ADR 066:** FastMCP Transport Standards (Dual-Stack: STDIO/SSE)

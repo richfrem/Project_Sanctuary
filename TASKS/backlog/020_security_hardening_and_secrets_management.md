@@ -19,14 +19,14 @@ This parent task has been split into 5 focused sub-tasks to enable incremental p
 - **Protocol 89**: The Clean Forge - Systematic quality
 - **Protocol 101**: The Unbreakable Commit - Verifiable security
 
-## Sub-Tasks
+## Sub-tasks
 
 ### ✅ Task 020A: Hardcoded Paths Remediation
 - **Status**: in-progress
 - **Priority**: High
 - **Effort**: 2-3 hours
 - **Dependencies**: None
-- **File**: `TASKS/in-progress/020A_hardcoded_paths_remediation.md`
+- **File**: `tasks/in-progress/020A_hardcoded_paths_remediation.md`
 
 **Objective**: Replace all hardcoded absolute paths in test files with relative/computed paths for portability and security.
 
@@ -43,7 +43,7 @@ This parent task has been split into 5 focused sub-tasks to enable incremental p
 - **Priority**: High
 - **Effort**: 2-3 hours
 - **Dependencies**: None
-- **File**: `TASKS/in-progress/020B_inconsistent_secrets_handling_env_fallback.md`
+- **File**: `tasks/in-progress/020B_inconsistent_secrets_handling_env_fallback.md`
 
 **Objective**: Update all scripts to check environment variables FIRST, then fallback to `.env` file, ensuring consistency with WSLENV approach.
 
@@ -60,7 +60,7 @@ This parent task has been split into 5 focused sub-tasks to enable incremental p
 - **Priority**: Medium
 - **Effort**: 2-3 hours
 - **Dependencies**: 020B
-- **File**: `TASKS/backlog/020C_api_key_format_validation.md`
+- **File**: `tasks/backlog/020C_api_key_format_validation.md`
 
 **Objective**: Add format validation for API keys (Hugging Face, OpenAI, Gemini) with clear error messages.
 
@@ -77,7 +77,7 @@ This parent task has been split into 5 focused sub-tasks to enable incremental p
 - **Priority**: Medium
 - **Effort**: 2-3 hours
 - **Dependencies**: 020B, 020C
-- **File**: `TASKS/backlog/020D_secure_error_handling_for_secrets.md`
+- **File**: `tasks/backlog/020D_secure_error_handling_for_secrets.md`
 
 **Objective**: Implement secure error handling for secrets loading with helpful remediation steps and no secret exposure.
 
@@ -94,7 +94,7 @@ This parent task has been split into 5 focused sub-tasks to enable incremental p
 - **Priority**: Low
 - **Effort**: 2-3 hours
 - **Dependencies**: 020B, 020C, 020D
-- **File**: `TASKS/backlog/020E_secrets_access_audit_trail.md`
+- **File**: `tasks/backlog/020E_secrets_access_audit_trail.md`
 
 **Objective**: Implement centralized audit logging for secrets access with rotation and analysis capabilities.
 
@@ -109,13 +109,13 @@ This parent task has been split into 5 focused sub-tasks to enable incremental p
 ## Execution Strategy
 
 ### Phase 1: Quick Wins (Current - Week 1)
-**Tasks**: 020A, 020B (both in-progress)
+**tasks**: 020A, 020B (both in-progress)
 - These are independent and can be worked on simultaneously
 - Provide immediate security improvements
 - Establish foundation for later tasks
 
 ### Phase 2: Validation & Error Handling (Week 2)
-**Tasks**: 020C, 020D
+**tasks**: 020C, 020D
 - Build on the `env_helper.py` from 020B
 - Add robustness and user-friendly error messages
 
@@ -150,6 +150,6 @@ This task has been split into 5 manageable sub-tasks (2-3 hours each) to enable:
 - Clear completion criteria for each piece
 - Easier agent execution
 
-**Current Status**: Tasks 020A and 020B are in-progress and ready to work on immediately.
+**Current Status**: tasks 020A and 020B are in-progress and ready to work on immediately.
 
 For detailed implementation instructions, see the individual task files listed above.

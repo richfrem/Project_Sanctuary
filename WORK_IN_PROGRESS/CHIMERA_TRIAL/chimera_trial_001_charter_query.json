@@ -1,9 +1,0 @@
-{
-  "intent": "SYNTHESIZE",
-  "scope": "Protocols, Doctrines, Research Summaries",
-  "constraints": "Keywords=\"Chimera Sandbox\" OR Keywords=\"Mnemonic Psychosis\" OR Keywords=\"Sovereign Cognitive Health\" OR Name=\"P27: Flawed, Winning Grace\"",
-  "granularity": "SUMMARY",
-  "requestor": "COORDINATOR-01",
-  "purpose": "To gather foundational data for the formal charter of Chimera Trial 001.",
-  "request_id": "c01-ct001-a7b3e9f0-1"
-}

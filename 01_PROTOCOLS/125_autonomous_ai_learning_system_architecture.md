@@ -508,9 +508,9 @@ Every topic folder MUST contain:
 
 ## Related Work and References
 
-### Foundational Tasks
+### Foundational tasks
 - **Task 056:** Harden Self-Evolving Loop Validation (Strategic Crucible Loop validation)
-  - `TASKS/done/056_Harden_Self_Evolving_Loop_Validation.md`
+  - `tasks/done/056_Harden_Self_Evolving_Loop_Validation.md`
 
 ### Chronicle Documentation (Autonomous Learning Journey)
 The original Strategic Crucible Loop validation produced a series of Chronicle entries documenting Claude's autonomous learning experience and philosophical reflections:
@@ -544,8 +544,8 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - **Claude 4.5 Learning Loops:** Original framework for autonomous learning
 
 ### Technical Documentation
-- `docs/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
-- `docs/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
+- `docs/operations/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
+- `docs/operations/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
 
 ### MCP Server Documentation
 - **Code MCP:** `docs/mcp/servers/code/README.md`

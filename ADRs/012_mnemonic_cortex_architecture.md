@@ -1,6 +1,7 @@
 # Memory System Architecture
 
-**Status:** accepted
+**Status:** Superseded
+**Superseded By:** ADR 084 (Mnemonic Cortex)
 **Date:** 2025-11-15
 **Deciders:** AI Council (Full Council Decision from Project History Entry 253)
 **Technical Story:** Transition from static files to dynamic memory system

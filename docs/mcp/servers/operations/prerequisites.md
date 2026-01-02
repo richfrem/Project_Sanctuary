@@ -174,7 +174,7 @@ Ensure these directories exist:
 
 ```
 Project_Sanctuary/
-├── TASKS/
+├── tasks/
 │   ├── backlog/
 │   ├── todo/
 │   ├── in-progress/
@@ -201,7 +201,7 @@ MCP_SERVER_PORT=8080
 
 # Project Paths
 PROJECT_ROOT=/Users/richardfremmerlid/Projects/Project_Sanctuary
-TASKS_DIR=${PROJECT_ROOT}/TASKS
+tasks_DIR=${PROJECT_ROOT}/tasks
 ```
 
 ---
@@ -336,4 +336,4 @@ Once all prerequisites are met:
 - [Podman Documentation](https://docs.podman.io/)
 - [MCP Specification](https://modelcontextprotocol.io/)
 - [RAG Cortex Setup Guide](servers/rag_cortex/SETUP.md)
-- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/TASKS/backlog/031_implement_task_mcp.md)
+- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tasks/backlog/031_implement_task_mcp.md)

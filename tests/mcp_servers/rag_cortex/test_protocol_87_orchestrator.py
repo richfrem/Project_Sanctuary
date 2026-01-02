@@ -91,7 +91,7 @@ class TestProtocol87Orchestrator:
             mock_ops.list_tasks.return_value = ["Task 1", "Task 2"]
             
             results = mcp_client.route_query(
-                scope="Tasks",
+                scope="tasks",
                 intent="SUMMARIZE",
                 constraints='Status="in-progress"',
                 query_data={}
@@ -158,7 +158,7 @@ class TestProtocol87Orchestrator:
         """Test MCP name mapping."""
         assert ops._get_mcp_name("Protocols") == "Protocol MCP"
         assert ops._get_mcp_name("Living_Chronicle") == "Chronicle MCP"
-        assert ops._get_mcp_name("Tasks") == "Task MCP"
+        assert ops._get_mcp_name("tasks") == "Task MCP"
         assert ops._get_mcp_name("Code") == "Code MCP"
         assert ops._get_mcp_name("ADRs") == "ADR MCP"
         assert ops._get_mcp_name("Unknown") == "Cortex MCP (Vector DB)"

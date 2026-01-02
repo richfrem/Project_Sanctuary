@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** TASKS/2025-12-14-standardize-mcp-tests.md
+**Related Documents:** tasks/2025-12-14-standardize-mcp-tests.md
 
 ---
 

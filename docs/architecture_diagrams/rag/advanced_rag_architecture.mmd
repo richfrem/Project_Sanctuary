@@ -42,7 +42,7 @@ flowchart TB
         subgraph DataStores["Data Stores"]
             ProtocolFiles[("01_PROTOCOLS/<br/>Markdown Files")]
             ChronicleFiles[("00_CHRONICLE/<br/>Markdown Files")]
-            TaskFiles[("TASKS/<br/>Markdown Files")]
+            TaskFiles[("tasks/<br/>Markdown Files")]
             CodeFiles[("Source Code<br/>Python/JS/etc")]
             ADRFiles[("ADRs/<br/>Markdown Files")]
         end
@@ -63,7 +63,7 @@ flowchart TB
     
     Router -- "SCOPE: Protocols" --> ProtocolMCP
     Router -- "SCOPE: Living_Chronicle" --> ChronicleMCP
-    Router -- "SCOPE: Tasks" --> TaskMCP
+    Router -- "SCOPE: tasks" --> TaskMCP
     Router -- "SCOPE: Code" --> CodeMCP
     Router -- "SCOPE: ADRs" --> ADRMCP
     Router -- "SCOPE: mnemonic_cortex<br/>(Fallback)" --> PDR

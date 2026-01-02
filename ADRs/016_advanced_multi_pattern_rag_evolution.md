@@ -1,6 +1,7 @@
 # Advanced Multi-Method Information Retrieval System Evolution
 
-**Status:** accepted
+**Status:** Superseded
+**Superseded By:** ADR 084 (Mnemonic Cortex)
 **Date:** 2025-11-15
 **Deciders:** AI Council (AI System Lead Analysis)
 **Technical Story:** Improve information retrieval system capabilities

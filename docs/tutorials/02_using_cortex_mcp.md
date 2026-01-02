@@ -1,79 +1,147 @@
-# Tutorial: Using the Cortex MCP
+# Cortex Operations Guide
 
-The **Cortex MCP** is the long-term memory of Project Sanctuary. It uses **Retrieval-Augmented Generation (RAG)** to provide your LLM assistant with access to the project's entire history, documentation, and codebase.
+The **Cortex** is the cognitive memory system of Project Sanctuary. It provides RAG (Retrieval-Augmented Generation), learning operations, and soul persistence.
 
-## What is the Cortex?
+## Quick Reference: CLI Commands
 
-Think of the Cortex as a **Living Memory**. It doesn't just store files; it indexes them semantically, allowing you to ask questions in natural language and get answers based on the actual content of your project.
-
-## Querying the Knowledge Base
-
-The most common operation is `cortex_query`. You can ask questions about anything in the project.
-
-**Prompt:**
-> "What is Protocol 101?"
-
-**Tool Call:**
-```python
-cortex_query(
-    query="What is Protocol 101?"
-)
+```bash
+# All commands via cortex_cli.py
+python3 scripts/cortex_cli.py <command> [options]
 ```
 
-**Response:**
-The Cortex will search the indexed documents (like `01_PROTOCOLS/101_...md`) and return the relevant content, which the LLM will use to answer your question accurately.
+| Command | Purpose |
+|---------|---------|
+| `query "text"` | Semantic search |
+| `ingest` | Full index rebuild |
+| `ingest --incremental --hours 24` | Update recent changes |
+| `stats` | Vector DB health check |
+| `debrief --hours 24` | Session learning summary |
+| `snapshot --type seal` | Capture cognitive snapshot |
+| `persist-soul` | Sync to Hugging Face (incremental) |
+| `persist-soul-full` | Full Hugging Face sync |
+| `cache-warmup` | Pre-populate cache |
+| `cache-stats` | Cache efficiency report |
 
-### Advanced Querying
+---
 
-You can control the number of results or enable reasoning mode.
+## 1. RAG Querying
 
-**Prompt:**
-> "Find the 5 most relevant documents about error handling and explain the pattern."
-
-**Tool Call:**
-```python
-cortex_query(
-    query="error handling patterns",
-    max_results=5,
-    reasoning_mode=True
-)
+### Via CLI
+```bash
+python3 scripts/cortex_cli.py query "What is Protocol 101?" --max-results 5
 ```
 
-## Ingesting Knowledge
-
-When you add new documents or change code, the Cortex needs to know.
-
-### Incremental Ingestion (Automatic)
-
-The system is designed to automatically ingest changes when you use tools like `code_write` or `protocol_create`. However, you can force an update.
-
-**Prompt:**
-> "I just added a new ADR. Please update the Cortex."
-
-**Tool Call:**
+### Via MCP Tool
 ```python
-cortex_ingest_incremental()
+cortex_query(query="What is Protocol 101?", max_results=5)
 ```
 
-### Full Re-ingestion (Manual)
+### Advanced Options
+- `--use-cache` - Use semantic cache for faster results
+- `--max-results N` - Limit results (default: 5)
 
-If the memory seems out of sync or corrupted, you can rebuild it. **Warning: This can take time.**
+---
 
-**Prompt:**
-> "Rebuild the entire Cortex memory."
+## 2. Ingestion
 
-**Tool Call:**
-```python
-cortex_ingest_full(purge_existing=True)
+### Full Rebuild (Purge & Reindex)
+```bash
+python3 scripts/cortex_cli.py ingest
 ```
+
+### Incremental Update
+```bash
+python3 scripts/cortex_cli.py ingest --incremental --hours 24
+```
+
+### Target Specific Directory
+```bash
+python3 scripts/cortex_cli.py ingest --dirs LEARNING ADRs
+```
+
+---
+
+## 3. Learning Operations (Protocol 128)
+
+### Session Debrief
+Generates a learning summary of recent changes:
+```bash
+python3 scripts/cortex_cli.py debrief --hours 24
+```
+Output: `.agent/learning/learning_debrief.md`
+
+### Snapshot Capture
+
+| Type | Purpose |
+|------|---------|
+| `audit` | Red Team technical audit |
+| `learning_audit` | Cognitive learning audit |
+| `seal` | Final session seal |
+
+```bash
+# Learning audit
+python3 scripts/cortex_cli.py snapshot --type learning_audit
+
+# Final seal
+python3 scripts/cortex_cli.py snapshot --type seal
+```
+
+---
+
+## 4. Soul Persistence (ADR 079/081)
+
+Broadcasts cognitive state to Hugging Face for AI Commons.
+
+### Incremental (Append)
+```bash
+python3 scripts/cortex_cli.py persist-soul
+```
+- Appends 1 record to `data/soul_traces.jsonl`
+- Uploads snapshot to `lineage/` folder
+
+### Full Sync (Regenerate)
+```bash
+python3 scripts/cortex_cli.py persist-soul-full
+```
+- Regenerates entire JSONL from all project files
+- Full deploy to Hugging Face dataset
+
+---
+
+## 5. Cache Operations
+
+### Pre-populate Cache
+```bash
+python3 scripts/cortex_cli.py cache-warmup
+```
+
+### Check Cache Stats
+```bash
+python3 scripts/cortex_cli.py cache-stats
+```
+
+---
+
+## 6. Health & Diagnostics
+
+### Vector DB Statistics
+```bash
+python3 scripts/cortex_cli.py stats
+python3 scripts/cortex_cli.py stats --samples --sample-count 10
+```
+
+---
 
 ## Best Practices
 
-*   **Ask "What", not just "Where"**: Instead of "Where is the config file?", ask "How do I configure the server?". Cortex understands concepts.
-*   **Keep Docs Updated**: Cortex is only as good as your documentation. Write clear READMEs and docstrings.
-*   **Use Specific Terms**: Using unique project terms (like "Chronicle", "Forge") helps Cortex find the exact right context.
+1. **Query semantically** - Ask "How do I configure X?" not "Where is config?"
+2. **Run debrief before ending sessions** - Captures learning state
+3. **Use incremental ingest** - Faster than full rebuild
+4. **Persist soul after major work** - Maintains cognitive continuity
 
-## Next Steps
+## Related Documentation
 
-*   Explore the **[Architecture](../mcp/architecture.md)** to see how Cortex fits in.
-*   Check out the **[Council Tutorial](01_using_council_mcp.md)** to see how agents use memory.
+- [Soul Persistence Guide](../operations/SOUL_PERSISTENCE_GUIDE.md)
+- [Epistemic Gating Guide](../architecture/EPISTEMIC_GATING_GUIDE.md)
+- [Manifest Architecture](../architecture/MANIFEST_ARCHITECTURE_GUIDE.md)
+- [Scripts README](../../scripts/README.md)

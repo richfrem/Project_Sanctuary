@@ -194,7 +194,7 @@ pytest tests/mcp_servers/adr/ -v
 ## 4. Task MCP Server
 
 **Domain:** Task management  
-**Directory:** `TASKS/`  
+**Directory:** `tasks/`  
 **Server Code:** [mcp_servers/task/server.py](../../mcp_servers/task/server.py)  
 **README:** [Task MCP README](../../mcp_servers/task/README.md)  
 **Class Diagram:** [diagrams/task_mcp_class.mmd](diagrams/task_mcp_class.mmd)
@@ -518,7 +518,7 @@ pytest tests/mcp_servers/agent_persona/ -v
 - **LLM Client:** Interface to model provider (formerly Substrate)
 - **System Prompt:** Persona definition (formerly Awakening Seed)
 
-**Status:** ✅ Fully functional and tested (Tasks 079, 080 complete)
+**Status:** ✅ Fully functional and tested (tasks 079, 080 complete)
 
 ---
 
