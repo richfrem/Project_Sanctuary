@@ -34,5 +34,6 @@ Every task MUST follow this exact cycle:
 *   **Conflict Resolution**: If a conflict occurs, resolve it on the feature branch (merge `main` into `feat/...`), NOT on `main`.
 
 ### 5. Transition Rule
+*   **Security Scan**: Check for open Dependabot alerts or PRs. If critical, prioritize them as the next task.
 *   **Strategic Inquiry**: precise question: *"Branch merged and deleted. What is the next priority?"*.
 *   **Zero Residue**: Ensure `git branch` shows only `main` before starting the next task.
