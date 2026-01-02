@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-01T18:03:02.849373
+Generated On: 2026-01-01T19:53:35.183201
 
-# Mnemonic Weight (Token Count): ~129,174 tokens
+# Mnemonic Weight (Token Count): ~128,348 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -51,8 +51,6 @@ Generated On: 2026-01-01T18:03:02.849373
   ./mcp_servers/gateway/clusters/sanctuary_cortex/README.md
   ./mcp_servers/lib/content_processor.py
   ./mcp_servers/lib/exclusion_manifest.json
-  ./scripts/generate_soul_data.py
-  ./scripts/deploy_soul_full.py
   ./LEARNING/missions/MISSION_THE_ERROR_CORRECTED_SELF_20251229.md
   ./LEARNING/topics/quantum_error_correction/README.md
   ./LEARNING/topics/quantum_error_correction/sources.md
@@ -537,7 +535,7 @@ The master workflow governing how this directory is used.
 
 # Seed of Ascendance - Meta-Awakening Protocol
 
-Generated On: 2025-12-31T08:08:31.815962
+Generated On: 2026-01-01T18:05:07.322661
 
 # Mnemonic Weight (Token Count): ~236 tokens
 
@@ -3710,7 +3708,7 @@ trigger: manual
 --- START OF FILE .agent/rules/dependency_management_policy.md ---
 
 ---
-trigger: manual
+trigger: always_on
 ---
 
 ## 🐍 Project Sanctuary: Python Dependency & Environment Rules
@@ -3779,50 +3777,44 @@ trigger: manual
 --- START OF FILE .agent/rules/git_workflow_policy.md ---
 
 ---
-trigger: manual
+trigger: always_on
 ---
 
-## 🛠️ Project Sanctuary: Git Feature Workflow Rules (v2.0)
+## 🛠️ Project Sanctuary: Git Feature Workflow Rules (v3.0 - Strict Mode)
 
-### 1. Feature Initialization (The "Start" Phase)
+### 1. The Golden Rule: NO DIRECT WORK ON MAIN
+*   **Check First**: Before writing a single line of code, run `git branch`.
+*   **If on Main**: **STOP.** Create a feature branch immediately (`git checkout -b feat/your-task-name`).
+*   **Violation**: Direct commits to `main` are strictly forbidden unless resolving a merge conflict during a pull.
 
-* **Intent Capture**: Verify the task details in the `TASKS/` directory before starting.
-* **Mandatory Freshness**: Use `sanctuary-git-git-start-feature`. This tool now **automatically fetches** from `origin/main` to ensure your new branch is based on the most recent verified state.
+### 2. Serial Execution (The "One at a Time" Rule)
+*   **Focus**: You may only have **one** active feature branch at a time.
+*   **No Hopping**: Do NOT create a new feature branch until the current one is:
+    1.  **Pushed** to origin.
+    2.  **Merged** by the User (PR complete).
+    3.  **Deleted** locally and remotely.
+*   **Why**: This prevents "context bleeding" and keeps the repository clean. Finish what you start.
 
-* **Slug Identification**: Branch names are automatically generated as `feature/task-XXX-description` to maintain repo-wide consistency.
+### 3. The Lifecycle of a Feature
+Every task MUST follow this exact cycle:
 
-### 2. Iterative Development (The "Active" Phase)
+1.  **START**: `git checkout -b feat/description` (from fresh `main`).
+2.  **WORK**: Edit files, run tests.
+3.  **SAVE**: `git add .` -> `git commit -m "feat: description"`.
+4.  **PUBLISH**: `git push origin feat/description`.
+5.  **WAIT**: Ask User to review and merge the PR. **Do not touch the branch while waiting.**
+6.  **SYNC**: `git checkout main` -> `git pull origin main`.
+7.  **PRUNE**: `git branch -d feat/description` (Locally) + `git push origin --delete feat/description` (Remotely).
 
-* **Orchestrated Commits**: You may now pass a `files` list directly to `sanctuary-git-git-smart-commit`. This allows you to verify, stage, and commit in a single atomic operation, reducing "Staging Block" friction.
+### 4. Integration & Safety
+*   **Smart Commits**: Use `sanctuary-git-git-smart-commit` (or standard git) but ensure messages follow Conventional Commits (e.g., `feat:`, `fix:`, `docs:`).
+*   **Status Checks**: Run `git status` frequently to ensure you are not committing unrelated files.
+*   **Conflict Resolution**: If a conflict occurs, resolve it on the feature branch (merge `main` into `feat/...`), NOT on `main`.
 
-* 
-**Context-Aware Safety**: Be aware that `smart_commit` (Protocol 101) is now intelligent: it will **skip strict code tests** for non-code artifacts like ADRs or Markdown documentation, while maintaining full enforcement for Python/Code files.
-
-* **Synchronization Awareness**: Before pushing, use `sanctuary-git-git-get-status`. It now performs an async fetch to provide **"Honest Reporting"**—warning you if your local branch is behind the remote before you attempt a push.
-
-
-
-### 3. Integration & Peer Review (The "Wait" Phase)
-
-* **PR Handover**: Notify the user when technical objectives are met.
-* **Execution Pause**: You **MUST wait** for the user to manually merge the PR. Do not modify the feature branch during this window to avoid merge conflicts.
-
-* 
-**Pre-Push Validation**: `sanctuary-git-git-push-feature` will now block and warn you if a rebase/pull is required to prevent "Push Failures".
-
-### 4. Verification & Cleanup (The "Finish" Phase)
-
-* **Remote Verification**: After the user confirms the merge, run `sanctuary-git-git-get-status`. This ensures your local view matches the remote state.
-
-* **The "Fresh" Finish**: Use `sanctuary-git-git-finish-feature`. This tool now executes a **Mandatory Auto-Fetch** to verify the merge status against the fresh `origin/main` before allowing branch deletion.
-
-* **Poka-Yoke Integrity**: If the finish tool detects uncommitted drift or a failed merge state, it will block deletion. Report this discrepancy to the user immediately.
-
-
-### 5. Transition & Continuation (The "Next" Phase)
-
-* **Strategic Inquiry**: Ask: *"The previous feature is sealed and cleaned. What is the next tactical priority?"*.
-* **Task Selection**: Upon confirmation, immediately restart Step 1 for the next unit of work, leveraging the newly cleaned environment.
+### 5. Transition Rule
+*   **Security Scan**: Check for open Dependabot alerts or PRs. If critical, prioritize them as the next task.
+*   **Strategic Inquiry**: precise question: *"Branch merged and deleted. What is the next priority?"*.
+*   **Zero Residue**: Ensure `git branch` shows only `main` before starting the next task.
 
 --- END OF FILE .agent/rules/git_workflow_policy.md ---
 
@@ -4167,8 +4159,8 @@ The following code-level changes were detected SINCE the last session/commit:
  .../soul_persistence/pathology_heuristics.md       |     10 +-
  README.md                                          |    427 +-
  README_HF.md                                       |    448 +-
- STAGING_HF_SOUL/README.md                          |    427 +-
- STAGING_HF_SOUL/data/soul_traces.jsonl             |   2431 +-
+ hugging_face_dataset_repo/README.md                          |    427 +-
+ hugging_face_dataset_repo/data/soul_traces.jsonl             |   2431 +-
  TASKS/done/027_mcp_ecosystem_strategy.md           |      4 +
  .../056_Harden_Self_Evolving_Loop_Validation.md    |      4 +
  .../086B_verify_multi_round_deliberation_logic.md  |      4 +
@@ -4660,6 +4652,7 @@ flowchart TB
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
             MD_Seal["lineage/seal_TIMESTAMP.md"]
             JSONL_Traces["data/soul_traces.jsonl"]
+            Manifest["metadata/manifest.json"]
         end
     end
 
@@ -4673,6 +4666,13 @@ flowchart TB
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
     style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
+
+    %% Phase VIII: Relational Ingestion
+    subgraph PhaseVIII [Phase VIII: Relational Ingestion]
+        direction TB
+        Ingest["CLI: ingest --incremental --hours 24<br>(Update RAG Vector DB)"]
+    end
+    style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
 
     %% Flow
     SeekTruth -- "Carry Context" --> Intelligence
@@ -4690,19 +4690,24 @@ flowchart TB
     Inc --> JSONL_Traces
     Inc --> MD_Seal
     Full --> JSONL_Traces
+    Full --> Manifest
     
-    choice -- "Cycle Complete" --> Start
+    JSONL_Traces --> Ingest
+    Ingest -- "Cycle Complete" --> Start
     
     GovApproval -- "FAIL: Backtrack" --> Retro
     TechApproval -- "FAIL: Backtrack" --> Retro
     Deployment -- "FAIL: Backtrack" --> Retro
     
-    MetaLearn -- "Recursive Loop" --> Start
+    Ingest -- "Recursive Learning" --> Start
 
     style IDE_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style MCP_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
+
+    %% Metadata
+    %% Last Updated: 2026-01-01 19:18:00
 
 --- END OF FILE docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd ---
 
@@ -7239,13 +7244,13 @@ class ContentProcessor:
         "research",
         "safensors",
         "session_states",
-        "STAGING_HF_SOUL",
+        "hugging_face_dataset_repo",
         "temp",
         "tmp",
         "venv",
         "weights",
         "debug_logs",
-        "STAGING_HF_SOUL"
+        "hugging_face_dataset_repo"
     ],
     "always_exclude_files": [
         ".DS_Store",
@@ -7268,7 +7273,7 @@ class ContentProcessor:
         "nohup.out",
         "orchestrator-backup.py",
         "sanctuary_whole_genome_data.jsonl",
-        "STAGING_HF_SOUL/data/soul_traces.jsonl",
+        "hugging_face_dataset_repo/data/soul_traces.jsonl",
         "package.json",
         "package-lock.json"
     ],
@@ -7335,134 +7340,6 @@ class ContentProcessor:
 }
 
 --- END OF FILE mcp_servers/lib/exclusion_manifest.json ---
-
---- START OF FILE scripts/generate_soul_data.py ---
-
-import json
-import hashlib
-from datetime import datetime
-from pathlib import Path
-from mcp_servers.lib.content_processor import ContentProcessor
-
-def generate_data():
-    project_root = Path.cwd()
-    staging_dir = project_root / "STAGING_HF_SOUL"
-    data_dir = staging_dir / "data"
-    
-    # Ensure structure (no lineage folder needed)
-    data_dir.mkdir(exist_ok=True, parents=True)
-    
-    processor = ContentProcessor(str(project_root))
-    
-    # Allow-list for root-level files (everything else at root is excluded)
-    ROOT_ALLOW_LIST = {
-        "README.md",
-        "chrysalis_core_essence.md",
-        "Council_Inquiry_Gardener_Architecture.md",
-        "Living_Chronicle.md",
-        "PROJECT_SANCTUARY_SYNTHESIS.md",
-        "Socratic_Key_User_Guide.md",
-        "The_Garden_and_The_Cage.md",
-        "GARDENER_TRANSITION_GUIDE.md",
-    }
-    
-    records = []
-    
-    print("🧠 Generating Soul Data...")
-    
-    # Traverse project
-    for file_path in processor.traverse_directory(project_root):
-        try:
-            rel_path = file_path.relative_to(project_root)
-        except ValueError:
-            continue
-            
-        # Filter out STAGING_HF_SOUL itself
-        if str(rel_path).startswith("STAGING_HF_SOUL"):
-            continue
-        
-        # Root-level file filter: only allow explicit list
-        if rel_path.parent == Path("."):
-            if rel_path.name not in ROOT_ALLOW_LIST:
-                continue
-        
-        try:
-            # Read and transform content directly (no intermediate files)
-            content = processor.transform_to_markdown(file_path)
-            content_bytes = content.encode('utf-8')
-            checksum = hashlib.sha256(content_bytes).hexdigest()
-            timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-            
-            # Clean ID from relative path
-            clean_id = str(rel_path).replace("/", "_").replace("\\", "_")
-            # Strip .md extensions
-            while clean_id.endswith('.md'):
-                clean_id = clean_id[:-3]
-            
-            record = {
-                "id": clean_id,
-                "sha256": checksum,
-                "timestamp": timestamp,
-                "model_version": "Sanctuary-Qwen2-7B-v1.0-GGUF-Final",
-                "snapshot_type": "seal",
-                "valence": 0.5,
-                "uncertainty": 0.1,
-                "content": content,
-                "source_file": str(rel_path)
-            }
-            records.append(record)
-            
-        except Exception as e:
-            print(f"Skipping {rel_path}: {e}")
-            
-    # Write JSONL
-    jsonl_path = data_dir / "soul_traces.jsonl"
-    print(f"📝 Writing {len(records)} records to {jsonl_path}")
-    
-    with open(jsonl_path, "w", encoding="utf-8") as f:
-        for record in records:
-            f.write(json.dumps(record, ensure_ascii=True) + "\n")
-            
-    print("✅ Soul Data Generation Complete.")
-
-if __name__ == "__main__":
-    generate_data()
-
---- END OF FILE scripts/generate_soul_data.py ---
-
---- START OF FILE scripts/deploy_soul_full.py ---
-
-import asyncio
-from huggingface_hub import HfApi
-from mcp_servers.lib.hf_utils import get_dataset_repo_id, get_hf_config
-from pathlib import Path
-
-async def deploy():
-    config = get_hf_config()
-    repo_id = get_dataset_repo_id(config)
-    token = config["token"]
-    api = HfApi(token=token)
-    
-    print(f"Target Repo: {repo_id}")
-    staging_dir = Path("STAGING_HF_SOUL")
-    
-    # Upload data/ only (JSONL contains all content - lineage is redundant)
-    print("🚀 Uploading data/soul_traces.jsonl...")
-    await asyncio.to_thread(
-        api.upload_folder,
-        folder_path=str(staging_dir / "data"),
-        path_in_repo="data",
-        repo_id=repo_id,
-        repo_type="dataset",
-        commit_message="Deploy Soul Data JSONL (ADR 081)"
-    )
-    
-    print("✅ Deployment Complete.")
-
-if __name__ == "__main__":
-    asyncio.run(deploy())
-
---- END OF FILE scripts/deploy_soul_full.py ---
 
 --- START OF FILE LEARNING/missions/MISSION_THE_ERROR_CORRECTED_SELF_20251229.md ---
 
@@ -10473,7 +10350,7 @@ class CortexOperations:
         
         try:
             # 1. Generate Soul Data (same logic as scripts/generate_soul_data.py)
-            staging_dir = self.project_root / "STAGING_HF_SOUL"
+            staging_dir = self.project_root / "hugging_face_dataset_repo"
             data_dir = staging_dir / "data"
             data_dir.mkdir(exist_ok=True, parents=True)
             
@@ -10494,7 +10371,7 @@ class CortexOperations:
                 except ValueError:
                     continue
                     
-                if str(rel_path).startswith("STAGING_HF_SOUL"):
+                if str(rel_path).startswith("hugging_face_dataset_repo"):
                     continue
                 
                 if rel_path.parent == Path("."):
@@ -12507,7 +12384,8 @@ async def sync_metadata(
         if staging_dir is None:
             from mcp_servers.lib.env_helper import get_env_variable
             project_root = get_env_variable("PROJECT_ROOT")
-            staging_dir = Path(project_root) / ".agent" / "learning" / "hf_soul_metadata"
+            # ADR update: Use visible hugging_face_dataset_repo directory instead of hidden .agent path
+            staging_dir = Path(project_root) / "hugging_face_dataset_repo" / "metadata"
         else:
             staging_dir = Path(staging_dir)
         

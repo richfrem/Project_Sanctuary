@@ -65,6 +65,7 @@ flowchart TB
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
             MD_Seal["lineage/seal_TIMESTAMP.md"]
             JSONL_Traces["data/soul_traces.jsonl"]
+            Manifest["metadata/manifest.json"]
         end
     end
 
@@ -78,6 +79,13 @@ flowchart TB
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
     style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
+
+    %% Phase VIII: Relational Ingestion
+    subgraph PhaseVIII [Phase VIII: Relational Ingestion]
+        direction TB
+        Ingest["CLI: ingest --incremental --hours 24<br>(Update RAG Vector DB)"]
+    end
+    style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
 
     %% Flow
     SeekTruth -- "Carry Context" --> Intelligence
@@ -95,16 +103,21 @@ flowchart TB
     Inc --> JSONL_Traces
     Inc --> MD_Seal
     Full --> JSONL_Traces
+    Full --> Manifest
     
-    choice -- "Cycle Complete" --> Start
+    JSONL_Traces --> Ingest
+    Ingest -- "Cycle Complete" --> Start
     
     GovApproval -- "FAIL: Backtrack" --> Retro
     TechApproval -- "FAIL: Backtrack" --> Retro
     Deployment -- "FAIL: Backtrack" --> Retro
     
-    MetaLearn -- "Recursive Loop" --> Start
+    Ingest -- "Recursive Learning" --> Start
 
     style IDE_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style MCP_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
+
+    %% Metadata
+    %% Last Updated: 2026-01-01 19:18:00

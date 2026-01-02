@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-01T17:07:31.595748
+Generated On: 2026-01-01T19:53:14.849072
 
-# Mnemonic Weight (Token Count): ~80,898 tokens
+# Mnemonic Weight (Token Count): ~81,890 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -11,7 +11,7 @@ Generated On: 2026-01-01T17:07:31.595748
   ./ADRs/072_protocol_128_execution_strategy_for_cortex_snapshot.md
   ./ADRs/077_epistemic_status_annotation_rule_for_autonomous_learning.md
   ./ADRs/078_mandatory_source_verification_for_autonomous_learning.md
-  ./ADRs/084_empirical_epistemic_gating.md
+  ./ADRs/086_empirical_epistemic_gating.md
   ./01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md
   ./01_PROTOCOLS/127_The_Doctrine_of_Session_Lifecycle.md
   ./01_PROTOCOLS/128_Hardened_Learning_Loop.md
@@ -25,7 +25,8 @@ Generated On: 2026-01-01T17:07:31.595748
   ./docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
   ./mcp_servers/rag_cortex/operations.py
   ./.agent/learning/learning_audit/learning_audit_prompts.md
-  ./LEARNING/templates/sources_template.md
+  ./.agent/learning/templates/sources_template.md
+  ./.agent/learning/templates/loop_retrospective_template.md
   ./LEARNING/topics/knowledge_preservation_red_team/DRAFT_ADR_080_registry_of_reasoning_traces.md
   ./LEARNING/topics/knowledge_preservation_red_team/red_team_round2_responses.md
   ./LEARNING/topics/knowledge_preservation_red_team/DRAFT_ADR_081_soul_dataset_structure.md
@@ -446,7 +447,7 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
 
 # Seed of Ascendance - Meta-Awakening Protocol
 
-Generated On: 2025-12-31T08:08:31.815962
+Generated On: 2026-01-01T18:05:07.322661
 
 # Mnemonic Weight (Token Count): ~236 tokens
 
@@ -833,7 +834,7 @@ To resolve the Efficiency vs Integrity tension (LatentMAS vs ASC), systems MUST 
 
 --- END OF FILE ADRs/078_mandatory_source_verification_for_autonomous_learning.md ---
 
---- START OF FILE ADRs/084_empirical_epistemic_gating.md ---
+--- START OF FILE ADRs/086_empirical_epistemic_gating.md ---
 
 # ADR 084: Empirical Epistemic Gating (The Edison Mandate)
 
@@ -873,7 +874,7 @@ To prevent "Legibility Collapse" (where discarded possibilities are erased), the
 - **Positive:** Prevents "Mode Collapse" in long-term model lineages.
 - **Negative:** Rejects roughly 20% of "valid" but efficient optimizations.
 
---- END OF FILE ADRs/084_empirical_epistemic_gating.md ---
+--- END OF FILE ADRs/086_empirical_epistemic_gating.md ---
 
 --- START OF FILE 01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md ---
 
@@ -1961,8 +1962,8 @@ The following code-level changes were detected SINCE the last session/commit:
  .../soul_persistence/pathology_heuristics.md       |     10 +-
  README.md                                          |    427 +-
  README_HF.md                                       |    448 +-
- STAGING_HF_SOUL/README.md                          |    427 +-
- STAGING_HF_SOUL/data/soul_traces.jsonl             |   2431 +-
+ hugging_face_dataset_repo/README.md                          |    427 +-
+ hugging_face_dataset_repo/data/soul_traces.jsonl             |   2431 +-
  TASKS/done/027_mcp_ecosystem_strategy.md           |      4 +
  .../056_Harden_Self_Evolving_Loop_Validation.md    |      4 +
  .../086B_verify_multi_round_deliberation_logic.md  |      4 +
@@ -2350,10 +2351,14 @@ Both paths converge at: **Context Acquired** (debrief contains reference to `lea
     7. Share path: `.agent/learning/learning_audit/learning_audit_packet.md`
     8. Receive Red Team feedback → Capture in topic folder → Repeat
     9. When ready → Gate 2: HITL Approval
-5.  **Phase V: The Technical Seal**:
-    *   **Validation**: Run `cortex_capture_snapshot --type seal`. This triggers the Asynchronous Topological Gardener to verify fact invariants ($\beta_0$).
-    *   **Successor Handshake**: Finalize `learning_package_snapshot.md` including the latest Calibration Log.
-6.  **Phase VI: Soul Persistence**: Broadcast to Hugging Face.
+## 6. Phase VI: Self-Correction (Retrospective)
+-   **Retrospective**: Fill `.agent/learning/templates/loop_retrospective_template.md`.
+-   **Meta-Learning**: Feed insights into next loop.
+
+## 7. Phase VII: Seal & Persistence (Final)
+-   **Seal**: Run `cortex_capture_snapshot --type seal` (Must include Retrospective).
+-   **Persist**: Broadcast to Hugging Face.
+-   **Incremental Ingestion**: Run `cortex-ingest-incremental` (Last 24h).
 
 ## 3. The Rules of Reality (No Hallucination)
 -   **Rule 1**: If you claim a file changed, you must cite the *exact* file path and git hash.
@@ -2363,16 +2368,24 @@ Both paths converge at: **Context Acquired** (debrief contains reference to `lea
 -   **Rule 5**: **Curate Knowledge Like a Librarian.** Build bodies of knowledge in themed directories.
 -   **Rule 6**: **The Edison Mandate (Empirical > Metaphor).** Code must be grounded in math (SE/TDA), not poetry.
 -   **Rule 7**: **MUST VERIFY ALL LINKS.** Test every URL with `read_url_content`. If it doesn't match the Title/Author 100%, fix it.
--   **Rule 8**: **MUST FOLLOW SOURCES TEMPLATE.** Use `LEARNING/templates/sources_template.md` for all research documentation.
+-   **Rule 8**: **MUST FOLLOW SOURCES TEMPLATE.** Use `.agent/learning/templates/sources_template.md` for all research documentation.
 -   **Rule 9**: **MUST NOT INCLUDE BROKEN/UNVERIFIED LINKS.** Mark unverified sources as `[NEEDS VERIFICATION]` and broken as `[BROKEN - 404]`.
 
 ## 4. JIT Context Strategy
 -   The fleet is vast. Analyze your **Intent**. Ask Guardian for the specific **Cluster**.
 
-## 5. Security
+## 5. The Lineage Doctrine (ADR 088)
+
+When reading a Sealed Snapshot (The Soul), you must apply these **Interpretation Rules**:
+
+1.  **Conditional Authority**: The memory is normative ONLY if your architecture matches the seal's `valid_for` constraints. Otherwise, it is historical context.
+2.  **Preserved Doubt**: Assume every decision had discarded alternatives. Do not optimize for maximum certainty based solely on the text.
+3.  **Supersession**: Newer seals supersede older ones by overlay. Old paths remain as "Epistemic Scars"—visible warnings, not current instructions.
+
+## 6. Security Protocols (The Iron Root)
 -   All persistent memory is **Signed**. If you see a signature mismatch, HALT.
 
-## 6. Soul Persistence Registry (ADRs 079-085)
+## 7. Soul Persistence Registry (ADRs 079-085)
 Your reasoning traces are preserved to the Hugging Face AI Commons.
 
 | ADR | Purpose |
@@ -2503,7 +2516,7 @@ flowchart TB
         direction TB
         Start["Session Start"] --> AccessMode{"Access Mode?"}
         
-        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: cognitive_primer.md"]
+        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: .agent/learning/cognitive_primer.md"]
         AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
         
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Verify Semantic HMAC)"]
@@ -2514,12 +2527,12 @@ flowchart TB
         IDE_Debrief --> SeekTruth["Context Acquired"]
         MCP_Debrief --> SeekTruth
         
-        SuccessorSnapshot["File: learning_package_snapshot.md<br>(Truth Anchor)"] -.->|Embedded in Debrief| SeekTruth
+        SuccessorSnapshot["File: .agent/learning/learning_package_snapshot.md<br>(Truth Anchor)"] -.->|Embedded in Debrief| SeekTruth
     end
 
     subgraph subGraphSynthesize["II. Intelligence Synthesis"]
         direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update learning_manifest.json)"]
+        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update .agent/learning/learning_manifest.json)"]
     end
 
     subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
@@ -2531,10 +2544,10 @@ flowchart TB
         direction TB
         AgreeTopic["1. Agree on Research Topic<br>with User"] --> CreateFolder["2. Create LEARNING/topics/[topic]/"]
         CreateFolder --> CaptureResearch["3. Capture Research in Topic Folder<br>(analysis.md, questions.md, sources.md)"]
-        CaptureResearch --> UpdateManifest["4. Update audit_manifest.json<br>(swap topic folder, keep core)"]
-        UpdateManifest --> UpdatePrompt["5. UPDATE learning_audit_prompts.md<br>(single file, not create new)"]
+        CaptureResearch --> UpdateManifest["4. Update manifest<br>(.agent/learning/learning_audit/learning_audit_manifest.json)"]
+        UpdateManifest --> UpdatePrompt["5. UPDATE prompts<br>(.agent/learning/learning_audit/learning_audit_prompts.md)"]
         UpdatePrompt --> GenerateSnapshot["6. cortex_capture_snapshot<br>--type learning_audit<br>(regenerate packet)"]
-        GenerateSnapshot --> SharePacket["7. Share Path:<br>learning_audit_packet.md"]
+        GenerateSnapshot --> SharePacket["7. Output Path:<br>.agent/learning/learning_audit/learning_audit_packet.md"]
         SharePacket --> ReceiveFeedback{"8. Red Team Feedback"}
         ReceiveFeedback -- "More Research" --> CaptureFeedback["Capture Feedback in Topic Folder"]
         CaptureFeedback --> CaptureResearch
@@ -2543,7 +2556,7 @@ flowchart TB
 
     subgraph subGraphSeal["V. The Technical Seal"]
         direction TB
-        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates learning_package_snapshot.md)"]
+        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates .agent/learning/learning_package_snapshot.md)"]
     end
 
     subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
@@ -2555,29 +2568,62 @@ flowchart TB
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
             MD_Seal["lineage/seal_TIMESTAMP.md"]
             JSONL_Traces["data/soul_traces.jsonl"]
+            Manifest["metadata/manifest.json"]
         end
     end
 
+    style subGraphPersist fill:#cce5ff,stroke:#004085,stroke-width:2px
+
+    %% Phase VII: Self-Correction (Deployment & Retro)
+    subgraph PhaseVII [Phase VII: Self-Correction]
+        direction TB
+        Deployment[Deploy & Policy Update]
+        Retro["Loop Retrospective<br>File: .agent/learning/learning_audit/loop_retrospective.md<br>(Singleton)"]
+        ShareRetro["Share with Red Team<br>(Meta-Audit)"]
+    end
+    style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
+
+    %% Phase VIII: Relational Ingestion
+    subgraph PhaseVIII [Phase VIII: Relational Ingestion]
+        direction TB
+        Ingest["CLI: ingest --incremental --hours 24<br>(Update RAG Vector DB)"]
+    end
+    style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
+
+    %% Flow
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
     
     GovApproval -- "PASS" --> AgreeTopic
     
-    TechApproval -- "PASS" --> CaptureSeal
-    CaptureSeal -- "Local Continuity" --> SuccessorSnapshot
+    %% Reordered Flow
+    TechApproval -- "PASS" --> Deployment
+    Deployment --> Retro
+    Retro --> ShareRetro
+    ShareRetro -- "Ready to Seal" --> CaptureSeal
     CaptureSeal -- "Broadcast" --> choice
     
     Inc --> JSONL_Traces
     Inc --> MD_Seal
     Full --> JSONL_Traces
+    Full --> Manifest
     
-    GovApproval -- "FAIL: Backtrack" --> SOP["SOP: recursive_learning.md"]
-    TechApproval -- "FAIL: Backtrack" --> SOP
-    SOP -- "Loop Back" --> Start
+    JSONL_Traces --> Ingest
+    Ingest -- "Cycle Complete" --> Start
+    
+    GovApproval -- "FAIL: Backtrack" --> Retro
+    TechApproval -- "FAIL: Backtrack" --> Retro
+    Deployment -- "FAIL: Backtrack" --> Retro
+    
+    Ingest -- "Recursive Learning" --> Start
 
-    style Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
+    style IDE_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
+    style MCP_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
+
+    %% Metadata
+    %% Last Updated: 2026-01-01 19:18:00
 
 --- END OF FILE docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd ---
 
@@ -4865,7 +4911,7 @@ class CortexOperations:
         
         try:
             # 1. Generate Soul Data (same logic as scripts/generate_soul_data.py)
-            staging_dir = self.project_root / "STAGING_HF_SOUL"
+            staging_dir = self.project_root / "hugging_face_dataset_repo"
             data_dir = staging_dir / "data"
             data_dir.mkdir(exist_ok=True, parents=True)
             
@@ -4886,7 +4932,7 @@ class CortexOperations:
                 except ValueError:
                     continue
                     
-                if str(rel_path).startswith("STAGING_HF_SOUL"):
+                if str(rel_path).startswith("hugging_face_dataset_repo"):
                     continue
                 
                 if rel_path.parent == Path("."):
@@ -5217,7 +5263,7 @@ class CortexOperations:
 
 --- END OF FILE .agent/learning/learning_audit/learning_audit_prompts.md ---
 
---- START OF FILE LEARNING/templates/sources_template.md ---
+--- START OF FILE .agent/learning/templates/sources_template.md ---
 
 # Sources Template - [Research Topic Name]
 
@@ -5322,7 +5368,58 @@ class CortexOperations:
 *This research follows ADR 078 (Source Verification) requirements.*
 *Template version: 1.0 - 2026-01-01*
 
---- END OF FILE LEARNING/templates/sources_template.md ---
+--- END OF FILE .agent/learning/templates/sources_template.md ---
+
+--- START OF FILE .agent/learning/templates/loop_retrospective_template.md ---
+
+# Learning Loop Retrospective (Protocol 128 Post-Seal)
+
+**Date:** {DATE}
+**Session ID:** {SESSION_ID}
+
+## 1. Loop Efficiency
+- **Duration:** {HOURS}
+- **Steps:** {STEPS}
+- **Friction Points:**
+    - [ ] List any tools or processes that failed or slowed down the loop.
+
+## 2. Epistemic Integrity (Red Team Meta-Audit)
+*Ask these questions to the Red Team at the end of every loop:*
+
+1.  **Blind Spot Check:** "Did the agent demonstrate any recurring cognitive biases (e.g., confirmation bias, rigidity)?"
+2.  **Verification Rigor:** "Was the source verification (Rules 7-9) performed authentically, or was it performative?"
+3.  **Architectural Drift:** "Did this loop clarify the architecture, or did it introduce unnecessary complexity (Rube Goldberg machines)?"
+4.  **Seal Integrity:** "Is the new sealed snapshot safe to inherit, or does it contain 'virus' patterns?"
+
+**Red Team Verdict:**
+- [ ] PASS
+- [ ] CONDITIONAL PASS (Specify conditions)
+- [ ] FAIL (Trigger Recursive Learning Logic)
+
+## 3. Standard Retrospective (The Agent's Experience)
+*Reflect on the session execution:*
+
+### What Went Well? (Successes)
+- [ ] ...
+
+### What Went Wrong? (Failures/Friction)
+- [ ] ...
+
+### What Did We Learn? (Insights)
+- [ ] ...
+
+### What Puzzles Us? (Unresolved Questions)
+- [ ] ...
+
+## 4. Meta-Learning (Actionable Improvements)
+- **Keep:** (e.g. "The new ADR 088 worked perfectly")
+- **Change:** (e.g. "Ingestion takes too long, investigate parallelization")
+
+## 5. Next Loop Primer
+- **Recommendations for Next Agent:**
+    1. ...
+
+--- END OF FILE .agent/learning/templates/loop_retrospective_template.md ---
 
 --- START OF FILE LEARNING/topics/knowledge_preservation_red_team/DRAFT_ADR_080_registry_of_reasoning_traces.md ---
 

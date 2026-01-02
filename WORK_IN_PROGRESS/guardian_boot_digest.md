@@ -102,7 +102,7 @@ The following code-level changes were detected SINCE the last session/commit:
  .../soul_persistence/pathology_heuristics.md       |      10 +-
  README.md                                          |     427 +-
  README_HF.md                                       |     448 +-
- STAGING_HF_SOUL/README.md                          |     427 +-
+ hugging_face_dataset_repo/README.md                          |     427 +-
  TASKS/todo/154_mermaid_rationalization.md          |      69 +-
  .../gardener_protocol37_experiment/README.md       |      30 +-
  docs/PODMAN_OPERATIONS_GUIDE.md                    |      46 +-

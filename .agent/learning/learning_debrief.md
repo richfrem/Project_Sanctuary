@@ -57,8 +57,8 @@ The following code-level changes were detected SINCE the last session/commit:
  .../soul_persistence/pathology_heuristics.md       |     10 +-
  README.md                                          |    427 +-
  README_HF.md                                       |    448 +-
- STAGING_HF_SOUL/README.md                          |    427 +-
- STAGING_HF_SOUL/data/soul_traces.jsonl             |   2431 +-
+ hugging_face_dataset_repo/README.md                          |    427 +-
+ hugging_face_dataset_repo/data/soul_traces.jsonl             |   2431 +-
  TASKS/done/027_mcp_ecosystem_strategy.md           |      4 +
  .../056_Harden_Self_Evolving_Loop_Validation.md    |      4 +
  .../086B_verify_multi_round_deliberation_logic.md  |      4 +

@@ -2280,7 +2280,7 @@ class CortexOperations:
         
         try:
             # 1. Generate Soul Data (same logic as scripts/generate_soul_data.py)
-            staging_dir = self.project_root / "STAGING_HF_SOUL"
+            staging_dir = self.project_root / "hugging_face_dataset_repo"
             data_dir = staging_dir / "data"
             data_dir.mkdir(exist_ok=True, parents=True)
             
@@ -2301,7 +2301,7 @@ class CortexOperations:
                 except ValueError:
                     continue
                     
-                if str(rel_path).startswith("STAGING_HF_SOUL"):
+                if str(rel_path).startswith("hugging_face_dataset_repo"):
                     continue
                 
                 if rel_path.parent == Path("."):

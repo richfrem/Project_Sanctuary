@@ -278,7 +278,8 @@ async def sync_metadata(
         if staging_dir is None:
             from mcp_servers.lib.env_helper import get_env_variable
             project_root = get_env_variable("PROJECT_ROOT")
-            staging_dir = Path(project_root) / ".agent" / "learning" / "hf_soul_metadata"
+            # ADR update: Use visible hugging_face_dataset_repo directory instead of hidden .agent path
+            staging_dir = Path(project_root) / "hugging_face_dataset_repo" / "metadata"
         else:
             staging_dir = Path(staging_dir)
         
