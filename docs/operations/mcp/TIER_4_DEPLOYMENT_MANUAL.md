@@ -7,9 +7,9 @@
 
 ## 🏛️ System Architecture
 
-![gateway_testing_architecture](docs/architecture_diagrams/system/gateway_testing_architecture.png)
+![gateway_testing_architecture](../../architecture_diagrams/system/gateway_testing_architecture.png)
 
-*[Source: gateway_testing_architecture.mmd](docs/architecture_diagrams/system/gateway_testing_architecture.mmd)*
+*[Source: gateway_testing_architecture.mmd](../../architecture_diagrams/system/gateway_testing_architecture.mmd)*
 
 ---
 

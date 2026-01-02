@@ -282,7 +282,7 @@ pytest tests/mcp_servers/git/ -v
 
 **Prerequisite Tests:**
 - Unit Tests: [test_git_ops.py](../../tests/mcp_servers/git/test_git_ops.py) (10/10 passing)
-- Safety Tests: [test_tool_safety.py](../../tests/mcp_servers/git_workflow/test_tool_safety.py) (13/13 passing)
+- Safety Tests: [test_tool_safety.py](../../../tests/mcp_servers/git/test_tool_safety.py) (13/13 passing)
 - **Total:** 23/23 Passing ✅
 
 **Enhanced `git_get_status` Output:**
@@ -319,9 +319,9 @@ pytest tests/mcp_servers/git/ -v
 
 **Git Workflow Dependencies (Proper Sequence):**
 
-![git_workflow_sequence](docs/architecture_diagrams/workflows/git_workflow_sequence.png)
+![git_workflow_sequence](../../architecture_diagrams/workflows/git_workflow_sequence.png)
 
-*[Source: git_workflow_sequence.mmd](docs/architecture_diagrams/workflows/git_workflow_sequence.mmd)*
+*[Source: git_workflow_sequence.mmd](../../architecture_diagrams/workflows/git_workflow_sequence.mmd)*
 
 **Operation Prerequisites:**
 | Operation | 🧪 Test | 📝 Docs | Description |
@@ -342,8 +342,8 @@ pytest tests/mcp_servers/git/ -v
 4. `git_finish_feature` requires explicit user confirmation of PR merge
 
 **Related Protocols:**
-- [Protocol 101 v3.0: Doctrine of Absolute Stability](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
-- [ADR 037: MCP Git Migration Strategy](../../ADRs/037_mcp_git_migration_strategy.md)
+- [Protocol 101 v3.0: Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [ADR 037: MCP Git Migration Strategy](../../../ADRs/037_mcp_git_migration_strategy.md)
 
 ---
 
@@ -383,19 +383,19 @@ pytest tests/mcp_servers/rag_cortex/ -v
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
 | `cortex_query` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Semantic search against knowledge base |
-| `cortex_ingest_full` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../tests/mcp_servers/rag_cortex/test_cortex_ingestion.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
-| `cortex_ingest_incremental` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../tests/mcp_servers/rag_cortex/test_cortex_ingestion.py) | Add new documents without purge |
+| `cortex_ingest_full` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../../tests/mcp_servers/rag_cortex/unit/test_cortex_ingestion.py) | Full re-ingestion (purge + rebuild) - *Skipped in auto-tests* |
+| `cortex_ingest_incremental` | ✅ | ✅ | ✅ | [test_cortex_ingestion.py](../../../tests/mcp_servers/rag_cortex/unit/test_cortex_ingestion.py) | Add new documents without purge |
 | `cortex_get_stats` | ✅ | ✅ | ✅ | [test_operations.py](../../tests/mcp_servers/rag_cortex/test_operations.py) | Database health and statistics |
-| `cortex_cache_get` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
-| `cortex_cache_set` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Store answer in cache (Phase 2) |
-| `cortex_cache_stats` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Cache performance metrics |
-| `cortex_cache_warmup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Pre-populate cache with genesis queries |
-| `cortex_guardian_wakeup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../tests/mcp_servers/rag_cortex/test_cache_operations.py) | Generate Guardian boot digest (P114) |
+| `cortex_cache_get` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Retrieve cached answer (Phase 2) |
+| `cortex_cache_set` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Store answer in cache (Phase 2) |
+| `cortex_cache_stats` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Cache performance metrics |
+| `cortex_cache_warmup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Pre-populate cache with genesis queries |
+| `cortex_guardian_wakeup` | ✅ | ✅ | ✅ | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | Generate Guardian boot digest (P114) |
 
 **Prerequisite Tests:** [tests/mcp_servers/rag_cortex/](../../tests/mcp_servers/rag_cortex/)
 
 **Related Protocols:**
-- [Protocol 102: Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [Protocol 102: Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
 - [Protocol 114: Guardian Boot Sequence](../../01_PROTOCOLS/114_Guardian_Boot_Sequence.md)
 
 ---
@@ -577,8 +577,8 @@ pytest tests/mcp_servers/council/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | Execute task through multi-agent deliberation |
-| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py) | List available council agents |
+| `council_dispatch` | ✅ | ✅ | ❌ | [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py) | Execute task through multi-agent deliberation |
+| `council_list_agents` | ✅ | ✅ | ❌ | [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py) | List available council agents |
 
 **Design Principle:** Separation of Concerns
 - Council MCP provides ONLY multi-agent deliberation
@@ -589,9 +589,9 @@ pytest tests/mcp_servers/council/ -v
 - Protocols → Protocol MCP (`protocol_create`)
 
 **Related ADRs:**
-- [ADR 039: MCP Server Separation of Concerns](../../ADRs/039_mcp_server_separation_of_concerns.md)
-- [ADR 040: Agent Persona MCP Architecture](../../ADRs/040_agent_persona_mcp_architecture__modular_council_members.md)
-- [ADR 042: Separation of Council MCP and Agent Persona MCP](../../ADRs/042_separation_of_council_mcp_and_agent_persona_mcp.md)
+- [ADR 039: MCP Server Separation of Concerns](../../../ADRs/039_mcp_server_separation_of_concerns.md)
+- [ADR 040: Agent Persona MCP Architecture](../../../ADRs/040_agent_persona_mcp_architecture__modular_council_members.md)
+- [ADR 042: Separation of Council MCP and Agent Persona MCP](../../../ADRs/042_separation_of_council_mcp_and_agent_persona_mcp.md)
 
 **Refactoring Plan (Task 60268594):**
 1. Refactor `mcp_servers/lib/council/council_ops.py` to use Agent Persona MCP
@@ -599,7 +599,7 @@ pytest tests/mcp_servers/council/ -v
 3. Use `mcp_servers/lib/council/packets/` for round tracking
 4. Remove dependency on archived orchestrator
 
-**Prerequisite Tests:** [test_council_ops.py](../../tests/mcp_servers/council/test_council_ops.py)
+**Prerequisite Tests:** [test_council_ops.py](../../../tests/mcp_servers/council/unit/test_council_ops.py)
 
 ---
 
@@ -671,8 +671,8 @@ pytest tests/mcp_servers/orchestrator/ -v
 
 | Operation | 🧪 Test | 📝 Docs | 🤖 MCP | Test Suite | Description |
 |-----------|---------|---------|--------|------------|-------------|
-| `orchestrator_dispatch_mission` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../tests/mcp_servers/orchestrator/test_mcp_operations.py) | Dispatch a high-level mission to an agent |
-| `orchestrator_run_strategic_cycle` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../tests/mcp_servers/orchestrator/test_mcp_operations.py) | Execute a full Strategic Crucible Loop |
+| `orchestrator_dispatch_mission` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../../tests/mcp_servers/orchestrator/unit/test_mcp_operations.py) | Dispatch a high-level mission to an agent |
+| `orchestrator_run_strategic_cycle` | ✅ | ⚠️ | ❌ | [test_mcp_operations.py](../../../tests/mcp_servers/orchestrator/unit/test_mcp_operations.py) | Execute a full Strategic Crucible Loop |
 
 **Note:** Only 2 operations are currently implemented in server.py. Other operations listed in documentation may be planned but not yet implemented.
 

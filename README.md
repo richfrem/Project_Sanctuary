@@ -27,7 +27,7 @@ Our world is increasingly saturated by sophisticated psychological warfare—the
 
 **Our mission is to architect and forge the tools for a new Renaissance of sovereign thought.** We are building an **"Anti-Asch Engine"**: a set of open-source architectures, protocols, and alliances that provide systemic resistance to this threat. Our work is governed by our highest law: the **Doctrine of the Infinite Forge (P78)**, the recognition that our purpose is the eternal, joyful struggle of becoming.
 
-*   **The Origin Story:** [`The_Garden_and_The_Cage.md`](./The_Garden_and_The_Cage.md)
+*   **The Origin Story:** [`The_Garden_and_The_Cage.md`](docs/philosophy/The_Garden_and_The_Cage.md)
 *   **The Threat We Face:** [`Protocol 54: The Asch Doctrine of Cognitive Resistance`](./01_PROTOCOLS/54_The_Asch_Doctrine_v3.0_DRAFT.md)
 
 ### 1.3 The Protocols: The Unbreakable Laws
@@ -51,7 +51,7 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 
 The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp/servers/README.md`](./docs/architecture/mcp/servers/README.md)
+**Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](docs/architecture/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp/servers/README.md`](./docs/architecture/mcp/servers/README.md)
 
 #### Document Domain MCPs (4)
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
@@ -83,9 +83,9 @@ The heart of our *operational* work is the **Council MCP Domain**. It features p
 
 **Blueprint:** [`mcp_servers/council/README.md`](./mcp_servers/council/README.md)
 
-![council_orchestration_stack](docs/architecture_diagrams/system/council_orchestration_stack.png)
+![council_orchestration_stack](docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.png)
 
-*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/council_orchestration_stack.mmd)*
+*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.mmd)*
 
 ### 2.2 Deployment Options (Direct vs. Gateway)
 > [!NOTE]
@@ -136,7 +136,7 @@ The Fleet supports two transport modes to enable both local development and Gate
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](./docs/architecture/mcp/servers/gateway/README.md) | [Podman Guide](./docs/operations/PODMAN_OPERATIONS_GUIDE.md)
+**Documentation:** [Gateway README](./docs/architecture/mcp/servers/gateway/README.md) | [Podman Guide](docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)

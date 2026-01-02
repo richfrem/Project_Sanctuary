@@ -42,9 +42,9 @@ Use the official `mcpgateway.translate` module provided by the IBM/ContextForge 
 
 #### Workflow Diagram (Option A)
 
-![MCP SSE Bridge Approach](../../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.png)
+![MCP SSE Bridge Approach](../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.png)
 
-*[Source: mcp_sse_bridge_approach.mmd](../../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.mmd)*
+*[Source: mcp_sse_bridge_approach.mmd](../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.mmd)*
 
 ### Option B: The "Single File" Way (Custom Bridge)
 Implement a self-contained, single-file Python script (`mcp_servers/gateway/bridge.py`) within this project.

@@ -100,6 +100,6 @@ fi
 
 ## 7. References
 
-- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
-- [ADR-037: MCP Git Strategy - Immediate Compliance (Reforged)](../../../ADRs/037_mcp_git_migration_strategy.md)
-- [Council Orchestrator GitOps Documentation](../../../council_orchestrator/docs/howto-commit-command.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [ADR-037: MCP Git Strategy - Immediate Compliance (Reforged)](../../../../ADRs/037_mcp_git_migration_strategy.md)
+- [Council Orchestrator GitOps Documentation](../../../../ARCHIVE/howto-commit-command.md)

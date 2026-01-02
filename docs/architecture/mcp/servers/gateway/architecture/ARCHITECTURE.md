@@ -23,18 +23,18 @@ This document defines the technical architecture for the **Sanctuary MCP Gateway
 
 The architecture consolidates individual tools into risk-based clusters to prevent orchestration fatigue while maintaining security boundaries.
 
-![mcp_gateway_fleet](../../../../architecture_diagrams/system/mcp_gateway_fleet.png)
+![mcp_gateway_fleet](../../../../../architecture_diagrams/system/mcp_gateway_fleet.png)
 
-*[Source: mcp_gateway_fleet.mmd](../../../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
+*[Source: mcp_gateway_fleet.mmd](../../../../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 ```
 
 ### 2.2 Fleet Management (Registration & Discovery)
 
 The management of the Fleet follows a **3-Layer Declarative Pattern**, decoupling design intent from transport and runtime observation. This ensures the system remains resilient even if specific clusters are temporarily unreachable.
 
-![mcp_fleet_resolution_flow](../../../../architecture_diagrams/system/mcp_fleet_resolution_flow.png)
+![mcp_fleet_resolution_flow](../../../../../architecture_diagrams/system/mcp_fleet_resolution_flow.png)
 
-*[Source: mcp_fleet_resolution_flow.mmd](../../../../architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
+*[Source: mcp_fleet_resolution_flow.mmd](../../../../../architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
 
 ### 2.3 Component Responsibilities
 
@@ -106,17 +106,17 @@ services:
 
 The following diagram shows how the Learning Loop (Protocol 125) operates through the Gateway:
 
-![recursive_learning_gateway_flow](docs/architecture_diagrams/workflows/recursive_learning_gateway_flow.png)
+![recursive_learning_gateway_flow](../../../../../architecture_diagrams/workflows/recursive_learning_gateway_flow.png)
 
-*[Source: recursive_learning_gateway_flow.mmd](docs/architecture_diagrams/workflows/recursive_learning_gateway_flow.mmd)*
+*[Source: recursive_learning_gateway_flow.mmd](../../../../../architecture_diagrams/workflows/recursive_learning_gateway_flow.mmd)*
 
 ### 5.2 Cognitive Continuity (P128)
 
 Protocol 128 enforces a "Red Team Gate" and persistent identity via the **Guardian Role**.
 
-![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![protocol_128_learning_loop](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ---
 

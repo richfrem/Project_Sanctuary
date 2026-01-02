@@ -55,5 +55,5 @@ The **Task MCP** server provides programmatic access to task management:
 
 ## Related Documents
 
-- [MASTER_PLAN.md](../tasks/MASTER_PLAN.md) - Project roadmap
-- [Protocol 101](../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) - Tests must pass before commit
+- [MASTER_PLAN.md](../../../tasks/MASTER_PLAN.md) - Project roadmap
+- [Protocol 101](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) - Tests must pass before commit

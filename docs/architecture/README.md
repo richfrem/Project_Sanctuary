@@ -16,17 +16,17 @@ This architecture allows for:
 
 | Server | Domain | Documentation | Status |
 |--------|--------|---------------|--------|
-| **Cortex** | RAG, Memory, Semantic Search | [README](../../mcp_servers/cognitive/cortex/README.md) | ✅ Active |
+| **Cortex** | RAG, Memory, Semantic Search | [README](../../mcp_servers/rag_cortex/README.md) | ✅ Active |
 | **Chronicle** | Historical Records, Truth | [README](../../mcp_servers/chronicle/README.md) | ✅ Active |
 | **Protocol** | Doctrines, Laws | [README](../../mcp_servers/protocol/README.md) | ✅ Active |
 | **Council** | Multi-Agent Orchestration | [README](../../mcp_servers/council/README.md) | ✅ Active |
 | **Agent Persona** | Agent Roles & Dispatch | [README](../../mcp_servers/agent_persona/README.md) | ✅ Active |
-| **Forge** | Fine-Tuning, Model Queries | [README](../../mcp_servers/system/forge/README.md) | ✅ Active |
-| **Git Workflow** | Version Control, P101 v3.0 | [README](../../mcp_servers/system/git_workflow/README.md) | ✅ Active |
+| **Forge** | Fine-Tuning, Model Queries | [README](../../mcp_servers/forge_llm/README.md) | ✅ Active |
+| **Git Workflow** | Version Control, P101 v3.0 | [README](../../mcp_servers/git/README.md) | ✅ Active |
 | **Task** | Task Management | [README](../../mcp_servers/task/README.md) | ✅ Active |
 | **Code** | File I/O, Analysis | [README](../../mcp_servers/code/README.md) | ✅ Active |
 | **Config** | System Configuration | [README](../../mcp_servers/config/README.md) | ✅ Active |
-| **ADR** | Architecture Decisions | [README](../../mcp_servers/document/adr/README.md) | ✅ Active |
+| **ADR** | Architecture Decisions | [README](../../mcp_servers/adr/README.md) | ✅ Active |
 
 ## Fleet Deployment & Management (ADR 065)
 
@@ -79,7 +79,7 @@ See [ADR 066](../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implement
 2.  **Layer 2 (Network):** Service discovery via `mcp_servers/gateway/fleet_resolver.py`.
 3.  **Layer 3 (Logical):** Tool registration via `mcp_servers/gateway/fleet_orchestrator.py` -> `fleet_registry.json`.
 
-For detailed architecture, see the [Gateway Architecture](../architecture/gateway/architecture/ARCHITECTURE.md).
+For detailed architecture, see the [Gateway Architecture](mcp/servers/gateway/architecture/ARCHITECTURE.md).
 
 ### Tool Federation Status (Updated 2025-12-20)
 
@@ -102,12 +102,12 @@ python3 -m mcp_servers.gateway.gateway_client tools -v
 
 ## Development Standards
 
-- **Testing:** All MCP servers must follow the [Testing Standards](../standards/mcp/TESTING_STANDARDS.md).
+- **Testing:** All MCP servers must follow the [Testing Standards](../operations/mcp/TESTING_STANDARDS.md).
 - **Documentation:** Each server must have a README following the standard template.
 - **Architecture:** See [MCP Ecosystem Overview](../architecture/mcp/diagrams/mcp_ecosystem_class.mmd).
 
 ## Related Resources
 
 - [MCP Operations Inventory](../operations/mcp/mcp_operations_inventory.md) - Detailed list of all tools
-- [RAG Strategies](../architecture/cortex/README.md) - Deep dive into Cortex architecture
+- [RAG Strategies](mcp/servers/rag_cortex/README.md) - Deep dive into Cortex architecture
 - [Setup Guide](../operations/mcp/setup_guide.md) - Environment setup

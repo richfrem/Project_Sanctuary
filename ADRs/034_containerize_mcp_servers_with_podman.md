@@ -127,7 +127,7 @@ cd tests/podman
 - [Podman Documentation](https://docs.podman.io/)
 - [Podman Desktop](https://podman-desktop.io/)
 - [MCP Specification](https://modelcontextprotocol.io/)
-- [Task #031: Implement Task MCP](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tasks/backlog/031_implement_task_mcp.md)
+- [Task #031: Implement Task MCP](../tasks/done/031_implement_task_mcp.md)
 
 ---
 

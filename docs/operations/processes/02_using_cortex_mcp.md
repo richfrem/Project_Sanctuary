@@ -141,7 +141,7 @@ python3 scripts/cortex_cli.py stats --samples --sample-count 10
 
 ## Related Documentation
 
-- [Soul Persistence Guide](../operations/SOUL_PERSISTENCE_GUIDE.md)
-- [Epistemic Gating Guide](../architecture/EPISTEMIC_GATING_GUIDE.md)
-- [Manifest Architecture](../architecture/MANIFEST_ARCHITECTURE_GUIDE.md)
+- [Soul Persistence Guide](../hugging_face/SOUL_PERSISTENCE_GUIDE.md)
+- [Epistemic Gating Guide](../../architecture/EPISTEMIC_GATING_GUIDE.md)
+- [Manifest Architecture](../../architecture/MANIFEST_ARCHITECTURE_GUIDE.md)
 - [Scripts README](../../scripts/README.md)

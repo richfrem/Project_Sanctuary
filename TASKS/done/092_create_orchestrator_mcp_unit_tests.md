@@ -108,10 +108,10 @@ pytest tests/mcp_servers/orchestrator/test_orchestrator_ops.py -v
 
 ## Related Documents
 
-- [MCP Operations Inventory](../../docs/architecture/mcp/mcp_operations_inventory.md)
+- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md)
 - [Orchestrator MCP README](../../mcp_servers/orchestrator/README.md)
-- [Task 087: Comprehensive MCP Operations Testing](../in-progress/087_comprehensive_mcp_operations_testing.md)
-- [Test File](../../tests/mcp_servers/orchestrator/test_orchestrator_ops.py)
+- [Task 087: Comprehensive MCP Operations Testing](087_comprehensive_mcp_operations_testing.md)
+- [Test File](../../tests/mcp_servers/orchestrator/unit/test_orchestrator_ops.py)
 
 ## Notes
 

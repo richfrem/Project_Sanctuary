@@ -20,9 +20,9 @@ This document defines the **Model Context Protocol (MCP) ecosystem** for Project
 ### 2.1 Physical Deployment A: Legacy Virtual Environment Deployment
 This deployment mode runs each MCP server as a separate process within a local `.venv`, mapped 1:1 with the logical domains.
 
-![mcp_ecosystem_architecture_v3](docs/architecture_diagrams/system/mcp_ecosystem_architecture_v3.png)
+![mcp_ecosystem_architecture_v3](../../architecture_diagrams/system/mcp_ecosystem_architecture_v3.png)
 
-*[Source: mcp_ecosystem_architecture_v3.mmd](docs/architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd)*
+*[Source: mcp_ecosystem_architecture_v3.mmd](../../architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd)*
 
 ### 2.2 Physical Deployment B: IBM Gateway Fleet Architecture
 The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized services** accessed via a single **IBM ContextForge Gateway**.
@@ -30,9 +30,9 @@ The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized
 - **Reference:** [`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)
 - **Mechanism:** The Gateway acts as a broker, routing client requests to the appropriate backend container via SSE transport.
 
-![mcp_gateway_fleet](docs/architecture_diagrams/system/mcp_gateway_fleet.png)
+![mcp_gateway_fleet](../../architecture_diagrams/system/mcp_gateway_fleet.png)
 
-*[Source: mcp_gateway_fleet.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet.mmd)*
+*[Source: mcp_gateway_fleet.mmd](../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 
 ---
 
@@ -44,9 +44,9 @@ The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create and manage chronicle entries (file operations only)
 
-![chronicle_mcp_server](docs/architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.png)
+![chronicle_mcp_server](../../architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.png)
 
-*[Source: chronicle_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.mmd)*
+*[Source: chronicle_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -98,9 +98,9 @@ git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create, read, update chronicle entries with automatic git commits
 
-![chronicle_ecosystem_context](docs/architecture_diagrams/system/chronicle_ecosystem_context.png)
+![chronicle_ecosystem_context](../../architecture_diagrams/system/chronicle_ecosystem_context.png)
 
-*[Source: chronicle_ecosystem_context.mmd](docs/architecture_diagrams/system/chronicle_ecosystem_context.mmd)*
+*[Source: chronicle_ecosystem_context.mmd](../../architecture_diagrams/system/chronicle_ecosystem_context.mmd)*
 
 **Tool Signatures:**
 
@@ -154,9 +154,9 @@ search_chronicle(query: string) => ChronicleEntry[]
 **Directory:** `01_PROTOCOLS/`  
 **Purpose:** Create, read, update protocols with versioning and changelog
 
-![protocol_mcp_server](docs/architecture_diagrams/system/legacy_mcps/protocol_mcp_server.png)
+![protocol_mcp_server](../../architecture_diagrams/system/legacy_mcps/protocol_mcp_server.png)
 
-*[Source: protocol_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/protocol_mcp_server.mmd)*
+*[Source: protocol_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/protocol_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -218,9 +218,9 @@ archive_protocol(number: number, reason: string) => {
 **Directory:** `ADRs/`  
 **Purpose:** Document architectural decisions with status tracking
 
-![adr_mcp_server](docs/architecture_diagrams/system/legacy_mcps/adr_mcp_server.png)
+![adr_mcp_server](../../architecture_diagrams/system/legacy_mcps/adr_mcp_server.png)
 
-*[Source: adr_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/adr_mcp_server.mmd)*
+*[Source: adr_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/adr_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -271,9 +271,9 @@ search_adrs(query: string) => ADR[]
 **Directory:** `tasks/`  
 **Purpose:** Create, update, track tasks across backlog/active/completed
 
-![task_mcp_server](docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.png)
+![task_mcp_server](../../architecture_diagrams/system/legacy_mcps/task_mcp_server.png)
 
-*[Source: task_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/task_mcp_server.mmd)*
+*[Source: task_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/task_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -338,9 +338,9 @@ search_tasks(query: string) => Task[]
 **Directory:** `mcp_servers/rag_cortex/`  
 **Purpose:** Query vector database, ingest documents, manage knowledge
 
-![rag_cortex_mcp_server](docs/architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.png)
+![rag_cortex_mcp_server](../../architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.png)
 
-*[Source: rag_cortex_mcp_server.mmd](docs/architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.mmd)*
+*[Source: rag_cortex_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.mmd)*
 
 **Tool Signatures:**
 
@@ -916,15 +916,15 @@ class SchemaValidator {
 
 ### Example 1: Protocol Creation with Documentation
 
-![mcp_protocol_creation_workflow](docs/architecture_diagrams/workflows/mcp_protocol_creation_workflow.png)
+![mcp_protocol_creation_workflow](../../architecture_diagrams/workflows/mcp_protocol_creation_workflow.png)
 
-*[Source: mcp_protocol_creation_workflow.mmd](docs/architecture_diagrams/workflows/mcp_protocol_creation_workflow.mmd)*
+*[Source: mcp_protocol_creation_workflow.mmd](../../architecture_diagrams/workflows/mcp_protocol_creation_workflow.mmd)*
 
 ### Example 2: Research → Deliberation → Decision
 
-![mcp_deliberation_workflow](docs/architecture_diagrams/workflows/mcp_deliberation_workflow.png)
+![mcp_deliberation_workflow](../../architecture_diagrams/workflows/mcp_deliberation_workflow.png)
 
-*[Source: mcp_deliberation_workflow.mmd](docs/architecture_diagrams/workflows/mcp_deliberation_workflow.mmd)*
+*[Source: mcp_deliberation_workflow.mmd](../../architecture_diagrams/workflows/mcp_deliberation_workflow.mmd)*
 
 ---
 

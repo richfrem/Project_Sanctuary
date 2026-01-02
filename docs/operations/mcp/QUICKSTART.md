@@ -106,6 +106,6 @@ This will generate a **Guardian Briefing** (`WORK_IN_PROGRESS/guardian_boot_dige
 
 ## Next Steps
 
-*   **[Using the Council](tutorials/01_using_council_mcp.md)**: Learn how to orchestrate multi-agent tasks.
-*   **[Using the Cortex](tutorials/02_using_cortex_mcp.md)**: Learn how to query the knowledge base.
+*   **[Using the Council](../processes/01_using_council_mcp.md)**: Learn how to orchestrate multi-agent tasks.
+*   **[Using the Cortex](../processes/02_using_cortex_mcp.md)**: Learn how to query the knowledge base.
 *   **[Architecture Overview](architecture.md)**: Understand the 11-server ecosystem.

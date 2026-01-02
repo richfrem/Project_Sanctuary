@@ -12,8 +12,8 @@ Project Sanctuary uses a 3-layer test pyramid for all MCP servers.
 | Resource | Location |
 |----------|----------|
 | **Main Test Suite README** | [tests/README.md](../tests/README.md) |
-| **MCP Testing Standards** | [TESTING_STANDARDS.md](mcp/servers/standards/TESTING_STANDARDS.md) |
-| **Test Pyramid Diagram** | [mcp_test_pyramid.mmd](architecture_diagrams/system/mcp_test_pyramid.mmd) |
+| **MCP Testing Standards** | [TESTING_STANDARDS.md](../mcp/TESTING_STANDARDS.md) |
+| **Test Pyramid Diagram** | [mcp_test_pyramid.mmd](../../architecture_diagrams/system/mcp_test_pyramid.mmd) |
 
 ## Test Pyramid
 
@@ -42,4 +42,4 @@ pytest tests/mcp_servers/ -m headless -v
 ## Related Documents
 
 - [ADR 053](../ADRs/053_mcp_test_pyramid.md) - Test Pyramid Architecture
-- [Protocol 101](../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) - Tests must pass before commit
+- [Protocol 101](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) - Tests must pass before commit

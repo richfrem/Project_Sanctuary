@@ -641,7 +641,7 @@ create_chronicle_entry(
 ## References
 
 - [Council Orchestrator README](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/README.md)
-- [Command Schema Documentation](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/council_orchestrator/docs/command_schema.md)
+- [Command Schema Documentation](../../ARCHIVE/docs_council_orchestrator_legacy/command_schema.md)
 - [Protocol 95: Commandable Council](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/01_PROTOCOLS/95_The_Commandable_Council_Protocol.md)
 - [Protocol 101: Unbreakable Commit](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.git/hooks/pre-commit)
 - [Git Safety Rules](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/git_safety_rules.md)

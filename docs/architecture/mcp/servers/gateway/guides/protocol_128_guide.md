@@ -5,9 +5,9 @@ This guide provides an overview of the **Hardened Learning Loop (Protocol 128)**
 ## 🧬 Process Overview
 The system establishes a **Zero-Trust Gate** between the agent's work and the project's permanent memory (RAG DB / Git).
 
-![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![protocol_128_learning_loop](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 > [!IMPORTANT]
 > **HITL (Human-in-the-Loop)**: Protocol 128 v3.5 implements a **Dual-Gate** HITL model. 

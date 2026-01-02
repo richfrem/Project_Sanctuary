@@ -329,15 +329,15 @@ The Gateway proxies all 63 tools from 12 backend servers. See [TOOLS_CATALOG.md]
 
 ### 3.1 Tool Call Flow
 
-![mcp_gateway_tool_call_flow](docs/architecture_diagrams/workflows/mcp_gateway_tool_call_flow.png)
+![mcp_gateway_tool_call_flow](../../../../../architecture_diagrams/workflows/mcp_gateway_tool_call_flow.png)
 
-*[Source: mcp_gateway_tool_call_flow.mmd](docs/architecture_diagrams/workflows/mcp_gateway_tool_call_flow.mmd)*
+*[Source: mcp_gateway_tool_call_flow.mmd](../../../../../architecture_diagrams/workflows/mcp_gateway_tool_call_flow.mmd)*
 
 ### 3.2 Error Handling Flow
 
-![mcp_gateway_error_flow](docs/architecture_diagrams/workflows/mcp_gateway_error_flow.png)
+![mcp_gateway_error_flow](../../../../../architecture_diagrams/workflows/mcp_gateway_error_flow.png)
 
-*[Source: mcp_gateway_error_flow.mmd](docs/architecture_diagrams/workflows/mcp_gateway_error_flow.mmd)*
+*[Source: mcp_gateway_error_flow.mmd](../../../../../architecture_diagrams/workflows/mcp_gateway_error_flow.mmd)*
 
 ---
 

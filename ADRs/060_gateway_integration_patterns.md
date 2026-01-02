@@ -308,9 +308,9 @@ async def handle_tool_call(request: ToolRequest):
 
 ## Fleet of 7 Architecture Diagram
 
-![mcp_gateway_fleet_detailed](docs/architecture_diagrams/system/mcp_gateway_fleet_detailed.png)
+![mcp_gateway_fleet_detailed](../docs/architecture_diagrams/system/mcp_gateway_fleet_detailed.png)
 
-*[Source: mcp_gateway_fleet_detailed.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet_detailed.mmd)*
+*[Source: mcp_gateway_fleet_detailed.mmd](../docs/architecture_diagrams/system/mcp_gateway_fleet_detailed.mmd)*
 
 
 **Legend:**
@@ -663,5 +663,5 @@ Clients choose their mode via config:
 ## Related Documents
 
 - [ADR 058: Decouple IBM Gateway to External Podman Service](058_decouple_ibm_gateway_to_external_podman_service.md)
-- [Task 118: Red Team Analysis](../tasks/backlog/118_red_team_analysis_gateway_server_connection_patter.md)
+- [Task 118: Red Team Analysis](../tasks/done/118_red_team_analysis_gateway_server_connection_patter.md)
 - [Task 119: Deploy Pilot - sanctuary_utils Container](../tasks/backlog/119_deploy_pilot_sanctuary_utils_container.md) (to be created)

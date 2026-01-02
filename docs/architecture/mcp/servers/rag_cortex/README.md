@@ -41,7 +41,7 @@ External LLM → Cortex MCP (Server)
 - **Server Code:** [mcp_servers/rag_cortex/server.py](../../../mcp_servers/rag_cortex/server.py)
 - **Operations:** [mcp_servers/rag_cortex/operations.py](../../../mcp_servers/rag_cortex/operations.py)
 - **Models:** [mcp_servers/rag_cortex/models.py](../../../mcp_servers/rag_cortex/models.py)
-- **Container Service:** [docker-compose.yml](../../../docker-compose.yml) (`vector_db` service)
+- **Container Service:** [docker-compose.yml](../../../../../docker-compose.yml) (`vector_db` service)
 
 ## Setup & Installation
 

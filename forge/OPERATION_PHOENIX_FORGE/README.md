@@ -225,9 +225,9 @@ The Sanctuary AI supports **two interaction modes**:
 
 ## Workflow Overview
 
-![llm_finetuning_pipeline](docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
+![llm_finetuning_pipeline](../../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
 
-*[Source: llm_finetuning_pipeline.mmd](docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd)*
+*[Source: llm_finetuning_pipeline.mmd](../../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd)*
 
 ---
 

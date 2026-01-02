@@ -14,7 +14,7 @@ This section contains detailed technical reference material for the MCP Gateway.
 ## Planned Reference Documentation
 
 ### API Reference
-- **[Gateway Client Library](../../mcp_servers/lib/gateway_client.py)**: Canonical implementation and usage examples for all Gateway endpoints (`/gateways`, `/protocol/initialize`, `/tools`, `/rpc`).
+- **[Gateway Client Library](../../../../../../mcp_servers/gateway/gateway_client.py)**: Canonical implementation and usage examples for all Gateway endpoints (`/gateways`, `/protocol/initialize`, `/tools`, `/rpc`).
 - Gateway MCP API
 - Registry API
 - Health check API

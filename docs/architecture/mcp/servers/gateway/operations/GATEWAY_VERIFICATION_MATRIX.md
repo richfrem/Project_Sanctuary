@@ -30,9 +30,9 @@ This document tracks the **complete verification status** of every operation acr
 
 ### Why Do We Need Both?
 
-![gateway_production_flow](docs/architecture_diagrams/transport/gateway_production_flow.png)
+![gateway_production_flow](../../../../../architecture_diagrams/transport/gateway_production_flow.png)
 
-*[Source: gateway_production_flow.mmd](docs/architecture_diagrams/transport/gateway_production_flow.mmd)*
+*[Source: gateway_production_flow.mmd](../../../../../architecture_diagrams/transport/gateway_production_flow.mmd)*
 
 > **Key:** All MCP-compatible clients speak STDIO to `bridge.py`, which converts to HTTP for the Gateway, which speaks SSE to containers.
 
@@ -40,17 +40,17 @@ This document tracks the **complete verification status** of every operation acr
 
 For direct testing, integration tests, and headless E2E scenarios, you bypass the bridge:
 
-![mcp_testing_dev_paths](docs/architecture_diagrams/transport/mcp_testing_dev_paths.png)
+![mcp_testing_dev_paths](../../../../../architecture_diagrams/transport/mcp_testing_dev_paths.png)
 
-*[Source: mcp_testing_dev_paths.mmd](docs/architecture_diagrams/transport/mcp_testing_dev_paths.mmd)*
+*[Source: mcp_testing_dev_paths.mmd](../../../../../architecture_diagrams/transport/mcp_testing_dev_paths.mmd)*
 
 > **Key:** Testing can use either transport directly without going through the full Gateway stack.
 
 ### Architecture Diagram
 
-![mcp_sse_stdio_transport](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.png)
+![mcp_sse_stdio_transport](../../../../../architecture_diagrams/transport/mcp_sse_stdio_transport.png)
 
-*[Source: mcp_sse_stdio_transport.mmd](docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
+*[Source: mcp_sse_stdio_transport.mmd](../../../../../architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
 
 ### Transport Implementation
 

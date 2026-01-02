@@ -33,9 +33,9 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 - **Verification:** The system will reject any memory artifact that lacks a valid signature or user approval token.
 
 ## Visual Architecture
-![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![protocol_128_learning_loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 

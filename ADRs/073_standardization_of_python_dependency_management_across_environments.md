@@ -170,9 +170,9 @@ We recommend **Option D** (Strict Mapping) enhanced with a **Tiered Policy**:
 
 This is the "Tiered Policy" approach (Option D) to maintain consistency across local Mac and Podman containers.
 
-![python_dependency_workflow](docs/architecture_diagrams/workflows/python_dependency_workflow.png)
+![python_dependency_workflow](../docs/architecture_diagrams/workflows/python_dependency_workflow.png)
 
-*[Source: python_dependency_workflow.mmd](docs/architecture_diagrams/workflows/python_dependency_workflow.mmd)*
+*[Source: python_dependency_workflow.mmd](../docs/architecture_diagrams/workflows/python_dependency_workflow.mmd)*
 
 ### Step-by-Step Process
 

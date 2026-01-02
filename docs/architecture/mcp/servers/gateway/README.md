@@ -34,7 +34,7 @@ Technical architecture and design:
 
 ### ⚙️ [Operations](./operations/)
 Gateway operations and management:
-- **[Gateway Client Library](../../mcp_servers/lib/gateway_client.py)**: Canonical Python tool for registration and RPC calls.
+- **[Gateway Client Library](../../../../../mcp_servers/gateway/gateway_client.py)**: Canonical Python tool for registration and RPC calls.
 - Health checks and monitoring
 - Registry management
 - Tools catalog (72+ tools across 6 clusters)
@@ -104,9 +104,9 @@ The **Hybrid Fleet Strategy** consolidates 10 script-based MCP servers into **8 
 
 This architecture acts as a bridge, where the Gateway service (running in Podman) routes requests to the 6 front-end clusters via SSE.
 
-![mcp_gateway_fleet](docs/architecture_diagrams/system/mcp_gateway_fleet.png)
+![mcp_gateway_fleet](../../../../architecture_diagrams/system/mcp_gateway_fleet.png)
 
-*[Source: mcp_gateway_fleet.mmd](docs/architecture_diagrams/system/mcp_gateway_fleet.mmd)*
+*[Source: mcp_gateway_fleet.mmd](../../../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
 
 **Container Inventory:**
 | # | Container | Type | Role | Port | Front-end? |

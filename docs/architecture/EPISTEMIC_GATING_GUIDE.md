@@ -89,6 +89,6 @@ TDA is computationally expensive. Per ADR 084, it runs **ONLY** at:
 
 ## Related Documents
 
-- [ADR 084: Semantic Entropy and TDA](../ADRs/084_semantic_entropy_tda_gating.md)
-- [ADR 086: Empirical Epistemic Gating](../ADRs/086_empirical_epistemic_gating.md)
-- [Soul Persistence Guide](operations/SOUL_PERSISTENCE_GUIDE.md)
+- [ADR 084: Semantic Entropy and TDA](../../ADRs/084_semantic_entropy_tda_gating.md)
+- [ADR 086: Empirical Epistemic Gating](../../ADRs/086_empirical_epistemic_gating.md)
+- [Soul Persistence Guide](../operations/hugging_face/SOUL_PERSISTENCE_GUIDE.md)

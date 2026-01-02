@@ -35,7 +35,7 @@ We are consolidating the following legacy/redundant files into the modular archi
 
 ## 4. Proposed Architecture
 
-### A. The Engine: [gateway_test_client.py](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/tests/mcp_servers/gateway/integration/gateway_test_client.py)
+### A. The Engine: [gateway_test_client.py](../lib/gateway_test_client.py)
 A class-based modular core that handles:
 - **Environment**: Automatic `.env` discovery.
 - **Session**: Persistent `requests.Session` with retries and SSL bypass for local testing.

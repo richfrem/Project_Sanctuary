@@ -94,9 +94,9 @@ The Council MCP provides ONLY what's unique to the Council. Other capabilities a
 
 ### Execution Flow
 
-![council_execution_flow](docs/architecture_diagrams/workflows/council_execution_flow.png)
+![council_execution_flow](../../docs/architecture_diagrams/workflows/council_execution_flow.png)
 
-*[Source: council_execution_flow.mmd](docs/architecture_diagrams/workflows/council_execution_flow.mmd)*
+*[Source: council_execution_flow.mmd](../../docs/architecture_diagrams/workflows/council_execution_flow.mmd)*
 
 ### Directory Structure
 
@@ -506,17 +506,17 @@ async def deliberate(task: str):
 
 ### Council Orchestrator
 - [Council Orchestrator README](../../council_orchestrator/README.md) - Full orchestrator documentation
-- [Guardian Wakeup Flow](../../council_orchestrator/README_GUARDIAN_WAKEUP.md) - Cache-first situational awareness (Protocol 114)
-- [Command Schema](../../council_orchestrator/docs/command_schema.md) - Complete command format reference
+- [Guardian Wakeup Flow](../../ARCHIVE/docs_council_orchestrator_legacy/README_GUARDIAN_WAKEUP.md) - Cache-first situational awareness (Protocol 114)
+- [Command Schema](../../ARCHIVE/docs_council_orchestrator_legacy/command_schema.md) - Complete command format reference
 
 ### Mnemonic Cortex (RAG System)
-- [RAG Strategies and Doctrine](../../mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md) - RAG architecture and best practices
-- [Cortex Operations Guide](../../mnemonic_cortex/OPERATIONS_GUIDE.md) - Cortex operational procedures
+- [RAG Strategies and Doctrine](../../ARCHIVE/mnemonic_cortex/RAG_STRATEGIES_AND_DOCTRINE.md) - RAG architecture and best practices
+- [Cortex Operations Guide](../../ARCHIVE/mnemonic_cortex/OPERATIONS_GUIDE.md) - Cortex operational procedures
 - [Cortex README](../../mnemonic_cortex/README.md) - Cortex overview and setup
-- [Cortex Vision](../../mnemonic_cortex/VISION.md) - Strategic vision for knowledge systems
+- [Cortex Vision](../../ARCHIVE/mnemonic_cortex/VISION.md) - Strategic vision for knowledge systems
 
 ### MCP Ecosystem
-- [MCP Operations Inventory](../../docs/architecture/mcp/mcp_operations_inventory.md) - Complete MCP operations catalog
+- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md) - Complete MCP operations catalog
 - [Code MCP](../code/README.md) - File operations MCP
 - [Git MCP](../system/git_workflow/README.md) - Version control MCP
 - [Cortex MCP](../cognitive/cortex/README.md) - Memory/RAG MCP
@@ -524,7 +524,7 @@ async def deliberate(task: str):
 - [Task MCP](../task/README.md) - Task management MCP
 
 ### Task Documentation
-- [Task 077: Implement Council MCP](../../tasks/in-progress/077_implement_council_mcp_server.md) - Implementation task
+- [Task 077: Implement Council MCP](../../tasks/done/077_implement_council_mcp_server.md) - Implementation task
 
 ---
 

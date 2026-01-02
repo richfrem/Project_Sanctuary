@@ -267,6 +267,6 @@ For each MCP, run the pytest test harness to validate underlying operations:
 
 ## Related Documents
 
-- [MCP Operations Inventory](../../docs/architecture/mcp/mcp_operations_inventory.md)
+- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md)
 - [Integration Tests](../../tests/integration/)
-- [Testing Standards](../../docs/architecture/mcp/TESTING_STANDARDS.md)
+- [Testing Standards](../../docs/operations/mcp/TESTING_STANDARDS.md)

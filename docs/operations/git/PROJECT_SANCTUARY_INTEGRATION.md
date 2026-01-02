@@ -340,10 +340,10 @@ trivy fs . --security-checks vuln,config,secret
 
 ## References
 
-- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
-- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
-- [ADR-019: Protocol 101 - Cognitive Genome Publishing Architecture (Reforged)](../../ADRs/019_protocol_101_unbreakable_commit.md)
-- [Council Orchestrator GitOps Documentation](../../council_orchestrator/docs/howto-commit-command.md)
+- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
+- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
+- [ADR-019: Protocol 101 - Cognitive Genome Publishing Architecture (Reforged)](../../../ADRs/019_protocol_101_unbreakable_commit.md)
+- [Council Orchestrator GitOps Documentation](../../../ARCHIVE/howto-commit-command.md)
 - [Safety Documentation](https://pyup.io/safety/)
 - [Bandit Documentation](https://bandit.readthedocs.io/)
 - [GitHub Advanced Security](https://docs.github.com/en/code-security)

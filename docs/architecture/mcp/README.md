@@ -57,7 +57,7 @@ architecture/
 | ADR | Title | Summary |
 |-----|-------|---------|
 | [060](../../ADRs/060_gateway_integration_patterns__hybrid_fleet.md) | Hybrid Fleet | 6 clusters + 6 guardrails |
-| [066](../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | Dual-Transport | FastMCP STDIO + SSEServer for Gateway |
+| [066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | Dual-Transport | FastMCP STDIO + SSEServer for Gateway |
 | [076](../../ADRs/076_sse_tool_decorator_pattern.md) | @sse_tool Pattern | Decorator-based tool registration |
 
 ---

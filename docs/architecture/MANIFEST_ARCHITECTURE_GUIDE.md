@@ -93,5 +93,5 @@ for file in processor.traverse_and_filter():
 
 ## Related Documents
 
-- [ADR 083: Manifest-Centric Architecture](../ADRs/083_manifest_centric_architecture.md)
-- [ADR 082: Harmonized Content Processing](../ADRs/082_harmonized_content_processing.md)
+- [ADR 083: Manifest-Centric Architecture](../../ADRs/083_manifest_centric_architecture.md)
+- [ADR 082: Harmonized Content Processing](../../ADRs/082_harmonized_content_processing.md)

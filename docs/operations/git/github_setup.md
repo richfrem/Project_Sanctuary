@@ -282,8 +282,8 @@ npx js-yaml .github/workflows/ci.yml
 - [Git Workflow Guide](./git_workflow.md)
 - [How to Commit Guide](./how_to_commit.md)
 - [Project Sanctuary Integration Guide](./PROJECT_SANCTUARY_INTEGRATION.md)
-- [Protocol 101: The Unbreakable Commit](../../ADRs/019_protocol_101_unbreakable_commit.md)
-- [Council Orchestrator GitOps](../../council_orchestrator/docs/howto-commit-command.md)
+- [Protocol 101: The Unbreakable Commit](../../../ADRs/019_protocol_101_unbreakable_commit.md)
+- [Council Orchestrator GitOps](../../../ARCHIVE/howto-commit-command.md)
 
 ## External Resources
 

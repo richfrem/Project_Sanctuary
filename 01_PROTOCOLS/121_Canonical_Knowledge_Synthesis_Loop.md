@@ -41,9 +41,9 @@ The C-KSL is considered a success when:
 
 #### MCP Architecture Diagram
 
-![council_orchestration_stack](docs/architecture_diagrams/system/council_orchestration_stack.png)
+![council_orchestration_stack](../docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.png)
 
-*[Source: council_orchestration_stack.mmd](docs/architecture_diagrams/system/council_orchestration_stack.mmd)*
+*[Source: council_orchestration_stack.mmd](../docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.mmd)*
 
 ### 3. Continuous Learning Pipeline
 **Status:** `Active` - Automated Knowledge Update Loop Operational
@@ -58,6 +58,6 @@ The system evolves through every interaction via an automated feedback loop:
 4.  **Incremental Ingestion:** The ingestion service automatically detects and indexes new `.md` files into the ChromaDB vector database.
 5.  **Knowledge Availability:** Updated knowledge becomes immediately queryable via RAG, enabling the system to learn from its own execution history in near real-time.
 
-![legacy_learning_loop_orchestrator](docs/architecture_diagrams/workflows/legacy_learning_loop_orchestrator.png)
+![legacy_learning_loop_orchestrator](../docs/architecture_diagrams/workflows/legacy_mcps/legacy_learning_loop_orchestrator.png)
 
-*[Source: legacy_learning_loop_orchestrator.mmd](docs/architecture_diagrams/workflows/legacy_learning_loop_orchestrator.mmd)*
+*[Source: legacy_learning_loop_orchestrator.mmd](../docs/architecture_diagrams/workflows/legacy_mcps/legacy_learning_loop_orchestrator.mmd)*

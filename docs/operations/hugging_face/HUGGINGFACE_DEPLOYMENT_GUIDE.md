@@ -35,9 +35,9 @@ richfrem/Project_Sanctuary_Soul/
 | `persist-soul-full` | Full sync - regenerate entire JSONL |
 
 ### Related Docs
-- [Soul Persistence Guide](operations/SOUL_PERSISTENCE_GUIDE.md)
-- [ADR 079: Soul Persistence](../ADRs/079_soul_persistence_hugging_face.md)
-- [ADR 081: Soul Dataset Structure](../ADRs/081_soul_dataset_structure.md)
+- [Soul Persistence Guide](SOUL_PERSISTENCE_GUIDE.md)
+- [ADR 079: Soul Persistence](../../../ADRs/079_soul_persistence_hugging_face.md)
+- [ADR 081: Soul Dataset Structure](../../../ADRs/081_soul_dataset_structure.md)
 
 ---
 
@@ -67,7 +67,7 @@ ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 ```
 
 ### Related Docs
-- [Forge Operations Guide](operations/FORGE_OPERATIONS_GUIDE.md)
+- [Forge Operations Guide](../forge/FORGE_OPERATIONS_GUIDE.md)
 - [Phoenix Forge README](../forge/OPERATION_PHOENIX_FORGE/README.md)
 - [GGUF Model Card](../forge/OPERATION_PHOENIX_FORGE/huggingface/README.md)
 
@@ -81,4 +81,4 @@ Both require a Hugging Face token:
 HUGGING_FACE_TOKEN='hf_...'
 ```
 
-See [Secrets Configuration](operations/SECRETS_CONFIGURATION.md) for setup.
+See [Secrets Configuration](../processes/SECRETS_CONFIGURATION.md) for setup.

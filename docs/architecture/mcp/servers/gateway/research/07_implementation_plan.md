@@ -1231,9 +1231,9 @@ async def test_concurrent_requests():
 
 ### 4.1 Future State Architecture Diagram
 
-![mcp_gateway_legacy_migration_target](docs/architecture_diagrams/system/mcp_gateway_legacy_migration_target.png)
+![mcp_gateway_legacy_migration_target](../../../../../architecture_diagrams/system/mcp_gateway_legacy_migration_target.png)
 
-*[Source: mcp_gateway_legacy_migration_target.mmd](docs/architecture_diagrams/system/mcp_gateway_legacy_migration_target.mmd)*
+*[Source: mcp_gateway_legacy_migration_target.mmd](../../../../../architecture_diagrams/system/mcp_gateway_legacy_migration_target.mmd)*
 
 ### 4.2 Container Deployment
 

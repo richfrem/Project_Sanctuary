@@ -22,7 +22,7 @@
 
 ## Overview
 
-This guide covers the complete setup and operation of the RAG Cortex MCP server with ChromaDB running as a containerized service via Podman (per [ADR 034](../../../ADRs/034_containerize_mcp_servers_with_podman.md)).
+This guide covers the complete setup and operation of the RAG Cortex MCP server with ChromaDB running as a containerized service via Podman (per [ADR 034](../../../../../ADRs/034_containerize_mcp_servers_with_podman.md)).
 
 The RAG Cortex provides retrieval-augmented generation capabilities for Project Sanctuary, managing the knowledge base, vector embeddings, and semantic search.
 
@@ -34,7 +34,7 @@ The RAG Cortex provides retrieval-augmented generation capabilities for Project 
 
 Before setting up RAG Cortex, ensure you have completed the general MCP prerequisites:
 
-**📖 See: [MCP Server Prerequisites](../../prerequisites.md)**
+**📖 See: [MCP Server Prerequisites](../../../../operations/mcp/prerequisites.md)**
 
 Key requirements:
 - **Podman** installed and running (Podman Desktop recommended)
@@ -98,7 +98,7 @@ podman run --rm hello-world
 # Should download image and show "Hello from Podman!" message
 ```
 
-**If Podman is not installed**, follow the installation guide in [prerequisites.md](../../prerequisites.md#1-podman-containerization):
+**If Podman is not installed**, follow the installation guide in [prerequisites.md](../../../../operations/mcp/prerequisites.md#1-podman-containerization):
 
 ```bash
 # macOS: Download Podman Desktop
@@ -438,7 +438,7 @@ python scripts/cortex_ingest_full.py
 
 ## References
 
-- [ADR 034: Containerize MCP Servers with Podman](../../../ADRs/034_containerize_mcp_servers_with_podman.md)
+- [ADR 034: Containerize MCP Servers with Podman](../../../../../ADRs/034_containerize_mcp_servers_with_podman.md)
 - [Podman Documentation](https://docs.podman.io/)
 - [Podman Desktop](https://podman-desktop.io/)
 - [ChromaDB Documentation](https://docs.trychroma.com/)
