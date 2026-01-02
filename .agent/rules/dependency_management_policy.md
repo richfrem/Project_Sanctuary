@@ -1,5 +1,5 @@
 ---
-trigger: manual
+trigger: always_on
 ---
 
 ## 🐍 Project Sanctuary: Python Dependency & Environment Rules
