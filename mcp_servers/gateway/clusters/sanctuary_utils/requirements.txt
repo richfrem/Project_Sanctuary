@@ -46,7 +46,7 @@ cryptography==46.0.3
     # via
     #   authlib
     #   pyjwt
-cyclopts==4.4.1
+cyclopts==4.4.3
     # via fastmcp
 diskcache==5.6.3
     # via py-key-value-aio
@@ -62,9 +62,9 @@ exceptiongroup==1.3.1
     # via fastmcp
 fakeredis[lua]==2.33.0
     # via pydocket
-fastapi==0.127.0
+fastapi==0.128.0
     # via -r mcp_servers/requirements-core.in
-fastmcp==2.14.1
+fastmcp==2.14.2
     # via -r mcp_servers/requirements-core.in
 h11==0.16.0
     # via
@@ -89,7 +89,7 @@ importlib-metadata==8.7.1
     # via opentelemetry-api
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==6.0.1
+jaraco-context==6.0.2
     # via keyring
 jaraco-functools==4.4.0
     # via keyring
@@ -164,7 +164,7 @@ pydantic-core==2.41.5
     # via pydantic
 pydantic-settings==2.12.0
     # via mcp
-pydocket==0.16.1
+pydocket==0.16.3
     # via fastmcp
 pygments==2.19.2
     # via rich
@@ -211,7 +211,7 @@ shellingham==1.5.4
     # via typer
 sortedcontainers==2.4.0
     # via fakeredis
-sse-starlette==3.0.4
+sse-starlette==3.1.2
     # via
     #   -r mcp_servers/requirements-core.in
     #   mcp
@@ -220,7 +220,7 @@ starlette==0.50.0
     #   fastapi
     #   mcp
     #   sse-starlette
-typer==0.20.1
+typer==0.21.0
     # via pydocket
 typing-extensions==4.15.0
     # via
