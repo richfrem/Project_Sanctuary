@@ -45,6 +45,6 @@ To prevent conflicts with legacy services (8000-8099), the Fleet is pinned to th
 - [x] `SIDE_BY_SIDE_PORTS.md` (Source of Truth)
 - [ ] `docker-compose.yml` (Hardcoded mappings)
 - [ ] `README.md` (Architectural diagrams)
-- [ ] `docs/Protocol_056_MCP_Architecture_Analysis.md` (Diagram update)
+- [ ] `docs/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` (Diagram update)
 - [ ] `docs/PODMAN_STARTUP_GUIDE.md` (Quick reference update)
 - [ ] `.env` and `.env.example` synchronization
