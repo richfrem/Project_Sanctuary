@@ -16,7 +16,7 @@
 - All 125 tests passing across 10 MCPs (out of 12 total)
 - 2 MCPs without complete tests: Orchestrator (in progress), Forge LLM (requires CUDA GPU)
 - Test structure reorganized to `tests/mcp_servers/<name>/`
-- Documentation reorganized to `docs/mcp/servers/<name>/`
+- Documentation reorganized to `docs/architecture/mcp/servers/<name>/`
 - ADR 042 created: Council/Agent Persona separation validated
 
 ✅ **MCP Server Import Fixes Complete (2025-12-03)**
@@ -109,9 +109,9 @@
 | | `reset_state` | None | ✅ | ✅ | ✅ | |
 | | `create_custom` | None | ✅ | ✅ | ✅ | |
 | **Council (2)** | `dispatch` | Agent Persona, Cortex, Protocol, Git | ✅ | ✅ | ✅ | Verified via Python script to bypass UI timeouts |
-| | ↳ *Auditor Chain* | Agent Persona → Forge LLM | ✅ | ✅ | ✅ | [Context Retrieval Workflow](../../docs/mcp/orchestration_workflows.md#workflow-1-context-retrieval-orchestrator---cortex) |
-| | ↳ *Strategist Chain* | Agent Persona → Forge LLM | ✅ | ✅ | ✅ | [Agent Deliberation Workflow](../../docs/mcp/orchestration_workflows.md#workflow-2-agent-deliberation-orchestrator---council---agent) |
-| | ↳ *Coordinator Chain* | Agent Persona → Forge LLM | ✅ | ✅ | ✅ | [Multi-Agent Consensus](../../docs/mcp/orchestration_workflows.md#workflow-4-multi-agent-consensus-council) |
+| | ↳ *Auditor Chain* | Agent Persona → Forge LLM | ✅ | ✅ | ✅ | [Context Retrieval Workflow](../../docs/architecture/mcp/orchestration_workflows.md#workflow-1-context-retrieval-orchestrator---cortex) |
+| | ↳ *Strategist Chain* | Agent Persona → Forge LLM | ✅ | ✅ | ✅ | [Agent Deliberation Workflow](../../docs/architecture/mcp/orchestration_workflows.md#workflow-2-agent-deliberation-orchestrator---council---agent) |
+| | ↳ *Coordinator Chain* | Agent Persona → Forge LLM | ✅ | ✅ | ✅ | [Multi-Agent Consensus](../../docs/architecture/mcp/orchestration_workflows.md#workflow-4-multi-agent-consensus-council) |
 | | `list_agents` | None | ✅ | ✅ | ✅ | 3 agents available |
 | **Orchestrator (2)** | `dispatch_mission` | Council | ✅ | ✅ | ✅ | Verified (dispatched to Kilo) |
 | | ↳ *Council Chain* | Council → Agent Persona | ✅ | ✅ | ✅ | Orch→Council→Agent |
@@ -119,7 +119,7 @@
 | | ↳ *Cortex Ingest Chain* | Cortex → ChromaDB | ✅ | ✅ | ✅ | Orch→Cortex.ingest_incremental |
 | | ↳ *Code Write Chain* | Code MCP | ✅ | ✅ | ✅ | Orch→Code.write |
 | | ↳ *Protocol Update Chain* | Protocol MCP | ✅ | ✅ | ✅ | Orch→Protocol.update |
-| | `run_strategic_cycle` | Council, Cortex | ✅ | ✅ | ✅ | [Strategic Crucible Workflow](../../docs/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction) |
+| | `run_strategic_cycle` | Council, Cortex | ✅ | ✅ | ✅ | [Strategic Crucible Workflow](../../docs/architecture/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction) |
 | **Forge LLM (2)** | `check_model_status` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 | | `query_model` | Ollama | ✅ | ✅ | ✅ | Ollama container verified |
 
@@ -168,7 +168,7 @@ Perform comprehensive testing of all 12 MCP servers after recent changes (loggin
 **Status:** All test harnesses validated and passing
 - **Total Tests:** 125/125 passing across 10 MCPs
 - **Test Structure:** Reorganized to `tests/mcp_servers/<name>/`
-- **Documentation:** Updated in `docs/mcp/mcp_operations_inventory.md`
+- **Documentation:** Updated in `docs/architecture/mcp/mcp_operations_inventory.md`
 
 For each MCP, run the pytest test harness to validate underlying operations:
 
@@ -267,6 +267,6 @@ For each MCP, run the pytest test harness to validate underlying operations:
 
 ## Related Documents
 
-- [MCP Operations Inventory](../../docs/mcp/mcp_operations_inventory.md)
+- [MCP Operations Inventory](../../docs/architecture/mcp/mcp_operations_inventory.md)
 - [Integration Tests](../../tests/integration/)
-- [Testing Standards](../../docs/mcp/TESTING_STANDARDS.md)
+- [Testing Standards](../../docs/architecture/mcp/TESTING_STANDARDS.md)

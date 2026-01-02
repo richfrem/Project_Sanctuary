@@ -39,7 +39,7 @@
 
 - [ ] **Orchestrator Chain Verification**
   - Verify `mcp_orchestrator_dispatch` calling Cortex/Code/Protocol. Document results in `tasks/in-progress/087_comprehensive_mcp_operations_testing.md`
-4. Update `docs/mcp/mcp_operations_inventory.md` with test results
+4. Update `docs/architecture/mcp/mcp_operations_inventory.md` with test results
 
 **Reference:** See `tasks/in-progress/087_comprehensive_mcp_operations_testing.md` for detailed testing checklist
 
@@ -57,7 +57,7 @@
 
 **Files to Review:**
 - `README.md` (main project README)
-- `docs/mcp/mcp_operations_inventory.md` (reference for current MCP list)
+- `docs/architecture/mcp/mcp_operations_inventory.md` (reference for current MCP list)
 
 ---
 
@@ -81,13 +81,13 @@
 - Multiple test files in `tests/mcp_servers/rag_cortex/`
 
 #### 1. MCP Documentation Reorganization ✅ COMPLETE
-   - **Created:** `docs/mcp/servers/` structure with 12 subdirectories
+   - **Created:** `docs/architecture/mcp/servers/` structure with 12 subdirectories
    - **Added:** Usage-focused READMEs for all 12 MCP servers
    - **Moved:** Server-specific docs to appropriate subfolders
      - Council: 6 orchestration docs
      - RAG Cortex: 6 cortex docs + analysis/
    - **Deleted:** Obsolete `port_registry.md` (stdio transport, not HTTP)
-   - **Two-README Strategy:** Implementation (in `mcp_servers/`) vs Usage (in `docs/mcp/servers/`)
+   - **Two-README Strategy:** Implementation (in `mcp_servers/`) vs Usage (in `docs/architecture/mcp/servers/`)
 
 #### 2. MCP Server Refactoring ✅ COMPLETE
    - **Consolidated:** `mcp_servers/lib/` into individual server directories
@@ -102,7 +102,7 @@
    - **Moved:** All MCP tests to `tests/mcp_servers/<name>/` structure
    - **Fixed:** Import paths across all test files
    - **Status:** 125/125 tests passing across 10 MCPs
-   - **Perfect Alignment:** `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/mcp/servers/`
+   - **Perfect Alignment:** `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 
 #### 4. Architectural Validation ✅ COMPLETE
    - **Created:** ADR 042 - Separation of Council MCP and Agent Persona MCP

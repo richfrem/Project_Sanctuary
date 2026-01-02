@@ -548,10 +548,10 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - `docs/operations/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
 
 ### MCP Server Documentation
-- **Code MCP:** `docs/mcp/servers/code/README.md`
-- **RAG Cortex MCP:** `docs/mcp/servers/rag_cortex/README.md`
-- **Chronicle MCP:** `docs/mcp/servers/chronicle/README.md`
-- **Protocol MCP:** `docs/mcp/servers/protocol/README.md`
+- **Code MCP:** `docs/architecture/mcp/servers/code/README.md`
+- **RAG Cortex MCP:** `docs/architecture/mcp/servers/rag_cortex/README.md`
+- **Chronicle MCP:** `docs/architecture/mcp/servers/chronicle/README.md`
+- **Protocol MCP:** `docs/architecture/mcp/servers/protocol/README.md`
 
 ### Utilities
 - **Code Snapshot Tool:** `scripts/capture_code_snapshot.py` - Share learning artifacts with web-based LLMs

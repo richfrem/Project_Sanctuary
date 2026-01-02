@@ -1,0 +1,241 @@
+{
+    "mcpServers": {
+        "git_workflow": {
+            "displayName": "Git Workflow MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.git.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>",
+                "REPO_PATH": "<ABSOLUTE PROJECT PATH>",
+                "GIT_BASE_DIR": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "task": {
+            "displayName": "Task MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.task.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "adr": {
+            "displayName": "ADR MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.adr.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "chronicle": {
+            "displayName": "Chronicle MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.chronicle.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "protocol": {
+            "displayName": "Protocol MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.protocol.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "rag_cortex": {
+            "displayName": "RAG Cortex MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.rag_cortex.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>",
+                "CHROMA_HOST": "localhost",
+                "CHROMA_PORT": "8000",
+                "CHROMA_CHILD_COLLECTION": "child_chunks_v5",
+                "CHROMA_PARENT_STORE": "parent_documents_v5",
+                "CHROMA_DATA_PATH": ".vector_data"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "council": {
+            "displayName": "Council MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.council.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "agent_persona": {
+            "displayName": "Agent Persona MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.agent_persona.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "forge_llm": {
+            "displayName": "Forge LLM MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.forge_llm.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "config": {
+            "displayName": "Config MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.config.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "code": {
+            "displayName": "Code MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.code.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "orchestrator": {
+            "displayName": "Orchestrator MCP",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.orchestrator.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>",
+            "disabled": true
+        },
+        "sanctuary_gateway": {
+            "displayName": "Sanctuary Gateway (88 Federated Tools)",
+            "command": "<ABSOLUTE PROJECT PATH>/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.gateway.bridge"
+            ],
+            "env": {
+                "PROJECT_ROOT": "<ABSOLUTE PROJECT PATH>/Project_Sanctuary",
+                "PYTHONPATH": "<ABSOLUTE PROJECT PATH>/Project_Sanctuary",
+                "MCPGATEWAY_BEARER_TOKEN": "<YOUR MCP GATEWAY BEARER TOKEN>"
+            },
+            "cwd": "<ABSOLUTE PROJECT PATH>/Project_Sanctuary",
+            "disabled": false,
+            "disabledTools": [
+                "// === Utils Cluster (17 tools) - Already Disabled ===",
+                "utils-time-get-current-time",
+                "utils-time-get-timezone-info",
+                "utils-calculator-calculate",
+                "utils-calculator-add",
+                "utils-calculator-multiply",
+                "utils-calculator-subtract",
+                "utils-calculator-divide",
+                "utils-uuid-generate-uuid4",
+                "utils-uuid-validate-uuid",
+                "utils-uuid-generate-uuid1",
+                "utils-string-to-upper",
+                "utils-string-trim",
+                "utils-string-to-lower",
+                "utils-string-reverse",
+                "utils-gateway-get-capabilities",
+                "utils-string-replace",
+                "utils-string-word-count",
+                "// === Persona System (5 tools) - Rarely Used ===",
+                "sanctuary-domain-persona-dispatch",
+                "sanctuary-domain-persona-create-custom",
+                "sanctuary-domain-persona-reset-state",
+                "sanctuary-domain-persona-get-state",
+                "sanctuary-domain-persona-list-roles",
+                "// === Code Quality Tools (4 tools) - Manual CLI Better ===",
+                "sanctuary-filesystem-code-analyze",
+                "sanctuary-filesystem-code-lint",
+                "sanctuary-filesystem-code-format",
+                "sanctuary-filesystem-code-check-tools",
+                "// === Workflow Management (2 tools) - Static Files ===",
+                "sanctuary-domain-read-workflow",
+                "sanctuary-domain-get-available-workflows",
+                "// === Config Management (4 tools) - Manual Editing ===",
+                "sanctuary-domain-config-write",
+                "sanctuary-domain-config-delete",
+                "sanctuary-domain-config-read",
+                "sanctuary-domain-config-list",
+                "// === Git Flow (2 tools) - Direct Commits ===",
+                "sanctuary-git-git-start-feature",
+                "sanctuary-git-git-finish-feature",
+                "// === Sanctuary Model (2 tools) - If Not Using Fine-Tuned ===",
+                "sanctuary-cortex-check-sanctuary-model-status",
+                "sanctuary-cortex-query-sanctuary-model",
+                "// === Duplicate (1 tool) - Use create-entry instead ===",
+                "sanctuary-domain-chronicle-append-entry"
+            ]
+        }
+    }
+}

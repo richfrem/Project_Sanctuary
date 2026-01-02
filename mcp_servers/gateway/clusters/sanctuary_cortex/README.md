@@ -247,9 +247,9 @@ cortex_ingest_full()
 
 ## Related Documentation
 
-- [`docs/mcp/cortex_vision.md`](../../../docs/mcp/cortex_vision.md) - RAG vision and purpose
-- [`docs/mcp/RAG_STRATEGIES.md`](../../../docs/mcp/RAG_STRATEGIES.md) - Architecture details and doctrine
-- [`docs/mcp/cortex_operations.md`](../../../docs/mcp/cortex_operations.md) - Operations guide
+- [`docs/architecture/mcp/cortex_vision.md`](../../../docs/architecture/mcp/cortex_vision.md) - RAG vision and purpose
+- [`docs/architecture/mcp/RAG_STRATEGIES.md`](../../../docs/architecture/mcp/RAG_STRATEGIES.md) - Architecture details and doctrine
+- [`docs/architecture/mcp/cortex_operations.md`](../../../docs/architecture/mcp/cortex_operations.md) - Operations guide
 - [`01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md`](../../../01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md) - Protocol specification
 - [`01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md`](../../../01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md) - Cache prefill spec
 

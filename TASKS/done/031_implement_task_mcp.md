@@ -62,7 +62,7 @@ search_tasks(query)
 - [x] Podman machine running
 - [x] Test container working (http://localhost:5003)
 - [x] Created ADR #034 (Podman containerization decision)
-- [x] Created `docs/mcp/prerequisites.md`
+- [x] Created `docs/architecture/mcp/prerequisites.md`
 - [x] Created `mcp_servers/task/README.md`
 
 ### ✅ Phase 2: Core Modules
@@ -115,7 +115,7 @@ search_tasks(query)
 - `tests/mcp_servers/task/test_operations.py` (14 unit tests)
 - `tests/mcp_servers/task/test_e2e_workflow.py` (end-to-end workflow)
 - `ADRs/034_containerize_mcp_servers_with_podman.md`
-- `docs/mcp/prerequisites.md`
+- `docs/architecture/mcp/prerequisites.md`
 - `tests/podman/` (test container)
 
 ## Current Status

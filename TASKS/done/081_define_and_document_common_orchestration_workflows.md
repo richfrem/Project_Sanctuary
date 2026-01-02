@@ -14,7 +14,7 @@ Create comprehensive documentation and sequence diagrams for standard Council or
 
 ## 2. Deliverables
 
-1. docs/mcp/orchestration_workflows.md (Completed)
+1. docs/architecture/mcp/orchestration_workflows.md (Completed)
    - [x] Context Retrieval (Sequence Diagram)
    - [x] Agent Deliberation (Sequence Diagram)
    - [x] Action Execution (Sequence Diagram)

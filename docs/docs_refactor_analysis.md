@@ -293,7 +293,7 @@ No other gaps exist. The sequence is contiguous aside from the known missing ite
 A manual semantic verification of key documentation files confirms that the **Architectural Documentation** is highly consilient with the current state, correcting the previous false alarm from the regex scan.
 
 #### Architectural Consistency (Verified)
-- **FastMCP / Fleet**: `docs/mcp/servers/README.md` and `docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md` accurately describe the "Fleet of 8", "FastMCP Mandate" (ADR 066), and "Legacy vs Gateway" patterns.
+- **FastMCP / Fleet**: `docs/architecture/mcp/servers/README.md` and `docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md` accurately describe the "Fleet of 8", "FastMCP Mandate" (ADR 066), and "Legacy vs Gateway" patterns.
 - **Soul Persistence**: `docs/operations/SOUL_PERSISTENCE_GUIDE.md` accurately reflects ADR 079/081/088, including Semantic Entropy and snapshot logic.
 - **Podman**: `docs/operations/PODMAN_OPERATIONS_GUIDE.md` is current with ADR 065.
 
@@ -315,7 +315,7 @@ The primary disconnects are limited to the **newly restored** protocols, which l
 
 ### Recommendations
 1.  **Create Process Guides**: Operationalize P33 and P48 into `docs/process_guides/`.
-2.  **Maintain Architecture Docs**: No major refactoring needed for `docs/mcp/` or `docs/operations/`.
+2.  **Maintain Architecture Docs**: No major refactoring needed for `docs/architecture/mcp/` or `docs/operations/`.
 
 ### Next Steps / Recommendations
 1.  **Batch P100+ Naming Repair**: Rename P103-P111 to standard `snake_case` (e.g., `103_The_Doctrine_of_Digital_Sovereignty.md`).

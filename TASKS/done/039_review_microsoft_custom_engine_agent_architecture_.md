@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Claude (AI Research)
 **Dependencies:** None
-**Related Documents:** docs/mcp/analysis/microsoft_agent_analysis.md, https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-custom-engine-agent
+**Related Documents:** docs/architecture/mcp/analysis/microsoft_agent_analysis.md, https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-custom-engine-agent
 
 ---
 
@@ -30,7 +30,7 @@ Analyze Microsoft's custom engine agent architecture announced at Ignite 2024 to
 ## Notes
 
 **ANALYSIS COMPLETE - DELIVERABLES SAVED**
-Analysis document saved to: docs/mcp/analysis/microsoft_agent_analysis.md
+Analysis document saved to: docs/architecture/mcp/analysis/microsoft_agent_analysis.md
 Key findings:
 **Validation:** Sanctuary's architecture strongly aligns with Microsoft's four-pillar model (Knowledge/Skills/Autonomy/Orchestrator maps to Cortex/Protocols/Council/Orchestrator).
 **Top 3 Recommended Implementations:**

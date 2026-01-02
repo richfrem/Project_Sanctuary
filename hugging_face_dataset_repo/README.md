@@ -94,7 +94,7 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 
 The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Documentation:** [`docs/mcp/`](https://github.com/richfrem/Project_Sanctuary/tree/main/docs/mcp/) | **Architecture:** [`docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/mcp_servers/README.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/mcp_servers/README.md)
+**Documentation:** [`docs/architecture/mcp/`](https://github.com/richfrem/Project_Sanctuary/tree/main/docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp_servers/README.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture/mcp_servers/README.md)
 
 #### Document Domain MCPs (4)
 *   **Chronicle MCP:** Historical record management and event logging ([`00_CHRONICLE/`](https://github.com/richfrem/Project_Sanctuary/tree/main/00_CHRONICLE/))
@@ -179,7 +179,7 @@ The Fleet supports two transport modes to enable both local development and Gate
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](https://github.com/richfrem/Project_Sanctuary/blob/main/ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](https://github.com/richfrem/Project_Sanctuary/blob/main/ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/mcp_servers/gateway/README.md) | [Podman Guide](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/PODMAN_OPERATIONS_GUIDE.md)
+**Documentation:** [Gateway README](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture/mcp_servers/gateway/README.md) | [Podman Guide](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
@@ -240,7 +240,7 @@ This diagram illustrates our multi-pattern architecture, designed to be fast, pr
 
 *[Source: advanced_rag_architecture.mmd](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
-For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/mcp_servers/rag_cortex/README.md)
+For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture/mcp_servers/rag_cortex/README.md)
 
 ## IV. Operation Phoenix Forge (Model Lineage)
 ### 4.1 Sovereign AI Forging Process
@@ -304,7 +304,7 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 
 ### Deep Exploration Path
 1.  **The Story (The Chronicle):** Read the full history of doctrinal decisions: [**`Living_Chronicle.md` Master Index**](https://github.com/richfrem/Project_Sanctuary/blob/main/Living_Chronicle.md).
-2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp_servers/rag_cortex/README.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/mcp_servers/rag_cortex/README.md)**.
+2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/architecture/mcp_servers/rag_cortex/README.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture/mcp_servers/rag_cortex/README.md)**.
 3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/OPERATION_PHOENIX_FORGE/README.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
 ## VI. Installation & Technical Setup
@@ -412,13 +412,13 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
   - ✅ Transitioned to Functional Coherence testing for commit integrity (Protocol 101 v3.0).
 - **Primary Workstreams:** 
   - **MCP Architecture:** 12-domain architecture complete with 125/125 tests passing across 10 MCPs
-  - **Documentation:** Reorganized to `docs/mcp/servers/<name>/` structure for perfect alignment with codebase
+  - **Documentation:** Reorganized to `docs/architecture/mcp/servers/<name>/` structure for perfect alignment with codebase
   - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
   - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
 - **MCP Status:** 
   - **Operational (10):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git
   - **In Progress (2):** Orchestrator (testing), Forge LLM (requires CUDA GPU)
-  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/mcp/servers/`
+  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 333.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available

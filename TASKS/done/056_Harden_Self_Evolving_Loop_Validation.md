@@ -140,7 +140,7 @@ sequenceDiagram
 
 ## 📚 Related Documentation
 
-- [MCP Infrastructure Verification Guide](../../docs/mcp/test_forge_mcp_and_RAG_mcp.md)
-- [RAG Strategies - Strategic Crucible Loop](../../docs/mcp/RAG_STRATEGIES.md#7-the-strategic-crucible-loop-sequence-diagram)
-- [Strategic Crucible Workflow Definition](../../docs/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction)
-- [Council vs Orchestrator](../../docs/mcp/servers/council/council_vs_orchestrator.md)
+- [MCP Infrastructure Verification Guide](../../docs/architecture/mcp/test_forge_mcp_and_RAG_mcp.md)
+- [RAG Strategies - Strategic Crucible Loop](../../docs/architecture/mcp/RAG_STRATEGIES.md#7-the-strategic-crucible-loop-sequence-diagram)
+- [Strategic Crucible Workflow Definition](../../docs/architecture/mcp/orchestration_workflows.md#workflow-5-strategic-crucible-loop-orchestrator-self-correction)
+- [Council vs Orchestrator](../../docs/architecture/mcp/servers/council/council_vs_orchestrator.md)

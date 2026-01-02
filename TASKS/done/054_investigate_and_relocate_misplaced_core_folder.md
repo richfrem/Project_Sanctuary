@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** core/, mcp_servers/, docs/mcp/architecture.md
+**Related Documents:** core/, mcp_servers/, docs/architecture/mcp/architecture.md
 
 ---
 

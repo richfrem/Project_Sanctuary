@@ -316,7 +316,7 @@ git_finish_feature("feature/task-123-test")  # Syncs main automatically
 ## Related Documentation
 
 - [Git Workflow MCP README](README.md)
-- [MCP Operations Inventory](../../../docs/mcp/mcp_operations_inventory.md)
+- [MCP Operations Inventory](../../../docs/architecture/mcp/mcp_operations_inventory.md)
 - [Protocol 101 v3.0](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
 
 ---

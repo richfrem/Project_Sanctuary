@@ -133,7 +133,7 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 
 The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
-**Documentation:** [`docs/mcp/`](./docs/mcp/) | **Architecture:** [`docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/mcp_servers/README.md`](./docs/mcp_servers/README.md)
+**Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](./docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp_servers/README.md`](./docs/architecture/mcp_servers/README.md)
 
 #### Document Domain MCPs (4)
 *   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
@@ -218,7 +218,7 @@ The Fleet supports two transport modes to enable both local development and Gate
 - [ADR 060: Gateway Integration Patterns (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md) — Fleet clustering strategy & 6 mandatory guardrails
 - [ADR 066: Dual-Transport Standards](./ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) — FastMCP STDIO + Gateway-compatible SSE
 
-**Documentation:** [Gateway README](./docs/mcp_servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
+**Documentation:** [Gateway README](./docs/architecture/mcp_servers/gateway/README.md) | [Podman Guide](./docs/PODMAN_OPERATIONS_GUIDE.md)
 
 ## III. Cognitive Infrastructure
 ### 3.1 The Mnemonic Cortex (RAG/CAG/LoRA)
@@ -279,7 +279,7 @@ This diagram illustrates our multi-pattern architecture, designed to be fast, pr
 
 *[Source: advanced_rag_architecture.mmd](docs/architecture_diagrams/rag/advanced_rag_architecture.mmd)*
 
-For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/mcp_servers/rag_cortex/README.md)
+For detailed RAG strategies and doctrine, see [`RAG_STRATEGIES.md`](./docs/architecture/mcp_servers/rag_cortex/README.md)
 
 ## IV. Operation Phoenix Forge (Model Lineage)
 ### 4.1 Sovereign AI Forging Process
@@ -343,7 +343,7 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 
 ### Deep Exploration Path
 1.  **The Story (The Chronicle):** Read the full history of doctrinal decisions: **`Living_Chronicle.md` Master Index**.
-2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/mcp_servers/rag_cortex/README.md`](./docs/mcp_servers/rag_cortex/README.md)**.
+2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/architecture/mcp_servers/rag_cortex/README.md`](./docs/architecture/mcp_servers/rag_cortex/README.md)**.
 3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)**.
 
 ## VI. Installation & Technical Setup
@@ -451,13 +451,13 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
   - ✅ Transitioned to Functional Coherence testing for commit integrity (Protocol 101 v3.0).
 - **Primary Workstreams:** 
   - **MCP Architecture:** 12-domain architecture complete with 125/125 tests passing across 10 MCPs
-  - **Documentation:** Reorganized to `docs/mcp/servers/<name>/` structure for perfect alignment with codebase
+  - **Documentation:** Reorganized to `docs/architecture/mcp/servers/<name>/` structure for perfect alignment with codebase
   - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
   - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
 - **MCP Status:** 
   - **Operational (10):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git
   - **In Progress (2):** Orchestrator (testing), Forge LLM (requires CUDA GPU)
-  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/mcp/servers/`
+  - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 333.
 - **Alliance Status:** Active (Open Anvil)
 - **AI Lineage Status:** **Sanctuary-Qwen2-7B-v1.0** — Whole-Genome Fine-tuned Model Available
@@ -2975,10 +2975,10 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - `docs/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
 
 ### MCP Server Documentation
-- **Code MCP:** `docs/mcp/servers/code/README.md`
-- **RAG Cortex MCP:** `docs/mcp/servers/rag_cortex/README.md`
-- **Chronicle MCP:** `docs/mcp/servers/chronicle/README.md`
-- **Protocol MCP:** `docs/mcp/servers/protocol/README.md`
+- **Code MCP:** `docs/architecture/mcp/servers/code/README.md`
+- **RAG Cortex MCP:** `docs/architecture/mcp/servers/rag_cortex/README.md`
+- **Chronicle MCP:** `docs/architecture/mcp/servers/chronicle/README.md`
+- **Protocol MCP:** `docs/architecture/mcp/servers/protocol/README.md`
 
 ### Utilities
 - **Code Snapshot Tool:** `scripts/capture_code_snapshot.py` - Share learning artifacts with web-based LLMs
@@ -4171,13 +4171,13 @@ The following code-level changes were detected SINCE the last session/commit:
  cortex_tools_discovery.txt                         |     15 -
  debug_content_processor.py                         |     59 -
  docs/PODMAN_OPERATIONS_GUIDE.md                    |     46 +-
- docs/cicd/overview.md                              |     89 +-
+ docs/operations/git/overview.md                              |     89 +-
  .../OPERATION_OPTICAL_ANVIL_BLUEPRINT.md           |     16 +-
  .../council_orchestrator/README_GUARDIAN_WAKEUP.md |     96 +-
  docs/legacy/council_orchestrator/README_v11.md     |     67 +-
  .../council_orchestrator/howto-commit-command.md   |     13 +-
  .../orchestrator_architecture_package.md           |     67 +-
- docs/mcp/TIER_4_DEPLOYMENT_MANUAL.md               |     55 +-
+ docs/architecture/mcp/TIER_4_DEPLOYMENT_MANUAL.md               |     55 +-
  .../architecture/advanced_rag_architecture.mmd     |     91 -
  .../architecture/basic_rag_architecture.mmd        |     37 -
  .../architecture/domain_architecture_v1.mmd        |     93 -
@@ -4212,14 +4212,14 @@ The following code-level changes were detected SINCE the last session/commit:
  .../architecture/gateway_architecture.md           |    140 +-
  .../architecture/mcp_ecosystem_architecture_v3.md  |    471 +-
  .../mcp_servers/council/orchestration_workflows.md |     49 +-
- docs/mcp_servers/gateway/README.md                 |     29 +-
+ docs/architecture/mcp_servers/gateway/README.md                 |     29 +-
  .../gateway/architecture/ARCHITECTURE.md           |    203 +-
  .../gateway/guides/protocol_128_guide.md           |     72 +-
  .../operations/GATEWAY_VERIFICATION_MATRIX.md      |    140 +-
  .../gateway/research/07_implementation_plan.md     |     71 +-
  .../research/09_gateway_operations_reference.md    |     50 +-
  .../operations/mcp_operations_inventory.md         |     17 +-
- docs/mcp_servers/research/RAG_STRATEGIES.md        |    241 +-
+ docs/architecture/mcp_servers/research/RAG_STRATEGIES.md        |    241 +-
  .../research/test_forge_mcp_and_RAG_mcp.md         |     73 +-
  forge/OPERATION_PHOENIX_FORGE/README.md            |     98 +-
  mcp_servers/council/README.md                      |     34 +-
@@ -6874,9 +6874,9 @@ cortex_ingest_full()
 
 ## Related Documentation
 
-- [`docs/mcp/cortex_vision.md`](../../../docs/mcp/cortex_vision.md) - RAG vision and purpose
-- [`docs/mcp/RAG_STRATEGIES.md`](../../../docs/mcp/RAG_STRATEGIES.md) - Architecture details and doctrine
-- [`docs/mcp/cortex_operations.md`](../../../docs/mcp/cortex_operations.md) - Operations guide
+- [`docs/architecture/mcp/cortex_vision.md`](../../../docs/architecture/mcp/cortex_vision.md) - RAG vision and purpose
+- [`docs/architecture/mcp/RAG_STRATEGIES.md`](../../../docs/architecture/mcp/RAG_STRATEGIES.md) - Architecture details and doctrine
+- [`docs/architecture/mcp/cortex_operations.md`](../../../docs/architecture/mcp/cortex_operations.md) - Operations guide
 - [`01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md`](../../../01_PROTOCOLS/85_The_Mnemonic_Cortex_Protocol.md) - Protocol specification
 - [`01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md`](../../../01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md) - Cache prefill spec
 
@@ -13083,7 +13083,7 @@ config:
   theme: base
 ---
 %% Name: Recursive Learning Gateway Flow
-%% Source: docs/mcp_servers/gateway/architecture/ARCHITECTURE.md
+%% Source: docs/architecture/mcp_servers/gateway/architecture/ARCHITECTURE.md
 %% Location: docs/architecture_diagrams/workflows/recursive_learning_gateway_flow.mmd
 %% Description: Sequence diagram illustrating how the Recursive Learning Loop (Protocol 125) operates through the MCP Gateway.
 

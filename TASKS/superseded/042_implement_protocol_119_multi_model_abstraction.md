@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Claude (AI Research)
 **Dependencies:** None
-**Related Documents:** docs/mcp/analysis/microsoft_agent_analysis.md
+**Related Documents:** docs/architecture/mcp/analysis/microsoft_agent_analysis.md
 **Superseded By:** Task #094 (Council MCP Polymorphic Model Refactoring)
 
 ---

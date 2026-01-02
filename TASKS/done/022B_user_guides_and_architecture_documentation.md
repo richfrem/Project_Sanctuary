@@ -17,16 +17,16 @@ Create quick start guides for connecting to the MCP ecosystem, user tutorials fo
 
 ## Deliverables
 
-1. Create `docs/mcp/QUICKSTART.md` (Connecting Clients to Project Sanctuary)
+1. Create `docs/architecture/mcp/QUICKSTART.md` (Connecting Clients to Project Sanctuary)
 2. Create `docs/tutorials/01_using_council_mcp.md` (Multi-agent deliberation)
 3. Create `docs/tutorials/02_using_cortex_mcp.md` (RAG queries and ingestion)
-4. Update `docs/mcp/architecture.md` with detailed component views
-5. Create `docs/mcp/diagrams/system_overview_v2.mmd` (Mermaid)
+4. Update `docs/architecture/mcp/architecture.md` with detailed component views
+5. Create `docs/architecture/mcp/diagrams/system_overview_v2.mmd` (Mermaid)
 6. Create `docs/INDEX.md` as the entry point for all documentation
 
 ## Acceptance Criteria
 
-- [x] `docs/mcp/QUICKSTART.md` enables a new user to configure Claude/Antigravity in < 10 mins
+- [x] `docs/architecture/mcp/QUICKSTART.md` enables a new user to configure Claude/Antigravity in < 10 mins
 - [x] Tutorial for Council MCP covers dispatch, agent selection, and result interpretation
 - [x] Tutorial for Cortex MCP covers querying, ingestion, and scope management
 - [x] Architecture documentation accurately reflects all 12 MCP servers and their relationships
@@ -54,7 +54,7 @@ Create quick start guides for connecting to the MCP ecosystem, user tutorials fo
 - Ingesting new knowledge
 
 ### 3. Update Architecture Documentation (1-2 hours)
-- Update `docs/mcp/architecture.md`
+- Update `docs/architecture/mcp/architecture.md`
 - Detail the 12 MCP servers:
   1.  **Admins:** Config, Git, Task
   2.  **Cognitive:** Cortex, Council, Agent Persona, Forge

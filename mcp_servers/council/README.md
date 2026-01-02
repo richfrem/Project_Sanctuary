@@ -516,7 +516,7 @@ async def deliberate(task: str):
 - [Cortex Vision](../../mnemonic_cortex/VISION.md) - Strategic vision for knowledge systems
 
 ### MCP Ecosystem
-- [MCP Operations Inventory](../../docs/mcp/mcp_operations_inventory.md) - Complete MCP operations catalog
+- [MCP Operations Inventory](../../docs/architecture/mcp/mcp_operations_inventory.md) - Complete MCP operations catalog
 - [Code MCP](../code/README.md) - File operations MCP
 - [Git MCP](../system/git_workflow/README.md) - Version control MCP
 - [Cortex MCP](../cognitive/cortex/README.md) - Memory/RAG MCP

@@ -16,11 +16,11 @@ Establish standardized, high-quality documentation for all MCP servers following
 
 ## Deliverables
 
-1. Create `docs/mcp/README.md` - MCP documentation index
-2. Create `docs/mcp/TESTING_STANDARDS.md` - Standard testing workflow
+1. Create `docs/architecture/mcp/README.md` - MCP documentation index
+2. Create `docs/architecture/mcp/TESTING_STANDARDS.md` - Standard testing workflow
 3. Create MCP README template
 4. Update all 7 MCP server READMEs to follow standard template
-5. Ensure bidirectional cross-references between `docs/mcp/` and server READMEs
+5. Ensure bidirectional cross-references between `docs/architecture/mcp/` and server READMEs
 
 ## MCP Servers to Document
 
@@ -77,8 +77,8 @@ Each MCP server README must include:
 - Data flow
 
 ### 6. Cross-References
-- Link to `docs/mcp/README.md`
-- Link to `docs/mcp/TESTING_STANDARDS.md`
+- Link to `docs/architecture/mcp/README.md`
+- Link to `docs/architecture/mcp/TESTING_STANDARDS.md`
 - Link to related protocols
 
 ## Testing Documentation Standards
@@ -93,24 +93,24 @@ All MCP documentation must follow this workflow:
 
 ## Acceptance Criteria
 
-- [x] `docs/mcp/README.md` created with index of all MCP servers
-- [x] `docs/mcp/TESTING_STANDARDS.md` created with standard workflow
+- [x] `docs/architecture/mcp/README.md` created with index of all MCP servers
+- [x] `docs/architecture/mcp/TESTING_STANDARDS.md` created with standard workflow
 - [x] MCP README template created
 - [x] All 7 MCP server READMEs updated to follow template
 - [x] Each README includes comprehensive testing section
-- [x] Bidirectional links between `docs/mcp/` and server READMEs
+- [x] Bidirectional links between `docs/architecture/mcp/` and server READMEs
 - [x] Testing workflow clearly documented and repeatable
 - [x] All documentation follows same quality bar
 
 ## Implementation Steps
 
 ### 1. Create Central MCP Documentation (1 hour)
-- Create `docs/mcp/` directory
-- Write `docs/mcp/README.md` with:
+- Create `docs/architecture/mcp/` directory
+- Write `docs/architecture/mcp/README.md` with:
   - Overview of MCP architecture
   - Index of all MCP servers with links
   - Quick start guide
-- Write `docs/mcp/TESTING_STANDARDS.md` with:
+- Write `docs/architecture/mcp/TESTING_STANDARDS.md` with:
   - Standard testing workflow
   - Test result documentation format
   - MCP verification process

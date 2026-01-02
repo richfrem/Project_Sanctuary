@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Claude (AI Research)
 **Dependencies:** Protocol 117 (Orchestration Patterns)
-**Related Documents:** docs/mcp/analysis/microsoft_agent_analysis.md
+**Related Documents:** docs/architecture/mcp/analysis/microsoft_agent_analysis.md
 
 ---
 

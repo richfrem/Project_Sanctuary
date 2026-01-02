@@ -14,12 +14,12 @@ Analyze, document, and ensure correct port management for Side-by-Side architect
 
 ## 2. Deliverables
 
-1. docs/mcp/SIDE_BY_SIDE_PORTS.md
+1. docs/architecture/mcp/SIDE_BY_SIDE_PORTS.md
 2. Verification of port non-conflicts
 
 ## 3. Acceptance Criteria
 
-- Port strategy documented in docs/mcp/SIDE_BY_SIDE_PORTS.md matching user-provided list
+- Port strategy documented in docs/architecture/mcp/SIDE_BY_SIDE_PORTS.md matching user-provided list
 - Verified that legacy architecture remains unbroken
 - Client configuration options (Claude/Gemini) identified for toggling modes
 

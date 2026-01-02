@@ -518,7 +518,7 @@ def main():
     print("📋 PHASE 2 RECOMMENDATIONS:")
     print("=" * 60)
     print(f"   1. Review the {without_mmd} orphaned canonical diagrams")
-    print(f"   2. Create .mmd files in docs/mcp/servers/architecture/diagrams/")
+    print(f"   2. Create .mmd files in docs/architecture/mcp/servers/architecture/diagrams/")
     print(f"   3. Render .mmd → .png using mermaid-cli")
     print(f"   4. Replace all {summary['total_inline_mermaid_blocks']} inline blocks with image refs")
     print("=" * 60)

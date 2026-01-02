@@ -173,6 +173,6 @@ cat mcp_servers/gateway/fleet_registry.json | jq '.fleet_servers.cortex.tools | 
 | Gateway shows old count | Run full `fleet_setup` without `--no-clean` |
 
 ## Documentation
-- **[Gateway Architecture](../../docs/mcp/servers/gateway/architecture/ARCHITECTURE.md)**: Deep dive into the 3-layer pattern.
+- **[Gateway Architecture](../../docs/architecture/mcp/servers/gateway/architecture/ARCHITECTURE.md)**: Deep dive into the 3-layer pattern.
 - **[ADR 064](../../ADRs/064_centralized_registry_for_fleet_of_8_mcp_servers.md)**: Design decision for centralized registry.
 - **[Podman Operations Guide](../../docs/PODMAN_OPERATIONS_GUIDE.md)**: Detailed container management instructions.

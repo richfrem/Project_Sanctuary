@@ -20,7 +20,7 @@ Implement the Total Mirror Architecture defined in ADR 063 v1.0, enforcing stric
 
 ## 3. Acceptance Criteria
 
-- Directory structure in mcp_servers matches docs/mcp_servers/gateway/clusters/ (kebab-case).
+- Directory structure in mcp_servers matches docs/architecture/mcp_servers/gateway/clusters/ (kebab-case).
 - docker-compose.yml build contexts point to new locations.
 - Legacy top-level folders (utils, git, etc) are removed.
 - System passes 'The Phoenix Test' (make up / make status).

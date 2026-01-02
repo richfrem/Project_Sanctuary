@@ -392,7 +392,7 @@ class CircuitBreaker:
 - ADR 057: Adoption of IBM ContextForge for Dynamic MCP Gateway
 - Task 115: Design and Specify Dynamic MCP Gateway Architecture
 - Task 116: Implement Dynamic MCP Gateway with IBM ContextForge
-- Research: docs/mcp_gateway/research/ (13 documents)
+- Research: docs/architecture/mcp_gateway/research/ (13 documents)
 - MCP Specification: https://modelcontextprotocol.io
 
 ---

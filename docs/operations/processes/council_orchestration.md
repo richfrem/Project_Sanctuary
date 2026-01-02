@@ -34,7 +34,7 @@ The system operates on three levels of abstraction:
 - `task_description`: Specific instruction
 
 **Example:**
-> "Audit 'docs/mcp/README.md' for broken links."
+> "Audit 'docs/architecture/mcp/README.md' for broken links."
 
 ---
 

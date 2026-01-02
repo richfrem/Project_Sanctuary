@@ -4,7 +4,7 @@
 **Priority:** Medium
 **Lead:** Unassigned
 **Dependencies:** None
-**Related Documents:** mcp_servers/rag_cortex/server.py, docs/mcp_gateway/guides/agent_gateway_guide.md
+**Related Documents:** mcp_servers/rag_cortex/server.py, docs/architecture/mcp_gateway/guides/agent_gateway_guide.md
 
 ---
 

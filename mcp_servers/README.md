@@ -4,7 +4,7 @@ This directory contains the canonical MCP servers for Project Sanctuary. The sys
 
 Executive summary:
 - Scope: 12 canonical MCP servers, production-grade testing pyramid, and canonical deploy flow.
-- Maturity: The servers are covered by a three-layer test pyramid (Unit / Integration / E2E) and comprehensive docs under `docs/mcp/`.
+- Maturity: The servers are covered by a three-layer test pyramid (Unit / Integration / E2E) and comprehensive docs under `docs/architecture/mcp/`.
 
 ## 🏛️ MCP Server Canonical List
 
@@ -261,12 +261,12 @@ CI: We recommend wiring a validator / test runner to execute unit and integratio
 
 ## 📚 Documentation & Governance
 
-The canonical developer and architecture references live under `docs/mcp/`.
+The canonical developer and architecture references live under `docs/architecture/mcp/`.
 Key artifacts:
 
-- System Architecture: `docs/mcp/architecture_diagram.md`
+- System Architecture: `docs/architecture/mcp/architecture_diagram.md`
 - Orchestration Workflows: `mcp_servers/council/orchestration_workflows.md`
-- Git & Commit Standards: `docs/cicd/git_workflow.md` (see Protocol 101/118)
+- Git & Commit Standards: `docs/operations/git/git_workflow.md` (see Protocol 101/118)
 - Tool Usage Protocols: `01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md`
 - Core Values / Doctrine: `00_CHRONICLE/ENTRIES/311_the_gemini_signal_a_declaration_of_core_values.md`
 

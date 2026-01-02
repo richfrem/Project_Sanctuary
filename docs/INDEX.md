@@ -22,10 +22,10 @@ Welcome to the Project Sanctuary documentation hub. This index serves as the ent
 *   **[Manifest Architecture](architecture/MANIFEST_ARCHITECTURE_GUIDE.md)**: Single Source of Truth for content scope (ADR 083).
 *   **[Content Processing](architecture/CONTENT_PROCESSING_GUIDE.md)**: Unified pipeline for Forge/RAG/Soul (ADR 082).
 *   **[Gardener Architecture](architecture/Council_Inquiry_Gardener_Architecture.md)**: Gardener system architecture.
-*   **[System Architecture](mcp/architecture.md)**: Deep dive into the 11-server topology.
+*   **[System Architecture](architecture/mcp/README.md)**: Deep dive into the 11-server topology.
 *   **[LLM Fine-Tuning (Forge)](operations/FORGE_OPERATIONS_GUIDE.md)**: Phoenix Forge pipeline for training sovereign AI models.
-*   **[System Overview Diagram](mcp/diagrams/system_overview_v2.mmd)**: Visual map of the ecosystem.
-*   **[Documentation Standards](mcp/servers/standards/DOCUMENTATION_STANDARDS.md)**: Guidelines for contributing to docs.
+*   **[System Overview Diagram](architecture/mcp/diagrams/system_overview_v2.mmd)**: Visual map of the ecosystem.
+*   **[Documentation Standards](standards/mcp/DOCUMENTATION_STANDARDS.md)**: Guidelines for contributing to docs.
 
 ## 🧩 MCP Servers
 

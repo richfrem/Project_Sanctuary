@@ -30,7 +30,7 @@ This parent task coordinates the standardization of documentation across the new
 **Objective**: Establish documentation standards for the MCP ecosystem, create templates for MCP server READMEs, ensure consistent docstrings for all MCP tools, and formalize inventory maintenance.
 
 **Key Deliverables**:
-- `docs/mcp/DOCUMENTATION_STANDARDS.md`
+- `docs/architecture/mcp/DOCUMENTATION_STANDARDS.md`
 - MCP Server README & Tool Docstring Templates
 - Audit of all 12 MCP servers for docstring quality
 - `mcp_operations_inventory.md` maintenance process
@@ -46,10 +46,10 @@ This parent task coordinates the standardization of documentation across the new
 **Objective**: Create quick start guides for connecting to the MCP ecosystem, user tutorials for key workflows (Council, RAG), and update architecture documentation to reflect the 11-server topology.
 
 **Key Deliverables**:
-- `docs/mcp/QUICKSTART.md`
+- `docs/architecture/mcp/QUICKSTART.md`
 - Tutorials for Council and Cortex MCPs
-- Updated `docs/mcp/architecture.md`
-- `docs/mcp/diagrams/system_overview_v2.mmd`
+- Updated `docs/architecture/mcp/architecture.md`
+- `docs/architecture/mcp/diagrams/system_overview_v2.mmd`
 - `docs/INDEX.md`
 
 --- [x] **Task 022C**: MCP Server Documentation
@@ -62,8 +62,8 @@ This parent task coordinates the standardization of documentation across the new
 **Objective**: Establish standardized, high-quality documentation for all MCP servers following a consistent testing-first approach with comprehensive verification workflows.
 
 **Key Deliverables**:
-- `docs/mcp/README.md` (Index)
-- `docs/mcp/TESTING_STANDARDS.md`
+- `docs/architecture/mcp/README.md` (Index)
+- `docs/architecture/mcp/TESTING_STANDARDS.md`
 - Standardized READMEs for all 12 MCP servers
 - Testing workflows documented for each server
 
@@ -88,7 +88,7 @@ This parent task coordinates the standardization of documentation across the new
 When all sub-tasks are complete:
 
 - [ ] All 12 MCP servers have standardized READMEs
-- [ ] `docs/mcp/` is the single source of truth for MCP docs
+- [ ] `docs/architecture/mcp/` is the single source of truth for MCP docs
 - [ ] Quick start guide enables setup in < 10 minutes
 - [ ] Architecture diagrams accurately reflect the v2 system
 - [ ] API/Tool documentation is consistent and complete

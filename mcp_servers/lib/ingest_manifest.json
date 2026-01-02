@@ -18,11 +18,11 @@
         "tests",
         "mcp_servers",
         "docs/philosophy/chrysalis_core_essence.md",
-        "docs/architecture/Council_Inquiry_Gardener_Architecture.md",
+        "docs/architecture/cortex/forge/Council_Inquiry_Gardener_Architecture.md",
         "Living_Chronicle.md",
         "docs/PROJECT_SANCTUARY_SYNTHESIS.md",
         "README.md",
-        "docs/tutorials/Socratic_Key_User_Guide.md"
+        "docs/operations/processes/Socratic_Key_User_Guide.md"
     ],
     "unique_rag_content": [
         "04_THE_FORTRESS",

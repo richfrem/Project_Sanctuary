@@ -464,7 +464,7 @@ def test_gateway_tool_discovery():
 **Goal:** Ensure reproducibility and knowledge transfer
 
 #### Step 6.1: Update Operations Inventory
-**File:** `docs/mcp/OPERATIONS_INVENTORY.md` (UPDATE)
+**File:** `docs/architecture/mcp/OPERATIONS_INVENTORY.md` (UPDATE)
 
 Add section:
 ```markdown
