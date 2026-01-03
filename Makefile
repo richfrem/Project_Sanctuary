@@ -1,4 +1,4 @@
-.PHONY: up down restart status verify build logs exec clean prune
+.PHONY: up down restart status verify build logs exec clean prune bootstrap install-env install-dev compile
 
 # Unified Fleet Operations Makefile (ADR 065 v1.3)
 # "The Iron Root" - Single Source of Truth for Fleet Management
@@ -58,6 +58,63 @@ up:
 		python3 -m mcp_servers.gateway.fleet_setup; \
 	fi
 	@echo "✅ Fleet Deployed & Registered."
+
+# ----------------------------------------------------------------------------
+# LOCAL ENVIRONMENT SETUP (ADR 073)
+# ----------------------------------------------------------------------------
+
+# Initial bootstrap for a fresh repository clone
+# Usage: make bootstrap
+bootstrap:
+	@echo "🛡️  Bootstrapping Project Sanctuary environment..."
+	@if [ ! -d ".venv" ]; then \
+		echo "   Creating virtual environment..."; \
+		python3 -m venv .venv; \
+	fi
+	@echo "   Installing core requirements..."
+	@source .venv/bin/activate && pip install --upgrade pip pip-tools
+	@$(MAKE) install-env
+	@echo "✅ Bootstrap complete. Run 'source .venv/bin/activate' to begin."
+
+# Install all runtime dependencies (Tier 1 & Tier 2)
+# Usage: make install-env
+install-env:
+	@echo "📦 Installing shared core dependencies..."
+	@if [ -f mcp_servers/requirements-core.txt ]; then \
+		source .venv/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
+	else \
+		echo "   ⚠️  mcp_servers/requirements-core.txt not found. Compiling..."; \
+		$(MAKE) compile; \
+		source .venv/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
+	fi
+	@echo "📦 Installing service-specific requirements..."
+	@for req in mcp_servers/gateway/clusters/*/requirements.txt; do \
+		echo "   Installing $$req..."; \
+		source .venv/bin/activate && pip install -r $$req; \
+	done
+
+# Install development & test dependencies (Tier 3)
+# Usage: make install-dev
+install-dev:
+	@echo "🛠️  Installing development tools..."
+	@source .venv/bin/activate && pip install -r requirements-dev.txt
+
+# Re-compile all .in files to .txt lockfiles
+# Usage: make compile
+compile:
+	@echo "🔐 Locking dependencies (pip-compile)..."
+	@source .venv/bin/activate && pip install pip-tools
+	@if [ -f mcp_servers/requirements-core.in ]; then \
+		source .venv/bin/activate && pip-compile mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
+	fi
+	@if [ -f requirements-dev.in ]; then \
+		source .venv/bin/activate && pip-compile requirements-dev.in --output-file requirements-dev.txt; \
+	fi
+	@for req_in in mcp_servers/gateway/clusters/*/requirements.in; do \
+		req_txt=$${req_in%.in}.txt; \
+		echo "   Compiling $$req_in -> $$req_txt..."; \
+		source .venv/bin/activate && pip-compile $$req_in --output-file $$req_txt; \
+	done
 
 # Stop the fleet
 down:

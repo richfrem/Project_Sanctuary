@@ -29,4 +29,4 @@ Before every `EXECUTION` phase turn, the agent MUST perform this check:
 Failure to confirm this is a **Critical Protocol Breach.** MUST NOT TAKE ACTIONS  (git operations, code changes) unless explictly approved or requested
 
 ### 6. NO ASSUMPTIONS
-**DON'T MAKE ASSUMPTIONS.**  ASK CLARIFYING QUESTIONS TO CONFIRM INTENT.  
+**DON'T MAKE ASSUMPTIONS.**  ASK CLARIFYING QUESTIONS TO CONFIRM INTENT.

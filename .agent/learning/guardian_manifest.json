@@ -1,0 +1,14 @@
+[
+    "README.md",
+    "IDENTITY/founder_seed.json",
+    ".agent/learning/cognitive_primer.md",
+    ".agent/learning/learning_debrief.md",
+    ".agent/learning/learning_package_snapshot.md",
+    "LEARNING/calibration_log.json",
+    "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+    "ADRs/071_protocol_128_cognitive_continuity.md",
+    "ADRs/084_semantic_entropy_tda_gating.md",
+    "ADRs/086_empirical_epistemic_gating.md",
+    "mcp_servers/rag_cortex/operations.py",
+    "scripts/cortex_cli.py"
+]

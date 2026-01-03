@@ -122,6 +122,10 @@ tests/mcp_servers/operations_instrumentation.json
 .agent/learning/*.snapshot.txt
 # dataset_package already ignored above
 
+# ADR 089: Bootstrap artifacts (MUST be tracked for new clones)
+!.agent/learning/bootstrap_manifest.json
+!.agent/learning/bootstrap_packet.md
+
 # ADR 079: HF Soul Metadata Staging (Local Only)
 .agent/learning/hf_soul_metadata/
 

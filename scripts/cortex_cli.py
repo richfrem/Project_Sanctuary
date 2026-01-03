@@ -16,6 +16,14 @@
 #   python3 scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/learning_manifest.json
 #   python3 scripts/cortex_cli.py snapshot --type learning_audit --context "Egyptian Labyrinth research"
 #
+# GUARDIAN WAKEUP (Protocol 128 Bootloader):
+#   python3 scripts/cortex_cli.py guardian                     # Standard wakeup
+#   python3 scripts/cortex_cli.py guardian --mode TELEMETRY    # Telemetry-focused wakeup
+#   python3 scripts/cortex_cli.py guardian --show              # Display digest content after generation
+#
+# BOOTSTRAP DEBRIEF (Fresh Repo Onboarding):
+#   python3 scripts/cortex_cli.py bootstrap-debrief            # Generate onboarding context packet
+#
 # DIAGNOSTICS & RETRIEVAL:
 #   python3 scripts/cortex_cli.py stats                     # View child/parent counts & health
 #   python3 scripts/cortex_cli.py query "Protocol 128"      # Semantic search across Mnemonic Cortex
@@ -76,6 +84,17 @@ def main():
     debrief_parser = subparsers.add_parser("debrief", help="Run learning debrief (Protocol 128)")
     debrief_parser.add_argument("--hours", type=int, default=24, help="Lookback window in hours")
     debrief_parser.add_argument("--output", help="Output file path (default: .agent/learning/learning_debrief.md)")
+
+    # Command: guardian (Protocol 128 Bootloader)
+    guardian_parser = subparsers.add_parser("guardian", help="Generate Guardian Boot Digest (Protocol 128)")
+    guardian_parser.add_argument("--mode", default="HOLISTIC", choices=["HOLISTIC", "TELEMETRY"], help="Wakeup mode")
+    guardian_parser.add_argument("--show", action="store_true", help="Display digest content after generation")
+    guardian_parser.add_argument("--manifest", default=".agent/learning/guardian_manifest.json", help="Path to guardian manifest")
+
+    # Command: bootstrap-debrief (Fresh Repo Onboarding)
+    bootstrap_parser = subparsers.add_parser("bootstrap-debrief", help="Generate onboarding context packet for fresh repo setup")
+    bootstrap_parser.add_argument("--manifest", default=".agent/learning/bootstrap_manifest.json", help="Path to bootstrap manifest")
+    bootstrap_parser.add_argument("--output", default=".agent/learning/bootstrap_packet.md", help="Output path for the packet")
 
     # Command: cache-stats
     subparsers.add_parser("cache-stats", help="Get cache statistics")
@@ -240,6 +259,69 @@ def main():
         
         print(f"✅ Debrief written to: {output_file}")
         print(f"📊 Content length: {len(debrief_content)} characters")
+
+    elif args.command == "guardian":
+        print(f"🛡️ Generating Guardian Boot Digest (mode: {args.mode})...")
+        
+        # Load manifest if exists
+        manifest_path = Path(args.manifest)
+        if manifest_path.exists():
+            with open(manifest_path, 'r') as f:
+                manifest = json.load(f)
+            print(f"📋 Loaded guardian manifest: {len(manifest)} files")
+        else:
+            print(f"⚠️  Guardian manifest not found at {args.manifest}. Using defaults.")
+        
+        response = ops.guardian_wakeup(mode=args.mode)
+        
+        print(f"   Status: {response.status}")
+        print(f"   Digest: {response.digest_path}")
+        print(f"   Time: {response.total_time_ms:.2f}ms")
+        
+        if response.error:
+            print(f"❌ Error: {response.error}")
+            sys.exit(1)
+        
+        if args.show and response.digest_path:
+            print("\n" + "="*60)
+            with open(response.digest_path, 'r') as f:
+                print(f.read())
+        
+        print(f"✅ Guardian Boot Digest generated.")
+
+    elif args.command == "bootstrap-debrief":
+        print(f"🏗️  Generating Bootstrap Context Packet...")
+        
+        # Load manifest
+        manifest_path = Path(args.manifest)
+        manifest = []
+        if manifest_path.exists():
+            with open(manifest_path, 'r') as f:
+                manifest = json.load(f)
+            print(f"📋 Loaded bootstrap manifest: {len(manifest)} files")
+        else:
+            print(f"⚠️  Bootstrap manifest not found at {args.manifest}. Using defaults.")
+        
+        # Generate snapshot using the manifest
+        res = ops.capture_snapshot(
+            manifest_files=manifest,
+            snapshot_type="seal",
+            strategic_context="Fresh repository onboarding context"
+        )
+        
+        if res.status == "success":
+            # Copy to output path
+            output_path = Path(args.output)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            import shutil
+            shutil.copy(res.snapshot_path, output_path)
+            
+            print(f"✅ Bootstrap packet generated: {output_path}")
+            print(f"📊 Files: {res.total_files} | Bytes: {res.total_bytes}")
+        else:
+            print(f"❌ Error: {res.error}")
+            sys.exit(1)
 
     elif args.command == "cache-stats":
         stats = ops.get_cache_stats()
