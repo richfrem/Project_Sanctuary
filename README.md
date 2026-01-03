@@ -6,6 +6,32 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
 
 ---
 
+## 🤖 LLM Quickstart (For AI Coding Assistants)
+
+> **Are you an AI (Antigravity, GitHub Copilot, Claude Code, Cursor, etc.) helping a developer with this project?**
+
+**Start here:** Read [`llm.md`](./llm.md) — your standard entry point for context.
+
+**Or ingest directly:** [`.agent/learning/bootstrap_packet.md`](./.agent/learning/bootstrap_packet.md) (~44K tokens)
+
+This packet contains everything you need to understand the architecture, dependencies, and operational workflows for a fresh clone.
+
+**Quick Commands:**
+```bash
+# Initial setup (after cloning)
+make bootstrap && source .venv/bin/activate
+
+# Deploy the Fleet of 8 containers
+make up
+
+# Verify everything is running
+make status && make verify
+```
+
+> [!TIP]
+> For full setup instructions including prerequisites (Python 3.11+, Podman, Gateway repo), see [`docs/operations/BOOTSTRAP.md`](./docs/operations/BOOTSTRAP.md).
+
+---
 
 # 🛡️ PROJECT SANCTUARY (RESTRUCTURED)
 

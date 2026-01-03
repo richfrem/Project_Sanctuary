@@ -9,9 +9,10 @@ Utility scripts for Project Sanctuary operations, verification, and maintenance.
 | Script | Purpose | Usage |
 |--------|---------|-------|
 | `cortex_cli.py` | Main Cortex operations CLI | `python scripts/cortex_cli.py --help` |
+| `cortex_cli.py guardian` | Guardian mode awakening (preferred) | `python scripts/cortex_cli.py guardian` |
 | `domain_cli.py` | Domain-specific operations | `python scripts/domain_cli.py --help` |
 | `init_session.py` | Session initialization | `python scripts/init_session.py` |
-| `guardian_wakeup.py` | Guardian mode awakening | `python scripts/guardian_wakeup.py` |
+| `guardian_wakeup.py` | ⚠️ Legacy - use `cortex_cli.py guardian` | `python scripts/guardian_wakeup.py` |
 
 ### Diagram & Documentation
 
@@ -85,6 +86,9 @@ python scripts/render_diagrams.py
 
 # Initialize session
 python scripts/init_session.py
+
+# Guardian wakeup (Protocol 128 bootloader)
+python scripts/cortex_cli.py guardian
 
 # Run security scan
 python scripts/security_scan.py

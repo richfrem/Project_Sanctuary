@@ -60,7 +60,8 @@ class GatewayBridge:
         
         self.headers = {
             "Authorization": f"Bearer {self.token}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept-Encoding": "gzip, deflate"  # Exclude zstd to avoid potential decode issues
         }
         
         self.client = httpx.AsyncClient(
