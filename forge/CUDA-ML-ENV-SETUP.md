@@ -88,7 +88,7 @@ From your `Project_Sanctuary` root directory, execute the `setup_cuda_env.py` sc
 Note: Run this with sudo as it automatically installs system packages like python3.11 and git-lfs if they are missing.
 
 ```bash
-sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+sudo python3 forge/scripts/setup_cuda_env.py --staged --recreate
 ```
 
 This script creates (`~/ml_env`) and installs all Python dependencies from `requirements-finetuning.txt`, including the llama-cpp-python library.
@@ -246,11 +246,11 @@ Run the full suite of verification scripts to confirm everything is perfectly co
 
 ```bash
 # From the Project_Sanctuary root, with (ml_env) active:
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_pytorch.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_tensorflow.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py
+python forge/scripts/test_torch_cuda.py
+python forge/scripts/test_pytorch.py
+python forge/scripts/test_xformers.py
+python forge/scripts/test_tensorflow.py
+python forge/scripts/test_llama_cpp.py
 ```
 
 **All tests must pass before proceeding.**
@@ -266,7 +266,7 @@ Ensure your `(ml_env)` is active for all subsequent commands.
 Run the `forge_whole_genome_dataset.py` script to assemble the training data from your project's markdown and text files. This is the **essential first step** before training can begin.
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/forge_whole_genome_dataset.py
+python forge/scripts/forge_whole_genome_dataset.py
 ```
 This will create the `sanctuary_whole_genome_data.jsonl` file in your `dataset_package` directory.
 
@@ -275,7 +275,7 @@ This will create the `sanctuary_whole_genome_data.jsonl` file in your `dataset_p
 After creating the dataset, run the validation script to check it for errors.
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py dataset_package/sanctuary_whole_genome_data.jsonl
+python forge/scripts/validate_dataset.py dataset_package/sanctuary_whole_genome_data.jsonl
 ```
 
 ### 3. Download the Base Model
@@ -283,7 +283,7 @@ python forge/OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py dataset_package
 Run the download script. This will only download the large model files once.
 
 ```bash
-bash forge/OPERATION_PHOENIX_FORGE/scripts/download_model.sh
+bash forge/scripts/download_model.sh
 ```
 
 ### 4. Fine-Tune the LoRA Adapter
@@ -291,7 +291,7 @@ bash forge/OPERATION_PHOENIX_FORGE/scripts/download_model.sh
 With the data forged and the base model downloaded, execute the optimized fine-tuning script. This script now includes advanced features like structured logging, automatic resume from checkpoints, pre-tokenization for faster starts, and robust error handling. **This is a long-running process (1-3 hours).**
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/fine_tune.py
+python forge/scripts/fine_tune.py
 ```
 The final LoRA adapter will be saved to `models/Sanctuary-Qwen2-7B-v1.0-adapter/`.
 
@@ -301,7 +301,7 @@ ls -la models/Sanctuary-Qwen2-7B-v1.0-adapter/
 ```
 Ensure `adapter_model.safetensors` and `adapter_config.json` are present. For a quick integrity test, run:
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Test prompt"
+python forge/scripts/inference.py --input "Test prompt"
 ```
 If it loads and generates output without errors, the adapter is valid.
 
@@ -310,14 +310,14 @@ If it loads and generates output without errors, the adapter is valid.
 Combine the trained adapter with the base model to create a full, standalone fine-tuned model.
 
 ```bash
-#python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py --skip-sanity
+#python forge/scripts/merge_adapter.py
+python forge/scripts/merge_adapter.py --skip-sanity
 ```
 The merged model will be saved to `outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged/`.
 
 **Verification:** After completion, verify the merged model by testing it:
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --model-type merged --input "Test prompt"
+python forge/scripts/inference.py --model-type merged --input "Test prompt"
 ```
 If it loads and generates output without errors, the merged model is valid and ready for GGUF conversion.
 
@@ -338,8 +338,8 @@ pip install sentencepiece protobuf
 Convert the merged model to the GGUF format required by Ollama.
 
 ```bash
-#python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py --quant Q4_K_M --force
+#python forge/scripts/convert_to_gguf.py
+python forge/scripts/convert_to_gguf.py --quant Q4_K_M --force
 ```
 The final quantized `.gguf` file will be saved to `models/gguf/`.
 
@@ -360,7 +360,7 @@ The final quantized `.gguf` file will be saved to `models/gguf/`.
 Run the bulletproof Modelfile generator script:
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/create_modelfile.py
+python forge/scripts/create_modelfile.py
 ```
 
 This creates a production-ready Modelfile with auto-detected GGUF path, official Qwen2 template, full GUARDIAN-01 system prompt, and optimized parameters.
@@ -407,7 +407,7 @@ This demonstrates GUARDIAN-01's ability to handle both human conversation and au
 **3a. Quick Inference Test:**
 Use the `inference.py` script for a quick spot-check.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Summarize the primary objective of the Sovereign Crucible."
+python forge/scripts/inference.py --input "Summarize the primary objective of the Sovereign Crucible."
 ```
 
 **3b. (Recommended) Full Evaluation:**
@@ -418,13 +418,13 @@ pip install evaluate rouge-score
 ```
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/evaluate.py
+python forge/scripts/evaluate.py
 ```
 
 **3c. Real body of knowledge (BOK) test crucial**
 Test with actual Sanctuary protocols:
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --model-type merged --file 01_PROTOCOLS/23_The_AGORA_Protocol.md
+python forge/scripts/inference.py --model-type merged --file 01_PROTOCOLS/23_The_AGORA_Protocol.md
 ```
 ---
 
@@ -433,7 +433,7 @@ python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --model-type merged --
 Run the automated upload script to upload the GGUF model, Modelfile, and README to your Hugging Face repository:
 
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo yourusername/your-repo-name --gguf --modelfile --readme
+python forge/scripts/upload_to_huggingface.py --repo yourusername/your-repo-name --gguf --modelfile --readme
 ```
 
 Replace `yourusername/your-repo-name` with your actual Hugging Face repository ID (e.g., `richfrem/Sanctuary-Model`).

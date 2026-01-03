@@ -5,7 +5,7 @@ import sys
 from unittest.mock import MagicMock
 
 # Ensure the scripts directory is in the path so we can import modules
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../OPERATION_PHOENIX_FORGE/scripts')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../forge/scripts')))
 
 @pytest.fixture
 def mock_jsonl_data():

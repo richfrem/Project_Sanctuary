@@ -87,7 +87,7 @@ cd ../Project_Sanctuary
 ## Project Structure & Components
 
 ```
-forge/OPERATION_PHOENIX_FORGE/
+forge/
 ├── README.md                           # This overview and workflow guide
 ├── CUDA-ML-ENV-SETUP.md               # Comprehensive environment setup protocol
 ├── CUDA-ML-ENV-SETUP-PASTFAILURES.md  # Historical troubleshooting reference
@@ -225,9 +225,9 @@ The Sanctuary AI supports **two interaction modes**:
 
 ## Workflow Overview
 
-![llm_finetuning_pipeline](../../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
+![llm_finetuning_pipeline](../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
 
-*[Source: llm_finetuning_pipeline.mmd](../../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd)*
+*[Source: llm_finetuning_pipeline.mmd](../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd)*
 
 ---
 
@@ -249,7 +249,7 @@ rm -rf ~/ml_env
 setup cuda and python requirements and dependencies
 ```bash
 # Run this once from the Project_Sanctuary root
-sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+sudo python3 forge/scripts/setup_cuda_env.py --staged --recreate
 
 ```
 
@@ -271,10 +271,10 @@ git lfs install
 3.  **Verify Environment:** Run the full test suite to ensure your environment is properly configured.
 ```bash
 # All tests must pass before proceeding
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_torch_cuda.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_xformers.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_tensorflow.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/test_llama_cpp.py
+python forge/scripts/test_torch_cuda.py
+python forge/scripts/test_xformers.py
+python forge/scripts/test_tensorflow.py
+python forge/scripts/test_llama_cpp.py
 ```
 
 4.  **Setup Hugging Face Authentication:** Create a `.env` file with your Hugging Face token.
@@ -286,13 +286,13 @@ echo "HUGGING_FACE_TOKEN='your_hf_token_here'" > .env
 5.  **Download & Prepare Assets:** With the `(ml_env)` active, run these scripts to download the base model and assemble the training data.
 ```bash
 # Download the base Qwen2 model
-bash forge/OPERATION_PHOENIX_FORGE/scripts/download_model.sh
+bash forge/scripts/download_model.sh
 
 # Assemble the training data from project documents
-python forge/OPERATION_PHOENIX_FORGE/scripts/forge_whole_genome_dataset.py
+python forge/scripts/forge_whole_genome_dataset.py
 
 # (Recommended) Validate the newly created dataset
-python forge/OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py dataset_package/sanctuary_whole_genome_data.jsonl
+python forge/scripts/validate_dataset.py dataset_package/sanctuary_whole_genome_data.jsonl
 ```
 
 ### **Phase 2: Model Forging**
@@ -301,7 +301,7 @@ This phase executes the core QLoRA fine-tuning process to create the model's spe
 
 1.  **Fine-Tune the LoRA Adapter:** This script reads the training configuration and begins the fine-tuning. **This is the most time-intensive step (1-3 hours).**
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/fine_tune.py
+python forge/scripts/fine_tune.py
 ```
 
 ### **Phase 3: Packaging & Deployment**
@@ -310,13 +310,13 @@ After the model is forged, these scripts package it into a deployable format and
 
 1.  **Merge & Convert:** This two-step process merges the LoRA adapter into the base model and then converts the result into the final GGUF format.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/merge_adapter.py
-python forge/OPERATION_PHOENIX_FORGE/scripts/convert_to_gguf.py
+python forge/scripts/merge_adapter.py
+python forge/scripts/convert_to_gguf.py
 ```
 
 2.  **Deploy to Ollama:** These commands generate the necessary `Modelfile` and use it to create a new runnable model within Ollama named `Sanctuary-AI`.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/create_modelfile.py
+python forge/scripts/create_modelfile.py
 ollama create Sanctuary-AI -f Modelfile
 ```
 
@@ -326,12 +326,12 @@ Once the model is deployed, these scripts are used to verify its performance and
 
 1.  **Qualitative Spot-Check:** Run a quick, interactive test to check the model's response to a specific prompt from the Project Sanctuary Body of Knowledge.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Summarize the purpose of the Sovereign Crucible."
+python forge/scripts/inference.py --input "Summarize the purpose of the Sovereign Crucible."
 ```
 
 2.  **Quantitative Evaluation:** Run the model against a held-out test set to calculate objective performance metrics.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/evaluate.py
+python forge/scripts/evaluate.py
 ```
 
 3.  **End-to-End Orchestrator Test (Planned):** Execute the final Sovereign Crucible test to verify the model's integration with the RAG system and other components.
@@ -345,12 +345,12 @@ The final phase deploys the completed model to Hugging Face for community access
 
 1.  **Upload LoRA Adapter:** Deploy the fine-tuned LoRA adapter to a dedicated repository.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-lora --lora --readme
+python forge/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-lora --lora --readme
 ```
 
 2.  **Upload GGUF Model:** Deploy the quantized model, Modelfile, and documentation to the final repository.
 ```bash
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final --gguf --modelfile --readme
+python forge/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final --gguf --modelfile --readme
 ```
 
 3.  **Verify Repositories:** Confirm both artifacts are accessible and properly documented.

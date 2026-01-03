@@ -8,7 +8,7 @@
 # a reusable and configurable training executor.
 #
 # Usage:
-#   python forge/OPERATION_PHOENIX_FORGE/scripts/fine_tune.py
+#   python forge/scripts/fine_tune.py
 # ==============================================================================
 
 import os
@@ -92,7 +92,7 @@ def tokenize_and_cache(dataset, tokenizer, max_length, cache_path=None):
     return tokenized
 
 # --- Determine Paths ---
-# The script is in forge/OPERATION_PHOENIX_FORGE/scripts/
+# The script is in forge/scripts/
 # We need paths relative to the project root (Project_Sanctuary/).
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent

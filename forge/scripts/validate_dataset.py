@@ -9,7 +9,7 @@
 # Inspired by the 'validate_dataset.py' script from the Smart-Secrets-Scanner project.
 #
 # Usage:
-#   python forge/OPERATION_PHOENIX_FORGE/scripts/validate_dataset.py [path_to_dataset.jsonl]
+#   python forge/scripts/validate_dataset.py [path_to_dataset.jsonl]
 # ==============================================================================
 
 import json

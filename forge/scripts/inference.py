@@ -16,7 +16,7 @@
 #   Merging takes longer but gives you a clean, deployable model file.
 #
 # QUICK TEST WITH BASE MODEL + YOUR FINE-TUNED SETTINGS:
-# Just run: python forge/OPERATION_PHOENIX_FORGE/scripts/inference.py --input "Your test question here"
+# Just run: python forge/scripts/inference.py --input "Your test question here"
 # It automatically loads base + adapter if available. No extra steps needed!
 #
 # This script runs inference using the fine-tuned Project Sanctuary model.

@@ -4,7 +4,7 @@ from pathlib import Path
 
 # --- BOOTSTRAP: Find Project Root to import mcp_servers ---
 # We need to add the project root to sys.path before we can use the shared libraries.
-# The script is at: forge/OPERATION_PHOENIX_FORGE/scripts/forge_whole_genome_dataset.py
+# The script is at: forge/scripts/forge_whole_genome_dataset.py
 # So root is 4 levels up.
 current_script = Path(__file__).resolve()
 bootstrap_root = current_script.parent.parent.parent.parent

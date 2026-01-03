@@ -13,7 +13,7 @@
 
 ## Context
 
-The `forge/OPERATION_PHOENIX_FORGE/scripts/` directory has 6 verification scripts but no unit tests. Additionally, there's no CI/CD pipeline for automated testing across the repository.
+The `forge/scripts/` directory has 6 verification scripts but no unit tests. Additionally, there's no CI/CD pipeline for automated testing across the repository.
 
 ## Objective
 
@@ -22,11 +22,11 @@ Create test suite for Forge scripts and establish CI/CD pipeline with GitHub Act
 ## Acceptance Criteria
 
 ### 1. Forge Test Suite
-- [ ] Create `forge/OPERATION_PHOENIX_FORGE/tests/test_dataset_forge.py`
+- [ ] Create `forge/tests/test_dataset_forge.py`
   - Test JSONL dataset generation
   - Test dataset validation
   - Test markdown file processing
-- [ ] Create `forge/OPERATION_PHOENIX_FORGE/tests/test_modelfile_generation.py`
+- [ ] Create `forge/tests/test_modelfile_generation.py`
   - Test Modelfile creation
   - Test template rendering
   - Test configuration validation
@@ -51,7 +51,7 @@ Create test suite for Forge scripts and establish CI/CD pipeline with GitHub Act
 ## Technical Approach
 
 ```python
-# forge/OPERATION_PHOENIX_FORGE/tests/test_dataset_forge.py
+# forge/tests/test_dataset_forge.py
 import pytest
 from pathlib import Path
 import json
@@ -69,7 +69,7 @@ def sample_markdown_files(tmp_path):
 
 def test_dataset_forge_creates_valid_jsonl(sample_markdown_files, tmp_path):
     """Test that dataset forging creates valid JSONL."""
-    from forge.OPERATION_PHOENIX_FORGE.scripts.forge_whole_genome_dataset import forge_dataset
+    from forge.scripts.forge_whole_genome_dataset import forge_dataset
     
     output_file = tmp_path / "test_dataset.jsonl"
     forge_dataset(source_dir=sample_markdown_files, output_file=output_file)
@@ -84,7 +84,7 @@ def test_dataset_forge_creates_valid_jsonl(sample_markdown_files, tmp_path):
 
 def test_dataset_includes_all_protocols(sample_markdown_files, tmp_path):
     """Test that all protocol files are included."""
-    from forge.OPERATION_PHOENIX_FORGE.scripts.forge_whole_genome_dataset import forge_dataset
+    from forge.scripts.forge_whole_genome_dataset import forge_dataset
     
     output_file = tmp_path / "test_dataset.jsonl"
     forge_dataset(sample_markdown_files, output_file)

@@ -13,7 +13,7 @@
 #   - The 'evaluate' and 'rouge_score' libraries must be installed.
 #
 # Usage:
-#   python forge/OPERATION_PHOENIX_FORGE/scripts/evaluate.py
+#   python forge/scripts/evaluate.py
 # ==============================================================================
 
 import argparse

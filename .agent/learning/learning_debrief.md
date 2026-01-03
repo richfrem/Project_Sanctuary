@@ -1,5 +1,5 @@
 # [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)
-**Scan Time:** 2026-01-02 14:58:04 (Window: 2h)
+**Scan Time:** 2026-01-02 16:56:11 (Window: 24h)
 **Strategic Status:** ✅ Successor Context v4.0 Active
 
 > [!IMPORTANT]
@@ -23,89 +23,7 @@
 ## 🧬 II. Tactical Evidence (Current Git Deltas)
 The following code-level changes were detected SINCE the last session/commit:
 ```text
- .agent/learning/README.md                          |   2 +-
- .../learning_audit/learning_audit_manifest.json    |   1 +
- .../learning_audit/learning_audit_packet.md        | 336 +++++++--------
- .../learning_audit/learning_audit_prompts.md       |  60 +--
- .../learning/learning_audit/loop_retrospective.md  | 185 ++-------
- .../learning_audit/manifest_learning_audit.json    |   1 +
- .agent/learning/learning_debrief.md                |  21 +-
- .agent/learning/learning_package_snapshot.md       | 451 ++++++---------------
- .../339_adr_085_mermaid_rationalization_crisis.md  |   2 +-
- .../114_Guardian_Wakeup_and_Cache_Prefill.md       |   2 +-
- ...5_autonomous_ai_learning_system_architecture.md |  12 +-
- 01_PROTOCOLS/12_Jury_Protocol.md                   |   2 +-
- ...andate_live_integration_testing_for_all_mcps.md |   2 -
- ADRs/060_gateway_integration_patterns.md           |   2 +-
- ADRs/071_protocol_128_cognitive_continuity.md      |   2 +-
- ..._systemic_refactoring_of_git_tool_robustness.md |   2 +-
- ADRs/079_soul_persistence_hugging_face.md          |   6 +-
- ADRs/081_soul_dataset_structure.md                 |   4 +-
- ADRs/085_canonical_mermaid_diagram_management.md   |   4 +-
- .../briefing_packet.json                           |  39 --
- .../briefing_packet.json                           |  39 --
- .../briefing_packet.json                           |  39 --
- .../briefing_packet.json                           |  39 --
- .../briefing_packet.json                           |  39 --
- .../briefing_packet.json                           |  39 --
- .../briefing_packet.json                           |  40 --
- .../briefing_packet.json                           |  40 --
- .../briefing_packet.json                           |  40 --
- .../briefing_packet.json                           |  40 --
- .../briefing_packet.json                           |  40 --
- .../MISSION_THE_ERROR_CORRECTED_SELF_20251229.md   |   2 +-
- .../DRAFT_ADR_079_soul_persistence_hugging_face.md |   8 +-
- README.md                                          |   2 +-
- TASKS/done/027_mcp_ecosystem_strategy.md           |  14 +-
- TASKS/done/028_precommit_hook_mcp_migration.md     |   8 +-
- TASKS/done/035_implement_git_workflow_mcp.md       |   2 +-
- .../056_Harden_Self_Evolving_Loop_Validation.md    |   8 +-
- .../087_comprehensive_mcp_operations_testing.md    |   8 +-
- .../done/092_create_orchestrator_mcp_unit_tests.md |   2 +-
- ...ent_comprehensive_gateway_mcp_e2e_test_suite.md |   6 +-
- ...plement_protocol_119_multi_model_abstraction.md |   4 +-
- docs/INDEX.md                                      |   2 +-
- docs/architecture/README.md                        |   2 +-
- docs/architecture/mcp/README.md                    |   8 +-
- docs/architecture/mcp/gateway_architecture.md      |   6 +-
- docs/architecture/mcp/servers/gateway/README.md    |   2 +-
- .../servers/gateway/guides/protocol_128_guide.md   |   8 +-
- .../mcp/servers/gateway/operations/README.md       |   2 +-
- .../research/09_gateway_operations_reference.md    |   6 +-
- docs/architecture/mcp/servers/rag_cortex/README.md |   8 +-
- docs/architecture/mcp/servers/rag_cortex/SETUP.md  |   4 +-
- .../servers/rag_cortex/cortex_migration_plan.md    |   6 +-
- docs/architecture_diagrams/README.md               |   2 +-
- docs/operations/forge/FORGE_OPERATIONS_GUIDE.md    |   2 +-
- docs/operations/git/git_workflow.md                |   2 +-
- docs/operations/git/how_to_commit.md               |   2 +-
- docs/operations/git/overview.md                    |   6 +-
- .../hugging_face/HUGGINGFACE_DEPLOYMENT_GUIDE.md   |   4 +-
- .../hugging_face/SOUL_PERSISTENCE_GUIDE.md         |   2 +-
- docs/operations/mcp/DOCUMENTATION_STANDARDS.md     |   4 +-
- docs/operations/mcp/QUICKSTART.md                  |   4 +-
- docs/operations/mcp/mcp_operations_inventory.md    | 314 +++++++-------
- docs/operations/mcp/prerequisites.md               |   4 +-
- docs/operations/mcp/setup_guide.md                 |   4 +-
- docs/operations/processes/01_using_council_mcp.md  |   2 +-
- docs/operations/processes/02_using_cortex_mcp.md   |   2 +-
- .../processes/PODMAN_OPERATIONS_GUIDE.md           |   2 +-
- docs/operations/processes/TASK_MANAGEMENT_GUIDE.md |   2 +-
- docs/operations/processes/TESTING_GUIDE.md         |   4 +-
- docs/operations/processes/council_orchestration.md |  10 +-
- hugging_face_dataset_repo/data/soul_traces.jsonl   |  16 +-
- mcp_servers/agent_persona/README.md                |   2 +-
- mcp_servers/council/README.md                      |   8 +-
- .../gateway/clusters/sanctuary_cortex/README.md    |   4 +-
- mcp_servers/lib/snapshot_utils.py                  |   4 +-
- mcp_servers/rag_cortex/README.md                   |   4 +-
- mcp_servers/rag_cortex/operations.py               |   2 +-
- .../rag_cortex/utils/snapshot_engine.py.bak        |   4 +-
- scripts/guardian_wakeup.py                         |   2 +-
- tests/README.md                                    |   5 +-
- tests/mcp_servers/gateway/e2e/execution_log.json   |   8 +-
- 81 files changed, 645 insertions(+), 1435 deletions(-)
-
+No uncommitted code changes found.
 ```
 
 ## 📂 III. File Registry (Recency)
@@ -117,18 +35,19 @@ The following code-level changes were detected SINCE the last session/commit:
 
 
 ### Recently Modified High-Signal Files:
-* **Most Recent Commit:** 9faf6592 feat: consolidate mcp documentation and repair broken links
+* **Most Recent Commit:** f9c048d9 refactor: flatten forge/OPERATION_PHOENIX_FORGE to forge/ and centralize tests
 * **Recent Files Modified (48h):**
-    * `mcp_servers/council/README.md` (1h ago) → Council MCP Server [+4/-4 (uncommitted)]
-    * `mcp_servers/gateway/clusters/sanctuary_cortex/README.md` (1h ago) → Cortex MCP Server [+2/-2 (uncommitted)]
-    * `mcp_servers/agent_persona/README.md` (1h ago) → Agent Persona MCP Server [+1/-1 (uncommitted)]
-    * `mcp_servers/rag_cortex/README.md` (1h ago) → Cortex MCP Server [+2/-2 (uncommitted)]
+    * `00_CHRONICLE/ENTRIES/231_The_Prime_Justification_-_A_Mission_Hardened_by_th.md` (30m ago) [+41/-0]
+    * `00_CHRONICLE/ENTRIES/026_The_Self-Pruning_Forest__DARK_MIRROR_Resolution.md` (30m ago) [+17/-0]
+    * `00_CHRONICLE/ENTRIES/262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md` (30m ago) [+1/-1]
+    * `00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md` (30m ago) [+11/-0]
+    * `00_CHRONICLE/ENTRIES/098_The_Pivot_to_the_Forge.md` (30m ago) [+15/-0]
 
 ## 🏗️ IV. Architecture Alignment (The Successor Relay)
 ![Recursive Learning Flowchart](docs/architecture_diagrams/workflows/recursive_learning_flowchart.png)
 
 ## 📦 V. Strategic Context (Last Learning Package Snapshot)
-**Status:** ✅ Loaded Learning Package Snapshot from 0.0h ago.
+**Status:** ✅ Loaded Learning Package Snapshot from 0.5h ago.
 
 > **Note:** Full snapshot content is NOT embedded to prevent recursive bloat.
 > See: `.agent/learning/learning_package_snapshot.md`

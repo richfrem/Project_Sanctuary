@@ -14,7 +14,7 @@ Project Sanctuary has evolved three distinct content processing pipelines that s
 
 | System | Location | Purpose |
 |--------|----------|---------|
-| **Forge Fine-Tuning** | `forge/OPERATION_PHOENIX_FORGE/scripts/` | Generates JSONL training data for LLM fine-tuning |
+| **Forge Fine-Tuning** | `forge/scripts/` | Generates JSONL training data for LLM fine-tuning |
 | **RAG Vector DB** | `mcp_servers/rag_cortex/operations.py` | Full/incremental ingestion into ChromaDB |
 | **Soul Persistence** | `mcp_servers/lib/hf_utils.py` | Uploads snapshots to Hugging Face Commons |
 

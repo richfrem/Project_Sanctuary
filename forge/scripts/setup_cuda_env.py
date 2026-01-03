@@ -69,7 +69,7 @@ def find_repo_root(start: str | Path) -> str:
 # --- Global Paths ---
 THIS_FILE = Path(__file__).resolve()
 ROOT = find_repo_root(THIS_FILE)
-LOG_DIR = os.path.join(ROOT, 'forge', 'OPERATION_PHOENIX_FORGE', 'ml_env_logs')
+LOG_DIR = os.path.join(ROOT, 'forge', 'ml_env_logs')
 
 
 def run_as_user(cmd: list, user: str, venv_python: str | None = None) -> bool:
