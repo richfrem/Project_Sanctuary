@@ -17,7 +17,7 @@
 **Priority 1 - API Keys (Critical):**
 1. `council_orchestrator/orchestrator/engines/gemini_engine.py` - GEMINI_API_KEY
 2. `council_orchestrator/orchestrator/engines/openai_engine.py` - OPENAI_API_KEY  
-3. `forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py` - HUGGING_FACE_TOKEN
+3. `forge/scripts/upload_to_huggingface.py` - HUGGING_FACE_TOKEN
 
 **Priority 2 - Configuration (Lower Priority):**
 4. `mnemonic_cortex/scripts/ingest.py`
@@ -27,8 +27,8 @@
 8. `mnemonic_cortex/app/services/vector_db_service.py`
 9. `council_orchestrator/orchestrator/app.py`
 10. `council_orchestrator/orchestrator/substrate_monitor.py`
-11. `forge/OPERATION_PHOENIX_FORGE/scripts/create_modelfile.py`
-12. `forge/OPERATION_PHOENIX_FORGE/scripts/inference.py`
+11. `forge/scripts/create_modelfile.py`
+12. `forge/scripts/inference.py`
 13. `scripts/verify_substrates.py`
 
 ## Migration Pattern

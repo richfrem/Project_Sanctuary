@@ -9,7 +9,7 @@ try:
     import forge_whole_genome_dataset as forge
 except ImportError:
     # Fallback if path setup in conftest doesn't work for direct import here
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../OPERATION_PHOENIX_FORGE/scripts')))
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../forge/scripts')))
     import forge_whole_genome_dataset as forge
 
 class TestInstructionDetermination:

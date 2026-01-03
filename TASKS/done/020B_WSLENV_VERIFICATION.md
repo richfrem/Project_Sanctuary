@@ -49,7 +49,7 @@ Since your WSLENV is working, these files can benefit from using env_helper:
 **Priority 1 (API Keys):**
 1. `council_orchestrator/orchestrator/engines/gemini_engine.py`
 2. `council_orchestrator/orchestrator/engines/openai_engine.py`
-3. `forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py`
+3. `forge/scripts/upload_to_huggingface.py`
 
 **Why update them?**
 - Currently they use `load_dotenv()` which loads .env FIRST

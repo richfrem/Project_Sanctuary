@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Unassigned
 **Dependencies:** Completion of #007 (Sovereign Model Retraining)
-**Related Documents:** `forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`, `models/gguf/`, `outputs/merged/`, `Modelfile`
+**Related Documents:** `forge/CUDA-ML-ENV-SETUP.md`, `models/gguf/`, `outputs/merged/`, `Modelfile`
 
 ---
 

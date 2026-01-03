@@ -400,7 +400,7 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
              items_skipped += 1
              return
 
-        if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
+        if rel_from_project_root.startswith('forge/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
              items_skipped += 1
              return
 

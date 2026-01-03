@@ -50,7 +50,7 @@ atexit.register(logging.shutdown)
 # --------------------------------------------------------------------------- #
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent.parent
+PROJECT_ROOT = FORGE_ROOT.parent
 
 # Add project root to path to find core and mcp_servers
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -175,7 +175,7 @@ def main():
         file_paths.append(str(model_card_path))
 
     if args.lora:
-        lora_path = PROJECT_ROOT / files_config.get('lora_path', "forge/OPERATION_PHOENIX_FORGE/models/Sanctuary-Qwen2-7B-v1.0-adapter")
+        lora_path = PROJECT_ROOT / files_config.get('lora_path', "forge/models/Sanctuary-Qwen2-7B-v1.0-adapter")
         file_paths.append(str(lora_path))
 
     if not file_paths:

@@ -3,7 +3,7 @@
 # ==============================================================================
 # This file centralizes all parameters for the fine-tuning process, replacing
 # the hardcoded constants in the original 'build_lora_adapter.py' script.
-# It is located within the OPERATION_PHOENIX_FORGE directory to keep all
+# It is located within the forge directory to keep all
 # fine-tuning assets organized.
 #
 # HIGHLIGHTS FROM LLM MODELS (Gemini, Grok4, ChatGPT):

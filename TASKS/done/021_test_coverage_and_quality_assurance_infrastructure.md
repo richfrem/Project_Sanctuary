@@ -49,8 +49,8 @@ This parent task has been split into 3 focused sub-tasks to establish comprehens
 **Objective**: Create test suite for `forge/` scripts and establish GitHub Actions CI/CD pipeline with automated testing and coverage reporting.
 
 **Key Deliverables**:
-- Create `forge/OPERATION_PHOENIX_FORGE/tests/test_dataset_forge.py`
-- Create `forge/OPERATION_PHOENIX_FORGE/tests/test_modelfile_generation.py`
+- Create `forge/tests/test_dataset_forge.py`
+- Create `forge/tests/test_modelfile_generation.py`
 - Create `.github/workflows/test.yml` for GitHub Actions
 - Configure test matrix (Python 3.11, 3.12; Windows, Linux)
 - Add coverage reporting to PR comments

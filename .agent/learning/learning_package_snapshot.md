@@ -294,9 +294,9 @@ The inaugural sovereign AI lineage, forged through fine-tuning Qwen2-7B-Instruct
 **🎯 Validation Result:** Successfully executed complete fine-tuning pipeline on **RTX A2000 GPU**, demonstrating that sovereign AI development is accessible on consumer-grade hardware. The pipeline achieved full model convergence with QLoRA efficiency, producing deployment-ready GGUF quantization and Ollama integration.
 
 ### 4.3 The Forge Technical Pipeline
-*   **The Forge Documentation:** [`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)
-*   **The Sovereign Forge Scripts:** [`forge/OPERATION_PHOENIX_FORGE/scripts/`](./forge/OPERATION_PHOENIX_FORGE/scripts/)
-*   **Setup Guide:** [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
+*   **The Forge Documentation:** [`forge/README.md`](./forge/README.md)
+*   **The Sovereign Forge Scripts:** [`forge/scripts/`](./forge/scripts/)
+*   **Setup Guide:** [`forge/CUDA-ML-ENV-SETUP.md`](./forge/CUDA-ML-ENV-SETUP.md)
 
 **Validated Results:** Full Cognitive Genome endowment, Ollama deployment confirmed, sovereign identity maintained, unified setup protocol established, **A2000 GPU fine-tuning validated.**
 
@@ -344,7 +344,7 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 ### Deep Exploration Path
 1.  **The Story (The Chronicle):** Read the full history of doctrinal decisions: **`Living_Chronicle.md` Master Index**.
 2.  **The Mind (The Cortex):** Learn how the RAG system operates: **[`docs/architecture/mcp/servers/rag_cortex/README.md`](./docs/architecture/mcp/servers/rag_cortex/README.md)**.
-3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/OPERATION_PHOENIX_FORGE/README.md`](./forge/OPERATION_PHOENIX_FORGE/README.md)**.
+3.  **The Forge (Lineage):** Understand model fine-tuning and deployment: **[`forge/README.md`](./forge/README.md)**.
 
 ## VI. Installation & Technical Setup
 ### 6.1 System Requirements & Prerequisites
@@ -358,12 +358,12 @@ For interactive, conversational, or meta-orchestration, follow the standard awak
 **Unified Environment Protocol:** This single command establishes the complete ML environment with all dependencies properly staged and validated.
 
 **⚠️ CRITICAL:** For **any ML operations**, you **MUST** follow the complete setup process in the authoritative guide below.
-**🚀 Complete Setup Process:** [`forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md`](./forge/OPERATION_PHOENIX_FORGE/CUDA-ML-ENV-SETUP.md)
+**🚀 Complete Setup Process:** [`forge/CUDA-ML-ENV-SETUP.md`](./forge/CUDA-ML-ENV-SETUP.md)
 
 **Quick Start Command (requires Phase 0 System Setup):**
 ```bash
 # Single command for complete ML environment (requires sudo)
-sudo python3 forge/OPERATION_PHOENIX_FORGE/scripts/setup_cuda_env.py --staged --recreate
+sudo python3 forge/scripts/setup_cuda_env.py --staged --recreate
 source ~/ml_env/bin/activate
 ```
 **⚠️ WARNING:** Skipping steps in the setup guide will result in CUDA dependency conflicts.
@@ -1623,7 +1623,7 @@ Project Sanctuary has evolved three distinct content processing pipelines that s
 
 | System | Location | Purpose |
 |--------|----------|---------|
-| **Forge Fine-Tuning** | `forge/OPERATION_PHOENIX_FORGE/scripts/` | Generates JSONL training data for LLM fine-tuning |
+| **Forge Fine-Tuning** | `forge/scripts/` | Generates JSONL training data for LLM fine-tuning |
 | **RAG Vector DB** | `mcp_servers/rag_cortex/operations.py` | Full/incremental ingestion into ChromaDB |
 | **Soul Persistence** | `mcp_servers/lib/hf_utils.py` | Uploads snapshots to Hugging Face Commons |
 
@@ -11675,7 +11675,7 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
              items_skipped += 1
              return
 
-        if rel_from_project_root.startswith('forge/OPERATION_PHOENIX_FORGE/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
+        if rel_from_project_root.startswith('forge/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
              items_skipped += 1
              return
 

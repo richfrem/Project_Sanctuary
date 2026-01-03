@@ -123,7 +123,7 @@ token = get_env_variable("HUGGING_FACE_TOKEN", required=True)
 Based on grep search:
 
 1. **Priority 1 (Secrets)**:
-   - `forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py`
+   - `forge/scripts/upload_to_huggingface.py`
    - `council_orchestrator/orchestrator/engines/gemini_engine.py`
    - `council_orchestrator/orchestrator/engines/openai_engine.py`
 
@@ -135,17 +135,17 @@ Based on grep search:
 ```bash
 # Test with environment variable set
 export HUGGING_FACE_TOKEN="hf_test_token"
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --help
+python forge/scripts/upload_to_huggingface.py --help
 
 # Test with only .env file
 unset HUGGING_FACE_TOKEN
 echo "HUGGING_FACE_TOKEN=hf_test_from_env" > .env
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --help
+python forge/scripts/upload_to_huggingface.py --help
 
 # Test with neither (should fail gracefully)
 unset HUGGING_FACE_TOKEN
 rm .env
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --help
+python forge/scripts/upload_to_huggingface.py --help
 ```
 
 ## Success Metrics

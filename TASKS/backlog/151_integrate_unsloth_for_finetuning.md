@@ -4,7 +4,7 @@
 **Priority:** High
 **Lead:** Unassigned
 **Dependencies:** Requires #150, Blocks #082
-**Related Documents:** ADR 082, `forge/OPERATION_PHOENIX_FORGE/scripts/forge_whole_genome_dataset.py`
+**Related Documents:** ADR 082, `forge/scripts/forge_whole_genome_dataset.py`
 
 ---
 

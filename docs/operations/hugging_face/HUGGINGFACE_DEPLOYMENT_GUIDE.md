@@ -43,7 +43,7 @@ richfrem/Project_Sanctuary_Soul/
 
 ## 2. Fine-Tuned Model Repository
 
-**Location:** `forge/OPERATION_PHOENIX_FORGE/huggingface/`  
+**Location:** `forge/huggingface/`  
 **Purpose:** Sovereign AI model deployment
 
 ### Repositories
@@ -55,10 +55,10 @@ richfrem/Project_Sanctuary_Soul/
 ### Upload Commands
 ```bash
 # Upload LoRA adapter
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-lora --lora
+python forge/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-lora --lora
 
 # Upload GGUF model
-python forge/OPERATION_PHOENIX_FORGE/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final --gguf --modelfile
+python forge/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final --gguf --modelfile
 ```
 
 ### Quick Access
@@ -68,8 +68,8 @@ ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 
 ### Related Docs
 - [Forge Operations Guide](../forge/FORGE_OPERATIONS_GUIDE.md)
-- [Phoenix Forge README](../../../forge/OPERATION_PHOENIX_FORGE/README.md)
-- [GGUF Model Card](../../../forge/OPERATION_PHOENIX_FORGE/huggingface/README.md)
+- [Phoenix Forge README](../../../forge/README.md)
+- [GGUF Model Card](../../../forge/huggingface/README.md)
 
 ---
 
