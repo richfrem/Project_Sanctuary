@@ -116,6 +116,23 @@ compile:
 		source .venv/bin/activate && pip-compile $$req_in --output-file $$req_txt; \
 	done
 
+# Upgrade all dependencies to latest versions
+# Usage: make compile-upgrade
+compile-upgrade:
+	@echo "🔐 Upgrading dependency lockfiles (pip-compile --upgrade)..."
+	@source .venv/bin/activate && pip install pip-tools
+	@if [ -f mcp_servers/requirements-core.in ]; then \
+		source .venv/bin/activate && pip-compile --upgrade mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
+	fi
+	@if [ -f requirements-dev.in ]; then \
+		source .venv/bin/activate && pip-compile --upgrade requirements-dev.in --output-file requirements-dev.txt; \
+	fi
+	@for req_in in mcp_servers/gateway/clusters/*/requirements.in; do \
+		req_txt=$${req_in%.in}.txt; \
+		echo "   Upgrading $$req_in -> $$req_txt..."; \
+		source .venv/bin/activate && pip-compile --upgrade $$req_in --output-file $$req_txt; \
+	done
+
 # Stop the fleet
 down:
 	@echo "🛑 Stopping Fleet..."
