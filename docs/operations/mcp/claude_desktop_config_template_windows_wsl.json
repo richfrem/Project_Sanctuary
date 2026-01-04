@@ -1,0 +1,165 @@
+{
+    "mcpServers": {
+        "adr": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.adr.server"
+            ],
+            "disabled": true
+        },
+        "agent_persona": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.agent_persona.server"
+            ],
+            "disabled": true
+        },
+        "chronicle": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.chronicle.server"
+            ],
+            "disabled": true
+        },
+        "code": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.code.server"
+            ],
+            "disabled": true
+        },
+        "config": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.config.server"
+            ],
+            "disabled": true
+        },
+        "council": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.council.server"
+            ],
+            "disabled": true
+        },
+        "forge_llm": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.forge_llm.server"
+            ],
+            "disabled": true
+        },
+        "git_workflow": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.git.server"
+            ],
+            "disabled": true
+        },
+        "orchestrator": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.orchestrator.server"
+            ],
+            "disabled": true
+        },
+        "protocol": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.protocol.server"
+            ],
+            "disabled": true
+        },
+        "rag_cortex": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.rag_cortex.server"
+            ],
+            "disabled": true
+        },
+        "task": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary /home/richfrem/ml_env/bin/python -m mcp_servers.task.server"
+            ],
+            "disabled": true
+        },
+        "sanctuary_gateway": {
+            "command": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "cd /mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/RICHFREM/source/repos/Project_Sanctuary MCPGATEWAY_BEARER_TOKEN=<YOUR_TOKEN_HERE> /home/richfrem/ml_env/bin/python -m mcp_servers.gateway.bridge"
+            ],
+            "disabled": false,
+            "disabledTools": [
+                "utils-time-get-current-time",
+                "utils-time-get-timezone-info",
+                "utils-calculator-calculate",
+                "utils-calculator-add",
+                "utils-calculator-multiply",
+                "utils-calculator-subtract",
+                "utils-calculator-divide",
+                "utils-uuid-generate-uuid4",
+                "utils-uuid-validate-uuid",
+                "utils-uuid-generate-uuid1",
+                "utils-string-to-upper",
+                "utils-string-trim",
+                "utils-string-to-lower",
+                "utils-string-reverse",
+                "utils-gateway-get-capabilities",
+                "utils-string-replace",
+                "utils-string-word-count",
+                "sanctuary-domain-persona-dispatch",
+                "sanctuary-domain-persona-create-custom",
+                "sanctuary-domain-persona-reset-state",
+                "sanctuary-domain-persona-get-state",
+                "sanctuary-domain-persona-list-roles",
+                "sanctuary-filesystem-code-analyze",
+                "sanctuary-filesystem-code-lint",
+                "sanctuary-filesystem-code-format",
+                "sanctuary-filesystem-code-check-tools",
+                "sanctuary-domain-read-workflow",
+                "sanctuary-domain-get-available-workflows",
+                "sanctuary-domain-config-write",
+                "sanctuary-domain-config-delete",
+                "sanctuary-domain-config-read",
+                "sanctuary-domain-config-list",
+                "sanctuary-git-git-start-feature",
+                "sanctuary-git-git-finish-feature",
+                "sanctuary-cortex-check-sanctuary-model-status",
+                "sanctuary-cortex-query-sanctuary-model",
+                "sanctuary-domain-chronicle-append-entry",
+                "domain-persona-create-custom",
+                "domain-persona-get-state",
+                "domain-persona-reset-state",
+                "domain-persona-list-roles",
+                "domain-persona-dispatch"
+            ]
+        }
+    }
+}

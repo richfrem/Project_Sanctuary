@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-03T09:54:39.368452
+Generated On: 2026-01-03T17:41:05.020154
 
-# Mnemonic Weight (Token Count): ~44,179 tokens
+# Mnemonic Weight (Token Count): ~45,448 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -481,6 +481,7 @@ SHELL := /bin/bash
 # Configuration
 COMPOSE_FILE := docker-compose.yml
 GATEWAY_URL ?= https://localhost:4444
+VENV_DIR ?= .venv
 
 # ----------------------------------------------------------------------------
 # CORE LIFECYCLE TARGETS
@@ -519,53 +520,70 @@ up:
 # Usage: make bootstrap
 bootstrap:
 	@echo "🛡️  Bootstrapping Project Sanctuary environment..."
-	@if [ ! -d ".venv" ]; then \
-		echo "   Creating virtual environment..."; \
-		python3 -m venv .venv; \
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "   Creating virtual environment in $(VENV_DIR)..."; \
+		python3 -m venv $(VENV_DIR); \
 	fi
 	@echo "   Installing core requirements..."
-	@source .venv/bin/activate && pip install --upgrade pip pip-tools
+	@source $(VENV_DIR)/bin/activate && pip install --upgrade pip pip-tools
 	@$(MAKE) install-env
-	@echo "✅ Bootstrap complete. Run 'source .venv/bin/activate' to begin."
+	@echo "✅ Bootstrap complete. Run 'source $(VENV_DIR)/bin/activate' to begin."
 
 # Install all runtime dependencies (Tier 1 & Tier 2)
 # Usage: make install-env
 install-env:
 	@echo "📦 Installing shared core dependencies..."
 	@if [ -f mcp_servers/requirements-core.txt ]; then \
-		source .venv/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
 	else \
 		echo "   ⚠️  mcp_servers/requirements-core.txt not found. Compiling..."; \
 		$(MAKE) compile; \
-		source .venv/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
 	fi
 	@echo "📦 Installing service-specific requirements..."
 	@for req in mcp_servers/gateway/clusters/*/requirements.txt; do \
 		echo "   Installing $$req..."; \
-		source .venv/bin/activate && pip install -r $$req; \
+		source $(VENV_DIR)/bin/activate && pip install -r $$req; \
 	done
 
 # Install development & test dependencies (Tier 3)
 # Usage: make install-dev
 install-dev:
 	@echo "🛠️  Installing development tools..."
-	@source .venv/bin/activate && pip install -r requirements-dev.txt
+	@source $(VENV_DIR)/bin/activate && pip install -r requirements-dev.txt
 
 # Re-compile all .in files to .txt lockfiles
 # Usage: make compile
 compile:
 	@echo "🔐 Locking dependencies (pip-compile)..."
-	@source .venv/bin/activate && pip install pip-tools
+	@source $(VENV_DIR)/bin/activate && pip install pip-tools
 	@if [ -f mcp_servers/requirements-core.in ]; then \
-		source .venv/bin/activate && pip-compile mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
 	fi
 	@if [ -f requirements-dev.in ]; then \
-		source .venv/bin/activate && pip-compile requirements-dev.in --output-file requirements-dev.txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile requirements-dev.in --output-file requirements-dev.txt; \
 	fi
 	@for req_in in mcp_servers/gateway/clusters/*/requirements.in; do \
 		req_txt=$${req_in%.in}.txt; \
 		echo "   Compiling $$req_in -> $$req_txt..."; \
-		source .venv/bin/activate && pip-compile $$req_in --output-file $$req_txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile $$req_in --output-file $$req_txt; \
+	done
+
+# Upgrade all dependencies to latest versions
+# Usage: make compile-upgrade
+compile-upgrade:
+	@echo "🔐 Upgrading dependency lockfiles (pip-compile --upgrade)..."
+	@source $(VENV_DIR)/bin/activate && pip install pip-tools
+	@if [ -f mcp_servers/requirements-core.in ]; then \
+		source $(VENV_DIR)/bin/activate && pip-compile --upgrade mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
+	fi
+	@if [ -f requirements-dev.in ]; then \
+		source $(VENV_DIR)/bin/activate && pip-compile --upgrade requirements-dev.in --output-file requirements-dev.txt; \
+	fi
+	@for req_in in mcp_servers/gateway/clusters/*/requirements.in; do \
+		req_txt=$${req_in%.in}.txt; \
+		echo "   Upgrading $$req_in -> $$req_txt..."; \
+		source $(VENV_DIR)/bin/activate && pip-compile --upgrade $$req_in --output-file $$req_txt; \
 	done
 
 # Stop the fleet
@@ -694,10 +712,15 @@ Project Sanctuary requires a Unix-like environment for its MCP servers and ML de
 1. **OS**: macOS (13+), Linux (Ubuntu 22.04+), or Windows (WSL2 with Ubuntu 22.04+).
 2. **Python**: `python3 --version` should be 3.11 or higher.
 3. **Container Engine**: Podman (v4+) should be installed and running (macOS: `brew install podman && podman machine init && podman machine start`; WSL2: follow Podman docs).
-4. **Ollama**: Install and start Ollama for local LLM inference:
+4. **Make**: GNU Make (v4+) is required (check with `make --version`).
+6. **Compose**: `podman-compose` is required for fleet orchestration.
+   - **Check**: `podman-compose --version`
+   - **Install (WSL2/Linux)**: `sudo apt update && sudo apt install podman-compose`
+   - **Install (Alternative)**: `pip install podman-compose`
+7. **Ollama**: Install and start Ollama for local LLM inference:
    - **macOS**: `brew install ollama && ollama serve`
    - **Linux/WSL2**: Follow [ollama.ai](https://ollama.ai) installation guide
-   - **Verify**: `curl http://localhost:11434/api/tags` should return JSON
+   - **Verify**: `curl -s http://localhost:11434/api/tags > /dev/null && echo "Ollama: OK"`
 
 ---
 
@@ -711,13 +734,28 @@ Project Sanctuary requires a Unix-like environment for its MCP servers and ML de
 
 2. **Run the Bootstrap Sequence**:
    The `Makefile` creates the `.venv` and installs the locked dependency tiers.
+
+   **Standard Usage (Default):**
    ```bash
    make bootstrap
    ```
 
+   **Advanced Usage (Custom Environment):**
+   To target a pre-existing environment (e.g., CUDA ML env), override `VENV_DIR`:
+   ```bash
+   make bootstrap VENV_DIR=~/ml_env
+   ```
+
 3. **Activate the Environment**:
+
+   **Standard (.venv):**
    ```bash
    source .venv/bin/activate
+   ```
+
+   **Advanced (Custom):**
+   ```bash
+   source ~/ml_env/bin/activate
    ```
 
 ---
@@ -808,11 +846,57 @@ After the fleet is running, initialize the vector database with project content:
 ## 🛡️ Troubleshooting & Maintenance
 
 - **Detailed Operations**: For granular control, targeted rebuilds, and deep-dive maintenance, refer to the [Podman Operations Guide](docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md).
-- **Missing .txt files**: If a collaborator added a dependency to a `.in` file but didn't commit the `.txt`, run `make compile`.
-- **WSLENV Errors**: Ensure your Windows environment variables are named exactly as expected by `mcp_servers/lib/env_helper.py`.
+- **Missing Dependencies**: If `ModuleNotFoundError` occurs (e.g., `tiktoken`):
+  1. **Strictly Follow Protocol 073**: Do NOT run `pip install`.
+  2. Add package to `mcp_servers/requirements-core.in`.
+  3. Compile: `make compile [VENV_DIR=~/ml_env]`.
+  4. Bootstrap: `make bootstrap [VENV_DIR=~/ml_env]`.
 - **Podman Context**: If the Gateway cannot connect to containers, verify you are not mixing Docker and Podman contexts.
+- **Image Pull Failures (WSL2 Registry Resolution)**: If Podman cannot resolve image names (e.g., `chromadb/chroma`), manually pull with the `docker.io` prefix:
+  ```bash
+  podman pull docker.io/chromadb/chroma:latest
+  podman pull docker.io/ollama/ollama:latest
+  ```
 - **Ollama Not Responding**: Ensure `ollama serve` is running in a separate terminal or as a background service.
+- **Port 11434 Conflict (Ollama)**: If the container fails to start with `address already in use`, quit the Ollama desktop app (Windows System Tray) or stop the host service (`sudo systemctl stop ollama`) to allow the container to bind to the port.
 - **ChromaDB Empty**: If queries return no results, re-run `python3 scripts/cortex_cli.py ingest --full`.
+
+### Windows WSL: MCP Configuration
+
+When configuring MCP servers for Windows with WSL, the `env` block in JSON **does not propagate** to the WSL subprocess. Use `bash -c` with inline environment variables:
+
+```json
+{
+  "command": "C:\\Windows\\System32\\wsl.exe",
+  "args": [
+    "bash", "-c",
+    "cd /mnt/c/Users/<USER>/source/repos/Project_Sanctuary && PROJECT_ROOT=/mnt/c/Users/<USER>/source/repos/Project_Sanctuary PYTHONPATH=/mnt/c/Users/<USER>/source/repos/Project_Sanctuary /home/<USER>/ml_env/bin/python -m mcp_servers.gateway.bridge"
+  ]
+}
+```
+
+**Key Requirements:**
+- All paths must be Linux-style (`/mnt/c/...`)
+- `PROJECT_ROOT` and `PYTHONPATH` must be set inline in the bash command
+- `MCPGATEWAY_BEARER_TOKEN` can be set inline or via `WSLENV` environment sharing
+
+**Template:** See [`docs/operations/mcp/claude_desktop_config_template_windows_wsl.json`](./mcp/claude_desktop_config_template_windows_wsl.json)
+
+### Missing `__init__.py` Files
+
+If you encounter `ModuleNotFoundError: No module named 'mcp_servers'`, ensure all MCP server directories have `__init__.py` files:
+
+```bash
+# Check for missing __init__.py
+find mcp_servers -type d -exec sh -c 'test -f "$0/__init__.py" || echo "Missing: $0/__init__.py"' {} \;
+
+# Create missing files
+touch mcp_servers/code/__init__.py
+touch mcp_servers/config/__init__.py
+touch mcp_servers/gateway/clusters/sanctuary_domain/__init__.py
+touch mcp_servers/gateway/clusters/sanctuary_filesystem/__init__.py
+touch mcp_servers/gateway/clusters/sanctuary_network/__init__.py
+```
 
 --- END OF FILE docs/operations/BOOTSTRAP.md ---
 
@@ -1279,9 +1363,18 @@ python3 -m mcp_servers.gateway.fleet_setup --server sanctuary_cortex --no-clean
 
 ### Container Won't Start
 
+#### Image Pull Failures (Registry Resolution)
+If you see `Error: ... name "chromadb/chroma:latest" did not resolve to an address` (common in WSL2):
+```bash
+# Manually pull with fully qualified registry
+podman pull docker.io/chromadb/chroma:latest
+```
+
+#### Diagnostic Logs
 ```bash
 # Check logs for errors
 podman compose logs sanctuary_cortex
+
 
 # Verify the image was built
 podman images | grep sanctuary_cortex
@@ -2314,7 +2407,7 @@ The Protocol 128 Hardened Learning Loop is now fully operational with:
 --- START OF FILE mcp_servers/requirements-core.txt ---
 
 #
-# This file is autogenerated by pip-compile with Python 3.13
+# This file is autogenerated by pip-compile with Python 3.11
 # by the following command:
 #
 #    pip-compile --output-file=mcp_servers/requirements-core.txt mcp_servers/requirements-core.in
@@ -2336,6 +2429,8 @@ attrs==25.4.0
     #   referencing
 authlib==1.6.6
     # via fastmcp
+backports-tarfile==1.2.0
+    # via jaraco-context
 beartype==0.22.9
     # via
     #   py-key-value-aio
@@ -2361,6 +2456,7 @@ cryptography==46.0.3
     # via
     #   authlib
     #   pyjwt
+    #   secretstorage
 cyclopts==4.4.3
     # via fastmcp
 diskcache==5.6.3
@@ -2401,13 +2497,19 @@ idna==3.11
     #   httpx
     #   requests
 importlib-metadata==8.7.1
-    # via opentelemetry-api
+    # via
+    #   keyring
+    #   opentelemetry-api
 jaraco-classes==3.4.0
     # via keyring
 jaraco-context==6.0.2
     # via keyring
 jaraco-functools==4.4.0
     # via keyring
+jeepney==0.9.0
+    # via
+    #   keyring
+    #   secretstorage
 jsonschema==4.25.1
     # via mcp
 jsonschema-path==0.3.4
@@ -2507,8 +2609,12 @@ referencing==0.36.2
     #   jsonschema
     #   jsonschema-path
     #   jsonschema-specifications
+regex==2025.11.3
+    # via tiktoken
 requests==2.32.5
-    # via jsonschema-path
+    # via
+    #   jsonschema-path
+    #   tiktoken
 rich==14.2.0
     # via
     #   cyclopts
@@ -2522,6 +2628,8 @@ rpds-py==0.30.0
     # via
     #   jsonschema
     #   referencing
+secretstorage==3.5.0
+    # via keyring
 shellingham==1.5.4
     # via typer
 sortedcontainers==2.4.0
@@ -2535,10 +2643,14 @@ starlette==0.50.0
     #   fastapi
     #   mcp
     #   sse-starlette
+tiktoken==0.12.0
+    # via -r mcp_servers/requirements-core.in
 typer==0.21.0
     # via pydocket
 typing-extensions==4.15.0
     # via
+    #   anyio
+    #   exceptiongroup
     #   fastapi
     #   mcp
     #   opentelemetry-api
@@ -2548,6 +2660,8 @@ typing-extensions==4.15.0
     #   pydantic
     #   pydantic-core
     #   pydocket
+    #   referencing
+    #   starlette
     #   typer
     #   typing-inspection
 typing-inspection==0.4.2
@@ -2583,13 +2697,14 @@ sse-starlette
 httpx
 pydantic
 fastmcp  # MCP SDK – assumed baseline for all Sanctuary services
+tiktoken
 
 --- END OF FILE mcp_servers/requirements-core.in ---
 
 --- START OF FILE requirements-dev.txt ---
 
 #
-# This file is autogenerated by pip-compile with Python 3.13
+# This file is autogenerated by pip-compile with Python 3.11
 # by the following command:
 #
 #    pip-compile --output-file=requirements-dev.txt requirements-dev.in
@@ -2600,7 +2715,7 @@ black==25.12.0
     # via -r requirements-dev.in
 click==8.3.1
     # via black
-coverage[toml]==7.13.0
+coverage[toml]==7.13.1
     # via pytest-cov
 dill==0.4.0
     # via pylint
@@ -2608,7 +2723,7 @@ iniconfig==2.3.0
     # via pytest
 isort==7.0.0
     # via pylint
-librt==0.7.4
+librt==0.7.7
     # via mypy
 mccabe==0.7.0
     # via pylint

@@ -30,3 +30,4 @@ Failure to confirm this is a **Critical Protocol Breach.** MUST NOT TAKE ACTIONS
 
 ### 6. NO ASSUMPTIONS
 **DON'T MAKE ASSUMPTIONS.**  ASK CLARIFYING QUESTIONS TO CONFIRM INTENT.
+If something is unclear or ambiguous, DON'T ASSUME, you MUST ASK CLARIFYING QUESTIONS!!
