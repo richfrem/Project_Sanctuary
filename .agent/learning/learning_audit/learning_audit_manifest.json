@@ -37,5 +37,14 @@
     ".agent/learning/bootstrap_manifest.json",
     ".agent/learning/bootstrap_packet.md",
     "scripts/cortex_cli.py",
-    "Makefile"
+    "Makefile",
+    "llm.md",
+    "docs/operations/mcp/claude_desktop_config_template.json",
+    "docs/operations/mcp/claude_desktop_config_template_windows_wsl.json",
+    "mcp_servers/code/__init__.py",
+    "mcp_servers/config/__init__.py",
+    "mcp_servers/gateway/clusters/sanctuary_domain/__init__.py",
+    "mcp_servers/gateway/clusters/sanctuary_filesystem/__init__.py",
+    "mcp_servers/gateway/clusters/sanctuary_network/__init__.py",
+    "forge/scripts/forge_whole_genome_dataset.py"
 ]

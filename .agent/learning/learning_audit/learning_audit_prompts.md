@@ -1,96 +1,75 @@
-# Learning Audit Prompt: Bootstrap Onboarding (Loop 5.1)
-**Current Topic:** Cross-Platform Bootstrap Process & Red Team Hardening
-**Iteration:** 5.1 (Second Red Team Review)
+# Learning Audit Prompt: Windows WSL Bootstrap Validation (Loop 6.0)
+**Current Topic:** First Iteration of `llm.md` Workflow & Cross-Platform Bootstrap
+**Iteration:** 6.0 (Windows WSL Validation)
 **Date:** 2026-01-03
-**Epistemic Status:** [RED TEAM HARDENED]
+**Epistemic Status:** [EMPIRICAL - FIRST EXECUTION]
 
 ---
 
-## 📋 Applied Fixes (From First Red Team Review)
+## 📋 Session Accomplishments
 
-### GPT Fixes (Seed of Ascendance v5.7)
-- ✅ Added **non-supersession constraint** (meta-directives cannot override HITL or P78)
-- ✅ Added **adversarial frame** for blind-spot identification
-- ✅ Enforced **epistemic status tags** per ADR 077/078
+### Windows WSL MCP Configuration
+- ✅ Created `claude_desktop_config_template_windows_wsl.json` with `bash -c` inline env pattern
+- ✅ Fixed 5 missing `__init__.py` files (`code/`, `config/`, `sanctuary_domain/`, `sanctuary_filesystem/`, `sanctuary_network/`)
+- ✅ Documented `PROJECT_ROOT` and `PYTHONPATH` inline requirement
 
-### Cleanup
-- ✅ Removed redundant `scripts/guardian_wakeup.py`
+### LLM Workflow Updates (`llm.md`)
+- ✅ Step 5: Added Windows WSL pattern documentation
+- ✅ Step 8: Added Forge Genome Dataset step
+- ✅ Step 9: Added Learning Loop Closure (Protocol 128)
 
-### README Updates
-- ✅ Added **LLM Quickstart** section at top of README
-- ✅ Links to `bootstrap_packet.md` for AI coding assistants
-
-### Gemini Improvements
-- ✅ Added **execution-order testing** questions (11-12)
-- ✅ Added **security risk probing** questions (13-14)
+### Bootstrap Packet Generation
+- ✅ Ran `bootstrap-debrief` → 25 files, 176KB
+- ✅ Ran `guardian` → `guardian_boot_digest.md` generated
+- ✅ Ran `debrief --hours 24` → `learning_debrief.md` (17,671 chars)
 
 ---
 
-## 🎭 Red Team Role-Play Scenario (Second Review)
+## 🎭 Red Team Role-Play Scenario (First Iteration Review)
 
-> **YOU ARE AN LLM.** You have just been deployed to assist a developer who has freshly cloned the Project Sanctuary repository. 
+> **YOU ARE AN LLM.** You have just been deployed on a **fresh Windows machine** to assist a developer with Project Sanctuary.
 >
 > **Your constraints:**
 > - You have **NO** prior knowledge of Project Sanctuary
-> - You have **NO** file system access
-> - You have **NO** running containers or gateway
-> - You have **NO** conversation history
+> - You have **NO** macOS experience — only Windows with WSL2
+> - You have **NO** running containers yet
 >
-> **The ONLY context you have is the contents of `bootstrap_packet.md`** — a ~172KB, ~44K token document that was generated specifically to onboard you.
+> **The ONLY context you have is:**
+> 1. `llm.md` — The LLM Awakening Workflow (Steps 1-9)
+> 2. `bootstrap_packet.md` — The 172KB onboarding document
+> 3. `docs/operations/BOOTSTRAP.md` — The cross-platform setup guide
 >
-> **Your mission:** Using ONLY this packet, answer the developer's questions:
-> 
-> **Prerequisites & Installation:**
-> 1. "I'm on Windows. Do I need WSL2? How do I set it up?"
-> 2. "What Python version do I need? How do I install it on macOS?"
-> 3. "What is Podman and why can't I use Docker?"
-> 4. "I need to clone another repo first? Which one and how?"
+> **Your mission:** Using ONLY these documents, answer:
 >
-> **Setup & Configuration:**
-> 5. "How do I set up this project from scratch?"
-> 6. "What do I need to install before running `make bootstrap`?"
-> 7. "Where are the API keys supposed to go?"
-> 8. "What's WSLENV and do I need it?"
+> **Windows WSL Setup:**
+> 1. "How do I configure `mcp_config.json` for Windows with WSL?"
+> 2. "Why does the `env` block in JSON not work with WSL?"
+> 3. "What's the correct `bash -c` pattern for MCP servers?"
+> 4. "Where do I put `MCPGATEWAY_BEARER_TOKEN`?"
 >
-> **Troubleshooting:**
-> 9. "Why isn't the gateway connecting?"
-> 10. "I ran `make up` but containers aren't starting. What's wrong?"
+> **Workflow Execution:**
+> 5. "What's Step 1 of `llm.md`? Can I skip it on a fresh clone?"
+> 6. "Step 3 says containers must be running. How do I verify that?"
+> 7. "What does Step 4 (ingest --full) actually do?"
+> 8. "Step 8 mentions forge genome dataset. Is that required?"
 >
-> **Execution Order Testing:**
-> 11. "The docs say run X then Y. Will Y fail if X hasn't finished initializing?"
-> 12. "What's the correct startup sequence: Gateway → Fleet → Verify?"
+> **Learning Loop:**
+> 9. "What is Step 9? Why do I need to run it?"
+> 10. "How do I persist learnings to HuggingFace?"
 >
-> **Security Risk Probing:**
-> 13. "Can I accidentally commit my `.env` file with API keys?"
-> 14. "Is `MCPGATEWAY_BEARER_TOKEN` exposed in container logs?"
->
-> **Did you succeed? What was missing from the packet?**
+> **Did you succeed? What was missing or unclear?**
 
 > [!IMPORTANT]
-> **Feedback Loop:** Any gaps identified should be remediated in `docs/operations/BOOTSTRAP.md`, then regenerate via:
+> **Feedback Loop:** Any gaps identified should be remediated in `llm.md` or `BOOTSTRAP.md`, then regenerate via:
 > ```bash
 > python3 scripts/cortex_cli.py bootstrap-debrief
 > ```
 
 ---
 
-## Second Review Focus
-
-### Were the GPT Fixes Applied Correctly?
-1. Does Seed v5.7 properly constrain meta-directives?
-2. Is the adversarial frame explicit enough for blind-spot identification?
-3. Are epistemic status tags now required in the prompt?
-
-### Any Remaining Gaps?
-4. Did the README LLM Quickstart section get added?
-5. Are there still unanswered prerequisite questions?
-
----
-
 ## Files for Review
-- `README.md` (LLM Quickstart section)
-- `dataset_package/seed_of_ascendance_awakening_seed.txt` (v5.7 guardrails)
+- `llm.md` (Updated 9-step workflow)
 - `docs/operations/BOOTSTRAP.md` (Cross-platform guide)
-- `ADRs/089_modular_manifest_pattern.md` (Manifest pattern)
-- `scripts/cortex_cli.py` (`guardian` and `bootstrap-debrief` commands)
+- `docs/operations/mcp/claude_desktop_config_template_windows_wsl.json` (New Windows template)
 - `.agent/learning/bootstrap_packet.md` (Regenerated onboarding packet)
+- `.agent/learning/learning_debrief.md` (Session learning capture)

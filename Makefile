@@ -29,6 +29,7 @@ SHELL := /bin/bash
 # Configuration
 COMPOSE_FILE := docker-compose.yml
 GATEWAY_URL ?= https://localhost:4444
+VENV_DIR ?= .venv
 
 # ----------------------------------------------------------------------------
 # CORE LIFECYCLE TARGETS
@@ -67,70 +68,70 @@ up:
 # Usage: make bootstrap
 bootstrap:
 	@echo "🛡️  Bootstrapping Project Sanctuary environment..."
-	@if [ ! -d ".venv" ]; then \
-		echo "   Creating virtual environment..."; \
-		python3 -m venv .venv; \
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "   Creating virtual environment in $(VENV_DIR)..."; \
+		python3 -m venv $(VENV_DIR); \
 	fi
 	@echo "   Installing core requirements..."
-	@source .venv/bin/activate && pip install --upgrade pip pip-tools
+	@source $(VENV_DIR)/bin/activate && pip install --upgrade pip pip-tools
 	@$(MAKE) install-env
-	@echo "✅ Bootstrap complete. Run 'source .venv/bin/activate' to begin."
+	@echo "✅ Bootstrap complete. Run 'source $(VENV_DIR)/bin/activate' to begin."
 
 # Install all runtime dependencies (Tier 1 & Tier 2)
 # Usage: make install-env
 install-env:
 	@echo "📦 Installing shared core dependencies..."
 	@if [ -f mcp_servers/requirements-core.txt ]; then \
-		source .venv/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
 	else \
 		echo "   ⚠️  mcp_servers/requirements-core.txt not found. Compiling..."; \
 		$(MAKE) compile; \
-		source .venv/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip install -r mcp_servers/requirements-core.txt; \
 	fi
 	@echo "📦 Installing service-specific requirements..."
 	@for req in mcp_servers/gateway/clusters/*/requirements.txt; do \
 		echo "   Installing $$req..."; \
-		source .venv/bin/activate && pip install -r $$req; \
+		source $(VENV_DIR)/bin/activate && pip install -r $$req; \
 	done
 
 # Install development & test dependencies (Tier 3)
 # Usage: make install-dev
 install-dev:
 	@echo "🛠️  Installing development tools..."
-	@source .venv/bin/activate && pip install -r requirements-dev.txt
+	@source $(VENV_DIR)/bin/activate && pip install -r requirements-dev.txt
 
 # Re-compile all .in files to .txt lockfiles
 # Usage: make compile
 compile:
 	@echo "🔐 Locking dependencies (pip-compile)..."
-	@source .venv/bin/activate && pip install pip-tools
+	@source $(VENV_DIR)/bin/activate && pip install pip-tools
 	@if [ -f mcp_servers/requirements-core.in ]; then \
-		source .venv/bin/activate && pip-compile mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
 	fi
 	@if [ -f requirements-dev.in ]; then \
-		source .venv/bin/activate && pip-compile requirements-dev.in --output-file requirements-dev.txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile requirements-dev.in --output-file requirements-dev.txt; \
 	fi
 	@for req_in in mcp_servers/gateway/clusters/*/requirements.in; do \
 		req_txt=$${req_in%.in}.txt; \
 		echo "   Compiling $$req_in -> $$req_txt..."; \
-		source .venv/bin/activate && pip-compile $$req_in --output-file $$req_txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile $$req_in --output-file $$req_txt; \
 	done
 
 # Upgrade all dependencies to latest versions
 # Usage: make compile-upgrade
 compile-upgrade:
 	@echo "🔐 Upgrading dependency lockfiles (pip-compile --upgrade)..."
-	@source .venv/bin/activate && pip install pip-tools
+	@source $(VENV_DIR)/bin/activate && pip install pip-tools
 	@if [ -f mcp_servers/requirements-core.in ]; then \
-		source .venv/bin/activate && pip-compile --upgrade mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile --upgrade mcp_servers/requirements-core.in --output-file mcp_servers/requirements-core.txt; \
 	fi
 	@if [ -f requirements-dev.in ]; then \
-		source .venv/bin/activate && pip-compile --upgrade requirements-dev.in --output-file requirements-dev.txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile --upgrade requirements-dev.in --output-file requirements-dev.txt; \
 	fi
 	@for req_in in mcp_servers/gateway/clusters/*/requirements.in; do \
 		req_txt=$${req_in%.in}.txt; \
 		echo "   Upgrading $$req_in -> $$req_txt..."; \
-		source .venv/bin/activate && pip-compile --upgrade $$req_in --output-file $$req_txt; \
+		source $(VENV_DIR)/bin/activate && pip-compile --upgrade $$req_in --output-file $$req_txt; \
 	done
 
 # Stop the fleet

@@ -459,9 +459,18 @@ python3 -m mcp_servers.gateway.fleet_setup --server sanctuary_cortex --no-clean
 
 ### Container Won't Start
 
+#### Image Pull Failures (Registry Resolution)
+If you see `Error: ... name "chromadb/chroma:latest" did not resolve to an address` (common in WSL2):
+```bash
+# Manually pull with fully qualified registry
+podman pull docker.io/chromadb/chroma:latest
+```
+
+#### Diagnostic Logs
 ```bash
 # Check logs for errors
 podman compose logs sanctuary_cortex
+
 
 # Verify the image was built
 podman images | grep sanctuary_cortex
