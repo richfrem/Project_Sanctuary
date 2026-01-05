@@ -306,8 +306,8 @@ cd ../Project_Sanctuary
 Required for Python/CUDA environment. Must be sibling to Project_Sanctuary.
 
 ```bash
-# From Project_Sanctuary root (in WSL)
-cd ..
+# From ~/repos (in WSL)
+cd ~/repos
 git clone https://github.com/bcgov/ML-Env-CUDA13.git
 cd ML-Env-CUDA13
 
@@ -587,7 +587,7 @@ python -c "import torch; print(torch.cuda.is_available())"
 ```bash
 # Re-run environment setup
 source ~/ml_env/bin/activate
-pip install -r ~/ML-Env-CUDA13/requirements.txt
+pip install -r ~/repos/ML-Env-CUDA13/requirements.txt
 ```
 
 ---
