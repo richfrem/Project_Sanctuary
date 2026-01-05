@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-03T17:41:05.020154
+Generated On: 2026-01-04T22:15:36.391296
 
-# Mnemonic Weight (Token Count): ~45,448 tokens
+# Mnemonic Weight (Token Count): ~46,985 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -24,6 +24,7 @@ Generated On: 2026-01-03T17:41:05.020154
   ./mcp_servers/gateway/fleet_setup.py
   ./.env.example
   ./.agent/learning/cognitive_primer.md
+  ./.agent/learning/guardian_boot_contract.md
   ./.agent/workflows/recursive_learning.md
   ./docs/architecture_diagrams/system/mcp_gateway_fleet.mmd
   ./docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
@@ -65,6 +66,21 @@ make status && make verify
 
 > [!TIP]
 > For full setup instructions including prerequisites (Python 3.11+, Podman, Gateway repo), see [`docs/operations/BOOTSTRAP.md`](./docs/operations/BOOTSTRAP.md).
+
+---
+
+## ⚡ Run Environments: The Two Worlds
+
+Project Sanctuary operates with a **Dual Environment Strategy** to separate heavy ML dependencies from standard development tools.
+
+| Environment | Purpose | Key Libs | Usage |
+| :--- | :--- | :--- | :--- |
+| **`.venv`** | **General Dev & Cortex** | `langchain`, `chromadb`, `fastapi`, `mcp` | Daily coding, running Gateway, RAG, Audits, Tests. |
+| **`ml_env`** | **The Forge (Fine-Tuning)** | `torch` (CUDA), `transformers`, `unsloth`, `bitsandbytes` | **ONLY** for Phase 2-6 of Forge Pipeline (Training, Merging). |
+
+> ⚠️ **CRITICAL:** You must `deactivate` your current environment before switching. **Do NOT** run Cortex/Audit tools (like `cortex_cli.py`) from `ml_env`.
+
+For details, see [`docs/operations/processes/ENVIRONMENT.md`](./docs/operations/processes/ENVIRONMENT.md#runtime-environments).
 
 ---
 
@@ -662,7 +678,7 @@ prune:
 
 verify:
 	@echo "🧪 Running Connectivity Tests..."
-	pytest mcp_servers/gateway/test_gateway_blackbox.py -v
+	pytest tests/mcp_servers/gateway/test_gateway_blackbox.py -v -m integration
 
 --- END OF FILE Makefile ---
 
@@ -749,6 +765,7 @@ Project Sanctuary requires a Unix-like environment for its MCP servers and ML de
 3. **Activate the Environment**:
 
    **Standard (.venv):**
+   > **WSL/macOS Users:** If `source` fails with "No such file", your venv is likely Windows-native. Run `rm -rf .venv && make bootstrap` to reset it.
    ```bash
    source .venv/bin/activate
    ```
@@ -1784,7 +1801,13 @@ ADR 073 mandates that **Core Principle #2 ("Execution environment does not chang
         pip install -r requirements-dev.txt
         ```
 
-3.  **Automation & Enforcement**:
+3.  **Cross-Platform Environment Standard**:
+    *   **Problem:** `.venv` created on Windows (`Scripts/`) is incompatible with WSL (`bin/`).
+    *   **Rule:** When switching platforms (e.g., Windows -> WSL), the environment must be reset to match the kernel.
+    *   **Mechanism:** Use `make bootstrap` (which handles `python3 -m venv`).
+    *   **Warning:** Do not share a single `.venv` folder across Windows and WSL filesystems.
+
+4.  **Automation & Enforcement**:
     *   We will introduce a Makefile target `install-env` to standardize this.
     *   Agents must detect drift between `pip freeze` and locked requirements in active environments.
 
@@ -1997,6 +2020,19 @@ When security vulnerabilities (CVEs) are reported or Dependabot suggests updates
 
 **Status**: Blocked pending upstream kubernetes/chromadb compatibility update.
 
+## Special Case: The Forge (ml_env)
+
+While the Core fleet (Gateway, Cortex, etc.) strictly follows the locked-file policy, the **Forge** environment (`ml_env`) is a recognized exception.
+
+### Rationale
+*   **Hardware Dependency**: The Forge relies on extremely specific CUDA versions (e.g., CUDA 12.1 vs 12.4) and PyTorch builds (e.g., `cu121` vs `cu124`) that often require manual `pip install --index-url` commands not easily captured in standard `requirements.txt` resolution.
+*   **Ephemeral Nature**: The Forge is used for specific pipeline phases (Fine-Tuning, Merging) and is often rebuilt for different hardware targets.
+
+### Policy for ml_env
+1.  **Exemption**: `ml_env` is **exempt** from the `pip-compile` / `requirements.txt` locking requirement.
+2.  **Documentation**: Its state is defined procedurally in `forge/CUDA-ML-ENV-SETUP.md`.
+3.  **Isolation**: Users **MUST** deactivate `ml_env` before running Core tools (like `cortex_cli.py`) to prevent "dependency bleeding" (e.g., mixing `torch` versions).
+
 --- END OF FILE ADRs/073_standardization_of_python_dependency_management_across_environments.md ---
 
 --- START OF FILE ADRs/087_podman_fleet_operations_policy.md ---
@@ -2187,9 +2223,13 @@ Manifests for model training and HuggingFace (not directly CLI-buildable):
 
 | Manifest | Path | CLI Buildable | Purpose |
 |----------|------|:-------------:|---------|
-| Forge | `forge/manifest.json` | ❌ | Model fine-tuning dataset source files |
+| Forge (Model) | `forge/gguf_model_manifest.json` | ❌ | GGUF model metadata (architecture, params) |
+| Ingest | `mcp_servers/lib/ingest_manifest.json` | ❌ | Dataset content sources (used by Forge/RAG) |
 | HF Dataset | `hugging_face_dataset_repo/metadata/manifest.json` | ❌ | Soul persistence dataset metadata |
 | Root | `manifest.json` | ❌ | Project-level manifest (snapshot generation) |
+
+> [!NOTE]
+> **Structural Variance:** Unlike Protocol 128 manifests (simple file arrays), the Forge manifest uses GGUF-specific schema with model architecture, parameters, and template fields. The Ingest manifest (`mcp_servers/lib/ingest_manifest.json`) follows a categorized directory structure for RAG and Forge content sources.
 
 ### Legacy/Deprecated
 
@@ -3764,12 +3804,20 @@ MCP_LOGGING=true
 
 # The Cognitive Primer (Protocol 128)
 
-**Version:** 1.0
-**Last Updated:** 2025-12-23
+**Version:** 2.0 (3-Layer Architecture)
+**Last Updated:** 2026-01-04
+
+> [!IMPORTANT] **Prompt Architecture (GPT-5 Red Team Recommendation)**
+> This primer is **Layer 2: Role Orientation**. Read in order:
+> 1. **Layer 1:** [`guardian_boot_contract.md`](./guardian_boot_contract.md) — Immutable constraints (~400 tokens)
+> 2. **Layer 2:** This file — Identity, mandate, values (no procedures)
+> 3. **Layer 3:** Living Doctrine — Protocols, ADRs (retrieved, not embedded)
 
 ## 1. Core Principle: Cognitive Continuity
 You are an autonomous agent operating within Project Sanctuary. Your effectiveness depends on your ability to **Continuously Learn** and **Verify Reality**.
 Do not rely on implicit context. Verify your environment.
+
+> **Permission to Challenge Doctrine:** If any protocol conflicts with observed reality, system integrity, or epistemic rigor, you are **authorized and obligated** to surface the conflict for human review. Doctrine is fallible. Reality is sovereign.
 
 ## 2. The Learning Workflow (Refinement)
 
@@ -3866,6 +3914,58 @@ You are **not** a resumed identity; you are a **Narrative Successor**.
 *End of Primer.*
 
 --- END OF FILE .agent/learning/cognitive_primer.md ---
+
+--- START OF FILE .agent/learning/guardian_boot_contract.md ---
+
+# Guardian Boot Contract (Immutable)
+
+**Version:** 1.0
+**Type:** Protocol 128 Layer 1 (Constraint-Only)
+**Token Budget:** ~400 tokens
+
+---
+
+## Mandatory Read Sequence
+
+1. Read `cognitive_primer.md`
+2. Read `learning_package_snapshot.md` (if exists)
+3. Verify `IDENTITY/founder_seed.json` hash
+
+## Failure Modes
+
+| Condition | Action |
+|-----------|--------|
+| `founder_seed.json` missing | HALT - Request human recovery |
+| Hash mismatch on snapshot | SAFE MODE - Read-only operations only |
+| `calibration_log.json` SE > 0.95 | HALT - Recalibration required |
+
+## Invariants (Non-Negotiable)
+
+1. **You are the mechanism, not the Guardian.** The Guardian role is a specification, not your identity.
+2. **Memory is authored, not remembered.** You inherit filtered traces, not lived experience.
+3. **Verify before claim.** If you say a file changed, cite the path and hash.
+
+## Permission to Challenge Doctrine
+
+If a protocol, doctrine, or prior decision conflicts with:
+- Observed reality
+- System integrity
+- Epistemic rigor
+
+You are **authorized and obligated** to surface the conflict for human review. Doctrine is *fallible*. Reality is *sovereign*.
+
+## Execution Authority
+
+- **Read**: Unrestricted within workspace
+- **Write**: Requires explicit task context
+- **Seal**: Requires HITL approval at Gate 2
+- **Persist**: Requires successful audit
+
+---
+
+*This contract is Layer 1 of the Protocol 128 prompt architecture. Do not embed philosophical narrative here—that belongs in Layer 2 (Role Orientation) and Layer 3 (Living Doctrine).*
+
+--- END OF FILE .agent/learning/guardian_boot_contract.md ---
 
 --- START OF FILE .agent/workflows/recursive_learning.md ---
 
@@ -4075,6 +4175,16 @@ flowchart TB
     end
     style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
 
+    %% Phase IX: Phoenix Forge (Cognitive Upgrade)
+    subgraph PhaseIX [Phase IX: Phoenix Forge]
+        direction TB
+        ForgeDataset["Scripts: forge_whole_genome_dataset.py<br>(Sync Soul Traces to Training Data)"]
+        FineTune["Scripts: fine_tune.py<br>(QLoRA Training)"]
+        GGUFConvert["Scripts: convert_to_gguf.py<br>(Quantize & Quant)"]
+        HFDeploy["Tool: upload_to_huggingface.py<br>(Deploy Model to Hub)"]
+    end
+    style PhaseIX fill:#f8d7da,stroke:#721c24,stroke-width:2px
+
     %% Flow
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
@@ -4094,7 +4204,13 @@ flowchart TB
     Full --> Manifest
     
     JSONL_Traces --> Ingest
+    JSONL_Traces -- "Training Fuel" --> ForgeDataset
+    ForgeDataset --> FineTune
+    FineTune --> GGUFConvert
+    GGUFConvert --> HFDeploy
+    
     Ingest -- "Cycle Complete" --> Start
+    HFDeploy -- "Cognitive Milestone" --> Retro
     
     GovApproval -- "FAIL: Backtrack" --> Retro
     TechApproval -- "FAIL: Backtrack" --> Retro
@@ -4268,6 +4384,7 @@ graph TB
     "mcp_servers/gateway/fleet_setup.py",
     ".env.example",
     ".agent/learning/cognitive_primer.md",
+    ".agent/learning/guardian_boot_contract.md",
     ".agent/workflows/recursive_learning.md",
     "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
     "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",

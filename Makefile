@@ -210,4 +210,4 @@ prune:
 
 verify:
 	@echo "🧪 Running Connectivity Tests..."
-	pytest mcp_servers/gateway/test_gateway_blackbox.py -v
+	pytest tests/mcp_servers/gateway/test_gateway_blackbox.py -v -m integration

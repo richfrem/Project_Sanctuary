@@ -18,6 +18,7 @@
     "mcp_servers/gateway/fleet_setup.py",
     ".env.example",
     ".agent/learning/cognitive_primer.md",
+    ".agent/learning/guardian_boot_contract.md",
     ".agent/workflows/recursive_learning.md",
     "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
     "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
