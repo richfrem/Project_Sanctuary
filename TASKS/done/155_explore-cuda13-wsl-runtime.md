@@ -1,8 +1,15 @@
 # Explore CUDA 13 Runtime for WSL2 Environment
 
-**Status:** Backlog  
-**Priority:** Medium (upgrade now possible)  
-**Created:** 2026-01-04  
+**Status:** Done
+**Priority:** Medium (upgrade now possible)
+**Created:** 2026-01-04
+**Completed:** 2026-01-04
+
+**Resolution:**
+Investigated and implemented as **Option B (Experimental)** in `ML-Env-CUDA13`. 
+- PyTorch cu130 is available but `xformers` and `bitsandbytes` have compatibility friction.
+- Decision: Stick with CUDA 12.6 (Option A) for production stability.
+- Repository `ML-Env-CUDA13` supports both via `setup_ml_env_wsl.sh --cuda13` flag.
 
 ## Context
 The current ML environment (`~/ml_env`) was built with PyTorch 2.9.0+cu126 (CUDA 12.x runtime) while the Windows host driver reports CUDA 13.0. This version mismatch is documented as "expected and normal" due to backward compatibility.

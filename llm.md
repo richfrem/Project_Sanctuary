@@ -61,7 +61,6 @@ curl -s http://localhost:11434/api/tags > /dev/null && echo "Ollama: OK" || echo
 make bootstrap && source .venv/bin/activate
 ```
 
-**Option B: CUDA ML Environment (GPU)**
 ```bash
 # Target existing environment (requires Makefile VENV_DIR support)
 make bootstrap VENV_DIR=~/ml_env && source ~/ml_env/bin/activate
@@ -69,6 +68,19 @@ make bootstrap VENV_DIR=~/ml_env && source ~/ml_env/bin/activate
 
 > [!TIP] **Optional Tools:**
 > For diagram rendering (mermaid-cli) and other Node.js tools, see [dependency_management_policy.md](.agent/learning/rules/dependency_management_policy.md#6-non-python-tooling-nodejs--npm).
+
+#### 2.3 Directory Layout (Sibling Repositories)
+Ensure your `~/repos` directory follows this structure for correct relative path resolution in scripts:
+
+```text
+~/repos/
+├── Project_Sanctuary/    ← This repo (uses standard .venv)
+├── llama.cpp/            ← C++ compiles (for GGUF conversion)
+└── ML-Env-CUDA13/        ← Python/CUDA environment (ml_env source)
+```
+
+> [!NOTE]
+> `forge-llm.md` and build scripts rely on `../llama.cpp` and `../ML-Env-CUDA13` relative paths.
 
 #### 2.3 Troubleshooting: Missing Dependencies
 If you encounter `ModuleNotFoundError` (e.g., `tiktoken`), you MUST follow **Protocol 073** (Standardized Dependency Management).
