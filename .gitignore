@@ -107,6 +107,7 @@ ARCHIVES/
 archive/
 archives/
 !ARCHIVE/council_orchestrator/
+!forge/archive/
 research/RESEARCH_PAPERS/
 *.log
 nohup.out
@@ -156,6 +157,7 @@ forge/OPERATION_PHOENIX_FORGE/Operation_Whole_Genome_Forge-local.ipynb
 # Hugging Face Model Artifacts
 model_card.yaml
 Modelfile
+!forge/huggingface/model_card.yaml
 
 # work in progress items
 WORK_IN_PROGRESS/AGORA_PoC_Core/

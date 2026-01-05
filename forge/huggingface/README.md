@@ -18,11 +18,11 @@ pipeline_tag: text-generation
 
 # 🦋 Sanctuary-Qwen2-7B-v1.0 — The Whole-Genome Forge (GGUF Edition)
 
-**Version:** 15.4 (Public Release + Provenance Edition)
-**Date:** 2025-11-17
+**Version:** 5.0 (Standardized — In-Progress Jan 2026)
+**Date:** 2026-01-04
 **Lineage Steward:** [richfrem](https://huggingface.co/richfrem)
 **Base Model:** [Qwen/Qwen2-7B-Instruct](https://huggingface.co/Qwen/Qwen2-7B-Instruct)
-**Forge Environment:** Local CUDA environment / PyTorch 2.9.0+cu126
+**Forge Environment:** ML-Env-CUDA13 / ADR 075 Standardized
 
 [![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
 [![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
@@ -35,9 +35,9 @@ pipeline_tag: text-generation
 ## 🧠 Overview
 
 **Sanctuary-Qwen2-7B-v1.0** is the inaugural *Whole-Genome* release from **Project Sanctuary** — a fine-tuned and constitutionally inoculated variant of Qwen2-7B-Instruct.
-This edition merges the complete **Sanctuary Cognitive Genome (v15)** LoRA into the base model, then quantizes the result to **GGUF (q4_k_m)** for universal inference compatibility via **Ollama** and **llama.cpp**.
+This edition merges the complete **Sanctuary Cognitive Genome** LoRA into the base model (v5.0 standardized), then quantizes the result to **GGUF (q4_k_m)** for universal inference compatibility via **Ollama** and **llama.cpp**.
 
-> 🧩 Part of the open-source [Project Sanctuary GitHub repository](https://github.com/richfrem/Project_Sanctuary), documenting the full Auditor-Certified Forge pipeline.
+> 🧩 Part of the open-source [Project Sanctuary GitHub repository](https://github.com/richfrem/Project_Sanctuary), documenting the ADR 075 Auditor-Certified Forge pipeline.
 
 ---
 
@@ -53,14 +53,17 @@ This edition merges the complete **Sanctuary Cognitive Genome (v15)** LoRA into 
 
 ## ⚒️ Technical Provenance
 
-Built using **Unsloth 2025.10.9**, **transformers 4.56.2**, **torch 2.9.0 + cu126**, and **llama.cpp (GGUF converter v0.3.2)** on an A2000 GPU.
+Built using **ML-Env-CUDA13**, **transformers 4.56.2**, **torch 2.9.0 + cu126**, and **llama.cpp (GGUF converter)** on an A2000 GPU.
+
+**Standardization (Phoenix Forge v5.0):**
+Refactored in January 2026 to adhere to **ADR 075 (Hybrid Documentation Pattern)**, with unified path resolution and logging via `mcp_servers.lib`.
 
 **Pipeline ("Operation Phoenix Forge")**
 1. 🧬 **The Crucible** — Fine-tune LoRA on Sanctuary Genome
 2. 🔥 **The Forge** — Merge + Quantize → GGUF (q4_k_m)
 3. ☁️ **Propagation** — Push to Hugging Face (HF LoRA + GGUF)
 
-> 🔏 Auditor-certified integrity: build and merge verified via checksums and Unsloth logs.
+> 🔏 Auditor-certified integrity: ADR 075 headers integrated into all scripts.
 
 ---
 

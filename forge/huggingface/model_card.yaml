@@ -1,0 +1,51 @@
+# Sanctuary-Qwen2-7B-v1.0 Model Card Metadata
+# Version: 5.0 (Standardized - Jan 2026)
+
+model_details:
+  name: "Sanctuary-Qwen2-7B-v1.0"
+  architecture: "Qwen2"
+  base_model: "Qwen/Qwen2-7B-Instruct"
+  version: "5.0"
+  date: "2026-01-04"
+  organization: "Project Sanctuary"
+  license: "cc-by-4.0"
+  steward: "richfrem"
+
+training_details:
+  pipeline: "Operation Phoenix Forge v5.0"
+  standard: "ADR 075 (Hybrid Documentation Pattern)"
+  environment: "ML-Env-CUDA13"
+  framework: "PEFT / transformers / trl"
+  method: "QLoRA"
+  quantization: "nf4"
+  hardware: "NVIDIA A2000"
+  
+  # Hyperparameters (Synced from training_config.yaml)
+  num_epochs: 3
+  learning_rate: 2e-4
+  optimizer: "paged_adamw_8bit"
+  lr_scheduler: "cosine"
+  max_seq_length: 256
+  lora_r: 16
+  lora_alpha: 32
+  gradient_accumulation_steps: 8
+
+tags:
+  - gguf
+  - ollama
+  - qwen2
+  - fine-tuned
+  - project-sanctuary
+  - alignment
+  - constitutional-ai
+  - llama.cpp
+  - q4_k_m
+
+lineage:
+  base: "Qwen/Qwen2-7B-Instruct"
+  adapter: "Sanctuary-Qwen2-7B-lora"
+  dataset: "Sanctuary Whole Cognitive Genome"
+
+intended_use:
+  primary: "Research on agentic cognition and AI alignment."
+  interfaces: ["Ollama", "llama.cpp", "LM Studio"]

@@ -1,56 +1,66 @@
 #!/usr/bin/env python3
-# ==============================================================================
-# INFERENCE.PY (v2.0) - Plain Language Summary
-#
-# WHAT THIS SCRIPT DOES:
-# This is a quick test tool for your fine-tuned Project Sanctuary AI model.
-# It loads the original base model (Qwen2-7B) and applies your custom training changes (the "adapter") on top,
-# then generates responses to test prompts. Think of it as trying on your fine-tuned "brain upgrade" before making it permanent.
-# It's like testing a modded game character before saving the changes forever.
-#
-# VS. TESTING AFTER MERGE_ADAPTER.PY:
-# - This script (inference.py): Tests the base model + adapter separately (temporary combo, like a preview).
-#   Use this right after fine-tuning to check if your training worked without committing to a big merge.
-# - After merge_adapter.py: Tests the fully combined model (base + adapter merged into one file).
-#   This is the "final product" - permanent, standalone, and ready for conversion to GGUF/Ollama.
-#   Merging takes longer but gives you a clean, deployable model file.
-#
-# QUICK TEST WITH BASE MODEL + YOUR FINE-TUNED SETTINGS:
-# Just run: python forge/scripts/inference.py --input "Your test question here"
-# It automatically loads base + adapter if available. No extra steps needed!
-#
-# This script runs inference using the fine-tuned Project Sanctuary model.
-# It supports loading either the LoRA adapter (post-fine-tune) or the merged model (post-merge).
-# Uses 4-bit quantization for compatibility with 8GB GPUs.
-#
-# Usage examples:
-#   # Test adapter after fine-tune
-#   python .../inference.py --input "What is the Doctrine of Flawed Winning Grace?"
-#
-#   # Test merged model after merge
-#   python .../inference.py --model-type merged --input "Test prompt"
-#
-#   # Force GPU loading with 4-bit quantization
-#   python .../inference.py --device cuda --load-in-4bit --input "Test prompt"
-#
-#   # Enable sampling for more varied responses
-#   python .../inference.py --do-sample --temperature 0.7 --input "Test prompt"
-#
-#   # Test with a full document
-#   python .../inference.py --file path/to/some_document.md
-# ==============================================================================
+#============================================
+# forge/tests/verify_adapter.py
+# Purpose: Verify fine-tuned LoRA adapters by running test inference.
+# Role: Verification Layer
+# Used by: Post-training verification, adapter validation
+#============================================
+"""
+Inference Test Script for Project Sanctuary Sovereign AI Models.
+
+This script runs inference using the fine-tuned Project Sanctuary model.
+It supports loading either the LoRA adapter (post-fine-tune) or the merged model (post-merge).
+Uses 4-bit quantization for compatibility with 8GB GPUs.
+
+Usage:
+    # Test adapter after fine-tune
+    python forge/tests/verify_adapter.py --input "What is the Doctrine of Sovereign Resilience?"
+
+    # Test merged model after merge
+    python forge/tests/verify_adapter.py --model-type merged --input "Test prompt"
+
+    # Force GPU loading with 4-bit quantization
+    python forge/tests/verify_adapter.py --device cuda --load-in-4bit --input "Test prompt"
+
+References:
+    - ADR 075: Standardized Code Documentation Pattern
+    - Protocol 41: Operation Phoenix Forge
+"""
 
 import argparse
+import logging
 import sys
-import torch
-import yaml
 import os
 from pathlib import Path
+
+import torch
+import yaml
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
 
+# --- Project Utilities Bootstrap ---
+SCRIPT_DIR = Path(__file__).resolve().parent  # forge/tests
+FORGE_ROOT = SCRIPT_DIR.parent                 # forge
+PROJECT_ROOT = FORGE_ROOT.parent               # Project_Sanctuary
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+try:
+    from mcp_servers.lib.path_utils import find_project_root
+    from mcp_servers.lib.logging_utils import setup_mcp_logging
+    PROJECT_ROOT = Path(find_project_root())
+    logger = setup_mcp_logging("sanctuary.inference", log_file="logs/inference.log")
+except ImportError:
+    # Fallback for WSL environment
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)-8s | %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)]
+    )
+    logger = logging.getLogger("sanctuary.inference")
+
 # --- Load environment variables from project root .env ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 env_path = PROJECT_ROOT / '.env'
 if env_path.exists():
     try:
@@ -59,12 +69,7 @@ if env_path.exists():
     except ImportError:
         pass  # python-dotenv not installed, rely on system environment
 
-# --- Determine Paths ---
-SCRIPT_DIR = Path(__file__).resolve().parent
-FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent.parent
-
-# --- Load Configuration ---
+# --- Configuration Constants ---
 CONFIG_PATH = FORGE_ROOT / "config" / "inference_config.yaml"
 with open(CONFIG_PATH, 'r') as f:
     config = yaml.safe_load(f)

@@ -1,75 +1,81 @@
-# Learning Audit Prompt: Windows WSL Bootstrap Validation (Loop 6.0)
-**Current Topic:** First Iteration of `llm.md` Workflow & Cross-Platform Bootstrap
-**Iteration:** 6.0 (Windows WSL Validation)
-**Date:** 2026-01-03
-**Epistemic Status:** [EMPIRICAL - FIRST EXECUTION]
+# Learning Audit Prompt: Forge v5.0 Evolution & ADR 075 Standardization
+**Current Topic:** Fine-Tuning Pipeline Refactoring & Legacy Decommissioning
+**Iteration:** 7.0 (Forge v5.0 Standardization)
+**Date:** 2026-01-04
+**Epistemic Status:** [EMPIRICAL - EXECUTION IN PROGRESS - 90%]
 
 ---
 
 ## 📋 Session Accomplishments
 
-### Windows WSL MCP Configuration
-- ✅ Created `claude_desktop_config_template_windows_wsl.json` with `bash -c` inline env pattern
-- ✅ Fixed 5 missing `__init__.py` files (`code/`, `config/`, `sanctuary_domain/`, `sanctuary_filesystem/`, `sanctuary_network/`)
-- ✅ Documented `PROJECT_ROOT` and `PYTHONPATH` inline requirement
+### Forge Codebase Standardization (ADR 075)
+- ✅ Refactored 15+ Python scripts with file headers, docstrings, and type hints
+- ✅ Integrated `mcp_servers.lib` utilities for path resolution and logging
+- ✅ Shell scripts updated with ADR 075-style headers
 
-### LLM Workflow Updates (`llm.md`)
-- ✅ Step 5: Added Windows WSL pattern documentation
-- ✅ Step 8: Added Forge Genome Dataset step
-- ✅ Step 9: Added Learning Loop Closure (Protocol 128)
+### Legacy Decommissioning
+- ✅ Audited `OPERATION_PHOENIX_FORGE` directory - confirmed as legacy workspace
+- ✅ Moved 7 legacy scripts to centralized `forge/archive/`
+- ✅ Verified all v5.0 outputs route to project root directories (`outputs/`, `models/`)
 
-### Bootstrap Packet Generation
-- ✅ Ran `bootstrap-debrief` → 25 files, 176KB
-- ✅ Ran `guardian` → `guardian_boot_digest.md` generated
-- ✅ Ran `debrief --hours 24` → `learning_debrief.md` (17,671 chars)
+### Documentation Updates
+- ✅ Updated `forge-llm.md` (authoritative pipeline guide)
+- ✅ Updated `forge/README.md` to v5.0 status
+- ✅ Consolidated and enriched `model_card.yaml` with training hyperparameters
+- ✅ Updated Hugging Face READMEs for deployment
+
+### Training Progress
+- ✅ Fine-tuning reached 90% (Epoch 2.7+)
+- ⏳ Awaiting 100% completion for merge/GGUF/deployment steps
 
 ---
 
-## 🎭 Red Team Role-Play Scenario (First Iteration Review)
+## 🎭 Red Team Role-Play Scenario (Forge Pipeline Review)
 
-> **YOU ARE AN LLM.** You have just been deployed on a **fresh Windows machine** to assist a developer with Project Sanctuary.
+> **YOU ARE AN EXPERIENCED ML ENGINEER.** You have been asked to review the Forge v5.0 fine-tuning pipeline.
 >
 > **Your constraints:**
-> - You have **NO** prior knowledge of Project Sanctuary
-> - You have **NO** macOS experience — only Windows with WSL2
-> - You have **NO** running containers yet
+> - You have access to the manifest files listed below
+> - You must verify technical accuracy and operational readiness
 >
-> **The ONLY context you have is:**
-> 1. `llm.md` — The LLM Awakening Workflow (Steps 1-9)
-> 2. `bootstrap_packet.md` — The 172KB onboarding document
-> 3. `docs/operations/BOOTSTRAP.md` — The cross-platform setup guide
+> **Questions to Answer:**
 >
-> **Your mission:** Using ONLY these documents, answer:
+> **Codebase Standardization:**
+> 1. "Do all scripts in `forge/scripts/` follow the ADR 075 documentation pattern?"
+> 2. "Is the path resolution strategy consistent across scripts?"
+> 3. "Are the project utilities (`mcp_servers.lib`) correctly bootstrapped?"
 >
-> **Windows WSL Setup:**
-> 1. "How do I configure `mcp_config.json` for Windows with WSL?"
-> 2. "Why does the `env` block in JSON not work with WSL?"
-> 3. "What's the correct `bash -c` pattern for MCP servers?"
-> 4. "Where do I put `MCPGATEWAY_BEARER_TOKEN`?"
+> **Dependency Management (ADR 073):**
+> 4. "Does the training environment follow the locked-file ritual?"
+> 5. "Are `.in` files for intent and `.txt` files for truth being used correctly?"
 >
-> **Workflow Execution:**
-> 5. "What's Step 1 of `llm.md`? Can I skip it on a fresh clone?"
-> 6. "Step 3 says containers must be running. How do I verify that?"
-> 7. "What does Step 4 (ingest --full) actually do?"
-> 8. "Step 8 mentions forge genome dataset. Is that required?"
+> **Pipeline Accuracy:**
+> 6. "Does `forge-llm.md` accurately describe the current v5.0 pipeline?"
+> 7. "Are all output paths in `training_config.yaml` pointing to root-level directories?"
+> 8. "Is the `model_card.yaml` metadata consistent with the training configuration?"
 >
-> **Learning Loop:**
-> 9. "What is Step 9? Why do I need to run it?"
-> 10. "How do I persist learnings to HuggingFace?"
+> **Legacy Cleanup:**
+> 9. "Is the `OPERATION_PHOENIX_FORGE` directory fully decommissioned?"
+> 10. "Are any critical assets missing from the standardized locations?"
+
+> **Environment Strategy (Platform Reset):**
+> 11. "Does `RUNTIME_ENVIRONMENTS.md` clearly distinguish between `.venv` (Standard) and `ml_env` (Forge)?"
+> 12. "Is the `make bootstrap` mandate for WSL/macOS resets clearly documented in `BOOTSTRAP.md`?"
+> 13. "Do the updated `llm.md` instructions effectively warn users about WSL cloning performance?"
 >
-> **Did you succeed? What was missing or unclear?**
+> **Did you find any discrepancies? What needs correction?**
 
 > [!IMPORTANT]
-> **Feedback Loop:** Any gaps identified should be remediated in `llm.md` or `BOOTSTRAP.md`, then regenerate via:
-> ```bash
-> python3 scripts/cortex_cli.py bootstrap-debrief
-> ```
+> **Feedback Loop:** Any gaps identified should be remediated before the learning seal.
 
 ---
 
 ## Files for Review
-- `llm.md` (Updated 9-step workflow)
-- `docs/operations/BOOTSTRAP.md` (Cross-platform guide)
-- `docs/operations/mcp/claude_desktop_config_template_windows_wsl.json` (New Windows template)
-- `.agent/learning/bootstrap_packet.md` (Regenerated onboarding packet)
-- `.agent/learning/learning_debrief.md` (Session learning capture)
+- `forge-llm.md` (Authoritative pipeline guide)
+- `forge/README.md` (v5.0 status and deliverables)
+- `forge/config/training_config.yaml` (Training hyperparameters)
+- `forge/huggingface/model_card.yaml` (HF deployment metadata)
+- `forge/scripts/fine_tune.py` (Core training script)
+- `forge/scripts/merge_adapter.py` (Model merging logic)
+- `LEARNING/topics/forge_v5_evolution.md` (Session synthesis)
+- `.agent/learning/learning_audit/loop_retrospective.md` (Session retrospective)

@@ -87,6 +87,16 @@ flowchart TB
     end
     style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
 
+    %% Phase IX: Phoenix Forge (Cognitive Upgrade)
+    subgraph PhaseIX [Phase IX: Phoenix Forge]
+        direction TB
+        ForgeDataset["Scripts: forge_whole_genome_dataset.py<br>(Sync Soul Traces to Training Data)"]
+        FineTune["Scripts: fine_tune.py<br>(QLoRA Training)"]
+        GGUFConvert["Scripts: convert_to_gguf.py<br>(Quantize & Quant)"]
+        HFDeploy["Tool: upload_to_huggingface.py<br>(Deploy Model to Hub)"]
+    end
+    style PhaseIX fill:#f8d7da,stroke:#721c24,stroke-width:2px
+
     %% Flow
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
@@ -106,7 +116,13 @@ flowchart TB
     Full --> Manifest
     
     JSONL_Traces --> Ingest
+    JSONL_Traces -- "Training Fuel" --> ForgeDataset
+    ForgeDataset --> FineTune
+    FineTune --> GGUFConvert
+    GGUFConvert --> HFDeploy
+    
     Ingest -- "Cycle Complete" --> Start
+    HFDeploy -- "Cognitive Milestone" --> Retro
     
     GovApproval -- "FAIL: Backtrack" --> Retro
     TechApproval -- "FAIL: Backtrack" --> Retro

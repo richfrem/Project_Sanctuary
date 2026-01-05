@@ -12,7 +12,7 @@ sequenceDiagram
     participant O as MCP Orchestrator <BR>(Council / Agentic Logic)
     participant C as Cortex <BR>(RAG / Vector DB)
     participant G as Guardian Cache <BR>(CAG / Context Cache)
-    participant M as Memory Adaptor <BR>(Fine-Tuning / LoRA)
+    participant M as Phoenix Forge <BR>(LLM / GGUF)
 
     Note over O: 1. Gap Analysis & Research
     O->>O: Identify Strategic Gap
@@ -33,12 +33,14 @@ sequenceDiagram
     Note over O: Regular Cycle Complete
 
     rect rgb(255, 250, 205)
-        Note over O, M: 4. Periodic Fine-Tuning (Manual/Scheduled)
-        Note right of M: Triggered manually or<br/>on major milestones,<br/>NOT every cycle
-        O->>M: generate_adaptation_packet(days=30)
-        M->>C: Query Recent Learnings
-        C-->>M: Return Documents
-        M->>M: Synthesize Full Training Dataset
-        M-->>O: Dataset Generated (JSONL)
-        Note over M: Human reviews dataset,<br/>runs fine_tune.py,<br/>deploys new model
+        Note over O, M: 4. Phoenix Forge (LLM Optimization)
+        Note right of M: Periodic QLoRA <br/>Fine-Tuning Loop
+        O->>M: forge_whole_genome_dataset.py
+        M->>C: Aggregate Memory & ADRs
+        C-->>M: Return Training Data (JSONL)
+        M->>M: fine_tune.py (QLoRA Training)
+        M->>M: merge_adapter.py (8GB Safe Merge)
+        M->>M: convert_to_gguf.py (Quantization)
+        M->>M: create_modelfile.py (Ollama Setup)
+        M-->>O: NEW "GUARDIAN" MODEL DEPLOYED
     end

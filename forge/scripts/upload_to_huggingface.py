@@ -1,86 +1,91 @@
-#!/usr/bin/env python3
-# ==============================================================================
-# UPLOAD_TO_HUGGINGFACE.PY (v1.0) – Automated Hugging Face Upload Script
-# ==============================================================================
+#============================================
+# forge/scripts/upload_to_huggingface.py
+# Purpose: Manages the upload of model weights, GGUF files, and metadata to Hugging Face Hub.
+# Role: Deployment / Artifact Layer
+# Used by: Phase 6 of the Forge Pipeline
+#============================================
+
+import sys
 import argparse
 import logging
-import os
-import sys
-from pathlib import Path
+import asyncio
 import atexit
+from pathlib import Path
+from typing import List, Dict, Any, Tuple, Optional
+
+import yaml
+
+# --- Project Utilities Bootstrap ---
+SCRIPT_DIR = Path(__file__).resolve().parent
+FORGE_ROOT = SCRIPT_DIR.parent
+PROJECT_ROOT_PATH = FORGE_ROOT.parent
+
+if str(PROJECT_ROOT_PATH) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT_PATH))
 
 try:
-    from dotenv import load_dotenv
-except ImportError:
-    print("python-dotenv not installed. Install with: pip install python-dotenv")
+    from mcp_servers.lib.path_utils import find_project_root
+    from mcp_servers.lib.logging_utils import setup_mcp_logging
+    from mcp_servers.lib.hf_utils import upload_to_hf_hub
+    from mcp_servers.lib.env_helper import get_env_variable
+    # Use find_project_root() for consistent root discovery
+    PROJECT_ROOT = Path(find_project_root())
+except ImportError as e:
+    print(f"❌ FATAL ERROR: Could not import core libraries: {e}")
     sys.exit(1)
 
+# --- Logging ---
 try:
-    import yaml
-except ImportError:
-    print("PyYAML not installed. Install with: pip install PyYAML")
-    sys.exit(1)
-
-try:
-    from huggingface_hub import HfApi, upload_file, upload_folder
-except ImportError:
-    print("huggingface_hub not installed. Install with: pip install huggingface_hub")
-    sys.exit(1)
-
-# --------------------------------------------------------------------------- #
-# Logging
-# --------------------------------------------------------------------------- #
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-    datefmt="%H:%M:%S",
-)
-file_handler = logging.FileHandler('../logs/upload_to_huggingface.log')
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
-logging.getLogger().addHandler(file_handler)
-
-log = logging.getLogger(__name__)
-log.info("Upload to Hugging Face script started - logging to console and ../logs/upload_to_huggingface.log")
+    log = setup_mcp_logging("upload_to_huggingface", log_file="logs/upload_to_huggingface.log")
+    log.info("Upload to Hugging Face started - using setup_mcp_logging")
+except Exception:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
+    log = logging.getLogger("upload_to_huggingface")
+    log.info("Upload to Hugging Face started - local logging fallback")
 
 atexit.register(logging.shutdown)
 
-# --------------------------------------------------------------------------- #
-# Paths
-# --------------------------------------------------------------------------- #
-SCRIPT_DIR = Path(__file__).resolve().parent
-FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent
+# --- Configuration Constants ---
+DEFAULT_UPLOAD_CONFIG: Path = FORGE_ROOT / "config" / "upload_config.yaml"
 
-# Add project root to path to find core and mcp_servers
-sys.path.insert(0, str(PROJECT_ROOT))
 
-try:
-    import asyncio
-    from mcp_servers.lib.hf_utils import upload_to_hf_hub
-except ImportError as e:
-    print(f"Error importing dependencies: {e}")
-    sys.exit(1)
+#============================================
+# Function: load_config
+# Purpose: Loads the upload configuration from a YAML file.
+# Args: None
+# Returns: (Dict[str, Any]) The configuration dictionary.
+#============================================
+def load_config() -> Dict[str, Any]:
+    """
+    Loads the upload configuration from a YAML file.
 
-# --------------------------------------------------------------------------- #
-# Load Config
-# --------------------------------------------------------------------------- #
-def load_config():
-    config_path = FORGE_ROOT / "config" / "upload_config.yaml"
-    if not config_path.exists():
-        log.warning(f"Config file not found at {config_path}, using defaults.")
+    Returns:
+        The loaded configuration as a dictionary, or empty if not found.
+    """
+    if not DEFAULT_UPLOAD_CONFIG.exists():
+        log.warning(f"Config file not found at {DEFAULT_UPLOAD_CONFIG}, using defaults.")
         return {}
     
-    with open(config_path, 'r') as f:
+    with open(DEFAULT_UPLOAD_CONFIG, 'r') as f:
         config = yaml.safe_load(f)
-        log.info(f"Loaded config from {config_path}")
-        return config
+        log.info(f"Loaded config from {DEFAULT_UPLOAD_CONFIG}")
+        return config or {}
 
-def load_environment():
-    # sys.path is now set at module level
-    from core.utils.env_helper import get_env_variable
 
-    # env_helper handles priority: Env Var -> .env -> Error
+#============================================
+# Function: load_environment
+# Purpose: Retrieves necessary Hugging Face credentials from environment variables.
+# Args: None
+# Returns: (Tuple[str, Optional[str], Optional[str]]) Token, username, and repo name.
+# Raises: SystemExit if HF Token is missing.
+#============================================
+def load_environment() -> Tuple[str, Optional[str], Optional[str]]:
+    """
+    Retrieves necessary Hugging Face credentials from environment variables.
+
+    Returns:
+        A tuple of (token, username, repo_name).
+    """
     try:
         token = get_env_variable("HUGGING_FACE_TOKEN", required=True)
     except ValueError as e:
@@ -95,100 +100,126 @@ def load_environment():
     
     return token, username, repo_name
 
-# --------------------------------------------------------------------------- #
-# Upload Function
-# --------------------------------------------------------------------------- #
-def upload_to_hf(repo_id, file_paths, token, private=False):
-    log.info(f"Delegating upload to shared library (mcp_servers.lib.hf_utils)...")
+
+#============================================
+# Function: perform_upload
+# Purpose: Synchronous wrapper for the asynchronous HF upload utility.
+# Args:
+#   repo_id (str): The destination repository ID.
+#   file_paths (List[str]): List of files/folders to upload.
+#   token (str): HF API Token.
+#   private (bool): Whether to ensure the repo is private (default: False).
+# Returns: None
+# Raises: SystemExit if the upload fails.
+#============================================
+def perform_upload(repo_id: str, file_paths: List[str], token: str, private: bool = False) -> None:
+    """
+    Synchronous wrapper for the asynchronous HF upload utility.
+
+    Args:
+        repo_id: The destination repository ID.
+        file_paths: List of local paths to upload.
+        token: Hugging Face authentication token.
+        private: Flag to mark repository as private.
+    """
+    log.info(f"Delegating upload to mcp_servers.lib.hf_utils...")
     
     # Run async function in sync wrapper
     result = asyncio.run(upload_to_hf_hub(
         repo_id=repo_id,
         paths=file_paths,
         token=token,
-        private=private,
-        commit_message=None  # Use default
+        private=private
     ))
     
     if result.success:
-        log.info(f"Upload complete. Repository: {result.repo_url}")
-        log.info(f"Summary: {result.remote_path}")
+        log.info(f"🏆 SUCCESS: Upload complete. Repository: {result.repo_url}")
     else:
-        log.error(f"Upload failed: {result.error}")
+        log.error(f"❌ FATAL ERROR: Upload failed: {result.error}")
         sys.exit(1)
 
-# --------------------------------------------------------------------------- #
-# Main
-# --------------------------------------------------------------------------- #
-def main():
-    parser = argparse.ArgumentParser(description="Upload files to Hugging Face repository.")
-    parser.add_argument("--repo", help="Hugging Face repository ID (e.g., username/repo-name). If not provided, uses HUGGING_FACE_USERNAME/HUGGING_FACE_REPO from .env or config")
-    parser.add_argument("--files", nargs="+", help="Paths to files or folders to upload")
-    parser.add_argument("--private", action="store_true", help="Create private repository")
-    parser.add_argument("--gguf", action="store_true", help="Upload GGUF file from config location")
-    parser.add_argument("--modelfile", action="store_true", help="Upload Modelfile from config location")
-    parser.add_argument("--readme", action="store_true", help="Upload README.md from config location")
-    parser.add_argument("--model-card", action="store_true", help="Upload model_card.yaml from config location")
-    parser.add_argument("--lora", action="store_true", help="Upload LoRA adapter from config location")
+
+#============================================
+# Function: main
+# Purpose: Orchestrates the upload of specified Forge artifacts to Hugging Face.
+# Args: None
+# Returns: None
+# Raises: SystemExit if no files are specified or path resolution fails.
+#============================================
+def main() -> None:
+    """
+    Orchestrates the upload of specified Forge artifacts to Hugging Face.
+    
+    Processes command-line arguments, resolves file paths based on configuration,
+    and initiates the upload process.
+    """
+    parser = argparse.ArgumentParser(description="Upload Forge artifacts to Hugging Face.")
+    parser.add_argument("--repo", help="HF Repo ID (username/repo). Overrides defaults.")
+    parser.add_argument("--files", nargs="+", help="Explicit file/folder paths to upload.")
+    parser.add_argument("--private", action="store_true", help="Mark repository as private.")
+    parser.add_argument("--gguf", action="store_true", help="Upload GGUF artifacts.")
+    parser.add_argument("--modelfile", action="store_true", help="Upload Ollama Modelfile.")
+    parser.add_argument("--readme", action="store_true", help="Upload README.md.")
+    parser.add_argument("--model-card", action="store_true", help="Upload model_card.yaml.")
+    parser.add_argument("--lora", action="store_true", help="Upload LoRA adapter directory.")
     args = parser.parse_args()
 
-    # Load configuration
     config = load_config()
-    token, username, repo_name = load_environment()
+    token, env_username, env_repo = load_environment()
 
+    # Determine Repo ID
     if args.repo:
         repo_id = args.repo
-    elif username and repo_name:
-        repo_id = f"{username}/{repo_name}"
-        log.info(f"Using default repo from .env: {repo_id}")
+    elif env_username and env_repo:
+        repo_id = f"{env_username}/{env_repo}"
     elif config.get('repository', {}).get('default_repo'):
         repo_id = config['repository']['default_repo']
-        log.info(f"Using default repo from config: {repo_id}")
     else:
-        log.error("No repository specified. Use --repo or set HUGGING_FACE_USERNAME and HUGGING_FACE_REPO in .env or config")
+        log.error("No repo ID found. Specify --repo or HUGGING_FACE_USERNAME/REPO.")
         sys.exit(1)
 
-    file_paths = args.files or []
-
-    # Use config paths for file locations
+    file_paths: List[str] = args.files or []
     files_config = config.get('files', {})
 
+    # Path Resolution Logic
     if args.gguf:
-        gguf_path = PROJECT_ROOT / files_config.get('gguf_path', "models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf")
-        file_paths.append(str(gguf_path))
+        path = PROJECT_ROOT / files_config.get('gguf_path', "models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf")
+        file_paths.append(str(path))
 
     if args.modelfile:
-        modelfile_path = PROJECT_ROOT / files_config.get('modelfile_path', "Modelfile")
-        file_paths.append(str(modelfile_path))
+        path = PROJECT_ROOT / files_config.get('modelfile_path', "Modelfile")
+        file_paths.append(str(path))
 
     if args.readme:
-        if args.lora:
-            # Use LoRA-specific README for LoRA uploads
-            readme_path = FORGE_ROOT / files_config.get('readme_lora_path', "huggingface/README_LORA.md")
-        else:
-            # Use standard README for other uploads
-            readme_path = FORGE_ROOT / files_config.get('readme_path', "huggingface/README.md")
-        file_paths.append(str(readme_path))
+        target = 'readme_lora_path' if args.lora else 'readme_path'
+        fallback = "huggingface/README_LORA.md" if args.lora else "huggingface/README.md"
+        path = FORGE_ROOT / files_config.get(target, fallback)
+        file_paths.append(str(path))
 
     if args.model_card:
-        model_card_path = FORGE_ROOT / files_config.get('model_card_path', "huggingface/model_card.yaml")
-        file_paths.append(str(model_card_path))
+        path = FORGE_ROOT / files_config.get('model_card_path', "huggingface/model_card.yaml")
+        file_paths.append(str(path))
 
     if args.lora:
-        lora_path = PROJECT_ROOT / files_config.get('lora_path', "forge/models/Sanctuary-Qwen2-7B-v1.0-adapter")
-        file_paths.append(str(lora_path))
+        path = PROJECT_ROOT / files_config.get('lora_path', "forge/models/Sanctuary-Qwen2-7B-v1.0-adapter")
+        file_paths.append(str(path))
+
+    # Verify paths exist before starting
+    for p in file_paths:
+        if not Path(p).exists():
+            log.error(f"Path does not exist: {p}")
+            sys.exit(1)
 
     if not file_paths:
-        log.error("No files specified. Use --files, --gguf, --modelfile, --readme, --model-card, or --lora")
+        log.error("No files specified for upload.")
         sys.exit(1)
 
-    log.info("=== Hugging Face Upload ===")
-    log.info(f"Repository: {repo_id}")
-    log.info(f"Files: {file_paths}")
+    log.info("=== Hugging Face Upload Session ===")
+    log.info(f"Target Repository: {repo_id}")
+    log.info(f"Artifact Count: {len(file_paths)}")
 
-    upload_to_hf(repo_id, file_paths, token, args.private)
+    perform_upload(repo_id, file_paths, token, args.private)
 
-    log.info("=== Upload Complete ===")
 
 if __name__ == "__main__":
     main()

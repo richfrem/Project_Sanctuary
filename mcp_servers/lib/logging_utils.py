@@ -27,9 +27,12 @@ def setup_mcp_logging(name: str, log_file: str = "logs/mcp_server.log"):
     log_path = project_root / log_file
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Load environment variables
-    from dotenv import load_dotenv
-    load_dotenv(project_root / ".env")
+    # Load environment variables (optional - dotenv may not be installed in ML env)
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(project_root / ".env")
+    except ImportError:
+        pass  # python-dotenv not installed, skip .env loading
 
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)

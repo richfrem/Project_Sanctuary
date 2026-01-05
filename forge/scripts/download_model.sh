@@ -1,14 +1,9 @@
-#!/bin/bash
-# ==============================================================================
-# DOWNLOAD_MODEL.SH (v1.1)
-#
-# This script downloads the base pre-trained model from Hugging Face.
-# It is idempotent, meaning it will not re-download the model if it already
-# exists in the target directory.
-#
-# It requires a Hugging Face token for authentication, which should be stored
-# in a .env file at the project root.
-# ==============================================================================
+#============================================
+# forge/scripts/download_model.sh
+# Purpose: Downloads the base pre-trained model from Hugging Face.
+# Role: Data Acquisition Layer
+# Used by: Phase 2 of the Forge Pipeline
+#============================================
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
@@ -17,11 +12,11 @@ set -e
 MODEL_ID="Qwen/Qwen2-7B-Instruct"
 
 # --- Determine Project Root and Paths ---
-# This finds the script's own directory, then navigates to the forge root.
+# Script is at forge/scripts/ - forge root is parent, project root is grandparent
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 FORGE_ROOT="$SCRIPT_DIR/.."
-PROJECT_ROOT="$FORGE_ROOT/../.."
-OUTPUT_DIR="$FORGE_ROOT/models/base/$MODEL_ID" # CORRECTED PATH
+PROJECT_ROOT="$FORGE_ROOT/.."  # forge -> Project_Sanctuary (1 level up)
+OUTPUT_DIR="$FORGE_ROOT/models/base/$MODEL_ID"
 ENV_FILE="$PROJECT_ROOT/.env"
 
 echo "--- 🔽 Model Downloader Initialized ---"

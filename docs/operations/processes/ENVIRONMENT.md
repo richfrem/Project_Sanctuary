@@ -8,14 +8,12 @@ This file documents all environment variables used across the Project Sanctuary 
 # Option 1: Source the .env file
 # use mcp_servers/lib/env_helper.py
 
-#read information about approach and three
-#environments terminal, .venv and podman
-# see ADRs/073_standardization_of_python_dependency_management_across_environments.md
-
 # user secrets and api keys stored in user profile .zshrc
 ```
 
-
+## Runtime Environments
+For details on the **Dual Environment Strategy** (`.venv` vs `ml_env`), see:
+👉 [**`docs/operations/processes/RUNTIME_ENVIRONMENTS.md`**](./RUNTIME_ENVIRONMENTS.md)
 
 ## Environment Variables Reference
 
