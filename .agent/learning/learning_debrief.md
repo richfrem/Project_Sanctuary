@@ -1,5 +1,5 @@
 # [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)
-**Scan Time:** 2026-01-03 17:18:22 (Window: 24h)
+**Scan Time:** 2026-01-04 21:56:51 (Window: 24h)
 **Strategic Status:** ✅ Successor Context v4.0 Active
 
 > [!IMPORTANT]
@@ -23,24 +23,80 @@
 ## 🧬 II. Tactical Evidence (Current Git Deltas)
 The following code-level changes were detected SINCE the last session/commit:
 ```text
- .agent/learning/bootstrap_packet.md                | 128 ++++++++---
- .agent/learning/learning_package_snapshot.md       | 128 ++++++++---
- .agent/rules/human_gate_policy.md                  |   3 +-
- Makefile                                           |  35 +--
- docs/operations/BOOTSTRAP.md                       |  37 +++-
- .../processes/PODMAN_OPERATIONS_GUIDE.md           |   9 +
- llm.md                                             | 243 ++++++++++++++++++++-
- .../clusters/sanctuary_cortex/requirements.txt     |  70 +++++-
- .../clusters/sanctuary_domain/requirements.txt     |  24 +-
- .../clusters/sanctuary_filesystem/requirements.txt |  27 ++-
- .../clusters/sanctuary_git/requirements.txt        |  28 ++-
- .../clusters/sanctuary_network/requirements.txt    |  27 ++-
- .../clusters/sanctuary_utils/requirements.txt      |  27 ++-
- mcp_servers/requirements-core.in                   |   1 +
- mcp_servers/requirements-core.txt                  |  27 ++-
- requirements-dev.txt                               |   2 +-
- tests/mcp_servers/forge_llm/inspect_ollama.py      |  19 +-
- 17 files changed, 725 insertions(+), 110 deletions(-)
+ .agent/git_safety_rules.md                         |     0
+ .agent/git_workflow_policy.md                      |     0
+ .agent/learning/README.md                          |     0
+ .agent/learning/audit_prompts.md                   |     0
+ .agent/learning/bootstrap_manifest.json            |     0
+ .agent/learning/bootstrap_packet.md                |    65 +-
+ .agent/learning/cognitive_primer.md                |     0
+ .agent/learning/guardian_manifest.json             |     0
+ .agent/learning/identity_anchor.json               |     0
+ .../learning_audit/learning_audit_manifest.json    |     0
+ .../learning_audit/learning_audit_packet.md        |     0
+ .../learning_audit/learning_audit_prompts.md       |     0
+ .../learning/learning_audit/loop_retrospective.md  |     0
+ .../learning_audit/manifest_learning_audit.json    |     0
+ .agent/learning/learning_debrief.md                |     0
+ .agent/learning/learning_manifest.json             |     0
+ .agent/learning/learning_package_snapshot.md       | 15150 ++++---------------
+ .agent/learning/manifest_seal.json                 |    85 +-
+ .../learning/templates/learning_audit_template.md  |     0
+ .../templates/loop_retrospective_template.md       |     0
+ .../templates/red_team_briefing_template.md        |     0
+ .agent/learning/templates/sources_template.md      |     0
+ .agent/mcp_commit_guide.md                         |     0
+ .agent/mcp_config.json                             |     0
+ .agent/mcp_migration.conf                          |     0
+ .agent/rules/architecture_sovereignty_policy.md    |     0
+ .agent/rules/coding_conventions_policy.md          |     0
+ .agent/rules/cognitive_continuity_policy.md        |     0
+ .agent/rules/dependency_management_policy.md       |     0
+ .agent/rules/git_workflow_policy.md                |     0
+ .agent/rules/human_gate_policy.md                  |     3 +-
+ .agent/rules/mcp_routing_policy.md                 |     0
+ .agent/temp_adr_list.txt                           |     0
+ .agent/temp_protocol_list.txt                      |     0
+ .agent/workflows/recursive_learning.md             |     0
+ .coverage                                          |   Bin 53248 -> 53248 bytes
+ .dockerignore                                      |     0
+ .env.example                                       |     0
+ .gitattributes                                     |     0
+ .github/copilot-instructions.md                    |     0
+ .github/dependabot.yml                             |     0
+ .github/workflows/ci.yml                           |     0
+ .github/workflows/security.yml                     |     0
+ .gitignore                                         |    10 +-
+ .ollama_models/id_ed25519                          |     0
+ .ollama_models/id_ed25519.pub                      |     0
+ LICENSE                                            |     0
+ Living_Chronicle.md                                |     0
+ Makefile                                           |     2 +-
+ Modelfile_minimal                                  |     0
+ README.md                                          |     0
+ REQUIREMENTS.env                                   |     0
+ all_tools.txt                                      |     0
+ docker-compose.yml                                 |     0
+ forge-llm.md                                       |     0
+ invalid_links_report.json                          |     0
+ llm.md                                             |     2 +-
+ manifest.json                                      |     0
+ package-lock.json                                  |     0
+ package.json                                       |     0
+ pytest.ini                                         |     0
+ repro_gateway.py                                   |     0
+ requirements-dev.in                                |     0
+ requirements-dev.txt                               |     0
+ requirements-finetuning.txt                        |     0
+ requirements.txt                                   |     0
+ scripts/init_session.py                            |     0
+ scripts/manual_test_deliberation.py                |     0
+ scripts/run_integration_tests.sh                   |     0
+ scripts/update_genome.sh                           |     0
+ scripts/wait_for_pulse.sh                          |     0
+ tests/manual/test_auditor_simple.sh                |     0
+ tests/run_all_tests.py                             |     0
+ 73 files changed, 3161 insertions(+), 12156 deletions(-)
 
 ```
 
@@ -53,13 +109,13 @@ The following code-level changes were detected SINCE the last session/commit:
 
 
 ### Recently Modified High-Signal Files:
-* **Most Recent Commit:** f3a1504 Feature/999 bootstrap makefile docs (#144)
+* **Most Recent Commit:** 7fdecad update repo to enable clone to wsl environment (#146)
 * **Recent Files Modified (48h):**
-    * `mcp_servers/gateway/clusters/sanctuary_network/__init__.py` (38m ago) [new file]
-    * `mcp_servers/gateway/clusters/sanctuary_filesystem/__init__.py` (38m ago) [new file]
-    * `mcp_servers/gateway/clusters/sanctuary_domain/__init__.py` (38m ago) [new file]
-    * `mcp_servers/config/__init__.py` (38m ago) [new file]
-    * `mcp_servers/code/__init__.py` (38m ago) [new file]
+    * `mcp_servers/start_mcp_servers.py` (2h ago) [+5/-3]
+    * `mcp_servers/lib/hf_utils.py` (2h ago) [+2/-1]
+    * `mcp_servers/lib/env_helper.py` (2h ago) [+84/-0]
+    * `mcp_servers/lib/path_utils.py` (2h ago) [+32/-0]
+    * `mcp_servers/lib/logging_utils.py` (2h ago) [+6/-3]
 
 ## 🏗️ IV. Architecture Alignment (The Successor Relay)
 ![Recursive Learning Flowchart](docs/architecture_diagrams/workflows/recursive_learning_flowchart.png)

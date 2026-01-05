@@ -17,19 +17,19 @@ This document provides a repeatable, validated workflow for fine-tuning a Large 
 ## Visual Pipelines
 
 ### 1. LLM Fine-Tuning Pipeline
-![LLM Fine-Tuning Pipeline](file:///c:/Users/RICHFREM/source/repos/Project_Sanctuary/docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
+![LLM Fine-Tuning Pipeline](./docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
 *(Source: [llm_finetuning_pipeline.mmd](./docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd))*
 
 ---
 
 ### 2. Strategic Crucible Loop
-![Strategic Crucible Loop](file:///c:/Users/RICHFREM/source/repos/Project_Sanctuary/docs/architecture_diagrams/workflows/strategic_crucible_loop.png)
+![Strategic Crucible Loop](./docs/architecture_diagrams/workflows/strategic_crucible_loop.png)
 *(Source: [strategic_crucible_loop.mmd](./docs/architecture_diagrams/workflows/strategic_crucible_loop.mmd))*
 
 ---
 
 ### 3. Protocol 128 Learning Loop
-![Protocol 128 Learning Loop](file:///c:/Users/RICHFREM/source/repos/Project_Sanctuary/docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![Protocol 128 Learning Loop](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 *(Source: [protocol_128_learning_loop.mmd](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd))*
 
 ---

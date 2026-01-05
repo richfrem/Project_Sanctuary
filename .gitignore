@@ -108,6 +108,7 @@ archive/
 archives/
 !ARCHIVE/council_orchestrator/
 !forge/archive/
+!.agent/learning/archive/
 research/RESEARCH_PAPERS/
 *.log
 nohup.out
@@ -118,16 +119,18 @@ debug_logs/
 *.py.md
 tests/mcp_servers/operations_instrumentation.json
 
-# Protocol 128: Red Team Artifacts (Local Only)
-.agent/learning/red_team/
-.agent/learning/*.snapshot.txt
+# Protocol 128: Learning Artifacts - TRACKED for portability (ADR 089)
+# Red team, manifests, and templates are now committed for new machine setup.
+# Only ephemeral runtime files are ignored.
+#.agent/learning/red_team/  # TRACKED - needed for audit manifests
+.agent/learning/*.snapshot.txt  # Ephemeral - regenerated each session
 # dataset_package already ignored above
 
 # ADR 089: Bootstrap artifacts (MUST be tracked for new clones)
 !.agent/learning/bootstrap_manifest.json
 !.agent/learning/bootstrap_packet.md
 
-# ADR 079: HF Soul Metadata Staging (Local Only)
+# ADR 079: HF Soul Metadata Staging (Local Only - regenerated)
 .agent/learning/hf_soul_metadata/
 
 
@@ -180,3 +183,4 @@ mcp_config/
 # !dataset_package/
 tests/verify_wslenv_setup.py
 mcp_config.json
+!.agent/learning/mcp_config.json

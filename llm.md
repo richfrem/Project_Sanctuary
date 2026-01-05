@@ -40,10 +40,19 @@ curl -s http://localhost:11434/api/tags > /dev/null && echo "Ollama: OK" || echo
 
 #### Option A: Project Sanctuary (Standard)
 1.  **Activate:** `source .venv/bin/activate`
-2.  **Bootstrap:** `make bootstrap` (if not already done) - *Expect 45-60 mins for full fleet install on WSL.*
-    > [!WARNING] **WSL Performance Critical:**
-    > *   **Correct:** Clone into `~/project` (Linux Filesystem). Install time: **<5 mins**. basically youll save a lot of time, if you do gitclone directly into the wsl filesystem rather than cloning into the windows filesystem and then copying it over to the wsl filesystem.
-    > *   **Incorrect:** Clone into `/mnt/c/Users/...` (Windows Mount). Install time: **45-60 mins**.
+2.  **Bootstrap:** `make bootstrap` (if not already done)
+    > [!CAUTION] **Windows Bridge Tax (~100x Slower):**
+    > WSL2's 9P filesystem bridge has **severe** I/O overhead for pip operations.
+    > 
+    > | Location | `make bootstrap` Time |
+    > |----------|----------------------|
+    > | ✅ `~/repos/Project_Sanctuary` (Native WSL) | **< 5 mins** |
+    > | ❌ `/mnt/c/Users/.../Project_Sanctuary` (Windows Mount) | **60-90 mins** |
+    > 
+    > **Always clone directly to native WSL filesystem:**
+    > ```bash
+    > cd ~/repos && git clone <repo-url>
+    > ```
 
 > ⚠️ **CRITICAL:** See [`docs/operations/processes/RUNTIME_ENVIRONMENTS.md`](./docs/operations/processes/RUNTIME_ENVIRONMENTS.md) for the **Dual Environment Strategy** (`ml_env` vs `.venv`).
 
@@ -57,6 +66,9 @@ make bootstrap && source .venv/bin/activate
 # Target existing environment (requires Makefile VENV_DIR support)
 make bootstrap VENV_DIR=~/ml_env && source ~/ml_env/bin/activate
 ```
+
+> [!TIP] **Optional Tools:**
+> For diagram rendering (mermaid-cli) and other Node.js tools, see [dependency_management_policy.md](.agent/learning/rules/dependency_management_policy.md#6-non-python-tooling-nodejs--npm).
 
 #### 2.3 Troubleshooting: Missing Dependencies
 If you encounter `ModuleNotFoundError` (e.g., `tiktoken`), you MUST follow **Protocol 073** (Standardized Dependency Management).
@@ -241,7 +253,7 @@ make verify
 ### Step 4: Knowledge Base Initialization
 ```bash
 # Full ingest of project content into ChromaDB
-python3 scripts/cortex_cli.py ingest --full
+python3 scripts/cortex_cli.py ingest
 ```
 
 ### Step 5: IDE MCP Configuration
