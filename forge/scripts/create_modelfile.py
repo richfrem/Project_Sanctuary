@@ -5,33 +5,44 @@
 # ==============================================================================
 import sys
 import yaml
-import os
 from pathlib import Path
 from datetime import datetime, timezone
 
-# --- Load environment variables from project root .env ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-env_path = PROJECT_ROOT / '.env'
-if env_path.exists():
-    try:
-        from dotenv import load_dotenv
-        load_dotenv(env_path)
-    except ImportError:
-        pass  # python-dotenv not installed, rely on system environment
-
-# --- Paths ---
+# --- Project Utilities Bootstrap ---
 SCRIPT_DIR = Path(__file__).resolve().parent
 FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent.parent
+PROJECT_ROOT_PATH = FORGE_ROOT.parent
+
+if str(PROJECT_ROOT_PATH) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT_PATH))
+
+try:
+    from mcp_servers.lib.path_utils import find_project_root
+    from mcp_servers.lib.logging_utils import setup_mcp_logging
+    # Use find_project_root() for consistent root discovery
+    PROJECT_ROOT = Path(find_project_root())
+except ImportError:
+    # Fallback if mcp_servers is not in path
+    PROJECT_ROOT = PROJECT_ROOT_PATH
+
+# --- Logging ---
+try:
+    logger = setup_mcp_logging("create_modelfile", log_file="logs/create_modelfile.log")
+    logger.info("Modelfile generator started - using setup_mcp_logging")
+except Exception:
+    import logging
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger("create_modelfile")
 
 # --- Load Configuration ---
 CONFIG_PATH = FORGE_ROOT / "config" / "gguf_config.yaml"
 with open(CONFIG_PATH, 'r') as f:
     cfg = yaml.safe_load(f)
 
-GGUF_DIR = PROJECT_ROOT / os.environ.get('SANCTUARY_GGUF_OUTPUT_DIR', cfg["model"]["gguf_output_dir"])
-MODEL_NAME_PATTERN = os.environ.get('SANCTUARY_GGUF_MODEL_NAME', cfg["model"]["gguf_model_name"])
-OLLAMA_MODEL_NAME = os.environ.get('SANCTUARY_OLLAMA_MODEL_NAME', cfg["model"].get("ollama_model_name", "Sanctuary-Guardian-01"))
+# --- Paths ---
+GGUF_DIR = PROJECT_ROOT / cfg["model"]["gguf_output_dir"]
+MODEL_NAME_PATTERN = cfg["model"]["gguf_model_name"]
+OLLAMA_MODEL_NAME = cfg["model"].get("ollama_model_name", "Sanctuary-Guardian-01")
 
 # Auto-pick newest Sanctuary GGUF
 gguf_files = list(GGUF_DIR.glob(f"{MODEL_NAME_PATTERN}*.gguf"))
@@ -94,19 +105,13 @@ TEMPLATE """{TEMPLATE_CONTENT}"""
 PARAMETER stop "<|im_end|>"
 PARAMETER stop "<|im_start|>"
 
-# Sovereign-grade generation parameters (November 2025 best practice)
-PARAMETER temperature 0.67
-PARAMETER top_p 0.95
+# Safe defaults for 8GB GPU compatibility
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
 PARAMETER top_k 40
 PARAMETER repeat_penalty 1.10
-PARAMETER num_ctx 32768
-PARAMETER num_predict 4096
-PARAMETER num_keep 4
-
-# Mirostat v1 (for Ollama versions before 0.3.15+ - no v2 support detected)
-PARAMETER mirostat 2
-PARAMETER mirostat_tau 5.0
-PARAMETER mirostat_eta 0.1
+PARAMETER num_ctx 4096
+PARAMETER num_predict 512
 '''
 
 def main():

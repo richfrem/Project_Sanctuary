@@ -124,7 +124,13 @@ ADR 073 mandates that **Core Principle #2 ("Execution environment does not chang
         pip install -r requirements-dev.txt
         ```
 
-3.  **Automation & Enforcement**:
+3.  **Cross-Platform Environment Standard**:
+    *   **Problem:** `.venv` created on Windows (`Scripts/`) is incompatible with WSL (`bin/`).
+    *   **Rule:** When switching platforms (e.g., Windows -> WSL), the environment must be reset to match the kernel.
+    *   **Mechanism:** Use `make bootstrap` (which handles `python3 -m venv`).
+    *   **Warning:** Do not share a single `.venv` folder across Windows and WSL filesystems.
+
+4.  **Automation & Enforcement**:
     *   We will introduce a Makefile target `install-env` to standardize this.
     *   Agents must detect drift between `pip freeze` and locked requirements in active environments.
 
@@ -336,3 +342,16 @@ When security vulnerabilities (CVEs) are reported or Dependabot suggests updates
 - **Accept risk with mitigation**: Document the advisory, monitor for upstream fix, apply when available
 
 **Status**: Blocked pending upstream kubernetes/chromadb compatibility update.
+
+## Special Case: The Forge (ml_env)
+
+While the Core fleet (Gateway, Cortex, etc.) strictly follows the locked-file policy, the **Forge** environment (`ml_env`) is a recognized exception.
+
+### Rationale
+*   **Hardware Dependency**: The Forge relies on extremely specific CUDA versions (e.g., CUDA 12.1 vs 12.4) and PyTorch builds (e.g., `cu121` vs `cu124`) that often require manual `pip install --index-url` commands not easily captured in standard `requirements.txt` resolution.
+*   **Ephemeral Nature**: The Forge is used for specific pipeline phases (Fine-Tuning, Merging) and is often rebuilt for different hardware targets.
+
+### Policy for ml_env
+1.  **Exemption**: `ml_env` is **exempt** from the `pip-compile` / `requirements.txt` locking requirement.
+2.  **Documentation**: Its state is defined procedurally in `forge/CUDA-ML-ENV-SETUP.md`.
+3.  **Isolation**: Users **MUST** deactivate `ml_env` before running Core tools (like `cortex_cli.py`) to prevent "dependency bleeding" (e.g., mixing `torch` versions).

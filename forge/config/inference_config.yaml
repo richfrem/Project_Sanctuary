@@ -1,7 +1,7 @@
 model:
-  base_path: "forge/models/base/Qwen/Qwen2-7B-Instruct"
+  base_path: "models/base/Qwen/Qwen2-7B-Instruct"
   adapter_path: "models/Sanctuary-Qwen2-7B-v1.0-adapter"
-  merged_path: "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
+  merged_path: "models/merged/Sanctuary-Qwen2-7B-v1.0-merged"
 
 quantization:
   load_in_4bit: true

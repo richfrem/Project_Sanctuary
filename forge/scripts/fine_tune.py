@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
-# ==============================================================================
-# FINE_TUNE.PY (v1.0)
-#
-# This is the primary script for executing the QLoRA fine-tuning process.
-# It replaces the monolithic 'build_lora_adapter.py' with a modular approach.
-# All configuration is loaded from a dedicated YAML file, making this script
-# a reusable and configurable training executor.
-#
-# Usage:
-#   python forge/scripts/fine_tune.py
-# ==============================================================================
+#============================================
+# forge/scripts/fine_tune.py
+# Purpose: Executes the QLoRA fine-tuning process for sovereign AI models.
+# Role: Model Training Layer
+# Used by: Phase 3 of the Forge Pipeline
+#============================================
+"""
+Fine-Tuning Script for Project Sanctuary Sovereign AI Models.
+
+This is the primary script for executing the QLoRA fine-tuning process.
+All configuration is loaded from a dedicated YAML file (forge/config/training_config.yaml),
+making this script a reusable and configurable training executor.
+
+Usage:
+    python forge/scripts/fine_tune.py
+
+Estimated Runtime: ~1.5 hours (for 3 epochs, ~1200 examples on RTX A2000)
+
+References:
+    - ADR 075: Standardized Code Documentation Pattern
+    - ADR 073: Python Dependency Management
+    - Protocol 41: Operation Phoenix Forge
+"""
 
 import os
 import sys
@@ -17,6 +29,8 @@ import yaml
 import torch
 import logging
 import psutil
+import time
+from datetime import timedelta
 from pathlib import Path
 from datasets import load_dataset
 from transformers import (
@@ -33,16 +47,51 @@ from trl import SFTTrainer
 # Disable tokenizers parallelism warning
 os.environ['TOKENIZERS_PARALLELISM'] = 'true'
 
-# --- Logging Setup ---
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)-8s | %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)]
-)
-logger = logging.getLogger("sanctuary.fine_tune")
+# --- Project Utilities Bootstrap ---
+SCRIPT_DIR = Path(__file__).resolve().parent
+FORGE_ROOT = SCRIPT_DIR.parent
+PROJECT_ROOT_PATH = FORGE_ROOT.parent
 
-def get_torch_dtype(kind: str):
-    """Safely map string to torch dtype."""
+if str(PROJECT_ROOT_PATH) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT_PATH))
+
+try:
+    from mcp_servers.lib.path_utils import find_project_root
+    from mcp_servers.lib.logging_utils import setup_mcp_logging
+    PROJECT_ROOT = Path(find_project_root())
+    logger = setup_mcp_logging("sanctuary.fine_tune", log_file="logs/fine_tune.log")
+    logger.info("Fine-tuning script started - using setup_mcp_logging")
+except ImportError:
+    # Fallback if mcp_servers is not in path (e.g., WSL environment)
+    PROJECT_ROOT = PROJECT_ROOT_PATH
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)-8s | %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)]
+    )
+    logger = logging.getLogger("sanctuary.fine_tune")
+    logger.info("Fine-tuning script started - local logging fallback")
+
+# --- Configuration Constants ---
+DEFAULT_CONFIG_PATH = FORGE_ROOT / "config/training_config.yaml"
+
+#============================================
+# Function: get_torch_dtype
+# Purpose: Safely map string dtype names to torch dtype objects.
+#============================================
+def get_torch_dtype(kind: str) -> torch.dtype:
+    """
+    Safely map string dtype names to torch dtype objects.
+    
+    Args:
+        kind: String representation of dtype (e.g., 'float16', 'fp16', 'bfloat16').
+        
+    Returns:
+        torch.dtype: Corresponding PyTorch dtype object.
+        
+    Raises:
+        ValueError: If the dtype string is not recognized.
+    """
     kind = kind.lower()
     if kind in ("float16", "fp16"):
         return torch.float16
@@ -52,8 +101,22 @@ def get_torch_dtype(kind: str):
         return torch.bfloat16
     raise ValueError(f"Unsupported dtype '{kind}' for bitsandbytes compute dtype")
 
-def ensure_train_val_files(train_path: Path, val_path=None, split_ratio=0.1):
-    """Ensure train and val files exist, splitting if necessary."""
+#============================================
+# Function: ensure_train_val_files
+# Purpose: Ensures train and validation files exist, creating a split if needed.
+#============================================
+def ensure_train_val_files(train_path: Path, val_path: Path = None, split_ratio: float = 0.1):
+    """
+    Ensure train and validation files exist, splitting the training data if necessary.
+    
+    Args:
+        train_path: Path to the training JSONL file.
+        val_path: Optional path to validation file. If not present, will be created.
+        split_ratio: Fraction of data to use for validation (default: 0.1).
+        
+    Returns:
+        Tuple[Path, Optional[Path]]: Paths to train and validation files.
+    """
     if val_path is None or not val_path:
         logger.info("No val_file provided; skipping split.")
         return train_path, None
@@ -81,8 +144,23 @@ def ensure_train_val_files(train_path: Path, val_path=None, split_ratio=0.1):
     logger.info("Split complete. Train: %d examples, Val: %d examples.", split_idx, len(lines) - split_idx)
     return new_train, new_val
 
-def tokenize_and_cache(dataset, tokenizer, max_length, cache_path=None):
-    """Tokenize dataset and optionally cache to disk."""
+#============================================
+# Function: tokenize_and_cache
+# Purpose: Tokenizes dataset and optionally caches to disk.
+#============================================
+def tokenize_and_cache(dataset, tokenizer, max_length: int, cache_path: Path = None):
+    """
+    Tokenize dataset and optionally cache to disk for faster subsequent loads.
+    
+    Args:
+        dataset: HuggingFace dataset to tokenize.
+        tokenizer: Tokenizer to use for encoding.
+        max_length: Maximum sequence length for truncation.
+        cache_path: Optional path to save tokenized dataset.
+        
+    Returns:
+        Dataset: Tokenized dataset.
+    """
     def tokenize_fn(examples):
         return tokenizer(examples["text"], truncation=True, max_length=max_length)
     tokenized = dataset.map(tokenize_fn, batched=True, remove_columns=dataset.column_names)
@@ -91,16 +169,24 @@ def tokenize_and_cache(dataset, tokenizer, max_length, cache_path=None):
         logger.info("Tokenized dataset cached to: %s", cache_path)
     return tokenized
 
-# --- Determine Paths ---
-# The script is in forge/scripts/
-# We need paths relative to the project root (Project_Sanctuary/).
-SCRIPT_DIR = Path(__file__).resolve().parent
-FORGE_ROOT = SCRIPT_DIR.parent
-PROJECT_ROOT = FORGE_ROOT.parent.parent
-DEFAULT_CONFIG_PATH = FORGE_ROOT / "config/training_config.yaml"
 
-def load_config(config_path):
-    """Loads the training configuration from a YAML file with validation."""
+#============================================
+# Function: load_config
+# Purpose: Loads and validates training configuration from YAML.
+#============================================
+def load_config(config_path: Path) -> dict:
+    """
+    Load the training configuration from a YAML file with validation.
+    
+    Args:
+        config_path: Path to the YAML configuration file.
+        
+    Returns:
+        dict: Validated configuration dictionary.
+        
+    Raises:
+        SystemExit: If configuration file is missing or invalid.
+    """
     logger.info("🔩 Loading configuration from: %s", config_path)
     if not config_path.exists():
         logger.error("Configuration file not found: %s", config_path)
@@ -132,8 +218,20 @@ def load_config(config_path):
     logger.info("✅ Configuration loaded successfully.")
     return config
 
-def formatting_prompts_func(examples):
-    """Applies the official Qwen2 ChatML format to each entry in the dataset."""
+#============================================
+# Function: formatting_prompts_func
+# Purpose: Applies Qwen2 ChatML format to dataset entries.
+#============================================
+def formatting_prompts_func(examples: dict) -> dict:
+    """
+    Apply the official Qwen2 ChatML format to each entry in the dataset.
+    
+    Args:
+        examples: Batch of examples with 'instruction' and 'output' keys.
+        
+    Returns:
+        dict: Dictionary with 'text' key containing formatted prompt strings.
+    """
     output_texts = []
     # Assumes the dataset has 'instruction' and 'output' columns.
     for instruction, output in zip(examples['instruction'], examples['output']):
@@ -145,9 +243,24 @@ def formatting_prompts_func(examples):
         output_texts.append(text)
     return {"text": output_texts}
 
-def main():
-    """Main function to execute the fine-tuning process."""
+#============================================
+# Function: main
+# Purpose: Main entry point for the fine-tuning process.
+#============================================
+def main() -> None:
+    """
+    Main function to execute the fine-tuning process.
+    
+    This function orchestrates the complete QLoRA fine-tuning pipeline:
+    1. Load configuration
+    2. Prepare dataset
+    3. Load base model with quantization
+    4. Configure LoRA adapter
+    5. Train with SFTTrainer
+    6. Save final adapter
+    """
     logger.info("--- 🔥 Initiating Sovereign Inoculation (v2.0 Modular) 🔥 ---")
+    start_time = time.time()
     
     # Diagnostics
     logger.info("CUDA available: %s; GPU count: %d", torch.cuda.is_available(), torch.cuda.device_count())
@@ -169,6 +282,7 @@ def main():
     cfg_quant = config['quantization']
     cfg_lora = config['lora']
     cfg_training = config['training']
+    final_adapter_path = PROJECT_ROOT / cfg_model['final_adapter_path']
 
     set_seed(42)
 
@@ -196,7 +310,7 @@ def main():
     logger.info("Quantization configured.")
 
     # 4. Load Base Model and Tokenizer
-    base_model_path = FORGE_ROOT / "models" / "base" / cfg_model['base_model_name']
+    base_model_path = PROJECT_ROOT / "models" / "base" / cfg_model['base_model_name']
     logger.info("[3/7] Loading base model from local path: '%s'", base_model_path)
     if not base_model_path.exists():
         logger.error("Base model not found: %s", base_model_path)
@@ -249,11 +363,16 @@ def main():
 
     # Check for resume
     last_checkpoint = None
-    if os.path.isdir(output_dir):
+    if output_dir.exists():
         checkpoints = sorted([d for d in os.listdir(output_dir) if d.startswith("checkpoint")])
         if checkpoints:
-            last_checkpoint = os.path.join(output_dir, checkpoints[-1])
-            logger.info("Found checkpoint to resume from: %s", last_checkpoint)
+            potential_checkpoint = output_dir / checkpoints[-1]
+            # Ensure it's a valid directory and contains something
+            if potential_checkpoint.is_dir() and any(potential_checkpoint.iterdir()):
+                last_checkpoint = str(potential_checkpoint)
+                logger.info("Found valid checkpoint to resume from: %s", last_checkpoint)
+            else:
+                logger.warning("Found checkpoint folder %s but it appears empty or invalid. Skipping auto-resume.", checkpoints[-1])
 
     # Tokenize dataset
     logger.info("Tokenizing dataset...")
@@ -296,12 +415,16 @@ def main():
     logger.info("--- TRAINING COMPLETE ---")
 
     # --- Final Step: Save the Adapter ---
-    final_adapter_path = PROJECT_ROOT / cfg_model['final_adapter_path']
     logger.info("Fine-Tuning Complete! Saving final LoRA adapter to: %s", final_adapter_path)
     trainer.model.save_pretrained(str(final_adapter_path))
     tokenizer.save_pretrained(str(final_adapter_path))
     torch.cuda.empty_cache()
+    
+    end_time = time.time()
+    duration = timedelta(seconds=int(end_time - start_time))
+    
     logger.info("--- ✅ Sovereign Inoculation Complete. ---")
+    logger.info("Total Duration: %s", duration)
     sys.exit(0)
 
 if __name__ == "__main__":

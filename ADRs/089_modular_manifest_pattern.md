@@ -133,9 +133,13 @@ Manifests for model training and HuggingFace (not directly CLI-buildable):
 
 | Manifest | Path | CLI Buildable | Purpose |
 |----------|------|:-------------:|---------|
-| Forge | `forge/manifest.json` | ❌ | Model fine-tuning dataset source files |
+| Forge (Model) | `forge/gguf_model_manifest.json` | ❌ | GGUF model metadata (architecture, params) |
+| Ingest | `mcp_servers/lib/ingest_manifest.json` | ❌ | Dataset content sources (used by Forge/RAG) |
 | HF Dataset | `hugging_face_dataset_repo/metadata/manifest.json` | ❌ | Soul persistence dataset metadata |
 | Root | `manifest.json` | ❌ | Project-level manifest (snapshot generation) |
+
+> [!NOTE]
+> **Structural Variance:** Unlike Protocol 128 manifests (simple file arrays), the Forge manifest uses GGUF-specific schema with model architecture, parameters, and template fields. The Ingest manifest (`mcp_servers/lib/ingest_manifest.json`) follows a categorized directory structure for RAG and Forge content sources.
 
 ### Legacy/Deprecated
 

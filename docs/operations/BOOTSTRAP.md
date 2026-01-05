@@ -79,6 +79,7 @@ Project Sanctuary requires a Unix-like environment for its MCP servers and ML de
 3. **Activate the Environment**:
 
    **Standard (.venv):**
+   > **WSL/macOS Users:** If `source` fails with "No such file", your venv is likely Windows-native. Run `rm -rf .venv && make bootstrap` to reset it.
    ```bash
    source .venv/bin/activate
    ```

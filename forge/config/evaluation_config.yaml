@@ -3,7 +3,7 @@
 
 # Model Configuration
 model:
-  path: "outputs/merged/Sanctuary-Qwen2-7B-v1.0-merged"
+  path: "models/merged/Sanctuary-Qwen2-7B-v1.0-merged"
   torch_dtype: "bfloat16"
   device_map: "auto"  # Relative to PROJECT_ROOT
   torch_dtype: "bfloat16"  # Data type for model loading

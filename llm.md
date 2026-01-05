@@ -32,6 +32,21 @@ curl -s http://localhost:11434/api/tags > /dev/null && echo "Ollama: OK" || echo
 ```
 
 #### 2.2 Initialize Environment (Choose A or B)
+> [!CRITICAL] **WSL Users:** If `source .venv/bin/activate` fails with "No such file", your venv is Windows-native. **Fix it:**
+> ```bash
+> rm -rf .venv && make bootstrap
+> ```
+> See: [**Dual Environment Strategy**](docs/operations/processes/RUNTIME_ENVIRONMENTS.md)
+
+#### Option A: Project Sanctuary (Standard)
+1.  **Activate:** `source .venv/bin/activate`
+2.  **Bootstrap:** `make bootstrap` (if not already done) - *Expect 45-60 mins for full fleet install on WSL.*
+    > [!WARNING] **WSL Performance Critical:**
+    > *   **Correct:** Clone into `~/project` (Linux Filesystem). Install time: **<5 mins**. basically youll save a lot of time, if you do gitclone directly into the wsl filesystem rather than cloning into the windows filesystem and then copying it over to the wsl filesystem.
+    > *   **Incorrect:** Clone into `/mnt/c/Users/...` (Windows Mount). Install time: **45-60 mins**.
+
+> ⚠️ **CRITICAL:** See [`docs/operations/processes/RUNTIME_ENVIRONMENTS.md`](./docs/operations/processes/RUNTIME_ENVIRONMENTS.md) for the **Dual Environment Strategy** (`ml_env` vs `.venv`).
+
 **Option A: Standard (CPU/Default)**
 ```bash
 make bootstrap && source .venv/bin/activate

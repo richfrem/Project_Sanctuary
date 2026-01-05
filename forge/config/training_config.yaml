@@ -76,7 +76,7 @@ training:
   save_total_limit: 3                   # Prevents disk bloat by keeping only 3 checkpoints.
   fp16: true                            # Updated: Enable fp16 for A2000 compatibility.
   gradient_checkpointing: true          # Reduces peak VRAM at slight speed cost.
-  eval_strategy: "no"          # Disable evaluation to avoid tokenizer issues.
+  evaluation_strategy: "no"          # Disable evaluation to avoid tokenizer issues.
   # eval_steps: 200                       # Run evaluation every 200 steps.
   # load_best_model_at_end: true          # Load the best model at end.
   # metric_for_best_model: "loss"         # Use loss to select best model.

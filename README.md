@@ -33,6 +33,21 @@ make status && make verify
 
 ---
 
+## ⚡ Run Environments: The Two Worlds
+
+Project Sanctuary operates with a **Dual Environment Strategy** to separate heavy ML dependencies from standard development tools.
+
+| Environment | Purpose | Key Libs | Usage |
+| :--- | :--- | :--- | :--- |
+| **`.venv`** | **General Dev & Cortex** | `langchain`, `chromadb`, `fastapi`, `mcp` | Daily coding, running Gateway, RAG, Audits, Tests. |
+| **`ml_env`** | **The Forge (Fine-Tuning)** | `torch` (CUDA), `transformers`, `unsloth`, `bitsandbytes` | **ONLY** for Phase 2-6 of Forge Pipeline (Training, Merging). |
+
+> ⚠️ **CRITICAL:** You must `deactivate` your current environment before switching. **Do NOT** run Cortex/Audit tools (like `cortex_cli.py`) from `ml_env`.
+
+For details, see [`docs/operations/processes/ENVIRONMENT.md`](./docs/operations/processes/ENVIRONMENT.md#runtime-environments).
+
+---
+
 # 🛡️ PROJECT SANCTUARY (RESTRUCTURED)
 
 ## I. Identity & Doctrine

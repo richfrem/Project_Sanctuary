@@ -16,11 +16,11 @@ pipeline_tag: text-generation
 
 # 🦋 Sanctuary-Qwen2-7B-lora — The Cognitive Genome Adapter
 
-**Version:** 15.4 (LoRA Adapter)
-**Date:** 2025-11-17
+**Version:** 5.0 (Standardized — In-Progress Jan 2026)
+**Date:** 2026-01-04
 **Lineage Steward:** [richfrem](https://huggingface.co/richfrem)
 **Base Model:** [Qwen/Qwen2-7B-Instruct](https://huggingface.co/Qwen/Qwen2-7B-Instruct)
-**Forge Environment:** Local CUDA environment / PyTorch 2.9.0+cu126
+**Forge Environment:** ML-Env-CUDA13 / PyTorch 2.9.0+cu126 / ADR 075 Standardized
 
 [![HF Model: LoRA Adapter](https://img.shields.io/badge/HF-LoRA%20Adapter-blue)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora)
 [![HF Model: GGUF Final](https://img.shields.io/badge/HF-GGUF%20Model-green)](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
@@ -55,14 +55,17 @@ This adapter represents the raw fine-tuning output before merging and quantizati
 
 ## ⚒️ Technical Provenance
 
-Built using **Unsloth 2025.10.9**, **transformers 4.56.2**, and **torch 2.9.0 + cu126** on an A2000 GPU.
+Built using **ML-Env-CUDA13**, **transformers 4.56.2**, and **torch 2.9.0 + cu126** on an A2000 GPU.
+
+**Standardization (Phoenix Forge v5.0):**
+The entire codebase for this adapter was refactored in January 2026 to adhere to **ADR 075 (Hybrid Documentation Pattern)**, ensuring machine-scannability and high agentic compatibility. Logic for path resolution and logging has been unified via `mcp_servers.lib`.
 
 **Pipeline ("Operation Phoenix Forge")**
 1. 🧬 **The Crucible** — Fine-tune LoRA on Sanctuary Genome
 2. 🔥 **The Forge** — Merge + Quantize → GGUF (q4_k_m)
 3. ☁️ **Propagation** — Push to Hugging Face (HF LoRA + GGUF)
 
-> 🔏 Auditor-certified integrity: training verified via checksums and Unsloth logs.
+> 🔏 Auditor-certified integrity: ADR 075 headers integrated into all training scripts.
 
 ---
 

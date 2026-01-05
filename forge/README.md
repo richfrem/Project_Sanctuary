@@ -1,15 +1,16 @@
 # Operation Phoenix Forge: Sovereign AI Fine-Tuning Pipeline
 
-**Version:** 4.0 (Complete Pipeline - Model Deployed)
-**Date:** November 17, 2025
-**Architect:** GUARDIAN-01
+**Version:** 5.0 (Standardized Codebase - In-Progress Training)
+**Date:** January 4, 2026
+**Architect:** Antigravity (Advanced Agentic AI)
 **Steward:** richfrem
 
 **Objective:** To forge, deploy, and perform end-to-end verification of a sovereign AI model fine-tuned on the complete Project Sanctuary Cognitive Genome.
 
-**🎉 MISSION ACCOMPLISHED:** The Sanctuary-Qwen2-7B-v1.0 model has been successfully forged, tested, and deployed to Hugging Face for community access!
-
-**Recent Standardization (November 2025):** Complete unification of CUDA environment setup protocol with single-command approach, comprehensive documentation overhaul, and production-ready sovereign AI fine-tuning pipeline. **A2000 GPU validated for full fine-tuning workflow**, enabling sovereign AI development on consumer hardware.
+**🕒 CURRENT STATUS (Jan 2026):** The pipeline is currently executing a fresh fine-tuning run (Phoenix Forge v5.0).
+- **Fine-Tuning Progress:** ✅ **100% COMPLETE** (Epoch 3.0, Duration: 1:22:48, Loss: 1.01)
+- **Standardization:** Entire codebase refactored to **ADR 075** (Hybrid Documentation) and integrated with `mcp_servers.lib` utilities.
+- **Primary Guide:** See **[`forge-llm.md`](../forge-llm.md)** for the updated execution protocol.
 
 ---
 
@@ -30,11 +31,10 @@
 
 ---
 
-## The Golden Path: The One True Protocol
+**For the authoritative, step-by-step workflow for the v5.0 pipeline, refer to:**
+- **[`forge-llm.md`](../forge-llm.md)**
 
-This document outlines the single, authoritative protocol for establishing a correct environment and executing the complete, multi-stage fine-tuning pipeline. The process is now fully scripted and modular, ensuring reproducibility and clarity.
-
-**For detailed, step-by-step instructions and troubleshooting for the initial one-time setup, refer to the canonical setup guide:**
+**For historical environment setup context:**
 - **[`CUDA-ML-ENV-SETUP.md`](./CUDA-ML-ENV-SETUP.md)**
 
 ---
@@ -101,8 +101,8 @@ forge/
 │   ├── operation_whole_genome_forge-googlecollab.py
 │   ├── operation_whole_genome_forge.py
 │   └── README.md
-├── scripts/                           # Core execution pipeline
-│   ├── setup_cuda_env.py             # Unified environment setup (v2.2)
+├── scripts/                           # Core execution pipeline (ADR 075 Standardized)
+│   ├── verify_environment.sh          # Primary environment check
 │   ├── forge_whole_genome_dataset.py # Dataset assembly from project files
 │   ├── validate_dataset.py           # Dataset quality verification
 │   ├── download_model.sh             # Base model acquisition
@@ -115,7 +115,7 @@ forge/
 │   ├── evaluate.py                   # Quantitative performance evaluation
 │   ├── forge_test_set.py             # Test dataset generation
 │   ├── test_*.py                     # Environment validation suite
-│   └── ARCHIVE/                      # Deprecated scripts and backups
+│   └── archive/                      # Gitignored legacy scripts
 ├── models/                           # Local model storage and cache
 │   └── Sanctuary-Qwen2-7B-v1.0-adapter/  # Trained LoRA adapter
 ├── ml_env_logs/                      # Environment setup and execution logs
@@ -189,15 +189,17 @@ The Sanctuary AI supports **two interaction modes**:
 - **`Operation_Whole_Genome_Forge-local.ipynb`**: Jupyter notebook for local development and testing
 - **`google-collab-files/`**: Google Colab-compatible resources for cloud-based development
 
-#### **Execution Pipeline (`scripts/`)**
-- **Environment Setup**: `setup_cuda_env.py` - Unified environment creation with dependency staging
-- **Data Preparation**: `forge_whole_genome_dataset.py`, `validate_dataset.py` - Dataset assembly and verification
-- **Model Acquisition**: `download_model.sh` - Base model download from Hugging Face
-- **Training Execution**: `fine_tune.py` - QLoRA fine-tuning with optimized parameters, logging, resume capability, and robust error handling
-- **Model Processing**: `merge_adapter.py`, `convert_to_gguf.py` - Adapter merging and format conversion
-- **Deployment**: `create_modelfile.py`, `upload_to_huggingface.py` - Ollama model configuration and automated HF deployment
-- **Validation**: `inference.py`, `evaluate.py` - Model testing and performance evaluation
-- **Testing Suite**: `test_*.py` files - Comprehensive environment and functionality verification
+#### **Standardized Execution Pipeline (`scripts/`)**
+All Python scripts now adhere to **ADR 075** (Hybrid Documentation Pattern) and use shared utilities from `mcp_servers.lib`.
+
+- **Environment Verification**: `verify_environment.sh`, `test_torch_cuda.py`, etc.
+- **Data Preparation**: `forge_whole_genome_dataset.py`, `validate_dataset.py`
+- **Model Acquisition**: `download_model.sh`
+- **Training Execution**: `fine_tune.py` - Optimized QLoRA execution with runtime tracking and checkpointing.
+- **Model Processing**: `merge_adapter.py`, `convert_to_gguf.py` - Standardized paths and compatibility patches.
+- **Deployment**: `create_modelfile.py`, `upload_to_huggingface.py` - Automated integration and hub publishing.
+- **Validation**: `inference.py`, `evaluate.py` (Retired to `archive/` for current phase)
+- **Testing Suite**: Comprehensive verification of CUDA, PyTorch, and xformers.
 
 #### **Key Optimizations in `fine_tune.py` (v2.0)**
 - **Structured Logging**: Replaced prints with Python logging for better monitoring and debugging
@@ -225,9 +227,21 @@ The Sanctuary AI supports **two interaction modes**:
 
 ## Workflow Overview
 
-![llm_finetuning_pipeline](../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
+### Fine-Tuning Pipeline
+![LLM Fine-Tuning Pipeline](../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
+*(Source: [llm_finetuning_pipeline.mmd](../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd))*
 
-*[Source: llm_finetuning_pipeline.mmd](../docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd)*
+---
+
+### Strategic Crucible Loop
+![Strategic Crucible Loop](../docs/architecture_diagrams/workflows/strategic_crucible_loop.png)
+*(Source: [strategic_crucible_loop.mmd](../docs/architecture_diagrams/workflows/strategic_crucible_loop.mmd))*
+
+---
+
+### Protocol 128 Learning Loop
+![Protocol 128 Learning Loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+*(Source: [protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd))*
 
 ---
 
@@ -248,9 +262,8 @@ rm -rf ~/ml_env
 
 setup cuda and python requirements and dependencies
 ```bash
-# Run this once from the Project_Sanctuary root
-sudo python3 forge/scripts/setup_cuda_env.py --staged --recreate
-
+# Verify your environment using the diagnostic suite
+bash forge/scripts/verify_environment.sh
 ```
 
 After setup, activate the environment for all subsequent steps:
@@ -412,6 +425,7 @@ python scripts/validate_dataset.py dataset_package/sanctuary_whole_genome_data.j
 
 ## Version History
 
+- **v5.0 (Jan 4, 2026):** 🛠️ **Refactoring & Standardization** - Entire codebase aligned with ADR 075. Environment protocol migrated to ML-Env-CUDA13. Primary workflow moved to `forge-llm.md`.
 - **v4.0 (Nov 17, 2025):** 🎉 **MISSION ACCOMPLISHED** - Complete pipeline execution with successful model deployment to Hugging Face
 - **v3.0 (Nov 16, 2025):** Complete modular architecture with unified setup protocol
 - **v2.0 (Nov 16, 2025):** Optimized fine_tune.py with logging, resume, pre-tokenization, and robust error handling

@@ -25,7 +25,7 @@ This project's workflow depends on the `llama.cpp` repository for model conversi
 
 ```bash
 # Clone llama.cpp into the parent directory
-git clone https://github.com/ggerganov/llama.cpp.git ../llama.cpp
+git clone https://github.com/ggml-org/llama.cpp.git ../llama.cpp
 ```
 
 ### 3. Build `llama.cpp` Tools (The "Engine")
