@@ -48,6 +48,6 @@ except ImportError as e:
     print("  - This confirms a critical issue in how Python is resolving modules.")
     print("------------------------------------")
 except Exception as e:
-    print(f"\n[{'\033[91m'}CRITICAL FAILURE{'\033[0m'}] An unexpected error occurred.")
+    print(f"\n[{RED}CRITICAL FAILURE{RESET}] An unexpected error occurred.")
     print(f"  - Error: {e}")
     print("------------------------------------")

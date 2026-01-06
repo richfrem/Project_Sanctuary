@@ -707,6 +707,25 @@ class CortexOperations:
                 error=str(e)
             )
 
+    # [DISABLED] Synaptic Phase (Dreaming) - See ADR 091 (Rejected for now)
+    # def dream(self):
+    #     #============================================
+    #     # Method: dream
+    #     # Purpose: Execute the Synaptic Phase (Dreaming).
+    #     #          Consolidate memories and update Opinion Network.
+    #     # Reference: ADR 091
+    #     #============================================
+    #     from .dreaming import Dreamer
+    #     
+    #     try:
+    #         logger.info("Initializing Synaptic Phase (Dreaming)...")
+    #         dreamer = Dreamer(self.project_root)
+    #         dreamer.dream()
+    #         return {"status": "success", "message": "Synaptic Phase complete."}
+    #     except Exception as e:
+    #         logger.error(f"Dreaming failed: {e}", exc_info=True)
+    #         return {"status": "error", "error": str(e)}
+
     # ========================================================================
     # Cache Operations (Protocol 114 - Guardian Wakeup)
     # ========================================================================

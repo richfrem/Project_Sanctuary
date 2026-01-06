@@ -540,9 +540,32 @@ Remove any previous cached version and pull fresh:
 # Clean up old cache
 ollama rm hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 
-# Run from Hugging Face
+# Run from Hugging Face (automatically pulls latest)
 ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 ```
+
+### 6.3 Create Local Alias (Recommended)
+Create a shorter alias for convenience:
+```bash
+# Remove old alias if it exists (may point to stale version)
+ollama rm Sanctuary-Qwen2-7B:latest
+
+# Create fresh alias pointing to the new version
+ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M Sanctuary-Qwen2-7B:latest
+
+# Verify both point to same model ID
+ollama list
+```
+
+**Expected Output:**
+```
+NAME                                                        ID              SIZE
+Sanctuary-Qwen2-7B:latest                                   dbc652e8317f    4.7 GB
+hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M    dbc652e8317f    4.7 GB
+```
+
+> [!TIP]
+> After creating the alias, you can use `ollama run Sanctuary-Qwen2-7B:latest` instead of the full HuggingFace path.
 
 ---
 

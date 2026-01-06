@@ -49,7 +49,6 @@ cryptography==46.0.3
     # via
     #   authlib
     #   pyjwt
-    #   secretstorage
 cyclopts==4.4.1
     # via fastmcp
 diskcache==5.6.3
@@ -103,10 +102,6 @@ jaraco-context==6.0.1
     # via keyring
 jaraco-functools==4.4.0
     # via keyring
-jeepney==0.9.0
-    # via
-    #   keyring
-    #   secretstorage
 jiter==0.12.0
     # via openai
 jsonschema==4.25.1
@@ -236,8 +231,6 @@ rpds-py==0.30.0
     # via
     #   jsonschema
     #   referencing
-secretstorage==3.5.0
-    # via keyring
 shellingham==1.5.4
     # via typer
 six==1.17.0

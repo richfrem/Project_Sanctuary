@@ -32,7 +32,22 @@
   "docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd",
   "docs/architecture_diagrams/workflows/strategic_crucible_loop.mmd",
   "LEARNING/topics/forge_v5_evolution.md",
+  "LEARNING/topics/llm_memory_architectures_2025/analysis.md",
+  "LEARNING/topics/llm_memory_architectures_2025/questions.md",
+  "LEARNING/topics/llm_memory_architectures_2025/sources.md",
+  "LEARNING/topics/llm_memory_architectures_2025/red_team_feedback.md",
+  "LEARNING/topics/llm_memory_architectures_2025/red_team_round2.md",
+  "LEARNING/topics/llm_memory_architectures_2025/red_team_round3.md",
+  "LEARNING/topics/llm_memory_architectures_2025/followup_prompts.md",
+  "LEARNING/topics/cross_topic_synthesis.md",
+  "ADRs/084_semantic_entropy_tda_gating.md",
   ".agent/learning/learning_audit/loop_retrospective.md",
   ".agent/learning/learning_audit/learning_audit_prompts.md",
-  "scripts/cortex_cli.py"
+  "scripts/cortex_cli.py",
+  "ADRs/090_iron_core_safe_mode.md",
+  "founder_seed.json",
+  "tests/adversarial_torture_test.py",
+  "LEARNING/associative_architecture_brief.md",
+  "scripts/path_diag.py",
+  "LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md"
 ]

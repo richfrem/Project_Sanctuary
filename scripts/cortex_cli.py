@@ -49,6 +49,67 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from mcp_servers.rag_cortex.operations import CortexOperations
+import subprocess
+
+# ADR 090: Iron Core Definitions
+IRON_CORE_PATHS = [
+    "01_PROTOCOLS",
+    "ADRs",
+    "cognitive_continuity_policy.md",
+    "founder_seed.json"
+]
+
+def verify_iron_core(root_path):
+    """
+    Verifies that Iron Core paths have not been tampered with (uncommitted/unstaged changes).
+    ADR 090 (Evolution-Aware):
+    - Unstaged changes (Dirty Worktree) -> VIOLATION (Drift)
+    - Staged changes (Index) -> ALLOWED (Evolution)
+    """
+    violations = []
+    try:
+        # Check for modifications in Iron Core paths
+        # --porcelain format:
+        # XY Path
+        # X = Index (Staged), Y = Worktree (Unstaged)
+        # We only care if Y is modified (meaning unstaged changes exist)
+        cmd = ["git", "status", "--porcelain"] + IRON_CORE_PATHS
+        result = subprocess.run(
+            cmd, 
+            cwd=root_path, 
+            capture_output=True, 
+            text=True, 
+            check=False
+        )
+        
+        if result.stdout.strip():
+            for line in result.stdout.strip().split('\n'):
+                # Line format: "XY Path" (e.g., " M file.md", "M  file.md", "?? file.md")
+                if len(line.strip()) < 3: 
+                    continue
+                    
+                status_code = line[:2]
+                path = line[3:]
+                
+                # Check Worktree Status (2nd character)
+                # ' ' = Unmodified in worktree (changes are staged or clean)
+                # 'M' = Modified in worktree
+                # 'D' = Deleted in worktree
+                # '?' = Untracked
+                worktree_status = status_code[1]
+                
+                # Violation if:
+                # 1. Untracked ('??') inside Iron Core path (adding new files without staging)
+                # 2. Modified in Worktree ('M') (editing without staging)
+                # 3. Deleted in Worktree ('D') (deleting without staging)
+                if status_code == '??' or worktree_status in ['M', 'D']:
+                    violations.append(f"{line.strip()} (Unstaged/Dirty - Please 'git add' to authorize)")
+                
+    except Exception as e:
+        return False, [f"Error checking Iron Core: {str(e)}"]
+        
+    return len(violations) == 0, violations
+
 
 def main():
     parser = argparse.ArgumentParser(description="Mnemonic Cortex CLI")
@@ -68,6 +129,7 @@ def main():
     snapshot_parser.add_argument("--type", choices=["audit", "learning_audit", "seal"], required=True)
     snapshot_parser.add_argument("--manifest", help="Path to manifest JSON file")
     snapshot_parser.add_argument("--context", help="Strategic context for the snapshot")
+    snapshot_parser.add_argument("--override-iron-core", action="store_true", help="⚠️ Override Iron Core check (Requires ADR 090 Amendment)")
 
     # Command: stats
     stats_parser = subparsers.add_parser("stats", help="Get RAG health and statistics")
@@ -84,6 +146,9 @@ def main():
     debrief_parser = subparsers.add_parser("debrief", help="Run learning debrief (Protocol 128)")
     debrief_parser.add_argument("--hours", type=int, default=24, help="Lookback window in hours")
     debrief_parser.add_argument("--output", help="Output file path (default: .agent/learning/learning_debrief.md)")
+
+    # [DISABLED] Synaptic Phase (Dreaming)
+    # dream_parser = subparsers.add_parser("dream", help="Execute Synaptic Phase (Dreaming)")
 
     # Command: guardian (Protocol 128 Bootloader)
     guardian_parser = subparsers.add_parser("guardian", help="Generate Guardian Boot Digest (Protocol 128)")
@@ -125,7 +190,6 @@ def main():
     if args.command == "ingest":
         if args.incremental:
             print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
-            # Find files modified in the last N hours
             import time
             from datetime import timedelta
             
@@ -175,6 +239,22 @@ def main():
                 sys.exit(1)
 
     elif args.command == "snapshot":
+        # ADR 090: Iron Core Verification
+        if not args.override_iron_core:
+            print("🛡️  Running Iron Core Verification (ADR 090)...")
+            is_pristine, violations = verify_iron_core(args.root)
+            if not is_pristine:
+                print(f"\n\033[91m⛔ IRON CORE BREACH DETECTED (SAFE MODE ENGAGED)\033[0m")
+                print("The following immutable files have been modified without authorization:")
+                for v in violations:
+                    print(f"  - {v}")
+                print("\nAction blocked: 'snapshot' is disabled in Safe Mode.")
+                print("To proceed, revert changes or use --override-iron-core (Constitutional Amendment required).")
+                sys.exit(1)
+            print("✅ Iron Core Integrity Verified.")
+        else:
+            print(f"⚠️  \033[93mWARNING: IRON CORE CHECK OVERRIDDEN\033[0m")
+
         manifest = []
         if args.manifest:
             manifest_path = Path(args.manifest)
@@ -223,6 +303,12 @@ def main():
         if stats.error:
             print(f"\n❌ Error: {stats.error}")
 
+    # [DISABLED] Synaptic Phase (Dreaming)
+    # elif args.command == "dream":
+    #     print("💤 Mnemonic Cortex: Entering Synaptic Phase (Dreaming)...")
+    #     # Use centralized Operations layer
+    #     response = ops.dream()
+    #     print(json.dumps(response, indent=2))
     elif args.command == "query":
         print(f"🔍 Querying: {args.query_text}")
         res = ops.query(
