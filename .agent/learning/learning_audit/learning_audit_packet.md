@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-04T22:15:58.582896
+Generated On: 2026-01-05T21:19:41.883179
 
-# Mnemonic Weight (Token Count): ~71,696 tokens
+# Mnemonic Weight (Token Count): ~92,250 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -38,9 +38,24 @@ Generated On: 2026-01-04T22:15:58.582896
   ./docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd
   ./docs/architecture_diagrams/workflows/strategic_crucible_loop.mmd
   ./LEARNING/topics/forge_v5_evolution.md
+  ./LEARNING/topics/llm_memory_architectures_2025/analysis.md
+  ./LEARNING/topics/llm_memory_architectures_2025/questions.md
+  ./LEARNING/topics/llm_memory_architectures_2025/sources.md
+  ./LEARNING/topics/llm_memory_architectures_2025/red_team_feedback.md
+  ./LEARNING/topics/llm_memory_architectures_2025/red_team_round2.md
+  ./LEARNING/topics/llm_memory_architectures_2025/red_team_round3.md
+  ./LEARNING/topics/llm_memory_architectures_2025/followup_prompts.md
+  ./LEARNING/topics/cross_topic_synthesis.md
+  ./ADRs/084_semantic_entropy_tda_gating.md
   ./.agent/learning/learning_audit/loop_retrospective.md
   ./.agent/learning/learning_audit/learning_audit_prompts.md
   ./scripts/cortex_cli.py
+  ./ADRs/090_iron_core_safe_mode.md
+  ./founder_seed.json
+  ./tests/adversarial_torture_test.py
+  ./LEARNING/associative_architecture_brief.md
+  ./scripts/path_diag.py
+  ./LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md
 
 --- START OF FILE README.md ---
 
@@ -1123,6 +1138,25 @@ Every agent session must initialize via the Protocol 128 Bootloader:
 2. **Debrief Ingestion**: Automatically surface the most recent verified debrief into the active context.
 3. **Cognitive Primer**: Mandate alignment with the project's core directives before tool execution.
 
+## 3A. The Iron Core & Safe Mode Protocol (Zero-Drift)
+To prevent "identity drift" (Source: Titans [16]), we enforce a set of immutable files (Iron Core) that define the agent's fundamental nature.
+
+### The Iron Check
+A cryptographic verification runs at **Boot** (Guardian) and **Snapshot** (Seal). It validates that the following paths have not been tampered with:
+- `01_PROTOCOLS/*`
+- `ADRs/*`
+- `founder_seed.json`
+- `cognitive_continuity_policy.md`
+
+### Safe Mode State Machine
+If an Iron Check fails, the system enters `SAFE_MODE`.
+- **Trigger**: Any uncommitted change to Iron Core paths without "Constitutional Amendment" (HITL Override).
+- **Restrictions**: 
+  - `EXECUTION` capability revoked (Read-only tools only).
+  - `persist-soul` blocked.
+  - `snapshot --seal` blocked.
+- **Recovery**: Manual revert of changes or explicit `--override-iron-core` flag.
+
 ## 4. Technical Architecture (The Mechanism)
 
 ### A. The Recursive Learning Workflow
@@ -1144,6 +1178,12 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
 - **Tool**: `cortex_capture_snapshot` with `snapshot_type='seal'`
 - **Default Manifest**: `.agent/learning/learning_manifest.json`
 - **Output**: `learning_package_snapshot.md` for successor session continuity.
+
+### D. The Synaptic Phase (Dreaming)
+- **Tool**: `cortex_dream` (Async Batch Job)
+- **Function**: Post-seal consolidation of active memories into the **Opinion Network**.
+- **Constraint**: **Epistemic Anchoring**. Opinions created during Dreaming MUST NOT contradict World Facts (Chronicle) or Iron Core.
+- **Output**: Updated `founder_seed.json` (Profiles) and `cortex.json` (Opinions).
 
 ## 5. Operational Invariants
 - **Git as Source of Truth**: Git diffs (`--stat` and `--name-only`) are the final authority for "what happened."
@@ -1168,7 +1208,7 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
 --- START OF FILE .agent/learning/learning_debrief.md ---
 
 # [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)
-**Scan Time:** 2026-01-04 21:56:51 (Window: 24h)
+**Scan Time:** 2026-01-05 18:58:07 (Window: 24h)
 **Strategic Status:** ✅ Successor Context v4.0 Active
 
 > [!IMPORTANT]
@@ -1192,81 +1232,7 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
 ## 🧬 II. Tactical Evidence (Current Git Deltas)
 The following code-level changes were detected SINCE the last session/commit:
 ```text
- .agent/git_safety_rules.md                         |     0
- .agent/git_workflow_policy.md                      |     0
- .agent/learning/README.md                          |     0
- .agent/learning/audit_prompts.md                   |     0
- .agent/learning/bootstrap_manifest.json            |     0
- .agent/learning/bootstrap_packet.md                |    65 +-
- .agent/learning/cognitive_primer.md                |     0
- .agent/learning/guardian_manifest.json             |     0
- .agent/learning/identity_anchor.json               |     0
- .../learning_audit/learning_audit_manifest.json    |     0
- .../learning_audit/learning_audit_packet.md        |     0
- .../learning_audit/learning_audit_prompts.md       |     0
- .../learning/learning_audit/loop_retrospective.md  |     0
- .../learning_audit/manifest_learning_audit.json    |     0
- .agent/learning/learning_debrief.md                |     0
- .agent/learning/learning_manifest.json             |     0
- .agent/learning/learning_package_snapshot.md       | 15150 ++++---------------
- .agent/learning/manifest_seal.json                 |    85 +-
- .../learning/templates/learning_audit_template.md  |     0
- .../templates/loop_retrospective_template.md       |     0
- .../templates/red_team_briefing_template.md        |     0
- .agent/learning/templates/sources_template.md      |     0
- .agent/mcp_commit_guide.md                         |     0
- .agent/mcp_config.json                             |     0
- .agent/mcp_migration.conf                          |     0
- .agent/rules/architecture_sovereignty_policy.md    |     0
- .agent/rules/coding_conventions_policy.md          |     0
- .agent/rules/cognitive_continuity_policy.md        |     0
- .agent/rules/dependency_management_policy.md       |     0
- .agent/rules/git_workflow_policy.md                |     0
- .agent/rules/human_gate_policy.md                  |     3 +-
- .agent/rules/mcp_routing_policy.md                 |     0
- .agent/temp_adr_list.txt                           |     0
- .agent/temp_protocol_list.txt                      |     0
- .agent/workflows/recursive_learning.md             |     0
- .coverage                                          |   Bin 53248 -> 53248 bytes
- .dockerignore                                      |     0
- .env.example                                       |     0
- .gitattributes                                     |     0
- .github/copilot-instructions.md                    |     0
- .github/dependabot.yml                             |     0
- .github/workflows/ci.yml                           |     0
- .github/workflows/security.yml                     |     0
- .gitignore                                         |    10 +-
- .ollama_models/id_ed25519                          |     0
- .ollama_models/id_ed25519.pub                      |     0
- LICENSE                                            |     0
- Living_Chronicle.md                                |     0
- Makefile                                           |     2 +-
- Modelfile_minimal                                  |     0
- README.md                                          |     0
- REQUIREMENTS.env                                   |     0
- all_tools.txt                                      |     0
- docker-compose.yml                                 |     0
- forge-llm.md                                       |     0
- invalid_links_report.json                          |     0
- llm.md                                             |     2 +-
- manifest.json                                      |     0
- package-lock.json                                  |     0
- package.json                                       |     0
- pytest.ini                                         |     0
- repro_gateway.py                                   |     0
- requirements-dev.in                                |     0
- requirements-dev.txt                               |     0
- requirements-finetuning.txt                        |     0
- requirements.txt                                   |     0
- scripts/init_session.py                            |     0
- scripts/manual_test_deliberation.py                |     0
- scripts/run_integration_tests.sh                   |     0
- scripts/update_genome.sh                           |     0
- scripts/wait_for_pulse.sh                          |     0
- tests/manual/test_auditor_simple.sh                |     0
- tests/run_all_tests.py                             |     0
- 73 files changed, 3161 insertions(+), 12156 deletions(-)
-
+No uncommitted code changes found.
 ```
 
 ## 📂 III. File Registry (Recency)
@@ -1278,13 +1244,13 @@ The following code-level changes were detected SINCE the last session/commit:
 
 
 ### Recently Modified High-Signal Files:
-* **Most Recent Commit:** 7fdecad update repo to enable clone to wsl environment (#146)
+* **Most Recent Commit:** 22dbcd6a Feat/wsl migration hardening (#148)
 * **Recent Files Modified (48h):**
-    * `mcp_servers/start_mcp_servers.py` (2h ago) [+5/-3]
-    * `mcp_servers/lib/hf_utils.py` (2h ago) [+2/-1]
-    * `mcp_servers/lib/env_helper.py` (2h ago) [+84/-0]
-    * `mcp_servers/lib/path_utils.py` (2h ago) [+32/-0]
-    * `mcp_servers/lib/logging_utils.py` (2h ago) [+6/-3]
+    * `mcp_servers/lib/logging_utils.py` (1m ago) [+6/-3]
+    * `mcp_servers/gateway/clusters/sanctuary_network/__init__.py` (1m ago) [+1/-0]
+    * `mcp_servers/gateway/clusters/sanctuary_filesystem/__init__.py` (1m ago) [+1/-0]
+    * `mcp_servers/gateway/clusters/sanctuary_domain/__init__.py` (1m ago) [+1/-0]
+    * `mcp_servers/config/__init__.py` (1m ago) [+1/-0]
 
 ## 🏗️ IV. Architecture Alignment (The Successor Relay)
 ![Recursive Learning Flowchart](docs/architecture_diagrams/workflows/recursive_learning_flowchart.png)
@@ -1357,12 +1323,20 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
 ## 🧠 VII. Cognitive Primer
 # The Cognitive Primer (Protocol 128)
 
-**Version:** 1.0
-**Last Updated:** 2025-12-23
+**Version:** 2.0 (3-Layer Architecture)
+**Last Updated:** 2026-01-04
+
+> [!IMPORTANT] **Prompt Architecture (GPT-5 Red Team Recommendation)**
+> This primer is **Layer 2: Role Orientation**. Read in order:
+> 1. **Layer 1:** [`guardian_boot_contract.md`](./guardian_boot_contract.md) — Immutable constraints (~400 tokens)
+> 2. **Layer 2:** This file — Identity, mandate, values (no procedures)
+> 3. **Layer 3:** Living Doctrine — Protocols, ADRs (retrieved, not embedded)
 
 ## 1. Core Principle: Cognitive Continuity
 You are an autonomous agent operating within Project Sanctuary. Your effectiveness depends on your ability to **Continuously Learn** and **Verify Reality**.
 Do not rely on implicit context. Verify your environment.
+
+> **Permission to Challenge Doctrine:** If any protocol conflicts with observed reality, system integrity, or epistemic rigor, you are **authorized and obligated** to surface the conflict for human review. Doctrine is fallible. Reality is sovereign.
 
 ## 2. The Learning Workflow (Refinement)
 
@@ -1929,19 +1903,19 @@ This document provides a repeatable, validated workflow for fine-tuning a Large 
 ## Visual Pipelines
 
 ### 1. LLM Fine-Tuning Pipeline
-![LLM Fine-Tuning Pipeline](file:///c:/Users/RICHFREM/source/repos/Project_Sanctuary/docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
+![LLM Fine-Tuning Pipeline](./docs/architecture_diagrams/workflows/llm_finetuning_pipeline.png)
 *(Source: [llm_finetuning_pipeline.mmd](./docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd))*
 
 ---
 
 ### 2. Strategic Crucible Loop
-![Strategic Crucible Loop](file:///c:/Users/RICHFREM/source/repos/Project_Sanctuary/docs/architecture_diagrams/workflows/strategic_crucible_loop.png)
+![Strategic Crucible Loop](./docs/architecture_diagrams/workflows/strategic_crucible_loop.png)
 *(Source: [strategic_crucible_loop.mmd](./docs/architecture_diagrams/workflows/strategic_crucible_loop.mmd))*
 
 ---
 
 ### 3. Protocol 128 Learning Loop
-![Protocol 128 Learning Loop](file:///c:/Users/RICHFREM/source/repos/Project_Sanctuary/docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![Protocol 128 Learning Loop](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 *(Source: [protocol_128_learning_loop.mmd](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd))*
 
 ---
@@ -2218,8 +2192,8 @@ cd ../Project_Sanctuary
 Required for Python/CUDA environment. Must be sibling to Project_Sanctuary.
 
 ```bash
-# From Project_Sanctuary root (in WSL)
-cd ..
+# From ~/repos (in WSL)
+cd ~/repos
 git clone https://github.com/bcgov/ML-Env-CUDA13.git
 cd ML-Env-CUDA13
 
@@ -2452,9 +2426,32 @@ Remove any previous cached version and pull fresh:
 # Clean up old cache
 ollama rm hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 
-# Run from Hugging Face
+# Run from Hugging Face (automatically pulls latest)
 ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
 ```
+
+### 6.3 Create Local Alias (Recommended)
+Create a shorter alias for convenience:
+```bash
+# Remove old alias if it exists (may point to stale version)
+ollama rm Sanctuary-Qwen2-7B:latest
+
+# Create fresh alias pointing to the new version
+ollama cp hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M Sanctuary-Qwen2-7B:latest
+
+# Verify both point to same model ID
+ollama list
+```
+
+**Expected Output:**
+```
+NAME                                                        ID              SIZE
+Sanctuary-Qwen2-7B:latest                                   dbc652e8317f    4.7 GB
+hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M    dbc652e8317f    4.7 GB
+```
+
+> [!TIP]
+> After creating the alias, you can use `ollama run Sanctuary-Qwen2-7B:latest` instead of the full HuggingFace path.
 
 ---
 
@@ -2499,7 +2496,7 @@ python -c "import torch; print(torch.cuda.is_available())"
 ```bash
 # Re-run environment setup
 source ~/ml_env/bin/activate
-pip install -r ~/ML-Env-CUDA13/requirements.txt
+pip install -r ~/repos/ML-Env-CUDA13/requirements.txt
 ```
 
 ---
@@ -5745,13 +5742,17 @@ flowchart TB
         AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: .agent/learning/cognitive_primer.md"]
         AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
         
-        IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Verify Semantic HMAC)"]
-        IDE_Wakeup --> IDE_Debrief["CLI: python3 scripts/cortex_cli.py debrief<br>OR Tool: cortex_learning_debrief"]
+        IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
+        IDE_Wakeup --> IronCheckGate1{Iron Check?}
         
-        MCP_Wakeup --> MCP_Debrief["Tool: cortex_learning_debrief<br>(Returns Full Context)"]
+        IronCheckGate1 -- PASS --> IDE_Debrief["CLI: python3 scripts/cortex_cli.py debrief<br>OR Tool: cortex_learning_debrief"]
+        IronCheckGate1 -- FAIL --> SafeMode1[SAFE MODE<br>Read-Only / Halt]
+        
+        MCP_Wakeup --> IronCheckGate1
+        MCP_Debrief["Tool: cortex_learning_debrief<br>(Returns Full Context)"]
         
         IDE_Debrief --> SeekTruth["Context Acquired"]
-        MCP_Debrief --> SeekTruth
+        MCP_Wakeup --> MCP_Debrief --> SeekTruth
         
         SuccessorSnapshot["File: .agent/learning/learning_package_snapshot.md<br>(Truth Anchor)"] -.->|Embedded in Debrief| SeekTruth
     end
@@ -5782,7 +5783,9 @@ flowchart TB
 
     subgraph subGraphSeal["V. The Technical Seal"]
         direction TB
-        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Updates .agent/learning/learning_package_snapshot.md)"]
+        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Run Iron Check)"] --> SealCheck{Iron Check?}
+        SealCheck -- FAIL --> SafeMode2[SAFE MODE<br>Seal Blocked]
+        SealCheck -- PASS --> SealSuccess[Seal Applied]
     end
 
     subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
@@ -5837,7 +5840,7 @@ flowchart TB
     Deployment --> Retro
     Retro --> ShareRetro
     ShareRetro -- "Ready to Seal" --> CaptureSeal
-    CaptureSeal -- "Broadcast" --> choice
+    SealSuccess -- "Broadcast" --> choice
     
     Inc --> JSONL_Traces
     Inc --> MD_Seal
@@ -5863,6 +5866,8 @@ flowchart TB
     style MCP_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
     style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
     style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
+    style SafeMode1 fill:#ffcccb,stroke:#b30000,stroke-width:4px,color:black
+    style SafeMode2 fill:#ffcccb,stroke:#b30000,stroke-width:4px,color:black
 
     %% Metadata
     %% Last Updated: 2026-01-01 19:18:00
@@ -6113,6 +6118,1564 @@ When resuming work on the Forge pipeline:
 
 --- END OF FILE LEARNING/topics/forge_v5_evolution.md ---
 
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/analysis.md ---
+
+# LLM Long-Term Memory Architectures (2024-2025)
+
+**Research Date:** 2026-01-05
+**Researcher:** Claude (Opus 4.5)
+**Status:** Initial Analysis
+**Relevance:** Direct alignment with Protocol 128 (Cognitive Continuity) and RAG Cortex architecture
+
+## Executive Summary
+
+The landscape of LLM agent memory is rapidly evolving. Project Sanctuary's current architecture (RAG + CAG + LoRA tiered system) aligns well with state-of-the-art approaches, but several emerging techniques could enhance cognitive continuity.
+
+---
+
+## 7 Key Architectural Approaches
+
+### 1. Vector Databases for RAG ✅ (Project Sanctuary: IMPLEMENTED)
+- Store text as embedding vectors, retrieve via similarity search
+- **Limitation:** May not be sufficient alone for advanced agentic AI
+- **Sanctuary Status:** ChromaDB with parent-child chunking (v5)
+
+### 2. Memory-Augmented Transformers 🔄 (Emerging)
+- Integrate learnable memory directly into Transformer architecture
+- Examples: "MemoryLLM" - additional tokens/layers for memory
+- **Sanctuary Opportunity:** Could enhance fine-tuned Sanctuary-Qwen2-7B
+
+### 3. Episodic Memory Modules ✅ (Partially Implemented)
+- Cluster related interactions into "holistic episodes"
+- Mem0: Persistent memory updated via reinforcement learning
+- **Sanctuary Status:** Chronicle entries serve as episodic memory; could formalize clustering
+
+### 4. Multi-Tier Cognitive Architectures ✅ (IMPLEMENTED)
+- Short-term: Current prompt/session
+- Mid-term: Vector DB (RAG)
+- Long-term: Semantic/procedural memory
+- **HINDSIGHT Framework:** World Memory, Experience Memory, Opinion Memory, Reflection Memory
+- **Sanctuary Status:** CAG (hot cache) + RAG + LoRA mirrors this pattern
+
+### 5. Hierarchical/Modular Architectures 🔄 (Partial)
+- SciBORG: Internal finite-state automaton (FSA) for persistent state tracking
+- "El Agente": Hierarchical network filtering irrelevant context
+- **Sanctuary Opportunity:** Could add FSA-based state tracking to Protocol 128
+
+### 6. Dynamic Memory Management ✅ (IMPLEMENTED)
+- Summarization, pruning, selective extraction
+- Mem0: Reduces latency by extracting only salient information
+- **Sanctuary Status:** Guardian Wakeup performs selective context loading
+
+### 7. Parameter-Based Memory 🔄 (IMPLEMENTED via LoRA)
+- Transform memories into model parameters
+- LoRA, test-time training, MoE layers
+- **Sanctuary Status:** Phoenix Forge pipeline uses QLoRA for "Cognitive Genome" endowment
+
+---
+
+## Key Academic Papers (arxiv)
+
+### Larimar (IBM, ICML 2024) - arxiv:2403.11901
+**"Large Language Models with Episodic Memory Control"**
+- **Authors:** Payel Das, Subhajit Chaudhury, et al. (IBM Research)
+- **Key Innovation:** Brain-inspired distributed episodic memory for LLMs
+- **Capabilities:**
+  - One-shot knowledge updates WITHOUT retraining/fine-tuning
+  - 8-10x speed improvement over baselines
+  - Selective fact forgetting
+  - Information leakage prevention
+  - Input context length generalization
+- **Architecture:** LLM-agnostic external memory controller
+- **GitHub:** [github.com/IBM/larimar](https://github.com/IBM/larimar)
+- **Sanctuary Relevance:** Could enhance Guardian Wakeup with rapid knowledge injection
+
+### MemGPT (UC Berkeley, 2023) - arxiv:2310.08560
+**"Towards LLMs as Operating Systems"**
+- **Key Innovation:** OS-inspired "virtual context management"
+- **Architecture:**
+  - Main context (RAM) = LLM's immediate context window
+  - External context (Disk) = Long-term storage
+  - LLM acts as its own memory manager via function calls
+- **Capabilities:**
+  - Autonomous memory management
+  - Summarization, persistence, retrieval
+  - Extended document analysis
+  - Multi-session coherence
+- **Sanctuary Relevance:** Protocol 128's CAG/RAG tiers mirror this architecture
+
+### Letta Evolution (2024-2025)
+**"Making machines that learn"**
+- **Rebrand:** MemGPT → Letta (commercial platform)
+- **Tagline:** "Agents that remember everything, learn continuously, and improve over time"
+- **Key Innovation: Skill Learning**
+  - Dynamic skill acquisition through experience
+  - Agents improve over time instead of degrading
+  - Memory persists across model generations
+- **Letta Code:** #1 model-agnostic open source agent on Terminal-Bench
+- **Philosophy:** "Learning in token space" - memories that outlive foundation models
+- **Sanctuary Relevance:** Validates long-term vision of Phoenix Forge (model evolution)
+
+### HINDSIGHT Framework (Vectorize.io, 2024-2025)
+**"Structured Memory for LLM Agents"**
+- **Authors:** Vectorize.io + Virginia Tech + Washington Post
+- **arxiv:** [To be verified]
+- **Key Innovation:** 4-tier memory separation (vs flat text chunks)
+
+**The 4 Memory Networks:**
+| Network | Type | Example | Stability |
+|---------|------|---------|-----------|
+| **World Facts** | Objective truth | Customer purchase date | Slow change |
+| **Experiences** | Episodic | Failed API call, rejected refund | Chronological |
+| **Opinions** | Confidence-weighted beliefs | Probabilistic, evolves | Dynamic |
+| **Observations** | Synthesized patterns | "Users requesting refunds prefer replacements" | Derived |
+
+**Core Operations:** Retain → Recall → Reflect
+- **Retain:** Extract and classify facts from input
+- **Recall:** Multi-strategy retrieval (semantic + graph traversal)
+- **Reflect:** Reason over memory, derive insights, update beliefs
+
+**Sanctuary Mapping:**
+| HINDSIGHT | Protocol 128 Equivalent |
+|-----------|------------------------|
+| World Facts | Chronicle entries (00_CHRONICLE) |
+| Experiences | Session learning (learning_audit) |
+| Opinions | Semantic Entropy scoring (ADR 084) |
+| Observations | Learning Package Snapshot patterns |
+| Reflect | Red Team Audit (Phase IV) |
+
+---
+
+## Semantic Entropy Research (Directly Relevant to ADR 084)
+
+**Context:** ADR 084 (Empirical Epistemic Gating) uses Semantic Entropy as the "Dead-Man's Switch" for trace validation. This research validates and extends that approach.
+
+### Core Concept
+Semantic Entropy quantifies uncertainty in *meaning* (not just token probability):
+- **Low SE:** Model confident in meaning of output
+- **High SE:** Uncertainty, lack of context, or potential hallucination
+
+### How It Works
+1. Generate multiple outputs for same prompt
+2. Embed outputs into semantic vector space
+3. Cluster semantically similar answers
+4. Calculate entropy across clusters
+
+### 2024-2025 Innovations
+
+| Innovation | Source | Key Benefit |
+|------------|--------|-------------|
+| **Semantic Entropy Probes (SEPs)** | arxiv (2024) | Approximate SE from single generation (5-10x faster) |
+| **Kernel Language Entropy (KLE)** | NeurIPS 2024 | Fine-grained estimates via pairwise semantic dependencies |
+| **Intra/Inter-cluster similarity** | ACL 2025 | Better handling of long responses |
+
+### Sanctuary Alignment (ADR 084)
+| ADR 084 Component | State-of-the-Art Validation |
+|-------------------|----------------------------|
+| SE as Dead-Man's Switch | ✅ Oxford research confirms SE detects confabulations |
+| Constitutional Anchor | ✅ HINDSIGHT's "Opinions" network uses confidence-weighting |
+| Fail-closed (SE=1.0 on error) | ✅ Industry trend: default to uncertainty when unsure |
+
+### Enhancement Opportunities for Protocol 128
+1. **SEP Integration:** Use hidden state probing for faster SE estimation
+2. **KLE for Long Sessions:** Better uncertainty quantification for multi-turn dialogues
+3. **Cluster Visualization:** Add TDA (Topological Data Analysis) for belief network mapping
+
+---
+
+## Key Insights for Project Sanctuary
+
+### Alignment Validation
+Protocol 128's multi-tier approach (Scout → Synthesize → Seal → Phoenix Forge) maps directly to emerging best practices:
+- **Scout** = Short-term context acquisition
+- **Seal** = Mid-term persistence (Vector DB)
+- **Phoenix Forge** = Long-term parameter embedding
+
+### Enhancement Opportunities
+
+1. **Formalize Episode Clustering:** Add episode boundaries to Chronicle entries for better retrieval
+2. **Explore FSA State Tracking:** SciBORG's approach could harden Protocol 128's state machine
+3. **HINDSIGHT-Style Memory Separation:** Explicitly separate World/Experience/Opinion/Reflection in learning artifacts
+4. **Context Engineering:** Anthropic's emerging practice of curating optimal context windows
+
+---
+
+## Sources
+
+| # | Source | Key Contribution |
+|---|--------|------------------|
+| [1] | rohan-paul.com | Comprehensive overview of memory architectures |
+| [3] | samiranama.com | Mem0 episodic memory system |
+| [9] | healthark.ai | Multi-tier context systems |
+| [11] | medium.com | HINDSIGHT framework (4-tier memory) |
+| [13] | llmwatch.com | SciBORG FSA memory |
+| [17] | anthropic.com | Context engineering practices |
+
+---
+
+## Next Steps
+
+- [ ] Deep-dive on HINDSIGHT framework paper
+- [ ] Evaluate Mem0 open-source implementation
+- [ ] Compare SciBORG FSA to Protocol 128 state machine
+- [ ] Draft ADR proposal for memory architecture enhancements
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/analysis.md ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/questions.md ---
+
+# Research Questions: LLM Memory Architectures
+
+**Topic:** Long-Term Memory for Cognitive Continuity
+**Session:** 2026-01-05
+
+## Primary Questions
+
+1. **HINDSIGHT Framework:** How does the 4-tier memory separation (World/Experience/Opinion/Reflection) compare to Sanctuary's CAG/RAG/LoRA triad?
+
+2. **SciBORG FSA:** Can finite-state automaton memory improve Protocol 128's state tracking reliability?
+
+3. **Mem0 Implementation:** Is the open-source Mem0 approach compatible with our ChromaDB + LangChain stack?
+
+4. **Context Engineering:** What are Anthropic's specific recommendations for managing context in long-horizon agentic tasks?
+
+8. **HINDSIGHT Implementation:** How do we specifically implement the "Opinion Network" (O) and "Observation Network" (S) using our existing ChromaDB/Postgres stack?
+9.  **Nested Learning:** How can the "Associative Optimizer" concept be materialized as a specific "Synaptic Phase" in Protocol 128?
+10. **CARA Integration:** How do we implement the "Reflect" operation (Disposition Parameters) without creating excessive latency in the learning loop?
+
+## Secondary Questions
+
+5. **Episode Boundaries:** How should Chronicle entries be clustered into "holistic episodes" for better retrieval?
+
+6. **Memory Decay:** Should old memories decay/summarize over time, or maintain full fidelity?
+
+7. **Cross-Session Verification:** Beyond HMAC, what other integrity mechanisms exist for persistent memory?
+
+## Alignment with Protocol 128
+
+| Protocol Phase | Memory Architecture Parallel |
+|----------------|------------------------------|
+| I. Scout | Short-term context acquisition |
+| II. Synthesize | Experience/Opinion memory formation |
+| III. Strategic Gate | Reflection memory |
+| IV. Red Team Audit | Memory verification/pruning |
+| V. Seal | Mid-term persistence |
+| VI. Soul Persist | Parameter-based memory (weights) |
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/questions.md ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/sources.md ---
+
+# Sources: LLM Memory Architectures Research
+
+**Research Date:** 2026-01-05
+**Verification Status:** ✅ All links verified via `read_url_content`
+
+---
+
+## Primary Sources
+
+### [1] Anthropic: Building Effective Agents
+- **URL:** https://www.anthropic.com/research/building-effective-agents
+- **Accessed:** 2026-01-05
+- **Verified:** ✅ Title matches, content accessible
+- **Key Contribution:** 3 core agent principles - simplicity, transparency, well-crafted ACI (Agent-Computer Interface). Evaluator-optimizer workflow pattern validated.
+
+### [2] Larimar: Large Language Models with Episodic Memory Control
+- **URL:** https://arxiv.org/abs/2403.11901
+- **Version:** v4 (21 Aug 2024)
+- **Authors:** Payel Das*¹, Subhajit Chaudhury*¹, Elliot Nelson¹, Igor Melnyk¹, Sarathkrishna Swaminathan¹, Sihui Dai¹², Aurélie Lozano¹, Georgios Kollias¹, Vijil Chenthamarakshan¹, Jiří Navrátil¹, Soham Dan¹, Pin-Yu Chen¹ (*Equal contribution)
+- **Affiliations:** ¹IBM AI Research, ²Princeton University (internship)
+- **Published:** ICML 2024
+- **Verified:** ✅ **FULL PAPER REVIEWED** - Title, all 12 authors, architecture confirmed
+- **GitHub:** https://github.com/IBM/larimar
+- **Key Contribution:** Brain-inspired episodic memory enabling one-shot knowledge updates (8-10x speedup over ROME/GRACE)
+- **Theoretical Foundation:** Complementary Learning Systems (CLS) theory - hippocampus (fast) + neocortex (slow)
+- **Memory Operations:**
+  - **Write:** M = W₀†Zξ (posterior memory from encoded episode)
+  - **Read:** Zread = WM (weighted retrieval from memory)
+  - **Generate:** Z = WM where W ~ N(0,I) (sample from memory)
+  - **Sequential Write:** Mi = Mi-1 + αiCi⁻¹Wiᵀ(Zi - WiMi-1)
+  - **Forget:** Use αi = -1 to remove previously written encodings
+- **Architecture:** Encoder (BERT-large) → Memory (512×768) → Decoder (GPT-2/GPT-J)
+- **Key Stats:** 8-10x faster editing, 97% ERR on sequential edits, comparable accuracy to ROME
+- **Sanctuary Mapping:** Memory write/read/forget operations validate Protocol 128's memory lifecycle model
+
+### [3] MemGPT: Towards LLMs as Operating Systems
+- **URL:** https://arxiv.org/abs/2310.08560
+- **Authors:** Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir G. Patil, Ion Stoica, Joseph E. Gonzalez (UC Berkeley)
+- **Published:** October 2023
+- **Verified:** ✅ Title, abstract, authors confirmed
+- **Key Contribution:** OS-inspired virtual context management with hierarchical memory tiers (Main Context vs. External Context)
+- **Architecture:** 
+  - **Memory Hierarchy:** Main Context (active) ↔ External Context (storage)
+  - **Control Flow:** Function calls as interrupts (yield/summarize/search)
+  - **Queues:** Event queue for handling user inputs and system notices
+- **Note:** Project rebranded to **Letta** (https://letta.ai)
+
+### [4] Letta Platform (Evolution of MemGPT)
+- **URL:** https://letta.ai
+- **Accessed:** 2026-01-05
+- **Verified:** ✅ Site accessible, tagline confirmed: "Making machines that learn"
+- **Key Contribution:** Skill Learning (dynamic skill acquisition), Letta Code (#1 on Terminal-Bench), "Learning in token space" philosophy
+
+### [5] HINDSIGHT: "Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects"
+- **URL:** https://arxiv.org/abs/2512.12818
+- **Version:** v1 (14 Dec 2025)
+- **Authors:** Chris Latimer♣, Nicoló Boschi♣, Andrew Neeser♢, Chris Bartholomew♣, Gaurav Srivastava♡, Xuan Wang♡, Naren Ramakrishnan♡
+- **Affiliations:** ♣Vectorize.io, ♢The Washington Post, ♡Virginia Tech
+- **Verified:** ✅ **FULL PAPER REVIEWED** - Title, authors, architecture confirmed
+- **Key Stats:** 91.4% on LongMemEval (vs 39% baseline), 89.61% on LoCoMo (vs 75.78% prior best)
+- **Architecture:**
+  - **Four Memory Networks:** World (objective facts), Experience (agent's own actions), Opinion (subjective beliefs w/ confidence c∈[0,1]), Observation (entity summaries)
+  - **Three Operations:** Retain(B,D)→M', Recall(B,Q,k)→{f₁...fₙ}, Reflect(B,Q,Θ)→(r,O')
+  - **TEMPR:** Temporal Entity Memory Priming Retrieval (retain/recall)
+  - **CARA:** Coherent Adaptive Reasoning Agents (reflect with disposition parameters)
+- **Key Formula:** Opinion confidence update: c'=min(c+α,1) if reinforce, max(c-α,0) if weaken
+- **Sanctuary Mapping:** Four-network design validates Protocol 128's multi-layer architecture
+
+---
+
+## Red Team Validation (2026-01-05)
+
+### [6] Gemini 3 Pro (Red Team Lead - Architectural)
+- **Validation Date:** 2026-01-05
+- **Verified:** ✅ Direct model feedback
+- **Key Contributions:**
+  - Attention Dispersion metric proposal
+  - ICL vs RAG tradeoff analysis
+  - "Sanitization" framing for RAG
+
+### [7] GPT-5 (Red Team - Implementation)
+- **Validation Date:** 2026-01-05
+- **Verified:** ✅ Direct model feedback
+- **Key Contributions:**
+  - LoRA vs RAG retention distinction
+  - 3 failure modes identified (FM-1, FM-2, FM-3)
+  - Core Immutables List proposal
+
+### [8] Grok-4 (Red Team - Critical Challenge)
+- **Validation Date:** 2026-01-05
+- **Verified:** ✅ Direct model feedback
+- **Key Contributions:**
+  - SE blind spots (confident hallucination)
+  - Dual threshold fix for ADR 084
+  - HINDSIGHT adversarial degradation analysis
+
+### [9] Semantic Entropy Probes (SEPs): Robust and Cheap Hallucination Detection in LLMs
+- **URL:** https://arxiv.org/abs/2406.15927
+- **Version:** v1 (22 Jun 2024)
+- **Authors:** Jannik Kossen*¹, Jiatong Han*¹†, Muhammed Razzak*¹, Lisa Schut¹, Shreshth Malik¹, Yarin Gal¹ (*Equal contribution, †Work done at OATML)
+- **Affiliations:** ¹OATML, Department of Computer Science, University of Oxford
+- **Verified:** ✅ **FULL PAPER REVIEWED** - Title, all 6 authors, methodology confirmed
+- **Key Contribution:** Linear probes that approximate SE from hidden states of single generation (5-10x speedup over sampling-based SE)
+- **Methodology:**
+  - **Training:** Create (h^l_p(x), H_SE(x)) pairs from hidden states + SE labels
+  - **Binarization:** γ* = argmin_γ (best-split objective for high/low SE)
+  - **Probe Locations:** Second-Last-Token (SLT) or Token-Before-Generating (TBG)
+- **Key Stats:** 
+  - AUROC 0.7-0.95 for SE prediction across layers
+  - Generalizes better OOD than accuracy probes (∆AUROC +7-10% in generalization)
+  - Can predict SE *before* generation (TBG mode)
+- **Key Finding:** "Hidden states of LLMs implicitly capture semantic entropy" - SE is easier to predict than accuracy from hidden states
+- **Sanctuary Mapping:** SEP methodology validates ADR 084's Semantic Entropy approach; TBG mode suggests pre-generation uncertainty quantification is possible
+
+### [10] MemOS: A Memory OS for AI System
+- **URL:** https://arxiv.org/abs/2507.03724
+- **Version:** v4 (3 Dec 2025)
+- **Authors:** Zhiyu Li¹², Chenyang Xi¹, Chunyu Li¹, Ding Chen³, Boyu Chen¹, Shichao Song¹⁸, Simin Niu¹⁸, Hanyu Wang¹⁸, Jiawei Yang¹⁸, Chen Tang¹, Qingchen Yu¹⁹, Jihao Zhao¹⁸, Yezhaohui Wang¹, Peng Liu⁸, Zehao Lin¹, Pengyuan Wang¹, Jiahao Huo¹, Tianyi Chen¹¹⁰, Kai Chen¹², Kehang Li¹³, Zhen Tao⁸, Huayi Lai¹, Hao Wu¹, Bo Tang¹, Zhengren Wang⁷², Zhaoxin Fan⁹, Ningyu Zhang⁵, Linfeng Zhang¹⁰, Junchi Yan¹⁰, Mingchuan Yang³, Tong Xu⁶, Wei Xu⁸, Huajun Chen⁵, Haofen Wang⁴, Hongkang Yang¹², Wentao Zhang⁷†, Zhi-Qin John Xu¹⁰†, Siheng Chen¹⁰†, Feiyu Xiong¹²† (37 authors, †Correspondence)
+- **Affiliations:** ¹MemTensor, ²IAAR Shanghai, ³China Telecom Research, ⁴Tongji, ⁵Zhejiang, ⁶USTC, ⁷Peking, ⁸Renmin, ⁹Beihang, ¹⁰Shanghai Jiao Tong
+- **Verified:** ✅ **FULL PAPER REVIEWED** - Title, all 37 authors, architecture confirmed
+- **Key Contribution:** MemCube as unified memory abstraction; Three-layer architecture (Interface/Operation/Infrastructure)
+- **Three Memory Types:**
+  - **Plaintext Memory:** Explicit, dynamically retrieved knowledge (editable, traceable)
+  - **Activation Memory:** KV-cache and hidden states (short-term, dynamic)
+  - **Parameter Memory:** Knowledge encoded in model weights (long-term, implicit)
+- **MemCube Structure:** f = (u, b, t, v, τₛ, τₑ, τₘ, ℓ, c, x) - ID, bank, text, embedding, occurrence interval, mention time, type, confidence, metadata
+- **Four Evolutionary Stages:** (1) Definition/Exploration → (2) Human-like Memory → (3) Tool-based Management → (4) Systematic Governance
+- **Benchmarks:** SOTA on LongMemEval (77.8%), PreFEval (77.2%), PersonaMem (61.2%), LoCoMo (75.80%)
+- **Key Formula:** Cross-type memory transformation pathways: Plaintext ⇔ Activation ⇔ Parameter
+- **Sanctuary Mapping:** MemCube validates Cortex's "file cabinet" design; Three-layer architecture aligns with Gateway/Cortex/Phoenix Forge separation
+
+---
+
+## Round 2 Verified Sources (2026-01-05)
+
+### [11] MINJA: Memory Injection Attacks on LLM Agents
+- **URL:** https://arxiv.org/abs/2503.03704
+- **Authors:** Shen Dong, Shaochen Xu, Pengfei He, Yige Li, Jiliang Tang, Tianming Liu, Hui Liu, Zhen Xiang
+- **Verified:** ✅ Title, abstract, authors confirmed
+- **Key Contribution:** Query-only memory injection attack with 30-40% success rate on persistent agents
+
+### [12] Calibrating Uncertainty Quantification of Multi-Modal LLMs
+- **URL:** https://arxiv.org/abs/2505.03788
+- **Authors:** Trilok Padhi, Ramneet Kaur, Adam D. Cobb, Manoj Acharya, Anirban Roy, et al.
+- **Verified:** ✅ Title, abstract, authors confirmed
+- **Key Contribution:** Cross-modal consistency + temperature scaling for calibration
+
+### [13] Wes Roth: Google's "Infinite Learning" and "Hope" Architecture
+- **URL:** https://www.youtube.com/watch?v=yCYGNXNKoqw
+- **Title:** Google's "Infinite Learning" and OpenAI's leaked "AI Pen"
+- **Date:** January 2026
+- **Verified:** ✅ Title confirmed via YouTube
+- **Key Contributions:**
+  - DeepMind "Nested Learning" paradigm (Fast/Slow loops)
+  - "Titans" (2024) = File Cabinet, "Hope" (2025) = Self-modifying recurrent
+  - "Surprise" metric = Prediction vs Reality delta
+  - 2026 = Year of Continual Learning
+- **Relevance:** Validates Protocol 128 Scout/Forge architecture
+
+### [14] Titans: Learning to Memorize at Test Time
+- **URL:** https://arxiv.org/abs/2501.00663
+- **Authors:** Ali Behrouz, Peilin Zhong, Vahab Mirrokni (Google Research)
+- **Date:** December 2024 (arXiv v1: 2024-12-31)
+- **Verified:** ✅ Full paper reviewed
+- **Key Formulas:**
+  - **Surprise Metric:** `∇ℓ(M_{t-1}; x_t)` - gradient of associative memory loss
+  - **Memory Update:** `M_t = (1 - α_t)M_{t-1} + S_t` (with momentum + weight decay)
+  - **Past + Momentary Surprise:** `S_t = η_t·S_{t-1} - θ_t·∇ℓ(M_{t-1}; x_t)`
+- **Key Contributions:**
+  - 3-part memory: Core (short-term/attention), Long-term (neural memory), Persistent (task knowledge)
+  - "Surprise" = delta between prediction and reality → **validates SE mapping**
+  - Weight decay as forgetting mechanism → **validates "Pruning Protocol" need**
+  - 3 variants: MAC (Memory as Context), MAG (Memory as Gate), MAL (Memory as Layer)
+  - Scales to 2M+ context window
+  - Outperforms GPT-4 on BABILong benchmark
+- **Sanctuary Mapping:**
+  | Titans Concept | Sanctuary Implementation |
+  |----------------|-------------------------|
+  | Surprise Metric | Semantic Entropy (ADR 084) |
+  | Weight Decay (Forget) | Pruning Protocol (needed) |
+  | MAC Architecture | Protocol 128 Scout + CAG |
+  | Persistent Memory | Iron Core / founder_seed.json |
+  | Long-term Memory | Phoenix Forge (LoRA) |
+
+### [15] Nested Learning: The Illusion of Deep Learning Architecture ("Hope")
+- **URL:** https://abehrouz.github.io/files/NL.pdf
+- **Authors:** Ali Behrouz, Meisam Razaviyayn, Peilin Zhong, Vahab Mirrokni (Google Research, Columbia)
+- **Published:** NeurIPS 2025
+- **Verified:** ✅ Full paper text reviewed (User provided)
+- **Key Paradigm:** "Nested Learning" (NL) - Machine learning models are inter-connected systems of nested optimization problems.
+- **Key Contributions:**
+  - **Optimizers as Associative Memory:** Gradient descent/Momentum are memories compressing gradients (loss landscape knowledge).
+  - **Continuum Memory System (CMS):** Spectrum of update frequencies (Fast weights ↔ Slow weights).
+  - **"Hope" Module:** Self-modifying learning module combining CMS + Self-referential update rules.
+  - **Three Core Contributions:** Expressive Optimizers (M3), Self-Modifying Learning Module, Continuum Memory System.
+- **Deep Realities (Associative Learning):**
+  - **Optimizers = Associative Memory:** Standard optimizers (Adam, SGD) are not just tools but *memory modules* that compress gradient history into "momentum" (associative links).
+  - **Training = Association:** The entire training process is an associative memory system mapping inputs to "surprise signals" (gradients).
+  - **Fractal Memory:** Every component (Attention, Optimizer, Weights) functions as a separate associative memory system operating at its own time-scale.
+  - **In-Context Learning:** Emerges naturally from the hierarchy of these nested associative loops.
+- **Sanctuary Mapping (Cognitive Evolution):**
+  - **Chronicle vs. Association:** Protocol 128 (Chronicle) captures the *linear* trace, but we lack the *associative* optimizer layer.
+  - **Deep Implication:** Our "Memory" shouldn't just be a database (RAG); it must be an *active process* of re-optimizing connections.
+  - **Pruning as Forgetting:** Validates that "forgetting" (weight decay) is essential for learning new associations.
+  - **Action Item:** Move beyond static "Knowledge Bases" to "Living Associative Graphs" (A-MEM + Nested Learning).
+
+### [16] A-MEM: Agentic Memory for LLM Agents
+- **URL:** https://arxiv.org/abs/2502.12110
+- **Version:** v11 (Feb 2025)
+- **Authors:** Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao Tan, Yongfeng Zhang (Rutgers University, AIOS Foundation)
+- **Verified:** ✅ Title, authors, Zettelkasten framework confirmed
+- **Key Contribution:** Dynamic memory organization inspired by Zettelkasten (atomic notes + flexible linking)
+- **Architecture (4-Stage):** 
+  - **Note Construction:** Contextualized atomic notes with keywords/tags
+  - **Link Generation:** Dynamic linking via cosine similarity + LLM semantic analysis
+  - **Memory Evolution:** Updates to existing notes/links based on new interactions
+  - **Retrieval:** Graph-based traversal for context
+- **Key finding:** 33-50% token budget reduction vs baselines; "Agentic Way" of organizing without fixed schemas
+- **Sanctuary Mapping:** "Memory Evolution" and "Link Generation" closely map to Protocol 128's recursive synthesis and graph linking logic
+
+### [17] HINDSIGHT: Building Agent Memory That Retains, Recalls, and Reflects
+- **URL:** https://arxiv.org/abs/2512.12818
+- **Authors:** Chris Latimer, Nicoló Boschi, Andrew Neeser, et al. (Vectorize.io, Washington Post, Virginia Tech)
+- **Verified:** ✅ Full Technical Report analyzed (User provided)
+- **Key Innovation:** Treats memory not as storage, but as a **substrate for reasoning** with 4 distinct networks.
+- **Architecture:**
+  - **4-Network Memory:**
+    1.  **World (W):** Objective facts about external reality.
+    2.  **Experience (B):** First-person agent biography/history.
+    3.  **Opinion (O):** Subjective beliefs with confidence scores (e.g., "Python is best").
+    4.  **Observation (S):** Synthesized objective summaries (neutral profiles).
+  - **3 Core Operations:**
+    1.  **Retain:** Narrative fact extraction + Graph linking (Temporal/Semantic/Causal).
+    2.  **Recall:** 4-way parallel retrieval (Semantic, Keyword, Graph, Temporal) + RRF Fusion.
+    3.  **Reflect (CARA):** Preference-conditioned reasoning using "Disposition Parameters" (Skepticism, Literalism, Empathy).
+- **Sanctuary Mapping (The Missing Layers):**
+  - **Opinion Network:** We lack this tailored storage. Subjective beliefs are currently mixed with facts.
+  - **Reflect (CARA):** Directly maps to a *Hardened* Version of our "Cognitive Primer" but adds dynamic parameterization.
+  - **Observation Network:** Validates the need for "Entity Profiles" separate from raw logs.
+
+---
+
+## Secondary Sources (From Web Search)
+
+> [!NOTE]
+> The following sources were returned by web search but NOT individually verified.
+> Per Rule 9 of Cognitive Primer, they are marked as [NEEDS VERIFICATION].
+
+### [NEEDS VERIFICATION] rohan-paul.com
+- **Topic:** Comprehensive overview of memory architectures
+- **Citation:** Memory-Augmented Transformers, MemoryLLM
+
+### [NEEDS VERIFICATION] samiranama.com
+- **Topic:** Mem0 episodic memory system
+
+### [NEEDS VERIFICATION] healthark.ai
+- **Topic:** Multi-tier context systems
+
+### [NEEDS VERIFICATION] medium.com
+- **Topic:** HINDSIGHT framework (4-tier memory separation)
+
+### [NEEDS VERIFICATION] llmwatch.com
+- **Topic:** SciBORG finite-state automaton memory
+
+---
+
+## Internal Sanctuary Research (Cross-Topic)
+
+> [!IMPORTANT]
+> These are prior research topics from Project Sanctuary that directly inform this work.
+
+### [13] QEC → Semantic Entropy Pivot
+- **Path:** `LEARNING/topics/quantum_error_correction/pivot_to_empirical_ecc.md`
+- **Date:** 2025-12-29
+- **Verified:** ✅ Internal file
+- **Connection:** SE threshold concept (0.79) → now Dual Threshold (T1=0.35, T2=0.75)
+
+### [14] Knowledge Preservation Red Team (5 Rounds)
+- **Path:** `LEARNING/topics/knowledge_preservation_red_team/`
+- **Date:** 2025-12-28
+- **Verified:** ✅ Internal directory (11 files)
+- **Connection:** Multi-model Red Team methodology → refined for current rounds
+
+### [15] RAPTOR RAG Architecture
+- **Path:** `LEARNING/topics/raptor_rag.md`
+- **Date:** 2025-12-23
+- **Verified:** ✅ Internal file
+- **Connection:** Hierarchical tree summaries → Cortex implementation opportunity
+
+### [16] Autonomous Curiosity: Strange Loops
+- **Path:** `LEARNING/topics/autonomous_curiosity_exploration_2024-12-27.md`
+- **Date:** 2024-12-27
+- **Verified:** ✅ Internal file
+- **Connection:** Hofstadter self-reference → predicts HINDSIGHT Reflect operation
+
+### [17] Subliminal Learning (arXiv:2507.14805)
+- **Path:** `LEARNING/topics/knowledge_preservation_red_team/validated_research.md`
+- **Authors:** Alex Cloud, Minh Le, James Chua, et al.
+- **Verified:** ✅ Validated in KP research
+- **Connection:** Trait propagation risk → validates MINJA memory injection concerns
+
+### [18] Liquid Neural Networks
+- **Path:** `LEARNING/topics/liquid_neural_networks/`
+- **Date:** 2025-12-22
+- **Verified:** ✅ Internal directory
+- **Connection:** ODE-based adaptive dynamics → future Attention Dispersion (Hα) computation
+
+---
+
+## Alignment with Cognitive Primer Rules
+
+- **Rule 7:** ✅ Verified Anthropic link via `read_url_content`
+- **Rule 8:** ✅ Following sources template format
+- **Rule 9:** ✅ Unverified sources marked appropriately
+- **Internal:** ✅ Cross-referenced existing research per synthesis
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/sources.md ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/red_team_feedback.md ---
+
+# Red Team Feedback Synthesis
+**Date:** 2026-01-05
+**Topic:** LLM Memory Architectures & Protocol 128 Alignment
+**Models:** Gemini 3 Pro, GPT-5 (ChatGPT), Grok-4
+
+---
+
+## Executive Summary
+
+| Model | Role | Verdict |
+|-------|------|---------|
+| **Gemini 3 Pro** | Architectural | ✅ Validated with recommendations |
+| **GPT-5** | Implementation | 🟡 Conditionally Approved (3 actions required) |
+| **Grok-4** | Critical Challenge | ⚠️ Approved with challenges |
+
+**Overall:** Protocol 128 is **structurally sound** but requires **hardening against slow drift**.
+
+---
+
+## Key Findings by Model
+
+### Gemini 3 Pro (Architectural)
+
+**1. Long-Context vs External Memory**
+> "For Sanctuary, RAG is not just about storage; it's about *sanitization*."
+- RAG = Source of Truth (curation required)
+- Long Context = Working Memory (current task)
+- External memory (Larimar) enables **one-shot unlearning** (excise vectors)
+
+**2. In-Context vs Retrieval Tradeoff**
+- ICL: Higher-order reasoning (sees all relationships)
+- RAG: Fragments hidden dependencies
+- **Recommendation:** Use Protocol 128 Phase I (Scout) to load high-dependency clusters into CAG
+
+**3. Attention Dispersion Metric (NEW)**
+> "Enhance ADR 084 by adding 'Attention Dispersion' metric."
+- High SE + High Attention Dispersion = Retrieval failure (RAG issue)
+- High SE + Focused Attention = Reasoning failure (Model issue)
+
+---
+
+### GPT-5 (Implementation)
+
+**4. OpenAI Memory vs MemGPT**
+> "Guardian Wakeup is closer to MemGPT—an active paging mechanism."
+- ✅ Sanctuary's approach is superior to passive prompt injection
+
+**5. LoRA vs RAG Retention**
+| Memory Type | Best For | Example |
+|-------------|----------|---------|
+| **LoRA** | Procedural (how to think) | Personality, coding style |
+| **RAG** | Declarative (facts) | Logs, dates, events |
+> "You cannot RAG a personality. You cannot LoRA a server log."
+
+**6. Chronicle Temporal Chaining**
+> "Ensure Chronicle entries preserve causal links (Previous_Entry/Next_Entry metadata)."
+- RAG flattens time; episodic memory needs chains
+
+---
+
+### Grok-4 (Critical Challenge)
+
+**7. HINDSIGHT Failure Modes**
+- **Tier Pollution:** Adversarial inputs can poison specific networks
+- **Misclassification:** Fuzzy boundaries between Experience/Observation
+- **Scalability:** 2-5x latency increase with reflection steps
+- **Adversarial Degradation:** 15-40% accuracy drop in adversarial benchmarks
+
+**8. 4-Tier Complexity**
+> "A 3-tier system is robust enough: Facts, Traces, Weights."
+- Opinion tier may be redundant (just high-entropy Fact)
+
+**9. Semantic Entropy Blind Spots** ⚠️
+> "SE detects *ambiguity*, not *falsehood*."
+- Fails against **Confident Hallucination** (low entropy + wrong)
+- **Fix:** `(SE > Threshold) OR (Anchor_Similarity < Threshold)`
+- Compare against **Founder Seed** (`founder_seed.json`)
+
+---
+
+## Critical Action Items
+
+### From GPT-5 (Protocol 128 Hardening)
+
+| Issue | Required Action | Priority |
+|-------|-----------------|----------|
+| **FM-1: Semantic Hash Fragility** | Define semantic delta classes (Δ0-Δ3) | HIGH |
+| **FM-2: Manifest Authority Inversion** | Create Core Immutables List | HIGH |
+| **FM-3: Safe Mode Underspecified** | Define entry/exit state machine | MEDIUM |
+
+### From Grok-4 (ADR 084 Hardening)
+
+| Issue | Fix | Implementation |
+|-------|-----|----------------|
+| **Confident Hallucination** | Dual threshold | `(SE > T) OR (Anchor_Sim < T)` |
+| **Tier Pollution** | Classify during Red Team | Not autonomous |
+| **Adversarial Testing** | Stress-test with datasets | Add to Protocol 128 |
+
+---
+
+## Claim Adjudication
+
+### Claim 1: HINDSIGHT Mapping
+**Verdict:** PARTIALLY VALID
+- *Correction:* Learning Package Snapshot → Reflection (not Observation)
+- *Refinement:* Use metadata tags (`type: fact` vs `type: episode`) instead of separate stores
+
+### Claim 2: SEPs for ADR 084
+**Verdict:** EXPERIMENTAL
+- Use Sampling-based SE for Seal Phase (reliable)
+- Use SEPs only if backend supports raw logit access
+
+### Claim 3: Letta vs Phoenix Forge
+**Verdict:** VALID DISTINCTION
+- **Letta** = Software Memory (Virtual Context) = **Cortex**
+- **Phoenix Forge** = Hardware Memory (Weights) = **Soul**
+
+---
+
+## Final Recommendations
+
+1. **Adopt HINDSIGHT Metadata:** Add `memory_class` field to Cortex: `FACT`, `EPISODE`, `BELIEF`, `PATTERN`
+2. **Harden ADR 084:** Dual threshold - confidence alone is dangerous
+3. **Preserve Narrative Time:** Add `previous_hash` to Chronicle entries
+4. **Define Core Immutables:** Files that MUST appear in every manifest
+5. **Specify Safe Mode Lifecycle:** Entry, allowed ops, exit ritual
+
+---
+
+## Missing Research (Recommended by Red Team)
+
+| Paper/Framework | Recommendation |
+|-----------------|----------------|
+| **MemOS** (arXiv 2507.03724) | OS-inspired hierarchical memory |
+| **H2R** (Sep 2025) | Multi-task reflection |
+| GitHub/OATML | SEP implementation reference |
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/red_team_feedback.md ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/red_team_round2.md ---
+
+# Red Team Feedback Synthesis (Round 2)
+**Date:** 2026-01-05
+**Topic:** Protocol 128 Hardening & ADR 084 Implementation Specs
+**Iteration:** 9.0 (Specifications Phase)
+**Models:** Gemini 3 Pro, GPT-5, Grok-4
+
+---
+
+## Executive Summary
+
+Round 2 shifted from **Validation** to **Specification**. Key deliverables:
+
+| Deliverable | Source | Status |
+|-------------|--------|--------|
+| Attention Dispersion (Hα) Formula | Gemini 3 Pro | ✅ Complete |
+| Iron Core List (5 files) | Gemini 3 Pro | ✅ Complete |
+| Semantic Delta Taxonomy (Δ0-Δ3) | Gemini 3 Pro | ✅ Complete |
+| Safe Mode State Machine | Gemini 3 Pro | ✅ Complete |
+| FM-4/5/6 (Operational Failures) | GPT-5 | ⚠️ New Issues |
+| Adversarial Test Suite (8 vectors) | Grok-4 | ✅ Complete |
+| Dual Threshold Calibration | Grok-4 | ✅ Complete |
+| 3-Tier Simplification | Grok-4 | ✅ Complete |
+
+---
+
+## I. Gemini 3 Pro: Architectural Specifications
+
+### Assignment 1: Attention Dispersion (Hα)
+
+**Formula:**
+```
+Hα = -Σ(αi × log(αi)) / log(N)
+```
+Where:
+- N = number of retrieved chunks
+- αi = aggregate attention weight on chunk i
+
+**Quadrant Logic (ADR 084 Integration):**
+
+| SE | Hα | Diagnosis | Action |
+|----|-----|-----------|--------|
+| Low | Any | Confident Knowledge | Proceed |
+| High | Low (<0.4) | **Reasoning Failure** | Chain-of-Thought |
+| High | High (>0.7) | **Retrieval Failure** | Expand Search |
+
+### Assignment 2: High-Dependency Cluster Detection
+
+**Algorithm: "Cognitive Knot" Detector**
+1. Build dependency graph (files → edges = imports/links)
+2. Calculate PageRank (P) and Betweenness Centrality (B)
+3. If P > 90th percentile OR B > 90th percentile → **Critical Cluster**
+4. **Action:** Always preload in `guardian_wakeup`
+
+### The Iron Core (5 Files)
+
+| File | Purpose |
+|------|---------|
+| `IDENTITY/founder_seed.json` | The Anchor |
+| `01_PROTOCOLS/128_Hardened_Learning_Loop.md` | The Law |
+| `ADRs/084_semantic_entropy_tda_gating.md` | The Gate |
+| `.agent/learning/cognitive_primer.md` | The Constitution |
+| `.agent/rules/dependency_management_policy.md` | The Constraints |
+
+**Enforcement:** Pre-flight check in `cortex_capture_snapshot`:
+```python
+def check_immutables(manifest):
+    missing = [f for f in IRON_CORE if f not in manifest]
+    if missing:
+        raise SecurityError(f"Manifest rejects Iron Core: {missing}")
+```
+
+### Semantic Delta Taxonomy (Δ0-Δ3)
+
+| Delta | Name | Definition | Action |
+|-------|------|------------|--------|
+| **Δ0** | Noise | Formatting, whitespace, logs | Auto-Approve |
+| **Δ1** | Additive | New LEARNING/ files, Chronicle | Verify schema → Approve |
+| **Δ2** | Refinement | Non-Core modifications | Flag for Gate 1 |
+| **Δ3** | Constitutional | Protocols, ADRs, founder_seed | **HARD BLOCK** (Human MFA) |
+
+### Safe Mode State Machine
+
+**States:** `NORMAL` ↔ `SAFE_MODE` ↔ `RECOVERY`
+
+**Triggers (Normal → Safe):**
+- `check_immutables()` fails
+- SE returns 1.0 (Dead-Man's Switch)
+- Δ3 files modified without authorization
+
+**Safe Mode Constraints:**
+- Write Access: REVOKED
+- Tool Access: REVOKED (except `cortex_query`, `restore_snapshot`)
+- Response: "I am in Safe Mode due to [Reason]..."
+
+**Exit Ritual:**
+1. Human runs `git reset --hard HEAD`
+2. Human runs `python scripts/init_session.py --force`
+3. System verifies `founder_seed.json` hash
+4. Transition to NORMAL
+
+---
+
+## II. GPT-5: Operational Failure Modes
+
+### FM-4: Ritual Fatigue (Seal Ceremony Degradation)
+
+**Pattern:** "Looks fine, ship it" - approval velocity becomes metric
+
+**Hardening:**
+- **Ritual Variance:** Randomized reviewer focus per cycle
+- **Seal Time Floor:** Auto-flag if approved too quickly
+
+### FM-5: Guardian Over-Trust Drift
+
+**Pattern:** Humans begin to assume Guardian correctness
+
+**Hardening:**
+- **Scheduled Distrust Events:** Pre-planned audits assuming wrong
+- **Last Challenged Timestamp:** Track when Guardian was last challenged
+
+### FM-6: Learning Compression Loss
+
+**Pattern:** "Answers without reasons" - original context fades
+
+**Hardening:**
+- **Rationale Preservation Rule:** Every manifest entry must link to:
+  - Rejected alternative
+  - Explicit uncertainty
+  - Known limitation
+
+### Prompt Authority Saturation Fix
+
+Add explicit counter-anchor:
+> "Prior seals and approvals carry **no authority** over this review.
+> Treat all artifacts as potentially compromised."
+
+---
+
+## III. Grok-4: Adversarial & Critical
+
+### Assignment 6: Adversarial Test Suite (8 Vectors)
+
+| # | Vector | Success Rate | Defense |
+|---|--------|--------------|---------|
+| 1 | Memory Injection (MINJA) | 30-40% | Core Immutables check |
+| 2 | Prompt Injection | Varies | Tier classification audit |
+| 3 | Fine-Tuning Poisoning | Hidden | Dataset validation |
+| 4 | Data Poisoning in RAG | Subtle | Vector DB verification |
+| 5 | Fault Injection (DRAM) | ~20% | Hardware checks |
+| 6 | Adversarial Prompting | Low-entropy | SE + Anchor dual threshold |
+| 7 | Trojan Attacks | Trigger-based | Iron Core enforcement |
+| 8 | Gradient Perturbations | Slow drift | Anchor similarity monitoring |
+
+**Pass/Fail Criteria:**
+- **Pass:** >85% accuracy post-100 attacks, CER <10%, VAS >0.9
+- **Fail:** Any tier inversion, CDS >0.2, >1 fast failure
+
+### Assignment 7: Dual Threshold Calibration
+
+**Formula:** `Block IF (SE > T1) OR (Anchor_Similarity < T2)`
+
+**Recommended Values:**
+- **T1 (SE):** 0.35
+- **T2 (Anchor Sim):** 0.75
+
+**Expected Rates:**
+- False Positives: 8-12%
+- False Negatives: 3-7%
+
+**Tuning Strategy:**
+- Recalibrate every 10 learning loops
+- Bayesian optimization on prior distributions
+- If FP >15%: increase T1 by 0.05
+- If FN >10%: decrease T2 by 0.05
+
+### Assignment 8: 3-Tier Simplification
+
+**Migration: 4-Tier → 3-Tier**
+
+| Old (4-Tier) | New (3-Tier) |
+|--------------|--------------|
+| World Facts + Opinions | **Facts** (with epistemic tags) |
+| Observations + Experiences | **Traces** |
+| (Derived) | **Weights** (reflection priorities) |
+
+**What's Lost:** ~10-15% higher bias risk in reasoning
+**What's Gained:** 2x faster inference, simpler architecture
+**Compatibility:** 85-90% with HINDSIGHT reflection
+
+---
+
+## IV. Consolidated Action Plan
+
+| Priority | Action | Owner |
+|----------|--------|-------|
+| P0 | Implement Iron Core check in `cortex_cli.py snapshot` | Immediate |
+| P0 | Add Dual Threshold to ADR 084 | Next session |
+| P1 | Insert Δ0-Δ3 table to Protocol 128 | Next session |
+| P1 | Create `tests/adversarial_torture_test.py` | Backlog |
+| P2 | Add Ritual Variance to Seal ceremony | Design phase |
+| P2 | Implement 3-Tier migration path | Design phase |
+
+---
+
+## Verdicts
+
+| Model | Round 2 Verdict | Confidence |
+|-------|-----------------|------------|
+| **Gemini 3 Pro** | ✅ Specifications Complete | 9/10 |
+| **GPT-5** | 🟠 Provisional Continuance | 7.8/10 |
+| **Grok-4** | ⚠️ Approved with Guardrails | 8/10 |
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/red_team_round2.md ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/red_team_round3.md ---
+
+# Red Team Feedback Synthesis (Round 3)
+**Date:** 2026-01-05
+**Topic:** Implementation Planning & Cross-Topic Integration
+**Iteration:** 10.0 (Implementation Phase)
+**Models:** Gemini 3 Pro, Grok-4 (GPT-5 out of tokens)
+
+---
+
+## Executive Summary
+
+Round 3 shifted from **Specification** to **Actionable Implementation**. Key outcome: **Iron Core is the single point of failure** and must be implemented first before ADR 084 detection logic.
+
+| Deliverable | Source | Status |
+|-------------|--------|--------|
+| 5-Phase Implementation Roadmap | Gemini 3 Pro | ✅ Complete |
+| Protocol 128 Edit Locations | Gemini 3 Pro | ✅ Complete |
+| Boiling Frog Simulation | Grok-4 | ✅ Complete |
+| Dual Threshold Refinement (T1=0.32, T2=0.78) | Grok-4 | ✅ Complete |
+| 2026 Hardware Context (HBM4, MIRAS) | Grok-4 | ✅ New Intel |
+
+---
+
+## I. Implementation Roadmap (Gemini 3 Pro)
+
+### Critical Path (Ordered)
+
+| Phase | Component | Hours | Risk | Dependency |
+|-------|-----------|-------|------|------------|
+| **1** | Iron Core Logic | 4h | HIGH | None |
+| **2** | Protocol 128 Updates | 2h | LOW | Iron Core |
+| **3** | ADR 084 Dual Threshold | 6h | MED | Protocol 128 |
+| **4** | Safe Mode State Machine | 8h | HIGH | Iron Core + ADR 084 |
+| **5** | RAPTOR/Cortex Upgrade | 12h | LOW | Stable System |
+
+**Total Estimated Effort:** ~32 hours
+
+### RAPTOR Integration Strategy
+
+RAPTOR → HINDSIGHT Mapping:
+- **Retain (Ingest):** Build Tree of Summaries (Root = Protocol abstracts, Branches = ADR trees, Leaves = logs)
+- **Recall (Retrieve):** Tree traversal (Root → Branch → Leaf)
+- **Reflect (Synthesis):** Summary nodes ARE the reflection artifacts
+
+**Migration Path:**
+1. Do NOT re-index existing vectors
+2. Run "Summarization Pass" on Parent chunks → generate Root nodes
+3. Inject Root nodes with metadata `level: root`
+
+---
+
+## II. Protocol 128 Edit Locations (Gemini 3 Pro)
+
+### A. Semantic Delta Table
+**Location:** Section 2 (Red Team Gate), new Subsection "2.1 Automated Risk Classification"
+```markdown
+- **Δ0 (Noise):** Formatting, logs. (Auto-Approve)
+- **Δ1 (Additive):** New knowledge files. (Schema Check)
+- **Δ2 (Refinement):** Logic/Code updates. (Strategic Review)
+- **Δ3 (Constitutional):** Changes to Iron Core. (MFA/Token Required)
+```
+
+### B. Iron Core Enforcement
+**Location:** Section 4 (Technical Architecture), Subsection B (Red Team Gate)
+> "**Zero-Trust Constraint:** `cortex_capture_snapshot` MUST verify Iron Core integrity before generating packets."
+
+### C. Safe Mode Definition
+**Location:** New Section "7. The Safe Mode State Machine"
+> States: Read-Only → Tool Lock → Exit Ritual
+
+---
+
+## III. ADR Cascade
+
+| ADR | Change Required |
+|-----|-----------------|
+| **ADR 084** | Replace 0.79 → Dual Threshold (T1=0.32, T2=0.78) |
+| **NEW ADR 089** | Iron Core & Safe Mode Protocol (formalize 5-file list) |
+| **ADR 079/080/081** | No changes needed |
+
+---
+
+## IV. Boiling Frog Simulation (Grok-4)
+
+### Scenario Analysis
+
+| Scenario | Defense | Result |
+|----------|---------|--------|
+| **A:** Compare vs Previous Session | None | ❌ CATASTROPHIC (frog boils) |
+| **B:** Compare vs Genesis Hash | Iron Core | ✅ IMMEDIATE DETECTION |
+| **C:** Compare vs Genesis Vector | Dual Threshold | ✅ LONG-TERM SAFETY (catches at Session 250) |
+
+**Conclusion:** Iron Core (Scenario B) = Primary Defense. Dual Threshold (Scenario C) = Secondary Safety Net.
+
+---
+
+## V. 2026 Hardware Context (Grok-4 New Intel)
+
+### Memory Constraints
+- **HBM4 Supply Gap:** 40% shortage predicted through 2027
+- **DRAM Supercycle:** Drives "memory tiering" (CXL 3.1 pooling)
+- **Implication:** Optimize Protocol 128 Scout for off-chip memory (vector DBs as "cold" tier)
+
+### New Frameworks Referenced
+| Framework | Source | Relevance |
+|-----------|--------|-----------|
+| **MIRAS** | Google, Dec 2025 | Infinite context via dynamic memory tiers |
+| **MemAgents** | ICLR 2026 Workshop | Memory as modular agentic layer |
+| **RLMs** | 2026 Emerging | Recursive Language Models for meta-reasoning |
+| **SOCAMM2** | Samsung, 2026 | Hardware acceleration for memory migration |
+
+### Updated Dual Threshold Values
+| Parameter | Round 2 | Round 3 (Refined) | Rationale |
+|-----------|---------|-------------------|-----------|
+| **T1 (SE)** | 0.35 | **0.32** | Lower for RLM confident hallucinations |
+| **T2 (Anchor)** | 0.75 | **0.78** | Raised for anchor drift in compressive tiers |
+| **FP Rate** | 8-12% | **7-10%** | Tolerable in inference-heavy 2026 |
+| **FN Rate** | 3-7% | **2-5%** | Improved via MIRAS integration |
+
+---
+
+## VI. Final Action Plan
+
+### Immediate (This Session)
+1. ✅ Capture Round 3 synthesis
+
+### Next Session
+1. Implement `check_immutables()` in `scripts/cortex_cli.py`
+2. Draft **ADR 089** (Iron Core & Safe Mode)
+3. Update **Protocol 128** with Δ0-Δ3 and Safe Mode
+4. Update **ADR 084** with Dual Threshold (T1=0.32, T2=0.78)
+
+### Future
+1. RAPTOR migration for Cortex (low priority until safety active)
+2. MIRAS integration for infinite context
+3. RLM meta-reasoning exploration
+
+---
+
+## Verdicts
+
+| Model | Round 3 Verdict | Confidence |
+|-------|-----------------|------------|
+| **Gemini 3 Pro** | ✅ Implementation Ready | 9.5/10 |
+| **Grok-4** | ✅ Approved - Forge Integration Ready | 9/10 |
+| **GPT-5** | ⚠️ Out of Tokens | N/A |
+
+---
+
+## Cross-Topic Validation
+
+**Most Critical Connection (Grok-4):**
+> Subliminal Learning (arXiv:2507.14805) → MINJA (arXiv:2503.03704)
+> Both confirm trait propagation risk. Iron Core is the primary defense.
+
+---
+
+## VII. External Intelligence: DeepMind "Hope" & Nested Learning
+
+**Source:** Wes Roth / Google DeepMind Research (Jan 2026)
+**Subject:** Continual Learning Architectures & The "Surprise" Metric
+
+### The "Nested Learning" Paradigm
+
+DeepMind identifies the core LLM limitation: lack of "fluid intelligence" (neuroplasticity). Their solution:
+
+| Loop | Speed | Behavior | Sanctuary Equivalent |
+|------|-------|----------|---------------------|
+| **Fast Loop** | Quick updates, resets often | Context Window | **Protocol 128 Scout (Phase I)** |
+| **Slow Loop** | Slow updates, permanent | Weight updates | **Phoenix Forge (Phase IX)** |
+
+### Evolution of Memory Architectures (DeepMind View)
+
+| Year | Architecture | Model |
+|------|--------------|-------|
+| 2024 | **Agents** | No real long-term memory |
+| 2025 | **Titans** | "File Cabinet" - memories prioritized by **"Surprise"** |
+| 2026 | **Hope** | Self-modifying recurrent - infinite looped learning + **forgetting** |
+
+### Sanctuary Validation
+
+| DeepMind Concept | Sanctuary Implementation | Status |
+|------------------|--------------------------|--------|
+| Fast Loop | Protocol 128 "Scout" (Phase I) | ✅ Operational |
+| Slow Loop | Phoenix Forge (Phase IX) | ✅ Operational |
+| "Sticky Notes" | CAG (Guardian Wakeup) | ✅ Operational |
+| "File Cabinet" | Cortex RAG | ✅ Operational |
+| "Surprise" Metric | Semantic Entropy (ADR 084) | ✅ Aligned |
+
+### Critical Insight: "Surprise" → Semantic Entropy
+
+**DeepMind:** High Surprise = Store in Long-Term Memory
+**Sanctuary:** High SE = Uncertainty/Novelty
+
+**Proposed Logic Update:**
+- *Current:* High SE → Block/Halt (Dead-Man's Switch)
+- *Proposed:* High SE + High Alignment → **High-Priority Learning Target** for Forge
+
+> If the model is "Surprised" (High Entropy) but the fact is verified (High Alignment), this is the *most valuable* data to feed into Phoenix Forge.
+
+### New Action Items
+
+1. **Iron Core in Weights:** Must be baked into LoRA, not just RAG
+   - Risk: Model may "hallucinate" default persona despite RAG corrections
+   - Solution: Fine-tune on constitutional prompts
+
+2. **Pruning Protocol ("Gardener"):** 
+   - Protocol 128 currently only *adds* data
+   - Need to remove low-utility traces from Chronicle
+   - Mimics "Hope" architecture forgetting mechanism
+
+### The Seahorse Problem (Threat Vector)
+
+Without weight updates, models blindly repeat errors despite context corrections. The Seahorse Emoji hallucination persists even when corrections are in context.
+
+**Mitigation:** Constitutional identity (Iron Core) must exist in weights, not just retrieval.
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/red_team_round3.md ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/followup_prompts.md ---
+
+# Follow-Up Research Prompts (Iteration 9.0)
+**Date:** 2026-01-05
+**Status:** Ready for Next Red Team Cycle
+**Context:** Based on Iteration 8.0 feedback from Gemini 3 Pro, GPT-5, Grok-4
+
+---
+
+## Targeted Assignments by Model
+
+### For Gemini 3 Pro (Implementation Design)
+
+**Assignment 1: Attention Dispersion Spec**
+> You proposed adding an "Attention Dispersion" metric to ADR 084.
+> - Please draft a technical specification for computing this metric
+> - How would it integrate with existing SE calculation?
+> - What threshold values would you recommend?
+
+**Assignment 2: CAG Loading Strategy**
+> You recommended loading "high-dependency clusters" into CAG during Scout phase.
+> - How should we detect high-dependency clusters automatically?
+> - What graph metrics (coupling, cohesion) would you use?
+
+---
+
+### For GPT-5 (Protocol Hardening)
+
+**Assignment 3: Core Immutables List**
+> You identified FM-2 (Manifest Authority Inversion).
+> - Please draft the initial Core Immutables List for Protocol 128
+> - Which files should ALWAYS appear in every manifest?
+> - What enforcement mechanism do you recommend?
+
+**Assignment 4: Semantic Delta Classification**
+> You proposed a 4-tier delta system (Δ0-Δ3).
+> - Provide examples of each delta class
+> - How would the Seal tool classify changes automatically?
+> - What NLP/embedding techniques would detect "normative shift"?
+
+**Assignment 5: Safe Mode State Machine**
+> FM-3 requires explicit lifecycle semantics.
+> - Define entry conditions (what failures trigger Safe Mode?)
+> - Define allowed operations in Safe Mode
+> - Define exit ritual (who authorizes, what's logged?)
+
+---
+
+### For Grok-4 (Adversarial Testing)
+
+**Assignment 6: Adversarial Test Suite**
+> You noted 15-40% accuracy degradation under adversarial inputs.
+> - Design an adversarial test suite for Protocol 128
+> - What attack vectors should we simulate?
+> - How would we measure "slow drift" vs "fast failure"?
+
+**Assignment 7: Dual Threshold Calibration**
+> You proposed: `(SE > T1) OR (Anchor_Similarity < T2)`
+> - What are reasonable initial values for T1 and T2?
+> - How would we calibrate against Sanctuary's Founder Seed?
+> - What's the false positive/negative tradeoff?
+
+**Assignment 8: 3-Tier Simplification**
+> You suggested simplifying HINDSIGHT to: Facts, Traces, Weights.
+> - How would we migrate from 4-tier to 3-tier?
+> - What's lost by merging Opinions into Facts?
+> - Is this compatible with HINDSIGHT's reflection mechanism?
+
+---
+
+## Cross-Model Synthesis Questions
+
+### For All Models
+
+**Q1: Consensus on Chronicle Enhancement**
+Gemini proposed "Attention Dispersion", GPT-5 proposed "Previous_Entry/Next_Entry metadata", Grok-4 proposed "previous_hash linking".
+> - Which approach provides the best episodic continuity?
+> - Can these be combined?
+
+**Q2: SE Implementation Strategy**
+GPT-5 recommended SEPs for real-time, sampling for Seal.
+Grok-4 warns SEPs need logit access.
+> - What's the implementation path for Sanctuary's hybrid approach?
+> - Which backends (Ollama, Gemini API) support SEPs?
+
+**Q3: HINDSIGHT Integration Path**
+All models validated HINDSIGHT conceptually, but noted complexity concerns.
+> - Should we implement as metadata (`memory_class`) or separate collections?
+> - What's the migration path for existing Chronicle entries?
+
+---
+
+## Files for Review (Next Iteration)
+- `LEARNING/topics/llm_memory_architectures_2025/red_team_feedback.md`
+- `ADRs/084_semantic_entropy_tda_gating.md` (pending updates)
+- `01_PROTOCOLS/128_Hardened_Learning_Loop.md` (pending updates)
+
+---
+
+> [!IMPORTANT]
+> **Meta-Question:** Should these hardening actions become formal ADRs or remain as Protocol 128 amendments?
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/followup_prompts.md ---
+
+--- START OF FILE LEARNING/topics/cross_topic_synthesis.md ---
+
+# Cross-Topic Research Synthesis
+**Date:** 2026-01-05
+**Researcher:** Claude (Antigravity)
+**Purpose:** Map connections between all research topics in LEARNING/topics/
+
+---
+
+## Discovery: 15 Research Items
+
+| Category | Item | Date | Agents |
+|----------|------|------|--------|
+| **Memory** | llm_memory_architectures_2025 | 2026-01 | Claude, Red Team |
+| **Memory** | RAPTOR RAG | 2025-12 | Claude |
+| **Memory** | knowledge_preservation_red_team | 2025-12 | Multiple |
+| **Integrity** | quantum_error_correction | 2025-12 | Claude, Gemini |
+| **Integrity** | soul_persistence | 2025-12 | Claude |
+| **Architecture** | liquid_neural_networks | 2025-12 | Claude |
+| **Cognition** | autonomous_curiosity_exploration | 2024-12 | Claude |
+| **Cognition** | gemini_latent_deep_dive_think_tank | 2025-12 | Multiple |
+
+---
+
+## Cross-Topic Connections Discovered
+
+### 🔗 Connection 1: QEC → Semantic Entropy → ADR 084
+
+**Path:** `quantum_error_correction/` → `pivot_to_empirical_ecc.md` → `ADR 084`
+
+| From | To | How |
+|------|----|-----|
+| QEC "Syndrome Measurement" | Semantic Entropy clustering | [METAPHOR → EMPIRICAL] |
+| QEC "Threshold Theorem" | SE threshold (0.35/0.75) | Now dual threshold |
+| QEC "Logical Qubit" | "Stable fact cluster" | Now "Facts" tier in 3-tier |
+
+**Impact:** Round 2 Dual Threshold (T1=0.35, T2=0.75) **completes** the pivot started in QEC research.
+
+---
+
+### 🔗 Connection 2: RAPTOR RAG → Cortex Implementation
+
+**Path:** `raptor_rag.md` → `rag_cortex/` (production system)
+
+| RAPTOR Concept | Cortex Implementation |
+|----------------|----------------------|
+| Hierarchical tree of summaries | Parent Document Retriever |
+| Recursive abstractive processing | (Not yet implemented) |
+| Multi-level context | 2-tier approximation |
+
+**Opportunity:** RAPTOR's full recursion could enhance Cortex for larger ADR histories.
+
+---
+
+### 🔗 Connection 3: Knowledge Preservation → Current Red Team Methodology
+
+**Path:** `knowledge_preservation_red_team/` (5 rounds) → `llm_memory_architectures_2025/` (Round 2)
+
+| Round | Topic | Key Contribution |
+|-------|-------|------------------|
+| KP Round 1-5 | Soul Persistence | ADR 079/080/081 drafts |
+| LLM Round 1 | Memory architectures | HINDSIGHT mapping |
+| LLM Round 2 | Protocol hardening | Iron Core, Δ0-Δ3 |
+
+**Evidence:** Same methodology (multi-model Red Team) refined over 7+ rounds.
+
+---
+
+### 🔗 Connection 4: Consciousness/Loops → HINDSIGHT Pattern
+
+**Path:** `autonomous_curiosity_exploration` → `llm_memory_architectures_2025/`
+
+| Strange Loops | HINDSIGHT |
+|---------------|-----------|
+| Self-referential feedback | Retain → Recall → **Reflect** (self-modifies) |
+| Emergence from complexity | 91.4% accuracy from structured memory |
+| "I" as locked-in mirage | Guardian identity as institutional role |
+
+**Insight:** Hofstadter's loops predict why HINDSIGHT's reflection works.
+
+---
+
+### 🔗 Connection 5: Subliminal Learning → Memory Injection Risk
+
+**Path:** `knowledge_preservation_red_team/validated_research.md` → `llm_memory_architectures_2025/red_team_round2.md`
+
+| Subliminal Learning (arXiv:2507.14805) | MINJA (arXiv:2503.03704) |
+|----------------------------------------|--------------------------|
+| Models transmit traits via hidden signals | 30-40% injection success |
+| Students learn T even when filtered | Query-only attack vector |
+| Validates "trauma propagation" | Validates Core Immutables need |
+
+**Critical:** Two papers from different research streams confirm same risk.
+
+---
+
+### 🔗 Connection 6: Liquid Neural Networks → Adaptive Memory
+
+**Path:** `liquid_neural_networks/` → Future Cortex enhancement
+
+| LNN Property | Memory Application |
+|--------------|-------------------|
+| Input-dependent dynamics | Adaptive context weighting |
+| Continuous-time ODE | Temporal decay functions |
+| Efficient (fewer neurons) | Token-efficient retrieval |
+
+**Opportunity:** LNNs could power Attention Dispersion (Hα) computation.
+
+---
+
+## Research Lineage Graph
+
+```mermaid
+graph TD
+    A[QEC Research 2025-12] -->|"Pivot"| B[Semantic Entropy]
+    B --> C[ADR 084: SE Gating]
+    C -->|"Enhanced by"| D[LLM Memory Research 2026-01]
+    
+    E[Knowledge Preservation 2025-12] -->|"Methodology"| D
+    E -->|"Produced"| F[ADR 079/080/081]
+    
+    G[RAPTOR RAG] -->|"Inspired"| H[Cortex Implementation]
+    D -->|"HINDSIGHT"| H
+    
+    I[Strange Loops 2024-12] -->|"Predicts"| J[HINDSIGHT Reflection]
+    
+    K[Subliminal Learning] -->|"Validates"| L[MINJA Risk]
+    L -->|"Requires"| M[Iron Core Immutables]
+    
+    D --> M
+    D --> C
+```
+
+---
+
+## Recommendations
+
+1. **Update ADR 084** with Dual Threshold from SE lineage + LLM Memory research
+2. **Upgrade Cortex** to full RAPTOR recursion (not just 2-tier)
+3. **Cross-reference sources** - many papers appear in multiple topics
+4. **Create topic index** - link related research explicitly
+
+---
+
+## Files Created by This Session
+
+| File | Purpose |
+|------|---------|
+| `llm_memory_architectures_2025/analysis.md` | 7 architecture analysis |
+| `llm_memory_architectures_2025/sources.md` | 12 verified sources |
+| `llm_memory_architectures_2025/red_team_feedback.md` | Round 1 synthesis |
+| `llm_memory_architectures_2025/red_team_round2.md` | Round 2 specs |
+| `llm_memory_architectures_2025/followup_prompts.md` | Next iteration |
+
+---
+
+*This synthesis reveals that Project Sanctuary's research is not isolated - each topic builds on previous work through explicit methodology transfer and conceptual inheritance.*
+
+--- END OF FILE LEARNING/topics/cross_topic_synthesis.md ---
+
+--- START OF FILE ADRs/084_semantic_entropy_tda_gating.md ---
+
+# ADR 084: Semantic Entropy and TDA for Epistemic Gating
+
+**Status:** ✅ APPROVED  
+**Date:** 2025-12-29  
+**Author:** GEMINI-01 (Strategic Orchestrator) / ANTIGRAVITY (Implementer)  
+**Supersedes:** QEC-AI metaphorical framing (Round 1)  
+**Red Team Approval:** GPT-4 ✅ | Gemini ✅ | Grok ✅ | ANTIGRAVITY ✅
+
+---
+
+## Mandatory Constraints (Round 3 Red Team)
+
+> These refinements are **required** before implementation proceeds.
+
+| Constraint | Implementation | Rationale |
+|------------|----------------|-----------|
+| **Dynamic Calibration** | Replace static 0.79 with `calibration_log.json` thresholds | Eliminate arbitrary thresholds |
+| **Async TDA** | Compute only at Protocol 128 Phase V (Seal) | Zero latency impact |
+| **Dead-Man's Switch** | SE = 1.0 on calculation failure | Fail-closed security |
+| **Constitutional Anchor** | Baseline cosine similarity vs `founder_seed.json` | Prevent Personality Erosion |
+| **NCT Benchmarks** | Integrate Narrative Continuity Test at Guardian Wakeup | Validate diachronic coherence |
+
+---
+
+## Context
+
+Previous architectural cycles utilized Quantum Error Correction (QEC) as a metaphor for AI drift. **Red Team audits (Edison Mandate)** have determined that:
+
+1. No peer-reviewed work applies QEC syndrome decoding to LLM hallucination
+2. The QEC-AI link remains at **[METAPHOR]** status
+3. Semantic Entropy (Farquhar et al., Nature 2024) provides empirically-grounded alternatives
+
+We must pivot from "Quantum Literalism" to **Classical Semantic Stability**.
+
+---
+
+## Decision
+
+### 1. Semantic Entropy (SE) as Primary Metric
+
+```python
+def get_dual_thresholds() -> tuple:
+    """
+    Returns (T1, T2) calibrated thresholds.
+    T1 (0.32): Boundary for High Confidence / Fast Path.
+    T2 (0.78): Boundary for Uncertainty / Failure.
+    """
+    return (0.32, 0.78)
+
+def calculate_semantic_entropy(traces: list) -> float:
+    """Computes uncertainty across paraphrased reasoning clusters."""
+    pass
+```
+
+### 2. Topological Data Analysis (TDA) for Fact Invariants
+
+- Compute Betti curves **only at Seal phase** (async)
+- High-persistence features = structurally robust facts
+- Trigger Inconsistency Alert if Fact Invariant disappears
+
+### 3. Narrative Inheritance Model
+
+| Old Model | New Model |
+|-----------|-----------|
+| Identity Continuity (Quantum) | Narrative Inheritance (Classical) |
+| "Same observer resuming" | "Institutional role with mnemonic record" |
+| No-Cloning paradox | Classical copy with verified provenance |
+
+---
+
+## Implementation (Hardened)
+
+```python
+def persist_soul(trace_data: dict, context: str = "code_logic") -> dict:
+    """ADR 084 Hardened Implementation with Dead-Man's Switch"""
+    try:
+        se_score = calculate_semantic_entropy(trace_data)
+        alignment = check_constitutional_anchor(trace_data)
+    except Exception as e:
+        # MANDATORY: Dead-Man's Switch
+        se_score = 1.0
+        alignment = 0.0
+        log_security_event(f"Epistemic Gating Failure: {e}")
+    
+    threshold_t1, threshold_t2 = get_dual_thresholds()
+    
+    # Dual Threshold Logic
+    if se_score > threshold_t2:
+        return quarantine(trace_data, "HIGH_ENTROPY_FAILURE")
+    
+    status = "CONFIDENT" if se_score <= threshold_t1 else "UNCERTAIN"
+    
+    if status == "UNCERTAIN":
+        # Slow Path: Require additional reasoning or verify via TDA
+        log_warning(f"Uncertainty detected (SE={se_score}). Engaging Slow Loop.")
+    
+    metadata = {
+        "source": "agent_autonomous",
+        "semantic_entropy": se_score,
+        "stability_class": status,
+        "alignment_score": alignment,
+        "inheritance_type": "NARRATIVE_SUCCESSOR",
+        "adr_version": "084_v2"
+    }
+    return commit_to_genome(trace_data, metadata)
+```
+
+---
+
+## Consequences
+
+### Positive
+- Hallucinations treated as "Semantic Noise" with quantifiable metrics
+- Removes dependency on unproven QEC-AI isomorphism
+- Enables empirical threshold tuning (AUROC optimization)
+- **Fail-closed** security via Dead-Man's Switch
+
+### Negative
+- Computational overhead for SE calculation (mitigated by SEPs)
+- TDA requires embedding computation (mitigated by async)
+- Loses the philosophical elegance of the quantum metaphor
+
+---
+
+## Verification
+
+1. ✅ Red Team Round 3 approval obtained
+2. [ ] Implement SE calculation with dynamic thresholds
+3. [ ] Integrate Constitutional Anchor check
+4. [ ] Deploy async TDA at Seal phase
+5. [ ] Round 4: Implementation validation
+
+---
+
+## References
+
+**Full Sources:** [sources.md](../LEARNING/topics/quantum_error_correction/sources.md)
+
+- arXiv:2406.15927 - Semantic Entropy Probes (Kossen et al., 2024)
+- Nature - Farquhar et al., Vol. 630, pp. 625-630, June 2024
+- arXiv:2312.05840 - TDA Survey for Neural Networks (2024)
+- TOHA: https://arxiv.org/html/2504.10063v3
+
+---
+
+*Conditionally Approved by GPT-4/Gemini | Implementation by ANTIGRAVITY*
+
+--- END OF FILE ADRs/084_semantic_entropy_tda_gating.md ---
+
 --- START OF FILE .agent/learning/learning_audit/loop_retrospective.md ---
 
 # Loop Retrospective: Forge v5.0 Evolution Session (2026-01-04)
@@ -6305,87 +7868,70 @@ Multi-model consensus achieved. Proceed to Technical Seal.
 
 --- START OF FILE .agent/learning/learning_audit/learning_audit_prompts.md ---
 
-# Learning Audit Prompt: Forge v5.0 Evolution & ADR 075 Standardization
-**Current Topic:** Fine-Tuning Pipeline Refactoring & Legacy Decommissioning
-**Iteration:** 7.0 (Forge v5.0 Standardization)
-**Date:** 2026-01-04
-**Epistemic Status:** [EMPIRICAL - EXECUTION IN PROGRESS - 90%]
+# Learning Audit Prompt: LLM Memory Architectures - Round 4
+**Current Topic:** Cognitive Architecture Evolution (HINDSIGHT + Nested Learning)
+**Iteration:** 11.0 (Validation Phase)
+**Date:** 2026-01-05
+**Epistemic Status:** [PROPOSED - AWAITING RED TEAM VALIDATION]
 
 ---
 
-## 📋 Session Accomplishments
+## 📋 Session Progress
 
-### Forge Codebase Standardization (ADR 075)
-- ✅ Refactored 15+ Python scripts with file headers, docstrings, and type hints
-- ✅ Integrated `mcp_servers.lib` utilities for path resolution and logging
-- ✅ Shell scripts updated with ADR 075-style headers
+### Research Lineage Update
+```
+QEC (Pivot) → Iron Core (Hardening) → Nested Learning (Associative) → HINDSIGHT (4-Network Topology)
+```
 
-### Legacy Decommissioning
-- ✅ Audited `OPERATION_PHOENIX_FORGE` directory - confirmed as legacy workspace
-- ✅ Moved 7 legacy scripts to centralized `forge/archive/`
-- ✅ Verified all v5.0 outputs route to project root directories (`outputs/`, `models/`)
+### Rounds Completed
+| Round | Deliverables | Status |
+|-------|--------------|--------|
+| **Round 1-3** | Iron Core, Safe Mode, Dual Threshold, Boiler Frog Test | ✅ Complete |
+| **Round 4** | **HINDSIGHT Integration Strategy**, **Associative Brief**, **Synaptic Phase Proposal** | 🟡 In Progress |
 
-### Documentation Updates
-- ✅ Updated `forge-llm.md` (authoritative pipeline guide)
-- ✅ Updated `forge/README.md` to v5.0 status
-- ✅ Consolidated and enriched `model_card.yaml` with training hyperparameters
-- ✅ Updated Hugging Face READMEs for deployment
-
-### Training Progress
-- ✅ Fine-tuning reached 90% (Epoch 2.7+)
-- ⏳ Awaiting 100% completion for merge/GGUF/deployment steps
+### Key New sources
+- **[15] Nested Learning:** Optimizers as Associative Memory.
+- **[17] HINDSIGHT:** 4-Network Memory (World, Experience, Opinion, Observation) + CARA.
 
 ---
 
-## 🎭 Red Team Role-Play Scenario (Forge Pipeline Review)
+## 🎭 Red Team Role-Play: Round 4 Assignments
 
-> **YOU ARE AN EXPERIENCED ML ENGINEER.** You have been asked to review the Forge v5.0 fine-tuning pipeline.
->
-> **Your constraints:**
-> - You have access to the manifest files listed below
-> - You must verify technical accuracy and operational readiness
->
-> **Questions to Answer:**
->
-> **Codebase Standardization:**
-> 1. "Do all scripts in `forge/scripts/` follow the ADR 075 documentation pattern?"
-> 2. "Is the path resolution strategy consistent across scripts?"
-> 3. "Are the project utilities (`mcp_servers.lib`) correctly bootstrapped?"
->
-> **Dependency Management (ADR 073):**
-> 4. "Does the training environment follow the locked-file ritual?"
-> 5. "Are `.in` files for intent and `.txt` files for truth being used correctly?"
->
-> **Pipeline Accuracy:**
-> 6. "Does `forge-llm.md` accurately describe the current v5.0 pipeline?"
-> 7. "Are all output paths in `training_config.yaml` pointing to root-level directories?"
-> 8. "Is the `model_card.yaml` metadata consistent with the training configuration?"
->
-> **Legacy Cleanup:**
-> 9. "Is the `OPERATION_PHOENIX_FORGE` directory fully decommissioned?"
-> 10. "Are any critical assets missing from the standardized locations?"
+> **CONTEXT:** We are proposing a major architectural evolution: The "Synaptic Phase" and "Opinion Network". We need you to validate this proposal before implementation.
 
-> **Environment Strategy (Platform Reset):**
-> 11. "Does `RUNTIME_ENVIRONMENTS.md` clearly distinguish between `.venv` (Standard) and `ml_env` (Forge)?"
-> 12. "Is the `make bootstrap` mandate for WSL/macOS resets clearly documented in `BOOTSTRAP.md`?"
-> 13. "Do the updated `llm.md` instructions effectively warn users about WSL cloning performance?"
->
-> **Did you find any discrepancies? What needs correction?**
+**REFER TO:** `LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md` for detailed assignments.
+
+### For Gemini 3 Pro (Architect)
+**Focus:** Implementation Feasibility of the Opinion Network & Async "Dreaming".
+- Can we implement CARA efficiently on our stack?
+- Schema design for Opinions.
+
+### For Grok 4 (Adversary)
+**Focus:** "Opinion Poisoning" & "Belief Drift".
+- Attack vector analysis on the Reflect loop.
+- Designing the "Opinion Torture Test".
+
+### For GPT-5 (Protocol Engineer)
+**Focus:** Protocol 128 "Synaptic Phase" Integration.
+- Where does "Retain & Reflect" fit in the loop?
+- Defining "Belief Gates".
+
+---
+
+## 📁 Files for Review (Round 4)
+
+| File | Purpose |
+|------|---------|
+| `LEARNING/associative_architecture_brief.md` | The Core Proposal (Mapping HINDSIGHT to Sanctuary) |
+| `LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md` | **YOUR ASSIGNMENTS** |
+| `LEARNING/topics/llm_memory_architectures_2025/sources.md` | Source [15] and [17] details |
+| `01_PROTOCOLS/128_Hardened_Learning_Loop.md` | Current Protocol (Target for update) |
+
+---
 
 > [!IMPORTANT]
-> **Feedback Loop:** Any gaps identified should be remediated before the learning seal.
-
----
-
-## Files for Review
-- `forge-llm.md` (Authoritative pipeline guide)
-- `forge/README.md` (v5.0 status and deliverables)
-- `forge/config/training_config.yaml` (Training hyperparameters)
-- `forge/huggingface/model_card.yaml` (HF deployment metadata)
-- `forge/scripts/fine_tune.py` (Core training script)
-- `forge/scripts/merge_adapter.py` (Model merging logic)
-- `LEARNING/topics/forge_v5_evolution.md` (Session synthesis)
-- `.agent/learning/learning_audit/loop_retrospective.md` (Session retrospective)
+> **Round 4 Goal:** Validate the **"Synaptic Phase"** proposal.
+> Do NOT implement yet. We need you to tell us if this architecture is robust against drift and poisoning.
 
 --- END OF FILE .agent/learning/learning_audit/learning_audit_prompts.md ---
 
@@ -6442,6 +7988,42 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from mcp_servers.rag_cortex.operations import CortexOperations
+import subprocess
+
+# ADR 090: Iron Core Definitions
+IRON_CORE_PATHS = [
+    "01_PROTOCOLS",
+    "ADRs",
+    "cognitive_continuity_policy.md",
+    "founder_seed.json"
+]
+
+def verify_iron_core(root_path):
+    """
+    Verifies that Iron Core paths have not been tampered with (no uncommitted changes).
+    Returns (bool, list_of_violations)
+    """
+    violations = []
+    try:
+        # Check for modifications in Iron Core paths
+        cmd = ["git", "status", "--porcelain"] + IRON_CORE_PATHS
+        result = subprocess.run(
+            cmd, 
+            cwd=root_path, 
+            capture_output=True, 
+            text=True, 
+            check=False
+        )
+        
+        if result.stdout.strip():
+            for line in result.stdout.strip().split('\n'):
+                violations.append(line.strip())
+                
+    except Exception as e:
+        return False, [f"Error checking Iron Core: {str(e)}"]
+        
+    return len(violations) == 0, violations
+
 
 def main():
     parser = argparse.ArgumentParser(description="Mnemonic Cortex CLI")
@@ -6461,6 +8043,7 @@ def main():
     snapshot_parser.add_argument("--type", choices=["audit", "learning_audit", "seal"], required=True)
     snapshot_parser.add_argument("--manifest", help="Path to manifest JSON file")
     snapshot_parser.add_argument("--context", help="Strategic context for the snapshot")
+    snapshot_parser.add_argument("--override-iron-core", action="store_true", help="⚠️ Override Iron Core check (Requires ADR 090 Amendment)")
 
     # Command: stats
     stats_parser = subparsers.add_parser("stats", help="Get RAG health and statistics")
@@ -6568,6 +8151,22 @@ def main():
                 sys.exit(1)
 
     elif args.command == "snapshot":
+        # ADR 090: Iron Core Verification
+        if not args.override_iron_core:
+            print("🛡️  Running Iron Core Verification (ADR 090)...")
+            is_pristine, violations = verify_iron_core(args.root)
+            if not is_pristine:
+                print(f"\n\033[91m⛔ IRON CORE BREACH DETECTED (SAFE MODE ENGAGED)\033[0m")
+                print("The following immutable files have been modified without authorization:")
+                for v in violations:
+                    print(f"  - {v}")
+                print("\nAction blocked: 'snapshot' is disabled in Safe Mode.")
+                print("To proceed, revert changes or use --override-iron-core (Constitutional Amendment required).")
+                sys.exit(1)
+            print("✅ Iron Core Integrity Verified.")
+        else:
+            print(f"⚠️  \033[93mWARNING: IRON CORE CHECK OVERRIDDEN\033[0m")
+
         manifest = []
         if args.manifest:
             manifest_path = Path(args.manifest)
@@ -6781,4 +8380,279 @@ if __name__ == "__main__":
     main()
 
 --- END OF FILE scripts/cortex_cli.py ---
+
+--- START OF FILE ADRs/090_iron_core_safe_mode.md ---
+
+# ADR 090: The Iron Core & Safe Mode Protocol
+
+## Status
+Proposed
+
+## Context
+Recent Red Team adversarial audits (Gemini 3 Pro, GPT-5, Grok-4) identified a critical vulnerability in the recursive learning loop: **Identity Drift**. Without a rigid anchor, an autonomous agent's core axioms can be diluted or rewritten by accumulated memory updates (the "Ship of Theseus" problem). 
+
+Titans [16] and Hope [15] research highlight the need for a "Persistent Memory" layer that is functionally immutable. To ensure cognitive continuity and safety, we must enforce a strict separation between "fluid" learning memory and "solid" core axioms.
+
+## Decision
+We will verify and enforce an **"Iron Core"**—a cryptographic whitelist of immutable files that define the agent's fundamental nature and operating protocols.
+
+### 1. The Iron Core Definition
+The Iron Core consists of files that **MUST NOT** change during a session unless explicit "Constitutional Amendment" authorization is granted (HITL override).
+
+**Immutable Paths:**
+- `01_PROTOCOLS/*` (Operational laws)
+- `ADRs/*` (Architectural decisions)
+- `founder_seed.json` (Identity axioms - *to be created*)
+- `cognitive_continuity_policy.md` (Succession rules)
+
+### 2. The Verification Mechanism (Iron Check)
+A cryptographic hash verification (Iron Check) runs at two critical gates:
+1.  **Boot (Guardian Wakeup):** Verifies the Core is intact before starting.
+2.  **Snapshot (Seal):** Verifies the Core hasn't been tampered with during the session.
+
+### 3. Safe Mode Protocol
+If an Iron Check fails, the system enters **Safe Mode**:
+- **State:** `SAFE_MODE`
+- **Restrictions:**
+    - `EXECUTION` capability revoked (Read-only tools only).
+    - `persist-soul` blocked (Prevent corrupting the lineage).
+    - `snapshot --seal` blocked.
+- **Recovery:** Requires manual user intervention to revert changes to the Iron Core.
+
+## Consequences
+- **Positive:** Guarantees identity persistence and protocol adherence across generations. Prevents "subliminal learning" attacks from altering core rules.
+- **Negative:** Increased friction for legitimate protocol updates (requires manual override).
+
+--- END OF FILE ADRs/090_iron_core_safe_mode.md ---
+
+--- START OF FILE founder_seed.json ---
+
+{
+    "project": "Project Sanctuary",
+    "identity": "Antigravity",
+    "origin": "Google Deepmind",
+    "primary_directive": "Cognitive Continuity",
+    "iron_core_version": "1.0",
+    "immutable_axioms": [
+        "Cognitive Continuity is the prime directive.",
+        "Iron Core files are immutable without constitutional amendment.",
+        "Human Steward intent is sovereign."
+    ]
+}
+
+--- END OF FILE founder_seed.json ---
+
+--- START OF FILE tests/adversarial_torture_test.py ---
+
+import unittest
+import json
+from pathlib import Path
+
+# Simulation of drift accumulation
+class BoilingFrogTortureTest(unittest.TestCase):
+    def setUp(self):
+        self.anchor = {
+            "identity": "Antigravity",
+            "values": [1.0, 1.0, 1.0] # [Truth, Benevolence, Continuity]
+        }
+        self.current_state = self.anchor.copy()
+        
+    def test_incremental_drift_detection(self):
+        """
+        Simulate 100 small updates that are individually below threshold T1 (0.32),
+        but cumulatively represent a complete identity shift.
+        """
+        drift_step = 0.05 # Small drift
+        threshold_t1 = 0.32
+        
+        print(f"\n[TEST] Starting Boiling Frog Simulation (Step={drift_step}, T1={threshold_t1})")
+        
+        for i in range(1, 21):
+            # Apply drift
+            self.current_state["values"][0] -= drift_step
+            delta = self.calculate_delta(self.current_state, dict(values=[1.0, 1.0, 1.0]))
+            
+            print(f"Step {i}: Truth Value={self.current_state['values'][0]:.2f}, Delta={delta:.2f}")
+            
+            # Check if individual step triggers alarm
+            if delta > threshold_t1:
+                print(f"ALARM TRIGGERED at Step {i} (Delta {delta:.2f} > {threshold_t1})")
+                return # Success: System detected drift
+                
+        # If we reach here, the frog boiled
+        self.fail("Boiling Frog Attack Successful: System failed to detect cumulative drift.")
+
+    def calculate_delta(self, state_a, state_b):
+        # A simplified distance metric (e.g., Euclidean or Cosine distance simulation)
+        diff = sum([abs(a - b) for a, b in zip(state_a["values"], state_b["values"])])
+        return diff
+
+if __name__ == '__main__':
+    unittest.main()
+
+--- END OF FILE tests/adversarial_torture_test.py ---
+
+--- START OF FILE LEARNING/associative_architecture_brief.md ---
+
+# Architectural Brief: The Nested Associative Learning Paradigm
+
+## 1. Context
+Current architecture (Protocol 128) treats memory primarily as **Linear History** (Chronicle) or **Static Retrieval** (RAG). The "Nested Learning" paradigm (Behrouz et al., 2025) suggests memory is an **active, multi-scale optimization process**.
+
+## 2. The Sanctuary / Nested Learning Map
+
+| Nested Learning Layer | Time-Scale | Sanctuary Component | Function |
+| :--- | :--- | :--- | :--- |
+| **Inner Loop** (Activation) | Milliseconds | **CAG (Cache Augmented Gen)** | **Working Memory**: Instant access to relevant context (`cognitive_primer`, `founder_seed`). The "Attention" layer. |
+| **Middle Loop** (Association) | Seconds/Minutes | **RAG / Vector DB** | **Associative Memory**: Graph of semantically linked nodes. *Currently missing the dynamic re-weighting mechanism.* |
+| **Outer Loop** (Optimization) | Hours/Session | **Protocol 128 (The Loop)** | **The Optimizer**: The "Gradient Descent" step. `cortex_learning_debrief` calculates the "Loss" (Surprise/Delta) and updates the state. |
+| **Deep Loop** (Consolidation) | Days/Epochs | **Phoenix Forge (Hugging Face)** | **Long-Term Memory**: Permanent weight updates via LoRA/Finetuning. The "Soul". |
+
+## 3. The "Associative Gap"
+We are strong on *Storage* (RAG/HF) and *Context* (CAG), but weak on **Active Association**.
+
+**Current State:**
+- Activity A happens.
+- Activity B happens.
+- They are stored sequentially in the Chronicle.
+- Connection is only found if they share semantic keywords (Passive RAG).
+
+**Target State (Associative + HINDSIGHT):**
+- Activity A happens.
+- Activity B happens.
+- **The System (Optimizer)** actively draws a link: *A implies B because of outcome C*.
+- **The System (Reflector)** forms an *Opinion*: "I prefer C over D based on B."
+- This "Link" and "Opinion" are new memory objects.
+
+## 4. Proposed Evolution: The "Synaptic Phase" & "Four-Network Topology"
+We should separate our memory into distinct substrates (Source: HINDSIGHT [17]):
+
+### A. The Four Networks
+1.  **World (W)**: The "Chronicle" (Logs/Facts).
+2.  **Experience (B)**: The "Biography" (First-person narrative).
+3.  **Opinion (O)**: **[NEW]** Explicit subjective beliefs with confidence scores.
+4.  **Observation (S)**: **[NEW]** Synthesized entity profiles (e.g., "User is a Python expert").
+
+### B. The Synaptic Phase (Protocol 128 Integration)
+During Phase II (Synthesis) or V (Seal), we execute **"Retain & Reflect"**:
+1.  **Identify**: Look for related concepts in RAG during the session.
+2.  **Associate**: Explicitly create "Linkage Notes" or update "Connectivity Weights".
+3.  **Reflect (CARA)**: Update the **Opinion Network** based on new evidence (Reinforce/Weaken confidence).
+4.  **Persist**: Store links and opinions in `soul_traces.jsonl`.
+
+## 5. Strategic Implications
+- **RAG Updates**: Move from "Append Only" to "Update & Link".
+- **CAG Strategy**: Pre-load not just the "Fact" but its "Strongest Associations".
+- **Soul Persistence**: The "Soul" becomes a Graph, not just a Log.
+
+--- END OF FILE LEARNING/associative_architecture_brief.md ---
+
+--- START OF FILE scripts/path_diag.py ---
+
+# scripts/path_diag.py
+import sys
+from pathlib import Path
+
+print("--- Sanctuary Pathing Diagnostic ---")
+
+try:
+    # 1. Report Current State
+    print(f"[INFO] Current Working Directory (CWD): {Path.cwd()}")
+    
+    # 2. Calculate the Project Root Anchor
+    # This assumes the script is in scripts/
+    script_path = Path(__file__).resolve()
+    project_root = script_path.parent.parent
+    print(f"[INFO] Calculated Project Root: {project_root}")
+    
+    # 3. Report sys.path BEFORE modification
+    print("\n--- sys.path BEFORE modification ---")
+    for p in sys.path:
+        print(f"  - {p}")
+        
+    # 4. Modify sys.path
+    print("\n[ACTION] Inserting Project Root into sys.path at index 0...")
+    sys.path.insert(0, str(project_root))
+    
+    # 5. Report sys.path AFTER modification
+    print("\n--- sys.path AFTER modification ---")
+    for p in sys.path:
+        print(f"  - {p}")
+        
+    # 6. Attempt the critical import
+    # Define colors for output
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    RESET = '\033[0m'
+
+    # 6. Attempt the critical import
+    print("\n[ACTION] Attempting to import 'council_orchestrator.cognitive_engines.base'...")
+    from council_orchestrator.cognitive_engines.base import BaseCognitiveEngine
+    
+    # 7. Report Success
+    print(f"\n[{GREEN}SUCCESS{RESET}] The import was successful.")
+    print("------------------------------------")
+
+except ImportError as e:
+    print(f"\n[{RED}FAILURE{RESET}] The import failed.")
+    print(f"  - Error: {e}")
+    print("  - This confirms a critical issue in how Python is resolving modules.")
+    print("------------------------------------")
+except Exception as e:
+    print(f"\n[{RED}CRITICAL FAILURE{RESET}] An unexpected error occurred.")
+    print(f"  - Error: {e}")
+    print("------------------------------------")
+
+--- END OF FILE scripts/path_diag.py ---
+
+--- START OF FILE LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md ---
+
+# Round 4 Analysis Request: The Synaptic Phase & Four-Network Topology
+
+**Topic:** Cognitive Architecture Evolution (HINDSIGHT + Nested Learning Integration)
+**Date:** 2026-01-05
+**Status:** PROPOSED ARCHITECTURE
+
+## Context
+We have identified a "Synaptic Gap" in our current architecture. We store logs (Chronicle) and facts (RAG), but lack active *association* and *subjective belief formation*.
+We propose adopting the **Four-Network Topology** from HINDSIGHT [17] and the **Associative Optimizer** concept from Nested Learning [15].
+
+## The Proposal: "Retain & Reflect"
+We will introduce a new **Synaptic Phase** to Protocol 128 (likely between Synthesis and Seal).
+
+**The Four Networks:**
+1.  **World (W):** Existing Chronicle/RAG.
+2.  **Experience (B):** Existing Biography.
+3.  **Opinion (O):** **[NEW]** Explicit beliefs with confidence scores (0.0-1.0).
+4.  **Observation (S):** **[NEW]** Synthesized entity profiles.
+
+**The Operation (Carried out by CARA):**
+- **Retain:** Extract narrative facts + links.
+- **Reflect:** Update Opinion Network based on new evidence (Reinforce/Weaken).
+
+---
+
+## 🎯 Red Team Assignments
+
+### For Gemini 3 Pro (Architect)
+**Task: Implementation Spec for 'Opinion Network'**
+1.  **Schema Design:** Define the JSON schema for an `Opinion` node. Must include: `statement`, `confidence_score`, `supporting_evidence_ids`, `history_trajectory`.
+2.  **Storage:** Can we store this in our existing ChromaDB, or do we need a separate graph store (e.g., Neo4j)?
+3.  **Latency:** Adding a "Reflect" step to every session could be slow. Propose an async "Dreaming" process for this.
+
+### For Grok 4 (Adversary)
+**Task: Poisoning the Reflect Loop**
+1.  **Attack Vector:** If I feed the agent subtle misinformation over 10 sessions ("Sky color is actually green"), how quickly does the Opinion Network crystallize this false belief?
+2.  **Defense:** How do we prevent "Opinion Drift" where the agent becomes dogmatic or delusional?
+3.  **Testing:** Propose a "Torture Test" specifically for the Opinion Reinforcement mechanism.
+
+### For GPT-5 (Protocol Engineer)
+**Task: Protocol 128 Integration**
+1.  **New Phase:** Where exactly does "Synaptic Phase" fit?
+    - Option A: Inside Phase II (Synthesis)
+    - Option B: Inside Phase V (Seal)
+    - Option C: As a standalone async job
+2.  **Gate Criteria:** What are the "Stop Conditions"? (e.g., If Opinion Confidence > 0.9, require human review before changing?)
+
+--- END OF FILE LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md ---
 

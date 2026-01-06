@@ -15,6 +15,25 @@ Every agent session must initialize via the Protocol 128 Bootloader:
 2. **Debrief Ingestion**: Automatically surface the most recent verified debrief into the active context.
 3. **Cognitive Primer**: Mandate alignment with the project's core directives before tool execution.
 
+## 3A. The Iron Core & Safe Mode Protocol (Zero-Drift)
+To prevent "identity drift" (Source: Titans [16]), we enforce a set of immutable files (Iron Core) that define the agent's fundamental nature.
+
+### The Iron Check
+A cryptographic verification runs at **Boot** (Guardian) and **Snapshot** (Seal). It validates that the following paths have not been tampered with:
+- `01_PROTOCOLS/*`
+- `ADRs/*`
+- `founder_seed.json`
+- `cognitive_continuity_policy.md`
+
+### Safe Mode State Machine
+If an Iron Check fails, the system enters `SAFE_MODE`.
+- **Trigger**: Any uncommitted change to Iron Core paths without "Constitutional Amendment" (HITL Override).
+- **Restrictions**: 
+  - `EXECUTION` capability revoked (Read-only tools only).
+  - `persist-soul` blocked.
+  - `snapshot --seal` blocked.
+- **Recovery**: Manual revert of changes or explicit `--override-iron-core` flag.
+
 ## 4. Technical Architecture (The Mechanism)
 
 ### A. The Recursive Learning Workflow
@@ -36,6 +55,12 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
 - **Tool**: `cortex_capture_snapshot` with `snapshot_type='seal'`
 - **Default Manifest**: `.agent/learning/learning_manifest.json`
 - **Output**: `learning_package_snapshot.md` for successor session continuity.
+
+### D. The Synaptic Phase (Dreaming)
+- **Tool**: `cortex_dream` (Async Batch Job)
+- **Function**: Post-seal consolidation of active memories into the **Opinion Network**.
+- **Constraint**: **Epistemic Anchoring**. Opinions created during Dreaming MUST NOT contradict World Facts (Chronicle) or Iron Core.
+- **Output**: Updated `founder_seed.json` (Profiles) and `cortex.json` (Opinions).
 
 ## 5. Operational Invariants
 - **Git as Source of Truth**: Git diffs (`--stat` and `--name-only`) are the final authority for "what happened."

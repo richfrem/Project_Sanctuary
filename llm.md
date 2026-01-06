@@ -31,43 +31,45 @@ curl -s http://localhost:11434/api/tags > /dev/null && echo "Ollama: OK" || echo
 # dos2unix Makefile
 ```
 
-#### 2.2 Initialize Environment (Choose A or B)
-> [!CRITICAL] **WSL Users:** If `source .venv/bin/activate` fails with "No such file", your venv is Windows-native. **Fix it:**
-> ```bash
-> rm -rf .venv && make bootstrap
-> ```
-> See: [**Dual Environment Strategy**](docs/operations/processes/RUNTIME_ENVIRONMENTS.md)
+#### 2.2 Initialize Environment
 
-#### Option A: Project Sanctuary (Standard)
-1.  **Activate:** `source .venv/bin/activate`
-2.  **Bootstrap:** `make bootstrap` (if not already done)
-    > [!CAUTION] **Windows Bridge Tax (~100x Slower):**
-    > WSL2's 9P filesystem bridge has **severe** I/O overhead for pip operations.
-    > 
-    > | Location | `make bootstrap` Time |
-    > |----------|----------------------|
-    > | ✅ `~/repos/Project_Sanctuary` (Native WSL) | **< 5 mins** |
-    > | ❌ `/mnt/c/Users/.../Project_Sanctuary` (Windows Mount) | **60-90 mins** |
-    > 
-    > **Always clone directly to native WSL filesystem:**
-    > ```bash
-    > cd ~/repos && git clone <repo-url>
-    > ```
+**DECISION: Check your operating system and follow the matching path below.**
 
-> ⚠️ **CRITICAL:** See [`docs/operations/processes/RUNTIME_ENVIRONMENTS.md`](./docs/operations/processes/RUNTIME_ENVIRONMENTS.md) for the **Dual Environment Strategy** (`ml_env` vs `.venv`).
-
-**Option A: Standard (CPU/Default)**
+##### IF Linux or WSL:
 ```bash
 make bootstrap && source .venv/bin/activate
 ```
+Done. Skip to Step 3.
+
+##### IF macOS (ARM64 / M-Series):
+The committed lockfiles are compiled for Linux + CUDA. They will **FAIL** on macOS.
+You must recompile them. Execute these commands in order:
 
 ```bash
-# Target existing environment (requires Makefile VENV_DIR support)
-make bootstrap VENV_DIR=~/ml_env && source ~/ml_env/bin/activate
+# Step 1: Install Python 3.11 (macOS default may be 3.12+)
+brew install python@3.11
+
+# Step 2: Create fresh venv with Python 3.11
+rm -rf .venv
+/opt/homebrew/bin/python3.11 -m venv .venv
+source .venv/bin/activate
+
+# Step 3: Recompile lockfiles for your platform
+make compile
+
+# Step 4: Install from newly compiled lockfiles
+make install-env
 ```
 
-> [!TIP] **Optional Tools:**
-> For diagram rendering (mermaid-cli) and other Node.js tools, see [dependency_management_policy.md](.agent/learning/rules/dependency_management_policy.md#6-non-python-tooling-nodejs--npm).
+**CRITICAL:** Do NOT run `make bootstrap` on macOS. It will fail with:
+`ERROR: No matching distribution found for nvidia-cublas-cu12`
+
+##### WSL Troubleshooting:
+If `source .venv/bin/activate` fails with "No such file", run:
+```bash
+rm -rf .venv && make bootstrap
+```
+
 
 #### 2.3 Directory Layout (Sibling Repositories)
 Ensure your `~/repos` directory follows this structure for correct relative path resolution in scripts:

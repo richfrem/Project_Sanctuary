@@ -21,7 +21,7 @@ sys.path.insert(0, str(project_root))
 
 try:
     from mcp_servers.rag_cortex.operations import CortexOperations
-    from mcp_servers.git.git_ops import GitOperations
+    from mcp_servers.git.operations import GitOperations
 except ImportError as e:
     print(f"❌ Critical Import Error: {e}")
     print("Ensure you are running from the project root and requirements are installed.")
@@ -47,9 +47,9 @@ def main():
     print("1️⃣  Verifying Git State...")
     try:
         status = git_ops.status()
-        print(f"   Current Branch: {status['branch']}")
+        print(f"   Current Branch: {status.branch}")
         
-        if status['modified'] or status['staged']:
+        if status.modified or status.staged:
             print("   ⚠️  WARNING: You have uncommitted changes.")
             # We don't block, but we warn heavily per Protocol 118 (Context Integrity)
         else:

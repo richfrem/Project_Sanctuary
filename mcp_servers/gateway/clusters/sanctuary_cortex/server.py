@@ -303,6 +303,16 @@ def run_sse_server(port: int):
     def cortex_learning_debrief(hours: int = 24):
         response = get_ops().learning_debrief(hours=hours)
         return json.dumps({"status": "success", "debrief": response}, indent=2)
+
+    # [DISABLED] Synaptic Phase (Dreaming)
+    # @sse_tool(
+    #     name="cortex_dream",
+    #     description="Execute Synaptic Phase (Dreaming) to consolidate memories and update opinions.",
+    #     schema=EMPTY_SCHEMA
+    # )
+    # def cortex_dream():
+    #     response = get_ops().dream()
+    #     return json.dumps(response, indent=2)
     
     @sse_tool(
         name="cortex_capture_snapshot",
@@ -480,6 +490,16 @@ def run_stdio_server():
             return json.dumps({"status": "success", "debrief": response}, indent=2)
         except Exception as e:
             raise ToolError(f"Learning debrief failed: {str(e)}")
+
+    # [DISABLED] Synaptic Phase (Dreaming)
+    # @mcp.tool()
+    # async def cortex_dream() -> str:
+    #     """Execute Synaptic Phase (Dreaming)."""
+    #     try:
+    #         response = get_ops().dream()
+    #         return json.dumps(response, indent=2)
+    #     except Exception as e:
+    #         raise ToolError(f"Dreaming failed: {str(e)}")
     
     @mcp.tool()
     async def cortex_capture_snapshot(request: CortexCaptureSnapshotRequest) -> str:

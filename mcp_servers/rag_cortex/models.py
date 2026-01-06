@@ -260,6 +260,45 @@ class CaptureSnapshotResponse:
 
 
 # ============================================================================
+# Opinion Models (ADR 091 - The Synaptic Phase)
+# ============================================================================
+
+@dataclass
+class DispositionParameters:
+    #============================================
+    # Model: DispositionParameters
+    # Purpose: Behavioral parameters from HINDSIGHT/CARA.
+    #============================================
+    skepticism: float
+    literalism: float
+    empathy: float = 0.5  # Default
+
+@dataclass
+class HistoryPoint:
+    #============================================
+    # Model: HistoryPoint
+    # Purpose: Tracking confidence trajectory over time.
+    #============================================
+    timestamp: str
+    score: float
+    delta_reason: str
+
+@dataclass
+class Opinion:
+    #============================================
+    # Model: Opinion
+    # Purpose: Subjective belief node (Synaptic Phase).
+    #============================================
+    id: str
+    statement: str
+    confidence_score: float
+    formation_source: str
+    supporting_evidence_ids: List[str]
+    history_trajectory: List[HistoryPoint]
+    disposition_parameters: Optional[DispositionParameters] = None
+    type: str = "opinion"  # Discriminator
+
+# ============================================================================
 # Persist Soul Models (ADR 079 - Johnny Appleseed)
 # ============================================================================
 

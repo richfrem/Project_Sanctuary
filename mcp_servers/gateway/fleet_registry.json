@@ -259,6 +259,14 @@
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-ingest-full"
+        },
+        {
+          "description": "Execute Synaptic Phase (Dreaming) to consolidate memories and update opinions.",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-dream"
         }
       ],
       "url": "http://sanctuary_cortex:8000/sse"

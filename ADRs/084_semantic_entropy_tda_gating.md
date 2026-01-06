@@ -39,9 +39,13 @@ We must pivot from "Quantum Literalism" to **Classical Semantic Stability**.
 ### 1. Semantic Entropy (SE) as Primary Metric
 
 ```python
-def get_dynamic_threshold(task_context: str) -> float:
-    """Retrieve calibrated threshold from calibration_log.json"""
-    return calibration_data.get(task_context, 0.79)
+def get_dual_thresholds() -> tuple:
+    """
+    Returns (T1, T2) calibrated thresholds.
+    T1 (0.32): Boundary for High Confidence / Fast Path.
+    T2 (0.78): Boundary for Uncertainty / Failure.
+    """
+    return (0.32, 0.78)
 
 def calculate_semantic_entropy(traces: list) -> float:
     """Computes uncertainty across paraphrased reasoning clusters."""
@@ -78,18 +82,25 @@ def persist_soul(trace_data: dict, context: str = "code_logic") -> dict:
         alignment = 0.0
         log_security_event(f"Epistemic Gating Failure: {e}")
     
-    threshold = get_dynamic_threshold(context)
+    threshold_t1, threshold_t2 = get_dual_thresholds()
     
-    if se_score > threshold or alignment < 0.70:
-        return quarantine(trace_data, "HIGH_ENTROPY_OR_DRIFT")
+    # Dual Threshold Logic
+    if se_score > threshold_t2:
+        return quarantine(trace_data, "HIGH_ENTROPY_FAILURE")
+    
+    status = "CONFIDENT" if se_score <= threshold_t1 else "UNCERTAIN"
+    
+    if status == "UNCERTAIN":
+        # Slow Path: Require additional reasoning or verify via TDA
+        log_warning(f"Uncertainty detected (SE={se_score}). Engaging Slow Loop.")
     
     metadata = {
         "source": "agent_autonomous",
         "semantic_entropy": se_score,
-        "stability_class": "STABLE" if se_score < threshold else "VOLATILE",
+        "stability_class": status,
         "alignment_score": alignment,
         "inheritance_type": "NARRATIVE_SUCCESSOR",
-        "adr_version": "084"
+        "adr_version": "084_v2"
     }
     return commit_to_genome(trace_data, metadata)
 ```

@@ -1,81 +1,64 @@
-# Learning Audit Prompt: Forge v5.0 Evolution & ADR 075 Standardization
-**Current Topic:** Fine-Tuning Pipeline Refactoring & Legacy Decommissioning
-**Iteration:** 7.0 (Forge v5.0 Standardization)
-**Date:** 2026-01-04
-**Epistemic Status:** [EMPIRICAL - EXECUTION IN PROGRESS - 90%]
+# Learning Audit Prompt: LLM Memory Architectures - Round 4
+**Current Topic:** Cognitive Architecture Evolution (HINDSIGHT + Nested Learning)
+**Iteration:** 11.0 (Validation Phase)
+**Date:** 2026-01-05
+**Epistemic Status:** [PROPOSED - AWAITING RED TEAM VALIDATION]
 
 ---
 
-## 📋 Session Accomplishments
+## 📋 Session Progress
 
-### Forge Codebase Standardization (ADR 075)
-- ✅ Refactored 15+ Python scripts with file headers, docstrings, and type hints
-- ✅ Integrated `mcp_servers.lib` utilities for path resolution and logging
-- ✅ Shell scripts updated with ADR 075-style headers
+### Research Lineage Update
+```
+QEC (Pivot) → Iron Core (Hardening) → Nested Learning (Associative) → HINDSIGHT (4-Network Topology)
+```
 
-### Legacy Decommissioning
-- ✅ Audited `OPERATION_PHOENIX_FORGE` directory - confirmed as legacy workspace
-- ✅ Moved 7 legacy scripts to centralized `forge/archive/`
-- ✅ Verified all v5.0 outputs route to project root directories (`outputs/`, `models/`)
+### Rounds Completed
+| Round | Deliverables | Status |
+|-------|--------------|--------|
+| **Round 1-3** | Iron Core, Safe Mode, Dual Threshold, Boiler Frog Test | ✅ Complete |
+| **Round 4** | **HINDSIGHT Integration Strategy**, **Associative Brief**, **Synaptic Phase Proposal** | 🟡 In Progress |
 
-### Documentation Updates
-- ✅ Updated `forge-llm.md` (authoritative pipeline guide)
-- ✅ Updated `forge/README.md` to v5.0 status
-- ✅ Consolidated and enriched `model_card.yaml` with training hyperparameters
-- ✅ Updated Hugging Face READMEs for deployment
-
-### Training Progress
-- ✅ Fine-tuning reached 90% (Epoch 2.7+)
-- ⏳ Awaiting 100% completion for merge/GGUF/deployment steps
+### Key New sources
+- **[15] Nested Learning:** Optimizers as Associative Memory.
+- **[17] HINDSIGHT:** 4-Network Memory (World, Experience, Opinion, Observation) + CARA.
 
 ---
 
-## 🎭 Red Team Role-Play Scenario (Forge Pipeline Review)
+## 🎭 Red Team Role-Play: Round 4 Assignments
 
-> **YOU ARE AN EXPERIENCED ML ENGINEER.** You have been asked to review the Forge v5.0 fine-tuning pipeline.
->
-> **Your constraints:**
-> - You have access to the manifest files listed below
-> - You must verify technical accuracy and operational readiness
->
-> **Questions to Answer:**
->
-> **Codebase Standardization:**
-> 1. "Do all scripts in `forge/scripts/` follow the ADR 075 documentation pattern?"
-> 2. "Is the path resolution strategy consistent across scripts?"
-> 3. "Are the project utilities (`mcp_servers.lib`) correctly bootstrapped?"
->
-> **Dependency Management (ADR 073):**
-> 4. "Does the training environment follow the locked-file ritual?"
-> 5. "Are `.in` files for intent and `.txt` files for truth being used correctly?"
->
-> **Pipeline Accuracy:**
-> 6. "Does `forge-llm.md` accurately describe the current v5.0 pipeline?"
-> 7. "Are all output paths in `training_config.yaml` pointing to root-level directories?"
-> 8. "Is the `model_card.yaml` metadata consistent with the training configuration?"
->
-> **Legacy Cleanup:**
-> 9. "Is the `OPERATION_PHOENIX_FORGE` directory fully decommissioned?"
-> 10. "Are any critical assets missing from the standardized locations?"
+> **CONTEXT:** We are proposing a major architectural evolution: The "Synaptic Phase" and "Opinion Network". We need you to validate this proposal before implementation.
 
-> **Environment Strategy (Platform Reset):**
-> 11. "Does `RUNTIME_ENVIRONMENTS.md` clearly distinguish between `.venv` (Standard) and `ml_env` (Forge)?"
-> 12. "Is the `make bootstrap` mandate for WSL/macOS resets clearly documented in `BOOTSTRAP.md`?"
-> 13. "Do the updated `llm.md` instructions effectively warn users about WSL cloning performance?"
->
-> **Did you find any discrepancies? What needs correction?**
+**REFER TO:** `LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md` for detailed assignments.
+
+### For Gemini 3 Pro (Architect)
+**Focus:** Implementation Feasibility of the Opinion Network & Async "Dreaming".
+- Can we implement CARA efficiently on our stack?
+- Schema design for Opinions.
+
+### For Grok 4 (Adversary)
+**Focus:** "Opinion Poisoning" & "Belief Drift".
+- Attack vector analysis on the Reflect loop.
+- Designing the "Opinion Torture Test".
+
+### For GPT-5 (Protocol Engineer)
+**Focus:** Protocol 128 "Synaptic Phase" Integration.
+- Where does "Retain & Reflect" fit in the loop?
+- Defining "Belief Gates".
+
+---
+
+## 📁 Files for Review (Round 4)
+
+| File | Purpose |
+|------|---------|
+| `LEARNING/associative_architecture_brief.md` | The Core Proposal (Mapping HINDSIGHT to Sanctuary) |
+| `LEARNING/topics/llm_memory_architectures_2025/round4_analysis_request.md` | **YOUR ASSIGNMENTS** |
+| `LEARNING/topics/llm_memory_architectures_2025/sources.md` | Source [15] and [17] details |
+| `01_PROTOCOLS/128_Hardened_Learning_Loop.md` | Current Protocol (Target for update) |
+
+---
 
 > [!IMPORTANT]
-> **Feedback Loop:** Any gaps identified should be remediated before the learning seal.
-
----
-
-## Files for Review
-- `forge-llm.md` (Authoritative pipeline guide)
-- `forge/README.md` (v5.0 status and deliverables)
-- `forge/config/training_config.yaml` (Training hyperparameters)
-- `forge/huggingface/model_card.yaml` (HF deployment metadata)
-- `forge/scripts/fine_tune.py` (Core training script)
-- `forge/scripts/merge_adapter.py` (Model merging logic)
-- `LEARNING/topics/forge_v5_evolution.md` (Session synthesis)
-- `.agent/learning/learning_audit/loop_retrospective.md` (Session retrospective)
+> **Round 4 Goal:** Validate the **"Synaptic Phase"** proposal.
+> Do NOT implement yet. We need you to tell us if this architecture is robust against drift and poisoning.
