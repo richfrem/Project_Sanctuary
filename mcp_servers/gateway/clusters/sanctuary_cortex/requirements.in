@@ -5,6 +5,9 @@
 # Inherits from Core MCP runtime
 -r ../../../requirements-core.in
 
+# SECURITY OVERRIDE (Jan 2026 Residuals)
+urllib3>=2.6.3
+
 # RAG & ML Dependencies
 sentence-transformers
 langchain
