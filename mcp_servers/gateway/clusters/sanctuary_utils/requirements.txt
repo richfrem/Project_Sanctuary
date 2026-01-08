@@ -4,11 +4,17 @@
 #
 #    pip-compile --output-file=mcp_servers/gateway/clusters/sanctuary_utils/requirements.txt mcp_servers/gateway/clusters/sanctuary_utils/requirements.in
 #
+aiohappyeyeballs==2.6.1
+    # via aiohttp
+aiohttp==3.13.3
+    # via -r mcp_servers/requirements-core.in
+aiosignal==1.4.0
+    # via aiohttp
 annotated-doc==0.0.4
     # via fastapi
 annotated-types==0.7.0
     # via pydantic
-anyio==4.12.0
+anyio==4.12.1
     # via
     #   httpx
     #   mcp
@@ -16,6 +22,7 @@ anyio==4.12.0
     #   starlette
 attrs==25.4.0
     # via
+    #   aiohttp
     #   cyclopts
     #   jsonschema
     #   referencing
@@ -29,7 +36,7 @@ beartype==0.22.9
     #   py-key-value-shared
 cachetools==6.2.4
     # via py-key-value-aio
-certifi==2025.11.12
+certifi==2026.1.4
     # via
     #   httpcore
     #   httpx
@@ -48,7 +55,7 @@ cryptography==46.0.3
     # via
     #   authlib
     #   pyjwt
-cyclopts==4.4.1
+cyclopts==4.4.4
     # via fastmcp
 diskcache==5.6.3
     # via py-key-value-aio
@@ -64,10 +71,14 @@ exceptiongroup==1.3.1
     # via fastmcp
 fakeredis[lua]==2.33.0
     # via pydocket
-fastapi==0.127.0
+fastapi==0.128.0
     # via -r mcp_servers/requirements-core.in
-fastmcp==2.14.1
+fastmcp==2.14.2
     # via -r mcp_servers/requirements-core.in
+frozenlist==1.8.0
+    # via
+    #   aiohttp
+    #   aiosignal
 h11==0.16.0
     # via
     #   httpcore
@@ -87,17 +98,18 @@ idna==3.11
     #   email-validator
     #   httpx
     #   requests
+    #   yarl
 importlib-metadata==8.7.1
     # via
     #   keyring
     #   opentelemetry-api
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==6.0.1
+jaraco-context==6.0.2
     # via keyring
 jaraco-functools==4.4.0
     # via keyring
-jsonschema==4.25.1
+jsonschema==4.26.0
     # via mcp
 jsonschema-path==0.3.4
     # via fastmcp
@@ -117,6 +129,10 @@ more-itertools==10.8.0
     # via
     #   jaraco-classes
     #   jaraco-functools
+multidict==6.7.0
+    # via
+    #   aiohttp
+    #   yarl
 openapi-pydantic==0.5.1
     # via fastmcp
 opentelemetry-api==1.39.1
@@ -148,6 +164,10 @@ prometheus-client==0.23.1
     # via
     #   opentelemetry-exporter-prometheus
     #   pydocket
+propcache==0.4.1
+    # via
+    #   aiohttp
+    #   yarl
 py-key-value-aio[disk,keyring,memory,redis]==0.3.0
     # via
     #   fastmcp
@@ -168,7 +188,7 @@ pydantic-core==2.41.5
     # via pydantic
 pydantic-settings==2.12.0
     # via mcp
-pydocket==0.16.1
+pydocket==0.16.3
     # via fastmcp
 pygments==2.19.2
     # via rich
@@ -219,7 +239,7 @@ shellingham==1.5.4
     # via typer
 sortedcontainers==2.4.0
     # via fakeredis
-sse-starlette==3.0.4
+sse-starlette==3.1.2
     # via
     #   -r mcp_servers/requirements-core.in
     #   mcp
@@ -230,10 +250,11 @@ starlette==0.50.0
     #   sse-starlette
 tiktoken==0.12.0
     # via -r mcp_servers/requirements-core.in
-typer==0.20.1
+typer==0.21.1
     # via pydocket
 typing-extensions==4.15.0
     # via
+    #   aiosignal
     #   anyio
     #   exceptiongroup
     #   fastapi
@@ -254,8 +275,10 @@ typing-inspection==0.4.2
     #   mcp
     #   pydantic
     #   pydantic-settings
-urllib3==2.6.2
-    # via requests
+urllib3==2.6.3
+    # via
+    #   -r mcp_servers/requirements-core.in
+    #   requests
 uvicorn==0.40.0
     # via
     #   -r mcp_servers/requirements-core.in
@@ -265,5 +288,7 @@ websockets==15.0.1
     # via fastmcp
 wrapt==1.17.3
     # via opentelemetry-instrumentation
+yarl==1.22.0
+    # via aiohttp
 zipp==3.23.0
     # via importlib-metadata
