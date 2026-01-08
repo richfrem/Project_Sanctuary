@@ -56,6 +56,24 @@ Defines universal blocking rules:
 
 **Rule**: These rules apply AFTER inclusion, acting as a final firewall.
 
+## Manifest Hierarchy (Extended)
+
+With the introduction of **Protocol 128 (Cognitive Continuity)** and **Protocol 130 (Deduplication)**, the manifest architecture has evolved into layers:
+
+1.  **System Manifests** (Content Scope):
+    -   `ingest_manifest.json` (Base Genome)
+    -   `exclusion_manifest.json` (Global Firewall)
+
+2.  **Process Manifests** (Workflow Context):
+    -   Defined in [ADR 089](../../ADRs/089_modular_manifest_pattern.md).
+    -   Examples: `learning_manifest.json`, `audit_manifest.json`, `bootstrap_manifest.json`.
+    -   Define specific subsets of files for tasks like onboarding, auditing, or sealing.
+
+3.  **The Registry** (Meta-Management):
+    -   `manifest_registry.json` (.agent/learning).
+    -   Maps all manifests to their generated outputs for deduplication.
+
+
 ## Content Processor
 
 The unified library `mcp_servers/lib/content_processor.py` drives all content access:

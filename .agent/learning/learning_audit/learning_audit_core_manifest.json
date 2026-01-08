@@ -7,10 +7,5 @@
     "ADRs/071_protocol_128_cognitive_continuity.md",
     "docs/prompt-engineering/sanctuary-guardian-prompt.md",
     ".agent/learning/learning_audit/learning_audit_core_prompt.md",
-    ".agent/learning/learning_audit/learning_audit_prompts.md",
-    "01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md",
-    "ADRs/089_modular_manifest_pattern.md",
-    "mcp_servers/rag_cortex/operations.py",
-    ".agent/learning/manifest_registry.json",
-    ".agent/rules/cognitive_continuity_policy.md"
+    ".agent/learning/learning_audit/learning_audit_prompts.md"
 ]

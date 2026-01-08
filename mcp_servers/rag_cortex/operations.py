@@ -1728,6 +1728,140 @@ class CortexOperations:
             logger.error(f"Error in learning_debrief: {e}")
             return f"Error generating debrief scan: {e}"
 
+    #============================================
+    # Protocol 130: Manifest Deduplication (ADR 089)
+    # Prevents including files already embedded in generated outputs
+    #============================================
+    
+    def _load_manifest_registry(self) -> Dict[str, Any]:
+        """
+        Load the manifest registry that maps manifests to their generated outputs.
+        Location: .agent/learning/manifest_registry.json
+        """
+        registry_path = self.project_root / ".agent" / "learning" / "manifest_registry.json"
+        if registry_path.exists():
+            try:
+                with open(registry_path, "r") as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Protocol 130: Failed to load manifest registry: {e}")
+        return {"manifests": {}}
+    
+    def _get_output_to_manifest_map(self, registry: Dict[str, Any]) -> Dict[str, str]:
+        """
+        Invert the registry: output_file → source_manifest_path
+        """
+        output_map = {}
+        for manifest_path, info in registry.get("manifests", {}).items():
+            output = info.get("output")
+            if output:
+                output_map[output] = manifest_path
+        return output_map
+    
+    def _dedupe_manifest(self, manifest: List[str]) -> Tuple[List[str], Dict[str, str]]:
+        """
+        Protocol 130: Remove files from manifest that are already embedded in included outputs.
+        
+        Args:
+            manifest: List of file paths
+            
+        Returns:
+            Tuple of (deduped_manifest, duplicates_found)
+            duplicates_found is dict of {file: reason}
+        """
+        registry = self._load_manifest_registry()
+        output_map = self._get_output_to_manifest_map(registry)
+        duplicates = {}
+        
+        # For each file in manifest, check if it's an output of another manifest
+        for file in manifest:
+            if file in output_map:
+                # This file is a generated output. Check if its source files are also included.
+                source_manifest_path = self.project_root / output_map[file]
+                
+                if source_manifest_path.exists():
+                    try:
+                        with open(source_manifest_path, "r") as f:
+                            source_files = json.load(f)
+                        
+                        # Check each source file - if it's in the manifest, it's a duplicate
+                        for source_file in source_files:
+                            if source_file in manifest and source_file != file:
+                                duplicates[source_file] = f"Already embedded in {file}"
+                    except Exception as e:
+                        logger.warning(f"Protocol 130: Failed to load source manifest {source_manifest_path}: {e}")
+        
+        if duplicates:
+            logger.info(f"Protocol 130: Found {len(duplicates)} embedded duplicates, removing from manifest")
+            for dup, reason in duplicates.items():
+                logger.debug(f"  - {dup}: {reason}")
+        
+        # Remove duplicates
+        deduped = [f for f in manifest if f not in duplicates]
+        return deduped, duplicates
+
+    #============================================
+    # Diagram Rendering (Task #154)
+    # Automatically renders .mmd to .png during snapshot
+    #============================================
+
+    def _check_mermaid_cli(self) -> bool:
+        """Check if mermaid-cli is available (via npx)."""
+        try:
+            # Check if npx is in path
+            subprocess.run(["npx", "--version"], capture_output=True, check=True)
+            return True
+        except Exception:
+            return False
+
+    def _render_single_diagram(self, mmd_path: Path) -> bool:
+        """Render a single .mmd file to png if outdated."""
+        output_path = mmd_path.with_suffix(".png")
+        try:
+            # Check timestamps
+            if output_path.exists() and mmd_path.stat().st_mtime <= output_path.stat().st_mtime:
+                return True # Up to date
+
+            logger.info(f"Rendering outdated diagram: {mmd_path.name}")
+            result = subprocess.run(
+                [
+                    "npx", "-y", "@mermaid-js/mermaid-cli",
+                    "-i", str(mmd_path),
+                    "-o", str(output_path),
+                    "-b", "transparent", "-t", "default"
+                ],
+                capture_output=True, text=True, timeout=120
+            )
+            if result.returncode != 0:
+                logger.warning(f"Failed to render {mmd_path.name}: {result.stderr[:200]}")
+                return False
+            return True
+        except Exception as e:
+            logger.warning(f"Error rendering {mmd_path.name}: {e}")
+            return False
+
+    def _ensure_diagrams_rendered(self):
+        """Scan docs/architecture_diagrams and render any outdated .mmd files."""
+        try:
+            diagrams_dir = self.project_root / "docs" / "architecture_diagrams"
+            if not diagrams_dir.exists():
+                return
+                
+            if not self._check_mermaid_cli():
+                logger.warning("mermaid-cli not found (npx missing or failed). Skipping diagram rendering.")
+                return
+
+            mmd_files = sorted(diagrams_dir.rglob("*.mmd"))
+            logger.info(f"Verifying {len(mmd_files)} architecture diagrams...")
+            
+            rendered_count = 0
+            for mmd_path in mmd_files:
+                # We only render if outdated, logic is in _render_single_diagram
+                if self._render_single_diagram(mmd_path): 
+                   pass 
+        except Exception as e:
+            logger.warning(f"Diagram rendering process failed: {e}")
+
     def _get_git_state(self, project_root: Path) -> Dict[str, Any]:
         """
         Helper: Captures the current Git state signature for integrity verification.
@@ -1772,19 +1906,22 @@ class CortexOperations:
         strategic_context: Optional[str] = None
     ) -> CaptureSnapshotResponse:
         #============================================
-        # Method: capture_snapshot
-        # Purpose: Tool-driven snapshot generation for Protocol 128.
-        # Args:
-        #   manifest_files: List of file paths to include
-        #   snapshot_type: 'audit', 'seal', or 'learning_audit'
-        #   strategic_context: Optional context string
-        # Returns: CaptureSnapshotResponse with verification info
-        #============================================
+        """
+        Generates a consolidated snapshot of the project state.
+        Types: 'audit' (Red Team), 'learning_audit' (Cognitive), or 'seal' (Final).
+        """
         import time
         import datetime
         import subprocess
         
-        # 1. Prepare Tool Paths
+        start_time = time.time()
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        # 1. Ensure Diagrams are Rendered (Task #154)
+        # This may generate new PNGs, which will trigger Git Drift if not staged.
+        self._ensure_diagrams_rendered()
+        
+        # 2. Prepare Tool Paths
         learning_dir = self.project_root / ".agent" / "learning"
         if snapshot_type == "audit":
             output_dir = learning_dir / "red_team"
@@ -1814,6 +1951,14 @@ class CortexOperations:
                     logger.info(f"Loaded default {snapshot_type} manifest: {len(effective_manifest)} entries")
                 except Exception as e:
                     logger.warning(f"Failed to load {snapshot_type} manifest: {e}")
+
+        # Protocol 130: Deduplicate manifest (Global Strategy)
+        # Prevents redundant inclusion of files already embedded in generated outputs.
+        dedupe_report = {}
+        if effective_manifest:
+            effective_manifest, dedupe_report = self._dedupe_manifest(effective_manifest)
+            if dedupe_report:
+                logger.info(f"Protocol 130: Deduplicated {len(dedupe_report)} items from {snapshot_type} manifest")
 
         # Define path early for Shadow Manifest exclusions
         snapshot_filename = f"{snapshot_type}_snapshot_{timestamp}.md"

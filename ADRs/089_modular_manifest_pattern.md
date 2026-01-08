@@ -84,10 +84,24 @@ New use cases are added by:
 ### Negative
 - **Manifest Proliferation**: Risk of too many manifests if not curated
 - **Coordination**: Changes to core files may require updating multiple manifests
+- **Content Duplication**: Generated outputs (e.g., `learning_package_snapshot.md`) may contain content from source manifests; including both wastes tokens
 
 ### Mitigation
 - **Manifest Registry**: Maintain this ADR as the canonical list of active manifests
 - **Gardener Checks**: Include manifest health in TDA gardener scans
+- **Deduplication Strategy**: Mark generated files with `[GENERATED_FROM: manifest_name]` metadata; snapshot tool should detect and exclude files that are outputs of included manifests
+
+### Implemented: Manifest Deduplication (Protocol 130)
+
+> [!NOTE]
+> **Status:** Implemented (Jan 2026) via `manifest_registry.json` and `operations.py`.
+>
+> **Protocol 130 Strategy:**
+> 1. Maintains a **Manifest Registry** (`.agent/learning/manifest_registry.json`) mapping manifests to their output files.
+> 2. During snapshot generation, the system checks if any included files are themselves generated outputs of other included manifests.
+> 3. Automatically removes the source manifests if their output is already included, preventing token waste.
+> 4. See [Protocol 130](../01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md) for full details.
+
 
 ## Manifest Inventory (Current)
 
@@ -127,6 +141,7 @@ Manifests used by MCP servers and infrastructure (not directly CLI-buildable):
 |----------|------|:-------------:|---------|
 | Exclusion | `mcp_servers/lib/exclusion_manifest.json` | ❌ | Files/patterns to exclude from ingestion |
 | Ingest | `mcp_servers/lib/ingest_manifest.json` | ❌ | Files/directories to include in RAG ingestion |
+| Registry | `.agent/learning/manifest_registry.json` | ❌ | Map of manifests to outputs (Protocol 130) |
 
 ### Forge & Dataset Manifests
 Manifests for model training and HuggingFace (not directly CLI-buildable):

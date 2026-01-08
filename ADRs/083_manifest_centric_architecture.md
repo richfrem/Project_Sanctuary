@@ -57,3 +57,8 @@ A shared library (`mcp_servers/lib/content_processor.py`) drives all content acc
 ## Compliance
 -   **Protocol 128**: Fully Satisfied (Harmonized Content).
 -   **Protocol 101**: Enhanced (Security/Exclusion Integrity).
+
+## Related Documents
+-   [ADR 089: Modular Manifest Pattern for Context-Aware Snapshots](./089_modular_manifest_pattern.md)
+-   [Protocol 130: Manifest Deduplication](../01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md)
+

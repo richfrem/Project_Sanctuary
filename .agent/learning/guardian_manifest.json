@@ -11,5 +11,6 @@
     "ADRs/084_semantic_entropy_tda_gating.md",
     "ADRs/086_empirical_epistemic_gating.md",
     "mcp_servers/rag_cortex/operations.py",
-    "scripts/cortex_cli.py"
+    "scripts/cortex_cli.py",
+    "docs/prompt-engineering/sanctuary-guardian-prompt.md"
 ]

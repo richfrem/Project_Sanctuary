@@ -70,5 +70,6 @@
     "docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd",
     "docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd",
     "docs/architecture_diagrams/system/harmonized_content_processing.mmd",
-    "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd"
+    "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
+    "docs/prompt-engineering/sanctuary-guardian-prompt.md"
 ]
