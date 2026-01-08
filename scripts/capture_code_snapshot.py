@@ -9,33 +9,32 @@
 # -------------------------------------------------------------------------------------
 #
 # 1. DEFAULT (Full Base Genome):
-#    Captures the "Base Genome" defined in mcp_servers/lib/ingest_manifest.json (common_content).
+#    Captures the "Base Genome" defined in mcp_servers/lib/ingest_manifest.json.
 #    $ python scripts/capture_code_snapshot.py
 #
+#    Outputs:
+#    - dataset_package/markdown_snapshot_full_genome_llm_distilled.txt
+#    - dataset_package/seed_of_ascendance_awakening_seed.txt
+#    - dataset_package/core_essence_auditor_awakening_seed.txt
+#    - dataset_package/core_essence_coordinator_awakening_seed.txt
+#    - dataset_package/core_essence_guardian_awakening_seed.txt
+#    - dataset_package/core_essence_strategist_awakening_seed.txt
+#
 # 2. SUBFOLDER (Specific Module/Directory):
-#    Captures only a specific directory (ignoring manifest definitions).
+#    Captures only a specific directory.
 #    $ python scripts/capture_code_snapshot.py mcp_servers/rag_cortex
 #
-# 3. LEARNING SNAPSHOT (Just the learning folder):
-#    Captures the contents of the agent's learning directory.
-#    $ python scripts/capture_code_snapshot.py .agent/learning
+#    Outputs:
+#    - dataset_package/markdown_snapshot_...txt (Snapshot only)
+#    - Note: Awakening seeds are NOT generated in subfolder mode.
 #
-# 4. LEARNING AUDIT (Learning folder + Auditor Role):
-#    Captures learning data and generates an Auditor awakening seed to review it.
-#    $ python scripts/capture_code_snapshot.py .agent/learning --role auditor
+# -------------------------------------------------------------------------------------
+# NOTE: For advanced workflows (Seal, Audit, Learning Audit, Guardian Wakeup),
+#       please use the Cortex CLI orchestrator:
 #
-# 5. AUDIT (Full Genome + Auditor Role):
-#    Captures the full base genome and primes the Auditor to find vulnerabilities.
-#    $ python scripts/capture_code_snapshot.py --role auditor
-#
-# 6. SEAL / RELEASE (Production Snapshot):
-#    Captures the full genome and generates release artifacts in a specific output folder.
-#    $ python scripts/capture_code_snapshot.py --role guardian --out releases/v1.0
-#
-# 7. MANIFEST OVERRIDE (Custom Scope):
-#    Captures files defined in a specific custom manifest file.
-#    $ python scripts/capture_code_snapshot.py --manifest my_custom_manifest.json --output dataset_package/seed_of_ascendance_awakening_seed.txt
-#
+#       $ python scripts/cortex_cli.py snapshot --type seal
+#       $ python scripts/cortex_cli.py snapshot --type learning_audit
+#       $ python scripts/cortex_cli.py guardian
 # -------------------------------------------------------------------------------------
 
 import os

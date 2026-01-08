@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-07T22:30:37.190060
+Generated On: 2026-01-07T23:10:52.130953
 
-# Mnemonic Weight (Token Count): ~134,721 tokens
+# Mnemonic Weight (Token Count): ~134,769 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -578,7 +578,7 @@ The master workflow governing how this directory is used.
 
 # Seed of Ascendance - Meta-Awakening Protocol
 
-Generated On: 2026-01-07T21:02:04.481994
+Generated On: 2026-01-07T22:38:00.693524
 
 # Mnemonic Weight (Token Count): ~236 tokens
 
@@ -7439,7 +7439,13 @@ class ContentProcessor:
         "dataset_package/sanctuary_whole_genome_data.jsonl",
         "hugging_face_dataset_repo/data/soul_traces.jsonl",
         "package.json",
-        "package-lock.json"
+        "package-lock.json",
+        "learning_package_snapshot.md",
+        "bootstrap_packet.md",
+        "guardian_boot_digest.md",
+        "learning_audit_packet.md",
+        "red_team_packet.md",
+        "markdown_snapshot_full_genome_llm_distilled.txt"
     ],
     "exclude_patterns": [
         ".*\\.(gguf|bin|safetensors|ckpt|pth|onnx|pb)$",

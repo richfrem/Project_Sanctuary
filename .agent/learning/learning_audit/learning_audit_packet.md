@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-07T22:18:47.526156
+Generated On: 2026-01-07T22:38:29.503472
 
-# Mnemonic Weight (Token Count): ~49,585 tokens
+# Mnemonic Weight (Token Count): ~49,475 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -1603,8 +1603,7 @@ You are reviewing a **learning audit packet** containing proposed changes or res
 ---
 
 ## Purpose
-
-Prevent token waste and context bloat by automatically detecting and removing duplicate content from learning audit manifests. This protocol ensures that when a manifest includes a generated output file (e.g., `learning_package_snapshot.md`), it does not also include the source files that are already embedded within that output.
+Prevent token waste and context bloat by automatically detecting and removing duplicate content from snapshot manifests. This ensures that when a snapshot includes a generated output file (e.g., `learning_package_snapshot.md`), it does not also include the source files that are already embedded within that output.
 
 ---
 
@@ -1642,8 +1641,8 @@ A central registry (`manifest_registry.json`) maps each manifest to its generate
 Deduplication is **built into** `capture_snapshot()` in `mcp_servers/rag_cortex/operations.py`:
 
 ```python
-# Protocol 130: Deduplicate manifest for learning_audit
-if snapshot_type == "learning_audit" and effective_manifest:
+# Protocol 130: Deduplicate manifest (Global)
+if effective_manifest:
     effective_manifest, dedupe_report = self._dedupe_manifest(effective_manifest)
 ```
 
@@ -1659,23 +1658,11 @@ if snapshot_type == "learning_audit" and effective_manifest:
 ---
 
 ## Usage
-
-### Automatic (Recommended)
-
-Deduplication happens automatically when running:
-
-```bash
-python3 scripts/cortex_cli.py snapshot --type learning_audit
-```
-
-Or via MCP tool:
-```
-cortex_capture_snapshot(snapshot_type="learning_audit")
-```
+Deduplication is applied automatically to **all snapshot types** (`audit`, `seal`, `learning_audit`) whenever `cortex_cli.py snapshot` or `cortex_capture_snapshot` is called.
 
 The output will log if duplicates were found and removed:
 ```
-Protocol 130: Removed 4 duplicates from learning_audit manifest
+Protocol 130: Deduplicated 4 items from learning_audit manifest
 ```
 
 ---
@@ -1908,8 +1895,8 @@ Manifests for model training and HuggingFace (not directly CLI-buildable):
 
 | Manifest | Path | Status |
 |----------|------|--------|
-| `manifest_learning_audit.json` | `.agent/learning/learning_audit/` | ⚠️ Superseded by `learning_audit_manifest.json` |
-| `manifest_seal.json` | `.agent/learning/` | ⚠️ Superseded by `learning_manifest.json` |
+| `manifest_learning_audit.json` | `.agent/learning/learning_audit/` | ❌ Removed (Jan 2026) |
+| `manifest_seal.json` | `.agent/learning/` | ❌ Removed (Jan 2026) |
 
 > [!TIP]
 > When creating a new manifest, follow the naming convention `<use_case>_manifest.json` and place it in the appropriate domain directory.
@@ -3916,12 +3903,13 @@ class CortexOperations:
                 except Exception as e:
                     logger.warning(f"Failed to load {snapshot_type} manifest: {e}")
 
-        # Protocol 130: Deduplicate manifest for learning_audit
+        # Protocol 130: Deduplicate manifest (Global Strategy)
+        # Prevents redundant inclusion of files already embedded in generated outputs.
         dedupe_report = {}
-        if snapshot_type == "learning_audit" and effective_manifest:
+        if effective_manifest:
             effective_manifest, dedupe_report = self._dedupe_manifest(effective_manifest)
             if dedupe_report:
-                logger.info(f"Protocol 130: Removed {len(dedupe_report)} duplicates from learning_audit manifest")
+                logger.info(f"Protocol 130: Deduplicated {len(dedupe_report)} items from {snapshot_type} manifest")
 
         # Define path early for Shadow Manifest exclusions
         snapshot_filename = f"{snapshot_type}_snapshot_{timestamp}.md"
@@ -4711,44 +4699,37 @@ class CortexOperations:
         ".agent/learning/learning_manifest.json": {
             "output": ".agent/learning/learning_package_snapshot.md",
             "command": "cortex_cli.py snapshot --type seal",
-            "description": "Primary learning package manifest (Protocol 128)"
-        },
-        ".agent/learning/manifest_seal.json": {
-            "output": ".agent/learning/learning_package_snapshot.md",
-            "command": "cortex_cli.py snapshot --type seal",
-            "description": "Alias/Variant for Seal snapshot"
+            "description": "Primary learning package manifest (Protocol 128)",
+            "protocol_128": true
         },
         ".agent/learning/bootstrap_manifest.json": {
             "output": ".agent/learning/bootstrap_packet.md",
             "command": "cortex_cli.py bootstrap-debrief",
-            "description": "Onboarding context for fresh clones. Ingested via llm.md."
+            "description": "Onboarding context for fresh clones. Ingested via llm.md.",
+            "protocol_128": true
         },
         ".agent/learning/guardian_manifest.json": {
             "output": "dataset_package/guardian_boot_digest.md",
             "command": "cortex_cli.py guardian",
-            "description": "Guardian bootloader context. Includes Identity Anchor and Primer."
+            "description": "Guardian bootloader context. Includes Identity Anchor and Primer.",
+            "protocol_128": true
         },
         ".agent/learning/learning_audit/learning_audit_manifest.json": {
             "output": ".agent/learning/learning_audit/learning_audit_packet.md",
             "command": "cortex_cli.py snapshot --type learning_audit",
-            "description": "Cognitive Audit manifest (Protocol 130). Used for Red Team review."
-        },
-        ".agent/learning/learning_audit/manifest_learning_audit.json": {
-            "output": ".agent/learning/learning_audit/learning_audit_packet.md",
-            "description": "Alias for Learning Audit"
+            "description": "Cognitive Audit manifest (Protocol 130). Used for Red Team review.",
+            "protocol_128": true
         },
         ".agent/learning/learning_audit/learning_audit_core_manifest.json": {
             "output": null,
-            "description": "Core context for Learning Audit (Merged into main manifest by Protocol 130 logic)"
+            "description": "Core context for Learning Audit (Merged into main manifest by Protocol 130 logic)",
+            "protocol_128": true
         },
         ".agent/learning/red_team/red_team_manifest.json": {
             "output": ".agent/learning/red_team/red_team_packet.md",
             "command": "cortex_cli.py snapshot --type audit",
-            "description": "Red Team Audit manifest. Focuses on modified files and git diffs."
-        },
-        ".agent/learning/red_team/manifest_audit.json": {
-            "output": ".agent/learning/red_team/red_team_packet.md",
-            "description": "Alias for Red Team Audit"
+            "description": "Red Team Audit manifest. Focuses on modified files and git diffs.",
+            "protocol_128": true
         },
         ".agent/learning/manifest_registry.json": {
             "output": null,

@@ -160,8 +160,8 @@ Manifests for model training and HuggingFace (not directly CLI-buildable):
 
 | Manifest | Path | Status |
 |----------|------|--------|
-| `manifest_learning_audit.json` | `.agent/learning/learning_audit/` | ⚠️ Superseded by `learning_audit_manifest.json` |
-| `manifest_seal.json` | `.agent/learning/` | ⚠️ Superseded by `learning_manifest.json` |
+| `manifest_learning_audit.json` | `.agent/learning/learning_audit/` | ❌ Removed (Jan 2026) |
+| `manifest_seal.json` | `.agent/learning/` | ❌ Removed (Jan 2026) |
 
 > [!TIP]
 > When creating a new manifest, follow the naming convention `<use_case>_manifest.json` and place it in the appropriate domain directory.

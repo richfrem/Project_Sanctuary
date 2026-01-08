@@ -8,12 +8,6 @@
             "description": "Primary learning package manifest (Protocol 128)",
             "protocol_128": true
         },
-        ".agent/learning/manifest_seal.json": {
-            "output": ".agent/learning/learning_package_snapshot.md",
-            "command": "cortex_cli.py snapshot --type seal",
-            "description": "Alias/Variant for Seal snapshot",
-            "protocol_128": true
-        },
         ".agent/learning/bootstrap_manifest.json": {
             "output": ".agent/learning/bootstrap_packet.md",
             "command": "cortex_cli.py bootstrap-debrief",
@@ -32,11 +26,6 @@
             "description": "Cognitive Audit manifest (Protocol 130). Used for Red Team review.",
             "protocol_128": true
         },
-        ".agent/learning/learning_audit/manifest_learning_audit.json": {
-            "output": ".agent/learning/learning_audit/learning_audit_packet.md",
-            "description": "Alias for Learning Audit",
-            "protocol_128": true
-        },
         ".agent/learning/learning_audit/learning_audit_core_manifest.json": {
             "output": null,
             "description": "Core context for Learning Audit (Merged into main manifest by Protocol 130 logic)",
@@ -46,11 +35,6 @@
             "output": ".agent/learning/red_team/red_team_packet.md",
             "command": "cortex_cli.py snapshot --type audit",
             "description": "Red Team Audit manifest. Focuses on modified files and git diffs.",
-            "protocol_128": true
-        },
-        ".agent/learning/red_team/manifest_audit.json": {
-            "output": ".agent/learning/red_team/red_team_packet.md",
-            "description": "Alias for Red Team Audit",
             "protocol_128": true
         },
         ".agent/learning/manifest_registry.json": {

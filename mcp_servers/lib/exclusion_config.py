@@ -36,6 +36,8 @@ ALLOWED_EXTENSIONS = set(_config.get("allowed_extensions", [
 MARKDOWN_EXTENSIONS = set(_config.get("markdown_extensions", {'.md', '.txt', '.markdown'}))
 
 # 4. Protected Seeds (Set)
+# These files act as a BYPASS to the exclusion rules.
+# If explicitly requested by a manifest, they are allowed even if their directory is excluded.
 PROTECTED_SEEDS = set(_config.get("protected_seeds", []))
 
 # 5. Always Exclude Files (Mixed List: Strings + Regex)
