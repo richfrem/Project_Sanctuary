@@ -1,0 +1,62 @@
+{
+    "description": "Registry of known manifests across Project Sanctuary. Maps sources to generated outputs for Protocol 130 deduplication.",
+    "version": "1.2",
+    "manifests": {
+        ".agent/learning/learning_manifest.json": {
+            "output": ".agent/learning/learning_package_snapshot.md",
+            "command": "cortex_cli.py snapshot --type seal",
+            "description": "Primary learning package manifest (Protocol 128)",
+            "protocol_128": true
+        },
+        ".agent/learning/bootstrap_manifest.json": {
+            "output": ".agent/learning/bootstrap_packet.md",
+            "command": "cortex_cli.py bootstrap-debrief",
+            "description": "Onboarding context for fresh clones. Ingested via llm.md.",
+            "protocol_128": true
+        },
+        ".agent/learning/guardian_manifest.json": {
+            "output": "dataset_package/guardian_boot_digest.md",
+            "command": "cortex_cli.py guardian",
+            "description": "Guardian bootloader context. Includes Identity Anchor and Primer.",
+            "protocol_128": true
+        },
+        ".agent/learning/learning_audit/learning_audit_manifest.json": {
+            "output": ".agent/learning/learning_audit/learning_audit_packet.md",
+            "command": "cortex_cli.py snapshot --type learning_audit",
+            "description": "Cognitive Audit manifest (Protocol 130). Used for Red Team review.",
+            "protocol_128": true
+        },
+        ".agent/learning/learning_audit/learning_audit_core_manifest.json": {
+            "output": null,
+            "description": "Core context for Learning Audit (Merged into main manifest by Protocol 130 logic)",
+            "protocol_128": true
+        },
+        ".agent/learning/red_team/red_team_manifest.json": {
+            "output": ".agent/learning/red_team/red_team_packet.md",
+            "command": "cortex_cli.py snapshot --type audit",
+            "description": "Red Team Audit manifest. Focuses on modified files and git diffs.",
+            "protocol_128": true
+        },
+        ".agent/learning/manifest_registry.json": {
+            "output": null,
+            "description": "The Registry itself (Meta-manifest). Maps manifests to outputs."
+        },
+        "forge/gguf_model_manifest.json": {
+            "output": null,
+            "description": "Forge LLM Model definitions (GGUF specs). Used by Forge pipeline."
+        },
+        "hugging_face_dataset_repo/metadata/manifest.json": {
+            "output": null,
+            "description": "Hugging Face dataset metadata. Used for Soul Persistence (ADR 079)."
+        },
+        "mcp_servers/lib/exclusion_manifest.json": {
+            "output": null,
+            "description": "Global file exclusion patterns (Protocol 130/128). Loaded by mcp_servers.lib.exclusion_config. Used by all snapshot tools."
+        },
+        "mcp_servers/lib/ingest_manifest.json": {
+            "output": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
+            "command": "scripts/capture_code_snapshot.py",
+            "description": "Defines the 'Base Genome' (common_content). Used by capture_code_snapshot.py (default) and Forge."
+        }
+    }
+}

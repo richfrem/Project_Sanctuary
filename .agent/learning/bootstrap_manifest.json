@@ -24,5 +24,6 @@
     "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
     "docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd",
     "docs/architecture_diagrams/system/sanctuary_mcp_overview.mmd",
-    ".agent/learning/bootstrap_manifest.json"
+    ".agent/learning/bootstrap_manifest.json",
+    "docs/prompt-engineering/sanctuary-guardian-prompt.md"
 ]

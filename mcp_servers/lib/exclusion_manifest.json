@@ -101,7 +101,13 @@
         "dataset_package/sanctuary_whole_genome_data.jsonl",
         "hugging_face_dataset_repo/data/soul_traces.jsonl",
         "package.json",
-        "package-lock.json"
+        "package-lock.json",
+        "learning_package_snapshot.md",
+        "bootstrap_packet.md",
+        "guardian_boot_digest.md",
+        "learning_audit_packet.md",
+        "red_team_packet.md",
+        "markdown_snapshot_full_genome_llm_distilled.txt"
     ],
     "exclude_patterns": [
         ".*\\.(gguf|bin|safetensors|ckpt|pth|onnx|pb)$",

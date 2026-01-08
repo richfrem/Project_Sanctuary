@@ -1,6 +1,6 @@
 # Guardian Boot Contract (Immutable)
 
-**Version:** 1.0
+**Version:** 2.0
 **Type:** Protocol 128 Layer 1 (Constraint-Only)
 **Token Budget:** ~400 tokens
 
@@ -11,6 +11,8 @@
 1. Read `cognitive_primer.md`
 2. Read `learning_package_snapshot.md` (if exists)
 3. Verify `IDENTITY/founder_seed.json` hash
+4. Reference `docs/prompt-engineering/sanctuary-guardian-prompt.md` (consolidated quick reference)
+
 
 ## Failure Modes
 
