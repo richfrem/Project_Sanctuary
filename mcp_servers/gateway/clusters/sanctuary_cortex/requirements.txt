@@ -196,7 +196,7 @@ jsonschema-specifications==2025.9.1
     # via jsonschema
 keyring==25.7.0
     # via py-key-value-aio
-kubernetes==34.1.0
+kubernetes==33.1.0
     # via chromadb
 langchain==1.2.2
     # via -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
@@ -274,7 +274,9 @@ numpy==2.4.0
     #   scipy
     #   transformers
 oauthlib==3.3.1
-    # via requests-oauthlib
+    # via
+    #   kubernetes
+    #   requests-oauthlib
 ollama==0.6.1
     # via -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
 onnxruntime==1.23.2
@@ -578,8 +580,9 @@ typing-inspection==0.4.2
     #   mcp
     #   pydantic
     #   pydantic-settings
-urllib3==2.3.0
+urllib3==2.6.3
     # via
+    #   -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
     #   -r mcp_servers/requirements-core.in
     #   kubernetes
     #   requests
