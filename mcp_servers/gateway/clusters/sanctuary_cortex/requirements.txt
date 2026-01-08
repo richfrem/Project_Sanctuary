@@ -6,15 +6,17 @@
 #
 aiohappyeyeballs==2.6.1
     # via aiohttp
-aiohttp==3.13.2
-    # via langchain-community
+aiohttp==3.13.3
+    # via
+    #   -r mcp_servers/requirements-core.in
+    #   langchain-community
 aiosignal==1.4.0
     # via aiohttp
 annotated-doc==0.0.4
     # via fastapi
 annotated-types==0.7.0
     # via pydantic
-anyio==4.12.0
+anyio==4.12.1
     # via
     #   httpx
     #   mcp
@@ -43,10 +45,8 @@ beartype==0.22.9
 build==1.3.0
     # via chromadb
 cachetools==6.2.4
-    # via
-    #   google-auth
-    #   py-key-value-aio
-certifi==2025.11.12
+    # via py-key-value-aio
+certifi==2026.1.4
     # via
     #   httpcore
     #   httpx
@@ -72,7 +72,7 @@ cryptography==46.0.3
     # via
     #   authlib
     #   pyjwt
-cyclopts==4.4.1
+cyclopts==4.4.4
     # via fastmcp
 dataclasses-json==0.6.7
     # via langchain-community
@@ -98,11 +98,11 @@ exceptiongroup==1.3.1
     # via fastmcp
 fakeredis[lua]==2.33.0
     # via pydocket
-fastapi==0.127.1
+fastapi==0.128.0
     # via -r mcp_servers/requirements-core.in
-fastmcp==2.14.1
+fastmcp==2.14.2
     # via -r mcp_servers/requirements-core.in
-filelock==3.20.1
+filelock==3.20.2
     # via
     #   huggingface-hub
     #   torch
@@ -117,7 +117,7 @@ fsspec==2025.12.0
     # via
     #   huggingface-hub
     #   torch
-google-auth==2.45.0
+google-auth==2.47.0
     # via kubernetes
 googleapis-common-protos==1.72.0
     # via opentelemetry-exporter-otlp-proto-grpc
@@ -186,7 +186,7 @@ jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
     # via jsonpatch
-jsonschema==4.25.1
+jsonschema==4.26.0
     # via
     #   chromadb
     #   mcp
@@ -198,7 +198,7 @@ keyring==25.7.0
     # via py-key-value-aio
 kubernetes==34.1.0
     # via chromadb
-langchain==1.2.0
+langchain==1.2.2
     # via -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
 langchain-chroma==1.1.0
     # via -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
@@ -206,7 +206,7 @@ langchain-classic==1.0.1
     # via langchain-community
 langchain-community==0.4.1
     # via -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
-langchain-core==1.2.5
+langchain-core==1.2.6
     # via
     #   langchain
     #   langchain-chroma
@@ -231,7 +231,7 @@ langgraph-prebuilt==1.0.5
     # via langgraph
 langgraph-sdk==0.3.1
     # via langgraph
-langsmith==0.5.1
+langsmith==0.6.1
     # via
     #   langchain-classic
     #   langchain-community
@@ -499,7 +499,7 @@ sqlalchemy==2.0.45
     # via
     #   langchain-classic
     #   langchain-community
-sse-starlette==3.1.1
+sse-starlette==3.1.2
     # via
     #   -r mcp_servers/requirements-core.in
     #   mcp
@@ -523,7 +523,7 @@ tiktoken==0.12.0
     # via
     #   -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
     #   -r mcp_servers/requirements-core.in
-tokenizers==0.22.1
+tokenizers==0.22.2
     # via
     #   chromadb
     #   langchain-huggingface
@@ -539,7 +539,7 @@ tqdm==4.67.1
     #   transformers
 transformers==4.57.3
     # via sentence-transformers
-typer==0.21.0
+typer==0.21.1
     # via
     #   chromadb
     #   pydocket
@@ -580,9 +580,10 @@ typing-inspection==0.4.2
     #   pydantic-settings
 urllib3==2.3.0
     # via
+    #   -r mcp_servers/requirements-core.in
     #   kubernetes
     #   requests
-uuid-utils==0.12.0
+uuid-utils==0.13.0
     # via
     #   langchain-core
     #   langsmith

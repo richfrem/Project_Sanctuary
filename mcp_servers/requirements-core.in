@@ -9,3 +9,7 @@ httpx
 pydantic
 fastmcp  # MCP SDK – assumed baseline for all Sanctuary services
 tiktoken
+
+# SECURITY BASELINES (GH Alerts Jan 2026)
+urllib3>=2.2.2
+aiohttp>=3.9.4
