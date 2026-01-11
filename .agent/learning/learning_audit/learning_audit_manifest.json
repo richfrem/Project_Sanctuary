@@ -9,5 +9,6 @@
     ".agent/learning/learning_audit/learning_audit_prompts.md",
     ".agent/rules/cognitive_continuity_policy.md",
     "LEARNING/topics/drq_recursive_self_improvement",
-    "docs/architecture_diagrams/workflows/drq_evolution_loop.mmd"
+    "docs/architecture_diagrams/workflows/drq_evolution_loop.mmd",
+    "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd"
 ]

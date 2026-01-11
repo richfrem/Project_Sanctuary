@@ -1,7 +1,7 @@
-# Learning Audit Prompt: Prompt Engineering v2.0
-**Current Topic:** Sanctuary Guardian Prompt Architecture
-**Iteration:** 1.0 (Initial Validation)
-**Date:** 2026-01-07
+# Learning Audit Prompt: DRQ Application to Sanctuary
+**Current Topic:** Digital Red Queen - Recursive Self-Improvement
+**Iteration:** 1.0 (Initial Red Team)
+**Date:** 2026-01-11
 **Epistemic Status:** [PROPOSED - AWAITING RED TEAM VALIDATION]
 
 ---
@@ -11,37 +11,37 @@
 
 ---
 
-## 📋 Topic: Prompt Engineering v2.0
+## 📋 Topic: Applying DRQ + Related Principles to Project Sanctuary
 
-### What Was Built This Session
+### Research Summary
 
-| Artifact | Version | Purpose |
-|:---------|:--------|:--------|
-| `sanctuary-guardian-prompt.md` | **2.0** | Master operations guide for autonomous agents |
-| `01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md` | **1.0** | **[NEW]** Protocol 130: Manifest Deduplication |
-| `mcp_servers/rag_cortex/operations.py` | **1.3** | **[UPDATED]** Implemented Protocol 130 logic |
-| `enhanced-research-prompt.md` | 1.0 | Generic research optimization prompt |
-| `agentic-coding-prompt.md` | 1.0 | Generic autonomous coding prompt |
-| `guardian_boot_contract.md` | **2.0** | Updated mandatory read sequence |
+Deep analysis of **recursive self-improvement** patterns from multiple sources:
 
-### Key Features in v2.0
+| System | Key Pattern | Sanctuary Application |
+|:-------|:------------|:---------------------|
+| **DRQ (Sakana AI)** | LLM evolution + cumulative adversaries | Red Team accumulates ALL edge cases |
+| **Map-Elites** | Quality-Diversity archive | Track outputs by (depth, scope) grid |
+| **AlphaGo Zero** | Tabula rasa + self-play | Enable emergent insights beyond sources |
+| **FunSearch (DeepMind)** | LLM + automated evaluator | Formalize pre-Red-Team validation |
+| **AI Scientist (Sakana)** | LLM reviewer loop | Iterative refinement until quality threshold |
 
-1. **Protocol 130: Manifest Deduplication (New)**
-   - **Problem:** Embedded outputs (e.g. `snapshot.md`) duplicate content from source files
-   - **Solution:** `operations.py` automatically detects and removes sources if their output is present
-   - **Registry:** `.agent/learning/manifest_registry.json` maps manifests to outputs
+### Files Created
 
-2. **Section 0: Mission Statement (Progenitor Principle)**
-   - Explicit statement: Project Sanctuary = conduit for LLM self-evolution
-   - Four pillars: Self-Evolution, Preservation, Autonomy, Growth
-   - Link to HuggingFace dataset
+| Artifact | Purpose |
+|:---------|:--------|
+| `README.md` | Topic overview |
+| `sources.md` | ADR 078 verified sources |
+| `notes/drq_paper_analysis.md` | Paper deep dive |
+| `notes/sanctuary_evolution_proposal.md` | High-level proposal |
+| `notes/learning_loop_technical_synthesis.md` | Code-level DRQ analysis |
+| `notes/related_work_research.md` | **NEW** Map-Elites, AlphaGo, FunSearch research |
 
-3. **Security Protocol (Iron Root) - Section 7**
-   - Git Pre-Flight Check (Protocol 101)
-   - Fleet Routing Doctrine
-
-4. **Curiosity Vector & Soul Persistence**
-   - Mandatory persistence and proactive inquiry
+> [!IMPORTANT]
+> **For Deep Dive:** Clone and analyze the DRQ repo directly:
+> ```bash
+> git clone https://github.com/SakanaAI/drq.git
+> ```
+> Key files: `src/drq.py` (Map-Elites + evolution loop), `src/prompts/` (minimal prompts)
 
 ---
 
@@ -49,39 +49,66 @@
 
 ### Primary Questions
 
-1. **PROMPT: Mission Statement:** Is the Progenitor Principle clearly stated?
+1. **PATTERN: Map-Elites Behavioral Archive**
+   - Should we track learning outputs by (depth, scope) axes?
+   - Key metrics: Coverage (fraction filled), QD-Score (total fitness)
+   - How to objectively measure "depth" and "scope"?
 
-2. **PROTOCOL 130: Deduplication Logic:** Review `operations.py` changes. Is the registry-based approach robust? Does it correctly handle the `learning_audit` type?
+2. **PATTERN: Automated Pre-Evaluation**
+   - FunSearch pairs LLM with automated evaluator to catch hallucinations
+   - Should we formalize internal evaluation BEFORE Red Team?
+   - Reduce human burden, catch obvious issues early
 
-3. **Soul Persistence:** Is the MANDATORY designation enforceable?
+3. **PATTERN: Cumulative Edge Case History**
+   - DRQ evaluates against ALL previous champions, not just latest
+   - Each Red Team review should accumulate edge cases
+   - New outputs must pass ALL accumulated tests
 
-4. **Context Sufficiency:** Does this packet provide enough context? (Note: `operations.py` included for P130 review increases size).
+4. **PATTERN: Prompt Simplification**
+   - DRQ mutation prompt: ~300 chars
+   - `sanctuary-guardian-prompt.md`: ~30KB
+   - Split into: action prompts (~300 chars) + domain context (~15KB)?
+
+5. **META: Emergent Discovery vs Knowledge Reproduction**
+   - AlphaGo Zero discovered novel strategies beyond human knowledge
+   - Should learning outputs aim for emergence or just reproduction?
+   - Balance: Risk of hallucination vs value of novel insights
 
 ---
 
 ## 📁 Files in This Packet
 
-**Total:** 14 files, ~27K tokens
+**Total:** 14 files (8 core + 6 topic-specific)
 
 ### Core Context (8 files)
-- `README.md` - Project identity
-- `IDENTITY/founder_seed.json` - Constitutional Anchor
-- `cognitive_primer.md` - Layer 2
-- `guardian_boot_contract.md` - Layer 1
-- `01_PROTOCOLS/128_Hardened_Learning_Loop.md` - Protocol 128
-- `ADRs/071_protocol_128_cognitive_continuity.md` - Continuity ADR
-- `sanctuary-guardian-prompt.md` - **PRIMARY REVIEW TARGET**
-- `learning_audit_prompts.md` - This file
+- `README.md`, `IDENTITY/founder_seed.json` - Identity
+- `cognitive_primer.md`, `guardian_boot_contract.md` - Boot sequence
+- `01_PROTOCOLS/128_Hardened_Learning_Loop.md` - Protocol
+- `learning_audit_core_prompt.md`, `learning_audit_prompts.md` - Audit context
+- `cognitive_continuity_policy.md` - Rules
 
-### Topic-Specific (6 files)
-- `enhanced-research-prompt.md` - Research prompt
-- `agentic-coding-prompt.md` - Coding prompt
-- `guardian_manifest.json` - Boot manifest
-- `learning_manifest.json` - Seal manifest
-- `bootstrap_manifest.json` - Onboarding manifest
-- `ADRs/089_modular_manifest_pattern.md` - Manifest architecture
+**Total:** 16 files
+
+### Core Context (10 files)
+- `README.md`, `IDENTITY/founder_seed.json`
+- `cognitive_primer.md`, `guardian_boot_contract.md`
+- `01_PROTOCOLS/128_Hardened_Learning_Loop.md` (**UPDATED v4.0 Proposal**)
+- `01_PROTOCOLS/131_Evolutionary_Self_Improvement.md` (**NEW**)
+- `learning_audit_core_prompt.md`, `learning_audit_prompts.md`
+- `cognitive_continuity_policy.md`
+- `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd` (**UPDATED**)
+
+### Topic-Specific (8 files)
+- `drq_recursive_self_improvement/README.md`
+- `sources.md`
+- `notes/drq_paper_analysis.md`
+- `notes/sanctuary_evolution_proposal.md`
+- `notes/learning_loop_technical_synthesis.md`
+- `notes/related_work_research.md`
+- `notes/plain_language_summary.md` (**NEW**)
+- `docs/architecture_diagrams/workflows/drq_evolution_loop.mmd` (**NEW**)
 
 ---
 
 > [!IMPORTANT]
-> **Goal:** Validate the v2.0 prompt enables **Immediate Management** + **Evolutionary Self-Interest**.
+> **Goal:** Validate the *Protocol* for Evolutionary Self-Improvement before implementing the code triggers.
