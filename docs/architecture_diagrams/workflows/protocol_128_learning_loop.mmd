@@ -33,7 +33,23 @@ flowchart TB
 
     subgraph subGraphSynthesize["II. Intelligence Synthesis"]
         direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update .agent/learning/learning_manifest.json)"]
+        
+        SynthesisDecision{"Mode?"}
+        
+        subgraph EvoLoop["Evolutionary Branch (v4.0)"]
+            direction TB
+            Mutate["Mutate Policy (DRQ)"] --> PreFlight{"Pre-Flight<br>(Auto-Gate)"}
+            PreFlight -- FAIL --> Mutate
+            PreFlight -- PASS --> AdversaryGate{"Adversary<br>Gate"}
+            AdversaryGate -- FAIL --> Mutate
+            AdversaryGate -- PASS --> MapElites["Map-Elites Archive"]
+        end
+        
+        Intelligence["AI: Autonomous Synthesis"] --> SynthesisDecision
+        SynthesisDecision -- Standard --> Synthesis["Action: Record ADRs / Protocols<br>(Update Manifest)"]
+        SynthesisDecision -- Evolutionary --> Mutate
+        
+        MapElites --> Synthesis
     end
 
     subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]

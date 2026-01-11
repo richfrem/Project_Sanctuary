@@ -41,7 +41,15 @@ Located at: `[.agent/workflows/recursive_learning.md](../.agent/workflows/recurs
 - **Goal**: Autonomous acquisition -> Verification -> Preservation.
 - **Trigger**: LLM intent to learn or session completion.
 
-### B. The Red Team Gate (MCP Tool)
+### B. The Evolutionary Branch (v4.0 Proposed)
+*Refer to Protocol 131 for full specification.*
+This introduces an optional "Evolutionary Loop" for high-velocity optimization of prompts and policies.
+1.  **Mutation**: System generates candidate policies via `drq_mutation`.
+2.  **Automated Gate**: `evaluator_preflight.py` checks syntax/citations.
+3.  **Adversarial Gate**: `cumulative_failures.json` prevents regression.
+4.  **Map-Elites**: Successful candidates are stored in the Behavioral Archive.
+
+### C. The Red Team Gate (MCP Tool)
 - **Tool**: `cortex_capture_snapshot` with `snapshot_type='audit'`
 - **Inputs**:
     - `manifest_files`: List of targeted file paths for review (defaults to `.agent/learning/red_team/red_team_manifest.json`).
