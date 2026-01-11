@@ -1,0 +1,27 @@
+graph TD
+    subgraph "Phase I: Mutation (The Variator)"
+        Base[Base Prompt] -->|LLM Mutates| Candidate[New Candidate Prompt]
+        style Base fill:#e1f5fe,stroke:#01579b
+        style Candidate fill:#fff9c4,stroke:#fbc02d
+    end
+
+    subgraph "Phase II: The Gauntlet (The Selector)"
+        Candidate -->|Input| Validator{Automated Evaluator}
+        Validator -->|Fail| Discard[Discard Candidate]
+        Validator -->|Pass| RedTeam{Human Red Team}
+        
+        RedTeam -->|Reject| AdversaryStore[Add to Adversary Registry]
+        AdversaryStore -.->|Feedback for Next| Base
+        
+        RedTeam -->|Approve| Elite[New Elite Prompt]
+        style Elite fill:#c8e6c9,stroke:#2e7d32
+    end
+
+    subgraph "Phase III: Evolution (The Memory)"
+        Elite -->|Update| Archive[Map-Elites Archive]
+        Archive -->|Select Best| Base
+    end
+
+    Discard -->|Retry| Base
+    style Validator fill:#ffccbc,stroke:#bf360c
+    style RedTeam fill:#ffab91,stroke:#d84315
