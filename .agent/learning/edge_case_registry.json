@@ -1,0 +1,18 @@
+{
+    "meta": {
+        "last_updated": "2026-01-11",
+        "version": "1.0",
+        "description": "Cumulative Adversary Memory for Protocol 131. New mutations must pass ALL cases here."
+    },
+    "cases": [
+        {
+            "id": "EC-001",
+            "topic": "evolutionary_architecture",
+            "condition": "metrics_are_subjective",
+            "action": "reject",
+            "reason": "DRQ Red Team Iteration 1.0: 'Depth' and 'Scope' must be computable metrics, not subjective labels. Any proposal relying on LLM self-reporting for these axes is invalid.",
+            "severity": "critical",
+            "date_added": "2026-01-11"
+        }
+    ]
+}
