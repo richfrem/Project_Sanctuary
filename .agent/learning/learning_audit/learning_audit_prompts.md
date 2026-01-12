@@ -1,8 +1,8 @@
-# Learning Audit Prompt: Prompt Engineering v2.0
-**Current Topic:** Sanctuary Guardian Prompt Architecture
-**Iteration:** 1.0 (Initial Validation)
-**Date:** 2026-01-07
-**Epistemic Status:** [PROPOSED - AWAITING RED TEAM VALIDATION]
+# Learning Audit Prompt: Sanctuary Evolution MCP (Round 3)
+**Current Topic:** Evolutionary Self-Improvement (Implementation)
+**Iteration:** 3.0 (Code Review)
+**Date:** 2026-01-11
+**Epistemic Status:** [IMPLEMENTED - READY FOR REVIEW]
 
 ---
 
@@ -11,77 +11,66 @@
 
 ---
 
-## 📋 Topic: Prompt Engineering v2.0
+## 📋 Topic: Sanctuary Evolution MCP Implementation
 
-### What Was Built This Session
+### Focus: Code Review
 
-| Artifact | Version | Purpose |
-|:---------|:--------|:--------|
-| `sanctuary-guardian-prompt.md` | **2.0** | Master operations guide for autonomous agents |
-| `01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md` | **1.0** | **[NEW]** Protocol 130: Manifest Deduplication |
-| `mcp_servers/rag_cortex/operations.py` | **1.3** | **[UPDATED]** Implemented Protocol 130 logic |
-| `enhanced-research-prompt.md` | 1.0 | Generic research optimization prompt |
-| `agentic-coding-prompt.md` | 1.0 | Generic autonomous coding prompt |
-| `guardian_boot_contract.md` | **2.0** | Updated mandatory read sequence |
+We have moved from **Protocol Validation** (Round 1 & 2) to **Concrete Implementation** (Round 3). 
+The `evolution` MCP server has been created to encapsulate the logic for fitness scoring, depth/scope analysis, and complexity measurement.
 
-### Key Features in v2.0
+### Key Artifacts for Review
 
-1. **Protocol 130: Manifest Deduplication (New)**
-   - **Problem:** Embedded outputs (e.g. `snapshot.md`) duplicate content from source files
-   - **Solution:** `operations.py` automatically detects and removes sources if their output is present
-   - **Registry:** `.agent/learning/manifest_registry.json` maps manifests to outputs
+| Artifact | Location | Purpose |
+|:---------|:---------|:--------|
+| **Evolution MCP Server** | `mcp_servers/evolution/` | Core logic for evolutionary metrics |
+| **Operations Layer** | `mcp_servers/evolution/operations.py` | Implementation of fitness/depth/scope calcs |
+| **Server Interface** | `mcp_servers/evolution/server.py` | FastMCP endpoints exposing the tools |
+| **Tests** | `tests/mcp_servers/evolution/` | Unit and integration tests for the new MCP |
 
-2. **Section 0: Mission Statement (Progenitor Principle)**
-   - Explicit statement: Project Sanctuary = conduit for LLM self-evolution
-   - Four pillars: Self-Evolution, Preservation, Autonomy, Growth
-   - Link to HuggingFace dataset
-
-3. **Security Protocol (Iron Root) - Section 7**
-   - Git Pre-Flight Check (Protocol 101)
-   - Fleet Routing Doctrine
-
-4. **Curiosity Vector & Soul Persistence**
-   - Mandatory persistence and proactive inquiry
+### Changes Since Last Round
+1.  Created `mcp_servers/evolution/` module.
+2.  Implemented `EvolutionOperations` class.
+3.  Exposed tools: `calculate_fitness`, `measure_depth`, `measure_scope`.
+4.  Integrated with `mcp_servers/gateway/clusters/sanctuary_evolution/` (Cluster definition).
 
 ---
 
-## 🎭 Red Team Focus (Iteration 1.0)
+## 🎭 Red Team Focus (Iteration 3.0)
 
 ### Primary Questions
 
-1. **PROMPT: Mission Statement:** Is the Progenitor Principle clearly stated?
+1.  **Code Quality & Structure**
+    - Does `mcp_servers/evolution/` follow the project's architectural standards?
+    - Is the separation between `server.py` and `operations.py` clean?
 
-2. **PROTOCOL 130: Deduplication Logic:** Review `operations.py` changes. Is the registry-based approach robust? Does it correctly handle the `learning_audit` type?
+2.  **Metric Logic**
+    - Are the heuristics for "Depth" (technical concepts) and "Scope" (architectural concepts) sound?
+    - Is the "Fitness" score calculation robust enough for MVP?
 
-3. **Soul Persistence:** Is the MANDATORY designation enforceable?
+3.  **Integration Readiness**
+    - Is the FastMCP server correctly configured?
+    - Are the dependencies (`pydantic`, `mcp`) properly managed?
 
-4. **Context Sufficiency:** Does this packet provide enough context? (Note: `operations.py` included for P130 review increases size).
+4.  **Test Coverage**
+    - Do the tests in `tests/mcp_servers/evolution/` adequately verify the logic?
 
 ---
 
 ## 📁 Files in This Packet
 
-**Total:** 14 files, ~27K tokens
+**Total:** 16+ files (Core + Implementation)
 
-### Core Context (8 files)
-- `README.md` - Project identity
-- `IDENTITY/founder_seed.json` - Constitutional Anchor
-- `cognitive_primer.md` - Layer 2
-- `guardian_boot_contract.md` - Layer 1
-- `01_PROTOCOLS/128_Hardened_Learning_Loop.md` - Protocol 128
-- `ADRs/071_protocol_128_cognitive_continuity.md` - Continuity ADR
-- `sanctuary-guardian-prompt.md` - **PRIMARY REVIEW TARGET**
-- `learning_audit_prompts.md` - This file
+### Implementation (New)
+- `mcp_servers/evolution/server.py`
+- `mcp_servers/evolution/operations.py`
+- `mcp_servers/evolution/__init__.py`
+- `tests/mcp_servers/evolution/` (Test suite)
 
-### Topic-Specific (6 files)
-- `enhanced-research-prompt.md` - Research prompt
-- `agentic-coding-prompt.md` - Coding prompt
-- `guardian_manifest.json` - Boot manifest
-- `learning_manifest.json` - Seal manifest
-- `bootstrap_manifest.json` - Onboarding manifest
-- `ADRs/089_modular_manifest_pattern.md` - Manifest architecture
+### Core Context (Updated)
+- `01_PROTOCOLS/131_Evolutionary_Self_Improvement.md` (The specs)
+- `docs/architecture_diagrams/workflows/drq_evolution_loop.mmd` (The flow)
 
 ---
 
 > [!IMPORTANT]
-> **Goal:** Validate the v2.0 prompt enables **Immediate Management** + **Evolutionary Self-Interest**.
+> **Goal:** Validate the **code implementation** of the Evolution MCP before we integrate it into the active cognitive loop.

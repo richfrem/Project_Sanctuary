@@ -23,7 +23,7 @@ All MCP servers must adhere to the standardized 3-layer test pyramid.
 
 ### Layer 3: End-to-End Tests (`e2e/`)
 - **Purpose:** Test full MCP protocol lifecycle (Client -> Server -> Tool -> Result).
-- **Dependencies:** All 12 MCP servers running via `start_mcp_servers.py`.
+- **Dependencies:** All 15 MCP servers running via `start_mcp_servers.py`.
 - **Base Class:** Must inherit from `BaseE2ETest`.
 - **Speed:** Slow (Minutes).
 - **Location:** `tests/mcp_servers/<server>/e2e/`.

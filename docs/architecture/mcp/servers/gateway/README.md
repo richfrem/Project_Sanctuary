@@ -8,7 +8,7 @@
 
 ## Overview
 
-The **Dynamic MCP Gateway Architecture** is Project Sanctuary's solution for scaling beyond 12 MCP servers while reducing context window overhead by 88%. This documentation covers the complete research, architecture, implementation, and operations of the Gateway.
+The **Dynamic MCP Gateway Architecture** is Project Sanctuary's solution for scaling beyond 15 MCP servers while reducing context window overhead by 88%. This documentation covers the complete research, architecture, implementation, and operations of the Gateway.
 
 ---
 

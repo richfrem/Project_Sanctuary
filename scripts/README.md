@@ -36,7 +36,7 @@ Utility scripts for Project Sanctuary operations, verification, and maintenance.
 
 | Script | Purpose |
 |--------|---------|
-| `verify_full_fleet.py` | Check all 12 MCP servers health |
+| `verify_full_fleet.py` | Check all 15 MCP servers health |
 | `verify_rag_capacities.py` | Validate RAG pipeline |
 | `verify_domain_routing.py` | Test domain routing |
 | `verify_cortex_image_content.py` | Check Cortex image integrity |

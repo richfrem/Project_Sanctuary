@@ -145,7 +145,7 @@ Before sharing a learning audit packet:
 *You must verify these steps before ending the session:*
 
 1. [ ] **Deployment**: Are containers running the new code? (ADR 087)
-2. [ ] **Retrospective**: Did you fill `loop_retrospective.md` with Red Team verdict?
+2. [ ] **Retrospective**: Did you fill `loop_retrospective.md` with Red Team verdict? **(MUST BE DONE BEFORE SEAL)**
 3. [ ] **Curiosity Vector**: Did you record any "Lines of Inquiry" for the next session?
 4. [ ] **Seal**: Did you re-run `cortex_capture_snapshot --type seal` *after* the Retro?
 5. [ ] **Persist**: Did you run `cortex-persist-soul` *after* the Seal?

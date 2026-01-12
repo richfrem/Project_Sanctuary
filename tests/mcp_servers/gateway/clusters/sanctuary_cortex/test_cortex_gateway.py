@@ -1,5 +1,5 @@
 import pytest
-from tests.mcp_servers.gateway.gateway_test_client import GatewayTestClient
+from tests.mcp_servers.gateway.lib.gateway_test_client import GatewayTestClient
 
 #=============================================================================
 # TIER 3 (BRIDGE) VERIFICATION: sanctuary_cortex
@@ -30,6 +30,16 @@ def test_cortex_gateway_connection(client):
     ("sanctuary-cortex-cortex-cache-stats", {}),
     ("sanctuary-cortex-cortex-query", {"query": "What is Protocol 101?", "max_results": 3}),
     ("sanctuary-cortex-query-sanctuary-model", {"prompt": "What is Project Sanctuary?"}),
+    # Learning Tools (Protocol 128)
+    ("sanctuary-cortex-cortex-learning-debrief", {"hours": 1}),
+    ("sanctuary-cortex-cortex-guardian-wakeup", {"mode": "full"}),
+    ("sanctuary-cortex-cortex-capture-snapshot", {"snapshot_type": "audit", "manifest_files": []}),
+    ("sanctuary-cortex-cortex-guardian-snapshot", {}),
+    ("sanctuary-cortex-cortex-persist-soul-full", {}),
+    # Evolution Tools (Protocol 131)
+    ("sanctuary-cortex-cortex-evolution-measure-fitness", {"content": "Deep content analysis requires citations."}),
+    ("sanctuary-cortex-cortex-evolution-evaluate-depth", {"content": "Deep content analysis requires citations."}),
+    ("sanctuary-cortex-cortex-evolution-evaluate-scope", {"content": "Scope requires referencing multiple files."}),
 ])
 def test_cortex_rpc_execution(client, tool, args):
     """

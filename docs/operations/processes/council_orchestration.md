@@ -1,6 +1,6 @@
 # Council Orchestration Workflows
 
-This document outlines the standard workflows for using the **Council MCP** and **Orchestrator MCP** within the 12-Domain Architecture. It is structured progressively, starting from basic building blocks and moving to complex self-evolving loops.
+This document outlines the standard workflows for using the **Council MCP** and **Orchestrator MCP** within the 15-Domain Architecture (ADR 092). It is structured progressively, starting from basic building blocks and moving to complex self-evolving loops.
 
 **Related Documentation:**
 - Standard Orchestration Workflows (Pending)

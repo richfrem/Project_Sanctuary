@@ -29,7 +29,7 @@ The lack of standardization violated the principle of consistency and created un
 We will standardize all MCP servers on FastMCP as the canonical implementation approach.
 
 **Rationale:**
-1. **Consistency:** All 12 MCP servers should follow the same implementation pattern
+1. **Consistency:** All 15 MCP servers should follow the same implementation pattern
 2. **Simplicity:** FastMCP's `@mcp.tool()` decorator is more concise than async handlers
 3. **Maintainability:** Single pattern reduces cognitive load and maintenance burden
 4. **Proven:** FastMCP already successfully used by 11/12 servers

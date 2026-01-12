@@ -25,7 +25,7 @@ This deployment mode runs each MCP server as a separate process within a local `
 *[Source: mcp_ecosystem_architecture_v3.mmd](../../architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd)*
 
 ### 2.2 Physical Deployment B: IBM Gateway Fleet Architecture
-The **Hybrid Fleet Strategy** consolidates the 12 domains into **8 containerized services** accessed via a single **IBM ContextForge Gateway**.
+The **Hybrid Fleet Strategy** consolidates the 15 domains (ADR 092) into **8 containerized services** accessed via a single **IBM ContextForge Gateway**.
 
 - **Reference:** [`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)
 - **Mechanism:** The Gateway acts as a broker, routing client requests to the appropriate backend container via SSE transport.

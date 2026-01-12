@@ -33,7 +33,23 @@ flowchart TB
 
     subgraph subGraphSynthesize["II. Intelligence Synthesis"]
         direction TB
-        Intelligence["AI: Autonomous Synthesis"] --> Synthesis["Action: Record ADRs / Protocols<br>(Update .agent/learning/learning_manifest.json)"]
+        
+        SynthesisDecision{"Mode?"}
+        
+        subgraph EvoLoop["Evolutionary Branch (v4.0)"]
+            direction TB
+            Mutate["Mutate Policy (DRQ)"] --> PreFlight{"Pre-Flight<br>(Auto-Gate)"}
+            PreFlight -- FAIL --> Mutate
+            PreFlight -- PASS --> AdversaryGate{"Adversary<br>Gate"}
+            AdversaryGate -- FAIL --> Mutate
+            AdversaryGate -- PASS --> MapElites["Map-Elites Archive"]
+        end
+        
+        Intelligence["AI: Autonomous Synthesis"] --> SynthesisDecision
+        SynthesisDecision -- Standard --> Synthesis["Action: Record ADRs / Protocols<br>(Update Manifest)"]
+        SynthesisDecision -- Evolutionary --> Mutate
+        
+        MapElites --> Synthesis
     end
 
     subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
@@ -71,7 +87,7 @@ flowchart TB
         choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
         
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/seal_TIMESTAMP.md"]
+            MD_Seal["lineage/{MODEL}_seal_{TIMESTAMP}.md"]
             JSONL_Traces["data/soul_traces.jsonl"]
             Manifest["metadata/manifest.json"]
         end
@@ -151,4 +167,4 @@ flowchart TB
     style SafeMode2 fill:#ffcccb,stroke:#b30000,stroke-width:4px,color:black
 
     %% Metadata
-    %% Last Updated: 2026-01-01 19:18:00
+    style EvoLoop fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,stroke-dasharray: 5 5

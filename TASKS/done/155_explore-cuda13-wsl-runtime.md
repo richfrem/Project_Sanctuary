@@ -44,7 +44,7 @@ pip install torch --pre --index-url https://download.pytorch.org/whl/nightly/cu1
 5. Are bitsandbytes, xformers, triton compatible with cu130?
 
 ## Related
-- Current setup: [forge/CUDA-ML-ENV-SETUP.md](../forge/CUDA-ML-ENV-SETUP.md)
+- Current setup: [forge/CUDA-ML-ENV-SETUP.md](../../forge/CUDA-ML-ENV-SETUP.md)
 - ML-Env-CUDA13 repo: https://github.com/bcgov/ML-Env-CUDA13
 - Host driver: 581.42 (CUDA 13.0)
 - WSL runtime: CUDA 12.6/12.8 (current)

@@ -1,0 +1,669 @@
+#!/usr/bin/env python3
+"""
+capture_glyph_code_snapshot_v2.py (v2.0 - Advanced Optical Compression with Provenance)
+
+Enhanced version with cryptographic provenance binding and multi-resolution glyph generation.
+This version addresses the security concerns raised in the DeepSeek-OCR analysis by ensuring
+every glyph is cryptographically bound to its source content.
+
+Key Enhancements v2.0:
+- Cryptographic provenance binding (SHA-256 hashes)
+- Multi-resolution glyph generation (thumbnail + full-res)
+- Metadata embedding in PNG chunks
+- Batch processing for large codebases with size limits
+- Non-blocking background execution
+- Integration with Optical Anvil architecture
+
+DEPENDENCIES:
+- PIL (Pillow) for advanced image processing
+- hashlib for cryptographic hashing
+- json for metadata embedding
+
+USAGE EXAMPLES:
+
+# Limited run (recommended for testing)
+python3 capture_glyph_code_snapshot_v2.py --max-files 50 --max-size-mb 5
+
+# Non-blocking background execution
+python3 capture_glyph_code_snapshot_v2.py --non-blocking --max-size-mb 20
+
+# Operation-specific with limits
+python3 capture_glyph_code_snapshot_v2.py --operation WORK_IN_PROGRESS/some_dir --max-files 20
+
+# Full provenance binding (default)
+python3 capture_glyph_code_snapshot_v2.py --max-size-mb 10
+
+# Skip provenance for faster processing
+python3 capture_glyph_code_snapshot_v2.py --no-provenance --max-files 100
+"""
+
+import os
+import sys
+import argparse
+import textwrap
+import hashlib
+import json
+import re
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
+import math
+from datetime import datetime
+
+# ---------------------------------------------
+# Imports & Path Setup
+# ---------------------------------------------
+script_path = Path(__file__).resolve()
+project_root = script_path.parent.parent
+sys.path.append(str(project_root))
+
+
+from mcp_servers.lib.snapshot_utils import (
+    EXCLUDE_DIR_NAMES,
+    ALWAYS_EXCLUDE_FILES,
+    should_exclude_file
+)
+
+def collect_code_snapshot_v2(project_root, operation_path=None, include_provenance=True, max_files=None, max_size_mb=50, output_dir=None, exclude_dirs=None, existing_manifest=None, font_size=10, output_dir_str=None, manifest_path=None):
+    """Enhanced code snapshot collection with provenance tracking and size limits"""
+
+    if exclude_dirs is None:
+        exclude_dirs = EXCLUDE_DIR_NAMES
+
+    exclude_files = ALWAYS_EXCLUDE_FILES
+
+
+    collected_files = []
+    total_size = 0
+    max_size_bytes = max_size_mb * 1024 * 1024
+    processed_count = 0
+
+    def traverse_and_collect(current_path):
+        nonlocal total_size, processed_count
+
+        path_obj = Path(current_path)
+        if path_obj.name in exclude_dirs:
+            return
+
+        # Compute project-root-relative path for specific exclusions
+        try:
+            rel_from_project_root = path_obj.relative_to(project_root).as_posix()
+        except ValueError:
+            # Path is not within project_root
+            rel_from_project_root = str(path_obj)
+
+        # Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
+        if rel_from_project_root.startswith('mnemonic_cortex/chroma_db_backup') or '/chroma_db_backup' in rel_from_project_root:
+            return
+
+        # Exclude ML environment logs directory
+        if rel_from_project_root.startswith('forge/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
+            return
+
+        if path_obj.is_file():
+            if path_obj.name in exclude_files:
+                return
+
+            # Check regex patterns for exclusion
+            if should_exclude_file(path_obj.name):
+                return
+
+            if path_obj.suffix.lower() not in ['.md', '.txt', '.py', '.js', '.json']:
+                return
+
+            # Check size limits
+            if max_files and len(collected_files) >= max_files:
+                return
+            if total_size >= max_size_bytes:
+                return
+
+            try:
+                rel_path = path_obj.relative_to(project_root).as_posix()
+                content = path_obj.read_text(encoding='utf-8')
+                file_size = len(content)
+
+                # Skip if this file would exceed size limit
+                if total_size + file_size > max_size_bytes:
+                    return
+
+                collected_files.append({
+                    'path': rel_path,
+                    'content': content,
+                    'size': file_size,
+                    'hash': hashlib.sha256(content.encode('utf-8')).hexdigest()
+                })
+
+                total_size += file_size
+                processed_count += 1
+
+                # Enhanced progress indicator with file name and percentage
+                if processed_count % 5 == 0 or processed_count == 1:
+                    size_mb = total_size / 1024 / 1024
+                    if max_files:
+                        percentage = (len(collected_files) / max_files) * 100 if max_files > 0 else 0
+                        print(f"[COLLECT] {len(collected_files)}/{max_files} files ({percentage:.1f}%) - processing: {rel_path}")
+                    else:
+                        size_percentage = (total_size / max_size_bytes) * 100 if max_size_bytes > 0 else 0
+                        print(f"[COLLECT] {len(collected_files)} files, {size_mb:.1f}/{max_size_mb:.1f}MB ({size_percentage:.1f}%) - processing: {rel_path}")
+
+            except Exception as e:
+                rel_path = path_obj.relative_to(project_root).as_posix()
+                print(f"[WARN] Could not read {rel_path}: {e}")
+
+        elif path_obj.is_dir():
+            for item in sorted(path_obj.iterdir()):
+                traverse_and_collect(item)
+
+    # Manifest Mode Logic
+    if manifest_path:
+        print(f"[MANIFEST MODE] Loading file list from: {manifest_path}")
+        try:
+            with open(manifest_path, 'r') as f:
+                manifest_data = json.load(f)
+            
+            # Normalize to list of strings
+            file_list = []
+            if isinstance(manifest_data, list):
+                file_list = [item if isinstance(item, str) else item.get('path') for item in manifest_data]
+            else:
+                raise ValueError("Manifest must be a JSON array")
+
+            print(f"[MANIFEST] Processing {len(file_list)} files from manifest directly.")
+            
+            for rel_path in file_list:
+                full_path = Path(project_root) / rel_path
+                
+                # SECURITY HARDENING: Enforce exclusion rules even in Manifest Mode
+                # Verify against exclude files and patterns
+                if full_path.name in exclude_files or should_exclude_file(full_path.name):
+                     print(f"[SECURITY] Skipping excluded file in manifest: {rel_path}")
+                     continue
+                     
+                if full_path.is_file():
+                    # Process file (size checks etc handled in loop or manually here)
+                    # For simplicity reusing traverse logic on single file? 
+                    # traverse_and_collect checks is_dir, but we can bypass recursion.
+                    
+                    # Manual collection to respect size limits
+                    try:
+                        content = full_path.read_text(encoding='utf-8')
+                        file_size = len(content)
+                        
+                        if max_size_mb and (total_size + file_size > max_size_bytes):
+                            print(f"[LIMIT] Skipping {rel_path} (size limit reached)")
+                            continue
+                            
+                        collected_files.append({
+                            'path': rel_path,
+                            'content': content,
+                            'size': file_size,
+                            'hash': hashlib.sha256(content.encode('utf-8')).hexdigest()
+                        })
+                        total_size += file_size
+                        processed_count += 1
+                    except Exception as e:
+                        print(f"[WARN] Could not read manifest file {rel_path}: {e}")
+                else:
+                    print(f"[WARN] Manifest file not found: {rel_path}")
+                    
+        except Exception as e:
+            print(f"[FATAL] Error processing manifest: {e}")
+            # Do not exit, just return what we have? Or fail? 
+            # Protocol 128 implies this is critical.
+            sys.exit(1)
+            
+    else:
+        # Standard Traversal
+        # First pass: get complete inventory (existing logic)
+        pass # We will wrap the existing logic in an else block
+
+
+    # Manifest loading moved to main() function
+
+    # First pass: get complete inventory of eligible files with metadata
+    eligible_files_inventory = []
+    def inventory_eligible_files(current_path):
+        nonlocal eligible_files_inventory
+
+        path_obj = Path(current_path)
+        if path_obj.name in exclude_dirs:
+            return
+
+        # Compute project-root-relative path for specific exclusions
+        try:
+            rel_from_project_root = path_obj.relative_to(project_root).as_posix()
+        except ValueError:
+            # Path is not within project_root
+            rel_from_project_root = str(path_obj)
+
+        # Exclude any files or directories that are backups of the Chroma DB under mnemonic_cortex
+        if rel_from_project_root.startswith('mnemonic_cortex/chroma_db_backup') or '/chroma_db_backup' in rel_from_project_root:
+            return
+
+        # Exclude ML environment logs directory
+        if rel_from_project_root.startswith('forge/ml_env_logs') or '/ml_env_logs' in rel_from_project_root:
+            return
+
+        if path_obj.is_file():
+            if path_obj.name in exclude_files:
+                return
+
+            # Check regex patterns for exclusion
+            if should_exclude_file(path_obj.name):
+                return
+
+            if path_obj.suffix.lower() not in ['.md', '.txt', '.py', '.js', '.json']:
+                return
+
+            try:
+                stat = path_obj.stat()
+                file_size = stat.st_size
+                mtime = stat.st_mtime
+                rel_path = path_obj.relative_to(project_root).as_posix()
+
+                file_info = {
+                    'path': rel_path,
+                    'size': file_size,
+                    'size_mb': file_size / 1024 / 1024,
+                    'mtime': mtime,
+                    'modified_iso': datetime.fromtimestamp(mtime).isoformat()
+                }
+
+                # Check if file has changed since last run
+                existing_entry = existing_manifest.get(rel_path, {})
+                if existing_entry.get('mtime') == mtime and existing_entry.get('size') == file_size:
+                    file_info['status'] = 'unchanged'
+                else:
+                    file_info['status'] = 'modified' if rel_path in existing_manifest else 'new'
+
+                eligible_files_inventory.append(file_info)
+
+            except Exception as e:
+                print(f"[WARN] Could not stat {path_obj}: {e}")
+
+        elif path_obj.is_dir():
+            for item in sorted(path_obj.iterdir()):
+                inventory_eligible_files(item)
+
+    if not manifest_path:
+        print(f"[INVENTORY] Scanning all eligible files...")
+        inventory_eligible_files(Path(project_root))
+
+        # Sort by size (largest first) for intelligent selection
+        eligible_files_inventory.sort(key=lambda x: x['size'], reverse=True)
+
+        total_eligible_files = len(eligible_files_inventory)
+        total_size_bytes = sum(f['size'] for f in eligible_files_inventory)
+        total_size_mb = total_size_bytes / 1024 / 1024
+
+        # Analyze change status
+        status_counts = {'new': 0, 'modified': 0, 'unchanged': 0}
+        for file_info in eligible_files_inventory:
+            status_counts[file_info.get('status', 'unknown')] += 1
+
+        print(f"[INVENTORY] Found {total_eligible_files} eligible files, {total_size_mb:.1f}MB total")
+        print(f"[INVENTORY] Change status: {status_counts['new']} new, {status_counts['modified']} modified, {status_counts['unchanged']} unchanged")
+        print(f"[INVENTORY] Top 10 largest files:")
+        for i, file_info in enumerate(eligible_files_inventory[:10]):
+            status_indicator = file_info.get('status', 'unknown')[0].upper()
+            print(f"  {i+1}. [{status_indicator}] {file_info['path']} ({file_info['size_mb']:.2f}MB)")
+
+        # Select files to process based on limits
+        selected_files = eligible_files_inventory.copy()  # Start with all files
+
+        # Apply file count limit first
+        if max_files and max_files < len(selected_files):
+            selected_files = selected_files[:max_files]
+            print(f"[SELECT] Limited to top {max_files} files by size")
+
+    # Then apply size limit to the already selected files
+    if max_size_mb:
+        filtered_files = []
+        current_size = 0
+        for file_info in selected_files:
+            if current_size + file_info['size_mb'] > max_size_mb:
+                break
+            filtered_files.append(file_info)
+            current_size += file_info['size_mb']
+
+        if len(filtered_files) < len(selected_files):
+            selected_files = filtered_files
+            print(f"[SELECT] Further limited to {len(selected_files)} files to stay under {max_size_mb}MB limit")
+        elif max_files and len(selected_files) <= max_files:
+            print(f"[SELECT] Processing {len(selected_files)} files (within {max_size_mb}MB limit)")
+
+    # Apply final limits and prioritize changed files
+        if max_files and len(selected_files) > max_files:
+            # Prioritize changed files (new/modified) over unchanged ones
+            changed_files = [f for f in selected_files if f.get('status') in ['new', 'modified']]
+            unchanged_files = [f for f in selected_files if f.get('status') == 'unchanged']
+
+            # Take all changed files first, then fill with unchanged files
+            selected_files = changed_files[:max_files]
+            remaining_slots = max_files - len(selected_files)
+            if remaining_slots > 0:
+                selected_files.extend(unchanged_files[:remaining_slots])
+
+            print(f"[COLLECT] Final file limit applied: {len(selected_files)} files ({len(changed_files)} changed, {len(selected_files) - len(changed_files)} unchanged)")
+
+        if max_size_mb:
+            filtered_files = []
+            current_size = 0
+            for file_info in selected_files:
+                if current_size + file_info['size_mb'] > max_size_mb:
+                    break
+                filtered_files.append(file_info)
+                current_size += file_info['size_mb']
+
+            if len(filtered_files) < len(selected_files):
+                selected_files = filtered_files
+                print(f"[SELECT] Further limited to {len(selected_files)} files to stay under {max_size_mb}MB limit")
+            elif max_files and len(selected_files) <= max_files:
+                print(f"[SELECT] Processing {len(selected_files)} files (within {max_size_mb}MB limit)")
+
+        # Apply final limits and prioritize changed files
+            if max_files and len(selected_files) > max_files:
+                # Prioritize changed files (new/modified) over unchanged ones
+                changed_files = [f for f in selected_files if f.get('status') in ['new', 'modified']]
+                unchanged_files = [f for f in selected_files if f.get('status') == 'unchanged']
+
+                # Take all changed files first, then fill with unchanged files
+                selected_files = changed_files[:max_files]
+                remaining_slots = max_files - len(selected_files)
+                if remaining_slots > 0:
+                    selected_files.extend(unchanged_files[:remaining_slots])
+
+                print(f"[COLLECT] Final file limit applied: {len(selected_files)} files ({len(changed_files)} changed, {len(selected_files) - len(changed_files)} unchanged)")
+
+            if max_size_mb:
+                filtered_files = []
+                current_size = 0
+                for file_info in selected_files:
+                    if current_size + file_info['size_mb'] > max_size_mb:
+                        break
+                    filtered_files.append(file_info)
+                    current_size += file_info['size_mb']
+                if len(filtered_files) < len(selected_files):
+                    selected_files = filtered_files
+                    print(f"[COLLECT] Final size limit applied: {len(selected_files)} files ({current_size:.1f}MB)")
+
+        print(f"[COLLECT] Starting collection of {len(selected_files)} selected files...")
+        for i, file_info in enumerate(selected_files):
+            file_path = Path(project_root) / file_info['path']
+
+            try:
+                content = file_path.read_text(encoding='utf-8')
+                file_size = len(content)
+
+                collected_files.append({
+                    'path': file_info['path'],
+                    'content': content,
+                    'size': file_size,
+                    'hash': hashlib.sha256(content.encode('utf-8')).hexdigest()
+                })
+
+                total_size += file_size
+                processed_count += 1
+
+                # Progress indicator with file name
+                if (i + 1) % 5 == 0 or (i + 1) == len(selected_files) or i == 0:
+                    percentage = ((i + 1) / len(selected_files)) * 100
+                    size_mb = total_size / 1024 / 1024
+                    print(f"[COLLECT] {i + 1}/{len(selected_files)} files ({percentage:.1f}%) - {file_info['path']}")
+
+            except Exception as e:
+                print(f"[WARN] Could not read {file_info['path']}: {e}")
+
+        print(f"[COLLECT] Finished: {len(collected_files)}/{len(selected_files)} files collected, {total_size/1024/1024:.1f}MB total")
+
+    # Create individual glyphs for each file (true optical compression)
+    print(f"[GLYPH FORGE] Creating individual provenance-bound glyphs for {len(collected_files)} files...")
+
+    # Initialize glyph forge with default font size since args is not available here
+    forge = ProvenanceGlyphForge(font_size=10)
+
+    # Create output directory
+    if output_dir is None:
+        output_dir = Path(output_dir_str) if output_dir_str else Path(DEFAULT_OUTPUT_DIR)
+    else:
+        output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True)
+
+    glyph_files = []
+    total_original_tokens = 0
+    total_vision_tokens = 0
+
+    for i, file_info in enumerate(collected_files):
+        file_path = file_info['path']
+        content = file_info['content']
+        file_size = file_info['size']
+
+        # Create unique glyph filename
+        safe_filename = file_path.replace('/', '_').replace('\\', '_').replace('.', '_')
+        glyph_filename = f"glyph_{safe_filename}_{datetime.now().strftime('%H%M%S')}.png"
+        glyph_path = output_dir / glyph_filename
+
+        print(f"[GLYPH] Creating individual glyph for {file_path}...")
+
+        # Create individual glyph for this file
+        width, height, content_hash = forge.create_provenance_glyph(
+            content, glyph_path, f"Glyph: {file_path}", True  # Enable provenance by default
+        )
+
+        # Calculate token estimates
+        estimated_original_tokens = len(content.split()) * 1.3
+        estimated_vision_tokens = (width * height) / 850  # Rough estimation
+
+        total_original_tokens += estimated_original_tokens
+        total_vision_tokens += estimated_vision_tokens
+
+        glyph_files.append({
+            'path': file_path,
+            'glyph_path': str(glyph_path),
+            'content_hash': content_hash,
+            'size': file_size,
+            'dimensions': f"{width}x{height}",
+            'estimated_original_tokens': estimated_original_tokens,
+            'estimated_vision_tokens': estimated_vision_tokens,
+            'compression_ratio': estimated_original_tokens / estimated_vision_tokens if estimated_vision_tokens > 0 else 0
+        })
+
+        # Progress indicator
+        if (i + 1) % 5 == 0 or (i + 1) == len(collected_files):
+            percentage = ((i + 1) / len(collected_files)) * 100
+            print(f"[GLYPH FORGE] {i + 1}/{len(collected_files)} glyphs created ({percentage:.1f}%)")
+
+    # Calculate overall compression statistics
+    overall_compression_ratio = total_original_tokens / total_vision_tokens if total_vision_tokens > 0 else 0
+
+    print(f"[GLYPH FORGE] Individual glyph creation complete!")
+    print(f"[COMPRESSION] Overall ratio: {overall_compression_ratio:.1f}x")
+    print(f"[COMPRESSION] Total original tokens: ~{total_original_tokens:,.0f}")
+    print(f"[COMPRESSION] Total vision tokens: ~{total_vision_tokens:,.0f}")
+
+    # Return individual glyph data instead of consolidated content
+    return glyph_files, len(collected_files), total_size, collected_files
+
+def main():
+    parser = argparse.ArgumentParser(description='Create Provenance-Bound Cognitive Glyphs')
+    parser.add_argument('--operation', help='Operation-specific directory to snapshot')
+    parser.add_argument('--output-dir', default=DEFAULT_OUTPUT_DIR, help='Output directory for glyphs')
+    parser.add_argument('--font-size', type=int, default=DEFAULT_FONT_SIZE, help='Font size for glyph text')
+    parser.add_argument('--no-provenance', action='store_true', help='Skip provenance binding')
+    parser.add_argument('--max-files', type=int, help='Maximum number of files to process')
+    parser.add_argument('--max-size-mb', type=int, default=10, help='Maximum size in MB (default: 10MB)')
+    parser.add_argument('--non-blocking', action='store_true', help='Run in background (non-blocking)')
+    parser.add_argument('--manifest', help='Path to JSON manifest of files to capture (skips traversal)')
+
+    args = parser.parse_args()
+
+    if args.non_blocking:
+        print("[NON-BLOCKING] Starting glyph forge in background...")
+        # Fork process for non-blocking execution
+        import subprocess
+        import os
+
+        env = os.environ.copy()
+        env['PYTHONPATH'] = str(Path.cwd())
+
+        # Remove non-blocking flag to avoid recursion
+        cmd_args = [arg for arg in sys.argv[1:] if arg != '--non-blocking']
+
+        subprocess.Popen([
+            sys.executable, str(Path(__file__)),
+        ] + cmd_args, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+        print("[NON-BLOCKING] Glyph forge started in background. Check output directory for results.")
+        return
+
+    # PATH FIX: Determine project root relative to script location to prevent 'scripts/dataset_code_glyphs' output
+    # If script is in PROJECT/scripts/script.py, project root is parent of parent.
+    script_path = Path(__file__).resolve()
+    project_root = script_path.parent.parent
+    
+    # If output dir is default relative path, anchor it to project root
+    if args.output_dir == DEFAULT_OUTPUT_DIR:
+        output_dir = project_root / DEFAULT_OUTPUT_DIR
+    elif not Path(args.output_dir).is_absolute():
+        output_dir = project_root / args.output_dir
+    else:
+        output_dir = Path(args.output_dir)
+        
+    output_dir.mkdir(exist_ok=True)
+
+    # Load existing manifest for incremental updates
+    manifest_path = output_dir / "glyph_manifest.json"
+    existing_manifest = {}
+    if manifest_path.exists():
+        try:
+            with open(manifest_path, 'r') as f:
+                existing_manifest = json.load(f)
+            print(f"[MANIFEST] Loaded existing manifest with {len(existing_manifest)} tracked files")
+        except Exception as e:
+            print(f"[WARN] Could not load existing manifest: {e}")
+            existing_manifest = {}
+
+    exclude_dirs = {
+        # Standard project/dev exclusions from capture_code_snapshot.py
+        'node_modules', '.next', '.git', '.cache', '.turbo', '.vscode', 'dist', 'build',
+        'coverage', 'out', 'tmp', 'temp', 'logs', '.idea', '.parcel-cache', '.storybook', '.husky', '.pnpm', '.yarn', '.svelte-kit', '.vercel', '.firebase', '.expo', '.expo-shared',
+        '__pycache__', '.ipynb_checkpoints', '.tox', '.eggs', 'eggs', '.venv', 'venv', 'env',
+        '.svn', '.hg', '.bzr',
+
+        # Large asset/model exclusions from capture_code_snapshot.py
+        'models', 'weights', 'checkpoints', 'ckpt', 'safensors',
+
+        # Sanctuary-specific OPERATIONAL RESIDUE exclusions from capture_code_snapshot.py
+        'dataset_package', 'chroma_db', 'dataset_code_glyphs', 'WORK_IN_PROGRESS', 'session_states', 'development_cycles',
+
+        # Sanctuary-specific DOCTRINAL NOISE exclusions from capture_code_snapshot.py
+        'ARCHIVES', 'ARCHIVE', 'archive', 'archives', 'ResearchPapers', 'RESEARCH_PAPERS', 'BRIEFINGS',
+        'MNEMONIC_SYNTHESIS', '07_COUNCIL_AGENTS', '04_THE_FORTRESS', '05_LIVING_CHRONICLE',
+
+        # Final Hardening v2.3 from capture_code_snapshot.py
+        '05_ARCHIVED_BLUEPRINTS', 'gardener',
+
+        # --- Security: MCP configuration files ---
+        'mcp_config'
+    }
+
+    # FINAL HARDENING (V2.1): Dynamic Self-Aware Exclusion
+    # A Forge must never ingest its own yield - make exclusion dynamic based on output directory
+    output_dir_name = output_dir.name
+    exclude_dirs.add(output_dir_name)
+    print(f"[HARDENING] Applied self-aware exclusion for output directory: {output_dir_name}")
+
+    print(f"[PROVENANCE GLYPH FORGE v2.1] Starting advanced optical compression")
+    print(f"[CONFIG] Font size: {args.font_size}px, Max files: {args.max_files or 'unlimited'}, Max size: {args.max_size_mb}MB")
+    print(f"[CONFIG] Provenance: {not args.no_provenance}, Output: {output_dir.absolute()}")
+
+    # Collect content with limits and create individual glyphs
+    glyph_files, file_count, total_size, collected_files = collect_code_snapshot_v2(
+        project_root, args.operation, not args.no_provenance,
+        max_files=args.max_files, max_size_mb=args.max_size_mb, output_dir=output_dir, 
+        exclude_dirs=exclude_dirs, existing_manifest=existing_manifest, font_size=args.font_size, 
+        output_dir_str=str(output_dir), manifest_path=args.manifest
+    )
+
+    if not glyph_files:
+        print("[ERROR] No glyphs created. Check file paths and permissions.")
+        sys.exit(1)
+
+    print(f"[COLLECTED] {file_count} files ({total_size/1024/1024:.1f}MB) processed into {len(glyph_files)} individual glyphs")
+
+    # Generate summary glyph
+    print("[GLYPH] Creating collection summary glyph...")
+    summary_content = create_smart_summary(glyph_files, file_count, total_size)
+    summary_path = output_dir / f"glyph_collection_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+    summary_forge = ProvenanceGlyphForge(font_size=args.font_size)
+    summary_forge.create_provenance_glyph(
+        summary_content, summary_path, "Optical Glyph Collection Summary", not args.no_provenance
+    )
+
+    # DOCTRINE OF THE VERIFIABLE MANIFEST (V2.2): Granular One-to-One Mapping
+    # Each file now has its own individual glyph
+
+    # Update manifest with individual file-to-glyph mapping
+    for glyph_info in glyph_files:
+        rel_path = glyph_info['path']
+
+        # Create or update individual file entry with its specific glyph
+        existing_manifest[rel_path] = {
+            'path': rel_path,
+            'size': glyph_info['size'],
+            'source_hash': glyph_info['content_hash'],
+            'last_processed_iso': datetime.now().isoformat(),
+            'glyph_path': glyph_info['glyph_path'],
+            'dimensions': glyph_info['dimensions'],
+            'estimated_original_tokens': glyph_info['estimated_original_tokens'],
+            'estimated_vision_tokens': glyph_info['estimated_vision_tokens'],
+            'compression_ratio': glyph_info['compression_ratio'],
+            'glyph_batch_timestamp': datetime.now().isoformat(),
+            'compression_method': 'optical_glyph_v2.2_individual'
+        }
+
+    # Save updated manifest
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(manifest_path, 'w') as f:
+        json.dump(existing_manifest, f, indent=2, sort_keys=True)
+    print(f"[MANIFEST] Updated verifiable manifest saved to {manifest_path} with {len(existing_manifest)} tracked artifacts")
+
+    print(f"\n[PROVENANCE GLYPH FORGE COMPLETE]")
+    print(f"  Individual Glyphs Created: {len(glyph_files)}")
+    print(f"  Storage: {output_dir.absolute()}")
+    print(f"  Files Processed: {file_count}")
+    print(f"  Total Size: {total_size/1024/1024:.1f}MB")
+    print(f"  Manifest: {manifest_path} ({len(existing_manifest)} tracked files)")
+    print(f"  True Optical Compression: Each file has its own glyph for individual access")
+
+def create_smart_summary(glyph_files, file_count, total_size):
+    """Create an intelligent summary of the glyph collection"""
+
+    summary_parts = []
+
+    # Extract key structural information
+    summary_parts.append("OPTICAL GLYPH COLLECTION SUMMARY")
+    summary_parts.append(f"Individual Glyphs Created: {len(glyph_files)}")
+    summary_parts.append(f"Files Processed: {file_count}")
+    summary_parts.append(f"Total Size: {total_size:,} bytes")
+    summary_parts.append("")
+
+    # Calculate compression statistics
+    total_original_tokens = sum(g['estimated_original_tokens'] for g in glyph_files)
+    total_vision_tokens = sum(g['estimated_vision_tokens'] for g in glyph_files)
+    avg_compression = total_original_tokens / total_vision_tokens if total_vision_tokens > 0 else 0
+
+    summary_parts.append(f"Estimated Original Tokens: {total_original_tokens:,.0f}")
+    summary_parts.append(f"Estimated Vision Tokens: {total_vision_tokens:,.0f}")
+    summary_parts.append(f"Average Compression Ratio: {avg_compression:.1f}x")
+    summary_parts.append("")
+
+    # Show top compressed files
+    sorted_by_compression = sorted(glyph_files, key=lambda x: x['compression_ratio'], reverse=True)
+    summary_parts.append("TOP COMPRESSED FILES:")
+    for i, glyph in enumerate(sorted_by_compression[:5]):
+        summary_parts.append(f"  {i+1}. {glyph['path']} ({glyph['compression_ratio']:.1f}x)")
+
+    return '\n'.join(summary_parts)
+
+if __name__ == "__main__":
+    main()

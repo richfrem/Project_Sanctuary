@@ -176,7 +176,7 @@ After the fleet is running, initialize the vector database with project content:
 
 ## 🛡️ Troubleshooting & Maintenance
 
-- **Detailed Operations**: For granular control, targeted rebuilds, and deep-dive maintenance, refer to the [Podman Operations Guide](docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md).
+- **Detailed Operations**: For granular control, targeted rebuilds, and deep-dive maintenance, refer to the [Podman Operations Guide](processes/PODMAN_OPERATIONS_GUIDE.md).
 - **Missing Dependencies**: If `ModuleNotFoundError` occurs (e.g., `tiktoken`):
   1. **Strictly Follow Protocol 073**: Do NOT run `pip install`.
   2. Add package to `mcp_servers/requirements-core.in`.

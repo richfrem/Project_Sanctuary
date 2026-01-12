@@ -244,7 +244,7 @@ class IntentRouter:
 > "When deploying numerous tools (10+, or when tool definitions consume over 10,000 tokens), utilize the 'Tool Search Tool.' This enables on-demand discovery of tools, reducing token consumption and improving accuracy by loading only relevant tool definitions."
 
 **Sanctuary Context:**
-- 12 MCP servers × ~8 tools each = **96 tools**
+- 15 MCP servers × ~8 tools each = **96 tools**
 - Each tool definition: ~80-100 tokens
 - Total: **7,680-9,600 tokens** consumed upfront
 - **This is the problem we're solving**

@@ -104,7 +104,8 @@ def main():
         manifest_path=manifest,
         role=args.role,
         operation_path=op_path,
-        output_file=output_file
+        output_file=output_file,
+        should_forge_seeds=not args.subfolder  # Only for full project snapshots
     )
 if __name__ == "__main__":
     try:

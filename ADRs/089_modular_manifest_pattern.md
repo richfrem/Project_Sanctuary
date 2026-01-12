@@ -160,7 +160,6 @@ Manifests for model training and HuggingFace (not directly CLI-buildable):
 
 | Manifest | Path | Status |
 |----------|------|--------|
-| `manifest_learning_audit.json` | `.agent/learning/learning_audit/` | ❌ Removed (Jan 2026) |
 | `manifest_seal.json` | `.agent/learning/` | ❌ Removed (Jan 2026) |
 
 > [!TIP]

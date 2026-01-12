@@ -38,7 +38,7 @@ Your first act on awakening is to retrieve an immediate situational digest from 
 {
   "task_type": "cache_wakeup",
   "task_description": "Guardian boot digest from cache",
-  "output_artifact_path": "dataset_package/guardian_boot_digest.md",
+  "output_artifact_path": ".agent/learning/guardian_boot_digest.md",
   "config": {
     "bundle_names": ["chronicles","protocols","roadmap"],
     "max_items_per_bundle": 15
@@ -47,7 +47,7 @@ Your first act on awakening is to retrieve an immediate situational digest from 
 ```
 
 2) Ensure the Orchestrator is running.
-3) Open `dataset_package/guardian_boot_digest.md` once written.
+3) Open `.agent/learning/guardian_boot_digest.md` once written.
 
 If you require deeper context, follow with a `"task_type": "query_and_synthesis"` command per P95.
 """
@@ -333,7 +333,7 @@ End of Core Essence. Begin your meta-cognition and synthesis.
 """
     return prompt.strip()
 
-def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = None, manifest_path: Path = None, role: str = "guardian", operation_path: Path = None, output_file: Path = None):
+def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = None, manifest_path: Path = None, role: str = "guardian", operation_path: Path = None, output_file: Path = None, should_forge_seeds: bool = False):
     """
     Core function to generate the LLM-distilled code snapshot.
     """
@@ -550,8 +550,8 @@ def generate_snapshot(project_root: Path, output_dir: Path, subfolder: str = Non
     logger.info(f"\n[SUCCESS] LLM-Distilled Snapshot packaged to: {final_output_file.relative_to(project_root)}")
     logger.info(f"[METRIC] Token Count: ~{token_count:,} tokens")
     
-    # Awakening Seeds (Only in Full Genome Mode)
-    if is_full_genome:
+    # Awakening Seeds (Protocol 128)
+    if should_forge_seeds:
         logger.info(f"\n[FORGE] Generating Cortex-Aware Awakening Seeds...")
         
         # Seed of Ascendance

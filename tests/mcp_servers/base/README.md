@@ -148,7 +148,7 @@ Test the **full MCP client call lifecycle** through the MCP protocol.
 
 ### Characteristics
 - **Speed:** Slow (minutes)
-- **Dependencies:** All 12 MCP servers running
+- **Dependencies:** All 15 MCP servers running
 - **Base Class:** `BaseE2ETest` (provides MCP client utilities)
 - **Scope:** Complete user scenarios via MCP protocol
 
@@ -197,7 +197,7 @@ E2E tests use the **`mcp_servers` pytest fixture** (defined in `tests/conftest.p
 @pytest.fixture(scope="session")
 def mcp_servers():
     """
-    Automatically starts all 12 MCP servers before tests.
+    Automatically starts all 15 MCP servers before tests.
     Uses the standard start_mcp_servers.py script.
     Tears down all servers after test session completes.
     """
@@ -238,7 +238,7 @@ pytest tests/mcp_servers/rag_cortex/unit/ -v
 # Layer 2: Integration tests (requires ChromaDB, Ollama)
 pytest tests/mcp_servers/rag_cortex/integration/ -v
 
-# Layer 3: E2E tests (requires all 12 MCP servers)
+# Layer 3: E2E tests (requires all 15 MCP servers)
 pytest tests/mcp_servers/rag_cortex/e2e/ -v -m e2e
 ```
 

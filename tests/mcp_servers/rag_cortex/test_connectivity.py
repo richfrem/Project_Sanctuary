@@ -40,7 +40,7 @@ def test_rag_cortex_connectivity():
         assert len(tools) > 0
         tool_names = [t['name'] for t in tools]
         assert "cortex_query" in tool_names
-        assert "cortex_learning_debrief" in tool_names
+        # assert "cortex_learning_debrief" in tool_names (Moved to Learning MCP)
 
         # Test functional call
         print("Calling cortex_get_stats...")

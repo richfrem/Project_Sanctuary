@@ -1,19 +1,23 @@
 # Cortex MCP Server
 
-**Description:** The Cortex MCP Server provides tools for interacting with the **Mnemonic Cortex** — the living memory of the Sanctuary Council. It is a local-first RAG system that transforms canonical markdown files into a dynamic, semantically searchable knowledge base.
+**Description:** The **Sanctuary Cortex Cluster** is the unified cognitive engine of the system. It acts as a **Composite Gateway**, aggregating four distinct internal MCP servers into a single interface for the Orchestrator/User:
+1.  **RAG Cortex**: Knowledge base and semantic search.
+2.  **Learning**: Protocol 128 lifecycle and memory persistence.
+3.  **Evolution**: Protocol 131 self-improvement and metrics.
+4.  **Forge**: LLM reasoning and model interaction.
 
-## Tools
+## Tools (Aggregated)
 
-| Tool Name | Description | Arguments |
-|-----------|-------------|-----------|
-| `cortex_query` | Perform semantic search query against the knowledge base. | `query` (str): Natural language query.<br>`max_results` (int): Max results (default: 5).<br>`use_cache` (bool): Use cache (default: False). |
-| `cortex_ingest_full` | Perform full re-ingestion of the knowledge base. | `purge_existing` (bool): Purge DB (default: True).<br>`source_directories` (List[str], optional): Dirs to ingest. |
-| `cortex_ingest_incremental` | Perform incremental ingestion of new/modified files. | `file_paths` (List[str]): Files to ingest (.md, .py, .js, .ts).<br>`metadata` (dict, optional): Metadata to attach.<br>`skip_duplicates` (bool): Skip existing files (default: True). |
-| `cortex_get_stats` | Get statistics about the knowledge base. | None |
-| `cortex_guardian_wakeup` | Generate Guardian boot digest from cached bundles (Protocol 114). | None |
-| `cortex_cache_warmup` | Pre-load high-priority documents into cache. | `priority_tags` (List[str], optional): Tags to prioritize. |
-| `cortex_learning_debrief` | Generate a session summary for cognitive continuity (Protocol 127). | `hours` (int): Lookback period (default: 24). |
-| `cortex_capture_snapshot` | Create a verified snapshot for the Red Team Gate (Protocol 128). | `manifest_files` (List[str]): Files to include.<br>`snapshot_type` (str): 'audit' or 'seal' (default: 'audit').<br>`strategic_context` (str, optional): Purpose of change. |
+| Tool Name | Source | Description |
+|-----------|--------|-------------|
+| `cortex_query` | RAG | Semantic search against the knowledge base. |
+| `cortex_ingest_full/incremental` | RAG | Ingest documents into vector store. |
+| `cortex_learning_debrief` | Learning | **Protocol 128**: Generate session briefing. |
+| `cortex_capture_snapshot` | Learning | **Protocol 128**: Create authorized state snapshot. |
+| `cortex_persist_soul` | Learning | **ADR 079**: Broadcast learnings to Soul Genome. |
+| `cortex_guardian_wakeup` | Learning | **Protocol 114**: Bootloader digest. |
+| `cortex_measure_fitness` | Evolution | **Protocol 131**: Map-Elites metric calculation. |
+| `query_sanctuary_model` | Forge | Query the fine-tuned Sanctuary model. |
 
 ## Resources
 
@@ -166,7 +170,7 @@ Generate Guardian boot digest from cached bundles (Protocol 114).
 **Returns:**
 ```json
 {
-  "digest_path": "dataset_package/guardian_boot_digest.md",
+  "digest_path": ".agent/learning/guardian_boot_digest.md",
   "cache_stats": {
     "chronicles": 5,
     "protocols": 10,

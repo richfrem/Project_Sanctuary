@@ -10,7 +10,7 @@
 
 ## Context
 
-Project Sanctuary faces critical scalability and context efficiency challenges with its current static MCP server loading approach. With 12 MCP servers exposing 63 tools, the context window overhead is ~8,400 tokens (21% of available context), limiting scalability to ~20 servers before context saturation.
+Project Sanctuary faces critical scalability and context efficiency challenges with its current static MCP server loading approach. With 15 MCP servers exposing 63 tools, the context window overhead is ~8,400 tokens (21% of available context), limiting scalability to ~20 servers before context saturation.
 
 **Problem Statement:**
 - Context window saturation prevents scaling beyond 20 servers

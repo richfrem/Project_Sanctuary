@@ -1,8 +1,12 @@
 # MCP Ecosystem - 10 Domain Architecture (DDD Analysis)
 
-**Version:** 3.0  
+> [!NOTE]
+> **Historical Document:** This analysis describes an earlier **10-domain architecture**. The architecture has since evolved to **15 Canonical Servers** per ADR 092, adding Learning (P128), Evolution (P131), Workflow, and additional servers.
+
+**Version:** 3.0 (Legacy)  
 **Created:** 2025-11-25  
-**Purpose:** Domain-Driven Design analysis of Project Sanctuary MCP ecosystem
+**Purpose:** Domain-Driven Design analysis of Project Sanctuary MCP ecosystem  
+**Status:** Superseded by ADR 092
 
 ---
 

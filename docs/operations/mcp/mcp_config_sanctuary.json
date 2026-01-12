@@ -162,6 +162,32 @@
                 "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
             },
             "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "learning": {
+            "displayName": "Learning MCP (Protocol 128)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.learning.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+        },
+        "evolution": {
+            "displayName": "Evolution MCP (Protocol 131)",
+            "command": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.venv/bin/python",
+            "args": [
+                "-m",
+                "mcp_servers.evolution.server"
+            ],
+            "env": {
+                "PROJECT_ROOT": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+                "PYTHONPATH": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
+            },
+            "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary"
         }
     }
 }

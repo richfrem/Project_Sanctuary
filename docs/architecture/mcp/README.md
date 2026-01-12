@@ -9,7 +9,7 @@ This folder contains the architectural documentation for Project Sanctuary's MCP
 | Document | Description |
 |----------|-------------|
 | [gateway_architecture.md](./gateway_architecture.md) | **Gateway Fleet** - 8 containers, 86 tools, dual-transport |
-| [mcp_ecosystem_architecture_v3.md](./mcp_ecosystem_architecture_v3.md) | **Complete MCP Ecosystem** - All 12 domains |
+| [mcp_ecosystem_architecture_v3.md](./mcp_ecosystem_architecture_v3.md) | **Complete MCP Ecosystem** - All 15 domains (ADR 092) |
 | [legacy_mcp_architecture.md](./legacy_mcp_architecture.md) | **Legacy STDIO MCPs** - Original standalone servers |
 
 ---

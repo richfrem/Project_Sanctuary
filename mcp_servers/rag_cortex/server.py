@@ -32,9 +32,6 @@ from .models import (
     CortexCacheGetRequest,
     CortexCacheSetRequest,
     CortexCacheWarmupRequest,
-    CortexGuardianWakeupRequest,
-    CortexCaptureSnapshotRequest,
-    CortexLearningDebriefRequest,
     ForgeQueryRequest
 )
 
@@ -158,16 +155,6 @@ async def cortex_cache_warmup(request: CortexCacheWarmupRequest) -> str:
         raise ToolError(f"Cache warmup failed: {str(e)}")
 
 @mcp.tool()
-async def cortex_guardian_wakeup(request: CortexGuardianWakeupRequest) -> str:
-    """Generate Guardian boot digest (Protocol 114)."""
-    try:
-        response = get_ops().guardian_wakeup(mode=request.mode)
-        return json.dumps(to_dict(response), indent=2)
-    except Exception as e:
-        logger.error(f"Error in cortex_guardian_wakeup: {e}")
-        raise ToolError(f"Guardian wakeup failed: {str(e)}")
-
-@mcp.tool()
 async def cortex_cache_stats() -> str:
     """Get Mnemonic Cache (CAG) statistics."""
     try:
@@ -176,30 +163,6 @@ async def cortex_cache_stats() -> str:
     except Exception as e:
         logger.error(f"Error in cortex_cache_stats: {e}")
         raise ToolError(f"Cache stats retrieval failed: {str(e)}")
-
-@mcp.tool()
-async def cortex_learning_debrief(request: CortexLearningDebriefRequest) -> str:
-    """Scans repository for technical state changes (Protocol 128)."""
-    try:
-        response = get_ops().learning_debrief(hours=request.hours)
-        return json.dumps({"status": "success", "debrief": response}, indent=2)
-    except Exception as e:
-        logger.error(f"Error in cortex_learning_debrief: {e}")
-        raise ToolError(f"Learning debrief failed: {str(e)}")
-
-@mcp.tool()
-async def cortex_capture_snapshot(request: CortexCaptureSnapshotRequest) -> str:
-    """Tool-driven snapshot generation (Protocol 128 v3.5)."""
-    try:
-        response = get_ops().capture_snapshot(
-            manifest_files=request.manifest_files,
-            snapshot_type=request.snapshot_type,
-            strategic_context=request.strategic_context
-        )
-        return json.dumps(to_dict(response), indent=2)
-    except Exception as e:
-        logger.error(f"Error in cortex_capture_snapshot: {e}")
-        raise ToolError(f"Snapshot capture failed: {str(e)}")
 
 # Registry of Forge tools (mirrored for convenience in rag_cortex cluster)
 @mcp.tool()

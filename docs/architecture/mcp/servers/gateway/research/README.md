@@ -1,5 +1,8 @@
 # MCP Gateway Research Index
 
+> [!NOTE]
+> **Historical Context:** This research was conducted when the architecture had **12 MCP servers**. The architecture has since evolved to **15 Canonical Servers** (ADR 092) with the addition of Learning, Evolution, and Workflow servers. The research findings and patterns remain valid; only the server counts have changed.
+
 **Research Date:** 2025-12-15  
 **Task:** 110 - Design and Specify Dynamic MCP Gateway Architecture  
 **Status:** Research Phase Complete

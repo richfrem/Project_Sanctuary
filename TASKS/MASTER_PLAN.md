@@ -13,7 +13,7 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 - [x] **Cortex MCP:** Memory & RAG (Task #050)
 - [x] **Guardian Cache:** Fast-path memory (Task #051, #003)
 - [x] **Core Scaffold:** Chronicle, Protocol, Orchestrator servers (Task #052)
-- [x] **Verification:** All 12 MCP servers operational with test coverage
+- [x] **Verification:** All 15 MCP servers operational with test coverage
 
 **Completion Date:** 2025-11-28
 
@@ -46,7 +46,7 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 
 **Evidence:**
 - test_protocol_056_headless.py: 6 MCP servers orchestrated via JSON-RPC
-- MCPServerFleet: Lifecycle management for 12 servers
+- MCPServerFleet: Lifecycle management for 15 servers (ADR 092)
 - run_all_tests.py: Systematic orchestration across 3 test layers
 
 **Completion Date:** 2025-12-14 (validated via E2E tests)
@@ -57,13 +57,13 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 **Goal:** Harden the system with comprehensive testing and documentation.
 - [x] **Cortex Test Suite:** Unit and integration tests for Cortex (Task #021A)
 - [x] **RAG MCP Verification:** All 10 Cortex MCP tools verified (Task #025, #026)
-- [x] **E2E Test Framework:** All 12 MCP servers with E2E tests (Task #113)
+- [x] **E2E Test Framework:** All 15 MCP servers with E2E tests (Task #113)
 - [x] **Test Suite Hardening:** 3-layer pyramid structure standardized (Task #114)
 - [x] **Integration Tests:** BaseIntegrationTest framework operational
 - [x] **Documentation:** Comprehensive MCP server documentation, test README
 
 **Evidence:**
-- tests/run_all_tests.py: Systematic test harness (12 servers × 3 layers)
+- tests/run_all_tests.py: Systematic test harness (15 servers × 3 layers)
 - tests/mcp_servers/*/e2e/: E2E test coverage for all servers
 - Protocol 056 E2E Test: Full MCP protocol lifecycle validation
 - tests/README.md: Complete test pyramid documentation
@@ -82,9 +82,9 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 
 ## Summary Statistics (as of 2025-12-14)
 
-**MCP Servers Operational:** 12/12 ✅
-- adr, agent_persona, chronicle, code, config, council
-- forge_llm, git, orchestrator, protocol, rag_cortex, task
+**MCP Servers Operational:** 15/15 ✅ (ADR 092)
+- adr, agent_persona, chronicle, code, config, council, evolution
+- forge_llm, git, learning, orchestrator, protocol, rag_cortex, task, workflow
 
 **Test Coverage:**
 - Unit Tests: ✅ Comprehensive
@@ -103,7 +103,7 @@ This document tracks the high-level roadmap and sequencing for evolving Project 
 ---
 
 ## Sequencing Strategy (Completed)
-1. ✅ **Phase 1:** Core infrastructure (12 MCP servers)
+1. ✅ **Phase 1:** Core infrastructure (15 MCP servers)
 2. ✅ **Phase 2:** Cognitive capabilities (autonomous learning)
 3. ✅ **Phase 3:** Orchestration (multi-agent coordination)
 4. ✅ **Phase 4:** Quality & security (comprehensive testing)

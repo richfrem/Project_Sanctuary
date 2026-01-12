@@ -14,7 +14,7 @@ Our testing strategy follows a three-layer pyramid, applied consistently across 
 |-------|-------|------|----------|
 | **Unit** | Functions/classes in isolation | Verify atomic logic, no I/O | Fast (ms) |
 | **Integration** | Server ↔ Local Services | Verify interactions with ChromaDB, Ollama, Git | Medium (sec) |
-| **E2E** | Full MCP protocol lifecycle | Verify complete MCP client workflows (requires all 12 servers) | Slow (min) |
+| **E2E** | Full MCP protocol lifecycle | Verify complete MCP client workflows (requires all 15 servers) | Slow (min) |
 
 ## Directory Structure
 
@@ -24,7 +24,7 @@ tests/
 ├── conftest.py               # Root pytest configuration and shared fixtures
 ├── test_utils.py             # Portable path utilities for tests
 │
-├── mcp_servers/              # Component tests for all 12 MCP servers (3-layer pyramid)
+├── mcp_servers/              # Component tests for all 15 MCP servers (3-layer pyramid)
 │   ├── README.md             # MCP server test pyramid documentation
 │   ├── base/                 # Base classes and common patterns
 │   │   ├── base_integration_test.py  # Layer 2 base class

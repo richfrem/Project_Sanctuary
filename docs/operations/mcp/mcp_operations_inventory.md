@@ -2,7 +2,7 @@
 
 **Version:** 2.0  
 **Status:** Living Document  
-**Last Updated:** 2026-01-02  
+**Last Updated:** 2026-01-11  
 **Purpose:** Comprehensive inventory of **Legacy MCP Server operations** and **Gateway Hosted Tools**, enabling a unified view of the hybrid fleet.
 
 ---
@@ -29,13 +29,15 @@ This document tracks all operations across the Project Sanctuary ecosystem, mapp
 - [5. Git MCP Server](#5-git-mcp-server)
 - [6. RAG Cortex MCP Server](#6-rag-cortex-mcp-server)
 - [7. Forge LLM MCP Server](#7-forge-llm-mcp-server-fine-tuning)
-- [8. Agent Persona MCP Server](#8-agent-persona-mcp-server)
-- [9. Council MCP Server](#9-council-mcp-server-multi-agent-deliberation)
-- [10. Orchestrator MCP Server](#10-orchestrator-mcp-server)
-- [11. Config MCP Server](#11-config-mcp-server)
-- [12. Code MCP Server](#12-code-mcp-server)
-- [13. Network MCP Server](#13-network-mcp-server)
-- [14. Utils MCP Server](#14-utils-mcp-server)
+- [8. Config MCP Server](#8-config-mcp-server)
+- [9. Code MCP Server](#9-code-mcp-server)
+- [10. Agent Persona MCP Server](#10-agent-persona-mcp-server)
+- [11. Council MCP Server](#11-council-mcp-server-multi-agent-deliberation)
+- [12. Orchestrator MCP Server](#12-orchestrator-mcp-server)
+- [13. Workflow MCP Server](#13-workflow-mcp-server)
+- [14. Learning MCP Server](#14-learning-mcp-server-protocol-128)
+- [15. Evolution MCP Server](#15-evolution-mcp-server-protocol-131)
+- [Appendix: Gateway Native Tools](#appendix-gateway-native-tools)
 - [Testing Strategy](#testing-strategy)
 - [Test Execution Commands](#test-execution-commands)
 - [Related Documentation](#related-documentation)
@@ -392,12 +394,10 @@ pytest tests/mcp_servers/rag_cortex/ -v
 | `cortex_cache_set` | `sanctuary-cortex-cortex-cache-set` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Store answer in cache |
 | `cortex_cache_stats` | `sanctuary-cortex-cortex-cache-stats` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Cache performance metrics |
 | `cortex_cache_warmup` | `sanctuary-cortex-cortex-cache-warmup` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Pre-populate cache |
-| `cortex_guardian_wakeup` | `sanctuary-cortex-cortex-guardian-wakeup` | [test_cache_operations.py](../../../tests/mcp_servers/rag_cortex/unit/test_cache_operations.py) | [test_cortex_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_cortex/test_cortex_gateway.py) | Generate Guardian boot digest (P114) |
 **Prerequisite Tests:** [tests/mcp_servers/rag_cortex/](../../../tests/mcp_servers/rag_cortex/)
 
 **Related Protocols:**
 - [Protocol 102: Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
-- [Protocol 114: Guardian Boot Sequence](../../../01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md)
 
 ---
 
@@ -468,7 +468,96 @@ pytest tests/integration/test_forge_integration.py -v
 
 ---
 
-## 8. Agent Persona MCP Server
+## 8. Config MCP Server
+
+**Domain:** Configuration management  
+**Directory:** `.agent/config/`  
+**Server Code:** [mcp_servers/config/server.py](../../../mcp_servers/config/server.py)  
+**README:** [Config MCP README](../../../mcp_servers/config/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/config_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/config_mcp_server.mmd)
+
+### Script Validation (Run First) 🧪
+```bash
+PYTHONPATH=. python3 tests/mcp_servers/config/unit/test_operations.py
+```
+**Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
+
+### LLM Prompting (MCP Verification) 🤖
+> "Please list the current configuration settings."
+
+### Configuration
+```json
+"config": {
+  "displayName": "Config MCP",
+  "command": "<PROJECT_ROOT>/.venv/bin/python",
+  "args": ["-m", "mcp_servers.config.server"],
+  "env": {
+    "PYTHONPATH": "<PROJECT_ROOT>",
+    "PROJECT_ROOT": "<PROJECT_ROOT>"
+  }
+}
+```
+
+### Operations
+
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `config_list` | `sanctuary-domain-config-list` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List configuration files |
+| `config_read` | `sanctuary-domain-config-read` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Read config file content |
+| `config_write` | `sanctuary-domain-config-write` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Write config file with backup |
+| `config_delete` | `sanctuary-domain-config-delete` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Delete config file |
+
+---
+
+## 9. Code MCP Server
+
+**Domain:** Code operations  
+**Directory:** `src/, scripts/, tools/`  
+**Server Code:** [mcp_servers/code/server.py](../../../mcp_servers/code/server.py)  
+**README:** [Code MCP README](../../../mcp_servers/code/README.md)  
+**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd)
+
+### Script Validation (Run First) 🧪
+```bash
+PYTHONPATH=. python3 tests/mcp_servers/code/unit/test_operations.py
+```
+**Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
+
+### LLM Prompting (MCP Verification) 🤖
+> "Please analyze the code structure of the `src` directory."
+
+### Configuration
+```json
+"code": {
+  "displayName": "Code MCP",
+  "command": "<PROJECT_ROOT>/.venv/bin/python",
+  "args": ["-m", "mcp_servers.code.server"],
+  "env": {
+    "PYTHONPATH": "<PROJECT_ROOT>",
+    "PROJECT_ROOT": "<PROJECT_ROOT>"
+  }
+}
+```
+
+### Operations
+
+| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
+|---|---|---|---|---|
+| `code_lint` | `sanctuary-filesystem-code-lint` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Run linting on files/directories |
+| `code_format` | `sanctuary-filesystem-code-format` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Format code with optional check-only mode |
+| `code_analyze` | `sanctuary-filesystem-code-analyze` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Perform static analysis |
+| `code_check_tools` | `sanctuary-filesystem-code-check-tools` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Check available code quality tools |
+| `code_find_file` | `sanctuary-filesystem-code-find-file` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Find files by name or glob pattern |
+| `code_list_files` | `sanctuary-filesystem-code-list-files` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | List files in directory with pattern |
+| `code_search_content` | `sanctuary-filesystem-code-search-content` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Search for text/patterns in code |
+| `code_read` | `sanctuary-filesystem-code-read` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Read file contents |
+| `code_write` | `sanctuary-filesystem-code-write` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Write/update file with backup |
+| `code_get_info` | `sanctuary-filesystem-code-get-info` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Get file metadata |
+| `code_delete` | `sanctuary-filesystem-code-delete` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Delete a file (careful!) |
+
+---
+
+## 10. Agent Persona MCP Server
 
 **Domain:** Agent persona management and execution  
 **Directory:** `mcp_servers/agent_persona/`  
@@ -523,7 +612,7 @@ pytest tests/mcp_servers/agent_persona/ -v
 
 ---
 
-## 9. Council MCP Server (Specialized Orchestrator for Multi-Agent Deliberation)
+## 11. Council MCP Server (Specialized Orchestrator for Multi-Agent Deliberation)
 
 **Domain:** Multi-agent deliberation orchestration  
 **Directory:** `mcp_servers/council/`  
@@ -606,7 +695,7 @@ pytest tests/mcp_servers/council/ -v
 
 ---
 
-## 10. Orchestrator MCP Server (General-Purpose Mission Coordinator)
+## 12. Orchestrator MCP Server (General-Purpose Mission Coordinator)
 
 **Domain:** Strategic mission orchestration and multi-phase workflow coordination  
 **Directory:** `mcp_servers/orchestrator/`  
@@ -683,29 +772,41 @@ pytest tests/mcp_servers/orchestrator/ -v
 
 ---
 
-## 11. Config MCP Server
+## 13. Workflow MCP Server
 
-**Domain:** Configuration management  
-**Directory:** `.agent/config/`  
-**Server Code:** [mcp_servers/config/server.py](../../../mcp_servers/config/server.py)  
-**README:** [Config MCP README](../../../mcp_servers/config/README.md)  
-**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/config_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/config_mcp_server.mmd)
+**Domain:** Standard Operating Procedures & Workflow Discovery
+**Directory:** `mcp_servers/workflow/`
+**Server Code:** [mcp_servers/workflow/server.py](../../../mcp_servers/workflow/server.py)
+**README:** [Workflow MCP README](../../../mcp_servers/workflow/README.md)
+
+### Operations
+
+| Operation | Gateway Tool | Description |
+|---|---|---|
+| `workflow_get_available_workflows` | `sanctuary-domain-workflow-get-available-workflows` | List all available SOPs |
+| `workflow_read_workflow` | `sanctuary-domain-workflow-read-workflow` | Read specific SOP content |
+
+---
+
+## 14. Learning MCP Server (Protocol 128)
+
+**Domain:** Cognitive Continuity & Learning Loop  
+**Directory:** `mcp_servers/learning/`  
+**Server Code:** [mcp_servers/learning/server.py](../../../mcp_servers/learning/server.py)  
+**README:** [Learning MCP README](../../../mcp_servers/learning/README.md)  
 
 ### Script Validation (Run First) 🧪
 ```bash
-PYTHONPATH=. python3 tests/mcp_servers/config/unit/test_operations.py
+pytest tests/mcp_servers/learning/ -v
 ```
-**Last Verification:** 2025-12-02 ✅ (6/6 passed - Task 087 Phase 1)
-
-### LLM Prompting (MCP Verification) 🤖
-> "Please list the current configuration settings."
+**Last Verification:** 2026-01-11 ✅ (Consolidated Integration Green)
 
 ### Configuration
 ```json
-"config": {
-  "displayName": "Config MCP",
+"learning": {
+  "displayName": "Learning MCP",
   "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.config.server"],
+  "args": ["-m", "mcp_servers.learning.server"],
   "env": {
     "PYTHONPATH": "<PROJECT_ROOT>",
     "PROJECT_ROOT": "<PROJECT_ROOT>"
@@ -715,64 +816,45 @@ PYTHONPATH=. python3 tests/mcp_servers/config/unit/test_operations.py
 
 ### Operations
 
-| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
-|---|---|---|---|---|
-| `config_list` | `sanctuary-domain-config-list` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | List configuration files |
-| `config_read` | `sanctuary-domain-config-read` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Read config file content |
-| `config_write` | `sanctuary-domain-config-write` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Write config file with backup |
-| `config_delete` | `sanctuary-domain-config-delete` | `test_operations.py` | [test_domain_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_domain/test_domain_gateway.py) | Delete config file |
+| Operation | Gateway Tool | 🧪 Integration Test | Description |
+|---|---|---|---|
+| `learning_debrief` | `sanctuary-cortex-cortex-learning-debrief` | [test_operations.py](../../../tests/mcp_servers/learning/integration/test_operations.py) | Generates technical state digest (WRITE) |
+| `capture_snapshot` | `sanctuary-cortex-cortex-capture-snapshot` | [test_operations.py](../../../tests/mcp_servers/learning/integration/test_operations.py) | Generates audit/seal packets (WRITE) |
+| `persist_soul` | `sanctuary-cortex-cortex-persist-soul` | [test_operations.py](../../../tests/mcp_servers/learning/integration/test_operations.py) | Incremental session persistence (WRITE) |
+| `guardian_wakeup` | `sanctuary-cortex-cortex-guardian-wakeup` | [test_operations.py](../../../tests/mcp_servers/learning/integration/test_operations.py) | Generates Guardian boot digest (WRITE) |
+| `guardian_snapshot` | `sanctuary-cortex-cortex-guardian-snapshot` | [test_operations.py](../../../tests/mcp_servers/learning/integration/test_operations.py) | Captures session context pack (WRITE) |
+| `persist_soul_full` | `sanctuary-cortex-cortex-persist-soul-full` | [test_operations.py](../../../tests/mcp_servers/learning/integration/test_operations.py) | Full session trajectory sync (WRITE) |
+
+**Prerequisite Tests:** [tests/mcp_servers/learning/](../../../tests/mcp_servers/learning/)
 
 ---
 
-## 12. Code MCP Server
+## 15. Evolution MCP Server (Protocol 131)
 
-**Domain:** Code operations  
-**Directory:** `src/, scripts/, tools/`  
-**Server Code:** [mcp_servers/code/server.py](../../../mcp_servers/code/server.py)  
-**README:** [Code MCP README](../../../mcp_servers/code/README.md)  
-**Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd)
-
-### Script Validation (Run First) 🧪
-```bash
-PYTHONPATH=. python3 tests/mcp_servers/code/unit/test_operations.py
-```
-**Last Verification:** 2025-12-02 ✅ (13/13 passed - Task 087 Phase 1)
-
-### LLM Prompting (MCP Verification) 🤖
-> "Please analyze the code structure of the `src` directory."
-
-### Configuration
-```json
-"code": {
-  "displayName": "Code MCP",
-  "command": "<PROJECT_ROOT>/.venv/bin/python",
-  "args": ["-m", "mcp_servers.code.server"],
-  "env": {
-    "PYTHONPATH": "<PROJECT_ROOT>",
-    "PROJECT_ROOT": "<PROJECT_ROOT>"
-  }
-}
-```
+**Domain:** Evolutionary Self-Improvement & Metrics
+**Directory:** `mcp_servers/evolution/`
+**Server Code:** [mcp_servers/evolution/server.py](../../../mcp_servers/evolution/server.py)
+**README:** [Evolution MCP README](../../../mcp_servers/evolution/README.md)
 
 ### Operations
 
-| Legacy Operation | Gateway Tool | 🧪 Unit Test (Server) | 🔗 Integration Test (Gateway) | Description |
-|---|---|---|---|---|
-| `code_lint` | `sanctuary-filesystem-code-lint` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Run linting on files/directories |
-| `code_format` | `sanctuary-filesystem-code-format` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Format code with optional check-only mode |
-| `code_analyze` | `sanctuary-filesystem-code-analyze` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Perform static analysis |
-| `code_check_tools` | `sanctuary-filesystem-code-check-tools` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Check available code quality tools |
-| `code_find_file` | `sanctuary-filesystem-code-find-file` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Find files by name or glob pattern |
-| `code_list_files` | `sanctuary-filesystem-code-list-files` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | List files in directory with pattern |
-| `code_search_content` | `sanctuary-filesystem-code-search-content` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Search for text/patterns in code |
-| `code_read` | `sanctuary-filesystem-code-read` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Read file contents |
-| `code_write` | `sanctuary-filesystem-code-write` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Write/update file with backup |
-| `code_get_info` | `sanctuary-filesystem-code-get-info` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Get file metadata |
-| `code_delete` | `sanctuary-filesystem-code-delete` | `test_operations.py` | [test_filesystem_gateway.py](../../../tests/mcp_servers/gateway/clusters/sanctuary_filesystem/test_filesystem_gateway.py) | Delete a file (careful!) |
+| Operation | Gateway Tool | 🧪 Integration Test | Description |
+|---|---|---|---|
+| `measure_fitness` | `sanctuary-cortex-cortex-evolution-measure-fitness` | [test_operations.py](../../../tests/mcp_servers/evolution/integration/test_operations.py) | Calculates full technical fitness vector (WRITE) |
+| `evaluate_depth` | `sanctuary-cortex-cortex-evolution-evaluate-depth` | [test_operations.py](../../../tests/mcp_servers/evolution/integration/test_operations.py) | Calculates 'Depth' heuristic score (WRITE) |
+| `evaluate_scope` | `sanctuary-cortex-cortex-evolution-evaluate-scope` | [test_operations.py](../../../tests/mcp_servers/evolution/integration/test_operations.py) | Calculates 'Scope' heuristic score (WRITE) |
+
+**Prerequisite Tests:** [tests/mcp_servers/evolution/](../../../tests/mcp_servers/evolution/)
 
 ---
 
-## 13. Network MCP Server
+
+
+## Appendix: Gateway Native Tools
+
+These tools are provided directly by the Gateway Runtimeclusters and do not correspond to standalone Python MCP Servers.
+
+### Network Tools (Cluster: sanctuary_network)
 
 **Domain:** External network access (isolated)  
 **Cluster:** `sanctuary_network` (Port 8102)
@@ -784,7 +866,7 @@ PYTHONPATH=. python3 tests/mcp_servers/code/unit/test_operations.py
 
 ---
 
-## 14. Utils MCP Server
+### Utils Tools (Cluster: sanctuary_utils)
 
 **Domain:** Core utilities (Time, Math, UUID, String)  
 **Cluster:** `sanctuary_utils` (Port 8100)
@@ -800,30 +882,35 @@ PYTHONPATH=. python3 tests/mcp_servers/code/unit/test_operations.py
 
 ## Testing Strategy
 
-### Phase 1: Script Validation Suite (Foundation) ✅
-> **Rule:** All MCP server operations must have corresponding tests in the test suite to verify underlying logic *before* MCP layer verification.
+The test suite is aligned with the **Canonical 15 MCP Server** architecture. Each server has its own dedicated test directory structure.
 
-- [x] Git operations unit tests (6/6 passing)
-- [x] Chronicle validator tests (4/4 passing)
-- [x] Protocol validator tests
-- [x] ADR validator tests
-- [x] Task operations tests
+### 1. Test Suite Structure
+Tests are located in `tests/mcp_servers/<server_name>/` and typically follow this pattern:
 
-### Phase 2: MCP Layer (In Progress 🔄)
-- [x] Git MCP tools (core workflow tested)
-- [x] Chronicle MCP tools (verified in Claude Desktop)
-- [ ] Protocol MCP tools (needs comprehensive testing)
-- [ ] ADR MCP tools (needs comprehensive testing)
-- [ ] Task MCP tools (needs comprehensive testing)
+- **`unit/`**: Tests internal server logic, tools, and utilities without external dependencies.
+- **`integration/`**: Tests MCP server behavioral compliance and interaction with Gateway/mocked services.
+- **`e2e/`**: (Where applicable) End-to-end workflow validation (e.g., Protocol 128 loops).
 
-### Phase 3: RAG Operations (Planned)
-- [ ] Cortex query operations
-- [ ] Cortex ingestion operations
-- [ ] Cache operations (Phase 2 feature)
+### 2. Validation Phases
 
-### Phase 4: Knowledge Loop (Planned)
-- [ ] End-to-end validation (Task 056)
-- [ ] Create → Commit → Ingest → Retrieve flow
+#### Phase 1: Unit & Logic Verification 🧪
+*Focus: Internal correctness*
+- [x] **Git MCP**: `tests/mcp_servers/git/unit/`
+- [x] **Chronicle MCP**: `tests/mcp_servers/chronicle/unit/`
+- [x] **Learning MCP**: `tests/mcp_servers/learning/unit/` (Migrated from RAG)
+- [x] **Evolution MCP**: `tests/mcp_servers/evolution/unit/` (Metrics logic)
+- [x] **Task MCP**: `tests/mcp_servers/task/unit/`
+
+#### Phase 2: Integration & Protocol Compliance 🔗
+*Focus: Gateway integration and protocol adherence*
+- [x] **Git Workflow**: Verify P101 v3.0 logic
+- [x] **Protocol 128**: Verify Learning Loop (Scout → Audit → Seal)
+- [x] **Protocol 131**: Verify Map-Elites metric calculations
+
+#### Phase 3: RAG & Knowledge Operations 🧠
+*Focus: Vector DB and context operations*
+- [x] **RAG Cortex**: `tests/mcp_servers/rag_cortex/` (Purified ingestion/query tests)
+- [ ] **Forge LLM**: Model fine-tuning integration tests
 
 ---
 
@@ -835,25 +922,36 @@ PYTHONPATH=. python3 tests/mcp_servers/code/unit/test_operations.py
 pytest tests/ -v
 ```
 
-### Run Specific MCP Tests
+### Run Specific MCP Suites
+
+**Core Infrastructure:**
 ```bash
-# Git operations
-pytest tests/mcp_servers/git/ -v
+pytest tests/mcp_servers/git/ -v          # Server 5
+pytest tests/mcp_servers/rag_cortex/ -v   # Server 6
+pytest tests/mcp_servers/config/ -v       # Server 8
+pytest tests/mcp_servers/code/ -v         # Server 9
+```
 
-# Chronicle
-pytest tests/mcp_servers/chronicle/ -v
+**Domain Logic:**
+```bash
+pytest tests/mcp_servers/chronicle/ -v    # Server 1
+pytest tests/mcp_servers/protocol/ -v     # Server 2
+pytest tests/mcp_servers/adr/ -v          # Server 3
+pytest tests/mcp_servers/task/ -v         # Server 4
+```
 
-# Protocol
-pytest tests/mcp_servers/protocol/ -v
+**Advanced Capabilities:**
+```bash
+pytest tests/mcp_servers/learning/ -v     # Server 14 (Protocol 128)
+pytest tests/mcp_servers/evolution/ -v    # Server 15 (Protocol 131)
+pytest tests/mcp_servers/workflow/ -v     # Server 13
+pytest tests/mcp_servers/agent_persona/ -v # Server 10
+```
 
-# ADR
-pytest tests/mcp_servers/adr/ -v
-
-# Task
-pytest tests/mcp_servers/task/ -v
-
-# Integration tests
-pytest tests/integration/ -v
+**Integration Only:**
+```bash
+pytest tests/mcp_servers/learning/integration/ -v
+pytest tests/mcp_servers/learning/e2e/ -v
 ```
 
 ---
@@ -872,14 +970,16 @@ pytest tests/integration/ -v
 
 ### Adding New Operations
 
+### Adding New Operations
+
 When adding a new MCP operation:
 
-1. **Implement the operation** in the appropriate `server.py`
-2. **Create unit tests** in `tests/test_<mcp>_operations.py`
-3. **Update this inventory** with operation details and testing status
-4. **Update MCP README** with operation documentation
-5. **Add operation to MCP README table** (server-specific)
-6. **Run test suite** and update status symbols
+1.  **Domain Alignment Check**: Consult **[ADR 092 (Canonical 15 Servers)](../../../ADRs/092_mcp_architecture_evolution_15_servers.md)** to ensure the operation maps to the correct logical MCP server domain.
+2.  **Implement the operation** in the appropriate `mcp_servers/<server>/server.py`.
+3.  **Create unit tests** in `tests/mcp_servers/<server>/unit/` (not in the root tests folder).
+4.  **Update this inventory** with operation details and testing status.
+5.  **Update MCP README** (`mcp_servers/<server>/README.md`) with operation documentation.
+6.  **Run test suite** (`pytest tests/mcp_servers/<server>/`) and update status symbols.
 
 ### Testing Checklist
 
@@ -894,5 +994,5 @@ Before marking an operation as ✅:
 
 ---
 
-**Last Updated:** 2026-01-02  
+**Last Updated:** 2026-01-11  
 **Maintainer:** Project Sanctuary Team
