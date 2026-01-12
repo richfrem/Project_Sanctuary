@@ -101,12 +101,8 @@ def get_dataset_repo_id(config: dict = None) -> str:
 
 def generate_snapshot_name(body_repo: str = None) -> str:
     """Generate a snapshot filename following the naming convention."""
-    if body_repo is None:
-        config = get_hf_config()
-        body_repo = config["body_repo"]
-    
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    return f"lineage/{body_repo}_seal_{timestamp}.md"
+    return f"lineage/seal_{timestamp}_learning_package_snapshot.md"
 
 
 async def upload_soul_snapshot(
