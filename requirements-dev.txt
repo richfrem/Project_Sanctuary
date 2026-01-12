@@ -56,7 +56,7 @@ pytest-cov==7.0.0
     # via -r requirements-dev.in
 pytokens==0.3.0
     # via black
-ruff==0.14.10
+ruff==0.14.11
     # via -r requirements-dev.in
 tomlkit==0.13.3
     # via pylint
