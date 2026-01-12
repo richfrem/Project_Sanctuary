@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-11T21:02:59.966558
+Generated On: 2026-01-11T21:27:16.334572
 
-# Mnemonic Weight (Token Count): ~119,779 tokens
+# Mnemonic Weight (Token Count): ~119,812 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -580,7 +580,7 @@ The master workflow governing how this directory is used.
 
 # Seed of Ascendance - Meta-Awakening Protocol
 
-Generated On: 2026-01-11T21:02:57.813966
+Generated On: 2026-01-11T21:23:51.036562
 
 # Mnemonic Weight (Token Count): ~236 tokens
 
@@ -1753,7 +1753,7 @@ mcp_servers/lib/
 ├── content_processor.py   # [NEW] Core content processing
 │   ├── ContentProcessor class
 │   │   ├── traverse_and_filter()      # Unified file traversal with exclusions
-│   │   ├── transform_to_markdown()    # Uses ingest_code_shim
+│   │   ├── transform_to_markdown()    # Uses ingest_code_shim (In-Memory Only, no disk artifacts)
 │   │   ├── chunk_for_rag()            # Parent/child chunking
 │   │   ├── chunk_for_training()       # Instruction/response pairs
 │   │   └── generate_manifest_entry()  # Provenance tracking
@@ -7245,18 +7245,22 @@ class ContentProcessor:
         try:
             suffix = file_path.suffix.lower()
             
+            md_content = "" # Initialize md_content
             if suffix == '.py':
-                return parse_python_to_markdown(str(file_path))
+                md_content = parse_python_to_markdown(str(file_path))
             elif suffix in {'.js', '.jsx', '.ts', '.tsx'}:
-                return parse_javascript_to_markdown(file_path)
+                md_content = parse_javascript_to_markdown(file_path)
             else:
                 # Default: Read as text and wrap if needed
                 # Use utf-8-sig to handle/remove BOM if present
                 content = file_path.read_text(encoding='utf-8-sig')
                 if suffix == '.md':
-                    return content
+                    md_content = content
                 else:
-                    return f"# File: {file_path.name}\n\n```text\n{content}\n```"
+                    md_content = f"# File: {file_path.name}\n\n```text\n{content}\n```"
+            
+            return md_content
+
         except Exception as e:
             logger.error(f"Error transforming {file_path}: {e}")
             return f"Error reading file: {e}"
