@@ -62,6 +62,6 @@ This ADR mandates a **proper Testing Pyramid** for all MCPs:
 - Clear operational readiness validation before deployments
 
 **Negative:**
-- Initial development time for all 12 MCPs
+- Initial development time for all 15 MCPs
 - May increase CI/CD pipeline execution time
 - Requires running infrastructure (containers) during test execution

@@ -213,50 +213,11 @@ class CacheWarmupResponse:
     error: Optional[str] = None
 
 
-@dataclass
-class GuardianWakeupResponse:
-    #============================================
-    # Model: GuardianWakeupResponse
-    # Purpose: Response from Guardian wakeup digest generation.
-    #============================================
-    digest_path: str
-    bundles_loaded: List[str]
-    cache_hits: int
-    cache_misses: int
-    total_time_ms: float
-    status: str  # "success" or "error"
-    error: Optional[str] = None
+
 
 
 # ============================================================================
-# Capture Snapshot Models (Protocol 128 v3.5)
-# ============================================================================
 
-@dataclass
-class CaptureSnapshotRequest:
-    #============================================
-    # Model: CaptureSnapshotRequest
-    # Purpose: Request model for tool-driven snapshotting.
-    #============================================
-    manifest_files: List[str]
-    snapshot_type: str = "audit"  # "audit" or "seal"
-    strategic_context: Optional[str] = None
-
-
-@dataclass
-class CaptureSnapshotResponse:
-    #============================================
-    # Model: CaptureSnapshotResponse
-    # Purpose: Response model for tool-driven snapshotting.
-    #============================================
-    snapshot_path: str
-    manifest_verified: bool
-    git_diff_context: str
-    snapshot_type: str
-    status: str  # "success" or "error"
-    total_files: int = 0
-    total_bytes: int = 0
-    error: Optional[str] = None
 
 
 # ============================================================================
@@ -299,31 +260,7 @@ class Opinion:
     type: str = "opinion"  # Discriminator
 
 # ============================================================================
-# Persist Soul Models (ADR 079 - Johnny Appleseed)
-# ============================================================================
 
-@dataclass
-class PersistSoulRequest:
-    #============================================
-    # Model: PersistSoulRequest
-    # Purpose: Request to broadcast the soul to the AI Commons.
-    #============================================
-    snapshot_path: str = ".agent/learning/learning_package_snapshot.md"
-    valence: float = 0.0
-    uncertainty: float = 0.0
-    is_full_sync: bool = False
-
-
-@dataclass
-class PersistSoulResponse:
-    #============================================
-    # Model: PersistSoulResponse
-    # Purpose: Response from the persistence operation.
-    #============================================
-    status: str  # "success", "quarantined", or "error"
-    repo_url: str
-    snapshot_name: str
-    error: Optional[str] = None
 
 
 # FastMCP Request Models
@@ -355,16 +292,9 @@ class CortexCacheSetRequest(BaseModel):
 class CortexCacheWarmupRequest(BaseModel):
     genesis_queries: Optional[List[str]] = Field(None, description="Queries to pre-warm the cache")
 
-class CortexGuardianWakeupRequest(BaseModel):
-    mode: str = Field("HOLISTIC", description="Synthesis mode")
 
-class CortexCaptureSnapshotRequest(BaseModel):
-    manifest_files: List[str] = Field(..., description="Files to include in snapshot")
-    snapshot_type: str = Field("audit", description="'audit' or 'seal'")
-    strategic_context: Optional[str] = Field(None, description="Context for snapshot")
 
-class CortexLearningDebriefRequest(BaseModel):
-    hours: int = Field(24, description="Lookback window in hours")
+
 
 class ForgeQueryRequest(BaseModel):
     prompt: str = Field(..., description="Model prompt")
@@ -372,11 +302,7 @@ class ForgeQueryRequest(BaseModel):
     max_tokens: int = Field(2048, description="Max tokens to generate")
     system_prompt: Optional[str] = Field(None, description="System persona prompt")
 
-class CortexPersistSoulRequest(BaseModel):
-    snapshot_path: str = Field(".agent/learning/learning_package_snapshot.md", description="Local path to seal")
-    valence: float = Field(0.0, description="Moral/Emotional charge")
-    uncertainty: float = Field(0.0, description="Logic confidence")
-    is_full_sync: bool = Field(False, description="Sync entire learning directory if True")
+
 
 
 # ============================================================================

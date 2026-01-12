@@ -17,6 +17,8 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 COPY mcp_servers/lib /app/mcp_servers/lib
 COPY mcp_servers/rag_cortex /app/mcp_servers/rag_cortex
 COPY mcp_servers/forge_llm /app/mcp_servers/forge_llm
+COPY mcp_servers/learning /app/mcp_servers/learning
+COPY mcp_servers/evolution /app/mcp_servers/evolution
 
 # Copy the fleet cluster code
 COPY mcp_servers/gateway/clusters/sanctuary_cortex /app/mcp_servers/gateway/clusters/sanctuary_cortex

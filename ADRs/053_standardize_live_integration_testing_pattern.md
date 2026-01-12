@@ -10,7 +10,7 @@
 
 ## Context
 
-ADR 047 mandated systemic integration testing. ADR 048 established Layer 2 (integration tests). However, we lacked a complete, standardized 3-layer test pyramid structure across all 12 MCP servers. 
+ADR 047 mandated systemic integration testing. ADR 048 established Layer 2 (integration tests). However, we lacked a complete, standardized 3-layer test pyramid structure across all 15 MCP servers. 
 
 **Problems:**
 1. Inconsistent test organization across MCP servers
@@ -26,7 +26,7 @@ ADR 047 mandated systemic integration testing. ADR 048 established Layer 2 (inte
 
 ## Decision
 
-We will implement a **complete 3-layer test pyramid** for all 12 MCP servers with standardized structure, base classes, and infrastructure.
+We will implement a **complete 3-layer test pyramid** for all 15 MCP servers with standardized structure, base classes, and infrastructure.
 
 ### Layer 1: Unit Tests (`unit/`)
 - **Purpose:** Test atomic logic in complete isolation
@@ -50,7 +50,7 @@ We will implement a **complete 3-layer test pyramid** for all 12 MCP servers wit
 
 ### Layer 3: E2E Tests (`e2e/`)
 - **Purpose:** Test full MCP client call lifecycle via MCP protocol
-- **Dependencies:** All 12 MCP servers running
+- **Dependencies:** All 15 MCP servers running
 - **Base Class:** `BaseE2ETest` (provides MCP client utilities)
 - **Speed:** Slow (minutes)
 - **Location:** `tests/mcp_servers/<server>/e2e/`
@@ -69,7 +69,7 @@ We will implement a **complete 3-layer test pyramid** for all 12 MCP servers wit
 3. ~~`base_unit_test.py`~~ - Removed (unnecessary for isolated tests)
 
 **Fixtures:**
-- `mcp_servers` (session-scoped) - Starts all 12 MCP servers for E2E tests
+- `mcp_servers` (session-scoped) - Starts all 15 MCP servers for E2E tests
 - Uses `mcp_servers/start_mcp_servers.py --run` for consistency with VS Code
 
 **Documentation:**
@@ -99,7 +99,7 @@ Only true multi-MCP workflow tests:
 ## Consequences
 
 **Positive:**
-- ✅ Complete 3-layer test pyramid implemented across all 12 MCP servers
+- ✅ Complete 3-layer test pyramid implemented across all 15 MCP servers
 - ✅ Consistent test structure and patterns
 - ✅ Automatic dependency verification for integration tests
 - ✅ E2E infrastructure established (ready for MCP client integration)
@@ -127,4 +127,4 @@ Only true multi-MCP workflow tests:
 
 ---
 
-**Status Update (2025-12-14):** Implemented complete 3-layer test pyramid structure across all 12 MCP servers with standardized base classes and infrastructure
+**Status Update (2025-12-14):** Implemented complete 3-layer test pyramid structure across all 15 MCP servers with standardized base classes and infrastructure

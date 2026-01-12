@@ -127,9 +127,9 @@ All diagrams must follow this workflow:
 
 4.  **Reference in documents** with image AND source link:
     ```markdown
-    ![Diagram Title](path/to/diagram_placeholder.png)
+    ![Diagram Title](../../architecture_diagrams/workflows/protocol_128_learning_loop.png)
     
-    *Source: [diagram.mmd](path/to/diagram_placeholder.mmd)*
+    *Source: [protocol_128_learning_loop.mmd](../../architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
     ```
 
 ### 7.2 Violation Detection

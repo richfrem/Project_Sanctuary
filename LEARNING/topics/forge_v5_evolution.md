@@ -86,9 +86,9 @@ When resuming work on the Forge pipeline:
    - Execute `create_modelfile.py` for Ollama integration
    - Execute `upload_to_huggingface.py` for final deployment
 3. **Reference Documents**:
-   - **[forge-llm.md](../forge-llm.md)**: Step-by-step pipeline guide
-   - **[ADR 075](../ADRs/075_standardized_code_documentation_pattern.md)**: Coding conventions
-   - **[ADR 073](../ADRs/073_standardization_of_python_dependency_management_across_environments.md)**: Dependency management
+   - **[forge-llm.md](../../forge-llm.md)**: Step-by-step pipeline guide
+   - **[ADR 075](../../ADRs/075_standardized_code_documentation_pattern.md)**: Coding conventions
+   - **[ADR 073](../../ADRs/073_standardization_of_python_dependency_management_across_environments.md)**: Dependency management
 
 ---
 

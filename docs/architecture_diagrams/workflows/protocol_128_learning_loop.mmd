@@ -87,7 +87,7 @@ flowchart TB
         choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
         
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/seal_TIMESTAMP.md"]
+            MD_Seal["lineage/{MODEL}_seal_{TIMESTAMP}.md"]
             JSONL_Traces["data/soul_traces.jsonl"]
             Manifest["metadata/manifest.json"]
         end

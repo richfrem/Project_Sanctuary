@@ -38,6 +38,10 @@
 #
 #   Full Sync (regenerate entire JSONL from all files + deploy data/):
 #     python3 scripts/cortex_cli.py persist-soul-full
+#
+# EVOLUTIONARY METRICS (Protocol 131):
+#   python3 scripts/cortex_cli.py evolution fitness "Some content"
+#   python3 scripts/cortex_cli.py evolution depth --file .agent/learning/learning_debrief.md
 #============================================
 import argparse
 import sys
@@ -49,6 +53,8 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from mcp_servers.rag_cortex.operations import CortexOperations
+from mcp_servers.learning.operations import LearningOperations
+from mcp_servers.evolution.operations import EvolutionOperations
 import subprocess
 
 # ADR 090: Iron Core Definitions
@@ -178,6 +184,25 @@ def main():
     # Command: persist-soul-full (ADR 081)
     subparsers.add_parser("persist-soul-full", help="Regenerate full JSONL and deploy to HF (ADR 081)")
 
+    # evolution (Protocol 131)
+    evolution_parser = subparsers.add_parser("evolution", help="Evolutionary metrics (Protocol 131)")
+    evolution_sub = evolution_parser.add_subparsers(dest="subcommand", help="Evolution subcommands")
+    
+    # fitness
+    fit_parser = evolution_sub.add_parser("fitness", help="Calculate full fitness vector")
+    fit_parser.add_argument("content", nargs="?", help="Text content to evaluate")
+    fit_parser.add_argument("--file", help="Read content from file")
+    
+    # depth
+    depth_parser = evolution_sub.add_parser("depth", help="Evaluate technical depth")
+    depth_parser.add_argument("content", nargs="?", help="Text content to evaluate")
+    depth_parser.add_argument("--file", help="Read content from file")
+    
+    # scope
+    scope_parser = evolution_sub.add_parser("scope", help="Evaluate architectural scope")
+    scope_parser.add_argument("content", nargs="?", help="Text content to evaluate")
+    scope_parser.add_argument("--file", help="Read content from file")
+
     args = parser.parse_args()
     
     if not args.command:
@@ -185,7 +210,9 @@ def main():
         sys.exit(1)
     
     # Initialize Operations
-    ops = CortexOperations(project_root=args.root)
+    cortex_ops = CortexOperations(project_root=args.root)
+    learning_ops = LearningOperations(project_root=args.root)
+    evolution_ops = EvolutionOperations(project_root=args.root)
 
     if args.command == "ingest":
         if args.incremental:
@@ -201,7 +228,7 @@ def main():
             exclude_dirs = {'.git', '.vector_data', '__pycache__', 'node_modules', 'venv', 'env', 
                             'dataset_package', 'docs/site', 'training_logs'}
             
-            for path in ops.project_root.rglob('*'):
+            for path in cortex_ops.project_root.rglob('*'):
                 if path.is_file():
                     # Check exclusions
                     if any(part in exclude_dirs for part in path.parts):
@@ -220,7 +247,7 @@ def main():
                 sys.exit(0)
                 
             print(f"📄 Found {len(modified_files)} modified files.")
-            res = ops.ingest_incremental(file_paths=modified_files)
+            res = cortex_ops.ingest_incremental(file_paths=modified_files)
             
             if res.status == "success":
                 print(f"✅ Success: {res.documents_added} added, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
@@ -231,7 +258,7 @@ def main():
         else:
             # Full Ingestion
             print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
-            res = ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
+            res = cortex_ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
             if res.status == "success":
                 print(f"✅ Success: {res.documents_processed} docs, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
             else:
@@ -266,7 +293,8 @@ def main():
             print(f"📋 Loaded manifest with {len(manifest)} files")
         
         print(f"📸 Capturing {args.type} snapshot...")
-        res = ops.capture_snapshot(
+        # ROUTED TO LEARNING MCP
+        res = learning_ops.capture_snapshot(
             manifest_files=manifest, 
             snapshot_type=args.type,
             strategic_context=args.context
@@ -282,7 +310,7 @@ def main():
             sys.exit(1)
 
     elif args.command == "stats":
-        stats = ops.get_stats(include_samples=args.samples, sample_count=args.sample_count)
+        stats = cortex_ops.get_stats(include_samples=args.samples, sample_count=args.sample_count)
         print(f"🏥 Health: {stats.health_status}")
         print(f"📚 Documents: {stats.total_documents}")
         print(f"🧩 Chunks: {stats.total_chunks}")
@@ -311,7 +339,7 @@ def main():
     #     print(json.dumps(response, indent=2))
     elif args.command == "query":
         print(f"🔍 Querying: {args.query_text}")
-        res = ops.query(
+        res = cortex_ops.query(
             query=args.query_text,
             max_results=args.max_results,
             use_cache=args.use_cache
@@ -333,7 +361,8 @@ def main():
 
     elif args.command == "debrief":
         print(f"📋 Running learning debrief (lookback: {args.hours}h)...")
-        debrief_content = ops.learning_debrief(hours=args.hours)
+        # ROUTED TO LEARNING MCP
+        debrief_content = learning_ops.learning_debrief(hours=args.hours)
         
         # Default output path
         output_path = args.output or ".agent/learning/learning_debrief.md"
@@ -358,7 +387,8 @@ def main():
         else:
             print(f"⚠️  Guardian manifest not found at {args.manifest}. Using defaults.")
         
-        response = ops.guardian_wakeup(mode=args.mode)
+        # ROUTED TO LEARNING MCP
+        response = learning_ops.guardian_wakeup(mode=args.mode)
         
         print(f"   Status: {response.status}")
         print(f"   Digest: {response.digest_path}")
@@ -389,7 +419,8 @@ def main():
             print(f"⚠️  Bootstrap manifest not found at {args.manifest}. Using defaults.")
         
         # Generate snapshot using the manifest
-        res = ops.capture_snapshot(
+        # ROUTED TO LEARNING MCP
+        res = learning_ops.capture_snapshot(
             manifest_files=manifest,
             snapshot_type="seal",
             strategic_context="Fresh repository onboarding context"
@@ -410,7 +441,7 @@ def main():
             sys.exit(1)
 
     elif args.command == "cache-stats":
-        stats = ops.get_cache_stats()
+        stats = cortex_ops.get_cache_stats()
         print(f"💾 Cache Statistics:")
         if isinstance(stats, dict):
             for key, value in stats.items():
@@ -421,7 +452,7 @@ def main():
     elif args.command == "cache-warmup":
         queries = args.queries or None
         print(f"🔥 Warming up cache...")
-        res = ops.cache_warmup(genesis_queries=queries)
+        res = cortex_ops.cache_warmup(genesis_queries=queries)
         
         if res.status == "success":
             print(f"✅ Cached {res.queries_cached} queries")
@@ -433,7 +464,7 @@ def main():
             sys.exit(1)
 
     elif args.command == "persist-soul":
-        from mcp_servers.rag_cortex.models import PersistSoulRequest
+        from mcp_servers.learning.models import PersistSoulRequest
         print(f"🌱 Broadcasting soul to Hugging Face AI Commons...")
         print(f"   Snapshot: {args.snapshot}")
         print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty}")
@@ -445,7 +476,8 @@ def main():
             uncertainty=args.uncertainty,
             is_full_sync=args.full_sync
         )
-        res = ops.persist_soul(request)
+        # ROUTED TO LEARNING MCP
+        res = learning_ops.persist_soul(request)
         
         if res.status == "success":
             print(f"✅ Soul planted successfully!")
@@ -459,7 +491,8 @@ def main():
 
     elif args.command == "persist-soul-full":
         print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace...")
-        res = ops.persist_soul_full()
+        # ROUTED TO LEARNING MCP
+        res = learning_ops.persist_soul_full()
         
         if res.status == "success":
             print(f"✅ Full sync complete!")
@@ -469,7 +502,33 @@ def main():
             print(f"❌ Error: {res.error}")
             sys.exit(1)
 
+    elif args.command == "evolution":
+        if not args.subcommand:
+            print("❌ Subcommand required for 'evolution' (fitness, depth, scope)")
+            sys.exit(1)
+            
+        content = args.content
+        if args.file:
+            try:
+                content = Path(args.file).read_text()
+            except Exception as e:
+                print(f"❌ Error reading file {args.file}: {e}")
+                sys.exit(1)
+        
+        if not content:
+            print("❌ No content provided. Use a positional argument or --file.")
+            sys.exit(1)
+            
+        if args.subcommand == "fitness":
+            res = evolution_ops.calculate_fitness(content)
+            print(json.dumps(res, indent=2))
+        elif args.subcommand == "depth":
+            res = evolution_ops.measure_depth(content)
+            print(f"Depth: {res}")
+        elif args.subcommand == "scope":
+            res = evolution_ops.measure_scope(content)
+            print(f"Scope: {res}")
+
 
 if __name__ == "__main__":
     main()
-

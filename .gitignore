@@ -184,9 +184,13 @@ mcp_config/
 tests/verify_wslenv_setup.py
 mcp_config.json
 !.agent/learning/mcp_config.json
-.agent/learning/learning_package_snapshot.md
+
 dataset_package/guardian_boot_digest.md
 .agent/learning/learning_audit/learning_audit_packet.md
 .agent/learning/red_team/red_team_packet.md
 mnemonics/learning_summary.md
 
+
+# DRQ research repo clone (local analysis only)
+LEARNING/topics/drq_recursive_self_improvement/drq_repo/
+!scripts/archive/

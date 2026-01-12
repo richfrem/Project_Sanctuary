@@ -1,9 +1,9 @@
 # 🛡️ Project Sanctuary MCP Servers - The Canonical Layer
 
-This directory contains the canonical MCP servers for Project Sanctuary. The system is mature and includes a set of 12 specialized MCP servers that provide stateful memory, tool-use, and governance capabilities used by the LLM clients and higher-order orchestrations.
+This directory contains the canonical MCP servers for Project Sanctuary. The system is mature and includes a set of 15 specialized MCP servers (ADR 092) that provide stateful memory, tool-use, and governance capabilities used by the LLM clients and higher-order orchestrations.
 
 Executive summary:
-- Scope: 12 canonical MCP servers, production-grade testing pyramid, and canonical deploy flow.
+- Scope: 15 canonical MCP servers, production-grade testing pyramid, and canonical deploy flow.
 - Maturity: The servers are covered by a three-layer test pyramid (Unit / Integration / E2E) and comprehensive docs under `docs/architecture/mcp/`.
 
 ## 🏛️ MCP Server Canonical List
@@ -16,12 +16,15 @@ The authoritative set of servers (folder names under `mcp_servers/`) and short p
 - `code` — File / Code Operations (builders, analyzers)
 - `config` — Configuration Management and helpers
 - `council` — Multi-Agent Deliberation and Council workflows
+- `evolution` — Self-Improvement and Mutation Tracking (Protocol 131)
 - `forge_llm` — LLM Fine-Tuning / Inference orchestration
 - `git` — Version Control Operations and commit/meta tooling
+- `learning` — Session Lifecycle and Cognitive Continuity (Protocol 128)
 - `orchestrator` — Strategic Mission Coordination (the System Brain)
 - `protocol` — Protocol Management and validation
 - `rag_cortex` — Knowledge Retrieval / Ingestion (System Memory)
 - `task` — Task / Roadmap and mission tracking
+- `workflow` — Standard Operating Procedures (SOPs)
 
 Notes:
 - The `orchestrator` and `rag_cortex` servers form the foundational pair for the Strategic Crucible Loop (see Protocol 056). They are the primary engines for planning, retrieval-augmented reasoning, and the strategic feedback cycle.
@@ -137,7 +140,7 @@ Required Environment Variables:
 
 ## Current Reality & Workaround
 
-**Doctrine vs Reality:** The project retains the Environment‑First Doctrine as the intended, long‑term approach. However, some MCP clients — notably Claude Desktop — do not perform environment variable substitution when reading external JSON configs. In practice this required us to write hard‑coded absolute paths into the Claude config so the client can start all 12 MCP servers reliably.
+**Doctrine vs Reality:** The project retains the Environment‑First Doctrine as the intended, long‑term approach. However, some MCP clients — notably Claude Desktop — do not perform environment variable substitution when reading external JSON configs. In practice this required us to write hard‑coded absolute paths into the Claude config so the client can start all 15 MCP servers reliably.
 
 **Warning:** The deployer and helper scripts may produce **hard‑coded** config files by default (absolute paths). This is intentional where the client requires it. Running the deployer without `--preserve-placeholders` will expand variables into absolute paths and overwrite the client config.
 

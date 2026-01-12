@@ -99,7 +99,7 @@ mcp_servers/lib/
 ├── content_processor.py   # [NEW] Core content processing
 │   ├── ContentProcessor class
 │   │   ├── traverse_and_filter()      # Unified file traversal with exclusions
-│   │   ├── transform_to_markdown()    # Uses ingest_code_shim
+│   │   ├── transform_to_markdown()    # Uses ingest_code_shim (In-Memory Only, no disk artifacts)
 │   │   ├── chunk_for_rag()            # Parent/child chunking
 │   │   ├── chunk_for_training()       # Instruction/response pairs
 │   │   └── generate_manifest_entry()  # Provenance tracking

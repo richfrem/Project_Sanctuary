@@ -1,12 +1,17 @@
-# MCP Ecosystem - Final 12-Domain Architecture
+# MCP Ecosystem - Legacy 12-Domain Architecture
 
-**Version:** 4.0 (Final)  
+> [!NOTE]
+> This document describes the **original 12-Domain architecture**. For the current Canonical 15-Server architecture (which adds Learning, Evolution, and Workflow servers), see **ADR 092**.
+
+**Version:** 4.0 (Legacy)  
 **Created:** 2025-11-25  
-**Status:** Complete Architecture - Ready for Implementation
+**Status:** Superseded by ADR 092 - Canonical 15 Servers
 
 ---
 
-## Complete Domain Map (12 Servers)
+## Complete Domain Map (12 Servers — Legacy)
+
+> See ADR 092 for the current 15-server architecture.
 
 | # | Domain | Category | Directory | Risk Level | Hardware |
 |---|--------|----------|-----------|------------|----------|
@@ -255,7 +260,7 @@ All architecture documentation is in `docs/architecture/mcp/`:
 ## Success Criteria
 
 ### Functional
-- [ ] All 12 MCP servers operational
+- [ ] All 15 MCP servers operational
 - [ ] 100% schema validation coverage
 - [ ] P101 compliance for all file operations
 - [ ] Git safety rules enforced

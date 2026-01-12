@@ -1,8 +1,9 @@
 ---
 id: drq_plain_summary
 type: summary
-status: active
+status: pilot_approved
 date: 2026-01-11
+iteration: 2.0
 ---
 
 # Plain Language Summary: Integrating Evolutionary Intelligence (DRQ)

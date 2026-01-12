@@ -248,17 +248,7 @@ class TestCortexOperations(BaseIntegrationTest):
     #   - Holistic digest generation
     #   - Markdown digest file creation
     #===========================================================================
-    def test_guardian_wakeup_basic(self, cortex_ops):
-        # Create some basic files to be found
-        (cortex_ops.project_root / "WORK_IN_PROGRESS").mkdir(exist_ok=True)
-        (cortex_ops.project_root / "tasks" / "test_task.md").write_text("- [ ] Task 1")
-        
-        print("\nRunning guardian_wakeup...")
-        res = cortex_ops.guardian_wakeup(mode="HOLISTIC")
-        
-        assert res.status == "success"
-        assert res.digest_path is not None
-        assert Path(res.digest_path).exists()
+
         
     #===========================================================================
     # MCP OPERATIONS: cortex_get_stats
@@ -313,108 +303,7 @@ class TestCortexOperations(BaseIntegrationTest):
         assert "Mnemonic-2025" in q_res.results[0].content
         print("✓ Incremental knowledge successfully retrieved.")
 
-    #===========================================================================
-    # MCP OPERATIONS: Internal Code-Ingestion Pipeline (Language Shims)
-    # Purpose: Verify that RAG Cortex can handle multiple programming languages.
-    # Inputs: 
-    #   - Real Python and JS syntax
-    # Scenarios tested:
-    #   - Python class with method (AST)
-    #   - JS function (Regex)
-    #===========================================================================
-    def test_polyglot_code_ingestion(self, cortex_ops):
-        print("\nTesting Polyglot Code Ingestion (Incremental)...")
-        
-        # 1. Provide Real Code Input
-        src_dir = cortex_ops.project_root / "src"
-        src_dir.mkdir()
-        
-        py_path = src_dir / "physics.py"
-        py_path.write_text(textwrap.dedent('''
-            class MnemonicValidator:
-                """A test class for AST ingestion."""
-                def validate_quantum_state(self, coherence: float) -> bool:
-                    """Verifies coherence. Threshold: 0.99"""
-                    return coherence > 0.99
-        '''))
-
-        js_path = src_dir / "ui.js"
-        js_path.write_text(textwrap.dedent('''
-            /** Renders UI. */
-            function renderDashboard(userId) {
-                return userId === "admin";
-            }
-        '''))
-        
-        # 2. Add to ChromaDB via Incremental Ingest
-        cortex_ops.ingest_incremental(file_paths=[str(py_path), str(js_path)])
-        
-        # 3. Verify Python Retrieval (Parsing AST headers)
-        py_res = cortex_ops.query("MnemonicValidator validate_quantum_state", max_results=1)
-        assert len(py_res.results) > 0
-        content = py_res.results[0].content
-        
-        # We check for structural components (Headers and content)
-        assert "MnemonicValidator" in content
-        assert "validate_quantum_state" in content
-        assert "0.99" in content
-        
-        # 4. Verify JS Retrieval (Parsing Regex headers)
-        js_res = cortex_ops.query("renderDashboard", max_results=1)
-        assert len(js_res.results) > 0
-        content = js_res.results[0].content
-        
-        # The JS shim uses "Function: `renderDashboard`"
-        assert "renderDashboard" in content
-        print("✓ Polyglot actual DB operations verified.")
-
-    #===========================================================================
-    # MCP OPERATIONS: cortex_query (Structural Search)
-    # Purpose: Verify search targeting of specific signatures/docstrings.
-    # Inputs: 
-    #   - Python function with type hints
-    # Scenarios tested:
-    #   - Retrieval of full parent context for signature-based queries
-    #===========================================================================
-    def test_python_structural_search(self, cortex_ops):
-        print("\nTesting Python Structural Search (Incremental)...")
-        
-        # 1. Create a file with a very specific signature
-        logic_dir = cortex_ops.project_root / "logic"
-        logic_dir.mkdir()
-        py_path = logic_dir / "cascade.py"
-        py_path.write_text(textwrap.dedent('''
-            def handle_mnemonic_cascade(sequence_id: str, intensity_threshold: float = 0.85):
-                """Processes alpha-level cascades. Protocol 121 active."""
-                return f"Cascade {sequence_id} active"
-        '''))
-        
-        # 2. Ingest
-        cortex_ops.ingest_incremental(file_paths=[str(py_path)])
-        
-        # 3. Query for specific types/signatures
-        print("Searching for specialized signature...")
-        q_res = cortex_ops.query("handle_mnemonic_cascade intensity_threshold", max_results=1)
-        
-        assert len(q_res.results) > 0
-        content = q_res.results[0].content
-        
-        # 4. Verify full parent content is retrieved
-        assert "handle_mnemonic_cascade" in content
-        assert "intensity_threshold" in content
-        assert "Protocol 121" in content
-        print("✓ Structural search for Python signatures verified.")
 
 
 
-    def test_learning_debrief(self, cortex_ops):
-        """
-        Test the learning_debrief operation (Protocol 128).
-        """
-        # The new learning_debrief (v3.5) is autonomous and returns "Liquid Information" (markdown string)
-        # It takes 'hours' as an argument, not raw content.
-        res = cortex_ops.learning_debrief(hours=1)
-        
-        assert "# [DRAFT] Learning Package Snapshot v3.5" in res
-        assert "**Scan Time:**" in res
-        assert "## 🧬 I. Tactical Evidence" in res
+

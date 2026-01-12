@@ -13,7 +13,7 @@ Every MCP server sub-directory (`<mcp>/`) is structured into three layers:
 | :---: | :--- | :--- | :--- | :--- | :--- |
 | **1** | **`unit/`** | Internal functions/classes | None (isolated) | None | Fast (ms) |
 | **2** | **`integration/`** | Server ↔ Local Services | `BaseIntegrationTest` | ChromaDB, Ollama, Git | Medium (sec) |
-| **3** | **`e2e/`** | Full MCP Protocol | `BaseE2ETest` | All 12 MCP servers | Slow (min) |
+| **3** | **`e2e/`** | Full MCP Protocol | `BaseE2ETest` | All 15 MCP servers | Slow (min) |
 
 ### Layer 1: Unit Tests (`unit/`)
 - **Focus:** Atomic logic in isolation (validators, parsers, utilities)
@@ -50,7 +50,7 @@ class TestRAGCortexLive(BaseIntegrationTest):
 
 ### Layer 3: E2E Tests (`e2e/`)
 - **Focus:** Full MCP client call lifecycle via MCP protocol
-- **Dependencies:** All 12 MCP servers running (via `start_mcp_servers.py`)
+- **Dependencies:** All 15 MCP servers running (via `start_mcp_servers.py`)
 - **Base Class:** `BaseE2ETest` (provides MCP client utilities)
 - **Run:** `pytest tests/mcp_servers/<mcp>/e2e/ -v`
 
@@ -81,7 +81,7 @@ class TestRAGCortexE2E(BaseE2ETest):
 Use the following command to execute all unit and component-level integration tests within this directory:
 
 ```bash
-# Runs unit and internal integration tests for all 12 MCP servers
+# Runs unit and internal integration tests for all 15 MCP servers
 pytest tests/mcp_servers/
 ```
 

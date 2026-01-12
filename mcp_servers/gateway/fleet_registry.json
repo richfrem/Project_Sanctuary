@@ -73,6 +73,14 @@
           "name": "sanctuary-cortex-cortex-persist-soul"
         },
         {
+          "description": "Generates Guardian context snapshot (Protocol 128).",
+          "inputSchema": {
+            "properties": {},
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-guardian-snapshot"
+        },
+        {
           "description": "Snapshot generation (Protocol 128). Types: audit (red_team_audit_packet.md), seal (learning_package_snapshot.md), learning_audit (learning_audit_packet.md).",
           "inputSchema": {
             "properties": {
@@ -93,6 +101,54 @@
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-capture-snapshot"
+        },
+        {
+          "description": "Calculates &#x27;Scope&#x27; score (0.0-5.0).",
+          "inputSchema": {
+            "properties": {
+              "content": {
+                "description": "Text content to evaluate",
+                "type": "string"
+              }
+            },
+            "required": [
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-evolution-evaluate-scope"
+        },
+        {
+          "description": "Calculates &#x27;Depth&#x27; score (0.0-5.0).",
+          "inputSchema": {
+            "properties": {
+              "content": {
+                "description": "Text content to evaluate",
+                "type": "string"
+              }
+            },
+            "required": [
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-evolution-evaluate-depth"
+        },
+        {
+          "description": "Calculates evolutionary fitness metrics (Depth, Scope).",
+          "inputSchema": {
+            "properties": {
+              "content": {
+                "description": "Text content to evaluate",
+                "type": "string"
+              }
+            },
+            "required": [
+              "content"
+            ],
+            "type": "object"
+          },
+          "name": "sanctuary-cortex-cortex-evolution-measure-fitness"
         },
         {
           "description": "Scans repository for technical state changes (Protocol 128).",
@@ -259,14 +315,6 @@
             "type": "object"
           },
           "name": "sanctuary-cortex-cortex-ingest-full"
-        },
-        {
-          "description": "Execute Synaptic Phase (Dreaming) to consolidate memories and update opinions.",
-          "inputSchema": {
-            "properties": {},
-            "type": "object"
-          },
-          "name": "sanctuary-cortex-cortex-dream"
         }
       ],
       "url": "http://sanctuary_cortex:8000/sse"

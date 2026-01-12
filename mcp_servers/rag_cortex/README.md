@@ -165,7 +165,7 @@ Generate Guardian boot digest from cached bundles (Protocol 114).
 **Returns:**
 ```json
 {
-  "digest_path": "dataset_package/guardian_boot_digest.md",
+  "digest_path": ".agent/learning/guardian_boot_digest.md",
   "cache_stats": {
     "chronicles": 5,
     "protocols": 10,

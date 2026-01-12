@@ -24,4 +24,4 @@ The current testing architecture relies heavily on mocked unit tests, which fail
 ## Consequences
 
 **Positive:** Greatly increased system stability; immediate detection of environment/dependency failures.
-**Negative:** Requires initial development time to implement the integration layer for all 12 MCPs.
+**Negative:** Requires initial development time to implement the integration layer for all 15 MCPs.

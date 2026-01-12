@@ -93,25 +93,3 @@ class TestCacheOperations:
             assert response.queries_cached == 1
             assert response.cache_misses == 1
             mock_cache.set.assert_called()
-
-    def test_guardian_wakeup(self, ops, mock_cache):
-        # Setup - Mock get_stats to avoid DB dependency
-        with patch.object(ops, 'get_stats') as mock_stats:
-            from mcp_servers.rag_cortex.models import StatsResponse
-            mock_stats.return_value = StatsResponse(
-                total_documents=100,
-                total_chunks=5000,
-                collections={},
-                health_status="healthy"
-            )
-            
-            # Execute (v2 mode)
-            response = ops.guardian_wakeup(mode="HOLISTIC")
-            
-            # Verify
-            assert response.status == "success"
-            assert response.digest_path is not None
-            assert len(response.bundles_loaded) >= 3  # Strategic, Tactical, Recency, (optionally Protocols)
-            assert "Strategic" in response.bundles_loaded
-
-

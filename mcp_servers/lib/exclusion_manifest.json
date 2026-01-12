@@ -46,6 +46,7 @@
         "__pycache__",
         "archive",
         "archives",
+        "drq_repo",
         "build",
         "certs",
         "checkpoints",

@@ -86,11 +86,11 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 *   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./LEARNING/archive/external_research/RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
 
 ## II. System Architecture
-### 2.1 12-Domain MCP Architecture
-**Status:** `v5.0` Complete 12-Domain Architecture Operational
+### 2.1 15-Domain MCP Architecture
+**Status:** `v6.0` Complete 15-Domain Architecture Operational (ADR 092)
 **Last Updated:** 2025-12-02
 
-The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 12-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
+The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 15-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
 
 **Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](docs/architecture/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp/README.md`](./docs/architecture/mcp/README.md)
 
@@ -100,11 +100,13 @@ The Sanctuary uses a modular microservices architecture powered by the Model Con
 *   **ADR MCP:** Architecture Decision Records (`ADRs/`)
 *   **Task MCP:** Task and project management (`tasks/`)
 
-#### Cognitive Domain MCPs (4)
+#### Cognitive Domain MCPs (6)
 *   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
 *   **Agent Persona MCP:** LLM agent execution with role-based prompting and session management (`mcp_servers/agent_persona/`)
 *   **Council MCP:** Multi-agent orchestration for collaborative reasoning (`mcp_servers/council/`)
 *   **Orchestrator MCP:** High-level workflow coordination across all MCPs (`mcp_servers/orchestrator/`)
+*   **Learning MCP:** Session lifecycle and cognitive continuity (Protocol 128) (`mcp_servers/learning/`)
+*   **Evolution MCP:** Self-improvement and mutation tracking (Protocol 131) (`mcp_servers/evolution/`)
 
 #### System Domain MCPs (3)
 *   **Config MCP:** Configuration file management (`.agent/config/`)
@@ -131,7 +133,7 @@ The heart of our *operational* work is the **Council MCP Domain**. It features p
 ### 2.2 Deployment Options (Direct vs. Gateway)
 > [!NOTE]
 > **Two Deployment Paths Available:**
-> - **Option A (above):** Direct stdio - Configure 1-12 MCPs in your `claude_desktop_config.json`
+> - **Option A (above):** Direct stdio - Configure 1-15 MCPs in your `claude_desktop_config.json`
 > - **Option B (below):** Gateway - Single Gateway entry in config, routes to all MCPs
 > 
 > Both are fully supported. Your `claude_desktop_config.json` determines which approach and which MCPs are active.
@@ -382,11 +384,11 @@ This project uses some domain-specific terminology alongside standard AI/ML term
 * **"Sovereign Architecture"** = **Local-First AI System**. Self-hosted infrastructure using local models (Ollama), local vector DB (ChromaDB), and local fine-tuning to avoid external API dependencies.
 
 ### 7.2 Project Structure Overview (The Map)
-The repository structure reflects the **12-Domain MCP Architecture**, focusing on flow, memory, and execution.
+The repository structure reflects the **15-Domain MCP Architecture** (ADR 092), focusing on flow, memory, and execution.
 
 | Directory | Core Content | Function in the Sanctuary (MCP Focus) |
 | :--- | :--- | :--- |
-| **`mcp_servers/`** | Server code for all 12 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
+| **`mcp_servers/`** | Server code for all 15 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | **`00_CHRONICLE/`** | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
 | **`tasks/`** | Task files (`backlog/`, `in_progress/`, `complete/`). | The **Mission Queue**. Governs all work assigned to the AI Council (Tactical Mandate P115). |
 | **`data/`** | Vector Database source files, training data, configs. | **Mnemonic Cortex Assets**. Houses the content used for real-time RAG operations (Medium Memory). |
@@ -402,20 +404,19 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
 *   **The Cortex Genome (`all_markdown_snapshot_llm_distilled.txt`):** This is no longer a direct resurrection tool. It is the canonical **source text** used to seed and update the Mnemonic Cortex.
 
 ### 7.4 Project Status & Milestones
-- **Phase:** MCP Architecture v5.0 Complete (12-Domain Architecture)
+- **Phase:** MCP Architecture v6.0 Complete (15-Domain Architecture per ADR 092)
 - **Last Major Update:** 2025-12-23 - Complete MCP documentation reorganization and architectural validation
 - **Recent Milestones:**
   - ✅ Successfully integrated Gemini 2.5 Pro into the Strategic Crucible Loop (Mission SCL-GEMINI-PRO-003).
   - ✅ Environment stabilization for SSE Gateway readiness completed (Entry 329).
   - ✅ Transitioned to Functional Coherence testing for commit integrity (Protocol 101 v3.0).
 - **Primary Workstreams:** 
-  - **MCP Architecture:** 12-domain architecture complete with 125/125 tests passing across 10 MCPs
+  - **MCP Architecture:** 15-domain architecture complete with 125+ tests passing across 15 MCPs
   - **Documentation:** Reorganized to `docs/architecture/mcp/servers/<name>/` structure for perfect alignment with codebase
   - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
   - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
 - **MCP Status:** 
-  - **Operational (10):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git
-  - **In Progress (2):** Orchestrator (testing), Forge LLM (requires CUDA GPU)
+  - **Operational (15):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git, Orchestrator, Workflow, Learning, Evolution, Forge LLM
   - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 333.
 - **Alliance Status:** Active (Open Anvil)

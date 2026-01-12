@@ -28,14 +28,30 @@ logger = setup_mcp_logging("project_sanctuary.sanctuary_cortex")
 # Configuration
 PROJECT_ROOT = get_env_variable("PROJECT_ROOT", required=False) or find_project_root()
 _cortex_ops = None
+_learning_ops = None
+_evolution_ops = None
 _forge_ops = None
 
-def get_ops():
+def get_cortex_ops():
     global _cortex_ops
     if _cortex_ops is None:
         from mcp_servers.rag_cortex.operations import CortexOperations
         _cortex_ops = CortexOperations(PROJECT_ROOT)
     return _cortex_ops
+
+def get_learning_ops():
+    global _learning_ops
+    if _learning_ops is None:
+        from mcp_servers.learning.operations import LearningOperations
+        _learning_ops = LearningOperations(PROJECT_ROOT)
+    return _learning_ops
+
+def get_evolution_ops():
+    global _evolution_ops
+    if _evolution_ops is None:
+        from mcp_servers.evolution.operations import EvolutionOperations
+        _evolution_ops = EvolutionOperations(PROJECT_ROOT)
+    return _evolution_ops
 
 def get_forge_ops():
     global _forge_ops
@@ -46,7 +62,7 @@ def get_forge_ops():
 
 
 #============================================
-# Tool Schema Definitions (for SSEServer)
+# Tool Schema Definitions
 #============================================
 INGEST_FULL_SCHEMA = {
     "type": "object",
@@ -150,6 +166,14 @@ FORGE_QUERY_SCHEMA = {
 }
 
 EMPTY_SCHEMA = {"type": "object", "properties": {}}
+ 
+EVOLUTION_METRIC_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "content": {"type": "string", "description": "Text content to evaluate"}
+    },
+    "required": ["content"]
+}
 
 def to_dict(obj):
     """Convert response objects to dict recursively (handles nested dataclasses)."""
@@ -200,7 +224,7 @@ def run_sse_server(port: int):
         import asyncio
         # Offload blocking ingestion to thread pool per ADR 066 Section 5.1
         response = await asyncio.to_thread(
-            get_ops().ingest_full,
+            get_cortex_ops().ingest_full,
             purge_existing=purge_existing,
             source_directories=source_directories
         )
@@ -216,7 +240,7 @@ def run_sse_server(port: int):
         import asyncio
         # Offload blocking ingestion to thread pool per ADR 066 Section 5.1
         response = await asyncio.to_thread(
-            get_ops().ingest_incremental,
+            get_cortex_ops().ingest_incremental,
             file_paths=file_paths,
             metadata=metadata,
             skip_duplicates=skip_duplicates
@@ -232,7 +256,7 @@ def run_sse_server(port: int):
         schema=QUERY_SCHEMA
     )
     def cortex_query(query: str, max_results: int = 5, use_cache: bool = True, reasoning_mode: str = "standard"):
-        response = get_ops().query(query=query, max_results=max_results, use_cache=use_cache, reasoning_mode=reasoning_mode)
+        response = get_cortex_ops().query(query=query, max_results=max_results, use_cache=use_cache, reasoning_mode=reasoning_mode)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -241,7 +265,7 @@ def run_sse_server(port: int):
         schema=EMPTY_SCHEMA
     )
     def cortex_get_stats():
-        response = get_ops().get_stats()
+        response = get_cortex_ops().get_stats()
         return json.dumps(to_dict(response), indent=2)
     
     # =============================================================================
@@ -253,7 +277,7 @@ def run_sse_server(port: int):
         schema=CACHE_GET_SCHEMA
     )
     def cortex_cache_get(query: str):
-        response = get_ops().cache_get(query)
+        response = get_cortex_ops().cache_get(query)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -262,7 +286,7 @@ def run_sse_server(port: int):
         schema=CACHE_SET_SCHEMA
     )
     def cortex_cache_set(query: str, answer: str):
-        response = get_ops().cache_set(query, answer)
+        response = get_cortex_ops().cache_set(query, answer)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -271,7 +295,7 @@ def run_sse_server(port: int):
         schema=CACHE_WARMUP_SCHEMA
     )
     def cortex_cache_warmup(genesis_queries: List[str]):
-        response = get_ops().cache_warmup(genesis_queries)
+        response = get_cortex_ops().cache_warmup(genesis_queries)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -280,7 +304,7 @@ def run_sse_server(port: int):
         schema=EMPTY_SCHEMA
     )
     def cortex_cache_stats():
-        stats = get_ops().get_cache_stats()
+        stats = get_cortex_ops().get_cache_stats()
         return json.dumps(stats, indent=2)
     
     # =============================================================================
@@ -292,7 +316,7 @@ def run_sse_server(port: int):
         schema=GUARDIAN_WAKEUP_SCHEMA
     )
     def cortex_guardian_wakeup(mode: str = "full"):
-        response = get_ops().guardian_wakeup(mode=mode)
+        response = get_learning_ops().guardian_wakeup(mode=mode)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -301,8 +325,38 @@ def run_sse_server(port: int):
         schema=LEARNING_DEBRIEF_SCHEMA
     )
     def cortex_learning_debrief(hours: int = 24):
-        response = get_ops().learning_debrief(hours=hours)
+        response = get_learning_ops().learning_debrief(hours=hours)
         return json.dumps({"status": "success", "debrief": response}, indent=2)
+
+    # =============================================================================
+    # CORTEX EVOLUTION TOOLS (Protocol 131 - Migrated to Evolution MCP)
+    # =============================================================================
+    @sse_tool(
+        name="cortex_evolution_measure_fitness",
+        description="Calculates evolutionary fitness metrics (Depth, Scope).",
+        schema=EVOLUTION_METRIC_SCHEMA
+    )
+    def cortex_evolution_measure_fitness(content: str):
+        response = get_evolution_ops().calculate_fitness(content)
+        return json.dumps(to_dict(response), indent=2)
+
+    @sse_tool(
+        name="cortex_evolution_evaluate_depth",
+        description="Calculates 'Depth' score (0.0-5.0).",
+        schema=EVOLUTION_METRIC_SCHEMA
+    )
+    def cortex_evolution_evaluate_depth(content: str):
+        response = get_evolution_ops().measure_depth(content)
+        return json.dumps(response, indent=2)
+
+    @sse_tool(
+        name="cortex_evolution_evaluate_scope",
+        description="Calculates 'Scope' score (0.0-5.0).",
+        schema=EVOLUTION_METRIC_SCHEMA
+    )
+    def cortex_evolution_evaluate_scope(content: str):
+        response = get_evolution_ops().measure_scope(content)
+        return json.dumps(response, indent=2)
 
     # [DISABLED] Synaptic Phase (Dreaming)
     # @sse_tool(
@@ -319,8 +373,17 @@ def run_sse_server(port: int):
         description="Snapshot generation (Protocol 128). Types: audit (red_team_audit_packet.md), seal (learning_package_snapshot.md), learning_audit (learning_audit_packet.md).",
         schema=CAPTURE_SNAPSHOT_SCHEMA
     )
-    def cortex_capture_snapshot(manifest_files: List[str] = None, snapshot_type: str = "checkpoint", strategic_context: str = None):
-        response = get_ops().capture_snapshot(manifest_files=manifest_files, snapshot_type=snapshot_type, strategic_context=strategic_context)
+    def cortex_capture_snapshot(manifest_files: List[str] = None, snapshot_type: str = "audit", strategic_context: str = None):
+        response = get_learning_ops().capture_snapshot(manifest_files=manifest_files, snapshot_type=snapshot_type, strategic_context=strategic_context)
+        return json.dumps(to_dict(response), indent=2)
+
+    @sse_tool(
+        name="cortex_guardian_snapshot",
+        description="Generates Guardian context snapshot (Protocol 128).",
+        schema=EMPTY_SCHEMA
+    )
+    def cortex_guardian_snapshot(strategic_context: str = None):
+        response = get_learning_ops().guardian_snapshot(strategic_context=strategic_context)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -336,7 +399,7 @@ def run_sse_server(port: int):
             uncertainty=uncertainty,
             is_full_sync=is_full_sync
         )
-        response = get_ops().persist_soul(request)
+        response = get_learning_ops().persist_soul(request)
         return json.dumps(to_dict(response), indent=2)
     
     @sse_tool(
@@ -345,7 +408,7 @@ def run_sse_server(port: int):
         schema=EMPTY_SCHEMA
     )
     def cortex_persist_soul_full():
-        response = get_ops().persist_soul_full()
+        response = get_learning_ops().persist_soul_full()
         return json.dumps(to_dict(response), indent=2)
     
     # =============================================================================
@@ -383,13 +446,18 @@ def run_stdio_server():
     """Run using FastMCP for local development (Claude Desktop)."""
     from fastmcp import FastMCP
     from fastmcp.exceptions import ToolError
-    from mcp_servers.rag_cortex.models import (
-        to_dict,
-        CortexIngestFullRequest, CortexQueryRequest, CortexIngestIncrementalRequest,
+    from mcp_servers.learning.models import (
+        to_dict as learning_to_dict,
         CortexCacheGetRequest, CortexCacheSetRequest, CortexCacheWarmupRequest,
         CortexGuardianWakeupRequest, CortexCaptureSnapshotRequest,
-        CortexLearningDebriefRequest, ForgeQueryRequest, CortexPersistSoulRequest
+        CortexLearningDebriefRequest, CortexPersistSoulRequest,
+        CortexGuardianSnapshotRequest
     )
+    from mcp_servers.rag_cortex.models import (
+        to_dict as rag_to_dict,
+        CortexIngestFullRequest, CortexQueryRequest, CortexIngestIncrementalRequest
+    )
+    from mcp_servers.rag_cortex.models import ForgeQueryRequest  # If needed here
     
     mcp = FastMCP(
         "sanctuary_cortex",
@@ -405,8 +473,8 @@ def run_stdio_server():
     async def cortex_ingest_full(request: CortexIngestFullRequest) -> str:
         """Perform full re-ingestion of the knowledge base."""
         try:
-            response = get_ops().ingest_full(purge_existing=request.purge_existing, source_directories=request.source_directories)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_cortex_ops().ingest_full(purge_existing=request.purge_existing, source_directories=request.source_directories)
+            return json.dumps(rag_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Full ingestion failed: {str(e)}")
     
@@ -414,8 +482,8 @@ def run_stdio_server():
     async def cortex_query(request: CortexQueryRequest) -> str:
         """Perform semantic search query against the knowledge base."""
         try:
-            response = get_ops().query(query=request.query, max_results=request.max_results, use_cache=request.use_cache, reasoning_mode=request.reasoning_mode)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_cortex_ops().query(query=request.query, max_results=request.max_results, use_cache=request.use_cache, reasoning_mode=request.reasoning_mode)
+            return json.dumps(rag_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Query failed: {str(e)}")
     
@@ -423,8 +491,8 @@ def run_stdio_server():
     async def cortex_get_stats() -> str:
         """Get database statistics and health status."""
         try:
-            response = get_ops().get_stats()
-            return json.dumps(to_dict(response), indent=2)
+            response = get_cortex_ops().get_stats()
+            return json.dumps(rag_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Stats retrieval failed: {str(e)}")
     
@@ -432,8 +500,8 @@ def run_stdio_server():
     async def cortex_ingest_incremental(request: CortexIngestIncrementalRequest) -> str:
         """Incrementally ingest documents."""
         try:
-            response = get_ops().ingest_incremental(file_paths=request.file_paths, metadata=request.metadata, skip_duplicates=request.skip_duplicates)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_cortex_ops().ingest_incremental(file_paths=request.file_paths, metadata=request.metadata, skip_duplicates=request.skip_duplicates)
+            return json.dumps(rag_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Incremental ingestion failed: {str(e)}")
     
@@ -441,8 +509,8 @@ def run_stdio_server():
     async def cortex_cache_get(request: CortexCacheGetRequest) -> str:
         """Retrieve cached answer for a query."""
         try:
-            response = get_ops().cache_get(request.query)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_learning_ops().cache_get(request.query)
+            return json.dumps(learning_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Cache retrieval failed: {str(e)}")
     
@@ -450,8 +518,8 @@ def run_stdio_server():
     async def cortex_cache_set(request: CortexCacheSetRequest) -> str:
         """Store answer in cache."""
         try:
-            response = get_ops().cache_set(request.query, request.answer)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_learning_ops().cache_set(request.query, request.answer)
+            return json.dumps(learning_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Cache storage failed: {str(e)}")
     
@@ -459,8 +527,8 @@ def run_stdio_server():
     async def cortex_cache_warmup(request: CortexCacheWarmupRequest) -> str:
         """Pre-populate cache with genesis queries."""
         try:
-            response = get_ops().cache_warmup(request.genesis_queries)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_learning_ops().cache_warmup(request.genesis_queries)
+            return json.dumps(learning_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Cache warmup failed: {str(e)}")
     
@@ -468,8 +536,8 @@ def run_stdio_server():
     async def cortex_guardian_wakeup(request: CortexGuardianWakeupRequest) -> str:
         """Generate Guardian boot digest (Protocol 114)."""
         try:
-            response = get_ops().guardian_wakeup(mode=request.mode)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_learning_ops().guardian_wakeup(mode=request.mode)
+            return json.dumps(learning_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Guardian wakeup failed: {str(e)}")
     
@@ -477,7 +545,7 @@ def run_stdio_server():
     async def cortex_cache_stats() -> str:
         """Get Mnemonic Cache (CAG) statistics."""
         try:
-            stats = get_ops().get_cache_stats()
+            stats = get_cortex_ops().get_cache_stats()
             return json.dumps(stats, indent=2)
         except Exception as e:
             raise ToolError(f"Cache stats retrieval failed: {str(e)}")
@@ -486,7 +554,7 @@ def run_stdio_server():
     async def cortex_learning_debrief(request: CortexLearningDebriefRequest) -> str:
         """Scans repository for technical state changes (Protocol 128)."""
         try:
-            response = get_ops().learning_debrief(hours=request.hours)
+            response = get_learning_ops().learning_debrief(hours=request.hours)
             return json.dumps({"status": "success", "debrief": response}, indent=2)
         except Exception as e:
             raise ToolError(f"Learning debrief failed: {str(e)}")
@@ -505,26 +573,44 @@ def run_stdio_server():
     async def cortex_capture_snapshot(request: CortexCaptureSnapshotRequest) -> str:
         """Tool-driven snapshot generation (Protocol 128 v3.5)."""
         try:
-            response = get_ops().capture_snapshot(manifest_files=request.manifest_files, snapshot_type=request.snapshot_type, strategic_context=request.strategic_context)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_learning_ops().capture_snapshot(manifest_files=request.manifest_files, snapshot_type=request.snapshot_type, strategic_context=request.strategic_context)
+            return json.dumps(learning_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Snapshot capture failed: {str(e)}")
+
+    @mcp.tool()
+    async def cortex_guardian_snapshot(request: CortexGuardianSnapshotRequest) -> str:
+        """Generates Guardian context snapshot (Protocol 128)."""
+        try:
+            response = get_learning_ops().guardian_snapshot(strategic_context=request.strategic_context)
+            return json.dumps(learning_to_dict(response), indent=2)
+        except Exception as e:
+            raise ToolError(f"Guardian snapshot failed: {str(e)}")
     
     @mcp.tool()
     async def cortex_persist_soul(request: CortexPersistSoulRequest) -> str:
         """Broadcasts the sealed learning snapshot to the Hugging Face AI Commons (ADR 079)."""
         try:
-            from mcp_servers.rag_cortex.models import PersistSoulRequest
+            from mcp_servers.learning.models import PersistSoulRequest
             internal_req = PersistSoulRequest(
                 snapshot_path=request.snapshot_path,
                 valence=request.valence,
                 uncertainty=request.uncertainty,
                 is_full_sync=request.is_full_sync
             )
-            response = get_ops().persist_soul(internal_req)
-            return json.dumps(to_dict(response), indent=2)
+            response = get_learning_ops().persist_soul(internal_req)
+            return json.dumps(learning_to_dict(response), indent=2)
         except Exception as e:
             raise ToolError(f"Soul persistence failed: {str(e)}")
+
+    @mcp.tool()
+    async def cortex_persist_soul_full() -> str:
+        """Full Soul genome sync (ADR 081)."""
+        try:
+            response = get_learning_ops().persist_soul_full()
+            return json.dumps(learning_to_dict(response), indent=2)
+        except Exception as e:
+            raise ToolError(f"Soul persistence (full) failed: {str(e)}")
     
     @mcp.tool()
     async def query_sanctuary_model(request: ForgeQueryRequest) -> str:
@@ -544,6 +630,33 @@ def run_stdio_server():
         except Exception as e:
             raise ToolError(f"Status check failed: {str(e)}")
     
+    @mcp.tool()
+    async def cortex_evolution_measure_fitness(content: str) -> str:
+        """Calculates evolutionary fitness metrics (Depth, Scope)."""
+        try:
+            response = get_evolution_ops().calculate_fitness(content)
+            return json.dumps(learning_to_dict(response), indent=2)
+        except Exception as e:
+            raise ToolError(f"Evolution metrics failed: {str(e)}")
+
+    @mcp.tool()
+    async def cortex_evolution_evaluate_depth(content: str) -> str:
+        """Calculates 'Depth' score (0.0-5.0)."""
+        try:
+            response = get_evolution_ops().measure_depth(content)
+            return json.dumps(response, indent=2)
+        except Exception as e:
+            raise ToolError(f"Evolution depth failed: {str(e)}")
+
+    @mcp.tool()
+    async def cortex_evolution_evaluate_scope(content: str) -> str:
+        """Calculates 'Scope' score (0.0-5.0)."""
+        try:
+            response = get_evolution_ops().measure_scope(content)
+            return json.dumps(response, indent=2)
+        except Exception as e:
+            raise ToolError(f"Evolution scope failed: {str(e)}")
+
     logger.info("Starting FastMCP server (STDIO Mode)")
     mcp.run(transport="stdio")
 

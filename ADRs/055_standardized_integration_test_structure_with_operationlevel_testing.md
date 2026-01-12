@@ -13,7 +13,7 @@ Integration tests for MCP servers with LLM dependencies (agent_persona, council,
 
 ## Decision
 
-We will standardize integration test structure across all 12 MCP servers with the following components:
+We will standardize integration test structure across all 15 MCP servers with the following components:
 
 1. **test_operations.py** - Tests each MCP operation individually with clear calling examples
 2. **conftest.py** - Includes automatic test result logging to test_history.json

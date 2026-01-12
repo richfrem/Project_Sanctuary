@@ -56,12 +56,13 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 2.  **Zero-Trust Check**: The tool automatically verifies the manifest against `git diff`. If discrepancies exist, it flags them in the generated packet.
 3.  **Audit**: Human reviews the consolidated `.agent/learning/red_team/red_team_audit_packet.md` for technical truth.
 
-### Phase 8: The Technical Seal (The Succession)
-1.  **The Seal**: Once the audit is approved, the agent calls `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='seal'`.
-2.  **Successor Update**: The tool generates the final `learning_package_snapshot.md` for total technical continuity. 
+### Phase 8: The Closure Loop (Strict Order)
+1.  **Retrospective**: Update `loop_retrospective.md` with the final verdict.
+2.  **Deployment**: Restart containers to apply code changes.
+3.  **The Seal**: Call `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='seal'`.
     > [!IMPORTANT]
-    > **Meta-Preservation**: The manifest for the Seal MUST include this SOP (`.agent/workflows/recursive_learning.md`) if any logical optimizations were made during the session.
-3.  **Preservation**: Commit all learning artifacts as per Protocol 101 Preservation.
+    > **Meta-Preservation**: The manifest for the Seal MUST include this SOP (`.agent/workflows/recursive_learning.md`) if logical optimizations were made.
+4.  **Preservation**: Commit all learning artifacts as per Protocol 101 Preservation.
 
 ---
 
