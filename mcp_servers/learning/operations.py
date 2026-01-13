@@ -466,16 +466,15 @@ class LearningOperations:
         # Ideally load .agent/learning/manifest_registry.json
         return manifest, {}
 
-    #============================================================
-    # 5. RLM CONTEXT SYNTHESIS (Protocol 132)
-    #============================================================
     def _rlm_context_synthesis(self) -> str:
         """
         Implements Protocol 132: Recursive Context Synthesis.
-        Generates the 'Cognitive Hologram' by mapping and reducing the system state.
+        Generates the 'Cognitive Hologram' by mapping and reducing the system state via LOCAL LLM.
         """
         try:
-            logger.info("🧠 RLM: Starting Recursive Context Synthesis...")
+            import time
+            start_time = time.time()
+            logger.info("🧠 RLM: Starting Recursive Context Synthesis (Sovereign Mode)...")
             
             # Phase 1: Map (Decomposition)
             roots = ["01_PROTOCOLS", "ADRs", "mcp_servers"]
@@ -484,6 +483,12 @@ class LearningOperations:
             # Phase 2: Reduce (Synthesis)
             hologram = self._rlm_reduce(perception_map)
             
+            duration = time.time() - start_time
+            logger.info(f"🧠 RLM: Synthesis Complete in {duration:.2f} seconds.")
+            
+            # Append timing to hologram for visibility
+            hologram += f"\n\n**Process Metrics:**\n* Total Synthesis Time: {duration:.2f}s"
+            
             return hologram
         except Exception as e:
             logger.error(f"RLM Synthesis failed: {e}")
@@ -491,34 +496,91 @@ class LearningOperations:
 
     def _rlm_map(self, roots: List[str]) -> Dict[str, str]:
         """
-        Level 1: Iterate roots and generate atomic summaries.
-        TODO: Phase IX - Replace static header extraction with actual LLM calls.
+        Level 1: Iterate roots and generate atomic summaries using local Qwen2-7B.
         """
+        import requests
+        import os
+        from dotenv import load_dotenv
+        
+        load_dotenv()
+        
+        # Configuration
+        OLLAMA_URL = os.getenv("OLLAMA_HOST", "http://localhost:11434") + "/api/generate"
+        MODEL_NAME = os.getenv("OLLAMA_MODEL", "hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M")
+        
         results = {}
+        
+        # 1. Pre-calculate total files for progress tracking
+        all_files = []
         for root in roots:
             root_path = self.project_root / root
             if not root_path.exists(): continue
-            
-            # Recursive walk (implicitly bounded by project structure)
             for path in root_path.rglob("*.md"):
                 if "template" in str(path).lower(): continue
+                all_files.append((root, path))
                 
-                try:
-                    content = path.read_text(errors='ignore')
-                    rel_path = str(path.relative_to(self.project_root))
-                    
-                    # Static Analysis Proxy for RLM (The "Map")
-                    # In full RLM, this is: summary = llm.generate(f"Summarize {content}")
-                    title = "Untitled"
-                    lines = content.split('\n')
-                    for line in lines:
-                        if line.startswith("# "):
-                            title = line[2:].strip()
-                            break
-                    
-                    results[rel_path] = title
-                except Exception:
+        total_files = len(all_files)
+        logger.info(f"🧠 RLM: Mapping {total_files} files with model {MODEL_NAME}...")
+
+        file_number = 0
+        for root, path in all_files:
+            file_number += 1
+            rel_path = str(path.relative_to(self.project_root))
+            
+            try:
+                # Log progress
+                logger.info(f"   [{file_number}/{total_files}] Processing {rel_path}...")
+                
+                content = path.read_text(errors='ignore')
+                
+                # Optimization: Skip huge files or empty ones
+                if not content.strip(): 
+                    results[rel_path] = "[Empty File]"
                     continue
+                if len(content) > 10000: 
+                    content = content[:10000] + "\n...[Truncated]"
+
+                # The Real Prompt
+                prompt = (
+                    f"Analyze the following Project Sanctuary document. "
+                    f"Provide a single, dense sentence summarizing its architectural purpose and status.\n"
+                    f"Document: {rel_path}\n"
+                    f"Content:\n{content}\n\n"
+                    f"Architectural Summary:"
+                )
+
+                # The Real Call (Ollama)
+                # Timeout INCREASED to 120s per file to accommodate slow generations
+                response = requests.post(
+                    OLLAMA_URL, 
+                    json={
+                        "model": MODEL_NAME,
+                        "prompt": prompt,
+                        "stream": False,
+                        "options": {
+                            "num_ctx": 4096,
+                            "temperature": 0.1  # Low temp for factual precision
+                        } 
+                    },
+                    timeout=120
+                )
+                
+                if response.status_code == 200:
+                    summary = response.json().get("response", "").strip()
+                    # Clean up common LLM chatting artifacts
+                    if summary.startswith("Here is a"): summary = summary.split(":", 1)[-1].strip()
+                    results[rel_path] = summary
+                else:
+                    logger.warning(f"Ollama Error {response.status_code} for {rel_path}")
+                    results[rel_path] = f"[Ollama Generation Failed: {response.status_code}]"
+
+            except requests.exceptions.Timeout:
+                logger.warning(f"Timeout processing {rel_path}")
+                results[rel_path] = "[RLM Read Timeout]"
+            except Exception as e:
+                logger.warning(f"Failed to map {rel_path}: {e}")
+                continue
+                    
         return results
 
     def _rlm_reduce(self, map_data: Dict[str, str]) -> str:
@@ -528,9 +590,10 @@ class LearningOperations:
         lines = [
             "# Cognitive Hologram (Protocol 132)", 
             f"**Synthesis Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", 
+            f"**Engine:** Local Sovereign (Sanctuary-Qwen2-7B)",
             "",
             "> [!NOTE]",
-            "> This context is recursively synthesized from the current system state.",
+            "> This context is recursively synthesized from the current system state using the local fine-tuned model.",
             ""
         ]
         
@@ -546,8 +609,8 @@ class LearningOperations:
         lines.append("\n".join([f"* {a}" for a in adrs]))
         
         lines.append(f"\n## 3. Active Capabilities ({len(code)} Modules)")
-        lines.append("\n".join([f"* {c}" for c in code[:20]])) # Truncate for brevity
-        if len(code) > 20: lines.append(f"* ... and {len(code)-20} more modules.")
+        lines.append("\n".join([f"* {c}" for c in code[:30]])) # Slightly larger display
+        if len(code) > 30: lines.append(f"* ... and {len(code)-30} more modules.")
         
         return "\n".join(lines)
 

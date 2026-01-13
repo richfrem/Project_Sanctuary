@@ -108,7 +108,8 @@
         "guardian_boot_digest.md",
         "learning_audit_packet.md",
         "red_team_packet.md",
-        "markdown_snapshot_full_genome_llm_distilled.txt"
+        "markdown_snapshot_full_genome_llm_distilled.txt",
+        "rlm_summary_cache.json"
     ],
     "exclude_patterns": [
         ".*\\.(gguf|bin|safetensors|ckpt|pth|onnx|pb)$",

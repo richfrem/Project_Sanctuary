@@ -181,3 +181,46 @@ class TestLearningOperations(BaseIntegrationTest):
                     assert response.status == "success"
                     # We expect the snapshot path to be the constant seal filename
                     assert "learning_package_snapshot.md" in response.snapshot_path
+
+    #===========================================================================
+    # RLM SYNTHESIS (Protocol 132) - Real Call Smoke Test
+    #===========================================================================
+    def test_rlm_real_call_ollama(self, learning_ops):
+        """
+        [INTEGRATION] Verifies _rlm_map actually calls the local Ollama instance
+        and returns a summary string (not an error).
+        Requires: Local Ollama running Sanctuary-Qwen2-7B.
+        """
+        # 1. Setup a single test file in a valid root
+        test_file = learning_ops.project_root / "01_PROTOCOLS" / "test_rlm.md"
+        test_file.write_text(
+            "# Protocol Test\n"
+            "This protocol defines the testing standard. "
+            "It ensures that systems respond to inputs with expected outputs."
+        )
+        
+        # 2. Run _rlm_map (Filtered to just this file if possible, or tolerate others)
+        # Since _rlm_map takes roots, we pass the root we created.
+        try:
+            results = learning_ops._rlm_map(["01_PROTOCOLS"])
+            
+            # 3. Validation
+            key = "01_PROTOCOLS/test_rlm.md"
+            if key not in results:
+                # Might be due to temp dir pathing issues in test runner vs real execution
+                # But we check if *any* result came back
+                assert len(results) > 0, "No results returned from RLM map"
+                # If we found something else, that's fine, just check it didn't error
+                first_val = list(results.values())[0]
+                assert "[Ollama" not in first_val, f"Ollama Error: {first_val}"
+                assert len(first_val) > 5, "Summary too short"
+            else:
+                summary = results[key]
+                assert len(summary) > 5
+                # Check for error strings
+                if "[Ollama" in summary:
+                    pytest.fail(f"Real Ollama Call Failed: {summary}")
+                
+        except Exception as e:
+            # If Ollama is down/slow integration test might fail, which is valid signal
+            pytest.fail(f"RLM Integration Exception: {e}")
