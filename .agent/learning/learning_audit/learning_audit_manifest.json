@@ -4,13 +4,17 @@
     ".agent/learning/cognitive_primer.md",
     ".agent/learning/guardian_boot_contract.md",
     "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
-    "01_PROTOCOLS/131_Evolutionary_Self_Improvement.md",
+    "01_PROTOCOLS/132_Recursive_Context_Synthesis.md",
+    "ADRs/092_RLM_Context_Synthesis.md",
     ".agent/learning/learning_audit/learning_audit_core_prompt.md",
     ".agent/learning/learning_audit/learning_audit_prompts.md",
     ".agent/rules/cognitive_continuity_policy.md",
-    "LEARNING/topics/drq_recursive_self_improvement",
-    "docs/architecture_diagrams/workflows/drq_evolution_loop.mmd",
+    "LEARNING/topics/Recursive_Language_Models/",
     "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
-    "mcp_servers/evolution/",
-    "tests/mcp_servers/evolution/"
+    "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd",
+    "LEARNING/topics/Recursive_Language_Models/11_risk_mitigation_and_mapping.md",
+    "LEARNING/topics/Recursive_Language_Models/12_performance_estimates.md",
+    "LEARNING/topics/Recursive_Language_Models/13_proposal_rlm_guardian_digest.md",
+    "LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py",
+    "mcp_servers/learning/operations.py"
 ]

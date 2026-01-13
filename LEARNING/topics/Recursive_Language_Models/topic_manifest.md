@@ -1,22 +1,17 @@
-# Topic Manifest: Recursive Language Models (RLM)
-
-**Topic ID:** `learning-topic-004`
-**Created:** 2026-01-12
-**Status:** Active Synthesis
-**Owner:** Cortex Guardian
-
-## Description
-Investigation into "Recursive Language Models" (MIT) and "Titans" (DeepMind) as distinct approaches to the long-context problem (Inference Strategy vs Neural Memory). This topic explores the architectural impact on Sanctuary's "Soul Persistence" and "Cognitive Continuity" protocols.
-
-## Core Artifacts
-- `01_analysis_rlm_vs_titans.md`: Comparative analysis and narrative de-confliction.
-
-## Key Insights
-1.  **RLM (Strategy):** Uses REPL-based recursion to virtualize context. Actionable now.
-2.  **Titans (Architecture):** Uses "Test-Time Training" to update weights. Future roadmap.
-
-## Source Verification
-| ID | Title | Verified | Link |
-|:---|:---|:---:|:---|
-| [S1] | Recursive Language Models (Zhang et al) | ✅ | [arXiv:2512.24601](https://arxiv.org/abs/2512.24601) |
-| [S2] | Titans: Learning to Memorize (DeepMind) | ✅ | [arXiv:2501.00663](https://arxiv.org/abs/2501.00663) |
+[
+    "01_analysis_rlm_vs_titans.md",
+    "02_plain_language_summary_and_qa.md",
+    "03_technical_qa_mit_rlm_paper.md",
+    "04_architectural_insight_rlm_vs_rag.md",
+    "05_visual_explanation_of_rlm_mechanism.md",
+    "06_applied_example_sanctuary_repo.md",
+    "07_conceptual_affirmation_mapreduce.md",
+    "08_comparison_python_variables_vs_vector_db.md",
+    "09_synthesis_reassembling_the_bits.md",
+    "10_strategic_impact_paradigm_shift.md",
+    "11_risk_mitigation_and_mapping.md",
+    "12_performance_estimates.md",
+    "13_proposal_rlm_guardian_digest.md",
+    "poc_rlm_synthesizer.py",
+    "topic_manifest.md"
+]

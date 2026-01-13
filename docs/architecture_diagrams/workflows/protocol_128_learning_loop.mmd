@@ -25,7 +25,7 @@ flowchart TB
         AuditPacket["Generate Learning Audit Packet"] --> RedTeam{"Red Team<br>Approve?"}
     end
 
-    subgraph subGraphRLM["V. RLM Context Synthesis (Protocol 132)"]
+    subgraph subGraphRLM["V. RLM (Recursive Language Model) Context Synthesis (Protocol 132)"]
         direction TB
         TriggerRLM["Trigger: RLM Synthesizer"]
         Map["Map: Protocols, ADRs, Code"]
@@ -37,7 +37,9 @@ flowchart TB
 
     subgraph subGraphSeal["VI. The Technical Seal"]
         direction TB
-        Seal["cortex_capture_snapshot --type seal"]
+        RLMTrigger["Trigger Protocol 132 (RLM)"]
+        SealCmd["cortex_capture_snapshot --type seal"]
+        SealCmd --> RLMTrigger
     end
 
     subgraph subGraphPersist["VII. Soul Persistence"]

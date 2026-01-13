@@ -289,6 +289,9 @@ class LearningOperations:
         if not effective_manifest:
             if snapshot_type == "seal":
                 manifest_file = learning_dir / "learning_manifest.json"
+                # ACTIVATE PROTOCOL 132 (RLM SYNTHESIS)
+                if not strategic_context:
+                    strategic_context = self._rlm_context_synthesis()
             elif snapshot_type == "learning_audit":
                 manifest_file = output_dir / "learning_audit_manifest.json"
             else:
@@ -463,7 +466,93 @@ class LearningOperations:
         # Ideally load .agent/learning/manifest_registry.json
         return manifest, {}
 
+    #============================================================
+    # 5. RLM CONTEXT SYNTHESIS (Protocol 132)
+    #============================================================
+    def _rlm_context_synthesis(self) -> str:
+        """
+        Implements Protocol 132: Recursive Context Synthesis.
+        Generates the 'Cognitive Hologram' by mapping and reducing the system state.
+        """
+        try:
+            logger.info("🧠 RLM: Starting Recursive Context Synthesis...")
+            
+            # Phase 1: Map (Decomposition)
+            roots = ["01_PROTOCOLS", "ADRs", "mcp_servers"]
+            perception_map = self._rlm_map(roots)
+            
+            # Phase 2: Reduce (Synthesis)
+            hologram = self._rlm_reduce(perception_map)
+            
+            return hologram
+        except Exception as e:
+            logger.error(f"RLM Synthesis failed: {e}")
+            return "## Cognitive Hologram [Failure]\n* System failed to synthesize state."
+
+    def _rlm_map(self, roots: List[str]) -> Dict[str, str]:
+        """
+        Level 1: Iterate roots and generate atomic summaries.
+        TODO: Phase IX - Replace static header extraction with actual LLM calls.
+        """
+        results = {}
+        for root in roots:
+            root_path = self.project_root / root
+            if not root_path.exists(): continue
+            
+            # Recursive walk (implicitly bounded by project structure)
+            for path in root_path.rglob("*.md"):
+                if "template" in str(path).lower(): continue
+                
+                try:
+                    content = path.read_text(errors='ignore')
+                    rel_path = str(path.relative_to(self.project_root))
+                    
+                    # Static Analysis Proxy for RLM (The "Map")
+                    # In full RLM, this is: summary = llm.generate(f"Summarize {content}")
+                    title = "Untitled"
+                    lines = content.split('\n')
+                    for line in lines:
+                        if line.startswith("# "):
+                            title = line[2:].strip()
+                            break
+                    
+                    results[rel_path] = title
+                except Exception:
+                    continue
+        return results
+
+    def _rlm_reduce(self, map_data: Dict[str, str]) -> str:
+        """
+        Level 2: Synthesize atomic summaries into the Hologram.
+        """
+        lines = [
+            "# Cognitive Hologram (Protocol 132)", 
+            f"**Synthesis Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", 
+            "",
+            "> [!NOTE]",
+            "> This context is recursively synthesized from the current system state.",
+            ""
+        ]
+        
+        # Group by Domain
+        protocols = sorted([f"`{k}`: {v}" for k,v in map_data.items() if "PROTOCOL" in k])
+        adrs = sorted([f"`{k}`: {v}" for k,v in map_data.items() if "ADR" in k])
+        code = sorted([f"`{k}`: {v}" for k,v in map_data.items() if "mcp_servers" in k])
+        
+        lines.append(f"## 1. Constitutional State ({len(protocols)} Protocols)")
+        lines.append("\n".join([f"* {p}" for p in protocols]))
+        
+        lines.append(f"\n## 2. Decision Record ({len(adrs)} Decisions)")
+        lines.append("\n".join([f"* {a}" for a in adrs]))
+        
+        lines.append(f"\n## 3. Active Capabilities ({len(code)} Modules)")
+        lines.append("\n".join([f"* {c}" for c in code[:20]])) # Truncate for brevity
+        if len(code) > 20: lines.append(f"* ... and {len(code)-20} more modules.")
+        
+        return "\n".join(lines)
+
     def _get_git_state(self, project_root: Path) -> Dict[str, Any]:
+
         """Captures current Git state signature."""
         try:
             git_status_proc = subprocess.run(
