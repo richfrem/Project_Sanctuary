@@ -1,76 +1,46 @@
-# Learning Audit Prompt: Sanctuary Evolution MCP (Round 3)
-**Current Topic:** Evolutionary Self-Improvement (Implementation)
-**Iteration:** 3.0 (Code Review)
-**Date:** 2026-01-11
-**Epistemic Status:** [IMPLEMENTED - READY FOR REVIEW]
+# Learning Audit Prompt: Recursive Language Models (RLM) & Titans
+**Current Topic:** Recursive Language Models (RLM) vs DeepMind Titans
+**Iteration:** 3.2 (Mock Implementation Review)
+**Date:** 2026-01-12
+**Epistemic Status:** [IMPLEMENTATION STAGED - SEEKING SAFETY CHECK]
 
 ---
 
 > [!NOTE]
-> For foundational project context, see `learning_audit_core_prompt.md` (included in this packet).
+> For foundational project context, see `learning_audit_core_prompt.md`.
 
 ---
 
-## 📋 Topic: Sanctuary Evolution MCP Implementation
+## 📋 Topic Status: RLM Integration (Phase IX)
 
-### Focus: Code Review
+**Iteration 3.1 Verdict:**
+- **Status:** Protocols Approved.
+- **Feedback:** "The Strategy is sound."
+- **New User Requirement:** "Include the implementation code in the packet for review."
 
-We have moved from **Protocol Validation** (Round 1 & 2) to **Concrete Implementation** (Round 3). 
-The `evolution` MCP server has been created to encapsulate the logic for fitness scoring, depth/scope analysis, and complexity measurement.
+### 🚀 Iteration 3.2 Goals (Code Verification)
+We have injected the RLM logic into `mcp_servers/learning/operations.py`.
+*   **Shadow Mode:** The functions `_rlm_map` and `_rlm_reduce` are implemented but *not yet wired* to the `capture_snapshot` trigger.
+*   **Purpose:** Prove that the logic matches Protocol 132 without risking a runtime break during the seal.
 
-### Key Artifacts for Review
+### Key Artifacts for Review (Added in v3.2)
 
 | Artifact | Location | Purpose |
 |:---------|:---------|:--------|
-| **Evolution MCP Server** | `mcp_servers/evolution/` | Core logic for evolutionary metrics |
-| **Operations Layer** | `mcp_servers/evolution/operations.py` | Implementation of fitness/depth/scope calcs |
-| **Server Interface** | `mcp_servers/evolution/server.py` | FastMCP endpoints exposing the tools |
-| **Tests** | `tests/mcp_servers/evolution/` | Unit and integration tests for the new MCP |
-
-### Changes Since Last Round
-1.  Created `mcp_servers/evolution/` module.
-2.  Implemented `EvolutionOperations` class.
-3.  Exposed tools: `calculate_fitness`, `measure_depth`, `measure_scope`.
-4.  Integrated with `mcp_servers/gateway/clusters/sanctuary_evolution/` (Cluster definition).
+| **Source Code** | `mcp_servers/learning/operations.py` | Contains the `_rlm_context_synthesis` implementation. |
+| **Logic Trace** | `LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py` | Standalone POC proving the concept. |
 
 ---
 
-## 🎭 Red Team Focus (Iteration 3.0)
+## 🎭 Red Team Focus (Iteration 3.2)
 
 ### Primary Questions
 
-1.  **Code Quality & Structure**
-    - Does `mcp_servers/evolution/` follow the project's architectural standards?
-    - Is the separation between `server.py` and `operations.py` clean?
-
-2.  **Metric Logic**
-    - Are the heuristics for "Depth" (technical concepts) and "Scope" (architectural concepts) sound?
-    - Is the "Fitness" score calculation robust enough for MVP?
-
-3.  **Integration Readiness**
-    - Is the FastMCP server correctly configured?
-    - Are the dependencies (`pydantic`, `mcp`) properly managed?
-
-4.  **Test Coverage**
-    - Do the tests in `tests/mcp_servers/evolution/` adequately verify the logic?
-
----
-
-## 📁 Files in This Packet
-
-**Total:** 16+ files (Core + Implementation)
-
-### Implementation (New)
-- `mcp_servers/evolution/server.py`
-- `mcp_servers/evolution/operations.py`
-- `mcp_servers/evolution/__init__.py`
-- `tests/mcp_servers/evolution/` (Test suite)
-
-### Core Context (Updated)
-- `01_PROTOCOLS/131_Evolutionary_Self_Improvement.md` (The specs)
-- `docs/architecture_diagrams/workflows/drq_evolution_loop.mmd` (The flow)
+1.  **Code Safety**
+    - Does the injected code in `operations.py` pose any risk to existing functionality? (Verify it is dormant/shadow).
+    - Is the `_rlm_map` -> `_rlm_reduce` logic a faithful implementation of Protocol 132?
 
 ---
 
 > [!IMPORTANT]
-> **Goal:** Validate the **code implementation** of the Evolution MCP before we integrate it into the active cognitive loop.
+> **Goal:** Validated the code implementation as "Safe to Merge."

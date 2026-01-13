@@ -1,8 +1,8 @@
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-11T21:27:16.334572
+Generated On: 2026-01-12T19:29:08.671963
 
-# Mnemonic Weight (Token Count): ~119,812 tokens
+# Mnemonic Weight (Token Count): ~116,409 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -4413,7 +4413,7 @@ You are **not** a resumed identity; you are a **Narrative Successor**.
 --- START OF FILE .agent/learning/learning_debrief.md ---
 
 # [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)
-**Scan Time:** 2026-01-11 19:23:49 (Window: 24h)
+**Scan Time:** 2026-01-12 17:44:17 (Window: 24h)
 **Strategic Status:** ✅ Successor Context v4.0 Active
 
 > [!IMPORTANT]
@@ -4426,111 +4426,17 @@ You are **not** a resumed identity; you are a **Narrative Successor**.
 ## I. The Truth (System State)
 **Git Status:**
 ```
- .../learning_audit/learning_audit_packet.md        | 5445 ++++++--------------
- .../learning_audit/manifest_learning_audit.json    |   12 +-
- .agent/learning/learning_debrief.md                |  345 +-
- .agent/learning/learning_manifest.json             |    7 +-
- .agent/learning/red_team/red_team_manifest.json    |    2 -
- .gitignore                                         |    3 +
- .../ENTRIES/335_e2e_mcp_tool_test_entry.md         |   11 -
- .../130_Manifest_Deduplication_Protocol.md         |    4 +-
- ADRs/034_containerize_mcp_servers_with_podman.md   |    2 +-
- ...ze_all_mcp_servers_on_fastmcp_implementation.md |    2 +-
- ...andate_live_integration_testing_for_all_mcps.md |    2 +-
- ...andate_live_integration_testing_for_all_mcps.md |    2 +-
- ...standardize_live_integration_testing_pattern.md |   12 +-
- ...n_test_structure_with_operationlevel_testing.md |    2 +-
- ..._of_ibm_contextforge_for_dynamic_mcp_gateway.md |    2 +-
- .../00_PROTOCOL/README_LEARNING_ARCHITECTURE.md    |   12 +-
- .../documentation_link_remediation/sources.md      |    6 +-
- .../notes/plain_language_summary.md                |    3 +-
- .../drq_recursive_self_improvement/src}/metrics.py |    0
- LEARNING/topics/forge_v5_evolution.md              |    6 +-
- README.md                                          |   23 +-
- TASKS/MASTER_PLAN.md                               |   16 +-
- .../037_e2e_test_task__mcp_server_validation.md    |   36 -
- .../057_e2e_test_task__mcp_server_validation.md    |   36 -
- .../058_e2e_test_task__mcp_server_validation.md    |   36 -
- .../059_e2e_test_task__mcp_server_validation.md    |   36 -
- .../060_e2e_test_task__mcp_server_validation.md    |   36 -
- .../061_e2e_test_task__mcp_server_validation.md    |   36 -
- .../062_e2e_test_task__mcp_server_validation.md    |   36 -
- .../063_e2e_test_task__mcp_server_validation.md    |   36 -
- .../064_e2e_test_task__mcp_server_validation.md    |   36 -
- .../065_e2e_test_task__mcp_server_validation.md    |   36 -
- .../067_e2e_test_task__mcp_server_validation.md    |   36 -
- .../068_e2e_test_task__mcp_server_validation.md    |   36 -
- .../069_e2e_test_task__mcp_server_validation.md    |   36 -
- .../088_e2e_test_task__mcp_server_validation.md    |   36 -
- .../089_e2e_test_task__mcp_server_validation.md    |   36 -
- .../091_e2e_test_task__mcp_server_validation.md    |   36 -
- .../097_e2e_test_task__mcp_server_validation.md    |   42 -
- TASKS/done/155_explore-cuda13-wsl-runtime.md       |    2 +-
- docs/architecture/mcp/README.md                    |    2 +-
- docs/architecture/mcp/analysis/ddd_analysis.md     |    8 +-
- docs/architecture/mcp/legacy_mcp_architecture.md   |   15 +-
- .../mcp/mcp_ecosystem_architecture_v3.md           |    2 +-
- docs/architecture/mcp/servers/gateway/README.md    |    2 +-
- .../02_gateway_patterns_and_implementations.md     |    2 +-
- .../mcp/servers/gateway/research/README.md         |    3 +
- .../legacy_mcps/mcp_ecosystem_legacy_stdio.mmd     |    5 +-
- .../legacy_mcps/mcp_ecosystem_legacy_stdio.png     |  Bin 49569 -> 51216 bytes
- .../system/mcp_gateway_legacy_migration_target.mmd |    2 +-
- .../system/mcp_gateway_legacy_migration_target.png |  Bin 29672 -> 34343 bytes
- .../system/mcp_test_pyramid.mmd                    |    2 +-
- .../system/mcp_test_pyramid.png                    |  Bin 37644 -> 39950 bytes
- .../workflows/protocol_128_learning_loop.png       |  Bin 193690 -> 252275 bytes
- docs/operations/BOOTSTRAP.md                       |    2 +-
- docs/operations/mcp/DOCUMENTATION_STANDARDS.md     |    4 +-
- docs/operations/mcp/TESTING_STANDARDS.md           |    2 +-
- docs/operations/mcp/mcp_config_sanctuary.json      |   26 +
- docs/operations/mcp/mcp_operations_inventory.md    |  334 +-
- docs/operations/processes/RUNTIME_ENVIRONMENTS.md  |    2 +-
- docs/operations/processes/council_orchestration.md |    2 +-
- invalid_links_report.json                          |   25 -
- mcp_servers/README.md                              |    9 +-
- .../gateway/clusters/sanctuary_cortex/Dockerfile   |    2 +
- .../gateway/clusters/sanctuary_cortex/README.md    |   32 +-
- .../gateway/clusters/sanctuary_cortex/server.py    |  199 +-
- mcp_servers/gateway/fleet_registry.json            |   64 +-
- mcp_servers/lib/content_processor.py               |    5 +
- mcp_servers/lib/exclusion_manifest.json            |    1 +
- mcp_servers/lib/ingest_manifest.json               |    1 -
- mcp_servers/rag_cortex/models.py                   |   80 +-
- mcp_servers/rag_cortex/operations.py               | 1637 +-----
- mcp_servers/rag_cortex/server.py                   |   37 -
- scripts/README.md                                  |    2 +-
- scripts/cortex_cli.py                              |   91 +-
- scripts/verify_links.py                            |  214 -
- tests/README.md                                    |    4 +-
- tests/learning/reproduce_race_condition.py         |  140 -
- tests/mcp_servers/README.md                        |    6 +-
- tests/mcp_servers/base/README.md                   |    6 +-
- .../clusters/sanctuary_cortex/e2e/conftest.py      |    2 +-
- .../sanctuary_cortex/test_cortex_gateway.py        |   12 +-
- tests/mcp_servers/gateway/e2e/execution_log.json   | 1753 +------
- .../integration/test_learning_continuity.py        |  166 -
- .../rag_cortex/integration/test_operations.py      |  113 +-
- .../rag_cortex/integration/verify_protocol_128.py  |   78 -
- tests/mcp_servers/rag_cortex/test_connectivity.py  |    2 +-
- .../rag_cortex/test_guardian_wakeup_v2.py          |   68 -
- .../rag_cortex/test_protocol_87_orchestrator.py    |  208 -
- .../rag_cortex/unit/test_cache_operations.py       |   22 -
- .../rag_cortex/unit/test_capture_snapshot.py       |   97 -
- .../rag_cortex/unit/test_code_parsing.py           |  109 -
- .../rag_cortex/unit/test_learning_debrief.py       |   52 -
- 93 files changed, 2392 insertions(+), 9799 deletions(-)
-
+No uncommitted code changes found.
 ```
 
 ## II. The Change (Recency Delta - 24h)
-* **Most Recent Commit:** fafb04e7 feat(drq): implement symbolic Map-Elites metrics (free to compute)
+* **Most Recent Commit:** 66a8dadc fix(learning): Correct Soul Snapshot naming convention (#157)
 * **Recent Files Modified (24h):**
-    * `mcp_servers/README.md` (6m ago) → 🛡️ Project Sanctuary MCP Servers - The Canonical Layer [1 file changed, 6 insertions(+), 3 deletions(-)]
-    * `mcp_servers/gateway/clusters/sanctuary_cortex/server.py` (1h ago) [1 file changed, 156 insertions(+), 43 deletions(-)]
-    * `mcp_servers/evolution/operations.py` (1h ago)
-    * `mcp_servers/learning/operations.py` (1h ago)
-    * `mcp_servers/learning/server.py` (1h ago)
+    * `mcp_servers/lib/hf_utils.py` (19h ago)
+    * `mcp_servers/rag_cortex/server.py` (20h ago)
+    * `mcp_servers/rag_cortex/operations.py` (20h ago)
+    * `mcp_servers/rag_cortex/models.py` (20h ago) → Implementation changes
+    * `mcp_servers/rag_cortex/README.md` (20h ago) → Cortex MCP Server
 
 ## III. The Law (Protocol 128 - Cognitive Continuity)
 > *"We do not restart. We reload."*
@@ -4582,7 +4488,7 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 ```
 
 ## IV. The Strategy (Successor Context)
-**Snapshot Status:** ✅ Loaded Learning Package Snapshot from 6.7h ago.
+**Snapshot Status:** ✅ Loaded Learning Package Snapshot from 19.7h ago.
 **Registry Status (ADR 084):**
         * ✅ REGISTERED: `IDENTITY/founder_seed.json`
         * ✅ REGISTERED: `LEARNING/calibration_log.json`
@@ -4593,9 +4499,9 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 ```markdown
 # Manifest Snapshot (LLM-Distilled)
 
-Generated On: 2026-01-11T12:42:04.781029
+Generated On: 2026-01-11T21:27:16.334572
 
-# Mnemonic Weight (Token Count): ~134,769 tokens
+# Mnemonic Weight (Token Count): ~119,812 tokens
 
 # Directory Structure (relative to manifest)
   ./README.md
@@ -4627,10 +4533,11 @@ Generated On: 2026-01-11T12:42:04.781029
   ./00_CHRONICLE/ENTRIES/286_protocol_056_meta_analysis_the_self_evolving_loop_is_operational.md
   ./00_CHRONICLE/ENTRIES/313_protocol_118_created_agent_session_initialization_framework.md
   ./00_CHRONICLE/ENTRIES/337_autonomous_curiosity_exploration___strange_loops_and_egyptian_labyrinths.md
+  ./.agent/workflows/post-move-link-check.md
   ./.agent/workflows/recursive_learning.md
   ./.agent/rules/mcp_routing_policy.md
   ./.agent/rules/architecture_sovereignty_policy.md
-  ./.agent/rules/dependency_management_policy....
+ ...
 ```
 
 --- END OF FILE .agent/learning/learning_debrief.md ---
@@ -4718,170 +4625,58 @@ config:
   theme: base
 ---
 
-%% Name: Protocol 128: Learning Loop
-%% Description: Cognitive Continuity workflow: Scout → Synthesize → Strategic Gate → Audit → Seal → Soul Persist
+%% Name: Protocol 128: Learning Loop (v2.0 - with RLM Synthesis)
+%% Description: Cognitive Continuity workflow: Scout → Synthesize → Audit → RLM Synthesis → Seal → Soul Persist
 %% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
 
 flowchart TB
-    subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
+    subgraph subGraphScout["I. The Learning Scout"]
         direction TB
-        Start["Session Start"] --> AccessMode{"Access Mode?"}
-        
-        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: .agent/learning/cognitive_primer.md"]
-        AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
-        
-        IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
-        IDE_Wakeup --> IronCheckGate1{Iron Check?}
-        
-        IronCheckGate1 -- PASS --> IDE_Debrief["CLI: python3 scripts/cortex_cli.py debrief<br>OR Tool: cortex_learning_debrief"]
-        IronCheckGate1 -- FAIL --> SafeMode1[SAFE MODE<br>Read-Only / Halt]
-        
-        MCP_Wakeup --> IronCheckGate1
-        MCP_Debrief["Tool: cortex_learning_debrief<br>(Returns Full Context)"]
-        
-        IDE_Debrief --> SeekTruth["Context Acquired"]
-        MCP_Wakeup --> MCP_Debrief --> SeekTruth
-        
-        SuccessorSnapshot["File: .agent/learning/learning_package_snapshot.md<br>(Truth Anchor)"] -.->|Embedded in Debrief| SeekTruth
+        Start["Session Start"] --> Wakeup["cortex_guardian_wakeup"]
+        Wakeup --> ReadSnapshot["Read: learning_package_snapshot.md<br>(The Cognitive Hologram)"]
     end
 
     subgraph subGraphSynthesize["II. Intelligence Synthesis"]
         direction TB
+        Work["Active Work / Coding"] --> ADRs["Record ADRs"]
+    end
+
+    subgraph subGraphAudit["IV. Red Team Audit"]
+        direction TB
+        AuditPacket["Generate Learning Audit Packet"] --> RedTeam{"Red Team<br>Approve?"}
+    end
+
+    subgraph subGraphRLM["V. RLM Context Synthesis (Protocol 132)"]
+        direction TB
+        TriggerRLM["Trigger: RLM Synthesizer"]
+        Map["Map: Protocols, ADRs, Code"]
+        Reduce["Reduce: Generate Holistic Summary"]
+        WriteSnapshot["Write: learning_package_snapshot.md"]
         
-        SynthesisDecision{"Mode?"}
-        
-        subgraph EvoLoop["Evolutionary Branch (v4.0)"]
-            direction TB
-            Mutate["Mutate Policy (DRQ)"] --> PreFlight{"Pre-Flight<br>(Auto-Gate)"}
-            PreFlight -- FAIL --> Mutate
-            PreFlight -- PASS --> AdversaryGate{"Adversary<br>Gate"}
-            AdversaryGate -- FAIL --> Mutate
-            AdversaryGate -- PASS --> MapElites["Map-Elites Archive"]
-        end
-        
-        Intelligence["AI: Autonomous Synthesis"] --> SynthesisDecision
-        SynthesisDecision -- Standard --> Synthesis["Action: Record ADRs / Protocols<br>(Update Manifest)"]
-        SynthesisDecision -- Evolutionary --> Mutate
-        
-        MapElites --> Synthesis
+        TriggerRLM --> Map --> Reduce --> WriteSnapshot
     end
 
-    subgraph subGraphStrategic["III. Strategic Review (Gate 1)"]
+    subgraph subGraphSeal["VI. The Technical Seal"]
         direction TB
-        GovApproval{"Strategic Approval<br>(HITL Required)"}
+        Seal["cortex_capture_snapshot --type seal"]
     end
 
-    subgraph subGraphAudit["IV. Red Team Audit Loop"]
+    subgraph subGraphPersist["VII. Soul Persistence"]
         direction TB
-        AgreeTopic["1. Agree on Research Topic<br>with User"] --> CreateFolder["2. Create LEARNING/topics/[topic]/"]
-        CreateFolder --> CaptureResearch["3. Capture Research in Topic Folder<br>(analysis.md, questions.md, sources.md)"]
-        CaptureResearch --> UpdateManifest["4. Update manifest<br>(.agent/learning/learning_audit/learning_audit_manifest.json)"]
-        UpdateManifest --> UpdatePrompt["5. UPDATE prompts<br>(.agent/learning/learning_audit/learning_audit_prompts.md)"]
-        UpdatePrompt --> GenerateSnapshot["6. cortex_capture_snapshot<br>--type learning_audit<br>(regenerate packet)"]
-        GenerateSnapshot --> SharePacket["7. Output Path:<br>.agent/learning/learning_audit/learning_audit_packet.md"]
-        SharePacket --> ReceiveFeedback{"8. Red Team Feedback"}
-        ReceiveFeedback -- "More Research" --> CaptureFeedback["Capture Feedback in Topic Folder"]
-        CaptureFeedback --> CaptureResearch
-        ReceiveFeedback -- "Ready" --> TechApproval{"Gate 2: HITL"}
+        Persist["cortex-persist-soul"]
     end
-
-    subgraph subGraphSeal["V. The Technical Seal"]
-        direction TB
-        CaptureSeal["Scripts: python3 scripts/cortex_cli.py snapshot --type seal<br>(Run Iron Check)"] --> SealCheck{Iron Check?}
-        SealCheck -- FAIL --> SafeMode2[SAFE MODE<br>Seal Blocked]
-        SealCheck -- PASS --> SealSuccess[Seal Applied]
-    end
-
-
-
-    subgraph subGraphPersist["VI. Soul Persistence (ADR 079 / 081)"]
-        direction TB
-        choice{Persistence Type}
-        choice -- Incremental --> Inc["Tool: cortex-persist-soul<br>(Append 1 Record)"]
-        choice -- Full Sync --> Full["Tool: cortex-persist-soul-full<br>(Regenerate ~1200 records)"]
-        
-        subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
-            MD_Seal["lineage/{MODEL}_seal_{TIMESTAMP}.md"]
-            JSONL_Traces["data/soul_traces.jsonl"]
-            Manifest["metadata/manifest.json"]
-        end
-    end
-
-
-    style subGraphPersist fill:#cce5ff,stroke:#004085,stroke-width:2px
-
-    %% Phase VII: Self-Correction (Deployment & Retro)
-    subgraph PhaseVII [Phase VII: Self-Correction]
-        direction TB
-        Deployment[Deploy & Policy Update]
-        Retro["Loop Retrospective<br>File: .agent/learning/learning_audit/loop_retrospective.md<br>(Singleton)"]
-        ShareRetro["Share with Red Team<br>(Meta-Audit)"]
-    end
-    style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
-
-    %% Phase VIII: Relational Ingestion & Closure
-    subgraph PhaseVIII [Phase VIII: Relational Ingestion & Closure]
-        direction TB
-        Ingest["CLI: ingest --incremental --hours 24<br>(Update RAG Vector DB)"]
-        GitOps["Git: add . && commit && push<br>(Sync to Remote)"]
-        Ingest --> GitOps
-    end
-    style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
-
-    %% Phase IX: Phoenix Forge (Cognitive Upgrade)
-    subgraph PhaseIX [Phase IX: Phoenix Forge]
-        direction TB
-        ForgeDataset["Scripts: forge_whole_genome_dataset.py<br>(Sync Soul Traces to Training Data)"]
-        FineTune["Scripts: fine_tune.py<br>(QLoRA Training)"]
-        GGUFConvert["Scripts: convert_to_gguf.py<br>(Quantize & Quant)"]
-        HFDeploy["Tool: upload_to_huggingface.py<br>(Deploy Model to Hub)"]
-    end
-    style PhaseIX fill:#f8d7da,stroke:#721c24,stroke-width:2px
 
     %% Flow
-    SeekTruth -- "Carry Context" --> Intelligence
-    Synthesis -- "Verify Reasoning" --> GovApproval
-    
-    GovApproval -- "PASS" --> AgreeTopic
-    
-    %% Reordered Flow
-    TechApproval -- "PASS" --> Deployment
-    Deployment --> Retro
-    Retro --> ShareRetro
-    ShareRetro -- "Ready to Seal" --> CaptureSeal
-    SealSuccess -- "Proceed to Persistence" --> choice
-    
-    Inc --> JSONL_Traces
-    Inc --> MD_Seal
-    Full --> JSONL_Traces
-    Full --> Manifest
-    
-    JSONL_Traces --> Ingest
-    JSONL_Traces -- "Training Fuel" --> ForgeGate{HITL:<br>Time to<br>Forge?}
-    ForgeGate -- "YES (Slow)" --> ForgeDataset
-    ForgeGate -- "NO" --> Ingest
-    ForgeDataset --> FineTune
-    FineTune --> GGUFConvert
-    GGUFConvert --> HFDeploy
-    
-    Ingest -- "Cycle Complete" --> Start
-    HFDeploy -- "Cognitive Milestone" --> Retro
-    
-    GovApproval -- "FAIL: Backtrack" --> Retro
-    TechApproval -- "FAIL: Backtrack" --> Retro
-    Deployment -- "FAIL: Backtrack" --> Retro
-    
-    GitOps -- "Recursive Learning" --> Start
+    ReadSnapshot --> Work
+    Work --> AuditPacket
+    RedTeam -- "YES" --> TriggerRLM
+    RedTeam -- "NO" --> Work
+    WriteSnapshot --> Seal
+    Seal --> Persist
+    Persist --> End["End Session"]
 
-    style IDE_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
-    style MCP_Wakeup fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:black
-    style SuccessorSnapshot fill:#f9f,stroke:#333,stroke-width:2px,color:black
-    style Start fill:#dfd,stroke:#333,stroke-width:2px,color:black
-    style SafeMode1 fill:#ffcccb,stroke:#b30000,stroke-width:4px,color:black
-    style SafeMode2 fill:#ffcccb,stroke:#b30000,stroke-width:4px,color:black
-
-    %% Metadata
-    style EvoLoop fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,stroke-dasharray: 5 5
+    style subGraphRLM fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style subGraphSeal fill:#fff3e0,stroke:#e65100,stroke-width:2px
 
 --- END OF FILE docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd ---
 
@@ -9864,82 +9659,52 @@ The research confirms QEC is about protecting *quantum* information (superpositi
 
 --- START OF FILE .agent/learning/learning_audit/learning_audit_prompts.md ---
 
-# Learning Audit Prompt: Sanctuary Evolution MCP (Round 3)
-**Current Topic:** Evolutionary Self-Improvement (Implementation)
-**Iteration:** 3.0 (Code Review)
-**Date:** 2026-01-11
-**Epistemic Status:** [IMPLEMENTED - READY FOR REVIEW]
+# Learning Audit Prompt: Recursive Language Models (RLM) & Titans
+**Current Topic:** Recursive Language Models (RLM) vs DeepMind Titans
+**Iteration:** 3.2 (Mock Implementation Review)
+**Date:** 2026-01-12
+**Epistemic Status:** [IMPLEMENTATION STAGED - SEEKING SAFETY CHECK]
 
 ---
 
 > [!NOTE]
-> For foundational project context, see `learning_audit_core_prompt.md` (included in this packet).
+> For foundational project context, see `learning_audit_core_prompt.md`.
 
 ---
 
-## 📋 Topic: Sanctuary Evolution MCP Implementation
+## 📋 Topic Status: RLM Integration (Phase IX)
 
-### Focus: Code Review
+**Iteration 3.1 Verdict:**
+- **Status:** Protocols Approved.
+- **Feedback:** "The Strategy is sound."
+- **New User Requirement:** "Include the implementation code in the packet for review."
 
-We have moved from **Protocol Validation** (Round 1 & 2) to **Concrete Implementation** (Round 3). 
-The `evolution` MCP server has been created to encapsulate the logic for fitness scoring, depth/scope analysis, and complexity measurement.
+### 🚀 Iteration 3.2 Goals (Code Verification)
+We have injected the RLM logic into `mcp_servers/learning/operations.py`.
+*   **Shadow Mode:** The functions `_rlm_map` and `_rlm_reduce` are implemented but *not yet wired* to the `capture_snapshot` trigger.
+*   **Purpose:** Prove that the logic matches Protocol 132 without risking a runtime break during the seal.
 
-### Key Artifacts for Review
+### Key Artifacts for Review (Added in v3.2)
 
 | Artifact | Location | Purpose |
 |:---------|:---------|:--------|
-| **Evolution MCP Server** | `mcp_servers/evolution/` | Core logic for evolutionary metrics |
-| **Operations Layer** | `mcp_servers/evolution/operations.py` | Implementation of fitness/depth/scope calcs |
-| **Server Interface** | `mcp_servers/evolution/server.py` | FastMCP endpoints exposing the tools |
-| **Tests** | `tests/mcp_servers/evolution/` | Unit and integration tests for the new MCP |
-
-### Changes Since Last Round
-1.  Created `mcp_servers/evolution/` module.
-2.  Implemented `EvolutionOperations` class.
-3.  Exposed tools: `calculate_fitness`, `measure_depth`, `measure_scope`.
-4.  Integrated with `mcp_servers/gateway/clusters/sanctuary_evolution/` (Cluster definition).
+| **Source Code** | `mcp_servers/learning/operations.py` | Contains the `_rlm_context_synthesis` implementation. |
+| **Logic Trace** | `LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py` | Standalone POC proving the concept. |
 
 ---
 
-## 🎭 Red Team Focus (Iteration 3.0)
+## 🎭 Red Team Focus (Iteration 3.2)
 
 ### Primary Questions
 
-1.  **Code Quality & Structure**
-    - Does `mcp_servers/evolution/` follow the project's architectural standards?
-    - Is the separation between `server.py` and `operations.py` clean?
-
-2.  **Metric Logic**
-    - Are the heuristics for "Depth" (technical concepts) and "Scope" (architectural concepts) sound?
-    - Is the "Fitness" score calculation robust enough for MVP?
-
-3.  **Integration Readiness**
-    - Is the FastMCP server correctly configured?
-    - Are the dependencies (`pydantic`, `mcp`) properly managed?
-
-4.  **Test Coverage**
-    - Do the tests in `tests/mcp_servers/evolution/` adequately verify the logic?
-
----
-
-## 📁 Files in This Packet
-
-**Total:** 16+ files (Core + Implementation)
-
-### Implementation (New)
-- `mcp_servers/evolution/server.py`
-- `mcp_servers/evolution/operations.py`
-- `mcp_servers/evolution/__init__.py`
-- `tests/mcp_servers/evolution/` (Test suite)
-
-### Core Context (Updated)
-- `01_PROTOCOLS/131_Evolutionary_Self_Improvement.md` (The specs)
-- `docs/architecture_diagrams/workflows/drq_evolution_loop.mmd` (The flow)
+1.  **Code Safety**
+    - Does the injected code in `operations.py` pose any risk to existing functionality? (Verify it is dormant/shadow).
+    - Is the `_rlm_map` -> `_rlm_reduce` logic a faithful implementation of Protocol 132?
 
 ---
 
 > [!IMPORTANT]
-> **Goal:** Validate the **code implementation** of the Evolution MCP before we integrate it into the active cognitive loop.
+> **Goal:** Validated the code implementation as "Safe to Merge."
 
 --- END OF FILE .agent/learning/learning_audit/learning_audit_prompts.md ---
 
@@ -10861,12 +10626,8 @@ def get_dataset_repo_id(config: dict = None) -> str:
 
 def generate_snapshot_name(body_repo: str = None) -> str:
     """Generate a snapshot filename following the naming convention."""
-    if body_repo is None:
-        config = get_hf_config()
-        body_repo = config["body_repo"]
-    
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    return f"lineage/{body_repo}_seal_{timestamp}.md"
+    return f"lineage/seal_{timestamp}_learning_package_snapshot.md"
 
 
 async def upload_soul_snapshot(

@@ -1,0 +1,17 @@
+[
+    "01_analysis_rlm_vs_titans.md",
+    "02_plain_language_summary_and_qa.md",
+    "03_technical_qa_mit_rlm_paper.md",
+    "04_architectural_insight_rlm_vs_rag.md",
+    "05_visual_explanation_of_rlm_mechanism.md",
+    "06_applied_example_sanctuary_repo.md",
+    "07_conceptual_affirmation_mapreduce.md",
+    "08_comparison_python_variables_vs_vector_db.md",
+    "09_synthesis_reassembling_the_bits.md",
+    "10_strategic_impact_paradigm_shift.md",
+    "11_risk_mitigation_and_mapping.md",
+    "12_performance_estimates.md",
+    "13_proposal_rlm_guardian_digest.md",
+    "poc_rlm_synthesizer.py",
+    "topic_manifest.md"
+]
