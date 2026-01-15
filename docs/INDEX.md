@@ -85,3 +85,7 @@ Welcome to the Project Sanctuary documentation hub. This index serves as the ent
 *   **[Protocol Library](../01_PROTOCOLS/)**: All system protocols.
 *   **[ADR Library](../ADRs/)**: Architecture Decision Records.
 
+## 🗄️ Archive
+
+*   **[Historical Archive](archive/)**: Legacy architecture comparisons, early research, and historical session reports.
+

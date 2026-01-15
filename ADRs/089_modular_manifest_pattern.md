@@ -50,21 +50,36 @@ python3 scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/le
 python3 scripts/cortex_cli.py snapshot --type learning_audit --manifest .agent/learning/learning_audit/learning_audit_manifest.json
 ```
 
-### 3. Manifest Schema
-All manifests follow a simple JSON array of relative paths:
+### 3. Manifest Schema (v2.0 - Core + Topic)
+
+All manifests follow a structured JSON object with two sections:
 
 ```json
-[
-    "README.md",
-    "docs/operations/BOOTSTRAP.md",
-    "Makefile",
-    "ADRs/073_standardization_of_python_dependency_management_across_environments.md"
-]
+{
+    "core": [
+        "README.md",
+        "01_PROTOCOLS/",
+        "ADRs/",
+        "docs/prompt-engineering/sanctuary-guardian-prompt.md"
+    ],
+    "topic": [
+        "LEARNING/topics/Recursive_Language_Models/",
+        "mcp_servers/learning/operations.py"
+    ]
+}
 ```
 
-- **Directories** can be included (e.g., `"LEARNING/topics/my_topic/"`) for recursive capture
+**Section Semantics:**
+- **`core`**: Always included. Stable, foundational files that every session needs.
+- **`topic`**: Session-specific. Changes per learning loop to reflect current focus.
+
+**Path Types:**
+- **Directories** (trailing `/`): Recursively include all files (e.g., `"01_PROTOCOLS/"`)
+- **Files**: Include specific file (e.g., `"README.md"`)
 - **Relative paths** from project root
-- **No metadata** in manifest—content processing extracts structure
+
+**Backward Compatibility:**
+Legacy flat arrays (`["file1", "file2"]`) are still supported by `operations.py` for migration.
 
 ### 4. Evolution Path
 New use cases are added by:

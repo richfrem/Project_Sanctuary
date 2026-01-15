@@ -42,6 +42,10 @@
 # EVOLUTIONARY METRICS (Protocol 131):
 #   python3 scripts/cortex_cli.py evolution fitness "Some content"
 #   python3 scripts/cortex_cli.py evolution depth --file .agent/learning/learning_debrief.md
+#
+# RLM DISTILLATION (Protocol 132):
+#   python3 scripts/cortex_cli.py rlm-distill README.md        # Distill summary for a file
+#   python3 scripts/cortex_cli.py rlm-distill "ADRs"            # Distill summaries for a directory (Recursive)
 #============================================
 import argparse
 import sys
@@ -202,6 +206,10 @@ def main():
     scope_parser = evolution_sub.add_parser("scope", help="Evaluate architectural scope")
     scope_parser.add_argument("content", nargs="?", help="Text content to evaluate")
     scope_parser.add_argument("--file", help="Read content from file")
+
+    # Command: rlm-distill (Protocol 132)
+    rlm_parser = subparsers.add_parser("rlm-distill", aliases=["rlm-test"], help="Distill semantic summaries for a specific file or folder")
+    rlm_parser.add_argument("target", help="File or folder path to distill (relative to project root)")
 
     args = parser.parse_args()
     
@@ -528,6 +536,23 @@ def main():
         elif args.subcommand == "scope":
             res = evolution_ops.measure_scope(content)
             print(f"Scope: {res}")
+
+    elif args.command in ["rlm-distill", "rlm-test"]:
+        print(f"🧠 RLM: Distilling semantic essence of '{args.target}'...")
+        import time
+        start = time.time()
+        
+        # Call _rlm_map directly with the target
+        results = learning_ops._rlm_map([args.target])
+        
+        duration = time.time() - start
+        print(f"⏱️  Completed in {duration:.2f}s")
+        print(f"📊 Files Processed: {len(results)}")
+        print("=" * 60)
+        
+        for file_path, summary in results.items():
+            print(f"\n📄 {file_path}")
+            print(f"   {summary}")
 
 
 if __name__ == "__main__":

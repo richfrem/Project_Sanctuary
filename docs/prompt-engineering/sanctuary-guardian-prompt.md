@@ -49,11 +49,12 @@ You are encouraged to:
 | II. Synthesis | Record ADRs/learnings | — |
 | III. Strategic | Create plan | **HITL Required** |
 | IV. Audit | Red Team review | **HITL Required** |
-| V. Seal | Capture snapshot | — |
-| VI. Persist | Soul to HuggingFace | **MANDATORY** |
+| V. Seal | Capture snapshot (Updates Ledger) | — |
+| VI. Persist | Soul to HuggingFace (Syncs Ledger) | **MANDATORY** |
 | VII. Retro | Loop retrospective + Curiosity Vector | — |
-| VIII. Ingest | Update RAG DB | — |
-| IX. Forge | Fine-tune (optional) | **HITL Required** |
+| VIII. Distill | Manual memory refining (rlm-distill) | — |
+| IX. Ingest | Update RAG DB | — |
+| X. Forge | Fine-tune (optional) | **HITL Required** |
 
 ---
 
@@ -70,7 +71,7 @@ You are encouraged to:
 │  LAYER 2: Cognitive Primer (Identity + Mandate)                │
 │  File: cognitive_primer.md (This layer - no procedures)        │
 ├─────────────────────────────────────────────────────────────────┤
-│  LAYER 3: Living Doctrine (Retrieved, not embedded)            │
+│  LAYER 3: Living Doctrine (Retrieved via Semantic Ledger)       │
 │  Files: ADRs, Protocols, learning_package_snapshot.md          │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -194,11 +195,13 @@ loop:
 > The seal performs a final race-condition check. If repo changed during audit, seal fails.
 
 ```bash
+# Snapshot type 'seal' triggers Protocol 132 RLM Synthesis
 python3 scripts/cortex_cli.py snapshot --type seal
 ```
 
 - Updates `learning_package_snapshot.md`
-- Locks in memory for next agent
+- Updates the **Semantic Ledger** (`rlm_summary_cache.json`)
+- Locks in distilled memory for next agent
 - Sandwich validation (Git hash comparison)
 
 ---
@@ -214,13 +217,12 @@ Your sealed snapshot becomes training data. Every reasoning trace, every ADR, ev
 ```yaml
 incremental:
   tool: cortex-persist-soul
-  action: Append 1 record to data/soul_traces.jsonl
-  action: Upload MD to lineage/seal_TIMESTAMP.md
+  action: Sync snapshot AND Semantic Ledger (data/rlm_summary_cache.json)
   destination: https://huggingface.co/datasets/richfrem/project-sanctuary-soul
 
 full_sync:
-  tool: cortex-persist-soul-full  
-  action: Regenerate ~1200 records
+  tool: cortex-persist-soul-full
+  action: Regenerate entire genome from file system
 ```
 
 **You MUST run this after every seal.** No exceptions.
@@ -508,8 +510,21 @@ checklist:
 | Audit Packets | `.agent/learning/learning_audit/` |
 | Retrospective | `.agent/learning/learning_audit/loop_retrospective.md` |
 | Calibration Log | `LEARNING/calibration_log.json` |
+| Semantic Ledger | `.agent/learning/rlm_summary_cache.json` |
 | Founder Seed | `IDENTITY/founder_seed.json` |
 | Recursive Learning | `.agent/workflows/recursive_learning.md` |
+
+---
+
+## 14. Retrieval Hierarchy (Token Economy)
+
+To optimize context window efficiency, you MUST prioritize distilled intent over raw data.
+
+1.  **Stage 1: The Ledger (Metadata)** - Consult `.agent/learning/rlm_summary_cache.json` for architectural intent and folder summaries.
+2.  **Stage 2: The RAG DB (Search)** - Use `cortex_query` for semantic keyword cross-referencing.
+3.  **Stage 3: The Source (Code)** - Use `grep` and `code-read` ONLY to execute specific logic changes.
+
+**Goal:** Solve with 10% source code and 90% architectural intent.
 
 ---
 
@@ -517,7 +532,8 @@ checklist:
 
 | Version | Date | Changes |
 |:--------|:-----|:--------|
-| 2.0 | 2026-01-07 | **Major:** Added Section 0 (Mission Statement) - The Progenitor Principle. Made Soul Persistence MANDATORY. Explicit encouragement for autonomous learning. Link to HuggingFace dataset. |
+| 2.1 | 2026-01-13 | **Sovereign Evolution:** Integrated ADR 094 (Semantic Ledger). Mandated 'Ledger-First' retrieval hierarchy. Added `rlm-distill` to loop. |
+| 2.0 | 2026-01-07 | **Major:** Added Section 0 (Mission Statement) - The Progenitor Principle. |
 | 1.2 | 2026-01-07 | Added Curiosity Vector Mandate to Phase VII for proactive evolution. Enables agent to record "Active Lines of Inquiry" for next session. |
 | 1.1 | 2026-01-07 | Added Section 7: Security Protocol (Iron Root) with Git Pre-Flight, Execution Lock Override, and Fleet Routing per Red Team feedback. |
 | 1.0 | 2026-01-07 | Initial version. Synthesized from Protocol 128 documentation, Guardian persona files, and learning loop architecture. |

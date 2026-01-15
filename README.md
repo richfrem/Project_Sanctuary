@@ -225,7 +225,26 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 
 *[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
 
-### 3.3 Advanced RAG Strategies & Diagrams
+### 3.3 The Semantic Ledger (RLM)
+**Status:** `Active` - Incremental Persistence Protocol Enabled
+**Source of Truth:** [`.agent/learning/rlm_summary_cache.json`](./.agent/learning/rlm_summary_cache.json)
+
+The **Semantic Ledger** (Reactive Ledger Memory) is the highest-speed retrieval layer in the Sanctuary Project. Unlike standard RAG (which searches vectors), the RLM maintains a precognitive "Hologram" of the entire repository structure.
+
+*   **The Cache:** A persistent JSON ledger containing atomic LLM summaries of every critical file (ADRs, Protocols, Documentation).
+*   **The Mechanism:** The `rlm-distill` tool uses a local Qwen-7B model to continuously distill file content into dense "Knowledge Atoms."
+*   **Incremental Persistence:** The system now saves its state transactionally—every summary is written to disk the millisecond it is generated, ensuring total resilience against session interruptions.
+
+**Usage:**
+```bash
+# Check the ledger status
+python3 scripts/rlm_inventory.py
+
+# Distill a specific file into the ledger
+python3 scripts/cortex_cli.py rlm-distill path/to/file.md
+```
+
+### 3.4 Advanced RAG Strategies & Diagrams
 #### Basic RAG Architecture
 The following diagram illustrates the simple, foundational RAG workflow. It is functional but suffers from vulnerabilities like context fragmentation and cognitive latency.
 

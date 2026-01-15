@@ -157,6 +157,56 @@ async def upload_soul_snapshot(
         )
 
 
+async def upload_semantic_cache(
+    cache_path: str,
+    config: dict = None
+) -> HFUploadResult:
+    """
+    Upload the RLM semantic cache to Hugging Face.
+    
+    Args:
+        cache_path: Path to the rlm_summary_cache.json file
+        config: Optional HF config dict
+    
+    Returns:
+        HFUploadResult with status
+    """
+    try:
+        from huggingface_hub import HfApi
+        
+        if config is None:
+            config = get_hf_config()
+        
+        api = HfApi(token=config["token"])
+        dataset_repo = get_dataset_repo_id(config)
+        remote_path = "data/rlm_summary_cache.json"
+        
+        # Upload cache file asynchronously
+        await asyncio.to_thread(
+            api.upload_file,
+            path_or_fileobj=str(cache_path),
+            path_in_repo=remote_path,
+            repo_id=dataset_repo,
+            repo_type="dataset",
+            commit_message=f"Update Semantic Ledger (RLM Cache)"
+        )
+        
+        return HFUploadResult(
+            success=True,
+            repo_url=f"https://huggingface.co/datasets/{dataset_repo}",
+            remote_path=remote_path
+        )
+        
+    except Exception as e:
+        logger.error(f"Semantic Cache upload failed: {e}")
+        return HFUploadResult(
+            success=False,
+            repo_url="",
+            remote_path="",
+            error=str(e)
+        )
+
+
 async def sync_full_learning_history(
     learning_dir: str,
     config: dict = None

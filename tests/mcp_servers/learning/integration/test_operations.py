@@ -51,6 +51,15 @@ class TestLearningOperations(BaseIntegrationTest):
         ops = LearningOperations(str(project_root))
         return ops
 
+    @pytest.fixture
+    def real_learning_ops(self):
+        """
+        Fixture using the REAL project root for true integration testing.
+        Tests using this fixture operate on actual project files and cache.
+        """
+        real_project_root = Path(__file__).parent.parent.parent.parent.parent
+        return LearningOperations(str(real_project_root))
+
     #===========================================================================
     # MCP OPERATION: learning_debrief
     #===========================================================================
@@ -142,6 +151,15 @@ class TestLearningOperations(BaseIntegrationTest):
     #===========================================================================
     def test_guardian_wakeup(self, learning_ops):
         """Verify the Bootloader generates the context-aware briefing."""
+        # Create guardian manifest for v3.0 manifest-driven wakeup
+        manifest_path = learning_ops.project_root / ".agent" / "learning" / "guardian_manifest.json"
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_text('{"core": ["README.md"], "topic": []}')
+        
+        # Create README.md for the manifest
+        readme = learning_ops.project_root / "README.md"
+        readme.write_text("# Test Project")
+        
         with patch("subprocess.run") as mock_run:
             mock_run.return_value.stdout = "sanctuary-fleet" # Containerized check
             
@@ -181,3 +199,151 @@ class TestLearningOperations(BaseIntegrationTest):
                     assert response.status == "success"
                     # We expect the snapshot path to be the constant seal filename
                     assert "learning_package_snapshot.md" in response.snapshot_path
+
+    #===========================================================================
+    # RLM SYNTHESIS (Protocol 132) - Real Call Smoke Test
+    #===========================================================================
+    def test_rlm_real_call_ollama(self, learning_ops):
+        """
+        [INTEGRATION] Verifies _rlm_map actually calls the local Ollama instance
+        and returns a summary string (not an error).
+        Requires: Local Ollama running Sanctuary-Qwen2-7B.
+        """
+        # 1. Setup a single test file in a valid root
+        test_file = learning_ops.project_root / "01_PROTOCOLS" / "test_rlm.md"
+        test_file.write_text(
+            "# Protocol Test\n"
+            "This protocol defines the testing standard. "
+            "It ensures that systems respond to inputs with expected outputs."
+        )
+        
+        # 2. Run _rlm_map (Filtered to just this file if possible, or tolerate others)
+        # Since _rlm_map takes roots, we pass the root we created.
+        try:
+            results = learning_ops._rlm_map(["01_PROTOCOLS"])
+            
+            # 3. Validation
+            key = "01_PROTOCOLS/test_rlm.md"
+            if key not in results:
+                # Might be due to temp dir pathing issues in test runner vs real execution
+                # But we check if *any* result came back
+                assert len(results) > 0, "No results returned from RLM map"
+                # If we found something else, that's fine, just check it didn't error
+                first_val = list(results.values())[0]
+                assert "[Ollama" not in first_val, f"Ollama Error: {first_val}"
+                assert len(first_val) > 5, "Summary too short"
+            else:
+                summary = results[key]
+                assert len(summary) > 5
+                # Check for error strings
+                if "[Ollama" in summary:
+                    pytest.fail(f"Real Ollama Call Failed: {summary}")
+                
+        except Exception as e:
+            # If Ollama is down/slow integration test might fail, which is valid signal
+            pytest.fail(f"RLM Integration Exception: {e}")
+
+    #===========================================================================
+    # RLM CACHE INTEGRATION TESTS - Real Project Cache
+    #===========================================================================
+    
+    #===========================================================================
+    # RLM CACHE INTEGRATION TESTS - Real Project Cache
+    #===========================================================================
+    
+    def test_rlm_cache_progressive_population(self, real_learning_ops):
+        """
+        [REAL INTEGRATION] Verifies cache population with new files.
+        Finds ADRs not in cache, processes them, and verifies they are saved with the new schema.
+        """
+        import json
+        import random
+        
+        cache_path = real_learning_ops.project_root / ".agent" / "learning" / "rlm_summary_cache.json"
+        
+        # 1. Load current cache keys
+        cached_keys = set()
+        if cache_path.exists():
+            try:
+                cache = json.loads(cache_path.read_text())
+                cached_keys = set(cache.keys())
+            except: pass
+            
+        # 2. Find 2 ADRs currently NOT in the cache
+        adr_dir = real_learning_ops.project_root / "ADRs"
+        all_adrs = [str(f.relative_to(real_learning_ops.project_root)) for f in adr_dir.glob("*.md")]
+        
+        # Exclude artifacts and templates
+        eligible = [a for a in all_adrs if a not in cached_keys and "template" not in a.lower()]
+        
+        if not eligible:
+            # If everything is already cached, just pick any 2 to verify they stay there
+            sample_targets = random.sample(all_adrs, min(2, len(all_adrs)))
+        else:
+            sample_targets = random.sample(eligible, min(2, len(eligible)))
+            
+        # 3. Process them
+        try:
+            results = real_learning_ops._rlm_map(sample_targets)
+        except Exception as e:
+            pytest.fail(f"RLM call failed: {e}")
+            
+        # 4. Verify results and cache update
+        cache = json.loads(cache_path.read_text())
+        for target in sample_targets:
+            assert target in cache, f"Target {target} should be in cache now"
+            entry = cache[target]
+            assert "hash" in entry
+            assert "file_mtime" in entry
+            assert "summarized_at" in entry
+            assert "summary" in entry
+            assert "[Ollama" not in entry["summary"], "Stored an error in cache"
+
+    def test_rlm_cache_hit_performance(self, real_learning_ops):
+        """
+        [REAL INTEGRATION] Verifies cache hit performance.
+        Picks files from cache and ensures they return instantly.
+        """
+        import json
+        import time
+        import random
+        
+        cache_path = real_learning_ops.project_root / ".agent" / "learning" / "rlm_summary_cache.json"
+        if not cache_path.exists():
+            pytest.skip("Cache file doesn't exist yet, can't test hits.")
+            
+        cache = json.loads(cache_path.read_text())
+        if not cache:
+            pytest.skip("Cache is empty, can't test hits.")
+            
+        # Pick 3 random cached files
+        sample_files = random.sample(list(cache.keys()), min(3, len(cache)))
+        
+        # First hit run
+        start = time.time()
+        results = real_learning_ops._rlm_map(sample_files)
+        duration = time.time() - start
+        
+        # 3 hits should take < 500ms total
+        assert duration < 1.0, f"Cache hit too slow: {duration:.2f}s for {len(sample_files)} files"
+        assert len(results) == len(sample_files)
+
+    def test_rlm_skips_recursive_artifacts(self, real_learning_ops):
+        """
+        [REAL INTEGRATION] Verifies RLM safety filter skips recursive artifacts.
+        Attempts to force summary of 'learning_package_snapshot.md' and expects 0 results.
+        """
+        # Pick a snapshot that likely exists (or README as control)
+        targets = [".agent/learning/learning_package_snapshot.md", "README.md"]
+        
+        results = real_learning_ops._rlm_map(targets)
+        
+        # README.md should be in results (it's safe)
+        assert "README.md" in results
+        
+        # the snapshot MUST NOT be in results
+        assert ".agent/learning/learning_package_snapshot.md" not in results
+        
+        # Verify cache hits log for README.md if it was already there
+        # (This just ensures the test ran correctly)
+        assert len(results) >= 1

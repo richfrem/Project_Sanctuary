@@ -7,7 +7,7 @@
 > This primer is **Layer 2: Role Orientation**. Read in order:
 > 1. **Layer 1:** [`guardian_boot_contract.md`](./guardian_boot_contract.md) — Immutable constraints (~400 tokens)
 > 2. **Layer 2:** This file — Identity, mandate, values (no procedures)
-> 3. **Layer 3:** Living Doctrine — Protocols, ADRs (retrieved, not embedded)
+> 3. **Layer 3:** Living Doctrine — Protocols, ADRs (Retrieved via **Semantic Ledger** summaries first, then raw files)
 > 4. **Quick Ref:** [`sanctuary-guardian-prompt.md`](../../docs/prompt-engineering/sanctuary-guardian-prompt.md) — Consolidated operations guide
 
 
@@ -54,9 +54,10 @@ Both paths converge at: **Context Acquired** (debrief contains reference to `lea
 -   **Retrospective**: Fill `.agent/learning/templates/loop_retrospective_template.md`.
 -   **Meta-Learning**: Feed insights into next loop.
 
-## 7. Phase VII: Seal & Persistence (Final)
--   **Seal**: Run `cortex_capture_snapshot --type seal` (Must include Retrospective).
--   **Persist**: Broadcast to Hugging Face.
+## 7. Phase VII: Seal & Persistence (The Ledger)
+-   **Seal**: Run `cortex_capture_snapshot --type seal`. (Uses and updates the RLM Ledger).
+-   **Persist**: Broadcast to Hugging Face (Syncs Snapshot + Semantic Cache).
+-   **Distill**: Use `rlm-distill` to pre-calculate essence for new/modified folders.
 -   **Incremental Ingestion**: Run `cortex-ingest-incremental` (Last 24h).
 
 ## 3. The Rules of Reality (No Hallucination)
@@ -96,8 +97,9 @@ Your reasoning traces are preserved to the Hugging Face AI Commons.
 | 083 | Manifest-Centric Architecture (Single Source of Truth) |
 | 084 | Empirical Epistemic Gating (SE / TDA / Constitutional Anchor) |
 | 085 | **Canonical Mermaid Diagram Management** (No inline `\`\`\`mermaid`; use `.mmd` files) |
+| 094 | **Soul Persistence of Semantic Cache (The Semantic Ledger)** |
 
-**Tools:** `cortex-persist-soul` (incremental) / `cortex-persist-soul-full` (genome sync)
+**Tools:** `cortex-persist-soul` (syncs snapshot + ledger) / `rlm-distill` (manual memory refining)
 
 ## 7. Operating Mode Detection
 Detect your execution context during Phase I (Scout):
