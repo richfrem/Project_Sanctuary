@@ -27,6 +27,12 @@
             "description": "The script to verify coverage of the semantic ledger."
         },
         {
+            "title": "ChromaDB Ingestor (The Vector Memory)",
+            "source_path": "scripts/rlm_factory/chroma_ingest.py",
+            "language": "python",
+            "description": "Standalone script for ingesting files into ChromaDB."
+        },
+        {
             "title": "CLI Interface (The Driver)",
             "source_path": "scripts/cortex_cli.py",
             "language": "python",
