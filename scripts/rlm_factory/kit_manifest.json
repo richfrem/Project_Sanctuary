@@ -33,6 +33,12 @@
             "description": "Standalone script for ingesting files into ChromaDB."
         },
         {
+            "title": "Code-to-MD Shim (AST Converter)",
+            "source_path": "mcp_servers/rag_cortex/ingest_code_shim.py",
+            "language": "python",
+            "description": "Smart converter that turns Python/JS code into RAG-optimized Markdown."
+        },
+        {
             "title": "CLI Interface (The Driver)",
             "source_path": "scripts/cortex_cli.py",
             "language": "python",
