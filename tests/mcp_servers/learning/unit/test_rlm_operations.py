@@ -85,3 +85,97 @@ class TestRLMOperations:
         assert "ADR Summary" in hologram
         assert "Code Summary" in hologram
         assert "**Process Metrics:**" not in hologram # Metrics added at synthesis level, not reduce level
+
+    #===========================================================================
+    # CACHE TESTS (Protocol 132 / ADR 093)
+    #===========================================================================
+    
+    @patch("requests.post")
+    def test_cache_creation(self, mock_post, learning_ops, mock_repo):
+        """
+        Scenario: First run creates cache file with correct metadata.
+        Expected: Cache file exists, contains hash, summary, file_mtime, summarized_at.
+        """
+        import json
+        
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"response": "Test summary."}
+        mock_post.return_value = mock_response
+        
+        learning_ops.project_root = mock_repo
+        cache_path = mock_repo / ".agent" / "learning" / "rlm_summary_cache.json"
+        
+        # Run RLM
+        learning_ops._rlm_map(["01_PROTOCOLS"])
+        
+        # Verify cache file exists
+        assert cache_path.exists()
+        
+        # Verify cache structure
+        cache = json.loads(cache_path.read_text())
+        assert "01_PROTOCOLS/Protocol_Test.md" in cache
+        entry = cache["01_PROTOCOLS/Protocol_Test.md"]
+        assert "hash" in entry
+        assert "summary" in entry
+        assert "file_mtime" in entry
+        assert "summarized_at" in entry
+        assert entry["summary"] == "Test summary."
+
+    @patch("requests.post")
+    def test_cache_hit_skips_ollama(self, mock_post, learning_ops, mock_repo):
+        """
+        Scenario: Second run with unchanged file should hit cache.
+        Expected: Ollama NOT called on second run, result from cache returned.
+        """
+        import json
+        
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"response": "Original summary."}
+        mock_post.return_value = mock_response
+        
+        learning_ops.project_root = mock_repo
+        
+        # First run - should call Ollama
+        results1 = learning_ops._rlm_map(["01_PROTOCOLS"])
+        assert mock_post.call_count == 1
+        assert results1["01_PROTOCOLS/Protocol_Test.md"] == "Original summary."
+        
+        # Second run - should hit cache, NOT call Ollama
+        mock_post.reset_mock()
+        results2 = learning_ops._rlm_map(["01_PROTOCOLS"])
+        assert mock_post.call_count == 0  # No new calls!
+        assert results2["01_PROTOCOLS/Protocol_Test.md"] == "Original summary."
+
+    @patch("requests.post")
+    def test_cache_miss_on_file_change(self, mock_post, learning_ops, mock_repo):
+        """
+        Scenario: File content changes after caching.
+        Expected: Cache miss, Ollama called again with new content.
+        """
+        import json
+        
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"response": "First summary."}
+        mock_post.return_value = mock_response
+        
+        learning_ops.project_root = mock_repo
+        test_file = mock_repo / "01_PROTOCOLS" / "Protocol_Test.md"
+        
+        # First run
+        results1 = learning_ops._rlm_map(["01_PROTOCOLS"])
+        assert mock_post.call_count == 1
+        
+        # Modify file content
+        test_file.write_text("# MODIFIED Protocol\\nThis content is different!")
+        
+        # Update mock for second call
+        mock_post.reset_mock()
+        mock_response.json.return_value = {"response": "Updated summary."}
+        
+        # Second run - should miss cache due to hash change
+        results2 = learning_ops._rlm_map(["01_PROTOCOLS"])
+        assert mock_post.call_count == 1  # Called again!
+        assert results2["01_PROTOCOLS/Protocol_Test.md"] == "Updated summary."

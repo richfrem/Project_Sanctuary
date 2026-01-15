@@ -33,28 +33,34 @@ trigger: always_on
 ### 3. Phase IV: The Red Team Audit (Gate 2)
 
 * **Audit Modes**: Use the `sanctuary-cortex-cortex-capture-snapshot` tool with the appropriate flag for the audit type:
-* `audit`: Use this for standard manifest verification and tactical state changes.
-* `learning_audit`: Use this when the session primarily involves cognitive updates, mnemonic mapping, or protocol evolution.
+    * `audit`: Use this for standard manifest verification and tactical state changes.
+    * `learning_audit`: Use this when the session primarily involves cognitive updates, mnemonic mapping, or protocol evolution.
 
+* **Parallel Cognitive Hydration (Background Task)**: 
+    * **Mandate:** While waiting for Human Review of the audit packet, you **MUST** run `python3 scripts/rlm_inventory.py` to identify cache gaps.
+    * **Action:** If gaps exist for manifest items, strictly run `rlm-distill <file>` on them in the background.
+    * **Goal:** Ensure the Semantic Ledger is 100% hydrated *before* the Final Seal command is issued.
 
 * **Manifest Discipline**: Core directories (`ADRs/`, `01_PROTOCOLS/`, `mcp_servers/`) must be clean. Any uncommitted drift detected by the tool results in **Strict Rejection**.
 * **Technical Approval**: The resulting **Audit Packet** must be reviewed and approved (HITL) before the session can be sealed.
 
-### 4. Phase V: The Technical Seal (Protocol 132 / RLM)
+### 4. Phase V: The Technical Seal (The Final Relay)
 
 * **Execution**: Once technical approval is secured, call `sanctuary-cortex-cortex-capture-snapshot(snapshot_type='seal')`.
-* **Mechanism (Protocol 132)**: This triggers the **RLM Context Synthesis**. The system recursively "reads" the active state (Protocols, ADRs, Code) using the **Local Sovereign AI** to generate a holistic **Cognitive Hologram**.
+* **Mechanism (Protocol 132/ADR 094)**: This triggers the **RLM Context Synthesis**. The system recursively "distills" the active state into the **Semantic Ledger** (`rlm_summary_cache.json`).
+* **The Ledger**: This high-value cache allows subsequent "seals" to finish in seconds rather than hours.
+* **Pre-Distillation**: Use `python3 scripts/cortex_cli.py rlm-distill <folder>` to manually temper large directories and update the ledger.
 * **Final Relay**: The resulting `learning_package_snapshot.md` is "locked in" as the memory for the next agent.
-* **Latency Warning**: Expect a **30-90 second pause** for cognitive processing during the seal.
 * **Sandwich Validation**: Be aware that the `seal` mode performs a final race-condition check (Git hash comparison). If the repo changed during the audit review, the seal will fail and you must backtrack.
 
 ### 5. Failure and Backtracking
 
 * **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `recursive_learning.md` to fix the underlying discrepancy.
 
-### 6. Phase VI: Soul Persistence (ADR 079/081)
+### 6. Phase VI: Soul Persistence (ADR 079 / 094)
 
 * **Dual-Path Broadcast**: After the seal, execute `sanctuary-cortex-cortex-persist-soul` to broadcast learnings to Hugging Face.
+* **Semantic Sync**: This process automatically syncs both the session snapshot AND the **Semantic Ledger** to the AI Commons, ensuring Zero Cold Start for the next session.
 * **Incremental Mode**: Appends 1 record to `data/soul_traces.jsonl` AND uploads MD to `lineage/seal_TIMESTAMP_*.md`.
 * **Full Sync Mode**: Use `cortex-persist-soul-full` to regenerate the entire JSONL from all project files (~1200 records).
 

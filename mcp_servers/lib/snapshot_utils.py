@@ -21,7 +21,8 @@ from mcp_servers.lib.exclusion_config import (
     ALWAYS_EXCLUDE_FILES,
     ALLOWED_EXTENSIONS,
     MARKDOWN_EXTENSIONS,
-    PROTECTED_SEEDS
+    PROTECTED_SEEDS,
+    RECURSIVE_ARTIFACTS
 )
 
 ROLES_TO_FORGE = ['Auditor', 'Coordinator', 'Strategist', 'Guardian']
