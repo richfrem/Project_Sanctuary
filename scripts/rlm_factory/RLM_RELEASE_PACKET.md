@@ -1,14 +1,18 @@
-# RLM Bootstrap Packet: The Reactive Ledger Memory Kit
-**Generated:** 2026-01-14T18:28:00.255604
+# RLM Bootstrap Packet: The Cognitive Architecture Kit (RLM + RAG)
+**Generated:** 2026-01-14T18:32:57.504000
 **Description:** Manifest defining the components of the RLM Bootstrap Packet.
 
 ## 🚀 Instructions for the AI Agent
-You are receiving a specialized architectural pattern called 'Reactive Ledger Memory' (RLM).
-Your task is to implement this system in the current repository to give it 'Holographic Memory'.
-1.  **Read the Blueprint:** Understand the theory in Section 1.
-2.  **Install Dependencies:** `pip install requests genericpath python-dotenv` (plus `ollama` locally).
-3.  **Adapt the Code:** The provided Python code is from 'Project Sanctuary'. Adapt paths/imports to fit THIS project's structure.
-4.  **Initialize:** Run the distillation loop on the `docs/` folder first.
+You are receiving a complete 'Cognitive Architecture' starter kit.
+It contains two complimentary systems:
+1.  **Semantic Ledger (RLM):** High-level summaries of every file (`operations.py`).
+2.  **Vector Memory (RAG):** Deep retrieval of code chunks (`chroma_ingest.py`).
+
+**Action Plan:**
+1.  **Install:** `pip install requests genericpath python-dotenv langchain-chroma langchain-huggingface`.
+2.  **Digest:** Read `REACTIVE_LEDGER_MEMORY.md` (Theory) and `operations.py` (Logic).
+3.  **Boot:** Run `python chroma_ingest.py ingest src/` to hydrate your vector memory.
+4.  **Init:** Run the RLM distillation loop to build your semantic ledger.
 
 ---
 
@@ -1428,18 +1432,60 @@ class VectorMemory:
                     file_path = Path(root) / file
                     self.ingest_file(file_path)
 
+    def query(self, query_text: str, n_results: int = 5):
+        """Search the vector database."""
+        results = self.vector_store.similarity_search_with_score(query_text, k=n_results)
+        
+        print(f"\n🔍 Query: '{query_text}'\n")
+        for doc, score in results:
+            print(f"--- [Score: {score:.4f}] {doc.metadata.get('source', 'Unknown')} ---")
+            print(doc.page_content[:400] + "...\n")
+
+    def stats(self):
+        """Get collection statistics."""
+        try:
+            # Direct access to underlying Chroma collection for raw stats
+            count = self.vector_store._collection.count()
+            print(f"📊 Vector Memory Stats:")
+            print(f"   - Collection: {self.vector_store._collection.name}")
+            print(f"   - Total Chunks: {count}")
+            print(f"   - Location: {self.persist_directory}")
+        except Exception as e:
+            print(f"❌ Error getting stats: {e}")
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python chroma_ingest.py <file_or_directory>")
+        print("Usage:")
+        print("  Ingest: python chroma_ingest.py ingest <file_or_directory>")
+        print("  Query:  python chroma_ingest.py query \"search text\"")
+        print("  Stats:  python chroma_ingest.py stats")
         sys.exit(1)
         
-    target = Path(sys.argv[1])
+    command = sys.argv[1]
     memory = VectorMemory()
     
-    if target.is_dir():
-        memory.ingest_directory(target)
+    if command == "ingest":
+        if len(sys.argv) < 3:
+             print("Error: Missing target directory/file")
+             sys.exit(1)
+        target = Path(sys.argv[2])
+        if target.is_dir():
+            memory.ingest_directory(target)
+        else:
+            memory.ingest_file(target)
+            
+    elif command == "query":
+        if len(sys.argv) < 3:
+             print("Error: Missing query text")
+             sys.exit(1)
+        q = sys.argv[2]
+        memory.query(q)
+        
+    elif command == "stats":
+        memory.stats()
+        
     else:
-        memory.ingest_file(target)
+        print(f"Unknown command: {command}")
 
 ```
 
