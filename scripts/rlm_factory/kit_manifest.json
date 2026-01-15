@@ -39,6 +39,18 @@
             "description": "Smart converter that turns Python/JS code into RAG-optimized Markdown."
         },
         {
+            "title": "Reference: Cortex Operations (The Brain)",
+            "source_path": "mcp_servers/rag_cortex/operations.py",
+            "language": "python",
+            "description": "Deep logic for RAG coordination, HMAC checking, and ingestion."
+        },
+        {
+            "title": "Reference: Cortex Models (The Structure)",
+            "source_path": "mcp_servers/rag_cortex/models.py",
+            "language": "python",
+            "description": "Pydantic models defining the data structures for RAG."
+        },
+        {
             "title": "CLI Interface (The Driver)",
             "source_path": "scripts/cortex_cli.py",
             "language": "python",
