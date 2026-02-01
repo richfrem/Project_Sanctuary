@@ -68,6 +68,7 @@ Consumed by:
 import os
 import sys
 import json
+import re
 import hashlib
 import time
 import traceback
@@ -138,6 +139,59 @@ OLLAMA_URL = os.getenv("OLLAMA_HOST", "http://localhost:11434") + "/api/generate
 # CORE LOGIC
 # ============================================================
 
+def extract_header_summary(content: str) -> Optional[str]:
+    """
+    Attempts to extract metadata from Extended Python CLI/Tool Header.
+    Returns JSON string if successful, None otherwise.
+    """
+    # Simple check for docstring
+    if '"""' not in content[:500] and "'''" not in content[:500]:
+        return None
+
+    sections = {}
+    
+    # Helper regex
+    def extract_section(header, pattern):
+        match = re.search(pattern, header, re.DOTALL | re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        return None
+    
+    # 1. Purpose
+    purpose = extract_section(content, r'Purpose:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)')
+    if purpose:
+        sections["purpose"] = " ".join(purpose.split())
+    else:
+        return None # Mandatory
+        
+    # 2. Layer
+    layer = extract_section(content, r'Layer:\s*(.*)')
+    if layer: sections["layer"] = layer
+        
+    # 3. List Sections
+    for key, pattern in [
+        ("usage", r'Usage Examples?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("args", r'CLI Arguments?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("inputs", r'Input Files?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("outputs", r'Output:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("dependencies", r'(?:Script )?Dependencies:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("key_functions", r'Key Functions:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("supported_object_types", r'Supported Object Types:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("consumed_by", r'Consumed by:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)')
+    ]:
+        raw = extract_section(content, pattern)
+        if raw:
+            # Split by line, strip bullets
+            items = []
+            for line in raw.splitlines():
+                clean = line.strip()
+                if clean.startswith("- "): clean = clean[2:]
+                elif clean.startswith("* "): clean = clean[2:]
+                if clean: items.append(clean)
+            sections[key] = items
+
+    return json.dumps(sections, indent=2)
+
 def call_ollama(content: str, file_path: str, prompt_template: str, model_name: str) -> Optional[str]:
     """Call Ollama to generate summary."""
     # Truncate large files
@@ -164,7 +218,7 @@ def call_ollama(content: str, file_path: str, prompt_template: str, model_name: 
                     "temperature": 0.1
                 }
             },
-            timeout=120
+            timeout=180  # Increased for model cold-start
         )
         
         if response.status_code == 200:
@@ -247,8 +301,19 @@ def distill(config: RLMConfig, target_files: List[Path] = None, force: bool = Fa
             
             # Need to distill
             print(f"[{i}/{total}] Processing {rel_path}...")
-           # 2. Distill (if needed)
-            summary = call_ollama(content, rel_path, config.prompt_template, config.llm_model)
+            # 2. Distill (Header Extraction Priority for Tools)
+            summary = None
+            if config.type == "tool":
+                try:
+                    summary = extract_header_summary(content)
+                    if summary:
+                         debug("Extracted summary from header")
+                except Exception as e:
+                    debug(f"Header extraction failed: {e}")
+            
+            if not summary:
+                 # Fallback to LLM
+                 summary = call_ollama(content, rel_path, config.prompt_template, config.llm_model)
             
             if summary:
                 # 3. Update Ledger

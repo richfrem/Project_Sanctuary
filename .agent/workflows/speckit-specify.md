@@ -27,14 +27,14 @@ Given that feature description, do this:
 ## Pre-Flight (MANDATORY)
 Before beginning, run the universal startup sequence:
 ```bash
-source scripts/bash/workflow-start.sh speckit-specify [FeatureName]
+python tools/cli.py workflow start --name speckit-specify --target "[FeatureName]"
 ```
 *This aligns with Constitution, determines work type, and initializes tracking.*
 
 ---
 
 1. **Proceed with Feature Definition**:
-   - The Pre-Flight `workflow-start.sh` has already ensured we are in a valid feature branch (either existing or new).
+   - The Pre-Flight Python CLI has already ensured we are in a valid feature branch (either existing or new).
    - Continue to use the current context to define the spec.
 
 3. Load `.agent/templates/workflow/spec-template.md` to understand required sections.

@@ -6,7 +6,7 @@ tools: ['github/github-mcp-server/issue_write']
 
 ## Phase 0: Pre-Flight
 ```bash
-source scripts/bash/workflow-start.sh speckit-tasks-to-issues [Target]
+python tools/cli.py workflow start --name speckit-tasks-to-issues --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 

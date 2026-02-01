@@ -9,7 +9,7 @@ handoffs:
 
 ## Phase 0: Pre-Flight
 ```bash
-source scripts/bash/workflow-start.sh speckit-clarify [Target]
+python tools/cli.py workflow start --name speckit-clarify --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 

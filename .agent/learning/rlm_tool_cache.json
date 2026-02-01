@@ -1,9 +1,28 @@
 {
+  "scripts/cortex_cli.py": {
+    "hash": "b1b2aa81ba94a191",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"CLI Orchestrator for the Mnemonic Cortex RAG server and Protocol 128 (Learning Loop). Serves as the Single Source of Truth for Terminal Operations involving knowledge ingestion, retrieval, snapshotting, and soul persistence.\",\n  \"layer\": \"Orchestrator\",\n  \"supported_object_types\": [\"CLI Command\", \"RAG\", \"Snapshot\"],\n  \"usage\": [\n    \"python scripts/cortex_cli.py ingest --incremental --hours 24\",\n    \"python scripts/cortex_cli.py query \\\"Protocol 128\\\"\",\n    \"python scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/learning_manifest.json\",\n    \"python scripts/cortex_cli.py guardian --mode TELEMETRY\"\n  ],\n  \"args\": [\n    \"ingest: Perform RAG ingestion (Full or Incremental)\",\n    \"query: Perform semantic search\",\n    \"snapshot: Capture Protocol 128 snapshot\",\n    \"guardian: Generate Guardian Boot Digest\",\n    \"persist-soul: Broadcast snapshot to Hugging Face\",\n    \"debrief: Run learning debrief logic\",\n    \"stats: View RAG health statistics\"\n  ],\n  \"inputs\": [\n    \".agent/learning/learning_manifest.json\",\n    \".agent/learning/guardian_manifest.json\",\n    \"Project files (md, py, js, etc.) for ingestion\"\n  ],\n  \"outputs\": [\n    \"RAG Database (.vector_data/)\",\n    \"Snapshots (.agent/learning/snapshots/)\",\n    \"Guardian Digest (stdout/file)\"\n  ],\n  \"dependencies\": [\n    \"mcp_servers/rag_cortex/operations.py\",\n    \"mcp_servers/learning/operations.py\",\n    \"mcp_servers/evolution/operations.py\"\n  ],\n  \"key_functions\": [\n    \"main()\",\n    \"verify_iron_core()\",\n    \"ingest()\",\n    \"snapshot()\"\n  ],\n  \"consumed_by\": [\n    \"User (Manual CLI)\",\n    \"Agent (via Tool Calls)\",\n    \"CI/CD Pipelines\"\n  ]\n}"
+  },
+  "scripts/domain_cli.py": {
+    "hash": "b66d818aadaa82e7",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"CLI Orchestrator for Sanctuary Domain Logic (Chronicle, Task, ADR, Protocol). Replaces generic MCP servers with a direct Python CLI interface for CRUD operations and file management.\",\n  \"layer\": \"Orchestrator\",\n  \"supported_object_types\": [\"Chronicle\", \"Task\", \"ADR\", \"Protocol\"],\n  \"usage\": [\n    \"python scripts/domain_cli.py chronicle list --limit 15\",\n    \"python scripts/domain_cli.py task create \\\"Fix Bug\\\" --objective \\\"Fix X\\\"\",\n    \"python scripts/domain_cli.py adr get 85\",\n    \"python scripts/domain_cli.py protocol search \\\"Mnemonic\\\"\"\n  ],\n  \"args\": [\n    \"chronicle: Manage Chronicle Entries\",\n    \"task: Manage Tasks\",\n    \"adr: Manage Architecture Decision Records\",\n    \"protocol: Manage Protocols\"\n  ],\n  \"inputs\": [\n    \"00_CHRONICLE/ENTRIES/\",\n    \"tasks/\",\n    \"ADRs/\",\n    \"01_PROTOCOLS/\"\n  ],\n  \"outputs\": [\n    \"Markdown files in respective directories\"\n  ],\n  \"dependencies\": [\n    \"mcp_servers/chronicle/operations.py\",\n    \"mcp_servers/task/operations.py\",\n    \"mcp_servers/adr/operations.py\",\n    \"mcp_servers/protocol/operations.py\"\n  ],\n  \"key_functions\": [\n    \"ChronicleOperations.create_entry()\",\n    \"TaskOperations.create_task()\",\n    \"ADROperations.create_adr()\",\n    \"ProtocolOperations.create_protocol()\"\n  ],\n  \"consumed_by\": [\n    \"User (Manual CLI)\",\n    \"Agent (via Tool Calls)\"\n  ]\n}"
+  },
+  "scripts/link-checker/smart_fix_links.py": {
+    "hash": "0fb17813788353bb",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Auto-repair utility for broken Markdown links. Uses a file inventory to find the correct location of moved or renamed files and updates the links in-place. Supports 'fuzzy' matching.\",\n  \"layer\": \"Curate / Link Checker\",\n  \"supported_object_types\": [\"Markdown\"],\n  \"usage\": [\n    \"python scripts/link-checker/smart_fix_links.py --dry-run\",\n    \"python scripts/link-checker/smart_fix_links.py\"\n  ],\n  \"args\": [\n    \"--dry-run: Report proposed changes without modifying files (Safety Mode)\"\n  ],\n  \"inputs\": [\n    \"scripts/link-checker/file_inventory.json (Source of Truth)\",\n    \"**/*.md (Target files to fix)\"\n  ],\n  \"outputs\": [\n    \"Modified .md files\",\n    \"Console report of fixes\"\n  ],\n  \"dependencies\": [\n    \"mcp_servers/lib/exclusion_config.py\"\n  ],\n  \"key_functions\": [\n    \"fix_links_in_file()\"\n  ],\n  \"consumed_by\": [\n    \"/post-move-link-check (Workflow)\",\n    \"Manual maintenance\"\n  ]\n}"
+  },
+  "scripts/link-checker/verify_links.py": {
+    "hash": "new_hash_2",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Comprehensive integrity checker for the Project Sanctuary knowledge graph. Scans Markdown files and JSON manifests for broken internal links (dead references). Optionally validates external URLs. Enforces Protocol 128: Source Verification (Rule 9).\",\n  \"layer\": \"Curate / Link Checker\",\n  \"supported_object_types\": [\"Markdown\", \"Manifest\"],\n  \"usage\": [\n    \"python scripts/link-checker/verify_links.py\",\n    \"python scripts/link-checker/verify_links.py --check-external --output report.json\"\n  ],\n  \"args\": [\n    \"--root: Project root directory (default: .)\",\n    \"--check-external: Enable HTTP/HTTPS validation (slower)\",\n    \"--output: JSON report path\"\n  ],\n  \"inputs\": [\n    \"**/*.md\",\n    \"**/*manifest.json\"\n  ],\n  \"outputs\": [\n    \"JSON Report of broken links\",\n    \"Console summary\"\n  ],\n  \"dependencies\": [\n    \"requests (external lib)\"\n  ],\n  \"key_functions\": [\n    \"scan_md_file()\",\n    \"resolve_relative_path()\"\n  ],\n  \"consumed_by\": [\n    \"CI/CD Pipelines\",\n    \"Agent (Pre-Flight checks)\"\n  ]\n}"
+  },
   "tools/cli.py": {
-    "file_mtime": 1769716444.164248,
-    "hash": "b9ba11f575ae4693",
-    "summarized_at": "2026-01-29T17:27:06.256595",
-    "summary": "{\n  \"purpose\": \"Main entry point for the Antigravity Command System. Orchestrates sub-tools for scanning, context bundling, dependency analysis, and business rule discovery. Routes commands like scan, bundle, query, and rules to specialized modules.\",\n  \"layer\": \"Curate / Cli_Entry_Points\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/cli.py --help\"],\n  \"args\": [\n    \"--target : Target ID (e.g., JCSE0030)\",\n    \"--depth : Recursion depth\",\n    \"args : Arguments for priority_candidates.py\",\n    \"text : Query text\",\n    \"--deep : Deep search across all source files\",\n    \"--json : Output in JSON format\",\n    \"--direction : Analysis direction (upstream/downstream/both)\",\n    \"--target : Target Artifact ID\",\n    \"--type : Artifact Type\",\n    \"--bundle-title : Title for the bundle (e.g. JCSE0030)\",\n    \"--manifest : Custom manifest path\",\n    \"--path : N/A\",\n    \"--note : N/A\",\n    \"--base : Target base manifest type (e.g. form)\",\n    \"--new-path : N/A\",\n    \"--pattern : Regex pattern to search for\",\n    \"--target : Library ID (e.g. AGLIB)\",\n    \"--target : Target Form ID (e.g. JCSE0086)\",\n    \"--target : Target Form ID (e.g. JUSE0005)\",\n    \"--json : Output as JSON\",\n    \"--force : Overwrite ALL items including code-discovered\",\n    \"--item-id : Item ID to find (e.g. CRIMINAL_MENU.JCSE0030)\",\n    \"--app : Application to search in (optional, searches all if not provided)\",\n    \"--form : Form ID\",\n    \"--role : Filter by role\",\n    \"--output : Output directory\",\n    \"--format : Output format\",\n    \"target : Form ID or App Code\",\n    \"item : Item ID\",\n    \"--visible : Comma-sep roles or 'all'\",\n    \"--hidden : Comma-sep roles or 'none'\",\n    \"--json : Output as JSON\"\n  ],\n  \"inputs\": [\"Input Files not explicitly mentioned in the provided code\"],\n  \"outputs\": [\"Output not explicitly mentioned in the provided code\"],\n  \"dependencies\": [\"dependencies.py\"],\n  \"consumed_by\": [\"business_rules_inventory_manager.py\", \"business_workflows_inventory_manager.py\"],\n  \"key_functions\": [\n    \"_enrich_manifest(target_id: str, manifest_manager_path: str)\",\n    \"resolve_type_from_inventory(target_id: str)\"\n  ]\n}"
+    "hash": "5420347489bdb43a",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Main entry point for the Antigravity Command System. Orchestrates sub-tools for context bundling, tool discovery, workflow management, and queries.\",\n  \"layer\": \"Tools / CLI\",\n  \"supported_object_types\": [\"Generic\", \"Workflow\"],\n  \"usage\": [\n    \"python tools/cli.py --help\",\n    \"python tools/cli.py tools list\",\n    \"python tools/cli.py query \\\"search term\\\"\",\n    \"python tools/cli.py workflow start --name codify --target MyTarget\"\n  ],\n  \"args\": [\n    \"--target: Target ID\",\n    \"--type: Artifact Type\",\n    \"--json: Output in JSON format\",\n    \"--manifest: Custom manifest path\",\n    \"--output: Output directory\"\n  ],\n  \"inputs\": [\n    \"(See individual sub-tools)\"\n  ],\n  \"outputs\": [\n    \"(See individual sub-tools)\"\n  ],\n  \"dependencies\": [\n    \"tools/investigate/utils/path_resolver.py\",\n    \"tools/orchestrator/workflow_manager.py\"\n  ],\n  \"key_functions\": [\n    \"resolve_type_from_inventory()\",\n    \"main()\"\n  ]\n}"
   },
   "tools/codify/diagrams/export_mmd_to_image.py": {
     "file_mtime": 1769270613.391936,
@@ -25,8 +44,8 @@
   },
   "tools/codify/rlm/rlm_config.py": {
     "hash": "c31ca280d008bb57",
-    "summarized_at": "2026-01-31T18:26:57.941950",
-    "summary": "[DISTILLATION FAILED]"
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Central configuration factory for RLM. Resolves cache paths and loads manifests.\",\n  \"layer\": \"Codify / RLM\",\n  \"supported_object_types\": [\"RLM Config\"],\n  \"usage\": [\"from tools.codify.rlm.rlm_config import RLMConfig\"],\n  \"dependencies\": [],\n  \"key_functions\": [\"RLMConfig\"]\n}"
   },
   "tools/codify/tracking/analyze_tracking_status.py": {
     "file_mtime": 1769312126.2832038,
@@ -46,18 +65,6 @@
     "summarized_at": "2026-01-29T10:18:45.426060",
     "summary": "{\n  \"purpose\": \"Generates a single text file snapshot of code files for LLM context sharing.\",\n  \"layer\": \"Curate / Documentation\",\n  \"supported_object_types\": [\"code files\"],\n  \"usage\": [\"node tools/codify/utils/capture-code-snapshot.js --help\"],\n  \"args\": [],\n  \"inputs\": [\n    {\n      \"description\": \"Directory to scan for code files (defaults to current working directory)\",\n      \"type\": \"path\"\n    }\n  ],\n  \"outputs\": [\"llm_code_snapshot.txt\"],\n  \"dependencies\": [\"fs\", \"path\", \"ignore\"],\n  \"consumed_by\": \"(Unknown)\",\n  \"key_functions\": [\n    \"collectFiles()\",\n    \"main()\"\n  ]\n}"
   },
-  "tools/codify/vector/ingest.py": {
-    "file_mtime": 1769707613.6856737,
-    "hash": "7e45178d45b3234a",
-    "summarized_at": "2026-01-29T10:12:50.378361",
-    "summary": "{\n  \"purpose\": \"Vector Ingestion: Chunks code/docs and generates embeddings via ChromaDB.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/codify/vector/ingest.py --help\"],\n  \"args\": [\n    \"--full\",\n    \"--folder\",\n    \"--file\",\n    \"--since\",\n    \"--query\",\n    \"--stats\",\n    \"--purge\",\n    \"--cleanup\",\n    \"--no-cleanup\"\n  ],\n  \"inputs\": \"- (See code)\",\n  \"outputs\": \"- (See code)\",\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": \"(Unknown)\",\n  \"key_functions\": [\n    \"get_chroma_path()\",\n    \"load_manifest()\",\n    \"load_rlm_cache()\",\n    \"should_skip()\",\n    \"collect_files()\",\n    \"create_document_with_context()\",\n    \"run_cleanup()\",\n    \"main()\"\n  ]\n}"
-  },
-  "tools/codify/vector/ingest_code_shim.py": {
-    "file_mtime": 1769525918.950572,
-    "hash": "6667b5234959c210",
-    "summarized_at": "2026-01-29T10:13:16.567889",
-    "summary": "{\n  \"purpose\": \"Shim for ingesting code files into Vector DB.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\n    \"Generic\"\n  ],\n  \"usage\": [\n    \"python tools/codify/vector/ingest_code_shim.py --help\"\n  ],\n  \"args\": [],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"(None detected)\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ],\n  \"key_functions\": [\n    \"find_project_root()\",\n    \"parse_xml_to_markdown()\",\n    \"parse_sql_to_markdown()\",\n    \"parse_json_to_markdown()\",\n    \"parse_python_to_markdown()\",\n    \"parse_javascript_to_markdown()\"\n  ]\n}"
-  },
   "tools/curate/documentation/workflow_inventory_manager.py": {
     "file_mtime": 1769561175.0164137,
     "hash": "78d0f2c74115efc9",
@@ -68,28 +75,32 @@
     "file_mtime": 1769716444.1697989,
     "hash": "4b4a01331d072e33",
     "summarized_at": "2026-01-29T17:20:29.446699",
-    "summary": "{\n  \"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.\",\n  \"layer\": \"Curate / Curate\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python tools/curate/inventories/manage_tool_inventory.py --help\",\n    \"python tools/curate/inventories/manage_tool_inventory.py list\",\n    \"python tools/curate/inventories/manage_tool_inventory.py search \\\"keyword\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py remove --path \\\"path/to/tool.py\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py update --path \\\"tool.py\\\" --desc \\\"New description\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub\"\n  ],\n  \"args\": [\n    \"--inventory\",\n    \"--path\",\n    \"--category\",\n    \"--desc\",\n    \"--output\",\n    \"keyword\",\n    \"--status\",\n    \"--new-path\",\n    \"--mark-compliant\",\n    \"--include-json\",\n    \"--json\",\n    \"--batch\",\n    \"--dry-run\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)\",\n    \"tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)\"\n  ],\n  \"consumed_by\": [\"tools/codify/rlm/distiller.py (Invokes update_tool for RLM-driven enrichment)\"],\n  \"key_functions\": [\n    \"generate_markdown()\",\n    \"extract_docstring()\",\n    \"main()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.\",\n  \"layer\": \"Curate / Curate\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python tools/curate/inventories/manage_tool_inventory.py --help\",\n    \"python tools/curate/inventories/manage_tool_inventory.py list\",\n    \"python tools/curate/inventories/manage_tool_inventory.py search \\\"keyword\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py remove --path \\\"path/to/tool.py\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py update --path \\\"tool.py\\\" --desc \\\"New description\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub\"\n  ],\n  \"args\": [\n    \"--inventory\",\n    \"--path\",\n    \"--category\",\n    \"--desc\",\n    \"--output\",\n    \"keyword\",\n    \"--status\",\n    \"--new-path\",\n    \"--mark-compliant\",\n    \"--include-json\",\n    \"--json\",\n    \"--batch\",\n    \"--dry-run\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)\",\n    \"tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)\"\n  ],\n  \"consumed_by\": [\"tools/codify/rlm/distiller.py (Invokes update_tool for RLM-driven enrichment)\"],\n  \"key_functions\": [\n    \"generate_markdown()\",\n    \"extract_docstring()\",\n    \"main()\"\n  ]\n  }"
+  },
+  "tools/curate/inventories/vibe_cleanup.py": {
+    "hash": "7727289db71a92cf",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Inventory Reconciliation Utility. Scans the `tool_inventory.json` against the filesystem and automatically removes entries for files that no longer exist (Pruning). Also lists all current scripts to audit 'ghosts' vs reality.\",\n  \"layer\": \"Curate / Inventories\",\n  \"supported_object_types\": [\"Temp Files\"],\n  \"usage\": [\"python tools/curate/inventories/vibe_cleanup.py\"],\n  \"args\": [\n    \"None\"\n  ],\n  \"inputs\": [\n    \"tools/tool_inventory.json\",\n    \"Filesystem (tools/ directory)\"\n  ],\n  \"outputs\": [\n    \"Updates to tool_inventory.json\",\n    \"Console log of removed files\"\n  ],\n  \"dependencies\": [\n    \"tools/curate/inventories/manage_tool_inventory.py\"\n  ],\n  \"key_functions\": [\n    \"get_missing_files()\",\n    \"remove_tool()\"\n  ],\n  \"consumed_by\": [\n    \"CI/CD Pipelines\",\n    \"Manual maintenance\"\n  ]\n}"
   },
   "tools/curate/rlm/cleanup_cache.py": {
     "hash": "04571da937a7cad6",
-    "summarized_at": "2026-01-29T17:19:31.564375",
-    "summary": "[DISTILLATION FAILED]"
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"RLM Cleanup: Removes stale and orphan entries from the Recursive Language Model ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"RLM Cache Entry\"],\n  \"usage\": [\n    \"python tools/curate/rlm/cleanup_cache.py --help\"\n  ],\n  \"args\": [\n    \"--apply: Perform the deletion\",\n    \"--prune-orphans: Remove entries not matching manifest\",\n    \"--v: Verbose mode\"\n  ],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"tools/codify/rlm/rlm_config.py\"\n  ],\n  \"key_functions\": [\n    \"load_manifest_globs()\",\n    \"matches_any()\",\n    \"main()\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ]\n}"
   },
-  "tools/curate/vector/cleanup.py": {
-    "file_mtime": 1769525918.981603,
-    "hash": "da8492734aead125",
-    "summarized_at": "2026-01-29T10:13:07.856580",
-    "summary": "{\n  \"purpose\": \"Vector Cleanup: Consistency check to remove stale chunks from DB.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/curate/vector/cleanup.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"--apply\",\n      \"description\": \"Perform the deletion\"\n    },\n    {\n      \"name\": \"--prune-orphans\",\n      \"description\": \"Remove entries not matching manifest\"\n    },\n    {\n      \"name\": \"--v\",\n      \"description\": \"Verbose mode\"\n    }\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"get_chroma_path()\",\n    \"load_manifest_globs()\",\n    \"matches_any()\",\n    \"main()\"\n  ]\n}"
+  "tools/investigate/utils/next_number.py": {
+    "hash": "new_hash_1",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Sequential Identifier Generator. Scans artifact directories (Specs, Tasks, ADRs, Chronicles) to find the next available sequence number. Prevents ID collisions.\",\n  \"layer\": \"Investigate / Utils\",\n  \"supported_object_types\": [\"ADR\", \"Task\", \"Spec\", \"Chronicle\"],\n  \"usage\": [\n    \"python tools/investigate/utils/next_number.py --type spec\",\n    \"python tools/investigate/utils/next_number.py --type task\",\n    \"python tools/investigate/utils/next_number.py --type all\"\n  ],\n  \"args\": [\n    \"--type: Artifact type (spec, task, adr, chronicle, all)\"\n  ],\n  \"inputs\": [\n    \"specs/\",\n    \"tasks/\",\n    \"ADRs/\",\n    \"00_CHRONICLE/ENTRIES/\"\n  ],\n  \"outputs\": [\n    \"Next available ID (e.g. \\\"0045\\\") to stdout\"\n  ],\n  \"dependencies\": [\n    \"pathlib\",\n    \"re\"\n  ],\n  \"key_functions\": [\n    \"main()\"\n  ],\n  \"consumed_by\": [\n    \"scripts/domain_cli.py\",\n    \"Manual workflow execution\"\n  ]\n}"
   },
   "tools/orchestrator/proof_check.py": {
     "hash": "6ffa54cfc3afc26f",
-    "summarized_at": "2026-01-31T13:59:27.150847",
-    "summary": "[DISTILLATION FAILED]"
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. This tool prevents 'checkbox fraud'.\",\n  \"layer\": \"Orchestrator / Verification\",\n  \"supported_object_types\": [\"Spec artifacts\", \"File references\"],\n  \"usage\": [\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-human-gate-protocols\",\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-foo --json\"\n  ],\n  \"args\": [\n    \"--spec-dir: Path to spec directory (required)\",\n    \"--project-root: Project root directory (default: current)\",\n    \"--json: Output in JSON format (optional)\"\n  ],\n  \"inputs\": [\n    \"specs/[ID]/spec.md\",\n    \"specs/[ID]/plan.md\",\n    \"specs/[ID]/tasks.md\"\n  ],\n  \"outputs\": [\n    \"Summary report of modified/unchanged files\",\n    \"Exit code 1 if fail, 0 if pass\"\n  ],\n  \"dependencies\": [\n    \"Git\"\n  ],\n  \"key_functions\": [\n    \"extract_file_refs()\",\n    \"check_file_modified()\",\n    \"run_proof_check()\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py workflow retrospective\",\n    \"/workflow-retrospective workflow\"\n  ]\n}"
   },
   "tools/orchestrator/workflow_manager.py": {
     "hash": "ecb4b989fc6c51d2",
-    "summarized_at": "2026-01-31T20:09:41.591680",
-    "summary": "[DISTILLATION FAILED]"
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Core logic for the 'Python Orchestrator' architecture (ADR-0030 v2/v3). Handles Git State checks, Context Alignment, Branch Creation & Naming, and Context Manifest Initialization. Acts as the single source of truth for 'Start Workflow' logic.\",\n  \"layer\": \"Orchestrator\",\n  \"supported_object_types\": [\"Workflow State\"],\n  \"usage\": [\n    \"from tools.orchestrator.workflow_manager import WorkflowManager\",\n    \"mgr = WorkflowManager()\",\n    \"mgr.start_workflow('codify', 'MyTarget')\"\n  ],\n  \"args\": [\n    \"Workflow Name\",\n    \"Target ID\",\n    \"Artifact Type\"\n  ],\n  \"inputs\": [\n    \"Workflow Name\",\n    \"Target ID\"\n  ],\n  \"outputs\": [\n    \"Exit Code 0: Success (Proceed)\",\n    \"Exit Code 1: Failure (Stop)\"\n  ],\n  \"dependencies\": [\n    \"tools/investigate/utils/path_resolver.py\"\n  ],\n  \"key_functions\": [\n    \"start_workflow\",\n    \"get_git_status\",\n    \"get_current_branch\",\n    \"generate_next_id\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py\",\n    \"Manual Scripts\"\n  ]\n}"
   },
   "tools/retrieve/bundler/bundle.py": {
     "file_mtime": 1769525919.0013855,
@@ -103,6 +114,12 @@
     "summarized_at": "2026-01-29T10:12:02.640725",
     "summary": "{\n  \"purpose\": \"Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler.\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/bundler/manifest_manager.py --help\"],\n  \"args\": [\n    \"--manifest\",\n    \"--base\",\n    \"--bundle-title\",\n    \"--type\",\n    \"--path\",\n    \"--note\",\n    \"pattern\",\n    \"--output\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\"None detected\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"add_file()\",\n    \"bundle()\",\n    \"get_base_manifest_path()\",\n    \"init_manifest()\",\n    \"list_manifest()\",\n    \"load_manifest()\",\n    \"remove_file()\",\n    \"save_manifest()\",\n    \"search_files()\",\n    \"update_file()\"\n  ]\n}"
   },
+  "tools/retrieve/rlm/fetch_tool_context.py": {
+    "file_mtime": 1769924260.8329458,
+    "hash": "e6db97fa1e136a6a",
+    "summarized_at": "2026-01-31T22:01:21.015896",
+    "summary": "{\n  \"purpose\": \"Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable 'Manual Page'. This is the second step of the Late-Binding Protocol, following query_cache.py which finds a tool, this script provides the detailed context needed to use it.\",\n  \"layer\": \"Retrieve\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python tools/retrieve/rlm/fetch_tool_context.py --file tools/cli.py\",\n    \"python tools/retrieve/rlm/fetch_tool_context.py --file scripts/domain_cli.py\"\n  ],\n  \"args\": [\n    \"--file : Path to the tool script (required, e.g., tools/cli.py)\"\n  ],\n  \"inputs\": [],\n  \"outputs\": [\"Markdown-formatted technical specification to stdout:\"],\n  \"dependencies\": [\n    \"- tools/codify/rlm/rlm_config.py: RLM configuration and cache loading\"\n  ],\n  \"consumed_by\": [\n    \"- Agent during Late-Binding tool discovery flow\"\n  ],\n  \"key_functions\": [\n    \"format_as_manual(file_path: str, data: dict)\"\n  ]\n}"
+  },
   "tools/retrieve/rlm/inventory.py": {
     "file_mtime": 1769703353.8198912,
     "hash": "e89667d95d7a8297",
@@ -115,10 +132,39 @@
     "summarized_at": "2026-01-29T10:12:28.812250",
     "summary": "{\n  \"purpose\": \"RLM Search: Instant O(1) semantic search of the ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/rlm/query_cache.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"term\",\n      \"description\": \"Search term (ID, filename, or content keyword)\"\n    },\n    {\n      \"name\": \"--list\",\n      \"description\": \"List all cached files\"\n    },\n    {\n      \"name\": \"--no-summary\",\n      \"description\": \"Hide summary text\"\n    },\n    {\n      \"name\": \"--json\",\n      \"description\": \"Output results as JSON\"\n    }\n  ],\n  \"inputs\": [\"- (See code)\"],\n  \"outputs\": [\"- (See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"load_cache()\",\n    \"search_cache()\",\n    \"list_cache()\",\n    \"main()\"\n  ]\n}"
   },
-  "tools/retrieve/vector/query.py": {
-    "file_mtime": 1769554275.3047755,
-    "hash": "b66859b4fc8d6957",
-    "summarized_at": "2026-01-29T10:12:59.974507",
-    "summary": "{\n  \"purpose\": \"Vector Search: Semantic search interface for the ChromaDB collection.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/vector/query.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"query\",\n      \"description\": \"Search query text\"\n    },\n    {\n      \"name\": \"--results\",\n      \"alias\": \"-n\",\n      \"type\": \"int\",\n      \"default\": 5,\n      \"description\": \"Number of results (default: 5)\"\n    },\n    {\n      \"name\": \"--stats\",\n      \"action\": \"store_true\",\n      \"description\": \"Show database statistics\"\n    },\n    {\n      \"name\": \"--json\",\n      \"alias\": \"-j\",\n      \"action\": \"store_true\",\n      \"description\": \"Output results as JSON\"\n    }\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"get_chroma_path()\",\n    \"VectorDBQuery.query()\",\n    \"VectorDBQuery.stats()\"\n  ]\n}"
+  "tools/utils/path_resolver.py": {
+    "hash": "new_hash_3",
+    "summarized_at": "2026-01-31T22:55:00.000000",
+    "summary": "{\n  \"purpose\": \"Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding.\",\n  \"layer\": \"Tools / Utils\",\n  \"supported_object_types\": [\"Generic\", \"Path\"],\n  \"usage\": [\n    \"from tools.utils.path_resolver import resolve_path\"\n  ],\n  \"args\": [\n    \"(None detected)\"\n  ],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"(None detected)\"\n  ],\n  \"key_functions\": [\n    \"resolve_root()\",\n    \"resolve_path()\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ]\n}"
+  },
+  "tools/investigate/utils/path_resolver.py": {
+    "summary": {
+      "purpose": "Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding.",
+      "layer": "Curate / Bundler",
+      "supported_object_types": [
+        "Generic"
+      ]
+    },
+    "summarized_at": "2026-01-31T23:55:00.000000"
+  },
+  "tools/investigate/utils/pathResolver.js": {
+    "summary": {
+      "purpose": "Node.js implementation of path resolution logic.",
+      "layer": "Utility",
+      "supported_object_types": [
+        "Generic"
+      ]
+    },
+    "summarized_at": "2026-01-31T23:55:00.000000"
+  },
+  "tools/investigate/utils/rlmConfigResolver.js": {
+    "summary": {
+      "purpose": "Resolves RLM configuration paths for Node.js tools.",
+      "layer": "Configuration",
+      "supported_object_types": [
+        "Generic"
+      ]
+    },
+    "summarized_at": "2026-01-31T23:55:00.000000"
   }
 }

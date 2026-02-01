@@ -13,7 +13,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Pre-Flight (MANDATORY)
 Before beginning, ensure workflow-start has been run:
 ```bash
-source scripts/bash/workflow-start.sh speckit-implement [FeatureName]
+python tools/cli.py workflow start --name speckit-implement --target "[FeatureName]"
 ```
 
 ---

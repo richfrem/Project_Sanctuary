@@ -1,4 +1,45 @@
 #!/usr/bin/env python3
+"""
+verify_links.py (CLI)
+=====================================
+
+Purpose:
+    Comprehensive integrity checker for the Project Sanctuary knowledge graph.
+    Scans Markdown files and JSON manifests for broken internal links (dead references).
+    Optionally validates external URLs.
+
+    Enforces "Protocol 128: Source Verification (Rule 9)".
+
+Layer: Curate / Link Checker
+
+Usage Examples:
+    python scripts/link-checker/verify_links.py
+    python scripts/link-checker/verify_links.py --check-external --output report.json
+
+CLI Arguments:
+    --root          : Project root directory (default: .)
+    --check-external: Enable HTTP/HTTPS validation (slower)
+    --output        : JSON report path
+
+Input Files:
+    - **/*.md
+    - **/*manifest.json
+
+Output:
+    - JSON Report of broken links
+    - Console summary
+
+Key Functions:
+    - scan_md_file(): Regex-based link extraction and path resolution.
+    - resolve_relative_path(): Handles relative, absolute, and root-relative paths.
+
+Script Dependencies:
+    - requests (external lib)
+
+Consumed by:
+    - CI/CD Pipelines
+    - Agent (Pre-Flight checks)
+"""
 import os
 import re
 import json

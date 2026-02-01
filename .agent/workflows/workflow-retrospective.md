@@ -19,9 +19,10 @@ tier: 1
 
 ## Step 0: Collect User Feedback (MANDATORY FIRST)
 
-> [!CRITICAL]
-> **You MUST ask the User these questions BEFORE filling out any other sections.**
-> Use `notify_user` and WAIT for their response.
+> [!CRITICAL] **STOP! READ THIS CAREFULLY!**
+> Do NOT check any boxes. Do NOT run any scripts.
+> You MUST output the questions below to the User and **WAIT** for their reply.
+> **Failure to do this is a Protocol Violation.**
 
 **Questions to ask:**
 1. What went well for you during this workflow?

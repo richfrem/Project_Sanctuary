@@ -250,7 +250,8 @@ class InventoryManager:
         print(f"✅ Added {tool_path} to category '{category}' (status: {new_entry['compliance_status']})")
         
         # Trigger RLM Update
-        self._trigger_distillation(tool_path)
+        # DISABLED (Temporary): Perf issues with Ollama
+        # self._trigger_distillation(tool_path)
 
     def list_tools(self):
         """Print all tools."""
@@ -417,7 +418,7 @@ class InventoryManager:
              # Use the NEW path if updated, else original
              # Note: if path changed, we should use new path.
              target_path = new_path if new_path else tool_path
-             self._distill_tool(target_path)
+             # self._trigger_distillation(target_path) # FIXED: Method name & Disabled
         else:
              print(f"ℹ️  Skipped distillation (suppressed).")
         

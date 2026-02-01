@@ -5,7 +5,7 @@ description: Perform a non-destructive cross-artifact consistency and quality an
 
 ## Phase 0: Pre-Flight
 ```bash
-source scripts/bash/workflow-start.sh speckit-analyze [Target]
+python tools/cli.py workflow start --name speckit-analyze --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 

@@ -138,7 +138,7 @@ class WorkflowManager:
         if not self.next_num_script.exists():
             raise FileNotFoundError(f"next_number.py not found at {self.next_num_script}")
             
-        res = self.run_command([sys.executable, str(self.next_num_script), "--dir", str(self.specs_dir)])
+        res = self.run_command([sys.executable, str(self.next_num_script), "--type", "spec"])
         return res.stdout.strip()
 
     def start_workflow(self, workflow_name: str, target_id: str, artifact_type: str = "generic") -> bool:

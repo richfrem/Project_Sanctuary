@@ -5,19 +5,21 @@ rlm_config.py (Shared Module)
 
 Purpose:
     Centralized configuration and utility logic for the RLM Toolchain.
-    Implement the "Manifest Factory" pattern (ADR-0024) to dynamically
-    resolve manifests and cache files based on the Analysis Type (Sanctuary vs Tool).
+    Implements the "Manifest Factory" pattern (ADR-0024) to dynamically
+    resolve manifests, cache files, and vector DB configs based on the 
+    Analysis Type (Sanctuary vs Tool).
 
     This module is the Single Source of Truth for RLM logic.
 
-Layer: Curate / Rlm
+Layer: Codify / Rlm
+
+Usage Examples:
+    from tools.codify.rlm.rlm_config import RLMConfig
+    config = RLMConfig(run_type="tool")
 
 Supported Object Types:
     - RLM Config (Sanctuary Documentation)
     - RLM Config (Tool Discovery)
-
-CLI Arguments (Consumed by Scripts):
-    --type  : [legacy|tool] Selects the configuration profile.
 
 Input Files:
     - tools/standalone/rlm-factory/manifest-index.json
@@ -27,8 +29,10 @@ Output:
     - RLMConfig object (Typed configuration)
     - Shared Utility Pointers (load_cache, save_cache, etc.)
 
-Key Classes/Functions:
+Key Classes:
     - RLMConfig: Loads and validates configuration from the factory index.
+
+Key Functions:
     - load_cache(): Shared cache loader.
     - save_cache(): Shared cache persister.
     - collect_files(): Centralized file discovery logic (Glob vs Inventory).
@@ -40,7 +44,6 @@ Consumed by:
     - tools/codify/rlm/distiller.py
     - tools/retrieve/rlm/query_cache.py
     - tools/curate/rlm/cleanup_cache.py
-    - tools/retrieve/rlm/inventory.py
 """
 import os
 import sys
@@ -58,7 +61,7 @@ PROJECT_ROOT = current_dir.parents[2]
 FACTORY_INDEX_PATH = PROJECT_ROOT / "tools" / "standalone" / "rlm-factory" / "manifest-index.json"
 
 class RLMConfig:
-    def __init__(self, run_type="sanctuary", override_targets=None):
+    def __init__(self, run_type="tool", override_targets=None):
         self.type = run_type
         self.manifest_data = {}
         self.cache_path = None
