@@ -279,7 +279,7 @@ def main():
     wf_retro = wf_subparsers.add_parser("retrospective", help="Run Self-Retrospective")
 
     wf_end = wf_subparsers.add_parser("end", help="End workflow (Commit & Push)")
-    wf_end.add_argument("message", help="Commit message")
+    wf_end.add_argument("message", nargs="?", help="Commit message")
     wf_end.add_argument("files", nargs="*", help="Files to commit")
     wf_end.add_argument("--force", "-f", action="store_true", help="Skip confirmation prompt")
 
@@ -1083,7 +1083,21 @@ export const menuConfig: {{ sections: MenuSection[] }} = {json.dumps({"sections"
             try:
                 manager = WorkflowManager()
                 force = getattr(args, 'force', False)
-                success = manager.end_workflow_with_confirmation(args.message, args.files, force=force)
+                
+                message = args.message
+                if not message:
+                    # Interactive prompt if running in TTY
+                    if sys.stdin.isatty():
+                        try:
+                            message = input("📝 Enter Commit Message: ").strip()
+                        except EOFError:
+                            pass
+                    
+                    if not message:
+                        print("❌ Error: Commit message is required.")
+                        sys.exit(1)
+
+                success = manager.end_workflow_with_confirmation(message, args.files, force=force)
                 if not success:
                     sys.exit(1)
             except Exception as e:

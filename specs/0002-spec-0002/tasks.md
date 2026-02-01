@@ -137,3 +137,12 @@ The following tasks ensure the "Bundle" architecture is properly integrated into
     - **Action Item:** A new Task #162 (Standardize Lifecycle Workflows) should be created to explicitly audit and align `workflow-retrospective.sh` and `workflow-end.sh` with the new CLI architecture, ensuring no gaps exist in `workflow_manager.py` for these terminal states.
 
 **Status:** Spec-0002 is essentially complete regarding the *bundling mechanism*. The lifecycle integration gaps are noted and moved to the backlog.
+
+## Phase N: Closure & Merge (MANDATORY)
+- [x] TXXX Run `/workflow-retrospective` (Generates `retrospective.md`)
+- [x] TXXX Complete Retrospective with User (Part A questions)
+- [x] TXXX Agent completes Part B self-assessment
+- [x] TXXX Update key templates if issues found (e.g., `tasks-template.md`, `workflow-retrospective-template.md`)
+- [ ] TXXX Run `/workflow-end` — This handles: Human Review Gate → Git Add/Commit/Push → PR Creation
+- [ ] TXXX Wait for User to confirm: "PR Merged?"
+- [ ] TXXX ONLY AFTER USER CONFIRMS MERGE: Run `/workflow-end` again for cleanup (branch deletion, task closure)
