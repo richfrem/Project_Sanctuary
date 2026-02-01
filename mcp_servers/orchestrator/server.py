@@ -1,10 +1,37 @@
-#============================================
-# mcp_servers/orchestrator/server.py
-# Purpose: Orchestrator MCP Server.
-#          Central mission control for the Agentic swarm.
-# Role: Interface Layer
-# Used as: Main service entry point.
-#============================================
+#!/usr/bin/env python3
+"""
+Orchestrator Server
+=====================================
+
+Purpose:
+    Orchestrator MCP Server.
+    Central mission control for the Agentic swarm.
+    Manages missions, strategic cycles, and task dispatching.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.orchestrator.server
+
+    # Run via Gateway (SSE)
+    PORT=8008 python -m mcp_servers.orchestrator.server
+
+Key Functions / MCP Tools:
+    - orchestrator_dispatch_mission(request): Dispatch mission to agent
+    - orchestrator_run_strategic_cycle(request): Execute strategic loop
+    - create_cognitive_task(request): Generate Council deliberation task
+    - create_development_cycle(request): Generate Dev Loop task
+    - query_mnemonic_cortex(request): Generate RAG query task
+    - create_file_write_task(request): Generate file write task
+    - create_git_commit_task(request): Generate git commit task
+    - get_orchestrator_status(): Check service health
+    - list_recent_tasks(request): View recent task logs
+    - get_task_result(request): Retrieve specific task outcome
+
+Related:
+    - mcp_servers/orchestrator/operations.py
+"""
 
 import os
 import sys

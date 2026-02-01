@@ -1,7 +1,24 @@
-
+#!/usr/bin/env python3
 """
-mcp_servers/evolution/operations.py
-Protocol 131: Map-Elites Axis Computations
+Evolution Operations
+=====================================
+
+Purpose:
+    Operations for Evolutionary Self-Improvement (Protocol 131).
+    Provides proxy metrics (Depth, Scope) for the Map-Elites archive.
+
+Layer: Business Logic
+
+Key Classes:
+    - EvolutionOperations: Metric calculator
+        - __init__(project_root)
+        - calculate_fitness(content)
+        - measure_depth(content)
+        - measure_scope(content)
+
+Algorithms:
+    - Depth: Citation density + complexity heuristic
+    - Scope: Unique file/domain reference spread
 """
 
 import re

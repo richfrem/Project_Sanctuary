@@ -1,16 +1,23 @@
-#============================================
-# mcp_servers/chronicle/models.py
-# Purpose: Data models and constants for the Living Chronicle.
-# Role: Data Definition Layer
-# Used as: Type definition module by operations.py and server.py
-# LIST OF CLASSES/CONSTANTS:
-#   - ChronicleStatus (Enum)
-#   - ChronicleClassification (Enum)
-#   - ChronicleEntry (DataClass)
-#   - CHRONICLE_TEMPLATE (Constant)
-#============================================
+#!/usr/bin/env python3
 """
-Data models for the Chronicle MCP server.
+Chronicle Models
+=====================================
+
+Purpose:
+    Data definitions for Chronicle Server.
+    Defines schemas for entries, status, approval workflow, and MCP requests.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - ChronicleEntry: Represents a single event
+    - ChronicleStatus: draft, published, canonical
+    - ChronicleClassification: public, internal, confidential
+
+    # MCP Requests
+    - ChronicleCreateRequest, ChronicleUpdateRequest
+    - ChronicleGetRequest, ChronicleListRequest
 """
 from dataclasses import dataclass
 from enum import Enum

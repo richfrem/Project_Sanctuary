@@ -1,18 +1,23 @@
-#============================================
-# mcp_servers/adr/validator.py
-# Purpose: Validation logic for ADR Operations.
-#          Enforces schema requirements, status transitions, and ID uniqueness.
-# Role: Validation Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - ADRValidator
-#     - __init__
-#     - get_next_adr_number
-#     - validate_adr_number
-#     - validate_status_transition
-#     - validate_supersedes
-#     - validate_required_fields
-#============================================
+#!/usr/bin/env python3
+"""
+ADR Validator
+=====================================
+
+Purpose:
+    Validation logic for ADR Operations.
+    Enforces schema requirements, status transitions, and ID uniqueness.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - ADRValidator: Main safety logic
+        - __init__(adrs_dir)
+        - get_next_adr_number()
+        - validate_adr_number(number)
+        - validate_status_transition(current, new)
+        - validate_supersedes(id)
+        - validate_required_fields(title, context, ...)
+"""
 import os
 import re
 from typing import List, Optional

@@ -1,40 +1,36 @@
 #!/usr/bin/env python3
 """
-mcp_servers/learning/operations.py
+Learning Operations
 =====================================
 
 Purpose:
-    Core operations for the Project Sanctuary Learning Loop (Protocol 128).
-    Handles cognitive continuity, snapshot generation, soul persistence,
-    and guardian wakeup workflows.
+    Core business logic for the Learning Loop (Protocol 128).
+    Handles snapshots, debriefs, RLM synthesis, and Soul persistence.
     
-    ADR 097: Uses Context Bundler CLI for manifest-based bundling.
+    Migrated from RAG Cortex to ensure domain purity.
 
-Layer: MCP Server / Learning Domain
+Layer: Business Logic
 
-⚠️  DEPRECATION NOTICE (2026-02-01):
-    MCP-based bundling via this module is DEPRECATED.
-    Use `tools/cli.py snapshot --type TYPE` instead.
-    This module maintains backward compatibility but will be removed in v2.0.
-    See: ADR 097 (Base Manifest Inheritance Architecture)
+Key Classes:
+    - LearningOperations: Main manager
+        - __init__(project_root)
+        - learning_debrief(hours)
+        - capture_snapshot(manifest, type, context)
+        - persist_soul(request)
+        - persist_soul_full()
+        - guardian_wakeup(mode)
+        - guardian_snapshot(strategic_context)
+        
+        # Internal Methods
+        - _rlm_context_synthesis()
+        - _rlm_map(targets)
+        - _rlm_reduce(map_data)
+        - _get_git_state(project_root)
+        - _ensure_diagrams_rendered()
 
-Usage:
-    from mcp_servers.learning.operations import LearningOperations
-    ops = LearningOperations(project_root)
-    result = ops.capture_snapshot(snapshot_type="seal")
-
-Key Functions:
-    - capture_snapshot(): Generate context snapshots (seal, audit, learning_audit)
-    - persist_soul(): Broadcast learnings to HuggingFace
-    - guardian_wakeup(): Protocol 128 bootloader initialization
-    - guardian_snapshot(): Session pack generation
-
-Related:
-    - tools/retrieve/bundler/bundle.py (Context Bundler)
-    - tools/retrieve/bundler/manifest_manager.py (Manifest Manager)
-    - tools/cli.py snapshot (PREFERRED CLI path)
-    - 01_PROTOCOLS/128_Hardened_Learning_Loop.md
-    - ADRs/071_protocol_128_cognitive_continuity.md
+Internal Dependencies:
+    - tools/retrieve/bundler/manifest_manager.py
+    - tools/cli.py (for snapshot generation)
 """
 
 

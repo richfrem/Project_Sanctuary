@@ -1,19 +1,21 @@
-#============================================
-# mcp_servers/chronicle/validator.py
-# Purpose: Validation logic for Chronicle entries.
-#          Enforces data integrity, uniqueness, and modification windows.
-# Role: Validation Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - ChronicleValidator
-#     - __init__
-#     - get_next_entry_number
-#     - validate_entry_number
-#     - validate_modification_window
-#     - validate_required_fields
-#============================================
+#!/usr/bin/env python3
 """
-Validation logic for Chronicle MCP.
+Chronicle Validator
+=====================================
+
+Purpose:
+    Validation logic for Chronicle Operations.
+    Enforces data integrity, uniqueness, and modification windows.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - ChronicleValidator: Main safety logic
+        - __init__(base_dir)
+        - get_next_entry_number()
+        - validate_entry_number(number)
+        - validate_modification_window(file_path, override)
+        - validate_required_fields(title, content, author)
 """
 import os
 import re

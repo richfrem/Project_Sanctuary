@@ -1,10 +1,32 @@
-#============================================
-# mcp_servers/agent_persona/server.py
-# Purpose: MCP Server for Agent Personas.
-#          Facilitates role-based agent dispatch and state management.
-# Role: Interface Layer
-# Used as: Main service entry point for the mcp_servers.agent_persona module.
-#============================================
+#!/usr/bin/env python3
+"""
+Agent Persona Server
+=====================================
+
+Purpose:
+    MCP Server for Agent Personas.
+    Facilitates role-based agent dispatch and state management.
+    Manages custom persona definitions and lifecycle.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.agent_persona.server
+
+    # Run via Gateway (SSE)
+    PORT=8002 python -m mcp_servers.agent_persona.server
+
+Key Functions / MCP Tools:
+    - persona_dispatch(request): Send task to specific agent
+    - persona_list_roles(): List available personas (built-in/custom)
+    - persona_get_state(request): Retrieve conversation history
+    - persona_reset_state(request): Clear agent memory
+    - persona_create_custom(request): Define new role behavior
+
+Related:
+    - mcp_servers/agent_persona/operations.py
+"""
 
 import os
 import sys

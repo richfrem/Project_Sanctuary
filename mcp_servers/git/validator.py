@@ -1,10 +1,22 @@
-#============================================
-# mcp_servers/git/validator.py
-# Purpose: Validation logic for Git operations.
-#          Enforces Protocol 101 (Clean State) and Protocol 122 (Poka-Yoke).
-# Role: Safety Layer
-# used_by: mcp_servers.git.operations
-#============================================
+#!/usr/bin/env python3
+"""
+Git Validator
+=====================================
+
+Purpose:
+    Validation logic for Git operations.
+    Enforces Protocol 101 (Clean State) and Protocol 122 (Poka-Yoke).
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - ValidationError: Custom exception
+    - GitValidator: Main safety logic
+        - validate_clean_state(status)
+        - validate_feature_branch_context(current_branch, operation)
+        - validate_one_feature_rule(branch_name, existing_features)
+        - validate_poka_yoke(staged_files, diff_getter)
+"""
 
 from typing import List, Optional
 from mcp_servers.git.models import GitStatus

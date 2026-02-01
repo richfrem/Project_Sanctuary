@@ -1,10 +1,38 @@
-#============================================
-# mcp_servers/gateway/clusters/sanctuary_domain/server.py
-# Purpose: Sanctuary Domain Logic Cluster - Dual-Transport Entry Point
-# Role: Interface Layer (Aggregator Node)
-# Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
-# Used by: Gateway Fleet (SSE) and Claude Desktop (STDIO)
-#============================================
+#!/usr/bin/env python3
+"""
+Sanctuary Domain Cluster Server
+=====================================
+
+Purpose:
+    Sanctuary Domain Logic Cluster - Dual-Transport Entry Point.
+    Acts as the Interface Layer (Cluster Aggregator) for the Domain Logic.
+    Aggregates Chronicle, Protocol, Task, ADR, Persona, and Config tools into a single MCP interface.
+
+    Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
+
+Layer: Interface (Gateway Cluster)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.gateway.clusters.sanctuary_domain.server
+
+    # Run via Gateway (SSE)
+    MCP_TRANSPORT=sse PORT=8101 python -m mcp_servers.gateway.clusters.sanctuary_domain.server
+
+Key Functions / MCP Tools:
+    - chronicle_create_entry()/update/get/list: Chronicle management
+    - protocol_create()/update/get/list: Protocol management
+    - create_task()/update/get/list: Task management
+    - adr_create()/update/get/list: ADR management
+    - persona_dispatch(): Agent persona delegation
+    - config_list()/read/write: Agent configuration
+    - get_available_workflows(): Workflow listing & retrieval
+
+Related:
+    - mcp_servers/chronicle/operations.py
+    - mcp_servers/protocol/operations.py
+    - ADR 066: Dual Transport Protocol
+"""
 
 import os
 import sys

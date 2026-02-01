@@ -433,4 +433,5 @@ touch mcp_servers/gateway/clusters/sanctuary_network/__init__.py
 ## See Also
 
 - [ADR 089: Modular Manifest Pattern](./ADRs/089_modular_manifest_pattern.md) — How manifests work + llm.md pattern
+- [ADR 097: Base Manifest Inheritance](./ADRs/097_base_manifest_inheritance_architecture.md) — Simple `{files: [{path, note}]}` schema
 - [Protocol 128: Cognitive Continuity](./ADRs/071_protocol_128_cognitive_continuity.md) — Learning loop governance

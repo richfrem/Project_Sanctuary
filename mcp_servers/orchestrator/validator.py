@@ -1,16 +1,22 @@
-#============================================
-# mcp_servers/orchestrator/validator.py
-# Purpose: Validation logic for Orchestrator Operations.
-#          Enforces safety rules and git protocols.
-# Role: Safety Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - OrchestratorValidator
-#     - __init__
-#     - validate_path
-#     - validate_git_operation
-#     - validate_cognitive_task
-#============================================
+#!/usr/bin/env python3
+"""
+Orchestrator Validator
+=====================================
+
+Purpose:
+    Validation logic for Orchestrator Operations.
+    Enforces safety rules (e.g. protected paths) and git protocols/convention compliance.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - OrchestratorValidator: Main safety logic
+        - __init__(project_root, config_path)
+        - validate_path(path)
+        - validate_git_operation(files, message, push)
+        - validate_cognitive_task(output_path)
+        - _load_config(path)
+"""
 
 import os
 import re

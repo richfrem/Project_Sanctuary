@@ -1,10 +1,30 @@
-#============================================
-# mcp_servers/workflow/server.py
-# Purpose: Workflow MCP Server.
-#          Provides access to standard operating procedures and workflows.
-# Role: Interface Layer
-# Used as: Main service entry point.
-#============================================
+#!/usr/bin/env python3
+"""
+Workflow Server
+=====================================
+
+Purpose:
+    Workflow MCP Server.
+    Provides access to standard operating procedures (SOPs) and workflows.
+    Serves as the interface for ensuring process compliance.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.workflow.server
+
+    # Run via Gateway (SSE)
+    PORT=8011 python -m mcp_servers.workflow.server
+
+Key Functions / MCP Tools:
+    - workflow_get_available_workflows(): List .agent/workflows contents
+    - workflow_read_workflow(request): Read specific workflow file
+
+Related:
+    - mcp_servers/workflow/operations.py
+    - .agent/workflows/
+"""
 
 import os
 import sys

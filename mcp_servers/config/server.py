@@ -1,10 +1,31 @@
-#============================================
-# mcp_servers/config/server.py
-# Purpose: MCP Server for Configuration Management.
-#          Allows reading, writing, and listing agent configuration files.
-# Role: Interface Layer
-# Used as: Main service entry point for the mcp_servers.config module.
-#============================================
+#!/usr/bin/env python3
+"""
+Config Server
+=====================================
+
+Purpose:
+    MCP Server for Configuration Management.
+    Allows reading, writing, and listing agent configuration files.
+    Manages settings in .agent/config directory.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.config.server
+
+    # Run via Gateway (SSE)
+    PORT=8006 python -m mcp_servers.config.server
+
+Key Functions / MCP Tools:
+    - config_list(): List all .agent/config files
+    - config_read(request): Parse file (JSON/YAML) or read raw
+    - config_write(request): Create/Update config with backup
+    - config_delete(request): Remove a configuration file
+
+Related:
+    - mcp_servers/config/operations.py
+"""
 
 import os
 import sys

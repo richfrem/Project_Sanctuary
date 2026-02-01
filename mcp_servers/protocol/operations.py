@@ -1,14 +1,3 @@
-#============================================
-# mcp_servers/protocol/operations.py
-# Purpose: Core business logic for Protocol MCP.
-#          Handles creation, updating, retrieval, and search of protocols.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# LIST OF CLASSES:
-#   - ProtocolOperations
-#============================================
-
-"""
 File operations for Protocol MCP.
 """
 import os

@@ -1,17 +1,20 @@
-#============================================
-# mcp_servers/rag_cortex/structured_query.py
-# Purpose: Protocol 87 Query Support for Cortex MCP.
-#          Implements the Mnemonic Inquiry Protocol.
-# Role: Single Source of Truth
-# Used as a module by operations.py.
-# Calling example:
-#   from mcp_servers.rag_cortex.structured_query import parse_query_string
-#   query_data = parse_query_string("RETRIEVE :: Protocols :: Name=\"Protocol 101\"")
-# LIST OF FUNCTIONS:
-#   - build_protocol_87_response
-#   - build_search_query
-#   - parse_query_string
-#============================================
+#!/usr/bin/env python3
+"""
+RAG Cortex Structured Query
+=====================================
+
+Purpose:
+    Protocol 87 Query Support for Cortex MCP.
+    Implements the Mnemonic Inquiry Protocol (INTENT :: SCOPE :: CONSTRAINTS).
+    Parses structured queries and builds natural language prompts.
+
+Layer: Parsing / Protocol (Logic)
+
+Functions:
+    - parse_query_string(query_str): Parse Protocol 87 syntax
+    - build_search_query(query_data): Convert to natural language
+    - build_protocol_87_response(request_id, query_data, retrieved_docs, granularity): Format final response
+"""
 
 from typing import Dict, Any
 

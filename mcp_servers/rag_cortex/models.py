@@ -1,30 +1,36 @@
-#============================================
-# mcp_servers/rag_cortex/models.py
-# Purpose: Pydantic/Dataclass models for RAG operations in the Mnemonic Cortex.
-# Role: Single Source of Truth
-# Used as a module by operations.py and server.py
-# Calling example:
-#   from mcp_servers.rag_cortex.models import to_dict
-# LIST OF MODELS:
-#   - IngestFullRequest
-#   - IngestFullResponse
-#   - QueryRequest
-#   - QueryResult
-#   - QueryResponse
-#   - DocumentSample
-#   - CollectionStats
-#   - StatsResponse
-#   - IngestIncrementalRequest
-#   - IngestIncrementalResponse
-#   - CacheGetResponse
-#   - CacheSetResponse
-#   - CacheWarmupResponse
-#   - GuardianWakeupResponse
-#   - CaptureSnapshotRequest
-#   - CaptureSnapshotResponse
-# LIST OF FUNCTIONS:
-#   - to_dict
-#============================================
+#!/usr/bin/env python3
+"""
+RAG Cortex Models
+=====================================
+
+Purpose:
+    Data definitions and Pydantic models for the RAG Cortex.
+    Serves as the Single Source of Truth for MCP schemas.
+
+Layer: Data (DTOs)
+
+Key Models:
+    - DocumentSample / CollectionStats / StatsResponse
+    - IngestIncrementalRequest / IngestIncrementalResponse
+    - CacheGetResponse / CacheSetResponse / CacheWarmupResponse
+    - Opinion / DispositionParameters / HistoryPoint
+
+    # Pydantic Models (MCP Requests)
+    - CortexIngestFullRequest
+    - CortexQueryRequest
+    - CortexIngestIncrementalRequest
+    - CortexCacheGetRequest
+    - CortexCacheSetRequest
+    - CortexCacheWarmupRequest
+    - ForgeQueryRequest
+
+Functions:
+    - to_dict(obj): Recursive dataclass converter
+
+Related:
+    - mcp_servers/rag_cortex/operations.py
+    - mcp_servers/rag_cortex/server.py
+"""
 
 from dataclasses import dataclass
 from typing import List, Optional, Dict, Any

@@ -1,16 +1,20 @@
-#============================================
-# Path: mcp_servers/forge_llm/operations.py
-# Purpose: Core operations for interacting with the fine-tuned Sanctuary model.
-# Role: Library Operations
-# Used as: Implementation for Sanctuary Forge LLM tools.
-# Calling example:
-#   from mcp_servers.forge_llm.operations import ForgeOperations
-# LIST OF CLASSES/FUNCTIONS:
-#   - ForgeOperations
-#   - ForgeOperations.__init__
-#   - ForgeOperations.check_model_availability
-#   - ForgeOperations.query_sanctuary_model
-#============================================
+#!/usr/bin/env python3
+"""
+Forge LLM Operations
+=====================================
+
+Purpose:
+    Core operations for interacting with the fine-tuned Sanctuary model.
+    Handles Ollama client communication and response parsing.
+
+Layer: Business Logic
+
+Key Classes:
+    - ForgeOperations: Main manager
+        - __init__(project_root)
+        - query_sanctuary_model(prompt, temperature, ...)
+        - check_model_availability()
+"""
 from pathlib import Path
 import sys
 import os

@@ -1,14 +1,19 @@
-#============================================
-# mcp_servers/config/validator.py
-# Purpose: Validation logic for Config Operations.
-#          Enforces path security and file validity.
-# Role: Safety Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - ConfigValidator
-#     - __init__
-#     - validate_path
-#============================================
+#!/usr/bin/env python3
+"""
+Config Validator
+=====================================
+
+Purpose:
+    Validation logic for Config Operations.
+    Enforces path security (jail) and file validity.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - ConfigValidator: Main safety logic
+        - __init__(config_dir)
+        - validate_path(filename) -> Path
+"""
 
 from pathlib import Path
 

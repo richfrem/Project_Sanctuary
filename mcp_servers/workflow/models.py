@@ -1,8 +1,17 @@
-#============================================
-# mcp_servers/workflow/models.py
-# Purpose: Data models for the Workflow MCP server.
-# Role: Data Layer
-#============================================
+#!/usr/bin/env python3
+"""
+Workflow Models
+=====================================
+
+Purpose:
+    Data definitions for the Workflow MCP server.
+    Defines Pydantic models for tool requests.
+
+Layer: Data (DTOs)
+
+Key Models:
+    - WorkflowReadRequest: Request to read a workflow file
+"""
 from pydantic import BaseModel, Field
 from typing import Optional
 

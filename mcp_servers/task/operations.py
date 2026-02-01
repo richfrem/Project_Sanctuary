@@ -1,17 +1,23 @@
-#============================================
-# mcp_servers/task/operations.py
-# Purpose: Core business logic for Task MCP.
-#          Handles task file CRUD operations (create, update, status change).
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# LIST OF CLASSES:
-#   - TaskOperations
-#============================================
-
+#!/usr/bin/env python3
 """
-Task MCP Server - File Operations
-Handles all task file operations (create, update, move, read, list, search)
-Following separation of concerns: File operations only, no Git commits
+Task Operations
+=====================================
+
+Purpose:
+    Core business logic for Task Operations.
+    Handles file I/O, parsing, and state transitions for tasks.
+
+Layer: Business Logic
+
+Key Classes:
+    - TaskOperations: Main manager
+        - __init__(project_root)
+        - create_task(title, objective, ...)
+        - update_task(number, updates)
+        - update_task_status(number, status, notes)
+        - get_task(number)
+        - list_tasks(status, priority)
+        - search_tasks(query)
 """
 
 import re

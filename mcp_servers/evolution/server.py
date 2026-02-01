@@ -1,5 +1,31 @@
+#!/usr/bin/env python3
+"""
+Evolution Server
+=====================================
 
-import os
+Purpose:
+    Evolution MCP Server.
+    Provides tools for evolutionary self-improvement (Protocol 131).
+    Calculates fitness metrics (depth/scope) for Map-Elites placement.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.evolution.server
+
+    # Run via Gateway (SSE)
+    PORT=8002 python -m mcp_servers.evolution.server
+
+Key Functions / MCP Tools:
+    - measure_fitness(content): Calculate full fitness vector
+    - evaluate_depth(content): Calculate Depth score (0.0-5.0)
+    - evaluate_scope(content): Calculate Scope score (0.0-5.0)
+
+Related:
+    - mcp_servers/evolution/operations.py
+    - Protocol 131 (Map-Elites)
+"""
 import sys
 import logging
 from pathlib import Path

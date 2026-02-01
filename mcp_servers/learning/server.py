@@ -1,5 +1,34 @@
+#!/usr/bin/env python3
+"""
+Learning Server
+=====================================
 
-import os
+Purpose:
+    Learning MCP Server (Protocol 128).
+    Manages the learning loop, memory persistence (Soul), and cognitive snapshots.
+    Handles semantic cache warming and system debriefs.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.learning.server
+
+    # Run via Gateway (SSE)
+    PORT=8000 python -m mcp_servers.learning.server
+
+Key Functions / MCP Tools:
+    - learning_debrief(hours): Scan repo for changes (Scout)
+    - capture_snapshot(manifest, type): Create audit/seal packet
+    - persist_soul(snapshot, ...): Sync to Hugging Face (Incremental)
+    - persist_soul_full(): Full sync to Hugging Face
+    - guardian_wakeup(mode): Generate boot digest
+    - guardian_snapshot(context): Create session start pack
+
+Related:
+    - mcp_servers/learning/operations.py
+    - 01_PROTOCOLS/128_Hardened_Learning_Loop.md
+"""
 import sys
 import logging
 from pathlib import Path

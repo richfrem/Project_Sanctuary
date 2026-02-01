@@ -1,14 +1,19 @@
-#============================================
-# mcp_servers/council/validator.py
-# Purpose: Validation logic for Council Operations.
-# Role: Safety Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - CouncilValidator
-#     - __init__
-#     - validate_task
-#     - validate_agent
-#============================================
+#!/usr/bin/env python3
+"""
+Council Validator
+=====================================
+
+Purpose:
+    Validation logic for Council Operations.
+    Ensures safe inputs for task dispatch and agent selection.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - CouncilValidator: Main safety logic
+        - validate_task(task)
+        - validate_agent(agent)
+"""
 
 from typing import Optional
 

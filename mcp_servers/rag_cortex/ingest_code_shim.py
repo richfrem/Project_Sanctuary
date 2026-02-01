@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
-#============================================
-# mcp_servers/rag_cortex/ingest_code_shim.py
-# Purpose: Code-to-Markdown Ingestion Shim for RAG Cortex.
-#          Converts code files into markdown optimized for ingestion.
-# Role: Single Source of Truth
-# Used as a module by operations.py and as a CLI script.
-# Strategy: AST-Based "Pseudo-Markdown" Conversion (Zero tokens)
-# Calling example:
-#   from mcp_servers.rag_cortex.ingest_code_shim import convert_and_save
-#   out_path = convert_and_save("script.py")
-# LIST OF FUNCTIONS IMPLEMENTED:
-#   - convert_and_save
-#   - main
-#   - parse_javascript_to_markdown
-#   - parse_python_to_markdown
-#============================================
+"""
+RAG Cortex Ingest Code Shim
+=====================================
+
+Purpose:
+    Code-to-Markdown Ingestion Shim for RAG Cortex.
+    Converts code files into markdown optimized for ingestion.
+    Extracts structure (classes, functions) for better semantic indexing.
+
+Layer: Utility (Ingestion)
+
+Functions:
+    - parse_python_to_markdown(file_path): Extract Python structure
+    - parse_javascript_to_markdown(file_path): Extract JS/TS structure
+    - convert_and_save(input_file, output_file): Wrapper for conversion
+    - main(): CLI entry point
+"""
 
 import ast
 import os

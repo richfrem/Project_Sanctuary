@@ -1,9 +1,28 @@
-#============================================
-# Path: mcp_servers/forge_llm/server.py
-# Purpose: MCP Server for interacting with the fine-tuned Sanctuary model.
-# Role: Interface Layer
-# Used as: Standardized entry point for the Forge LLM MCP service.
-#============================================
+#!/usr/bin/env python3
+"""
+Forge LLM Server
+=====================================
+
+Purpose:
+    MCP Server for interacting with the fine-tuned Sanctuary model.
+    Provides tools for querying and checking status of the local LLM.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.forge_llm.server
+
+    # Run via Gateway (SSE)
+    PORT=8007 python -m mcp_servers.forge_llm.server
+
+Key Functions / MCP Tools:
+    - query_sanctuary_model(request): Query fine-tuned model (Codestral/Mistral)
+    - check_sanctuary_model_status(): Verify Ollama/Model availability
+
+Related:
+    - mcp_servers/forge_llm/operations.py
+"""
 
 import os
 import json

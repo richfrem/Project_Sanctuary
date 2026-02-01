@@ -1,9 +1,31 @@
 
-#============================================
-# mcp_servers/learning/models.py
-# Purpose: Pydantic/Dataclass models for Learning Loop operations.
-# Protocol: 128 (Cognitive Continuity)
-#============================================
+#!/usr/bin/env python3
+"""
+Learning Models
+=====================================
+
+Purpose:
+    Data definitions for the Learning MCP server.
+    Defines schemas for cache, snapshots, soul persistence, and opinions.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal / Responses
+    - CacheGetResponse, CacheSetResponse, CacheWarmupResponse
+    - GuardianWakeupResponse, GuardianSnapshotResponse
+    - CaptureSnapshotResponse
+    - PersistSoulResponse
+    - Opinion, HistoryPoint, DispositionParameters
+
+    # MCP Requests
+    - CortexCacheGetRequest, CortexCacheSetRequest
+    - CortexGuardianWakeupRequest
+    - CortexCaptureSnapshotRequest
+    - CortexLearningDebriefRequest
+    - CortexPersistSoulRequest
+    - CaptureSnapshotRequest, PersistSoulRequest (Internal DTOs)
+"""
 
 from dataclasses import dataclass
 from typing import List, Optional, Dict, Any

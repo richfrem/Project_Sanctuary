@@ -75,7 +75,7 @@ Code that reads `core`/`topic` and merges them must be refactored to read `files
 | 174 | Default manifest path | Keep as-is (path unchanged) |
 | 178 | Default manifest path | Keep as-is (path unchanged) |
 
-- [ ] **Update docstrings**: Reflect new simple schema. <!-- id: 24 -->
+- [x] **Update docstrings**: Reflect new simple schema. <!-- id: 24 -->
 
 ### Task 2.5: Update bundle.py
 
@@ -98,10 +98,10 @@ After base manifests are created and code is updated, convert the existing manif
 
 ### Task 2.7: Update Documentation
 
-- [ ] **Update ADR 089**: Remove `core`/`topic` pattern, reference simple schema. <!-- id: 27 -->
-- [ ] **Update ADR 083**: Clarify distinction between ingest manifests and bundling manifests. <!-- id: 27b -->
-- [ ] **Update cognitive_continuity_policy.md**: Remove references to manifest sections. <!-- id: 28 -->
-- [ ] **Update llm.md**: Align onboarding with new approach. <!-- id: 29 -->
+- [x] **Update ADR 089**: Remove `core`/`topic` pattern, reference simple schema. <!-- id: 27 -->
+- [x] **Update ADR 083**: Clarify distinction between ingest manifests and bundling manifests. <!-- id: 27b -->
+- [x] **Update cognitive_continuity_policy.md**: Remove references to manifest sections. <!-- id: 28 -->
+- [x] **Update llm.md**: Align onboarding with new approach. <!-- id: 29 -->
 
 ### Task 2.8: Cleanup
 
@@ -112,6 +112,9 @@ After base manifests are created and code is updated, convert the existing manif
 
 ## Testing
 
-- [ ] **Test workflow-bundle**: End-to-end with new base manifests. <!-- id: 31 -->
-- [ ] **Test manifest_manager.py init**: Verify `--type learning` creates correct manifest. <!-- id: 32 -->
-- [ ] **Verify cortex_cli.py snapshot**: Ensure seal/audit still work after refactor. <!-- id: 36 -->
+- [x] **Test workflow-bundle**: End-to-end with new base manifests. <!-- id: 31 -->
+- [x] **Test manifest_manager.py init**: Verify `--type learning` creates correct manifest. <!-- id: 32 -->
+- [ ] **Verify cortex_cli.py snapshot**: Ensure seal/audit still work after refactor. <!-- id: 36 --> *(Out of scope - deferred to Task #161: Integrate Snapshot/Persist-Soul into New CLI)* out of scope will complete task 161 as a new spect to address this. 
+
+***LLM PLEASE Check***
+user question here why no spec documents for workflow retrospective template also workflow close and tasks related to those?  need to update the workflow details to ensure those arent' skipped or gap in the .sh files associated with the worklfows or the workflow manager.py has gaps?

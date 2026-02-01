@@ -304,3 +304,22 @@ Before committing changes to `tools/`:
 ### Related Policies
 - [Tool Inventory Policy](tool_inventory_policy.md) - Enforcement triggers
 - [Documentation Granularity Policy](documentation_granularity_policy.md) - Task tracking
+- [/workflow-tool-update](../../workflows/workflow-tool-update.md) - Complete tool registration workflow
+
+## 7. Manifest Schema (ADR 097)
+
+When creating or modifying manifests in `.agent/learning/`, use the simple schema:
+
+```json
+{
+    "title": "Bundle Name",
+    "description": "Purpose of the bundle.",
+    "files": [
+        {"path": "path/to/file.md", "note": "Brief description"}
+    ]
+}
+```
+
+**Do NOT use** the deprecated `core`/`topic` pattern (ADR 089 v2.0).
+
+**Version**: 2.0 | **Updated**: 2026-02-01

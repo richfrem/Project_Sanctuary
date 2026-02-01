@@ -1,23 +1,23 @@
-#============================================
-# mcp_servers/agent_persona/operations.py
-# Purpose: Core business logic for Agent Persona Operations.
-#          Orchestrates agent instantiation, dispatch, and state persistence.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# Calling example:
-#   ops = PersonaOperations(project_root)
-#   ops.dispatch(role="coordinator", task="...")
-# LIST OF CLASSES/FUNCTIONS:
-#   - PersonaOperations
-#     - __init__
-#     - list_roles
-#     - dispatch
-#     - get_state
-#     - reset_state
-#     - create_custom
-#     - _create_agent
-#     - _classify_response
-#============================================
+#!/usr/bin/env python3
+"""
+Agent Persona Operations
+=====================================
+
+Purpose:
+    Core business logic for Agent Personas.
+    Orchestrates agent instantiation, dispatch, and state persistence.
+
+Layer: Business Logic
+
+Key Classes:
+    - PersonaOperations: Main manager
+        - __init__(project_root)
+        - dispatch(role, task, ...)
+        - list_roles()
+        - get_state(role)
+        - reset_state(role)
+        - create_custom(role, definition, ...)
+"""
 
 import json
 import logging

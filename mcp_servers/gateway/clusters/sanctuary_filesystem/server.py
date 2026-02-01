@@ -1,10 +1,37 @@
-#============================================
-# mcp_servers/gateway/clusters/sanctuary_filesystem/server.py
-# Purpose: Sanctuary FileSystem/Code Cluster - Dual-Transport Entry Point
-# Role: Interface Layer (Aggregator Node)
-# Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
-# Used by: Gateway Fleet (SSE) and Claude Desktop (STDIO)
-#============================================
+#!/usr/bin/env python3
+"""
+Sanctuary FileSystem Server
+=====================================
+
+Purpose:
+    Sanctuary FileSystem/Code Cluster - Dual-Transport Entry Point.
+    Acts as the Interface Layer (Aggregator Node) for FileSystem and Code operations.
+    Aggregates Code Quality, File Discovery, File I/O, and Analysis tools into a single MCP interface.
+
+    Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
+
+Layer: Interface (Gateway Cluster)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.gateway.clusters.sanctuary_filesystem.server
+
+    # Run via Gateway (SSE)
+    MCP_TRANSPORT=sse PORT=8102 python -m mcp_servers.gateway.clusters.sanctuary_filesystem.server
+
+Key Functions / MCP Tools:
+    - code_lint(): Code linting (ruff, pylint, flake8)
+    - code_format(): Code formatting (black, ruff)
+    - code_analyze(): Static analysis
+    - code_find_file()/list_files(): File discovery
+    - code_search_content(): Content search
+    - code_read()/write()/delete(): File I/O
+    - code_get_info(): File metadata
+
+Related:
+    - mcp_servers/code/operations.py
+    - ADR 066: Dual Transport Protocol
+"""
 
 import os
 import sys

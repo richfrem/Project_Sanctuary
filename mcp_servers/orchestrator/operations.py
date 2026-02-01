@@ -1,14 +1,3 @@
-#============================================
-# mcp_servers/orchestrator/operations.py
-# Purpose: Core business logic for Orchestrator.
-#          Centralizes cognitive, mechanical, and query operations.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - OrchestratorOperations
-#     - dispatch_mission
-#     - create_cognitive_task
-#     - create_development_cycle
 #     - query_mnemonic_cortex
 #     - create_file_write_task
 #     - create_git_commit_task

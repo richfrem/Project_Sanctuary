@@ -1,25 +1,28 @@
-#============================================
-# mcp_servers/code/operations.py
-# Purpose: Core business logic for Code Operations.
-#          Handles file I/O, code analysis, and tool execution.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - CodeOperations
-#     - __init__
-#     - lint
-#     - format_code
-#     - analyze
-#     - check_tool_available
-#     - find_file
-#     - list_files
-#     - search_content
-#     - read_file
-#     - write_file
-#     - get_file_info
-#     - _run_command
-#     - delete_file
-#============================================
+#!/usr/bin/env python3
+"""
+Code Operations
+=====================================
+
+Purpose:
+    Core business logic for Code Operations.
+    Handles file I/O, code analysis, and tool execution.
+
+Layer: Business Logic
+
+Key Classes:
+    - CodeOperations: Main manager
+        - __init__(project_root)
+        - read_file(path, max_size)
+        - write_file(path, content, backup)
+        - delete_file(path, force)
+        - list_files(path, pattern, recursive)
+        - find_file(name_pattern, directory)
+        - search_content(query, file_pattern)
+        - get_file_info(path)
+        - lint(path, tool)
+        - format_code(path, tool, check_only)
+        - analyze(path)
+"""
 
 import subprocess
 import shutil

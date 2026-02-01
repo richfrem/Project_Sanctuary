@@ -1,22 +1,23 @@
-#============================================
-# mcp_servers/adr/operations.py
-# Purpose: Core business logic for ADR Operations.
-#          Handles file I/O, parsing, and state transitions for ADRs.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# Calling example:
-#   ops = ADROperations(adrs_dir="ADRs")
-#   ops.create_adr(title="My Decision", ...)
-# LIST OF CLASSES/FUNCTIONS:
-#   - ADROperations
-#     - __init__
-#     - create_adr
-#     - update_adr_status
-#     - get_adr
-#     - list_adrs
-#     - search_adrs
-#     - _find_adr_file
-#============================================
+#!/usr/bin/env python3
+"""
+ADR Operations
+=====================================
+
+Purpose:
+    Core business logic for ADR Operations.
+    Handles file I/O, parsing, and state transitions for ADRs.
+
+Layer: Business Logic
+
+Key Classes:
+    - ADROperations: Main manager
+        - __init__(adrs_dir)
+        - create_adr(title, context, ...)
+        - update_adr_status(number, status, reason)
+        - get_adr(number)
+        - list_adrs(status)
+        - search_adrs(query)
+"""
 import os
 import re
 from datetime import datetime

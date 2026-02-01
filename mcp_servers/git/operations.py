@@ -1,10 +1,34 @@
-#============================================
-# mcp_servers/git/operations.py
-# Purpose: Core Logic for Git Operations.
-#          Handles executing git commands, parsing output.
-# Role: Business Logic Layer
-# Used by: mcp_servers.git.server
-#============================================
+#!/usr/bin/env python3
+"""
+Git Operations
+=====================================
+
+Purpose:
+    Core Logic for Git Operations.
+    Handles executing git commands, parsing output, and enforcing logic.
+
+Layer: Business Logic
+
+Key Classes:
+    - GitOperations: Main manager
+        - __init__(repo_path, base_dir)
+        - status() -> GitStatus
+        - add(files)
+        - commit(message)
+        - diff(cached, file_path)
+        - log(max_count, oneline)
+        - start_feature(task_id, description)
+        - push(remote, branch, ...)
+        - finish_feature(branch_name, force)
+        
+        # Internal / Raw wrappers
+        - _run_git(args)
+        - get_staged_files()
+        - get_current_branch()
+        - create_branch(branch_name, start_point)
+        - checkout(branch_name)
+        - delete_local_branch(branch_name, force)
+"""
 
 import subprocess
 import os

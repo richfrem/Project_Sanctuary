@@ -1,14 +1,27 @@
-#============================================
-# mcp_servers/code/models.py
-# Purpose: Data definition layer for Code Server.
-# Role: Data Layer
-# Used as: Type definitions for operations and validator.
-# LIST OF CLASSES/CONSTANTS:
-#   - CodeTool (Enum)
-#   - FileInfo (DataClass)
-#   - OperationResult (DataClass)
-#   - HIGH_RISK_FILES (Constant)
-#============================================
+#!/usr/bin/env python3
+"""
+Code Models
+=====================================
+
+Purpose:
+    Data definitions for FileSystem and Code Operations.
+    Defines schemas for tool requests, file metadata, and operation results.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - CodeTool: Enum for tools (ruff, black, etc.)
+    - FileInfo: File metadata (size, lines, modified)
+    - OperationResult: Standardized output wrapper
+
+    # MCP Requests
+    - CodeReadRequest, CodeWriteRequest
+    - CodeListFilesRequest, CodeFindFileRequest
+    - CodeSearchContentRequest
+    - CodeLintRequest, CodeFormatRequest, CodeAnalysisRequest
+    - CodeGetInfoRequest
+"""
 
 from dataclasses import dataclass
 from enum import Enum
