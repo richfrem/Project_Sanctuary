@@ -1,10 +1,35 @@
-#============================================
-# mcp_servers/rag_cortex/server.py
-# Purpose: MCP Server for the Mnemonic Cortex RAG system.
-#          Provides tools for ingestion, querying, and cache management.
-# Role: Interface Layer
-# Used as: Main service entry point.
-#============================================
+#!/usr/bin/env python3
+"""
+RAG Cortex Server
+=====================================
+
+Purpose:
+    Core MCP Server for the Mnemonic Cortex RAG system.
+    Provides tools for ingestion, querying, and cache management.
+    Orchestrates interaction between ChromaDB, Mnemonic Cache, and LLMs.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.rag_cortex.server
+
+    # Run via Gateway (SSE)
+    PORT=8006 python -m mcp_servers.rag_cortex.server
+
+Key Functions / MCP Tools:
+    - query_sanctuary_model(request): Query Forge model
+    - check_sanctuary_model_status(): Check model availability
+    
+    # Internal Helpers
+    - get_ops(): Lazy loader for CortexOperations
+    - get_forge_ops(): Lazy loader for ForgeOperations
+    - run_server(): Main entry point
+
+Related:
+    - mcp_servers/rag_cortex/operations.py
+    - mcp_servers/gateway/clusters/sanctuary_cortex/server.py (Consumer)
+"""
 
 import os
 import json

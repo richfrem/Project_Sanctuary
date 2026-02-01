@@ -1,10 +1,37 @@
-#============================================
-# mcp_servers/git/server.py
-# Purpose: MCP Server for Git Operations.
-#          Provides tools for branching, committing, pushing, and finishing features.
-# Role: Protocol 101/128 Enforcement
-# Used as: Main service entry point for the sanctuary_git cluster.
-#============================================
+#!/usr/bin/env python3
+"""
+Git Server
+=====================================
+
+Purpose:
+    MCP Server for Git Operations.
+    Provides tools for branching, committing, pushing, and finishing features.
+    Enforces Protocol 101 (Safety Rules) and Protocol 122 (Poka-Yoke).
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.git.server
+
+    # Run via Gateway (SSE)
+    PORT=8003 python -m mcp_servers.git.server
+
+Key Functions / MCP Tools:
+    - git_get_safety_rules(): Get Protocol 101 safety rules
+    - git_get_status(): Get current repository status
+    - git_add(request): Stage files
+    - git_diff(request): Show changes
+    - git_log(request): Show commit history
+    - git_smart_commit(request): Commit with safety checks
+    - git_start_feature(request): Create compliant feature branch
+    - git_push_feature(request): Push to origin
+    - git_finish_feature(request): Cleanup merged feature
+
+Related:
+    - mcp_servers/git/operations.py
+    - Protocol 101 (Sanctuary Security)
+"""
 
 import os
 import sys

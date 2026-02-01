@@ -1,10 +1,33 @@
-#============================================
-# mcp_servers/task/server.py
-# Purpose: Task MCP Server.
-#          Provides tools for managing Project tasks.
-# Role: Interface Layer
-# Used as: Main service entry point.
-#============================================
+#!/usr/bin/env python3
+"""
+Task Server
+=====================================
+
+Purpose:
+    Task MCP Server.
+    Provides tools for managing Project tasks.
+    Handles creation, updates, status transitions, and queries.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.task.server
+
+    # Run via Gateway (SSE)
+    PORT=8010 python -m mcp_servers.task.server
+
+Key Functions / MCP Tools:
+    - task_create(request): Create new task
+    - task_update(request): Update task fields
+    - task_update_status(request): Move task (backlog->todo->in-progress->done)
+    - task_get(request): Retrieve task details
+    - task_list(request): List tasks with filters
+    - task_search(request): Full-text search tasks
+
+Related:
+    - mcp_servers/task/operations.py
+"""
 
 import os
 import sys

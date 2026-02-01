@@ -1,14 +1,24 @@
-#============================================
-# mcp_servers/adr/models.py
-# Purpose: Data models for the ADR System.
-# Role: Data Definition Layer
-# Used as: Type definition module by operations.py and server.py
-# LIST OF CLASSES/CONSTANTS:
-#   - ADRStatus (Enum)
-#   - ADR (DataClass)
-#   - ADR_TEMPLATE (Constant)
-#   - VALID_TRANSITIONS (Constant)
-#============================================
+#!/usr/bin/env python3
+"""
+ADR Models
+=====================================
+
+Purpose:
+    Data definitions for the ADR System.
+    Defines schemas for decision records, status enums, and MCP requests.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - ADR: Main entity
+    - ADRStatus: valid workflow states
+    - VALID_TRANSITIONS: State machine rules
+
+    # MCP Requests
+    - ADRCreateRequest, ADRUpdateStatusRequest
+    - ADRGetRequest, ADRListRequest
+"""
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional

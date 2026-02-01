@@ -1,10 +1,21 @@
-#============================================
-# mcp_servers/protocol/validator.py
-# Purpose: Validation logic for Protocol MCP.
-#          Ensures protocol integrity and uniqueness.
-# Role: Validation Layer
-# Used as: Helper for Operations.
-#============================================
+#!/usr/bin/env python3
+"""
+Protocol Validator
+=====================================
+
+Purpose:
+    Validation logic for Protocol MCP.
+    Ensures protocol integrity and uniqueness (e.g. unique numbers).
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - ProtocolValidator: Main validation logic
+        - __init__(base_dir)
+        - validate_protocol_number(number)
+        - get_next_protocol_number()
+        - validate_required_fields(title, classification, ...)
+"""
 
 """
 Validation logic for Protocol MCP.

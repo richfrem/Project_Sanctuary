@@ -1,10 +1,33 @@
-#============================================
-# mcp_servers/protocol/server.py
-# Purpose: Protocol MCP Server.
-#          Provides tools for managing the Protocol Library.
-# Role: Interface Layer
-# Used as: Main service entry point.
-#============================================
+#!/usr/bin/env python3
+"""
+Protocol Server
+=====================================
+
+Purpose:
+    Protocol MCP Server.
+    Provides tools for managing the Protocol Library (01_PROTOCOLS).
+    Handles lifecycle of Standard Operating Procedures (SOPs).
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.protocol.server
+
+    # Run via Gateway (SSE)
+    PORT=8009 python -m mcp_servers.protocol.server
+
+Key Functions / MCP Tools:
+    - protocol_create(request): Create new protocol
+    - protocol_update(request): Update existing protocol
+    - protocol_get(request): Retrieve protocol content
+    - protocol_list(request): List protocols by status
+    - protocol_search(request): Search protocol content
+
+Related:
+    - mcp_servers/protocol/operations.py
+    - 01_PROTOCOLS/ directory
+"""
 
 import os
 import sys

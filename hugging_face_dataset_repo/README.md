@@ -215,7 +215,7 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 
 **Key Resources:**
 *   **Doctrine:** [`ADR 071: Cognitive Continuity`](https://github.com/richfrem/Project_Sanctuary/blob/main/ADRs/071_protocol_128_cognitive_continuity.md)
-*   **Workflow:** [`recursive_learning.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/recursive_learning.md)
+*   **Workflow:** [`workflow-learning-loop.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-learning-loop.md)
 *   **Guide:** [`learning_debrief.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/learning_package_snapshot.md)
 *   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/cognitive_primer.md)

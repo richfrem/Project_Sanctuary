@@ -1,10 +1,36 @@
-#============================================
-# mcp_servers/code/server.py
-# Purpose: MCP Server for FileSystem and Code Operations.
-#          Provides tools for listing, reading, writing, and analyzing code.
-# Role: Interface Layer
-# Used as: Main service entry point for the mcp_servers.code module.
-#============================================
+#!/usr/bin/env python3
+"""
+Code Server
+=====================================
+
+Purpose:
+    MCP Server for FileSystem and Code Operations.
+    Provides tools for listing, reading, writing, and analyzing code.
+    Enforces Protocol 122 (Poka-Yoke) for safety.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.code.server
+
+    # Run via Gateway (SSE)
+    PORT=8005 python -m mcp_servers.code.server
+
+Key Functions / MCP Tools:
+    - code_read(request): Read file content
+    - code_write(request): Write file with backup
+    - code_list_files(request): Search directory (supports glob)
+    - code_find_file(request): Locate file by name
+    - code_search_content(request): Grep content in files
+    - code_get_info(request): Get file metadata
+    - code_lint(request): Run linter (ruff, etc.)
+    - code_format(request): Format code (ruff, black)
+    - code_analyze(request): Static analysis
+
+Related:
+    - mcp_servers/code/operations.py
+"""
 
 import os
 import sys

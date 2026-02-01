@@ -1,11 +1,23 @@
-#============================================
-# mcp_servers/config/models.py
-# Purpose: Data definition layer for Config Server.
-# Role: Data Layer
-# Used as: Type definitions for operations and validator.
-# LIST OF CLASSES:
-#   - ConfigItem (DataClass)
-#============================================
+#!/usr/bin/env python3
+"""
+Config Models
+=====================================
+
+Purpose:
+    Data definitions for Config Server.
+    Defines schemas for configuration items and MCP requests.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - ConfigItem: File metadata (name, size, modified)
+
+    # MCP Requests
+    - ConfigReadRequest
+    - ConfigWriteRequest
+    - ConfigDeleteRequest
+"""
 
 from dataclasses import dataclass
 from typing import Any, Dict

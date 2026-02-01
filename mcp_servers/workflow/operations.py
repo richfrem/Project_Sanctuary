@@ -1,8 +1,21 @@
-#============================================
-# mcp_servers/workflow/operations.py
-# Purpose: Operations for managing Agent Workflows.
-# Role: Business Logic Layer
-#============================================
+#!/usr/bin/env python3
+"""
+Workflow Operations
+=====================================
+
+Purpose:
+    Operations for managing Agent Workflows.
+    Handles reading, parsing, and listing of workflow definition files.
+    
+Layer: Core Logic
+
+Key Classes:
+    - WorkflowOperations: Main manager
+        - __init__(workflow_dir)
+        - list_workflows()
+        - get_workflow_content(filename)
+        - _parse_frontmatter(content)
+"""
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 import yaml

@@ -1,16 +1,21 @@
-#============================================
-# mcp_servers/agent_persona/validator.py
-# Purpose: Validation logic for Agent Persona entries.
-#          Ensures rule compliance, safety, and path integrity.
-# Role: Validation Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - PersonaValidator
-#     - __init__
-#     - validate_role_name
-#     - validate_custom_persona_creation
-#     - validate_file_path
-#============================================
+#!/usr/bin/env python3
+"""
+Agent Persona Validator
+=====================================
+
+Purpose:
+    Validation logic for Agent Persona Operations.
+    Ensures safe role names, valid paths, and persona definitions.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - PersonaValidator: Main safety logic
+        - __init__(persona_dir)
+        - validate_role_name(role)
+        - validate_custom_persona_creation(role, definition)
+        - validate_file_path(path)
+"""
 import re
 from pathlib import Path
 from typing import List, Optional

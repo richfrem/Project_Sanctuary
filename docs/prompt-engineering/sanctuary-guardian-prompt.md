@@ -512,7 +512,7 @@ checklist:
 | Calibration Log | `LEARNING/calibration_log.json` |
 | Semantic Ledger | `.agent/learning/rlm_summary_cache.json` |
 | Founder Seed | `IDENTITY/founder_seed.json` |
-| Recursive Learning | `.agent/workflows/recursive_learning.md` |
+| Recursive Learning | `.agent/workflows/workflow-learning-loop.md` |
 
 ---
 

@@ -1,10 +1,29 @@
-#============================================
-# mcp_servers/council/server.py
-# Purpose: Council MCP Server.
-#          Exposes Sanctuary Council Orchestrator capabilities.
-# Role: Interface Layer
-# Used as: Main service entry point.
-#============================================
+#!/usr/bin/env python3
+"""
+Council Server
+=====================================
+
+Purpose:
+    Council MCP Server.
+    Exposes Sanctuary Council Orchestrator capabilities.
+    Specialized in multi-agent deliberation for cognitive tasks.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.council.server
+
+    # Run via Gateway (SSE)
+    PORT=8003 python -m mcp_servers.council.server
+
+Key Functions / MCP Tools:
+    - council_dispatch(request): Execute Council deliberation task
+    - council_list_agents(): List available agents and status
+
+Related:
+    - mcp_servers/council/operations.py
+"""
 
 import os
 import sys

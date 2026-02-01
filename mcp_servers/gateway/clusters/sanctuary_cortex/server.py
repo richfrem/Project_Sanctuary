@@ -1,10 +1,43 @@
-#============================================
-# mcp_servers/gateway/clusters/sanctuary_cortex/server.py
-# Purpose: Sanctuary Cortex Cluster - Dual-Transport Entry Point
-# Role: Interface Layer (Cluster Aggregator)
-# Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
-# Used by: Gateway Fleet (SSE) and Claude Desktop (STDIO)
-#============================================
+#!/usr/bin/env python3
+"""
+Sanctuary Cortex Cluster Server
+=====================================
+
+Purpose:
+    Sanctuary Cortex Cluster - Dual-Transport Entry Point.
+    Acts as the Interface Layer (Cluster Aggregator) for the Mnemonic Cortex.
+     Aggregates RAG, Learning, Evolution, and Forge capabilities into a single MCP interface.
+
+    Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
+
+Layer: Interface (Gateway Cluster)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.gateway.clusters.sanctuary_cortex.server
+
+    # Run via Gateway (SSE)
+    MCP_TRANSPORT=sse PORT=8104 python -m mcp_servers.gateway.clusters.sanctuary_cortex.server
+
+Key Functions / MCP Tools:
+    - cortex_query(): Semantic search
+    - cortex_ingest_full(): Full knowledge base ingestion
+    - cortex_ingest_incremental(): Incremental ingestion
+    - cortex_get_stats(): RAG health stats
+    - cortex_cache_get/set/warmup/stats(): CAG Cache operations
+    - cortex_guardian_wakeup(): Protocol 114 bootloader
+    - cortex_learning_debrief(): Protocol 128 debrief
+    - cortex_capture_snapshot(): Protocol 128 snapshot
+    - cortex_persist_soul(): Soul persistence (incremental)
+    - cortex_persist_soul_full(): Soul persistence (full sync)
+    - query_sanctuary_model(): Forge model interaction
+    - cortex_evolution_measure_fitness(): Protocol 131 metrics
+
+Related:
+    - mcp_servers/rag_cortex/operations.py
+    - mcp_servers/learning/operations.py
+    - ADR 066: Dual Transport Protocol
+"""
 
 import os
 import sys
@@ -33,6 +66,7 @@ _evolution_ops = None
 _forge_ops = None
 
 def get_cortex_ops():
+    """Singleton accessor for CortexOperations."""
     global _cortex_ops
     if _cortex_ops is None:
         from mcp_servers.rag_cortex.operations import CortexOperations
@@ -40,6 +74,7 @@ def get_cortex_ops():
     return _cortex_ops
 
 def get_learning_ops():
+    """Singleton accessor for LearningOperations."""
     global _learning_ops
     if _learning_ops is None:
         from mcp_servers.learning.operations import LearningOperations
@@ -47,6 +82,7 @@ def get_learning_ops():
     return _learning_ops
 
 def get_evolution_ops():
+    """Singleton accessor for EvolutionOperations."""
     global _evolution_ops
     if _evolution_ops is None:
         from mcp_servers.evolution.operations import EvolutionOperations
@@ -54,6 +90,7 @@ def get_evolution_ops():
     return _evolution_ops
 
 def get_forge_ops():
+    """Singleton accessor for ForgeOperations."""
     global _forge_ops
     if _forge_ops is None:
         from mcp_servers.forge_llm.operations import ForgeOperations

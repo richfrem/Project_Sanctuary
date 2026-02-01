@@ -192,7 +192,10 @@ def main():
     # Context Command (Initial Reconstruction)
     context_parser = subparsers.add_parser("init-context", help="Initialize manifest and generate first bundle")
     context_parser.add_argument("--target", required=True, help="Target ID")
-    context_parser.add_argument("--type", choices=['generic', 'context-bundler', 'tool', 'workflow', 'docs', 'adr', 'spec', 'learning'], help="Artifact Type")
+    context_parser.add_argument("--type", choices=[
+        'generic', 'context-bundler', 'tool', 'workflow', 'docs', 'adr', 'spec',
+        'learning', 'learning-audit', 'learning-audit-core', 'red-team', 'guardian', 'bootstrap'
+    ], help="Artifact Type")
 
     # Manifest Command (Manual Management)
     manifest_parser = subparsers.add_parser("manifest", help="Manage context manifest")
@@ -203,7 +206,10 @@ def main():
     
     man_init = manifest_subparsers.add_parser("init", help="Init from base manifest")
     man_init.add_argument("--bundle-title", required=True, help="Title for the bundle")
-    man_init.add_argument("--type", choices=['generic', 'context-bundler', 'tool', 'workflow', 'docs', 'adr', 'spec', 'learning'], help="Artifact Type (Optional if resolvable)")
+    man_init.add_argument("--type", choices=[
+        'generic', 'context-bundler', 'tool', 'workflow', 'docs', 'adr', 'spec',
+        'learning', 'learning-audit', 'learning-audit-core', 'red-team', 'guardian', 'bootstrap'
+    ], help="Artifact Type (Optional if resolvable)")
     man_init.add_argument("--manifest", help="Custom manifest path")
 
     man_add = manifest_subparsers.add_parser("add", help="Add file to manifest")
@@ -238,6 +244,15 @@ def main():
     man_bundle.add_argument("--base", help="Target base manifest type")
     man_bundle.add_argument("--manifest", help="Custom manifest path")
 
+    # Snapshot Command (Protocol 128 - uses bundler directly, no MCP required)
+    snapshot_parser = subparsers.add_parser("snapshot", help="Generate Protocol 128 context snapshots")
+    snapshot_parser.add_argument("--type", required=True, choices=[
+        'seal', 'learning_audit', 'audit', 'guardian', 'bootstrap'
+    ], help="Snapshot type")
+    snapshot_parser.add_argument("--manifest", help="Custom manifest path (overrides default)")
+    snapshot_parser.add_argument("--output", help="Output path (default: based on type)")
+
+
     # Config Command Group (TS Rules Manager)
     config_parser = subparsers.add_parser("config", help="Update Form Rules (TS)")
     config_subparsers = config_parser.add_subparsers(dest="config_action")
@@ -264,7 +279,7 @@ def main():
     wf_retro = wf_subparsers.add_parser("retrospective", help="Run Self-Retrospective")
 
     wf_end = wf_subparsers.add_parser("end", help="End workflow (Commit & Push)")
-    wf_end.add_argument("message", help="Commit message")
+    wf_end.add_argument("message", nargs="?", help="Commit message")
     wf_end.add_argument("files", nargs="*", help="Files to commit")
     wf_end.add_argument("--force", "-f", action="store_true", help="Skip confirmation prompt")
 
@@ -696,6 +711,47 @@ def main():
                 cmd.extend(["--output", args.output])
             subprocess.run(cmd)
 
+    elif args.command == "snapshot":
+        # Protocol 128 Snapshot Generation (uses bundler directly, no MCP required)
+        print(f"📸 Generating {args.type} snapshot...")
+        
+        # Default manifest paths per type
+        manifest_defaults = {
+            'seal': '.agent/learning/learning_manifest.json',
+            'learning_audit': '.agent/learning/learning_audit/learning_audit_manifest.json',
+            'audit': '.agent/learning/red_team/red_team_manifest.json',
+            'guardian': '.agent/learning/guardian_manifest.json',
+            'bootstrap': '.agent/learning/bootstrap_manifest.json'
+        }
+        
+        # Default output paths per type
+        output_defaults = {
+            'seal': '.agent/learning/learning_package_snapshot.md',
+            'learning_audit': '.agent/learning/learning_audit/learning_audit_packet.md',
+            'audit': '.agent/learning/red_team/red_team_audit_packet.md',
+            'guardian': '.agent/learning/guardian_boot_digest.md',
+            'bootstrap': '.agent/learning/bootstrap_packet.md'
+        }
+        
+        manifest_path = args.manifest or manifest_defaults.get(args.type)
+        output_path = args.output or output_defaults.get(args.type)
+        
+        if not Path(manifest_path).exists():
+            print(f"❌ Manifest not found: {manifest_path}")
+            sys.exit(1)
+        
+        # Call bundle.py directly
+        bundler_script = PROJECT_ROOT / "tools" / "retrieve" / "bundler" / "bundle.py"
+        cmd = [sys.executable, str(bundler_script), manifest_path, "-o", output_path]
+        
+        result = subprocess.run(cmd, cwd=str(PROJECT_ROOT), capture_output=True, text=True)
+        
+        if result.returncode == 0:
+            print(f"✅ Snapshot created: {output_path}")
+            print(result.stdout)
+        else:
+            print(f"❌ Error: {result.stderr}")
+            sys.exit(1)
 
     elif args.command == "applications":
         target = args.target.upper()
@@ -1027,7 +1083,21 @@ export const menuConfig: {{ sections: MenuSection[] }} = {json.dumps({"sections"
             try:
                 manager = WorkflowManager()
                 force = getattr(args, 'force', False)
-                success = manager.end_workflow_with_confirmation(args.message, args.files, force=force)
+                
+                message = args.message
+                if not message:
+                    # Interactive prompt if running in TTY
+                    if sys.stdin.isatty():
+                        try:
+                            message = input("📝 Enter Commit Message: ").strip()
+                        except EOFError:
+                            pass
+                    
+                    if not message:
+                        print("❌ Error: Commit message is required.")
+                        sys.exit(1)
+
+                success = manager.end_workflow_with_confirmation(message, args.files, force=force)
                 if not success:
                     sys.exit(1)
             except Exception as e:

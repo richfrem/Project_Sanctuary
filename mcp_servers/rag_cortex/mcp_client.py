@@ -1,22 +1,25 @@
-#============================================
-# mcp_servers/rag_cortex/mcp_client.py
-# Purpose: Client for routing Protocol 87 queries to specialized MCPs.
-#          Implements the MCP composition pattern from ADR 039.
-# Role: Single Source of Truth
-# Used as a module by operations.py (or any other component needing routing)
-# Calling example:
-#   client = MCPClient(project_root)
-#   results = client.route_query(scope="Protocols", intent="RETRIEVE", ...)
-# LIST OF CLASSES/FUNCTIONS:
-#   - MCPClient
-#     - __init__
-#     - route_query
-#     - _query_protocols
-#     - _query_chronicles
-#     - _query_tasks
-#     - _query_code
-#     - _query_adrs
-#============================================
+#!/usr/bin/env python3
+"""
+RAG Cortex MCP Client (Protocol 87 Router)
+=====================================
+
+Purpose:
+    Client for routing Protocol 87 queries to specialized MCPs.
+    Implements the MCP composition pattern from ADR 039.
+    Routes queries based on intent (e.g. Protocol, Chronicle, Task).
+
+Layer: Client / Router
+
+Key Classes:
+    - MCPClient: Main routing logic
+        - __init__(project_root)
+        - route_query(scope, intent, constraints, query_data)
+        - _query_protocols(intent, constraints, query_data)
+        - _query_chronicles(intent, constraints, query_data)
+        - _query_tasks(intent, constraints, query_data)
+        - _query_code(intent, constraints, query_data)
+        - _query_adrs(intent, constraints, query_data)
+"""
 
 from typing import Dict, Any, List, Optional
 import json

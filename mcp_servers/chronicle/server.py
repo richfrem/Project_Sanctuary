@@ -1,10 +1,32 @@
-#============================================
-# mcp_servers/chronicle/server.py
-# Purpose: MCP Server for the Living Chronicle.
-#          Provides tools for creating, updating, retrieving, and listing chronicle entries.
-# Role: Interface Layer
-# Used as: Main service entry point for the mcp_servers.chronicle module.
-#============================================
+#!/usr/bin/env python3
+"""
+Chronicle Server
+=====================================
+
+Purpose:
+    MCP Server for the Living Chronicle.
+    Manages the creation, retrieval, and updates of chronicle entries.
+    Maintains project history and context (00_CHRONICLE/ENTRIES).
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.chronicle.server
+
+    # Run via Gateway (SSE)
+    PORT=8004 python -m mcp_servers.chronicle.server
+
+Key Functions / MCP Tools:
+    - chronicle_create_entry(request): Add new event
+    - chronicle_update_entry(request): Modify existing entry
+    - chronicle_get_entry(request): Retrieve by ID
+    - chronicle_list_entries(request): Show recent history
+    - chronicle_search(request): Search content
+
+Related:
+    - mcp_servers/chronicle/operations.py
+"""
 
 import os
 import sys

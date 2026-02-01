@@ -1,17 +1,22 @@
-#============================================
-# mcp_servers/config/operations.py
-# Purpose: Core business logic for Config Operations.
-#          Handles reading, writing, and managing configuration files.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - ConfigOperations
-#     - __init__
-#     - list_configs
-#     - read_config
-#     - write_config
-#     - delete_config
-#============================================
+#!/usr/bin/env python3
+"""
+Config Operations
+=====================================
+
+Purpose:
+    Core business logic for Config Management.
+    Handles safe reading/writing of JSON/YAML configuration files.
+
+Layer: Business Logic
+
+Key Classes:
+    - ConfigOperations: Main manager
+        - __init__(config_dir)
+        - list_configs() -> List[ConfigItem]
+        - read_config(filename)
+        - write_config(filename, content, backup)
+        - delete_config(filename)
+"""
 
 import json
 import shutil

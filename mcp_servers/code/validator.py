@@ -1,15 +1,20 @@
-#============================================
-# mcp_servers/code/validator.py
-# Purpose: Validation logic for Code Operations.
-#          Enforces path security and Protocol 122 (Poka-Yoke) for safe writes.
-# Role: Safety Layer
-# Used as: Helper module by operations.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - CodeValidator
-#     - __init__
-#     - validate_path
-#     - validate_safe_write
-#============================================
+#!/usr/bin/env python3
+"""
+Code Validator
+=====================================
+
+Purpose:
+    Validation logic for Code Operations.
+    Enforces path security (Jail) and Protocol 122 (Poka-Yoke) for safe writes.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - CodeValidator: Main safety logic
+        - __init__(project_root)
+        - validate_path(path)
+        - validate_safe_write(file_path, new_content)
+"""
 
 from pathlib import Path
 from typing import List

@@ -29,7 +29,7 @@ CLI Arguments:
     stats           : View RAG health statistics
 
 Input Files:
-    - .agent/learning/learning_manifest.json
+    - .agent/learning/learning_manifest.json (ADR 097 format: {title, files: [{path, note}]})
     - .agent/learning/guardian_manifest.json
     - Project files (md, py, js, etc.) for ingestion
 

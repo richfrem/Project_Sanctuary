@@ -1,12 +1,29 @@
-#============================================
-# mcp_servers/orchestrator/models.py
-# Purpose: Data definition layer for Orchestrator Server.
-# Role: Data Layer
-# Used as: Type definitions for operations and validator.
-# LIST OF CLASSES:
-#   - ValidationResult (DataClass)
-#   - OrchestratorTask (DataClass - optional helper)
-#============================================
+#!/usr/bin/env python3
+"""
+Orchestrator Models
+=====================================
+
+Purpose:
+    Data definition layer for Orchestrator Server.
+    Defines schemas for task requests and validation results.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - ValidationResult: Safety check outcome
+
+    # MCP Requests
+    - OrchestratorDispatchMissionRequest
+    - OrchestratorStrategicCycleRequest
+    - CreateCognitiveTaskRequest
+    - CreateDevelopmentCycleRequest
+    - QueryMnemonicCortexRequest
+    - CreateFileWriteTaskRequest
+    - CreateGitCommitTaskRequest
+    - ListRecenttasksRequest
+    - GetTaskResultRequest
+"""
 
 from dataclasses import dataclass
 from typing import Optional, Any, Dict

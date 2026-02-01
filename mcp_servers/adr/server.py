@@ -1,10 +1,32 @@
-#============================================
-# mcp_servers/adr/server.py
-# Purpose: MCP Server for ADR Management.
-#          Provides tools for creating, updating, retrieving, and listing ADRs.
-# Role: Protocol 122 Enforcement
-# Used as: Main service entry point for the mcp_servers.adr module.
-#============================================
+#!/usr/bin/env python3
+"""
+ADR Server
+=====================================
+
+Purpose:
+    MCP Server for ADR Management.
+    Provides tools for creating, updating, retrieving, and listing ADRs.
+    Enforces Protocol 122 (Documentation-First) standards.
+
+Layer: Interface (MCP)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.adr.server
+
+    # Run via Gateway (SSE)
+    PORT=8001 python -m mcp_servers.adr.server
+
+Key Functions / MCP Tools:
+    - adr_create(request): Create a new decision record
+    - adr_update_status(request): Change workflow state
+    - adr_get(request): Retrieve full ADR content
+    - adr_list(request): List and filter ADRs
+    - adr_search(request): Full-text search
+
+Related:
+    - mcp_servers/adr/operations.py
+"""
 
 import os
 from typing import Optional, List, Dict, Any

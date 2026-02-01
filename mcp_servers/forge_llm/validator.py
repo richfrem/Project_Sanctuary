@@ -1,16 +1,20 @@
-#============================================
-# Path: mcp_servers/forge_llm/validator.py
-# Purpose: Validation logic for Forge MCP operations.
-# Role: Library Validator
-# Used as: Input validation for Forge LLM tools.
-# Calling example:
-#   from mcp_servers.forge_llm.validator import ForgeValidator
-# LIST OF CLASSES/FUNCTIONS:
-#   - ForgeValidator
-#   - ForgeValidator.__init__
-#   - ForgeValidator.validate_query_sanctuary_model
-#   - ValidationError
-#============================================
+#!/usr/bin/env python3
+"""
+Forge LLM Validator
+=====================================
+
+Purpose:
+    Validation logic for Forge MCP operations.
+    Ensures safe and valid inputs for LLM queries.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - ValidationError: Custom exception
+    - ForgeValidator: Main validation logic
+        - __init__(project_root)
+        - validate_query_sanctuary_model(prompt, temperature, ...)
+"""
 from typing import Optional
 
 

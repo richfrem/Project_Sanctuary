@@ -19,10 +19,18 @@ All agent interactions with the codebase MUST be mediated by **Antigravity Comma
 
 ## 1. Interaction Model (Command-First)
 The Antigravity Command System is the **authoritative** interface for all Project Sanctuary tasks.
-- **Slash Commands** (`.agent/workflows/`): The **Interface**. User-friendly workflows.
-- **CLI Tools** (`tools/`): The **Implementation**. Data processing engines.
+
+### Architecture (ADR-036: Thick Python / Thin Shim)
+| Layer | Location | Purpose |
+|:------|:---------|:--------|
+| **Slash Commands** | `.agent/workflows/*.md` | The **Interface**. User-friendly workflows (Agent reads). |
+| **Thin Shims** | `scripts/bash/*.sh` | The **Gateway**. Dumb wrappers that `exec` Python CLI. |
+| **CLI Tools** | `tools/cli.py` | The **Router**. Dispatches to orchestrator/tools. |
+| **Python Orchestrator** | `tools/orchestrator/` | The **Logic**. Git checks, ID generation, state management. |
 
 **Rule of Thumb:** Use a Slash Command to *do* a task; use or improve a CLI tool to *implement* how that task is done.
+
+> **See:** [ADR-036: Workflow Shim Architecture](../../ADRs/036_workflow_shim_architecture.md)
 
 ## 1.1 Command Naming Extensions
 *   `/speckit-*`: **Discovery** workflows for Spec-Driven Development (specify, plan, tasks, implement).
@@ -86,4 +94,4 @@ All workflows should integrate with the standard session lifecycle:
 | **Execute** | `/speckit-*` or task-specific workflows |
 | **Close** | `/workflow-retrospective` + `/workflow-end` |
 
-**Version**: 2.0 | **Updated**: 2026-01-31
+**Version**: 2.1 | **Updated**: 2026-02-01 | **See Also**: ADR-036

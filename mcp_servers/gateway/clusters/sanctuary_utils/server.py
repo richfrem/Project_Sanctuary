@@ -1,15 +1,35 @@
-#============================================
-# mcp_servers/gateway/clusters/sanctuary_utils/server.py
-# Purpose: Sanctuary Utils Cluster - Dual-Transport Entry Point
-# Role: Interface Layer (Aggregator Node)
-# Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
-# Used by: Gateway Fleet (SSE) and Claude Desktop (STDIO)
-#============================================
-# Transport Selection (per ADR-066 v1.3):
-#   - MCP_TRANSPORT=sse  -> Uses SSEServer (Gateway-compatible)
-#   - MCP_TRANSPORT=stdio -> Uses FastMCP (local development)
-#   - Default: stdio (safe for local)
-#============================================
+#!/usr/bin/env python3
+"""
+Sanctuary Utils Server
+=====================================
+
+Purpose:
+    Sanctuary Utils Cluster - Dual-Transport Entry Point.
+    Acts as the Interface Layer (Aggregator Node) for Utility tools.
+    Aggregates Time, Calculator, UUID, String Manipulation, and Meta-Capability tools.
+
+    Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
+
+Layer: Interface (Gateway Cluster)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.gateway.clusters.sanctuary_utils.server
+
+    # Run via Gateway (SSE)
+    MCP_TRANSPORT=sse PORT=8105 python -m mcp_servers.gateway.clusters.sanctuary_utils.server
+
+Key Functions / MCP Tools:
+    - time_get_current_time(): Current time/timezone
+    - calculator_*(): Math operations
+    - uuid_generate_uuid4(): Random UUIDs
+    - string_*(): Text processing utils
+    - gateway_get_capabilities(): Meta-discovery of servers
+
+Related:
+    - mcp_servers/gateway/clusters/sanctuary_utils/tools/
+    - ADR 066: Dual Transport Protocol
+"""
 
 import os
 import sys

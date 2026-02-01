@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-31T23:26:03.357197",
-    "count": 24,
+    "generatedAt": "2026-02-01T10:15:05.654536",
+    "count": 25,
     "source": ".agent/workflows"
   },
   "workflows": [
@@ -20,16 +20,6 @@
       "filename": "post-move-link-check.md",
       "path": ".agent/workflows/post-move-link-check.md",
       "description": "Run link checker after moving or renaming files/folders",
-      "inputs": [],
-      "tier": null,
-      "track": "Factory",
-      "called_by": []
-    },
-    {
-      "name": "recursive_learning",
-      "filename": "recursive_learning.md",
-      "path": ".agent/workflows/recursive_learning.md",
-      "description": "\"Standard operating procedure for Protocol 128 Hardened Learning Loop (Scout -> Synthesize -> Audit -> Seal -> Persist).\"",
       "inputs": [],
       "tier": null,
       "track": "Factory",
@@ -146,6 +136,16 @@
       "called_by": []
     },
     {
+      "name": "workflow-bundle",
+      "filename": "workflow-bundle.md",
+      "path": ".agent/workflows/workflow-bundle.md",
+      "description": "Create a markdown bundle from a set of files using a manifest.",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
       "name": "workflow-chronicle",
       "filename": "workflow-chronicle.md",
       "path": ".agent/workflows/workflow-chronicle.md",
@@ -179,7 +179,7 @@
       "name": "workflow-learning-loop",
       "filename": "workflow-learning-loop.md",
       "path": ".agent/workflows/workflow-learning-loop.md",
-      "description": "Orchestrates a Protocol 128 Learning Loop within the standard Spec-First lifecycle.",
+      "description": "\"Standard operating procedure for Protocol 128 Hardened Learning Loop (Scout -> Synthesize -> Audit -> Seal -> Persist).\"",
       "inputs": [],
       "tier": null,
       "track": "Factory",
@@ -245,6 +245,16 @@
       "inputs": [],
       "tier": null,
       "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-tool-update",
+      "filename": "workflow-tool-update.md",
+      "path": ".agent/workflows/workflow-tool-update.md",
+      "description": "Update tool inventories, RLM cache, and associated artifacts after creating or modifying tools.",
+      "inputs": [],
+      "tier": 2,
+      "track": "Curate",
       "called_by": []
     }
   ]

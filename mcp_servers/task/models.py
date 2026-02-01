@@ -1,14 +1,28 @@
-#============================================
-# mcp_servers/task/models.py
-# Purpose: Data models for the Task MCP server.
-#          Defines taskschema, taskstatus, TaskPriority, and FileOperationResult.
-# Role: Data Layer
-# Used as: Data structure definitions.
-#============================================
-
+#!/usr/bin/env python3
 """
-Task MCP Server - Data Models
-Defines schemas for tasks and operation results
+Task Models
+=====================================
+
+Purpose:
+    Data definitions for the Task MCP server.
+    Defines internal schemas, enums, and request models.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal / Enums
+    - taskstatus (Enum): backlog, todo, in-progress, complete, blocked
+    - TaskPriority (Enum): Critical, High, Medium, Low
+    - taskschema: Internal task representation
+    - FileOperationResult: Result of file I/O operations
+
+    # MCP Requests
+    - TaskCreateRequest
+    - TaskUpdateRequest
+    - TaskUpdateStatusRequest
+    - TaskGetRequest
+    - TaskListRequest
+    - tasksearchRequest
 """
 
 from dataclasses import dataclass

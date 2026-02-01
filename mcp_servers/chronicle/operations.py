@@ -1,25 +1,22 @@
-#============================================
-# mcp_servers/chronicle/operations.py
-# Purpose: Core business logic for the Living Chronicle.
-#          Handles file I/O, entry parsing, and content management.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# Calling example:
-#   ops = ChronicleOperations(base_dir)
-#   ops.create_entry(...)
-# LIST OF CLASSES/FUNCTIONS:
-#   - ChronicleOperations
-#     - __init__
-#     - create_entry
-#     - update_entry
-#     - get_entry
-#     - list_entries
-#     - search_entries
-#     - _find_entry_file
-#     - _parse_entry
-#============================================
+#!/usr/bin/env python3
 """
-File operations for Chronicle MCP.
+Chronicle Operations
+=====================================
+
+Purpose:
+    Core business logic for the Living Chronicle.
+    Handles file I/O, entry parsing, search, and validation.
+
+Layer: Business Logic
+
+Key Classes:
+    - ChronicleOperations: Main manager
+        - __init__(base_dir)
+        - create_entry(title, content, ...)
+        - update_entry(entry_number, updates, ...)
+        - get_entry(entry_number)
+        - list_entries(limit)
+        - search_entries(query)
 """
 import os
 import re

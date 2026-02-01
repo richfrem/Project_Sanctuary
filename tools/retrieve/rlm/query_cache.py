@@ -85,9 +85,17 @@ def search_cache(term, config: RLMConfig, show_summary=True, return_data=False, 
             continue
             
         # Match against summary content
-        if term.lower() in entry.get('summary', '').lower():
-            matches.append({"path": relative_path, "entry": entry})
-            continue
+        # Match against summary content
+        summary_val = entry.get('summary', '')
+        if isinstance(summary_val, str):
+            if term.lower() in summary_val.lower():
+                matches.append({"path": relative_path, "entry": entry})
+                continue
+        else:
+            # If summary is complex (dict/list), search in its string representation
+            if term.lower() in str(summary_val).lower():
+                matches.append({"path": relative_path, "entry": entry})
+                continue
             
         # Match against ID or Hash (less likely but useful)
         if term.lower() in entry.get('content_hash', '').lower():

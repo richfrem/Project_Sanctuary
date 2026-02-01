@@ -1,14 +1,23 @@
-#============================================
-# mcp_servers/task/validator.py
-# Purpose: Validation logic for Task MCP.
-#          Validates task schema, unique IDs, and dependencies.
-# Role: Validation Layer
-# Used as: Helper for Operations.
-#============================================
-
+#!/usr/bin/env python3
 """
-Task MCP Server - Schema Validator
-Validates tasks against tasks/task_schema.md
+Task Validator
+=====================================
+
+Purpose:
+    Validation logic for Task MCP.
+    Validates task schema, unique IDs, dependency chains, and file paths.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - TaskValidator: Main validation logic
+        - __init__(project_root)
+        - validate_task_number(number)
+        - get_next_task_number()
+        - validate_task_schema(task)
+        - validate_dependencies(dependencies_str)
+        - task_exists(number)
+        - validate_file_path(file_path)
 """
 
 import re

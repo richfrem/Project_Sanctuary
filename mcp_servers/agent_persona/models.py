@@ -1,13 +1,25 @@
-#============================================
-# mcp_servers/agent_persona/models.py
-# Purpose: Data models and constants for the Agent Persona System.
-# Role: Data Definition Layer
-# Used as: Type definition module by operations.py and server.py
-# LIST OF CLASSES/CONSTANTS:
-#   - PersonaRole (Enum)
-#   - AgentResponse (DataClass)
-#   - PersonaConstants (Class)
-#============================================
+#!/usr/bin/env python3
+"""
+Agent Persona Models
+=====================================
+
+Purpose:
+    Data definitions for Agent Persona Server.
+    Defines schemas for agent responses, roles, and lifecycle management.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - PersonaRole: Enum for standard/custom roles
+    - AgentResponse: Dispatch execution result
+    - PersonaConstants: Paths and built-ins
+
+    # MCP Requests
+    - PersonaDispatchParams
+    - PersonaRoleParams
+    - PersonaCreateCustomParams
+"""
 from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, Any, List, Optional

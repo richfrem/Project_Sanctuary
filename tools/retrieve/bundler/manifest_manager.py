@@ -96,7 +96,7 @@ MANIFEST_INDEX_PATH = MANIFEST_DIR / "base-manifests-index.json"
 # Function definitions
 # =====================================================
 
-def add_file(path: str, note: str, manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> None:
+def add_file(path: str, note: str, manifest_path: Optional[str] = None, base_type: Optional[str] = None, section: str = "auto") -> None:
     """
     Adds a file entry to the manifest if it doesn't already exist.
 
@@ -105,6 +105,7 @@ def add_file(path: str, note: str, manifest_path: Optional[str] = None, base_typ
         note: Description or note for the file.
         manifest_path: Optional custom path to the manifest.
         base_type: If provided, adds to a base manifest template.
+        section: Target section ('core', 'topic', 'context', 'files', 'guardian', etc.) or 'auto'.
     """
     manifest = load_manifest(manifest_path, base_type)
     if base_type:
@@ -125,16 +126,50 @@ def add_file(path: str, note: str, manifest_path: Optional[str] = None, base_typ
     while "//" in path:
         path = path.replace("//", "/")
 
-    # Check for duplicate
-    for f in manifest["files"]:
-        existing = f["path"].replace('\\', '/')
-        if existing == path:
-            print(f"⚠️  File already in manifest: {path}")
-            return
+    # Determine Target Section
+    target_section = "files"
+    if section != "auto":
+        target_section = section
+    else:
+        # Heuristic: If 'files' exists, use it. If not, and 'topic' exists, use 'topic'.
+        # If composite (core/topic) and no 'files', default to 'topic' (dynamic part).
+        if "files" in manifest:
+             target_section = "files"
+        elif "topic" in manifest:
+             target_section = "topic"
+        elif "context" in manifest:
+             target_section = "context"
+        else:
+             target_section = "files" # Fallback, will create key
 
-    manifest["files"].append({"path": path, "note": note})
+    # Initialize key if missing
+    if target_section not in manifest:
+        manifest[target_section] = []
+
+    # Check for duplicate
+    # We must check ALL list sections to enable "Move to Core" or "Move to Topic" logic later?
+    # For now, just check target section to allow duplicates across sections (rare) or strictly dedup?
+    # Strict dedup across known keys is safer.
+    known_keys = ['files', 'core', 'topic', 'context', 'bootstrap', 'guardian', 'generated']
+    
+    for key in known_keys:
+        if key in manifest and isinstance(manifest[key], list):
+            for f in manifest[key]:
+                # Handle polymorphic entries
+                existing = None
+                if isinstance(f, str):
+                    existing = f.replace('\\', '/')
+                elif isinstance(f, dict):
+                    existing = f.get("path", "").replace('\\', '/')
+                
+                if existing == path:
+                    print(f"⚠️  File already in manifest (section '{key}'): {path}")
+                    return
+
+    # Add entry (Polymorphic: dict preferred)
+    manifest[target_section].append({"path": path, "note": note})
     save_manifest(manifest, manifest_path, base_type)
-    print(f"✅ Added to manifest: {path}")
+    print(f"✅ Added to manifest [{target_section}]: {path}")
 
 def bundle(output_file: Optional[str] = None, manifest_path: Optional[str] = None) -> None:
     """
@@ -167,12 +202,27 @@ def bundle(output_file: Optional[str] = None, manifest_path: Optional[str] = Non
     except Exception as e:
         print(f"❌ Bundling failed: {e}")
 
-def get_base_manifest_path(artifact_type):
-    """Resolves base manifest path using index or fallback."""
+def get_base_manifest_path(artifact_type: str, strict: bool = True):
+    """
+    Resolves base manifest path using index or fallback.
+    
+    Args:
+        artifact_type: The type of artifact to look up.
+        strict: If True, fail loudly on unknown types. If False, use fallback.
+    
+    Returns:
+        Path to the base manifest file.
+    
+    Raises:
+        ValueError: If strict=True and type is not registered.
+    """
+    available_types = []
+    
     if MANIFEST_INDEX_PATH.exists():
         try:
             with open(MANIFEST_INDEX_PATH, "r", encoding="utf-8") as f:
                 index = json.load(f)
+            available_types = list(index.keys())
             filename = index.get(artifact_type)
             if filename:
                 return BASE_MANIFESTS_DIR / filename
@@ -180,7 +230,17 @@ def get_base_manifest_path(artifact_type):
             print(f"⚠️ Error reading manifest index: {e}")
     
     # Fallback to standard naming convention
-    return BASE_MANIFESTS_DIR / f"base-{artifact_type}-file-manifest.json"
+    fallback_path = BASE_MANIFESTS_DIR / f"base-{artifact_type}-file-manifest.json"
+    
+    if strict and not fallback_path.exists():
+        available = ", ".join(available_types) if available_types else "(none registered)"
+        raise ValueError(
+            f"Unknown manifest type: '{artifact_type}'\n"
+            f"Available types: {available}\n"
+            f"Register new types in: {MANIFEST_INDEX_PATH}"
+        )
+    
+    return fallback_path
 
 def init_manifest(bundle_title: str, artifact_type: str, manifest_path: Optional[str] = None) -> None:
     """
@@ -399,6 +459,7 @@ if __name__ == "__main__":
     add_parser = subparsers.add_parser("add", help="Add file to manifest")
     add_parser.add_argument("--path", required=True, help="Relative or absolute path")
     add_parser.add_argument("--note", default="", help="Note for the file")
+    add_parser.add_argument("--section", default="auto", help="Target section (core, topic, context, files)")
 
     # remove
     remove_parser = subparsers.add_parser("remove", help="Remove file from manifest")
@@ -426,7 +487,7 @@ if __name__ == "__main__":
     if args.action == "init":
         init_manifest(args.bundle_title, args.type, args.manifest)
     elif args.action == "add":
-        add_file(args.path, args.note, args.manifest, args.base)
+        add_file(args.path, args.note, args.manifest, args.base, args.section)
     elif args.action == "remove":
         remove_file(args.path, args.manifest, args.base)
     elif args.action == "update":

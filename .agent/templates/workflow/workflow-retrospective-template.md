@@ -39,6 +39,8 @@
 
 ### B2. What was difficult or confusing?
 - [ ] [Agent observation]
+- *Do you want to add more tasks to backlog to address those?*
+- *If quick and easy, anything you want to fix now?*
 
 ### B3. Did we follow the plan?
 - [ ] Yes / No

@@ -1,10 +1,27 @@
-#============================================
-# mcp_servers/protocol/models.py
-# Purpose: Data models for the Protocol MCP server.
-#          Defines Protocol dataclass and Status enum.
-# Role: Data Layer
-# Used as: Data structure definitions.
-#============================================
+#!/usr/bin/env python3
+"""
+Protocol Models
+=====================================
+
+Purpose:
+    Data models for the Protocol MCP server.
+    Defines Protocol dataclass and Status enum.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal / Enums
+    - ProtocolStatus (Enum): PROPOSED, CANONICAL, DEPRECATED
+    - Protocol: Internal representation
+        - filename (property)
+
+    # MCP Requests
+    - ProtocolCreateRequest
+    - ProtocolUpdateRequest
+    - ProtocolGetRequest
+    - ProtocolListRequest
+    - ProtocolSearchRequest
+"""
 
 """
 Data models for the Protocol MCP server.

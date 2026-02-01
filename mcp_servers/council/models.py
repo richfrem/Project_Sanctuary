@@ -1,12 +1,22 @@
-#============================================
-# mcp_servers/council/models.py
-# Purpose: Data definition layer for Council Server.
-# Role: Data Layer
-# Used as: Type definitions for operations.
-# LIST OF CLASSES:
-#   - CouncilAgent (DataClass)
-#   - CouncilTaskResult (DataClass)
-#============================================
+#!/usr/bin/env python3
+"""
+Council Models
+=====================================
+
+Purpose:
+    Data definitions for Council Server.
+    Defines agents, task results, and MCP request packets.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal
+    - CouncilAgent: Agent metadata and status
+    - CouncilTaskResult: Outcome of deliberation session
+
+    # MCP Requests
+    - CouncilDispatchRequest: Task parameters
+"""
 
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any

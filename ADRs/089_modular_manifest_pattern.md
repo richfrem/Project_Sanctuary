@@ -1,8 +1,9 @@
 # ADR 089: Modular Manifest Pattern for Context-Aware Snapshots
 
-**Status:** PROPOSED  
-**Date:** 2026-01-03  
-**Author:** Antigravity (Agent) / User (Steward)
+**Status:** ACCEPTED (Schema v3.0)  
+**Date:** 2026-01-03 (Updated: 2026-02-01)  
+**Author:** Antigravity (Agent) / User (Steward)  
+**See Also:** [ADR 097: Base Manifest Inheritance Architecture](./097_base_manifest_inheritance_architecture.md)
 
 ---
 
@@ -50,28 +51,35 @@ python3 scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/le
 python3 scripts/cortex_cli.py snapshot --type learning_audit --manifest .agent/learning/learning_audit/learning_audit_manifest.json
 ```
 
-### 3. Manifest Schema (v2.0 - Core + Topic)
+### 3. Manifest Schema (v3.0 - Simple Files Array)
 
-All manifests follow a structured JSON object with two sections:
+> **Note:** v2.0 (`core`/`topic`) is **deprecated**. See ADR 097 for the new architecture.
+
+All manifests follow the simple JSON structure:
 
 ```json
 {
-    "core": [
-        "README.md",
-        "01_PROTOCOLS/",
-        "ADRs/",
-        "docs/prompt-engineering/sanctuary-guardian-prompt.md"
-    ],
-    "topic": [
-        "LEARNING/topics/Recursive_Language_Models/",
-        "mcp_servers/learning/operations.py"
+    "title": "Learning Seal Bundle",
+    "description": "Protocol 128 seal snapshot for successor agent context.",
+    "files": [
+        {
+            "path": "README.md",
+            "note": "Project overview"
+        },
+        {
+            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+            "note": "Protocol 128"
+        }
     ]
 }
 ```
 
-**Section Semantics:**
-- **`core`**: Always included. Stable, foundational files that every session needs.
-- **`topic`**: Session-specific. Changes per learning loop to reflect current focus.
+**Schema Fields:**
+- **`title`**: Human-readable bundle name
+- **`description`**: Purpose of the bundle
+- **`files`**: Array of file entries
+  - **`path`**: Relative path from project root
+  - **`note`**: Brief description of file's purpose
 
 **Path Types:**
 - **Directories** (trailing `/`): Recursively include all files (e.g., `"01_PROTOCOLS/"`)
@@ -79,7 +87,11 @@ All manifests follow a structured JSON object with two sections:
 - **Relative paths** from project root
 
 **Backward Compatibility:**
-Legacy flat arrays (`["file1", "file2"]`) are still supported by `operations.py` for migration.
+- Legacy flat arrays (`["file1", "file2"]`) are still supported by `operations.py`
+- Legacy `core`/`topic` structure (v2.0) is deprecated but still functional
+
+**Base Manifest Inheritance (ADR 097):**
+Pre-defined base manifests in `tools/standalone/context-bundler/base-manifests/` provide common file sets. Use `manifest_manager.py init --type <TYPE>` to initialize from a base.
 
 ### 4. Evolution Path
 New use cases are added by:

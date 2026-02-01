@@ -1,8 +1,26 @@
-#============================================
-# mcp_servers/git/models.py
-# Purpose: Data models for Git operations.
-# Role: Data Structure Layer
-#============================================
+#!/usr/bin/env python3
+"""
+Git Models
+=====================================
+
+Purpose:
+    Data definitions for Git operations.
+    Defines Pydantic models for status, branch info, and tool requests.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal / Enums
+    - BranchInfo: Name and current status
+    - RemoteInfo: Upstream, ahead/behind counts
+    - GitStatus: Full repository state
+
+    # MCP Requests
+    - GitAddRequest, GitDiffRequest
+    - GitFinishFeatureRequest, GitLogRequest
+    - GitPushFeatureRequest
+    - GitSmartCommitRequest, GitStartFeatureRequest
+"""
 
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field

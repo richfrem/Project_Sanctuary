@@ -1,41 +1,43 @@
-#============================================
-# mcp_servers/rag_cortex/operations.py
-# Purpose: Core operations for interacting with the Mnemonic Cortex (RAG).
-#          Orchestrates ingestion, semantic search, and cache management.
-# Role: Single Source of Truth
-# Used as a module by server.py
-# Calling example:
-#   ops = CortexOperations(project_root)
-#   ops.ingest_full(...)
-# LIST OF CLASSES/FUNCTIONS:
-#   - CortexOperations
-#     - __init__
-#     - _calculate_semantic_hmac
-#     - _chunked_iterable
-#     - _get_container_status
-#     - _get_git_diff_summary
-#     - _get_mcp_name
-#     - _get_recency_delta
-#     - _get_recent_chronicle_highlights
-#     - _get_recent_protocol_updates
-#     - _get_strategic_synthesis
-#     - _get_system_health_traffic_light
-#     - _get_tactical_priorities
-#     - _load_documents_from_directory
-#     - _safe_add_documents
-#     - _should_skip_path
-#     - cache_get
-#     - cache_set
-#     - cache_warmup
-#     - capture_snapshot
-#     - get_cache_stats
-#     - get_stats
-#     - ingest_full
-#     - ingest_incremental
-#     - learning_debrief
-#     - query
-#     - query_structured
-#============================================
+#!/usr/bin/env python3
+"""
+RAG Cortex Operations
+=====================================
+
+Purpose:
+    Core domain logic for the Mnemonic Cortex (RAG) system.
+    Orchestrates ingestion, semantic search, and Mnemonic Cache (CAG) management.
+    Manages vector store interactions and LLM context building.
+
+Layer: Business Logic
+
+Key Classes:
+    - CortexOperations: Main manager
+        - __init__(project_root, client)
+        - ingest_incremental(file_paths, metadata, skip_duplicates)
+        - query(query, max_results, use_cache, reasoning_mode)
+        - query_structured(query_string, request_id)
+        - get_stats(include_samples, sample_count)
+        - cache_get(query)
+        - cache_set(query, answer)
+        - cache_warmup(genesis_queries)
+        - get_cache_stats()
+        
+        # Internal Methods
+        - _chunked_iterable(seq, size)
+        - _safe_add_documents(retriever, docs, max_retries)
+        - _load_manifest_registry()
+        - _get_output_to_manifest_map(registry)
+        - _dedupe_manifest(manifest)
+        - _check_mermaid_cli()
+        - _render_single_diagram(mmd_path)
+        - _ensure_diagrams_rendered()
+        - _get_mcp_name(mcp_class_str)
+
+Dependencies:
+    - ChromaDB: Vector Store
+    - LangChain: Text Splitting & Embedding
+    - HuggingFace: Embedding Models
+"""
 
 
 import os

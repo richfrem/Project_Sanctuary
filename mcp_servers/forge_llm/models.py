@@ -1,14 +1,21 @@
-#============================================
-# Path: mcp_servers/forge_llm/models.py
-# Purpose: Data models for Forge MCP operations.
-# Role: Library Models
-# Used as: Common data structures for the Forge LLM library.
-# Calling example:
-#   from mcp_servers.forge_llm.models import ModelQueryResponse
-# LIST OF CLASSES/FUNCTIONS:
-#   - ModelQueryResponse
-#   - to_dict
-#============================================
+#!/usr/bin/env python3
+"""
+Forge LLM Models
+=====================================
+
+Purpose:
+    Data definitions for Forge MCP operations.
+    Defines response wrapper and request models.
+
+Layer: Data (DTOs)
+
+Key Models:
+    # Internal / Responses
+    - ModelQueryResponse: Standardized LLM response wrapper
+
+    # MCP Requests
+    - ForgeQueryRequest: Prompt and generation parameters
+"""
 from dataclasses import dataclass
 from typing import Optional, Dict, Any
 

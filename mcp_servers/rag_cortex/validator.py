@@ -1,21 +1,21 @@
-#============================================
-# mcp_servers/rag_cortex/validator.py
-# Purpose: Input validation for Mnemonic Cortex RAG operations.
-# Role: Single Source of Truth
-# Used as a module by server.py and potentially CLI tools.
-# Calling example:
-#   validator = CortexValidator(project_root)
-#   validated = validator.validate_query(query="...", max_results=5)
-# LIST OF CLASSES/FUNCTIONS:
-#   - CortexValidator
-#     - __init__
-#     - validate_capture_snapshot
-#     - validate_ingest_full
-#     - validate_ingest_incremental
-#     - validate_query
-#     - validate_stats
-#   - ValidationError
-#============================================
+#!/usr/bin/env python3
+"""
+RAG Cortex Validator
+=====================================
+
+    Input validation for Mnemonic Cortex RAG operations.
+    Ensures structural integrity of requests before processing.
+
+Layer: Validation (Logic)
+
+Key Classes:
+    - CortexValidator: Main safety logic
+        - __init__(project_root)
+        - validate_ingest_full(purge, dirs)
+        - validate_query(query, max_results)
+        - validate_ingest_incremental(files, meta)
+        - validate_capture_snapshot(manifest, type)
+"""
 
 import os
 from pathlib import Path

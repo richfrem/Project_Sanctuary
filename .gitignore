@@ -175,7 +175,9 @@ mcp_config/
 05_ARCHIVED_BLUEPRINTS/
 
 
-#temp notes etc
+# Temp folder - Ephemeral context bundles and working files
+temp/
+
 #continuing_work_new_chat.md
 
 # --- GENERATED STATE (IGNORED) ---

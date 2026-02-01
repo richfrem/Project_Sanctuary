@@ -1,16 +1,22 @@
-#============================================
-# mcp_servers/council/operations.py
-# Purpose: Core business logic for Council Operations.
-#          Orchestrates multi-agent deliberation.
-# Role: Business Logic Layer
-# Used as: Helper module by server.py
-# LIST OF CLASSES/FUNCTIONS:
-#   - CouncilOperations
-#     - __init__
-#     - dispatch_task
-#     - list_agents
-#     - _format_rag_context
-#============================================
+#!/usr/bin/env python3
+"""
+Council Operations
+=====================================
+
+Purpose:
+    Core business logic for Council Operations.
+    Orchestrates multi-agent deliberation and synthesis.
+
+Layer: Business Logic
+
+Key Classes:
+    - CouncilOperations: Main manager
+        - __init__(project_root)
+        - dispatch_task(task_description, agent, ...)
+        - list_agents()
+        - _ensure_initialized()
+        - _format_rag_context()
+"""
 
 import uuid
 from pathlib import Path

@@ -1,21 +1,3 @@
-#============================================
-# mcp_servers/rag_cortex/cache.py
-# Purpose: Implements the Cached Augmented Generation (CAG) layer for the Mnemonic Cortex.
-#          Caches final generated answers keyed by structured query hash.
-# Role: Single Source of Truth
-# Used as a module by operations.py 
-# Calling example: 
-#   result = cache.get(key)
-#   if result:
-#       return result  # Cache hit
-#
-#   # Cache miss - compute answer
-#   answer = generate_rag_answer(structured_query_json)
-#   cache.set(key, answer)
-#   return answer
-# LIST OF FUNCTIONS IMPLEMENTED:
-#   - __init__
-#   - _init_warm_cache
 #   - _update_access_stats
 #   - clear_hot_cache
 #   - clear_warm_cache

@@ -1,10 +1,32 @@
-#============================================
-# mcp_servers/gateway/clusters/sanctuary_network/server.py
-# Purpose: Sanctuary Network Cluster - Dual-Transport Entry Point
-# Role: Interface Layer (Aggregator Node)
-# Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
-# Used by: Gateway Fleet (SSE) and Claude Desktop (STDIO)
-#============================================
+#!/usr/bin/env python3
+"""
+Sanctuary Network Server
+=====================================
+
+Purpose:
+    Sanctuary Network Cluster - Dual-Transport Entry Point.
+    Acts as the Interface Layer (Aggregator Node) for Network Operations.
+    Aggregates web fetching and site status checking tools into a single MCP interface.
+
+    Status: ADR-066 v1.3 Compliant (SSEServer for Gateway, FastMCP for STDIO)
+
+Layer: Interface (Gateway Cluster)
+
+Usage:
+    # Run via MCP Config (STDIO)
+    python -m mcp_servers.gateway.clusters.sanctuary_network.server
+
+    # Run via Gateway (SSE)
+    MCP_TRANSPORT=sse PORT=8103 python -m mcp_servers.gateway.clusters.sanctuary_network.server
+
+Key Functions / MCP Tools:
+    - fetch_url(): Fetch content via HTTP GET
+    - check_site_status(): Check site availability (HEAD)
+
+Related:
+    - mcp_servers/gateway/clusters/sanctuary_network/tools.py
+    - ADR 066: Dual Transport Protocol
+"""
 
 import os
 import sys
