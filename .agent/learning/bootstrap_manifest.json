@@ -1,32 +1,110 @@
 {
-    "core": [
-        "README.md",
-        "Makefile",
-        ".agent/learning/cognitive_primer.md",
-        ".agent/learning/guardian_boot_contract.md",
-        ".agent/workflows/recursive_learning.md",
-        ".env.example",
-        "docs/operations/BOOTSTRAP.md",
-        "docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md",
-        "docs/prompt-engineering/sanctuary-guardian-prompt.md",
-        "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
-        "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
-        "ADRs/065_unified_fleet_deployment_cli.md",
-        "ADRs/071_protocol_128_cognitive_continuity.md",
-        "ADRs/073_standardization_of_python_dependency_management_across_environments.md",
-        "ADRs/087_podman_fleet_operations_policy.md",
-        "ADRs/089_modular_manifest_pattern.md",
-        "docker-compose.yml",
-        "scripts/cortex_cli.py",
-        "scripts/wait_for_pulse.sh",
-        "mcp_servers/gateway/fleet_setup.py",
-        "mcp_servers/requirements-core.txt",
-        "mcp_servers/requirements-core.in"
-    ],
-    "topic": [
-        "requirements-dev.txt",
-        "requirements-dev.in",
-        "docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd",
-        "docs/architecture_diagrams/system/sanctuary_mcp_overview.mmd"
+    "title": "Bootstrap Context Bundle",
+    "description": "Fresh repository onboarding context for new developers/agents.",
+    "files": [
+        {
+            "path": "README.md",
+            "note": "Project overview"
+        },
+        {
+            "path": "Makefile",
+            "note": "Build commands"
+        },
+        {
+            "path": ".agent/learning/cognitive_primer.md",
+            "note": "Cognitive primer"
+        },
+        {
+            "path": ".agent/learning/guardian_boot_contract.md",
+            "note": "Guardian contract"
+        },
+        {
+            "path": ".agent/workflows/recursive_learning.md",
+            "note": "Learning workflow"
+        },
+        {
+            "path": ".env.example",
+            "note": "Environment template"
+        },
+        {
+            "path": "docs/operations/BOOTSTRAP.md",
+            "note": "Bootstrap guide"
+        },
+        {
+            "path": "docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md",
+            "note": "Podman guide"
+        },
+        {
+            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
+            "note": "Guardian prompt"
+        },
+        {
+            "path": "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
+            "note": "Fleet diagram"
+        },
+        {
+            "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
+            "note": "Protocol 128 diagram"
+        },
+        {
+            "path": "ADRs/065_unified_fleet_deployment_cli.md",
+            "note": "ADR 065"
+        },
+        {
+            "path": "ADRs/071_protocol_128_cognitive_continuity.md",
+            "note": "ADR 071"
+        },
+        {
+            "path": "ADRs/073_standardization_of_python_dependency_management_across_environments.md",
+            "note": "ADR 073"
+        },
+        {
+            "path": "ADRs/087_podman_fleet_operations_policy.md",
+            "note": "ADR 087"
+        },
+        {
+            "path": "ADRs/089_modular_manifest_pattern.md",
+            "note": "ADR 089"
+        },
+        {
+            "path": "docker-compose.yml",
+            "note": "Docker compose"
+        },
+        {
+            "path": "scripts/cortex_cli.py",
+            "note": "Cortex CLI"
+        },
+        {
+            "path": "scripts/wait_for_pulse.sh",
+            "note": "Pulse script"
+        },
+        {
+            "path": "mcp_servers/gateway/fleet_setup.py",
+            "note": "Fleet setup"
+        },
+        {
+            "path": "mcp_servers/requirements-core.txt",
+            "note": "Core requirements"
+        },
+        {
+            "path": "mcp_servers/requirements-core.in",
+            "note": "Core requirements source"
+        },
+        {
+            "path": "requirements-dev.txt",
+            "note": "Dev requirements"
+        },
+        {
+            "path": "requirements-dev.in",
+            "note": "Dev requirements source"
+        },
+        {
+            "path": "docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd",
+            "note": "Transport diagram"
+        },
+        {
+            "path": "docs/architecture_diagrams/system/sanctuary_mcp_overview.mmd",
+            "note": "MCP overview"
+        }
     ]
 }

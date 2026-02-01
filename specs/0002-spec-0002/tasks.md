@@ -1,0 +1,117 @@
+# Tasks-0002: Context Bundler Migration
+
+## Completed (Phase 1)
+- [x] **Register Tool**: Check and add `tools/retrieve/bundler/bundle.py` to tool inventory. <!-- id: 0 -->
+- [x] **Verify Discovery**: Confirm tool appears in `query_cache.py` output. <!-- id: 1 -->
+- [x] **Create Test Assets**: Generate `test_manifest.json` and source files in `temp_bundler_test/`. <!-- id: 2 -->
+- [x] **Execute Bundle Test**: Run `bundle.py` against the test manifest. <!-- id: 3 -->
+- [x] **Verify Output**: Check the generated markdown file for correctness. <!-- id: 4 -->
+- [x] **Review Code/Docs**: Ensure `bundle.py` follows project standards. <!-- id: 5 -->
+- [x] **Create Workflow**: Add `.agent/workflows/workflow-bundle.md`. <!-- id: 6 -->
+- [x] **Persist Design**: Move design proposal to `docs/architecture/designs/`. <!-- id: 10 -->
+- [x] **Visual Design**: Create workflow diagram in `specs/0002-spec-0002/`. <!-- id: 11 -->
+- [x] **Create ADR**: Codify design as ADR 097 (Base Manifest Inheritance Architecture). <!-- id: 33 -->
+
+## Completed (Phase 1.5 - Workflow Improvements) - 2026-02-01
+- [x] **Create validate.py**: Add manifest validation tool (`tools/retrieve/bundler/validate.py`). <!-- id: 37 -->
+- [x] **Register validate.py**: Add to tool inventories (master, RLM cache, standalone). <!-- id: 38 -->
+- [x] **Update workflow-bundle**: Add validation step (Step 4) and cleanup step (Step 7). <!-- id: 39 -->
+- [x] **Create /workflow-tool-update**: New workflow for registering tools in discovery system. <!-- id: 40 -->
+- [x] **Rename workflow file**: `recursive_learning.md` → `workflow-learning-loop.md` (ADR-036 alignment). <!-- id: 41 -->
+- [x] **Update learning loop**: Add temp cleanup to Pre-Departure Checklist. <!-- id: 42 -->
+- [x] **Update .gitignore**: Add `temp/` folder for ephemeral bundle outputs. <!-- id: 43 -->
+- [x] **Update workflow_standardization_policy.md**: Add ADR-036 shim architecture reference (v2.1). <!-- id: 44 -->
+- [x] **Regenerate inventories**: Workflow inventory (25 workflows), Tool inventory. <!-- id: 45 -->
+
+## Phase 2: Migrate Bundling Manifests to Simple Schema
+
+**Schema**: All manifests follow `{title, description, files: [{path, note}]}`  
+**Resolution**: `manifest_manager.py init --type X` loads base manifest from `base-manifests-index.json`
+
+### Task 2.1: Create Base Manifests (in `tools/standalone/context-bundler/base-manifests/`)
+
+| Type | Source | Base Manifest | Status |
+|------|--------|---------------|--------|
+| learning | `.agent/learning/learning_manifest.json` | `base-learning-file-manifest.json` | ✅ |
+| learning-audit | `.agent/learning/learning_audit/learning_audit_manifest.json` | `base-learning-audit-core.json` | ✅ |
+| guardian | `.agent/learning/guardian_manifest.json` | `base-guardian-file-manifest.json` | ✅ |
+| bootstrap | `.agent/learning/bootstrap_manifest.json` | `base-bootstrap-file-manifest.json` | ✅ |
+| red-team | `.agent/learning/red_team/red_team_manifest.json` | `base-red-team-file-manifest.json` | ✅ |
+
+- [x] **Create base-learning-file-manifest.json**: Extract 20 files from `learning_manifest.json`, convert to `{path, note}` format. <!-- id: 12 -->
+- [x] **Fix base-learning-audit-core.json**: Already created but has wrong format (string paths instead of `{path, note}`). <!-- id: 13 -->
+- [x] **Create base-guardian-file-manifest.json**: Extract 10 core + 4 topic files. <!-- id: 14 -->
+- [x] **Create base-bootstrap-file-manifest.json**: Extract 22 core + 4 topic files. <!-- id: 15 -->
+- [x] **Create base-red-team-file-manifest.json**: Extract 16 core + 10 topic files. <!-- id: 16 -->
+
+### Task 2.2: Register in Index
+
+- [x] **Update base-manifests-index.json**: Add entries for learning, guardian, bootstrap, red-team. <!-- id: 17 -->
+
+### Task 2.3: Refactor Python Code (operations.py)
+
+**File**: `mcp_servers/learning/operations.py`
+
+Code that reads `core`/`topic` and merges them must be refactored to read `files` directly.
+
+| Line | Current Code | New Behavior |
+|------|--------------|--------------|
+| 346-349 | `core = manifest_data.get("core", [])` | `files = manifest_data.get("files", [])` |
+| 554-557 | `core + topic` merge | Use `files` array |
+| 996-998 | `core + topic` merge | Use `files` array |
+
+- [ ] **Line 346-349**: Refactor snapshot manifest loading to use `files`. <!-- id: 23a -->
+- [ ] **Line 554-557**: Refactor RLM context loading to use `files`. <!-- id: 23b -->
+- [ ] **Line 996-998**: Refactor guardian manifest loading to use `files`. <!-- id: 23c -->
+
+### Task 2.4: Refactor Python Code (cortex_cli.py)
+
+**File**: `scripts/cortex_cli.py`
+
+| Line | Current | Action |
+|------|---------|--------|
+| 19, 32 | Reference to `.agent/learning/learning_manifest.json` | Update comments only |
+| 33 | Reference to guardian manifest | Update comments only |
+| 174 | Default manifest path | Keep as-is (path unchanged) |
+| 178 | Default manifest path | Keep as-is (path unchanged) |
+
+- [ ] **Update docstrings**: Reflect new simple schema. <!-- id: 24 -->
+
+### Task 2.5: Update bundle.py
+
+**File**: `tools/retrieve/bundler/bundle.py`
+
+Current code (lines 138-151) handles composite keys (`core`, `topic`, etc.). This is already working but needs cleanup.
+
+- [ ] **Remove legacy composite key handling**: After migration, remove lines 138-151. <!-- id: 25 -->
+- [ ] **Revert `extends` logic**: Remove the extends resolution I added earlier (lines 131-167 in current state). <!-- id: 25b -->
+
+### Task 2.6: Migrate Existing Manifests
+
+After base manifests are created and code is updated, convert the existing manifests at `.agent/learning/`:
+
+- [ ] **Migrate learning_manifest.json**: Convert to simple `{title, files}` format. <!-- id: 18 -->
+- [ ] **Migrate learning_audit_manifest.json**: Already partially done. <!-- id: 19 -->
+- [ ] **Migrate red_team_manifest.json**: Convert to simple format. <!-- id: 20 -->
+- [ ] **Migrate guardian_manifest.json**: Convert to simple format. <!-- id: 21 -->
+- [ ] **Migrate bootstrap_manifest.json**: Convert to simple format. <!-- id: 22 -->
+
+### Task 2.7: Update Documentation
+
+- [ ] **Update ADR 089**: Remove `core`/`topic` pattern, reference simple schema. <!-- id: 27 -->
+- [ ] **Update ADR 083**: Clarify distinction between ingest manifests and bundling manifests. <!-- id: 27b -->
+- [ ] **Update cognitive_continuity_policy.md**: Remove references to manifest sections. <!-- id: 28 -->
+- [ ] **Update llm.md**: Align onboarding with new approach. <!-- id: 29 -->
+
+### Task 2.8: Cleanup
+
+- [ ] **Delete old manifests**: After all code migrated, remove deprecated manifest files if applicable. <!-- id: 34 -->
+- [ ] **Remove manifest_registry.json references**: If Protocol 130 deduplication is no longer needed. <!-- id: 35 -->
+
+---
+
+## Testing
+
+- [ ] **Test workflow-bundle**: End-to-end with new base manifests. <!-- id: 31 -->
+- [ ] **Test manifest_manager.py init**: Verify `--type learning` creates correct manifest. <!-- id: 32 -->
+- [ ] **Verify cortex_cli.py snapshot**: Ensure seal/audit still work after refactor. <!-- id: 36 -->

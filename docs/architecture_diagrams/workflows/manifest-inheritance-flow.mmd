@@ -1,0 +1,49 @@
+graph TD
+    %% Define Styles
+    classDef explicit fill:#ffebee,stroke:#ef9a9a,color:#333;
+    classDef proposed fill:#e8f5e9,stroke:#a5d6a7,color:#333;
+    classDef logic fill:#e3f2fd,stroke:#90caf9,color:#333;
+
+    subgraph Current [Current: Explicit Composite]
+        direction TB
+        M1[Manifest JSON]:::explicit
+        
+        M1 -->|Contains| C1[Core Section]:::explicit
+        M1 -->|Contains| T1[Topic Section]:::explicit
+        
+        C1 -.-> F1[File: Protocol 128]
+        C1 -.-> F2[File: Primer.md]
+        
+        note1[Duplication risk if<br/>Core changes]
+        C1 --- note1
+    end
+
+    subgraph Proposed [Proposed: Base Inheritance]
+        direction TB
+        M2[Manifest JSON]:::proposed
+        
+        M2 -->|property: 'extends'| ID[ID: 'protocol-128-core']:::proposed
+        M2 -->|Contains| T2[Topic Section]:::proposed
+        
+        ID -->|Lookup| IDX[base-manifests-index.json]
+        IDX -->|Resolves to| BASE[base-manifests/protocol-128-core.json]:::proposed
+        
+        BASE -->|Contains| B_FILES[Base Files List]
+        B_FILES --> F1
+        B_FILES --> F2
+    end
+    
+    subgraph Bundler_Logic [Bundler Runtime Resolution]
+        direction TB
+        RESOLVER[Manifest Resolver]:::logic
+        
+        RESOLVER -->|1. Read 'extends'| M2
+        RESOLVER -->|2. Fetch Base Manifest| BASE
+        RESOLVER -->|3. Flatten & Dedupe| MERGED[Final File List]:::logic
+        
+        MERGED -.->|Includes| B_FILES
+        MERGED -.->|Includes| T2
+    end
+
+    %% Connect flows
+    Current -.->|Refactored to| Proposed

@@ -1,22 +1,70 @@
 {
-    "core": [
-        "README.md",
-        "IDENTITY/founder_seed.json",
-        ".agent/learning/cognitive_primer.md",
-        ".agent/learning/guardian_boot_contract.md",
-        ".agent/learning/learning_audit/learning_audit_core_prompt.md",
-        ".agent/learning/learning_audit/learning_audit_prompts.md",
-        ".agent/rules/cognitive_continuity_policy.md",
-        "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
-        "ADRs/071_protocol_128_cognitive_continuity.md",
-        "docs/prompt-engineering/sanctuary-guardian-prompt.md",
-        "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd"
-    ],
-    "topic": [
-        "01_PROTOCOLS/132_Recursive_Context_Synthesis.md",
-        "ADRs/092_RLM_Context_Synthesis.md",
-        "LEARNING/topics/Recursive_Language_Models/",
-        "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd",
-        "mcp_servers/learning/operations.py"
+    "title": "Learning Audit Bundle",
+    "description": "Learning audit context for Red Team review. Topic files for current learning focus.",
+    "files": [
+        {
+            "path": "README.md",
+            "note": "Project overview"
+        },
+        {
+            "path": "IDENTITY/founder_seed.json",
+            "note": "Identity anchor"
+        },
+        {
+            "path": ".agent/learning/cognitive_primer.md",
+            "note": "Cognitive primer"
+        },
+        {
+            "path": ".agent/learning/guardian_boot_contract.md",
+            "note": "Guardian contract"
+        },
+        {
+            "path": ".agent/learning/learning_audit/learning_audit_core_prompt.md",
+            "note": "Core audit prompt"
+        },
+        {
+            "path": ".agent/learning/learning_audit/learning_audit_prompts.md",
+            "note": "Audit prompts"
+        },
+        {
+            "path": ".agent/rules/cognitive_continuity_policy.md",
+            "note": "Continuity policy"
+        },
+        {
+            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+            "note": "Protocol 128"
+        },
+        {
+            "path": "ADRs/071_protocol_128_cognitive_continuity.md",
+            "note": "ADR 071"
+        },
+        {
+            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
+            "note": "Guardian prompt"
+        },
+        {
+            "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
+            "note": "Protocol 128 diagram"
+        },
+        {
+            "path": "01_PROTOCOLS/132_Recursive_Context_Synthesis.md",
+            "note": "Current topic: RLM"
+        },
+        {
+            "path": "ADRs/092_RLM_Context_Synthesis.md",
+            "note": "Current topic: RLM"
+        },
+        {
+            "path": "LEARNING/topics/Recursive_Language_Models/",
+            "note": "Current topic: RLM"
+        },
+        {
+            "path": "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd",
+            "note": "Current topic: RLM"
+        },
+        {
+            "path": "mcp_servers/learning/operations.py",
+            "note": "Current topic: RLM"
+        }
     ]
 }

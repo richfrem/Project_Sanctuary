@@ -113,7 +113,7 @@ docs/operations/mcp/
 
 ### Phase 3: Workflow Updates
 1. Update speckit workflows: Replace `source scripts/bash/workflow-start.sh` with Python
-2. Update `/recursive_learning.md`: Replace MCP references with CLI
+2. Update `/workflow-learning-loop.md`: Replace MCP references with CLI
 3. Convert `check-prerequisites.sh` logic to Python (used by many workflows)
 
 ### Phase 4: Bash Script Migration (Deferred)

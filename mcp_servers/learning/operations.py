@@ -1,3 +1,42 @@
+#!/usr/bin/env python3
+"""
+mcp_servers/learning/operations.py
+=====================================
+
+Purpose:
+    Core operations for the Project Sanctuary Learning Loop (Protocol 128).
+    Handles cognitive continuity, snapshot generation, soul persistence,
+    and guardian wakeup workflows.
+    
+    ADR 097: Uses Context Bundler CLI for manifest-based bundling.
+
+Layer: MCP Server / Learning Domain
+
+⚠️  DEPRECATION NOTICE (2026-02-01):
+    MCP-based bundling via this module is DEPRECATED.
+    Use `tools/cli.py snapshot --type TYPE` instead.
+    This module maintains backward compatibility but will be removed in v2.0.
+    See: ADR 097 (Base Manifest Inheritance Architecture)
+
+Usage:
+    from mcp_servers.learning.operations import LearningOperations
+    ops = LearningOperations(project_root)
+    result = ops.capture_snapshot(snapshot_type="seal")
+
+Key Functions:
+    - capture_snapshot(): Generate context snapshots (seal, audit, learning_audit)
+    - persist_soul(): Broadcast learnings to HuggingFace
+    - guardian_wakeup(): Protocol 128 bootloader initialization
+    - guardian_snapshot(): Session pack generation
+
+Related:
+    - tools/retrieve/bundler/bundle.py (Context Bundler)
+    - tools/retrieve/bundler/manifest_manager.py (Manifest Manager)
+    - tools/cli.py snapshot (PREFERRED CLI path)
+    - 01_PROTOCOLS/128_Hardened_Learning_Loop.md
+    - ADRs/071_protocol_128_cognitive_continuity.md
+"""
+
 
 import os
 import re
@@ -22,6 +61,9 @@ from mcp_servers.lib.snapshot_utils import (
     PROTECTED_SEEDS,
     RECURSIVE_ARTIFACTS
 )
+# ADR 097: Context Bundler CLI paths
+BUNDLER_SCRIPT = "tools/retrieve/bundler/bundle.py"
+MANIFEST_MANAGER_SCRIPT = "tools/retrieve/bundler/manifest_manager.py"
 from mcp_servers.learning.models import (
     CaptureSnapshotResponse,
     PersistSoulRequest,
@@ -117,14 +159,14 @@ class LearningOperations:
                 
                 # 3. Read Core Documents
                 primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
-                sop_content = "[MISSING] .agent/workflows/recursive_learning.md"
+                sop_content = "[MISSING] .agent/workflows/workflow-learning-loop.md"
                 protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
                 
                 try:
                     p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
                     if p_path.exists(): primer_content = p_path.read_text()
                     
-                    s_path = self.project_root / ".agent" / "workflows" / "recursive_learning.md"
+                    s_path = self.project_root / ".agent" / "workflows" / "workflow-learning-loop.md"
                     if s_path.exists(): sop_content = s_path.read_text()
                     
                     pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"
@@ -341,12 +383,23 @@ class LearningOperations:
                     with open(manifest_file, "r") as f:
                         manifest_data = json.load(f)
                     
-                    # Handle modular manifest structure (ADR 089)
+                    # Handle modular manifest structure (ADR 089 -> ADR 097)
                     if isinstance(manifest_data, dict):
-                        core = manifest_data.get("core", [])
-                        topic = manifest_data.get("topic", [])
-                        effective_manifest = core + topic
-                        logger.info(f"Loaded {snapshot_type} manifest: {len(core)} core + {len(topic)} topic entries")
+                        # NEW: Prefer 'files' array (ADR 097 simple schema)
+                        if "files" in manifest_data and isinstance(manifest_data["files"], list):
+                            effective_manifest = []
+                            for item in manifest_data["files"]:
+                                if isinstance(item, str):
+                                    effective_manifest.append(item)
+                                elif isinstance(item, dict) and "path" in item:
+                                    effective_manifest.append(item["path"])
+                            logger.info(f"Loaded {snapshot_type} manifest (ADR 097): {len(effective_manifest)} files")
+                        else:
+                            # LEGACY: Fallback to core+topic (ADR 089)
+                            core = manifest_data.get("core", [])
+                            topic = manifest_data.get("topic", [])
+                            effective_manifest = core + topic
+                            logger.info(f"Loaded {snapshot_type} manifest (legacy): {len(core)} core + {len(topic)} topic entries")
                     else:
                         # Legacy: flat array
                         effective_manifest = manifest_data
@@ -397,22 +450,46 @@ class LearningOperations:
                     error="Strict manifestation failed: drift detected"
                 )
 
-        # 3. Generate Snapshot
+        # 3. Generate Snapshot using Context Bundler (ADR 097)
         try:
             from uuid import uuid4
-            # We use the existing generate_snapshot utility
-            # It expects a manifest file path in JSON format (list or dict)
+            
+            # Create temp manifest in bundler schema format
             temp_manifest = self.project_root / f".temp_manifest_{uuid4()}.json"
-            temp_manifest.write_text(json.dumps(effective_manifest, indent=2))
+            bundler_manifest = {
+                "title": f"{snapshot_type.replace('_', ' ').title()} Snapshot",
+                "description": f"Auto-generated {snapshot_type} snapshot",
+                "files": [{"path": f, "note": ""} for f in effective_manifest]
+            }
+            temp_manifest.write_text(json.dumps(bundler_manifest, indent=2))
             
             try:
-                stats = generate_snapshot(
-                    project_root=self.project_root,
-                    manifest_path=temp_manifest,
-                    output_dir=final_snapshot_path.parent,
-                    output_file=final_snapshot_path,
-                    should_forge_seeds=False
+                # Call bundle.py CLI via subprocess
+                bundler_cmd = [
+                    sys.executable,
+                    str(self.project_root / BUNDLER_SCRIPT),
+                    str(temp_manifest),
+                    "-o", str(final_snapshot_path)
+                ]
+                result = subprocess.run(
+                    bundler_cmd,
+                    cwd=str(self.project_root),
+                    capture_output=True,
+                    text=True
                 )
+                
+                if result.returncode != 0:
+                    logger.error(f"Bundler failed: {result.stderr}")
+                    return CaptureSnapshotResponse(
+                        snapshot_path="",
+                        manifest_verified=manifest_verified,
+                        git_diff_context=git_diff_context,
+                        snapshot_type=snapshot_type,
+                        status="error",
+                        error=f"Bundler failed: {result.stderr[:200]}"
+                    )
+                
+                logger.info(f"Bundler output: {result.stdout[:200]}")
                 
                 if not final_snapshot_path.exists():
                      return CaptureSnapshotResponse(
@@ -442,7 +519,7 @@ class LearningOperations:
                     git_diff_context=git_diff_context,
                     snapshot_type=snapshot_type,
                     status="success",
-                    total_files=stats.get("total_files", 0),
+                    total_files=len(effective_manifest),
                     total_bytes=file_stat.st_size
                 )
             finally:
@@ -549,12 +626,21 @@ class LearningOperations:
                 logger.info(f"🧠 RLM: Loading scope from {manifest_path.name}...")
                 manifest_data = json.loads(manifest_path.read_text())
                 
-                # Handle modular manifest structure (ADR 089)
                 if isinstance(manifest_data, dict):
-                    core = manifest_data.get("core", [])
-                    topic = manifest_data.get("topic", [])
-                    target_files = core + topic
-                    logger.info(f"🧠 RLM: Merged {len(core)} core + {len(topic)} topic entries.")
+                    # ADR 097: New simple {files: [{path, note}]} format
+                    if "files" in manifest_data:
+                        for item in manifest_data["files"]:
+                            if isinstance(item, str):
+                                target_files.append(item)
+                            elif isinstance(item, dict) and "path" in item:
+                                target_files.append(item["path"])
+                        logger.info(f"🧠 RLM: Loaded {len(target_files)} files (ADR 097 format).")
+                    else:
+                        # LEGACY: Fallback to core+topic (ADR 089)
+                        core = manifest_data.get("core", [])
+                        topic = manifest_data.get("topic", [])
+                        target_files = core + topic
+                        logger.info(f"🧠 RLM: Merged {len(core)} core + {len(topic)} topic entries (legacy).")
                 else:
                     # Legacy: flat array
                     target_files = manifest_data

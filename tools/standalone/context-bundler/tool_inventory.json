@@ -8,12 +8,17 @@
                 {
                     "name": "manifest_manager.py",
                     "path": "tools/retrieve/bundler/manifest_manager.py",
-                    "description": "CLI Entry Point: Handles initialization, modification, and bundling triggers."
+                    "description": "CLI Entry Point: Handles initialization, modification, and bundling triggers. Supports strict type validation."
                 },
                 {
                     "name": "bundle.py",
                     "path": "tools/retrieve/bundler/bundle.py",
-                    "description": "Core Logic: Concatenates manifest files into a single Markdown artifact."
+                    "description": "Core Logic: Concatenates manifest files into a single Markdown artifact. Warns on deprecated legacy keys."
+                },
+                {
+                    "name": "validate.py",
+                    "path": "tools/retrieve/bundler/validate.py",
+                    "description": "Validation Tool: Validates manifests against schema. Supports --all-base and --check-index modes."
                 },
                 {
                     "name": "path_resolver.py",
