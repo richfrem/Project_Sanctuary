@@ -1,0 +1,69 @@
+flowchart TD
+    User([User / Agent])
+
+    subgraph Commands ["Codify Domain Interface"]
+        direction TB
+        
+        subgraph RLM ["Recursive Language Model"]
+            CmdDistill["/codify-rlm-distill"]
+            CmdRLMConfig["rlm_config.py"]
+        end
+        
+        subgraph Vector ["Vector Database"]
+            CmdIngest["/codify-vector-ingest"]
+            CmdIngestCode["ingest_code_shim.py"]
+        end
+        
+        subgraph Tracking ["Task Tracking"]
+            CmdStatus["/codify-tracking-status"]
+            CmdTodo["/codify-tracking-todo"]
+        end
+        
+        subgraph Diagrams ["Diagram Generation"]
+            CmdExport["/codify-diagrams-export"]
+        end
+    end
+
+    subgraph Outputs ["Final Artifacts"]
+        OutRLM[("`.agent/learning/
+        rlm_summary_cache.json`")]
+        OutVector[("`.vector_data/
+        chroma_db/`")]
+        OutTodo[("TODO_PENDING_TASKS.md")]
+        OutDiagrams[("docs/diagrams/*.png")]
+    end
+
+    subgraph Dependencies ["External Dependencies"]
+        Ollama((Ollama LLM))
+        ChromaDB((ChromaDB))
+    end
+
+    %% User to Commands
+    User --> CmdDistill & CmdIngest & CmdStatus & CmdExport
+
+    %% RLM Flow
+    CmdDistill --> CmdRLMConfig
+    CmdRLMConfig --> Ollama
+    Ollama --> OutRLM
+
+    %% Vector Flow
+    CmdIngest --> CmdIngestCode
+    CmdIngestCode --> ChromaDB
+    ChromaDB --> OutVector
+
+    %% Tracking Flow
+    CmdStatus --> OutTodo
+    CmdTodo --> OutTodo
+
+    %% Diagrams Flow
+    CmdExport --> OutDiagrams
+
+    classDef command fill:#c9f,stroke:#333,stroke-width:2px;
+    classDef config fill:#ffc,stroke:#333,stroke-width:2px;
+    classDef output fill:#9f9,stroke:#333,stroke-width:2px;
+    classDef external fill:#f96,stroke:#333,stroke-width:2px;
+
+    class CmdDistill,CmdIngest,CmdStatus,CmdTodo,CmdExport command;
+    class CmdRLMConfig,CmdIngestCode config;
+    class OutRLM,OutVector,OutTodo,OutDiagrams output;
+    class Ollama,ChromaDB external;

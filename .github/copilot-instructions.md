@@ -38,7 +38,7 @@
 * **NO DESTRUCTIVE ACTIONS**: Never perform `git reset` or `force push` without explicit authorization.
 * **CONCISE OUTPUT**: Avoid verbose explanations of project structure. If a step is skipped, state it in a single line.
 
-## IV. DEVELOPMENT STANDARDS (BC PUBLIC SERVICE JUSTICE SECTOR)
+## IV. DEVELOPMENT STANDARDS
 
 * **FILE PATHS**: Default to the current directory (`.`) for project operations.
 * **SENSITIVE DATA**: Never commit or log raw token strings. Always redact tokens in terminal outputs or log captures.

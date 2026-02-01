@@ -1,0 +1,253 @@
+{
+  "metadata": {
+    "last_updated": "2026-01-31T17:58:17.466268",
+    "status": "Deduplicated"
+  },
+  "python": {
+    "tools": {
+      "cli_entry_points": [
+        {
+          "name": "cli.py",
+          "path": "tools/cli.py",
+          "description": "Main entry point for the Antigravity Command System. Orchestrates sub-tools for scanning, context bundling, dependency analysis, and business rule discovery. Routes commands like scan, bundle, query, and rules to specialized modules.",
+          "original_path": "tools/business-rule-extraction/cli.py",
+          "decision": "keep",
+          "header_style": "basic",
+          "last_updated": "2026-01-29T11:14:20.565224",
+          "compliance_status": "compliant",
+          "category": "cli_entry_points"
+        }
+      ],
+      "miners": [],
+      "bundler": [
+        {
+          "name": "bundle.py",
+          "path": "tools/retrieve/bundler/bundle.py",
+          "description": "Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest.",
+          "original_path": "tools/context-bundler/bundle.py",
+          "decision": "moved",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.764694",
+          "compliance_status": "compliant",
+          "category": "bundler"
+        },
+        {
+          "name": "manifest_manager.py",
+          "path": "tools/retrieve/bundler/manifest_manager.py",
+          "description": "Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler.",
+          "original_path": "tools/business-rule-extraction/scripts/manifest_manager.py",
+          "decision": "moved",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.766086",
+          "compliance_status": "compliant",
+          "category": "bundler"
+        }
+      ],
+      "rlm": [
+        {
+          "name": "cleanup_cache.py",
+          "path": "tools/curate/rlm/cleanup_cache.py",
+          "description": "RLM Cleanup: Removes stale and orphan entries from the Recursive Language Model ledger.",
+          "original_path": "tools/curate/rlm/cleanup_cache.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.677670",
+          "compliance_status": "compliant",
+          "category": "rlm"
+        },
+        {
+          "name": "debug_rlm.py",
+          "path": "tools/codify/rlm/debug_rlm.py",
+          "description": "Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts.",
+          "last_updated": "2026-01-29T11:14:20.590635",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "distiller.py",
+          "path": "tools/codify/rlm/distiller.py",
+          "description": "Recursive summarization of repo content using Ollama.",
+          "original_path": "tools/codify/rlm/distiller.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T17:42:47.661855",
+          "compliance_status": "compliant",
+          "category": "rlm"
+        },
+        {
+          "name": "inventory.py",
+          "path": "tools/retrieve/rlm/inventory.py",
+          "description": "RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.",
+          "original_path": "tools/retrieve/rlm/inventory.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.767578",
+          "compliance_status": "compliant",
+          "category": "rlm"
+        },
+        {
+          "name": "query_cache.py",
+          "path": "tools/retrieve/rlm/query_cache.py",
+          "description": "RLM Search: Instant O(1) semantic search of the ledger.",
+          "original_path": "tools/retrieve/rlm/query_cache.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.768843",
+          "compliance_status": "compliant",
+          "category": "rlm"
+        },
+        {
+          "name": "rlm_config.py",
+          "path": "tools/codify/rlm/rlm_config.py",
+          "description": "Centralized configuration and utility logic for the RLM Toolchain. Implement the 'Manifest Factory' pattern to dynamically resolve manifests and cache files based on the Analysis Type (Legacy vs Tool). This module is the Single Source of Truth for RLM logic.",
+          "last_updated": "2026-01-29T11:14:20.594474",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        }
+      ],
+      "vector": [
+        {
+          "name": "ingest.py",
+          "path": "tools/codify/vector/ingest.py",
+          "description": "Vector Ingestion: Chunks code/docs and generates embeddings via ChromaDB.",
+          "original_path": "tools/codify/vector/ingest.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.606698",
+          "compliance_status": "compliant",
+          "category": "vector"
+        },
+        {
+          "name": "query.py",
+          "path": "tools/retrieve/vector/query.py",
+          "description": "Vector Search: Semantic search interface for the ChromaDB collection.",
+          "original_path": "tools/retrieve/vector/query.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.770299",
+          "compliance_status": "compliant",
+          "category": "vector"
+        },
+        {
+          "name": "cleanup.py",
+          "path": "tools/curate/vector/cleanup.py",
+          "description": "Vector Cleanup: Consistency check to remove stale chunks from DB.",
+          "original_path": "tools/curate/vector/cleanup.py",
+          "decision": "keep",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.686080",
+          "compliance_status": "compliant",
+          "category": "vector"
+        },
+        {
+          "name": "ingest_code_shim.py",
+          "path": "tools/codify/vector/ingest_code_shim.py",
+          "description": "Shim for ingesting code files into Vector DB.",
+          "original_path": "tools/vector-db/ingest_code_shim.py",
+          "decision": "moved",
+          "header_style": "basic",
+          "last_updated": "2026-01-29T11:14:20.608493",
+          "compliance_status": "compliant",
+          "category": "vector"
+        }
+      ],
+      "search": [],
+      "documentation": [
+        {
+          "name": "export_mmd_to_image.py",
+          "path": "tools/codify/diagrams/export_mmd_to_image.py",
+          "description": "Renders all .mmd files in docs/architecture_diagrams/ to PNG images. Run this script whenever diagrams are updated to regenerate images.",
+          "original_path": "tools/codify/diagrams/export_mmd_to_image.py",
+          "decision": "keep",
+          "header_style": "minimal",
+          "last_updated": "2026-01-29T11:14:20.571933",
+          "compliance_status": "needs_review"
+        },
+        {
+          "name": "analyze_tracking_status.py",
+          "path": "tools/codify/tracking/analyze_tracking_status.py",
+          "description": "Generates a summary report of AI Analysis progress from the tracking file. Shows analyzed vs pending forms for project management dashboards.",
+          "original_path": "tools/codify/tracking/analyze_tracking_status.py",
+          "decision": "keep",
+          "header_style": "basic",
+          "last_updated": "2026-01-29T11:14:20.596419",
+          "compliance_status": "partial"
+        },
+        {
+          "name": "generate_todo_list.py",
+          "path": "tools/codify/tracking/generate_todo_list.py",
+          "description": "Creates a prioritized TODO list of forms pending AI analysis. Bubbles up Critical and High priority items based on workflow usage.",
+          "original_path": "tools/codify/tracking/generate_todo_list.py",
+          "decision": "keep",
+          "header_style": "basic",
+          "last_updated": "2026-01-29T11:14:20.598019",
+          "compliance_status": "partial"
+        },
+        {
+          "name": "capture-code-snapshot.js",
+          "path": "tools/codify/utils/capture-code-snapshot.js",
+          "description": "Generates a single text file snapshot of code files for LLM context sharing.",
+          "original_path": "tools/codify/utils/capture-code-snapshot.js",
+          "decision": "keep",
+          "header_style": "none",
+          "last_updated": "2026-01-29T11:14:20.604473",
+          "compliance_status": "compliant",
+          "category": "documentation"
+        },
+        {
+          "name": "workflow_inventory_manager.py",
+          "path": "tools/curate/documentation/workflow_inventory_manager.py",
+          "description": "Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md.",
+          "original_path": "new-creation",
+          "decision": "keep",
+          "header_style": "basic",
+          "last_updated": "2026-01-29T11:14:20.610263",
+          "compliance_status": "partial"
+        }
+      ],
+      "inventories": [],
+      "utilities": [],
+      "standalone": [],
+      "curate": [
+        {
+          "name": "manage_tool_inventory.py",
+          "path": "tools/curate/inventories/manage_tool_inventory.py",
+          "description": "Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.",
+          "header_style": "extended",
+          "last_updated": "2026-01-29T11:14:20.654524",
+          "compliance_status": "compliant",
+          "category": "curate"
+        }
+      ],
+      "investigate": [],
+      "curate/inventories": [],
+      "codify/documentation": [],
+      "Orchestrator": [
+        {
+          "name": "workflow_manager.py",
+          "path": "tools/orchestrator/workflow_manager.py",
+          "description": "Core logic for the 'Python Orchestrator' architecture (ADR-0030 v2/v3). Handles Git State checks, Context Alignment, Branch Creation & Naming, and Context Manifest Initialization. Acts as the single source of truth for 'Start Workflow' logic.",
+          "last_updated": "2026-01-31T08:47:10.159714",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "orchestrator": [
+        {
+          "name": "proof_check.py",
+          "path": "tools/orchestrator/proof_check.py",
+          "description": "TBD",
+          "last_updated": "2026-01-31T13:57:26.855955",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ]
+    }
+  },
+  "javascript": {
+    "tools": {
+      "xml_to_markdown": [],
+      "utilities": []
+    }
+  }
+}

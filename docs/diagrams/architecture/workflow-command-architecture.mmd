@@ -1,0 +1,49 @@
+---
+config:
+  theme: base
+---
+flowchart TB
+ subgraph Legend["Command Pattern Legend"]
+        direction LR
+        L1["investigate-* = Reusable Analysis Module"]
+        L2["codify-* = Documentation Output"]
+        L3["modernize-* = Code Generation Output"]
+  end
+ subgraph Shared["Shared Analysis Layer (Reusable)"]
+        direction LR
+        I_Form@{ label: "<b style='color:#1E90FF'>/investigate-form</b><br>Mining: Blocks, Triggers, UI, Nav, Security" }
+        I_Menu@{ label: "<b style='color:#1E90FF'>/investigate-menu</b><br>Mining: Hierarchy, Commands, Roles" }
+        I_Lib@{ label: "<b style='color:#1E90FF'>/investigate-library</b><br>Mining: API, Globals, External Calls" }
+        I_Report@{ label: "<b style='color:#1E90FF'>/investigate-report</b><br>Mining: SQL, Parameters, Triggers" }
+  end
+ subgraph Documentation["Documentation Workflows (Output: Overview.md)"]
+        direction TB
+        C_Form@{ label: "<b style='color:#32CD32'>/codify-form</b><br>1. init-context<br>2. /investigate-form<br>3. Fill Template" }
+        C_Menu@{ label: "<b style='color:#32CD32'>/codify-menu</b><br>1. init-context<br>2. /investigate-menu<br>3. Fill Template" }
+        C_Lib@{ label: "<b style='color:#32CD32'>/codify-library</b><br>1. init-context<br>2. /investigate-library<br>3. Fill Template" }
+        C_Report@{ label: "<b style='color:#32CD32'>/codify-report</b><br>1. init-context<br>2. /investigate-report<br>3. Fill Template" }
+  end
+ subgraph Modernization["Modernization Workflows (Output: React Code)"]
+        direction TB
+        M_Form@{ label: "<b style='color:#FFD700'>/modernize-form</b><br>1. init-context<br>2. /investigate-form<br>3. Generate React" }
+  end
+ subgraph Context["Context Initialization (Shared)"]
+        Init@{ label: "<b style='color:#1E90FF'>cli.py init-context</b><br>--target [ID] --type [TYPE]<br>(Resets Manifest, Builds Bundle)" }
+  end
+    Init --> C_Form & C_Menu & C_Lib & C_Report & M_Form
+    C_Form --> I_Form
+    C_Menu --> I_Menu
+    C_Lib --> I_Lib
+    C_Report --> I_Report
+    M_Form --> I_Form
+
+    style I_Form fill:#E6E6FA
+    style I_Menu fill:#E6E6FA
+    style I_Lib fill:#E6E6FA
+    style I_Report fill:#E6E6FA
+    style C_Form fill:#90EE90
+    style C_Menu fill:#90EE90
+    style C_Lib fill:#90EE90
+    style C_Report fill:#90EE90
+    style M_Form fill:#FFD700
+    style Init fill:#87CEEB

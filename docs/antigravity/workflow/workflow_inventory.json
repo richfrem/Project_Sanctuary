@@ -1,0 +1,151 @@
+{
+  "metadata": {
+    "generatedAt": "2026-01-31T19:34:26.859083",
+    "count": 14,
+    "source": ".agent/workflows"
+  },
+  "workflows": [
+    {
+      "name": "post-move-link-check",
+      "filename": "post-move-link-check.md",
+      "path": ".agent/workflows/post-move-link-check.md",
+      "description": "Run link checker after moving or renaming files/folders",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "recursive_learning",
+      "filename": "recursive_learning.md",
+      "path": ".agent/workflows/recursive_learning.md",
+      "description": "\"Standard operating procedure for Protocol 128 Hardened Learning Loop (Scout -> Synthesize -> Audit -> Seal -> Persist).\"",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "speckit-analyze",
+      "filename": "speckit-analyze.md",
+      "path": ".agent/workflows/speckit-analyze.md",
+      "description": "Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-checklist",
+      "filename": "speckit-checklist.md",
+      "path": ".agent/workflows/speckit-checklist.md",
+      "description": "Generate a custom checklist for the current feature based on user requirements.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-clarify",
+      "filename": "speckit-clarify.md",
+      "path": ".agent/workflows/speckit-clarify.md",
+      "description": "Identify underspecified areas in the current feature spec by asking up to 5 highly targeted clarification questions and encoding answers back into the spec.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-constitution",
+      "filename": "speckit-constitution.md",
+      "path": ".agent/workflows/speckit-constitution.md",
+      "description": "Create or update the project constitution from interactive or provided principle inputs, ensuring all dependent templates stay in sync.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-implement",
+      "filename": "speckit-implement.md",
+      "path": ".agent/workflows/speckit-implement.md",
+      "description": "Execute the implementation plan by processing and executing all tasks defined in tasks.md",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-plan",
+      "filename": "speckit-plan.md",
+      "path": ".agent/workflows/speckit-plan.md",
+      "description": "Execute the implementation planning workflow using the plan template to generate design artifacts.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-specify",
+      "filename": "speckit-specify.md",
+      "path": ".agent/workflows/speckit-specify.md",
+      "description": "Create or update the feature specification from a natural language feature description.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-tasks-to-issues",
+      "filename": "speckit-tasks-to-issues.md",
+      "path": ".agent/workflows/speckit-tasks-to-issues.md",
+      "description": "Convert existing tasks into actionable, dependency-ordered GitHub issues for the feature based on available design artifacts.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "speckit-tasks",
+      "filename": "speckit-tasks.md",
+      "path": ".agent/workflows/speckit-tasks.md",
+      "description": "Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.",
+      "inputs": [],
+      "tier": null,
+      "track": "Discovery",
+      "called_by": []
+    },
+    {
+      "name": "workflow-end",
+      "filename": "workflow-end.md",
+      "path": ".agent/workflows/workflow-end.md",
+      "description": "Standard post-flight closure for all codify/investigate workflows. Handles human review, git commit, PR verification, and cleanup.",
+      "inputs": [],
+      "tier": 1,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-retrospective",
+      "filename": "workflow-retrospective.md",
+      "path": ".agent/workflows/workflow-retrospective.md",
+      "description": "Mandatory self-retrospective and continuous improvement check after completing any codify workflow.",
+      "inputs": [],
+      "tier": 1,
+      "track": "Factory",
+      "called_by": [
+        "/workflow-end"
+      ]
+    },
+    {
+      "name": "workflow-start",
+      "filename": "workflow-start.md",
+      "path": ".agent/workflows/workflow-start.md",
+      "description": "Universal pre-flight and Spec initialization for all workflows. Determines work type and ensures Spec-Plan-Tasks exist.",
+      "inputs": [],
+      "tier": 1,
+      "track": "Factory",
+      "called_by": []
+    }
+  ]
+}

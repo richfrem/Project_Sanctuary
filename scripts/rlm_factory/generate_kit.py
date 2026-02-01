@@ -33,17 +33,21 @@ def generate_kit():
     
     # 2. Build the Header
     content = [
-        "# RLM Bootstrap Packet: The Reactive Ledger Memory Kit",
+        "# RLM Bootstrap Packet: The Cognitive Architecture Kit (RLM + RAG)",
         f"**Generated:** {datetime.now().isoformat()}",
         f"**Description:** {manifest.get('description', 'Auto-generated RLM Kit')}",
         "",
         "## 🚀 Instructions for the AI Agent",
-        "You are receiving a specialized architectural pattern called 'Reactive Ledger Memory' (RLM).",
-        "Your task is to implement this system in the current repository to give it 'Holographic Memory'.",
-        "1.  **Read the Blueprint:** Understand the theory in Section 1.",
-        "2.  **Install Dependencies:** `pip install requests genericpath python-dotenv` (plus `ollama` locally).",
-        "3.  **Adapt the Code:** The provided Python code is from 'Project Sanctuary'. Adapt paths/imports to fit THIS project's structure.",
-        "4.  **Initialize:** Run the distillation loop on the `docs/` folder first.",
+        "You are receiving a complete 'Cognitive Architecture' starter kit.",
+        "It contains two complimentary systems:",
+        "1.  **Semantic Ledger (RLM):** High-level summaries of every file (`operations.py`).",
+        "2.  **Vector Memory (RAG):** Deep retrieval of code chunks (`chroma_ingest.py`).",
+        "",
+        "**Action Plan:**",
+        "1.  **Install:** `pip install requests genericpath python-dotenv langchain-chroma langchain-huggingface`.",
+        "2.  **Digest:** Read `REACTIVE_LEDGER_MEMORY.md` (Theory) and `operations.py` (Logic).",
+        "3.  **Boot:** Run `python chroma_ingest.py ingest src/` to hydrate your vector memory.",
+        "4.  **Init:** Run the RLM distillation loop to build your semantic ledger.",
         "",
         "---",
         ""

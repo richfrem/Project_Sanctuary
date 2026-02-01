@@ -1,0 +1,32 @@
+flowchart TD
+    subgraph Input
+        Q[/"User Query"/]
+    end
+
+    subgraph Analysis
+        Q --> D{Query Type?}
+    end
+
+    subgraph Path1["Path 1: RLM Cache (O(1))"]
+        D -->|"Direct lookup<br/>'What does Protocol 128 do?'"| RLM[(RLM Cache<br/>JSON Ledger)]
+        RLM -->|Instant| S1[File Summary]
+    end
+
+    subgraph Path2["Path 2: Vector DB (Semantic)"]
+        D -->|"Semantic search<br/>'Find bail-related forms'"| VDB[(Chroma<br/>Vector DB)]
+        VDB -->|Similarity| S2[Ranked Chunks]
+    end
+
+    subgraph SuperRAG["Super-RAG: Context Injection"]
+        S2 --> INJ{Augment with<br/>RLM Summary?}
+        INJ -->|Yes| AUG["[CONTEXT: form purpose]<br/>+ chunk content"]
+    end
+
+    subgraph Output
+        S1 --> R[/"Agent Response"/]
+        AUG --> R
+    end
+
+    style RLM fill:#4CAF50,color:#fff
+    style VDB fill:#2196F3,color:#fff
+    style INJ fill:#FF9800,color:#fff

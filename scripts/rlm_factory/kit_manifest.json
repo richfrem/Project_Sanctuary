@@ -27,6 +27,30 @@
             "description": "The script to verify coverage of the semantic ledger."
         },
         {
+            "title": "ChromaDB Ingestor (The Vector Memory)",
+            "source_path": "scripts/rlm_factory/chroma_ingest.py",
+            "language": "python",
+            "description": "Standalone script for ingesting files into ChromaDB."
+        },
+        {
+            "title": "Code-to-MD Shim (AST Converter)",
+            "source_path": "mcp_servers/rag_cortex/ingest_code_shim.py",
+            "language": "python",
+            "description": "Smart converter that turns Python/JS code into RAG-optimized Markdown."
+        },
+        {
+            "title": "Reference: Cortex Operations (The Brain)",
+            "source_path": "mcp_servers/rag_cortex/operations.py",
+            "language": "python",
+            "description": "Deep logic for RAG coordination, HMAC checking, and ingestion."
+        },
+        {
+            "title": "Reference: Cortex Models (The Structure)",
+            "source_path": "mcp_servers/rag_cortex/models.py",
+            "language": "python",
+            "description": "Pydantic models defining the data structures for RAG."
+        },
+        {
             "title": "CLI Interface (The Driver)",
             "source_path": "scripts/cortex_cli.py",
             "language": "python",

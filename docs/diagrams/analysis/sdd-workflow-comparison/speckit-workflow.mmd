@@ -1,0 +1,32 @@
+graph TD
+    User([User])
+    Specify[/speckit-specify/]
+    Clarify[/speckit-clarify/]
+    Plan[/speckit-plan/]
+    Tasks[/speckit-tasks/]
+    Implement[/speckit-implement/]
+    
+    SpecArtifact[spec.md]
+    PlanArtifact[plan.md]
+    TaskArtifact[tasks.md]
+    Code[Code Changes]
+
+    User -->|Idea| Specify
+    Specify -->|Generates| SpecArtifact
+    
+    SpecArtifact --> Clarify
+    Clarify -->|Updates| SpecArtifact
+    
+    SpecArtifact --> Plan
+    Plan -->|Generates| PlanArtifact
+    
+    PlanArtifact --> Tasks
+    Tasks -->|Generates| TaskArtifact
+    
+    TaskArtifact --> Implement
+    Implement -->|Generates| Code
+
+    style Specify fill:#ADD8E6,stroke:#333
+    style Plan fill:#ADD8E6,stroke:#333
+    style Tasks fill:#ADD8E6,stroke:#333
+    style Implement fill:#ADD8E6,stroke:#333

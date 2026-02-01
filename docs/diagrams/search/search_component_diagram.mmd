@@ -1,0 +1,21 @@
+---
+config:
+  theme: base
+---
+flowchart TD
+    classDef node fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef python fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
+    classDef store fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+
+    Node["Node.js Orchestrator"]:::node
+    Sidecar["Python Sidecar Daemon"]:::python
+    RLM["RLM Memory"]
+    IPC["HTTP/2"]
+    DB[("ChromaDB<br/>(Vectors)")]:::store
+    FS[("Source Code<br/>(Files)")]:::store
+
+    Node -->|"Search Request"| IPC
+    IPC -->|"Localhost / Unix Socket"| Sidecar
+    Node -.->|"Direct Memory Access (mmap)"| RLM
+    Sidecar -->|"Semantic Query (Hot Model)"| DB
+    Sidecar -->|"Secure Deep Search (Ripgrep)"| FS

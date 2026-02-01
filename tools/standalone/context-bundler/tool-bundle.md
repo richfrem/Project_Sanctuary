@@ -1,0 +1,1411 @@
+# Context Bundler Tool
+**Generated:** 2026-01-31T20:06:59.645901
+
+A standalone utility to concatenate multiple source files into a single context bundle for LLM analysis.
+
+---
+
+## 📑 Table of Contents
+1. [tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md](#entry-1)
+2. [tools/ai-resources/prompts/Context_Bundler_System_Prompt.md](#entry-2)
+3. [tools/standalone/context-bundler/prompt.md](#entry-3)
+4. [tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md](#entry-4)
+5. [tools/standalone/context-bundler/README.md](#entry-5)
+6. [tools/standalone/context-bundler/INSTALL.md](#entry-6)
+7. [tools/standalone/context-bundler/TOOL_INVENTORY.md](#entry-7)
+8. [docs/tools/standalone/context-bundler/bundler-internal-logic.mmd](#entry-8)
+9. [docs/tools/standalone/context-bundler/setup-lifecycle-workflow.mmd](#entry-9)
+10. [docs/tools/standalone/context-bundler/agent-unpacking-process.mmd](#entry-10)
+11. [tools/retrieve/bundler/bundle.py](#entry-11)
+12. [tools/retrieve/bundler/manifest_manager.py](#entry-12)
+13. [tools/investigate/utils/path_resolver.py](#entry-13)
+14. [tools/standalone/context-bundler/file-manifest-schema.json](#entry-14)
+15. [.agent/workflows/curate-bundle.md](#entry-15)
+16. [.agent/workflows/retrieve-bundle.md](#entry-16)
+17. [docs/diagrams/workflows/curate-bundle.mmd](#entry-17)
+18. [docs/tools/standalone/context-bundler/architecture.md](#entry-18)
+19. [tools/standalone/context-bundler/base-manifests](#entry-19)
+
+---
+
+<a id='entry-1'></a>
+## 1. tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md (MISSING)
+> ❌ File not found: tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/base-manifests/tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md
+<a id='entry-2'></a>
+## 2. tools/ai-resources/prompts/Context_Bundler_System_Prompt.md (MISSING)
+> ❌ File not found: tools/ai-resources/prompts/Context_Bundler_System_Prompt.md
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/ai-resources/prompts/Context_Bundler_System_Prompt.md
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/base-manifests/tools/ai-resources/prompts/Context_Bundler_System_Prompt.md
+<a id='entry-3'></a>
+## 3. tools/standalone/context-bundler/prompt.md (MISSING)
+> ❌ File not found: tools/standalone/context-bundler/prompt.md
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/prompt.md
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/base-manifests/tools/standalone/context-bundler/prompt.md
+<a id='entry-4'></a>
+
+---
+
+## File: tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md
+**Path:** `tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md`
+**Note:** CRITICAL: How to use this bundle
+
+```markdown
+# 📦 Bundle Unpacking Protocol
+
+> **🛑 STOP & READ**: Use this protocol to hydrate the tools in this bundle.
+
+## Extraction Logic
+1.  **Scan** this document for sections marked with **Path:** metadata (e.g., `**Path:** scripts/run.py`).
+2.  **Extract** the code block content immediately following the metadata.
+3.  **Write** the content to the specified path (relative to your chosen root directory).
+    *   *Create parent directories if they don't exist.*
+
+## Reference
+*   See **[`INSTALL.md`](#file-2)** for the recommended directory structure.
+*   See **[`agent-unpacking-process.mmd`](#file-7)** for a visual flowchart of this process.
+
+```
+<a id='entry-5'></a>
+
+---
+
+## File: tools/standalone/context-bundler/README.md
+**Path:** `tools/standalone/context-bundler/README.md`
+**Note:** Documentation and Usage Guide
+
+```markdown
+# Context Bundler Tool 📦
+
+## Overview
+A standalone utility to bundle source files and documentation into a single Markdown "Context Bundle" for LLM analysis. This self-contained package is design for seamless integration with AI-powered development environments.
+
+For installation instructions (unlocking this bundle), see **[INSTALL.md](INSTALL.md)**.
+
+## 🚀 Capabilities
+19.  **Initialize**: Generate a fresh manifest (Supports Task-Specific or Generic).
+10. **Manage**: Add, Remove, or Update file entries.
+11. **Bundle**: Compile everything into a single Markdown artifact.
+
+## ⚠️ Prerequisites
+*   **Python**: 3.8+
+*   **Directory Structure**: 
+    *   **Bundler**: `tools/retrieve/bundler/` (Contains `manifest_manager.py`, `bundle.py`)
+    *   **Utils**: `tools/investigate/utils/` (Contains `path_resolver.py`)
+
+> **🤖 Agent / LLM Note**: 
+> The paths referenced in this `README.md` (e.g., `tools/retrieve/bundler/...`) are **example paths** based on the source repository structure. 
+> 
+> **Action Required**: When you (the LLM) unpack or use this tool in a new environment:
+> 1.  Identify where you saved the files (e.g., `my_tools/context-bundler/`).
+> 2.  **Update the paths** in your planned commands to match that actual location.
+> 3.  Do not blindly run the example commands if your directory structure differs.
+
+## Usage
+
+### 1. Initialize a Bundle
+Create a new manifest for a target artifact.
+```bash
+python tools/retrieve/bundler/manifest_manager.py init --target [ID] --type [form|generic]
+```
+> **Note**: For `generic` bundles, you **MUST** update the `prompt.md` note to define the analysis goal.
+
+### 2. Add / Remove Files
+Manage the file list.
+```bash
+# Add file
+python tools/retrieve/bundler/manifest_manager.py add --path [path/to/file] --note "Context"
+
+# Remove file
+python tools/retrieve/bundler/manifest_manager.py remove --path [path/to/file]
+```
+
+### 3. Update Existing Entries
+Modify notes or paths.
+```bash
+python tools/retrieve/bundler/manifest_manager.py update --path [path/to/file] --note "Updated Note"
+```
+
+
+### 4. Manage Base Manifests (Template Management)
+You can query, add, or update the **Base Manifests** (templates) themselves by passing the `--base` flag.
+```bash
+# List contents of the 'form' base manifest
+python tools/retrieve/bundler/manifest_manager.py list --base form
+
+# Add a standard file to the 'form' template
+python tools/retrieve/bundler/manifest_manager.py add --base form --path "docs/standard_form_checklist.md" --note "Standard Checklist"
+```
+
+### 5. Tool Distribution (Self-Bundling)
+You can bundle this tool itself to share with other agents.
+```bash
+# 1. Initialize from Base Manifest (Standardized)
+python tools/retrieve/bundler/manifest_manager.py init --target ContextBundler --type context-bundler
+
+# 2. Bundle 
+python tools/retrieve/bundler/manifest_manager.py bundle --output tool-bundle.md
+```
+
+## 📚 Included Workflows
+This bundle includes standard operating procedures for context management:
+*   **Curate Bundle**: `workflow: .agent/workflows/curate-bundle.md` (Visual: `docs/diagrams/workflows/curate-bundle.mmd`)
+*   **Retrieve Bundle**: `workflow: .agent/workflows/retrieve-bundle.md`
+
+## Architecture
+See `docs/tools/standalone/context-bundler/architecture.mmd` for internal logic diagrams.
+
+```
+<a id='entry-6'></a>
+
+---
+
+## File: tools/standalone/context-bundler/INSTALL.md
+**Path:** `tools/standalone/context-bundler/INSTALL.md`
+**Note:** Installation and Unpacking Instructions
+
+```markdown
+# Installation & Unpacking Guide 📂
+
+This guide explains how to restore the "Context Bundler" tool from its Markdown distribution bundle into a working directory structure.
+
+## 1. Directory Structure
+
+For optimal usage by an Agent/LLM or in a clean environment, unpack the files into the following standard directory structure:
+
+```text
+<your_tool_root>/
+├── context-bundler/       # Tool Specific Logic
+│   ├── bundle.py          # Core Bundling Engine
+│   ├── manifest_manager.py # CLI Entry Point
+│   ├── file-manifest-schema.json
+│   ├── prompt.md
+│   ├── README.md
+│   └── diagrams/          # Architecture & Flow
+│       ├── bundler-internal-logic.mmd
+│       ├── setup-lifecycle-workflow.mmd
+│       └── agent-unpacking-process.mmd
+└── utils/                 # Shared Utilities
+    └── path_resolver.py   # Path Resolution Helper
+```
+
+## 2. Configuration: Post-Unpack
+
+If you deploy to the structure above (or any structure different from the original source repo), you **MUST** ensure Python imports resolve correctly.
+
+### Linking Utilities
+The `manifest_manager.py` script imports `path_resolver` from a utility folder. 
+If `utils/` is a sibling directory (as shown above):
+
+1.  **Option A (Env Var)**: Ensure the parent folder (`antigravity-toolkit/`) is in `PYTHONPATH`.
+    ```bash
+    export PYTHONPATH=$PYTHONPATH:/path/to/antigravity-toolkit
+    ```
+
+2.  **Option B (Code Edit)**: Adjust the import in `manifest_manager.py`:
+    ```python
+    # Change:
+    from tools.investigate.utils.path_resolver import ...
+    
+    # To:
+    from utils.path_resolver import ...
+    ```
+
+## 4. Localization (Agent / LLM Task) 🤖
+
+**Context**: You (the Agent) have just unpacked this tool into a new location.
+**Action**: You must now "localize" the documentation to match your environment.
+
+1.  **Read the `README.md`**: Identify the example paths (e.g., `tools/retrieve/bundler/`).
+2.  **Rewrite `README.md`**: Search and replace the example paths with the **actual absolute or relative paths** where you just saved the files.
+    *   *Example*: Replace `tools/retrieve/bundler/` with `antigravity-toolkit/context-bundler/`.
+3.  **Verify Scripts**: Check that `manifest_manager.py` can find `path_resolver.py`. If you changed the folder structure, update the import lines in the python files directly.
+
+> **Why?** This ensures that if you (or another agent) reads the README later, the copy-paste commands will actually work!
+
+```
+<a id='entry-7'></a>
+
+---
+
+## File: tools/standalone/context-bundler/TOOL_INVENTORY.md
+**Path:** `tools/standalone/context-bundler/TOOL_INVENTORY.md`
+**Note:** Bundle-Specific Tool Inventory
+
+```markdown
+# Tool Inventory
+
+> **Auto-generated:** 2026-01-25 09:54
+> **Source:** [`tool_inventory.json`](tool_inventory.json)
+> **Regenerate:** `python tools/curate/inventories/manage_tool_inventory.py generate --inventory tool_inventory.json`
+
+---
+
+## 📦 Bundler
+
+| Script | Description |
+| :--- | :--- |
+| [`bundle.py`](tools/retrieve/bundler/bundle.py) | Core Logic: Concatenates manifest files into a single Markdown artifact. |
+| [`manifest_manager.py`](tools/retrieve/bundler/manifest_manager.py) | CLI Entry Point: Handles initialization, modification, and bundling triggers. |
+| [`path_resolver.py`](tools/investigate/utils/path_resolver.py) | Utility: Handles cross-platform path resolution for the toolchain. |
+
+```
+<a id='entry-8'></a>
+
+---
+
+## File: docs/tools/standalone/context-bundler/bundler-internal-logic.mmd
+**Path:** `docs/tools/standalone/context-bundler/bundler-internal-logic.mmd`
+**Note:** Architecture Diagram (Internal Logic)
+
+```mermaid
+flowchart TD
+    subgraph Input [Input: Distribution Folder]
+        M(tool-manifest.json)
+        MD(README.md)
+        IM(INSTALL.md)
+        PM(prompt.md)
+        DIAG(Diagrams Folder)
+    end
+
+    subgraph Logic [Tool Logic]
+        CLI[manifest_manager.py]
+        Script[bundle.py]
+    end
+
+    subgraph Remote [Remote Source]
+        SRC(Source Code Files)
+    end
+
+    subgraph Output [Output Artifacts]
+        Bundle(tool-bundle.md)
+    end
+
+    M -->|Arg: --manifest| CLI
+    CLI -->|"Calls bundle()"| Script
+    Script -->|Resolves Paths| SRC
+    Script -->|Reads| MD
+    Script -->|Reads| IM
+    Script -->|Reads| PM
+    Script -->|Reads| DIAG
+    SRC -->|Concatenates| Bundle
+    MD -->|Concatenates| Bundle
+    IM -->|Concatenates| Bundle
+    PM -->|Concatenates| Bundle
+    DIAG -->|Concatenates| Bundle
+
+```
+<a id='entry-9'></a>
+
+---
+
+## File: docs/tools/standalone/context-bundler/setup-lifecycle-workflow.mmd
+**Path:** `docs/tools/standalone/context-bundler/setup-lifecycle-workflow.mmd`
+**Note:** User Workflow Diagram (Lifecycle)
+
+```mermaid
+flowchart TD
+    %% Nodes
+    Start([Tool Ready])
+    
+    subgraph Setup [1. Configuration Phase]
+        Init[Init Manifest]
+        CMD_Init[/"python manifest_manager.py init --target X --manifest m.json"/]
+        Manifest[(m.json)]
+    end
+    
+    subgraph Curation [2. Curation Phase]
+        Add[Add Files]
+        CMD_Add[/"python manifest_manager.py add --path P --manifest m.json"/]
+        
+        List[Review Manifest]
+        CMD_List[/"python manifest_manager.py list --manifest m.json"/]
+        
+        Search[Search Manifest]
+        CMD_Search[/"python manifest_manager.py search 'pattern' --manifest m.json"/]
+    end
+    
+    subgraph Execution [3. Execution Phase]
+        Bundle[Generate Bundle]
+        CMD_Bundle[/"python manifest_manager.py bundle --output o.md --manifest m.json"/]
+        Output([o.md])
+    end
+
+    %% Flow
+    Start --> Init
+    Init --> CMD_Init
+    CMD_Init --> Manifest
+    
+    Manifest --> Add
+    Add --> CMD_Add
+    CMD_Add --> Manifest
+    
+    Manifest --> List
+    List --> CMD_List
+    CMD_List --> Manifest
+    
+    Manifest --> Search
+    Search --> CMD_Search
+    CMD_Search --> Manifest
+    
+    Manifest --> Bundle
+    Bundle --> CMD_Bundle
+    CMD_Bundle --> Output
+
+```
+<a id='entry-10'></a>
+
+---
+
+## File: docs/tools/standalone/context-bundler/agent-unpacking-process.mmd
+**Path:** `docs/tools/standalone/context-bundler/agent-unpacking-process.mmd`
+**Note:** Agent Unpacking Flow Diagram
+
+```mermaid
+flowchart TD
+    subgraph Received [Input Artifact]
+        Bundle(tool-bundle.md)
+    end
+
+    subgraph Hydration [Agent Actions]
+        Parse{Parse Markdown}
+        Split(Identify Files & Paths)
+        Mkdir(Create Directories)
+        Write(Write File Content)
+    end
+    
+    subgraph Localization [Environment Adaptation]
+        Detect[Detect Local Root]
+        UpdateMD[Update README.md Paths]
+        UpdatePy[Update Python Imports]
+    end
+
+    subgraph Ready [Working Tool]
+        Tool[Target Tool Directory]
+    end
+
+    Bundle --> Parse
+    Parse -->|Regex/Split| Split
+    Split --> Mkdir
+    Mkdir --> Write
+    Write --> Detect
+    
+    Detect --> UpdateMD
+    Detect --> UpdatePy
+    
+    UpdateMD --> Tool
+    UpdatePy --> Tool
+
+```
+<a id='entry-11'></a>
+
+---
+
+## File: tools/retrieve/bundler/bundle.py
+**Path:** `tools/retrieve/bundler/bundle.py`
+**Note:** Core Bundling Logic
+
+```python
+#!/usr/bin/env python3
+"""
+bundle.py (CLI)
+=====================================
+
+Purpose:
+    Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest.
+
+Layer: Curate / Bundler
+
+Usage Examples:
+    python tools/retrieve/bundler/bundle.py --help
+
+Supported Object Types:
+    - Generic
+
+CLI Arguments:
+    manifest        : Path to file-manifest.json
+    -o              : Output markdown file path
+
+Input Files:
+    - (See code)
+
+Output:
+    - (See code)
+
+Key Functions:
+    - write_file_content(): Helper to write a single file's content to the markdown output.
+    - bundle_files(): Bundles files specified in a JSON manifest into a single Markdown file.
+
+Script Dependencies:
+    (None detected)
+
+Consumed by:
+    (Unknown)
+"""
+import json
+import os
+import argparse
+import datetime
+import sys
+from pathlib import Path
+from typing import Optional
+
+# Ensure we can import the path resolver from project root
+current_dir = Path(__file__).parent.resolve()
+project_root = current_dir.parent.parent.parent.resolve()
+if str(project_root) not in sys.path:
+    sys.path.append(str(project_root))
+
+print(f"DEBUG: Bundler initialized. Project Root: {project_root}")
+
+try:
+    from tools.investigate.utils.path_resolver import resolve_path
+except ImportError:
+    # Fallback to local logic if running standalone without project context
+    def resolve_path(path_str: str) -> Path:
+        p = Path(path_str)
+        if p.exists(): return p.resolve()
+        # Try project root relative
+        p_root = project_root / path_str
+        if p_root.exists(): return p_root.resolve()
+        # Try relative to cwd
+        return Path(os.path.abspath(path_str))
+
+def write_file_content(out, path: Path, rel_path: str, note: str = ""):
+    """Helper to write a single file's content to the markdown output."""
+    out.write(f"\n---\n\n")
+    out.write(f"## File: {rel_path}\n")
+    out.write(f"**Path:** `{rel_path}`\n")
+    if note:
+        out.write(f"**Note:** {note}\n")
+    out.write("\n")
+
+    try:
+        ext = path.suffix.lower().replace('.', '')
+        # Map common extensions to markdown languages
+        lang_map = {
+            'js': 'javascript', 'ts': 'typescript', 'py': 'python', 
+            'md': 'markdown', 'json': 'json', 'yml': 'yaml', 'html': 'html',
+            'mmd': 'mermaid', 'css': 'css', 'sql': 'sql', 'xml': 'xml',
+            'txt': 'text', 'ps1': 'powershell', 'sh': 'bash',
+            'pks': 'sql', 'pkb': 'sql', 'pkg': 'sql', 'in': 'text'
+        }
+        lang = lang_map.get(ext, '')
+
+        # Define textual extensions that can be read as utf-8
+        text_extensions = set(lang_map.keys())
+        
+        if ext in text_extensions or not ext:
+            with open(path, 'r', encoding='utf-8', errors='replace') as source_file:
+                content = source_file.read()
+                
+            out.write(f"```{lang}\n")
+            out.write(content)
+            out.write("\n```\n")
+        else:
+            out.write(f"> ⚠️ Binary or unknown file type ({ext}). Content skipped.\n")
+    except Exception as e:
+        out.write(f"> ⚠️ Error reading file: {e}\n")
+
+def bundle_files(manifest_path: str, output_path: str) -> None:
+    """
+    Bundles files specified in a JSON manifest into a single Markdown file.
+
+    Args:
+        manifest_path (str): Path to the input JSON manifest.
+        output_path (str): Path to write the output markdown bundle.
+    
+    Raises:
+        FileNotFoundError: If manifest doesn't exist.
+        json.JSONDecodeError: If manifest is invalid.
+    """
+    manifest_abs_path = os.path.abspath(manifest_path)
+    base_dir = os.path.dirname(manifest_abs_path)
+    
+    try:
+        with open(manifest_abs_path, 'r', encoding='utf-8') as f:
+            manifest = json.load(f)
+    except Exception as e:
+        print(f"Error reading manifest: {e}")
+        return
+
+    # Extract metadata
+    # Prefer 'title', fall back to 'name' or 'tool_name' or Default
+    title = manifest.get('title') or manifest.get('name') or manifest.get('tool_name') or 'Context Bundle'
+    description = manifest.get('description', '')
+    files = manifest.get('files', [])
+
+    print(f"📦 Bundling '{title}'...")
+
+    with open(output_path, 'w', encoding='utf-8') as out:
+        # Header
+        out.write(f"# {title}\n")
+        out.write(f"**Generated:** {datetime.datetime.now().isoformat()}\n")
+        if description:
+            out.write(f"\n{description}\n")
+        out.write("\n---\n\n")
+
+        # Table of Contents
+        out.write("## 📑 Table of Contents\n")
+        
+        # We need to collect valid items first to generate TOC correctly if we expand dirs
+        # But expansion happens during processing. 
+        # For simplicity in this version, TOC will list the Manifest Entries, mentioning recursion if applicable.
+        for i, item in enumerate(files, 1):
+            path_str = item.get('path', 'Unknown')
+            note = item.get('note', '')
+            out.write(f"{i}. [{path_str}](#entry-{i})\n")
+        out.write("\n---\n\n")
+
+        # Content Loop
+        for i, item in enumerate(files, 1):
+            rel_path = item.get('path')
+            note = item.get('note', '')
+            
+            out.write(f"<a id='entry-{i}'></a>\n")
+            
+            # Resolve path
+            found_path = None
+            
+            # Try PathResolver
+            try:
+                candidate_str = resolve_path(rel_path)
+                candidate = Path(candidate_str)
+                if candidate.exists():
+                    found_path = candidate
+            except Exception:
+                pass
+
+            # Try Relative to Manifest
+            if not found_path:
+                candidate = Path(base_dir) / rel_path
+                if candidate.exists():
+                    found_path = candidate
+            
+            # Use relative path if found (or keep original string)
+            display_path = str(found_path.relative_to(project_root)).replace('\\', '/') if found_path else rel_path
+
+            if found_path and found_path.exists():
+                if found_path.is_dir():
+                    # RECURSIVE DIRECTORY PROCESSING
+                    out.write(f"### Directory: {display_path}\n")
+                    if note:
+                        out.write(f"**Note:** {note}\n")
+                    out.write(f"> 📂 Expanding contents of `{display_path}`...\n")
+                    
+                    # Walk directory
+                    for root, dirs, filenames in os.walk(found_path):
+                        # Filter hidden dirs (like .git, __pycache__, node_modules)
+                        dirs[:] = [d for d in dirs if not d.startswith('.') and d != 'node_modules' and d != '__pycache__']
+                        
+                        for filename in filenames:
+                            file_full_path = Path(root) / filename
+                            # Calculate relative path from project root for display
+                            try:
+                                file_rel_path = str(file_full_path.relative_to(project_root)).replace('\\', '/')
+                            except ValueError:
+                                file_rel_path = str(file_full_path)
+                                
+                            write_file_content(out, file_full_path, file_rel_path, note="(Expanded from directory)")
+                else:
+                    # SINGLE FILE PROCESSING
+                    write_file_content(out, found_path, display_path, note)
+            else:
+                out.write(f"## {i}. {rel_path} (MISSING)\n")
+                out.write(f"> ❌ File not found: {rel_path}\n")
+                # Debug info
+                try:
+                    debug_resolve = resolve_path(rel_path)
+                    out.write(f"> Debug: ResolvePath tried: {debug_resolve}\n")
+                except:
+                    pass
+                try:
+                    out.write(f"> Debug: BaseDir tried: {Path(base_dir) / rel_path}\n")
+                except:
+                    pass
+
+    print(f"✅ Bundle created at: {output_path}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Context Bundler')
+    parser.add_argument('manifest', help='Path to file-manifest.json')
+    parser.add_argument('-o', '--output', help='Output markdown file path', default='bundle.md')
+    
+    args = parser.parse_args()
+    bundle_files(args.manifest, args.output)
+
+```
+<a id='entry-12'></a>
+
+---
+
+## File: tools/retrieve/bundler/manifest_manager.py
+**Path:** `tools/retrieve/bundler/manifest_manager.py`
+**Note:** Source Code: Manifest Manager
+
+```python
+#!/usr/bin/env python3
+"""
+manifest_manager.py (CLI)
+=====================================
+
+Purpose:
+    Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler.
+
+Layer: Curate / Bundler
+
+Usage Examples:
+    python tools/retrieve/bundler/manifest_manager.py --help
+
+Supported Object Types:
+    - Generic
+
+CLI Arguments:
+    --manifest      : Custom path to manifest file (optional)
+    --base          : Target a Base Manifest Type (e.g. tool, docs)
+    --bundle-title  : Title for the bundle
+    --type          : Artifact Type (e.g. tool, docs)
+    --path          : Relative or absolute path
+    --note          : Note for the file
+    --path          : Path to remove
+    --path          : Path to update
+    --note          : New note
+    --new-path      : New path
+    pattern         : Search pattern
+    --output        : Output file path (optional)
+
+Input Files:
+    - (See code)
+
+Output:
+    - (See code)
+
+Key Functions:
+    - add_file(): Adds a file entry to the manifest if it doesn't already exist.
+    - bundle(): Executes the bundling process using the current manifest.
+    - get_base_manifest_path(): Resolves base manifest path using index or fallback.
+    - init_manifest(): Bootstraps a new manifest file from a base template.
+    - list_manifest(): Lists all files currently in the manifest.
+    - load_manifest(): Loads the manifest JSON file.
+    - remove_file(): Removes a file entry from the manifest.
+    - save_manifest(): Saves the manifest dictionary to a JSON file.
+    - search_files(): Searches for files in the manifest matching a pattern.
+    - update_file(): No description.
+
+Script Dependencies:
+    (None detected)
+
+Consumed by:
+    (Unknown)
+"""
+import os
+import json
+import argparse
+import sys
+from pathlib import Path
+from typing import Dict, Any, Optional
+
+# Ensure tools module can be imported for PathResolver
+current_dir = Path(__file__).parent.resolve()
+project_root = current_dir.parent.parent.parent.resolve()
+if str(project_root) not in sys.path:
+    sys.path.append(str(project_root))
+
+# Try imports
+try:
+    from tools.investigate.utils.path_resolver import resolve_root, resolve_path
+    from tools.retrieve.bundler.bundle import bundle_files
+except ImportError:
+    # Use relative import for bundle if package structure allows, else fail
+    sys.path.append(str(current_dir))
+    from bundle import bundle_files
+    # Fallback/Shim if PathResolver missing
+    resolve_root = lambda: str(project_root)
+    resolve_path = lambda p: str(project_root / p)
+
+# Resolve Directories
+MANIFEST_DIR = Path(resolve_root()) / "tools" / "standalone" / "context-bundler"
+MANIFEST_PATH = MANIFEST_DIR / "file-manifest.json"
+BASE_MANIFESTS_DIR = Path(resolve_root()) / "tools" / "standalone" / "context-bundler" / "base-manifests"
+PROJECT_ROOT = Path(resolve_root())
+
+# Ensure tools module can be imported for legacy miners
+sys.path.append(str(Path(__file__).parent))
+try:
+    from xml_miner import mine_declarative_rules, find_xml_file
+except ImportError:
+    pass
+
+MANIFEST_INDEX_PATH = MANIFEST_DIR / "base-manifests-index.json"
+
+# =====================================================
+# Function definitions
+# =====================================================
+
+def add_file(path: str, note: str, manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> None:
+    """
+    Adds a file entry to the manifest if it doesn't already exist.
+
+    Args:
+        path: Relative or absolute path to the file.
+        note: Description or note for the file.
+        manifest_path: Optional custom path to the manifest.
+        base_type: If provided, adds to a base manifest template.
+    """
+    manifest = load_manifest(manifest_path, base_type)
+    if base_type:
+        target_path = get_base_manifest_path(base_type)
+    else:
+        target_path = Path(manifest_path) if manifest_path else MANIFEST_PATH
+    manifest_dir = target_path.parent
+    
+    # Standardize path: relative to manifest_dir and use forward slashes
+    if os.path.isabs(path):
+        try:
+            path = os.path.relpath(path, manifest_dir)
+        except ValueError:
+            pass
+    
+    # Replace backslashes with forward slashes for cross-platform consistency in manifest
+    path = path.replace('\\', '/')
+    while "//" in path:
+        path = path.replace("//", "/")
+
+    # Check for duplicate
+    for f in manifest["files"]:
+        existing = f["path"].replace('\\', '/')
+        if existing == path:
+            print(f"⚠️  File already in manifest: {path}")
+            return
+
+    manifest["files"].append({"path": path, "note": note})
+    save_manifest(manifest, manifest_path, base_type)
+    print(f"✅ Added to manifest: {path}")
+
+def bundle(output_file: Optional[str] = None, manifest_path: Optional[str] = None) -> None:
+    """
+    Executes the bundling process using the current manifest.
+    
+    Args:
+        output_file (Optional[str]): Path to save the bundle. Defaults to temp/context-bundles/[title].md
+        manifest_path (Optional[str]): Custom manifest path. Defaults to local file-manifest.json.
+    """
+    target_manifest = manifest_path if manifest_path else str(MANIFEST_PATH)
+    
+    if not output_file:
+        # Load manifest to get title for default output
+        # (This implies strictly loading valid JSON at target path)
+        try:
+             with open(target_manifest, "r") as f:
+                data = json.load(f)
+                title = data.get("title", "context").lower().replace(" ", "_")
+        except Exception:
+             title = "bundle"
+             
+        bundle_out_dir = PROJECT_ROOT / "temp" / "context-bundles"
+        bundle_out_dir.mkdir(parents=True, exist_ok=True)
+        output_file = str(bundle_out_dir / f"{title}.md")
+
+    print(f"🚀 Running bundle process to {output_file} using {target_manifest}...")
+    try:
+        # Direct Python Call
+        bundle_files(target_manifest, str(output_file)) 
+    except Exception as e:
+        print(f"❌ Bundling failed: {e}")
+
+def get_base_manifest_path(artifact_type):
+    """Resolves base manifest path using index or fallback."""
+    if MANIFEST_INDEX_PATH.exists():
+        try:
+            with open(MANIFEST_INDEX_PATH, "r", encoding="utf-8") as f:
+                index = json.load(f)
+            filename = index.get(artifact_type)
+            if filename:
+                return BASE_MANIFESTS_DIR / filename
+        except Exception as e:
+            print(f"⚠️ Error reading manifest index: {e}")
+    
+    # Fallback to standard naming convention
+    return BASE_MANIFESTS_DIR / f"base-{artifact_type}-file-manifest.json"
+
+def init_manifest(bundle_title: str, artifact_type: str, manifest_path: Optional[str] = None) -> None:
+    """
+    Bootstraps a new manifest file from a base template.
+
+    Args:
+        bundle_title: The title for the bundle.
+        artifact_type: The type of artifact (e.g., 'form', 'lib').
+        manifest_path: Optional custom path for the new manifest.
+    """
+    base_file = get_base_manifest_path(artifact_type)
+    if not base_file.exists():
+        print(f"❌ Error: Base manifest for type '{artifact_type}' not found at {base_file}")
+        return
+
+    with open(base_file, "r", encoding="utf-8") as f:
+        manifest = json.load(f)
+
+    manifest["title"] = f"{bundle_title} Context Bundle"
+    manifest["description"] = f"Auto-generated context for {bundle_title} (Type: {artifact_type})"
+    
+    # Substitute [TARGET] placeholder in file paths
+    target_lower = bundle_title.lower()
+    target_upper = bundle_title.upper()
+    if "files" in manifest:
+        for file_entry in manifest["files"]:
+            if "path" in file_entry:
+                # Replace [TARGET] with actual target (case-preserving)
+                file_entry["path"] = file_entry["path"].replace("[TARGET]", target_lower)
+                file_entry["path"] = file_entry["path"].replace("[target]", target_lower)
+            if "note" in file_entry:
+                file_entry["note"] = file_entry["note"].replace("[TARGET]", target_upper)
+                file_entry["note"] = file_entry["note"].replace("[target]", target_lower)
+    
+    save_manifest(manifest, manifest_path)
+    print(f"✅ Manifest initialized for {bundle_title} ({artifact_type}) at {manifest_path if manifest_path else MANIFEST_PATH}")
+
+def list_manifest(manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> None:
+    """
+    Lists all files currently in the manifest.
+
+    Args:
+        manifest_path: Optional custom path to the manifest.
+        base_type: If provided, lists files from a base manifest template.
+    """
+    manifest = load_manifest(manifest_path, base_type)
+    print(f"📋 Current Manifest: {manifest['title']}")
+    for i, f in enumerate(manifest["files"], 1):
+        print(f"  {i}. {f['path']} - {f.get('note', '')}")
+
+def load_manifest(manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Loads the manifest JSON file.
+
+    Args:
+        manifest_path: Optional custom path to the manifest file. 
+                       Defaults to tools/standalone/context-bundler/file-manifest.json.
+        base_type: If provided, loads a base manifest template instead of a specific manifest file.
+
+    Returns:
+        Dict[str, Any]: The manifest content as a dictionary. 
+                        Returns a default empty structure if file not found.
+    """
+    if base_type:
+        target_path = get_base_manifest_path(base_type)
+    else:
+        target_path = Path(manifest_path) if manifest_path else MANIFEST_PATH
+        
+    if not target_path.exists():
+        return {"title": "Default Bundle", "description": "Auto-generated", "files": []}
+    with open(target_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def remove_file(path: str, manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> None:
+    """
+    Removes a file entry from the manifest.
+
+    Args:
+        path: The path to the file to remove.
+        manifest_path: Optional custom path to the manifest.
+        base_type: If provided, removes from a base manifest template.
+    """
+    manifest = load_manifest(manifest_path, base_type)
+    
+    # Determine manifest directory for relative path resolution
+    if base_type:
+        target_path = get_base_manifest_path(base_type)
+    else:
+        target_path = Path(manifest_path) if manifest_path else MANIFEST_PATH
+    manifest_dir = target_path.parent
+
+    # Standardize path: relative to manifest_dir and use forward slashes
+    if os.path.isabs(path):
+        try:
+            path = os.path.relpath(path, manifest_dir)
+        except ValueError:
+            pass
+    
+    # Replace backslashes with forward slashes for cross-platform consistency
+    path = path.replace('\\', '/')
+    while "//" in path:
+        path = path.replace("//", "/")
+
+    # Filter out the file
+    initial_count = len(manifest["files"])
+    manifest["files"] = [f for f in manifest["files"] if f["path"] != path]
+    
+    if len(manifest["files"]) < initial_count:
+        save_manifest(manifest, manifest_path, base_type)
+        print(f"✅ Removed from manifest: {path}")
+    else:
+        print(f"⚠️  File not found in manifest: {path}")
+
+def save_manifest(manifest: Dict[str, Any], manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> None:
+    """
+    Saves the manifest dictionary to a JSON file.
+
+    Args:
+        manifest: The dictionary content to save.
+        manifest_path: Optional custom destination path. 
+                       Defaults to tools/standalone/context-bundler/file-manifest.json.
+        base_type: If provided, saves to a base manifest template path.
+    """
+    if base_type:
+        target_path = get_base_manifest_path(base_type)
+    else:
+        target_path = Path(manifest_path) if manifest_path else MANIFEST_PATH
+        
+    manifest_dir = target_path.parent
+    if not manifest_dir.exists():
+        os.makedirs(manifest_dir, exist_ok=True)
+    with open(target_path, "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+
+def search_files(pattern: str, manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> None:
+    """
+    Searches for files in the manifest matching a pattern.
+
+    Args:
+        pattern: The search string (case-insensitive substring match).
+        manifest_path: Optional custom path to the manifest.
+        base_type: If provided, searches within a base manifest template.
+    """
+    manifest = load_manifest(manifest_path, base_type)
+    matches = [f for f in manifest["files"] if pattern.lower() in f["path"].lower() or pattern.lower() in f.get("note", "").lower()]
+    
+    if matches:
+        print(f"🔍 Found {len(matches)} matches in manifest:")
+        for m in matches:
+            print(f"  - {m['path']} ({m.get('note', '')})")
+    else:
+        print(f"❓ No matches for '{pattern}' in manifest.")
+
+def update_file(path, note=None, new_path=None, manifest_path=None, base_type=None):
+    manifest = load_manifest(manifest_path, base_type)
+    if base_type:
+        target_path = get_base_manifest_path(base_type)
+    else:
+        target_path = Path(manifest_path) if manifest_path else MANIFEST_PATH
+    manifest_dir = target_path.parent
+
+    # Standardize lookup path
+    if os.path.isabs(path):
+        try:
+             path = os.path.relpath(path, manifest_dir)
+        except ValueError:
+             pass
+    path = path.replace('\\', '/')
+    while "//" in path:
+        path = path.replace("//", "/")
+
+    found = False
+    for f in manifest["files"]:
+        if f["path"] == path:
+            found = True
+            if note is not None:
+                 f["note"] = note
+            if new_path:
+                 # Standardize new path
+                 np = new_path
+                 if os.path.isabs(np):
+                     try:
+                         np = os.path.relpath(np, manifest_dir)
+                     except ValueError:
+                         pass
+                 np = np.replace('\\', '/')
+                 while "//" in np:
+                     np = np.replace("//", "/")
+                 f["path"] = np
+            break
+    
+    if found:
+        save_manifest(manifest, manifest_path, base_type)
+        print(f"✅ Updated in manifest: {path}")
+    else:
+        print(f"⚠️  File not found in manifest: {path}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Manifest Manager CLI")
+    parser.add_argument("--manifest", help="Custom path to manifest file (optional)")
+    parser.add_argument("--base", help="Target a Base Manifest Type (e.g. tool, docs)")
+    
+    subparsers = parser.add_subparsers(dest="action")
+
+    # init
+    init_parser = subparsers.add_parser("init", help="Initialize manifest from base")
+    init_parser.add_argument("--bundle-title", required=True, help="Title for the bundle")
+    init_parser.add_argument('--type', 
+        choices=['generic', 'context-bundler', 'tool', 'workflow', 'docs', 'adr', 'spec', 'learning'], 
+        help='Artifact Type (e.g. tool, docs, spec)'
+    )
+    # init uses --manifest but not --base for the *target* (source is arg type)
+
+    # add
+    add_parser = subparsers.add_parser("add", help="Add file to manifest")
+    add_parser.add_argument("--path", required=True, help="Relative or absolute path")
+    add_parser.add_argument("--note", default="", help="Note for the file")
+
+    # remove
+    remove_parser = subparsers.add_parser("remove", help="Remove file from manifest")
+    remove_parser.add_argument("--path", required=True, help="Path to remove")
+
+    # update
+    update_parser = subparsers.add_parser("update", help="Update file in manifest")
+    update_parser.add_argument("--path", required=True, help="Path to update")
+    update_parser.add_argument("--note", help="New note")
+    update_parser.add_argument("--new-path", help="New path")
+
+    # search
+    search_parser = subparsers.add_parser("search", help="Search files in manifest")
+    search_parser.add_argument("pattern", help="Search pattern")
+
+    # list
+    list_parser = subparsers.add_parser("list", help="List files in manifest")
+
+    # bundle
+    bundle_parser = subparsers.add_parser("bundle", help="Execute bundle.py")
+    bundle_parser.add_argument("--output", help="Output file path (optional)")
+
+    args = parser.parse_args()
+
+    if args.action == "init":
+        init_manifest(args.bundle_title, args.type, args.manifest)
+    elif args.action == "add":
+        add_file(args.path, args.note, args.manifest, args.base)
+    elif args.action == "remove":
+        remove_file(args.path, args.manifest, args.base)
+    elif args.action == "update":
+        update_file(args.path, args.note, args.new_path, args.manifest, args.base)
+    elif args.action == "search":
+        search_files(args.pattern, args.manifest, args.base)
+    elif args.action == "list":
+        list_manifest(args.manifest, args.base)
+    elif args.action == "bundle":
+        # Bundle logic primarily processes instantiated manifests, not templates, 
+        # but could technically bundle a base template.
+        # bundle() signature doesn't take base_type yet, let's keep it simple for now or resolve path before calling it.
+        target_manifest = args.manifest
+        if args.base:
+            target_manifest = str(get_base_manifest_path(args.base))
+        bundle(args.output, target_manifest)
+    else:
+        parser.print_help()
+
+```
+<a id='entry-13'></a>
+## 13. tools/investigate/utils/path_resolver.py (MISSING)
+> ❌ File not found: tools/investigate/utils/path_resolver.py
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/investigate/utils/path_resolver.py
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/base-manifests/tools/investigate/utils/path_resolver.py
+<a id='entry-14'></a>
+
+---
+
+## File: tools/standalone/context-bundler/file-manifest-schema.json
+**Path:** `tools/standalone/context-bundler/file-manifest-schema.json`
+**Note:** Input Schema Definition
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Context Bundler Manifest",
+    "description": "Schema for defining a bundle of files for context generation.",
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string",
+            "description": "Title of the generated context document."
+        },
+        "description": {
+            "type": "string",
+            "description": "Optional description included at the top of the bundle."
+        },
+        "files": {
+            "type": "array",
+            "description": "List of files to include in the bundle. IMPORTANT: The first file MUST be the prompt/instruction file.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Relative path to the file to include."
+                    },
+                    "note": {
+                        "type": "string",
+                        "description": "Optional note or annotation about this file."
+                    }
+                },
+                "required": [
+                    "path"
+                ]
+            }
+        }
+    },
+    "required": [
+        "title",
+        "files"
+    ]
+}
+```
+<a id='entry-15'></a>
+## 15. .agent/workflows/curate-bundle.md (MISSING)
+> ❌ File not found: .agent/workflows/curate-bundle.md
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/curate-bundle.md
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/base-manifests/.agent/workflows/curate-bundle.md
+<a id='entry-16'></a>
+## 16. .agent/workflows/retrieve-bundle.md (MISSING)
+> ❌ File not found: .agent/workflows/retrieve-bundle.md
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/retrieve-bundle.md
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/context-bundler/base-manifests/.agent/workflows/retrieve-bundle.md
+<a id='entry-17'></a>
+
+---
+
+## File: docs/diagrams/workflows/curate-bundle.mmd
+**Path:** `docs/diagrams/workflows/curate-bundle.mmd`
+**Note:** Workflow Diagram: Curate Bundle
+
+```mermaid
+flowchart TB
+ subgraph subGraph0["CLI Layer"]
+        EntryPoint["cli.py bundle"]
+        ManifestMgr["manifest_manager.py"]
+  end
+ subgraph subGraph1["Core Logic"]
+        Bundler["bundle.py"]
+        ContextBuilder{"Context Builder"}
+  end
+    subgraph subGraph2["Intelligence Sources"]
+        RLM[("RLM Cache")]
+        BaseManifests["Base Manifests<br>(tools/standalone/context-bundler/base-manifests/*.json)"]
+        Manifest["file-manifest.json"]
+        Miners["Miners: XML, PLL, DB"]
+        DepMap["Dependency Map"]
+  end
+ subgraph Output["Output"]
+        ContextBundle["temp/context-bundles/ID_context.md"]
+  end
+    User(["User / Automation"]) -- "/curate-bundle" --> EntryPoint
+    User -.->|"curate-manifest ID Init"| ManifestMgr
+    EntryPoint -- target --> ManifestMgr
+    ManifestMgr -- "init (Selects Base by Type)" --> BaseManifests
+    BaseManifests --> Manifest
+    ManifestMgr -- read --> Manifest
+    ManifestMgr -- execute --> Bundler
+    Bundler -- "1. Load Manifest" --> Manifest
+    Bundler -- "2. Check Intelligence" --> RLM
+    Bundler -- "3. Mine Logic" --> Miners
+    Bundler -- "4. Trace Deps" --> DepMap
+    Bundler --> ContextBuilder
+    ContextBuilder -- Assemble --> ContextBundle
+    ContextBundle --> Review{"Complete?"}
+    Review -- Yes --> Done(["Ready for Analysis"])
+    Review -- No: Gaps --> Refine["Refine Manifest"]
+    Refine -- "Add / Remove / Update<br>(Recursively Adjust Context)" --> EntryPoint
+
+     EntryPoint:::command
+     ManifestMgr:::script
+     Bundler:::script
+     ContextBuilder:::logic
+     RLM:::input
+     BaseManifests:::input
+     Manifest:::input
+     Miners:::input
+     DepMap:::input
+     ContextBundle:::output
+     User:::command
+     Review:::logic
+     Refine:::command
+     Done:::output
+    classDef command fill:#f9f,stroke:#333,stroke-width:2px
+    classDef script fill:#bbf,stroke:#333,stroke-width:1px
+    classDef input fill:#efe,stroke:#333,stroke-width:1px
+    classDef logic fill:#ffe,stroke:#333,stroke-width:1px
+    classDef output fill:#faa,stroke:#333,stroke-width:2px
+    click EntryPoint "../../../tools/cli.py"
+    click ManifestMgr "../../../tools/retrieve/bundler/manifest_manager.py"
+    click Bundler "../../../tools/retrieve/bundler/bundle.py"
+```
+<a id='entry-18'></a>
+
+---
+
+## File: docs/tools/standalone/context-bundler/architecture.md
+**Path:** `docs/tools/standalone/context-bundler/architecture.md`
+**Note:** Architecture & Recursive Workflow Logic
+
+```markdown
+# Context Bundler Architecture & Workflow
+
+**Purpose**: This document explains the architecture, components, and recursive workflow of the Context Bundler tool.
+
+## 1. Core Architecture
+
+The system follows a **Controller-Manager-Worker** pattern with a shared **State** file.
+
+| Component | Role | File | Responsibility |
+| :--- | :--- | :--- | :--- |
+| **Interface** | Controller | `tools/cli.py` | Routes user commands (`manifest`, `init-context`) to the Manager. No logic here. |
+| **Manager** | Orchestrator | `tools/retrieve/bundler/manifest_manager.py` | Handles the *Workflow* & *Manifest CRUD*. Inits, Adds, Updates, Removes, and Lists/Queries files. |
+| **Bundler** | Worker | `tools/retrieve/bundler/bundle.py` | Handles the *Action*. Reads state and compiles the Markdown bundle. |
+| **State** | Data Store | `tools/context-bundler/file-manifest.json` | The JSON list of files currently "in scope" for the bundle. |
+
+## 2. Intelligence Sources (Inputs)
+
+The Manager queries these sources to populate the State (`file-manifest.json`):
+
+*   **dependency_map.json**: *The Graph*. Tells the manager *why* file B is needed (e.g. "Form A calls Table B").
+*   **Miners (XML/PLL)**: *The Source Truth*. Extract declarative dependencies from raw code.
+*   **Base Manifests**: *The Templates*. Provide the mandatory starting point for each analysis type (Form, Lib, etc.).
+    *   *Index*: `tools/standalone/context-bundler/base-manifests-index.json` maps Type -> Template.
+
+## 3. The Recursive Context Loop
+
+Bundling is not a one-time event. It is a **Recursive Discovery Process**.
+
+![Recursive Context Loop](../../../diagrams/workflows/context-first-analysis.mmd)
+
+**(See full workflow diagram: [`docs/diagrams/workflows/context-first-analysis.mmd`](../../../diagrams/workflows/context-first-analysis.mmd))**
+
+### Workflow Steps:
+1.  **Initialization**: `cli.py init-context` calls `manifest_manager.py init` using the target ID as the **Bundle Title**. It auto-resolves the Artifact Type (e.g., FORM) from the Inventory. It **strictly loads the Base Manifest template** and overwrites `file-manifest.json`. **No dependency analysis happens here.**
+2.  **Review**: The Agent reads the generated bundle (Default Context).
+3.  **Recursion (The Loop)**:
+    *   The Agent analyzes logic.
+    *   The Agent uses specific tools (e.g., `/retrieve-dependency-graph`) which query `dependency_map.json` to find missing context.
+    *   If a gap is found, the Agent uses `/curate-manifest-add` to update the `file-manifest.json` (add specific files).
+    *   The Agent runs `/retrieve-bundle` to regenerate the markdown.
+4.  **Completion**: When the bundle contains all necessary context for the task.
+
+## 5. Tool Distribution & Configuration
+
+The tool is self-contained in `tools/standalone/context-bundler/`.
+
+*   **Logic**: `manifest_manager.py`, `bundle.py`
+*   **Configuration**:
+    *   `base-manifests-index.json`: Maps analysis types (form, lib) to template files.
+    *   `base-manifests/*.json`: The actual JSON templates used during `init`.
+*   **Documentation**:
+    *   `README.md`: Setup & Usage guide.
+    *   `architecture.md`: This file (Internal Logic).
+
+> **Note**: When distributing this tool to other agents, bundle the entire `context-bundler/` directory including these config files.
+
+```
+<a id='entry-19'></a>
+### Directory: tools/standalone/context-bundler/base-manifests
+**Note:** Base Manifest Templates (Standard Configurations)
+> 📂 Expanding contents of `tools/standalone/context-bundler/base-manifests`...
+
+---
+
+## File: tools/standalone/context-bundler/base-manifests/base-generic-file-manifest.json
+**Path:** `tools/standalone/context-bundler/base-manifests/base-generic-file-manifest.json`
+**Note:** (Expanded from directory)
+
+```json
+{
+  "title": "{{TARGET}} Generic Bundle",
+  "description": "Generic context bundle for {{TARGET}}",
+  "files": [
+    {
+      "path": "tools/standalone/context-bundler/prompt.md",
+      "note": "Context Bundler Instructions"
+    }
+  ]
+}
+```
+
+---
+
+## File: tools/standalone/context-bundler/base-manifests/base-context-bundler-file-manifest.json
+**Path:** `tools/standalone/context-bundler/base-manifests/base-context-bundler-file-manifest.json`
+**Note:** (Expanded from directory)
+
+```json
+{
+  "title": "Context Bundler Tool",
+  "description": "A standalone utility to concatenate multiple source files into a single context bundle for LLM analysis.",
+  "files": [
+    {
+      "path": "tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md",
+      "note": "Context Bundler Instructions (System Prompt)"
+    },
+    {
+      "path": "tools/ai-resources/prompts/Context_Bundler_System_Prompt.md",
+      "note": "Context Bundler Instructions (System Prompt)"
+    },
+    {
+      "path": "tools/standalone/context-bundler/prompt.md",
+      "note": "Agent Usage Instructions (System Prompt)"
+    },
+    {
+      "path": "tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md",
+      "note": "CRITICAL: How to use this bundle"
+    },
+    {
+      "path": "tools/standalone/context-bundler/README.md",
+      "note": "Documentation and Usage Guide"
+    },
+    {
+      "path": "tools/standalone/context-bundler/INSTALL.md",
+      "note": "Installation and Unpacking Instructions"
+    },
+    {
+      "path": "tools/standalone/context-bundler/TOOL_INVENTORY.md",
+      "note": "Bundle-Specific Tool Inventory"
+    },
+    {
+      "path": "docs/tools/standalone/context-bundler/bundler-internal-logic.mmd",
+      "note": "Architecture Diagram (Internal Logic)"
+    },
+    {
+      "path": "docs/tools/standalone/context-bundler/setup-lifecycle-workflow.mmd",
+      "note": "User Workflow Diagram (Lifecycle)"
+    },
+    {
+      "path": "docs/tools/standalone/context-bundler/agent-unpacking-process.mmd",
+      "note": "Agent Unpacking Flow Diagram"
+    },
+    {
+      "path": "tools/retrieve/bundler/bundle.py",
+      "note": "Core Bundling Logic"
+    },
+    {
+      "path": "tools/retrieve/bundler/manifest_manager.py",
+      "note": "Source Code: Manifest Manager"
+    },
+    {
+      "path": "tools/investigate/utils/path_resolver.py",
+      "note": "Source Code: Path Resolver Utility"
+    },
+    {
+      "path": "tools/standalone/context-bundler/file-manifest-schema.json",
+      "note": "Input Schema Definition"
+    },
+    {
+      "path": ".agent/workflows/curate-bundle.md",
+      "note": "Workflow: Context Bundling (Curate)"
+    },
+    {
+      "path": ".agent/workflows/retrieve-bundle.md",
+      "note": "Workflow: Bundle Retrieval (Legacy)"
+    },
+    {
+      "path": "docs/diagrams/workflows/curate-bundle.mmd",
+      "note": "Workflow Diagram: Curate Bundle"
+    },
+    {
+      "path": "docs/tools/standalone/context-bundler/architecture.md",
+      "note": "Architecture & Recursive Workflow Logic"
+    },
+    {
+      "path": "tools/standalone/context-bundler/base-manifests",
+      "note": "Base Manifest Templates (Standard Configurations)"
+    }
+  ]
+}
+
+```

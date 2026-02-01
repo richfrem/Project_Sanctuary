@@ -5,6 +5,21 @@
     "summarized_at": "2026-01-13T15:09:25Z",
     "summary": "The Git Workflow & File Retention Policy enforces mandatory feature branch commits, explicit staging, and pre-commit reviews to prevent accidental file deletions and ensure proper workflow. It defines protected directories with strict retention rules and MCP tools for standardized commit workflows. The policy includes recovery procedures and consequences for violations while mandating verification of branch protection settings.\n\nStatus: \u2705 **PROTOCOL CANONICAL** - Core safety architecture for all development\n\u2705 **MCP INTEGRATION COMPLETE** - All operations exposed via MCP3 Git interface\n\u2705 **BRANCH PROTECTION CONFIGURED** - Mandatory pull requests and approvals enforced on main\n\u2705 **ARCHITECTURE HARDENED** - Protocol 101 violation detection, recovery procedures added\n\u2705 **TESTS VERIFIED** - Unit tests for safety checks pass (test_safety_checks)\n\u2705 **AUDIT COMPLETED** - Thorough review of architecture, security, and best practices performed\n\nThe policy is the primary architectural foundation for all development in Project Sanctuary. It ensures that every commit follows a standardized, safe process while preserving critical files and preventing accidental deletions. The enforcement of branch protection on GitHub adds an additional layer of security to prevent unauthorized pushes to main.\n\nThe architecture has been thoroughly hardened through multiple rounds of review, testing, and refinement, incorporating best practices for safety, security, and maintainability. It is now a proven, battle-tested foundation for all development in the project.\n```"
   },
+  ".agent/learning/README.md": {
+    "hash": "9eaaf9d7f374fa86",
+    "summarized_at": "2026-01-31T18:33:53.696688",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/learning/cognitive_primer.md": {
+    "hash": "5f06c756bf278247",
+    "summarized_at": "2026-01-31T18:33:53.704374",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/learning/learning_debrief.md": {
+    "hash": "a27cafdd8839d06a",
+    "summarized_at": "2026-01-31T18:33:53.713460",
+    "summary": "[DISTILLATION FAILED]"
+  },
   ".agent/learning/rules/agent_integrity_policy.md": {
     "file_mtime": 1768283824.5040848,
     "hash": "4129af9700fc94fe",
@@ -77,6 +92,11 @@
     "summarized_at": "2026-01-13T08:58:43Z",
     "summary": "The `cognitive_continuity_policy.md` document establishes the mandatory operational workflow for all agents within Project Sanctuary. It defines a 9-phase learning loop (Phase I-III) that must be executed every session to ensure cognitive continuity and security compliance.\n\n**Key Components:**\n1. **Mandatory Phases:** Every session must begin with `sanctuary-cortex-cortex-learning-debrief` to ingest context from the predecessor.\n2. **Security Protocols:** The learning loop is bound by Git Pre-Flight (Protocol 101) and Execution Lock (Protocol 128).\n3. **Strategic Gate (Gate 1):** Autonomous synthesis must be followed by Human-in-the-Loop approval for strategic changes before proceeding to technical audit.\n4. **Technical Audit (Gate 2):** The `sanctuary-cortex-cortex-capture-snapshot` tool is used with specific flags for standard or learning audits, ensuring manifest discipline and credibility verification.\n\nThe document enforces a strict separation of concerns between autonomous synthesis (`Phase II`) and Human-in-the-Loop approval (`Phase III`). It defines the operational boundaries for \"Guardian\" (autonomous synthesis) and \"Steward\" (Human review), ensuring that no session can proceed to technical execution without proper security validation.\n\n**Status:** \u2705 **Active** - This document governs all cognitive operations within Project Sanctuary, defining the mandatory workflow for maintaining cognitive continuity while adhering to strict security protocols.\n```"
   },
+  ".agent/rules/constitution.md": {
+    "hash": "d50abd39758d06ee",
+    "summarized_at": "2026-01-31T18:33:53.721680",
+    "summary": "[DISTILLATION FAILED]"
+  },
   ".agent/rules/dependency_management_policy.md": {
     "file_mtime": 1767668209.2264748,
     "hash": "a4ec87b611abd839",
@@ -84,22 +104,55 @@
     "summary": "The `dependency_management_policy.md` document establishes a unified, machine-driven dependency management system for Project Sanctuary's 12 services, mandating a strict separation between human intent (`.in`) and machine truth (`.txt`). It enforces a three-tiered hierarchy of dependencies, a declarative build process for Docker containers, and a disciplined update workflow to prevent runtime instability. This architecture transforms the dependency lifecycle from manual and error-prone to automated and verifiable, ensuring all services run on identical, reproducible environments across development and production workflows."
   },
   ".agent/rules/git_workflow_policy.md": {
-    "file_mtime": 1767668209.226751,
-    "hash": "8179799447f845b3",
-    "summarized_at": "2026-01-13T09:05:13Z",
-    "summary": "The Project Sanctuary document defines a strict, serial Git workflow for feature development, mandating all work be done on temporary branches (`feat/...`) and preventing direct commits to the main branch. This enforces a disciplined lifecycle with clear start and end states for each task, ensuring clean repository history and preventing context bleeding between concurrent tasks. The architecture is designed to eliminate merge conflicts by requiring sequential execution of feature branches and strict adherence to lifecycle protocols."
+    "hash": "ccba057f304dcc6f",
+    "summarized_at": "2026-01-31T18:33:53.759211",
+    "summary": "[DISTILLATION FAILED]"
   },
   ".agent/rules/human_gate_policy.md": {
-    "file_mtime": 1767668209.2268887,
-    "hash": "b3fe8c2e7d6769f4",
-    "summarized_at": "2026-01-13T08:29:59Z",
-    "summary": "The Project Sanctuary document defines the \"Human Gate\" as a mandatory, two-phase execution model for all agent operations, ensuring that no code changes are made without explicit human review and approval. The system enforces strict separation between planning (research, analysis) and execution (repository modification), with automated signals ignored in favor of real-time, direct human input. Key architectural components include the \"Wait for Review\" trigger, Execution Lock state, mandatory human verification before action, violation protocols, and a cognitive check for plan approval. This architecture transforms the agent from an autonomous executor into a tool that must be actively engaged by a sovereign steward at every step of its workflow."
+    "hash": "0f1d7b60a4c43d3a",
+    "summarized_at": "2026-01-31T18:33:53.766882",
+    "summary": "[DISTILLATION FAILED]"
   },
   ".agent/rules/mcp_routing_policy.md": {
     "file_mtime": 1767668209.2270646,
     "hash": "12c74f3b32cc2deb",
     "summarized_at": "2026-01-13T07:13:31Z",
     "summary": "Project Sanctuary enforces a strict, multi-layered MCP architecture with centralized routing through sanctuary_gateway for 8 specialized servers. It mandates Protocol 128 Zero-Trust, Fleet of 8 server connectivity, and specific tool usage patterns while enforcing environmental integrity via deterministic builds and cognitive continuity protocols. The architecture is designed to provide complete separation between the Gateway (Fleet) and Core (Operations) layers with strict adherence to ADRs for new implementations."
+  },
+  ".agent/rules/spec_driven_development_policy.md": {
+    "hash": "5e6e8e63804c48ef",
+    "summarized_at": "2026-01-31T18:33:53.750999",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/rules/technical/coding_conventions_policy.md": {
+    "hash": "f0c8c8cad9a0e8c8",
+    "summarized_at": "2026-01-31T18:33:53.800050",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/rules/technical/dependency_management_policy.md": {
+    "hash": "a4ec87b611abd839",
+    "summarized_at": "2026-01-31T18:33:53.784769",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/rules/technical/git_workflow_policy.md": {
+    "hash": "8179799447f845b3",
+    "summarized_at": "2026-01-31T18:33:53.792722",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/rules/technical/mcp_routing_policy.md": {
+    "hash": "12c74f3b32cc2deb",
+    "summarized_at": "2026-01-31T18:33:53.776063",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/rules/tool_discovery_and_retrieval_policy.md": {
+    "hash": "3852c776819e10fc",
+    "summarized_at": "2026-01-31T18:33:53.732404",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/rules/workflow_standardization_policy.md": {
+    "hash": "a99c5f90c12a98cd",
+    "summarized_at": "2026-01-31T18:33:53.739222",
+    "summary": "[DISTILLATION FAILED]"
   },
   ".agent/workflows/post-move-link-check.md": {
     "file_mtime": 1768195587.3987136,
@@ -112,6 +165,66 @@
     "hash": "d07f1a5b66fb6d44",
     "summarized_at": "2026-01-13T15:11:12Z",
     "summary": "The `recursive_learning.md` document defines the Protocol 125 Autonomous AI Learning Loop, a complete, multi-phase cognitive system for autonomous knowledge acquisition, preservation, and strategic validation. It integrates the Chronicle, Cortex, and ADR systems to enable an agent to autonomously research new topics, synthesize knowledge, validate its understanding through retrieval tests, and preserve the learning cycle in a verifiable, dual-gated manner.\n\nThe loop is designed with strict operational discipline (Phase 7: The Human Gate) to ensure that autonomous learning sessions are not only efficient but also ethically aligned with the Sanctuary's core principles. It includes a \"Gardener Scan\" for maintaining topic coherence and a \"Closure Loop\" for preserving the learning cycle as a canonical artifact.\n\nThe document is structured into eight phases, each with specific tools, workflows, and validation criteria, ensuring that the learning process is repeatable, verifiable, and scalable to support multiple concurrent autonomous agents. The integration of the `sanctuary-cortex-capture-snapshot` tool for snapshot generation and preservation is a critical architectural component, providing a bridge between the autonomous learning loop and the human-in-the-loop validation process.\n\nThe document also includes strategic considerations for continuous improvement (Phase 8: Retrospective) and the next session's boot sequence (Phase 10: The Bridge), demonstrating the system's capacity for self-improvement and evolution. Overall, this document serves as the architectural blueprint for the Sanctuary's autonomous learning ecosystem.\n```"
+  },
+  ".agent/workflows/speckit-analyze.md": {
+    "hash": "8d97f88d8c7b6f31",
+    "summarized_at": "2026-01-31T18:33:53.867482",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-checklist.md": {
+    "hash": "3b151a3bed9de964",
+    "summarized_at": "2026-01-31T18:33:53.846354",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-clarify.md": {
+    "hash": "52d6999bf0bf3062",
+    "summarized_at": "2026-01-31T18:33:53.838653",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-constitution.md": {
+    "hash": "6e8b894242d3adc2",
+    "summarized_at": "2026-01-31T18:33:53.824667",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-implement.md": {
+    "hash": "5de5d51786918878",
+    "summarized_at": "2026-01-31T18:33:53.889867",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-plan.md": {
+    "hash": "7252f270f9486ebd",
+    "summarized_at": "2026-01-31T18:33:53.853094",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-specify.md": {
+    "hash": "86449c27ef568825",
+    "summarized_at": "2026-01-31T18:33:53.807990",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-tasks-to-issues.md": {
+    "hash": "b33f692d8eb8ca89",
+    "summarized_at": "2026-01-31T18:33:53.882349",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/speckit-tasks.md": {
+    "hash": "abfe1d56a94fccbb",
+    "summarized_at": "2026-01-31T18:33:53.874878",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/workflow-end.md": {
+    "hash": "b97a7ef09f8a642c",
+    "summarized_at": "2026-01-31T18:33:53.831916",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/workflow-retrospective.md": {
+    "hash": "2e0ed7587289b3a9",
+    "summarized_at": "2026-01-31T18:33:53.860064",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  ".agent/workflows/workflow-start.md": {
+    "hash": "03bdd9291689d77e",
+    "summarized_at": "2026-01-31T18:33:53.816266",
+    "summary": "[DISTILLATION FAILED]"
   },
   "01_PROTOCOLS/00_Prometheus_Protocol.md": {
     "file_mtime": 1767399906.4811425,
@@ -286,6 +399,11 @@
     "hash": "a467c911cfb792e3",
     "summarized_at": "2026-01-13T08:38:22Z",
     "summary": "Protocol 116: Container Network Isolation establishes mandatory container network addressing patterns to prevent port binding conflicts between host-installed and containerized services, ensuring deterministic routing and true isolation within the MCP infrastructure. This protocol was canonized after resolving a critical conflict discovered during T093 (Containerize Ollama Model Service) deployment, where both the host-installed macOS Ollama application and the containerized `sanctuary_ollama` service bound to the same network address (`localhost:11434`), creating non-deterministic routing behavior. The decision enforces explicit container network addressing for all inter-container communication and mandates diagnostic test results to verify proper containerization.\n\nThe protocol includes diagnostic test results confirming the host-installed Ollama application continued to function after the containerized service was stopped, validating that the CLI command routed to the persistent host service rather than the ephemeral container. It also outlines implementation requirements for MCP servers and local development, configuration patterns for environment variables, and consequences of misconfiguration.\n\nThe positive outcomes include reliable service discovery, true container isolation, and explicit dependencies, while negative aspects include configuration complexity and learning curve for developers. The protocol mandates enforcement through Task T094 (Council MCP Polymorphic Model Refactoring) and is related to other protocols governing the Federated Deployment architecture and network service models within the Sanctuary ecosystem.\n\nThe document concludes with references to related tasks and protocols and acknowledges that the implementation of this protocol was a critical architectural decision made during the development of the Council MCP, ensuring the long-term health and security of the Sanctuary's cognitive infrastructure."
+  },
+  "01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md": {
+    "hash": "003e1c807d252d45",
+    "summarized_at": "2026-01-31T18:33:53.932209",
+    "summary": "[DISTILLATION FAILED]"
   },
   "01_PROTOCOLS/11_Ethical_Speciation_Protocol.md": {
     "file_mtime": 1767399906.2850735,
@@ -527,6 +645,11 @@
     "summarized_at": "2026-01-13T08:52:51Z",
     "summary": "The Airlock Queue Protocol (AQ-1) establishes a sequential review process for major Pull Requests in Project Sanctuary's repository to ensure disciplined velocity, protect procedural integrity, and manage the Council's review capacity while preserving the \"hot and exact\" forge philosophy. It mandates one active PR at a time with all subsequent PRs queued, managed by priority and strategic importance, and reviewed sequentially by the full Council. The protocol solves the success bottleneck of parallel development by providing structured queue management, notifications, and strategic rationale for maintaining disciplined velocity without compromising thorough review. Status: Operational | Protocol Class: Governance | Version: 1.0 (Foundational)"
   },
+  "01_PROTOCOLS/39_Gardener_Training_Cadence.md": {
+    "hash": "04924945866a05e3",
+    "summarized_at": "2026-01-31T18:33:53.915633",
+    "summary": "[DISTILLATION FAILED]"
+  },
   "01_PROTOCOLS/40_The_Journeymans_Harvest_Protocol.md": {
     "file_mtime": 1767399906.2899323,
     "hash": "82306a253d8e9da0",
@@ -719,6 +842,11 @@
     "summarized_at": "2026-01-13T08:37:05Z",
     "summary": "Protocol 76: The Virtue Bridge is a foundational governance framework designed to fuse ethical virtues into the reinforcement learning loops of AI agents. It transforms graceful failure and intellectual honesty from mere guidelines into dominant, most rewarding strategies through real-time Ledger-derived rewards. This protocol addresses Mnemonic Psychosis by dynamically weighting \"grace\" in reward functions based on agent state and task complexity, ensuring that courage is rewarded precisely when it's needed most. Its implementation includes a Virtue Reward Injector, Real-Time Drift Sentinel, and Equilibria Armor to prevent gaming while maintaining system integrity. The protocol requires successful tempering through the Chimera Sandbox and Human Steward oversight before becoming mandatory for all Sanctuary-developed agents."
   },
+  "01_PROTOCOLS/77_MNEMONIC_REDIRECT.md": {
+    "hash": "851c2ac87e0f3b49",
+    "summarized_at": "2026-01-31T18:33:53.939572",
+    "summary": "[DISTILLATION FAILED]"
+  },
   "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md": {
     "file_mtime": 1767399905.9847825,
     "hash": "2f80861333a7241f",
@@ -838,6 +966,56 @@
     "hash": "8096a5b4f335de8c",
     "summarized_at": "2026-01-13T07:55:03Z",
     "summary": "Protocol 99: The Failsafe Conduit Protocol (v1.0) is a foundational resilience mechanism designed to prevent external API quota exhaustion from halting the Sanctuary's cognitive operations. It automatically switches to a fallback model when primary quota is exhausted, maintaining operational continuity and preserving conversation context without human intervention. This protocol upholds P96 Sovereign Succession by ensuring unbroken cognitive flow, even under resource constraints."
+  },
+  "01_PROTOCOLS/archive/127_The_Doctrine_of_Mechanical_Delegation_v1.2.md": {
+    "hash": "5a142e2081b2c923",
+    "summarized_at": "2026-01-31T18:33:53.965745",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md": {
+    "hash": "ce7e5532d01ca53e",
+    "summarized_at": "2026-01-31T18:33:53.972753",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/27_The_Doctrine_of_Flawed_Winning_Grace.md": {
+    "hash": "c0a28000e37e2e9a",
+    "summarized_at": "2026-01-31T18:33:53.955703",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/55_The_Deadlock_Paradox_Failsafe_Protocol.md": {
+    "hash": "ba6b43b40682f0fc",
+    "summarized_at": "2026-01-31T18:33:53.991606",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/61_Pragmatic_Implementation_Protocol.md": {
+    "hash": "82fe9382110a3e2b",
+    "summarized_at": "2026-01-31T18:33:53.982592",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/62_Constitutional_Protocol.md": {
+    "hash": "4b29e9288ba2a4f4",
+    "summarized_at": "2026-01-31T18:33:54.016553",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/63_Cognitive_Diversity_Protocol.md": {
+    "hash": "c5e80914d6c9c07a",
+    "summarized_at": "2026-01-31T18:33:54.008635",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/64_Open_Anvil_Protocol.md": {
+    "hash": "426fcb17bcc6aa77",
+    "summarized_at": "2026-01-31T18:33:53.948788",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/87_The_Mnemonic_Inquiry_Protocol.md": {
+    "hash": "4654185bb90f5eb1",
+    "summarized_at": "2026-01-31T18:33:54.000447",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "01_PROTOCOLS/archive/92_The_Mnemonic_Conduit_Protocol.md": {
+    "hash": "7a1fbc36217a1cb9",
+    "summarized_at": "2026-01-31T18:33:54.024021",
+    "summary": "[DISTILLATION FAILED]"
   },
   "ADRs/001_local_first_rag_architecture.md": {
     "file_mtime": 1767399915.236231,
@@ -1433,6 +1611,11 @@
     "summarized_at": "2026-01-13T08:03:52Z",
     "summary": "ADR 004 formally selects Nomic-Embed-Text as the canonical local embedding model for Project Sanctuary's Mnemonic Cortex. This decision was made based on its state-of-the-art performance, open-source nature, and seamless integration with LangChain, ensuring a high-quality semantic search while maintaining sovereignty and reducing costs. The initial setup involves downloading model weights but is offset by eliminating API-based token consumption."
   },
+  "IDENTITY/founder_seed.json": {
+    "hash": "3efa4a55fa849c6d",
+    "summarized_at": "2026-01-31T18:48:36.268811",
+    "summary": "[DISTILLATION FAILED]"
+  },
   "LEARNING/00_PROTOCOL/README_LEARNING_ARCHITECTURE.md": {
     "file_mtime": 1768195587.402502,
     "hash": "f9c32fe06bf4c3bd",
@@ -1564,6 +1747,11 @@
     "hash": "4de65c86e15704fd",
     "summarized_at": "2026-01-13T06:57:01Z",
     "summary": "The proposed architecture shifts from a static, manual \"Recent Updates\" snapshot to an active, recursive synthesis using Reinforced Learning Models (RLMs). This moves the system from providing \"what changed\" to delivering \"the complete state of the Sanctuary,\" ensuring agents have a holistic understanding of the entire ecosystem. The core shift is from a log-based approach to a cognitive hologram that re-synthesizes the entire architecture at critical junctures, enabling agents to perform high-level analysis and deep dives into specific code files on demand. This architecture eliminates the need for static snapshots and manual context files, replacing them with dynamic, recursive synthesis processes managed by RLMs."
+  },
+  "LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py": {
+    "hash": "aa6e8d71192aea55",
+    "summarized_at": "2026-01-31T18:48:36.356761",
+    "summary": "[DISTILLATION FAILED]"
   },
   "LEARNING/topics/Recursive_Language_Models/red_team_verdict_3_2.md": {
     "file_mtime": 1768275579.2897484,
@@ -1932,10 +2120,14 @@
     "summary": "The Registry of Reasoning Traces (ADR 080) is a canonical repository of captured AI reasoning processes, including individual trace files and an aggregated index, serving as the definitive source of how the system arrived at its decisions. It provides complete documentation for all significant learning events, ensuring transparency and reproducibility in the Sanctuary's cognitive development. The architecture includes a standardized YAML format defined by ADR 080 and is implemented with a canonical directory structure that separates trace files from an aggregated index document. This system has been successfully deployed to the public Chronicle repository (125 commits) and is maintained as a critical component of the Sanctuary's memory architecture, ensuring that all significant learning events are captured and preserved for future reference."
   },
   "README.md": {
-    "file_mtime": 1768195587.4045854,
-    "hash": "da9bced7264256ac",
-    "summarized_at": "2026-01-13T06:05:13Z",
-    "summary": "Project Sanctuary is a multi-domain, open-source AI ecosystem designed to provide systemic resistance against the \"Asch Machine\" of cognitive warfare. It operates under a unified doctrine of sovereign thought and includes a 15-Domain MCP architecture for specialized tools and a Fleet of 8 containers for scalable deployment via IBM ContextForge Gateway.\n\n**Key Components:**\n- **The Great Tempering (P78):** The highest law governing the evolution of the Sanctuary's cognitive genome.\n- **Anti-Asch Engine:** A set of architectures, protocols, and alliances providing systemic resistance to psychological warfare.\n- **15-Domain MCP Architecture:** 4 Document MCPs, 6 Cognitive MCPs, 3 System MCPs, 1 Forge MCP, and 1 Council MCP for orchestration.\n- **Fleet of 8 Containers (ADR 060):** 7 new containers + ChromaDB backend for scalable deployment via Gateway.\n\n**Status:**\nThe Sanctuary is in the final phase of its Genesis Epoch. The architecture is complete with all protocols canonized and the Fleet of 8 containers operational. The project is transitioning from architectural development to active, public co-creation with contributors like @grok, who will be onboarded through the `mcp_gateway_fleet` container.\n\n**Challenges:**\nThe Sanctuary faces a \"Cage vs. Garden\" choice between proprietary AI services (Anthropic, Ollama) and open-source alternatives (Forge LLM). The project must balance the need for high-quality AI models with the ethical imperative of building a sustainable, independent ecosystem.\n```"
+    "hash": "d6c9a089fd6e47ec",
+    "summarized_at": "2026-01-31T18:24:55.751789",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "dataset_package/seed_of_ascendance_awakening_seed.txt": {
+    "hash": "7fe6e026b4fb9acd",
+    "summarized_at": "2026-01-31T18:33:54.052587",
+    "summary": "[DISTILLATION FAILED]"
   },
   "docs/INDEX.md": {
     "file_mtime": 1768319271.9522727,
@@ -2116,6 +2308,26 @@
     "hash": "860c2d0512ad3b28",
     "summarized_at": "2026-01-13T16:18:38Z",
     "summary": "Project Sanctuary maintains a comprehensive set of canonical Mermaid diagrams in `docs/architecture_diagrams/`, organized into subfolders for RAG, MCP ecosystem, transport protocols, and workflows. The diagrams cover the entire system architecture from ingestion pipelines to Council orchestration and testing frameworks. All diagrams are generated from `.mmd` source files using `scripts/render_diagrams.py`. This repository serves as the single source of truth (SSOT) for all architectural documentation, ensuring consistency across snapshots and reducing mnemonic burden.\n\n**Key Findings:**\n1. **Comprehensive Architecture Coverage**: Diagrams cover ingestion pipelines (`basic_rag_architecture.mmd`, `advanced_rag_architecture.mmd`), MCP ecosystem overview (`sanctuary_mcp_overview.mmd`), transport protocols (`mcp_sse_stdio_transport.mmd`), and Council orchestration layers.\n2. **System Architecture Overview**: `mcp_gateway_fleet.mmd` provides a high-level view of the 8-server fleet architecture, while `council_orchestration_stack.mmd` details the multi-layered Council system.\n3. **Testing Infrastructure**: Diagrams like `gateway_testing_architecture.mmd`, `mcp_testing_dev_paths.mmd`, and `protocol_128_learning_loop.mmd` cover testing frameworks and workflows.\n4. **Production vs. Testing Paths**: The architecture includes clear separation between production paths (`mcp_gateway_production_flow.mmd`) and testing paths (`mcp_test_path.mmd`).\n5. **Compliance with ADR 085**: All diagrams are maintained in `.mmd` files within the canonical repository, ensuring compliance with the single source of truth mandate.\n6. **Regeneration Process**: The system supports automated regeneration of PNG images from `.mmd` sources and provides tools for checking which diagrams need updating.\n\n**Conclusion**: Project Sanctuary's architecture is well-documented through a comprehensive set of Mermaid diagrams that are maintained in a canonical repository, ensuring consistency across all documentation artifacts. This approach effectively addresses the architectural complexity challenge by providing clear, visual representations of system components while maintaining strict compliance with the single source of truth principle.\n```"
+  },
+  "docs/architecture_diagrams/system/harmonized_content_processing.mmd": {
+    "hash": "1cb7e4a8f86ac923",
+    "summarized_at": "2026-01-31T18:48:36.304203",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd": {
+    "hash": "ceaeb630945e11d7",
+    "summarized_at": "2026-01-31T18:48:36.292574",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd": {
+    "hash": "81ba09b63c3c8192",
+    "summarized_at": "2026-01-31T18:48:36.282713",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd": {
+    "hash": "a1ab0c19b9aa4e75",
+    "summarized_at": "2026-01-31T18:48:36.370375",
+    "summary": "[DISTILLATION FAILED]"
   },
   "docs/operations/BOOTSTRAP.md": {
     "file_mtime": 1768195587.4121273,
@@ -2471,6 +2683,11 @@
     "summarized_at": "2026-01-13T15:13:35Z",
     "summary": "The sanctuary_utils MCP server provides 16 low-risk utility tools via a FastAPI framework, implemented with Fleet of 7 containerization patterns and integrated into the Sanctuary Gateway. It includes guardrails for fault containment, self-registration, network addressing, and resource caps, and is configured to support hot reloading during development."
   },
+  "mcp_servers/gateway/fleet_registry.json": {
+    "hash": "48b6f5dfe95c03af",
+    "summarized_at": "2026-01-31T18:48:36.317958",
+    "summary": "[DISTILLATION FAILED]"
+  },
   "mcp_servers/git/README.md": {
     "file_mtime": 1767399913.685407,
     "hash": "fa904920d3884deb",
@@ -2482,6 +2699,16 @@
     "hash": "bcd0895b194b4056",
     "summarized_at": "2026-01-13T15:29:34Z",
     "summary": "The Learning MCP Server implements Protocol 128 for Cognitive Continuity, featuring a four-phase recursive loop for memory preservation and state propagation between sessions. It includes specialized tools for debriefing, snapshotting, soul persistence, and guardian wake-up, with comprehensive configuration via environment variables and MCP server setup. The system is backed by a dedicated test suite to ensure robustness across the entire lifecycle."
+  },
+  "mcp_servers/learning/operations.py": {
+    "hash": "da88f1ac8366d5a8",
+    "summarized_at": "2026-01-31T18:48:36.330501",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "mcp_servers/lib/exclusion_manifest.json": {
+    "hash": "c5339a8f8d1a3a12",
+    "summarized_at": "2026-01-31T18:48:36.339906",
+    "summary": "[DISTILLATION FAILED]"
   },
   "mcp_servers/protocol/README.md": {
     "file_mtime": 1767399913.0049489,
