@@ -1,0 +1,48 @@
+---
+config:
+  theme: base
+---
+sequenceDiagram
+    autonumber
+    participant U as 👤 Use
+    participant R as 🖥️ React 
+    participant N as ⚙️ Node Orchestrator
+    participant M as 🧠 RLM Cache
+    participant S as 🐍 Python Sidecar (Daemon)
+    participant C as 💾 ChromaDB (Vector)
+    participant F as 📁 FileSystem 
+
+    %% Initializing
+
+    Note over N,S: System Setup
+    N->>M: Load rlm_summary_cache.json 
+    N->>S: Health Check (gRPC)
+    S->>C: Pre-load Embedding Model
+    S->>C: Warm-up Index 
+    S-->>N:
+
+    %% Searching
+    U->>R: Type "bail"
+    R->>N: GET /api/search?q="bail"
+    par Async Layer Execution
+        %% Layer 1
+        N->>M: Key Lookup ("bail rules")
+        M-->>N: RLM Results (Immediate)
+        %% Layer 2 (Vector)
+        N->>S: RPC: semantic_search("bail rules")
+        S->>C: Embed Query -> Cosine Similarity
+        C-->>S: Top-K Chunks
+        S-->>N: Vector Results (JSON)
+        %% Layer 3 (Deep)
+        N->>S: RPC: deep_search("bail rules")
+        S->>F: Ripgrep / Walk (Safe)
+        F-->>S: File Matches
+        S-->>N: Code Snippets (JSON)
+    end
+
+    %% Aggregating
+    Note over N: Unified Ranker (RRF / Bayesian)
+    N->>N: Merge & Sort Results
+    N->>N: Attach "Why" Context
+    N-->>R: Unified Response
+    R-->>U: Render Graph &

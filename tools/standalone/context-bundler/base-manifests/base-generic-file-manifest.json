@@ -1,0 +1,10 @@
+{
+  "title": "{{TARGET}} Generic Bundle",
+  "description": "Generic context bundle for {{TARGET}}",
+  "files": [
+    {
+      "path": "tools/standalone/context-bundler/prompt.md",
+      "note": "Context Bundler Instructions"
+    }
+  ]
+}

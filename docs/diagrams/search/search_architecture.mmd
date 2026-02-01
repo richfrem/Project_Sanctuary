@@ -1,0 +1,63 @@
+---
+config:
+  theme: base
+---
+graph TB
+    classDef frontend fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+    classDef backend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef python fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
+    classDef storage fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef future fill:#f5f5f5,stroke:#616161,stroke-width:2px,stroke-dasharray: 5 5;
+
+    subgraph Frontend_App ["🖥️ Frontend Application"]
+        UI["React UI<br/>(src/App.tsx)"]:::frontend
+        SearchView["Search View<br/>(src/components/SearchView.tsx)"]:::frontend
+        UI --> SearchView
+    end
+
+    subgraph Backend_Orchestrator ["⚙️ Backend Orchestrator"]
+        Server["Node.js Server<br/>(server.js)"]:::backend
+        APIGateway["GET /api/search"]:::backend
+        SearchView -- "Query & Layers" --> APIGateway
+        APIGateway --> Server
+        Server -- "Parallel Execution" --> L1_Logic
+        Server -- "Parallel Execution" --> L2_Proc
+        Server -- "Parallel Execution" --> L3_Proc
+    end
+
+    subgraph Layer1 ["🧠 Layer 1: RLM (Fast Memory)"]
+        L1_Logic["In-Memory Lookup"]:::backend
+        RLMCache[("RLM Cache<br/>(rlm_summary_cache.json)")]:::storage
+        L1_Logic -.-> RLMCache
+    end
+
+    subgraph Layer2 ["🤖 Layer 2: Vector (Concepts)"]
+        L2_Proc["Spawn Subprocess"]:::backend
+        QueryPy["Script: query.py<br/>(--json arg)"]:::python
+        ChromaDB[("ChromaDB<br/>(Vector Store)")]:::storage
+        Embedding["Model: all-MiniLM-L6-v2"]:::python
+        
+        L2_Proc -->|Exec| QueryPy
+        QueryPy --> Embedding
+        QueryPy <--> ChromaDB
+    end
+
+    subgraph Layer3 ["🔍 Layer 3: Deep (Code)"]
+        L3_Proc["Spawn Subprocess"]:::backend
+        FindPLSQL["Script: findPLSQLTermAttributeKeyword.py<br/>(Grep-like)"]:::python
+        SourceCode[("FileSystem<br/>(Forms/PLSQL)")]:::storage
+        
+        L3_Proc -->|Exec| FindPLSQL
+        FindPLSQL --> SourceCode
+    end
+
+    subgraph Future_State ["🚀 Future Evolution (Red Team)"]
+        Daemon["Persistent Python Daemon<br/>(FastAPI / gRPC)"]:::future
+        RRF["Unified Ranker<br/>(Reciprocal Rank Fusion)"]:::future
+        Server -.->|Proposed IPC| Daemon
+        Daemon -.-> QueryPy
+    end
+    L1_Logic -->|Direct Result| Aggregator["Result Aggregator"]:::backend
+    QueryPy -->|JSON Stdout| Aggregator
+    FindPLSQL -->|Markdown Stdout| Aggregator
+    Aggregator -->|Unified Response| APIGateway

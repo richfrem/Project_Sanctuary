@@ -1,0 +1,110 @@
+flowchart TD
+    User([User / Agent])
+
+    subgraph Interface ["Investigate Domain Interface"]
+        direction TB
+        
+        subgraph Presentation ["Presentation Layer"]
+            CmdForm["/investigate-form"]
+            CmdMenu["/investigate-menu"]
+            CmdLib["/investigate-library"]
+            CmdRep["/investigate-report"]
+            CmdOLB["/investigate-olb"]
+        end
+        
+        subgraph Database ["Database Layer"]
+            CmdPkg["/investigate-db-package"]
+            CmdProc["/investigate-db-procedure"]
+            CmdFunc["/investigate-db-function"]
+            CmdTable["/investigate-db-table"]
+            CmdView["/investigate-db-view"]
+            CmdTrig["/investigate-db-trigger"]
+            CmdType["/investigate-db-type"]
+            CmdSeq["/investigate-db-sequence"]
+            CmdIdx["/investigate-db-index"]
+            CmdConst["/investigate-db-constraint"]
+        end
+        
+        subgraph Utility ["Utility / Cross-Cutting"]
+            CmdSearch["/investigate-code-search"]
+            CmdLineage["/investigate-lineage"]
+            CmdRoles["/investigate-roles"]
+            CmdRules["/investigate-rules"]
+        end
+    end
+
+    subgraph Tools ["Core Tools"]
+        subgraph Miners ["Extraction Engine"]
+            XMLMiner["xml_miner.py"]
+            MenuMiner["menu_miner.py"]
+            PLLMiner["pll_miner.py"]
+            RepMiner["report_miner.py"]
+            OLBMiner["olb_miner.py"]
+            DBMiner["db_miner.py"]
+        end
+        
+        subgraph Search ["Dependency Analysis"]
+            DepPy["dependencies.py"]
+            CollPy["search_collection.py"]
+            SearchPy["search_plsql.py"]
+            ReachPy["reachability.py"]
+        end
+    end
+
+    subgraph Sources ["Source Artifacts"]
+        FMB[("Form XML/MD")]
+        MMB[("Menu XML")]
+        PLL[("Library Text")]
+        RDF[("Report XML")]
+        OLB[("OLB XML")]
+        DBSQL[("DB DDL/SQL")]
+        DepMap[("dependency_map.json")]
+    end
+
+    %% Presentation Routing
+    User --> CmdForm & CmdMenu & CmdLib & CmdRep & CmdOLB
+    CmdForm --> XMLMiner
+    CmdMenu --> MenuMiner
+    CmdLib --> PLLMiner
+    CmdRep --> RepMiner
+    CmdOLB --> OLBMiner
+
+    %% Database Routing
+    User --> CmdPkg & CmdProc & CmdFunc & CmdTrig
+    User --> CmdTable & CmdView & CmdType & CmdSeq & CmdIdx & CmdConst
+    CmdPkg --> DBMiner
+    CmdProc --> DBMiner
+    CmdFunc --> DBMiner
+    CmdTrig --> DBMiner
+    CmdTable --> DepPy
+    CmdView --> DepPy
+    CmdType --> DepPy
+    CmdSeq --> DepPy
+    CmdIdx --> DepPy
+    CmdConst --> DepPy
+
+    %% Utility Routing
+    User --> CmdSearch & CmdLineage & CmdRoles & CmdRules
+    CmdSearch --> SearchPy
+    CmdLineage --> ReachPy
+
+    %% Data Access
+    XMLMiner --> FMB
+    MenuMiner --> MMB
+    PLLMiner --> PLL
+    RepMiner --> RDF
+    OLBMiner --> OLB
+    DBMiner --> DBSQL
+    DepPy --> DepMap
+    CollPy --> DepMap
+    SearchPy --> FMB & MMB & PLL & DBSQL
+
+    classDef command fill:#f96,stroke:#333,stroke-width:2px;
+    classDef miner fill:#9cf,stroke:#333,stroke-width:2px;
+    classDef search fill:#9f9,stroke:#333,stroke-width:2px;
+    classDef source fill:#ff9,stroke:#333,stroke-width:2px;
+
+    class CmdForm,CmdMenu,CmdLib,CmdRep,CmdOLB,CmdPkg,CmdProc,CmdFunc,CmdTable,CmdView,CmdTrig,CmdType,CmdSeq,CmdIdx,CmdConst,CmdSearch,CmdLineage,CmdRoles,CmdRules command;
+    class XMLMiner,MenuMiner,PLLMiner,RepMiner,OLBMiner,DBMiner miner;
+    class DepPy,CollPy,SearchPy,ReachPy search;
+    class FMB,MMB,PLL,RDF,OLB,DBSQL,DepMap source;

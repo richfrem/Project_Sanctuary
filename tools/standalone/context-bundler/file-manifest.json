@@ -1,0 +1,18 @@
+{
+  "title": "Get_Sentence_Terms Context Bundle",
+  "description": "Auto-generated context for Get_Sentence_Terms (Type: function)",
+  "files": [
+    {
+      "path": "tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md",
+      "note": "Context Bundler Instructions (System Prompt)"
+    },
+    {
+      "path": "tools/ai-resources/prompts/Context_Bundler_System_Prompt.md",
+      "note": "Context Bundler Instructions (System Prompt)"
+    },
+    {
+      "path": "tools/standalone/context-bundler/prompt.md",
+      "note": "Context Bundler Instructions"
+    }
+  ]
+}

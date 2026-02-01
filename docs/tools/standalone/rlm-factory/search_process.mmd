@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant Agent
+    participant QueryTool as query_cache.py
+    participant Ledger as RLM Ledger (JSON)
+    participant FileSys as File System (Markdown)
+
+    Note over Agent, Ledger: Phase 1: High-Speed Orientation (O(1))
+    
+    Agent->>QueryTool: "What does the vector query tool do?"
+    QueryTool->>Ledger: Scan Summaries (Key/Value Lookup)
+    Ledger-->>QueryTool: "query.py handles semantic search..."
+    QueryTool-->>Agent: Returns 1-Sentence Summary
+    
+    alt Summary Sufficient
+        Agent->>Agent: Proceed with high-level planning
+        Note right of Agent: "I know enough to continue."
+    else Summary Insufficient
+        Note over Agent, FileSys: Phase 2: Targeted Deep Dive (O(N))
+        Agent->>FileSys: Read full content of query.py
+        FileSys-->>Agent: Return Full Content (Tokens: 5k)
+        Agent->>Agent: Perform deep analysis
+    end

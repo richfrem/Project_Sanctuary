@@ -1,0 +1,49 @@
+graph TD
+    %% Actors
+    Agent([Agent / User])
+    
+    %% Layers
+    subgraph "Entry Layer (Thin Wrapper)"
+        MD_Start[/"/workflow-start"/]
+        Shim_Start[["workflow-start.sh"]]
+    end
+
+    subgraph "Orchestration Layer (Thick Python)"
+        CLI[("cli.py workflow start")]
+        Manager[("WorkflowManager.py")]
+        
+        Logic_Git{{"Git State Check"}}
+        Logic_Context{{"Context Strategy"}}
+        Logic_ID{{"ID Generation"}}
+    end
+
+    subgraph "System Layer (State)"
+        Sys_Git[(Git Repo)]
+        Sys_Manifest[(Context Manifest)]
+    end
+
+    %% Flow
+    Agent -->|1. Reads| MD_Start
+    MD_Start -.->|2. Invokes| Shim_Start
+    
+    %% Passing the baton
+    Shim_Start -->|3. Execs| CLI
+    CLI --> Manager
+    
+    %% The Heavy Lifting
+    Manager -->|4. Validates| Logic_Git
+    Logic_Git <-->|Status| Sys_Git
+    
+    Manager -->|5. Decides| Logic_Context
+    Logic_Context -->|If needed| Logic_ID
+    Logic_Context -->|Checkout/Branch| Sys_Git
+    Logic_Context -->|Init| Sys_Manifest
+    
+    %% Return
+    Manager -- "Success/JSON" --> Agent
+    
+    %% Styling
+    style Agent fill:#ffcc80,stroke:#333
+    style Shim_Start fill:#e1f5fe,stroke:#333
+    style Manager fill:#c8e6c9,stroke:#333,stroke-width:4px
+    style Logic_Git fill:#fff9c4

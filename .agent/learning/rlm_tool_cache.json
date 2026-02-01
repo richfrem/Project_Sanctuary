@@ -1,0 +1,124 @@
+{
+  "tools/cli.py": {
+    "file_mtime": 1769716444.164248,
+    "hash": "b9ba11f575ae4693",
+    "summarized_at": "2026-01-29T17:27:06.256595",
+    "summary": "{\n  \"purpose\": \"Main entry point for the Antigravity Command System. Orchestrates sub-tools for scanning, context bundling, dependency analysis, and business rule discovery. Routes commands like scan, bundle, query, and rules to specialized modules.\",\n  \"layer\": \"Curate / Cli_Entry_Points\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/cli.py --help\"],\n  \"args\": [\n    \"--target : Target ID (e.g., JCSE0030)\",\n    \"--depth : Recursion depth\",\n    \"args : Arguments for priority_candidates.py\",\n    \"text : Query text\",\n    \"--deep : Deep search across all source files\",\n    \"--json : Output in JSON format\",\n    \"--direction : Analysis direction (upstream/downstream/both)\",\n    \"--target : Target Artifact ID\",\n    \"--type : Artifact Type\",\n    \"--bundle-title : Title for the bundle (e.g. JCSE0030)\",\n    \"--manifest : Custom manifest path\",\n    \"--path : N/A\",\n    \"--note : N/A\",\n    \"--base : Target base manifest type (e.g. form)\",\n    \"--new-path : N/A\",\n    \"--pattern : Regex pattern to search for\",\n    \"--target : Library ID (e.g. AGLIB)\",\n    \"--target : Target Form ID (e.g. JCSE0086)\",\n    \"--target : Target Form ID (e.g. JUSE0005)\",\n    \"--json : Output as JSON\",\n    \"--force : Overwrite ALL items including code-discovered\",\n    \"--item-id : Item ID to find (e.g. CRIMINAL_MENU.JCSE0030)\",\n    \"--app : Application to search in (optional, searches all if not provided)\",\n    \"--form : Form ID\",\n    \"--role : Filter by role\",\n    \"--output : Output directory\",\n    \"--format : Output format\",\n    \"target : Form ID or App Code\",\n    \"item : Item ID\",\n    \"--visible : Comma-sep roles or 'all'\",\n    \"--hidden : Comma-sep roles or 'none'\",\n    \"--json : Output as JSON\"\n  ],\n  \"inputs\": [\"Input Files not explicitly mentioned in the provided code\"],\n  \"outputs\": [\"Output not explicitly mentioned in the provided code\"],\n  \"dependencies\": [\"dependencies.py\"],\n  \"consumed_by\": [\"business_rules_inventory_manager.py\", \"business_workflows_inventory_manager.py\"],\n  \"key_functions\": [\n    \"_enrich_manifest(target_id: str, manifest_manager_path: str)\",\n    \"resolve_type_from_inventory(target_id: str)\"\n  ]\n}"
+  },
+  "tools/codify/diagrams/export_mmd_to_image.py": {
+    "file_mtime": 1769270613.391936,
+    "hash": "124a3dee1a20a504",
+    "summarized_at": "2026-01-29T10:16:25.019821",
+    "summary": "{\n  \"purpose\": \"Renders all .mmd files in docs/architecture_diagrams/ to PNG images. Run this script whenever diagrams are updated to regenerate images.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Mermaid Diagram (.mmd)\"],\n  \"usage\": [\n    \"python3 scripts/export_mmd_to_image.py                 # Render all\",\n    \"python3 scripts/export_mmd_to_image.py my_diagram.mmd  # Render specific file(s)\",\n    \"python3 scripts/export_mmd_to_image.py --svg           # Render as SVG instead\",\n    \"python3 scripts/export_mmd_to_image.py --check         # Check for outdated images\"\n  ],\n  \"args\": [\n    {\n      \"name\": \"--input\",\n      \"type\": \"str\",\n      \"help\": \"Input MMD file or directory\",\n      \"required\": false\n    },\n    {\n      \"name\": \"--output\",\n      \"type\": \"str\",\n      \"help\": \"Output file path or directory\",\n      \"required\": false\n    },\n    {\n      \"name\": \"--svg\",\n      \"action\": \"store_true\",\n      \"help\": \"Render as SVG instead of PNG\"\n    },\n    {\n      \"name\": \"--check\",\n      \"action\": \"store_true\",\n      \"help\": \"Check for outdated images only\"\n    }\n  ],\n  \"inputs\": [\"docs/architecture_diagrams/*.mmd\"],\n  \"outputs\": [\"PNG or SVG images in the specified output directory\"],\n  \"dependencies\": [\"mermaid-cli (npm install -g @mermaid-js/mermaid-cli)\"],\n  \"consumed_by\": [],\n  \"key_functions\": [\n    \"check_mmdc()\",\n    \"render_diagram(mmd_path: Path, output_format: str = \\\"png\\\") -> bool\",\n    \"check_outdated(mmd_path: Path, output_format: str = \\\"png\\\") -> bool\"\n  ]\n}"
+  },
+  "tools/codify/rlm/debug_rlm.py": {
+    "file_mtime": 1769707602.6598785,
+    "hash": "683125e86c5d11a2",
+    "summarized_at": "2026-01-29T10:12:20.551771",
+    "summary": "{\n  \"purpose\": \"Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts.\",\n  \"layer\": \"Standalone\",\n  \"supported_object_types\": [\"RLM Configuration\"],\n  \"usage\": [\"(None)\"],\n  \"args\": [],\n  \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\", \".env\"],\n  \"outputs\": [\"Console output (State inspection)\"],\n  \"dependencies\": [\"tools/codify/rlm/rlm_config.py\"],\n  \"key_functions\": [\"main()\"]\n}"
+  },
+  "tools/codify/rlm/distiller.py": {
+    "file_mtime": 1769737016.6712525,
+    "hash": "3a8e416775ada64c",
+    "summarized_at": "2026-01-29T17:42:47.074224",
+    "summary": "{\n  \"purpose\": \"Recursive summarization of repo content using Ollama.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"# 1. Distill a single file (Tool Logic)\",\n    \"python tools/codify/rlm/distiller.py --file tools/codify/rlm/rlm_config.py --type tool\",\n    \"python tools/codify/rlm/distiller.py --file tools/investigate/miners/db_miner.py --type tool --force\",\n    \"# 2. Distill legacy system documentation (Default)\",\n    \"python tools/codify/rlm/distiller.py --file filepath.md\",\n    \"# 3. Incremental update (files changed in last 24 hours)\",\n    \"python tools/codify/rlm/distiller.py --since 24 --type legacy\",\n    \"# 4. Process specific directory\",\n    \"python tools/codify/rlm/distiller.py --target folder --type sanctuary\",\n    \"# 5. Force update (regenerate summaries even if unchanged)\",\n    \"python tools/codify/rlm/distiller.py --target tools/investigate/miners --type tool --force\"\n  ],\n  \"args\": [\n    \"--file\",\n    \"Single file to process\",\n    \"--model\",\n    \"Ollama model to use\",\n    \"--cleanup\",\n    \"Remove stale entries for deleted/renamed files\",\n    \"--since\",\n    \"Process only files changed in last N hours\",\n    \"--no-cleanup\",\n    \"Skip auto-cleanup on incremental distills\",\n    \"--target\",\n    \"Target directories to process  (use with caution currently will process all files in the target directory)\",\n    \"--force\",\n    \"Force update (regenerate summaries even if unchanged)\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/rlm_config.py (Configuration)\",\n    \"tools/curate/inventories/manage_tool_inventory.py (Cyclical: Updates inventory descriptions)\",\n    \"tools/curate/rlm/cleanup_cache.py (Orphan Removal)\"\n  ],\n  \"consumed_by\": [\n    \"tools/curate/inventories/manage_tool_inventory.py (Invokes distiller on tool updates)\"\n  ],\n  \"key_functions\": [\n    \"load_manifest()\",\n    \"load_cache()\",\n    \"save_cache()\",\n    \"compute_hash()\",\n    \"call_ollama()\",\n    \"distill()\",\n    \"run_cleanup()\"\n  ]\n}"
+  },
+  "tools/codify/rlm/rlm_config.py": {
+    "hash": "c31ca280d008bb57",
+    "summarized_at": "2026-01-31T18:26:57.941950",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "tools/codify/tracking/analyze_tracking_status.py": {
+    "file_mtime": 1769312126.2832038,
+    "hash": "67bbe5d3d27fcaa5",
+    "summarized_at": "2026-01-29T10:18:06.771048",
+    "summary": "{\n  \"purpose\": \"Generates a summary report of AI Analysis progress from the tracking file. Shows analyzed vs pending forms for project management dashboards.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"AI Analysis Tracking\"],\n  \"usage\": [\"python tools/codify/tracking/analyze_tracking_status.py\"],\n  \"inputs\": [\"file path\"],\n  \"outputs\": [\"Summary report of AI Analysis progress\"],\n  \"dependencies\": [],\n  \"consumed_by\": [\"Project management dashboards\"],\n  \"key_functions\": [\n    \"analyze_status()\"\n  ]\n}"
+  },
+  "tools/codify/tracking/generate_todo_list.py": {
+    "file_mtime": 1769312126.2832038,
+    "hash": "4f8c370b8a7478d1",
+    "summarized_at": "2026-01-29T10:18:15.872122",
+    "summary": "{\n  \"purpose\": \"Creates a prioritized TODO list of forms pending AI analysis. Bubbles up Critical and High priority items based on workflow usage.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Forms\"],\n  \"usage\": \"python tools/codify/tracking/generate_todo_list.py\",\n  \"args\": [],\n  \"inputs\": [\n    {\n      \"name\": \"ai_analysis_tracking.json\",\n      \"description\": \"JSON file containing form tracking data.\"\n    },\n    {\n      \"name\": \"Workflow_Summary.md\",\n      \"description\": \"Markdown file containing workflow forms data.\"\n    },\n    {\n      \"name\": \"folderpath\",\n      \"description\": \"Directory containing application overview markdown files.\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"TODO_PENDING_ANALYSIS.md\",\n      \"description\": \"Markdown file listing pending forms for AI analysis, prioritized based on workflow and app core usage.\"\n    }\n  ],\n  \"dependencies\": [\n    \"json\",\n    \"re\",\n    \"pathlib\"\n  ],\n  \"consumed_by\": [\"AI Analysis System\"],\n  \"key_functions\": [\n    \"extract_form_ids\",\n    \"get_priority_forms\",\n    \"generate_todo\"\n  ]\n}"
+  },
+  "tools/codify/utils/capture-code-snapshot.js": {
+    "file_mtime": 1769525918.950016,
+    "hash": "ef4d5eb654ecb301",
+    "summarized_at": "2026-01-29T10:18:45.426060",
+    "summary": "{\n  \"purpose\": \"Generates a single text file snapshot of code files for LLM context sharing.\",\n  \"layer\": \"Curate / Documentation\",\n  \"supported_object_types\": [\"code files\"],\n  \"usage\": [\"node tools/codify/utils/capture-code-snapshot.js --help\"],\n  \"args\": [],\n  \"inputs\": [\n    {\n      \"description\": \"Directory to scan for code files (defaults to current working directory)\",\n      \"type\": \"path\"\n    }\n  ],\n  \"outputs\": [\"llm_code_snapshot.txt\"],\n  \"dependencies\": [\"fs\", \"path\", \"ignore\"],\n  \"consumed_by\": \"(Unknown)\",\n  \"key_functions\": [\n    \"collectFiles()\",\n    \"main()\"\n  ]\n}"
+  },
+  "tools/codify/vector/ingest.py": {
+    "file_mtime": 1769707613.6856737,
+    "hash": "7e45178d45b3234a",
+    "summarized_at": "2026-01-29T10:12:50.378361",
+    "summary": "{\n  \"purpose\": \"Vector Ingestion: Chunks code/docs and generates embeddings via ChromaDB.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/codify/vector/ingest.py --help\"],\n  \"args\": [\n    \"--full\",\n    \"--folder\",\n    \"--file\",\n    \"--since\",\n    \"--query\",\n    \"--stats\",\n    \"--purge\",\n    \"--cleanup\",\n    \"--no-cleanup\"\n  ],\n  \"inputs\": \"- (See code)\",\n  \"outputs\": \"- (See code)\",\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": \"(Unknown)\",\n  \"key_functions\": [\n    \"get_chroma_path()\",\n    \"load_manifest()\",\n    \"load_rlm_cache()\",\n    \"should_skip()\",\n    \"collect_files()\",\n    \"create_document_with_context()\",\n    \"run_cleanup()\",\n    \"main()\"\n  ]\n}"
+  },
+  "tools/codify/vector/ingest_code_shim.py": {
+    "file_mtime": 1769525918.950572,
+    "hash": "6667b5234959c210",
+    "summarized_at": "2026-01-29T10:13:16.567889",
+    "summary": "{\n  \"purpose\": \"Shim for ingesting code files into Vector DB.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\n    \"Generic\"\n  ],\n  \"usage\": [\n    \"python tools/codify/vector/ingest_code_shim.py --help\"\n  ],\n  \"args\": [],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"(None detected)\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ],\n  \"key_functions\": [\n    \"find_project_root()\",\n    \"parse_xml_to_markdown()\",\n    \"parse_sql_to_markdown()\",\n    \"parse_json_to_markdown()\",\n    \"parse_python_to_markdown()\",\n    \"parse_javascript_to_markdown()\"\n  ]\n}"
+  },
+  "tools/curate/documentation/workflow_inventory_manager.py": {
+    "file_mtime": 1769561175.0164137,
+    "hash": "78d0f2c74115efc9",
+    "summarized_at": "2026-01-29T10:19:03.519385",
+    "summary": "{\n  \"purpose\": \"Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Workflows\"],\n  \"usage\": [\n    \"# Scan and regenerate inventory\\npython tools/curate/documentation/workflow_inventory_manager.py --scan\",\n    \"# Search workflows\\npython tools/curate/documentation/workflow_inventory_manager.py --search \\\"keyword\\\"\",\n    \"# List all workflows\\npython tools/curate/documentation/workflow_inventory_manager.py --list\",\n    \"# Show workflow details\\npython tools/curate/documentation/workflow_inventory_manager.py --show \\\"workflow-name\\\"\"\n  ],\n  \"args\": [\n    {\n      \"long\": \"--scan\",\n      \"short\": \"\",\n      \"action\": \"store_true\",\n      \"help\": \"Scan workflows dir and regenerate inventory\"\n    },\n    {\n      \"long\": \"--search\",\n      \"short\": \"\",\n      \"type\": \"str\",\n      \"metavar\": \"QUERY\",\n      \"help\": \"Search workflows by keyword\"\n    },\n    {\n      \"long\": \"--list\",\n      \"short\": \"\",\n      \"action\": \"store_true\",\n      \"help\": \"List all workflows\"\n    },\n    {\n      \"long\": \"--show\",\n      \"short\": \"\",\n      \"type\": \"str\",\n      \"metavar\": \"NAME\",\n      \"help\": \"Show details for a workflow\"\n    }\n  ],\n  \"inputs\": [\".agent/workflows/*.md\"],\n  \"outputs\": [\n    \"docs/antigravity/workflow/workflow_inventory.json\",\n    \"docs/antigravity/workflow/WORKFLOW_INVENTORY.md\"\n  ],\n  \"dependencies\": [\"PathResolver\"],\n  \"consumed_by\": [],\n  \"key_functions\": [\n    \"parse_frontmatter\",\n    \"extract_called_by\",\n    \"scan_workflows\",\n    \"load_inventory\",\n    \"save_inventory\",\n    \"generate_json\",\n    \"generate_markdown\",\n    \"search_workflows\",\n    \"list_workflows\",\n    \"show_workflow\"\n  ]\n}"
+  },
+  "tools/curate/inventories/manage_tool_inventory.py": {
+    "file_mtime": 1769716444.1697989,
+    "hash": "4b4a01331d072e33",
+    "summarized_at": "2026-01-29T17:20:29.446699",
+    "summary": "{\n  \"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.\",\n  \"layer\": \"Curate / Curate\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python tools/curate/inventories/manage_tool_inventory.py --help\",\n    \"python tools/curate/inventories/manage_tool_inventory.py list\",\n    \"python tools/curate/inventories/manage_tool_inventory.py search \\\"keyword\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py remove --path \\\"path/to/tool.py\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py update --path \\\"tool.py\\\" --desc \\\"New description\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub\"\n  ],\n  \"args\": [\n    \"--inventory\",\n    \"--path\",\n    \"--category\",\n    \"--desc\",\n    \"--output\",\n    \"keyword\",\n    \"--status\",\n    \"--new-path\",\n    \"--mark-compliant\",\n    \"--include-json\",\n    \"--json\",\n    \"--batch\",\n    \"--dry-run\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)\",\n    \"tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)\"\n  ],\n  \"consumed_by\": [\"tools/codify/rlm/distiller.py (Invokes update_tool for RLM-driven enrichment)\"],\n  \"key_functions\": [\n    \"generate_markdown()\",\n    \"extract_docstring()\",\n    \"main()\"\n  ]\n}"
+  },
+  "tools/curate/rlm/cleanup_cache.py": {
+    "hash": "04571da937a7cad6",
+    "summarized_at": "2026-01-29T17:19:31.564375",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "tools/curate/vector/cleanup.py": {
+    "file_mtime": 1769525918.981603,
+    "hash": "da8492734aead125",
+    "summarized_at": "2026-01-29T10:13:07.856580",
+    "summary": "{\n  \"purpose\": \"Vector Cleanup: Consistency check to remove stale chunks from DB.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/curate/vector/cleanup.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"--apply\",\n      \"description\": \"Perform the deletion\"\n    },\n    {\n      \"name\": \"--prune-orphans\",\n      \"description\": \"Remove entries not matching manifest\"\n    },\n    {\n      \"name\": \"--v\",\n      \"description\": \"Verbose mode\"\n    }\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"get_chroma_path()\",\n    \"load_manifest_globs()\",\n    \"matches_any()\",\n    \"main()\"\n  ]\n}"
+  },
+  "tools/orchestrator/proof_check.py": {
+    "hash": "6ffa54cfc3afc26f",
+    "summarized_at": "2026-01-31T13:59:27.150847",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "tools/orchestrator/workflow_manager.py": {
+    "hash": "ecb4b989fc6c51d2",
+    "summarized_at": "2026-01-31T20:09:41.591680",
+    "summary": "[DISTILLATION FAILED]"
+  },
+  "tools/retrieve/bundler/bundle.py": {
+    "file_mtime": 1769525919.0013855,
+    "hash": "4c0db7435b49626d",
+    "summarized_at": "2026-01-29T10:11:52.707664",
+    "summary": "{\n  \"purpose\": \"Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest.\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/bundler/bundle.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"manifest\",\n      \"description\": \"Path to file-manifest.json\"\n    },\n    {\n      \"name\": \"-o\",\n      \"description\": \"Output markdown file path\"\n    }\n  ],\n  \"inputs\": [\"See code\"],\n  \"outputs\": [\"See code\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"write_file_content()\",\n    \"bundle_files()\"\n  ]\n}"
+  },
+  "tools/retrieve/bundler/manifest_manager.py": {
+    "file_mtime": 1769554275.3037753,
+    "hash": "25a46ba715d8df06",
+    "summarized_at": "2026-01-29T10:12:02.640725",
+    "summary": "{\n  \"purpose\": \"Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler.\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/bundler/manifest_manager.py --help\"],\n  \"args\": [\n    \"--manifest\",\n    \"--base\",\n    \"--bundle-title\",\n    \"--type\",\n    \"--path\",\n    \"--note\",\n    \"pattern\",\n    \"--output\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\"None detected\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"add_file()\",\n    \"bundle()\",\n    \"get_base_manifest_path()\",\n    \"init_manifest()\",\n    \"list_manifest()\",\n    \"load_manifest()\",\n    \"remove_file()\",\n    \"save_manifest()\",\n    \"search_files()\",\n    \"update_file()\"\n  ]\n}"
+  },
+  "tools/retrieve/rlm/inventory.py": {
+    "file_mtime": 1769703353.8198912,
+    "hash": "e89667d95d7a8297",
+    "summarized_at": "2026-01-29T09:54:31.690762",
+    "summary": "{\n  \"purpose\": \"RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"RLM Cache (Legacy)\", \"RLM Cache (Tool)\"],\n  \"usage\": \"No explicit usage examples provided in the code. The script is intended to be run from the command line with optional --type argument.\",\n  \"args\": [\n    {\n      \"name\": \"--type\",\n      \"description\": \"Selects the configuration profile (default: legacy).\",\n      \"choices\": [\"legacy\", \"tool\"]\n    }\n  ],\n  \"inputs\": [\n    \".agent/learning/rlm_summary_cache.json (Legacy)\",\n    \".agent/learning/rlm_tool_cache.json (Tool)\",\n    \"Filesystem targets (defined in manifests)\",\n    \"tool_inventory.json\"\n  ],\n  \"outputs\": [\"Console report (Statistics, Missing Files, Stale Entries)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/rlm_config.py\"\n  ],\n  \"key_functions\": [\n    \"audit_inventory()\"\n  ]\n}"
+  },
+  "tools/retrieve/rlm/query_cache.py": {
+    "file_mtime": 1769702294.5297713,
+    "hash": "fd76ff31721cc98a",
+    "summarized_at": "2026-01-29T10:12:28.812250",
+    "summary": "{\n  \"purpose\": \"RLM Search: Instant O(1) semantic search of the ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/rlm/query_cache.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"term\",\n      \"description\": \"Search term (ID, filename, or content keyword)\"\n    },\n    {\n      \"name\": \"--list\",\n      \"description\": \"List all cached files\"\n    },\n    {\n      \"name\": \"--no-summary\",\n      \"description\": \"Hide summary text\"\n    },\n    {\n      \"name\": \"--json\",\n      \"description\": \"Output results as JSON\"\n    }\n  ],\n  \"inputs\": [\"- (See code)\"],\n  \"outputs\": [\"- (See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"load_cache()\",\n    \"search_cache()\",\n    \"list_cache()\",\n    \"main()\"\n  ]\n}"
+  },
+  "tools/retrieve/vector/query.py": {
+    "file_mtime": 1769554275.3047755,
+    "hash": "b66859b4fc8d6957",
+    "summarized_at": "2026-01-29T10:12:59.974507",
+    "summary": "{\n  \"purpose\": \"Vector Search: Semantic search interface for the ChromaDB collection.\",\n  \"layer\": \"Curate / Vector\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/vector/query.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"query\",\n      \"description\": \"Search query text\"\n    },\n    {\n      \"name\": \"--results\",\n      \"alias\": \"-n\",\n      \"type\": \"int\",\n      \"default\": 5,\n      \"description\": \"Number of results (default: 5)\"\n    },\n    {\n      \"name\": \"--stats\",\n      \"action\": \"store_true\",\n      \"description\": \"Show database statistics\"\n    },\n    {\n      \"name\": \"--json\",\n      \"alias\": \"-j\",\n      \"action\": \"store_true\",\n      \"description\": \"Output results as JSON\"\n    }\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"get_chroma_path()\",\n    \"VectorDBQuery.query()\",\n    \"VectorDBQuery.stats()\"\n  ]\n}"
+  }
+}

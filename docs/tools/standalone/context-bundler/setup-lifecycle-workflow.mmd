@@ -1,0 +1,47 @@
+flowchart TD
+    %% Nodes
+    Start([Tool Ready])
+    
+    subgraph Setup [1. Configuration Phase]
+        Init[Init Manifest]
+        CMD_Init[/"python manifest_manager.py init --target X --manifest m.json"/]
+        Manifest[(m.json)]
+    end
+    
+    subgraph Curation [2. Curation Phase]
+        Add[Add Files]
+        CMD_Add[/"python manifest_manager.py add --path P --manifest m.json"/]
+        
+        List[Review Manifest]
+        CMD_List[/"python manifest_manager.py list --manifest m.json"/]
+        
+        Search[Search Manifest]
+        CMD_Search[/"python manifest_manager.py search 'pattern' --manifest m.json"/]
+    end
+    
+    subgraph Execution [3. Execution Phase]
+        Bundle[Generate Bundle]
+        CMD_Bundle[/"python manifest_manager.py bundle --output o.md --manifest m.json"/]
+        Output([o.md])
+    end
+
+    %% Flow
+    Start --> Init
+    Init --> CMD_Init
+    CMD_Init --> Manifest
+    
+    Manifest --> Add
+    Add --> CMD_Add
+    CMD_Add --> Manifest
+    
+    Manifest --> List
+    List --> CMD_List
+    CMD_List --> Manifest
+    
+    Manifest --> Search
+    Search --> CMD_Search
+    CMD_Search --> Manifest
+    
+    Manifest --> Bundle
+    Bundle --> CMD_Bundle
+    CMD_Bundle --> Output

@@ -1,0 +1,106 @@
+graph TD
+    User([User/Agent])
+    Constitution[["🏛️ Constitution"]]
+    ThinShim{{"🐚 Thin Shim<br/>(workflow-start.sh)"}}
+    PythonCLI{{"🐍 Python CLI<br/>(tools/cli.py workflow start)"}}
+    Orchestrator[["⚙️ WorkflowManager<br/>(tools/orchestrator/)"]]
+
+    User -->|"1. Request:<br/>/codify-form TARGET"| ThinShim
+    
+    %% Shim is pass-through
+    ThinShim -->|"2. exec python3<br/>tools/cli.py ..."| PythonCLI
+    
+    %% Constitution aligned at start
+    PythonCLI -->|Align with| Constitution
+    
+    %% Annotation about the shim
+    ThinShim -.-|"ADR-0030: Dumb wrapper<br/>NO logic, just redirect"| ShimNote["ℹ️ Thin Shim contains ONLY:<br/>exec python3 tools/cli.py ..."]
+    
+    %% Constitution governs all
+    Constitution -.->|"Governs all steps"| Note["ℹ️ Adhered to at every phase:<br/>Spec, Plan, Tasks, Execution"]
+    
+    %% Python Orchestrator handles enforcement
+    PythonCLI -->|3. Invoke| Orchestrator
+    
+    subgraph Enforcement ["Enforcement Layer (Python - ALL Logic Here)"]
+        direction TB
+        GitCheck["Git State Check<br/>(clean? detached?)"]
+        SpecCheck["Spec Detection<br/>(existing folder?)"]
+        BranchCheck["Branch Detection<br/>(existing branch?)"]
+        ContextInit["Context Manifest Init"]
+        
+        GitCheck --> SpecCheck
+        SpecCheck --> BranchCheck
+        BranchCheck --> ContextInit
+    end
+    
+    Orchestrator --> GitCheck
+    
+    %% Router determines TYPE of work
+    ContextInit -->|4. Determine Type| TypeCheck{Work Type?}
+    
+    TypeCheck -->|Standard SOP<br/>e.g. /codify-form| StandardFlow[Standard Flow]
+    TypeCheck -->|Custom/Discovery<br/>New Feature/Problem| CustomFlow[Custom Flow]
+    
+    %% BOTH tracks create Spec-Plan-Tasks (Unified Tracking)
+    subgraph UnifiedTracking ["Unified Tracking: spec → plan → tasks"]
+        direction TB
+        Spec[spec.md]
+        Plan[plan.md]
+        Tasks[tasks.md]
+        
+        Spec -->|Define What & Why| Plan
+        Plan -->|Define How| Tasks
+    end
+    
+    StandardFlow -->|Auto-Template| Spec
+    CustomFlow -->|Manual Draft| Spec
+    
+    %% Execution: Tasks drive work
+    Tasks -->|Execute| Execution{Execution}
+    
+    %% Standard goes to Factory Ops
+    Execution -->|Standard| FactoryOps
+    subgraph FactoryOps ["Factory Operations"]
+        C_Form[/codify-form/]
+        C_DB[/codify-db-*/]
+        C_Logic[/codify-business-*/]
+    end
+    
+    %% Custom goes to Implementation
+    Execution -->|Custom| CustomImpl
+    subgraph CustomImpl ["Custom Implementation"]
+        Implement[/speckit-implement/]
+        ManualCode[Manual Code]
+    end
+    
+    %% Closure
+    FactoryOps --> Closure
+    CustomImpl --> Closure
+    
+    subgraph Closure ["Universal Closure"]
+        Retro[/workflow-retrospective/]
+        End[/workflow-end/]
+        Retro --> End
+    end
+    
+    End --> Done([Done])
+    
+    %% Styling
+    style User fill:#fff,stroke:#333
+    style Constitution fill:#ff9999,stroke:#333,stroke-width:3px
+    style ThinShim fill:#f5deb3,stroke:#8b4513,stroke-width:2px
+    style ShimNote fill:#fffacd,stroke:#999,stroke-dasharray:5
+    style PythonCLI fill:#4B8BBE,stroke:#333,stroke-width:2px,color:#fff
+    style Orchestrator fill:#306998,stroke:#333,stroke-width:2px,color:#fff
+    style Note fill:#fffacd,stroke:#999,stroke-dasharray:5
+    style GitCheck fill:#ffe4b5,stroke:#333
+    style SpecCheck fill:#ffe4b5,stroke:#333
+    style BranchCheck fill:#ffe4b5,stroke:#333
+    style ContextInit fill:#ffe4b5,stroke:#333
+    style TypeCheck fill:#FFD700,stroke:#333
+    style Spec fill:#ADD8E6,stroke:#333
+    style Plan fill:#ADD8E6,stroke:#333
+    style Tasks fill:#ADD8E6,stroke:#333
+    style StandardFlow fill:#90EE90,stroke:#333
+    style CustomFlow fill:#87CEEB,stroke:#333

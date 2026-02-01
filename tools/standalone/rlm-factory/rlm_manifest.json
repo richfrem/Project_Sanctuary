@@ -1,0 +1,174 @@
+{
+    "version": "2.0",
+    "description": "Recursive Learning Model manifest for Project Sanctuary",
+    "project": "Project_Sanctuary",
+    "generated_at": "2026-01-31T19:28:00Z",
+    "target_directories": [
+        {
+            "path": "ADRs",
+            "description": "Architectural Decision Records",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": "01_PROTOCOLS",
+            "description": "System Protocols and Governance",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": ".agent/rules",
+            "description": "Core Agent Rules & Policies",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": ".agent/workflows",
+            "description": "Standard Operating Procedures (Slash Commands)",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": ".agent/skills",
+            "description": "Agent Skills and Capabilities",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": ".agent/learning",
+            "description": "Learning Module and Cognitive Artifacts",
+            "priority": "HIGH",
+            "file_types": [
+                ".md",
+                ".json"
+            ]
+        },
+        {
+            "path": "docs",
+            "description": "Project Documentation",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": "LEARNING",
+            "description": "Research Topics and Learnings",
+            "priority": "MEDIUM",
+            "file_types": [
+                ".md"
+            ]
+        },
+        {
+            "path": "IDENTITY",
+            "description": "Project Identity and Founder Seeds",
+            "priority": "MEDIUM",
+            "file_types": [
+                ".md",
+                ".json"
+            ]
+        },
+        {
+            "path": "mcp_servers",
+            "description": "MCP Server Implementations",
+            "priority": "MEDIUM",
+            "file_types": [
+                ".py",
+                ".md",
+                ".json"
+            ]
+        },
+        {
+            "path": "tools",
+            "description": "CLI Tools and Utilities",
+            "priority": "MEDIUM",
+            "file_types": [
+                ".py",
+                ".md"
+            ]
+        },
+        {
+            "path": "forge",
+            "description": "Active Specs and Implementation Plans",
+            "priority": "HIGH",
+            "file_types": [
+                ".md"
+            ]
+        }
+    ],
+    "core_files": [
+        {
+            "path": ".agent/rules/constitution.md",
+            "description": "Project Sanctuary Constitution"
+        },
+        {
+            "path": ".agent/rules/human_gate_policy.md",
+            "description": "Human Review & Approval Policy"
+        },
+        {
+            "path": ".agent/rules/cognitive_continuity_policy.md",
+            "description": "Session Continuity & Learning Loop"
+        },
+        {
+            "path": ".agent/rules/git_workflow_policy.md",
+            "description": "Git Branching and Commit Policy"
+        },
+        {
+            "path": ".agent/rules/tool_discovery_and_retrieval_policy.md",
+            "description": "Tool Discovery Protocol"
+        },
+        {
+            "path": ".agent/learning/learning_package_snapshot.md",
+            "description": "Current Session Snapshot (Truth Anchor)"
+        },
+        {
+            "path": ".agent/learning/cognitive_primer.md",
+            "description": "Cognitive Primer for New Sessions"
+        },
+        {
+            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
+            "description": "Sanctuary Guardian Persona & Protocol"
+        },
+        {
+            "path": "IDENTITY/founder_seed.json",
+            "description": "Founder Identity Seed"
+        },
+        {
+            "path": "README.md",
+            "description": "Project Root README"
+        },
+        {
+            "path": "mcp_servers/gateway/fleet_registry.json",
+            "description": "MCP Gateway Fleet Registry"
+        },
+        {
+            "path": "mcp_servers/lib/exclusion_manifest.json",
+            "description": "Content Exclusion Manifest"
+        }
+    ],
+    "exclude_patterns": [
+        "**/archive/**",
+        "**/node_modules/**",
+        "**/.git/**",
+        "**/__pycache__/**",
+        "**/chroma_db/**",
+        "**/.vector_data/**",
+        "**/outputs/**",
+        "**/temp/**"
+    ],
+    "notes": {
+        "vector_data": "Skip vector database files - binary embeddings",
+        "chroma_db": "Skip ChromaDB storage - generated artifacts",
+        "archive": "Skip archived content - historical only"
+    }
+}

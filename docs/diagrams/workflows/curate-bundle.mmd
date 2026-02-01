@@ -1,0 +1,59 @@
+flowchart TB
+ subgraph subGraph0["CLI Layer"]
+        EntryPoint["cli.py bundle"]
+        ManifestMgr["manifest_manager.py"]
+  end
+ subgraph subGraph1["Core Logic"]
+        Bundler["bundle.py"]
+        ContextBuilder{"Context Builder"}
+  end
+    subgraph subGraph2["Intelligence Sources"]
+        RLM[("RLM Cache")]
+        BaseManifests["Base Manifests<br>(tools/standalone/context-bundler/base-manifests/*.json)"]
+        Manifest["file-manifest.json"]
+        Miners["Miners: XML, PLL, DB"]
+        DepMap["Dependency Map"]
+  end
+ subgraph Output["Output"]
+        ContextBundle["temp/context-bundles/ID_context.md"]
+  end
+    User(["User / Automation"]) -- "/curate-bundle" --> EntryPoint
+    User -.->|"curate-manifest ID Init"| ManifestMgr
+    EntryPoint -- target --> ManifestMgr
+    ManifestMgr -- "init (Selects Base by Type)" --> BaseManifests
+    BaseManifests --> Manifest
+    ManifestMgr -- read --> Manifest
+    ManifestMgr -- execute --> Bundler
+    Bundler -- "1. Load Manifest" --> Manifest
+    Bundler -- "2. Check Intelligence" --> RLM
+    Bundler -- "3. Mine Logic" --> Miners
+    Bundler -- "4. Trace Deps" --> DepMap
+    Bundler --> ContextBuilder
+    ContextBuilder -- Assemble --> ContextBundle
+    ContextBundle --> Review{"Complete?"}
+    Review -- Yes --> Done(["Ready for Analysis"])
+    Review -- No: Gaps --> Refine["Refine Manifest"]
+    Refine -- "Add / Remove / Update<br>(Recursively Adjust Context)" --> EntryPoint
+
+     EntryPoint:::command
+     ManifestMgr:::script
+     Bundler:::script
+     ContextBuilder:::logic
+     RLM:::input
+     BaseManifests:::input
+     Manifest:::input
+     Miners:::input
+     DepMap:::input
+     ContextBundle:::output
+     User:::command
+     Review:::logic
+     Refine:::command
+     Done:::output
+    classDef command fill:#f9f,stroke:#333,stroke-width:2px
+    classDef script fill:#bbf,stroke:#333,stroke-width:1px
+    classDef input fill:#efe,stroke:#333,stroke-width:1px
+    classDef logic fill:#ffe,stroke:#333,stroke-width:1px
+    classDef output fill:#faa,stroke:#333,stroke-width:2px
+    click EntryPoint "../../../tools/cli.py"
+    click ManifestMgr "../../../tools/retrieve/bundler/manifest_manager.py"
+    click Bundler "../../../tools/retrieve/bundler/bundle.py"
