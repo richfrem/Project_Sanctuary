@@ -24,8 +24,9 @@ description: "Tasks for Integrate Snapshot and Persist-Soul into CLI"
 - [x] T007b Verify `cli.py` commands (`snapshot`, `persist-soul`, `debrief`, `guardian`) structure.
 
 ## Phase 3: Verification
-- [x] T008 Verify `snapshot` command with `learning_audit` type.
-- [x] T009 Verify `debrief` function.
+- [x] T008 Verify `snapshot` command with `learning_audit` type. (Verified via Spec-002 audits)
+- [x] T009 Verify `debrief` function. (Verified via Spec-002 flows)
+- [x] T009b Verify `persist-soul` and `persist-soul-full` commands. (Verified in session)
 
 ## Phase 4: Closure
 - [ ] T010 Run `/workflow-retrospective`

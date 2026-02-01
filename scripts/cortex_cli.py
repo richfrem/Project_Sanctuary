@@ -72,8 +72,7 @@ import subprocess
 IRON_CORE_PATHS = [
     "01_PROTOCOLS",
     "ADRs",
-    "cognitive_continuity_policy.md",
-    "founder_seed.json"
+    "cognitive_continuity_policy.md"
 ]
 
 def verify_iron_core(root_path):

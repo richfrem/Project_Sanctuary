@@ -1,62 +1,102 @@
 #!/usr/bin/env python3
 """
-cli.py (CLI)
-=====================================
+cli.py - Project Sanctuary Command Line Interface
+==================================================
 
 Purpose:
-    Main entry point for the Project Sanctuary Command System (Antigravity).
-    Serves as the Single Source of Truth for system orchestration:
-    - Protocol 128 Learning Loop (Snapshot, Debrief, Persist, Guardian)
-    - RAG Cortex Operations (Ingest, Query, Stats)
-    - Context Bundling & Tool Discovery (Investigate/Retrieve)
-    - Workflow Management (Codify)
+    Main entry point for the Project Sanctuary Command System.
+    Provides unified access to all core operations:
+    - Protocol 128 Learning Loop (Debrief, Snapshot, Persist, Guardian)
+    - RAG Cortex Operations (Ingest, Query, Stats, Cache)
+    - Context Bundling & Manifest Management
+    - Tool Discovery & Inventory
+    - Workflow Orchestration
     - Evolutionary Metrics (Protocol 131)
+    - RLM Distillation (Protocol 132)
 
 Layer: Tools / Orchestrator
 
+Commands:
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # PROTOCOL 128 - LEARNING LOOP
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    debrief         : Phase I - Run Learning Debrief (orientation)
+    snapshot        : Phase V - Capture context snapshot (seal, audit, guardian, bootstrap)
+    persist-soul    : Phase VI - Broadcast learnings to Hugging Face
+    persist-soul-full : Full JSONL regeneration and HF deployment (ADR 081)
+    guardian        : Bootloader operations (wakeup, snapshot)
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # RAG CORTEX
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ingest          : RAG ingestion (full or incremental)
+    query           : Semantic search against vector DB
+    stats           : View RAG health and collection statistics
+    cache-stats     : View semantic cache efficiency metrics
+    cache-warmup    : Pre-populate cache with common queries
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # CONTEXT BUNDLING
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    init-context    : Quick setup - initialize manifest and auto-bundle
+    manifest        : Full manifest management (init, add, remove, update, search, list, bundle)
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # TOOLS & WORKFLOWS
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    tools           : Discover and manage CLI tools (list, search, add, update, remove)
+    workflow        : Agent lifecycle management (start, retrospective, end)
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # EVOLUTION & RLM
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    evolution       : Evolutionary metrics - fitness, depth, scope (Protocol 131)
+    rlm-distill     : Distill semantic summaries from files (Protocol 132)
+
 Usage Examples:
+
     # Learning Loop (Protocol 128)
     python tools/cli.py debrief --hours 24
     python tools/cli.py snapshot --type seal
-    python tools/cli.py persist-soul --snapshot .agent/learning/learning_package_snapshot.md
+    python tools/cli.py snapshot --type learning_audit
+    python tools/cli.py persist-soul
+    python tools/cli.py persist-soul-full
     python tools/cli.py guardian wakeup --mode HOLISTIC
 
     # RAG Cortex
-    python tools/cli.py ingest --incremental --hours 24
-    python tools/cli.py query "Concept: Protocol 128"
-    python tools/cli.py stats --samples
+    python tools/cli.py ingest                              # Full ingestion
+    python tools/cli.py ingest --incremental --hours 24     # Incremental
+    python tools/cli.py query "What is Protocol 128?"
+    python tools/cli.py query "Architecture decisions" --max-results 10
+    python tools/cli.py stats --samples --sample-count 3
+    python tools/cli.py cache-stats
+    python tools/cli.py cache-warmup --queries "Protocol 128" "ADR process"
 
-    # Workflows & Investigation
-    python tools/cli.py workflow start --name codify-feat --target MyFeat
-    python tools/cli.py tools list --category curate
-    python tools/cli.py bundle --target MyTarget
+    # Context Bundling
+    python tools/cli.py init-context --target MyFeature --type generic
+    python tools/cli.py manifest init --bundle-title MyBundle --type learning
+    python tools/cli.py manifest add --path docs/my-file.md --note "Reference doc"
+    python tools/cli.py manifest list
+    python tools/cli.py manifest bundle
 
-    # Evolution (Protocol 131)
-    python tools/cli.py evolution fitness "Content here or --file path"
+    # Tools & Workflows
+    python tools/cli.py tools list
+    python tools/cli.py tools search "ingestion"
+    python tools/cli.py tools add --path tools/my-script.py --category curate
+    python tools/cli.py workflow start --name workflow-start --target MyFeature
+    python tools/cli.py workflow retrospective
+    python tools/cli.py workflow end "feat: implemented feature X"
 
-CLI Arguments:
-    # Core RAG
-    ingest          : Perform RAG ingestion (Full or Incremental)
-    query           : Perform semantic search
-    stats           : View RAG health statistics
-
-    # Learning Loop
-    debrief         : Run Learning Debrief (Phase I)
-    snapshot        : Capture context snapshot (Phase V)
-    persist-soul    : Broadcast to Hugging Face (Phase VI)
-    guardian        : Bootloader operations
-    
-    # Tooling
-    tools           : Discover and manage scripts
-    bundle          : Generate context bundles
-    workflow        : Manage agent workflows
-    evolution       : Calculate fitness metrics
+    # Evolution & RLM
+    python tools/cli.py evolution fitness --file docs/my-document.md
+    python tools/cli.py evolution depth "Text content to evaluate"
+    python tools/cli.py rlm-distill tools/my-script.py
 
 Dependencies:
-    - mcp_servers.learning.operations
-    - mcp_servers.rag_cortex.operations
-    - mcp_servers.evolution.operations
-    - tools.orchestrator.workflow_manager
+    - mcp_servers.learning.operations (LearningOperations)
+    - mcp_servers.rag_cortex.operations (CortexOperations)
+    - mcp_servers.evolution.operations (EvolutionOperations)
+    - tools.orchestrator.workflow_manager (WorkflowManager)
 """
 import sys
 import argparse
@@ -81,15 +121,12 @@ except ImportError:
     from tools.utils.path_resolver import resolve_path
 
 # Resolve Directories
-# Resolve Directories
 SEARCH_DIR = Path(resolve_path("tools/investigate/search"))
 DOCS_DIR = Path(resolve_path("tools/codify/documentation"))
 TRACKING_DIR = Path(resolve_path("tools/codify/tracking"))
 SHARED_DIR = Path(resolve_path("tools/shared"))
 RETRIEVE_DIR = Path(resolve_path("tools/retrieve/bundler"))
-VECTOR_TOOLS_DIR = Path(resolve_path("tools/retrieve/vector"))
 INVENTORIES_DIR = Path(resolve_path("tools/curate/inventories"))
-HYGIENE_DIR = Path(resolve_path("tools/curate/hygiene"))
 RLM_DIR = Path(resolve_path("tools/retrieve/rlm"))
 ORCHESTRATOR_DIR = Path(resolve_path("tools/orchestrator"))
 
@@ -115,8 +152,7 @@ except ImportError:
 IRON_CORE_PATHS = [
     "01_PROTOCOLS",
     "ADRs",
-    "cognitive_continuity_policy.md",
-    "founder_seed.json"
+    "cognitive_continuity_policy.md"
 ]
 
 def verify_iron_core(root_path):
@@ -164,62 +200,6 @@ def verify_iron_core(root_path):
         
     return len(violations) == 0, violations
 
-def resolve_type_from_inventory(target_id: str) -> str:
-    """
-    Placeholder for artifact type resolution.
-    Project Sanctuary does not use a legacy object inventory.
-    Returns None - callers should handle type inference differently.
-    """
-    return None
-
-def _enrich_manifest(target_id: str, manifest_manager_path: str):
-    """
-    Enriches the manifest by automatically adding downstream dependencies
-    discovered by dependencies.py.
-    """
-    print(f"✨ Auto-enriching manifest with dependencies for {target_id}...")
-    
-    # 1. Query Dependencies (Downstream + JSON)
-    dep_script = str(SEARCH_DIR / "dependencies.py")
-    cmd = [sys.executable, dep_script, "--target", target_id, "--direction", "downstream", "--json"]
-    
-    try:
-        res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        data = json.loads(res.stdout)
-        
-        downstream = data.get("downstream", {})
-        count = 0
-        
-        # 2. Iterate and Add
-        for category, items in downstream.items():
-            # FILTER: Skip Forms and Reports (Focus on Logic/DB)
-            if category in ["Forms", "Reports", "Menus"]:
-                continue
-                
-            for item in items:
-                # Item structure from dependencies.py: {"id": "NAME", "FilePath": "path/to/file"}
-                file_path = item.get("FilePath")
-                if file_path:
-                    # Construct note
-                    note = f"Auto-Dep: {category} ({item['id']})"
-                    
-                    # Call manifest add
-                    # We use subprocess to keep manifest logic encapsulated in manager
-                    # Note: manifest_manager expects relative or absolute path. 
-                    # dependencies.py returns path relative to PROJECT_ROOT usually.
-                    
-                    add_cmd = [sys.executable, manifest_manager_path, "add", "--path", file_path, "--note", note]
-                    subprocess.run(add_cmd, capture_output=True) # Silence output to avoid noise
-                    count += 1
-        
-        print(f"✅ Added {count} downstream dependencies to manifest.")
-        
-    except subprocess.CalledProcessError as e:
-        print(f"⚠️  Dependency enrichment failed (Command Error): {e}")
-    except json.JSONDecodeError:
-        print(f"⚠️  Dependency enrichment failed (Invalid JSON output from dependencies.py)")
-    except Exception as e:
-        print(f"⚠️  Dependency enrichment failed: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="Recursive Business Rule Discovery CLI")
@@ -245,18 +225,6 @@ def main():
     
     tools_remove = tools_subparsers.add_parser("remove", help="Remove tool from inventory")
     tools_remove.add_argument("--path", required=True, help="Path/Name of tool")
-
-    # Candidates Command (Wrapper)
-    cand_parser = subparsers.add_parser("candidates", help="Manage priority candidates")
-    cand_parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for priority_candidates.py")
-
-    # Business Rules Command (Wrapper to business_rules_inventory_manager.py)
-    br_parser = subparsers.add_parser("br", help="Business Rules Inventory (search, register, investigate)")
-    br_parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for business_rules_inventory_manager.py")
-
-    # Business Workflows Command (Wrapper to business_workflows_inventory_manager.py)
-    bw_parser = subparsers.add_parser("bw", help="Business Workflows Inventory (search, register, investigate)")
-    bw_parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for business_workflows_inventory_manager.py")
 
     # Command: ingest
     ingest_parser = subparsers.add_parser("ingest", help="Perform full ingestion")
@@ -307,18 +275,7 @@ def main():
     rlm_parser.add_argument("target", help="File or folder path to distill")
 
 
-    # Dependency Command
-    dep_parser = subparsers.add_parser("dependencies", help="Query Artifact Dependencies")
-    dep_parser.add_argument("--target", required=True, help="Target Artifact ID")
-    dep_parser.add_argument("--deep", action="store_true", help="Deep search across all source files")
-    dep_parser.add_argument("--json", action="store_true", help="Output in JSON format")
-    dep_parser.add_argument("--direction", choices=['upstream', 'downstream', 'both'], default='both', help="Analysis direction (upstream/downstream/both)")
-
-    # Bundle Command
-    bundle_parser = subparsers.add_parser("bundle", help="Gather comprehensive context (XML + Deps + Menu)")
-    bundle_parser.add_argument("--target", required=True, help="Target Artifact ID")
-
-    # Context Command (Initial Reconstruction)
+    # Init-Context Command: Quick setup - initializes manifest and auto-bundles
     context_parser = subparsers.add_parser("init-context", help="Initialize manifest and generate first bundle")
     context_parser.add_argument("--target", required=True, help="Target ID")
     context_parser.add_argument("--type", choices=[
@@ -326,7 +283,7 @@ def main():
         'learning', 'learning-audit', 'learning-audit-core', 'red-team', 'guardian', 'bootstrap'
     ], help="Artifact Type")
 
-    # Manifest Command (Manual Management)
+    # Manifest Command: Full manifest management (init, add, remove, update, search, list, bundle)
     manifest_parser = subparsers.add_parser("manifest", help="Manage context manifest")
     # Global args for manifest subcommands? No, must add to each subparser unless we structure differently.
     # To keep simple, we add --base to each action that supports it.
@@ -344,7 +301,7 @@ def main():
     man_add = manifest_subparsers.add_parser("add", help="Add file to manifest")
     man_add.add_argument("--path", required=True)
     man_add.add_argument("--note", default="")
-    man_add.add_argument("--base", help="Target base manifest type (e.g. form)")
+    man_add.add_argument("--base", help="Target base manifest type")
     man_add.add_argument("--manifest", help="Custom manifest path")
     
     man_remove = manifest_subparsers.add_parser("remove", help="Remove file from manifest")
@@ -373,7 +330,7 @@ def main():
     man_bundle.add_argument("--base", help="Target base manifest type")
     man_bundle.add_argument("--manifest", help="Custom manifest path")
 
-    # Snapshot Command (Protocol 128 - uses bundler directly, no MCP required)
+    # Snapshot Command: Protocol 128 memory bundles for session continuity
     snapshot_parser = subparsers.add_parser("snapshot", help="Generate Protocol 128 context snapshots")
     snapshot_parser.add_argument("--type", required=True, choices=[
         'seal', 'learning_audit', 'audit', 'guardian', 'bootstrap'
@@ -387,7 +344,7 @@ def main():
     debrief_parser = subparsers.add_parser("debrief", help="Run Learning Debrief (Protocol 128 Phase I)")
     debrief_parser.add_argument("--hours", type=int, default=24, help="Lookback window (hours)")
 
-    # Guardian Command (Bootloader)
+    # Guardian Command: Bootloader operations for session startup
     guardian_parser = subparsers.add_parser("guardian", help="Guardian Bootloader Operations")
     guardian_subparsers = guardian_parser.add_subparsers(dest="guardian_action")
     
@@ -406,28 +363,14 @@ def main():
 
     # Persist Soul Full Command (ADR 081)
     subparsers.add_parser("persist-soul-full", help="Regenerate full JSONL and deploy to HF (ADR 081)")
-
-
-    # Config Command Group (TS Rules Manager)
-    config_parser = subparsers.add_parser("config", help="Update Form Rules (TS)")
-    config_subparsers = config_parser.add_subparsers(dest="config_action")
     
-    cfg_query = config_subparsers.add_parser("query", help="Get rules for an item")
-    cfg_query.add_argument("target", help="Form ID or App Code")
-    cfg_query.add_argument("item", help="Item ID")
-    
-    cfg_update = config_subparsers.add_parser("update", help="Update rules for an item")
-    cfg_update.add_argument("target", help="Form ID or App Code")
-    cfg_update.add_argument("item", help="Item ID")
-    cfg_update.add_argument("--visible", help="Comma-sep roles, or *")
-    cfg_update.add_argument("--enabled", help="Comma-sep roles, or *")
 
-    # Workflow Command (New Python Orchestrator)
+    # Workflow Command: Agent lifecycle management (start, retrospective, end)
     wf_parser = subparsers.add_parser("workflow", help="Agent Workflow Orchestration")
     wf_subparsers = wf_parser.add_subparsers(dest="workflow_action")
     
     wf_start = wf_subparsers.add_parser("start", help="Start a new workflow (Safe Pre-flight)")
-    wf_start.add_argument("--name", required=True, help="Workflow Name (e.g. codify-form)")
+    wf_start.add_argument("--name", required=True, help="Workflow Name (e.g. workflow-start)")
     wf_start.add_argument("--target", required=True, help="Target ID")
     wf_start.add_argument("--type", default="generic", help="Target Type (optional)")
 
@@ -452,6 +395,9 @@ def main():
         # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
         pass 
 
+    # --- Command Handlers ---
+
+    # RAG Ingestion Command: Processes files into the Vector DB
     if args.command == "ingest":
         if args.incremental:
             print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
@@ -480,12 +426,14 @@ def main():
             print(f"📄 Found {len(modified_files)} modified files.")
             res = cortex_ops.ingest_incremental(file_paths=modified_files)
             
+            # res.status contains "success" or "error"
             if res.status == "success":
                 print(f"✅ Success: {res.documents_added} added, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
             else:
                 print(f"❌ Error: {res.error}")
                 sys.exit(1)
         else:
+            # Full Ingestion: Purges and rebuilds the collection
             print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
             res = cortex_ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
             if res.status == "success":
@@ -494,6 +442,7 @@ def main():
                 print(f"❌ Error: {res.error}")
                 sys.exit(1)
 
+    # Vector Query Command: Semantic search against the RAG collection
     elif args.command == "query":
         print(f"🔍 Querying: {args.query_text}")
         res = cortex_ops.query(
@@ -513,6 +462,7 @@ def main():
             print(f"❌ Error: {res.error}")
             sys.exit(1)
 
+    # RAG Stats Command: View health and collection metrics
     elif args.command == "stats":
         stats = cortex_ops.get_stats(include_samples=args.samples, sample_count=args.sample_count)
         print(f"🏥 Health: {stats.health_status}")
@@ -528,10 +478,12 @@ def main():
                 print(f"\n  {i}. ID: {sample.id}")
                 print(f"     Preview: {sample.content_preview[:100]}...")
 
+    # Cache Stats Command: View Semantic Cache efficiency metrics
     elif args.command == "cache-stats":
         stats = cortex_ops.get_cache_stats()
         print(f"💾 Cache Statistics: {stats}")
 
+    # Cache Warmup Command: Pre-populate cache with common queries
     elif args.command == "cache-warmup":
         print(f"🔥 Warming up cache...")
         res = cortex_ops.cache_warmup(genesis_queries=args.queries)
@@ -541,6 +493,7 @@ def main():
             print(f"❌ Error: {res.error}")
             sys.exit(1)
 
+    # Evolution Metrics Command: Protocol 131 Fitness/Depth/Scope metrics
     elif args.command == "evolution":
         if not args.evolution_subcommand:
             print("❌ Subcommand required (fitness, depth, scope)")
@@ -563,6 +516,7 @@ def main():
         elif args.evolution_subcommand == "scope":
             print(f"Scope: {evolution_ops.measure_scope(content)}")
             
+    # RLM Distillation: Atomic summarization of files (Protocol 132 Level 1)
     elif args.command in ["rlm-distill", "rlm-test"]:
         print(f"🧠 RLM: Distilling '{args.target}'...")
         ops = LearningOperations(project_root=str(PROJECT_ROOT))
@@ -571,262 +525,17 @@ def main():
         for fp, s in results.items():
             print(f"\n📄 {fp}\n   {s}")
 
-    if args.command == "roles":
-        if args.roles_action == "verify":
-            role_name = args.role_name.upper()
-            inventory_path = PROJECT_ROOT / ".agent" / "learning" / "roles_inventory.json"
-            
-            if not inventory_path.exists():
-                print(f"❌ Error: Role inventory not found at {inventory_path}")
-                sys.exit(1)
-                
-            try:
-                with open(inventory_path, "r", encoding="utf-8") as f:
-                    inventory = json.load(f)
-                
-                if role_name in inventory:
-                    status = inventory[role_name].get("status", "Active")
-                    print(f"✅ ACTIVE: {role_name} found in inventory (Status: {status})")
-                else:
-                    print(f"⚠️  LEGACY / DEPRECATED: {role_name} NOT found in inventory.")
-            except Exception as e:
-                print(f"❌ Error reading inventory: {e}")
-
-        elif args.roles_action == "scan":
-            target = args.target
-            print(f"🔎 Scanning {target} for Role usage...")
-            
-            # 1. Load Inventory
-            inventory_path = PROJECT_ROOT / ".agent" / "learning" / "roles_inventory.json"
-            if not inventory_path.exists():
-                print("❌ Inventory not found.")
-                sys.exit(1)
-            
-            with open(inventory_path, "r", encoding="utf-8") as f:
-                inventory = json.load(f)
-            
-            # 2. Locate Source (Simplified - assume XML or text dump exists in context)
-            # We'll use the find_xml_file logic from xml_miner if available, or simple glob
-            found_roles = {}
-            
-            # Search strategy: Try to find the bundle first (text), then raw XML
-            bundle_path = PROJECT_ROOT / "temp" / "context-bundles" / f"{target.lower()}_context.md"
-            if not bundle_path.exists():
-                bundle_path = PROJECT_ROOT / "temp" / "context-bundles" / f"{target.lower()}_context_bundle.md"
-            source_content = ""
-            
-            if bundle_path.exists():
-                 source_content = bundle_path.read_text(encoding="utf-8", errors="ignore")
-            else:
-                 # Fallback to recursively searching docs for the file
-                 # Simple exact match grep
-                 print(f"⚠️ Context bundle not found. Searching source files...")
-                 files = list(PROJECT_ROOT.glob(f"docs/**/{target.lower()}*.*"))
-                 for p in files:
-                     if p.suffix in ['.xml', '.txt', '.md', '.sql']:
-                         source_content += p.read_text(encoding="utf-8", errors="ignore")
-            
-            if not source_content:
-                print(f"❌ No source content found for {target}")
-                sys.exit(1)
-                
-            source_content_upper = source_content.upper()
-            
-            # 3. Scan
-            print(f"   Analyzing {len(source_content)} bytes of source...")
-            match_count = 0
-            for role, meta in inventory.items():
-                # Basic whole word check logic usually preferred, but simple substring for now
-                # to mimic "grep" rigor.
-                # Using regex for word boundary is safer: \bROLE\b
-                if re.search(r'\b' + re.escape(role) + r'\b', source_content_upper):
-                    status = meta.get("status", "Active")
-                    found_roles[role] = status
-                    match_count += 1
-                    
-            # 4. Report
-            if found_roles:
-                print(f"\n✅ Found {match_count} roles referenced in {target}:")
-                print(f"{'ROLE':<30} | {'STATUS':<15}")
-                print("-" * 50)
-                for r, s in found_roles.items():
-                    icon = "🟢" if s == "Active" else "cx🔴"
-                    print(f"{icon} {r:<28} | {s}")
-            else:
-                print(f"\n⚪ No known roles detected in {target}.")
-
-    elif args.command == "investigate":
-        if args.investigate_action == "code":
-            print(f"🔍 Deep Code Search for pattern: '{args.pattern}' in {args.target}")
-            
-            # Use search_plsql (enhanced to search bundle or direct file)
-            # Strategy: Find the Context Bundle or Markdown Source 
-            # We will use the same logic as 'roles scan' to find content, or pass file to search_plsql if it supports it
-            
-            # Better strategy: Wrap search_plsql structure
-            if str(SEARCH_DIR) not in sys.path:
-                sys.path.append(str(SEARCH_DIR))
-            
-            from search_plsql import search_text
-            
-            # Locate file (Try Markdown first, then XML, then bundle)
-            target_lower = args.target.lower()
-            candidate_files = []
-            
-            # 1. Context Bundle (Best for holistic search)
-            bundle_path = PROJECT_ROOT / "temp" / "context-bundles" / f"{target_lower}_context.md"
-            if bundle_path.exists():
-                candidate_files.append(bundle_path)
-            
-            # 2. Form Module Markdown
-            md_path = PROJECT_ROOT / "docs" / "source" / "markdown" / f"{target_lower}-FormModule.md"
-            if md_path.exists():
-                candidate_files.append(md_path)
-                
-            # 3. XML Source
-            xml_path = PROJECT_ROOT / "docs" / "source" / "XML" / f"{target_lower}_fmb.xml"
-            if xml_path.exists():
-                candidate_files.append(xml_path)
-
-            if not candidate_files:
-                print(f"❌ No source files found for {args.target}")
-                return
-
-            print(f"   Scanning {len(candidate_files)} source files...")
-            
-            all_matches = []
-            for fpath in candidate_files:
-                matches = search_text(str(fpath), args.pattern, is_regex=True, context=1)
-                for m in matches:
-                    m['File'] = fpath.name
-                    all_matches.append(m)
-            
-            if all_matches:
-                 print(f"✅ Found {len(all_matches)} occurrences:\n")
-                 for m in all_matches:
-                     print(f"   [{m['File']}:{m['Line']}]  {m['Content'].strip()[:100]}")
-            else:
-                 print("   No matches found.")
-
-        elif args.investigate_action == "lineage":
-            print(f"📉 Analyzing lineage/reachability for {args.target}...")
-            cmd = [sys.executable, str(SEARCH_DIR / "reachability.py"), "--target", args.target]
-            subprocess.run(cmd)
-
-
-
-    elif args.command == "candidates":
-        pass_args = args.args
-        if pass_args and pass_args[0] == "--":
-            pass_args = pass_args[1:]
-        cmd = [sys.executable, str(SEARCH_DIR / "priority_candidates.py")] + pass_args
-        subprocess.run(cmd)
-
-    elif args.command == "br":
-        # Wrapper to business_rules_inventory_manager.py
-        pass_args = args.args
-        if pass_args and pass_args[0] == "--":
-            pass_args = pass_args[1:]
-        cmd = [sys.executable, str(INVENTORIES_DIR / "business_rules_inventory_manager.py")] + pass_args
-        subprocess.run(cmd)
-
-    elif args.command == "bw":
-        # Wrapper to business_workflows_inventory_manager.py
-        pass_args = args.args
-        if pass_args and pass_args[0] == "--":
-            pass_args = pass_args[1:]
-        cmd = [sys.executable, str(INVENTORIES_DIR / "business_workflows_inventory_manager.py")] + pass_args
-        subprocess.run(cmd)
-
-
-    elif args.command == "dependencies":
-        cmd_dep = [sys.executable, str(SEARCH_DIR / "dependencies.py"), "--target", args.target]
-        if args.deep:
-            cmd_dep.append("--deep")
-        if args.json:
-            cmd_dep.append("--json")
-        if args.direction:
-            cmd_dep.extend(["--direction", args.direction])
-        subprocess.run(cmd_dep)
-
-    elif args.command == "bundle":
-        # New "Super Command" to gather all context in one shot
-        data = {"Target": args.target, "Analysis": {}}
-        
-        # 0. RLM Cache Lookup (Instant Context)
-
-        # 1. Miners (Legacy Mining Logic Removed)
-        # Focus is now on RAG and Dependencies
-
-        # 2. Dependencies (Code Detected + CSV)
-        try:
-            if str(SEARCH_DIR) not in sys.path:
-                 sys.path.append(str(SEARCH_DIR))
-
-            from dependencies import load_dependency_map, find_upstream, find_downstream, deep_search
-            
-            dep_map = load_dependency_map()
-            downstream = find_downstream(args.target, dep_map)
-            upstream = find_upstream(args.target, dep_map)
-            
-            # Perform deep search? bundle usually implies thoroughness
-            deep_results = deep_search(args.target)
-            
-            # Merge upstream logic (similar to dependencies.py main)
-            merged_callers = {
-                'Forms': list(set(upstream) | set(deep_results.get('Forms', []))),
-                'Libraries': deep_results.get('Libraries', []),
-                'Packages': deep_results.get('Packages', []),
-                'Procedures': deep_results.get('Procedures', []),
-                'Functions': deep_results.get('Functions', []),
-                'Views': deep_results.get('Views', [])
-            }
-            
-            # Structure for JSON output
-            data["Analysis"]["Dependencies"] = {
-                "Downstream": downstream,
-                "Upstream": merged_callers
-            }
-            
-        except ImportError as e:
-             print(f"⚠️  Could not import dependencies: {e}")
-             data["Analysis"]["Dependencies"] = {"error": f"ImportError: {e}"}
-        except Exception as e:
-            data["Analysis"]["Dependencies"] = {"error": str(e)}
-
-        # 3. APPL4 Menu Rules
-        try:
-            res = subprocess.run([sys.executable, str(MENU_DIR / "appl4_lookup.py"), "--target", args.target], capture_output=True, text=True)
-            if res.returncode == 0:
-                 data["Analysis"]["APPL4_Menu"] = json.loads(res.stdout)
-        except Exception as e:
-            data["Analysis"]["APPL4_Menu"] = str(e)
-
-        print(json.dumps(data, indent=2))
-
+    # Init-Context Command: Initialize manifest from base template and auto-bundle
     elif args.command == "init-context":
-        # Auto-resolve type if not provided
-        artifact_type = args.type
-        if not artifact_type:
-            artifact_type = resolve_type_from_inventory(args.target)
-            if not artifact_type:
-                # Fallback to 'form' for backward compatibility or error?
-                # Ideally error, but 'form' was the old default.
-                # Let's default to 'form' but warn.
-                print(f"⚠️  Could not resolve type for '{args.target}'. Defaulting to 'form'.")
-                artifact_type = "form"
+        artifact_type = args.type if args.type else "generic"
         
         print(f"🚀 Initializing Smart Context Bundle for {args.target} ({artifact_type})...")
         script = str(RETRIEVE_DIR / "manifest_manager.py")
         
-        # Note: manifest init now expects --bundle-title, not --target
         subprocess.run([sys.executable, script, "init", "--bundle-title", args.target, "--type", artifact_type])
-        
-        # Auto-Enrichment
-        _enrich_manifest(args.target, script)
-        
         subprocess.run([sys.executable, script, "bundle"])
 
+    # Manifest Command: Manage Context Bundler manifests (.json configs)
     elif args.command == "manifest":
         script = str(RETRIEVE_DIR / "manifest_manager.py")
         
@@ -838,14 +547,10 @@ def main():
             base_cmd.extend(["--manifest", args.manifest])
 
         if args.manifest_action == "init":
-            # Auto-resolve type if not provided
             artifact_type = args.type
             if not artifact_type:
-                # Use bundle_title as target ID for resolution
-                artifact_type = resolve_type_from_inventory(args.bundle_title)
-                if not artifact_type:
-                    print(f"❌ Error: Could not resolve type for '{args.bundle_title}'. Please specify --type.")
-                    sys.exit(1)
+                print(f"❌ Error: --type is required for manifest init. Options: generic, learning, guardian, etc.")
+                sys.exit(1)
             
             cmd = base_cmd + ["init", "--bundle-title", args.bundle_title, "--type", artifact_type]
             subprocess.run(cmd)
@@ -880,6 +585,7 @@ def main():
                 cmd.extend(["--output", args.output])
             subprocess.run(cmd)
 
+    # Protocol 128 Snapshot: Create a memory bundle for session continuity
     elif args.command == "snapshot":
         # ADR 090: Iron Core Verification
         if not args.override_iron_core:
@@ -939,6 +645,7 @@ def main():
                 print(f"   Context: {result.git_diff_context}")
             sys.exit(1)
 
+    # Protocol 128 Debrief: Orientation for fresh sessions (Truth Anchor)
     elif args.command == "debrief":
         print(f"📡 Running Learning Debrief (Protocol 128 Phase I)...")
         ops = LearningOperations(project_root=str(PROJECT_ROOT))
@@ -949,6 +656,7 @@ def main():
         # Output to stdout
         print(debrief_content)
 
+    # Guardian Command: Session pack and Boot Digest (Lifecycle)
     elif args.command == "guardian":
         ops = LearningOperations(project_root=str(PROJECT_ROOT))
 
@@ -974,6 +682,7 @@ def main():
                 print(f"❌ Error: {result.error}")
                 sys.exit(1)
 
+    # Persist Soul Command: Protocol 128 Phase VI (Hugging Face Broadcast)
     elif args.command == "persist-soul":
         print(f"📡 Initiating Soul Persistence (Protocol 128 Phase VI)...")
         print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty} | Full Sync: {args.full_sync}")
@@ -1003,6 +712,7 @@ def main():
             print(f"❌ Persistence Failed: {result.error}")
             sys.exit(1)
 
+    # Persist Soul Full: ADR 081 Full Dataset Regeneration
     elif args.command == "persist-soul-full":
         print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace (ADR 081)...")
         ops = LearningOperations(project_root=str(PROJECT_ROOT))
@@ -1017,268 +727,7 @@ def main():
             print(f"❌ Error: {result.error}")
             sys.exit(1)
 
-    elif args.command == "applications":
-        target = args.target.upper()
-        print(f"\n📱 Application Trace for: {target}")
-        print("=" * 60)
-        
-        try:
-            if str(SCRIPTS_DIR) not in sys.path:
-                sys.path.append(str(SCRIPTS_DIR))
-            
-            from dependencies import load_dependency_map, trace_applications
-            
-            dep_map = load_dependency_map()
-            apps = trace_applications(target, dep_map, max_depth=3)
-            
-            if args.json:
-                print(json.dumps({'target': target, 'applications': apps}, indent=2))
-            else:
-                if apps:
-                    print("   Reachable from Main Modules:")
-                    for module, app_name in sorted(apps.items()):
-                        print(f"      - [{app_name}] {module}")
-                else:
-                    print("   ⚠️  No Main Modules found within 3 levels upstream.")
-                    print("   (Form may be orphaned or called via library indirection)")
-                print("=" * 60)
-                
-        except ImportError as e:
-            print(f"❌ Error: Could not import dependencies module: {e}")
-        except Exception as e:
-            print(f"❌ Error: {e}")
-
-    elif args.command == "config":
-        # Dynamic import to avoid earlier errors if file didn't exist
-        if str(SCRIPTS_DIR) not in sys.path:
-            sys.path.append(str(SCRIPTS_DIR))
-            
-        # config_manager is in tools/business-rule-extraction/ so we use relative path logic or update sys.path
-        # Actually SCRIPTS_DIR points to tools/business-rule-extraction/scripts
-        # config_manager is one level up
-        
-        bre_dir = SCRIPTS_DIR.parent
-        if str(bre_dir) not in sys.path:
-             sys.path.append(str(bre_dir))
-             
-        try:
-            import config_manager as cm
-            
-            if args.config_action == "query":
-                res = cm.query_item(args.target, args.item)
-                print(json.dumps(res, indent=2))
-                
-            elif args.config_action == "update":
-                vis_list = args.visible.split(",") if args.visible else None
-                en_list = args.enabled.split(",") if args.enabled else None
-                
-                # Handle wildcards
-                if vis_list and "*" in vis_list: vis_list = ["*"]
-                if en_list and "*" in en_list: en_list = ["*"]
-                
-                res = cm.update_item(args.target, args.item, vis_list, en_list)
-                print(json.dumps(res, indent=2))
-                
-        except ImportError as e:
-            print(f"❌ Error importing config_manager: {e}")
-        except Exception as e:
-            print(f"❌ Config Error: {e}")
-
-    elif args.command == "menu":
-        # Dynamic imports
-        if str(SCRIPTS_DIR) not in sys.path:
-            sys.path.append(str(SCRIPTS_DIR))
-        
-        try:
-            from menu_builder import MenuBuilder, save_inventory
-            import menu_query as mq
-        except ImportError as e:
-            print(f"❌ Error importing menu tools: {e}")
-            sys.exit(1)
-
-        mb = MenuBuilder()
-
-        if args.menu_action == "rebuild":
-            # Rebuild menu inventory from APPL4
-            print("🔄 Rebuilding menu inventory from APPL4...")
-            try:
-                # Build new from APPL4 + Static XML
-                new_inventory = mb.build_full_inventory()
-                
-                # TODO: Implement merge logic if we have manual/discovered items in the future
-                # For now, we trust the builder completely.
-                
-                # Save
-                path = save_inventory(new_inventory)
-                
-                # Also save to React path
-                react_path = PROJECT_ROOT / "sandbox" / "ui" / "public" / "config" / "menu_inventory.json"
-                if react_path.parent.exists():
-                    with open(react_path, "w", encoding="utf-8") as f:
-                        json.dump(new_inventory, f, indent=2)
-                    print(f"   ✅ Saved to React config: {react_path}")
-                
-            except Exception as e:
-                print(f"❌ Error rebuilding menu: {e}")
-        
-        elif args.menu_action == "find":
-            # Check if a menu item exists
-            try:
-                inventory = mb.load_inventory()
-                if not inventory:
-                    print("❌ Inventory not found. Run: cli.py menu rebuild")
-                    sys.exit(1)
-                
-                item_id = args.item_id.upper()
-                found_any = False
-                
-                apps_to_search = [args.app.upper()] if args.app else inventory.get("applications", {}).keys()
-                
-                for app in apps_to_search:
-                    app_data = inventory.get("applications", {}).get(app)
-                    if not app_data: continue
-                    
-                    sections = app_data.get("sections", [])
-                    found_items = mq.search_by_id(sections, item_id)
-                    
-                    if found_items:
-                        found_any = True
-                        print(f"\n✅ Matches in {app}:")
-                        for match in found_items:
-                             # match has: id, label, path, roles
-                             print(f"   - {match['label']} (ID: {match['id']})")
-                             print(f"     Path: {match['path']}")
-                             print(f"     Roles (Visible): {match['roles'].get('visible', [])[:5]}...")
-
-                if not found_any:
-                     print(f"❌ Not found: {item_id}")
-                    
-            except Exception as e:
-                print(f"❌ Error during find: {e}")
-        
-        elif args.menu_action == "add":
-            print("⚠️ 'menu add' is temporarily disabled pending schema update.")
-            print("   Please edit 'Appl4 Menu Item Rules.csv' or XML definitions directly.")
-        
-        elif args.menu_action == "query":
-            # Query with filtering
-            try:
-                inventory = mb.load_inventory()
-                if not inventory:
-                    print("❌ Inventory not found. Run: cli.py menu rebuild")
-                    sys.exit(1)
-                
-                # If app is inferred from form
-                app = args.app
-                if not app and args.form:
-                    app = args.form[:3].upper()
-                
-                if not app:
-                    print("❌ Please provide --app or --form")
-                    sys.exit(1)
-                
-                app_data = inventory.get("applications", {}).get(app.upper())
-                if not app_data:
-                    print(f"❌ Application '{app}' not found in inventory.")
-                    sys.exit(1)
-
-                sections = app_data.get("sections", [])
-                # Correct signature: nodes, role, form=None
-                results = mq.traverse_and_filter(sections, args.role, args.form)
-                
-                if args.json:
-                    print(json.dumps(results, indent=2))
-                else:
-                    print(f"\n📂 Menu Query Results ({len(results)} items) for {app} " + (f"Form={args.form}" if args.form else "") + ":")
-                    print("=" * 80)
-                    print(f"{'LABEL':<30} | {'ID':<35} | {'ENABLED'}")
-                    print("-" * 80)
-                    for item in results:
-                        status = "Yes" if item['enabled'] else "No"
-                        print(f"{item['label']:<30} | {item['id']:<35} | {status}")
-                        
-            except Exception as e:
-                print(f"❌ Error during query: {e}")
-        
-        elif args.menu_action == "list":
-            # List all for an application
-            try:
-                inventory = mb.load_inventory()
-                if not inventory:
-                     print("❌ Inventory not found.")
-                     sys.exit(1)
-                
-                app = args.app.upper()
-                app_data = inventory.get("applications", {}).get(app)
-                if not app_data:
-                     print(f"❌ Application {app} not found.")
-                     sys.exit(1)
-                
-                sections = app_data.get("sections", [])
-                results = mq.traverse_and_filter(sections, role=None, form=None)
-                
-                print(f"\n📂 All Menu Items for {app} ({len(results)} items):")
-                print("=" * 70)
-                for item in results:
-                    print(f"   {item['label']:<30}  ID: {item['id']}")
-                    
-            except Exception as e:
-                print(f"❌ Error listing items: {e}")
-        
-        elif args.menu_action == "export":
-            # Export for React
-            try:
-                inventory = mb.load_inventory()
-                if not inventory:
-                    print("❌ Inventory not found.")
-                    sys.exit(1)
-                
-                # Determine App
-                app = args.app
-                if not app and args.form:
-                    app = args.form[:3].upper()
-                
-                if not app or app not in inventory["applications"]:
-                    print(f"❌ Application '{app}' not found in inventory.")
-                    sys.exit(1)
-                
-                # Get Sections
-                sections = inventory["applications"][app].get("sections", [])
-                
-                # Filter Hierarchically
-                filtered_sections = mb.filter_sections(sections, args.role, args.form)
-                
-                # Prepare Output
-                output_dir = Path(args.output)
-                if not output_dir.exists():
-                    os.makedirs(output_dir, exist_ok=True)
-                
-                filename = f"{app}_{args.form if args.form else 'MENU'}.json"
-                output_path = output_dir / filename
-                
-                with open(output_path, "w", encoding="utf-8") as f:
-                     json.dump({"sections": filtered_sections}, f, indent=2)
-                
-                print(f"✅ Exported menu config to: {output_path}")
-                
-                # Type Script Generation
-                if args.format == "ts":
-                    ts_path = output_path.with_suffix('.ts')
-                    ts_content = f"""// Auto-generated menu configuration
-import {{ MenuSection }} from '../../../types/MenuConfig';
-
-export const menuConfig: {{ sections: MenuSection[] }} = {json.dumps({"sections": filtered_sections}, indent=2)};
-"""
-                    with open(ts_path, "w", encoding="utf-8") as f:
-                        f.write(ts_content)
-                    print(f"✅ Exported TypeScript wrapper: {ts_path}")
-                    
-            except Exception as e:
-                print(f"❌ Error exporting menu: {e}")
-        
-        else:
-            print("Usage: cli.py menu [rebuild|find|query|list|export] ...")
-
+    # Tools Command: Manage tool inventory (list, search, add, update, remove)
     elif args.command == "tools":
         script = str(INVENTORIES_DIR / "manage_tool_inventory.py")
         cmd = [sys.executable, script]
@@ -1321,6 +770,7 @@ export const menuConfig: {{ sections: MenuSection[] }} = {json.dumps({"sections"
         # Execute
         subprocess.run(cmd)
 
+    # Workflow Command: Agent lifecycle management (Start/End/Retro)
     elif args.command == "workflow":
         if args.workflow_action == "start":
             try:
@@ -1367,38 +817,6 @@ export const menuConfig: {{ sections: MenuSection[] }} = {json.dumps({"sections"
             except Exception as e:
                 print(f"❌ Workflow End Failed: {e}")
                 sys.exit(1)
-
-    elif args.command == "rules":
-        manager_script = str(INVENTORIES_DIR / "business_rules_inventory_manager.py")
-        
-        if args.rules_action == "search":
-            print(f"🔎 Searching Business Rules for: '{args.keyword}'")
-            cmd = [sys.executable, manager_script, "--search", args.keyword]
-            subprocess.run(cmd)
-            
-        elif args.rules_action == "register":
-            print(f"📝 Registering Rule: {args.title}")
-            cmd = [sys.executable, manager_script, "--register", 
-                   "--title", args.title, 
-                   "--source", args.source, 
-                   "--priority", args.priority]
-            subprocess.run(cmd)
-            
-        elif args.rules_action == "update":
-            print(f"📝 Updating Rule Summary: {args.id}")
-            cmd = [sys.executable, manager_script, "--update-summary", args.id, "--new-summary", args.summary]
-            subprocess.run(cmd)
-
-        elif args.rules_action == "candidates":
-            # priority_candidates.py arguments reconstruction
-            cmd = [sys.executable, str(SEARCH_DIR / "priority_candidates.py")]
-            if args.summary: cmd.append("--summary")
-            if args.top: cmd.extend(["--top", str(args.top)])
-            if args.source: cmd.extend(["--source", args.source])
-            if args.type: cmd.extend(["--type", args.type])
-            if args.export: cmd.extend(["--export", args.export])
-            
-            subprocess.run(cmd)
 
     else:
         parser.print_help()

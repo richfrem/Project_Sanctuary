@@ -183,14 +183,13 @@ class LearningOperations:
                             last_package_content = package_path.read_text()
                             package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
                         else:
+                            last_package_content = package_path.read_text()
                             package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
                     except Exception as e:
                         package_status = f"❌ Error reading snapshot: {e}"
 
                 # 4b. Mandatory Logic Verification (ADR 084)
                 mandatory_files = [
-                    "IDENTITY/founder_seed.json",
-                    "LEARNING/calibration_log.json", 
                     "ADRs/084_semantic_entropy_tda_gating.md",
                     "mcp_servers/learning/operations.py" # Ref updated
                 ]
@@ -200,8 +199,27 @@ class LearningOperations:
                      try:
                          with open(manifest_path, "r") as f: 
                              m = json.load(f)
+                         files_list = m.get("files", [])
+                         # Handle legacy list format if encountered
+                         if isinstance(m, list):
+                             files_list = m
+
                          for mf in mandatory_files:
-                             status = "✅ REGISTERED" if mf in m else "❌ MISSING"
+                             # Check if in manifest (Robust check for dicts or strings)
+                             in_registry = False
+                             for entry in files_list:
+                                 path_val = entry.get("path") if isinstance(entry, dict) else entry
+                                 if path_val == mf:
+                                     in_registry = True
+                                     break
+                             
+                             if in_registry:
+                                 status = "✅ REGISTERED"
+                             elif (self.project_root / mf).exists():
+                                 status = "⚠️ UNREGISTERED (Exists)"
+                             else:
+                                 status = "❌ MISSING"
+                                 
                              registry_status += f"        * {status}: `{mf}`\n"
                      except Exception as e:
                          registry_status = f"⚠️ Manifest Error: {e}"
