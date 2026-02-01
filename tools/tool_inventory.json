@@ -150,13 +150,13 @@
           "compliance_status": "partial"
         },
         {
-          "name": "capture-code-snapshot.js",
-          "path": "tools/codify/utils/capture-code-snapshot.js",
-          "description": "Generates a single text file snapshot of code files for LLM context sharing.",
+          "name": "capture_code_snapshot.py",
+          "path": "scripts/capture_code_snapshot.py",
+          "description": "Generates a single text file snapshot of code files for LLM context sharing. Direct Python port of the legacy Node.js utility.",
           "original_path": "tools/codify/utils/capture-code-snapshot.js",
-          "decision": "keep",
-          "header_style": "none",
-          "last_updated": "2026-01-29T11:14:20.604473",
+          "decision": "ported",
+          "header_style": "extended",
+          "last_updated": "2026-02-01T14:48:00.000000",
           "compliance_status": "compliant",
           "category": "documentation"
         },
