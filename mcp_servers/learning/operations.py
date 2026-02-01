@@ -1072,16 +1072,26 @@ class LearningOperations:
                 "",
             ]
             
-            # Load Guardian Manifest (ADR 089 format)
+            # Load Guardian Manifest (ADR 097 format)
             learning_dir = self.project_root / ".agent" / "learning"
             manifest_path = learning_dir / "guardian_manifest.json"
             if manifest_path.exists():
                 try:
                     manifest_data = json.loads(manifest_path.read_text())
+                    all_files = []
                     if isinstance(manifest_data, dict):
-                        core = manifest_data.get("core", [])
-                        topic = manifest_data.get("topic", [])
-                        all_files = core + topic
+                        # ADR 097: New simple {files: [{path, note}]} format
+                        if "files" in manifest_data:
+                            for item in manifest_data["files"]:
+                                if isinstance(item, str):
+                                    all_files.append(item)
+                                elif isinstance(item, dict) and "path" in item:
+                                    all_files.append(item["path"])
+                        else:
+                            # LEGACY: Fallback to core+topic (ADR 089)
+                            core = manifest_data.get("core", [])
+                            topic = manifest_data.get("topic", [])
+                            all_files = core + topic
                     else:
                         all_files = manifest_data
                     

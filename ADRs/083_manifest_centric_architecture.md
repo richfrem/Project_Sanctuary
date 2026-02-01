@@ -58,7 +58,24 @@ A shared library (`mcp_servers/lib/content_processor.py`) drives all content acc
 -   **Protocol 128**: Fully Satisfied (Harmonized Content).
 -   **Protocol 101**: Enhanced (Security/Exclusion Integrity).
 
+## Manifest Type Clarification
+
+> **ADR 097 Update (2026-02-01):** Two distinct manifest categories exist:
+
+| Category | Purpose | Schema | Tools |
+|----------|---------|--------|-------|
+| **Ingest Manifests** | Define scope for RAG/Forge ingestion | Directory-based (`ingest_manifest.json`) | `content_processor.py` |
+| **Bundling Manifests** | Define files for context bundles | `{title, files: [{path, note}]}` | `bundle.py`, `manifest_manager.py` |
+
+**Key Differences:**
+- **Ingest**: Recursive directory traversal, exclusion filtering, syntax validation
+- **Bundling**: Explicit file lists with annotations, no recursive traversal
+
+**Do NOT confuse:**
+- `mcp_servers/lib/ingest_manifest.json` (RAG/Forge scope) 
+- `.agent/learning/*.json` (Protocol 128 bundling)
+
 ## Related Documents
 -   [ADR 089: Modular Manifest Pattern for Context-Aware Snapshots](./089_modular_manifest_pattern.md)
+-   [ADR 097: Base Manifest Inheritance Architecture](./097_base_manifest_inheritance_architecture.md)
 -   [Protocol 130: Manifest Deduplication](../01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md)
-

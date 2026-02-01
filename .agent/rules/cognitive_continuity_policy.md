@@ -27,7 +27,7 @@ trigger: always_on
 
 * **Autonomous Synthesis**: Record all architectural changes as ADRs and process learnings into the `LEARNING/` directory.
 * **Strategic Approval (Gate 1)**: You must receive explicit **Human-in-the-Loop (HITL)** approval for the strategy before proceeding to the technical audit.
-* **Backtrack Logic**: If strategic approval is denied, you must revert to `SOP: recursive_learning.md` to re-scout and re-synthesize.
+* **Backtrack Logic**: If strategic approval is denied, you must revert to `SOP: workflow-learning-loop.md` to re-scout and re-synthesize.
 * **Content Hygiene (ADR 085)**: **No inline Mermaid diagrams**. All diagrams must be `.mmd` files in `docs/architecture_diagrams/`, rendered to PNG, and referenced via image links.
 
 ### 3. Phase IV: The Red Team Audit (Gate 2)
@@ -48,7 +48,7 @@ trigger: always_on
 
 ### 5. Failure and Backtracking
 
-* **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `recursive_learning.md` to fix the underlying discrepancy.
+* **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `workflow-learning-loop.md` to fix the underlying discrepancy.
 
 ### 6. Phase VI: Soul Persistence (ADR 079/081)
 
@@ -97,7 +97,7 @@ trigger: always_on
 | Manifest | Purpose | When Used |
 |:---------|:--------|:----------|
 | `learning_audit_core_manifest.json` | Foundational project context | Always included in Iteration 1.0 |
-| `learning_audit_manifest.json` | Active working manifest | Overwrite for each topic (core + topic for 1.0) |
+| `learning_audit_manifest.json` | Active working manifest | Overwrite for each topic |
 
 ### Prompt Types
 
@@ -120,7 +120,7 @@ When generating a learning_audit, the system automatically:
 
 ### Iteration 1.0 (New Topic)
 ```yaml
-manifest: core + topic
+manifest: files array with {path, note} entries
 purpose: Red Team needs full project context + topic files
 target_size: < 30K tokens (no truncation)
 ```

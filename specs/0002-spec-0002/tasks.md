@@ -60,9 +60,9 @@ Code that reads `core`/`topic` and merges them must be refactored to read `files
 | 554-557 | `core + topic` merge | Use `files` array |
 | 996-998 | `core + topic` merge | Use `files` array |
 
-- [ ] **Line 346-349**: Refactor snapshot manifest loading to use `files`. <!-- id: 23a -->
-- [ ] **Line 554-557**: Refactor RLM context loading to use `files`. <!-- id: 23b -->
-- [ ] **Line 996-998**: Refactor guardian manifest loading to use `files`. <!-- id: 23c -->
+- [x] **Line 346-349**: Refactor snapshot manifest loading to use `files`. <!-- id: 23a --> *(Already done)*
+- [x] **Line 554-557**: Refactor RLM context loading to use `files`. <!-- id: 23b -->
+- [x] **Line 996-998**: Refactor guardian manifest loading to use `files`. <!-- id: 23c -->
 
 ### Task 2.4: Refactor Python Code (cortex_cli.py)
 
@@ -83,18 +83,18 @@ Code that reads `core`/`topic` and merges them must be refactored to read `files
 
 Current code (lines 138-151) handles composite keys (`core`, `topic`, etc.). This is already working but needs cleanup.
 
-- [ ] **Remove legacy composite key handling**: After migration, remove lines 138-151. <!-- id: 25 -->
-- [ ] **Revert `extends` logic**: Remove the extends resolution I added earlier (lines 131-167 in current state). <!-- id: 25b -->
+- [x] **Remove legacy composite key handling**: After migration, remove lines 138-151. <!-- id: 25 -->
+- [x] **Revert `extends` logic**: Remove the extends resolution I added earlier (lines 131-167 in current state). <!-- id: 25b -->
 
 ### Task 2.6: Migrate Existing Manifests
 
 After base manifests are created and code is updated, convert the existing manifests at `.agent/learning/`:
 
-- [ ] **Migrate learning_manifest.json**: Convert to simple `{title, files}` format. <!-- id: 18 -->
-- [ ] **Migrate learning_audit_manifest.json**: Already partially done. <!-- id: 19 -->
-- [ ] **Migrate red_team_manifest.json**: Convert to simple format. <!-- id: 20 -->
-- [ ] **Migrate guardian_manifest.json**: Convert to simple format. <!-- id: 21 -->
-- [ ] **Migrate bootstrap_manifest.json**: Convert to simple format. <!-- id: 22 -->
+- [x] **Migrate learning_manifest.json**: Convert to simple `{title, files}` format. <!-- id: 18 -->
+- [x] **Migrate learning_audit_manifest.json**: Already partially done. <!-- id: 19 -->
+- [x] **Migrate red_team_manifest.json**: Convert to simple format. <!-- id: 20 -->
+- [x] **Migrate guardian_manifest.json**: Convert to simple format. <!-- id: 21 -->
+- [x] **Migrate bootstrap_manifest.json**: Convert to simple format. <!-- id: 22 -->
 
 ### Task 2.7: Update Documentation
 
