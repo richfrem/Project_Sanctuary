@@ -343,9 +343,11 @@ def main():
     # Debrief Command (Protocol 128 Phase I)
     debrief_parser = subparsers.add_parser("debrief", help="Run Learning Debrief (Protocol 128 Phase I)")
     debrief_parser.add_argument("--hours", type=int, default=24, help="Lookback window (hours)")
+    debrief_parser.add_argument("--output", help="Output file path (default: stdout)")
 
     # Guardian Command: Bootloader operations for session startup
     guardian_parser = subparsers.add_parser("guardian", help="Guardian Bootloader Operations")
+    guardian_parser.add_argument("--manifest", help="Custom manifest path")
     guardian_subparsers = guardian_parser.add_subparsers(dest="guardian_action")
     
     g_wakeup = guardian_subparsers.add_parser("wakeup", help="Generate Guardian Boot Digest")
@@ -353,6 +355,11 @@ def main():
     
     g_snapshot = guardian_subparsers.add_parser("snapshot", help="Capture Guardian Session Pack")
     g_snapshot.add_argument("--context", help="Strategic context")
+
+    # Command: bootstrap-debrief (Fresh Repo Onboarding)
+    bootstrap_parser = subparsers.add_parser("bootstrap-debrief", help="Generate onboarding context packet for fresh repo setup")
+    bootstrap_parser.add_argument("--manifest", default=".agent/learning/bootstrap_manifest.json", help="Path to bootstrap manifest")
+    bootstrap_parser.add_argument("--output", default=".agent/learning/bootstrap_packet.md", help="Output path for the packet")
 
     # Persist Soul Command (Protocol 128 Phase VI)
     ps_parser = subparsers.add_parser("persist-soul", help="Broadcast learnings to Hugging Face")
@@ -653,33 +660,56 @@ def main():
         # Debrief returns a formatted Markdown string
         debrief_content = ops.learning_debrief(hours=args.hours)
         
-        # Output to stdout
-        print(debrief_content)
+        if args.output:
+            output_path = Path(args.output)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(output_path, 'w') as f:
+                f.write(debrief_content)
+            print(f"✅ Debrief written to: {output_path}")
+            print(f"📊 Content length: {len(debrief_content)} characters")
+        else:
+            # Output to stdout
+            print(debrief_content)
 
     # Guardian Command: Session pack and Boot Digest (Lifecycle)
     elif args.command == "guardian":
+        # Initialize ops locally to ensure availability
         ops = LearningOperations(project_root=str(PROJECT_ROOT))
-
+        
         if args.guardian_action == "wakeup":
-            print(f"🛡️  Guardian Wakeup: Generating Boot Digest (Mode: {args.mode})...")
-            result = ops.guardian_wakeup(mode=args.mode)
+            # Load manifest if exists (using proper arg now)
+            manifest_path_str = args.manifest if args.manifest else ".agent/learning/guardian_manifest.json"
+            manifest_path = Path(manifest_path_str)
             
-            if result.status == "success":
-                print(f"✅ Boot Digest Generated: {result.digest_path}")
-                print(f"   Time: {result.total_time_ms:.2f}ms")
+            if manifest_path.exists():
+                try:
+                    with open(manifest_path, 'r') as f:
+                        manifest = json.load(f)
+                    print(f"📋 Loaded guardian manifest: {len(manifest)} files")
+                except Exception as e:
+                    print(f"⚠️  Error reading guardian manifest: {e}")
             else:
-                print(f"❌ Error: {result.error}")
+                print(f"⚠️  Guardian manifest not found at {manifest_path_str}. Using defaults.")
+
+            # ROUTED TO LEARNING MCP
+            response = ops.guardian_wakeup(mode=args.mode)
+            
+            if response.status == "success":
+                print(f"✅ Boot Digest Generated: {response.digest_path}")
+                print(f"   Time: {response.total_time_ms:.2f}ms")
+            else:
+                print(f"❌ Error: {response.error}")
                 sys.exit(1)
 
         elif args.guardian_action == "snapshot":
             print(f"🛡️  Guardian Snapshot: Capturing Session Pack...")
-            result = ops.guardian_snapshot(strategic_context=args.context)
+            response = ops.guardian_snapshot(strategic_context=args.context)
             
-            if result.status == "success":
-                print(f"✅ Session Pack Captured: {result.snapshot_path}")
-                print(f"   Files: {result.total_files}, Bytes: {result.total_bytes}")
+            if response.status == "success":
+                print(f"✅ Session Pack Captured: {response.snapshot_path}")
+                print(f"   Files: {response.total_files}, Bytes: {response.total_bytes}")
             else:
-                print(f"❌ Error: {result.error}")
+                print(f"❌ Error: {response.error}")
                 sys.exit(1)
 
     # Persist Soul Command: Protocol 128 Phase VI (Hugging Face Broadcast)
@@ -725,6 +755,50 @@ def main():
             print(f"   Output: {result.snapshot_name}")
         else:
             print(f"❌ Error: {result.error}")
+            sys.exit(1)
+
+    # Bootstrap Debrief Command: Fresh Repo Onboarding
+    elif args.command == "bootstrap-debrief":
+        print(f"🏗️  Generating Bootstrap Context Packet...")
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        
+        # Load manifest
+        manifest_path = Path(args.manifest)
+        manifest_list = []
+        if manifest_path.exists():
+            try:
+                data = json.loads(manifest_path.read_text())
+                if isinstance(data, list): 
+                    manifest_list = data
+                elif isinstance(data, dict): 
+                    # Extract 'path' from dict entries if present, or use raw strings
+                    raw_files = data.get("files", [])
+                    manifest_list = [f.get("path") if isinstance(f, dict) else f for f in raw_files]
+                print(f"📋 Loaded bootstrap manifest: {len(manifest_list)} items")
+            except Exception as e:
+                print(f"⚠️  Error reading manifest: {e}")
+        else:
+            print(f"⚠️  Bootstrap manifest not found at {args.manifest}. Using defaults/empty.")
+
+        # Generate snapshot
+        res = ops.capture_snapshot(
+            manifest_files=manifest_list,
+            snapshot_type="seal",
+            strategic_context="Fresh repository onboarding context"
+        )
+        
+        if res.status == "success":
+            # Copy to output path
+            output_path = Path(args.output)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            import shutil
+            shutil.copy(res.snapshot_path, output_path)
+            
+            print(f"✅ Bootstrap packet generated: {output_path}")
+            print(f"📊 Files: {res.total_files} | Bytes: {res.total_bytes}")
+        else:
+            print(f"❌ Error: {res.error}")
             sys.exit(1)
 
     # Tools Command: Manage tool inventory (list, search, add, update, remove)

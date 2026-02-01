@@ -98,7 +98,7 @@ EXCLUDE_DIR_NAMES = {
 }
 
 ALWAYS_EXCLUDE_FILES = [
-    'capture_code_snapshot.js',
+    'capture_code_snapshot.py',
     'capture_code_snapshot.py',
     'capture_glyph_code_snapshot.py',
     'capture_glyph_code_snapshot_v2.py',

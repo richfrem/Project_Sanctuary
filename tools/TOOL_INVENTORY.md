@@ -1,6 +1,6 @@
 # Tool Inventory
 
-> **Auto-generated:** 2026-02-01 12:29
+> **Auto-generated:** 2026-02-01 14:52
 > **Source:** [`tools/tool_inventory.json`](tools/tool_inventory.json)
 > **Regenerate:** `python tools/curate/inventories/manage_tool_inventory.py generate --inventory tools/tool_inventory.json`
 
@@ -24,7 +24,7 @@
 
 | Script | Description |
 | :--- | :--- |
-| [`cli.py`](tools/cli.py) | Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution. |
+| [`cli.py`](tools/cli.py) | Main entry point for the Antigravity Command System. Supports Context Bundling, Tool Discovery, and Protocol 128 Learning Operations (Snapshot, Debrief, Guardian, Soul Persistence). Decoupled from mcp_servers. |
 
 ## 📁 Curate
 
@@ -38,7 +38,7 @@
 | Script | Description |
 | :--- | :--- |
 | [`analyze_tracking_status.py`](tools/codify/tracking/analyze_tracking_status.py) | Generates a summary report of AI Analysis progress from the tracking file. Shows analyzed vs pending forms for project management dashboards. |
-| [`capture-code-snapshot.js`](tools/codify/utils/capture-code-snapshot.js) | Generates a single text file snapshot of code files for LLM context sharing. |
+| [`capture_code_snapshot.py`](scripts/capture_code_snapshot.py) | Generates a single text file snapshot of code files for LLM context sharing. Direct Python port of the legacy Node.js utility. |
 | [`export_mmd_to_image.py`](tools/codify/diagrams/export_mmd_to_image.py) | Renders all .mmd files in docs/architecture_diagrams/ to PNG images. Run this script whenever diagrams are updated to regenerate images. |
 | [`generate_todo_list.py`](tools/codify/tracking/generate_todo_list.py) | Creates a prioritized TODO list of forms pending AI analysis. Bubbles up Critical and High priority items based on workflow usage. |
 | [`workflow_inventory_manager.py`](tools/curate/documentation/workflow_inventory_manager.py) | Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md. |

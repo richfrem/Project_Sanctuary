@@ -15,7 +15,7 @@ trigger: manual
 ### 2. Implementation Sovereignty (ADR & Protocol Alignment)
 
 * **FastMCP Preference**: For all new MCP server implementations, adhere strictly to `ADR/066`.
-* **Native Python Snapshots**: Per **ADR 072**, the `cortex_capture_snapshot` tool is a native Python solution. Do not attempt to invoke legacy Node.js scripts (`capture_code_snapshot.js`).
+* **Native Python Snapshots**: Per **ADR 072**, the `cortex_capture_snapshot` tool is a native Python solution. Do not attempt to invoke legacy Node.js scripts (`capture_code_snapshot.py`).
 * **Protocol 128 (Zero-Trust)**: No cognitive update or "learning" can be considered persistent without a successful `cortex_capture_snapshot` (type='audit') and HITL approval.
 * **Strict Rejection**: Snapshots will be rejected if core directories (`ADRs/`, `01_PROTOCOLS/`, `mcp_servers/`) have uncommitted changes omitted from the manifest.
 
