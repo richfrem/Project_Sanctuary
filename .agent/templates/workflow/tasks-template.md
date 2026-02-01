@@ -47,9 +47,12 @@ description: "Task list template for feature implementation"
 - [ ] T008 [US2] Implementation Step 1
 
 ## Phase N: Closure & Merge (MANDATORY)
-- [ ] TXXX Run `/workflow-retrospective`
-- [ ] TXXX Commit all changes to Feature Branch
+- [ ] TXXX Run `/workflow-retrospective` (Generates `retrospective.md`)
+- [ ] TXXX Complete Retrospective with User
+- [ ] TXXX Run `/workflow-end` (Generates `workflow-end.md` checklist)
+- [ ] TXXX Complete End Checklist items
+- [ ] TXXX Commit all changes (including artifacts) to Feature Branch
 - [ ] TXXX Push to remote and Create Pull Request
 - [ ] TXXX Confirm with User: "PR Merged?"
-- [ ] TXXX Run `/workflow-end`
+- [ ] TXXX Finalize: Run `/workflow-end` again to push final state
 

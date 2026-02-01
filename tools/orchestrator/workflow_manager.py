@@ -263,7 +263,30 @@ class WorkflowManager:
                 scratchpad_dest = new_spec_path / "scratchpad.md"
                 if scratchpad_tpl.exists():
                     scratchpad_dest.write_text(scratchpad_tpl.read_text())
-                    print(f"📄 Created {scratchpad_dest.name} from template") 
+                    print(f"📄 Created {scratchpad_dest.name} from template")
+
+                # Copy Retrospective Template (Deterministic Lifecycle)
+                retro_tpl = self.project_root / ".agent" / "templates" / "workflow" / "workflow-retrospective-template.md"
+                retro_dest = new_spec_path / "retrospective.md"
+                if retro_tpl.exists():
+                    retro_dest.write_text(retro_tpl.read_text())
+                    print(f"📄 Created {retro_dest.name} from template")
+
+                # Copy Workflow End Template (Deterministic Lifecycle)
+                end_tpl = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
+                end_dest = new_spec_path / "workflow-end.md"
+                if end_tpl.exists():
+                    end_dest.write_text(end_tpl.read_text())
+                    print(f"📄 Created {end_dest.name} from template")
+
+                # Copy Core Spec/Plan/Tasks Templates (if not handled by Manifest)
+                # This ensures the folder is fully populated 
+                for doc, tpl_name in [("spec.md", "spec-template.md"), ("plan.md", "plan-template.md"), ("tasks.md", "tasks-template.md")]:
+                     tpl = self.project_root / ".agent" / "templates" / "workflow" / tpl_name
+                     dest = new_spec_path / doc
+                     if tpl.exists() and not dest.exists():
+                         dest.write_text(tpl.read_text())
+                         print(f"📄 Created {dest.name} from template") 
             except Exception as e:
                 print(f"❌ Failed to create spec directory: {e}")
                 return False
