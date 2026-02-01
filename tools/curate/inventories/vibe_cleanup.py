@@ -1,3 +1,43 @@
+#!/usr/bin/env python3
+"""
+vibe_cleanup.py (CLI)
+=====================================
+
+Purpose:
+    Inventory Reconciliation Utility.
+    Scans the `tool_inventory.json` against the filesystem and automatically
+    removes entries for files that no longer exist (Pruning).
+    Also lists all current scripts to audit "ghosts" vs reality.
+
+    "Vibe Cleanup" = Ensuring the map matches the territory.
+
+Layer: Curate / Inventories
+
+Usage Examples:
+    python tools/curate/inventories/vibe_cleanup.py
+
+CLI Arguments:
+    None
+
+Input Files:
+    - tools/tool_inventory.json
+    - Filesystem (tools/ directory)
+
+Output:
+    - Updates to tool_inventory.json
+    - Console log of removed files
+
+Key Functions:
+    - get_missing_files(): uses manage_tool_inventory.py audit.
+    - remove_tool(): uses manage_tool_inventory.py remove.
+
+Script Dependencies:
+    - tools/curate/inventories/manage_tool_inventory.py
+
+Consumed by:
+    - CI/CD Pipelines
+    - Manual maintenance
+"""
 import os
 import json
 import subprocess

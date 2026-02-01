@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-01-31T17:58:17.466268",
+    "last_updated": "2026-01-31T22:32:17.342614",
     "status": "Deduplicated"
   },
   "python": {
@@ -9,7 +9,7 @@
         {
           "name": "cli.py",
           "path": "tools/cli.py",
-          "description": "Main entry point for the Antigravity Command System. Orchestrates sub-tools for scanning, context bundling, dependency analysis, and business rule discovery. Routes commands like scan, bundle, query, and rules to specialized modules.",
+          "description": "Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution.",
           "original_path": "tools/business-rule-extraction/cli.py",
           "decision": "keep",
           "header_style": "basic",
@@ -47,7 +47,7 @@
         {
           "name": "cleanup_cache.py",
           "path": "tools/curate/rlm/cleanup_cache.py",
-          "description": "RLM Cleanup: Removes stale and orphan entries from the Recursive Language Model ledger.",
+          "description": "Prunes stale or orphaned entries from the RLM Cache to ensure it matches the filesystem state.",
           "original_path": "tools/curate/rlm/cleanup_cache.py",
           "decision": "keep",
           "header_style": "extended",
@@ -59,7 +59,7 @@
           "name": "debug_rlm.py",
           "path": "tools/codify/rlm/debug_rlm.py",
           "description": "Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts.",
-          "last_updated": "2026-01-29T11:14:20.590635",
+          "last_updated": "2026-01-31T22:09:46.957316",
           "compliance_status": "needs_review",
           "header_style": "minimal"
         },
@@ -99,58 +99,13 @@
         {
           "name": "rlm_config.py",
           "path": "tools/codify/rlm/rlm_config.py",
-          "description": "Centralized configuration and utility logic for the RLM Toolchain. Implement the 'Manifest Factory' pattern to dynamically resolve manifests and cache files based on the Analysis Type (Legacy vs Tool). This module is the Single Source of Truth for RLM logic.",
-          "last_updated": "2026-01-29T11:14:20.594474",
+          "description": "Central configuration factory for RLM. Resolves cache paths and loads manifests.",
+          "last_updated": "2026-01-31T22:09:47.302237",
           "compliance_status": "needs_review",
           "header_style": "minimal"
         }
       ],
-      "vector": [
-        {
-          "name": "ingest.py",
-          "path": "tools/codify/vector/ingest.py",
-          "description": "Vector Ingestion: Chunks code/docs and generates embeddings via ChromaDB.",
-          "original_path": "tools/codify/vector/ingest.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.606698",
-          "compliance_status": "compliant",
-          "category": "vector"
-        },
-        {
-          "name": "query.py",
-          "path": "tools/retrieve/vector/query.py",
-          "description": "Vector Search: Semantic search interface for the ChromaDB collection.",
-          "original_path": "tools/retrieve/vector/query.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.770299",
-          "compliance_status": "compliant",
-          "category": "vector"
-        },
-        {
-          "name": "cleanup.py",
-          "path": "tools/curate/vector/cleanup.py",
-          "description": "Vector Cleanup: Consistency check to remove stale chunks from DB.",
-          "original_path": "tools/curate/vector/cleanup.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.686080",
-          "compliance_status": "compliant",
-          "category": "vector"
-        },
-        {
-          "name": "ingest_code_shim.py",
-          "path": "tools/codify/vector/ingest_code_shim.py",
-          "description": "Shim for ingesting code files into Vector DB.",
-          "original_path": "tools/vector-db/ingest_code_shim.py",
-          "decision": "moved",
-          "header_style": "basic",
-          "last_updated": "2026-01-29T11:14:20.608493",
-          "compliance_status": "compliant",
-          "category": "vector"
-        }
-      ],
+      "vector": [],
       "search": [],
       "documentation": [
         {
@@ -160,7 +115,7 @@
           "original_path": "tools/codify/diagrams/export_mmd_to_image.py",
           "decision": "keep",
           "header_style": "minimal",
-          "last_updated": "2026-01-29T11:14:20.571933",
+          "last_updated": "2026-01-31T22:07:51.874081",
           "compliance_status": "needs_review"
         },
         {
@@ -217,16 +172,41 @@
           "last_updated": "2026-01-29T11:14:20.654524",
           "compliance_status": "compliant",
           "category": "curate"
+        },
+        {
+          "name": "vibe_cleanup.py",
+          "path": "tools/curate/inventories/vibe_cleanup.py",
+          "description": "Maintenance script to clean up temporary/vibe files (logs, temp artifacts) from the workspace to ensure hygiene.",
+          "last_updated": "2026-01-31T22:19:42.802739",
+          "compliance_status": "compliant",
+          "header_style": "minimal"
         }
       ],
-      "investigate": [],
+      "investigate": [
+        {
+          "name": "next_number.py",
+          "path": "tools/investigate/utils/next_number.py",
+          "description": "Generates the next sequential ID number for project artifacts (ADRs, Tasks, Specs) by scanning the filesystem for existing files.",
+          "last_updated": "2026-01-31T22:19:42.609674",
+          "compliance_status": "compliant",
+          "header_style": "minimal"
+        },
+        {
+          "name": "path_resolver.py",
+          "path": "tools/investigate/utils/path_resolver.py",
+          "description": "Standardizes cross-platform path resolution (Legacy Location).",
+          "last_updated": "2026-01-31T23:55:00.000000",
+          "compliance_status": "manual_entry",
+          "header_style": "manual"
+        }
+      ],
       "curate/inventories": [],
       "codify/documentation": [],
       "Orchestrator": [
         {
           "name": "workflow_manager.py",
           "path": "tools/orchestrator/workflow_manager.py",
-          "description": "Core logic for the 'Python Orchestrator' architecture (ADR-0030 v2/v3). Handles Git State checks, Context Alignment, Branch Creation & Naming, and Context Manifest Initialization. Acts as the single source of truth for 'Start Workflow' logic.",
+          "description": "Manages the lifecycle of Agent Workflows (Start, Step, End). Tracks state in workflow_state.json.",
           "last_updated": "2026-01-31T08:47:10.159714",
           "compliance_status": "compliant",
           "header_style": "extended"
@@ -236,8 +216,70 @@
         {
           "name": "proof_check.py",
           "path": "tools/orchestrator/proof_check.py",
-          "description": "TBD",
+          "description": "Validates task completion by checking file modifications against the Git index. Ensures Proof of Work.",
           "last_updated": "2026-01-31T13:57:26.855955",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "root": [
+        {
+          "name": "cli.py",
+          "path": "tools/cli.py",
+          "description": "Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution.",
+          "last_updated": "2026-01-31T21:26:39.882399",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "cortex_cli.py",
+          "path": "scripts/cortex_cli.py",
+          "description": "Main CLI entry point for the Cortex Agentic Operations (Protocol 128). Orchestrates Cognitive functions (Memory, Learning, Debrief, Stats).",
+          "last_updated": "2026-01-31T22:19:43.145683",
+          "compliance_status": "compliant",
+          "header_style": "minimal"
+        },
+        {
+          "name": "domain_cli.py",
+          "path": "scripts/domain_cli.py",
+          "description": "Domain-Specific CLI for managing specific Project Entities (Tasks, ADRs, Chronicles, Protocols). Maps CLI commands to MCP business logic.",
+          "last_updated": "2026-01-31T22:19:42.987331",
+          "compliance_status": "compliant",
+          "header_style": "minimal"
+        },
+        {
+          "name": "smart_fix_links.py",
+          "path": "scripts/link-checker/smart_fix_links.py",
+          "description": "Auto-repair utility for broken Markdown links using a file inventory.",
+          "last_updated": "2026-01-31T22:10:58.475815",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "verify_links.py",
+          "path": "scripts/link-checker/verify_links.py",
+          "description": "Verifies the integrity of internal links across the documentation base. Part of Protocol 128 validation.",
+          "last_updated": "2026-01-31T22:10:58.689853",
+          "compliance_status": "needs_review",
+          "header_style": "none"
+        }
+      ],
+      "retrieve": [
+        {
+          "name": "fetch_tool_context.py",
+          "path": "tools/retrieve/rlm/fetch_tool_context.py",
+          "description": "Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable 'Manual Page'. This is the second step of the Late-Binding Protocol, following query_cache.py which finds a tool, this script provides the detailed context needed to use it.",
+          "last_updated": "2026-01-31T22:19:42.432516",
+          "compliance_status": "compliant",
+          "header_style": "basic"
+        }
+      ],
+      "utils": [
+        {
+          "name": "path_resolver.py",
+          "path": "tools/utils/path_resolver.py",
+          "description": "Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding.",
+          "last_updated": "2026-01-31T21:47:58.363525",
           "compliance_status": "compliant",
           "header_style": "extended"
         }
@@ -247,7 +289,24 @@
   "javascript": {
     "tools": {
       "xml_to_markdown": [],
-      "utilities": []
+      "utilities": [
+        {
+          "name": "pathResolver.js",
+          "path": "tools/investigate/utils/pathResolver.js",
+          "description": "Node.js implementation of path resolution logic.",
+          "last_updated": "2026-01-31T23:55:00.000000",
+          "compliance_status": "manual_entry",
+          "header_style": "manual"
+        },
+        {
+          "name": "rlmConfigResolver.js",
+          "path": "tools/investigate/utils/rlmConfigResolver.js",
+          "description": "Resolves RLM configuration paths for Node.js tools.",
+          "last_updated": "2026-01-31T23:55:00.000000",
+          "compliance_status": "manual_entry",
+          "header_style": "manual"
+        }
+      ]
     }
   }
 }

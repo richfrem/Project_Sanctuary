@@ -1,11 +1,39 @@
 #!/usr/bin/env python3
 """
-=============================================================================
- Smart Link Fixer - Project Sanctuary Link Checker
-=============================================================================
- Purpose: Auto-repair broken markdown links using file inventory.
- Usage: python scripts/link-checker/smart_fix_links.py [--dry-run]
-=============================================================================
+smart_fix_links.py (CLI)
+=====================================
+
+Purpose:
+    Auto-repair utility for broken Markdown links.
+    Uses a file inventory to find the correct location of moved or renamed files
+    and updates the links in-place. Supports "fuzzy" matching for ambiguous cases.
+
+Layer: Curate / Link Checker
+
+Usage Examples:
+    python scripts/link-checker/smart_fix_links.py --dry-run
+    python scripts/link-checker/smart_fix_links.py
+
+CLI Arguments:
+    --dry-run       : Report proposed changes without modifying files (Safety Mode)
+
+Input Files:
+    - scripts/link-checker/file_inventory.json (Source of Truth)
+    - **/*.md (Target files to fix)
+
+Output:
+    - Modified .md files
+    - Console report of fixes
+
+Key Functions:
+    - fix_links_in_file(): regex replacement logic with inventory lookup.
+
+Script Dependencies:
+    - mcp_servers/lib/exclusion_config.py
+
+Consumed by:
+    - /post-move-link-check (Workflow)
+    - Manual maintenance
 """
 import os
 import json

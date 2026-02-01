@@ -1,52 +1,59 @@
-#============================================
-# scripts/cortex_cli.py
-# Purpose: CLI Orchestrator for the Mnemonic Cortex RAG server.
-# Role: Single Source of Truth for Terminal Operations.
-# Reference: Protocol 128 (Hardened Learning Loop)
-#
-# INGESTION EXAMPLES:
-#   python3 scripts/cortex_cli.py ingest                    # Full purge & rebuild (Default behavior)
-#   python3 scripts/cortex_cli.py ingest --no-purge         # Append to existing Vector DB
-#   python3 scripts/cortex_cli.py ingest --dirs "LEARNING"  # Target specific directory ingestion
-#   python3 scripts/cortex_cli.py ingest --type incremental --files "path/to/file.md"  # Targeted update
-#
-# SNAPSHOT EXAMPLES (Protocol 128 Workflow):
-#   python3 scripts/cortex_cli.py snapshot --type audit --manifest .agent/learning/red_team/red_team_manifest.json
-#   python3 scripts/cortex_cli.py snapshot --type learning_audit --manifest .agent/learning/learning_audit/learning_audit_manifest.json
-#   python3 scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/learning_manifest.json
-#   python3 scripts/cortex_cli.py snapshot --type learning_audit --context "Egyptian Labyrinth research"
-#
-# GUARDIAN WAKEUP (Protocol 128 Bootloader):
-#   python3 scripts/cortex_cli.py guardian                     # Standard wakeup
-#   python3 scripts/cortex_cli.py guardian --mode TELEMETRY    # Telemetry-focused wakeup
-#   python3 scripts/cortex_cli.py guardian --show              # Display digest content after generation
-#
-# BOOTSTRAP DEBRIEF (Fresh Repo Onboarding):
-#   python3 scripts/cortex_cli.py bootstrap-debrief            # Generate onboarding context packet
-#
-# DIAGNOSTICS & RETRIEVAL:
-#   python3 scripts/cortex_cli.py stats                     # View child/parent counts & health
-#   python3 scripts/cortex_cli.py query "Protocol 128"      # Semantic search across Mnemonic Cortex
-#   python3 scripts/cortex_cli.py debrief --hours 48        # Session diff & recency scan
-#   python3 scripts/cortex_cli.py cache-stats               # Check semantic cache (CAG) efficiency
-#   python3 scripts/cortex_cli.py cache-warmup              # Pre-populate CAG with genesis queries
-#
-# SOUL PERSISTENCE (ADR 079 / 081):
-#   Incremental (append 1 seal to JSONL + upload MD to lineage/):
-#     python3 scripts/cortex_cli.py persist-soul
-#     python3 scripts/cortex_cli.py persist-soul --valence 0.8 --snapshot .agent/learning/learning_package_snapshot.md
-#
-#   Full Sync (regenerate entire JSONL from all files + deploy data/):
-#     python3 scripts/cortex_cli.py persist-soul-full
-#
-# EVOLUTIONARY METRICS (Protocol 131):
-#   python3 scripts/cortex_cli.py evolution fitness "Some content"
-#   python3 scripts/cortex_cli.py evolution depth --file .agent/learning/learning_debrief.md
-#
-# RLM DISTILLATION (Protocol 132):
-#   python3 scripts/cortex_cli.py rlm-distill README.md        # Distill summary for a file
-#   python3 scripts/cortex_cli.py rlm-distill "ADRs"            # Distill summaries for a directory (Recursive)
-#============================================
+#!/usr/bin/env python3
+"""
+cortex_cli.py (CLI)
+=====================================
+
+Purpose:
+    CLI Orchestrator for the Mnemonic Cortex RAG server and Protocol 128 (Learning Loop).
+    Serves as the Single Source of Truth for Terminal Operations involving knowledge ingestion,
+    retrieval, snapshotting, and soul persistence.
+
+    This tool is critical for maintaining the Agent's long-term memory and ensuring
+    cognitive continuity between sessions.
+
+Layer: Orchestrator
+
+Usage Examples:
+    python scripts/cortex_cli.py ingest --incremental --hours 24
+    python scripts/cortex_cli.py query "Protocol 128"
+    python scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/learning_manifest.json
+    python scripts/cortex_cli.py guardian --mode TELEMETRY
+
+CLI Arguments:
+    ingest          : Perform RAG ingestion (Full or Incremental)
+    query           : Perform semantic search
+    snapshot        : Capture Protocol 128 snapshot
+    guardian        : Generate Guardian Boot Digest
+    persist-soul    : Broadcast snapshot to Hugging Face
+    debrief         : Run learning debrief logic
+    stats           : View RAG health statistics
+
+Input Files:
+    - .agent/learning/learning_manifest.json
+    - .agent/learning/guardian_manifest.json
+    - Project files (md, py, js, etc.) for ingestion
+
+Output:
+    - RAG Database (.vector_data/)
+    - Snapshots (.agent/learning/snapshots/)
+    - Guardian Digest (stdout/file)
+
+Key Functions:
+    - main(): Entry point and argument router.
+    - verify_iron_core(): Enforces ADR 090 security protocols.
+    - ingest(): Handled via CortexOperations.
+    - snapshot(): Handled via LearningOperations.
+
+Script Dependencies:
+    - mcp_servers/rag_cortex/operations.py
+    - mcp_servers/learning/operations.py
+    - mcp_servers/evolution/operations.py
+
+Consumed by:
+    - User (Manual CLI)
+    - Agent (via Tool Calls)
+    - CI/CD Pipelines
+"""
 import argparse
 import sys
 import json

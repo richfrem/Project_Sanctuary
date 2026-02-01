@@ -6,28 +6,31 @@ debug_rlm.py (CLI)
 Purpose:
     Debug utility to inspect the RLMConfiguration state.
     Verifies path resolution, manifest loading, and environment variable overrides.
-    Useful for troubleshooting cache path conflicts.
+    Useful for troubleshooting cache path conflicts and RLM factory resolution.
 
-Layer: Standalone
+Layer: Codify / Rlm
 
-Supported Object Types:
-    - RLM Configuration
+Usage Examples:
+    python tools/codify/rlm/debug_rlm.py
 
 CLI Arguments:
-    (None)
+    None
 
 Input Files:
     - tools/standalone/rlm-factory/manifest-index.json
     - .env
 
 Output:
-    - Console output (State inspection)
+    - Console output (State inspection of RLMConfig)
 
 Key Functions:
-    - main(): Prints configuration details for 'tool' and 'sanctuary' modes.
+    - RLMConfig(): Instantiated to test path resolution logic.
 
 Script Dependencies:
     - tools/codify/rlm/rlm_config.py
+
+Consumed by:
+    - Developers (Manual debugging)
 """
 import os
 import sys

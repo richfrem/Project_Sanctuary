@@ -14,7 +14,7 @@ handoffs:
 
 ## Phase 0: Pre-Flight
 ```bash
-source scripts/bash/workflow-start.sh speckit-tasks [Target]
+python tools/cli.py workflow start --name speckit-tasks --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 

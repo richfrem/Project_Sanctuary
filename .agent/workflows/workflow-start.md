@@ -66,7 +66,7 @@ view_file .agent/rules/constitution.md
 
 ### 2.1 Get Next Spec Number
 ```bash
-python tools/investigate/utils/next_number.py spec
+python tools/investigate/utils/next_number.py --type spec
 ```
 
 ### 2.2 Create Spec Bundle Directory

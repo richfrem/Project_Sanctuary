@@ -5,7 +5,7 @@ graph TD
     PythonCLI{{"🐍 Python CLI<br/>(tools/cli.py workflow start)"}}
     Orchestrator[["⚙️ WorkflowManager<br/>(tools/orchestrator/)"]]
 
-    User -->|"1. Request:<br/>/codify-form TARGET"| ThinShim
+    User -->|"1. Request:<br/>/workflow-learning-loop"| ThinShim
     
     %% Shim is pass-through
     ThinShim -->|"2. exec python3<br/>tools/cli.py ..."| PythonCLI
@@ -39,7 +39,7 @@ graph TD
     %% Router determines TYPE of work
     ContextInit -->|4. Determine Type| TypeCheck{Work Type?}
     
-    TypeCheck -->|Standard SOP<br/>e.g. /codify-form| StandardFlow[Standard Flow]
+    TypeCheck -->|Standard - Learning Loop| Scout[/"Protocol 128<br/>Learning Loop"/]
     TypeCheck -->|Custom/Discovery<br/>New Feature/Problem| CustomFlow[Custom Flow]
     
     %% BOTH tracks create Spec-Plan-Tasks (Unified Tracking)
@@ -53,19 +53,14 @@ graph TD
         Plan -->|Define How| Tasks
     end
     
-    StandardFlow -->|Auto-Template| Spec
+    Scout -->|Defines Context| Spec
     CustomFlow -->|Manual Draft| Spec
     
     %% Execution: Tasks drive work
     Tasks -->|Execute| Execution{Execution}
     
-    %% Standard goes to Factory Ops
-    Execution -->|Standard| FactoryOps
-    subgraph FactoryOps ["Factory Operations"]
-        C_Form[/codify-form/]
-        C_DB[/codify-db-*/]
-        C_Logic[/codify-business-*/]
-    end
+    %% Standard goes to Learning Ops
+    Execution -->|Standard| LearningOps
     
     %% Custom goes to Implementation
     Execution -->|Custom| CustomImpl
@@ -74,8 +69,16 @@ graph TD
         ManualCode[Manual Code]
     end
     
+    %% Learning goes to Protocol Ops
+    subgraph LearningOps ["Track C: Learning Ops (Protocol 128)"]
+        Audit[/workflow-audit/]
+        Seal[/workflow-seal/]
+        Persist[/workflow-persist/]
+        Audit --> Seal --> Persist
+    end
+    
     %% Closure
-    FactoryOps --> Closure
+    LearningOps --> Closure
     CustomImpl --> Closure
     
     subgraph Closure ["Universal Closure"]
@@ -86,6 +89,9 @@ graph TD
     
     End --> Done([Done])
     
+    %% Interaction Links
+    click Scout "https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd" "View Protocol 128 Diagram"
+
     %% Styling
     style User fill:#fff,stroke:#333
     style Constitution fill:#ff9999,stroke:#333,stroke-width:3px
@@ -102,5 +108,5 @@ graph TD
     style Spec fill:#ADD8E6,stroke:#333
     style Plan fill:#ADD8E6,stroke:#333
     style Tasks fill:#ADD8E6,stroke:#333
-    style StandardFlow fill:#90EE90,stroke:#333
+    style Scout fill:#90EE90,stroke:#333
     style CustomFlow fill:#87CEEB,stroke:#333

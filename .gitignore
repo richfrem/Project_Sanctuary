@@ -150,6 +150,7 @@ debug_cdp_failure.png
 
 # Fine-tuning Artifacts - Generated during model training, should not be committed
 outputs/
+!.agent/templates/outputs/  # Output templates - TRACKED (ADR templates, etc.)
 #sanctuary_whole_genome_data.jsonl
 
 # Colab Notebooks - Generated artifac# Jupyter Notebooks

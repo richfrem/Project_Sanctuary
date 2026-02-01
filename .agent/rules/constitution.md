@@ -65,7 +65,7 @@ trigger: always_on
 **Core Principle**: Standardized workflows and tool usage. **Ad-hoc actions are strictly prohibited.**
 
 ### 1. Global Operational Protocol (Tool Discovery)
-> **Reference Skill**: [.agent/skills/tool_discovery/SKILL.md](../../.agent/skills/tool_discovery/SKILL.md)
+> **Reference Skill**: [.agent/skills/SKILL.md](../../.agent/skills/SKILL.md)
 
 **CRITICAL:** You operate in a "Late-Binding" environment. You do not have all tools loaded.
 *   **Discovery First**: Agent MUST consult cache of tools first before running native filesystem commands.

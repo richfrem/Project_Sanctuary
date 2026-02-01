@@ -1,10 +1,20 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-31T19:34:26.859083",
-    "count": 14,
+    "generatedAt": "2026-01-31T23:26:03.357197",
+    "count": 24,
     "source": ".agent/workflows"
   },
   "workflows": [
+    {
+      "name": "codify-adr",
+      "filename": "codify-adr.md",
+      "path": ".agent/workflows/codify-adr.md",
+      "description": "Creates a new Architecture Decision Record (ADR) with proper numbering and template.",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
     {
       "name": "post-move-link-check",
       "filename": "post-move-link-check.md",
@@ -116,12 +126,72 @@
       "called_by": []
     },
     {
+      "name": "workflow-adr",
+      "filename": "workflow-adr.md",
+      "path": ".agent/workflows/workflow-adr.md",
+      "description": "Manage Architecture Decision Records (ADR)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-audit",
+      "filename": "workflow-audit.md",
+      "path": ".agent/workflows/workflow-audit.md",
+      "description": "Protocol 128 Phase IV - Red Team Audit (Capture Snapshot)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-chronicle",
+      "filename": "workflow-chronicle.md",
+      "path": ".agent/workflows/workflow-chronicle.md",
+      "description": "Manage Chronicle Entries (Journaling)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
       "name": "workflow-end",
       "filename": "workflow-end.md",
       "path": ".agent/workflows/workflow-end.md",
       "description": "Standard post-flight closure for all codify/investigate workflows. Handles human review, git commit, PR verification, and cleanup.",
       "inputs": [],
       "tier": 1,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-ingest",
+      "filename": "workflow-ingest.md",
+      "path": ".agent/workflows/workflow-ingest.md",
+      "description": "Run RAG Ingestion (Protocol 128 Phase IX)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-learning-loop",
+      "filename": "workflow-learning-loop.md",
+      "path": ".agent/workflows/workflow-learning-loop.md",
+      "description": "Orchestrates a Protocol 128 Learning Loop within the standard Spec-First lifecycle.",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-persist",
+      "filename": "workflow-persist.md",
+      "path": ".agent/workflows/workflow-persist.md",
+      "description": "Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face)",
+      "inputs": [],
+      "tier": null,
       "track": "Factory",
       "called_by": []
     },
@@ -138,12 +208,42 @@
       ]
     },
     {
+      "name": "workflow-scout",
+      "filename": "workflow-scout.md",
+      "path": ".agent/workflows/workflow-scout.md",
+      "description": "Protocol 128 Phase I - The Learning Scout (Debrief & Orientation)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-seal",
+      "filename": "workflow-seal.md",
+      "path": ".agent/workflows/workflow-seal.md",
+      "description": "Protocol 128 Phase V - The Technical Seal (Snapshot & Validation)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
       "name": "workflow-start",
       "filename": "workflow-start.md",
       "path": ".agent/workflows/workflow-start.md",
       "description": "Universal pre-flight and Spec initialization for all workflows. Determines work type and ensures Spec-Plan-Tasks exist.",
       "inputs": [],
       "tier": 1,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-task",
+      "filename": "workflow-task.md",
+      "path": ".agent/workflows/workflow-task.md",
+      "description": "Manage Maintenance Tasks (Kanban)",
+      "inputs": [],
+      "tier": null,
       "track": "Factory",
       "called_by": []
     }

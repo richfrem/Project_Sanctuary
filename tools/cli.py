@@ -50,11 +50,11 @@ if str(PROJECT_ROOT) not in sys.path:
 
 # Import path resolver
 try:
-    from tools.investigate.utils.path_resolver import resolve_path
+    from tools.utils.path_resolver import resolve_path
 except ImportError:
     # Fallback if running from root without package structure
     sys.path.append(str(PROJECT_ROOT))
-    from tools.investigate.utils.path_resolver import resolve_path
+    from tools.utils.path_resolver import resolve_path
 
 # Resolve Directories
 MINERS_DIR = Path(resolve_path("tools/investigate/miners"))
@@ -75,7 +75,7 @@ for d in [MINERS_DIR, SEARCH_DIR, MENU_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, 
     if str(d) not in sys.path:
         sys.path.append(str(d))
 
-from tools.investigate.utils.path_resolver import resolve_path
+from tools.utils.path_resolver import resolve_path
 from workflow_manager import WorkflowManager
 
 def resolve_type_from_inventory(target_id: str) -> str:
@@ -177,9 +177,6 @@ def main():
     bw_parser = subparsers.add_parser("bw", help="Business Workflows Inventory (search, register, investigate)")
     bw_parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for business_workflows_inventory_manager.py")
 
-    # Query Command
-    query_parser = subparsers.add_parser("query", help="Query the Knowledge Base")
-    query_parser.add_argument("text", help="Query text")
 
     # Dependency Command
     dep_parser = subparsers.add_parser("dependencies", help="Query Artifact Dependencies")
@@ -474,14 +471,6 @@ def main():
         cmd = [sys.executable, str(INVENTORIES_DIR / "business_workflows_inventory_manager.py")] + pass_args
         subprocess.run(cmd)
 
-    elif args.command == "query":
-        print(f"🔍 Semantic Search (Vector DB):")
-        cmd_vec = [sys.executable, str(VECTOR_TOOLS_DIR / "query.py"), args.text]
-        subprocess.run(cmd_vec)
-        
-        print(f"\n📚 Cache Search (RLM):")
-        cmd_rlm = [sys.executable, str(RLM_DIR / "query_cache.py"), args.text]
-        subprocess.run(cmd_rlm)
 
     elif args.command == "dependencies":
         cmd_dep = [sys.executable, str(SEARCH_DIR / "dependencies.py"), "--target", args.target]
@@ -498,28 +487,7 @@ def main():
         data = {"Target": args.target, "Analysis": {}}
         
         # 0. RLM Cache Lookup (Instant Context)
-        try:
-            from tools.codify.rlm.rlm_config import RLMConfig
-            rlm_config = RLMConfig(run_type="sanctuary")
-            rlm_cache_path = rlm_config.cache_path
-            
-            if rlm_cache_path.exists():
-                with open(rlm_cache_path, "r", encoding="utf-8") as f:
-                    cache = json.load(f)
-                # Search for entries containing the target ID (case-insensitive)
-                target_lower = args.target.lower()
-                matches = {k: v for k, v in cache.items() if target_lower in k.lower()}
-                if matches:
-                    data["Analysis"]["RLM_Cache"] = {
-                        "found": len(matches),
-                        "entries": {k: v.get("summary", "") for k, v in matches.items()}
-                    }
-                else:
-                    data["Analysis"]["RLM_Cache"] = {"found": 0, "entries": {}}
-            else:
-                data["Analysis"]["RLM_Cache"] = {"error": "Cache file not found"}
-        except Exception as e:
-            data["Analysis"]["RLM_Cache"] = {"error": str(e)}
+
         
         # 1. Miners (Declarative Rules & Logic)
         # XML Miner (Forms)

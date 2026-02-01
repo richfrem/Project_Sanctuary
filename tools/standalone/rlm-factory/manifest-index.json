@@ -1,29 +1,4 @@
 {
-    "sanctuary": {
-        "description": "project sanctuary RLM learning cache",
-        "manifest": "tools/standalone/rlm-factory/distiller_manifest.json",
-        "cache": ".agent/learning/rlm_summary_cache.json",
-        "parser": "directory_glob",
-        "prompt_path": "tools/ai-resources/prompts/rlm/rlm_summarize_sanctuary.md",
-        "llm_model": "hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M",
-        "vector_config": {
-            "collection_name": "sanctuary_knowledge_v1",
-            "description": "Primary RAG Knowledge Base",
-            "parent_store": {
-                "collection_name": "parent_documents_v5",
-                "storage_type": "file_store",
-                "path": ".vector_data/parent_documents_v5",
-                "chunk_size": 2000,
-                "chunk_overlap": 200
-            },
-            "child_store": {
-                "collection_name": "child_chunks_v5",
-                "storage_type": "chroma",
-                "chunk_size": 400,
-                "chunk_overlap": 50
-            }
-        }
-    },
     "tool": {
         "description": "Tool Discovery (CLI Scripts & Capabilities)",
         "manifest": "tools/tool_inventory.json",

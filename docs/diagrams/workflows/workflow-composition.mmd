@@ -1,59 +1,63 @@
 graph TD
     %% Styling
-    classDef orchestrator fill:#d4e1f5,stroke:#2b5797,stroke-width:2px,color:#000
-    classDef investigator fill:#e3f2fd,stroke:#0288d1,stroke-width:2px,color:#000
+    classDef meta fill:#d4e1f5,stroke:#2b5797,stroke-width:2px,color:#000
+    classDef domain fill:#e3f2fd,stroke:#0288d1,stroke-width:2px,color:#000
     classDef atomic fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000
     classDef output fill:#fff9c4,stroke:#fbc02d,stroke-width:2px,stroke-dasharray: 5 5,color:#000
 
-    subgraph Tier3 ["Tier 3: Orchestrators (Context & Decisions)"]
-        CodifyForm["/codify-form"]:::orchestrator
-        CodifyApp["/codify-app"]:::orchestrator
-        Modernize["/modernize-form"]:::orchestrator
-        SpecKit["/speckit-* (Discovery)"]:::orchestrator
+    subgraph Tier3 ["Tier 3: Meta-Orchestrators (Lifecycle)"]
+        P128["/workflow-learning-loop<br/>(Protocol 128)"]:::meta
+        SpecKit["/speckit-*<br/>(Specification)"]:::meta
     end
 
-    subgraph Tier2 ["Tier 2: Investigators (Technical Extraction)"]
-        InvForm["/investigate-form"]:::investigator
-        InvMenu["/investigate-menu"]:::investigator
-        InvLib["/investigate-library"]:::investigator
+    subgraph Tier2 ["Tier 2: Domain Management"]
+        Chronicle["/workflow-chronicle<br/>(Journaling)"]:::domain
+        Task["/workflow-task<br/>(Kanban)"]:::domain
+        ADR["/workflow-adr<br/>(Architecture)"]:::domain
     end
 
-    subgraph Tier1 ["Tier 1: Atomic (Single Responsibility)"]
+    subgraph Tier1 ["Tier 1: Atomic Phases (Protocol Ops)"]
         Start["/workflow-start"]:::atomic
+        Scout["/workflow-scout"]:::atomic
+        Audit["/workflow-audit"]:::atomic
+        Seal["/workflow-seal"]:::atomic
+        Persist["/workflow-persist"]:::atomic
         End["/workflow-end"]:::atomic
         Sync["/codify-intelligence-sync"]:::atomic
-        Deps["/investigate-direct-dependencies"]:::atomic
-        BR["/investigate-business-rule"]:::atomic
-        Roles["/investigate-roles"]:::atomic
     end
 
     subgraph Outputs ["Outputs"]
-        Doc["Overviews (MD)"]:::output
-        Code["React Code (TSX)"]:::output
-        Cache["RLM Cache & Vector DB"]:::output
+        Doc["Learning Snapshot (MD)"]:::output
+        Cache["RLM Cache (JSON)"]:::output
+        Soul["Soul Traces (HuggingFace)"]:::output
     end
 
-    %% Composition flows
-    CodifyForm --> Start
-    CodifyForm --> Deps
-    CodifyForm --> InvForm
-    CodifyForm --> Roles
-    CodifyForm --> Sync
-    CodifyForm --> End
-
-    Modernize --> Start
-    Modernize --> InvForm
-    Modernize --> End
-
-    %% Dependencies
-    InvForm --> BR
-    InvForm -- "Recursive Discovery" --> InvLib
+    %% Protocol 128 Composition
+    P128 -->|1. Initialize| Start
+    P128 -->|2. Scout| Scout
+    P128 -->|3. Define| SpecKit
     
-    %% Output generation
-    CodifyForm --> Doc
-    Modernize --> Code
+    %% Execution Phase uses Domain Tools
+    P128 -.->|Executive| Chronicle
+    P128 -.->|Executive| Task
+    P128 -.->|Executive| ADR
+    
+    %% Closure Phase
+    P128 -->|4. Audit| Audit
+    P128 -->|5. Seal| Seal
+    P128 -->|6. Persist| Persist
+    P128 -->|7. Close| End
+    
+    %% Output Generation
+    Scout --> Doc
+    Seal --> Doc
+    Persist --> Soul
     Sync --> Cache
+    P128 --> Sync
 
-    %% Links/Notes
-    click CodifyForm "https://github.com/.../blob/main/.agent/workflows/codify-form.md" "View Workflow"
-    click InvForm "https://github.com/.../blob/main/.agent/workflows/investigate-form.md" "View Workflow"
+    %% Links
+    click P128 "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-learning-loop.md" "View Workflow"
+    click Scout "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-scout.md" "View Workflow"
+    click Audit "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-audit.md" "View Workflow"
+    click Seal "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-seal.md" "View Workflow"
+    click Persist "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-persist.md" "View Workflow"
