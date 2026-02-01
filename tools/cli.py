@@ -4,35 +4,59 @@ cli.py (CLI)
 =====================================
 
 Purpose:
-    Main entry point for the Antigravity Command System. Orchestrates sub-tools 
-    for context bundling, tool discovery, workflow management, and queries.
+    Main entry point for the Project Sanctuary Command System (Antigravity).
+    Serves as the Single Source of Truth for system orchestration:
+    - Protocol 128 Learning Loop (Snapshot, Debrief, Persist, Guardian)
+    - RAG Cortex Operations (Ingest, Query, Stats)
+    - Context Bundling & Tool Discovery (Investigate/Retrieve)
+    - Workflow Management (Codify)
+    - Evolutionary Metrics (Protocol 131)
 
-Layer: Tools / CLI
+Layer: Tools / Orchestrator
 
 Usage Examples:
-    python tools/cli.py --help
-    python tools/cli.py tools list
-    python tools/cli.py query "search term"
-    python tools/cli.py workflow start --name codify --target MyTarget
+    # Learning Loop (Protocol 128)
+    python tools/cli.py debrief --hours 24
+    python tools/cli.py snapshot --type seal
+    python tools/cli.py persist-soul --snapshot .agent/learning/learning_package_snapshot.md
+    python tools/cli.py guardian wakeup --mode HOLISTIC
 
-Supported Object Types:
-    - Generic
-    - Workflow
+    # RAG Cortex
+    python tools/cli.py ingest --incremental --hours 24
+    python tools/cli.py query "Concept: Protocol 128"
+    python tools/cli.py stats --samples
+
+    # Workflows & Investigation
+    python tools/cli.py workflow start --name codify-feat --target MyFeat
+    python tools/cli.py tools list --category curate
+    python tools/cli.py bundle --target MyTarget
+
+    # Evolution (Protocol 131)
+    python tools/cli.py evolution fitness "Content here or --file path"
 
 CLI Arguments:
-    --target        : Target ID
-    --type          : Artifact Type
-    --json          : Output in JSON format
-    --manifest      : Custom manifest path
-    --output        : Output directory
+    # Core RAG
+    ingest          : Perform RAG ingestion (Full or Incremental)
+    query           : Perform semantic search
+    stats           : View RAG health statistics
 
-Key Functions:
-    - resolve_type_from_inventory(): Placeholder for artifact type resolution.
-    - main(): CLI entry point.
+    # Learning Loop
+    debrief         : Run Learning Debrief (Phase I)
+    snapshot        : Capture context snapshot (Phase V)
+    persist-soul    : Broadcast to Hugging Face (Phase VI)
+    guardian        : Bootloader operations
+    
+    # Tooling
+    tools           : Discover and manage scripts
+    bundle          : Generate context bundles
+    workflow        : Manage agent workflows
+    evolution       : Calculate fitness metrics
 
-Script Dependencies:
-    - tools/investigate/utils/path_resolver.py
-    - tools/orchestrator/workflow_manager.py
+Dependencies:
+    - mcp_servers.learning.operations
+    - mcp_servers.rag_cortex.operations
+    - mcp_servers.evolution.operations
+    - tools.orchestrator.workflow_manager
 """
 import sys
 import argparse
@@ -57,9 +81,8 @@ except ImportError:
     from tools.utils.path_resolver import resolve_path
 
 # Resolve Directories
-MINERS_DIR = Path(resolve_path("tools/investigate/miners"))
+# Resolve Directories
 SEARCH_DIR = Path(resolve_path("tools/investigate/search"))
-MENU_DIR = Path(resolve_path("tools/investigate/menu"))
 DOCS_DIR = Path(resolve_path("tools/codify/documentation"))
 TRACKING_DIR = Path(resolve_path("tools/codify/tracking"))
 SHARED_DIR = Path(resolve_path("tools/shared"))
@@ -71,18 +94,22 @@ RLM_DIR = Path(resolve_path("tools/retrieve/rlm"))
 ORCHESTRATOR_DIR = Path(resolve_path("tools/orchestrator"))
 
 # Add directories to sys.path for internal imports
-for d in [MINERS_DIR, SEARCH_DIR, MENU_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
+for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
     if str(d) not in sys.path:
         sys.path.append(str(d))
 
 from tools.utils.path_resolver import resolve_path
 from workflow_manager import WorkflowManager
 try:
-    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest
+    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
+    from mcp_servers.rag_cortex.operations import CortexOperations
+    from mcp_servers.evolution.operations import EvolutionOperations
 except ImportError:
     # Fallback/Bootstrap if pathing is tricky
     sys.path.append(str(PROJECT_ROOT))
-    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest
+    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
+    from mcp_servers.rag_cortex.operations import CortexOperations
+    from mcp_servers.evolution.operations import EvolutionOperations
 
 # ADR 090: Iron Core Definitions
 IRON_CORE_PATHS = [
@@ -198,11 +225,6 @@ def main():
     parser = argparse.ArgumentParser(description="Recursive Business Rule Discovery CLI")
     subparsers = parser.add_subparsers(dest="command")
 
-    # Scan Command
-    scan_parser = subparsers.add_parser("scan", help="Recursively scan an artifact")
-    scan_parser.add_argument("--target", required=True, help="Target ID")
-    scan_parser.add_argument("--depth", type=int, default=1, help="Recursion depth")
-
     # Tools Command (Tool Discovery)
     tools_parser = subparsers.add_parser("tools", help="Discover and Manage CLI Tools")
     tools_subparsers = tools_parser.add_subparsers(dest="tools_action")
@@ -235,6 +257,54 @@ def main():
     # Business Workflows Command (Wrapper to business_workflows_inventory_manager.py)
     bw_parser = subparsers.add_parser("bw", help="Business Workflows Inventory (search, register, investigate)")
     bw_parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for business_workflows_inventory_manager.py")
+
+    # Command: ingest
+    ingest_parser = subparsers.add_parser("ingest", help="Perform full ingestion")
+    ingest_parser.add_argument("--no-purge", action="store_false", dest="purge", help="Skip purging DB")
+    ingest_parser.add_argument("--dirs", nargs="+", help="Specific directories to ingest")
+    ingest_parser.add_argument("--incremental", action="store_true", help="Incremental ingestion mode")
+    ingest_parser.add_argument("--hours", type=int, default=24, help="Hours to look back (for incremental mode)")
+
+    # Command: stats
+    stats_parser = subparsers.add_parser("stats", help="Get RAG health and statistics")
+    stats_parser.add_argument("--samples", action="store_true", help="Include sample documents")
+    stats_parser.add_argument("--sample-count", type=int, default=5, help="Number of samples to include")
+
+    # Command: query
+    query_parser = subparsers.add_parser("query", help="Perform semantic search query")
+    query_parser.add_argument("query_text", help="Search query string")
+    query_parser.add_argument("--max-results", type=int, default=5, help="Maximum results to return")
+    query_parser.add_argument("--use-cache", action="store_true", help="Use semantic cache")
+
+    # Command: cache-stats
+    subparsers.add_parser("cache-stats", help="Get cache statistics")
+
+    # Command: cache-warmup
+    warmup_parser = subparsers.add_parser("cache-warmup", help="Pre-populate cache with genesis queries")
+    warmup_parser.add_argument("--queries", nargs="+", help="Custom queries to cache")
+
+    # Command: evolution (Protocol 131)
+    evolution_parser = subparsers.add_parser("evolution", help="Evolutionary metrics (Protocol 131)")
+    evolution_sub = evolution_parser.add_subparsers(dest="evolution_subcommand", help="Evolution subcommands")
+    
+    # fitness
+    fit_parser = evolution_sub.add_parser("fitness", help="Calculate full fitness vector")
+    fit_parser.add_argument("content", nargs="?", help="Text content to evaluate")
+    fit_parser.add_argument("--file", help="Read content from file")
+    
+    # depth
+    depth_parser = evolution_sub.add_parser("depth", help="Evaluate technical depth")
+    depth_parser.add_argument("content", nargs="?", help="Text content to evaluate")
+    depth_parser.add_argument("--file", help="Read content from file")
+    
+    # scope
+    scope_parser = evolution_sub.add_parser("scope", help="Evaluate architectural scope")
+    scope_parser.add_argument("content", nargs="?", help="Text content to evaluate")
+    scope_parser.add_argument("--file", help="Read content from file")
+
+    # Command: rlm-distill (Protocol 132)
+    rlm_parser = subparsers.add_parser("rlm-distill", aliases=["rlm-test"], help="Distill semantic summaries")
+    rlm_parser.add_argument("target", help="File or folder path to distill")
 
 
     # Dependency Command
@@ -313,6 +383,20 @@ def main():
     snapshot_parser.add_argument("--context", help="Strategic context for the snapshot")
     snapshot_parser.add_argument("--override-iron-core", action="store_true", help="⚠️ Override Iron Core check (Requires ADR 090 Amendment)")
 
+    # Debrief Command (Protocol 128 Phase I)
+    debrief_parser = subparsers.add_parser("debrief", help="Run Learning Debrief (Protocol 128 Phase I)")
+    debrief_parser.add_argument("--hours", type=int, default=24, help="Lookback window (hours)")
+
+    # Guardian Command (Bootloader)
+    guardian_parser = subparsers.add_parser("guardian", help="Guardian Bootloader Operations")
+    guardian_subparsers = guardian_parser.add_subparsers(dest="guardian_action")
+    
+    g_wakeup = guardian_subparsers.add_parser("wakeup", help="Generate Guardian Boot Digest")
+    g_wakeup.add_argument("--mode", default="HOLISTIC", help="Wakeup mode")
+    
+    g_snapshot = guardian_subparsers.add_parser("snapshot", help="Capture Guardian Session Pack")
+    g_snapshot.add_argument("--context", help="Strategic context")
+
     # Persist Soul Command (Protocol 128 Phase VI)
     ps_parser = subparsers.add_parser("persist-soul", help="Broadcast learnings to Hugging Face")
     ps_parser.add_argument("--snapshot", help="Specific snapshot path (default: active seal)")
@@ -356,6 +440,136 @@ def main():
 
 
     args = parser.parse_args()
+    
+    cortex_ops = None
+    evolution_ops = None
+    # Lazy Init Operations based on command to avoid overhead
+    if args.command in ["ingest", "query", "stats", "cache-stats", "cache-warmup"]:
+        cortex_ops = CortexOperations(project_root=str(PROJECT_ROOT))
+    if args.command == "evolution":
+        evolution_ops = EvolutionOperations(project_root=str(PROJECT_ROOT))
+    if args.command in ["debrief", "snapshot", "guardian", "persist-soul", "rlm-distill"]:
+        # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
+        pass 
+
+    if args.command == "ingest":
+        if args.incremental:
+            print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
+            import time
+            from datetime import timedelta
+            
+            cutoff_time = time.time() - (args.hours * 3600)
+            modified_files = []
+            
+            exclude_dirs = {'.git', '.vector_data', '__pycache__', 'node_modules', 'venv', 'env', 
+                            'dataset_package', 'docs/site', 'training_logs'}
+            
+            for path in PROJECT_ROOT.rglob('*'):
+                if path.is_file():
+                    if any(part in exclude_dirs for part in path.parts):
+                        continue
+                    if path.suffix not in ['.md', '.py', '.js', '.ts', '.txt', '.json']:
+                        continue
+                    if path.stat().st_mtime > cutoff_time:
+                        modified_files.append(str(path))
+            
+            if not modified_files:
+                print(f"⚠️ No files modified in the last {args.hours} hours. Skipping ingestion.")
+                sys.exit(0)
+                
+            print(f"📄 Found {len(modified_files)} modified files.")
+            res = cortex_ops.ingest_incremental(file_paths=modified_files)
+            
+            if res.status == "success":
+                print(f"✅ Success: {res.documents_added} added, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
+            else:
+                print(f"❌ Error: {res.error}")
+                sys.exit(1)
+        else:
+            print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
+            res = cortex_ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
+            if res.status == "success":
+                print(f"✅ Success: {res.documents_processed} docs, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
+            else:
+                print(f"❌ Error: {res.error}")
+                sys.exit(1)
+
+    elif args.command == "query":
+        print(f"🔍 Querying: {args.query_text}")
+        res = cortex_ops.query(
+            query=args.query_text,
+            max_results=args.max_results,
+            use_cache=args.use_cache
+        )
+        if res.status == "success":
+            print(f"✅ Found {len(res.results)} results in {res.query_time_ms:.2f}ms")
+            print(f"💾 Cache hit: {res.cache_hit}")
+            for i, result in enumerate(res.results, 1):
+                print(f"\n--- Result {i} (Score: {result.relevance_score:.4f}) ---")
+                print(f"Content: {result.content[:300]}...")
+                if result.metadata:
+                    print(f"Source: {result.metadata.get('source', 'Unknown')}")
+        else:
+            print(f"❌ Error: {res.error}")
+            sys.exit(1)
+
+    elif args.command == "stats":
+        stats = cortex_ops.get_stats(include_samples=args.samples, sample_count=args.sample_count)
+        print(f"🏥 Health: {stats.health_status}")
+        print(f"📚 Documents: {stats.total_documents}")
+        print(f"🧩 Chunks: {stats.total_chunks}")
+        if stats.collections:
+            print("\n📊 Collections:")
+            for name, coll in stats.collections.items():
+                print(f"  - {coll.name}: {coll.count} items")
+        if stats.samples:
+            print(f"\n🔍 Sample Documents:")
+            for i, sample in enumerate(stats.samples, 1):
+                print(f"\n  {i}. ID: {sample.id}")
+                print(f"     Preview: {sample.content_preview[:100]}...")
+
+    elif args.command == "cache-stats":
+        stats = cortex_ops.get_cache_stats()
+        print(f"💾 Cache Statistics: {stats}")
+
+    elif args.command == "cache-warmup":
+        print(f"🔥 Warming up cache...")
+        res = cortex_ops.cache_warmup(genesis_queries=args.queries)
+        if res.status == "success":
+            print(f"✅ Cached {res.queries_cached} queries in {res.total_time_ms/1000:.2f}s")
+        else:
+            print(f"❌ Error: {res.error}")
+            sys.exit(1)
+
+    elif args.command == "evolution":
+        if not args.evolution_subcommand:
+            print("❌ Subcommand required (fitness, depth, scope)")
+            sys.exit(1)
+        content = args.content
+        if args.file:
+            try:
+                content = Path(args.file).read_text()
+            except Exception as e:
+                print(f"❌ Error reading file: {e}")
+                sys.exit(1)
+        if not content:
+            print("❌ No content provided.")
+            sys.exit(1)
+            
+        if args.evolution_subcommand == "fitness":
+            print(json.dumps(evolution_ops.calculate_fitness(content), indent=2))
+        elif args.evolution_subcommand == "depth":
+            print(f"Depth: {evolution_ops.measure_depth(content)}")
+        elif args.evolution_subcommand == "scope":
+            print(f"Scope: {evolution_ops.measure_scope(content)}")
+            
+    elif args.command in ["rlm-distill", "rlm-test"]:
+        print(f"🧠 RLM: Distilling '{args.target}'...")
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        results = ops._rlm_map([args.target])
+        print(f"📊 Files Processed: {len(results)}")
+        for fp, s in results.items():
+            print(f"\n📄 {fp}\n   {s}")
 
     if args.command == "roles":
         if args.roles_action == "verify":
@@ -441,25 +655,6 @@ def main():
             else:
                 print(f"\n⚪ No known roles detected in {target}.")
 
-    elif args.command == "scan":
-        print(f"Scanning target: {args.target}...")
-        try:
-             # Route to XML Miner Directly
-             from tools.business_rule_extraction.scripts.xml_miner import find_xml_file, mine_declarative_rules
-             
-             xml_path = find_xml_file(args.target, str(PROJECT_ROOT / "docs" / "source" / "XML"))
-             if xml_path and os.path.exists(xml_path):
-                 mined_data = mine_declarative_rules(xml_path)
-                 print(json.dumps(mined_data, indent=2))
-             else:
-                 print(f"❌ XML source file not found for {args.target}")
-                 
-        except ImportError:
-             # Fallback if direct import fails (path issues)
-             # Fallback if direct import fails (path issues)
-             cmd = [sys.executable, str(MINERS_DIR / "xml_miner.py"), "--target", args.target]
-             subprocess.run(cmd)
-
     elif args.command == "investigate":
         if args.investigate_action == "code":
             print(f"🔍 Deep Code Search for pattern: '{args.pattern}' in {args.target}")
@@ -518,21 +713,7 @@ def main():
             cmd = [sys.executable, str(SEARCH_DIR / "reachability.py"), "--target", args.target]
             subprocess.run(cmd)
 
-        elif args.investigate_action == "library":
-             print(f"📚 Investigating Library (PLL) {args.target}...")
-             try:
-                 if str(MINERS_DIR) not in sys.path:
-                     sys.path.append(str(MINERS_DIR))
-                 from pll_miner import PllMiner
-                 miner = PllMiner()
-                 miner.scan_plls(target=args.target)
-                 
-                 # Output JSON to stdout so it can be captured or read
-                 print(json.dumps(miner.rules, indent=2))
-             except ImportError as e:
-                 print(f"❌ Error: Could not import pll_miner: {e}")
-             except Exception as e:
-                 print(f"❌ Error during library investigation: {e}")
+
 
     elif args.command == "candidates":
         pass_args = args.args
@@ -574,91 +755,8 @@ def main():
         
         # 0. RLM Cache Lookup (Instant Context)
 
-        
-        # 1. Miners (Declarative Rules & Logic)
-        # XML Miner (Forms)
-        try:
-            if str(MINERS_DIR) not in sys.path:
-                sys.path.append(str(MINERS_DIR))
-            
-            from xml_miner import find_xml_file, mine_declarative_rules
-            
-            xml_path = find_xml_file(args.target, str(PROJECT_ROOT / "docs" / "source" / "XML"))
-            
-            if xml_path and os.path.exists(xml_path):
-                mined_data = mine_declarative_rules(xml_path)
-                data["Analysis"]["XML_Miner"] = mined_data
-            else:
-                data["Analysis"]["XML_Miner"] = {"status": "skipped", "reason": "No XML source found"}
-                
-        except ImportError as e:
-             data["Analysis"]["XML_Miner"] = {"error": f"ImportError: {e}"}
-        except Exception as e:
-            data["Analysis"]["XML_Miner"] = {"error": str(e)}
-
-        # PLL Miner (Libraries)
-        try:
-            from pll_miner import PllMiner
-            miner = PllMiner()
-            # PllMiner prints to stdout, we need to capture or modify it. 
-            # Ideally PllMiner should return data. Looking at PllMiner.scan_plls, it populates self.rules.
-            # We will use scan_plls(target) then access miner.rules.
-            
-            # Check if PLL exists effectively before running to avoid noise
-            miner.scan_plls(target=args.target)
-            if any(miner.rules.values()):
-                data["Analysis"]["PLL_Miner"] = miner.rules
-            else:
-                data["Analysis"]["PLL_Miner"] = {"status": "skipped", "reason": "No PLL content found"}
-                
-        except ImportError:
-            data["Analysis"]["PLL_Miner"] = {"error": "ImportError: pll_miner"}
-        except Exception as e:
-            data["Analysis"]["PLL_Miner"] = {"error": str(e)}
-
-        # MMB Miner (Menus)
-        try:
-            # Only run if we suspect it is a menu (Target ID pattern or just check file)
-            # Simplest approach: Try finding the file
-            if str(MINERS_DIR) not in sys.path:
-                 sys.path.append(str(MINERS_DIR))
-            from mmb_miner import MmbMiner
-            
-            # MmbMiner logic usually requires path.
-            # We can use find_xml_file logic but look for .mmb.xml or standard name
-            mmb_xml_path = PROJECT_ROOT / "docs" / "source" / "XML" / f"{args.target.lower()}_mmb.xml"
-            
-            if mmb_xml_path.exists():
-                miner = MmbMiner(str(mmb_xml_path))
-                raw_structure = miner.mine_structure()
-                data["Analysis"]["MMB_Miner"] = raw_structure
-            else:
-                 # It might be in 'Forms' if misclassified, or just not a menu.
-                 # If we explicitly checked type in a real scenario we'd error, but here we just skip.
-                 pass
-        except ImportError:
-             data["Analysis"]["MMB_Miner"] = {"error": "ImportError: mmb_miner"}
-        except Exception as e:
-            # Don't clutter unless it's a menu target
-            if "MENU" in args.target.upper():
-                 data["Analysis"]["MMB_Miner"] = {"error": str(e)}
-
-        # OLB Miner (Object Libraries)
-        try:
-             if str(MINERS_DIR) not in sys.path:
-                 sys.path.append(str(MINERS_DIR))
-             from olb_miner import OlbMiner
-             
-             olb_xml_path = PROJECT_ROOT / "docs" / "source" / "XML" / f"{args.target.lower()}_olb.xml"
-             
-             if olb_xml_path.exists():
-                 miner = OlbMiner(str(olb_xml_path))
-                 data["Analysis"]["OLB_Miner"] = miner.mine()
-        except ImportError:
-             pass
-        except Exception as e:
-             if "OLB" in args.target.upper() or "LIB" in args.target.upper():
-                  data["Analysis"]["OLB_Miner"] = {"error": str(e)}
+        # 1. Miners (Legacy Mining Logic Removed)
+        # Focus is now on RAG and Dependencies
 
         # 2. Dependencies (Code Detected + CSV)
         try:
@@ -840,6 +938,41 @@ def main():
             if result.git_diff_context:
                 print(f"   Context: {result.git_diff_context}")
             sys.exit(1)
+
+    elif args.command == "debrief":
+        print(f"📡 Running Learning Debrief (Protocol 128 Phase I)...")
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        
+        # Debrief returns a formatted Markdown string
+        debrief_content = ops.learning_debrief(hours=args.hours)
+        
+        # Output to stdout
+        print(debrief_content)
+
+    elif args.command == "guardian":
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+
+        if args.guardian_action == "wakeup":
+            print(f"🛡️  Guardian Wakeup: Generating Boot Digest (Mode: {args.mode})...")
+            result = ops.guardian_wakeup(mode=args.mode)
+            
+            if result.status == "success":
+                print(f"✅ Boot Digest Generated: {result.digest_path}")
+                print(f"   Time: {result.total_time_ms:.2f}ms")
+            else:
+                print(f"❌ Error: {result.error}")
+                sys.exit(1)
+
+        elif args.guardian_action == "snapshot":
+            print(f"🛡️  Guardian Snapshot: Capturing Session Pack...")
+            result = ops.guardian_snapshot(strategic_context=args.context)
+            
+            if result.status == "success":
+                print(f"✅ Session Pack Captured: {result.snapshot_path}")
+                print(f"   Files: {result.total_files}, Bytes: {result.total_bytes}")
+            else:
+                print(f"❌ Error: {result.error}")
+                sys.exit(1)
 
     elif args.command == "persist-soul":
         print(f"📡 Initiating Soul Persistence (Protocol 128 Phase VI)...")

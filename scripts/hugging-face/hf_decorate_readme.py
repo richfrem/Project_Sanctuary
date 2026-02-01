@@ -1,20 +1,33 @@
-#============================================
-# scripts/hf_decorate_readme.py
-# Purpose: Prepares the local Hugging Face staging directory for upload.
-# Output: Modifies 'hugging_face_dataset_repo/README.md' in-place.
-# Role:
-#   1. Ensures the Hub-standard directory structure (lineage, data, metadata).
-#   2. Augments the README.md with Hub-readable YAML frontmatter.
-#      - This metadata explains the dataset's schema and licensing to the Hub's UI.
-#      - It creates the link between the 'Human' landing page and the 'Machine' data records.
-#      - IMPORTANT: This script understands the 'data/soul_traces.jsonl' schema and maps it 
-#        to the 'features' section in the Dataset Card so the Hub can correctly index the soul.
-# Scenarios when to run this script:
-#   1. Schema Changes: If you add new fields (e.g., semantic_entropy) to the soul records.
-#   2. Structural Changes: If you move data/lineage folders or rename the staging directory.
-#   3. Metadata Updates: If you want to update tags, license, or the Hub 'Pretty Name'.
-# ADR: 081 - Content Harmonization & Integrity
-#============================================
+#!/usr/bin/env python3
+"""
+hf_decorate_readme.py
+=====================================
+
+Purpose:
+    Prepares the local Hugging Face staging directory for upload.
+    Modifies 'hugging_face_dataset_repo/README.md' in-place.
+    Ensures Hub-standard directory structure (lineage, data, metadata) per ADR 081.
+
+Layer: Curate
+
+Usage:
+    python scripts/hugging-face/hf_decorate_readme.py
+
+Input Files:
+    - hugging_face_dataset_repo/README.md
+
+Output:
+    - hugging_face_dataset_repo/README.md (Modified with YAML frontmatter)
+    - hugging_face_dataset_repo/lineage/ (Folder created)
+    - hugging_face_dataset_repo/data/ (Folder created)
+
+Key Functions:
+    - stage_readme(): Main entry point to transform README.
+
+Related:
+    - scripts/hugging-face/hf_upload_assets.py
+    - ADR 081: Content Harmonization & Integrity
+"""
 import re
 import os
 import sys

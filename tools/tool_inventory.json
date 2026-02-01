@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-02-01T12:16:45.928921",
+    "last_updated": "2026-02-01T12:47:10.222017",
     "status": "Deduplicated"
   },
   "python": {
@@ -9,11 +9,11 @@
         {
           "name": "cli.py",
           "path": "tools/cli.py",
-          "description": "Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution.",
+          "description": "Main entry point for the Antigravity Command System. Supports Context Bundling, Tool Discovery, and Protocol 128 Learning Operations (Snapshot, Debrief, Guardian, Soul Persistence). Decoupled from mcp_servers.",
           "original_path": "tools/business-rule-extraction/cli.py",
           "decision": "keep",
           "header_style": "basic",
-          "last_updated": "2026-02-01T12:16:45.928712",
+          "last_updated": "2026-02-01T12:47:10.221991",
           "compliance_status": "compliant",
           "category": "cli_entry_points"
         }
@@ -259,12 +259,52 @@
           "header_style": "minimal"
         },
         {
+          "name": "env_helper.py",
+          "path": "mcp_servers/lib/env_helper.py",
+          "description": "Simple environment variable helper with proper fallback (Env -> .env). Ensures consistent secret loading across Project Sanctuary.",
+          "last_updated": "2026-02-01T12:28:27.745494",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "hf_decorate_readme.py",
+          "path": "scripts/hugging-face/hf_decorate_readme.py",
+          "description": "Prepares the local Hugging Face staging directory for upload. Modifies 'hugging_face_dataset_repo/README.md' in-place with YAML frontmatter per ADR 081.",
+          "last_updated": "2026-02-01T12:28:25.588884",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "hf_upload_assets.py",
+          "path": "scripts/hugging-face/hf_upload_assets.py",
+          "description": "Synchronizes staged landing-page assets with the Hugging Face Hub (ADR 081). Uploads the final, metadata-rich README.md to the repository root.",
+          "last_updated": "2026-02-01T12:28:30.133968",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "hf_utils.py",
+          "path": "mcp_servers/lib/hf_utils.py",
+          "description": "Hugging Face utility library for soul persistence (ADR 079). Encapsulates huggingface_hub logic. Provides unified async primitives for uploading files, folders, and updating datasets.",
+          "last_updated": "2026-02-01T12:27:54.714138",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
           "name": "smart_fix_links.py",
           "path": "scripts/link-checker/smart_fix_links.py",
           "description": "Auto-repair utility for broken Markdown links using a file inventory.",
           "last_updated": "2026-01-31T22:10:58.475815",
           "compliance_status": "needs_review",
           "header_style": "basic"
+        },
+        {
+          "name": "upload_to_huggingface.py",
+          "path": "forge/scripts/upload_to_huggingface.py",
+          "description": "Manages the upload of model weights, GGUF files, and metadata to Hugging Face Hub (Phase 6). Handles artifact selection, repo creation, and secure transport.",
+          "last_updated": "2026-02-01T12:27:52.489333",
+          "compliance_status": "compliant",
+          "header_style": "extended"
         },
         {
           "name": "verify_links.py",

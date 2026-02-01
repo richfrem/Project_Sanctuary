@@ -1,8 +1,28 @@
-#============================================
-# mcp_servers/lib/hf_utils.py
-# Purpose: Hugging Face utility library for soul persistence (ADR 079)
-# Role: Encapsulates huggingface_hub logic for clean Bicameral Separation
-#============================================
+#!/usr/bin/env python3
+"""
+hf_utils.py
+=====================================
+
+Purpose:
+    Hugging Face utility library for soul persistence (ADR 079).
+    Encapsulates huggingface_hub logic for clean Bicameral Separation.
+    Provides unified async primitives for uploading files, folders, and updating datasets.
+
+Layer: Retrieve / Curate (Library)
+
+Usage:
+    from mcp_servers.lib.hf_utils import upload_to_hf_hub
+    await upload_to_hf_hub(repo_id="...", paths=["file.txt"])
+
+Key Functions:
+    - upload_soul_snapshot(): Uploads sealed learning snapshots.
+    - upload_semantic_cache(): Syncs RLM semantic ledger.
+    - sync_full_learning_history(): Backup full learning directory.
+    - ensure_dataset_structure(): Enforces ADR 081 folder schema.
+
+Related:
+    - mcp_servers.learning.operations
+"""
 
 import os
 import time

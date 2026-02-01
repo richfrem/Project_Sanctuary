@@ -30,11 +30,16 @@ Integrate Protocol 128 Snapshot and Persist Soul operations into the central `to
 ### Source Code
 ```text
 tools/
-└── cli.py  # Update: Modify 'snapshot' and add 'persist-soul'
+├── cli.py  # Update: Modify 'snapshot', add 'persist-soul', add RAG/Evolution commands
 mcp_servers/
 └── learning/
-    └── operations.py # Logic source (no changes expected, just usage)
+    └── operations.py # Logic Source
 ```
+
+## Migration Note (2026-02-01)
+*   **Decoupling Cancelled**: The proposal to move `LearningOperations` to `tools/orchestrator` was rejected and reverted. `tools/cli.py` now imports directly from `mcp_servers` via `sys.path`.
+*   **CLI Consolidation**: `tools/cli.py` now includes all commands from `scripts/cortex_cli.py` (Ingest, Query, Evolution, etc), enabling deprecation of the legacy script.
+
 
 ## Verification Plan
 

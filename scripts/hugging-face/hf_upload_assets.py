@@ -1,12 +1,31 @@
-#============================================
-# scripts/hf_upload_assets.py
-# Purpose: Synchronizes staged landing-page assets with the Hugging Face Hub.
-# Role:
-#   1. Uploads the final, metadata-rich README.md to the repository root.
-#   2. Ensures the public Dataset Card is up to date with the latest protocol evolution.
-#   3. Complements cortex_cli.py (which handles the machine-readable data).
-# ADR: 081 - Content Harmonization & Integrity
-#============================================
+#!/usr/bin/env python3
+"""
+hf_upload_assets.py
+=====================================
+
+Purpose:
+    Synchronizes staged landing-page assets with the Hugging Face Hub (ADR 081).
+    Uploads the final, metadata-rich README.md to the repository root.
+    Complements cortex_cli.py (which handles machine-readable data) by handling human-readable assets.
+
+Layer: Curate / Deployment
+
+Usage:
+    python scripts/hugging-face/hf_upload_assets.py
+
+Input Files:
+    - hugging_face_dataset_repo/README.md
+
+Output:
+    - Uploads README.md to Hugging Face Dataset Root.
+
+Key Functions:
+    - upload_assets(): Async wrapper for file upload.
+
+Related:
+    - scripts/hugging-face/hf_decorate_readme.py
+    - mcp_servers.lib.hf_utils
+"""
 import asyncio
 import os
 import sys

@@ -67,3 +67,8 @@ Query → ChromaDB (child_chunks_v5) → Match → FileStore (parent_documents_v
     - `skip_duplicates`: Boolean flag
 3.  **Environment:** Ensure `CHROMA_DB_DIR` and collection names (`CHROMA_CHILD_COLLECTION`, `CHROMA_PARENT_STORE`) are loaded via `mcp_servers.lib.env_helper`.
 4.  **Stats:** Call `ops.get_stats()` for post-ingest summary.
+
+## 6. Decoupling Requirement (Added 2026-02-01)
+- **Problem:** `tools/cli.py` currently imports directly from `mcp_servers/learning/operations.py` and `mcp_servers/rag_cortex/operations.py`.
+- **Solution:** Move business logic classes (`LearningOperations`, `CortexOperations`) out of `mcp_servers/*` and into a shared library (e.g., `tools/lib/operations/` or `tools/operations/`).
+- **Goal:** `mcp_servers` should strictly be the API/Server layer; `tools/cli.py` should consume the shared library.

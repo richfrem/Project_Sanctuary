@@ -1,6 +1,6 @@
 # Tool Inventory
 
-> **Auto-generated:** 2026-02-01 10:07
+> **Auto-generated:** 2026-02-01 12:29
 > **Source:** [`tools/tool_inventory.json`](tools/tool_inventory.json)
 > **Regenerate:** `python tools/curate/inventories/manage_tool_inventory.py generate --inventory tools/tool_inventory.json`
 
@@ -80,7 +80,12 @@
 | [`cli.py`](tools/cli.py) | Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution. |
 | [`cortex_cli.py`](scripts/cortex_cli.py) | Main CLI entry point for the Cortex Agentic Operations (Protocol 128). Orchestrates Cognitive functions (Memory, Learning, Debrief, Stats). |
 | [`domain_cli.py`](scripts/domain_cli.py) | Domain-Specific CLI for managing specific Project Entities (Tasks, ADRs, Chronicles, Protocols). Maps CLI commands to MCP business logic. |
+| [`env_helper.py`](mcp_servers/lib/env_helper.py) | Simple environment variable helper with proper fallback (Env -> .env). Ensures consistent secret loading across Project Sanctuary. |
+| [`hf_decorate_readme.py`](scripts/hugging-face/hf_decorate_readme.py) | Prepares the local Hugging Face staging directory for upload. Modifies 'hugging_face_dataset_repo/README.md' in-place with YAML frontmatter per ADR 081. |
+| [`hf_upload_assets.py`](scripts/hugging-face/hf_upload_assets.py) | Synchronizes staged landing-page assets with the Hugging Face Hub (ADR 081). Uploads the final, metadata-rich README.md to the repository root. |
+| [`hf_utils.py`](mcp_servers/lib/hf_utils.py) | Hugging Face utility library for soul persistence (ADR 079). Encapsulates huggingface_hub logic. Provides unified async primitives for uploading files, folders, and updating datasets. |
 | [`smart_fix_links.py`](scripts/link-checker/smart_fix_links.py) | Auto-repair utility for broken Markdown links using a file inventory. |
+| [`upload_to_huggingface.py`](forge/scripts/upload_to_huggingface.py) | Manages the upload of model weights, GGUF files, and metadata to Hugging Face Hub (Phase 6). Handles artifact selection, repo creation, and secure transport. |
 | [`verify_links.py`](scripts/link-checker/verify_links.py) | Verifies the integrity of internal links across the documentation base. Part of Protocol 128 validation. |
 
 ## 🛠️ Utils

@@ -1,9 +1,56 @@
-#============================================
-# forge/scripts/upload_to_huggingface.py
-# Purpose: Manages the upload of model weights, GGUF files, and metadata to Hugging Face Hub.
-# Role: Deployment / Artifact Layer
-# Used by: Phase 6 of the Forge Pipeline
-#============================================
+#!/usr/bin/env python3
+"""
+upload_to_huggingface.py (CLI)
+=====================================
+
+Purpose:
+    Manages the upload of model weights, GGUF files, and metadata to Hugging Face Hub.
+    Handles artifact selection, repository creation, and secure transport of large model files.
+
+    This tool is critical for Phase 6 of the Forge Pipeline (Deployment).
+
+Layer: Curate
+
+Usage Examples:
+    python forge/scripts/upload_to_huggingface.py --repo user/repo --gguf --readme
+    python forge/scripts/upload_to_huggingface.py --files ./custom_model.bin --private
+
+Supported Object Types:
+    - Model Weights (GGUF, Safetensors)
+    - Metadata (README.md, model_card.yaml)
+    - Configuration (Modelfile)
+
+CLI Arguments:
+    --repo          : HF Repo ID (username/repo). Overrides defaults.
+    --files         : Explicit file/folder paths to upload.
+    --private       : Mark repository as private.
+    --gguf          : Upload GGUF artifacts.
+    --modelfile     : Upload Ollama Modelfile.
+    --readme        : Upload README.md.
+    --model-card    : Upload model_card.yaml.
+    --lora          : Upload LoRA adapter directory.
+
+Input Files:
+    - forge/config/upload_config.yaml
+    - models/gguf/*
+    - huggingface/README.md
+
+Output:
+    - Uploaded artifacts on Hugging Face Hub
+
+Key Functions:
+    - load_config(): Loads upload config from YAML.
+    - load_environment(): Retrieves HF credentials.
+    - perform_upload(): Validates and executing the upload via hf_hub.
+
+Script Dependencies:
+    - mcp_servers.lib.hf_utils
+    - mcp_servers.lib.env_helper
+
+Consumed by:
+    - User (Manual Deployment)
+    - CI/CD Pipeline
+"""
 
 import sys
 import argparse
