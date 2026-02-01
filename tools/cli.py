@@ -77,6 +77,65 @@ for d in [MINERS_DIR, SEARCH_DIR, MENU_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, 
 
 from tools.utils.path_resolver import resolve_path
 from workflow_manager import WorkflowManager
+try:
+    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest
+except ImportError:
+    # Fallback/Bootstrap if pathing is tricky
+    sys.path.append(str(PROJECT_ROOT))
+    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest
+
+# ADR 090: Iron Core Definitions
+IRON_CORE_PATHS = [
+    "01_PROTOCOLS",
+    "ADRs",
+    "cognitive_continuity_policy.md",
+    "founder_seed.json"
+]
+
+def verify_iron_core(root_path):
+    """
+    Verifies that Iron Core paths have not been tampered with (uncommitted/unstaged changes).
+    ADR 090 (Evolution-Aware):
+    - Unstaged changes (Dirty Worktree) -> VIOLATION (Drift)
+    - Staged changes (Index) -> ALLOWED (Evolution)
+    """
+    violations = []
+    try:
+        # Check for modifications in Iron Core paths
+        cmd = ["git", "status", "--porcelain"] + IRON_CORE_PATHS
+        result = subprocess.run(
+            cmd, 
+            cwd=root_path, 
+            capture_output=True, 
+            text=True, 
+            check=False
+        )
+        
+        if result.stdout.strip():
+            for line in result.stdout.strip().split('\n'):
+                if len(line.strip()) < 3: 
+                    continue
+                    
+                status_code = line[:2]
+                
+                # Check Worktree Status (2nd character)
+                # ' ' = Unmodified in worktree (changes are staged or clean)
+                # 'M' = Modified in worktree
+                # 'D' = Deleted in worktree
+                # '?' = Untracked
+                worktree_status = status_code[1]
+                
+                # Violation if:
+                # 1. Untracked ('??') inside Iron Core path
+                # 2. Modified in Worktree ('M')
+                # 3. Deleted in Worktree ('D')
+                if status_code == '??' or worktree_status in ['M', 'D']:
+                    violations.append(f"{line.strip()} (Unstaged/Dirty - Please 'git add' to authorize)")
+                
+    except Exception as e:
+        return False, [f"Error checking Iron Core: {str(e)}"]
+        
+    return len(violations) == 0, violations
 
 def resolve_type_from_inventory(target_id: str) -> str:
     """
@@ -251,6 +310,18 @@ def main():
     ], help="Snapshot type")
     snapshot_parser.add_argument("--manifest", help="Custom manifest path (overrides default)")
     snapshot_parser.add_argument("--output", help="Output path (default: based on type)")
+    snapshot_parser.add_argument("--context", help="Strategic context for the snapshot")
+    snapshot_parser.add_argument("--override-iron-core", action="store_true", help="⚠️ Override Iron Core check (Requires ADR 090 Amendment)")
+
+    # Persist Soul Command (Protocol 128 Phase VI)
+    ps_parser = subparsers.add_parser("persist-soul", help="Broadcast learnings to Hugging Face")
+    ps_parser.add_argument("--snapshot", help="Specific snapshot path (default: active seal)")
+    ps_parser.add_argument("--valence", type=float, default=0.5, help="Session valence (0.0-1.0)")
+    ps_parser.add_argument("--uncertainty", type=float, default=0.0, help="Logic confidence")
+    ps_parser.add_argument("--full-sync", action="store_true", help="Sync entire learning directory")
+
+    # Persist Soul Full Command (ADR 081)
+    subparsers.add_parser("persist-soul-full", help="Regenerate full JSONL and deploy to HF (ADR 081)")
 
 
     # Config Command Group (TS Rules Manager)
@@ -712,45 +783,105 @@ def main():
             subprocess.run(cmd)
 
     elif args.command == "snapshot":
-        # Protocol 128 Snapshot Generation (uses bundler directly, no MCP required)
-        print(f"📸 Generating {args.type} snapshot...")
-        
-        # Default manifest paths per type
-        manifest_defaults = {
-            'seal': '.agent/learning/learning_manifest.json',
-            'learning_audit': '.agent/learning/learning_audit/learning_audit_manifest.json',
-            'audit': '.agent/learning/red_team/red_team_manifest.json',
-            'guardian': '.agent/learning/guardian_manifest.json',
-            'bootstrap': '.agent/learning/bootstrap_manifest.json'
-        }
-        
-        # Default output paths per type
-        output_defaults = {
-            'seal': '.agent/learning/learning_package_snapshot.md',
-            'learning_audit': '.agent/learning/learning_audit/learning_audit_packet.md',
-            'audit': '.agent/learning/red_team/red_team_audit_packet.md',
-            'guardian': '.agent/learning/guardian_boot_digest.md',
-            'bootstrap': '.agent/learning/bootstrap_packet.md'
-        }
-        
-        manifest_path = args.manifest or manifest_defaults.get(args.type)
-        output_path = args.output or output_defaults.get(args.type)
-        
-        if not Path(manifest_path).exists():
-            print(f"❌ Manifest not found: {manifest_path}")
-            sys.exit(1)
-        
-        # Call bundle.py directly
-        bundler_script = PROJECT_ROOT / "tools" / "retrieve" / "bundler" / "bundle.py"
-        cmd = [sys.executable, str(bundler_script), manifest_path, "-o", output_path]
-        
-        result = subprocess.run(cmd, cwd=str(PROJECT_ROOT), capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            print(f"✅ Snapshot created: {output_path}")
-            print(result.stdout)
+        # ADR 090: Iron Core Verification
+        if not args.override_iron_core:
+            print("🛡️  Running Iron Core Verification (ADR 090)...")
+            is_pristine, violations = verify_iron_core(PROJECT_ROOT)
+            if not is_pristine:
+                print(f"\n\033[91m⛔ IRON CORE BREACH DETECTED (SAFE MODE ENGAGED)\033[0m")
+                print("The following immutable files have been modified without authorization:")
+                for v in violations:
+                    print(f"  - {v}")
+                print("\nAction blocked: 'snapshot' is disabled in Safe Mode.")
+                print("To proceed, revert changes or use --override-iron-core (Constitutional Amendment required).")
+                sys.exit(1)
+            print("✅ Iron Core Integrity Verified.")
         else:
-            print(f"❌ Error: {result.stderr}")
+            print(f"⚠️  \033[93mWARNING: IRON CORE CHECK OVERRIDDEN\033[0m")
+
+        # Protocol 128 Snapshot Generation (Delegated to LearningOperations)
+        print(f"📸 Generating {args.type} snapshot via Learning Operations...")
+        
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        
+        # Manifest Handling
+        manifest_list = []
+        if args.manifest:
+            p = Path(args.manifest)
+            if p.exists():
+                try:
+                    data = json.loads(p.read_text())
+                    if isinstance(data, list): 
+                        manifest_list = data
+                    elif isinstance(data, dict):
+                        # ADR 097 support
+                        if "files" in data: 
+                            manifest_list = [f["path"] if isinstance(f, dict) else f for f in data["files"]]
+                        else:
+                            # Try legacy keys or fallback
+                            manifest_list = data.get("core", []) + data.get("topic", [])
+                except Exception as e:
+                    print(f"⚠️ Could not parse custom manifest {args.manifest}: {e}")
+
+        # Execute
+        result = ops.capture_snapshot(
+            manifest_files=manifest_list,
+            snapshot_type=args.type,
+            strategic_context=args.context
+        )
+        
+        if result.status == "success":
+            print(f"✅ Snapshot created: {result.snapshot_path}")
+            print(f"   Files: {result.total_files}, Bytes: {result.total_bytes}")
+            if not result.manifest_verified:
+                print(f"   ⚠️ Manifest Verification Failed: {result.git_diff_context}")
+        else:
+            print(f"❌ Error: {result.error}")
+            if result.git_diff_context:
+                print(f"   Context: {result.git_diff_context}")
+            sys.exit(1)
+
+    elif args.command == "persist-soul":
+        print(f"📡 Initiating Soul Persistence (Protocol 128 Phase VI)...")
+        print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty} | Full Sync: {args.full_sync}")
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        
+        # Default snapshot for seal is usually 'learning/learning_package_snapshot.md'
+        snapshot_path = args.snapshot
+        if not snapshot_path:
+            snapshot_path = ".agent/learning/learning_package_snapshot.md"
+            
+        req = PersistSoulRequest(
+            snapshot_path=snapshot_path,
+            valence=args.valence,
+            uncertainty=args.uncertainty,
+            is_full_sync=args.full_sync
+        )
+        
+        result = ops.persist_soul(req)
+        
+        if result.status == "success":
+            print(f"✅ Persistence Complete!")
+            print(f"   Repo: {result.repo_url}")
+            print(f"   Artifact: {result.snapshot_name}")
+        elif result.status == "quarantined":
+            print(f"🚫 Quarantined: {result.error}")
+        else:
+            print(f"❌ Persistence Failed: {result.error}")
+            sys.exit(1)
+
+    elif args.command == "persist-soul-full":
+        print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace (ADR 081)...")
+        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        
+        result = ops.persist_soul_full()
+        
+        if result.status == "success":
+            print(f"✅ Full Sync Complete!")
+            print(f"   Repo: {result.repo_url}")
+            print(f"   Output: {result.snapshot_name}")
+        else:
+            print(f"❌ Error: {result.error}")
             sys.exit(1)
 
     elif args.command == "applications":
