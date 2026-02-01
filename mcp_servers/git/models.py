@@ -13,16 +13,13 @@ Key Models:
     # Internal / Enums
     - BranchInfo: Name and current status
     - RemoteInfo: Upstream, ahead/behind counts
-    - GitStatus: Full repository state (staged, modified, etc.)
+    - GitStatus: Full repository state
 
     # MCP Requests
-    - GitAddRequest
-    - GitDiffRequest
-    - GitFinishFeatureRequest
-    - GitLogRequest
+    - GitAddRequest, GitDiffRequest
+    - GitFinishFeatureRequest, GitLogRequest
     - GitPushFeatureRequest
-    - GitSmartCommitRequest
-    - GitStartFeatureRequest
+    - GitSmartCommitRequest, GitStartFeatureRequest
 """
 
 from typing import List, Optional, Dict, Any

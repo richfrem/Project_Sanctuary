@@ -10,7 +10,6 @@ Purpose:
 Layer: Validation (Logic)
 
 Key Classes:
-    - ValidationError: Custom exception
     - GitValidator: Main safety logic
         - validate_clean_state(status)
         - validate_feature_branch_context(current_branch, operation)

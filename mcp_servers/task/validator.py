@@ -20,11 +20,6 @@ Key Classes:
         - validate_file_path(file_path)
 """
 
-"""
-Task MCP Server - Schema Validator
-Validates tasks against tasks/task_schema.md
-"""
-
 import re
 from pathlib import Path
 from typing import Dict, List, Tuple

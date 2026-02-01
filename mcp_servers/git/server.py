@@ -29,7 +29,7 @@ Key Functions / MCP Tools:
     - git_finish_feature(request): Cleanup merged feature
 
 Related:
-    - mcp_servers.git.operations.GitOperations
+    - mcp_servers/git/operations.py
     - Protocol 101 (Sanctuary Security)
 """
 

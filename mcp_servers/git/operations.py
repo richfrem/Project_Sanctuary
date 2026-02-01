@@ -6,17 +6,18 @@ Git Operations
 Purpose:
     Core Logic for Git Operations.
     Handles executing git commands, parsing output, and enforcing logic.
+    Enforces Protocol 101 (Safety Rules) and Protocol 122 (Poka-Yoke).
 
 Layer: Business Logic
 
 Key Classes:
     - GitOperations: Main manager
         - __init__(repo_path, base_dir)
-        - status() -> GitStatus
+        - status()
         - add(files)
         - commit(message)
-        - diff(cached, file_path)
-        - log(max_count, oneline)
+        - push(remote, branch)
+        - pull(remote, branch)
         - start_feature(task_id, description)
         - push(remote, branch, ...)
         - finish_feature(branch_name, force)

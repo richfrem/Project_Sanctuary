@@ -51,3 +51,19 @@ Query → ChromaDB (child_chunks_v5) → Match → FileStore (parent_documents_v
 - Chronicle #333: "Indexed in child_chunks_v5 and parent_documents_v5"
 - Stats output: child_chunks: 2145, parent_documents: 459
 - Both splitters configured: child (400/50), parent (2000/200)
+
+## 5. Implementation Guide (Added from Code Analysis)
+
+**Source Module:** `mcp_servers.rag_cortex.operations.CortexOperations`
+- **Instantiation:** `ops = CortexOperations(PROJECT_ROOT)`
+- **Core Method:** `ingest_incremental(file_paths, metadata, skip_duplicates)`
+- **Validation:** Use `mcp_servers.rag_cortex.validator.CortexValidator.validate_ingest_incremental` before execution.
+
+**Integration Strategy:**
+1.  **Import:** `from mcp_servers.rag_cortex.operations import CortexOperations`
+2.  **Request Model:** Map CLI args to `mcp_servers.rag_cortex.models.IngestIncrementalRequest`.
+    - `file_paths`: List[str] from glob/find
+    - `metadata`: Optional dict
+    - `skip_duplicates`: Boolean flag
+3.  **Environment:** Ensure `CHROMA_DB_DIR` and collection names (`CHROMA_CHILD_COLLECTION`, `CHROMA_PARENT_STORE`) are loaded via `mcp_servers.lib.env_helper`.
+4.  **Stats:** Call `ops.get_stats()` for post-ingest summary.
