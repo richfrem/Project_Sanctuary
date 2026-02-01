@@ -35,6 +35,10 @@
             "note": "ADRs directory"
         },
         {
+            "path": "ADRs/084_semantic_entropy_tda_gating.md",
+            "note": "Core Protocol 084"
+        },
+        {
             "path": "IDENTITY/founder_seed.json",
             "note": "Identity anchor"
         },

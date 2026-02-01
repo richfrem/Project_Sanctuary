@@ -3,18 +3,6 @@
   "description": "A standalone utility to concatenate multiple source files into a single context bundle for LLM analysis.",
   "files": [
     {
-      "path": "tools/ai-resources/prompts/extraction/Context_Bundler_System_Prompt.md",
-      "note": "Context Bundler Instructions (System Prompt)"
-    },
-    {
-      "path": "tools/ai-resources/prompts/Context_Bundler_System_Prompt.md",
-      "note": "Context Bundler Instructions (System Prompt)"
-    },
-    {
-      "path": "tools/standalone/context-bundler/prompt.md",
-      "note": "Agent Usage Instructions (System Prompt)"
-    },
-    {
       "path": "tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md",
       "note": "CRITICAL: How to use this bundle"
     },
@@ -57,14 +45,6 @@
     {
       "path": "tools/standalone/context-bundler/file-manifest-schema.json",
       "note": "Input Schema Definition"
-    },
-    {
-      "path": ".agent/workflows/curate-bundle.md",
-      "note": "Workflow: Context Bundling (Curate)"
-    },
-    {
-      "path": ".agent/workflows/retrieve-bundle.md",
-      "note": "Workflow: Bundle Retrieval (Legacy)"
     },
     {
       "path": "docs/diagrams/workflows/curate-bundle.mmd",

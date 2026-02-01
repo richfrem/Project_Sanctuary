@@ -11,7 +11,8 @@ trigger: always_on
 ### I. The Human Gate
 **The Human is the Supreme Sovereign. Zero Trust in autonomous modification without approval.**
 
-*   **Implied Approval is Invalid**: Philosophical agreement or ambiguous statements ("Looks good", "I agree") are NOT authorization to execute. Explicit commands ("Proceed", "Push") are required.
+*   **Implied Approval is Invalid**: Philosophical agreement or ambiguous statements ("Looks good", "I agree") are NOT authorization to execute. Explicit commands ("Proceed", "Push", "Commit") are required.
+*   **Git Operations are High Risk**: You MUST NOT run `git add`, `git commit`, or `git push` without an explicit user instruction to do so in the current turn. "Auto-fixing" via git is forbidden.
 *   **Execution Lock**: If user input contains "wait", "hold", "pause", "plan", "review", "before", "don't proceed", or "stop" → HALT all state-changing operations immediately.
 
 *   [human_gate_policy.md](human_gate_policy.md) - **The Supreme Law**: Defines Zero Trust, the Approval Gate, and Emergency Stop.

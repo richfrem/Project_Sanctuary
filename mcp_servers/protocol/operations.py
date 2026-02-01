@@ -1,6 +1,33 @@
-File operations for Protocol MCP.
+#!/usr/bin/env python3
 """
-import os
+Protocol Operations
+=====================================
+
+Purpose:
+    Core business logic for Protocol Management.
+    Handles creation, key-value updates, listing, search, and validation
+    of Protocol artifacts (01_PROTOCOLS/*.md).
+
+Layer: Business Logic
+
+Key Classes:
+    - ProtocolOperations: Main manager
+        - __init__(base_dir)
+        - create_protocol(number, title, status...)
+        - update_protocol(number, updates, reason)
+        - get_protocol(number)
+        - list_protocols(status)
+        - search_protocols(query)
+        
+        # Internal Methods
+        - _find_protocol_file(number)
+        - _parse_protocol(content, number)
+
+Dependencies:
+    - mcp_servers.protocol.models
+    - mcp_servers.protocol.validator
+    - mcp_servers.lib.logging_utils
+"""
 import re
 import sys
 from datetime import datetime

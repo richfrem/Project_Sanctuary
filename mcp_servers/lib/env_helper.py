@@ -1,12 +1,29 @@
+#!/usr/bin/env python3
 """
-Simple environment variable helper with proper fallback.
+env_helper.py
+=====================================
 
-Provides consistent secret loading across Project Sanctuary with proper priority:
-1. Environment variable (Windows → WSL via WSLENV)
-2. .env file in project root
-3. Error or None if not found
+Purpose:
+    Simple environment variable helper with proper fallback.
+    Provides consistent secret loading across Project Sanctuary with proper priority:
+    1. Environment variable (Windows → WSL via WSLENV)
+    2. .env file in project root
+    3. Error or None if not found
 
-This ensures consistency with docs/WSL_SECRETS_CONFIGURATION.md
+    Ensures consistency with docs/WSL_SECRETS_CONFIGURATION.md
+
+Layer: Core / Utility
+
+Usage:
+    from mcp_servers.lib.env_helper import get_env_variable
+    token = get_env_variable("MY_TOKEN", required=True)
+
+Key Functions:
+    - get_env_variable(): Main accessor with fallback logic.
+    - load_env(): Explicit .env loader.
+
+Related:
+    - mcp_servers.lib.path_utils
 """
 
 import os
