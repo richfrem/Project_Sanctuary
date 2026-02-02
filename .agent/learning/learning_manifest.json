@@ -89,6 +89,18 @@
         {
             "path": "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd",
             "note": "Current topic: RLM"
+        },
+        {
+            "path": "LEARNING/topics/openclaw_moltbook_ecosystem/",
+            "note": "Research: OpenClaw/MoltBook agent ecosystems - includes analysis, sources, reflections"
+        },
+        {
+            "path": "specs/0007-research-openclaw-moltbook/",
+            "note": "Spec folder for OpenClaw/MoltBook research - includes plan, tasks, scratchpad"
+        },
+        {
+            "path": "01_PROTOCOLS/23_The_AGORA_Protocol.md",
+            "note": "AGORA Protocol - connects to MoltBook findings"
         }
     ]
 }

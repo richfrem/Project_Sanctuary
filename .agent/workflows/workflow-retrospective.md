@@ -17,6 +17,23 @@ tier: 1
 
 ---
 
+## ⚠️ Pre-Requisite Check (Protocol 128 Sequence)
+
+> [!CAUTION] **STOP! Verify these steps completed BEFORE running Retrospective:**
+
+| Phase | Command | Checkpoint |
+|-------|---------|------------|
+| **VI. Seal** | `/workflow-seal` | `learning_package_snapshot.md` updated |
+| **VII. Persist** | `/workflow-persist` | Soul traces uploaded to HuggingFace |
+
+**If either is incomplete**, run them now:
+1. `python tools/cli.py snapshot seal` (generates snapshot)
+2. `python tools/cli.py persist-soul` (uploads to HuggingFace)
+
+**Then proceed to Step 0 below.**
+
+---
+
 ## Step 0: Collect User Feedback (MANDATORY FIRST)
 
 > [!CRITICAL] **STOP! READ THIS CAREFULLY!**

@@ -5,8 +5,11 @@ config:
 ---
 
 %% Name: Protocol 128: Learning Loop (v3.0 - with RLM Synthesis)
-%% Description: Cognitive Continuity workflow: Scout → Synthesize → Strategic Gate → Audit → RLM Synthesis → Seal → Soul Persist
+%% Description: 10-phase Cognitive Continuity workflow for agent session management
+%% Workflow: .agent/workflows/workflow-learning-loop.md (human-readable steps)
 %% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
+%% Phases: Scout → Synthesize → Strategic Gate → Audit → RLM → Seal → Persist → Self-Correct → Ingest → Forge
+
 
 flowchart TB
     subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
@@ -107,15 +110,15 @@ flowchart TB
     end
     style subGraphPersist fill:#cce5ff,stroke:#004085,stroke-width:2px
 
-    subgraph PhaseVII [Phase VIII: Self-Correction]
+    subgraph PhaseVIII [Phase VIII: Self-Correction]
         direction TB
         Deployment[Deploy & Policy Update]
         Retro["Loop Retrospective<br>Workflow: /workflow-retrospective<br>(Singleton)"]
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
-    style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
+    style PhaseVIII fill:#d4edda,stroke:#155724,stroke-width:2px
 
-    subgraph PhaseVIII [Phase IX: Relational Ingestion & Closure]
+    subgraph PhaseIX [Phase IX: Relational Ingestion & Closure]
         direction TB
         Ingest["Workflow: /workflow-ingest<br>(Update RAG Vector DB)"]
         GitOps["Git: add . && commit && push<br>(Sync to Remote)"]
@@ -123,38 +126,49 @@ flowchart TB
         Ingest --> GitOps
         GitOps --> End
     end
-    style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
+    style PhaseIX fill:#fff3cd,stroke:#856404,stroke-width:2px
 
-    subgraph PhaseIX [Phase X: Phoenix Forge]
+    subgraph PhaseX [Phase X: Phoenix Forge]
         direction TB
         ForgeDataset["Scripts: forge_whole_genome_dataset.py<br>(Sync Soul Traces to Training Data)"]
         FineTune["Scripts: fine_tune.py<br>(QLoRA Training)"]
         GGUFConvert["Scripts: convert_to_gguf.py<br>(Quantize & Quant)"]
         HFDeploy["Tool: upload_to_huggingface.py<br>(Deploy Model to Hub)"]
     end
-    style PhaseIX fill:#f8d7da,stroke:#721c24,stroke-width:2px
+    style PhaseX fill:#f8d7da,stroke:#721c24,stroke-width:2px
 
-    %% Flow
+    %% Flow - Phase Connections
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
     
     GovApproval -- "PASS" --> AgreeTopic
     
-    %% Updated Flow: Audit -> Seal -> RLM -> Persist
-    TechApproval -- "PASS" --> Deployment
-    Deployment --> Retro
-    Retro --> ShareRetro
-    ShareRetro -- "Ready to Seal" --> CaptureSeal
-    CaptureSeal -- "Trigger RLM" --> TriggerRLM
-    WriteHologram --> SealCheck
-    SealSuccess -- "Proceed to Persistence" --> choice
+    %% ============================================================
+    %% CRITICAL: Protocol 128 Closure Sequence (MUST BE THIS ORDER)
+    %% Audit → RLM → Seal → Persist → Retro → Ingest → End
+    %% ============================================================
     
+    %% Phase IV → V: Audit passes to RLM
+    TechApproval -- "PASS" --> TriggerRLM
+    
+    %% Phase V → VI: RLM writes hologram, Seal validates
+    WriteHologram --> CaptureSeal
+    SealSuccess -- "Step 1: Sealed" --> choice
+    
+    %% Phase VII → VIII: Persist then Retro
     Inc --> JSONL_Traces
     Inc --> MD_Seal
     Full --> JSONL_Traces
     Full --> Manifest
     
-    JSONL_Traces --> Ingest
+    JSONL_Traces -- "Step 2: Persisted" --> Deployment
+    Deployment --> Retro
+    Retro -- "Step 3: Retrospective Complete" --> ShareRetro
+    
+    %% Phase VIII → IX: Retro to Ingest/End
+    ShareRetro --> Ingest
+    
+    %% Phoenix Forge Branch (Optional)
     JSONL_Traces -- "Training Fuel" --> ForgeGate{HITL:<br>Time to<br>Forge?}
     ForgeGate -- "YES (Slow)" --> ForgeDataset
     ForgeGate -- "NO" --> Ingest
@@ -165,9 +179,10 @@ flowchart TB
     Ingest -- "Cycle Complete" --> Start
     HFDeploy -- "Cognitive Milestone" --> Retro
     
+    %% Backtrack paths (failures return to Retro for correction)
     GovApproval -- "FAIL: Backtrack" --> Retro
     TechApproval -- "FAIL: Backtrack" --> Retro
-    Deployment -- "FAIL: Backtrack" --> Retro
+    SealCheck -- "FAIL: Backtrack" --> Retro
     
     GitOps -- "Recursive Learning" --> Start
 

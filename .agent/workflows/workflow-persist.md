@@ -1,12 +1,18 @@
 ---
-description: Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face)
+description: Protocol 128 Phase VII - Soul Persistence (Broadcast to Hugging Face)
 ---
 # Workflow: Persist
 
+> **CLI Command**: `python3 tools/cli.py persist-soul`
+> **Output**: Uploads to HuggingFace `richfrem/Project_Sanctuary_Soul`
+
+## Steps
+
 1. **Broadcast Soul**:
    // turbo
-   python3 scripts/cortex_cli.py persist-soul
+   python3 tools/cli.py persist-soul
 
-2. **Ingest Changes**:
+2. **Ingest Changes** (Optional - can also use `/workflow-ingest`):
    // turbo
-   python3 scripts/cortex_cli.py ingest --incremental --hours 24
+   python3 tools/cli.py ingest --incremental --hours 24
+
