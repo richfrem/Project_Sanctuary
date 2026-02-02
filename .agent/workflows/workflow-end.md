@@ -30,16 +30,25 @@ tier: 1
 
 ---
 
-## Step 2: Final Git Commit
+## Step 2: Handoff to User for Git Operations
 
-```bash
-git add .
-git status  # Show what will be committed
-git commit -m "[CommitMessage]"
-git push origin [CurrentBranch]
-```
+> [!CAUTION] **AGENT: DO NOT RUN GIT COMMANDS DIRECTLY!**
+> You MUST instruct the User to run the bash script below.
+> This ensures proper environment handling (LFS, hooks, credentials).
 
-*Example:* `git commit -m "docs: add new workflow component"`
+**Tell the User:**
+> "Please run the following command to complete the git operations:"
+> ```bash
+> scripts/bash/workflow-end.sh
+> ```
+
+The script handles:
+- `git add .`
+- `git commit -m "[message]"`
+- `git push origin [branch]`
+- PR creation prompt
+
+**After the User confirms push succeeded**, proceed to Step 3.
 
 ---
 
@@ -55,15 +64,19 @@ git push origin [CurrentBranch]
 
 ## Step 4: Cleanup & Closure
 
-After merge confirmation:
-```bash
-git checkout main
-git pull origin main
-git branch -d [FeatureBranch]
-git push origin --delete [FeatureBranch]  # Optional: delete remote branch
-```
+> [!CAUTION] **AGENT: DO NOT RUN GIT CLEANUP COMMANDS DIRECTLY!**
 
----
+After merge confirmation, tell the User:
+> "Please run the cleanup script:"
+> ```bash
+> scripts/bash/workflow-cleanup.sh
+> ```
+
+The script handles:
+- `git checkout main`
+- `git pull origin main`
+- `git branch -d [FeatureBranch]`
+- Remote branch deletion (optional)
 
 ## Step 5: Task File Closure
 
