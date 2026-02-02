@@ -310,7 +310,7 @@ class WorkflowManager:
     def run_retrospective(self) -> bool:
         """
         Calculates the active spec and initializes the retrospective artifact.
-        Runs proof check FIRST to verify work was done.
+        Runs proof check, then INTERACTIVELY prompts user for feedback.
         """
         print(f"🕵️  Initializing Retrospective...")
         
@@ -339,44 +339,42 @@ class WorkflowManager:
             
         print(f"✅ Active Spec Context: {target_spec_folder.name}")
         
-        # 2. RUN PROOF CHECK - Verify files mentioned in spec/plan/tasks were modified
+        # 2. RUN PROOF CHECK
         print(f"\n🔍 Running Proof Check...")
         proof_result = self.run_proof_check(target_spec_folder)
         
         if proof_result["unchanged"]:
+            # (Blocking logic remains same as existing code...)
             print("\n" + "="*60)
             print("🛑 PROOF CHECK FAILED - VERIFICATION REQUIRED")
             print("="*60)
-            print("")
-            print("🤖 LLM: STOP AND READ THIS CAREFULLY.")
-            print("")
-            print("You checked boxes claiming work was done, but these files")
-            print("have NO CHANGES compared to origin/main:")
-            print("")
+            print("Files checked as modified but found UNCHANGED:")
             for item in proof_result["unchanged"]:
                 print(f"   ❌ {item['path']}")
-            print("")
-            print("QUESTION: Did you actually do this work, or did you just")
-            print("          check the box without making real changes?")
-            print("")
-            print("REQUIRED ACTIONS:")
-            print("   1. Go back and VERIFY each file was actually modified")
-            print("   2. If you skipped a step, DO THE WORK NOW")
-            print("   3. If the file reference is wrong, FIX the spec/plan/tasks")
-            print("   4. Re-run this check until it passes")
-            print("")
-            print("DO NOT PROCEED until this check passes.")
+            print("\nDO NOT PROCEED until this check passes.")
             print("="*60)
             return False
         
-        print(f"✅ Proof Check Passed: {len(proof_result['modified'])} file(s) verified as modified")
+        print(f"✅ Proof Check Passed: {len(proof_result['modified'])} file(s) verified.")
         
-        # 3. Copy Template
+        # 3. INTERACTIVE FEEDBACK (Part A)
+        print("\n" + "="*50)
+        print("🧠 Protocol 128: Interactive Retrospective")
+        print("="*50)
+        print("Please answer the following questions to close the learning loop:\n")
+        
+        a1 = input("1. What went well? (Observation): ").strip() or "N/A"
+        a2 = input("2. What was frustrating/confusing? (Observation): ").strip() or "N/A"
+        a3 = input("3. Did Agent ignore any feedback? (If yes, details): ").strip() or "No"
+        a4 = input("4. Suggestions for improvement?: ").strip() or "N/A"
+        
+        # 4. Load & Populate Template
         template_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-retrospective-template.md"
         dest_path = target_spec_folder / "retrospective.md"
         
         if dest_path.exists():
             print(f"⚠️  Retrospective file already exists at: {dest_path}")
+            print(f"   (Skipping overwrite to preserve existing data)")
             return True
             
         if not template_path.exists():
@@ -384,8 +382,55 @@ class WorkflowManager:
              return False
              
         try:
-            dest_path.write_text(template_path.read_text())
-            print(f"📄 Created Retrospective Artifact: {dest_path}")
+            content = template_path.read_text()
+            
+            # Inject Variables
+            import datetime
+            content = content.replace("[DATE]", str(datetime.date.today()))
+            content = content.replace("[WORKFLOW_NAME]", target_spec_folder.name)
+            
+            # Inject Answers (Simple replacement of placeholders or appending)
+            # The template has checkboxes like - [ ] [User observation]
+            # We'll replace the first occurrence of appropriate placeholders
+            
+            content = content.replace("[User observation]", a1, 1) # A1
+            content = content.replace("[User observation]", a2, 1) # A2 - reused placeholder?
+            # actually template uses same placeholder. Let's be robust.
+            # Strategy: Replace specific text blocks if they exist, or just append answers?
+            # Template:
+            # ### A1. What went well for you?
+            # - [ ] [User observation]
+            
+            # Re-read template structure in memory logic:
+            # We will use regex to robustly replace sections if simple replace is risky.
+            # But simple replace logic:
+            # 1st [User observation] -> A1
+            # 2nd [User observation] -> A2
+            # [Details] -> A3
+            # [User suggestion] -> A4
+            
+            # Let's start fresh with the replacements
+            content = template_path.read_text()
+            content = content.replace("[DATE]", str(datetime.date.today()))
+            content = content.replace("[WORKFLOW_NAME]", target_spec_folder.name)
+            
+            # Replace sequentially
+            content = content.replace("[User observation]", a1, 1)
+            content = content.replace("[User observation]", a2, 1)
+            content = content.replace("[Details]", a3, 1)
+            content = content.replace("[User suggestion]", a4, 1)
+            
+            # Auto-fill Files List
+            file_list_str = ""
+            for m in proof_result["modified"]:
+                file_list_str += f"- [x] `{m['path']}`\n"
+            
+            content = content.replace("- [ ] `path/to/file.py`", file_list_str)
+
+            dest_path.write_text(content)
+            print(f"\n✅ Created Retrospective Artifact: {dest_path}")
+            print("   Part A (User) is populated.")
+            print("   👉 Part B (Agent Self-Assessment): Agent will fill this now (simulated).")
             return True
         except Exception as e:
             print(f"❌ Error writing file: {e}")
@@ -482,11 +527,21 @@ class WorkflowManager:
                        break
         
         if target_spec_folder:
+             # 1.5a Enforce Retrospective (Protocol 128)
+             retro_path = target_spec_folder / "retrospective.md"
+             if not retro_path.exists():
+                 print(f"\n🛑 BLOCKING: No Retrospective Artifact found.")
+                 print(f"   path: {retro_path}")
+                 print("   The Universal Hybrid Workflow requires a retrospective before closure.")
+                 print("\n👉 ACTION REQUIRED: Run '/workflow-retrospective' first.\n")
+                 return False
+
+             # 1.5b Enforce Workflow End Checklist
              checklist_path = target_spec_folder / "workflow-end.md"
              if not checklist_path.exists():
-                  # Copy Template
-                  tpl_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
-                  if tpl_path.exists():
+                   # Copy Template
+                   tpl_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
+                   if tpl_path.exists():
                        checklist_path.write_text(tpl_path.read_text())
                        print(f"🛑 Checklist Created: {checklist_path}")
                        print("   Please review/complete this checklist, then run 'workflow end' again.")
@@ -507,6 +562,14 @@ class WorkflowManager:
         try:
             self.run_command(["git", "push", "origin", current_branch])
             print(f"✅ Workflow Completed. Branch '{current_branch}' pushed.")
+            
+            print("\n" + "="*50)
+            print("👉 NEXT STEPS:")
+            print(f"   1. Create Pull Request for branch '{current_branch}'")
+            print("   2. Wait for CI/CD & Review")
+            print("   3. Merge to main")
+            print("="*50 + "\n")
+
             return True
         except Exception as e:
             print(f"❌ Push failed: {e}")
@@ -530,4 +593,67 @@ class WorkflowManager:
                 print("❌ Push cancelled by user.")
                 return False
         
-        return self.end_workflow(message, files)
+        success = self.end_workflow(message, files)
+        if success:
+             print("\n💡 TIP: Once merged, run: /workflow-cleanup")
+        return success
+
+    def cleanup_workflow(self, force: bool = False) -> bool:
+        """
+        Step 4: Post-Merge Cleanup.
+        1. Checkout main
+        2. Pull origin main
+        3. Delete local feature branch
+        """
+        current_branch = self.get_current_branch()
+        if current_branch in ["main", "master", "develop"]:
+             print(f"❌ You are already on '{current_branch}'. Cleanup is for feature branches.")
+             return False
+        
+        print(f"\n🧹 Cleanup Routine for branch '{current_branch}'")
+        print("   1. Checkout 'main'")
+        print("   2. Pull latest 'main'")
+        print("   3. Delete local branch")
+        
+        if not force:
+             print("\n⚠️  PREREQUISITE: Ensure your Pull Request is MERGED first.")
+             resp = input("❓ Ready to proceed? (yes/no): ").strip().lower()
+             if resp != 'yes':
+                  print("❌ Aborting cleanup.")
+                  return False
+
+        print(f"\n🔄 Switching to 'main'...")
+        try:
+             self.run_command(["git", "checkout", "main"])
+        except Exception as e:
+             print(f"❌ Failed to checkout main: {e}")
+             return False
+
+        print(f"⬇️  Pulling 'origin main'...")
+        try:
+             self.run_command(["git", "pull", "origin", "main"])
+        except Exception as e:
+             print(f"❌ Failed to pull main: {e}")
+             # We continue, as we might still want to delete the branch, but safest to warn?
+             # Actually, if pull fails, we might be out of sync. But let's verify branch deletion.
+
+        print(f"🗑️  Deleting branch '{current_branch}'...")
+        try:
+             # Try safe delete first (checks merge status)
+             self.run_command(["git", "branch", "-d", current_branch])
+             print(f"✅ Branch '{current_branch}' deleted successfully.")
+        except Exception:
+             print(f"⚠️  Safe delete failed (maybe commit history mismatch?).")
+             resp = input(f"❓ Force delete '{current_branch}'? (yes/no): ").strip().lower()
+             if resp == 'yes':
+                  try:
+                       self.run_command(["git", "branch", "-D", current_branch])
+                       print(f"✅ Branch '{current_branch}' force deleted.")
+                  except Exception as e:
+                       print(f"❌ Force delete failed: {e}")
+                       return False
+             else:
+                  print("❌ Skipped deletion.")
+                  return False
+        
+        return True
