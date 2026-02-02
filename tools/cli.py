@@ -567,6 +567,9 @@ def main():
     wf_end.add_argument("files", nargs="*", help="Files to commit")
     wf_end.add_argument("--force", "-f", action="store_true", help="Skip confirmation prompt")
 
+    wf_cleanup = wf_subparsers.add_parser("cleanup", help="Post-Merge Cleanup (Main Checkout & Delete Branch)")
+    wf_cleanup.add_argument("--force", "-f", action="store_true", help="Skip confirmation prompt")
+
 
     args = parser.parse_args()
     
@@ -1069,6 +1072,16 @@ def main():
                     sys.exit(1)
             except Exception as e:
                 print(f"❌ Workflow End Failed: {e}")
+                sys.exit(1)
+
+        elif args.workflow_action == "cleanup":
+            try:
+                manager = WorkflowManager()
+                success = manager.cleanup_workflow(force=getattr(args, 'force', False))
+                if not success:
+                    sys.exit(1)
+            except Exception as e:
+                print(f"❌ Cleanup Failed: {e}")
                 sys.exit(1)
 
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

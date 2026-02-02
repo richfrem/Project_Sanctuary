@@ -17,5 +17,22 @@ if [ -z "$WORKFLOW_NAME" ]; then
     exit 1
 fi
 
+# ---------------------------------------------------------
+# RED TEAM REMEDIATION: CV-01 (Human Gate)
+# ---------------------------------------------------------
+echo "=============================================="
+echo "🛡️  HUMAN GATE REQURIED: START WORKFLOW 🛡️"
+echo "=============================================="
+echo "You are about to START a new workflow session."
+echo "This will Initialize Specs, Create Branches, and Modify State."
+echo ""
+echo "Type 'PROCEED' to execute."
+read -p "> " approval
+
+if [[ "$approval" != "PROCEED" ]]; then
+    echo "❌ Approval not given. Aborting."
+    exit 1
+fi
+
 # Handover to Python (ADR-0030: The Orchestrator handles all logic)
 exec python3 "$CLI_PATH" workflow start --name "$WORKFLOW_NAME" --target "$TARGET_ID" --type "$TARGET_TYPE"

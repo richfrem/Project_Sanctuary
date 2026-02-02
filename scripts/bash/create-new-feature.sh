@@ -67,6 +67,26 @@ if [ -z "$FEATURE_DESCRIPTION" ]; then
     exit 1
 fi
 
+# ---------------------------------------------------------
+# RED TEAM REMEDIATION: CV-01 (Human Gate)
+# Interactive Check: Only gate if connected to terminal (TTY)
+# ---------------------------------------------------------
+if [ -t 0 ]; then
+    echo "=============================================="
+    echo "🛡️  HUMAN GATE REQURIED: CREATE FEATURE 🛡️"
+    echo "=============================================="
+    echo "You are about to CREATE A NEW FEATURE BRANCH."
+    echo "Target: $FEATURE_DESCRIPTION"
+    echo ""
+    echo "Type 'PROCEED' to execute."
+    read -p "> " approval
+
+    if [[ "$approval" != "PROCEED" ]]; then
+        echo "❌ Approval not given. Aborting."
+        exit 1
+    fi
+fi
+
 # Function to find the repository root by searching for existing project markers
 find_repo_root() {
     local dir="$1"
