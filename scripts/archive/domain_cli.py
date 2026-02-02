@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """
-domain_cli.py (CLI)
+domain_cli.py (CLI) [DEPRECATED]
 =====================================
+
+⚠️  DEPRECATED: This script is superseded by `tools/cli.py`.
+    Use `python3 tools/cli.py chronicle|task|adr|protocol` instead.
+    This file will be archived in a future release.
+    Migration: Spec 0005 (2026-02-01)
 
 Purpose:
     CLI Orchestrator for Sanctuary Domain Logic (Chronicle, Task, ADR, Protocol).
@@ -11,10 +16,11 @@ Purpose:
 Layer: Orchestrator
 
 Usage Examples:
-    python scripts/domain_cli.py chronicle list --limit 15
-    python scripts/domain_cli.py task create "Fix Bug" --objective "Fix X" --deliverables "Code" --acceptance-criteria "Test Pass"
-    python scripts/domain_cli.py adr get 85
-    python scripts/domain_cli.py protocol search "Mnemonic"
+    # DEPRECATED - use tools/cli.py instead:
+    python3 tools/cli.py chronicle list --limit 15
+    python3 tools/cli.py task create "Fix Bug" --objective "..." --deliverables item1 --acceptance-criteria done1
+    python3 tools/cli.py adr get 85
+    python3 tools/cli.py protocol search "Mnemonic"
 
 CLI Arguments:
     chronicle       : Manage Chronicle Entries

@@ -14,7 +14,9 @@ Agent MUST consult cache of tools first before running native file system comman
 * **Action:** You **MUST** exclusively use the **Tool Discovery** skill (`tools/retrieve/rlm/query_cache.py`).
 
 ## 2. Binding Protocol
-* Once a tool is found via `query_cache.py`, you must "read the manual" using `fetch_tool_context.py` before executing it.
+* Once a tool is found via `query_cache.py`, you must **"read the manual"** by viewing the script's header directly.
+ * **Command**: `view_file(AbsolutePath="/path/to/script.py", StartLine=1, EndLine=200)`
+ * The header (docstring) contains the authoritative usage, arguments, and examples.
 
 ## 3. Tool Registration Protocol (MANDATORY)
 **When creating or modifying CLI tools/scripts in `tools/`:**

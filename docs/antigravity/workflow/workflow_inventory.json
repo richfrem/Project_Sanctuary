@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "generatedAt": "2026-02-01T10:15:05.654536",
-    "count": 25,
+    "generatedAt": "2026-02-01T16:27:26.168801",
+    "count": 26,
     "source": ".agent/workflows"
   },
   "workflows": [
@@ -190,6 +190,16 @@
       "filename": "workflow-persist.md",
       "path": ".agent/workflows/workflow-persist.md",
       "description": "Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face)",
+      "inputs": [],
+      "tier": null,
+      "track": "Factory",
+      "called_by": []
+    },
+    {
+      "name": "workflow-protocol",
+      "filename": "workflow-protocol.md",
+      "path": ".agent/workflows/workflow-protocol.md",
+      "description": "Manage Protocol Documents",
       "inputs": [],
       "tier": null,
       "track": "Factory",

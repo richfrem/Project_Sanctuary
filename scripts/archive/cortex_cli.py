@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """
-cortex_cli.py (CLI)
+cortex_cli.py (CLI) [DEPRECATED]
 =====================================
+
+⚠️  DEPRECATED: This script is superseded by `tools/cli.py`.
+    Use `python3 tools/cli.py ingest|query|snapshot|guardian|persist-soul` instead.
+    This file will be archived in a future release.
+    Migration: Specs 0004 & 0005 (2026-02-01)
 
 Purpose:
     CLI Orchestrator for the Mnemonic Cortex RAG server and Protocol 128 (Learning Loop).
@@ -14,10 +19,11 @@ Purpose:
 Layer: Orchestrator
 
 Usage Examples:
-    python scripts/cortex_cli.py ingest --incremental --hours 24
-    python scripts/cortex_cli.py query "Protocol 128"
-    python scripts/cortex_cli.py snapshot --type seal --manifest .agent/learning/learning_manifest.json
-    python scripts/cortex_cli.py guardian --mode TELEMETRY
+    # DEPRECATED - use tools/cli.py instead:
+    python3 tools/cli.py ingest --incremental --hours 24
+    python3 tools/cli.py query "Protocol 128"
+    python3 tools/cli.py snapshot --type seal --manifest .agent/learning/learning_manifest.json
+    python3 tools/cli.py guardian wakeup --mode TELEMETRY
 
 CLI Arguments:
     ingest          : Perform RAG ingestion (Full or Incremental)

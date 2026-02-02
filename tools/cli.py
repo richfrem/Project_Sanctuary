@@ -13,6 +13,8 @@ Purpose:
     - Workflow Orchestration
     - Evolutionary Metrics (Protocol 131)
     - RLM Distillation (Protocol 132)
+    - Domain Entity Management (Chronicle, Task, ADR, Protocol)
+    - Fine-Tuned Model Interaction (Forge)
 
 Layer: Tools / Orchestrator
 
@@ -53,49 +55,76 @@ Commands:
     evolution       : Evolutionary metrics - fitness, depth, scope (Protocol 131)
     rlm-distill     : Distill semantic summaries from files (Protocol 132)
 
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # DOMAIN ENTITY MANAGEMENT
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    chronicle       : Manage Chronicle Entries (list, search, get, create, update)
+    task            : Manage Tasks (list, get, create, update-status, search, update)
+    adr             : Manage Architecture Decision Records (list, search, get, create, update-status)
+    protocol        : Manage Protocols (list, search, get, create, update)
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # FINE-TUNED MODEL
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    forge           : Sanctuary Fine-Tuned Model (query, status) - requires ollama
+
 Usage Examples:
 
     # Learning Loop (Protocol 128)
     python tools/cli.py debrief --hours 24
     python tools/cli.py snapshot --type seal
-    python tools/cli.py snapshot --type learning_audit
     python tools/cli.py persist-soul
-    python tools/cli.py persist-soul-full
     python tools/cli.py guardian wakeup --mode HOLISTIC
 
     # RAG Cortex
-    python tools/cli.py ingest                              # Full ingestion
-    python tools/cli.py ingest --incremental --hours 24     # Incremental
+    python tools/cli.py ingest --incremental --hours 24
     python tools/cli.py query "What is Protocol 128?"
-    python tools/cli.py query "Architecture decisions" --max-results 10
-    python tools/cli.py stats --samples --sample-count 3
-    python tools/cli.py cache-stats
-    python tools/cli.py cache-warmup --queries "Protocol 128" "ADR process"
+    python tools/cli.py stats --samples
 
     # Context Bundling
     python tools/cli.py init-context --target MyFeature --type generic
     python tools/cli.py manifest init --bundle-title MyBundle --type learning
-    python tools/cli.py manifest add --path docs/my-file.md --note "Reference doc"
-    python tools/cli.py manifest list
     python tools/cli.py manifest bundle
 
     # Tools & Workflows
     python tools/cli.py tools list
     python tools/cli.py tools search "ingestion"
-    python tools/cli.py tools add --path tools/my-script.py --category curate
     python tools/cli.py workflow start --name workflow-start --target MyFeature
     python tools/cli.py workflow retrospective
     python tools/cli.py workflow end "feat: implemented feature X"
 
     # Evolution & RLM
     python tools/cli.py evolution fitness --file docs/my-document.md
-    python tools/cli.py evolution depth "Text content to evaluate"
     python tools/cli.py rlm-distill tools/my-script.py
+
+    # Domain Entities
+    python tools/cli.py chronicle list --limit 10
+    python tools/cli.py chronicle create "Title" --content "Content" --author "Author"
+    python tools/cli.py chronicle update 5 --title "New Title" --reason "Fix typo"
+    python tools/cli.py task list --status in-progress
+    python tools/cli.py task create "Title" --objective "Goal" --deliverables item1 item2 --acceptance-criteria done1
+    python tools/cli.py task update-status 5 done --notes "Completed"
+    python tools/cli.py task search "migration"
+    python tools/cli.py adr list --status proposed
+    python tools/cli.py adr create "Title" --context "Why" --decision "What" --consequences "Impact"
+    python tools/cli.py adr update-status 85 accepted --reason "Approved by council"
+    python tools/cli.py protocol list
+    python tools/cli.py protocol create "Title" --content "Content" --status PROPOSED
+    python tools/cli.py protocol update 128 --status ACTIVE --reason "Ratified"
+
+    # Fine-Tuned Model (requires ollama)
+    python tools/cli.py forge status
+    python tools/cli.py forge query "What are the core principles of Project Sanctuary?"
 
 Dependencies:
     - mcp_servers.learning.operations (LearningOperations)
     - mcp_servers.rag_cortex.operations (CortexOperations)
     - mcp_servers.evolution.operations (EvolutionOperations)
+    - mcp_servers.chronicle.operations (ChronicleOperations)
+    - mcp_servers.task.operations (TaskOperations)
+    - mcp_servers.adr.operations (ADROperations)
+    - mcp_servers.protocol.operations (ProtocolOperations)
+    - mcp_servers.forge_llm.operations (ForgeOperations) [optional]
     - tools.orchestrator.workflow_manager (WorkflowManager)
 """
 import sys
@@ -141,12 +170,30 @@ try:
     from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
     from mcp_servers.rag_cortex.operations import CortexOperations
     from mcp_servers.evolution.operations import EvolutionOperations
+    # Domain Operations (Chronicle, Task, ADR, Protocol)
+    from mcp_servers.chronicle.operations import ChronicleOperations
+    from mcp_servers.task.operations import TaskOperations
+    from mcp_servers.task.models import taskstatus, TaskPriority
+    from mcp_servers.adr.operations import ADROperations
+    from mcp_servers.protocol.operations import ProtocolOperations
 except ImportError:
     # Fallback/Bootstrap if pathing is tricky
     sys.path.append(str(PROJECT_ROOT))
     from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
     from mcp_servers.rag_cortex.operations import CortexOperations
     from mcp_servers.evolution.operations import EvolutionOperations
+    from mcp_servers.chronicle.operations import ChronicleOperations
+    from mcp_servers.task.operations import TaskOperations
+    from mcp_servers.task.models import taskstatus, TaskPriority
+    from mcp_servers.adr.operations import ADROperations
+    from mcp_servers.protocol.operations import ProtocolOperations
+
+# Forge LLM Operations (optional - requires ollama package)
+try:
+    from mcp_servers.forge_llm.operations import ForgeOperations
+    FORGE_AVAILABLE = True
+except ImportError:
+    FORGE_AVAILABLE = False
 
 # ADR 090: Iron Core Definitions
 IRON_CORE_PATHS = [
@@ -370,6 +417,138 @@ def main():
 
     # Persist Soul Full Command (ADR 081)
     subparsers.add_parser("persist-soul-full", help="Regenerate full JSONL and deploy to HF (ADR 081)")
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # DOMAIN OPERATIONS (Chronicle, Task, ADR, Protocol)
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    # Chronicle Command
+    chron_parser = subparsers.add_parser("chronicle", help="Manage Chronicle Entries")
+    chron_subs = chron_parser.add_subparsers(dest="chronicle_action")
+    
+    chron_list = chron_subs.add_parser("list", help="List chronicle entries")
+    chron_list.add_argument("--limit", type=int, default=10, help="Number of entries to show")
+    
+    chron_search = chron_subs.add_parser("search", help="Search chronicle entries")
+    chron_search.add_argument("query", help="Search query")
+    
+    chron_get = chron_subs.add_parser("get", help="Get a specific chronicle entry")
+    chron_get.add_argument("number", type=int, help="Entry number")
+    
+    chron_create = chron_subs.add_parser("create", help="Create a new chronicle entry")
+    chron_create.add_argument("title", help="Entry title")
+    chron_create.add_argument("--content", required=True, help="Entry content")
+    chron_create.add_argument("--author", default="AI Assistant", help="Author name")
+    chron_create.add_argument("--status", default="draft", help="Entry status")
+    chron_create.add_argument("--classification", default="internal", help="Classification level")
+    
+    chron_update = chron_subs.add_parser("update", help="Update a chronicle entry")
+    chron_update.add_argument("number", type=int, help="Entry number")
+    chron_update.add_argument("--title", help="New title")
+    chron_update.add_argument("--content", help="New content")
+    chron_update.add_argument("--status", help="New status")
+    chron_update.add_argument("--reason", required=True, help="Reason for update")
+
+    # Task Command
+    task_parser = subparsers.add_parser("task", help="Manage Tasks")
+    task_subs = task_parser.add_subparsers(dest="task_action")
+    
+    task_list = task_subs.add_parser("list", help="List tasks")
+    task_list.add_argument("--status", help="Filter by status (backlog, todo, in-progress, done)")
+    
+    task_get = task_subs.add_parser("get", help="Get a specific task")
+    task_get.add_argument("number", type=int, help="Task number")
+    
+    task_create = task_subs.add_parser("create", help="Create a new task")
+    task_create.add_argument("title", help="Task title")
+    task_create.add_argument("--objective", required=True, help="Task objective")
+    task_create.add_argument("--deliverables", nargs="+", required=True, help="Deliverables")
+    task_create.add_argument("--acceptance-criteria", nargs="+", required=True, help="Acceptance criteria")
+    task_create.add_argument("--priority", default="MEDIUM", help="Priority level")
+    task_create.add_argument("--status", default="TODO", dest="task_status", help="Initial status")
+    task_create.add_argument("--lead", default="Unassigned", help="Lead assignee")
+    
+    task_update = task_subs.add_parser("update-status", help="Update task status")
+    task_update.add_argument("number", type=int, help="Task number")
+    task_update.add_argument("new_status", help="New status")
+    task_update.add_argument("--notes", required=True, help="Status change notes")
+    
+    task_search = task_subs.add_parser("search", help="Search tasks")
+    task_search.add_argument("query", help="Search query")
+    
+    task_edit = task_subs.add_parser("update", help="Update task fields")
+    task_edit.add_argument("number", type=int, help="Task number")
+    task_edit.add_argument("--title", help="New title")
+    task_edit.add_argument("--objective", help="New objective")
+    task_edit.add_argument("--priority", help="New priority")
+    task_edit.add_argument("--lead", help="New lead")
+
+    # ADR Command
+    adr_parser = subparsers.add_parser("adr", help="Manage Architecture Decision Records")
+    adr_subs = adr_parser.add_subparsers(dest="adr_action")
+    
+    adr_list = adr_subs.add_parser("list", help="List ADRs")
+    adr_list.add_argument("--status", help="Filter by status")
+    adr_list.add_argument("--limit", type=int, default=20, help="Number of ADRs to show")
+    
+    adr_search = adr_subs.add_parser("search", help="Search ADRs")
+    adr_search.add_argument("query", help="Search query")
+    
+    adr_get = adr_subs.add_parser("get", help="Get a specific ADR")
+    adr_get.add_argument("number", type=int, help="ADR number")
+    
+    adr_create = adr_subs.add_parser("create", help="Create a new ADR")
+    adr_create.add_argument("title", help="ADR title")
+    adr_create.add_argument("--context", required=True, help="Decision context")
+    adr_create.add_argument("--decision", required=True, help="Decision made")
+    adr_create.add_argument("--consequences", required=True, help="Consequences")
+    adr_create.add_argument("--status", default="proposed", help="ADR status")
+    
+    adr_update_status = adr_subs.add_parser("update-status", help="Update ADR status")
+    adr_update_status.add_argument("number", type=int, help="ADR number")
+    adr_update_status.add_argument("new_status", help="New status (proposed, accepted, deprecated, superseded)")
+    adr_update_status.add_argument("--reason", required=True, help="Reason for status change")
+
+    # Protocol Command
+    prot_parser = subparsers.add_parser("protocol", help="Manage Protocols")
+    prot_subs = prot_parser.add_subparsers(dest="protocol_action")
+    
+    prot_list = prot_subs.add_parser("list", help="List protocols")
+    prot_list.add_argument("--status", help="Filter by status")
+    
+    prot_search = prot_subs.add_parser("search", help="Search protocols")
+    prot_search.add_argument("query", help="Search query")
+    
+    prot_get = prot_subs.add_parser("get", help="Get a specific protocol")
+    prot_get.add_argument("number", type=int, help="Protocol number")
+    
+    prot_create = prot_subs.add_parser("create", help="Create a new protocol")
+    prot_create.add_argument("title", help="Protocol title")
+    prot_create.add_argument("--content", required=True, help="Protocol content")
+    prot_create.add_argument("--version", default="1.0", help="Version")
+    prot_create.add_argument("--status", default="PROPOSED", help="Status")
+    prot_create.add_argument("--authority", default="Council", help="Authority")
+    prot_create.add_argument("--classification", default="Blue", help="Classification")
+    
+    prot_update = prot_subs.add_parser("update", help="Update protocol fields")
+    prot_update.add_argument("number", type=int, help="Protocol number")
+    prot_update.add_argument("--title", help="New title")
+    prot_update.add_argument("--content", help="New content")
+    prot_update.add_argument("--status", help="New status")
+    prot_update.add_argument("--version", help="New version")
+    prot_update.add_argument("--reason", required=True, help="Reason for update")
+
+    # Forge LLM Command (Fine-Tuned Model)
+    forge_parser = subparsers.add_parser("forge", help="Interact with Sanctuary Fine-Tuned Model")
+    forge_subs = forge_parser.add_subparsers(dest="forge_action")
+    
+    forge_query = forge_subs.add_parser("query", help="Query the Sanctuary model")
+    forge_query.add_argument("prompt", help="Prompt to send to the model")
+    forge_query.add_argument("--temperature", type=float, default=0.7, help="Sampling temperature")
+    forge_query.add_argument("--max-tokens", type=int, default=2048, help="Max tokens to generate")
+    forge_query.add_argument("--system", help="System prompt for context")
+    
+    forge_subs.add_parser("status", help="Check model availability")
     
 
     # Workflow Command: Agent lifecycle management (start, retrospective, end)
@@ -891,6 +1070,223 @@ def main():
             except Exception as e:
                 print(f"❌ Workflow End Failed: {e}")
                 sys.exit(1)
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # DOMAIN COMMAND HANDLERS
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+    # Chronicle Command Handler
+    elif args.command == "chronicle":
+        chron_ops = ChronicleOperations(os.path.join(PROJECT_ROOT, "00_CHRONICLE/ENTRIES"))
+        
+        if args.chronicle_action == "list":
+            res = chron_ops.list_entries(limit=args.limit)
+            for e in res:
+                print(f"[{e['number']:03d}] {e['title']} ({e['date']})")
+        elif args.chronicle_action == "search":
+            res = chron_ops.search_entries(args.query)
+            for e in res:
+                print(f"[{e['number']:03d}] {e['title']}")
+        elif args.chronicle_action == "get":
+            res = chron_ops.get_entry(args.number)
+            print(f"[{res['number']:03d}] {res['title']}")
+            print("-" * 40)
+            print(res['content'])
+        elif args.chronicle_action == "create":
+            res = chron_ops.create_entry(
+                title=args.title,
+                content=str(args.content).replace("\\n", "\n"),
+                author=args.author,
+                status=args.status,
+                classification=args.classification
+            )
+            print(f"✅ Created Chronicle Entry #{res['entry_number']:03d}: {res['file_path']}")
+        elif args.chronicle_action == "update":
+            updates = {}
+            if args.title:
+                updates['title'] = args.title
+            if args.content:
+                updates['content'] = str(args.content).replace("\\n", "\n")
+            if args.status:
+                updates['status'] = args.status
+            res = chron_ops.update_entry(args.number, updates, args.reason)
+            print(f"✅ Updated Chronicle Entry #{args.number:03d}")
+        else:
+            print("❌ Chronicle subcommand required (list, search, get, create, update)")
+            sys.exit(1)
+
+    # Task Command Handler
+    elif args.command == "task":
+        task_ops = TaskOperations(PROJECT_ROOT)
+        
+        if args.task_action == "list":
+            status_obj = taskstatus(args.status) if args.status else None
+            res = task_ops.list_tasks(status=status_obj)
+            for t in res:
+                print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
+        elif args.task_action == "get":
+            res = task_ops.get_task(args.number)
+            if not res:
+                print(f"❌ Task {args.number} not found")
+                sys.exit(1)
+            print(f"[{res['number']:03d}] {res['title']}")
+            print(f"Status: {res['status']} | Priority: {res['priority']} | Lead: {res['lead']}")
+            print("-" * 40)
+            print(res['content'])
+        elif args.task_action == "create":
+            res = task_ops.create_task(
+                title=args.title,
+                objective=str(args.objective).replace("\\n", "\n"),
+                deliverables=args.deliverables,
+                acceptance_criteria=args.acceptance_criteria,
+                priority=TaskPriority(args.priority.capitalize()),
+                status=taskstatus(args.task_status.lower()),
+                lead=args.lead
+            )
+            if res.status == "success":
+                print(f"✅ Created Task #{res.task_number:03d} at {res.file_path}")
+            else:
+                print(f"❌ Creation failed: {res.message}")
+                sys.exit(1)
+        elif args.task_action == "update-status":
+            task_ops.update_task_status(args.number, taskstatus(args.new_status), args.notes)
+            print(f"✅ Task {args.number} moved to {args.new_status}")
+        elif args.task_action == "search":
+            res = task_ops.search_tasks(args.query)
+            for t in res:
+                print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
+        elif args.task_action == "update":
+            updates = {}
+            if args.title:
+                updates['title'] = args.title
+            if args.objective:
+                updates['objective'] = args.objective
+            if args.priority:
+                updates['priority'] = args.priority
+            if args.lead:
+                updates['lead'] = args.lead
+            res = task_ops.update_task(args.number, updates)
+            print(f"✅ Updated Task #{args.number:03d}")
+        else:
+            print("❌ Task subcommand required (list, get, create, update-status, search, update)")
+            sys.exit(1)
+
+    # ADR Command Handler
+    elif args.command == "adr":
+        adr_ops = ADROperations(os.path.join(PROJECT_ROOT, "ADRs"))
+        
+        if args.adr_action == "list":
+            res = adr_ops.list_adrs(status=args.status.upper() if args.status else None)
+            for a in res:
+                print(f"[{a['number']:03d}] {a['title']} [{a['status']}]")
+        elif args.adr_action == "search":
+            res = adr_ops.search_adrs(args.query)
+            for a in res:
+                print(f"[{a['number']:03d}] {a['title']}")
+        elif args.adr_action == "get":
+            res = adr_ops.get_adr(args.number)
+            print(f"ADR-{res['number']:03d}: {res['title']}")
+            print(f"Status: {res['status']}")
+            print("-" * 40)
+            print(f"# Context\n{res['context']}\n")
+            print(f"# Decision\n{res['decision']}\n")
+            print(f"# Consequences\n{res['consequences']}")
+        elif args.adr_action == "create":
+            res = adr_ops.create_adr(
+                title=args.title,
+                context=str(args.context).replace("\\n", "\n"),
+                decision=str(args.decision).replace("\\n", "\n"),
+                consequences=str(args.consequences).replace("\\n", "\n"),
+                status=args.status
+            )
+            print(f"✅ Created ADR-{res['adr_number']:03d} at {res['file_path']}")
+        elif args.adr_action == "update-status":
+            res = adr_ops.update_adr_status(args.number, args.new_status.upper(), args.reason)
+            print(f"✅ ADR-{args.number:03d} status updated to {args.new_status.upper()}")
+        else:
+            print("❌ ADR subcommand required (list, search, get, create, update-status)")
+            sys.exit(1)
+
+    # Protocol Command Handler
+    elif args.command == "protocol":
+        prot_ops = ProtocolOperations(os.path.join(PROJECT_ROOT, "01_PROTOCOLS"))
+        
+        if args.protocol_action == "list":
+            res = prot_ops.list_protocols(status=args.status.upper() if args.status else None)
+            for p in res:
+                print(f"[{p['number']:03d}] {p['title']} [{p['status']}]")
+        elif args.protocol_action == "search":
+            res = prot_ops.search_protocols(args.query)
+            for p in res:
+                print(f"[{p['number']:03d}] {p['title']}")
+        elif args.protocol_action == "get":
+            res = prot_ops.get_protocol(args.number)
+            print(f"Protocol-{res['number']:03d}: {res['title']}")
+            print(f"v{res['version']} | {res['status']} | {res['classification']}")
+            print("-" * 40)
+            print(res['content'])
+        elif args.protocol_action == "create":
+            res = prot_ops.create_protocol(
+                number=None,  # Auto-generate
+                title=args.title,
+                status=args.status,
+                classification=args.classification,
+                version=args.version,
+                authority=args.authority,
+                content=str(args.content).replace("\\n", "\n")
+            )
+            print(f"✅ Created Protocol-{res['protocol_number']:03d} at {res['file_path']}")
+        elif args.protocol_action == "update":
+            updates = {}
+            if args.title:
+                updates['title'] = args.title
+            if args.content:
+                updates['content'] = str(args.content).replace("\\n", "\n")
+            if args.status:
+                updates['status'] = args.status
+            if args.version:
+                updates['version'] = args.version
+            res = prot_ops.update_protocol(args.number, updates, args.reason)
+            print(f"✅ Updated Protocol-{args.number:03d}")
+        else:
+            print("❌ Protocol subcommand required (list, search, get, create, update)")
+            sys.exit(1)
+
+    # Forge LLM Command Handler
+    elif args.command == "forge":
+        if not FORGE_AVAILABLE:
+            print("❌ Forge LLM not available. Install ollama: pip install ollama")
+            sys.exit(1)
+        forge_ops = ForgeOperations(str(PROJECT_ROOT))
+        
+        if args.forge_action == "query":
+            print(f"🤖 Querying Sanctuary Model...")
+            res = forge_ops.query_sanctuary_model(
+                prompt=args.prompt,
+                temperature=args.temperature,
+                max_tokens=getattr(args, 'max_tokens', 2048),
+                system_prompt=getattr(args, 'system', None)
+            )
+            if res.status == "success":
+                print(f"\n{res.response}")
+                print(f"\n📊 Tokens: {res.total_tokens or 'N/A'} | Temp: {res.temperature}")
+            else:
+                print(f"❌ Error: {res.error}")
+                sys.exit(1)
+        elif args.forge_action == "status":
+            print("🔍 Checking Sanctuary Model availability...")
+            res = forge_ops.check_model_availability()
+            if res.get("status") == "success":
+                print(f"✅ Model: {res['model']}")
+                print(f"   Available: {res['available']}")
+                if res.get('all_models'):
+                    print(f"   All Models: {', '.join(res['all_models'][:5])}{'...' if len(res['all_models']) > 5 else ''}")
+            else:
+                print(f"❌ Error: {res.get('error', 'Unknown error')}")
+                sys.exit(1)
+        else:
+            print("❌ Forge subcommand required (query, status)")
+            sys.exit(1)
 
     else:
         parser.print_help()
