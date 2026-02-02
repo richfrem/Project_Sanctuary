@@ -166,11 +166,9 @@ for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTOR
 
 from tools.utils.path_resolver import resolve_path
 from workflow_manager import WorkflowManager
+# Lightweight imports (file-based, no external services)
+# Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
 try:
-    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
-    from mcp_servers.rag_cortex.operations import CortexOperations
-    from mcp_servers.evolution.operations import EvolutionOperations
-    # Domain Operations (Chronicle, Task, ADR, Protocol)
     from mcp_servers.chronicle.operations import ChronicleOperations
     from mcp_servers.task.operations import TaskOperations
     from mcp_servers.task.models import taskstatus, TaskPriority
@@ -179,14 +177,46 @@ try:
 except ImportError:
     # Fallback/Bootstrap if pathing is tricky
     sys.path.append(str(PROJECT_ROOT))
-    from mcp_servers.learning.operations import LearningOperations, PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
-    from mcp_servers.rag_cortex.operations import CortexOperations
-    from mcp_servers.evolution.operations import EvolutionOperations
     from mcp_servers.chronicle.operations import ChronicleOperations
     from mcp_servers.task.operations import TaskOperations
     from mcp_servers.task.models import taskstatus, TaskPriority
     from mcp_servers.adr.operations import ADROperations
     from mcp_servers.protocol.operations import ProtocolOperations
+
+# Heavy imports - LAZY LOADED (require chromadb, requests, Ollama, etc.)
+# LearningOperations, CortexOperations, EvolutionOperations are imported only when needed
+LearningOperations = None
+CortexOperations = None
+EvolutionOperations = None
+
+def _get_learning_ops():
+    """Lazy load LearningOperations (requires requests, Ollama for RLM)"""
+    global LearningOperations
+    if LearningOperations is None:
+        from mcp_servers.learning.operations import LearningOperations as _LearnOps
+        LearningOperations = _LearnOps
+    return LearningOperations(project_root=str(PROJECT_ROOT))
+
+def _get_learning_models():
+    """Lazy load LearningOperations model classes"""
+    from mcp_servers.learning.operations import PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
+    return PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
+
+def _get_cortex_ops():
+    """Lazy load CortexOperations (requires chromadb)"""
+    global CortexOperations
+    if CortexOperations is None:
+        from mcp_servers.rag_cortex.operations import CortexOperations as _CortexOps
+        CortexOperations = _CortexOps
+    return CortexOperations(project_root=str(PROJECT_ROOT))
+
+def _get_evolution_ops():
+    """Lazy load EvolutionOperations (requires chromadb)"""
+    global EvolutionOperations
+    if EvolutionOperations is None:
+        from mcp_servers.evolution.operations import EvolutionOperations as _EvoOps
+        EvolutionOperations = _EvoOps
+    return EvolutionOperations(project_root=str(PROJECT_ROOT))
 
 # Forge LLM Operations (optional - requires ollama package)
 try:
@@ -708,7 +738,7 @@ def main():
     # RLM Distillation: Atomic summarization of files (Protocol 132 Level 1)
     elif args.command in ["rlm-distill", "rlm-test"]:
         print(f"🧠 RLM: Distilling '{args.target}'...")
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         results = ops._rlm_map([args.target])
         print(f"📊 Files Processed: {len(results)}")
         for fp, s in results.items():
@@ -795,7 +825,7 @@ def main():
         # Protocol 128 Snapshot Generation (Delegated to LearningOperations)
         print(f"📸 Generating {args.type} snapshot via Learning Operations...")
         
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         
         # Manifest Handling
         manifest_list = []
@@ -837,7 +867,7 @@ def main():
     # Protocol 128 Debrief: Orientation for fresh sessions (Truth Anchor)
     elif args.command == "debrief":
         print(f"📡 Running Learning Debrief (Protocol 128 Phase I)...")
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         
         # Debrief returns a formatted Markdown string
         debrief_content = ops.learning_debrief(hours=args.hours)
@@ -856,7 +886,7 @@ def main():
     # Guardian Command: Session pack and Boot Digest (Lifecycle)
     elif args.command == "guardian":
         # Initialize ops locally to ensure availability
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         
         if args.guardian_action == "wakeup":
             # Load manifest if exists (using proper arg now)
@@ -898,13 +928,14 @@ def main():
     elif args.command == "persist-soul":
         print(f"📡 Initiating Soul Persistence (Protocol 128 Phase VI)...")
         print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty} | Full Sync: {args.full_sync}")
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         
         # Default snapshot for seal is usually 'learning/learning_package_snapshot.md'
         snapshot_path = args.snapshot
         if not snapshot_path:
             snapshot_path = ".agent/learning/learning_package_snapshot.md"
             
+        PersistSoulRequest, _, _ = _get_learning_models()
         req = PersistSoulRequest(
             snapshot_path=snapshot_path,
             valence=args.valence,
@@ -927,7 +958,7 @@ def main():
     # Persist Soul Full: ADR 081 Full Dataset Regeneration
     elif args.command == "persist-soul-full":
         print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace (ADR 081)...")
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         
         result = ops.persist_soul_full()
         
@@ -942,7 +973,7 @@ def main():
     # Bootstrap Debrief Command: Fresh Repo Onboarding
     elif args.command == "bootstrap-debrief":
         print(f"🏗️  Generating Bootstrap Context Packet...")
-        ops = LearningOperations(project_root=str(PROJECT_ROOT))
+        ops = _get_learning_ops()
         
         # Load manifest
         manifest_path = Path(args.manifest)

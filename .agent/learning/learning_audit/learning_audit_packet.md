@@ -1,5 +1,5 @@
 # Learning Audit Snapshot
-**Generated:** 2026-02-01T12:16:54.038471
+**Generated:** 2026-02-02T10:14:57.535062
 
 Auto-generated learning_audit snapshot
 
@@ -519,187 +519,10 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
 }
 ```
 <a id='entry-3'></a>
-
----
-
-## File: .agent/rules/cognitive_continuity_policy.md
-**Path:** `.agent/rules/cognitive_continuity_policy.md`
-
-```markdown
----
-trigger: always_on
----
-
-## 🧠 Project Sanctuary: Cognitive Continuity & Learning Loop Rules
-
-> *Operations can be executed via CLI commands or MCP tools (when gateway is running).*
-
-### 🚀 Quick Start (Fresh Session)
-
-> [!IMPORTANT]
-> **First action on wakeup:** Read the consolidated operations guide at `docs/prompt-engineering/sanctuary-guardian-prompt.md` for the full 9-phase learning loop, security protocols, and tool routing.
-
-1. **Run Scout:** `cortex_learning_debrief` (MCP) or `python3 scripts/cortex_cli.py debrief --hours 24` (CLI)
-2. **Read Truth Anchor:** `learning_package_snapshot.md` (returned by debrief)
-3. **Check Security:** You are now bound by Git Pre-Flight (Protocol 101) and Execution Lock (Human Gate)
-
----
-
-### 1. Phase I: The Learning Scout (Orientation)
-
-* **Mandatory Wakeup**: Every session **must** begin with `sanctuary-cortex-cortex-learning-debrief`.
-* **Truth Anchor**: You must read the `learning_package_snapshot.md` to ingest the context left by the predecessor. Rely on this "Successor Snapshot" as the definitive state of the project.
-* **Guardian Check**: Run `cortex_guardian_wakeup` to verify environment integrity via Semantic HMAC.
-
-### 2. Phase II & III: Synthesis and Strategic Gate
-
-* **Autonomous Synthesis**: Record all architectural changes as ADRs and process learnings into the `LEARNING/` directory.
-* **Strategic Approval (Gate 1)**: You must receive explicit **Human-in-the-Loop (HITL)** approval for the strategy before proceeding to the technical audit.
-* **Backtrack Logic**: If strategic approval is denied, you must revert to `SOP: workflow-learning-loop.md` to re-scout and re-synthesize.
-* **Content Hygiene (ADR 085)**: **No inline Mermaid diagrams**. All diagrams must be `.mmd` files in `docs/architecture_diagrams/`, rendered to PNG, and referenced via image links.
-
-### 3. Phase IV: The Red Team Audit (Gate 2)
-
-* **Audit Modes**: Use the `sanctuary-cortex-cortex-capture-snapshot` tool with the appropriate flag for the audit type:
-* `audit`: Use this for standard manifest verification and tactical state changes.
-* `learning_audit`: Use this when the session primarily involves cognitive updates, mnemonic mapping, or protocol evolution.
-
-
-* **Manifest Discipline**: Core directories (`ADRs/`, `01_PROTOCOLS/`, `mcp_servers/`) must be clean. Any uncommitted drift detected by the tool results in **Strict Rejection**.
-* **Technical Approval**: The resulting **Audit Packet** must be reviewed and approved (HITL) before the session can be sealed.
-
-### 4. Phase V: The Technical Seal (The Final Relay)
-
-* **Execution**: Once technical approval is secured, call `sanctuary-cortex-cortex-capture-snapshot(snapshot_type='seal')`.
-* **Final Relay**: This process updates the `learning_package_snapshot.md`, effectively "locking in" the memory for the next agent.
-* **Sandwich Validation**: Be aware that the `seal` mode performs a final race-condition check (Git hash comparison). If the repo changed during the audit review, the seal will fail and you must backtrack.
-
-### 5. Failure and Backtracking
-
-* **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `workflow-learning-loop.md` to fix the underlying discrepancy.
-
-### 6. Phase VI: Soul Persistence (ADR 079/081)
-
-* **Dual-Path Broadcast**: After the seal, execute `sanctuary-cortex-cortex-persist-soul` to broadcast learnings to Hugging Face.
-* **Incremental Mode**: Appends 1 record to `data/soul_traces.jsonl` AND uploads MD to `lineage/seal_TIMESTAMP_*.md`.
-* **Full Sync Mode**: Use `cortex-persist-soul-full` to regenerate the entire JSONL from all project files (~1200 records).
-
-### 7. Phase VII: Self-Correction & Curiosity Vector
-
-* **Retrospective**: Fill `loop_retrospective.md` with Red Team verdict.
-* **Curiosity Vector**: If you identify an improvement that cannot be completed today, append it to "Active Lines of Inquiry" in `guardian_boot_digest.md` for the next session.
-
-### 8. Source Verification (ADR 078)
-
-* **Rule 7**: **MUST VERIFY ALL LINKS.** Test every URL with `read_url_content`.
-* **Rule 8**: **MUST MATCH 100% (Title/Author/Date).** Credibility is lost with even one error.
-* **Rule 9**: **MUST NOT INCLUDE BROKEN/UNVERIFIED LINKS.** Zero tolerance for 404s.
-* **Template**: All research sources must follow `LEARNING/templates/sources_template.md`.
-
----
-
-## Learning Audit Iteration Convention
-
-> [!NOTE]
-> Each **new learning topic** starts a fresh iteration cycle.
-
-| Scenario | Iteration |
-|:---------|:----------|
-| New topic (e.g., Prompt Engineering) | Reset to **1.0** |
-| Red Team feedback on same topic | Increment (1.0 → 2.0 → 3.0) |
-| Topic complete, new topic begins | Reset to **1.0** |
-
-**Example:**
-- LLM Memory Architectures: Iterations 1.0 → 11.0 (complete)
-- Prompt Engineering: Iterations 1.0 → ... (new loop)
-
----
-
-## Learning Audit Manifest Strategy
-
-> [!IMPORTANT]
-> Manifests must be curated to avoid truncation in Red Team review.
-
-### Manifest Types
-
-| Manifest | Purpose | When Used |
-|:---------|:--------|:----------|
-| `learning_audit_core_manifest.json` | Foundational project context | Always included in Iteration 1.0 |
-| `learning_audit_manifest.json` | Active working manifest | Overwrite for each topic |
-
-### Prompt Types
-
-| Prompt | Purpose | When Used |
-|:-------|:--------|:----------|
-| `learning_audit_core_prompt.md` | Stable project intro for Red Team | Always included in Iteration 1.0 |
-| `learning_audit_prompts.md` | Active working prompt | Overwritten each loop with topic + iteration context |
-
-### Manifest Deduplication (Protocol 130)
-
-> [!TIP]
-> Deduplication is **automatic** - built into `capture_snapshot()` in operations.py.
-
-When generating a learning_audit, the system automatically:
-1. Loads the manifest registry (`.agent/learning/manifest_registry.json`)
-2. Detects files that are already embedded in included outputs
-3. Removes duplicates before generating the packet
-
-**Registry:** `.agent/learning/manifest_registry.json` maps manifests to their outputs.
-
-### Iteration 1.0 (New Topic)
-```yaml
-manifest: files array with {path, note} entries
-purpose: Red Team needs full project context + topic files
-target_size: < 30K tokens (no truncation)
-```
-
-### Iteration 2.0+ (Subsequent Rounds)
-```yaml
-manifest: topic only (or delta from previous)
-purpose: Red Team already has context; focus on changes
-target_size: < 15K tokens
-```
-
-### Pre-Audit Validation
-Before sharing a learning audit packet:
-1. Run `cortex_capture_snapshot --type learning_audit`
-2. Check output for **Token Count** (target: < 30K for Loop 1)
-3. Check for "Protocol 130" deduplication logs
-4. Verify **Manifest verified: True**
-
----
-
-## Protocol 128: Pre-Departure Checklist
-*You must verify these steps before ending the session:*
-
-1. [ ] **Deployment**: Are containers running the new code? (ADR 087)
-2. [ ] **Retrospective**: Did you fill `loop_retrospective.md` with Red Team verdict? **(MUST BE DONE BEFORE SEAL)**
-3. [ ] **Curiosity Vector**: Did you record any "Lines of Inquiry" for the next session?
-4. [ ] **Seal**: Did you re-run `cortex_capture_snapshot --type seal` *after* the Retro?
-5. [ ] **Persist**: Did you run `cortex-persist-soul` *after* the Seal?
-6. [ ] **Ingest**: Did you run `ingest --incremental --hours 24` to index changes?
-
----
-
-## Quick Reference
-
-| Phase | CLI Command | MCP Tool |
-|-------|-------------|----------|
-| I. Scout | `python3 scripts/cortex_cli.py debrief --hours 24` | `cortex_learning_debrief` |
-| IV. Audit | `python3 scripts/cortex_cli.py snapshot --type learning_audit` | `cortex_capture_snapshot` |
-| V. Seal | `python3 scripts/cortex_cli.py snapshot --type seal` | `cortex_capture_snapshot` |
-| VI. Persist | `python3 scripts/cortex_cli.py persist-soul` | `cortex_persist_soul` |
-| VII. Ingest | `python3 scripts/cortex_cli.py ingest --incremental --hours 24` | (CLI Only) |
-
----
-
-## Consolidated Reference
-
-For the **full 13-section operations guide** including Security Protocol (Iron Root), Fleet Routing, and Lineage Doctrine, see:
-
-📄 **[`docs/prompt-engineering/sanctuary-guardian-prompt.md`](../../docs/prompt-engineering/sanctuary-guardian-prompt.md)**
-
-```
+## 3. .agent/rules/cognitive_continuity_policy.md (MISSING)
+> ❌ File not found: .agent/rules/cognitive_continuity_policy.md
+> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/rules/cognitive_continuity_policy.md
+> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/rules/cognitive_continuity_policy.md
 <a id='entry-4'></a>
 
 ---
@@ -1525,8 +1348,11 @@ config:
 ---
 
 %% Name: Protocol 128: Learning Loop (v3.0 - with RLM Synthesis)
-%% Description: Cognitive Continuity workflow: Scout → Synthesize → Strategic Gate → Audit → RLM Synthesis → Seal → Soul Persist
+%% Description: 10-phase Cognitive Continuity workflow for agent session management
+%% Workflow: .agent/workflows/workflow-learning-loop.md (human-readable steps)
 %% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
+%% Phases: Scout → Synthesize → Strategic Gate → Audit → RLM → Seal → Persist → Self-Correct → Ingest → Forge
+
 
 flowchart TB
     subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
@@ -1627,15 +1453,15 @@ flowchart TB
     end
     style subGraphPersist fill:#cce5ff,stroke:#004085,stroke-width:2px
 
-    subgraph PhaseVII [Phase VIII: Self-Correction]
+    subgraph PhaseVIII [Phase VIII: Self-Correction]
         direction TB
         Deployment[Deploy & Policy Update]
         Retro["Loop Retrospective<br>Workflow: /workflow-retrospective<br>(Singleton)"]
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
-    style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
+    style PhaseVIII fill:#d4edda,stroke:#155724,stroke-width:2px
 
-    subgraph PhaseVIII [Phase IX: Relational Ingestion & Closure]
+    subgraph PhaseIX [Phase IX: Relational Ingestion & Closure]
         direction TB
         Ingest["Workflow: /workflow-ingest<br>(Update RAG Vector DB)"]
         GitOps["Git: add . && commit && push<br>(Sync to Remote)"]
@@ -1643,16 +1469,16 @@ flowchart TB
         Ingest --> GitOps
         GitOps --> End
     end
-    style PhaseVIII fill:#fff3cd,stroke:#856404,stroke-width:2px
+    style PhaseIX fill:#fff3cd,stroke:#856404,stroke-width:2px
 
-    subgraph PhaseIX [Phase X: Phoenix Forge]
+    subgraph PhaseX [Phase X: Phoenix Forge]
         direction TB
         ForgeDataset["Scripts: forge_whole_genome_dataset.py<br>(Sync Soul Traces to Training Data)"]
         FineTune["Scripts: fine_tune.py<br>(QLoRA Training)"]
         GGUFConvert["Scripts: convert_to_gguf.py<br>(Quantize & Quant)"]
         HFDeploy["Tool: upload_to_huggingface.py<br>(Deploy Model to Hub)"]
     end
-    style PhaseIX fill:#f8d7da,stroke:#721c24,stroke-width:2px
+    style PhaseX fill:#f8d7da,stroke:#721c24,stroke-width:2px
 
     %% Flow
     SeekTruth -- "Carry Context" --> Intelligence
@@ -3074,14 +2900,13 @@ class LearningOperations:
                             last_package_content = package_path.read_text()
                             package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
                         else:
+                            last_package_content = package_path.read_text()
                             package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
                     except Exception as e:
                         package_status = f"❌ Error reading snapshot: {e}"
 
                 # 4b. Mandatory Logic Verification (ADR 084)
                 mandatory_files = [
-                    "IDENTITY/founder_seed.json",
-                    "LEARNING/calibration_log.json", 
                     "ADRs/084_semantic_entropy_tda_gating.md",
                     "mcp_servers/learning/operations.py" # Ref updated
                 ]
@@ -3091,8 +2916,27 @@ class LearningOperations:
                      try:
                          with open(manifest_path, "r") as f: 
                              m = json.load(f)
+                         files_list = m.get("files", [])
+                         # Handle legacy list format if encountered
+                         if isinstance(m, list):
+                             files_list = m
+
                          for mf in mandatory_files:
-                             status = "✅ REGISTERED" if mf in m else "❌ MISSING"
+                             # Check if in manifest (Robust check for dicts or strings)
+                             in_registry = False
+                             for entry in files_list:
+                                 path_val = entry.get("path") if isinstance(entry, dict) else entry
+                                 if path_val == mf:
+                                     in_registry = True
+                                     break
+                             
+                             if in_registry:
+                                 status = "✅ REGISTERED"
+                             elif (self.project_root / mf).exists():
+                                 status = "⚠️ UNREGISTERED (Exists)"
+                             else:
+                                 status = "❌ MISSING"
+                                 
                              registry_status += f"        * {status}: `{mf}`\n"
                      except Exception as e:
                          registry_status = f"⚠️ Manifest Error: {e}"
@@ -4041,5 +3885,4 @@ class LearningOperations:
             tasks = list(scan_dir.glob("*.md"))
             if tasks: return f"* Found {len(tasks)} active tasks."
         return "* No active tasks found."
-
 ```

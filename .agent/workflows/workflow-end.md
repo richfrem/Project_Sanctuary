@@ -12,6 +12,11 @@ tier: 1
 
 **Called By:** All `/codify-*` and `/speckit-*` workflows
 
+> [!IMPORTANT] **Protocol 128 Pre-Requisites (Must Complete First):**
+> 1. **Seal** → `/workflow-seal` (snapshot created)
+> 2. **Persist** → `/workflow-persist` (HuggingFace upload)
+> 3. **Retrospective** → `/workflow-retrospective` (self-reflection)
+
 ---
 
 ## Step 1: Human Review Approval
