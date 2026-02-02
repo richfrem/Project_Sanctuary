@@ -5,8 +5,9 @@ description: Manage Chronicle Entries (Journaling)
 
 1. **List Recent Entries**:
    // turbo
-   python3 scripts/domain_cli.py chronicle list --limit 5
+   python3 tools/cli.py chronicle list --limit 5
 
 2. **Action**:
-   - To create: `python3 scripts/domain_cli.py chronicle create "Your Content"`
-   - To update: `python3 scripts/domain_cli.py chronicle update --id ID --content "..."`
+   - To create: `python3 tools/cli.py chronicle create "Title" --content "Your Content"`
+   - To search: `python3 tools/cli.py chronicle search "query"`
+   - To view: `python3 tools/cli.py chronicle get N`

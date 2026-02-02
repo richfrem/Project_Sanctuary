@@ -5,8 +5,10 @@ description: Manage Maintenance Tasks (Kanban)
 
 1. **List Active Tasks**:
    // turbo
-   python3 scripts/domain_cli.py task list --status active
+   python3 tools/cli.py task list --status in-progress
 
 2. **Action**:
-   - To create: Use `python3 scripts/domain_cli.py task create "Title" ...`
-   - To update: Use `python3 scripts/domain_cli.py task update --id ID ...`
+   - To create: `python3 tools/cli.py task create "Title" --objective "..." --deliverables item1 item2 --acceptance-criteria done1 done2`
+   - To update status: `python3 tools/cli.py task update-status N new_status --notes "reason"`
+   - To view: `python3 tools/cli.py task get N`
+   - To list by status: `python3 tools/cli.py task list --status backlog|todo|in-progress|done`

@@ -1,7 +1,7 @@
 # Antigravity Workflow Inventory
 
-> **Generated:** 2026-02-01 10:15
-> **Total Workflows:** 25
+> **Generated:** 2026-02-01 16:27
+> **Total Workflows:** 26
 
 
 ## Track: Discovery
@@ -32,6 +32,7 @@
 | `/workflow-ingest` | - | Run RAG Ingestion (Protocol 128 Phase IX) | - |
 | `/workflow-learning-loop` | - | "Standard operating procedure for Protocol 128 Hardened Learning Loop (Scout -> Synthesize -> Audit -> Seal -> Persist)." | - |
 | `/workflow-persist` | - | Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face) | - |
+| `/workflow-protocol` | - | Manage Protocol Documents | - |
 | `/workflow-retrospective` | 1 | Mandatory self-retrospective and continuous improvement check after completing any codify workflow. | /workflow-end |
 | `/workflow-scout` | - | Protocol 128 Phase I - The Learning Scout (Debrief & Orientation) | - |
 | `/workflow-seal` | - | Protocol 128 Phase V - The Technical Seal (Snapshot & Validation) | - |
@@ -61,6 +62,7 @@
 | `/workflow-ingest` | Factory | Run RAG Ingestion (Protocol 128 Phase IX) |
 | `/workflow-learning-loop` | Factory | "Standard operating procedure for Protocol 128 Hardened Learning Loop (Scout -> Synthesize -> Audit -> Seal -> Persist)." |
 | `/workflow-persist` | Factory | Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face) |
+| `/workflow-protocol` | Factory | Manage Protocol Documents |
 | `/workflow-retrospective` | Factory | Mandatory self-retrospective and continuous improvement check after completing any codify workflow. |
 | `/workflow-scout` | Factory | Protocol 128 Phase I - The Learning Scout (Debrief & Orientation) |
 | `/workflow-seal` | Factory | Protocol 128 Phase V - The Technical Seal (Snapshot & Validation) |

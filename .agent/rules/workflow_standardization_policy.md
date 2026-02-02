@@ -56,7 +56,7 @@ Commands MUST be categorized into one of the established domains:
 
 ## 4. Documentation & Architecture Synchronization (MANDATORY)
 Every time a new command is added or an existing command's purpose changes, the agent MUST synchronize the following architectural artifacts:
-1. **Workflow Inventory**: Update `docs/antigravity/workflow/WORKFLOW_INVENTORY.md`.
+1. **Workflow Inventory**: Update `docs/antigravity/workflow/WORKFLOW_INVENTORY.md` by running `python tools/curate/documentation/workflow_inventory_manager.py --scan`.
 2. **Tool Inventory**: If the command uses a new script, run `python tools/curate/inventories/manage_tool_inventory.py add --path <path>`.
 3. **RLM Distillation**: Run `python tools/codify/rlm/distiller.py --file <path> --type tool` to update the Semantic Ledger.
 
@@ -82,7 +82,7 @@ python tools/retrieve/rlm/query_cache.py --type tool "pattern"
 | Inventory | CLI Command | Manifest File |
 |-----------|-------------|---------------|
 | **Tools/Scripts** | `python tools/retrieve/rlm/query_cache.py --type tool "kw"` | `.agent/learning/rlm_tool_cache.json` |
-| **Workflows** | View markdown | `docs/antigravity/workflow/WORKFLOW_INVENTORY.md` |
+| **Workflows** | `python tools/curate/documentation/workflow_inventory_manager.py --scan` | `docs/antigravity/workflow/WORKFLOW_INVENTORY.md` |
 
 ## 7. Session Lifecycle Alignment
 

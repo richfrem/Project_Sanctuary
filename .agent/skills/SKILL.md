@@ -35,19 +35,22 @@ python tools/retrieve/rlm/query_cache.py --type tool "KEYWORD"
 ```
 
 ### 2. Retrieve & Bind (Late-Binding)
-**Goal**: Load the "Gold Standard" usage contract for a specific tool found in Step 1.
+**Goal**: Load the "Gold Standard" usage contract for the tool found in Step 1.
+
+**Strategy**: The `rlm_tool_cache` gives you the *path*, but the *authoritative manual* is in the script header.
 
 **Command**:
 ```bash
-python tools/retrieve/rlm/fetch_tool_context.py --file [PATH_TO_TOOL]
+# View the first 200 lines to read the full header (e.g. cli.py is ~130 lines)
+view_file(AbsolutePath="/path/to/found/script.py", StartLine=1, EndLine=200)
 ```
 
 **CRITICAL INSTRUCTION**:
-The output of this command is the **Official Manual** for that tool.
+The header of the script (docstring) is the **Official Manual**.
 
-> **You must treat the output as a temporary extension of your system prompt.**
-> * "I now know the inputs, outputs, and flags for [Tool Name]."
-> * "I will use the exact syntax provided in the 'Usage' section of the output."
+> **You must treat the header content as a temporary extension of your system prompt.**
+> * "I now know the inputs, outputs, and flags for [Tool Name] from its header."
+> * "I will use the exact syntax provided in the 'Usage' section of the docstring."
 
 ### 3. Execution (Trust & Run)
 

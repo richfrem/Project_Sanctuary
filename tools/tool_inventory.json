@@ -18,7 +18,6 @@
           "category": "cli_entry_points"
         }
       ],
-      "miners": [],
       "bundler": [
         {
           "name": "bundle.py",
@@ -116,8 +115,6 @@
           "header_style": "minimal"
         }
       ],
-      "vector": [],
-      "search": [],
       "documentation": [
         {
           "name": "export_mmd_to_image.py",
@@ -171,9 +168,6 @@
           "compliance_status": "partial"
         }
       ],
-      "inventories": [],
-      "utilities": [],
-      "standalone": [],
       "curate": [
         {
           "name": "manage_tool_inventory.py",
@@ -211,8 +205,6 @@
           "header_style": "manual"
         }
       ],
-      "curate/inventories": [],
-      "codify/documentation": [],
       "Orchestrator": [
         {
           "name": "workflow_manager.py",
@@ -241,22 +233,6 @@
           "last_updated": "2026-01-31T21:26:39.882399",
           "compliance_status": "compliant",
           "header_style": "extended"
-        },
-        {
-          "name": "cortex_cli.py",
-          "path": "scripts/cortex_cli.py",
-          "description": "Main CLI entry point for the Cortex Agentic Operations (Protocol 128). Orchestrates Cognitive functions (Memory, Learning, Debrief, Stats).",
-          "last_updated": "2026-01-31T22:19:43.145683",
-          "compliance_status": "compliant",
-          "header_style": "minimal"
-        },
-        {
-          "name": "domain_cli.py",
-          "path": "scripts/domain_cli.py",
-          "description": "Domain-Specific CLI for managing specific Project Entities (Tasks, ADRs, Chronicles, Protocols). Maps CLI commands to MCP business logic.",
-          "last_updated": "2026-01-31T22:19:42.987331",
-          "compliance_status": "compliant",
-          "header_style": "minimal"
         },
         {
           "name": "env_helper.py",
