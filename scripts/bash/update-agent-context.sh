@@ -761,6 +761,26 @@ print_summary() {
 #==============================================================================
 
 main() {
+    # ---------------------------------------------------------
+    # RED TEAM REMEDIATION: CV-01 (Human Gate)
+    # Interactive Check: Only gate if connected to terminal (TTY)
+    # ---------------------------------------------------------
+    if [ -t 0 ]; then
+        echo "=============================================="
+        echo "🛡️  HUMAN GATE REQURIED: UPDATE CONTEXT 🛡️"
+        echo "=============================================="
+        echo "You are about to UPDATE AI AGENT CONTEXT FILES."
+        echo "This modifies tracked memory artifacts."
+        echo ""
+        echo "Type 'PROCEED' to execute."
+        read -p "> " approval
+
+        if [[ "$approval" != "PROCEED" ]]; then
+            echo "❌ Approval not given. Aborting."
+            exit 1
+        fi
+    fi
+
     # Validate environment before proceeding
     validate_environment
     

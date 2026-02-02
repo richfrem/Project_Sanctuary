@@ -461,8 +461,8 @@ class WorkflowManager:
         
         # 2. Add Files
         if not files:
-            print("⚠️  No files specified. Adding ALL tracked files.")
-            self.run_command(["git", "add", "-u"])
+            print("⚠️  No files specified. Adding ALL files (tracked + untracked).")
+            self.run_command(["git", "add", "."])
         else:
             print(f"📦 Staging {len(files)} files...")
             for f in files:

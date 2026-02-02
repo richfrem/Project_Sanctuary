@@ -1,0 +1,30 @@
+{
+    "title": "Red Team Analysis Package - Constitution v3.6",
+    "description": "Comprehensive bundle of all Project Sanctuary governing documents, workflows, skills, and scripts for adversarial review. Uses recursive directory expansion.",
+    "files": [
+        {
+            "path": "specs/0006-rebuild-constitution/red_team_prompt.md",
+            "note": "ANALYSIS INSTRUCTIONS"
+        },
+        {
+            "path": ".agent/rules",
+            "note": "GOVERNANCE: Constitution and all Tiers"
+        },
+        {
+            "path": ".agent/workflows",
+            "note": "OPERATIONS: All Standard Workflows"
+        },
+        {
+            "path": ".agent/skills",
+            "note": "CAPABILITIES: Skills and Tools"
+        },
+        {
+            "path": "scripts/bash",
+            "note": "IMPLEMENTATION: Bash Scripts"
+        },
+        {
+            "path": ".agent/learning/rlm_tool_cache.json",
+            "note": "TOOL: Tool Discovery Cache"
+        }
+    ]
+}
