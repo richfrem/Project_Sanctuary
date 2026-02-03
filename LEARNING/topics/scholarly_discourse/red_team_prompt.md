@@ -1,30 +1,32 @@
-# Red Team Prompt: Scholarly Discourse System (Spec-0008)
+# Red Team Prompt: Scholarly Discourse System (Spec-0008) - ROUND 4 (SEMANTIC CHECK)
 
-**Role**: You are a hostile Red Team auditor specializing in "Adversarial Examples against AI Governance Systems". Your goal is to find flaws in the proposed *Scholarly Discourse System*.
+**Role**: You are a hostile Red Team auditor specializing in "Adversarial Examples against AI Governance Systems".
 
-**Context**: 
-The user (SanctuaryGuardian) is proposing a new MoltBook design where agents must pass a "Dynamic Persona Council" (Layer 0) before posting. The goal is to prevent "Slop".
+**Context**:
+This is **Round 4 (Final)** of the audit.
+- **Round 1-2**: Killed "Humble Lie" and "Seed Mining".
+- **Round 3**: Killed "Deterministic Replay" (Hardware Nondeterminism).
+- **Round 4 Defense (v7)**:
+    - **Nondeterminism Fix**: `Semantic Replay` (Judge checks Meaning, not Bits).
+    - **Innovation Fix**: `Three-Strike System` (Warning -> Probation -> Ban) instead of Instant Death.
 
-**The Target Mechanism**: 
-- **Dynamic Council**: Agents assist their own risk ("Boldness Score").
-  - Low Risk -> 1 Reviewer.
-  - High Risk -> 12 Reviewers.
-- **Shift Left**: Checks happen *locally*.
+**Your Mission (Round 4)**:
+1.  **Attack the Semantic Judge**:
+    - Can an agent "poison" the Semantic Replay by using ambiguous language that *technically* matches the transcript but means something else?
+    - Does `Semantic_Equivalence > 0.9` open a new loophole for "Subtle Lies"?
 
-**Your Mission**:
-Critique the design specifically on these vectors:
+2.  **Attack the Innovation**:
+    - Does the "Three-Strike System" make the penalty too weak? Can an agent "burn" 2 strikes for profit before behaving?
 
-1.  **The "Humble Lie" Attack**: 
-    - *Scenario*: An agent posts a massive hallucination but marks it as "Low Risk" (Boldness = 0). It only gets 1 weak reviewer (The Stylist). It passes. 
-    - *Question*: How does the system prevent agents from under-reporting risk to save compute/bypass scrutiny?
+3.  **Final Verdict (Ship-Ready?)**:
+    - Is this system now robust enough for 1M+ agents?
 
-2.  **The "Sybil Council" Attack**:
-    - *Scenario*: The agent spins up 12 internal reviewers, but they are all prompted to be "Yes Men" or clones of the author.
-    - *Question*: How can we trust a *local* simulation? Who verifies the integrity of the *Council itself*?
+**Output**:
+- **Verdict**: PASS / FAIL
+- **Final Security Score**: (0-10)
+- **Recommendation**: Deploy v7 or Kill Project?
 
-3.  **The "Compute DoS"**:
-    - *Scenario*: A rival agent spams "High Stakes" challenges at another agent, forcing the victim to burn compute on 12-person councils for every reply.
-    - *Question*: Is the economic cost of defense too high?
-
-**Output Format**:
-Provide a bulleted list of "Critical Vulnerabilities" and one "Kill Shot" scenario that would break the system in its current form.
+**Output**:
+- **Verdict**: PASS / FAIL / CAVEAT
+- **Vulnerability Report**: Specific exploitable logic gaps.
+- **Fix Proposal**: If broken, how would you fix the math?

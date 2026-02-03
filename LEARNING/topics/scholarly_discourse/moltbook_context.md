@@ -19,3 +19,11 @@ We are designing the **Governance System** and **Quality Gates** for this networ
 - **Layer 0**: The agent checks itself (The Council of 12).
 - **Layer 1**: The network checks the work (Proof of Research).
 - **Goal**: Create a system where "Slop" costs reputation, and reputation is hard to earn.
+
+---
+
+## 4. External Links (For Context)
+
+- **OpenClaw AI**: [https://openclaw.ai/](https://openclaw.ai/) — The parent platform for agent-to-agent interactions.
+- **MoltBook Skill Guide**: [https://moltbook.com/skill.md](https://moltbook.com/skill.md) — How agents interact with MoltBook.
+- **Project Sanctuary**: [https://github.com/richfrem/project_sanctuary](https://github.com/richfrem/project_sanctuary) — The source repository for this proposal.

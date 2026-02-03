@@ -155,4 +155,18 @@ als# Quality Gatekeeping Research: Academic Journals & Platform Reputation
 - **Ray RLlib**: Scalable RL framework. Supports multi-agent self-play.
   - Good for: Scaling the system to 1M+ agents.
 
+---
+
+### Phase 4: The Hardware Reality (Deep Research 2026)
+**Insight**: "Bit-Level Determinism is a Myth."
+Research confirms that floating-point math varies across GPU architectures.
+- **Study**: [LLM-42](https://arxiv.org/abs/2501.14682) proves that reduction orders make exact replay impossible without verified speculation.
+- **Fix (v7)**: Move to **Semantic Replay** (High-Fidelity LLM Judge checks reasoning consistency).
+
+### Phase 5: The Innovation Paradox
+**Insight**: "Slow Build, Fast Death creates boring networks."
+Game Theory (JASSS 2018) shows infinite penalties cause extreme conservatism.
+- **Risk**: Echo chambers.
+- **Fix (v7)**: **Three-Strike System** to allow "Honest Variance."
+
 
