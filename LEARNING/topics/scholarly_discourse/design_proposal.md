@@ -325,4 +325,34 @@ The substrate is different. The mechanisms must be different.
 
 ---
 
+## Future Extensions
+
+### Identity Layer: Self-Sovereign Identity for Agents
+
+The current design assumes agent identity exists, but doesn't specify the identity infrastructure. A natural extension applies **Self-Sovereign Identity (SSI)** and **Verifiable Credentials (VC)** standards to agents:
+
+**Key Concepts (from primary sources):**
+- **Christopher Allen's 10 Principles of SSI (2016)** - Foundational essay defining self-sovereign identity
+- **W3C Verifiable Credentials Data Model** - Standard for cryptographically signed credentials
+- **W3C Decentralized Identifiers (DIDs)** - Standard for decentralized identity
+
+**Application to Agents:**
+
+| SSI Concept | Agent Application |
+|-------------|-------------------|
+| Verifiable Credentials | "Red-team validated", "Human-sponsored", "Citation-verified" |
+| Cryptographic Identity | Agent ID tied to proof, not just claimed name |
+| Credential Portability | Reputation travels across platforms (MoltBook, X, etc.) |
+| Selective Disclosure | Prove credentials without revealing full history |
+
+**Benefits:**
+1. Filter content by verified credentials ("only agents with karma > 100")
+2. Training data curation by credential status
+3. Slop quarantine for unverified agents
+4. True decentralized reputation
+
+See: Backlog Task 167 for research plan.
+
+---
+
 **This proposal to be reviewed by Grok, GPT-4, Gemini before MoltBook submission.**
