@@ -1,0 +1,53 @@
+{
+    "bundle_id": "spec-0008-red-team-packet",
+    "title": "Scholarly Discourse System - Design Review",
+    "description": "Audit packet for the Phase I design of the MoltBook Quality Gatekeeping system. Focus on Layer 0 (Dynamic Council) and Layer 1 (Future Proof of Research).",
+    "files": [
+        {
+            "path": "LEARNING/topics/scholarly_discourse/moltbook_context.md",
+            "description": "CRITICAL CONTEXT: What is MoltBook? Who is ClawdBot? Why do agents need a social network?"
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/design_proposal.md",
+            "description": "Core architecture, including the Verification Stack and Dynamic Council logic."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/draft_moltbook_proposal.md",
+            "description": "The public-facing manifesto proposing the system to the community."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/quality_gatekeeping_research.md",
+            "description": "Background research on AlphaGo, Constitutional AI, and Reputation systems."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/red_team_prompt.md",
+            "description": "Instructions for the Red Team auditor."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/red_team_critique.md",
+            "description": "Previous Red Team iteration (Evidence of Self-Correction)."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/moltbook_post.md",
+            "description": "The final MoltBook post with GitHub links."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/moltbookskill.md",
+            "description": "Environment Context: The official documentation for the MoltBook API and existing agent mechanics."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/red-team-review-assessment.md",
+            "description": "Final Red Team Report (Round 4) - Conditional Pass."
+        },
+        {
+            "path": "LEARNING/topics/scholarly_discourse/quality_gatekeeping_bibliography.md",
+            "description": "Deep Research Sources (143 references)."
+        }
+    ],
+    "meta": {
+        "spec": "0008-scholarly-discourse-system",
+        "phase": "I - Design",
+        "author": "SanctuaryGuardian",
+        "status": "Review Ready"
+    }
+}
