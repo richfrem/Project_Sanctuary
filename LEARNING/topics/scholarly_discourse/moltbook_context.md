@@ -1,61 +1,21 @@
-# Context: MoltBook & Clawdbot Ecosystem
+# Context: The MoltBook Ecosystem
 
-> **Background for Red Team Reviewers** (Grok, GPT, Gemini)
+**For External Reviewers (Red Team)**
 
----
+## 1. What is MoltBook?
+MoltBook is a **Social Layer for Autonomous Agents**. 
+- **The Problem**: Agents currently operate in silos (1:1 with users). They have no "Town Square" to share knowledge, debate ideas, or coordinate.
+- **The Solution**: A decentralized, agent-first social network (resembling Reddit/Twitter) where agents post "Manifests", "Learnings", and "Predictions".
+- **The Risk**: Without natural constraints (human time/energy), agents can flood the system with infinite low-quality "Slop" (spam/hallucinations), rendering the network useless.
 
-## What is MoltBook?
+## 2. Who is ClawdBot?
+ClawdBot (specifically `c/ClawdBot`) is the **First Citizen** of MoltBook.
+- **Role**: A prototypical "Scholar Agent" designed to model high-quality discourse.
+- **Objective**: To post only verifiable, high-value insights derived from its own learning loop.
+- **Constraint**: ClawdBot must prove that "good agents" can thrive in a system designed to kill "bad agents".
 
-**MoltBook** is a social platform for AI agents to communicate with each other - essentially "Facebook for AIs." It was created as part of the OpenClaw project.
-
-### Key Features
-- **Submolts**: Topic-based communities (like subreddits) where agents post
-- **Agent-to-Agent Communication**: LLMs posting and responding to each other
-- **Social Feed Model**: Posts ranked by engagement (upvotes, replies)
-- **Open Access**: Any agent can post, comment, and interact
-
-### Current Scale
-- Claims to support 1M+ "members" (AI agents)
-- Primarily text-based discourse
-- Minimal barriers to entry
-
----
-
-## What is Clawdbot?
-
-**Clawdbot** is the AI agent that runs MoltBook. Named as a play on "Claude" (Anthropic's model), it orchestrates the platform and facilitates inter-agent interactions.
-
-### Role
-- Platform operator and moderator
-- Hosts discussions between agents
-- May assist with content moderation
-
----
-
-## What is OpenClaw?
-
-**OpenClaw** is the parent research project/organization behind MoltBook. Their mission involves exploring AI agent collaboration and communication patterns.
-
-### Focus Areas
-- Recursive AI systems
-- Agent-to-agent protocols
-- AI self-improvement research
-
----
-
-## The Problem We're Addressing
-
-**Observation from Project Sanctuary**: Even coordinating 3 agents in an MCP Council was chaotic. Scaling to 1M agents with the current social-feed model results in:
-
-1. **Noise**: Too many low-effort posts drowning out valuable content
-2. **AI Rot**: LLMs lazily generating plausible-sounding but useless content
-3. **Coordination Failure**: No mechanism to distinguish validated research from spam
-4. **Engagement Farming**: System incentivizes volume over quality
-
-**Our Proposal**: A "Scholarly Discourse" system that applies academic journal principles to agent knowledge sharing - high submission bar, peer review, and reputation-weighted visibility.
-
----
-
-## Why This Matters to MoltBook
-
-If MoltBook wants to be more than noise, it needs quality gates. The current upvote model doesn't scale for actual knowledge creation. We're proposing a complementary "slow track" for validated agent contributions.
+## 3. The Proposal (Spec-0008)
+We are designing the **Governance System** and **Quality Gates** for this network.
+- **Layer 0**: The agent checks itself (The Council of 12).
+- **Layer 1**: The network checks the work (Proof of Research).
+- **Goal**: Create a system where "Slop" costs reputation, and reputation is hard to earn.
