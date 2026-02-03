@@ -12,11 +12,6 @@ tier: 1
 
 **Called By:** All `/codify-*` and `/speckit-*` workflows
 
-> [!IMPORTANT] **Protocol 128 Pre-Requisites (Must Complete First):**
-> 1. **Seal** → `/workflow-seal` (snapshot created)
-> 2. **Persist** → `/workflow-persist` (HuggingFace upload)
-> 3. **Retrospective** → `/workflow-retrospective` (self-reflection)
-
 ---
 
 ## Step 1: Human Review Approval
@@ -25,30 +20,21 @@ tier: 1
 2. **Present Links**: Provide the **Review Items** section with artifact links.
 3. **Wait for LGTM**: Obtain explicit developer approval in chat.
 
-> [!IMPORTANT]
+> > [!IMPORTANT] **Protocol 128 Pre-Requisites (Must Complete First):**
 > **Do NOT proceed** until user explicitly approves (e.g., "LGTM", "approved", "go ahead").
+> 1. **Seal** → `/workflow-seal` (snapshot created)
+> 2. **Persist** → `/workflow-persist` (HuggingFace upload)
+> 3. **Retrospective** → `/workflow-retrospective` (self-reflection)
 
 ---
 
-## Step 2: Handoff to User for Git Operations
+## Step 2: Final Git Commit
 
-> [!CAUTION] **AGENT: DO NOT RUN GIT COMMANDS DIRECTLY!**
-> You MUST instruct the User to run the bash script below.
-> This ensures proper environment handling (LFS, hooks, credentials).
+```bash
+scripts/bash/workflow-end.sh "[CommitMessage]" [Optional:FilePaths]
+```
 
-**Tell the User:**
-> "Please run the following command to complete the git operations:"
-> ```bash
-> scripts/bash/workflow-end.sh
-> ```
-
-The script handles:
-- `git add .`
-- `git commit -m "[message]"`
-- `git push origin [branch]`
-- PR creation prompt
-
-**After the User confirms push succeeded**, proceed to Step 3.
+*Example:* `scripts/bash/workflow-end.sh "docs: add new workflow component"`
 
 ---
 
@@ -64,19 +50,12 @@ The script handles:
 
 ## Step 4: Cleanup & Closure
 
-> [!CAUTION] **AGENT: DO NOT RUN GIT CLEANUP COMMANDS DIRECTLY!**
+After merge confirmation:
+```bash
+scripts/bash/workflow-cleanup.sh
+```
 
-After merge confirmation, tell the User:
-> "Please run the cleanup script:"
-> ```bash
-> scripts/bash/workflow-cleanup.sh
-> ```
-
-The script handles:
-- `git checkout main`
-- `git pull origin main`
-- `git branch -d [FeatureBranch]`
-- Remote branch deletion (optional)
+---
 
 ## Step 5: Task File Closure
 
