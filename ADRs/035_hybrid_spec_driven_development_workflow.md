@@ -24,16 +24,16 @@ We will adopt a **Dual-Track Hybrid Workflow** architecture that explicitly cate
 
 ### Track B: Discovery (Spec-Driven)
 *   **Purpose**: High-ambiguity, creative, exploratory tasks (New Features, Architecture Changes).
-*   **Tooling**: `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, `/speckit-implement`.
+*   **Tooling**: `/spec-kitty.specify`, `/spec-kitty.plan`, `/spec-kitty.tasks`, `/spec-kitty.implement`.
 *   **Protocol**: 4-Step Cycle (Spec -> Plan -> Tasks -> Implement).
 *   **Relationship**: Key point: **Track B can spawn Track A tasks.** A Feature Plan might include a task "Run /codify-form on Form X".
 
 ### Universal Wrappers & Shims
 Both tracks must adhere to the core governance lifecycle, enforced by **Shell Shims**:
-1.  **Entry Point**: `scripts/bash/workflow-start.sh` (Constitutional Gate).
+1.  **Entry Point**: `scripts/bash/sanctuary-start.sh` (Constitutional Gate).
 2.  **Execution**: `scripts/bash/codify-*.sh` (Orchestrator Shims).
-3.  **Exit Point**: `/workflow-end` (Quality Gate).
-4.  **Reflection**: `/workflow-retrospective` (Continuous Improvement).
+3.  **Exit Point**: `/sanctuary-end` (Quality Gate).
+4.  **Reflection**: `/sanctuary-retrospective` (Continuous Improvement).
 
 ## Consequences
 ### Positive

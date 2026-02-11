@@ -14,7 +14,7 @@ Prevent Agents from verifying T030 without explicit user feedback.
 
 ## 2. Deliverables
 
-1. Updated workflow-retrospective.md
+1. Updated sanctuary-retrospective.md
 2. Updated workflow-retrospective.sh
 
 ## 3. Acceptance Criteria

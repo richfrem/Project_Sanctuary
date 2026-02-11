@@ -17,7 +17,7 @@
 ## Step-by-Step Workflow
 
 ### 1. Pre-Flight
-*   **Trigger:** [What starts this? e.g. `/workflow-start`]
+*   **Trigger:** [What starts this? e.g. `/sanctuary-start`]
 *   **Constitutional Check:** Verify against `.agent/rules/constitution.md`
 *   **Action:** [Description]
 
@@ -28,7 +28,7 @@
 
 ### 3. Post-Flight
 *   **Outcome:** [End state]
-*   **Closure:** Run `/workflow-end` and `/workflow-retrospective`
+*   **Closure:** Run `/sanctuary-end` and `/sanctuary-retrospective`
 
 ## Key Rules & Validations
 *   Human Gate: Requires explicit approval before state-changing actions.
@@ -36,4 +36,4 @@
 
 ## Integration Points
 *   **CLI:** `python tools/cli.py workflow start --name [name] --target [target]`
-*   **Workflows:** References `/speckit-*` or `/codify-*` as needed
+*   **Workflows:** References `/spec-kitty.*` or `/codify-*` as needed

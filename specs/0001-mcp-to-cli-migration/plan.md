@@ -78,7 +78,7 @@ tools/
 └── TOOL_INVENTORY.md    # Auto-generated tool docs
 
 .agent/workflows/
-├── workflow-start.md    # Update to use --type flag
+├── sanctuary-start.md    # Update to use --type flag
 └── [other workflows]    # Verify CLI-first approach
 
 docs/operations/mcp/
@@ -112,8 +112,8 @@ docs/operations/mcp/
 4. Register `tools/cli.py` workflow commands in RLM cache
 
 ### Phase 3: Workflow Updates
-1. Update speckit workflows: Replace `source scripts/bash/workflow-start.sh` with Python
-2. Update `/workflow-learning-loop.md`: Replace MCP references with CLI
+1. Update speckit workflows: Replace `source scripts/bash/sanctuary-start.sh` with Python
+2. Update `/sanctuary-learning-loop.md`: Replace MCP references with CLI
 3. Convert `check-prerequisites.sh` logic to Python (used by many workflows)
 
 ### Phase 4: Bash Script Migration (Deferred)

@@ -37,7 +37,7 @@ If an Iron Check fails, the system enters `SAFE_MODE`.
 ## 4. Technical Architecture (The Mechanism)
 
 ### A. The Recursive Learning Workflow
-Located at: `[.agent/workflows/workflow-learning-loop.md](../.agent/workflows/workflow-learning-loop.md)`
+Located at: `[.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md](../.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)`
 - **Goal**: Autonomous acquisition -> Verification -> Preservation.
 - **Trigger**: LLM intent to learn or session completion.
 
@@ -80,7 +80,7 @@ This introduces an optional "Evolutionary Loop" for high-velocity optimization o
 | :--- | :--- | :--- |
 | **ADR 071** | Design Intent | `ADRs/071_protocol_128_cognitive_continuity.md` |
 | **Protocol 128** | Constitutional Mandate | `01_PROTOCOLS/128_Hardened_Learning_Loop.md` |
-| **SOP** | Execution Guide | `.agent/workflows/workflow-learning-loop.md` |
+| **SOP** | Execution Guide | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
 | **Primer** | Rules of Reality | `.agent/learning/cognitive_primer.md` |
 
 ---

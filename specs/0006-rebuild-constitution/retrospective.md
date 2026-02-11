@@ -71,10 +71,10 @@
 
 List all files actually modified in this workflow (proof check reference):
 - [x] `.agent/rules/constitution.md`
-- [x] `scripts/bash/workflow-end.sh`
-- [x] `scripts/bash/workflow-start.sh`
-- [x] `scripts/bash/workflow-ingest.sh`
-- [x] `scripts/bash/workflow-learning-loop.sh`
+- [x] `scripts/bash/sanctuary-end.sh`
+- [x] `scripts/bash/sanctuary-start.sh`
+- [x] `scripts/bash/sanctuary-ingest.sh`
+- [x] `scripts/bash/sanctuary-learning-loop.sh`
 - [x] `scripts/bash/create-new-feature.sh`
 - [x] `scripts/bash/update-agent-context.sh`
 - [x] `scripts/bash/workflow-cleanup.sh`

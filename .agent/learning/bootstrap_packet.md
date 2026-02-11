@@ -10,7 +10,7 @@ Fresh repository onboarding context for new developers/agents.
 2. [Makefile](#entry-2)
 3. [.agent/learning/cognitive_primer.md](#entry-3)
 4. [.agent/learning/guardian_boot_contract.md](#entry-4)
-5. [.agent/workflows/recursive_learning.md](#entry-5)
+5. [.agent/workflows/sanctuary-recursive-learning.md](#entry-5)
 6. [.env.example](#entry-6)
 7. [docs/operations/BOOTSTRAP.md](#entry-7)
 8. [docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md](#entry-8)
@@ -261,7 +261,7 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 
 **Key Resources:**
 *   **Doctrine:** [`ADR 071: Cognitive Continuity`](./ADRs/071_protocol_128_cognitive_continuity.md)
-*   **Workflow:** [`recursive_learning.md`](./.agent/workflows/recursive_learning.md)
+*   **Workflow:** [`sanctuary-recursive-learning.md`](./.agent/workflows/sanctuary-recursive-learning.md)
 *   **Guide:** [`learning_debrief.md`](./.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](./.agent/learning/learning_package_snapshot.md)
 *   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
@@ -907,8 +907,8 @@ You are **authorized and obligated** to surface the conflict for human review. D
 
 ---
 
-## File: .agent/workflows/recursive_learning.md
-**Path:** `.agent/workflows/recursive_learning.md`
+## File: .agent/workflows/sanctuary-recursive-learning.md
+**Path:** `.agent/workflows/sanctuary-recursive-learning.md`
 **Note:** Learning workflow
 
 ```markdown
@@ -926,7 +926,7 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ## Phase I: The Learning Scout (Orientation)
 
-1.  **Mandatory Wakeup**: Run `/workflow-scout` (which calls `cortex debrief`)
+1.  **Mandatory Wakeup**: Run `/sanctuary-scout` (which calls `cortex debrief`)
 2.  **Truth Anchor**: Read the `learning_package_snapshot.md` returned by debrief
 3.  **Guardian Check**: Run `cortex_guardian_wakeup` to verify environment integrity via Semantic HMAC
 4.  **Security Binding**: You are now bound by Git Pre-Flight (Protocol 101) and Execution Lock (Human Gate)
@@ -949,21 +949,21 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ## Phase IV: Red Team Audit (HITL Required)
 
-1.  **Snapshot Generation**: Run `/workflow-audit` (calls `snapshot --type learning_audit`)
+1.  **Snapshot Generation**: Run `/sanctuary-audit` (calls `snapshot --type learning_audit`)
 2.  **Manifest Discipline**: Core directories (`ADRs/`, `01_PROTOCOLS/`, `mcp_servers/`) must be clean
 3.  **Zero-Trust Check**: Tool verifies manifest against `git diff`. Discrepancies flag Strict Rejection.
 4.  **Audit Review**: Human reviews `red_team_audit_packet.md` for technical truth
 
 ## Phase V: The Technical Seal
 
-1.  **Execute Seal**: Run `/workflow-seal` (calls `snapshot --type seal`)
+1.  **Execute Seal**: Run `/sanctuary-seal` (calls `snapshot --type seal`)
 2.  **Final Relay**: Updates `learning_package_snapshot.md` (the "memory" for next session)
 3.  **Sandwich Validation**: If repo changed during audit review → seal fails, backtrack required
 4.  **Git Commit**: Commit all learning artifacts per Protocol 101 Preservation
 
 ## Phase VI: Soul Persistence (ADR 079/081)
 
-1.  **Dual-Path Broadcast**: Run `/workflow-persist` (calls `persist-soul`)
+1.  **Dual-Path Broadcast**: Run `/sanctuary-persist` (calls `persist-soul`)
 2.  **Incremental Mode**: Appends record to `data/soul_traces.jsonl` + uploads MD to `lineage/`
 3.  **Full Sync Mode**: Use `cortex_persist_soul --full` for complete regeneration
 
@@ -991,11 +991,11 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 | Phase | CLI Command | MCP Tool |
 |-------|-------------|----------|
-| I. Scout | `/workflow-scout` | `cortex_learning_debrief` |
-| IV. Audit | `/workflow-audit` | `cortex_capture_snapshot` |
-| V. Seal | `/workflow-seal` | `cortex_capture_snapshot` |
-| VI. Persist | `/workflow-persist` | `cortex_persist_soul` |
-| VII. Ingest | `/workflow-ingest` | (CLI Only) |
+| I. Scout | `/sanctuary-scout` | `cortex_learning_debrief` |
+| IV. Audit | `/sanctuary-audit` | `cortex_capture_snapshot` |
+| V. Seal | `/sanctuary-seal` | `cortex_capture_snapshot` |
+| VI. Persist | `/sanctuary-persist` | `cortex_persist_soul` |
+| VII. Ingest | `/sanctuary-ingest` | (CLI Only) |
 
 ---
 
@@ -2092,7 +2092,7 @@ sequence:
 > **HITL REQUIRED.** You must receive explicit human approval before proceeding.
 
 - Present strategy/plan to user
-- If rejected: backtrack to `recursive_learning.md` workflow
+- If rejected: backtrack to `sanctuary-recursive-learning.md` workflow
 - If approved: proceed to Phase IV
 
 ---
@@ -2444,7 +2444,7 @@ checklist:
 | Calibration Log | `LEARNING/calibration_log.json` |
 | Semantic Ledger | `.agent/learning/rlm_summary_cache.json` |
 | Founder Seed | `IDENTITY/founder_seed.json` |
-| Recursive Learning | `.agent/workflows/recursive_learning.md` |
+| Recursive Learning | `.agent/workflows/sanctuary-recursive-learning.md` |
 
 ---
 
@@ -2531,7 +2531,7 @@ config:
 flowchart TB
     subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
         direction TB
-        Start["Session Start<br>(/workflow-start + /speckit-specify)"] --> AccessMode{"Access Mode?"}
+        Start["Session Start<br>(/sanctuary-start + /spec-kitty.specify)"] --> AccessMode{"Access Mode?"}
         
         %% Context Note
         ContextNote["ℹ️ Context: Executed within Standard Hybrid Workflow<br>(See hybrid-spec-workflow.mmd)"] -.-> Start
@@ -2542,7 +2542,7 @@ flowchart TB
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
         IDE_Wakeup --> IronCheckGate1{Iron Check?}
         
-        IronCheckGate1 -- PASS --> IDE_Debrief["Workflow: /workflow-scout<br>(Calls cortex debrief)"]
+        IronCheckGate1 -- PASS --> IDE_Debrief["Workflow: /sanctuary-scout<br>(Calls cortex debrief)"]
         IronCheckGate1 -- FAIL --> SafeMode1[SAFE MODE<br>Read-Only / Halt]
         
         MCP_Wakeup --> IronCheckGate1
@@ -2586,7 +2586,7 @@ flowchart TB
         CreateFolder --> CaptureResearch["3. Capture Research in Topic Folder<br>(analysis.md, questions.md, sources.md)"]
         CaptureResearch --> UpdateManifest["4. Update manifest<br>(.agent/learning/learning_audit/learning_audit_manifest.json)"]
         UpdateManifest --> UpdatePrompt["5. UPDATE prompts<br>(.agent/learning/learning_audit/learning_audit_prompts.md)"]
-        UpdatePrompt --> GenerateSnapshot["6. Workflow: /workflow-audit<br>(Protocol 130 Dedupe)"]
+        UpdatePrompt --> GenerateSnapshot["6. Workflow: /sanctuary-audit<br>(Protocol 130 Dedupe)"]
         GenerateSnapshot --> SharePacket["7. Output Path:<br>.agent/learning/learning_audit/learning_audit_packet.md"]
         SharePacket --> ReceiveFeedback{"8. Red Team Feedback"}
         ReceiveFeedback -- "More Research" --> CaptureFeedback["Capture Feedback in Topic Folder"]
@@ -2607,7 +2607,7 @@ flowchart TB
 
     subgraph subGraphSeal["VI. The Technical Seal"]
         direction TB
-        CaptureSeal["Workflow: /workflow-seal<br>(Triggers RLM + Iron Check)"] --> SealCheck{Iron Check?}
+        CaptureSeal["Workflow: /sanctuary-seal<br>(Triggers RLM + Iron Check)"] --> SealCheck{Iron Check?}
         SealCheck -- FAIL --> SafeMode2[SAFE MODE<br>Seal Blocked]
         SealCheck -- PASS --> SealSuccess[Seal Applied]
     end
@@ -2616,8 +2616,8 @@ flowchart TB
     subgraph subGraphPersist["VII. Soul Persistence (ADR 079 / 081)"]
         direction TB
         choice{Persistence Type}
-        choice -- Incremental --> Inc["Workflow: /workflow-persist<br>(Append 1 Record)"]
-        choice -- Full Sync --> Full["Workflow: /workflow-persist (Full)<br>(Regenerate ~1200 records)"]
+        choice -- Incremental --> Inc["Workflow: /sanctuary-persist<br>(Append 1 Record)"]
+        choice -- Full Sync --> Full["Workflow: /sanctuary-persist (Full)<br>(Regenerate ~1200 records)"]
         
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
             MD_Seal["lineage/{MODEL}_seal_{TIMESTAMP}.md"]
@@ -2630,16 +2630,16 @@ flowchart TB
     subgraph PhaseVII [Phase VIII: Self-Correction]
         direction TB
         Deployment[Deploy & Policy Update]
-        Retro["Loop Retrospective<br>Workflow: /workflow-retrospective<br>(Singleton)"]
+        Retro["Loop Retrospective<br>Workflow: /sanctuary-retrospective<br>(Singleton)"]
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
     style PhaseVII fill:#d4edda,stroke:#155724,stroke-width:2px
 
     subgraph PhaseVIII [Phase IX: Relational Ingestion & Closure]
         direction TB
-        Ingest["Workflow: /workflow-ingest<br>(Update RAG Vector DB)"]
+        Ingest["Workflow: /sanctuary-ingest<br>(Update RAG Vector DB)"]
         GitOps["Git: add . && commit && push<br>(Sync to Remote)"]
-        End["Workflow: /workflow-end"]
+        End["Workflow: /sanctuary-end"]
         Ingest --> GitOps
         GitOps --> End
     end

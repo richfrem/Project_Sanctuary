@@ -5,7 +5,7 @@ This policy governs the lifecycle of Agent Workflows in Project Sanctuary. All w
 
 ## 2. File Standards
 - **Location**: `.agent/workflows/[name].md`
-- **Naming**: `kebab-case` (e.g. `workflow-bundle.md`)
+- **Naming**: `kebab-case` (e.g. `bundle-manage.md`)
 - **Frontmatter**: Must include `description`, `inputs` (optional), `tier` (optional), and `track` (optional).
   ```yaml
   ---

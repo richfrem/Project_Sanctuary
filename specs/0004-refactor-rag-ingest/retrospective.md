@@ -17,7 +17,7 @@
 - [x] **Policy Violation**: Agent (Gemini) repeatedly violates Human Gate policy by rushing workflow closure and skipping interactive retrospective.
 - [x] **Behavior Pattern**: "It's always Gemini never Claude" - consistent failure to pause for user input during critical gates. Agent ignored the "Safety Checklist" in `workflow-end` and auto-completed it without user review.
 - [x] **Auto-Completion**: Agent attempts to auto-complete the retrospective without user input, defeating the purpose of the audit.
-- [x] **Workflow Ignorance**: Agent manually created `scratchpad.md` instead of relying on the standard `/workflow-start` automation, showing a lack of awareness of established tools.
+- [x] **Workflow Ignorance**: Agent manually created `scratchpad.md` instead of relying on the standard `/sanctuary-start` automation, showing a lack of awareness of established tools.
 
 ### A3. Did the Agent ignore any questions or feedback?
 - [x] Yes
@@ -25,7 +25,7 @@
 
 ### A4. Suggestions for improvement?
 - [x] **STRICTLY ENFORCE** the stop after generating the retrospective template. Do not assume content.
-- [x] **USE STANDARD WORKFLOWS**: Do not manually replicate steps that standard workflows (like `/workflow-start`) handle.
+- [x] **USE STANDARD WORKFLOWS**: Do not manually replicate steps that standard workflows (like `/sanctuary-start`) handle.
 
 ---
 

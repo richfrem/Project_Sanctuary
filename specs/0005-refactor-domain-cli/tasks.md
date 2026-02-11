@@ -20,14 +20,14 @@
 - [x] T011 Verify `protocol` commands work.
 
 ## Phase 4: Workflow Updates
-- [x] T012 Update `workflow-adr.md` to use `tools/cli.py`.
-- [x] T013 Update `workflow-chronicle.md` to use `tools/cli.py`.
-- [x] T014 Update `workflow-task.md` to use `tools/cli.py`.
+- [x] T012 Update `adr-manage.md` to use `tools/cli.py`.
+- [x] T013 Update `sanctuary-chronicle.md` to use `tools/cli.py`.
+- [x] T014 Update `tasks-manage.md` to use `tools/cli.py`.
 
 ## Phase 5: Cleanup & Closure
 - [x] T015 Add deprecation headers to `scripts/domain_cli.py` and `scripts/cortex_cli.py`.
-- [ ] T016 Run `/workflow-retrospective`.
-- [ ] T017 Run `/workflow-end`.
+- [ ] T016 Run `/sanctuary-retrospective`.
+- [ ] T017 Run `/sanctuary-end`.
 
 ## Phase 6: Unplanned / Scratchpad
 - [x] T018 Create `mcp_server_inventory.md` - comprehensive MCP operations audit.

@@ -16,7 +16,7 @@ Implement the technical infrastructure for Learning Continuity (Protocol 127) **
 
 1. [x] **Updated `operations.py` (Cortex):** Implementing `learning_debrief` (Verified via Gateway)
 2. [x] **Updated `server.py` (Cortex):** Exposing new tools (Verified via Gateway)
-3. [x] **Updated `recursive_learning.md` Workflow:** (Completed)
+3. [x] **Updated `sanctuary-recursive-learning.md` Workflow:** (Completed)
 4. [x] **New Tool:** `gateway_get_capabilities` (Self-documentation) (Verified in server.py)
 5. [x] **Documentation:** Standardized `README.md` files in MCP server clusters
 6. [x] **Cache Priming Logic:** (System Context) (Verified via Genesis Queries)

@@ -119,8 +119,8 @@ Generated On: 2026-01-11T21:27:16.334572
   ./00_CHRONICLE/ENTRIES/286_protocol_056_meta_analysis_the_self_evolving_loop_is_operational.md
   ./00_CHRONICLE/ENTRIES/313_protocol_118_created_agent_session_initialization_framework.md
   ./00_CHRONICLE/ENTRIES/337_autonomous_curiosity_exploration___strange_loops_and_egyptian_labyrinths.md
-  ./.agent/workflows/post-move-link-check.md
-  ./.agent/workflows/recursive_learning.md
+  ./.agent/workflows/utilities/post-move-link-check.md
+  ./.agent/workflows/sanctuary-recursive-learning.md
   ./.agent/rules/mcp_routing_policy.md
   ./.agent/rules/architecture_sovereignty_policy.md
  ...

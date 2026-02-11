@@ -15,14 +15,14 @@ Create workflows and CLI integration for snapshot (seal/audit) and persist-soul 
 ## 2. Deliverables
 
 1. workflow-snapshot.md
-2. workflow-persist.md updated
+2. sanctuary-persist.md updated
 3. New cli.py integration with snapshot/persist-soul
 
 ## 3. Acceptance Criteria
 
 - snapshot --type seal generates learning_package_snapshot.md
 - persist-soul uploads to HuggingFace
-- Integrated with /workflow-seal and /workflow-persist
+- Integrated with /sanctuary-seal and /sanctuary-persist
 
 ## 4. Implementation Guide (Added from Code Analysis)
 

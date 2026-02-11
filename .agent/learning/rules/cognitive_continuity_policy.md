@@ -27,7 +27,7 @@ trigger: always_on
 
 * **Autonomous Synthesis**: Record all architectural changes as ADRs and process learnings into the `LEARNING/` directory.
 * **Strategic Approval (Gate 1)**: You must receive explicit **Human-in-the-Loop (HITL)** approval for the strategy before proceeding to the technical audit.
-* **Backtrack Logic**: If strategic approval is denied, you must revert to `SOP: recursive_learning.md` to re-scout and re-synthesize.
+* **Backtrack Logic**: If strategic approval is denied, you must revert to `SOP: sanctuary-recursive-learning.md` to re-scout and re-synthesize.
 * **Content Hygiene (ADR 085)**: **No inline Mermaid diagrams**. All diagrams must be `.mmd` files in `docs/architecture_diagrams/`, rendered to PNG, and referenced via image links.
 
 ### 3. Phase IV: The Red Team Audit (Gate 2)
@@ -55,7 +55,7 @@ trigger: always_on
 
 ### 5. Failure and Backtracking
 
-* **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `recursive_learning.md` to fix the underlying discrepancy.
+* **SOP Adherence**: If any Gate (Strategic or Technical) fails, do not attempt to "force" a seal. You must follow the loops defined in `sanctuary-recursive-learning.md` to fix the underlying discrepancy.
 
 ### 6. Phase VI: Soul Persistence (ADR 079 / 094)
 

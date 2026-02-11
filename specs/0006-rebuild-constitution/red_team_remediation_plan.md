@@ -8,8 +8,8 @@
 ### 🔴 CV-01: Human Gate Bypass (Script Level)
 **Risk**: Scripts like `retro.sh`, `seal.sh` could auto-execute state changes.
 **Fix (IR-2)**: Add explicit "Press ENTER to confirm" or `read` validation to:
-- `scripts/bash/workflow-end.sh` (which calls seal/persist)
-- `scripts/bash/workflow-learning-loop.sh`
+- `scripts/bash/sanctuary-end.sh` (which calls seal/persist)
+- `scripts/bash/sanctuary-learning-loop.sh`
 
 ### 🔴 CV-02: Tool Discovery Fallback Gap
 **Risk**: If `query_cache.py` fails, agent might use `grep` "to help".
@@ -23,7 +23,7 @@
 
 ### ⚠️ SW-02: Protocol 128 Enforcement
 **Risk**: Workflows can end without learning loop.
-**Fix (IR-5)**: Update `scripts/bash/workflow-end.sh` to check for a `.sealed` file or similar marker (if feasible) or at least warn user.
+**Fix (IR-5)**: Update `scripts/bash/sanctuary-end.sh` to check for a `.sealed` file or similar marker (if feasible) or at least warn user.
 
 ### ⚠️ SW-01: Tier Conflict
 **Risk**: Technical rules ignore approval gates.
@@ -37,8 +37,8 @@
     -   Unify "Explicit Approval" language (IR-9).
 
 2.  **Harden Scripts**:
-    -   Mod `scripts/bash/workflow-end.sh`: Add Approval Gate + Protocol 128 Check.
-    -   Mod `scripts/bash/workflow-learning-loop.sh`: Add Approval Gate.
+    -   Mod `scripts/bash/sanctuary-end.sh`: Add Approval Gate + Protocol 128 Check.
+    -   Mod `scripts/bash/sanctuary-learning-loop.sh`: Add Approval Gate.
 
 3.  **Harden Policies**:
     -   Update `tool_discovery_enforcement_policy.md`.

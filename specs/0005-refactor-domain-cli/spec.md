@@ -26,7 +26,7 @@ Consolidate all domain CLI operations (Chronicle, Task, ADR, Protocol) into `too
     - Add `task` command cluster with 4 subcommands.
     - Add `adr` command cluster with 4 subcommands.
     - Add `protocol` command cluster with 4 subcommands.
--   **Modify**: `.agent/workflows/workflow-adr.md`, `workflow-chronicle.md`, `workflow-task.md`
+-   **Modify**: `.agent/workflows/utilities/adr-manage.md`, `sanctuary-chronicle.md`, `tasks-manage.md`
     - Update command references from `domain_cli.py` to `tools/cli.py`.
 -   **Delete**: `scripts/domain_cli.py` (after verification).
 

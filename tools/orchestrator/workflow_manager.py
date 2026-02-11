@@ -248,9 +248,9 @@ class WorkflowManager:
                 # For now, we will rely on `speckit` commands to populate, 
                 # BUT we can drop a README or the SOP if we identify it.
                 # COPY TEMPLATES Logic
-                # Copy workflow-start.md to the new folder
+                # Copy sanctuary-start.md to the new folder
                 template_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-start-template.md"
-                dest_path = new_spec_path / "workflow-start.md"
+                dest_path = new_spec_path / "sanctuary-start.md"
                 
                 if template_path.exists():
                     dest_path.write_text(template_path.read_text())
@@ -274,7 +274,7 @@ class WorkflowManager:
 
                 # Copy Workflow End Template (Deterministic Lifecycle)
                 end_tpl = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
-                end_dest = new_spec_path / "workflow-end.md"
+                end_dest = new_spec_path / "sanctuary-end.md"
                 if end_tpl.exists():
                     end_dest.write_text(end_tpl.read_text())
                     print(f"📄 Created {end_dest.name} from template")
@@ -533,11 +533,11 @@ class WorkflowManager:
                  print(f"\n🛑 BLOCKING: No Retrospective Artifact found.")
                  print(f"   path: {retro_path}")
                  print("   The Universal Hybrid Workflow requires a retrospective before closure.")
-                 print("\n👉 ACTION REQUIRED: Run '/workflow-retrospective' first.\n")
+                 print("\n👉 ACTION REQUIRED: Run '/sanctuary-retrospective' first.\n")
                  return False
 
              # 1.5b Enforce Workflow End Checklist
-             checklist_path = target_spec_folder / "workflow-end.md"
+             checklist_path = target_spec_folder / "sanctuary-end.md"
              if not checklist_path.exists():
                    # Copy Template
                    tpl_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"

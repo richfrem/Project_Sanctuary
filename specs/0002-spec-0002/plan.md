@@ -16,4 +16,4 @@
 - [ ] Update `bundle.py` metadata/docstrings if needed.
 
 ## Phase 4: Workflow Integration (Optional)
-- [ ] Consider adding a `/workflow-bundle` wrapper if successful.
+- [ ] Consider adding a `/bundle-manage` wrapper if successful.

@@ -10,7 +10,7 @@ description: "Tasks for Integrate Snapshot and Persist-Soul into CLI"
 ## Phase 0: Pre-Flight
 - [x] T000 Check for existing branch `spec/0003-integrate-snapshot-persist-cli`
 - [x] T001 If clean, create/checkout branch `spec/0003-integrate-snapshot-persist-cli`
-- [x] T002 Initialize Spec Bundle (`spec.md`, `plan.md`) via `/workflow-start` (Done)
+- [x] T002 Initialize Spec Bundle (`spec.md`, `plan.md`) via `/sanctuary-start` (Done)
 
 ## Phase 1: Setup & Analysis
 - [x] T003 Analyze `mcp_servers/learning/operations.py` to understand direct usage requirements.
@@ -29,5 +29,5 @@ description: "Tasks for Integrate Snapshot and Persist-Soul into CLI"
 - [x] T009b Verify `persist-soul` and `persist-soul-full` commands. (Verified in session)
 
 ## Phase 4: Closure
-- [ ] T010 Run `/workflow-retrospective`
-- [ ] T011 Run `/workflow-end`
+- [ ] T010 Run `/sanctuary-retrospective`
+- [ ] T011 Run `/sanctuary-end`

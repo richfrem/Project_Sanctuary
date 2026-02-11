@@ -17,31 +17,31 @@
 | Workflow Name | Classification | Pre-Flight Status | MCP/Bash Dependencies | Migration Status |
 | :--- | :--- | :--- | :--- | :--- |
 | **Core Meta-Ops (Tier 1)** | | | | |
-| `/workflow-start` | Shared (Tier 1) | ✅ Python CLI | None | ✅ Complete |
-| `/workflow-end` | Shared (Tier 1) | ✅ Python CLI | None | ✅ Complete |
-| `/workflow-retrospective` | Shared (Meta-Ops) | ✅ Python CLI | Bash wrapper (thin) | ✅ Complete |
+| `/sanctuary-start` | Shared (Tier 1) | ✅ Python CLI | None | ✅ Complete |
+| `/sanctuary-end` | Shared (Tier 1) | ✅ Python CLI | None | ✅ Complete |
+| `/sanctuary-retrospective` | Shared (Meta-Ops) | ✅ Python CLI | Bash wrapper (thin) | ✅ Complete |
 | **Documentation Factory (Track A)** | | | | |
-| `/codify-adr` | Track A (Factory) | ✅ Python CLI | None | ✅ Complete |
+| `/adr-manage` | Track A (Factory) | ✅ Python CLI | None | ✅ Complete |
 | **Spec-Kit Core (Track B)** | | | | |
-| `/speckit-specify` | Track B (Discovery) | ✅ Python CLI | None | ✅ Complete |
-| `/speckit-clarify` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
-| `/speckit-plan` | Track B (Discovery) | ✅ Python CLI | `setup-plan.sh`, `update-agent-context.sh` | ⚠️ Partial |
-| `/speckit-tasks` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
-| `/speckit-implement` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
-| `/speckit-constitution` | Track B (Discovery) | ✅ Python CLI | None | ✅ Complete |
-| `/speckit-checklist` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
-| `/speckit-analyze` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
-| `/speckit-tasks-to-issues` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh`, **github-mcp-server** | ⚠️ Partial + MCP |
+| `/spec-kitty.specify` | Track B (Discovery) | ✅ Python CLI | None | ✅ Complete |
+| `/spec-kitty.clarify` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
+| `/spec-kitty.plan` | Track B (Discovery) | ✅ Python CLI | `setup-plan.sh`, `update-agent-context.sh` | ⚠️ Partial |
+| `/spec-kitty.tasks` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
+| `/spec-kitty.implement` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
+| `/spec-kitty.constitution` | Track B (Discovery) | ✅ Python CLI | None | ✅ Complete |
+| `/spec-kitty.checklist` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
+| `/spec-kitty.analyze` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
+| `/spec-kitty.tasks-to-issues` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh`, **github-mcp-server** | ⚠️ Partial + MCP |
 | **Protocol 128 (Learning)** | | | | |
 | `/recursive_learning` | Shared (Meta-Ops) | ⚠️ Mixed | **Cortex MCP Suite** | 🔄 SOP Only |
-| `/workflow-learning-loop` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-scout` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-audit` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-seal` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-persist` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-ingest` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-chronicle` | Shared (Meta-Ops) | ✅ Python CLI | Shim | ✅ Complete |
-| `/workflow-task` | Shared (Meta-Ops) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-learning-loop` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-scout` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-audit` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-seal` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-persist` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-ingest` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
+| `/sanctuary-chronicle` | Shared (Meta-Ops) | ✅ Python CLI | Shim | ✅ Complete |
+| `/tasks-manage` | Shared (Meta-Ops) | ✅ Python CLI | Shim | ✅ Complete |
 | **Utilities** | | | | |
 | `/post-move-link-check` | Shared (Meta-Ops) | ⚠️ Manual | Bash commands | ⏳ Low Priority |
 
@@ -61,11 +61,11 @@ The following CLIs already expose MCP operations and can be extended:
 | :--- | :---: | :--- | :--- |
 | Chronicle MCP | 7 | `domain_cli.py chronicle` ✅ | `/chronicle-*` (optional) |
 | Task MCP | 6 | `domain_cli.py task` ✅ | `/task-*` (optional) |
-| ADR MCP | 5 | `domain_cli.py adr` ✅ | `/codify-adr` (exists?) |
+| ADR MCP | 5 | `domain_cli.py adr` ✅ | `/adr-manage` (exists?) |
 | Protocol MCP | 5 | `domain_cli.py protocol` ✅ | `/protocol-*` (optional) |
 | RAG Cortex MCP | 8 | `cortex_cli.py` ✅ | `/retrieve-*` (exists?) |
 | Evolution MCP | 5 | `cortex_cli.py evolution` ✅ | Part of learning loop |
-| Git MCP | 8 | `git` (native) | `/workflow-end`, `/workflow-start` |
+| Git MCP | 8 | `git` (native) | `/sanctuary-end`, `/sanctuary-start` |
 | Config MCP | 4 | TBD | `/config-*` (new) |
 | Code MCP | 11 | TBD | `/investigate-*` (exists?) |
 | Forge LLM MCP | 2 | TBD | Part of Discovery workflows |
@@ -85,8 +85,8 @@ The following CLIs already expose MCP operations and can be extended:
 
 ## Analysis Findings
 
-1.  **Clear Separation**: The `codify-*` vs `speckit-*` namespace is resolved. `codify` is for **documenting what exists** (Factory). `speckit` is for **building what's new** (Discovery).
-2.  **The "Bridge"**: The `investigate-*` workflows are crucial. They are "Factory" modules, but `speckit-plan` (Track B) should rely on them to gather context.
+1.  **Clear Separation**: The `codify-*` vs `spec-kitty.*` namespace is resolved. `codify` is for **documenting what exists** (Factory). `speckit` is for **building what's new** (Discovery).
+2.  **The "Bridge"**: The `investigate-*` workflows are crucial. They are "Factory" modules, but `spec-kitty.plan` (Track B) should rely on them to gather context.
 3.  **Existing CLIs**: `domain_cli.py` and `cortex_cli.py` already wrap most MCP operations - we just need to register them in the tool cache!
 4.  **Thin Shims OK**: `workflow-start.sh`, `workflow-end.sh`, `workflow-retrospective.sh` are already thin pass-throughs. Keep them.
 
@@ -98,7 +98,7 @@ The following CLIs already expose MCP operations and can be extended:
 | `create-new-feature.sh` | 10KB | **High** | Merge into `WorkflowManager` |
 | `check-prerequisites.sh` | 5KB | **Medium** | Used by many workflows |
 | `common.sh` | 5KB | **Medium** | Shared utilities |
-| `setup-plan.sh` | 2KB | **Low** | Part of `/speckit-plan` |
+| `setup-plan.sh` | 2KB | **Low** | Part of `/spec-kitty.plan` |
 | `workflow-start.sh` | 655B | ✅ Keep | Thin shim |
 | `workflow-end.sh` | 314B | ✅ Keep | Thin shim |
 | `workflow-retrospective.sh` | 334B | ✅ Keep | Thin shim |

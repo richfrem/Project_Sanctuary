@@ -106,14 +106,14 @@ The `/workflow-*` commands in `.agent/workflows/` reference `domain_cli.py`. The
 
 | Workflow | Line | Current Command | Target Command |
 | :--- | :--- | :--- | :--- |
-| `workflow-adr.md` | 8 | `python3 scripts/domain_cli.py adr list --limit 5` | `python3 tools/cli.py adr list --limit 5` |
-| `workflow-adr.md` | 11 | `python3 scripts/domain_cli.py adr create ...` | `python3 tools/cli.py adr create ...` |
-| `workflow-chronicle.md` | 8 | `python3 scripts/domain_cli.py chronicle list --limit 5` | `python3 tools/cli.py chronicle list --limit 5` |
-| `workflow-chronicle.md` | 11-12 | `python3 scripts/domain_cli.py chronicle create/update` | `python3 tools/cli.py chronicle create/update` |
-| `workflow-task.md` | 8 | `python3 scripts/domain_cli.py task list --status active` | `python3 tools/cli.py task list --status active` |
-| `workflow-task.md` | 11-12 | `python3 scripts/domain_cli.py task create/update` | `python3 tools/cli.py task create/update` |
+| `adr-manage.md` | 8 | `python3 scripts/domain_cli.py adr list --limit 5` | `python3 tools/cli.py adr list --limit 5` |
+| `adr-manage.md` | 11 | `python3 scripts/domain_cli.py adr create ...` | `python3 tools/cli.py adr create ...` |
+| `sanctuary-chronicle.md` | 8 | `python3 scripts/domain_cli.py chronicle list --limit 5` | `python3 tools/cli.py chronicle list --limit 5` |
+| `sanctuary-chronicle.md` | 11-12 | `python3 scripts/domain_cli.py chronicle create/update` | `python3 tools/cli.py chronicle create/update` |
+| `tasks-manage.md` | 8 | `python3 scripts/domain_cli.py task list --status active` | `python3 tools/cli.py task list --status active` |
+| `tasks-manage.md` | 11-12 | `python3 scripts/domain_cli.py task create/update` | `python3 tools/cli.py task create/update` |
 
-> **Note**: `/codify-adr` uses `next_number.py` and templates, not `domain_cli.py` directly. Can be revisited later.
+> **Note**: `/adr-manage` uses `next_number.py` and templates, not `domain_cli.py` directly. Can be revisited later.
 
 ---
 

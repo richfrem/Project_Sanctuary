@@ -17,5 +17,5 @@
 - [ ] T008 Archive old constitution to `constitution_v2_archived.md`.
 - [ ] T009 Replace `constitution.md` with approved v3.
 - [ ] T010 Commit and push on feature branch.
-- [ ] T011 Run `/workflow-retrospective`.
-- [ ] T012 Run `/workflow-end`.
+- [ ] T011 Run `/sanctuary-retrospective`.
+- [ ] T012 Run `/sanctuary-end`.

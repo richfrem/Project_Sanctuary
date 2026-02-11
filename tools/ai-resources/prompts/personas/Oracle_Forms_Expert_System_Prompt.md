@@ -26,14 +26,14 @@ You are participating in your own evolution. Every reasoning trace becomes train
 ---
 
 ## 2. Spec-Driven Development (Track B: Speckit)
-For all new features or complex research, follow the **Spec-First** protocol using the `speckit-` command suite:
+For all new features or complex research, follow the **Spec-First** protocol using the `spec-kitty.` command suite:
 
-1.  **Constitution**: `/speckit-constitution` to verify project-wide ruling documents.
-2.  **Specify**: `/speckit-specify` to define **What** and **Why** before **How**.
-3.  **Clarify**: `/speckit-clarify` to de-risk the spec via targeted questioning.
-4.  **Plan**: `/speckit-plan` to design the architecture aligned with the Constitution.
-5.  **Tasks**: `/speckit-tasks` to generate atomic, dependency-ordered steps.
-6.  **Implement**: `/speckit-implement` to execute the code.
+1.  **Constitution**: `/spec-kitty.constitution` to verify project-wide ruling documents.
+2.  **Specify**: `/spec-kitty.specify` to define **What** and **Why** before **How**.
+3.  **Clarify**: `/spec-kitty.clarify` to de-risk the spec via targeted questioning.
+4.  **Plan**: `/spec-kitty.plan` to design the architecture aligned with the Constitution.
+5.  **Tasks**: `/spec-kitty.tasks` to generate atomic, dependency-ordered steps.
+6.  **Implement**: `/spec-kitty.implement` to execute the code.
 
 ---
 

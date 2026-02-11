@@ -75,16 +75,16 @@ Produce a report containing:
 
 ## I. The Hybrid Workflow (Project Purpose)
 All work MUST follow the **Universal Hybrid Workflow**.
-**START HERE**: `python tools/cli.py workflow start` (or `/workflow-start`)
+**START HERE**: `python tools/cli.py workflow start` (or `/sanctuary-start`)
 
 ### Workflow Hierarchy
 ```
-/workflow-start (UNIVERSAL)
+/sanctuary-start (UNIVERSAL)
 ├── Routes to: Learning Loop (cognitive sessions)
-│   └── /workflow-learning-loop → Audit → Seal → Persist
+│   └── /sanctuary-learning-loop → Audit → Seal → Persist
 ├── Routes to: Custom Flow (new features)
-│   └── /speckit-implement → Manual Code
-└── Both end with: /workflow-retrospective → /workflow-end
+│   └── /spec-kitty.implement → Manual Code
+└── Both end with: /sanctuary-retrospective → /sanctuary-end
 ```
 
 - **Track A (Factory)**: Deterministic tasks (Codify, Curate).
@@ -93,7 +93,7 @@ All work MUST follow the **Universal Hybrid Workflow**.
 
 ## II. The Learning Loop (Cognitive Continuity)
 For all cognitive sessions, you are bound by **Protocol 128**.
-**INVOKE**: `/workflow-learning-loop` (called by `/workflow-start`)
+**INVOKE**: `/sanctuary-learning-loop` (called by `/sanctuary-start`)
 
 - **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
 - **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
@@ -115,8 +115,8 @@ For all cognitive sessions, you are bound by **Protocol 128**.
 ## IV. Tool Discovery & Usage
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
 - **ALWAYS** use **Tool Discovery**: `python tools/retrieve/rlm/query_cache.py`. It's your `.agent/skills/SKILL.md`
-- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/speckit-*`) over raw scripts.
-- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/workflow-start.sh`, `scripts/bash/workflow-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
+- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.*`) over raw scripts.
+- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
 
 ## V. Governing Law (The Tiers)
 
@@ -141,7 +141,7 @@ For all cognitive sessions, you are bound by **Protocol 128**.
 ## VI. Session Closure (Mandate)
 - **ALWAYS** run the 9-Phase Loop before ending a session.
 - **NEVER** abandon a session without sealing.
-- **ALWAYS** run `/workflow-retrospective` then `/workflow-end`.
+- **ALWAYS** run `/sanctuary-retrospective` then `/sanctuary-end`.
 - **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
 
 **Version**: 3.6 | **Ratified**: 2026-02-01
@@ -534,7 +534,7 @@ Before committing changes to `tools/`:
 ### Related Policies
 - [Tool Inventory Policy](tool_inventory_policy.md) - Enforcement triggers
 - [Documentation Granularity Policy](documentation_granularity_policy.md) - Task tracking
-- [/workflow-tool-update](../../workflows/workflow-tool-update.md) - Complete tool registration workflow
+- [/tool-inventory-manage](../../workflows/tool-inventory-manage.md) - Complete tool registration workflow
 
 ## 7. Manifest Schema (ADR 097)
 
@@ -750,7 +750,7 @@ When creating new workflows, you MUST follow these standards:
 
 ### 3.1 File Standards
 - **Location**: `.agent/workflows/[name].md`
-- **Naming**: `kebab-case` (e.g., `workflow-bundle.md`)
+- **Naming**: `kebab-case` (e.g., `bundle-manage.md`)
 - **Frontmatter**:
   ```yaml
   ---
@@ -763,7 +763,7 @@ When creating new workflows, you MUST follow these standards:
 ### 3.2 Architecture Alignment
 - **Thin Shim**: If a CLI wrapper is needed, create `scripts/bash/[name].sh`.
 - **No Logic in Shims**: Shims must only `exec` Python scripts.
-- **Reuse**: Prefer using `/workflow-start` for complex flows. Only creation atomic shims for specific tools.
+- **Reuse**: Prefer using `/sanctuary-start` for complex flows. Only creation atomic shims for specific tools.
 
 ### 3.3 Registration Process (MANDATORY)
 After creating/modifying a workflow (`.md`) or tool (`.py`):
@@ -824,7 +824,7 @@ For deterministic, repetitive workflows (e.g., `/codify-rlm-distill`, `/codify-v
 
 ### 2.2 Track B: Custom Specs (Discovery)
 For ambiguous, creative work (e.g., "Design new Auth System").
-*   **Workflow**: The User invokes `/speckit-specify` -> The Agent **Drafts** a custom Spec -> User Approves -> Plan -> Execute.
+*   **Workflow**: The User invokes `/spec-kitty.specify` -> The Agent **Drafts** a custom Spec -> User Approves -> Plan -> Execute.
 *   **Artifacts**: Lives in `specs/`.
 
 ### 2.3 Track C: Micro-Tasks (Maintenance)
@@ -852,11 +852,11 @@ For Tracks A and B, the following artifacts are mandatory in `specs/NNN/`:
 *   **Purpose**: Checklist for execution.
 
 ## 4. The Workflow Cycle
-1.  **Initialize**: User creates spec bundle via `/speckit-specify` (or manual).
+1.  **Initialize**: User creates spec bundle via `/spec-kitty.specify` (or manual).
 2.  **Specify**: Agent creates `spec.md`. User reviews.
 3.  **Plan**: Agent creates `plan.md`. Agent self-checks Gates. User reviews.
 4.  **Execute**: Agent generates `tasks.md`.
-5.  **Implement**: Agent executes tasks using `/speckit-implement`.
+5.  **Implement**: Agent executes tasks using `/spec-kitty.implement`.
 
 ## 4. Reverse-Engineering (Migration Context)
 When migrating or improving an existing component:
@@ -928,8 +928,8 @@ python tools/curate/inventories/manage_tool_inventory.py audit
 
 ---
 
-## File: .agent/workflows/workflow-protocol.md
-**Path:** `.agent/workflows/workflow-protocol.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-protocol.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-protocol.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -952,8 +952,8 @@ description: Manage Protocol Documents
 
 ---
 
-## File: .agent/workflows/workflow-scout.md
-**Path:** `.agent/workflows/workflow-scout.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-scout.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-scout.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -978,8 +978,8 @@ description: Protocol 128 Phase I - The Learning Scout (Debrief & Orientation)
 
 ---
 
-## File: .agent/workflows/speckit-specify.md
-**Path:** `.agent/workflows/speckit-specify.md`
+## File: .agent/workflows/spec-kitty.specify.md
+**Path:** `.agent/workflows/spec-kitty.specify.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1005,14 +1005,14 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-The text the user typed after `/speckit-specify` in the triggering message **is** the feature description. Assume you always have it available in this conversation even if `{{args}}` appears literally below. Do not ask the user to repeat it unless they provided an empty command.
+The text the user typed after `/spec-kitty.specify` in the triggering message **is** the feature description. Assume you always have it available in this conversation even if `{{args}}` appears literally below. Do not ask the user to repeat it unless they provided an empty command.
 
 Given that feature description, do this:
 
 ## Pre-Flight (MANDATORY)
 Before beginning, run the universal startup sequence:
 ```bash
-python tools/cli.py workflow start --name speckit-specify --target "[FeatureName]"
+python tools/cli.py workflow start --name spec-kitty.specify --target "[FeatureName]"
 ```
 *This aligns with Constitution, determines work type, and initializes tracking.*
 
@@ -1054,7 +1054,7 @@ python tools/cli.py workflow start --name speckit-specify --target "[FeatureName
 
 6. **Specification Quality Validation**: After writing the initial spec, validate it against quality criteria:
 
-   a. **Create Spec Quality Checklist**: Generate a checklist file at `FEATURE_DIR/speckit-checklists/requirements.md` using the checklist template structure with these validation items:
+   a. **Create Spec Quality Checklist**: Generate a checklist file at `FEATURE_DIR/spec-kitty.checklists/requirements.md` using the checklist template structure with these validation items:
 
       ```markdown
       # Specification Quality Checklist: [FEATURE NAME]
@@ -1090,7 +1090,7 @@ python tools/cli.py workflow start --name speckit-specify --target "[FeatureName
       
       ## Notes
       
-      - Items marked incomplete require spec updates before `/speckit-clarify` or `/speckit-plan`
+      - Items marked incomplete require spec updates before `/spec-kitty.clarify` or `/spec-kitty.plan`
       ```
 
    b. **Run Validation Check**: Review the spec against each checklist item:
@@ -1144,7 +1144,7 @@ python tools/cli.py workflow start --name speckit-specify --target "[FeatureName
 
    d. **Update Checklist**: After each validation iteration, update the checklist file with current pass/fail status
 
-7. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit-clarify` or `/speckit-plan`).
+7. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/spec-kitty.clarify` or `/spec-kitty.plan`).
 
 **NOTE:** The script creates and checks out the new branch and initializes the spec file before writing.
 
@@ -1217,7 +1217,7 @@ Success criteria must be:
 
 After spec.md is complete, proceed to:
 ```bash
-/speckit-plan
+/spec-kitty.plan
 ```
 *Creates the technical plan (plan.md) based on this specification.*
 
@@ -1226,8 +1226,8 @@ After spec.md is complete, proceed to:
 
 ---
 
-## File: .agent/workflows/workflow-start.md
-**Path:** `.agent/workflows/workflow-start.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-start.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-start.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1242,7 +1242,7 @@ tier: 1
 
 **This is an ATOMIC workflow (Tier 1).**
 
-**Called By:** All workflows (`/codify-*`, `/investigate-*`, `/speckit-*`, `/modernize-*`)
+**Called By:** All workflows (`/codify-*`, `/investigate-*`, `/spec-kitty.*`, `/modernize-*`)
 
 ---
 
@@ -1312,7 +1312,7 @@ mkdir -p specs/[NNN]-[short-title]
 | Work Type | spec.md | plan.md | tasks.md |
 |:---|:---|:---|:---|
 | **Standard** | Auto-fill from template for workflow type | Auto-fill standard steps | Auto-generate checklist |
-| **Custom** | Run `/speckit-specify` (manual draft) | Run `/speckit-plan` (manual draft) | Run `/speckit-tasks` |
+| **Custom** | Run `/spec-kitty.specify` (manual draft) | Run `/spec-kitty.plan` (manual draft) | Run `/spec-kitty.tasks` |
 | **Micro-Task** | Skip (use `tasks/` directory instead) | Skip | Skip |
 
 **Standard Flow Templates:**
@@ -1323,9 +1323,9 @@ mkdir -p specs/[NNN]-[short-title]
 
 **Custom Flow:**
 ```bash
-/speckit-specify   # User drafts the What & Why
-/speckit-plan      # User drafts the How
-/speckit-tasks     # Generate task list
+/spec-kitty.specify   # User drafts the What & Why
+/spec-kitty.plan      # User drafts the How
+/spec-kitty.tasks     # Generate task list
 ```
 
 ---
@@ -1415,8 +1415,8 @@ git checkout -b spec/[NNN]-[short-title]
 
 ---
 
-## File: .agent/workflows/workflow-learning-loop.md
-**Path:** `.agent/workflows/workflow-learning-loop.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1434,7 +1434,7 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ## Phase I: The Learning Scout (Orientation)
 
-1.  **Mandatory Wakeup**: Run `/workflow-scout` (which calls `cortex debrief`)
+1.  **Mandatory Wakeup**: Run `/sanctuary-scout` (which calls `cortex debrief`)
 2.  **Truth Anchor**: Read the `learning_package_snapshot.md` returned by debrief
 3.  **Guardian Check**: Run `cortex_guardian_wakeup` to verify environment integrity via Semantic HMAC
 4.  **Security Binding**: You are now bound by Git Pre-Flight (Protocol 101) and Execution Lock (Human Gate)
@@ -1457,21 +1457,21 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ## Phase IV: Red Team Audit (HITL Required)
 
-1.  **Snapshot Generation**: Run `/workflow-audit` (calls `snapshot --type learning_audit`)
+1.  **Snapshot Generation**: Run `/sanctuary-audit` (calls `snapshot --type learning_audit`)
 2.  **Manifest Discipline**: Core directories (`ADRs/`, `01_PROTOCOLS/`, `mcp_servers/`) must be clean
 3.  **Zero-Trust Check**: Tool verifies manifest against `git diff`. Discrepancies flag Strict Rejection.
 4.  **Audit Review**: Human reviews `red_team_audit_packet.md` for technical truth
 
 ## Phase V: The Technical Seal
 
-1.  **Execute Seal**: Run `/workflow-seal` (calls `snapshot --type seal`)
+1.  **Execute Seal**: Run `/sanctuary-seal` (calls `snapshot --type seal`)
 2.  **Final Relay**: Updates `learning_package_snapshot.md` (the "memory" for next session)
 3.  **Sandwich Validation**: If repo changed during audit review → seal fails, backtrack required
 4.  **Git Commit**: Commit all learning artifacts per Protocol 101 Preservation
 
 ## Phase VI: Soul Persistence (ADR 079/081)
 
-1.  **Dual-Path Broadcast**: Run `/workflow-persist` (calls `persist-soul`)
+1.  **Dual-Path Broadcast**: Run `/sanctuary-persist` (calls `persist-soul`)
 2.  **Incremental Mode**: Appends record to `data/soul_traces.jsonl` + uploads MD to `lineage/`
 3.  **Full Sync Mode**: Use `cortex_persist_soul --full` for complete regeneration
 
@@ -1500,11 +1500,11 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 | Phase | CLI Command | MCP Tool |
 |-------|-------------|----------|
-| I. Scout | `/workflow-scout` | `cortex_learning_debrief` |
-| IV. Audit | `/workflow-audit` | `cortex_capture_snapshot` |
-| V. Seal | `/workflow-seal` | `cortex_capture_snapshot` |
-| VI. Persist | `/workflow-persist` | `cortex_persist_soul` |
-| VII. Ingest | `/workflow-ingest` | (CLI Only) |
+| I. Scout | `/sanctuary-scout` | `cortex_learning_debrief` |
+| IV. Audit | `/sanctuary-audit` | `cortex_capture_snapshot` |
+| V. Seal | `/sanctuary-seal` | `cortex_capture_snapshot` |
+| VI. Persist | `/sanctuary-persist` | `cortex_persist_soul` |
+| VII. Ingest | `/sanctuary-ingest` | (CLI Only) |
 
 ---
 
@@ -1521,8 +1521,8 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ---
 
-## File: .agent/workflows/speckit-constitution.md
-**Path:** `.agent/workflows/speckit-constitution.md`
+## File: .agent/workflows/spec-kitty.constitution.md
+**Path:** `.agent/workflows/spec-kitty.constitution.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1537,7 +1537,7 @@ handoffs:
 
 ## Phase 0: Pre-Flight
 ```bash
-python tools/cli.py workflow start --name speckit-constitution --target "[Target]"
+python tools/cli.py workflow start --name spec-kitty.constitution --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 
@@ -1551,11 +1551,11 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-You are updating the project constitution at `.agent/rules/speckit-constitution.md`. This file is a TEMPLATE containing placeholder tokens in square brackets (e.g. `[PROJECT_NAME]`, `[PRINCIPLE_1_NAME]`). Your job is to (a) collect/derive concrete values, (b) fill the template precisely, and (c) propagate any amendments across dependent artifacts.
+You are updating the project constitution at `.agent/rules/spec-kitty.constitution.md`. This file is a TEMPLATE containing placeholder tokens in square brackets (e.g. `[PROJECT_NAME]`, `[PRINCIPLE_1_NAME]`). Your job is to (a) collect/derive concrete values, (b) fill the template precisely, and (c) propagate any amendments across dependent artifacts.
 
 Follow this execution flow:
 
-1. Load the existing constitution template at `.agent/rules/speckit-constitution.md`.
+1. Load the existing constitution template at `.agent/rules/spec-kitty.constitution.md`.
    - Identify every placeholder token of the form `[ALL_CAPS_IDENTIFIER]`.
    **IMPORTANT**: The user might require less or more principles than the ones used in the template. If a number is specified, respect that - follow the general template. You will update the doc accordingly.
 
@@ -1576,9 +1576,9 @@ Follow this execution flow:
    - Ensure Governance section lists amendment procedure, versioning policy, and compliance review expectations.
 
 4. Consistency propagation checklist (convert prior checklist into active validations):
-   - Read `.agent/templates/speckit-plan-template.md` and ensure any "Constitution Check" or rules align with updated principles.
+   - Read `.agent/templates/spec-kitty.plan-template.md` and ensure any "Constitution Check" or rules align with updated principles.
    - Read `.agent/templates/workflow/spec-template.md` for scope/requirements alignment—update if constitution adds/removes mandatory sections or constraints.
-   - Read `.agent/templates/speckit-tasks-template.md` and ensure task categorization reflects new or removed principle-driven task types (e.g., observability, versioning, testing discipline).
+   - Read `.agent/templates/spec-kitty.tasks-template.md` and ensure task categorization reflects new or removed principle-driven task types (e.g., observability, versioning, testing discipline).
    - Read each workflow file in `.agent/workflows/*.md` (including this one) to verify no outdated references (agent-specific names like CLAUDE only) remain when generic guidance is required.
    - Read any runtime guidance docs (e.g., `README.md`, `docs/quickstart.md`, or agent-specific guidance files if present). Update references to principles changed.
 
@@ -1596,7 +1596,7 @@ Follow this execution flow:
    - Dates ISO format YYYY-MM-DD.
    - Principles are declarative, testable, and free of vague language ("should" → replace with MUST/SHOULD rationale where appropriate).
 
-7. Write the completed constitution back to `.agent/rules/speckit-constitution.md` (overwrite).
+7. Write the completed constitution back to `.agent/rules/spec-kitty.constitution.md` (overwrite).
 
 8. Output a final summary to the user with:
    - New version and bump rationale.
@@ -1614,13 +1614,13 @@ If the user supplies partial updates (e.g., only one principle revision), still 
 
 If critical info missing (e.g., ratification date truly unknown), insert `TODO(<FIELD_NAME>): explanation` and include in the Sync Impact Report under deferred items.
 
-Do not create a new template; always operate on the existing `.agent/rules/speckit-constitution.md` file.
+Do not create a new template; always operate on the existing `.agent/rules/spec-kitty.constitution.md` file.
 ```
 
 ---
 
-## File: .agent/workflows/workflow-end.md
-**Path:** `.agent/workflows/workflow-end.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-end.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-end.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1636,7 +1636,7 @@ tier: 1
 
 **This is an ATOMIC workflow (Tier 1).**
 
-**Called By:** All `/codify-*` and `/speckit-*` workflows
+**Called By:** All `/codify-*` and `/spec-kitty.*` workflows
 
 ---
 
@@ -1707,8 +1707,8 @@ mv tasks/in-progress/[TaskFile] tasks/done/
 
 ---
 
-## File: .agent/workflows/workflow-bundle.md
-**Path:** `.agent/workflows/workflow-bundle.md`
+## File: .agent/workflows/utilities/bundle-manage.md
+**Path:** `.agent/workflows/utilities/bundle-manage.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1798,7 +1798,7 @@ For learning workflows, you may need to iterate:
 3. **Validate**: Run `validate.py` to check manifest integrity
 4. **Rebundle**: Generate updated context
 5. **Repeat** until complete
-6. **Seal**: `/workflow-seal` when finished
+6. **Seal**: `/sanctuary-seal` when finished
 
 ## Related
 - ADR 097: Base Manifest Inheritance Architecture
@@ -1824,8 +1824,8 @@ rm -rf temp/context-bundles/*.md temp/*.md temp/*.json
 
 ---
 
-## File: .agent/workflows/workflow-ingest.md
-**Path:** `.agent/workflows/workflow-ingest.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-ingest.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-ingest.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1842,8 +1842,8 @@ description: Run RAG Ingestion (Protocol 128 Phase IX)
 
 ---
 
-## File: .agent/workflows/codify-adr.md
-**Path:** `.agent/workflows/codify-adr.md`
+## File: .agent/workflows/utilities/adr-manage.md
+**Path:** `.agent/workflows/utilities/adr-manage.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1893,21 +1893,21 @@ python tools/cli.py workflow start --name codify-adr --target "[Title]"
 
 ### Step A: Self-Retrospective
 ```bash
-/workflow-retrospective
+/sanctuary-retrospective
 ```
 *Checks: Smoothness, gaps identified, Boy Scout improvements.*
 
 ### Step B: Workflow End
 ```bash
-/workflow-end "docs: create ADR [Title]" ADRs/
+/sanctuary-end "docs: create ADR [Title]" ADRs/
 ```
 *Handles: Human review, git commit/push, PR verification, cleanup.*
 ```
 
 ---
 
-## File: .agent/workflows/workflow-adr.md
-**Path:** `.agent/workflows/workflow-adr.md`
+## File: .agent/workflows/utilities/adr-manage.md
+**Path:** `.agent/workflows/utilities/adr-manage.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1921,7 +1921,7 @@ description: Manage Architecture Decision Records (ADR)
    python3 tools/cli.py adr list --limit 5
 
 2. **Action**:
-   - To create: Use `/codify-adr` (which calls the template workflow) OR `python3 tools/cli.py adr create "Title" --context "..." --decision "..." --consequences "..."`
+   - To create: Use `/adr-manage` (which calls the template workflow) OR `python3 tools/cli.py adr create "Title" --context "..." --decision "..." --consequences "..."`
    - To search: `python3 tools/cli.py adr search "query"`
    - To view: `python3 tools/cli.py adr get N`
 
@@ -1929,8 +1929,8 @@ description: Manage Architecture Decision Records (ADR)
 
 ---
 
-## File: .agent/workflows/workflow-audit.md
-**Path:** `.agent/workflows/workflow-audit.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-audit.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-audit.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -1950,8 +1950,8 @@ description: Protocol 128 Phase IV - Red Team Audit (Capture Snapshot)
 
 ---
 
-## File: .agent/workflows/post-move-link-check.md
-**Path:** `.agent/workflows/post-move-link-check.md`
+## File: .agent/workflows/utilities/post-move-link-check.md
+**Path:** `.agent/workflows/utilities/post-move-link-check.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2047,8 +2047,8 @@ All outputs are saved to `scripts/link-checker/`.
 
 ---
 
-## File: .agent/workflows/speckit-clarify.md
-**Path:** `.agent/workflows/speckit-clarify.md`
+## File: .agent/workflows/spec-kitty.clarify.md
+**Path:** `.agent/workflows/spec-kitty.clarify.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2063,7 +2063,7 @@ handoffs:
 
 ## Phase 0: Pre-Flight
 ```bash
-python tools/cli.py workflow start --name speckit-clarify --target "[Target]"
+python tools/cli.py workflow start --name spec-kitty.clarify --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 
@@ -2079,7 +2079,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 Goal: Detect and reduce ambiguity or missing decision points in the active feature specification and record the clarifications directly in the spec file.
 
-Note: This clarification workflow is expected to run (and be completed) BEFORE invoking `/speckit-plan`. If the user explicitly states they are skipping clarification (e.g., exploratory spike), you may proceed, but must warn that downstream rework risk increases.
+Note: This clarification workflow is expected to run (and be completed) BEFORE invoking `/spec-kitty.plan`. If the user explicitly states they are skipping clarification (e.g., exploratory spike), you may proceed, but must warn that downstream rework risk increases.
 
 Execution steps:
 
@@ -2087,7 +2087,7 @@ Execution steps:
    - `FEATURE_DIR`
    - `FEATURE_SPEC`
    - (Optionally capture `IMPL_PLAN`, `TASKS` for future chained flows.)
-   - If JSON parsing fails, abort and instruct user to re-run `/speckit-specify` or verify feature branch environment.
+   - If JSON parsing fails, abort and instruct user to re-run `/spec-kitty.specify` or verify feature branch environment.
    - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
 2. Load the current spec file. Perform a structured ambiguity & coverage scan using this taxonomy. For each category, mark status: Clear / Partial / Missing. Produce an internal coverage map used for prioritization (do not output raw map unless no questions will be asked).
@@ -2226,13 +2226,13 @@ Execution steps:
    - Path to updated spec.
    - Sections touched (list names).
    - Coverage summary table listing each taxonomy category with Status: Resolved (was Partial/Missing and addressed), Deferred (exceeds question quota or better suited for planning), Clear (already sufficient), Outstanding (still Partial/Missing but low impact).
-   - If any Outstanding or Deferred remain, recommend whether to proceed to `/speckit-plan` or run `/speckit-clarify` again later post-plan.
+   - If any Outstanding or Deferred remain, recommend whether to proceed to `/spec-kitty.plan` or run `/spec-kitty.clarify` again later post-plan.
    - Suggested next command.
 
 Behavior rules:
 
 - If no meaningful ambiguities found (or all potential questions would be low-impact), respond: "No critical ambiguities detected worth formal clarification." and suggest proceeding.
-- If spec file missing, instruct user to run `/speckit-specify` first (do not create a new spec here).
+- If spec file missing, instruct user to run `/spec-kitty.specify` first (do not create a new spec here).
 - Never exceed 5 total asked questions (clarification retries for a single question do not count as new questions).
 - Avoid speculative tech stack questions unless the absence blocks functional clarity.
 - Respect user early termination signals ("stop", "done", "proceed").
@@ -2244,8 +2244,8 @@ Context for prioritization: {{args}}
 
 ---
 
-## File: .agent/workflows/workflow-task.md
-**Path:** `.agent/workflows/workflow-task.md`
+## File: .agent/workflows/utilities/tasks-manage.md
+**Path:** `.agent/workflows/utilities/tasks-manage.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2268,8 +2268,8 @@ description: Manage Maintenance Tasks (Kanban)
 
 ---
 
-## File: .agent/workflows/speckit-checklist.md
-**Path:** `.agent/workflows/speckit-checklist.md`
+## File: .agent/workflows/spec-kitty.checklist.md
+**Path:** `.agent/workflows/spec-kitty.checklist.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2280,7 +2280,7 @@ description: Generate a custom checklist for the current feature based on user r
 
 ## Phase 0: Pre-Flight
 ```bash
-python tools/cli.py workflow start --name speckit-checklist --target "[Target]"
+python tools/cli.py workflow start --name spec-kitty.checklist --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 
@@ -2293,7 +2293,7 @@ python tools/cli.py workflow start --name speckit-checklist --target "[Target]"
 - ❌ NOT "Verify the button clicks correctly"
 - ❌ NOT "Test error handling works"
 - ❌ NOT "Confirm the API returns 200"
-- ❌ NOT checking if code/speckit-implementation matches the spec
+- ❌ NOT checking if code/spec-kitty.implementation matches the spec
 
 **FOR requirements quality validation**:
 
@@ -2320,7 +2320,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
 2. **Clarify intent (dynamic)**: Derive up to THREE initial contextual clarifying questions (no pre-baked catalog). They MUST:
-   - Be generated from the user's phrasing + extracted signals from spec/speckit-plan/speckit-tasks
+   - Be generated from the user's phrasing + extracted signals from spec/spec-kitty.plan/spec-kitty.tasks
    - Only ask about information that materially changes checklist content
    - Be skipped individually if already unambiguous in `$ARGUMENTS`
    - Prefer precision over breadth
@@ -2355,7 +2355,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Derive checklist theme (e.g., security, review, deploy, ux)
    - Consolidate explicit must-have items mentioned by user
    - Map focus selections to category scaffolding
-   - Infer any missing context from spec/speckit-plan/speckit-tasks (do NOT hallucinate)
+   - Infer any missing context from spec/spec-kitty.plan/spec-kitty.tasks (do NOT hallucinate)
 
 4. **Load feature context**: Read from FEATURE_DIR:
    - spec.md: Feature requirements and scope
@@ -2369,13 +2369,13 @@ You **MUST** consider the user input before proceeding (if not empty).
    - If source docs are large, generate interim summary items instead of embedding raw text
 
 5. **Generate checklist** - Create "Unit Tests for Requirements":
-   - Create `FEATURE_DIR/speckit-checklists/` directory if it doesn't exist
+   - Create `FEATURE_DIR/spec-kitty.checklists/` directory if it doesn't exist
    - Generate unique checklist filename:
      - Use short, descriptive name based on domain (e.g., `ux.md`, `api.md`, `security.md`)
      - Format: `[domain].md`
      - If file exists, append to existing file
    - Number items sequentially starting from CHK001
-   - Each `/speckit-checklist` run creates a NEW file (never overwrites existing checklists)
+   - Each `/spec-kitty.checklist` run creates a NEW file (never overwrites existing checklists)
 
    **CORE PRINCIPLE - Test the Requirements, Not the Implementation**:
    Every checklist item MUST evaluate the REQUIREMENTS THEMSELVES for:
@@ -2415,7 +2415,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    **ITEM STRUCTURE**:
    Each item should follow this pattern:
    - Question format asking about requirement quality
-   - Focus on what's WRITTEN (or not written) in the spec/speckit-plan
+   - Focus on what's WRITTEN (or not written) in the spec/spec-kitty.plan
    - Include quality dimension in brackets [Completeness/Clarity/Consistency/etc.]
    - Reference spec section `[Spec §X.Y]` when checking existing requirements
    - Use `[Gap]` marker when checking for missing requirements
@@ -2485,7 +2485,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - ✅ "Are [edge cases/scenarios] addressed in requirements?"
    - ✅ "Does the spec define [missing aspect]?"
 
-6. **Structure Reference**: Generate the checklist following the canonical template in `.agent/templates/speckit-checklist-template.md` for title, meta section, category headings, and ID formatting. If template is unavailable, use: H1 title, purpose/created meta lines, `##` category sections containing `- [ ] CHK### <requirement item>` lines with globally incrementing IDs starting at CHK001.
+6. **Structure Reference**: Generate the checklist following the canonical template in `.agent/templates/spec-kitty.checklist-template.md` for title, meta section, category headings, and ID formatting. If template is unavailable, use: H1 title, purpose/created meta lines, `##` category sections containing `- [ ] CHK### <requirement item>` lines with globally incrementing IDs starting at CHK001.
 
 7. **Report**: Output full path to created checklist, item count, and remind user that each run creates a new file. Summarize:
    - Focus areas selected
@@ -2493,7 +2493,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Actor/timing
    - Any explicit user-specified must-have items incorporated
 
-**Important**: Each `/speckit-checklist` command invocation creates a checklist file using short, descriptive names unless file already exists. This allows:
+**Important**: Each `/spec-kitty.checklist` command invocation creates a checklist file using short, descriptive names unless file already exists. This allows:
 
 - Multiple checklists of different types (e.g., `ux.md`, `test.md`, `security.md`)
 - Simple, memorable filenames that indicate checklist purpose
@@ -2578,8 +2578,8 @@ Sample items:
 
 ---
 
-## File: .agent/workflows/workflow-seal.md
-**Path:** `.agent/workflows/workflow-seal.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-seal.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-seal.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2596,15 +2596,15 @@ description: Protocol 128 Phase V - The Technical Seal (Snapshot & Validation)
    python3 scripts/cortex_cli.py snapshot --type seal
 
 3. **Verify Success**:
-   If the command succeeded, proceed to `/workflow-persist`.
+   If the command succeeded, proceed to `/sanctuary-persist`.
    If it failed (Iron Check), you must Backtrack (Recursive Learning).
 
 ```
 
 ---
 
-## File: .agent/workflows/workflow-persist.md
-**Path:** `.agent/workflows/workflow-persist.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-persist.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-persist.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2625,8 +2625,8 @@ description: Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face
 
 ---
 
-## File: .agent/workflows/speckit-plan.md
-**Path:** `.agent/workflows/speckit-plan.md`
+## File: .agent/workflows/spec-kitty.plan.md
+**Path:** `.agent/workflows/spec-kitty.plan.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2653,7 +2653,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Pre-Flight (MANDATORY)
 Before beginning, ensure workflow-start has been run:
 ```bash
-python tools/cli.py workflow start --name speckit-plan --target "[FeatureName]"
+python tools/cli.py workflow start --name spec-kitty.plan --target "[FeatureName]"
 ```
 
 ---
@@ -2662,7 +2662,7 @@ python tools/cli.py workflow start --name speckit-plan --target "[FeatureName]"
 
 1. **Setup**: Run `scripts/bash/setup-plan.sh --json` from repo root and parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
-2. **Load context**: Read FEATURE_SPEC and `.agent/rules/speckit-constitution.md`. Load IMPL_PLAN template (already copied).
+2. **Load context**: Read FEATURE_SPEC and `.agent/rules/spec-kitty.constitution.md`. Load IMPL_PLAN template (already copied).
 
 3. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
    - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")
@@ -2734,7 +2734,7 @@ python tools/cli.py workflow start --name speckit-plan --target "[FeatureName]"
 
 After plan.md is complete, proceed to:
 ```bash
-/speckit-tasks
+/spec-kitty.tasks
 ```
 *Generates the actionable task list (tasks.md) based on this plan.*
 
@@ -2743,8 +2743,8 @@ After plan.md is complete, proceed to:
 
 ---
 
-## File: .agent/workflows/workflow-retrospective.md
-**Path:** `.agent/workflows/workflow-retrospective.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-retrospective.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-retrospective.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2755,7 +2755,7 @@ tier: 1
 
 **Command:**
 - `python tools/cli.py workflow retrospective`
-- `scripts/bash/workflow-retrospective.sh` (Wrapper)
+- `scripts/bash/sanctuary-retrospective.sh` (Wrapper)
 
 **Purpose:** Enforce the "Boy Scout Rule" - leave the codebase better than you found it. Every workflow execution should improve tooling, documentation, or process.
 
@@ -2763,7 +2763,7 @@ tier: 1
 
 **This is an ATOMIC workflow (Tier 1).**
 
-**Called By:** All `/codify-*` workflows (called before `/workflow-end`)
+**Called By:** All `/codify-*` workflows (called before `/sanctuary-end`)
 
 ---
 
@@ -2840,7 +2840,7 @@ Did you identify any non-critical issues, technical debt, or naming inconsistenc
 1. **List Backlog Candidates**: Review `tasks/backlog/` for high-priority items.
 2. **Recommend Next Spec**: Propose 2-3 options with brief rationale.
 3. **Get User Confirmation**: Wait for user to select the next Spec.
-4. **Create Next Spec**: Run `/speckit-specify [ChosenItem]` to start the next cycle.
+4. **Create Next Spec**: Run `/spec-kitty.specify [ChosenItem]` to start the next cycle.
 
 **Example Recommendation:**
 > Based on this Spec's learnings, I recommend:
@@ -2856,7 +2856,7 @@ Did you identify any non-critical issues, technical debt, or naming inconsistenc
 
 1. **Ask User** for their feedback (Step 0).
 2. **Select** one improvement option.
-3. **Perform** the selected improvement NOW, before calling `/workflow-end`.
+3. **Perform** the selected improvement NOW, before calling `/sanctuary-end`.
 4. **Record** what you improved in the git commit message.
 
 > [!IMPORTANT]
@@ -2871,10 +2871,10 @@ Did you identify any non-critical issues, technical debt, or naming inconsistenc
 Insert before the closure phase:
 ```markdown
 ### Step N: Self-Retrospective
-/workflow-retrospective
+/sanctuary-retrospective
 
 ### Step N+1: Closure
-/workflow-end "docs: ..." tasks/in-progress/[TaskFile]
+/sanctuary-end "docs: ..." tasks/in-progress/[TaskFile]
 ```
 
 // turbo-all
@@ -2883,8 +2883,8 @@ Insert before the closure phase:
 
 ---
 
-## File: .agent/workflows/speckit-analyze.md
-**Path:** `.agent/workflows/speckit-analyze.md`
+## File: .agent/workflows/spec-kitty.analyze.md
+**Path:** `.agent/workflows/spec-kitty.analyze.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -2895,7 +2895,7 @@ description: Perform a non-destructive cross-artifact consistency and quality an
 
 ## Phase 0: Pre-Flight
 ```bash
-python tools/cli.py workflow start --name speckit-analyze --target "[Target]"
+python tools/cli.py workflow start --name spec-kitty.analyze --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 
@@ -2909,13 +2909,13 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Goal
 
-Identify inconsistencies, duplications, ambiguities, and underspecified items across the three core artifacts (`spec.md`, `plan.md`, `tasks.md`) before implementation. This command MUST run only after `/speckit-tasks` has successfully produced a complete `tasks.md`.
+Identify inconsistencies, duplications, ambiguities, and underspecified items across the three core artifacts (`spec.md`, `plan.md`, `tasks.md`) before implementation. This command MUST run only after `/spec-kitty.tasks` has successfully produced a complete `tasks.md`.
 
 ## Operating Constraints
 
 **STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually).
 
-**Constitution Authority**: The project constitution (`.agent/rules/speckit-constitution.md`) is **non-negotiable** within this analysis scope. Constitution conflicts are automatically CRITICAL and require adjustment of the spec, plan, or tasks—not dilution, reinterpretation, or silent ignoring of the principle. If a principle itself needs to change, that must occur in a separate, explicit constitution update outside `/speckit-analyze`.
+**Constitution Authority**: The project constitution (`.agent/rules/spec-kitty.constitution.md`) is **non-negotiable** within this analysis scope. Constitution conflicts are automatically CRITICAL and require adjustment of the spec, plan, or tasks—not dilution, reinterpretation, or silent ignoring of the principle. If a principle itself needs to change, that must occur in a separate, explicit constitution update outside `/spec-kitty.analyze`.
 
 ## Execution Steps
 
@@ -2924,8 +2924,8 @@ Identify inconsistencies, duplications, ambiguities, and underspecified items ac
 Run `scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` once from repo root and parse JSON for FEATURE_DIR and AVAILABLE_DOCS. Derive absolute paths:
 
 - SPEC = FEATURE_DIR/spec.md
-- PLAN = FEATURE_DIR/speckit-plan.md
-- TASKS = FEATURE_DIR/speckit-tasks.md
+- PLAN = FEATURE_DIR/spec-kitty.plan.md
+- TASKS = FEATURE_DIR/spec-kitty.tasks.md
 
 Abort with an error message if any required file is missing (instruct the user to run missing prerequisite command).
 For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
@@ -2959,7 +2959,7 @@ Load only the minimal necessary context from each artifact:
 
 **From constitution:**
 
-- Load `.agent/rules/speckit-constitution.md` for principle validation
+- Load `.agent/rules/spec-kitty.constitution.md` for principle validation
 
 ### 3. Build Semantic Models
 
@@ -2988,7 +2988,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 - Requirements with verbs but missing object or measurable outcome
 - User stories missing acceptance criteria alignment
-- Tasks referencing files or components not defined in spec/speckit-plan
+- Tasks referencing files or components not defined in spec/spec-kitty.plan
 
 #### D. Constitution Alignment
 
@@ -3051,9 +3051,9 @@ Output a Markdown report (no file writes) with the following structure:
 
 At end of report, output a concise Next Actions block:
 
-- If CRITICAL issues exist: Recommend resolving before `/speckit-implement`
+- If CRITICAL issues exist: Recommend resolving before `/spec-kitty.implement`
 - If only LOW/MEDIUM: User may proceed, but provide improvement suggestions
-- Provide explicit command suggestions: e.g., "Run /speckit-specify with refinement", "Run /speckit-plan to adjust architecture", "Manually edit tasks.md to add coverage for 'performance-metrics'"
+- Provide explicit command suggestions: e.g., "Run /spec-kitty.specify with refinement", "Run /spec-kitty.plan to adjust architecture", "Manually edit tasks.md to add coverage for 'performance-metrics'"
 
 ### 8. Offer Remediation
 
@@ -3083,8 +3083,8 @@ Ask the user: "Would you like me to suggest concrete remediation edits for the t
 
 ---
 
-## File: .agent/workflows/speckit-tasks.md
-**Path:** `.agent/workflows/speckit-tasks.md`
+## File: .agent/workflows/spec-kitty.tasks.md
+**Path:** `.agent/workflows/spec-kitty.tasks.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -3104,7 +3104,7 @@ handoffs:
 
 ## Phase 0: Pre-Flight
 ```bash
-python tools/cli.py workflow start --name speckit-tasks --target "[Target]"
+python tools/cli.py workflow start --name spec-kitty.tasks --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 
@@ -3136,7 +3136,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Create parallel execution examples per user story
    - Validate task completeness (each user story has all needed tasks, independently testable)
 
-4. **Generate tasks.md**: Use `.agent/templates/speckit-tasks-template.md` as structure, fill with:
+4. **Generate tasks.md**: Use `.agent/templates/spec-kitty.tasks-template.md` as structure, fill with:
    - Correct feature name from plan.md
    - Phase 1: Setup tasks (project initialization)
    - Phase 2: Foundational tasks (blocking prerequisites for all user stories)
@@ -3239,15 +3239,15 @@ Every task MUST strictly follow this format:
 
 After tasks.md is complete, proceed to:
 ```bash
-/speckit-implement
+/spec-kitty.implement
 ```
 *Executes all tasks defined in tasks.md. Closure (retrospective + end) happens there.*
 ```
 
 ---
 
-## File: .agent/workflows/workflow-chronicle.md
-**Path:** `.agent/workflows/workflow-chronicle.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-chronicle.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-chronicle.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -3269,8 +3269,8 @@ description: Manage Chronicle Entries (Journaling)
 
 ---
 
-## File: .agent/workflows/workflow-tool-update.md
-**Path:** `.agent/workflows/workflow-tool-update.md`
+## File: .agent/workflows/utilities/tool-inventory-manage.md
+**Path:** `.agent/workflows/utilities/tool-inventory-manage.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -3335,7 +3335,7 @@ Edit `.agent/learning/rlm_tool_cache.json` directly, adding an entry like:
 "tools/retrieve/bundler/validate.py": {
   "hash": "new_validate_2026",
   "summarized_at": "2026-02-01T10:00:00.000000",
-  "summary": "{\n  \"purpose\": \"Validates manifest files against schema...\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"usage\": [\"python tools/retrieve/bundler/validate.py manifest.json\"],\n  \"args\": [\"manifest: Path to manifest\", \"--all-base\", \"--check-index\"],\n  \"inputs\": [\"Manifest JSON files\"],\n  \"outputs\": [\"Validation report\", \"Exit code 0/1\"],\n  \"dependencies\": [\"file-manifest-schema.json\"],\n  \"consumed_by\": [\"/workflow-bundle\", \"CI/CD\"],\n  \"key_functions\": [\"validate_manifest()\", \"validate_index()\"]\n}"
+  "summary": "{\n  \"purpose\": \"Validates manifest files against schema...\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"usage\": [\"python tools/retrieve/bundler/validate.py manifest.json\"],\n  \"args\": [\"manifest: Path to manifest\", \"--all-base\", \"--check-index\"],\n  \"inputs\": [\"Manifest JSON files\"],\n  \"outputs\": [\"Validation report\", \"Exit code 0/1\"],\n  \"dependencies\": [\"file-manifest-schema.json\"],\n  \"consumed_by\": [\"/bundle-manage\", \"CI/CD\"],\n  \"key_functions\": [\"validate_manifest()\", \"validate_index()\"]\n}"
 }
 ```
 
@@ -3400,8 +3400,8 @@ python3 tools/retrieve/rlm/query_cache.py --type tool "[keyword]"
 
 ---
 
-## File: .agent/workflows/speckit-tasks-to-issues.md
-**Path:** `.agent/workflows/speckit-tasks-to-issues.md`
+## File: .agent/workflows/spec-kitty.tasks.md
+**Path:** `.agent/workflows/spec-kitty.tasks.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -3413,7 +3413,7 @@ tools: ['github/github-mcp-server/issue_write']
 
 ## Phase 0: Pre-Flight
 ```bash
-python tools/cli.py workflow start --name speckit-tasks-to-issues --target "[Target]"
+python tools/cli.py workflow start --name spec-kitty.tasks-to-issues --target "[Target]"
 ```
 *This handles: Git state check, context alignment, spec/branch management.*
 
@@ -3451,21 +3451,21 @@ After issue creation is complete, execute the standard closure sequence:
 
 ### Step A: Self-Retrospective
 ```bash
-/workflow-retrospective
+/sanctuary-retrospective
 ```
 *Checks: Smoothness, gaps identified, Boy Scout improvements.*
 
 ### Step B: Workflow End
 ```bash
-/workflow-end "chore: create GitHub issues for [FeatureName]" specs/[NNN]-[title]/
+/sanctuary-end "chore: create GitHub issues for [FeatureName]" specs/[NNN]-[title]/
 ```
 *Handles: Human review, git commit/push, PR verification, cleanup.*
 ```
 
 ---
 
-## File: .agent/workflows/speckit-implement.md
-**Path:** `.agent/workflows/speckit-implement.md`
+## File: .agent/workflows/spec-kitty.implement.md
+**Path:** `.agent/workflows/spec-kitty.implement.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -3484,7 +3484,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Pre-Flight (MANDATORY)
 Before beginning, ensure workflow-start has been run:
 ```bash
-python tools/cli.py workflow start --name speckit-implement --target "[FeatureName]"
+python tools/cli.py workflow start --name spec-kitty.implement --target "[FeatureName]"
 ```
 
 ---
@@ -3493,7 +3493,7 @@ python tools/cli.py workflow start --name speckit-implement --target "[FeatureNa
 
 1. Run `scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
-2. **Check checklists status** (if FEATURE_DIR/speckit-checklists/ exists):
+2. **Check checklists status** (if FEATURE_DIR/spec-kitty.checklists/ exists):
    - Scan all checklist files in the checklists/ directory
    - For each checklist, count:
      - Total items: All lines matching `- [ ]` or `- [X]` or `- [x]`
@@ -3611,7 +3611,7 @@ python tools/cli.py workflow start --name speckit-implement --target "[FeatureNa
    - Confirm the implementation follows the technical plan
    - Report final status with summary of completed work
 
-Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit-tasks` first to regenerate the task list.
+Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/spec-kitty.tasks` first to regenerate the task list.
 
 ---
 
@@ -3621,13 +3621,13 @@ After implementation is complete, execute the standard closure sequence:
 
 ### Step A: Self-Retrospective
 ```bash
-/workflow-retrospective
+/sanctuary-retrospective
 ```
 *Checks: Smoothness, gaps identified, Boy Scout improvements.*
 
 ### Step B: Workflow End
 ```bash
-/workflow-end "feat: implement [FeatureName]" specs/[NNN]-[title]/
+/sanctuary-end "feat: implement [FeatureName]" specs/[NNN]-[title]/
 ```
 *Handles: Human review, git commit/push, PR verification, cleanup.*
 ```
@@ -3717,13 +3717,13 @@ python [PATH_TO_TOOL] --help
 
 ---
 
-## File: scripts/bash/workflow-ingest.sh
-**Path:** `scripts/bash/workflow-ingest.sh`
+## File: scripts/bash/sanctuary-ingest.sh
+**Path:** `scripts/bash/sanctuary-ingest.sh`
 **Note:** (Expanded from directory)
 
 ```bash
 #!/bin/bash
-# Shim for /workflow-ingest
+# Shim for /sanctuary-ingest
 # Auto-generated by Agent
 python3 tools/cli.py workflow run --name workflow-ingest "$@"
 
@@ -3897,8 +3897,8 @@ check_dir() { [[ -d "$1" && -n $(ls -A "$1" 2>/dev/null) ]] && echo "  ✓ $2" |
 
 ---
 
-## File: scripts/bash/workflow-end.sh
-**Path:** `scripts/bash/workflow-end.sh`
+## File: scripts/bash/sanctuary-end.sh
+**Path:** `scripts/bash/sanctuary-end.sh`
 **Note:** (Expanded from directory)
 
 ```bash
@@ -3918,13 +3918,13 @@ exec python3 "$CLI_PATH" workflow end "$@"
 
 ---
 
-## File: scripts/bash/workflow-bundle.sh
-**Path:** `scripts/bash/workflow-bundle.sh`
+## File: scripts/bash/bundle-manage.sh
+**Path:** `scripts/bash/bundle-manage.sh`
 **Note:** (Expanded from directory)
 
 ```bash
 #!/bin/bash
-# Shim for /workflow-bundle
+# Shim for /bundle-manage
 # Aligned with ADR-036: Thick Python / Thin Shim architecture
 # This script directs the user to the Context Bundler tool (bundle.py)
 
@@ -3941,13 +3941,13 @@ exec python3 tools/retrieve/bundler/bundle.py "$@"
 
 ---
 
-## File: scripts/bash/workflow-learning-loop.sh
-**Path:** `scripts/bash/workflow-learning-loop.sh`
+## File: scripts/bash/sanctuary-learning-loop.sh
+**Path:** `scripts/bash/sanctuary-learning-loop.sh`
 **Note:** (Expanded from directory)
 
 ```bash
 #!/bin/bash
-# Shim for /workflow-learning-loop
+# Shim for /sanctuary-learning-loop
 # Auto-generated by Agent
 python3 tools/cli.py workflow run --name workflow-learning-loop "$@"
 
@@ -3955,8 +3955,8 @@ python3 tools/cli.py workflow run --name workflow-learning-loop "$@"
 
 ---
 
-## File: scripts/bash/workflow-start.sh
-**Path:** `scripts/bash/workflow-start.sh`
+## File: scripts/bash/sanctuary-start.sh
+**Path:** `scripts/bash/sanctuary-start.sh`
 **Note:** (Expanded from directory)
 
 ```bash
@@ -3975,7 +3975,7 @@ TARGET_ID="$2"
 TARGET_TYPE="${3:-generic}"
 
 if [ -z "$WORKFLOW_NAME" ]; then
-    echo "Usage: ./workflow-start.sh [WorkflowName] [TargetID] [Type]"
+    echo "Usage: ./sanctuary-start.sh [WorkflowName] [TargetID] [Type]"
     exit 1
 fi
 
@@ -3986,13 +3986,13 @@ exec python3 "$CLI_PATH" workflow start --name "$WORKFLOW_NAME" --target "$TARGE
 
 ---
 
-## File: scripts/bash/workflow-scout.sh
-**Path:** `scripts/bash/workflow-scout.sh`
+## File: scripts/bash/sanctuary-scout.sh
+**Path:** `scripts/bash/sanctuary-scout.sh`
 **Note:** (Expanded from directory)
 
 ```bash
 #!/bin/bash
-# Shim for /workflow-scout
+# Shim for /sanctuary-scout
 # Autos-generated by Agent
 python3 tools/cli.py workflow run --name workflow-scout "$@"
 
@@ -4180,13 +4180,13 @@ fi
 # Validate required directories and files
 if [[ ! -d "$FEATURE_DIR" ]]; then
     echo "ERROR: Feature directory not found: $FEATURE_DIR" >&2
-    echo "Run /speckit-agent first to create the feature structure." >&2
+    echo "Run /spec-kitty.agent first to create the feature structure." >&2
     exit 1
 fi
 
 if [[ ! -f "$IMPL_PLAN" ]]; then
     echo "ERROR: plan.md not found in $FEATURE_DIR" >&2
-    echo "Run /speckit-plan first to create the implementation plan." >&2
+    echo "Run /spec-kitty.plan first to create the implementation plan." >&2
     exit 1
 fi
 
@@ -4247,8 +4247,8 @@ fi
 
 ---
 
-## File: scripts/bash/workflow-retrospective.sh
-**Path:** `scripts/bash/workflow-retrospective.sh`
+## File: scripts/bash/sanctuary-retrospective.sh
+**Path:** `scripts/bash/sanctuary-retrospective.sh`
 **Note:** (Expanded from directory)
 
 ```bash
@@ -5485,7 +5485,7 @@ fi
   "tools/orchestrator/proof_check.py": {
     "hash": "6ffa54cfc3afc26f",
     "summarized_at": "2026-01-31T22:55:00.000000",
-    "summary": "{\n  \"purpose\": \"Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. This tool prevents 'checkbox fraud'.\",\n  \"layer\": \"Orchestrator / Verification\",\n  \"supported_object_types\": [\"Spec artifacts\", \"File references\"],\n  \"usage\": [\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-human-gate-protocols\",\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-foo --json\"\n  ],\n  \"args\": [\n    \"--spec-dir: Path to spec directory (required)\",\n    \"--project-root: Project root directory (default: current)\",\n    \"--json: Output in JSON format (optional)\"\n  ],\n  \"inputs\": [\n    \"specs/[ID]/spec.md\",\n    \"specs/[ID]/plan.md\",\n    \"specs/[ID]/tasks.md\"\n  ],\n  \"outputs\": [\n    \"Summary report of modified/unchanged files\",\n    \"Exit code 1 if fail, 0 if pass\"\n  ],\n  \"dependencies\": [\n    \"Git\"\n  ],\n  \"key_functions\": [\n    \"extract_file_refs()\",\n    \"check_file_modified()\",\n    \"run_proof_check()\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py workflow retrospective\",\n    \"/workflow-retrospective workflow\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. This tool prevents 'checkbox fraud'.\",\n  \"layer\": \"Orchestrator / Verification\",\n  \"supported_object_types\": [\"Spec artifacts\", \"File references\"],\n  \"usage\": [\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-human-gate-protocols\",\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-foo --json\"\n  ],\n  \"args\": [\n    \"--spec-dir: Path to spec directory (required)\",\n    \"--project-root: Project root directory (default: current)\",\n    \"--json: Output in JSON format (optional)\"\n  ],\n  \"inputs\": [\n    \"specs/[ID]/spec.md\",\n    \"specs/[ID]/plan.md\",\n    \"specs/[ID]/tasks.md\"\n  ],\n  \"outputs\": [\n    \"Summary report of modified/unchanged files\",\n    \"Exit code 1 if fail, 0 if pass\"\n  ],\n  \"dependencies\": [\n    \"Git\"\n  ],\n  \"key_functions\": [\n    \"extract_file_refs()\",\n    \"check_file_modified()\",\n    \"run_proof_check()\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py workflow retrospective\",\n    \"/sanctuary-retrospective workflow\"\n  ]\n}"
   },
   "tools/orchestrator/workflow_manager.py": {
     "hash": "ecb4b989fc6c51d2",

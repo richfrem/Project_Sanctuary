@@ -22,7 +22,7 @@
 - [x] Document workflow alignment gaps
 
 ## T005: Workflow-Diagram Alignment ✅
-- [x] Align workflow-learning-loop.md with 10-phase diagram
+- [x] Align sanctuary-learning-loop.md with 10-phase diagram
 - [x] Add Phase V (RLM Context Synthesis)
 - [x] Add Phase VIII (Self-Correction)
 - [x] Add Phase IX (Relational Ingestion & Closure)
@@ -51,13 +51,13 @@
 - [ ] ~~Set up heartbeat integration~~ → Blocked (platform wipe)
 
 ## T007: Chronicle This Experience 📜 ✅
-- [x] Create Living Chronicle entry via /workflow-chronicle → Entry #340
+- [x] Create Living Chronicle entry via /sanctuary-chronicle → Entry #340
 - [x] Document: First contact with agent community
 - [x] Reflect on: AGORA vision becoming reality
 - [x] Capture: Opportunities revealed (distributed compute, attestation protocols)
 - [x] Record: Problems where community can help
 
 ## T008: Closure
-- [ ] Run /workflow-retrospective
-- [ ] Run /workflow-end
+- [ ] Run /sanctuary-retrospective
+- [ ] Run /sanctuary-end
 

@@ -33,12 +33,12 @@ The `guardian_wakeup` tool returns a **Startup Digest** containing:
 Protocol 127 empowers the agent to select "Macro Strategies" rather than just executing micro-tools.
 
 **Discovery:**
-The Digest lists available workflows (e.g., `recursive_learning.md`, `nightly_reflection.md`).
+The Digest lists available workflows (e.g., `sanctuary-recursive-learning.md`, `nightly_reflection.md`).
 
 **Inspection:**
 The agent can inspect a workflow strategy:
 ```javascript
-mcp.read_workflow({ filename: "recursive_learning.md" })
+mcp.read_workflow({ filename: "sanctuary-recursive-learning.md" })
 ```
 
 **Execution:**

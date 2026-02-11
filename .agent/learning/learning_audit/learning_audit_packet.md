@@ -246,7 +246,7 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 
 **Key Resources:**
 *   **Doctrine:** [`ADR 071: Cognitive Continuity`](./ADRs/071_protocol_128_cognitive_continuity.md)
-*   **Workflow:** [`workflow-learning-loop.md`](./.agent/workflows/workflow-learning-loop.md)
+*   **Workflow:** [`sanctuary-learning-loop.md`](./.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)
 *   **Guide:** [`learning_debrief.md`](./.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](./.agent/learning/learning_package_snapshot.md)
 *   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
@@ -570,7 +570,7 @@ If an Iron Check fails, the system enters `SAFE_MODE`.
 ## 4. Technical Architecture (The Mechanism)
 
 ### A. The Recursive Learning Workflow
-Located at: `[.agent/workflows/workflow-learning-loop.md](../.agent/workflows/workflow-learning-loop.md)`
+Located at: `[.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md](../.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)`
 - **Goal**: Autonomous acquisition -> Verification -> Preservation.
 - **Trigger**: LLM intent to learn or session completion.
 
@@ -613,7 +613,7 @@ This introduces an optional "Evolutionary Loop" for high-velocity optimization o
 | :--- | :--- | :--- |
 | **ADR 071** | Design Intent | `ADRs/071_protocol_128_cognitive_continuity.md` |
 | **Protocol 128** | Constitutional Mandate | `01_PROTOCOLS/128_Hardened_Learning_Loop.md` |
-| **SOP** | Execution Guide | `.agent/workflows/workflow-learning-loop.md` |
+| **SOP** | Execution Guide | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
 | **Primer** | Rules of Reality | `.agent/learning/cognitive_primer.md` |
 
 ---
@@ -954,7 +954,7 @@ sequence:
 > **HITL REQUIRED.** You must receive explicit human approval before proceeding.
 
 - Present strategy/plan to user
-- If rejected: backtrack to `recursive_learning.md` workflow
+- If rejected: backtrack to `sanctuary-recursive-learning.md` workflow
 - If approved: proceed to Phase IV
 
 ---
@@ -1306,7 +1306,7 @@ checklist:
 | Calibration Log | `LEARNING/calibration_log.json` |
 | Semantic Ledger | `.agent/learning/rlm_summary_cache.json` |
 | Founder Seed | `IDENTITY/founder_seed.json` |
-| Recursive Learning | `.agent/workflows/workflow-learning-loop.md` |
+| Recursive Learning | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
 
 ---
 
@@ -1349,7 +1349,7 @@ config:
 
 %% Name: Protocol 128: Learning Loop (v3.0 - with RLM Synthesis)
 %% Description: 10-phase Cognitive Continuity workflow for agent session management
-%% Workflow: .agent/workflows/workflow-learning-loop.md (human-readable steps)
+%% Workflow: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md (human-readable steps)
 %% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
 %% Phases: Scout → Synthesize → Strategic Gate → Audit → RLM → Seal → Persist → Self-Correct → Ingest → Forge
 
@@ -1357,7 +1357,7 @@ config:
 flowchart TB
     subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
         direction TB
-        Start["Session Start<br>(/workflow-start + /speckit-specify)"] --> AccessMode{"Access Mode?"}
+        Start["Session Start<br>(/sanctuary-start + /spec-kitty.specify)"] --> AccessMode{"Access Mode?"}
         
         %% Context Note
         ContextNote["ℹ️ Context: Executed within Standard Hybrid Workflow<br>(See hybrid-spec-workflow.mmd)"] -.-> Start
@@ -1368,7 +1368,7 @@ flowchart TB
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
         IDE_Wakeup --> IronCheckGate1{Iron Check?}
         
-        IronCheckGate1 -- PASS --> IDE_Debrief["Workflow: /workflow-scout<br>(Calls cortex debrief)"]
+        IronCheckGate1 -- PASS --> IDE_Debrief["Workflow: /sanctuary-scout<br>(Calls cortex debrief)"]
         IronCheckGate1 -- FAIL --> SafeMode1[SAFE MODE<br>Read-Only / Halt]
         
         MCP_Wakeup --> IronCheckGate1
@@ -1412,7 +1412,7 @@ flowchart TB
         CreateFolder --> CaptureResearch["3. Capture Research in Topic Folder<br>(analysis.md, questions.md, sources.md)"]
         CaptureResearch --> UpdateManifest["4. Update manifest<br>(.agent/learning/learning_audit/learning_audit_manifest.json)"]
         UpdateManifest --> UpdatePrompt["5. UPDATE prompts<br>(.agent/learning/learning_audit/learning_audit_prompts.md)"]
-        UpdatePrompt --> GenerateSnapshot["6. Workflow: /workflow-audit<br>(Protocol 130 Dedupe)"]
+        UpdatePrompt --> GenerateSnapshot["6. Workflow: /sanctuary-audit<br>(Protocol 130 Dedupe)"]
         GenerateSnapshot --> SharePacket["7. Output Path:<br>.agent/learning/learning_audit/learning_audit_packet.md"]
         SharePacket --> ReceiveFeedback{"8. Red Team Feedback"}
         ReceiveFeedback -- "More Research" --> CaptureFeedback["Capture Feedback in Topic Folder"]
@@ -1433,7 +1433,7 @@ flowchart TB
 
     subgraph subGraphSeal["VI. The Technical Seal"]
         direction TB
-        CaptureSeal["Workflow: /workflow-seal<br>(Triggers RLM + Iron Check)"] --> SealCheck{Iron Check?}
+        CaptureSeal["Workflow: /sanctuary-seal<br>(Triggers RLM + Iron Check)"] --> SealCheck{Iron Check?}
         SealCheck -- FAIL --> SafeMode2[SAFE MODE<br>Seal Blocked]
         SealCheck -- PASS --> SealSuccess[Seal Applied]
     end
@@ -1442,8 +1442,8 @@ flowchart TB
     subgraph subGraphPersist["VII. Soul Persistence (ADR 079 / 081)"]
         direction TB
         choice{Persistence Type}
-        choice -- Incremental --> Inc["Workflow: /workflow-persist<br>(Append 1 Record)"]
-        choice -- Full Sync --> Full["Workflow: /workflow-persist (Full)<br>(Regenerate ~1200 records)"]
+        choice -- Incremental --> Inc["Workflow: /sanctuary-persist<br>(Append 1 Record)"]
+        choice -- Full Sync --> Full["Workflow: /sanctuary-persist (Full)<br>(Regenerate ~1200 records)"]
         
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
             MD_Seal["lineage/{MODEL}_seal_{TIMESTAMP}.md"]
@@ -1456,16 +1456,16 @@ flowchart TB
     subgraph PhaseVIII [Phase VIII: Self-Correction]
         direction TB
         Deployment[Deploy & Policy Update]
-        Retro["Loop Retrospective<br>Workflow: /workflow-retrospective<br>(Singleton)"]
+        Retro["Loop Retrospective<br>Workflow: /sanctuary-retrospective<br>(Singleton)"]
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
     style PhaseVIII fill:#d4edda,stroke:#155724,stroke-width:2px
 
     subgraph PhaseIX [Phase IX: Relational Ingestion & Closure]
         direction TB
-        Ingest["Workflow: /workflow-ingest<br>(Update RAG Vector DB)"]
+        Ingest["Workflow: /sanctuary-ingest<br>(Update RAG Vector DB)"]
         GitOps["Git: add . && commit && push<br>(Sync to Remote)"]
-        End["Workflow: /workflow-end"]
+        End["Workflow: /sanctuary-end"]
         Ingest --> GitOps
         GitOps --> End
     end
@@ -2872,14 +2872,14 @@ class LearningOperations:
                 
                 # 3. Read Core Documents
                 primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
-                sop_content = "[MISSING] .agent/workflows/workflow-learning-loop.md"
+                sop_content = "[MISSING] .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md"
                 protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
                 
                 try:
                     p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
                     if p_path.exists(): primer_content = p_path.read_text()
                     
-                    s_path = self.project_root / ".agent" / "workflows" / "workflow-learning-loop.md"
+                    s_path = self.project_root / ".agent" / "workflows" / "sanctuary-learning-loop.md"
                     if s_path.exists(): sop_content = s_path.read_text()
                     
                     pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"

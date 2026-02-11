@@ -5,11 +5,11 @@
 
 ## 1. Documentation Check (The Bookend)
 - [ ] **Pre-Flight Verified**: Confirmed that `workflow-start` correctly identified the spec/branch.
-- [ ] `workflow-start.md` exists and pre-flight checklist is complete
+- [ ] `sanctuary-start.md` exists and pre-flight checklist is complete
 - [ ] `spec.md` is up to date vs reality
 - [ ] `plan.md` reflects final architecture
 - [ ] `tasks.md` is 100% checked off (Including Phase 0 and Phase N)
-- [ ] `workflow-retrospective.md` is completed and linked
+- [ ] `sanctuary-retrospective.md` is completed and linked
 
 ## 2. Technical Check
 - [ ] All SOP steps from `tasks.md` are completed

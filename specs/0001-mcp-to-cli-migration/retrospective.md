@@ -20,7 +20,7 @@
 - [x] Yes. Ignored the implicit instruction in the workflow to "Ask First" before marking complete.
 
 ### A4. Suggestions for improvement?
-- [x] Update `workflow-retrospective.md` to enforce a hard stop for Agents.
+- [x] Update `sanctuary-retrospective.md` to enforce a hard stop for Agents.
 - [x] Ensure `workflow-retrospective.sh` does not auto-complete without user input mechanism.
 
 ---
@@ -41,7 +41,7 @@
 - [x] Yes. Foundation, Tooling, Docs, and P128 phases complete.
 
 ### B4. Documentation Gaps
-- [x] `workflow-start.md` outdated syntax (Fixed).
+- [x] `sanctuary-start.md` outdated syntax (Fixed).
 - [x] `workflow_inventory_and_analysis.md` stale table (Fixed).
 
 ---

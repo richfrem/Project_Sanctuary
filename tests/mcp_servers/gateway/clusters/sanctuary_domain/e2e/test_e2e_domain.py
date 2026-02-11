@@ -360,7 +360,7 @@ class TestWorkflowTools:
     def test_read_workflow(self, logged_call):
         """Test read-workflow retrieves workflow content."""
         result = logged_call("sanctuary-domain-read-workflow", {
-            "filename": "workflow-learning-loop.md"
+            "filename": "sanctuary-learning-loop.md"
         })
         
         # May fail if workflow doesn't exist

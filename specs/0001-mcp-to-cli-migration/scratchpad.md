@@ -89,7 +89,7 @@ Found during migration: `ADRs/092_*` has two files:
 - [ ] Fix `query_cache.py` BrokenPipeError (piping output to head)
 - [ ] Fix `next_number.py` SyntaxWarning (escape sequence)
 - [ ] Create mapping document `docs/operations/mcp/mcp_to_cli_mapping.md`
-- [ ] Update workflow-start.md to use `--type` flag for next_number.py
+- [ ] Update sanctuary-start.md to use `--type` flag for next_number.py
 
 ---
 

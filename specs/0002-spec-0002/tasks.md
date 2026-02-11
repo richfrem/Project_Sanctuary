@@ -7,7 +7,7 @@
 - [x] **Execute Bundle Test**: Run `bundle.py` against the test manifest. <!-- id: 3 -->
 - [x] **Verify Output**: Check the generated markdown file for correctness. <!-- id: 4 -->
 - [x] **Review Code/Docs**: Ensure `bundle.py` follows project standards. <!-- id: 5 -->
-- [x] **Create Workflow**: Add `.agent/workflows/workflow-bundle.md`. <!-- id: 6 -->
+- [x] **Create Workflow**: Add `.agent/workflows/utilities/bundle-manage.md`. <!-- id: 6 -->
 - [x] **Persist Design**: Move design proposal to `docs/architecture/designs/`. <!-- id: 10 -->
 - [x] **Visual Design**: Create workflow diagram in `specs/0002-spec-0002/`. <!-- id: 11 -->
 - [x] **Create ADR**: Codify design as ADR 097 (Base Manifest Inheritance Architecture). <!-- id: 33 -->
@@ -16,8 +16,8 @@
 - [x] **Create validate.py**: Add manifest validation tool (`tools/retrieve/bundler/validate.py`). <!-- id: 37 -->
 - [x] **Register validate.py**: Add to tool inventories (master, RLM cache, standalone). <!-- id: 38 -->
 - [x] **Update workflow-bundle**: Add validation step (Step 4) and cleanup step (Step 7). <!-- id: 39 -->
-- [x] **Create /workflow-tool-update**: New workflow for registering tools in discovery system. <!-- id: 40 -->
-- [x] **Rename workflow file**: `recursive_learning.md` → `workflow-learning-loop.md` (ADR-036 alignment). <!-- id: 41 -->
+- [x] **Create /tool-inventory-manage**: New workflow for registering tools in discovery system. <!-- id: 40 -->
+- [x] **Rename workflow file**: `sanctuary-recursive-learning.md` → `sanctuary-learning-loop.md` (ADR-036 alignment). <!-- id: 41 -->
 - [x] **Update learning loop**: Add temp cleanup to Pre-Departure Checklist. <!-- id: 42 -->
 - [x] **Update .gitignore**: Add `temp/` folder for ephemeral bundle outputs. <!-- id: 43 -->
 - [x] **Update workflow_standardization_policy.md**: Add ADR-036 shim architecture reference (v2.1). <!-- id: 44 -->
@@ -116,8 +116,8 @@ The following tasks ensure the "Bundle" architecture is properly integrated into
 - [x] **Audit workflow-end**: Verify `workflow_manager.py` (end_workflow) triggers/checks for Protocol 128 Seal. <!-- id: 51 --> (Verified Logic)
 - [x] **Update Shell Wrappers**: Ensure `workflow-retrospective.sh` and `workflow-end.sh` are robust and aligned with `cli.py`. <!-- id: 52 --> (Verified: They delegate to Python)
 - [x] **Standardize Templates**: Update `workflow-retrospective-template.md` and `workflow-end-template.md` if needed. <!-- id: 53 --> (Updated to be deterministic)
-- [x] **Generate Retrospective**: Run `/workflow-retrospective` to create `retrospective.md`. <!-- id: 54 -->
-- [x] **Generate End Checklist**: Run `/workflow-end` to create `workflow-end.md`. <!-- id: 55 -->
+- [x] **Generate Retrospective**: Run `/sanctuary-retrospective` to create `retrospective.md`. <!-- id: 54 -->
+- [x] **Generate End Checklist**: Run `/sanctuary-end` to create `sanctuary-end.md`. <!-- id: 55 -->
 
 ---
 
@@ -139,10 +139,10 @@ The following tasks ensure the "Bundle" architecture is properly integrated into
 **Status:** Spec-0002 is essentially complete regarding the *bundling mechanism*. The lifecycle integration gaps are noted and moved to the backlog.
 
 ## Phase N: Closure & Merge (MANDATORY)
-- [x] TXXX Run `/workflow-retrospective` (Generates `retrospective.md`)
+- [x] TXXX Run `/sanctuary-retrospective` (Generates `retrospective.md`)
 - [x] TXXX Complete Retrospective with User (Part A questions)
 - [x] TXXX Agent completes Part B self-assessment
 - [x] TXXX Update key templates if issues found (e.g., `tasks-template.md`, `workflow-retrospective-template.md`)
-- [ ] TXXX Run `/workflow-end` — This handles: Human Review Gate → Git Add/Commit/Push → PR Creation
+- [ ] TXXX Run `/sanctuary-end` — This handles: Human Review Gate → Git Add/Commit/Push → PR Creation
 - [ ] TXXX Wait for User to confirm: "PR Merged?"
-- [ ] TXXX ONLY AFTER USER CONFIRMS MERGE: Run `/workflow-end` again for cleanup (branch deletion, task closure)
+- [ ] TXXX ONLY AFTER USER CONFIRMS MERGE: Run `/sanctuary-end` again for cleanup (branch deletion, task closure)

@@ -35,7 +35,7 @@ Implement Phase 1 of ADR 084: Core SE Integration with Dead-Man's Switch.
 - [ ] Add Inconsistency Alert trigger
 
 ### Phase 4: Workflow Updates (Deferred)
-- [ ] Update recursive_learning.md for TDA at Seal
+- [ ] Update sanctuary-recursive-learning.md for TDA at Seal
 - [ ] Add NCT check to Guardian Wakeup
 - [ ] Update Protocol 128 to v5.0
 

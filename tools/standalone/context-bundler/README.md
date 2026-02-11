@@ -72,7 +72,7 @@ python tools/retrieve/bundler/manifest_manager.py bundle --output tool-bundle.md
 
 ## 📚 Included Workflows
 This bundle includes standard operating procedures for context management:
-*   **Bundle Context**: `workflow: .agent/workflows/workflow-bundle.md` (Shim: `scripts/bash/workflow-bundle.sh`)
+*   **Bundle Context**: `workflow: .agent/workflows/utilities/bundle-manage.md` (Shim: `scripts/bash/bundle-manage.sh`)
 *   **Curate Bundle**: `workflow: .agent/workflows/curate-bundle.md` (Visual: `docs/diagrams/workflows/curate-bundle.mmd`)
 *   **Retrieve Bundle**: `workflow: .agent/workflows/retrieve-bundle.md`
 

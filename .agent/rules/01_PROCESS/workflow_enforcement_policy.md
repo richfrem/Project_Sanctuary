@@ -43,7 +43,7 @@ When creating new workflows, you MUST follow these standards:
 
 ### 3.1 File Standards
 - **Location**: `.agent/workflows/[name].md`
-- **Naming**: `kebab-case` (e.g., `workflow-bundle.md`)
+- **Naming**: `kebab-case` (e.g., `bundle-manage.md`)
 - **Frontmatter**:
   ```yaml
   ---
@@ -56,7 +56,7 @@ When creating new workflows, you MUST follow these standards:
 ### 3.2 Architecture Alignment
 - **Thin Shim**: If a CLI wrapper is needed, create `scripts/bash/[name].sh`.
 - **No Logic in Shims**: Shims must only `exec` Python scripts.
-- **Reuse**: Prefer using `/workflow-start` for complex flows. Only creation atomic shims for specific tools.
+- **Reuse**: Prefer using `/sanctuary-start` for complex flows. Only creation atomic shims for specific tools.
 
 ### 3.3 Registration Process (MANDATORY)
 After creating/modifying a workflow (`.md`) or tool (`.py`):

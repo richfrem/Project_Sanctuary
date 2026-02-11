@@ -66,8 +66,8 @@
 The constitution is the **single entry point**. It embeds:
 1. **Human Gate** (SUPREME LAW)
 2. **Git Zero Trust**
-3. **Hybrid Workflow** (P0) → `/workflow-start` → ADR 035 + Diagram
-4. **The Learning Loop** (P1) → `/workflow-learning-loop` → ADR 071 + Diagram
+3. **Hybrid Workflow** (P0) → `/sanctuary-start` → ADR 035 + Diagram
+4. **The Learning Loop** (P1) → `/sanctuary-learning-loop` → ADR 071 + Diagram
 
 ### Tier 1: PROCESS (Deterministic)
 | File | Purpose |
@@ -147,7 +147,7 @@ These files are part of the **3-Layer Prompt Architecture** and should be refere
 
 **MANDATORY STARTUP SEQUENCE (All Work):**
 1. **Read the Constitution** (this file)
-2. **Run `/workflow-start`** (UNIVERSAL entry point for ALL work)
+2. **Run `/sanctuary-start`** (UNIVERSAL entry point for ALL work)
 
 See: [Hybrid Workflow Diagram](docs/diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd) | [ADR 036](ADRs/036_workflow_shim_architecture.md)
 
@@ -155,25 +155,25 @@ See: [Hybrid Workflow Diagram](docs/diagrams/analysis/sdd-workflow-comparison/hy
 
 ### Workflow Hierarchy (Critical)
 ```
-/workflow-start (UNIVERSAL)
+/sanctuary-start (UNIVERSAL)
 ├── Routes to: Learning Loop (cognitive sessions)
-│   └── /workflow-learning-loop → Audit → Seal → Persist
+│   └── /sanctuary-learning-loop → Audit → Seal → Persist
 ├── Routes to: Custom Flow (new features)
-│   └── /speckit-implement → Manual Code
-└── Both end with: /workflow-retrospective → /workflow-end
+│   └── /spec-kitty.implement → Manual Code
+└── Both end with: /sanctuary-retrospective → /sanctuary-end
 ```
 
-> **Key Insight:** The Learning Loop is ONE PATH through the universal workflow, not a separate system. ALL work starts with `/workflow-start`.
+> **Key Insight:** The Learning Loop is ONE PATH through the universal workflow, not a separate system. ALL work starts with `/sanctuary-start`.
 
 ---
 
 1.  **Human Gate** (embedded, SUPREME LAW)
 2.  **The Learning Loop** (cognitive continuity - when applicable)
-    - **Invoked BY:** `/workflow-start` (when work type = "Standard/Learning")
-    - **Run:** `/workflow-learning-loop`
+    - **Invoked BY:** `/sanctuary-start` (when work type = "Standard/Learning")
+    - **Run:** `/sanctuary-learning-loop`
     - Background: [Protocol 128 Guide](docs/architecture/mcp/servers/gateway/guides/protocol_128_guide.md)
 3.  **Mandatory Boot Sequence** (Layer 1 → Layer 2 → Layer 3)
 4.  **Git Zero Trust** (never commit to main)
 5.  **Tool Discovery** (RLM protocol)
-6.  **Session Closure** (Run `/workflow-retrospective` → `/workflow-end`)
+6.  **Session Closure** (Run `/sanctuary-retrospective` → `/sanctuary-end`)
 

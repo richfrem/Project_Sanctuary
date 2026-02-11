@@ -13,7 +13,7 @@
 
 ## 1. Objective
 
-Create a clean CLI model for RAG ingest operations that aligns with workflow-ingest.md, consuming code from mcp_servers/rag_cortex/ via a new cli.py pattern similar to the bundling architecture refactor.
+Create a clean CLI model for RAG ingest operations that aligns with sanctuary-ingest.md, consuming code from mcp_servers/rag_cortex/ via a new cli.py pattern similar to the bundling architecture refactor.
 
 **Note:** This is a CLI UX improvement, NOT an architectural fix. The parent/child architecture is working correctly.
 
@@ -21,7 +21,7 @@ Create a clean CLI model for RAG ingest operations that aligns with workflow-ing
 
 1. New `tools/ingest/cli.py` (or `tools/retrieve/ingest/cli.py`)
 2. Refactored ingest commands
-3. Updated `workflow-ingest.md`
+3. Updated `sanctuary-ingest.md`
 
 ## 3. Acceptance Criteria
 

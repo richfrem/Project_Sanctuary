@@ -36,12 +36,12 @@ Principles → Specification → Clarification → Plan → Tasks → Implementa
 
 | Phase | Command | Purpose |
 |-------|---------|---------|
-| 0 | `/speckit-constitution` | Establish governing principles |
-| 1 | `/speckit-specify` | Define *what* to build |
-| 2 | `/speckit-clarify` | De-risk before planning |
-| 3 | `/speckit-plan` | Define *how* to build |
-| 4 | `/speckit-tasks` | Break into actionable steps |
-| 5 | `/speckit-implement` | Execute the tasks |
+| 0 | `/spec-kitty.constitution` | Establish governing principles |
+| 1 | `/spec-kitty.specify` | Define *what* to build |
+| 2 | `/spec-kitty.clarify` | De-risk before planning |
+| 3 | `/spec-kitty.plan` | Define *how* to build |
+| 4 | `/spec-kitty.tasks` | Break into actionable steps |
+| 5 | `/spec-kitty.implement` | Execute the tasks |
 
 ### Key ADRs
 
@@ -64,7 +64,7 @@ Principles → Specification → Clarification → Plan → Tasks → Implementa
 ### Reference
 
 - **SpecKit Antigravity**: [github.com/richfrem/spec-kit-antigravity](https://github.com/richfrem/spec-kit-antigravity)
-- **Agent Debrief**: [docs/antigravity/guides/speckit-debrief.md](../../docs/antigravity/guides/speckit-debrief.md)
+- **Agent Debrief**: [docs/antigravity/guides/spec-kitty.debrief.md](../../docs/antigravity/guides/spec-kitty.debrief.md)
 
 ## User Scenarios & Testing
 
@@ -79,7 +79,7 @@ As an LLM Agent, I need to discover available tools at runtime so I can perform 
 **Acceptance Scenarios**:
 
 1. **Given** an initialized RLM cache, **When** agent queries for "chronicle" operations, **Then** it receives CLI commands that replace `chronicle_create_entry` MCP tool
-2. **Given** the agent needs to commit code, **When** it queries for git operations, **Then** it receives workflow references for `/workflow-end` and CLI commands for git staging
+2. **Given** the agent needs to commit code, **When** it queries for git operations, **Then** it receives workflow references for `/sanctuary-end` and CLI commands for git staging
 
 ---
 
@@ -157,7 +157,7 @@ As a developer, I need new CLI tools to be automatically registered in the tool 
 ### Measurable Outcomes
 
 - **SC-001**: All 15 MCP server operations (see `mcp_operations_inventory.md`) have CLI equivalents
-- **SC-002**: Agent can complete a full `/workflow-start` → work → `/workflow-end` cycle without MCP servers
+- **SC-002**: Agent can complete a full `/sanctuary-start` → work → `/sanctuary-end` cycle without MCP servers
 - **SC-003**: Tool discovery (`query_cache.py`) returns results for all migrated operations
 - **SC-004**: Podman container count for Project Sanctuary reduced from 15+ to 0 (optional)
 - **SC-005**: Spec bundle creation works via `WorkflowManager` without MCP
@@ -192,7 +192,7 @@ Per ADR-0031 (Pure Python Orchestration), these `scripts/bash/` files need conve
 | `create-new-feature.sh` | 10KB | High | Merge into `WorkflowManager` |
 | `check-prerequisites.sh` | 5KB | Medium | `tools/cli.py prereqs check` |
 | `common.sh` | 5KB | Medium | `tools/utils/shell_compat.py` |
-| `setup-plan.sh` | 2KB | Low | Part of `/speckit-plan` |
+| `setup-plan.sh` | 2KB | Low | Part of `/spec-kitty.plan` |
 | `workflow-start.sh` | 655B | ✅ Thin shim | Keep as pass-through |
 | `workflow-retrospective.sh` | 334B | ✅ Thin shim | Keep as pass-through |
 | `workflow-end.sh` | 314B | ✅ Thin shim | Keep as pass-through |

@@ -21,7 +21,7 @@ Optimize the Recursive Learning Loop to reduce friction by introducing reusable 
 ## 3. Acceptance Criteria
 
 - Standardized template `.agent/learning/templates/session_task.md` created.
-- Workflow `recursive_learning.md` updated to use template.
+- Workflow `sanctuary-recursive-learning.md` updated to use template.
 - Validation session on "Liquid Information Processing" completed using optimized workflow.
 - `cortex_capture_snapshot` tool utilized for generating learning artifacts.
 
