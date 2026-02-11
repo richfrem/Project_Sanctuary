@@ -98,42 +98,42 @@ uvx --from git+https://github.com/richfrem/spec-kit-antigravity.git specify init
 
 Launch your AI assistant in the project directory. The slash commands are available in the assistant.
 
-Use the **`/speckit-constitution`** command to create your project's governing principles and development guidelines that will guide all subsequent development.
+Use the **`/spec-kitty.constitution`** command to create your project's governing principles and development guidelines that will guide all subsequent development.
 
 ```bash
-/speckit-constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements
+/spec-kitty.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements
 ```
 
 ### 3. Create the spec
 
-Use the **`/speckit-specify`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
+Use the **`/spec-kitty.specify`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
 
 ```bash
-/speckit-specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
+/spec-kitty.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
 ```
 
 ### 4. Create a technical implementation plan
 
-Use the **`/speckit-plan`** command to provide your tech stack and architecture choices.
+Use the **`/spec-kitty.plan`** command to provide your tech stack and architecture choices.
 
 ```bash
-/speckit-plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+/spec-kitty.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
 ```
 
 ### 5. Break down into tasks
 
-Use **`/speckit-tasks`** to create an actionable task list from your implementation plan.
+Use **`/spec-kitty.tasks`** to create an actionable task list from your implementation plan.
 
 ```bash
-/speckit-tasks
+/spec-kitty.tasks
 ```
 
 ### 6. Execute implementation
 
-Use **`/speckit-implement`** to execute all tasks and build your feature according to the plan.
+Use **`/spec-kitty.implement`** to execute all tasks and build your feature according to the plan.
 
 ```bash
-/speckit-implement
+/spec-kitty.implement
 ```
 
 For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
@@ -257,11 +257,11 @@ Essential commands for the Spec-Driven Development workflow:
 
 | Command                 | Description                                                              |
 | ----------------------- | ------------------------------------------------------------------------ |
-| `/speckit-constitution` | Create or update project governing principles and development guidelines |
-| `/speckit-specify`      | Define what you want to build (requirements and user stories)            |
-| `/speckit-plan`         | Create technical implementation plans with your chosen tech stack        |
-| `/speckit-tasks`        | Generate actionable task lists for implementation                        |
-| `/speckit-implement`    | Execute all tasks to build the feature according to the plan             |
+| `/spec-kitty.constitution` | Create or update project governing principles and development guidelines |
+| `/spec-kitty.specify`      | Define what you want to build (requirements and user stories)            |
+| `/spec-kitty.plan`         | Create technical implementation plans with your chosen tech stack        |
+| `/spec-kitty.tasks`        | Generate actionable task lists for implementation                        |
+| `/spec-kitty.implement`    | Execute all tasks to build the feature according to the plan             |
 
 #### Optional Commands
 
@@ -269,15 +269,15 @@ Additional commands for enhanced quality and validation:
 
 | Command              | Description                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `/speckit-clarify`   | Clarify underspecified areas (recommended before `/speckit-plan`; formerly `/quizme`)                                                |
-| `/speckit-analyze`   | Cross-artifact consistency & coverage analysis (run after `/speckit-tasks`, before `/speckit-implement`)                             |
-| `/speckit-checklist` | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
+| `/spec-kitty.clarify`   | Clarify underspecified areas (recommended before `/spec-kitty.plan`; formerly `/quizme`)                                                |
+| `/spec-kitty.analyze`   | Cross-artifact consistency & coverage analysis (run after `/spec-kitty.tasks`, before `/spec-kitty.implement`)                             |
+| `/spec-kitty.checklist` | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
 
 ### Environment Variables
 
 | Variable          | Description                                                                                                                                                                                                                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>\*\*Must be set in the context of the agent you're working with prior to using `/speckit-plan` or follow-up commands. |
+| `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>\*\*Must be set in the context of the agent you're working with prior to using `/spec-kitty.plan` or follow-up commands. |
 
 ## 📚 Core Philosophy
 
@@ -357,11 +357,11 @@ specify init <project_name> --ai antigravity
 
 Go to the project folder and run your AI agent.
 
-![Spec Kit CLI Menu with Antigravity Support](./media/speckit-specify_cli_menu_antigravity.png)
+![Spec Kit CLI Menu with Antigravity Support](./media/spec-kitty.specify_cli_menu_antigravity.png)
 
 _Select "antigravity" from the list of supported agents._
 
-![Spec Kit Initialization Success](./media/speckit-specify_init_success_antigravity.png)
+![Spec Kit Initialization Success](./media/spec-kitty.specify_init_success_antigravity.png)
 
 _Successful initialization prepares your project with the correct .agent structure._
 
@@ -369,19 +369,19 @@ _Successful initialization prepares your project with the correct .agent structu
 
 _The resulting folder structure compatible with Antigravity._
 
-You will know that things are configured correctly if you see the `/speckit-constitution`, `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, and `/speckit-implement` commands available.
+You will know that things are configured correctly if you see the `/spec-kitty.constitution`, `/spec-kitty.specify`, `/spec-kitty.plan`, `/spec-kitty.tasks`, and `/spec-kitty.implement` commands available.
 
-The first step should be establishing your project's governing principles using the `/speckit-constitution` command. This helps ensure consistent decision-making throughout all subsequent development phases:
+The first step should be establishing your project's governing principles using the `/spec-kitty.constitution` command. This helps ensure consistent decision-making throughout all subsequent development phases:
 
 ```text
-/speckit-constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements. Include governance for how these principles should guide technical decisions and implementation choices.
+/spec-kitty.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements. Include governance for how these principles should guide technical decisions and implementation choices.
 ```
 
-This step creates or updates the `.agent/rules/speckit-constitution.md` file with your project's foundational guidelines that the AI agent will reference during specification, planning, and implementation phases.
+This step creates or updates the `.agent/rules/spec-kitty.constitution.md` file with your project's foundational guidelines that the AI agent will reference during specification, planning, and implementation phases.
 
 ### **STEP 2:** Create project specifications
 
-With your project principles established, you can now create the functional specifications. Use the `/speckit-specify` command and then provide the concrete requirements for the project you want to develop.
+With your project principles established, you can now create the functional specifications. Use the `/spec-kitty.specify` command and then provide the concrete requirements for the project you want to develop.
 
 > [!IMPORTANT]
 > Be as explicit as possible about *what* you are trying to build and *why*. **Do not focus on the tech stack at this point**.
@@ -424,8 +424,8 @@ At this stage, your project folder contents should resemble the following:
         │   ├── plan-template.md
         │   ├── spec-template.md
         │   └── tasks-template.md
-        ├── speckit-specify.md
-        ├── speckit-plan.md
+        ├── spec-kitty.specify.md
+        ├── spec-kitty.plan.md
         └── ...
 ├── scripts
 │  ├── bash
@@ -447,12 +447,12 @@ You should run the structured clarification workflow **before** creating a techn
 
 Preferred order:
 
-1. Use `/speckit-clarify` (structured) – sequential, coverage-based questioning that records answers in a Clarifications section.
+1. Use `/spec-kitty.clarify` (structured) – sequential, coverage-based questioning that records answers in a Clarifications section.
 2. Optionally follow up with ad-hoc free-form refinement if something still feels vague.
 
 If you intentionally want to skip clarification (e.g., spike or exploratory prototype), explicitly state that so the agent doesn't block on missing clarifications.
 
-Example free-form refinement prompt (after `/speckit-clarify` if still needed):
+Example free-form refinement prompt (after `/spec-kitty.clarify` if still needed):
 
 ```text
 For each sample project or project that you create there should be a variable number of tasks between 5 and 15
@@ -470,7 +470,7 @@ It's important to use the interaction with your agent as an opportunity to clari
 
 ### **STEP 4:** Generate a plan
 
-You can now be specific about the tech stack and other technical requirements. You can use the `/speckit-plan` command that is built into the project template with a prompt like this:
+You can now be specific about the tech stack and other technical requirements. You can use the `/spec-kitty.plan` command that is built into the project template with a prompt like this:
 
 ```text
 We are going to generate this using .NET Aspire, using Postgres as the database. The frontend should use
@@ -549,14 +549,14 @@ This helps refine the implementation plan and helps you avoid potential blind sp
 You can also ask your agent (if you have the [GitHub CLI](https://docs.github.com/en/github-cli/github-cli) installed) to go ahead and create a pull request from your current branch to `main` with a detailed description, to make sure that the effort is properly tracked.
 
 > [!NOTE]
-> Before you have the agent implement it, it's also worth prompting the agent to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask your agent to resolve them. Ensure that the agent follows the [constitution](base/.agent/rules/speckit-constitution.md) as the foundational piece that it must adhere to when establishing the plan.
+> Before you have the agent implement it, it's also worth prompting the agent to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask your agent to resolve them. Ensure that the agent follows the [constitution](base/.agent/rules/spec-kitty.constitution.md) as the foundational piece that it must adhere to when establishing the plan.
 
-### **STEP 6:** Generate task breakdown with /speckit-tasks
+### **STEP 6:** Generate task breakdown with /spec-kitty.tasks
 
-With the implementation plan validated, you can now break down the plan into specific, actionable tasks that can be executed in the correct order. Use the `/speckit-tasks` command to automatically generate a detailed task breakdown from your implementation plan:
+With the implementation plan validated, you can now break down the plan into specific, actionable tasks that can be executed in the correct order. Use the `/spec-kitty.tasks` command to automatically generate a detailed task breakdown from your implementation plan:
 
 ```text
-/speckit-tasks
+/spec-kitty.tasks
 ```
 
 This step creates a `tasks.md` file in your feature specification directory that contains:
@@ -568,17 +568,17 @@ This step creates a `tasks.md` file in your feature specification directory that
 - **Test-driven development structure** - If tests are requested, test tasks are included and ordered to be written before implementation
 - **Checkpoint validation** - Each user story phase includes checkpoints to validate independent functionality
 
-The generated tasks.md provides a clear roadmap for the `/speckit-implement` command, ensuring systematic implementation that maintains code quality and allows for incremental delivery of user stories.
+The generated tasks.md provides a clear roadmap for the `/spec-kitty.implement` command, ensuring systematic implementation that maintains code quality and allows for incremental delivery of user stories.
 
 ### **STEP 7:** Implementation
 
-Once ready, use the `/speckit-implement` command to execute your implementation plan:
+Once ready, use the `/spec-kitty.implement` command to execute your implementation plan:
 
 ```text
-/speckit-implement
+/spec-kitty.implement
 ```
 
-The `/speckit-implement` command will:
+The `/spec-kitty.implement` command will:
 
 - Validate that all prerequisites are in place (constitution, spec, plan, and tasks)
 - Parse the task breakdown from `tasks.md`

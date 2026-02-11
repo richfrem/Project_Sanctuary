@@ -304,7 +304,7 @@ Before committing changes to `tools/`:
 ### Related Policies
 - [Tool Inventory Policy](tool_inventory_policy.md) - Enforcement triggers
 - [Documentation Granularity Policy](documentation_granularity_policy.md) - Task tracking
-- [/workflow-tool-update](../../workflows/workflow-tool-update.md) - Complete tool registration workflow
+- [/tool-inventory-manage](../../workflows/tool-inventory-manage.md) - Complete tool registration workflow
 
 ## 7. Manifest Schema (ADR 097)
 

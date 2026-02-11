@@ -17,8 +17,8 @@
 - [x] T010 Verify `guardian wakeup`.
 
 ## Phase 4: Closure
-- [ ] T011 Run `/workflow-retrospective`.
-- [ ] T012 Run `/workflow-end`.
+- [ ] T011 Run `/sanctuary-retrospective`.
+- [ ] T012 Run `/sanctuary-end`.
 
 ## Phase 5: Unplanned / Scratchpad
 - [x] T013 Create Backlog Task #162 (Domain CLI migration).

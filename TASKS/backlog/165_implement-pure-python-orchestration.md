@@ -7,11 +7,11 @@ High (Architectural Cleanup)
 Per [ADR-096 (Pure Python Orchestration)](../../ADRs/096_pure_python_orchestration.md), we will migrate from the "Thick Python / Thin Shim" architecture (ADR-030 v2) to a fully Python-native model.
 
 **Current State** (see [hybrid-spec-workflow.mmd](../../docs/diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd)):
-- User invokes `/workflow-start` → Thin Shim (`workflow-start.sh`) → Python CLI → `WorkflowManager`
+- User invokes `/sanctuary-start` → Thin Shim (`workflow-start.sh`) → Python CLI → `WorkflowManager`
 - The Thin Shim layer (`scripts/bash/*.sh`) is now pure passthrough (`exec python3 tools/cli.py ...`)
 
 **Target State**:
-- User invokes `/workflow-start` → Python CLI → `WorkflowManager` (no shim)
+- User invokes `/sanctuary-start` → Python CLI → `WorkflowManager` (no shim)
 - Single truth: Workflow Markdown → `python tools/cli.py workflow <command>`
 
 ## Core Asset
@@ -29,19 +29,19 @@ This task removes the `.sh` shim layer and updates workflow markdowns to invoke 
 
 | Current (Shim) | Target (Pure Python) |
 |----------------|---------------------|
-| `source scripts/bash/workflow-start.sh` | `python tools/cli.py workflow start` |
-| `source scripts/bash/codify-adr.sh` | `python tools/cli.py workflow start --name codify-adr` |
-| `source scripts/bash/speckit-implement.sh` | `python tools/cli.py workflow start --name speckit-implement` |
+| `source scripts/bash/sanctuary-start.sh` | `python tools/cli.py workflow start` |
+| `source scripts/bash/adr-manage.sh` | `python tools/cli.py workflow start --name codify-adr` |
+| `source scripts/bash/spec-kitty.implement.sh` | `python tools/cli.py workflow start --name spec-kitty.implement` |
 
 ### Full Command Mapping
 
 ```
 # Start a workflow
-OLD: source scripts/bash/workflow-start.sh "$SPEC_ID"
+OLD: source scripts/bash/sanctuary-start.sh "$SPEC_ID"
 NEW: python tools/cli.py workflow start --target "$SPEC_ID"
 
 # End workflow (commit + push)
-OLD: source scripts/bash/workflow-end.sh
+OLD: source scripts/bash/sanctuary-end.sh
 NEW: python tools/cli.py workflow end
 
 # Post-merge cleanup
@@ -49,7 +49,7 @@ OLD: source scripts/bash/workflow-cleanup.sh
 NEW: python tools/cli.py workflow cleanup
 
 # Retrospective
-OLD: source scripts/bash/workflow-retrospective.sh
+OLD: source scripts/bash/sanctuary-retrospective.sh
 NEW: python tools/cli.py workflow retrospective
 ```
 
@@ -66,13 +66,13 @@ AFTER:
 ## Requirements
 
 ### Phase 1: Delete Shims
-- [ ] Remove `scripts/bash/workflow-start.sh`
+- [ ] Remove `scripts/bash/sanctuary-start.sh`
 - [ ] Remove `scripts/bash/codify-*.sh` (all codify shims)
 - [ ] Audit `scripts/bash/` for any other workflow-related shims
 
 ### Phase 2: Update Workflow Markdowns (~27 files)
 - [ ] Find & Replace in all `.agent/workflows/*.md` files:
-    - **Old**: `source scripts/bash/workflow-start.sh ...`
+    - **Old**: `source scripts/bash/sanctuary-start.sh ...`
     - **New**: `python tools/cli.py workflow start ...`
 - [ ] Update any `// turbo` annotations if needed
 

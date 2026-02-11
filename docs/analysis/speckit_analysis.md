@@ -1,7 +1,7 @@
 # Analysis Report: Spec-Kit Integration & Hybrid Workflow
 
 **Date**: 2026-01-30
-**Feature**: 002-analyze-speckit-integration
+**Feature**: 002-analyze-spec-kitty.integration
 **Status**: Completed
 
 ## 1. Executive Summary
@@ -12,7 +12,7 @@ We have classified workflows into three distinct tracks, all governed by the Rou
 
 *   **Track A: Standardized Specs (Factory)**: Deterministic workflows (`/codify-*`) that auto-generate a Standard Spec Bundle.
     *   *Use Case*: "Document Form X" -> Generates Spec/Plan/Tasks from Template -> Executes.
-*   **Track B: Custom Specs (Discovery)**: Open-ended workflows (`/speckit-*`) that require manual spec drafting.
+*   **Track B: Custom Specs (Discovery)**: Open-ended workflows (`/spec-kitty.*`) that require manual spec drafting.
     *   *Use Case*: "Design new Auth" -> Manual Spec -> Manual Plan -> Executes.
 *   **Track C: Micro-Tasks (Maintenance)**: Trivial fixes (`/maintenance-task`) that bypass the Spec system.
     *   *Use Case*: "Fix typo" -> Direct execution or simple ticket.

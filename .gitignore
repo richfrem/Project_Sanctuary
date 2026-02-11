@@ -197,3 +197,18 @@ mnemonics/learning_summary.md
 # DRQ research repo clone (local analysis only)
 LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 !scripts/archive/
+
+# Added by Spec Kitty CLI (auto-managed)
+.claude/
+.codex/
+.opencode/
+.windsurf/
+.gemini/
+.cursor/
+.qwen/
+.kilocode/
+.augment/
+.roo/
+.amazonq/
+.github/copilot/
+.kittify/.dashboard

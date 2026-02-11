@@ -7,8 +7,8 @@
   "workflows": [
     {
       "name": "codify-adr",
-      "filename": "codify-adr.md",
-      "path": ".agent/workflows/codify-adr.md",
+      "filename": "adr-manage.md",
+      "path": ".agent/workflows/utilities/adr-manage.md",
       "description": "Creates a new Architecture Decision Record (ADR) with proper numbering and template.",
       "inputs": [],
       "tier": null,
@@ -18,7 +18,7 @@
     {
       "name": "post-move-link-check",
       "filename": "post-move-link-check.md",
-      "path": ".agent/workflows/post-move-link-check.md",
+      "path": ".agent/workflows/utilities/post-move-link-check.md",
       "description": "Run link checker after moving or renaming files/folders",
       "inputs": [],
       "tier": null,
@@ -26,9 +26,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-analyze",
-      "filename": "speckit-analyze.md",
-      "path": ".agent/workflows/speckit-analyze.md",
+      "name": "spec-kitty.analyze",
+      "filename": "spec-kitty.analyze.md",
+      "path": ".agent/workflows/spec-kitty.analyze.md",
       "description": "Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.",
       "inputs": [],
       "tier": null,
@@ -36,9 +36,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-checklist",
-      "filename": "speckit-checklist.md",
-      "path": ".agent/workflows/speckit-checklist.md",
+      "name": "spec-kitty.checklist",
+      "filename": "spec-kitty.checklist.md",
+      "path": ".agent/workflows/spec-kitty.checklist.md",
       "description": "Generate a custom checklist for the current feature based on user requirements.",
       "inputs": [],
       "tier": null,
@@ -46,9 +46,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-clarify",
-      "filename": "speckit-clarify.md",
-      "path": ".agent/workflows/speckit-clarify.md",
+      "name": "spec-kitty.clarify",
+      "filename": "spec-kitty.clarify.md",
+      "path": ".agent/workflows/spec-kitty.clarify.md",
       "description": "Identify underspecified areas in the current feature spec by asking up to 5 highly targeted clarification questions and encoding answers back into the spec.",
       "inputs": [],
       "tier": null,
@@ -56,9 +56,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-constitution",
-      "filename": "speckit-constitution.md",
-      "path": ".agent/workflows/speckit-constitution.md",
+      "name": "spec-kitty.constitution",
+      "filename": "spec-kitty.constitution.md",
+      "path": ".agent/workflows/spec-kitty.constitution.md",
       "description": "Create or update the project constitution from interactive or provided principle inputs, ensuring all dependent templates stay in sync.",
       "inputs": [],
       "tier": null,
@@ -66,9 +66,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-implement",
-      "filename": "speckit-implement.md",
-      "path": ".agent/workflows/speckit-implement.md",
+      "name": "spec-kitty.implement",
+      "filename": "spec-kitty.implement.md",
+      "path": ".agent/workflows/spec-kitty.implement.md",
       "description": "Execute the implementation plan by processing and executing all tasks defined in tasks.md",
       "inputs": [],
       "tier": null,
@@ -76,9 +76,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-plan",
-      "filename": "speckit-plan.md",
-      "path": ".agent/workflows/speckit-plan.md",
+      "name": "spec-kitty.plan",
+      "filename": "spec-kitty.plan.md",
+      "path": ".agent/workflows/spec-kitty.plan.md",
       "description": "Execute the implementation planning workflow using the plan template to generate design artifacts.",
       "inputs": [],
       "tier": null,
@@ -86,9 +86,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-specify",
-      "filename": "speckit-specify.md",
-      "path": ".agent/workflows/speckit-specify.md",
+      "name": "spec-kitty.specify",
+      "filename": "spec-kitty.specify.md",
+      "path": ".agent/workflows/spec-kitty.specify.md",
       "description": "Create or update the feature specification from a natural language feature description.",
       "inputs": [],
       "tier": null,
@@ -96,9 +96,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-tasks-to-issues",
-      "filename": "speckit-tasks-to-issues.md",
-      "path": ".agent/workflows/speckit-tasks-to-issues.md",
+      "name": "spec-kitty.tasks-to-issues",
+      "filename": "spec-kitty.tasks.md",
+      "path": ".agent/workflows/spec-kitty.tasks.md",
       "description": "Convert existing tasks into actionable, dependency-ordered GitHub issues for the feature based on available design artifacts.",
       "inputs": [],
       "tier": null,
@@ -106,9 +106,9 @@
       "called_by": []
     },
     {
-      "name": "speckit-tasks",
-      "filename": "speckit-tasks.md",
-      "path": ".agent/workflows/speckit-tasks.md",
+      "name": "spec-kitty.tasks",
+      "filename": "spec-kitty.tasks.md",
+      "path": ".agent/workflows/spec-kitty.tasks.md",
       "description": "Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.",
       "inputs": [],
       "tier": null,
@@ -117,8 +117,8 @@
     },
     {
       "name": "workflow-adr",
-      "filename": "workflow-adr.md",
-      "path": ".agent/workflows/workflow-adr.md",
+      "filename": "adr-manage.md",
+      "path": ".agent/workflows/utilities/adr-manage.md",
       "description": "Manage Architecture Decision Records (ADR)",
       "inputs": [],
       "tier": null,
@@ -127,8 +127,8 @@
     },
     {
       "name": "workflow-audit",
-      "filename": "workflow-audit.md",
-      "path": ".agent/workflows/workflow-audit.md",
+      "filename": "sanctuary-audit.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-audit.md",
       "description": "Protocol 128 Phase IV - Red Team Audit (Capture Snapshot)",
       "inputs": [],
       "tier": null,
@@ -137,8 +137,8 @@
     },
     {
       "name": "workflow-bundle",
-      "filename": "workflow-bundle.md",
-      "path": ".agent/workflows/workflow-bundle.md",
+      "filename": "bundle-manage.md",
+      "path": ".agent/workflows/utilities/bundle-manage.md",
       "description": "Create a markdown bundle from a set of files using a manifest.",
       "inputs": [],
       "tier": null,
@@ -147,8 +147,8 @@
     },
     {
       "name": "workflow-chronicle",
-      "filename": "workflow-chronicle.md",
-      "path": ".agent/workflows/workflow-chronicle.md",
+      "filename": "sanctuary-chronicle.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-chronicle.md",
       "description": "Manage Chronicle Entries (Journaling)",
       "inputs": [],
       "tier": null,
@@ -157,8 +157,8 @@
     },
     {
       "name": "workflow-end",
-      "filename": "workflow-end.md",
-      "path": ".agent/workflows/workflow-end.md",
+      "filename": "sanctuary-end.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-end.md",
       "description": "Standard post-flight closure for all codify/investigate workflows. Handles human review, git commit, PR verification, and cleanup.",
       "inputs": [],
       "tier": 1,
@@ -167,8 +167,8 @@
     },
     {
       "name": "workflow-ingest",
-      "filename": "workflow-ingest.md",
-      "path": ".agent/workflows/workflow-ingest.md",
+      "filename": "sanctuary-ingest.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-ingest.md",
       "description": "Run RAG Ingestion (Protocol 128 Phase IX)",
       "inputs": [],
       "tier": null,
@@ -177,8 +177,8 @@
     },
     {
       "name": "workflow-learning-loop",
-      "filename": "workflow-learning-loop.md",
-      "path": ".agent/workflows/workflow-learning-loop.md",
+      "filename": "sanctuary-learning-loop.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md",
       "description": "\"Standard operating procedure for Protocol 128 Hardened Learning Loop (Scout -> Synthesize -> Audit -> Seal -> Persist).\"",
       "inputs": [],
       "tier": null,
@@ -187,8 +187,8 @@
     },
     {
       "name": "workflow-persist",
-      "filename": "workflow-persist.md",
-      "path": ".agent/workflows/workflow-persist.md",
+      "filename": "sanctuary-persist.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-persist.md",
       "description": "Protocol 128 Phase VI - Soul Persistence (Broadcast to Hugging Face)",
       "inputs": [],
       "tier": null,
@@ -197,8 +197,8 @@
     },
     {
       "name": "workflow-protocol",
-      "filename": "workflow-protocol.md",
-      "path": ".agent/workflows/workflow-protocol.md",
+      "filename": "sanctuary-protocol.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-protocol.md",
       "description": "Manage Protocol Documents",
       "inputs": [],
       "tier": null,
@@ -207,20 +207,20 @@
     },
     {
       "name": "workflow-retrospective",
-      "filename": "workflow-retrospective.md",
-      "path": ".agent/workflows/workflow-retrospective.md",
+      "filename": "sanctuary-retrospective.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-retrospective.md",
       "description": "Mandatory self-retrospective and continuous improvement check after completing any codify workflow.",
       "inputs": [],
       "tier": 1,
       "track": "Factory",
       "called_by": [
-        "/workflow-end"
+        "/sanctuary-end"
       ]
     },
     {
       "name": "workflow-scout",
-      "filename": "workflow-scout.md",
-      "path": ".agent/workflows/workflow-scout.md",
+      "filename": "sanctuary-scout.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-scout.md",
       "description": "Protocol 128 Phase I - The Learning Scout (Debrief & Orientation)",
       "inputs": [],
       "tier": null,
@@ -229,8 +229,8 @@
     },
     {
       "name": "workflow-seal",
-      "filename": "workflow-seal.md",
-      "path": ".agent/workflows/workflow-seal.md",
+      "filename": "sanctuary-seal.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-seal.md",
       "description": "Protocol 128 Phase V - The Technical Seal (Snapshot & Validation)",
       "inputs": [],
       "tier": null,
@@ -239,8 +239,8 @@
     },
     {
       "name": "workflow-start",
-      "filename": "workflow-start.md",
-      "path": ".agent/workflows/workflow-start.md",
+      "filename": "sanctuary-start.md",
+      "path": ".agent/workflows/sanctuary_protocols/sanctuary-start.md",
       "description": "Universal pre-flight and Spec initialization for all workflows. Determines work type and ensures Spec-Plan-Tasks exist.",
       "inputs": [],
       "tier": 1,
@@ -249,8 +249,8 @@
     },
     {
       "name": "workflow-task",
-      "filename": "workflow-task.md",
-      "path": ".agent/workflows/workflow-task.md",
+      "filename": "tasks-manage.md",
+      "path": ".agent/workflows/utilities/tasks-manage.md",
       "description": "Manage Maintenance Tasks (Kanban)",
       "inputs": [],
       "tier": null,
@@ -259,8 +259,8 @@
     },
     {
       "name": "workflow-tool-update",
-      "filename": "workflow-tool-update.md",
-      "path": ".agent/workflows/workflow-tool-update.md",
+      "filename": "tool-inventory-manage.md",
+      "path": ".agent/workflows/utilities/tool-inventory-manage.md",
       "description": "Update tool inventories, RLM cache, and associated artifacts after creating or modifying tools.",
       "inputs": [],
       "tier": 2,

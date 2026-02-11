@@ -160,7 +160,7 @@ sequence:
 > **HITL REQUIRED.** You must receive explicit human approval before proceeding.
 
 - Present strategy/plan to user
-- If rejected: backtrack to `recursive_learning.md` workflow
+- If rejected: backtrack to `sanctuary-recursive-learning.md` workflow
 - If approved: proceed to Phase IV
 
 ---
@@ -512,7 +512,7 @@ checklist:
 | Calibration Log | `LEARNING/calibration_log.json` |
 | Semantic Ledger | `.agent/learning/rlm_summary_cache.json` |
 | Founder Seed | `IDENTITY/founder_seed.json` |
-| Recursive Learning | `.agent/workflows/workflow-learning-loop.md` |
+| Recursive Learning | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
 
 ---
 

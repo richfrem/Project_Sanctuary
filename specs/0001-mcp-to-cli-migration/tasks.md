@@ -23,7 +23,7 @@ description: "Task list for MCP-to-CLI Migration (Phase 1: Foundation)"
 - [x] T003 Fix `next_number.py` SyntaxWarning (escape sequence on line 169)
 - [x] T004 Fix `next_number.py` ADR directory path (`ADRs` not `docs/ADRs`)
 - [x] T005 Fix `query_cache.py` BrokenPipeError when piping to `head`
-- [x] T006 [P] Update `workflow-start.md` and `WorkflowManager.py` to use `--type` flag for next_number.py
+- [x] T006 [P] Update `sanctuary-start.md` and `WorkflowManager.py` to use `--type` flag for next_number.py
 
 ## Phase 2: Verify Foundation [US2]
 - [x] T007 [US2] Test `WorkflowManager.start_workflow()` without MCP servers
@@ -43,16 +43,16 @@ description: "Task list for MCP-to-CLI Migration (Phase 1: Foundation)"
 - [x] T017 [P] [US3] Map remaining high-priority MCPs (Protocol, ADR, Task) (`domain_cli.py`)
 
 ## Phase 5: Workflow Migration
-- [ ] T018 Update `speckit-analyze.md`: Replace `source scripts/bash/` with `python tools/cli.py`
-- [ ] T019 Update `speckit-checklist.md`: Replace `source scripts/bash/` with `python tools/cli.py`
-- [ ] T020 Update `speckit-tasks-to-issues.md`: Replace bash pre-flight, address MCP tool dependency
+- [ ] T018 Update `spec-kitty.analyze.md`: Replace `source scripts/bash/` with `python tools/cli.py`
+- [ ] T019 Update `spec-kitty.checklist.md`: Replace `source scripts/bash/` with `python tools/cli.py`
+- [ ] T020 Update `spec-kitty.tasks.md`: Replace bash pre-flight, address MCP tool dependency
 - [ ] T021 Audit remaining speckit workflows for bash/MCP references
-- [x] T022 Update `recursive_learning.md`: Replace "Cortex MCP Suite" references with CLI
+- [x] T022 Update `sanctuary-recursive-learning.md`: Replace "Cortex MCP Suite" references with CLI
 
-- [x] T022 Update `recursive_learning.md`: Replace "Cortex MCP Suite" references with CLI
+- [x] T022 Update `sanctuary-recursive-learning.md`: Replace "Cortex MCP Suite" references with CLI
      
 ## Phase 5b: Protocol 128 Implementation (New)
-- [x] T035 Create `/workflow-learning-loop.md` and shim (The Orchestrator)
+- [x] T035 Create `/sanctuary-learning-loop.md` and shim (The Orchestrator)
 - [x] T036 Create Atomic Phase workflows (`scout`, `audit`, `seal`, `persist`, `ingest`) and shims
 - [x] T037 Create Domain workflows (`chronicle`, `task`, `adr`) and shims
 - [x] T038 Update `workflow-composition.mmd` to feature Learning Loop
@@ -74,11 +74,11 @@ description: "Task list for MCP-to-CLI Migration (Phase 1: Foundation)"
 - [x] T029 [P] [US3] Update constitution/rules to reflect CLI-first policy
 
 ## Phase N: Closure & Merge (MANDATORY)
-- [ ] T030 Run `/workflow-retrospective`
+- [ ] T030 Run `/sanctuary-retrospective`
 - [ ] T031 Commit all changes to Feature Branch
 - [ ] T032 Push to remote and Create Pull Request
 - [ ] T033 Confirm with User: "PR Merged?"
-- [ ] T034 Run `/workflow-end`
+- [ ] T034 Run `/sanctuary-end`
 
 ---
 

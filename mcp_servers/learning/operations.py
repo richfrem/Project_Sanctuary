@@ -155,14 +155,14 @@ class LearningOperations:
                 
                 # 3. Read Core Documents
                 primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
-                sop_content = "[MISSING] .agent/workflows/workflow-learning-loop.md"
+                sop_content = "[MISSING] .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md"
                 protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
                 
                 try:
                     p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
                     if p_path.exists(): primer_content = p_path.read_text()
                     
-                    s_path = self.project_root / ".agent" / "workflows" / "workflow-learning-loop.md"
+                    s_path = self.project_root / ".agent" / "workflows" / "sanctuary-learning-loop.md"
                     if s_path.exists(): sop_content = s_path.read_text()
                     
                     pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"

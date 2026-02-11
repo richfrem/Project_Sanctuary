@@ -1,0 +1,13 @@
+vcs:
+  type: git
+agents:
+  available:
+  - windsurf
+  - claude
+  - antigravity
+  - gemini
+  - copilot
+  selection:
+    strategy: preferred
+    preferred_implementer: windsurf
+    preferred_reviewer: windsurf

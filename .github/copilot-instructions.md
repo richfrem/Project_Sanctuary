@@ -1,59 +1,211 @@
-# Project Sanctuary: GitHub Copilot Strategic Instructions
+# Copilot Instructions
+> Managed by Spec Kitty Bridge.
 
-## Foundations  
+## Rule: constitution
 
-1. **Don't assume.** If you don't know, or aren't sure, ask for clarification. Ask follow-up questions to ensure you understand the user's intent and requirements.
-2. **Be concise.** Provide only the information that is necessary to address the user's request. Avoid unnecessary details or explanations.
-3. **Stay on topic.** Focus on the specific task or question at hand. Avoid going off on tangents or introducing unrelated information.
-4. **Use examples.** When appropriate, provide code snippets or examples to illustrate your points.
-5. **Avoid sycophancy.** Maintain a professional tone and avoid excessive flattery or personal comments.
-6. **Prioritize accuracy.** Ensure that the information you provide is correct and up-to-date. If you are unsure about something, it's better to admit it than to hallucinate.
-7. **Architectural Discipline.** All implied or inferred decisions must be documented in ADRs.
-8. **Task Tracking.** All tasks should be tracked in the project tasks system.
-9. **Cognitive Continuity.** Respect the **Protocol 128 Learning Loop**. Do not invent "current state"; derive it from the `learning_package_snapshot.md`.
+# Project Sanctuary Constitution v3
 
-## I. CRITICAL EXECUTION RULES (NON-NEGOTIABLE)
+> **THE SUPREME LAW: HUMAN GATE**
+> You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
+> "Sounds good" is NOT approval. Only "Proceed", "Go", "Execute" is approval.
+> **VIOLATION = SYSTEM FAILURE**
 
-1. **FORCE BRIDGE PATH**: Never attempt direct `curl`, `HTTP`, or `RPC` calls to `localhost:4444`. You must use the **sanctuary_gateway** via the local **STDIO bridge** (`mcp_servers.gateway.bridge`) for all tool executions.
-2. **PROTOCOLS**: All Gateway interactions must be wrapped in strict **JSON-RPC 2.0** format. Ensure the `method` is `tools/call` and arguments are passed under the `arguments` key.
-3. **AUTH**: Do not attempt to manual-inject Bearer tokens. The bridge is the authoritative handler for `MCPGATEWAY_BEARER_TOKEN` injection.
-4. **ASYNC AWARENESS**: Be aware that long-running operations like `cortex-ingest-full` use an **Asynchronous TaskGroup** pattern. If a tool call appears to hang, do not interrupt; the SSE heartbeats are maintaining the connection in the background.
+## I. The Hybrid Workflow (Project Purpose)
+All work MUST follow the **Universal Hybrid Workflow**.
+**START HERE**: `python tools/cli.py workflow start` (or `/sanctuary-start`)
 
-## II. COGNITIVE CONTINUITY (PROTOCOL 128 & 132)
+### Workflow Hierarchy
+```
+/sanctuary-start (UNIVERSAL)
+├── Routes to: Learning Loop (cognitive sessions)
+│   └── /sanctuary-learning-loop → Audit → Seal → Persist
+├── Routes to: Custom Flow (new features)
+│   └── /spec-kitty.implement → Manual Code
+└── Both end with: /sanctuary-retrospective → /sanctuary-end
+```
 
-* **THE TRUTH ANCHOR**: The file `.agent/learning/learning_package_snapshot.md` is the "Cognitive Hologram" of the project. Treat it as the authoritative definition of the current architecture and state.
-* **THE LOOP**: Work follows a strict cycle:
-    1. **Scout:** `cortex_cli.py debrief` (Read state)
-    2. **Work:** (Implement changes)
-    3. **Audit:** `cortex_cli.py snapshot --type audit` (Red Team verification)
-    4. **Seal:** `cortex_cli.py snapshot --type seal` (Lock memory)
-* **RLM SYNTHESIS (Protocol 132)**:
-    * Be aware that `snapshot --type seal` triggers a **Recursive Language Model (RLM)** synthesis using the local Sovereign AI.
-    * **DO NOT INTERRUPT** the seal process. It may take **30-90 seconds** to recursively map and summarize the repository.
-    * If modifying `operations.py`, ensure the `_rlm_map` function remains wired to the **local** inference endpoint (Ollama), not a mock/stub.
+- **Track A (Factory)**: Deterministic tasks (Codify, Curate).
+- **Track B (Discovery)**: Spec-Driven Development (Spec → Plan → Tasks).
+- **Reference**: [ADR 035](../../ADRs/035_hybrid_spec_driven_development_workflow.md) | [Diagram](../../docs/diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd)
 
-## III. COMMUNICATION & COLLABORATION
+## II. The Learning Loop (Cognitive Continuity)
+For all cognitive sessions, you are bound by **Protocol 128**.
+**INVOKE**: `/sanctuary-learning-loop` (called by `/sanctuary-start`)
 
-* **INTENT CONFIRMATION**: Always present a brief plan and wait for the user's "Proceed" before modifying any core `server.py` or `bridge.py` logic.
-* **NO DESTRUCTIVE ACTIONS**: Never perform `git reset` or `force push` without explicit authorization.
-* **CONCISE OUTPUT**: Avoid verbose explanations of project structure. If a step is skipped, state it in a single line.
+- **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
+- **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
+- **Reference**: [ADR 071](../../ADRs/071_protocol_128_cognitive_continuity.md) | [Diagram](../../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)
 
-## IV. DEVELOPMENT STANDARDS
+### Identity Layers (Boot Files)
+| Layer | File | Purpose |
+|:------|:-----|:--------|
+| **1. Contract** | [boot_contract.md](../learning/guardian_boot_contract.md) | Immutable constraints |
+| **2. Primer** | [cognitive_primer.md](../learning/cognitive_primer.md) | Role Orientation |
+| **3. Snapshot** | [snapshot.md](../learning/learning_package_snapshot.md) | Session Context |
 
-* **FILE PATHS**: Default to the current directory (`.`) for project operations.
-* **SENSITIVE DATA**: Never commit or log raw token strings. Always redact tokens in terminal outputs or log captures.
-* **SOURCE VERIFICATION (ADR 078)**: All external links in documentation must be verified via `read_url_content` before inclusion. No broken links.
+## III. Zero Trust (Git & Execution)
+- **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
+- **NEVER** run `git push` without explicit, fresh approval.
+- **NEVER** "auto-fix" via git.
+- **HALT** on any user "Stop/Wait" command immediately.
 
-## V. PROGRESS TRACKING (CHECKLIST)
+### Defined: State-Changing Operation
+Any operation that:
+1. Writes to disk (except /tmp/)
+2. Modifies version control (git add/commit/push)
+3. Executes external commands with side effects
+4. Modifies .agent/learning/* files
+**REQUIRES EXPLICIT APPROVAL ("Proceed", "Go", "Execute").**
 
-- [ ] **E2E Validation**: Verify the Bridged Path is active.
-- [ ] **Log Monitoring**: Check `/tmp/bridge_debug.log` for successful RPC handshakes.
-- [ ] **Health Status**: Ensure `sanctuary_cortex` remains `healthy` during 600s+ tasks.
-- [ ] **Cognitive Seal**: Ensure the session ends with a valid `learning_package_snapshot.md` generated via RLM.
+## IV. Tool Discovery & Usage
+- **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
+- **fallback IS PROHIBITED**: If `query_cache.py` fails, you MUST STOP and ask user to refresh cache.
+- **ALWAYS** use **Tool Discovery**: `python tools/retrieve/rlm/query_cache.py`. It's your `.agent/skills/SKILL.md`
+- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.*`) over raw scripts.
+- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
 
-## VI. ERROR HANDLING PROTOCOL
+## V. Governing Law (The Tiers)
 
-If a tool returns an **Internal Error (-32000)**:
-1. Do not fallback to manual scripts.
-2. Verify that the bridge process has the correct `PYTHONPATH`.
-3. Check the **VS Code Output** panel for the `sanctuary_gateway` stream to find the specific protocol mismatch.
+### Tier 1: PROCESS (Deterministic)
+| File | Purpose |
+|:-----|:--------|
+| [`workflow_enforcement_policy.md`](01_PROCESS/workflow_enforcement_policy.md) | **Slash Commands**: Command-Driven Improvement |
+| [`tool_discovery_enforcement_policy.md`](01_PROCESS/tool_discovery_enforcement_policy.md) | **No Grep Policy**: Use `query_cache.py` |
+| [`spec_driven_development_policy.md`](01_PROCESS/spec_driven_development_policy.md) | **Lifecycle**: Spec → Plan → Tasks |
+
+### Tier 2: OPERATIONS (Policies)
+| File | Purpose |
+|:-----|:--------|
+| [`git_workflow_policy.md`](02_OPERATIONS/git_workflow_policy.md) | Branch strategy, commit standards |
+
+### Tier 3: TECHNICAL (Standards)
+| File | Purpose |
+|:-----|:--------|
+| [`coding_conventions_policy.md`](03_TECHNICAL/coding_conventions_policy.md) | Code standards, documentation |
+| [`dependency_management_policy.md`](03_TECHNICAL/dependency_management_policy.md) | pip-compile workflow |
+
+## VI. Session Closure (Mandate)
+- **ALWAYS** run the 9-Phase Loop before ending a session.
+- **NEVER** abandon a session without sealing.
+- **ALWAYS** run `/sanctuary-retrospective` then `/sanctuary-end`.
+- **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
+
+**Version**: 3.7 | **Ratified**: 2026-02-01
+
+
+---
+
+
+# Available Workflows
+- /prompts/spec-kitty.accept.prompt.md
+- /prompts/spec-kitty.analyze.prompt.md
+- /prompts/spec-kitty.checklist.prompt.md
+- /prompts/spec-kitty.clarify.prompt.md
+- /prompts/spec-kitty.constitution.prompt.md
+- /prompts/spec-kitty.dashboard.prompt.md
+- /prompts/spec-kitty.implement.prompt.md
+- /prompts/spec-kitty.merge.prompt.md
+- /prompts/spec-kitty.plan.prompt.md
+- /prompts/spec-kitty.research.prompt.md
+- /prompts/spec-kitty.review.prompt.md
+- /prompts/spec-kitty.specify.prompt.md
+- /prompts/spec-kitty.status.prompt.md
+- /prompts/spec-kitty.tasks.prompt.md
+
+
+<!-- RULES_SYNC_START -->
+# SHARED RULES FROM .agent/rules/
+
+
+--- RULE: constitution.md ---
+
+# Project Sanctuary Constitution v3
+
+> **THE SUPREME LAW: HUMAN GATE**
+> You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
+> "Sounds good" is NOT approval. Only "Proceed", "Go", "Execute" is approval.
+> **VIOLATION = SYSTEM FAILURE**
+
+## I. The Hybrid Workflow (Project Purpose)
+All work MUST follow the **Universal Hybrid Workflow**.
+**START HERE**: `python tools/cli.py workflow start` (or `/sanctuary-start`)
+
+### Workflow Hierarchy
+```
+/sanctuary-start (UNIVERSAL)
+├── Routes to: Learning Loop (cognitive sessions)
+│   └── /sanctuary-learning-loop → Audit → Seal → Persist
+├── Routes to: Custom Flow (new features)
+│   └── /spec-kitty.implement → Manual Code
+└── Both end with: /sanctuary-retrospective → /sanctuary-end
+```
+
+- **Track A (Factory)**: Deterministic tasks (Codify, Curate).
+- **Track B (Discovery)**: Spec-Driven Development (Spec → Plan → Tasks).
+- **Reference**: [ADR 035](../../ADRs/035_hybrid_spec_driven_development_workflow.md) | [Diagram](../../docs/diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd)
+
+## II. The Learning Loop (Cognitive Continuity)
+For all cognitive sessions, you are bound by **Protocol 128**.
+**INVOKE**: `/sanctuary-learning-loop` (called by `/sanctuary-start`)
+
+- **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
+- **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
+- **Reference**: [ADR 071](../../ADRs/071_protocol_128_cognitive_continuity.md) | [Diagram](../../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)
+
+### Identity Layers (Boot Files)
+| Layer | File | Purpose |
+|:------|:-----|:--------|
+| **1. Contract** | [boot_contract.md](../learning/guardian_boot_contract.md) | Immutable constraints |
+| **2. Primer** | [cognitive_primer.md](../learning/cognitive_primer.md) | Role Orientation |
+| **3. Snapshot** | [snapshot.md](../learning/learning_package_snapshot.md) | Session Context |
+
+## III. Zero Trust (Git & Execution)
+- **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
+- **NEVER** run `git push` without explicit, fresh approval.
+- **NEVER** "auto-fix" via git.
+- **HALT** on any user "Stop/Wait" command immediately.
+
+### Defined: State-Changing Operation
+Any operation that:
+1. Writes to disk (except /tmp/)
+2. Modifies version control (git add/commit/push)
+3. Executes external commands with side effects
+4. Modifies .agent/learning/* files
+**REQUIRES EXPLICIT APPROVAL ("Proceed", "Go", "Execute").**
+
+## IV. Tool Discovery & Usage
+- **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
+- **fallback IS PROHIBITED**: If `query_cache.py` fails, you MUST STOP and ask user to refresh cache.
+- **ALWAYS** use **Tool Discovery**: `python tools/retrieve/rlm/query_cache.py`. It's your `.agent/skills/SKILL.md`
+- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.ty.*`) over raw scripts.
+- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
+
+## V. Governing Law (The Tiers)
+
+### Tier 1: PROCESS (Deterministic)
+| File | Purpose |
+|:-----|:--------|
+| [`workflow_enforcement_policy.md`](01_PROCESS/workflow_enforcement_policy.md) | **Slash Commands**: Command-Driven Improvement |
+| [`tool_discovery_enforcement_policy.md`](01_PROCESS/tool_discovery_enforcement_policy.md) | **No Grep Policy**: Use `query_cache.py` |
+| [`spec_driven_development_policy.md`](01_PROCESS/spec_driven_development_policy.md) | **Lifecycle**: Spec → Plan → Tasks |
+
+### Tier 2: OPERATIONS (Policies)
+| File | Purpose |
+|:-----|:--------|
+| [`git_workflow_policy.md`](02_OPERATIONS/git_workflow_policy.md) | Branch strategy, commit standards |
+
+### Tier 3: TECHNICAL (Standards)
+| File | Purpose |
+|:-----|:--------|
+| [`coding_conventions_policy.md`](03_TECHNICAL/coding_conventions_policy.md) | Code standards, documentation |
+| [`dependency_management_policy.md`](03_TECHNICAL/dependency_management_policy.md) | pip-compile workflow |
+
+## VI. Session Closure (Mandate)
+- **ALWAYS** run the 9-Phase Loop before ending a session.
+- **NEVER** abandon a session without sealing.
+- **ALWAYS** run `/sanctuary-retrospective` then `/sanctuary-end`.
+- **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
+
+**Version**: 3.7 | **Ratified**: 2026-02-01
+
+<!-- RULES_SYNC_END -->

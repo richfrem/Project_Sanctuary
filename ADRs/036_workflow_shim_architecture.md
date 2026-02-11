@@ -26,11 +26,11 @@ exec python3 tools/cli.py workflow start ...
 ### 3. The CLI Interface
 Agents invoke:
 ```bash
-/workflow-start [Name] [Target]
+/sanctuary-start [Name] [Target]
 ```
 Which maps to:
 ```bash
-source scripts/bash/workflow-start.sh ...
+source scripts/bash/sanctuary-start.sh ...
 ```
 Which executes:
 ```bash

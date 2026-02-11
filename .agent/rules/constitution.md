@@ -7,16 +7,16 @@
 
 ## I. The Hybrid Workflow (Project Purpose)
 All work MUST follow the **Universal Hybrid Workflow**.
-**START HERE**: `python tools/cli.py workflow start` (or `/workflow-start`)
+**START HERE**: `python tools/cli.py workflow start` (or `/sanctuary-start`)
 
 ### Workflow Hierarchy
 ```
-/workflow-start (UNIVERSAL)
+/sanctuary-start (UNIVERSAL)
 ├── Routes to: Learning Loop (cognitive sessions)
-│   └── /workflow-learning-loop → Audit → Seal → Persist
+│   └── /sanctuary-learning-loop → Audit → Seal → Persist
 ├── Routes to: Custom Flow (new features)
-│   └── /speckit-implement → Manual Code
-└── Both end with: /workflow-retrospective → /workflow-end
+│   └── /spec-kitty.implement → Manual Code
+└── Both end with: /sanctuary-retrospective → /sanctuary-end
 ```
 
 - **Track A (Factory)**: Deterministic tasks (Codify, Curate).
@@ -25,7 +25,7 @@ All work MUST follow the **Universal Hybrid Workflow**.
 
 ## II. The Learning Loop (Cognitive Continuity)
 For all cognitive sessions, you are bound by **Protocol 128**.
-**INVOKE**: `/workflow-learning-loop` (called by `/workflow-start`)
+**INVOKE**: `/sanctuary-learning-loop` (called by `/sanctuary-start`)
 
 - **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
 - **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
@@ -56,8 +56,8 @@ Any operation that:
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
 - **fallback IS PROHIBITED**: If `query_cache.py` fails, you MUST STOP and ask user to refresh cache.
 - **ALWAYS** use **Tool Discovery**: `python tools/retrieve/rlm/query_cache.py`. It's your `.agent/skills/SKILL.md`
-- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/speckit-*`) over raw scripts.
-- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/workflow-start.sh`, `scripts/bash/workflow-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
+- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.ty.*`) over raw scripts.
+- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
 
 ## V. Governing Law (The Tiers)
 
@@ -82,7 +82,7 @@ Any operation that:
 ## VI. Session Closure (Mandate)
 - **ALWAYS** run the 9-Phase Loop before ending a session.
 - **NEVER** abandon a session without sealing.
-- **ALWAYS** run `/workflow-retrospective` then `/workflow-end`.
+- **ALWAYS** run `/sanctuary-retrospective` then `/sanctuary-end`.
 - **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
 
 **Version**: 3.7 | **Ratified**: 2026-02-01

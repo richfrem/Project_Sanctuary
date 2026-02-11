@@ -6,23 +6,23 @@ graph TD
     classDef output fill:#fff9c4,stroke:#fbc02d,stroke-width:2px,stroke-dasharray: 5 5,color:#000
 
     subgraph Tier3 ["Tier 3: Meta-Orchestrators (Lifecycle)"]
-        P128["/workflow-learning-loop<br/>(Protocol 128)"]:::meta
-        SpecKit["/speckit-*<br/>(Specification)"]:::meta
+        P128["/sanctuary-learning-loop<br/>(Protocol 128)"]:::meta
+        SpecKit["/spec-kitty.*<br/>(Specification)"]:::meta
     end
 
     subgraph Tier2 ["Tier 2: Domain Management"]
-        Chronicle["/workflow-chronicle<br/>(Journaling)"]:::domain
-        Task["/workflow-task<br/>(Kanban)"]:::domain
-        ADR["/workflow-adr<br/>(Architecture)"]:::domain
+        Chronicle["/sanctuary-chronicle<br/>(Journaling)"]:::domain
+        Task["/tasks-manage<br/>(Kanban)"]:::domain
+        ADR["/adr-manage<br/>(Architecture)"]:::domain
     end
 
     subgraph Tier1 ["Tier 1: Atomic Phases (Protocol Ops)"]
-        Start["/workflow-start"]:::atomic
-        Scout["/workflow-scout"]:::atomic
-        Audit["/workflow-audit"]:::atomic
-        Seal["/workflow-seal"]:::atomic
-        Persist["/workflow-persist"]:::atomic
-        End["/workflow-end"]:::atomic
+        Start["/sanctuary-start"]:::atomic
+        Scout["/sanctuary-scout"]:::atomic
+        Audit["/sanctuary-audit"]:::atomic
+        Seal["/sanctuary-seal"]:::atomic
+        Persist["/sanctuary-persist"]:::atomic
+        End["/sanctuary-end"]:::atomic
         Sync["/codify-intelligence-sync"]:::atomic
     end
 
@@ -56,8 +56,8 @@ graph TD
     P128 --> Sync
 
     %% Links
-    click P128 "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-learning-loop.md" "View Workflow"
-    click Scout "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-scout.md" "View Workflow"
-    click Audit "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-audit.md" "View Workflow"
-    click Seal "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-seal.md" "View Workflow"
-    click Persist "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/workflow-persist.md" "View Workflow"
+    click P128 "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md" "View Workflow"
+    click Scout "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/sanctuary_protocols/sanctuary-scout.md" "View Workflow"
+    click Audit "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/sanctuary_protocols/sanctuary-audit.md" "View Workflow"
+    click Seal "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/sanctuary_protocols/sanctuary-seal.md" "View Workflow"
+    click Persist "https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/sanctuary_protocols/sanctuary-persist.md" "View Workflow"

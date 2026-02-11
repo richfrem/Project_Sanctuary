@@ -10,9 +10,9 @@ While this solved the fragility of Bash logic, it retained "Triple Tracking" (Ma
 ## Decision
 We will remove the Shim Layer entirely.
 
-1.  **Delete** all `scripts/bash/codify-*.sh` and `scripts/bash/workflow-start.sh`.
+1.  **Delete** all `scripts/bash/codify-*.sh` and `scripts/bash/sanctuary-start.sh`.
 2.  **Update** all 27+ `.agent/workflows/*.md` files to invoke the Python CLI directly:
-    *   Old: `source scripts/bash/workflow-start.sh ...`
+    *   Old: `source scripts/bash/sanctuary-start.sh ...`
     *   New: `python tools/cli.py workflow start ...`
 
 > [!IMPORTANT]

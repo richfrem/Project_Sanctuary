@@ -1,0 +1,1 @@
+/Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/rules/constitution.md

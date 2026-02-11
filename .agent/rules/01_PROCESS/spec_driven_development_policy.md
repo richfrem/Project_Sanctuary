@@ -17,7 +17,7 @@ For deterministic, repetitive workflows (e.g., `/codify-rlm-distill`, `/codify-v
 
 ### 2.2 Track B: Custom Specs (Discovery)
 For ambiguous, creative work (e.g., "Design new Auth System").
-*   **Workflow**: The User invokes `/speckit-specify` -> The Agent **Drafts** a custom Spec -> User Approves -> Plan -> Execute.
+*   **Workflow**: The User invokes `/spec-kitty.specify` -> The Agent **Drafts** a custom Spec -> User Approves -> Plan -> Execute.
 *   **Artifacts**: Lives in `specs/`.
 
 ### 2.3 Track C: Micro-Tasks (Maintenance)
@@ -45,11 +45,11 @@ For Tracks A and B, the following artifacts are mandatory in `specs/NNN/`:
 *   **Purpose**: Checklist for execution.
 
 ## 4. The Workflow Cycle
-1.  **Initialize**: User creates spec bundle via `/speckit-specify` (or manual).
+1.  **Initialize**: User creates spec bundle via `/spec-kitty.specify` (or manual).
 2.  **Specify**: Agent creates `spec.md`. User reviews.
 3.  **Plan**: Agent creates `plan.md`. Agent self-checks Gates. User reviews.
 4.  **Execute**: Agent generates `tasks.md`.
-5.  **Implement**: Agent executes tasks using `/speckit-implement`.
+5.  **Implement**: Agent executes tasks using `/spec-kitty.implement`.
 
 ## 4. Reverse-Engineering (Migration Context)
 When migrating or improving an existing component:

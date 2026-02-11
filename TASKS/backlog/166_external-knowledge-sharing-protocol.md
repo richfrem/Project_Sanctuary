@@ -86,8 +86,8 @@ Create **ADR-XXX: External Knowledge Sharing Policy** that defines:
 - [ ] Include step-by-step checklist for each sharing scenario
 
 ### Phase 3: Integration
-- [ ] Add to `/workflow-persist` as optional MoltBook broadcast step
-- [ ] Update `/workflow-end` to prompt for external sharing consideration
+- [ ] Add to `/sanctuary-persist` as optional MoltBook broadcast step
+- [ ] Update `/sanctuary-end` to prompt for external sharing consideration
 - [ ] Create `LEARNING/topics/<topic>/external_shares.md` template
 
 ## References

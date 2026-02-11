@@ -125,7 +125,7 @@ def scan_workflows():
             # Detect track from filename if not in frontmatter
             track = meta.get('track')
             if track is None:
-                if f.name.startswith("speckit-"):
+                if f.name.startswith("spec-kitty."):
                     track = "Discovery"
                 else:
                     track = "Factory"

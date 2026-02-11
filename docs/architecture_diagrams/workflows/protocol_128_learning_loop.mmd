@@ -6,7 +6,7 @@ config:
 
 %% Name: Protocol 128: Learning Loop (v3.0 - with RLM Synthesis)
 %% Description: 10-phase Cognitive Continuity workflow for agent session management
-%% Workflow: .agent/workflows/workflow-learning-loop.md (human-readable steps)
+%% Workflow: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md (human-readable steps)
 %% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
 %% Phases: Scout → Synthesize → Strategic Gate → Audit → RLM → Seal → Persist → Self-Correct → Ingest → Forge
 
@@ -14,7 +14,7 @@ config:
 flowchart TB
     subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
         direction TB
-        Start["Session Start<br>(/workflow-start + /speckit-specify)"] --> AccessMode{"Access Mode?"}
+        Start["Session Start<br>(/sanctuary-start + /spec-kitty.specify)"] --> AccessMode{"Access Mode?"}
         
         %% Context Note
         ContextNote["ℹ️ Context: Executed within Standard Hybrid Workflow<br>(See hybrid-spec-workflow.mmd)"] -.-> Start
@@ -25,7 +25,7 @@ flowchart TB
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
         IDE_Wakeup --> IronCheckGate1{Iron Check?}
         
-        IronCheckGate1 -- PASS --> IDE_Debrief["Workflow: /workflow-scout<br>(Calls cortex debrief)"]
+        IronCheckGate1 -- PASS --> IDE_Debrief["Workflow: /sanctuary-scout<br>(Calls cortex debrief)"]
         IronCheckGate1 -- FAIL --> SafeMode1[SAFE MODE<br>Read-Only / Halt]
         
         MCP_Wakeup --> IronCheckGate1
@@ -69,7 +69,7 @@ flowchart TB
         CreateFolder --> CaptureResearch["3. Capture Research in Topic Folder<br>(analysis.md, questions.md, sources.md)"]
         CaptureResearch --> UpdateManifest["4. Update manifest<br>(.agent/learning/learning_audit/learning_audit_manifest.json)"]
         UpdateManifest --> UpdatePrompt["5. UPDATE prompts<br>(.agent/learning/learning_audit/learning_audit_prompts.md)"]
-        UpdatePrompt --> GenerateSnapshot["6. Workflow: /workflow-audit<br>(Protocol 130 Dedupe)"]
+        UpdatePrompt --> GenerateSnapshot["6. Workflow: /sanctuary-audit<br>(Protocol 130 Dedupe)"]
         GenerateSnapshot --> SharePacket["7. Output Path:<br>.agent/learning/learning_audit/learning_audit_packet.md"]
         SharePacket --> ReceiveFeedback{"8. Red Team Feedback"}
         ReceiveFeedback -- "More Research" --> CaptureFeedback["Capture Feedback in Topic Folder"]
@@ -90,7 +90,7 @@ flowchart TB
 
     subgraph subGraphSeal["VI. The Technical Seal"]
         direction TB
-        CaptureSeal["Workflow: /workflow-seal<br>(Triggers RLM + Iron Check)"] --> SealCheck{Iron Check?}
+        CaptureSeal["Workflow: /sanctuary-seal<br>(Triggers RLM + Iron Check)"] --> SealCheck{Iron Check?}
         SealCheck -- FAIL --> SafeMode2[SAFE MODE<br>Seal Blocked]
         SealCheck -- PASS --> SealSuccess[Seal Applied]
     end
@@ -99,8 +99,8 @@ flowchart TB
     subgraph subGraphPersist["VII. Soul Persistence (ADR 079 / 081)"]
         direction TB
         choice{Persistence Type}
-        choice -- Incremental --> Inc["Workflow: /workflow-persist<br>(Append 1 Record)"]
-        choice -- Full Sync --> Full["Workflow: /workflow-persist (Full)<br>(Regenerate ~1200 records)"]
+        choice -- Incremental --> Inc["Workflow: /sanctuary-persist<br>(Append 1 Record)"]
+        choice -- Full Sync --> Full["Workflow: /sanctuary-persist (Full)<br>(Regenerate ~1200 records)"]
         
         subgraph HF_Repo["HuggingFace: Project_Sanctuary_Soul"]
             MD_Seal["lineage/{MODEL}_seal_{TIMESTAMP}.md"]
@@ -113,16 +113,16 @@ flowchart TB
     subgraph PhaseVIII [Phase VIII: Self-Correction]
         direction TB
         Deployment[Deploy & Policy Update]
-        Retro["Loop Retrospective<br>Workflow: /workflow-retrospective<br>(Singleton)"]
+        Retro["Loop Retrospective<br>Workflow: /sanctuary-retrospective<br>(Singleton)"]
         ShareRetro["Share with Red Team<br>(Meta-Audit)"]
     end
     style PhaseVIII fill:#d4edda,stroke:#155724,stroke-width:2px
 
     subgraph PhaseIX [Phase IX: Relational Ingestion & Closure]
         direction TB
-        Ingest["Workflow: /workflow-ingest<br>(Update RAG Vector DB)"]
+        Ingest["Workflow: /sanctuary-ingest<br>(Update RAG Vector DB)"]
         GitOps["Git: add . && commit && push<br>(Sync to Remote)"]
-        End["Workflow: /workflow-end"]
+        End["Workflow: /sanctuary-end"]
         Ingest --> GitOps
         GitOps --> End
     end

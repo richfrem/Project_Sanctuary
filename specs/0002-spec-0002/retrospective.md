@@ -14,7 +14,7 @@
 - [x] "honestly you and claude did great doing a first cli + workflow enabled loop. other than this missing parts of the spec kit folder it went really well"
 
 ### A2. What was frustrating or confusing?
-- [x] "confusing why those files were missing" (referring to `workflow-retrospective.md` and `workflow-end.md` templates in the spec folder)
+- [x] "confusing why those files were missing" (referring to `sanctuary-retrospective.md` and `sanctuary-end.md` templates in the spec folder)
 
 ### A3. Did the Agent ignore any questions or feedback?
 - [x] No (User note: "yes you upddateted the workflow manager to address it great job")
@@ -40,19 +40,19 @@
 - [x] **Flexibility**: We successfully pivoted from "delete legacy manifests" to "adapt legacy manifests" without breaking the new architecture.
 
 ### B2. What was difficult or confusing?
-- [x] **Lifecycle Templates**: The "Just-In-Time" generation of `retrospective.md` and `workflow-end.md` caused confusion. It wasn't clear if they *should* exist or not until the very end.
+- [x] **Lifecycle Templates**: The "Just-In-Time" generation of `retrospective.md` and `sanctuary-end.md` caused confusion. It wasn't clear if they *should* exist or not until the very end.
 - [x] **Action**: Updated `workflow_manager.py` to create these deterministically at start-up.
 - [x] **Missing Tasks**: The original plan didn't explicitly account for the "Meta-Workflow" (updating the workflow tools themselves).
 - [x] **Backlog Additions**:
     - Task #162: Standardize Lifecycle Workflows (Audit `.sh` vs `cli.py` gaps).
-    - Task #163: Audit `workflow-start.md` to ensure it reflects the new deterministic template creation.
+    - Task #163: Audit `sanctuary-start.md` to ensure it reflects the new deterministic template creation.
 
 ### B3. Did we follow the plan?
 - [x] Yes (Mostly)
 - *If No, why?*: We deviated to add "Phase 3" (Lifecycle Integration) mid-flight to address the missing templates issue, which was the right call. The pivot on Manifests (keeping legacy) was also a deviation but authorized.
 
 ### B4. Documentation Gaps
-- [x] Did we find any undocumented dependencies? Yes, the "Lifecycle Templates" in `workflow_manager.py` were not documented in `workflow-start.md`.
+- [x] Did we find any undocumented dependencies? Yes, the "Lifecycle Templates" in `workflow_manager.py` were not documented in `sanctuary-start.md`.
 - [x] Did we have to "guess" any logic? No, but we had to inspect code to find where the templates were used.
 
 ---
@@ -69,7 +69,7 @@
 
 ### Backlog Items (Use `/create-task`)
 - [ ] Task #162: Standardize Lifecycle Workflows
-- [ ] Task #163: Audit workflow-start.md
+- [ ] Task #163: Audit sanctuary-start.md
 
 ### Backlog Items (Use `/create-task`)
 - [ ] [Larger improvement requiring separate task]
@@ -79,7 +79,7 @@
 ## Part D: Files Modified
 
 List all files actually modified in this workflow (proof check reference):
-- [x] `.agent/templates/workflow/workflow-retrospective-template.md`
+- [x] `.agent/templates/workflow/sanctuary-retrospective-template.md`
 - [x] `specs/0002-spec-0002/tasks.md`
 - [x] `tools/orchestrator/workflow_manager.py`
 - [x] `specs/0002-spec-0002/retrospective.md` (Self-referential)

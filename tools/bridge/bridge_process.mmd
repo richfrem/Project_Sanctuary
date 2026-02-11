@@ -1,0 +1,21 @@
+flowchart TD
+    subgraph Init [1. Initialization]
+        A[Run: spec-kitty init . --ai windsurf] --> B[.windsurf/workflows]
+        A --> C[.kittify/memory]
+    end
+
+    subgraph Bridge [2. Bridge Script Execution]
+        B & C --> D{speckit_system_bridge.py}
+        
+        D -->|Read & Convert| E[Sync Antigravity]
+        D -->|Read & Convert| F[Sync Claude]
+        D -->|Read & Convert| G[Sync Gemini]
+        D -->|Read & Convert| H[Sync Copilot]
+    end
+
+    subgraph Targets [3. Target Agent Configs]
+        E --> I[.agent/workflows & rules]
+        F --> J[.claude/prompts & CLAUDE.md]
+        G --> K[.gemini/commands & GEMINI.md]
+        H --> L[.github/prompts & instructions.md]
+    end

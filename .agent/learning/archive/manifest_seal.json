@@ -18,7 +18,7 @@
   "mcp_servers/gateway/fleet_setup.py",
   ".env.example",
   ".agent/learning/cognitive_primer.md",
-  ".agent/workflows/recursive_learning.md",
+  ".agent/workflows/sanctuary-recursive-learning.md",
   "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
   "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
   "docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd",

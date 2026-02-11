@@ -5,7 +5,7 @@ graph TD
     PythonCLI{{"🐍 Python CLI<br/>(tools/cli.py workflow start)"}}
     Orchestrator[["⚙️ WorkflowManager<br/>(tools/orchestrator/)"]]
 
-    User -->|"1. Request:<br/>/workflow-learning-loop"| ThinShim
+    User -->|"1. Request:<br/>/sanctuary-learning-loop"| ThinShim
     
     %% Shim is pass-through
     ThinShim -->|"2. exec python3<br/>tools/cli.py ..."| PythonCLI
@@ -65,15 +65,15 @@ graph TD
     %% Custom goes to Implementation
     Execution -->|Custom| CustomImpl
     subgraph CustomImpl ["Custom Implementation"]
-        Implement[/speckit-implement/]
+        Implement[/spec-kitty.implement/]
         ManualCode[Manual Code]
     end
     
     %% Learning goes to Protocol Ops
     subgraph LearningOps ["Track C: Learning Ops (Protocol 128)"]
-        Audit[/workflow-audit/]
-        Seal[/workflow-seal/]
-        Persist[/workflow-persist/]
+        Audit[/sanctuary-audit/]
+        Seal[/sanctuary-seal/]
+        Persist[/sanctuary-persist/]
         Audit --> Seal --> Persist
     end
     
@@ -82,8 +82,8 @@ graph TD
     CustomImpl --> Closure
     
     subgraph Closure ["Universal Closure"]
-        Retro[/workflow-retrospective/]
-        End[/workflow-end/]
+        Retro[/sanctuary-retrospective/]
+        End[/sanctuary-end/]
         Retro --> End
     end
     

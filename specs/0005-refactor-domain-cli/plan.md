@@ -39,13 +39,13 @@ Achieve feature parity in `tools/cli.py` relative to `scripts/domain_cli.py` for
 
 ### 3. Workflow Updates
 
-#### [MODIFY] [workflow-adr.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/workflow-adr.md)
+#### [MODIFY] [adr-manage.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/utilities/adr-manage.md)
 - Replace `python scripts/domain_cli.py adr` with `python tools/cli.py adr`.
 
-#### [MODIFY] [workflow-chronicle.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/workflow-chronicle.md)
+#### [MODIFY] [sanctuary-chronicle.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/sanctuary_protocols/sanctuary-chronicle.md)
 - Replace `python scripts/domain_cli.py chronicle` with `python tools/cli.py chronicle`.
 
-#### [MODIFY] [workflow-task.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/workflow-task.md)
+#### [MODIFY] [tasks-manage.md](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/utilities/tasks-manage.md)
 - Replace `python scripts/domain_cli.py task` with `python tools/cli.py task`.
 
 ---
@@ -68,4 +68,4 @@ Achieve feature parity in `tools/cli.py` relative to `scripts/domain_cli.py` for
 2.  **Task**: `python3 tools/cli.py task list --status backlog` → Verify output.
 3.  **ADR**: `python3 tools/cli.py adr get 85` → Verify content retrieval.
 4.  **Protocol**: `python3 tools/cli.py protocol search "Mnemonic"` → Verify search.
-5.  **Workflow**: Run `/workflow-adr` steps → Verify new CLI usage.
+5.  **Workflow**: Run `/adr-manage` steps → Verify new CLI usage.
