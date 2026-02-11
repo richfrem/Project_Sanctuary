@@ -25,16 +25,15 @@ tier: 1
 2. **Present Links**: Provide the **Review Items** section with artifact links.
 3. **Wait for LGTM**: Obtain explicit developer approval in chat.
 
-> [!IMPORTANT]
+> > [!IMPORTANT] **Protocol 128 Pre-Requisites (Must Complete First):**
 > **Do NOT proceed** until user explicitly approves (e.g., "LGTM", "approved", "go ahead").
+> 1. **Seal** → `/workflow-seal` (snapshot created)
+> 2. **Persist** → `/workflow-persist` (HuggingFace upload)
+> 3. **Retrospective** → `/workflow-retrospective` (self-reflection)
 
 ---
 
-## Step 2: Handoff to User for Git Operations
-
-> [!CAUTION] **AGENT: DO NOT RUN GIT COMMANDS DIRECTLY!**
-> You MUST instruct the User to run the bash script below.
-> This ensures proper environment handling (LFS, hooks, credentials).
+## Step 2: Final Git Commit
 
 **Tell the User:**
 > "Please run the following command to complete the git operations:"
@@ -64,19 +63,12 @@ The script handles:
 
 ## Step 4: Cleanup & Closure
 
-> [!CAUTION] **AGENT: DO NOT RUN GIT CLEANUP COMMANDS DIRECTLY!**
+After merge confirmation:
+```bash
+scripts/bash/workflow-cleanup.sh
+```
 
-After merge confirmation, tell the User:
-> "Please run the cleanup script:"
-> ```bash
-> scripts/bash/workflow-cleanup.sh
-> ```
-
-The script handles:
-- `git checkout main`
-- `git pull origin main`
-- `git branch -d [FeatureBranch]`
-- Remote branch deletion (optional)
+---
 
 ## Step 5: Task File Closure
 
