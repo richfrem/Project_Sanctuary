@@ -65,6 +65,22 @@
         {
             "path": ".agent/skills/code-review/SKILL.md",
             "note": "Current topic: New code review skill"
+        },
+        {
+            "path": "LEARNING/protocols/dual_loop_implementation_summary.md",
+            "note": "Dual-Loop implementation summary"
+        },
+        {
+            "path": ".agent/skills/dual-loop-supervisor/SKILL.md",
+            "note": "Dual-Loop Supervisor Skill"
+        },
+        {
+            "path": "docs/architecture_diagrams/workflows/dual_loop_architecture.mmd",
+            "note": "Dual-Loop Architecture Diagram"
+        },
+        {
+            "path": ".agent/workflows/sanctuary_protocols/dual-loop-learning.md",
+            "note": "Protocol 133 Workflow"
         }
     ]
 }
