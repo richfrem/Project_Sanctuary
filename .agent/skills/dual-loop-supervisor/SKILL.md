@@ -94,9 +94,13 @@ The main entry point for running a Dual-Loop task.
 2.  **Architect**: Execute `/spec-kitty.plan` (Plan).
 3.  **Tasking**: Execute `/spec-kitty.tasks` (Prompts).
 4.  **Launch**: Run `run_workflow.py` for a specific WP ID.
+    - *Troubleshooting*: If worktree path is not auto-detected, use `git worktree list`.
 5.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).
-6.  **Verify**: Outer Loop runs verification tool.
-7.  **Seal**: Outer Loop updates `tasks.md` and commits.
+6.  **Verify**: Outer Loop runs `tools/orchestrator/dual_loop/verify_inner_loop_result.py`.
+7.  **Seal**: 
+    - **Commit**: `cd .worktrees/<WP> && git add . && git commit -m "feat(WP): ..."`
+    - **Mark**: Update `tasks.md` status.
+    - **Push**: `spec-kitty agent tasks move-task <WP> --to for_review`.
 
 ## Constraints
 

@@ -27,24 +27,13 @@ spec-kitty agent workflow implement --task-id WP-06 --agent "Antigravity"
 ```
 
 **Output Parsing**:
-The command will output the path to the created worktree. You MUST capture this and change directory into it.
-Example output:
-```
-...
-SUCCESS: Worktree created at .worktrees/006-feature-WP-06
-To start working:
-cd .worktrees/006-feature-WP-06
-...
-```
-
-**Note**: If the previous WP was merged to main, use `--base main` if the tool doesn't auto-detect it.
-```bash
-spec-kitty implement WP06 --base main
-```
+1. Capture the path from the tool output.
+2. If output is truncated or unclear, run `git worktree list` to find the newest worktree.
+3. **CRITICAL**: Do NOT guess the path. Verify it exists.
 
 ## 2. Implementation Loop
-1.  **Navigate**: `cd .worktrees/<WP-ID>`
-2.  **Install**: `npm install` (backend/frontend)
+1.  **Navigate**: `cd .worktrees/<WP-ID>` (Verify with `pwd`)
+2.  **Setup**: Install dependencies if needed (detect project type: Python/Node/etc).
 3.  **Code**: Implement the feature.
 4.  **Verify**: Run tests or manual verification.
 5.  **Commit**: `git add . && git commit -m "feat(WPxx): description"` (Local worktree commit)
