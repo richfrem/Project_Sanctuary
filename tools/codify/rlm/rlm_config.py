@@ -142,23 +142,67 @@ class RLMConfig:
                 data = json.load(f)
                 
             if self.parser_type == "directory_glob":
-                self.targets = data.get("include", [])
-                # Fallback for Classic Schema (core + topic)
-                if not self.targets:
+                self.targets = []
+                
+                # 1. RLM Manifest Schema v2.0 (target_directories + core_files)
+                if "target_directories" in data:
+                    t_dirs = data.get("target_directories", [])
+                    for d in t_dirs:
+                        if isinstance(d, dict) and "path" in d:
+                            self.targets.append(d["path"])
+                        elif isinstance(d, str):
+                            self.targets.append(d)
+                            
+                if "core_files" in data:
+                    c_files = data.get("core_files", [])
+                    for f in c_files:
+                        if isinstance(f, dict) and "path" in f:
+                            self.targets.append(f["path"])
+                        elif isinstance(f, str):
+                            self.targets.append(f)
+                            
+                # 2. ADR 097 Simple Schema (files array)
+                if "files" in data:
+                    files = data.get("files", [])
+                    for item in files:
+                        if isinstance(item, str):
+                            self.targets.append(item)
+                        elif isinstance(item, dict) and "path" in item:
+                            self.targets.append(item["path"])
+
+                # 3. Original Simple Schema (include array)
+                if "include" in data:
+                     self.targets.extend(data.get("include", []))
+
+                # 4. Fallback for Classic Schema (core + topic) (Legacy ADR 089)
+                if not self.targets and ("core" in data or "topic" in data):
                     self.targets = data.get("core", []) + data.get("topic", [])
                 
-                self.exclude_patterns = data.get("exclude", [])
+                self.exclude_patterns = data.get("exclude_patterns", data.get("exclude", []))
 
                 # Fallback: Inherit Global Exclusions from Ingest Manifest if missing
                 if not self.exclude_patterns:
-                    ingest_path = PROJECT_ROOT / "tools" / "standalone" / "vector-db" / "ingest_manifest.json"
-                    if ingest_path.exists():
-                        try:
-                            with open(ingest_path, "r") as f:
-                                ingest_data = json.load(f)
-                                self.exclude_patterns = ingest_data.get("exclude", [])
-                        except Exception as e:
-                            print(f"⚠️  Failed to load global exclusions: {e}")
+                    # Try local exclusion manifest first (new standard)
+                    excl_path = PROJECT_ROOT / "mcp_servers" / "lib" / "exclusion_manifest.json"
+                    if excl_path.exists():
+                         try:
+                            with open(excl_path, "r") as f:
+                                excl_data = json.load(f)
+                                self.exclude_patterns = excl_data.get("global_exclusions", [])
+                         except Exception:
+                             pass
+                    
+                    # Fallback to older location
+                    if not self.exclude_patterns:
+                        ingest_path = PROJECT_ROOT / "tools" / "standalone" / "vector-db" / "ingest_manifest.json"
+                        if ingest_path.exists():
+                            try:
+                                with open(ingest_path, "r") as f:
+                                    ingest_data = json.load(f)
+                                    self.exclude_patterns = ingest_data.get("exclude", [])
+                            except Exception as e:
+                                print(f"⚠️  Failed to load global exclusions: {e}")
+
             elif self.parser_type == "inventory_dict":
                  # For inventory, we treat the keys or specific fields as targets
                  # Assuming tool_inventory.json structure: {"category": {"tool_name": { "path": "..." }}}
