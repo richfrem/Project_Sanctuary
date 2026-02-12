@@ -71,6 +71,18 @@
             "note": "Dual-Loop implementation summary"
         },
         {
+            "path": "tools/orchestrator/dual_loop/generate_strategy_packet.py",
+            "note": "Tool: Strategy Packet Generator"
+        },
+        {
+            "path": "tools/orchestrator/dual_loop/verify_inner_loop_result.py",
+            "note": "Tool: Inner Loop Verifier"
+        },
+        {
+            "path": "tools/orchestrator/dual_loop/run_workflow.py",
+            "note": "Tool: Dual-Loop Orchestrator (Python)"
+        },
+        {
             "path": ".agent/skills/dual-loop-supervisor/SKILL.md",
             "note": "Dual-Loop Supervisor Skill"
         },

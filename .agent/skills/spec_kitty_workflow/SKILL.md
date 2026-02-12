@@ -10,9 +10,22 @@ This skill documents the standard lifecycle for implementing features using Spec
 ## 1. Start a Work Package (WP)
 Always start by creating an isolated worktree for the task.
 
+**Mandatory**: Before starting, copy the meta-tasks from `.agent/templates/workflow/spec-kitty-meta-tasks.md` into your task list to track workflow steps.
+
 ```bash
-# syntax: spec-kitty implement <WP-ID>
-spec-kitty implement WP06
+# syntax: spec-kitty agent workflow implement --task-id <WP-ID>
+spec-kitty agent workflow implement --task-id WP-06 --agent "Antigravity"
+```
+
+**Output Parsing**:
+The command will output the path to the created worktree. You MUST capture this and change directory into it.
+Example output:
+```
+...
+SUCCESS: Worktree created at .worktrees/006-feature-WP-06
+To start working:
+cd .worktrees/006-feature-WP-06
+...
 ```
 
 **Note**: If the previous WP was merged to main, use `--base main` if the tool doesn't auto-detect it.

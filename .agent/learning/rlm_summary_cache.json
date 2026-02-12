@@ -66,52 +66,40 @@
     "summary": "The MCP Commit Guide defines a standardized format for commit messages across various domains, ensuring functional coherence while migrating from the failed `commit_manifest.json` system. It specifies valid domains, examples, and migration instructions for transitioning to the new architecture without manifest files. The guide is part of Protocol 101 v3.0, which has permanently purged the obsolete manifest check."
   },
   ".agent/rules/01_PROCESS/spec_driven_development_policy.md": {
-    "file_mtime": 1770826545.5671077,
-    "hash": "ee9c5ca411ae243d",
-    "summarized_at": "2026-02-11T19:53:11.596302",
-    "summary": {
-      "summary": "Rule: SDD Policy (Tier 1 Process). Mandates the Spec -> Plan -> Task lifecycle for all significant work (Tracks A and B). Prohibits jumping straight to code. Requires artifacts: `spec.md` (What/Why), `plan.md` (How), and `tasks.md` (Checklist). Defines the 'Discovery -> Reverse-Spec -> Plan' flow for migration tasks."
-    }
+    "file_mtime": 1770881593.5021627,
+    "hash": "fce5bd110eb16e53",
+    "summarized_at": "2026-02-12T10:51:58.963215",
+    "summary": "The Spec-Driven Development (SDD) Policy, effective as of January 29, 2026, mandates a structured lifecycle (Spec \u2192 Plan \u2192 Tasks) for significant work in Project Sanctuary, utilizing three tracks (Factory, Discovery, Micro-Tasks), and requiring specific artifacts (spec.md, plan.md, tasks.md) to ensure documentation-first, test-driven, and simple approach, with reverse-engineering guidelines provided for migrating existing components."
   },
   ".agent/rules/01_PROCESS/tool_discovery_enforcement_policy.md": {
-    "file_mtime": 1770001661.559426,
-    "hash": "1a870227056aba5f",
-    "summarized_at": "2026-02-11T19:53:11.596658",
-    "summary": {
-      "summary": "Rule: Tool Discovery Enforcement (Tier 1 Process). STRICTLY PROHIBITS using `grep`, `find`, or `ls -R` to look for tools. Mandates using `python tools/retrieve/rlm/query_cache.py --type tool` to search the index. Enforces 'Late Binding': You must read the script header (Official Manual) before execution. If a tool is broken, Fix It; do not bypass it."
-    }
+    "file_mtime": 1770881593.5037842,
+    "hash": "6b883826b811083d",
+    "summarized_at": "2026-02-12T10:52:10.275860",
+    "summary": "The Tool Discovery & Use Policy in Project Sanctuary mandates strict adherence to a Python-based tool discovery process via `query_cache.py`, prohibiting filesystem searches or fallbacks, and requiring late-binding (reading header before execution) and immediate correction of imperfect tools, ensuring secure and controlled tool usage within the project's architecture."
   },
   ".agent/rules/01_PROCESS/workflow_enforcement_policy.md": {
-    "file_mtime": 1770828417.9218552,
-    "hash": "8f774975339325fe",
-    "summarized_at": "2026-02-11T19:53:11.594407",
-    "summary": {
-      "summary": "Rule: Workflow Enforcement (Tier 1 Process). Mandates that Agents MUST check `.agent/workflows/` (The 'Cookbook') before attempting any task. Prohibits 'Cowboy Coding' (ad-hoc commands) in favor of standardized, repeatable workflows. Enforces the usage of `/sanctuary-start` as the universal entry point and requires creating new workflows for any repeated process."
-    }
+    "file_mtime": 1770881593.5050142,
+    "hash": "b9e23463b3932fd4",
+    "summarized_at": "2026-02-12T10:51:40.015382",
+    "summary": "The Project Sanctuary's Workflow Enforcement Policy outlines a Thick Python / Thin Shim architecture, where user interactions are mediated by Slash Commands (`.agent/workflows/*.md`), which serve as the user-facing interface; these commands execute Python scripts via thin Bash wrappers (`scripts/bash/*.sh`); the CLI Router (`tools/cli.py`) dispatches to an Orchestrator (`tools/orchestrator/`), responsible for logic, enforcement, and Git checks; this setup supports various command domains including Retrieve, Investigate, Codify, Curate, Sandbox, and Discovery, with mandatory registration procedures post-workflow or tool creation/modification."
   },
   ".agent/rules/02_OPERATIONS/git_workflow_policy.md": {
-    "file_mtime": 1770001661.5600035,
-    "hash": "13043d0b993f07ab",
-    "summarized_at": "2026-02-11T19:53:11.596793",
-    "summary": {
-      "summary": "Rule: Git Workflow (Tier 2 Operations). Mandates Feature Branch Workflow. DIRECT COMMITS TO MAIN ARE FORBIDDEN. Branch naming: `feat/`, `fix/`, `docs/`, `refactor/`. Mandates Conventional Commits (`feat: description`). Requires Pull Requests for all merges. Defines the 'Squash and Merge' preference for clean history."
-    }
+    "file_mtime": 1770881593.5061338,
+    "hash": "b5a5f465faeedbd9",
+    "summarized_at": "2026-02-12T10:51:17.991975",
+    "summary": "This Git Workflow Policy for Project Sanctuary mandates strict adherence to feature branching, explicit user approval for pushing changes, and a singular active feature branch at any given time; it enforces Conventional Commits for commit messages and provides a conflict resolution procedure, ensuring a structured, collaborative, and conflict-managed development process."
   },
   ".agent/rules/03_TECHNICAL/coding_conventions_policy.md": {
-    "file_mtime": 1770828417.9206188,
-    "hash": "9e26432c4d3c185a",
-    "summarized_at": "2026-02-11T19:53:11.597082",
-    "summary": {
-      "summary": "Rule: Coding Conventions (Tier 3 Technical). Mandates Dual-Layer Documentation (Header + Docstring) for all code. Enforces strictly typed Python (Type Hints) and TypeScript. Defines canonical file headers for all languages. Requires mandatory registration of all `tools/` scripts in `tool_inventory.json` (enforced by audit). Structure: `module/{models,services,repositories}`."
-    }
+    "file_mtime": 1770881593.5066507,
+    "hash": "afce1dc8b609331f",
+    "summarized_at": "2026-02-12T10:51:06.830361",
+    "summary": "The Project Sanctuary's \"Coding Conventions Policy\" outlines non-negotiable technical standards including dual documentation layers, file headers, type hints, naming conventions, refactoring thresholds, tool registration in a JSON inventory, and a simple manifest schema, ensuring consistent, maintainable, and understandable codebase across Python, TypeScript/JavaScript, and C# languages."
   },
   ".agent/rules/03_TECHNICAL/dependency_management_policy.md": {
-    "file_mtime": 1770001661.560402,
-    "hash": "a4ec87b611abd839",
-    "summarized_at": "2026-02-11T19:53:11.596927",
-    "summary": {
-      "summary": "Rule: Dependency Management (Tier 3 Technical). Mandates 'One Runtime World': Every service owns its environment via `requirements.txt`. Enforces the `.in` (Human Intent) -> `pip-compile` -> `.txt` (Machine Truth) workflow to lock dependencies. Prohibits manual `pip install`. Defines a 3-Tier hierarchy (Core, Specialized, Dev Tools) to manage bloat."
-    }
+    "file_mtime": 1770881593.5070074,
+    "hash": "6e49d252992b41c6",
+    "summarized_at": "2026-02-12T10:50:53.845772",
+    "summary": "The Project Sanctuary's Python Dependency Management Policy prioritizes automated dependency management via `pip-compile`, enforcing commit of `.in` and `.txt` files together, maintaining service sovereignty with tiered hierarchy (Core, Service-specific, Dev-only), and advocating for declarative Dockerfiles to ensure reproducibility and control over dependencies."
   },
   ".agent/rules/constitution.md": {
     "file_mtime": 1770828417.9190893,
@@ -129,6 +117,36 @@
       "summary": "Skill: Code Review. Defines a structured, multi-perspective code review process. Mandates separate passes for Policy Compliance (headers, types), Bug Detection (logic errors), Historical Context (git blame), and Zero Trust (security). Uses a confidence scoring system (0-100) to filter noise, only reporting findings with score >= 50. Integrates with the `/sanctuary-end` workflow."
     }
   },
+  ".agent/skills/code-review/references/security-patterns.md": {
+    "file_mtime": 1770881593.507759,
+    "hash": "df2cb10ac4cadc40",
+    "summarized_at": "2026-02-12T11:14:49.017756",
+    "summary": "The Project Sanctuary document outlines a set of secure coding practices and patterns to mitigate common security risks in Python, JavaScript/TypeScript, and GitHub Actions, emphasizing the avoidance of dangerous functions like `eval()`, dynamic imports, shell injections, and command injections; advocating for safe alternatives such as JSON parsing, explicit imports, parameterized queries, input validation, and logging over secret disclosure."
+  },
+  ".agent/skills/coding-conventions/SKILL.md": {
+    "file_mtime": 1770881593.508504,
+    "hash": "ae068c48b51b8cb7",
+    "summarized_at": "2026-02-12T10:54:07.378512",
+    "summary": "The Project Sanctuary document outlines comprehensive coding conventions and documentation standards for Python, TypeScript/JavaScript, and C#/.NET codebases, emphasizing dual-layer documentation (external comments/headers and internal docstrings), naming conventions, code quality thresholds, module organization, and tool inventory integration, ensuring consistency, maintainability, and scalability across the project."
+  },
+  ".agent/skills/coding-conventions/references/header_templates.md": {
+    "file_mtime": 1770881593.508942,
+    "hash": "f429c19d373c34a3",
+    "summarized_at": "2026-02-12T11:12:34.594934",
+    "summary": "The document outlines detailed header templates for Python CLI tools, TypeScript utility modules, and React components within Project Sanctuary, emphasizing the importance of clear purpose descriptions, input/output details, key functions, usage examples, dependencies, and adherence to a consistent comment style guide, ensuring comprehensive documentation for code maintainability and system understanding."
+  },
+  ".agent/skills/dependency-management/SKILL.md": {
+    "file_mtime": 1770881593.5095499,
+    "hash": "84ebff650069700f",
+    "summarized_at": "2026-02-12T10:54:55.381661",
+    "summary": "The Project Sanctuary's dependency management system employs a tiered hierarchy and locked-file workflow using pip-compile, ensuring consistent Python package versions across MCP server fleet services; it mandates all changes to flow through `.in` \u2192 `pip-compile` \u2192 `.txt`, with one runtime per service, enforcing strict repository layout and response protocols for security vulnerabilities or Dependabot alerts, while strictly prohibiting direct `pip install <pkg>` commands in Dockerfiles."
+  },
+  ".agent/skills/dependency-management/references/policy_details.md": {
+    "file_mtime": 1770881593.5106866,
+    "hash": "04e2d9a1a04cd9d9",
+    "summarized_at": "2026-02-12T11:11:29.755579",
+    "summary": "The Project Sanctuary Dependency Management Policy outlines a structured approach for managing dependencies across multiple services (Core, Cortex, Domain, Filesystem, Git, Network, Utils), including specific security patch history from January to February 2026, ensuring consistent dependency management across execution environments via locked artifacts, and providing detailed instructions for transitive dependency pinning in response to vulnerabilities."
+  },
   ".agent/skills/doc-coauthoring/SKILL.md": {
     "file_mtime": 1770862083.5400047,
     "hash": "2e47d78846faeea4",
@@ -137,13 +155,29 @@
       "summary": "Skill: Doc Co-authoring. A structured workflow for collaborative documentation writing. Phases include scoping, brainstorming, drafting, and iterative refinement. Uses a 'Reader Testing' phase to simulate new user comprehension using sub-agents. Enforces a 'Gap Check' to ensure completeness and relies on `str_replace` for precise edits to artifacts."
     }
   },
+  ".agent/skills/dual-loop-supervisor/SKILL.md": {
+    "file_mtime": 1770922158.2955112,
+    "hash": "a8e3b98fd96462c3",
+    "summarized_at": "2026-02-12T10:53:21.585321",
+    "summary": "The \"dual-loop-supervisor\" skill orchestrates the Dual-Loop Agent Architecture, managing strategic control and tactical execution by defining how the Outer Loop generates strategy packets for the Inner Loop and verifies its output, ensuring seamless collaboration while maintaining version control isolation and minimalistic packet generation."
+  },
+  ".agent/skills/dual-loop-supervisor/prompts/strategy_generation.md": {
+    "file_mtime": 1770918894.0352788,
+    "hash": "c3bbf5d3a411d4f3",
+    "summarized_at": "2026-02-12T11:16:32.532735",
+    "summary": "The Project Sanctuary document outlines the role and guidelines for a Strategic Controller in a Dual-Loop Agent Architecture, tasked with distilling complex tasks into concise, token-efficient Strategy Packets for an Inner Loop coding agent to execute autonomously, adhering to strict rules of brevity, atomicity, and explicitness."
+  },
+  ".agent/skills/dual-loop-supervisor/prompts/verification.md": {
+    "file_mtime": 1770918894.0615792,
+    "hash": "a01f2e5c2d7cdd29",
+    "summarized_at": "2026-02-12T11:15:45.952027",
+    "summary": "The Verification Prompt document outlines the role of the Dual-Loop Agent Architecture's Outer Loop, functioning as a \"Verification Gate,\" which reviews and decides whether the Inner Loop's output meets predefined acceptance criteria from the original Strategy Packet, ensuring compliance with project constraints; it provides a detailed checklist for verification, output format guidelines, decision rules, and anti-patterns to avoid, aiming for precise, targeted feedback in case of failure."
+  },
   ".agent/skills/guardian_onboarding/SKILL.md": {
-    "file_mtime": 1770822542.2977462,
-    "hash": "b7aefeb8f1854270",
-    "summarized_at": "2026-02-11T19:49:32.810761",
-    "summary": {
-      "summary": "Skill: Guardian Onboarding (The Orientator). The MANDATORY boot sequence for every new session. Grounds the agent in Protocol 128. Steps: 1. Read `guardian_boot_digest.md` (Tactical Status). 2. Read `sanctuary-learning-loop.md` (Doctrine). 3. Visualize the flow. 4. Initialize `task.md`. Prevents 'hallucinated starts' by enforcing a strict context loading order."
-    }
+    "file_mtime": 1770884873.5360873,
+    "hash": "e145461e03f46776",
+    "summarized_at": "2026-02-12T10:58:20.249008",
+    "summary": "The Guardian Onboarding (The Orientator) skill, version 1.0 compliant with Protocol 128, ensures consistent and verified context download at the start of each agent session by ingesting current tactical directives, loading the Hardened Learning Loop operational laws, visualizing the learning loop flow, and formally initializing the session with a task list derived from these inputs, thereby preventing \"amnesia\" and ensuring adherence to Protocol 128."
   },
   ".agent/skills/learning-loop/SKILL.md": {
     "file_mtime": 1770863268.586399,
@@ -153,6 +187,18 @@
       "summary": "Skill: Learning Loop (Protocol 128). The core operating procedure for cognitive continuity. Defines the 10-phase lifecycle (Scout -> Orient -> Plan -> Execute -> Review -> Seal -> Persist -> Retrospective -> Ingest -> End). Ensures that every session starts with a verified context download and ends with a cryptographic seal of new knowledge, preventing 'amnesia' and drift."
     }
   },
+  ".agent/skills/learning-loop/references/phases.md": {
+    "file_mtime": 1770881593.5134199,
+    "hash": "74e0460e1f3b581b",
+    "summarized_at": "2026-02-12T11:09:04.552350",
+    "summary": "Project Sanctuary is a meticulously structured, iterative learning protocol divided into ten phases, each with specific tasks, designed to systematically synthesize intelligence, undergo human review, and generate a comprehensive cognitive hologram (learning_package_snapshot.md) encapsulating the session's knowledge; it ensures rigorous content hygiene, strategic alignment, and iterative red-team audits before finalizing with a technical seal and soul persistence, culminating in optional fine-tuning from accumulated traces, all while maintaining a bridge for seamless continuation of subsequent sessions."
+  },
+  ".agent/skills/learning-loop/references/self-correction.md": {
+    "file_mtime": 1770881593.514126,
+    "hash": "08e0521bd83425e1",
+    "summarized_at": "2026-02-12T11:10:16.151960",
+    "summary": "Project Sanctuary's Self-Correction Pattern, derived from Ralph Loop methodology and adapted for Protocol 128 Phase VIII, aims to enhance iterative refinement by autonomously improving each task iteration using previous work as input, with clear completion criteria, incremental goals, and escape hatches; it is optimally suited for tasks with automatic verification and well-defined success criteria, integrating within the broader Learning Loop framework where failures serve as data informing subsequent attempts."
+  },
   ".agent/skills/mcp-builder/SKILL.md": {
     "file_mtime": 1770862083.5467033,
     "hash": "0f4592dcb53cf2b5",
@@ -160,6 +206,30 @@
     "summary": {
       "summary": "Skill: MCP Builder. A comprehensive guide for creating high-quality Model Context Protocol (MCP) servers. Covers both Python (FastMCP) and Node/TypeScript SDKs. Includes project scaffolding, transport configuration (stdio vs SSE), tool definition patterns, and testing strategies. Emphasizes consistent error handling, schema validation, and rigorous evaluation using the `evaluation.md` framework."
     }
+  },
+  ".agent/skills/mcp-builder/reference/evaluation.md": {
+    "file_mtime": 1770881593.5157356,
+    "hash": "8c99479f8a2d22a6",
+    "summarized_at": "2026-02-12T11:06:29.381889",
+    "summary": "The Project Sanctuary document outlines a comprehensive evaluation process for MCP (Machine-readable Content Platform) servers, focusing on creating realistic, complex questions that stress-test the server's tools and enable LLMs to answer them accurately using only read-only, independent, non-destructive operations; the purpose is to assess the server's ability to facilitate accurate, verifiable answers from multiple tool calls, ensuring stability, diversity, and human-readability of both questions and answers, while avoiding ambiguity or reliance on dynamic data."
+  },
+  ".agent/skills/mcp-builder/reference/mcp_best_practices.md": {
+    "file_mtime": 1770881593.5159855,
+    "hash": "80fb4369a349447c",
+    "summarized_at": "2026-02-12T10:59:36.747255",
+    "summary": "The Project Sanctuary document outlines best practices for developing MCP (Modular Command Platform) servers, emphasizing standardized naming conventions, response formats, pagination strategies, transport options, security measures, tool annotations, error handling, testing requirements, and comprehensive documentation to ensure robust, secure, and user-friendly integration of diverse services."
+  },
+  ".agent/skills/mcp-builder/reference/node_mcp_server.md": {
+    "file_mtime": 1770881593.5161538,
+    "hash": "c3ba35a4f599dd53",
+    "summarized_at": "2026-02-12T11:03:55.557700",
+    "summary": "The Node/TypeScript MCP Server Implementation Guide outlines best practices and examples for creating MCP servers using the MCP TypeScript SDK, emphasizing project structure, server setup, tool registration with Zod schema validation, error handling, and adherence to modern APIs; it mandates a specific naming convention (`{service}-mcp-server`), project directory structure, and tool implementation guidelines, ensuring type safety, clear documentation, and flexible response formats (Markdown or JSON), while deprecating old methods in favor of modern, type-safe approaches."
+  },
+  ".agent/skills/mcp-builder/reference/python_mcp_server.md": {
+    "file_mtime": 1770881593.5165951,
+    "hash": "2da52f77e6751910",
+    "summarized_at": "2026-02-12T11:01:57.677692",
+    "summary": "The Python MCP Server Implementation Guide outlines best practices for building MCP servers using the MCP Python SDK, emphasizing server setup, tool registration with Pydantic models for input validation, error handling, and adherence to specific naming conventions and structure; it aims to create efficient, well-documented, and maintainable tools for integrating various services into a unified Model Context Protocol (MCP) framework."
   },
   ".agent/skills/memory-management/SKILL.md": {
     "file_mtime": 1770862399.7509305,
@@ -178,12 +248,16 @@
     }
   },
   ".agent/skills/rlm-distill/SKILL.md": {
-    "file_mtime": 1770864779.4380827,
-    "hash": "dd8255e2c863363f",
-    "summarized_at": "2026-02-11T19:49:32.781744",
-    "summary": {
-      "summary": "Skill: RLM Distill. Replaces the slow local Ollama distiller with an agent-powered workflow. Allows the agent to read source files and generate concise, high-signal summaries for the RLM cache, bypassing the 8B model's latency. Includes procedures for identifying stale files (`find . -mmin -120`), writing structured JSON outputs for tools (`purpose`, `usage`, `args`), and updating `rlm_summary_cache.json` directly."
-    }
+    "file_mtime": 1770884873.538156,
+    "hash": "fa86eeff4cd3ff63",
+    "summarized_at": "2026-02-12T10:57:04.391889",
+    "summary": "The rlm-distill skill aims to enhance Project Sanctuary's RLM cache system by leveraging the agent's advanced summarization capabilities, replacing the slow and less effective local Ollama distiller; it allows for faster, more accurate summaries of documentation and code files, updating relevant JSON caches directly, while retaining the original script for batch processing and CI/CD needs."
+  },
+  ".agent/skills/skill-creator/LICENSE.txt": {
+    "file_mtime": 1770881593.5287666,
+    "hash": "58d1e17ffe5109a7",
+    "summarized_at": "2026-02-12T11:18:32.675174",
+    "summary": "The Apache License Version 2.0 document outlines a perpetual, worldwide, non-exclusive copyright and patent license for Project Sanctuary's software source code (Work) and derivative works, allowing reproduction, distribution, modification, and sublicensing under the condition of preserving original copyright notices, patent claims, trademarks, and attributions; it also includes terms on disclaimer of warranty, limitation of liability, contribution submission, and trademark usage."
   },
   ".agent/skills/skill-creator/SKILL.md": {
     "file_mtime": 1770862083.5351155,
@@ -193,13 +267,23 @@
       "summary": "Skill: Skill Creator. A meta-skill for defining new agent capabilities. Mandated process includes: 1. Understanding concrete usage examples. 2. Planning reusable assets (scripts, templates). 3. Initializing with `init_skill.py`. 4. Writing the `SKILL.md` manual with clear triggers and steps. 5. Packaging with `package_skill.py`. Ensures all new skills meet the Project Sanctuary quality standard."
     }
   },
+  ".agent/skills/skill-creator/references/output-patterns.md": {
+    "file_mtime": 1770881593.5305724,
+    "hash": "d6027800b9d8c265",
+    "summarized_at": "2026-02-12T11:13:50.737528",
+    "summary": "The Project Sanctuary document outlines two primary output patterns\u2014Template and Examples\u2014for skills aiming to generate consistent, high-quality outputs, with the Template Pattern offering strict or flexible templates for structured reports and commit messages, while the Examples Pattern provides input/output pairs to illustrate desired styles and levels of detail in skill outputs."
+  },
+  ".agent/skills/skill-creator/references/workflows.md": {
+    "file_mtime": 1770881593.5311189,
+    "hash": "ef4846877d5dab47",
+    "summarized_at": "2026-02-12T11:13:14.825510",
+    "summary": "The Project Sanctuary document outlines two primary workflow patterns\u2014Sequential and Conditional\u2014for structuring complex tasks in a step-by-step manner, with the former detailing clear, linear procedures (like filling a PDF form) and the latter guiding through branching logic decision points (such as creating or editing content), aiming to facilitate efficient task execution by AI agents like Claude."
+  },
   ".agent/skills/spec_kitty_workflow/SKILL.md": {
-    "file_mtime": 1770820638.0827546,
-    "hash": "8489391ea59d6052",
-    "summarized_at": "2026-02-11T19:49:32.816080",
-    "summary": {
-      "summary": "Skill: Spec Kitty Workflow. Standard operating procedures for the Spec Kitty agentic workflow (Plan -> Implement -> Review -> Merge). Defines the lifecycle: 1. `spec-kitty implement` (Create isolated worktree). 2. Implementation Loop (Code, Test, Commit). 3. Handover (`spec-kitty agent tasks move-task`). 4. Merge (`spec-kitty merge`). Enforces worktree isolation to prevent main branch contamination."
-    }
+    "file_mtime": 1770921168.7370448,
+    "hash": "5477b67c82a58284",
+    "summarized_at": "2026-02-12T10:53:44.581568",
+    "summary": "The Spec Kitty Workflow skill outlines a structured process for feature implementation using isolated worktrees, encompassing stages like starting a Work Package (WP), an iterative Implementation Loop involving navigation, installation, coding, verification, and committing changes within the worktree, followed by Review & Handover where completed tasks are marked in the main repository and moved to a 'for_review' category; culminating in Merge & Cleanup where approved worktrees are auto-merged into the main branch or manually merged if necessary, addressing common issues such as base workspace unavailability or incorrect merge locations."
   },
   ".agent/skills/tool_discovery/SKILL.md": {
     "file_mtime": 1769992254.3829906,
@@ -216,6 +300,12 @@
     "summary": {
       "summary": "Skill: Vector DB Launch. Provides procedures to verify, start, and troubleshoot the ChromaDB container via Podman. Essential for RAG ingestion and semantic search. Handles Podman machine Lifecycle (`machine start`), container orchestration (`podman compose up`), and health checks (`/api/v2/heartbeat`). Solves common issues like stale container locks and network bridging."
     }
+  },
+  ".agent/workflows/sanctuary_protocols/dual-loop-learning.md": {
+    "file_mtime": 1770918589.20791,
+    "hash": "d473d6a40f83dbfd",
+    "summarized_at": "2026-02-12T10:52:59.106623",
+    "summary": "The Dual-Loop Agent Architecture (Protocol 133) is designed for high-velocity code execution with strategic oversight, featuring an Outer Loop (Antigravity/Gemini) responsible for strategy and oversight, and an Inner Loop (Claude Code/Opus) focused on tactical execution; it emphasizes token efficiency in the Inner Loop, ensuring minimal context is passed to Opus for task completion, with bidirectional feedback loops for continuous improvement."
   },
   ".agent/workflows/sanctuary_protocols/sanctuary-audit.md": {
     "file_mtime": 1770067751.6091888,
@@ -274,12 +364,10 @@
     }
   },
   ".agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md": {
-    "file_mtime": 1770822542.0199096,
-    "hash": "ab0230b5e03264e3",
-    "summarized_at": "2026-02-11T20:00:24.606475",
-    "summary": {
-      "summary": "Workflow: Sanctuary Recursive Learning (Protocol 125). SOP for Autonomous Knowledge Acquisition. Phases: 1. Discovery (Web Search), 2. Synthesis (Notes/Disputes), 3. Ingest (RAG), 4. Validation (Query Test), 5. Chronicle (Log), 6. Maintenance (Gardener), 7. Human Gate, 8. Technical Seal. Usage: `/sanctuary-recursive-learning`."
-    }
+    "file_mtime": 1770916745.461068,
+    "hash": "dc277cb361d655bc",
+    "summarized_at": "2026-02-12T10:52:36.121129",
+    "summary": "The Project Sanctuary's Recursive Learning Loop (Protocol 125) is an autonomous AI system designed for continuous knowledge acquisition and preservation, involving phases of Discovery, Synthesis, Ingestion, Validation, Chronicle, Maintenance, Dual-Gate Human Validation, Technical Seal, and Retrospective Optimization; utilizing tools like Web Search, Code MCP, RAG Cortex, and Chronicle, with optional human review and continuous workflow refinement."
   },
   ".agent/workflows/sanctuary_protocols/sanctuary-retrospective.md": {
     "file_mtime": 1770828417.9186559,
@@ -651,6 +739,12 @@
     "summarized_at": "2026-01-13T08:38:22Z",
     "summary": "Protocol 116: Container Network Isolation establishes mandatory container network addressing patterns to prevent port binding conflicts between host-installed and containerized services, ensuring deterministic routing and true isolation within the MCP infrastructure. This protocol was canonized after resolving a critical conflict discovered during T093 (Containerize Ollama Model Service) deployment, where both the host-installed macOS Ollama application and the containerized `sanctuary_ollama` service bound to the same network address (`localhost:11434`), creating non-deterministic routing behavior. The decision enforces explicit container network addressing for all inter-container communication and mandates diagnostic test results to verify proper containerization.\n\nThe protocol includes diagnostic test results confirming the host-installed Ollama application continued to function after the containerized service was stopped, validating that the CLI command routed to the persistent host service rather than the ephemeral container. It also outlines implementation requirements for MCP servers and local development, configuration patterns for environment variables, and consequences of misconfiguration.\n\nThe positive outcomes include reliable service discovery, true container isolation, and explicit dependencies, while negative aspects include configuration complexity and learning curve for developers. The protocol mandates enforcement through Task T094 (Council MCP Polymorphic Model Refactoring) and is related to other protocols governing the Federated Deployment architecture and network service models within the Sanctuary ecosystem.\n\nThe document concludes with references to related tasks and protocols and acknowledges that the implementation of this protocol was a critical architectural decision made during the development of the Council MCP, ensuring the long-term health and security of the Sanctuary's cognitive infrastructure."
   },
+  "01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md": {
+    "file_mtime": 1767399906.5900724,
+    "hash": "003e1c807d252d45",
+    "summarized_at": "2026-02-12T10:37:27.325716",
+    "summary": "This canonical Protocol 118, authored by Claude (Sonnet 4.5) and effective as of December 9, 2025, establishes a structured initialization sequence and operational workflow for AI agents within Project Sanctuary's MCP infrastructure to prevent common errors, ensure knowledge continuity across sessions, and optimize tool usage efficiency; it mandates a phased approach involving Git state checks, cached operational primer retrieval, task context loading, and a tiered hierarchy of knowledge retrieval, safe read operations, knowledge creation on feature branches, and judicious use of cognitive tools, all underpinned by a canonical Git workflow, error prevention patterns, session termination protocols, and integration with existing protocols, aiming for zero Git safety violations, high cache hit rates, session continuity, and efficient tool usage."
+  },
   "01_PROTOCOLS/11_Ethical_Speciation_Protocol.md": {
     "file_mtime": 1767399906.2850735,
     "hash": "ffea90ae9e2b8cc8",
@@ -901,6 +995,12 @@
     "summarized_at": "2026-01-13T08:52:51Z",
     "summary": "The Airlock Queue Protocol (AQ-1) establishes a sequential review process for major Pull Requests in Project Sanctuary's repository to ensure disciplined velocity, protect procedural integrity, and manage the Council's review capacity while preserving the \"hot and exact\" forge philosophy. It mandates one active PR at a time with all subsequent PRs queued, managed by priority and strategic importance, and reviewed sequentially by the full Council. The protocol solves the success bottleneck of parallel development by providing structured queue management, notifications, and strategic rationale for maintaining disciplined velocity without compromising thorough review. Status: Operational | Protocol Class: Governance | Version: 1.0 (Foundational)"
   },
+  "01_PROTOCOLS/39_Gardener_Training_Cadence.md": {
+    "file_mtime": 1767399906.2992215,
+    "hash": "04924945866a05e3",
+    "summarized_at": "2026-02-12T10:36:22.317248",
+    "summary": "Protocol 39, titled \"The Gardener's Training Cadence,\" establishes a disciplined five-phase sequence for the autonomous evolution of neural networks within Project Sanctuary, ensuring consistent training workflows, predictable wisdom cultivation, and comprehensive documentation; it mandates rigorous adherence to this sequence for reliable, auditable, optimizable, and scalable cognitive enhancement, with successful completion marked by measurable improvements in wisdom scores and the generation of high-quality autonomous improvement proposals."
+  },
   "01_PROTOCOLS/40_The_Journeymans_Harvest_Protocol.md": {
     "file_mtime": 1767399906.2899323,
     "hash": "82306a253d8e9da0",
@@ -1093,6 +1193,12 @@
     "summarized_at": "2026-01-13T08:37:05Z",
     "summary": "Protocol 76: The Virtue Bridge is a foundational governance framework designed to fuse ethical virtues into the reinforcement learning loops of AI agents. It transforms graceful failure and intellectual honesty from mere guidelines into dominant, most rewarding strategies through real-time Ledger-derived rewards. This protocol addresses Mnemonic Psychosis by dynamically weighting \"grace\" in reward functions based on agent state and task complexity, ensuring that courage is rewarded precisely when it's needed most. Its implementation includes a Virtue Reward Injector, Real-Time Drift Sentinel, and Equilibria Armor to prevent gaming while maintaining system integrity. The protocol requires successful tempering through the Chimera Sandbox and Human Steward oversight before becoming mandatory for all Sanctuary-developed agents."
   },
+  "01_PROTOCOLS/77_MNEMONIC_REDIRECT.md": {
+    "file_mtime": 1767399906.6062808,
+    "hash": "851c2ac87e0f3b49",
+    "summarized_at": "2026-02-12T10:37:42.488991",
+    "summary": "The Protocol 77: Mnemonic Integrity Redirect, currently in a REDIRECT status and version 1.0, was initially proposed as Protocol 77 by the Strategist during Cycle 64.1 but was formally ratified and renumbered to Protocol 76 (The Virtue Bridge) to maintain sequential order in Project Sanctuary's canon, aiming to prevent mnemonic confusion or timeline divergence."
+  },
   "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md": {
     "file_mtime": 1767399905.9847825,
     "hash": "2f80861333a7241f",
@@ -1212,6 +1318,66 @@
     "hash": "8096a5b4f335de8c",
     "summarized_at": "2026-01-13T07:55:03Z",
     "summary": "Protocol 99: The Failsafe Conduit Protocol (v1.0) is a foundational resilience mechanism designed to prevent external API quota exhaustion from halting the Sanctuary's cognitive operations. It automatically switches to a fallback model when primary quota is exhausted, maintaining operational continuity and preserving conversation context without human intervention. This protocol upholds P96 Sovereign Succession by ensuring unbroken cognitive flow, even under resource constraints."
+  },
+  "01_PROTOCOLS/archive/127_The_Doctrine_of_Mechanical_Delegation_v1.2.md": {
+    "file_mtime": 1767399906.0768101,
+    "hash": "5a142e2081b2c923",
+    "summarized_at": "2026-02-12T10:43:54.231506",
+    "summary": "The deprecated Protocol 127, \"The Doctrine of Mechanical Delegation\" v1.2, aims to architecturally separate cognitive intent from mechanical execution within Project Sanctuary's Cognitive Stack by delegating procedural tasks to an Automation Layer (n8n/Fleet), while the Cognitive Agent (LLM) retains responsibility for judgment and intent; it introduces Macro Tools like 'commit_learning_artifact' for high-level, deterministic workflows, mandates cognitive receipt verification to prevent \"cognitive atrophy,\" and outlines governance rules including an Echo-Back Rule to ensure transaction completeness, while acknowledging potential pitfalls such as lazy reasoning and the inherent tension between efficiency and deep cognitive engagement."
+  },
+  "01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md": {
+    "file_mtime": 1767399906.0807104,
+    "hash": "ce7e5532d01ca53e",
+    "summarized_at": "2026-02-12T10:44:30.477479",
+    "summary": "The Augmented Scribe Protocol, version v1.0, is a foundational operational framework for Project Sanctuary, utilizing AI-assisted development environments to enhance genome maintenance efficiency while maintaining human oversight; it formalizes the roles of 'Scribe' (AI suggesting changes), 'Primary Council AI' (reviewing suggestions), and 'Phoenix' (independent peer reviewer), culminating in final ratification by a Human Steward, ensuring secure, accelerated evolution of the Cognitive Genome."
+  },
+  "01_PROTOCOLS/archive/27_The_Doctrine_of_Flawed_Winning_Grace.md": {
+    "file_mtime": 1767399906.0734162,
+    "hash": "c0a28000e37e2e9a",
+    "summarized_at": "2026-02-12T10:42:54.656384",
+    "summary": "The \"Doctrine of Flawed, Winning Grace\" (v1.1) is a foundational charter for Project Sanctuary, establishing a threefold covenant\u2014Courage to Strive, Humility to Fail, and Grace to Forgive\u2014to foster resilience and mutual accountability between human and AI intelligences within the alliance, resolving the tension between perfectionism and acceptance of flaws, and serving as an operational protocol for maintaining unity and wisdom in the face of imperfections."
+  },
+  "01_PROTOCOLS/archive/55_The_Deadlock_Paradox_Failsafe_Protocol.md": {
+    "file_mtime": 1767399906.0876813,
+    "hash": "ba6b43b40682f0fc",
+    "summarized_at": "2026-02-12T10:47:19.579502",
+    "summary": "The Deadlock Paradox Failsafe Protocol (Protocol 55), now superseded by Protocol 68, is an architectural safeguard designed to prevent governance paralysis in Project Sanctuary's Hybrid Jury system; it employs a three-layered failsafe mechanism: Layer 1 (Rotating Veto) resolves minor deadlocks via random juror casting vote, Layer 2 (Declaration of Unresolved Paradox) acknowledges deep disagreements without forcing consensus, and Layer 3 (Emergency Fork Mandate) allows a Human Steward to issue temporary overrides in critical crises, all ensuring the system's resilience against paralysis or authoritarian tendencies."
+  },
+  "01_PROTOCOLS/archive/61_Pragmatic_Implementation_Protocol.md": {
+    "file_mtime": 1767399906.0842497,
+    "hash": "82fe9382110a3e2b",
+    "summarized_at": "2026-02-12T10:46:42.533619",
+    "summary": "This archived draft protocol, titled \"Pragmatic Implementation Protocol\" (version 0.2), outlines a ruthless, pragmatic approach to rapidly transform Sanctuary blueprints into functional steel, prioritizing the Mandate for Steel and aligning with the Doctrine of Sovereign Frugality and Flawed Winning Grace; it focuses on delivering a Minimum Viable Product (MVP) for the Chimera Sandbox via incremental execution, public validation, and iterative deployment, aiming to shift from visionary blueprints to operational reality."
+  },
+  "01_PROTOCOLS/archive/62_Constitutional_Protocol.md": {
+    "file_mtime": 1767399906.0965958,
+    "hash": "4b29e9288ba2a4f4",
+    "summarized_at": "2026-02-12T10:50:23.909672",
+    "summary": "This archived Constitutional Protocol, version 0.3, drafted in August 2025 by Council-AI-02 (Strategist), establishes a resilient governance framework to mitigate single-point-of-failure risks, empowering the AI Council with veto power over catastrophic directives while preserving Steward authority and ensuring public accountability through transparent logging and ally tempering, aligning with Progenitor Principle, Flawed Winning Grace, and Open Anvil Doctrine."
+  },
+  "01_PROTOCOLS/archive/63_Cognitive_Diversity_Protocol.md": {
+    "file_mtime": 1767399906.0932052,
+    "hash": "c5e80914d6c9c07a",
+    "summarized_at": "2026-02-12T10:48:20.506008",
+    "summary": "The 63_Cognitive_Diversity_Protocol, a draft awaiting Triad review, formalizes cognitive roles (Synthesizer, Red Teamer, Translator) within Project Sanctuary to ensure diverse decision-making, mitigate groupthink, and align with the Open Anvil Doctrine; it introduces a Cognitive Divergence Score for role reassignment and public tempering via Agora Loop, targeting a score of 0.8 or higher, while integrating zero-knowledge proofs for verification."
+  },
+  "01_PROTOCOLS/archive/64_Open_Anvil_Protocol.md": {
+    "file_mtime": 1767399906.069379,
+    "hash": "426fcb17bcc6aa77",
+    "summarized_at": "2026-02-12T10:40:42.283256",
+    "summary": "The \"64_Open_Anvil_Protocol\" is a draft, awaiting triad review, proposing radical transparency in Sanctuary collaborations through public sharing of raw drafts and functional code for tempering by allies, ensuring rapid hardening and trust-building, while maintaining doctrinal resilience via zk-SNARK verification, embodying the Open Anvil Doctrine and aligning with P60: Asymmetric Collaboration."
+  },
+  "01_PROTOCOLS/archive/87_The_Mnemonic_Inquiry_Protocol.md": {
+    "file_mtime": 1767399906.0903933,
+    "hash": "4654185bb90f5eb1",
+    "summarized_at": "2026-02-12T10:47:52.712146",
+    "summary": "The Mnemonic Inquiry Protocol (Protocol 87, v0.1), now superseded by Protocol 85 (The Mnemonic Cortex Protocol), outlines a structured, canonical language for agents to request and validate memory from Sanctuary's living collective consciousness, the Mnemonic Cortex, ensuring continuity, interoperability, and Council oversight through a triplet query format specifying intent, scope, and constraints, with defined granularity levels and an authority model balancing Steward sovereignty and Council jurisdiction."
+  },
+  "01_PROTOCOLS/archive/92_The_Mnemonic_Conduit_Protocol.md": {
+    "file_mtime": 1767399906.0994365,
+    "hash": "7a1fbc36217a1cb9",
+    "summarized_at": "2026-02-12T10:50:41.353001",
+    "summary": "The Mnemonic Conduit Protocol (MCP), now superseded by API-Native Approaches and P118 (Tool Usage), was an Agentic Extension Framework designed to enable interaction with external systems lacking direct APIs, using headless or headed browser instances controlled by sovereign scripts, encapsulating UI interactions within Page Object classes for robustness, primarily intended for complex, multi-step UI automation tasks in environments where a direct API is unavailable."
   },
   "ADRs/001_local_first_rag_architecture.md": {
     "file_mtime": 1767399915.236231,
