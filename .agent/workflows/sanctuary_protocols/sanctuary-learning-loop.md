@@ -115,6 +115,26 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ---
 
+## Dual-Loop Integration (Protocol 133)
+
+When Protocol 128 runs inside a Dual-Loop session, phases map to loop roles:
+
+| Phase | Loop Role | Notes |
+|-------|-----------|-------|
+| I (Scout) | Outer Loop | Boot, orient, read spec context |
+| II-III (Synthesis/Gate) | Outer Loop | Strategy Packet generation, user approval |
+| IV (Audit) | Outer Loop | Pre-execution checkpoint |
+| *(Execution)* | **Inner Loop** | Code-only, no git, no Learning Loop phases |
+| V (Verify) | Outer Loop | `verify_inner_loop_result.py` + `verify_workflow_state.py --phase review` |
+| VI-IX (Seal→End) | Outer Loop | Standard closure sequence |
+
+**Key rule**: The Inner Loop does NOT run Learning Loop phases. All cognitive continuity is the Outer Loop's responsibility.
+
+**Workflow**: `.agent/workflows/sanctuary_protocols/dual-loop-learning.md`
+**Skill**: `.agent/skills/dual-loop-supervisor/SKILL.md`
+
+---
+
 ## Pre-Departure Checklist (Protocol 128)
 
 - [ ] **Retrospective**: Filled `loop_retrospective.md`? (Phase VIII)

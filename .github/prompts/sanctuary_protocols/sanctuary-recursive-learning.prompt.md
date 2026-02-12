@@ -69,12 +69,22 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 1. **Boot**: The next session agent calls `cortex_learning_debrief`.
 2. **Retrieve**: The tool identifies the `learning_package_snapshot.md` and presents it as the "Strategic Successor Context".
 
-## Phase 8: Retrospective (Continuous Improvement)
+## Phase 9: Retrospective (Continuous Improvement)
 1.  **Reflect:** Did this session feel efficient? Were there friction points?
-2.  **Optimize:**
-    *   If a tool failed >2 times, note it for Task 139 (Tool Hardening).
-    *   If the workflow felt rigid, update this file (`.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md`) immediately.
-3.  **Log:** If significant improvements were identified, mention them in the Chronicle Entry.
+2.  **Friction Log**: Record observations in `.agent/frictionlogs/` for process improvement.
+3.  **Optimize:**
+    *   If a tool failed >2 times, note it for Tool Hardening.
+    *   If the workflow felt rigid, update this file immediately.
+4.  **Log:** If significant improvements were identified, mention them in the Chronicle Entry.
 
 ---
-// End of Workflow
+
+## Cross-References
+
+- **Protocol 128** (Hardened Learning Loop): `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md`
+- **Protocol 133** (Dual-Loop): `.agent/workflows/sanctuary_protocols/dual-loop-learning.md`
+- **Verify Tool**: `tools/orchestrator/verify_workflow_state.py`
+- **Spec Kitty Skill**: `.agent/skills/spec_kitty_workflow/SKILL.md`
+
+---
+// End of Workflow (Protocol 125)

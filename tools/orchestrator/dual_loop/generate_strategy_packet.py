@@ -138,6 +138,13 @@ def generate_packet(
     spec_ref = spec_path or "[not provided]"
     plan_ref = plan_path or "[not provided]"
 
+    # Build optional context sections
+    context_sections = ""
+    if spec_excerpt:
+        context_sections += f"\n{spec_excerpt}\n"
+    if plan_excerpt:
+        context_sections += f"\n{plan_excerpt}\n"
+
     packet = f"""# Mission: {task['title']}
 **(Strategy Packet for Inner Loop / Opus)**
 
@@ -147,7 +154,7 @@ def generate_packet(
 - **Spec**: `{spec_ref}`
 - **Plan**: `{plan_ref}`
 - **Goal**: {task['title']}
-
+{context_sections}
 ## 2. Tasks
 
 {task['body'].strip()}
@@ -156,6 +163,7 @@ def generate_packet(
 - **NO GIT COMMANDS**: The Outer Loop handles all version control.
 - **Token Efficiency**: Produce only the requested artifacts, nothing extra.
 - **File Paths**: Use exact paths as specified in the task.
+- **Scope**: Do NOT modify files outside the scope of section 2.
 
 ## 4. Acceptance Criteria
 - [ ] All files specified in section 2 exist and are correctly implemented.
@@ -179,10 +187,21 @@ def next_packet_number() -> int:
     return max(numbers) + 1 if numbers else 1
 
 
+def auto_detect_feature_dir(tasks_file: Path) -> Path | None:
+    """Infer the kitty-specs feature directory from a tasks.md path.
+
+    Works for paths like kitty-specs/NNN-slug/tasks.md.
+    """
+    parent = tasks_file.resolve().parent
+    if parent.parent.name == "kitty-specs":
+        return parent
+    return None
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Generate a Strategy Packet for the Inner Loop (Dual-Loop Architecture).",
-        epilog="Example: %(prog)s --tasks-file specs/001/tasks.md --task-id A",
+        epilog="Example: %(prog)s --tasks-file kitty-specs/005-my-feature/tasks.md --task-id WP-001",
     )
     parser.add_argument(
         "--tasks-file",
@@ -206,13 +225,13 @@ def main() -> None:
         "--spec",
         type=Path,
         default=None,
-        help="Optional path to spec.md for context injection.",
+        help="Path to spec.md for context injection. Auto-detected from --tasks-file if omitted.",
     )
     parser.add_argument(
         "--plan",
         type=Path,
         default=None,
-        help="Optional path to plan.md for context injection.",
+        help="Path to plan.md for context injection. Auto-detected from --tasks-file if omitted.",
     )
     parser.add_argument(
         "--stdout",
@@ -231,6 +250,20 @@ def main() -> None:
     if not args.tasks_file.exists():
         print(f"[ERROR] Tasks file not found: {args.tasks_file}", file=sys.stderr)
         sys.exit(1)
+
+    # Auto-detect spec/plan from feature directory if not provided
+    feature_dir = auto_detect_feature_dir(args.tasks_file)
+    if feature_dir:
+        if args.spec is None:
+            candidate = feature_dir / "spec.md"
+            if candidate.exists():
+                args.spec = candidate
+                print(f"[INFO] Auto-detected spec: {candidate}")
+        if args.plan is None:
+            candidate = feature_dir / "plan.md"
+            if candidate.exists():
+                args.plan = candidate
+                print(f"[INFO] Auto-detected plan: {candidate}")
 
     # Parse and find task
     tasks = parse_tasks_file(args.tasks_file)
