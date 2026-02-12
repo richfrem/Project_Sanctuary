@@ -47,24 +47,24 @@
             "note": "Protocol 128 diagram"
         },
         {
-            "path": "01_PROTOCOLS/132_Recursive_Context_Synthesis.md",
-            "note": "Current topic: RLM"
+            "path": "LEARNING/topics/agent-skills-open-standard/analysis.md",
+            "note": "Current topic: Agent Skills Open Standard"
         },
         {
-            "path": "ADRs/092_RLM_Context_Synthesis.md",
-            "note": "Current topic: RLM"
+            "path": "LEARNING/topics/agent-skills-open-standard/sources.md",
+            "note": "Current topic: Sources"
         },
         {
-            "path": "LEARNING/topics/Recursive_Language_Models/",
-            "note": "Current topic: RLM"
+            "path": "LEARNING/topics/agent-skills-open-standard/questions.md",
+            "note": "Current topic: Open questions"
         },
         {
-            "path": "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd",
-            "note": "Current topic: RLM"
+            "path": ".agent/skills/memory-management/SKILL.md",
+            "note": "Current topic: New memory skill"
         },
         {
-            "path": "mcp_servers/learning/operations.py",
-            "note": "Current topic: RLM"
+            "path": ".agent/skills/code-review/SKILL.md",
+            "note": "Current topic: New code review skill"
         }
     ]
 }

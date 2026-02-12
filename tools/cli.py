@@ -166,6 +166,12 @@ for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTOR
 
 from tools.utils.path_resolver import resolve_path
 from workflow_manager import WorkflowManager
+# Import query_cache for rlm-search
+try:
+    from tools.retrieve.rlm.query_cache import search_cache, RLMConfig
+except ImportError:
+    # Fallback if imports fail (should be handled by sys.path hacks above)
+    pass
 # Lightweight imports (file-based, no external services)
 # Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
 try:
@@ -350,6 +356,12 @@ def main():
     # Command: rlm-distill (Protocol 132)
     rlm_parser = subparsers.add_parser("rlm-distill", aliases=["rlm-test"], help="Distill semantic summaries")
     rlm_parser.add_argument("target", help="File or folder path to distill")
+
+    # Command: rlm-search (Protocol 132)
+    rlm_search_parser = subparsers.add_parser("rlm-search", help="Search RLM Cache")
+    rlm_search_parser.add_argument("term", help="Search term")
+    rlm_search_parser.add_argument("--type", default="tool", help="RLM Type (tool/sanctuary)")
+    rlm_search_parser.add_argument("--json", action="store_true", help="Output as JSON")
 
 
     # Init-Context Command: Quick setup - initializes manifest and auto-bundles
@@ -607,9 +619,9 @@ def main():
     evolution_ops = None
     # Lazy Init Operations based on command to avoid overhead
     if args.command in ["ingest", "query", "stats", "cache-stats", "cache-warmup"]:
-        cortex_ops = CortexOperations(project_root=str(PROJECT_ROOT))
+        cortex_ops = _get_cortex_ops()
     if args.command == "evolution":
-        evolution_ops = EvolutionOperations(project_root=str(PROJECT_ROOT))
+        evolution_ops = _get_evolution_ops()
     if args.command in ["debrief", "snapshot", "guardian", "persist-soul", "rlm-distill"]:
         # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
         pass 
@@ -743,6 +755,16 @@ def main():
         print(f"📊 Files Processed: {len(results)}")
         for fp, s in results.items():
             print(f"\n📄 {fp}\n   {s}")
+
+    # RLM Search: Query the semantic ledger
+    elif args.command == "rlm-search":
+        # Initialize Config
+        try:
+            config = RLMConfig(run_type=args.type)
+            search_cache(args.term, config, show_summary=True, output_json=args.json)
+        except Exception as e:
+            print(f"❌ Error during RLM search: {e}")
+            sys.exit(1)
 
     # Init-Context Command: Initialize manifest from base template and auto-bundle
     elif args.command == "init-context":

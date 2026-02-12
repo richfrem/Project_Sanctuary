@@ -20,6 +20,11 @@ The system establishes a **Zero-Trust Gate** between the agent's work and the pr
 - **[Recursive Learning SOP](../../../../../../.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)**: The step-by-step guide for agents to acquire and preserve knowledge.
 - **[Cognitive Primer](../../../../../../.agent/learning/cognitive_primer.md)**: The "Rules of Reality" that agents must follow on every boot.
 
+### Supporting Skills (`.agent/skills/`)
+- **`learning-loop`**: Portable skill encoding the 10-phase Protocol 128 workflow.
+- **`memory-management`**: Tiered memory system (hot cache ↔ deep storage) for cognitive continuity.
+- **`code-review`**: Confidence-scored review for pre-commit quality gates.
+
 ## 💓 The "Learning Package Snapshot" Pulse
 When an agent calls `cortex_learning_debrief`, it triggers a series of autonomous observations:
 1. **Source of Truth**: Scans `git diff` for physical evidence.
@@ -30,7 +35,7 @@ When an agent calls `cortex_learning_debrief`, it triggers a series of autonomou
 ## 🛠️ Rapid-Fire Learning Cycle
 The agent follows these steps to achieve the "Final Seal":
 1. **Refinement**: Update the Recursive Learning SOP with logical optimizations.
-2. **Snapshot**: `node scripts/capture_code_snapshot.py --manifest .agent/learning/manifest.json`
+2. **Snapshot**: `python scripts/capture_code_snapshot.py --manifest .agent/learning/manifest.json`
 3. **The Seal**: Ensure output is saved to `.agent/learning/learning_package_snapshot.md`.
 4. **Persistence**: Use `git_smart_commit` referencing the SEAL to lock in the cognitive delta.
 
