@@ -9,6 +9,10 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
+    # 0. Default Behavior (Sanctuary Profile)
+    # Uses manifest: tools/standalone/rlm-factory/rlm_manifest.json
+    python tools/codify/rlm/distiller.py
+
     # 1. Distill a single file (Tool Logic) -- CRITICAL: Use --type tool for code!
     python tools/codify/rlm/distiller.py --file tools/codify/rlm/rlm_config.py --type tool
     python tools/codify/rlm/distiller.py --file tools/investigate/miners/db_miner.py --type tool --force
