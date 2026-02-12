@@ -9,6 +9,13 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 **Diagram:** `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd`
 **Tools:** Cortex MCP Suite, Git, Chronicle
 
+### Supporting Skills
+| Skill | Phases | Path |
+|-------|--------|------|
+| `learning-loop` | I-X | `.agent/skills/learning-loop/SKILL.md` |
+| `memory-management` | I, VI, IX | `.agent/skills/memory-management/SKILL.md` |
+| `code-review` | VIII, IX | `.agent/skills/code-review/SKILL.md` |
+
 ---
 
 ## Phase I: The Learning Scout (Orientation)

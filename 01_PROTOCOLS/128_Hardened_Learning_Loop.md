@@ -74,16 +74,37 @@ This introduces an optional "Evolutionary Loop" for high-velocity optimization o
 - **Git as Source of Truth**: Git diffs (`--stat` and `--name-only`) are the final authority for "what happened."
 - **Poka-Yoke**: Successor agents are blocked from holistic action until the previous session's continuity is verified.
 - **Sustainability**: Packets must be concise and targeted to prevent steward burnout.
+- **Tiered Memory**: Hot cache (boot files) serves 90% of context needs; deep storage (LEARNING/, ADRs/) loaded on demand.
+- **Self-Correction**: Failures are data. Phase VIII uses iterative refinement until validation passes or max iterations reached.
 
-## 6. Document Matrix
+## 6. Skills Integration Layer (v4.0)
+
+Protocol 128 is operationalized through portable skills in `.agent/skills/`:
+
+| Skill | Phase | Purpose |
+| :--- | :--- | :--- |
+| **`learning-loop`** | I-X | Encodes the 10-phase workflow as an agent skill |
+| **`memory-management`** | I, VI, IX | Tiered memory: hot cache ↔ deep storage |
+| **`code-review`** | VIII, IX | Confidence-scored review before commit |
+| **`guardian_onboarding`** | I | Session boot and orientation |
+| **`tool_discovery`** | II, IV | RLM cache query for tool lookup |
+
+Skills are synced across agents (Gemini, Claude, Copilot) via `tools/bridge/sync_skills.py`.
+
+## 7. Document Matrix
 | Document | Role | Path |
 | :--- | :--- | :--- |
 | **ADR 071** | Design Intent | `ADRs/071_protocol_128_cognitive_continuity.md` |
 | **Protocol 128** | Constitutional Mandate | `01_PROTOCOLS/128_Hardened_Learning_Loop.md` |
 | **SOP** | Execution Guide | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
 | **Primer** | Rules of Reality | `.agent/learning/cognitive_primer.md` |
+| **Learning Loop Skill** | Portable Skill | `.agent/skills/learning-loop/SKILL.md` |
+| **Memory Skill** | Portable Skill | `.agent/skills/memory-management/SKILL.md` |
 
 ---
-**Status:** APPROVED (v3.0)  
-**Date:** 2025-12-22  
-**Authority:** Antigravity (Agent) / Lead (Human)
+**Status:** APPROVED (v4.0)  
+**Date:** 2026-02-11  
+**Authority:** Antigravity (Agent) / Lead (Human)  
+**Change Log:**
+- v4.0 (2026-02-11): Added Skills Integration Layer, self-correction patterns, tiered memory invariant
+- v3.0 (2025-12-22): Original 10-phase architecture

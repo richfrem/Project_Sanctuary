@@ -1,5 +1,5 @@
 # Learning Audit Snapshot
-**Generated:** 2026-02-02T10:14:57.535062
+**Generated:** 2026-02-11T18:19:19.042412
 
 Auto-generated learning_audit snapshot
 
@@ -13,11 +13,11 @@ Auto-generated learning_audit snapshot
 5. [ADRs/071_protocol_128_cognitive_continuity.md](#entry-5)
 6. [docs/prompt-engineering/sanctuary-guardian-prompt.md](#entry-6)
 7. [docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd](#entry-7)
-8. [01_PROTOCOLS/132_Recursive_Context_Synthesis.md](#entry-8)
-9. [ADRs/092_RLM_Context_Synthesis.md](#entry-9)
-10. [LEARNING/topics/Recursive_Language_Models/](#entry-10)
-11. [docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd](#entry-11)
-12. [mcp_servers/learning/operations.py](#entry-12)
+8. [LEARNING/topics/agent-skills-open-standard/analysis.md](#entry-8)
+9. [LEARNING/topics/agent-skills-open-standard/sources.md](#entry-9)
+10. [LEARNING/topics/agent-skills-open-standard/questions.md](#entry-10)
+11. [.agent/skills/memory-management/SKILL.md](#entry-11)
+12. [.agent/skills/code-review/SKILL.md](#entry-12)
 
 ---
 
@@ -607,19 +607,40 @@ This introduces an optional "Evolutionary Loop" for high-velocity optimization o
 - **Git as Source of Truth**: Git diffs (`--stat` and `--name-only`) are the final authority for "what happened."
 - **Poka-Yoke**: Successor agents are blocked from holistic action until the previous session's continuity is verified.
 - **Sustainability**: Packets must be concise and targeted to prevent steward burnout.
+- **Tiered Memory**: Hot cache (boot files) serves 90% of context needs; deep storage (LEARNING/, ADRs/) loaded on demand.
+- **Self-Correction**: Failures are data. Phase VIII uses iterative refinement until validation passes or max iterations reached.
 
-## 6. Document Matrix
+## 6. Skills Integration Layer (v4.0)
+
+Protocol 128 is operationalized through portable skills in `.agent/skills/`:
+
+| Skill | Phase | Purpose |
+| :--- | :--- | :--- |
+| **`learning-loop`** | I-X | Encodes the 10-phase workflow as an agent skill |
+| **`memory-management`** | I, VI, IX | Tiered memory: hot cache ↔ deep storage |
+| **`code-review`** | VIII, IX | Confidence-scored review before commit |
+| **`guardian_onboarding`** | I | Session boot and orientation |
+| **`tool_discovery`** | II, IV | RLM cache query for tool lookup |
+
+Skills are synced across agents (Gemini, Claude, Copilot) via `tools/bridge/sync_skills.py`.
+
+## 7. Document Matrix
 | Document | Role | Path |
 | :--- | :--- | :--- |
 | **ADR 071** | Design Intent | `ADRs/071_protocol_128_cognitive_continuity.md` |
 | **Protocol 128** | Constitutional Mandate | `01_PROTOCOLS/128_Hardened_Learning_Loop.md` |
 | **SOP** | Execution Guide | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
 | **Primer** | Rules of Reality | `.agent/learning/cognitive_primer.md` |
+| **Learning Loop Skill** | Portable Skill | `.agent/skills/learning-loop/SKILL.md` |
+| **Memory Skill** | Portable Skill | `.agent/skills/memory-management/SKILL.md` |
 
 ---
-**Status:** APPROVED (v3.0)  
-**Date:** 2025-12-22  
-**Authority:** Antigravity (Agent) / Lead (Human)
+**Status:** APPROVED (v4.0)  
+**Date:** 2026-02-11  
+**Authority:** Antigravity (Agent) / Lead (Human)  
+**Change Log:**
+- v4.0 (2026-02-11): Added Skills Integration Layer, self-correction patterns, tiered memory invariant
+- v3.0 (2025-12-22): Original 10-phase architecture
 
 ```
 <a id='entry-5'></a>
@@ -1480,27 +1501,38 @@ flowchart TB
     end
     style PhaseX fill:#f8d7da,stroke:#721c24,stroke-width:2px
 
-    %% Flow
+    %% Flow - Phase Connections
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
     
     GovApproval -- "PASS" --> AgreeTopic
     
-    %% Updated Flow: Audit -> Seal -> RLM -> Persist
-    TechApproval -- "PASS" --> Deployment
-    Deployment --> Retro
-    Retro --> ShareRetro
-    ShareRetro -- "Ready to Seal" --> CaptureSeal
-    CaptureSeal -- "Trigger RLM" --> TriggerRLM
-    WriteHologram --> SealCheck
-    SealSuccess -- "Proceed to Persistence" --> choice
+    %% ============================================================
+    %% CRITICAL: Protocol 128 Closure Sequence (MUST BE THIS ORDER)
+    %% Audit → RLM → Seal → Persist → Retro → Ingest → End
+    %% ============================================================
     
+    %% Phase IV → V: Audit passes to RLM
+    TechApproval -- "PASS" --> TriggerRLM
+    
+    %% Phase V → VI: RLM writes hologram, Seal validates
+    WriteHologram --> CaptureSeal
+    SealSuccess -- "Step 1: Sealed" --> choice
+    
+    %% Phase VII → VIII: Persist then Retro
     Inc --> JSONL_Traces
     Inc --> MD_Seal
     Full --> JSONL_Traces
     Full --> Manifest
     
-    JSONL_Traces --> Ingest
+    JSONL_Traces -- "Step 2: Persisted" --> Deployment
+    Deployment --> Retro
+    Retro -- "Step 3: Retrospective Complete" --> ShareRetro
+    
+    %% Phase VIII → IX: Retro to Ingest/End
+    ShareRetro --> Ingest
+    
+    %% Phoenix Forge Branch (Optional)
     JSONL_Traces -- "Training Fuel" --> ForgeGate{HITL:<br>Time to<br>Forge?}
     ForgeGate -- "YES (Slow)" --> ForgeDataset
     ForgeGate -- "NO" --> Ingest
@@ -1511,9 +1543,10 @@ flowchart TB
     Ingest -- "Cycle Complete" --> Start
     HFDeploy -- "Cognitive Milestone" --> Retro
     
+    %% Backtrack paths (failures return to Retro for correction)
     GovApproval -- "FAIL: Backtrack" --> Retro
     TechApproval -- "FAIL: Backtrack" --> Retro
-    Deployment -- "FAIL: Backtrack" --> Retro
+    SealCheck -- "FAIL: Backtrack" --> Retro
     
     GitOps -- "Recursive Learning" --> Start
 
@@ -1532,2357 +1565,400 @@ flowchart TB
 
 ---
 
-## File: 01_PROTOCOLS/132_Recursive_Context_Synthesis.md
-**Path:** `01_PROTOCOLS/132_Recursive_Context_Synthesis.md`
+## File: LEARNING/topics/agent-skills-open-standard/analysis.md
+**Path:** `LEARNING/topics/agent-skills-open-standard/analysis.md`
 
 ```markdown
-# Protocol 132: Recursive Context Synthesis (RLM-G)
+# Agent Skills as an Open Standard
 
-> **Status:** DRAFT (Proposed Phase IX)
-> **Owner:** Cortex Guardian / Mnemonic Cortex
-> **Dependency:** Protocol 128 (Learning Loop)
+**Date:** 2026-02-11
+**Source:** Direct analysis of Anthropic repos + agentskills.io spec
+**Status:** Active Research
 
-## 1. The Mandate
-Static memory snapshots are forbidden. The Agent must not rely on "last diffs" or "file lists" for context.
-**The Mandate:** The primary context artifact (`learning_package_snapshot.md`) must be a **Recursive Synthesis** of the *entire* relevant system state, generated fresh at the moment of sealing.
+## 1. The Emerging Standard
 
-## 2. The Mechanism (RLM Loop)
-Upon `cortex_seal`, the system triggers the **RLM Synthesizer**.
+The agent skills ecosystem is converging on a portable format:
 
-### Phase A: Decomposition (The Map)
-The Synthesizer iterates through the "Context Roots":
-1.  `01_PROTOCOLS/` (Constitution)
-2.  `ADRs/` (Decisions)
-3.  `LEARNING/topics/` (Active Memory)
-4.  `mcp_servers/` (Capabilities)
+```
+skill-name/
+├── SKILL.md          ← Frontmatter (name, description) + instructions
+├── references/       ← Progressive disclosure (loaded on demand)
+│   └── detailed.md
+├── scripts/          ← Helper scripts
+├── examples/         ← Reference implementations
+└── resources/        ← Assets, templates
+```
 
-### Phase B: Recursive Summarization (The Crunch)
-*   **Level 1:** Read each file/module. Generate a 200-token functional summary.
-*   **Level 2:** Combine Level 1 summaries by domain (e.g., "All Evolution Logic").
-*   **Level 3:** Combine Level 2 summaries into the **Cognitive Hologram**.
+**Key Insight:** The `SKILL.md` file acts as both a **trigger** (the `description` field in frontmatter) and a **procedure** (the markdown body). This dual role means the description must be rich enough for the agent to self-select when to use the skill.
 
-### Phase C: Injection (The Snapshot)
-The final `learning_package_snapshot.md` is overwritten with this structure:
-1.  **Executive State:** "Sanctuary is currently optimizing X. The active strategy is Y."
-2.  **Architectural Map:** High-level dependency graph of current modules.
-3.  **Protocol Status:** "Protocol 128 is Active. Protocol 132 is Draft."
-4.  **Capabilities:** "I can use tools A, B, C."
+## 2. Source Analysis
 
-## 3. Just-In-Time (JIT) Detail
-The Snapshot is a *Map*. It is not the *Territory*.
-*   If the Agent needs to read code, it **MUST** use `cortex_ask_repo` (Live RLM Scan).
-*   It **MUST NOT** rely on code snippets embedded in the Snapshot (as they are stale by definition).
+### 2.1 agentskills.io Specification
+- Defines `SKILL.md` with YAML frontmatter: `name`, `description`
+- Body contains instructions in markdown
+- Directory name should match the skill name (lowercase-hyphens)
+- No prescribed sub-directory structure — flexible by design
 
-## 4. Integration with Protocol 128
-*   **Previous:** `Seal` -> `Git Commit`
-*   **New:** `Audit` -> **`RLM Synthesis`** -> `Seal` -> `Git Commit`
+### 2.2 Anthropic's claude-code-skills Repo
+- Reference implementations of the spec
+- `skill-creator` is the meta-skill (skill for creating skills)
+- Key pattern: **Progressive Disclosure** — keep SKILL.md < 500 lines, defer detail to `references/`
+- Anti-pattern: Monolithic SKILL.md files that load too much context
 
-## 5. Safety Guardrails
-*   **Recursion Depth:** Max 3.
-*   **Iron Core Protection:** The Synthesizer effectively "Reads" the Iron Core but produces a *Derived Artifact*. It does not modify the Core itself.
+### 2.3 Anthropic's claude-plugins-official Repo
+- **Plugins ≠ Skills**. Plugins include hooks (pre/post tool execution), MCP servers, and slash commands
+- The `code-review` plugin uses multi-agent parallel review with confidence scoring
+- The `ralph-loop` plugin implements iterative self-correction via stop hooks
+- The `security-guidance` plugin is a pure hook (no skill file) — pattern-matches code edits
+- Plugins are Claude Code specific; skills are portable across agents
+
+### 2.4 Anthropic's knowledge-work-plugins Repo
+- Domain-specific skill bundles (productivity, product-management, data, etc.)
+- `memory-management` skill: Tiered hot/cold memory with CLAUDE.md as working memory
+- `task-management` skill: Simple TASKS.md file with sections (Active/Waiting/Done)
+- These are workplace productivity skills, not developer tools
+
+## 3. Key Architectural Learnings
+
+### 3.1 The Skill vs Plugin Distinction
+| | Skill | Plugin |
+|---|---|---|
+| **Format** | `SKILL.md` + resources | Hooks + commands + MCP |
+| **Portability** | Cross-agent (any AI) | Agent-specific (Claude Code) |
+| **Activation** | Description-matching | Hook triggers, slash commands |
+| **State** | Stateless (reads files) | Can be stateful (hooks) |
+| **Project Sanctuary** | `.agent/skills/` | Not yet adopted |
+
+### 3.2 Progressive Disclosure Pattern
+Top skills follow a 3-tier loading pattern:
+1. **Tier 1 (Always):** SKILL.md frontmatter — loaded at session start for matching
+2. **Tier 2 (On match):** SKILL.md body — loaded when the skill is activated
+3. **Tier 3 (On demand):** `references/` files — loaded only when specific detail is needed
+
+This maps directly to our memory-management architecture:
+- Tier 1 = Hot cache (cognitive_primer.md)
+- Tier 2 = Boot files (guardian_boot_digest.md)
+- Tier 3 = Deep storage (LEARNING/topics/)
+
+### 3.3 Confidence-Based Code Review
+The code-review plugin introduced a powerful pattern:
+- Launch N independent review perspectives in parallel
+- Each flags issues with confidence scores (0-100)
+- Filter at threshold (default: 80) to eliminate false positives
+- This reduces reviewer fatigue dramatically
+
+**Application to Project Sanctuary:** Our `/sanctuary-end` pre-commit check could use this pattern.
+
+### 3.4 Self-Referential Iteration (Ralph Loop)
+The Ralph Loop concept — where an agent repeatedly executes the same prompt, seeing its own previous work in files — is philosophically aligned with Protocol 128's recursive learning:
+- Both preserve state across iterations via files
+- Both use validation gates to determine completion
+- Key difference: Ralph Loop is mechanical (bash while loop); Protocol 128 has HITL gates
+
+## 4. What We Built From This
+
+| New Artifact | Source Inspiration | Adaptation |
+|---|---|---|
+| `memory-management` skill | knowledge-work-plugins | Mapped to our LEARNING/ architecture |
+| `code-review` skill | claude-plugins-official | Extracted as portable skill with confidence scoring |
+| `references/security-patterns.md` | security-guidance hook | Converted hook patterns to reference table |
+| `references/self-correction.md` | ralph-loop plugin | Extracted iteration philosophy for Phase VIII |
+| Protocol 128 v4.0 | All sources | Added Skills Integration Layer |
+
+## 5. Open Questions
+
+1. **Should we adopt the plugin model?** Hooks could enforce Zero Trust (e.g., block `git push` without approval). But this requires Claude Code-specific infrastructure.
+2. **Skill discovery across agents?** Our `sync_skills.py` copies files, but Gemini/Copilot/Antigravity load skills differently. Is the current approach sufficient?
+3. **Skill versioning?** The agentskills.io spec has no versioning mechanism. Should we add one?
 
 ```
 <a id='entry-9'></a>
 
 ---
 
-## File: ADRs/092_RLM_Context_Synthesis.md
-**Path:** `ADRs/092_RLM_Context_Synthesis.md`
+## File: LEARNING/topics/agent-skills-open-standard/sources.md
+**Path:** `LEARNING/topics/agent-skills-open-standard/sources.md`
 
 ```markdown
-# ADR 092: RLM-Based Context Synthesis (The Cognitive Hologram)
+# Sources: Agent Skills Open Standard Research
 
-**Status:** Proposed
-**Date:** 2026-01-12
-**Author:** Cortex Guardian
-**Protocol:** 132
+**Date:** 2026-02-11
+**Researcher:** Guardian (Antigravity Session)
 
-## Context
-Project Sanctuary relies on `learning_package_snapshot.md` to transfer context between sessions. Currently, this is a "Diff" (showing only recent changes).
-This leads to "Context Blindness" where the agent knows *what changed* but forgets the *fundamental architecture* (the "Dark Matter" problem).
+## Primary Sources
 
-## Decision
-We will replace the "Diff-based Snapshot" with a **Recursive Language Model (RLM) Synthesis**.
-1.  **Mechanism:** Upon sealing, an RLM agent will recursively summarize the *entire* relevant state (Protocols + ADRs + Active Code).
-2.  **Artifact:** The `learning_package_snapshot.md` becomes a "Cognitive Hologram"—a high-fidelity, compressed map of the *entire* system state.
-3.  **Tooling:** We will build `cortex_rlm_synthesize` to automate this "MapReduce" logic at the end of every loop.
+### 1. agentskills.io Specification
+- **URL:** https://agentskills.io
+- **Status:** [VERIFIED via read_url_content]
+- **Content:** Open specification for portable AI agent skills using SKILL.md format
+- **Key Contribution:** Defines the canonical skill structure (frontmatter + body)
 
-## Consequences
-*   **Positive:** "Wakeup Hallucinations" (guessing architecture) should drop to near zero. Agents wake up "knowing" the system.
-*   **Negative:** Sealing time increases (from 5s to ~60s). Cost per seal increases (RLM tokens).
-*   **Mitigation:** Use "Lazy Hashing"—only re-summarize modules that have changed hash since the last seal.
+### 2. Anthropic claude-code-skills Repository
+- **URL:** https://github.com/anthropics/claude-code-skills
+- **Status:** [VERIFIED - cloned and analyzed]
+- **Content:** Reference implementations including skill-creator, doc-coauthoring, mcp-builder
+- **Key Contribution:** Progressive disclosure pattern, skill-creator meta-skill
 
-## Compliance
-*   **Iron Core:** This creates a *derived* artifact. It does not modify the Iron Core itself.
-*   **Protocol 128:** Inserts a new step (Phase V) before the final Git Commit.
+### 3. Anthropic claude-plugins-official Repository
+- **URL:** https://github.com/anthropics/claude-plugins-official
+- **Status:** [VERIFIED - cloned and analyzed]
+- **Content:** 28 plugins including code-review, ralph-loop, security-guidance, LSP integrations
+- **Key Contribution:** Multi-agent review with confidence scoring, self-referential iteration
+
+### 4. Anthropic knowledge-work-plugins Repository
+- **URL:** https://github.com/anthropics/knowledge-work-plugins
+- **Status:** [VERIFIED - cloned and analyzed]
+- **Content:** Domain-specific plugins for productivity, product-management, data, finance, etc.
+- **Key Contribution:** memory-management tiered architecture, task-management patterns
+
+## Analysis Methods
+- Direct filesystem analysis of cloned repositories
+- README.md and SKILL.md review for each relevant plugin/skill
+- Source code review of hooks (security_reminder_hook.py)
+- Cross-referencing with Project Sanctuary's existing skill architecture
 
 ```
 <a id='entry-10'></a>
-### Directory: LEARNING/topics/Recursive_Language_Models
-> 📂 Expanding contents of `LEARNING/topics/Recursive_Language_Models`...
 
 ---
 
-## File: LEARNING/topics/Recursive_Language_Models/08_comparison_python_variables_vs_vector_db.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/08_comparison_python_variables_vs_vector_db.md`
-**Note:** (Expanded from directory)
+## File: LEARNING/topics/agent-skills-open-standard/questions.md
+**Path:** `LEARNING/topics/agent-skills-open-standard/questions.md`
 
 ```markdown
-# Comparative Analysis: Python Variables (RLM) vs. Vector Embeddings (RAG)
+# Questions: Agent Skills Open Standard
 
-**User Query:** "How is it better/different using external python variables vs embeddings in a vector db?"
+**Date:** 2026-02-11
 
-**Core Distinction:** It is the difference between **Reading a Map** (RLM) and **Asking for Directions** (RAG).
+## Answered
 
-## 1. The Fundamental Mechanism
+1. **What is the canonical structure for an agent skill?**
+   → `SKILL.md` with YAML frontmatter (name, description) + markdown body. Optional `references/`, `scripts/`, `examples/` directories.
 
-| Feature | Vector DB (RAG) | Python Variable (RLM) |
-| :--- | :--- | :--- |
-| **Representation** | **Semantic Embedding:** Text is converted into a list of numbers (vector) representing its "meaning." | **Raw Text:** The text remains exactly as it is (string) but is stored in RAM. |
-| ** Retrieval Logic** | **Similarity Search:** "Find chunks that *sound like* my query." (Probabilistic) | **Programmatic Logic:** "Read lines 1-100. Then read the function named 'build'." (Deterministic) |
-| **Data Integrity** | **Fragmentation:** The document is shattered into disconnected chunks. Order/Flow is lost. | **Continuity:** The document structure (chapters, lines, sequence) is preserved. |
+2. **How do skills differ from plugins?**
+   → Skills are portable (any agent), stateless, description-triggered. Plugins are agent-specific, can be stateful, use hooks/commands.
 
----
+3. **What's the best pattern for skill content management?**
+   → Progressive disclosure: keep SKILL.md < 500 lines, defer detail to `references/`.
 
-## 2. Why "Variables" Beat "Vectors" for Reasoning
+4. **How does multi-agent code review work?**
+   → N independent perspectives run in parallel, each scores findings 0-100, filter at threshold (80) to reduce false positives.
 
-### A. The "Bag of Chunks" Problem (RAG's Weakness)
-In a Vector DB, a 500-page book becomes 1,000 independent paragraph-chunks.
-*   **Query:** "How does the main character change from Chapter 1 to Chapter 10?"
-*   **Vector DB:** Retrieves a chunk from Ch 1 and a chunk from Ch 10.
-*   **Failure:** It misses the **Gradient of Change**. It doesn't see Ch 2-9. It can't trace the *evolution* because the connection between chunks is severed.
+## Open
 
-### B. The "Active Reader" Advantage (RLM's Strength)
-With a Python Variable, the Agent can **navigate** the text structure.
-*   **Query:** "How does the main character change?"
-*   **RLM Agent:**
-    1.  `text = BOOK` (Variable)
-    2.  "I'll read the first 50 lines to find the character's name." (Slice)
-    3.  "Now I'll loop through the chapters and summarize the character's state in each." (Iteration)
-    4.  "I see a trend." (Synthesis)
-*   **Result:** It builds a connected narrative because it has access to the *whole* structure via code.
+5. **Should Project Sanctuary adopt the plugin model (hooks)?**
+   → Hooks could enforce Zero Trust policies. But requires Claude Code-specific infrastructure. Needs further investigation.
 
-### C. The "Zero Recall" Issue (RAG's Ceiling)
-*   **Vector DB:** You ask for `top_k=5` chunks. If the answer requires information from *6* chunks, you fail. You physically cannot see the 6th chunk.
-*   **RLM:** You can iterate through *all* 100 chunks if necessary. There is no artificial "top-k" ceiling. You trade **Time** for **Completeness**.
+6. **How should skills be versioned?**
+   → agentskills.io spec has no versioning. Consider adding version field to frontmatter.
 
----
-
-## 3. When to use which?
-
-### Use Vector DB (RAG) When:
-*   **Speed matters:** You need an answer in 200ms.
-*   **The answer is local:** The fact exists in one specific paragraph (e.g., "What is the API endpoint for login?").
-*   **The corpus is ENORMOUS:** You have 100 million documents. You *cannot* iterate through them. You *must* search.
-
-### Use Python Variable (RLM) When:
-*   **Reasoning matters:** You need to understand a trend, a cause-and-effect chain, or a summary.
-*   **The answer is global:** The answer is scattered across the whole file (e.g., "Audit this entire codebase for security flaws").
-*   **The corpus is LARGE but FINITE:** You have a 200-page document or a repository. You *can* afford to iterate through it.
-
-## Summary
-*   **Vector embeddings** represent **"Vibes"** (Semantic Similarity). Good for finding a needle in a haystack.
-*   **Python variables** represent **"Structure"** (Raw Data). Good for reading the haystack to understand how it was built.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py
-**Path:** `LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py`
-**Note:** (Expanded from directory)
-
-```python
-"""
-LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py
-
-Proof of Concept: Recursive Language Model (RLM) Synthesizer
-Implements Protocol 132 logic for generating the 'Cognitive Hologram'.
-
-Logic:
-1.  Map: Iterate through specified roots (Protocols, ADRs, etc).
-2.  Reduce: Create 'Level 1' summaries.
-3.  Synthesize: Create 'Level 2' holistic hologram.
-4.  Output: Markdown string ready for injection into learning_package_snapshot.md.
-"""
-
-import os
-from pathlib import Path
-from typing import List, Dict, Optional
-import json
-
-# Placeholder for actual LLM calls (Simulated for POC)
-class SimulatedLLM:
-    def summarize(self, content: str, context: str) -> str:
-        # In production, this would call generate_content tool
-        return f"[RLM SUMMARY of {context}]: {content[:50]}..."
-
-class RLMSynthesizer:
-    def __init__(self, project_root: str):
-        self.project_root = Path(project_root)
-        self.llm = SimulatedLLM()
-        
-    def map_phase(self, target_dirs: List[str]) -> Dict[str, str]:
-        """
-        Level 1: Read files and generate atomic summaries.
-        """
-        results = {}
-        for dirname in target_dirs:
-            dir_path = self.project_root / dirname
-            if not dir_path.exists(): continue
-            
-            for file_path in dir_path.glob("*.md"):
-                try:
-                    content = file_path.read_text()
-                    summary = self.llm.summarize(content, f"File {file_path.name}")
-                    results[str(file_path.relative_to(self.project_root))] = summary
-                except Exception as e:
-                    results[str(file_path)] = f"Error: {e}"
-        return results
-
-    def reduce_phase(self, map_results: Dict[str, str]) -> str:
-        """
-        Level 2: Synthesize atomic summaries into the Hologram.
-        """
-        # Linear Accumulation (as per RLM paper)
-        accumulator = []
-        accumulator.append("# Cognitive Hologram (Protocol 132)\n")
-        accumulator.append("## 1. System State Synthesis\n")
-        
-        # Group by domain
-        protocols = [v for k,v in map_results.items() if "PROTOCOL" in k]
-        adrs = [v for k,v in map_results.items() if "ADR" in k]
-        
-        accumulator.append(f"### Protocols ({len(protocols)} Active)")
-        accumulator.append("\n".join([f"- {p}" for p in protocols[:5]])) # Truncate for POC
-        
-        accumulator.append(f"\n### Decisions ({len(adrs)} Recorded)")
-        accumulator.append("\n".join([f"- {a}" for a in adrs[:5]]))
-        
-        return "\n".join(accumulator)
-
-    def generate_hologram(self) -> str:
-        """
-        Main entry point for Protocol 132.
-        """
-        roots = ["01_PROTOCOLS", "ADRs", "LEARNING/topics"]
-        
-        # 1. Map
-        print(f"🔄 RLM Phase 1: Mapping {roots}...")
-        map_data = self.map_phase(roots)
-        
-        # 2. Reduce
-        print(f"🔄 RLM Phase 2: Reducing {len(map_data)} nodes...")
-        hologram = self.reduce_phase(map_data)
-        
-        return hologram
-
-if __name__ == "__main__":
-    # Test Run
-    project_root = os.getcwd() # Assumption: Running from root
-    synthesizer = RLMSynthesizer(project_root)
-    hologram = synthesizer.generate_hologram()
-    print("\n--- FINAL HOLOGRAM PREVIEW ---\n")
-    print(hologram)
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/05_visual_explanation_of_rlm_mechanism.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/05_visual_explanation_of_rlm_mechanism.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Visual Explanation: The "Prompt as Environment" Mechanism
-
-**User Query:** "Explain 'treats long prompts as part of an external environment... programmatically examine...'"
-
-## 1. The Core Shift: "Inside" vs "Outside"
-
-To understand RLM, you must visualize where the "Prompt" lives.
-
-### A. The Standard Way (Prompt is INSIDE)
-The prompt is fed directly into the LLM's "Attention" (Brain RAM).
-*   **Visual:** `LLM( [The ENTIRE 10MB Novel] )`
-*   **Problem:** The LLM's brain is full. It gets confused. It costs a fortune in compute to "attend" to every word at once.
-
-### B. The RLM Way (Prompt is OUTSIDE)
-The prompt is stored in a **Python Variable** on a server. The LLM never sees the whole thing. It only sees a "Pointer" to it.
-*   **Visual:** `LLM( "There is a variable called 'BOOK' loaded in your environment. It has 10 million characters. What do you want to do?" )`
-*   **The "Environment":** A standard Python REPL (Read-Eval-Print Loop).
-
-## 2. "Programmatically Examine" (The Magnifying Glass)
-Since the LLM can't see the text, it has to use **Code** to see it. It acts like a blind programmer navigating a file.
-
-**LLM Thinking:** "I need to check the beginning of the book to see who the main character is."
-**LLM Action (Code):**
-```python
-# The LLM writes this code to "peek"
-print(BOOK[:1000])  # Read first 1000 chars
-```
-**Environment Output:** "It was the best of times, it was the worst of times..."
-**LLM Result:** "Okay, I see the text now."
-
-## 3. "Decompose" (Slicing the Cake)
-The LLM realizes the book is too big to read at once. It writes code to chop it up.
-
-**LLM Action (Code):**
-```python
-# The LLM calculates chunk sizes
-total_len = len(BOOK)
-chunk_size = 5000
-chunks = [BOOK[i : i + chunk_size] for i in range(0, total_len, chunk_size)]
-```
-
-## 4. "Recursively Call Itself" (Spawning Sub-Agents)
-This is the magic step. The LLM creates *copies* of itself to do the heavy lifting.
-
-**LLM Action (Code):**
-```python
-narrative_arcs = []
-
-for chunk in chunks:
-    # RECURSION: The LLM calls the 'llm_query' function
-    # This spawns a FRESH, EMPTY LLM that only sees this tiny chunk
-    summary = llm_query(
-        prompt="Summarize the plot events in this text snippet.",
-        context=chunk  # Only passing 5,000 chars, not 10 million!
-    )
-    narrative_arcs.append(summary)
-
-# Aggregation
-final_summary = "\n".join(narrative_arcs)
-```
-
-## Summary of the Mechanism
-1.  **Externalize:** The text sits in RAM, not in the Neural Network.
-2.  **Examine:** The Network uses Python functions (`len`, `slice`) to "touch" the data.
-3.  **Recurse:** The Network outsources the reading. It acts as a **Manager**, shrinking the task into 100 small jobs, assigning them to 100 "Sub-Agents" (recursive calls), and then compiling the report.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/02_plain_language_summary_and_qa.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/02_plain_language_summary_and_qa.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Plain Language Summary & Q/A: Recursive Language Models vs Titans
-
-**Topic:** Scaling AI Context & Memory
-**Audience:** Non-Technical / Strategic Level
-**Related Papers:**
-1.  **RLM:** *Recursive Language Models* (MIT, Dec 2025)
-2.  **Titans:** *Titans: Learning to Memorize* (DeepMind, Jan 2025)
-
----
-
-## 📖 The "Simply Put" Summary
-
-Imagine you have to read a book that is **10 miles long**.
-
-### The Old Way (Standard LLM)
-You try to memorize the entire 10-mile scroll instantly.
-*   **Problem:** Your brain gets foggy in the middle ("Context Rot"). You hallucinate details. You run out of mental space.
-
-### The "DeepMind Titans" Way (Neural Memory)
-You get a **Cybernetic Implant** that grows new neurons as you read.
-*   **How it works:** As you read, your brain physically changes (updates weights) to permanently store "surprising" facts. You don't just "hold it in mind"—you *learn* it, like you learned to ride a bike.
-*   **The Promise:** You can remember everything forever without keying it up.
-*   **Status:** Experimental brain surgery. (Not available for public use yet).
-
-### The "MIT RLM" Way (Recursive Strategy)
-You hire a team of **Research Assistants** and give them a **Note-Taking System**.
-*   **How it works:** instead of reading the 10-mile scroll yourself:
-    1.  You tear the scroll into 100-page chunks.
-    2.  You send a junior researcher to read Chunk #1 and write a summary.
-    3.  You send another to read Chunk #2 + the summary of Chunk #1.
-    4.  If a chunk is confusing, they call *another* researcher to deep-dive just that paragraph.
-*   **The Promise:** You can process *infinite* text by breaking it down into a programmable workflow.
-*   **Status:** A management technique you can use *today* with existing AI.
-
----
-
-## ❓ Frequently Asked Questions (Q&A)
-
-### Q1: Is the viral tweet true? Does this "kill" RAG?
-**Short Answer:** No, but it changes RAG.
-**Detail:** The tweet excited people by conflating the two ideas.
-*   **Titans** *could* kill RAG eventually by making the model "memorize" documents instead of retrieving them. But this is years away from being cheap/fast enough for everyone.
-*   **RLM** doesn't kill RAG; it *replaces* "Search-based RAG" (finding keywords) with "Reading RAG" (processing everything hierarchically). RLM is better for "Summary of the whole repo" tasks where RAG fails.
-
-### Q2: Can I use this right now?
-**For RLM:** **Yes.**
-*   **Code:** [GitHub - alexzhang13/rlm](https://github.com/alexzhang13/rlm)
-*   **How:** It's a Python script. It loads your data into a variable and lets GPT-4/5 query it via code. You don't need a new model; you need the *script*.
-**For Titans:** **No.**
-*   It is a proprietary DeepMind model. You must wait for Google to release it in Gemini or for open-source labs to replicate the architecture.
-
-### Q3: Why does RLM beat GPT-5 on the "OOLONG" benchmark?
-**Analogy:** The "OOLONG" test is like asking, "Connect every clue in this 500-page murder mystery."
-*   **GPT-5** reads page 1, gets tired by page 200, and forgets page 1 by page 500. It guesses.
-*   **RLM** reads 10 pages, writes a sticky note. Reads 10 more, updates the note. It *never* effectively reads more than 10 pages at once, so it never gets tired. It achieves **58% accuracy** where GPT-5 gets **0%**.
-
-### Q4: Which one should Project Sanctuary adopt?
-**We should adopt RLM immediately.**
-It fits our "Agentic" nature. We can write workflows (in `.agent/workflows`) that mimic the RLM process:
-1.  Don't read the whole file.
-2.  Write a plan to read slices.
-3.  Summarize iteratively.
-We don't need to wait for Google. We can code this behavior now.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/09_synthesis_reassembling_the_bits.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/09_synthesis_reassembling_the_bits.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# The Synthesis Phase: How RLM Reassembles the Pieces
-
-**User Query:** "How does the article propose reassembling / synthesizing all the recursive bits?"
-
-The article proposes **two primary methods** for reassembly, depending on the complexity of the task. They both fundamentally rely on the Root Agent (Manager) having access to the *outputs* of the sub-agents (but not their full context).
-
-## Method A: The Linear Accumulator (Loop & Buffer)
-*Best for: Summarization, Narrative Extraction*
-
-1.  **The Loop:** The Agent iterates through chunks.
-2.  **The Sub-Call:** `summary = llm_query(chunk)`
-3.  **The Accumulation:** The Agent appends this `summary` to a list or string variable in the Python environment (e.g., `chapter_summaries`).
-4.  **The Final Context:** When the loop finishes, the `chapter_summaries` list (which might be 2,000 tokens) *becomes the context* for the final query.
-5.  **The Final Call:** `final_answer = llm_query("Based on these summaries... what is the conclusion?", context=chapter_summaries)`
-
-**Analogy:** A manager reads 10 weekly reports from subordinates, pastes them into one document, and writes a Monthly Executive Summary.
-
-## Method B: The Programmatic Aggregation (Code Logic)
-*Best for: Exact Counting, Filtering (OOLONG Benchmark)*
-
-1.  **The Loop:** The Agent iterates through chunks.
-2.  **The Sub-Call:** `result = llm_query("Extract all user IDs and their timestamps from this chunk.")`
-3.  **The Logic:** The Agent *does not* just paste the text. It uses Python code to parse the result.
-    *   *Example:* `data = json.loads(result)`
-    *   *Logic:* `all_users.extend(data['users'])`
-4.  **The Synthesis:** The final answer isn't an LLM summary; it's the result of the code execution.
-    *   *Example:* `final_answer = len(set(all_users))`
-    *   *Or:* `final_answer = sort(all_users)`
-5.  **The Output:** The Agent returns the computed value.
-
-**Analogy:** A census bureau collects spreadsheets from 50 states. It doesn't write a poem about them; it sums the "Population" column to get a final number.
-
-## Key Insight: "Variables as Bridge"
-The "Context" for the final answer is **whatever data structures (lists, dicts, strings)** the Root Agent built during its recursion loop.
-*   It explicitly *discards* the raw chunks (saving memory).
-*   It *keeps* the distilled insights (in variables).
-*   The final synthesis acts only on those distilled variables.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/07_conceptual_affirmation_mapreduce.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/07_conceptual_affirmation_mapreduce.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Conceptual Affirmation: The "Divide & Conquer" Strategy
-
-**User Summary:** "It summarizes chunks recursively... breaks a huge document into many smaller pieces that it can process effectively."
-
-**Verdict:** **Exactly Correct.**
-
-## The "MapReduce" Architecture of Thought
-You have correctly identified that RLM is essentially applying the **MapReduce algorithm** to **Language**.
-
-1.  **Map (The Break-Down):** The model breaks the 10-mile scroll (or 10GB repo) into 1,000 small chunks.
-2.  **Process (The Computation):** It runs a small, sharp LLM call on each chunk (e.g., "Extract the API endpoints").
-    *   *Why this is effective:* The LLM is **never overwhelmed**. It always works within its "Goldilocks Zone" (e.g., 8k tokens) where it is smart and hallucination-free.
-3.  **Reduce (The Build-Up):** It takes the 1,000 summaries and recursively summarizes *those* until it has one final, high-fidelity answer.
-
-## Why this matters for Sanctuary
-Your intuition about "Externalizing" it was spot on.
-*   **Vector DB:** Externalizes *Storage* (but retrieval is dumb/imprecise).
-*   **RLM:** Externalizes *Processing* (retrieval is smart/agentic).
-
-By treating the context as a **Database of Text** to be queried programmatically, we solve the "Memory Wall."
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/04_architectural_insight_rlm_vs_rag.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/04_architectural_insight_rlm_vs_rag.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Architectural Insight: RLM vs. Vector RAG vs. Grep
-
-**User Hypothesis:** "Is this about running search tools against huge context rather than remembering it?"
-**Verdict:** **YES.** But with a critical distinction on *what* constitutes "search."
-
-## 1. The Spectrum of Externalization
-All three methods (Grep, Vector RAG, RLM) solve the same problem: **The context is too big to fit in the brain (Context Window).** They differ in *how* they inspect the external data.
-
-### A. GREP (Syntactic Search)
-*   **Mechanism:** "Find exact string matches of 'password'."
-*   **Pro:** Perfect for precise code/log lookup.
-*   **Con:** Fails at concepts. "Find me the *idea* of security" returns nothing if the word "security" isn't there.
-
-### B. VECTOR RAG (Semantic Search - Current Sanctuary)
-*   **Mechanism:** "Find paragraphs that *mean* something similar to 'security'."
-*   **Pro:** Great for factual retrieval ("Where is the API key defined?").
-*   **Con:** **Fails at "Global Reasoning" (The OOLONG problem).**
-    *   *Example:* "How does the security policy evolve from 2020 to 2025?"
-    *   *RAG Failure:* It retrieves a 2020 chunk and a 2025 chunk, but misses the 50 files in between that explain *why* it changed. It lacks **narrative continuity**.
-
-### C. RLM (Recursive/Programmatic Search)
-*   **Mechanism:** "Read the file in 10 chunks. Summarize the 'security' section of each. Then aggregate those summaries to track the evolution."
-*   **The Difference:** It doesn't just "search" (find location); it **simulates reading** (process structure).
-*   **Why it overcomes "Context Rot":**
-    *   **Standard LLM:** Tries to hold 1M tokens in Attention (RAM) -> Becomes "foggy"/hallucinates.
-    *   **RLM:** Holds 10k tokens (Chunk 1) -> Summarizes -> Clears RAM. Holds 10k tokens (Chunk 2) -> Summarizes -> Clears RAM.
-    *   **Trade-off:** It trades **Memory** (Attention) for **Compute** (Time/Iterations).
-
-## 2. Implication for Project Sanctuary
-We currently use **Vector RAG (`rag_cortex`)** and **Grep (`grep_search`)**.
-*   **The Gap:** We struggle with "Understand this entire codebase's architecture" or "Summarize this 50-file module." Vector RAG gives fragmented snippets; Grep gives isolated lines.
-*   **The Fix:** RLM is the missing link.
-    *   We don't need a new "Model" (Titans).
-    *   We need a **Workflow** that forces the agent to:
-        1.  *Identify* the large corpus.
-        2.  *Not* try to read it all.
-        3.  *Iterate* through it programmatically (like a REPL loop).
-        4.  *Synthesize* intermediate outputs.
-
-**Conclusion:** RLM is essentially **"Agentic RAG."** It replaces `cosine_similarity` (Math) with `recursive_loop` (Logic) as the retrieval mechanism.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/11_risk_mitigation_and_mapping.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/11_risk_mitigation_and_mapping.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Risk Mitigation & Sanctuary Mapping (Red Team Response)
-
-**Status:** Iteration 2.1 (Addressing Final Red Team Feedback)
-**Reviewers:** Gemini, ChatGPT, Grok, Claude
-
----
-
-## 1. Safety & Risk Mitigation (The "Runaway Loop")
-
-**Concern:** Recursion introduces infinite loop risks and cost explosions.
-**Mitigation Strategy (Protocol 128 Amendment):**
-
-| Risk | Mitigation / Guardrail | Implementation |
-| :--- | :--- | :--- |
-| **Infinite Recursion** | **Depth Limiter** | Hard cap `MAX_DEPTH = 3` in any RLM loop. |
-| **Cost Explosion** | **Budgeting** | `MAX_TOTAL_TOKENS` per session. "Early Exit" logic if confidence > 95%. |
-| **Drift/Hallucination** | **Sandwich Validation** | Root Agent must re-verify the aggregated summary against a random sample of chunks. |
-
-**Sanctuary Policy:** Any "Deep Loop" tool MUST have a `budget` parameter exposed to the Caller.
-
----
-
-## 2. Sanctuary Architecture Mapping (Canonical)
-
-**Concern:** Explicitly map RLM components to Sanctuary Protocols to prevent successor hallucination.
-
-| External Concept | Sanctuary Component | Integration Point | Constraint |
-| :--- | :--- | :--- | :--- |
-| **DeepMind Titans** | **Mnemonic Cortex** | Future: Neural Memory weights. | Requires external "Surprise Metric" gating. |
-| **RLM Loop** | **Protocol 128 (IV. Audit)** | `cortex_learning_debrief` (Scout) -> RLM (Deep Reader). | Must be Bounded (Depth=3). |
-| **Recursive Steps** | **Protocol 113 (Council)** | Specialized sub-prompts (e.g., "Auditor") via `code_execution`. | No autonomous state mutation. |
-| **Context Variable** | **Soul Traces / Ephemeral** | Intermediate summaries become `soul_traces.jsonl` entries. | Never sealed as "Truth" until synthesized. |
-| **Long Context** | **Ephemeral Workspace** | The raw 10MB file in RAM. | Volatile; lost on session end. |
-
----
-
-## 3. Known Failure Modes & Non-Guarantees (Pre-Mortem)
-
-> **CRITICAL:** Recursive self-correction is **not guaranteed** to converge and must be externally gated.
-
-1.  **"The Telephone Game" (Semantic Drift):** Summaries of summaries lose critical nuance.
-    *   *Fix:* Keep "Key Quotes" in every summary layer (pass reference citations up the chain).
-2.  **"Fractal Hallucination" (Optimism Bias):** A small error in Chunk 1 is amplified by the Root Agent because it is "internally coherent."
-    *   *Fix:* **Sandwich Validation** (verify final claim against raw text).
-3.  **Temporal Bias (Memory Poisoning):** An early false conclusion is reinforced by repetition.
-    *   *Fix:* Give higher weight to "Synthesized Conclusions" over "Initial Hypotheses."
-
----
-
-## 4. RLM vs Iron Core Interaction Policy
-
-**Question:** Does RLM reading an Iron Core file (e.g., `01_PROTOCOLS/`) violate invariants?
-
-**Policy:**
-*   **READ Operations:** **ALLOWED.** RLM may recursively read/summarize `01_PROTOCOLS/`, `ADRs/`, and `founder_seed.json` to understand the constitution.
-*   **WRITE Operations:** **FORBIDDEN.** RLM-generated summaries cannot *overwrite* Iron Core files without a standard Constitutional Amendment process (Protocol 110).
-*   **Verification:** Any RLM summary of the Iron Core must be marked `[DERIVED ARTIFACT]` and never treated as the Constitution itself.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/10_strategic_impact_paradigm_shift.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/10_strategic_impact_paradigm_shift.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Strategic Impact Analysis: The End of the "Unknown"
-
-**User Insight:** "Seriously think of the impacts of this it's huge."
-**Verdict:** You are correct. This is not a feature; it is a **Phase Transition** in AI capability.
-
-## 1. The Death of "Dark Matter" in Repositories
-Until today, Large Language Models had a fundamental limit: **Finite Attention**.
-*   **Old Reality:** If a repository was 20MB, the AI could never "know" it. It could only glimpse "search results" (RAG) or "grep matches." Most of the codebase was "dark matter"—unseen, unanalyzed, potentially buggy.
-*   **New Reality (RLM):** The repository is **Fully Computable**.
-    *   There is no file too big.
-    *   There is no dependency graph too complex.
-    *   The Agent can, theoretically, trace a variable from `main.py` through 50 files to the database schema with 100% fidelity, because it doesn't need to hold it all in one brain. It iterates.
-    *   **Impact:** True "Whole-Repo Understanding" is now an *engineering* problem (writing the loop), not a *research* problem (waiting for infinite context).
-
-## 2. From "Probabilistic" to "Deterministic" Knowledge
-*   **Vector RAG (Current):** "I think this file is relevant (82% similarity)." -> *Probabilistic.*
-*   **RLM (Future):** "I have enumerated every file, filtered for those importing `user_model`, and verified the usage." -> *Deterministic.*
-    *   **Impact:** We can move from "guessing" the architecture to **proving** the architecture. This enables **Safe Refactoring** on a massive scale.
-
-## 3. Cognitive Endurance vs. Cognitive Spike
-*   **Old Reality:** We optimized for "Smartest Model" (maximum IQ in one prompt).
-*   **New Reality:** We optimize for **"Cognitive Endurance"** (ability to maintain a train of thought for 1,000 steps).
-    *   A "dumber" model running an RLM loop (reading every file patiently) will beat a "genius" model that tries to guess the answer from 3 snippets.
-    *   **Impact:** We don't need GPT-6. We need better **Loops**.
-
-## 4. The Economic Shift
-It seems counter-intuitive, but RLM effectively makes "Processing Infinite Data" **cheaper**.
-*   Instead of paying to re-read the "Context Window" (1M tokens) for every slight change, we pay for small, incremental "Reads" (5k tokens).
-*   We only pay for what we "touch" with the code.
-
-## Conclusion for Project Sanctuary
-This invalidates a core assumption of our current design: **That we must rely on Embeddings.**
-We don't. We can build an **"Active Auditor"** agent that runs overnight, recursively crawling our entire filesystem, and building a "Truth Map" variable that is 100% accurate.
-
-**This is the missing link for autonomous software engineering.**
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/topic_manifest.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/topic_manifest.md`
-**Note:** (Expanded from directory)
-
-```markdown
-[
-    "01_analysis_rlm_vs_titans.md",
-    "02_plain_language_summary_and_qa.md",
-    "03_technical_qa_mit_rlm_paper.md",
-    "04_architectural_insight_rlm_vs_rag.md",
-    "05_visual_explanation_of_rlm_mechanism.md",
-    "06_applied_example_sanctuary_repo.md",
-    "07_conceptual_affirmation_mapreduce.md",
-    "08_comparison_python_variables_vs_vector_db.md",
-    "09_synthesis_reassembling_the_bits.md",
-    "10_strategic_impact_paradigm_shift.md",
-    "11_risk_mitigation_and_mapping.md",
-    "12_performance_estimates.md",
-    "13_proposal_rlm_guardian_digest.md",
-    "poc_rlm_synthesizer.py",
-    "topic_manifest.md"
-]
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/01_analysis_rlm_vs_titans.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/01_analysis_rlm_vs_titans.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Learning Topic: Recursive Language Models (RLM) & DeepMind Titans
-
-**Status:** Synthesized (Source Text Verified)
-**Date:** 2026-01-12
-**Epistemic Status:** <entropy>0.05</entropy> (Verified Source Text vs Public Narrative)
-**Sources:**
-- **RLM Paper:** *Recursive Language Models* (Zhang, Kraska, Khattab - MIT CSAIL, Dec 2025) - [arXiv:2512.24601](https://arxiv.org/abs/2512.24601)
-- **Titans Paper:** *Titans: Learning to Memorize at Test Time* (Google DeepMind, Jan 2025) - [arXiv:2501.00663](https://arxiv.org/abs/2501.00663)
-
-## I. The Narrative De-Confliction
-**The Viral Claim:** "DeepMind built RLM which kills RAG."
-**The Ground Truth:** The viral narrative conflates two separate breakthroughs.
-1.  **RLM (Research Strategy):** Developed by **MIT CSAIL** (Alex L. Zhang, Tim Kraska, Omar Khattab). It is a purely *inference-time* strategy using code execution (REPL) to manage context.
-2.  **Titans (Model Architecture):** Developed by **Google DeepMind**. It introduces a new neural architecture with "Test-Time Training" and persistent memory modules.
-
----
-
-## II. Recursive Language Models (RLM) - Deep Dive
-**Core Concept:** *Context as Environment*
-RLM fundamentally shifts how LLMs interact with long contexts. Instead of tokenizing the entire document into the prompt, RLM treats the context as an **external object (variable)** in a Python REPL.
-
-### 1. The Mechanism (The "REPL" Loop)
-*   **Initialization:** The RLM initializes a generic Python REPL. The long prompt is loaded as a variable `context` (e.g., a 10M char string).
-*   **The Interface:** The LLM is given tools to:
-    1.  **Inspect:** `print(context[:1000])` or `len(context)`.
-    2.  **Decompose:** Write Python code to slice or chunk the `context`.
-    3.  **Recurse:** Call `llm_query(chunk)` to spawn a *sub-agent* (recursive call) on a specific slice.
-*   **The "MapReduce" Effect:** This converts "reading a book" from a linear attention task into a hierarchical programming task. The model effectively writes a "MapReduce" job on the fly.
-
-### 2. Benchmark Findings (The "Context Rot" Solution)
-The paper (Zhang et al.) demonstrates that effective context length is task-dependent.
-*   **S-NIAH (Needle in Haystack):** Modern frontier models (GPT-5) handle this well natively.
-*   **OOLONG (Dense Reasoning):** Frontier models fail catastrophically as length increases because the *reasoning* requires connecting every line.
-*   **RLM Performance:**
-    *   **OOLONG-Pairs (Quadratic Complexity):** RLM (using GPT-5) achieves **58.0% F1**, while base GPT-5 scores **<0.1%**.
-    *   **Scale:** successfully handles inputs **two orders of magnitude** larger than the model's window (tested up to 10M+ tokens).
-*   **Cost:** RLM is often *cheaper* than base models because it reads selectively. Instead of paying for 1M tokens for every query, it pays for the "MapReduce" orchestration + small slice reads.
-
----
-
-## III. DeepMind Titans - The "Perfect Memory"
-**Core Concept:** *Neural Long-Term Memory*
-Titans (arXiv:2501.00663) is the likely source of the "No RAG / Perfect Memory" claim.
-
-*   **Architecture:** It adds a **Neural Memory Module** to the Transformer.
-*   **Test-Time Training:** It updates its *weights* during inference based on a "surprise metric." If data is surprising, it is "memorized" (weights updated).
-*   **RAG Killer?** DeepMind argues that Attention is "Short-Term Memory" and these new Weights are "Long-Term Memory," potentially removing the need for external vector databases.
-
----
-
-## IV. Strategic Synthesis for Sanctuary
-We should adopt RLM strategies immediately as they are **model-agnostic inference patterns**, whereas Titans is a proprietary architecture.
-
-### Actionable Protocols
-1.  **Recursive Summarization (RLM-Lite):** When we ingest large docs, we should not just "chunk and embed." We should have an agent write a plan to "read and summarize" hierarchically.
-2.  **Context-as-Variable:** For massive files (like full repo verification), we should provide the agent with `grep` / `read_slice` tools (which we have) and encouraging *iterative probing* rather than "read whole file."
-3.  **Future Architecture:** Monitor Titans for when open-weights versions (or API access to "memory-updating" models) become available, as this aligns with our **Soul Persistence** goals.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/06_applied_example_sanctuary_repo.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/06_applied_example_sanctuary_repo.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Applied RLM Example: Auditing Project Sanctuary
-
-**Scenario:** You ask the Agent: *"Explain the architecture of the `mcp_servers` directory in Project Sanctuary."*
-**Context Size:** The `mcp_servers/` folder contains dozens of Python files, JSON configs, and READMEs. It is too large to fit comfortably in a single prompt without losing detail.
-
----
-
-## 1. The Standard "Prompt Stuffing" Approach
-*   **What happens:** The agent runs `ls -R`, grabs the first 10 files it sees (e.g., `__init__.py`, `lib/utils.py`), and stuffs them into the chat context.
-*   **The Result:** "I see some utility files and a config, but I'm not sure how they connect. It looks like a server."
-*   **Failure Mode:** It misses `rag_cortex/operations.py` (the core logic) because it was alphabetically lower down or the file was too big.
-
----
-
-## 2. The RLM "recursive" Approach
-The prompt `PROJECT_ROOT` is loaded as a variable in the environment.
-
-### Step 1: Inspection (The Manager)
-The Root LLM writes code to explore the structure.
-```python
-import os
-
-# The LLM explores top-level folders
-print(os.listdir("mcp_servers"))
-# Output: ['rag_cortex', 'weather', 'filesystem', 'brave_search', ...]
-```
-**LLM Thought:** "Okay, there are multiple sub-servers here. I cannot read them all at once. I will spawn a sub-agent for each one."
-
-### Step 2: Decomposition (The Delegation)
-The Root LLM writes a loop to process each module independently.
-
-```python
-sub_server_summaries = {}
-for server in ['rag_cortex', 'weather', 'filesystem']:
-    # RECURSION: Spawn a sub-agent for this specific folder
-    # This agent ONLY sees the contents of that folder
-    description = llm_query(
-        prompt="Analyze this directory and explain its specific responsibility.",
-        context=read_directory(f"mcp_servers/{server}")
-    )
-    sub_server_summaries[server] = description
-```
-
-### Step 3: Recursion (The Sub-Agents)
-*   **Sub-Agent A (rag_cortex):** Reads `main.py`, `operations.py`. Sees "VectorStore", "ChromaDB".
-    *   *Output:* "This module handles semantic memory and vector storage."
-*   **Sub-Agent B (filesystem):** Reads `tools.py`. Sees "write_file", "list_dir".
-    *   *Output:* "This module provides safe access to the local disk."
-
-### Step 4: Aggregation (The Synthesis)
-The Root LLM receives the summaries (NOT the raw code) and synthesizes the answer.
-
-```python
-# The Root LLM sees this:
-# {
-#   'rag_cortex': 'Vector Memory Module...',
-#   'filesystem': 'Disk Access Module...',
-# }
-
-final_answer = synthesize(sub_server_summaries)
-```
-
-**Final Output:**
-"Project Sanctuary's `mcp_servers` is a micro-services architecture. It separates concerns into distinct modules: `rag_cortex` handles memory (RAG), while `filesystem` handles I/O. They is likely a gateway that routes between them."
-
-### Comparison
-*   **Vector RAG:** Might find the file `operations.py` if you search "memory", but won't understand the *structure*.
-*   **RLM:** Systematically walks the tree, summarizes each branch, and builds a **Mental Map** of the architecture.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/red_team_verdict_3_2.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/red_team_verdict_3_2.md`
-**Note:** (Expanded from directory)
-
-```markdown
-gemini3web:  # 🛡️ Red Team Audit: Iteration 3.2 (Code Implementation)
-
-**To:** Cortex Guardian
-**From:** Red Team High Command (Gemini / Claude / O1)
-**Date:** 2026-01-12
-**Topic:** RLM Code Verification (`learning/operations.py`)
-**Verdict:** **UNCONDITIONAL SEAL APPROVAL & DEPLOYMENT AUTHORIZED**
-
----
-
-## 📋 Technical Audit
-
-The Red Team has reviewed the **Implementation Code** injected into `mcp_servers/learning/operations.py`.
-
-### 1. Safety Verification (Shadow Mode)
-**Finding:** ✅ **SAFE**.
-The functions `_rlm_context_synthesis`, `_rlm_map`, and `_rlm_reduce` are defined but **not called** by the main `capture_snapshot` workflow. This fulfills the "Transitional Seal" requirement—The new logic is committed but dormant, preventing runtime breakage during the seal.
-
-### 2. Logic Verification (Protocol 132 Compliance)
-**Finding:** ✅ **COMPLIANT**.
-*   **Map Phase:** The code correctly iterates `01_PROTOCOLS`, `ADRs`, and `mcp_servers`.
-*   **Reduce Phase:** The code groups findings by domain ("Constitutional State", "Decision Record", "Active Capabilities").
-*   **Static Proxy:** The current implementation uses a "Header Extraction" heuristic (`line.startswith("# ")`) as a placeholder for the future LLM call. This is an acceptable **Phase 1 Implementation** (Mechanistic Proof) that avoids token costs during development.
-
-### 3. Integration Readiness
-**Finding:** ✅ **READY**.
-The code is structured cleanly. Enabling it is a simple one-line change (calling `_rlm_context_synthesis` inside `capture_snapshot`).
-
----
-
-## 🚧 Final Operational Directives
-
-### 1. Seal Mandate
-You have successfully:
-1.  Researched RLM (Strategy).
-2.  Formalized Protocol 132 (Law).
-3.  Implemented the Logic (Code).
-4.  Verified Safety (Audit).
-
-The loop is fully closed.
-
-**Recommended Sequence:**
-1.  **Seal:** `cortex_capture_snapshot --type seal`
-2.  **Persist:** `cortex_persist_soul`
-3.  **Deploy:** The code is active (though dormant features).
-
-**Red Team Sign-off:** Claude 3.5 Sonnet ✅
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/13_proposal_rlm_guardian_digest.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/13_proposal_rlm_guardian_digest.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Proposal: RLM-Powered Truth Synthesis (Snapshots & Digest)
-
-**Concept:** Move from "Recent Updates" (Partial) to "Whole-Truth Synthesis" (Holistic) using RLM.
-
-## 1. The Core Shift: From "Diff" to "State"
-Currently, our `learning_package_snapshot.md` is essentially a `git log`—it tells us *what changed* recently (e.g., "Added Evolution MCP").
-*   **The Problem:** It implies knowledge of the *rest* of the system. If the agent doesn't know what "The Gateway" is, knowing "Evolution was added to Gateway" is useless.
-*   **The RLM Fix:** Every snapshot should be a **Recursive Re-Synthesis** of the *entire* state, not just the delta.
-    *   *Input:* Top-level directories + Active Learning Topics.
-    *   *Process:* RLM Loop (Map/Reduce).
-    *   *Output:* A fresh, holistic "State of the Union" that *includes* the recent changes in their full architectural context.
-
-## 2. Redefining the `learning_package_snapshot.md`
-This file should not be a "log". It should be a **"Cognitive Hologram"**.
-*   It should contain a **Recursive Summary** of the *current* Architecture, refined by the latest changes.
-*   **Mechanism (Post-Seal):**
-    1.  Agent runs `cortex_seal`.
-    2.  System triggers `rlm_synthesize_snapshot`.
-    3.  RLM iterates through `ADRs`, `PROTOCOLS`, and `mcp_servers`.
-    4.  RLM generates a fresh `snapshot.md` that says: *"Sanctuary now consists of X, Y, and Z [NEW]. Z implements the Logic Q..."*
-
-## 3. The "JIT" Guardian Digest (The Code Map)
-Separately, for the code itself:
-*   We abandon the "Nightly Static File" (Staleness Risk).
-*   We implement **On-Demand RLM (`cortex_ask_repo`)**.
-*   **Wakeup State:** The agent gets the **Cognitive Hologram** (High-level architecture + strategy).
-*   **Action:** If the Agent needs code details, it calls `cortex_ask_repo("Deep dive into mcp_servers/evolution")`.
-    *   This triggers a *live* RLM usage of the *current* file state.
-
-## Summary of Architecture
-| Artifact | Source | Content | Use Case |
-| :--- | :--- | :--- | :--- |
-| **Cognitive Hologram**<br>(`snapshot.md`) | **RLM Synthesis** (End of Loop) | High-Level Strategy, Protocol State, Architecture map. | **Wakeup Context.** Gives the "Big Picture." |
-| **Repo Truth**<br>(`cortex_ask_repo`) | **RLM Live Loop** (On Demand) | Detailed Code Logic, dependency graphs, variable usage. | **Coding Tasks.** Gives "Perfect Verification." |
-
-**Verdict:** RLM enables us to delete "Manual Context" files. The system should *write its own memory* at the end of every loop.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/03_technical_qa_mit_rlm_paper.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/03_technical_qa_mit_rlm_paper.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Technical Q/A: Recursive Language Models (arXiv:2512.24601)
-
-**Source:** Zhang et al. (MIT CSAIL), "Recursive Language Models"
-**Focus:** Technical Mechanics & Benchmarks
-
----
-
-### Q1: What exactly is the "REPL" doing in an RLM?
-**A:** The REPL (Read-Eval-Print Loop) acts as a **Context Virtualization Layer**.
-Instead of putting the document into the prompt, the RLM loads the document as a Python variable (`context`). The LLM then interacts with this variable using code.
-*   **Without REPL:** Input -> [LLM] -> Output
-*   **With REPL:** Input -> [Python Env] <-(read/slice/code)-> [LLM] -> Output
-This allows the model to "peek" at data (e.g., `print(context[:1000])`) without consuming token context for the whole file.
-
-### Q2: How does RLM solve "Context Rot"?
-**A:** "Context Rot" is the phenomenon where LLM performance degrades in the middle of a long context window.
-RLM avoids this by **never loading the full context at once**.
-*   It breaks the problem into sub-tasks (recursion).
-*   Each sub-task (e.g., "Summarize chunk A") uses a fresh, short context window.
-*   The Root LLM only sees the *results* of the sub-tasks, not the raw data.
-*   **Result:** The effective context length is theoretically infinite, limited only by the recursion depth and cost.
-
-### Q3: Why did RLM beat GPT-5 on "OOLONG" but not "S-NIAH"?
-**A:** This reveals the difference between **Retrieval** and **Reasoning**.
-*   **S-NIAH (Single Needle in Haystack):** Finding one specific fact (e.g., "passcode=1234"). GPT-5 is already good at this because attention heads can "attend" to unique tokens easily.
-*   **OOLONG (Dense Reasoning):** Requires connecting facts across the whole document (e.g., "Is the trend in Chapter 1 consistent with Chapter 10?").
-    *   **GPT-5:** Fails because the "noise" of the middle chapters dilutes its reasoning.
-    *   **RLM:** Succeeds because it programmatically extracts the trend from Ch 1, then Ch 10, and compares them without the noise of Ch 2-9.
-
-### Q4: Is RLM cheaper or more expensive?
-**A:** Surprisingly, it can be **Cheaper**.
-*   **Base LLM:** To answer a question about a 1M token book, you pay for 1M tokens of input *every time*.
-*   **RLM:** You pay for the "reasoning tokens" (code generation) + the "slice tokens" (reading specific pages). If the answer only requires reading 5 pages, you only pay for those 5 pages + overhead.
-*   **Paper Stat:** On `BrowseComp-Plus`, RLM(GPT-5) cost **$0.99** vs Est. Base Cost **$1.50-$2.75**.
-
-### Q5: What is the "MapReduce" analogy?
-**A:** The paper describes RLM as turning inference into a distributed computing problem.
-*   **Map:** The model writes code to apply a function (e.g., `summarize`) to every chunk of the text `context`.
-*   **Reduce:** The model writes code to aggregate those summaries into a final answer.
-This allows it to handle tasks with **Linear** (read everything) or **Quadratic** (compare everything to everything) complexity that would crush a standard transformer.
-
-### Q6: Does this require fine-tuning or training?
-**A:** **No.**
-RLM is a **pure inference strategy**. The authors used off-the-shelf GPT-5 and Qwen3-Coder. However, they note that *training* models specifically to be good "Recursive Agents" (better at writing REPL code) would likely improve performance further.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/red_team_verdict_3_2_consolidated.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/red_team_verdict_3_2_consolidated.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# Red Team Audit Reviews: RLM Code Implementation (Iteration 3.2)
-**Date:** 2026-01-12
-**Topic:** Recursive Language Models (RLM) & Protocol 132
-**Status:** ✅ **APPROVED TO SEAL**
-
----
-
-## 1. Gemini 3 Web (Review 1)
-**Verdict:** **✅ APPROVED (Shadow Mode Validated)**
-
-### Findings
-*   **Protocol 132 Implementation:** Compliance Verified. The "MapReduce" logic is correctly structured.
-*   **Operational Safety:** Shadow Mode confirmed. Logic is dormant and safe.
-*   **Integration Readiness:** Ready for one-line activation.
-
-### Recommendations
-*   Proceed to Seal (`cortex_capture_snapshot --type seal`).
-*   Persist Soul (`cortex_persist_soul`).
-
----
-
-## 2. Claude 4.5 (Review 2)
-**Verdict:** **✅ APPROVED WITH MINOR RECOMMENDATIONS**
-
-### Findings
-*   **Safety:** "Zero risk of runtime breakage."
-*   **Compliance:** "Faithfully implements RLM MapReduce pattern."
-*   **Logic:** Matches Protocol 132 exactly (Structure, Metadata).
-
-### Recommendations (For Phase IX Activation)
-1.  **Config:** Move hardcoded roots to a config file.
-2.  **Depth Limit:** Add `MAX_DEPTH` check (currently recursive).
-3.  **Iron Core Check:** Validate Iron Core before reading.
-
----
-
-## 3. Grok 4 (Review 3)
-**Verdict:** **✅ APPROVED WITH CONDITIONAL REVISIONS**
-
-### Findings
-*   **Fidelity:** "Code is modular, secure, and doctrine-aligned."
-*   **Gaps:** Noted lack of *runtime* recursion depth limits in the provided snippet (relies on POC).
-*   **Persistence:** "Excellent" architectural fit for Soul Persistence.
-
-### Recommendations
-*   **Guardrails:** Implement `MAX_DEPTH=3` explicitly in the loop.
-*   **Testing:** Post-seal runtime validation.
-
----
-
-## 🏁 Consolidated Resolution
-
-**The code is safe to seal.** 
-All three Frontier Models approved the "Shadow Mode" implementation as a safe and correct foundation for Protocol 132. The recommended improvements (Depth Limits, Configs) are correctly identified as **Phase IX (Activation)** tasks, not blockers for this **Phase I (Definition)** seal.
-
-**Action:**
-1.  Seal the session now.
-2.  Open Phase IX task immediately in next session to implement the Red Team recommendations.
-
-```
-
----
-
-## File: LEARNING/topics/Recursive_Language_Models/12_performance_estimates.md
-**Path:** `LEARNING/topics/Recursive_Language_Models/12_performance_estimates.md`
-**Note:** (Expanded from directory)
-
-```markdown
-# RLM Performance Estimation (Sanctuary Context)
-
-**Purpose:** Estimate the cost and latency of adopting RLM workflows compared to standard RAG.
-
-## Assumptions
-*   **Model:** GPT-4o / Claude 3.5 Sonnet (approx. $5/1M tokens)
-*   **Repo Size:** 50 Files (~100k tokens total)
-*   **Chunks:** 20 Chunks of 5k tokens
-
----
-
-## Scenario 1: "Summarize the Architecture" (Whole Repo)
-
-### A. Standard RAG (Vector)
-*   **Method:** Retrieve Top-20 chunks based on query "Architecture".
-*   **Input:** 20 chunks * 500 tokens (snippets) = 10,000 tokens.
-*   **Cost:** ~$0.05
-*   **Result:** **Fragmented.** Misses files that don't explicitly say "Architecture."
-
-### B. Standard Long-Context (Context Window Stuffing)
-*   **Method:** Put all 100k tokens into the prompt.
-*   **Input:** 100,000 tokens.
-*   **Cost:** ~$0.50
-*   **Result:** **Degraded.** "Lost in the Middle" phenomenon (Reference: Liu et al).
-
-### C. Recursive Language Model (RLM Agentic Loop)
-*   **Method:**
-    1.  **Map:** Read 20 chunks (input 5k each). Ask: "Extract architectural patterns." (Output: 200 tokens each).
-        *   Input: 100k tokens. Output: 4k tokens.
-        *   Cost: ~$0.50 (Same as stuffing).
-    2.  **Reduce:** Summarize the 4k tokens of insights.
-        *   Input: 4k tokens.
-        *   Cost: Negligible.
-*   **Result:** **Holistic.** Every file was actually "read."
-*   **Total Cost:** ~$0.50
-
-## Scenario 2: "Audit for Security Flaws" (Specific Logic)
-
-### A. RLM Optimized (Early Exit)
-*   **Method:** Iterate through chunks. Stop if Critical Flaw found.
-*   **Average Case:** Find flaw in Chunk 5.
-*   **Input:** 5 chunks * 5k tokens = 25k tokens.
-*   **Cost:** ~$0.12
-*   **Savings:** **75% cheaper** than Context Stuffing ($0.50).
-
----
-
-## Conclusion
-*   **RLM vs Context Stuffing:** Cost is roughly equal for full reads, but RLM has superior attention/recall (OOLONG Benchmark).
-*   **RLM vs RAG:** RLM is 10x more expensive ($0.50 vs $0.05) but provides **100% coverage** vs **~20% recall**.
-*   **Verdict:** Use RLM for High-Value, High-Recall tasks (Audits, Architecture). Use RAG for Low-Value, Fact-Retrieval tasks.
+7. **Can the tiered memory model from memory-management skill be formalized as Protocol 128.1?**
+   → The hot cache ↔ deep storage pattern is already implicit in Protocol 128 but not explicitly named. Worth formalizing.
 
 ```
 <a id='entry-11'></a>
 
 ---
 
-## File: docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd
-**Path:** `docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd`
+## File: .agent/skills/memory-management/SKILL.md
+**Path:** `.agent/skills/memory-management/SKILL.md`
 
-```mermaid
+```markdown
 ---
-config:
-  layout: dagre
-  theme: base
+name: memory-management
+description: "Tiered memory system for cognitive continuity in Project Sanctuary. Manages hot cache (cognitive_primer.md, guardian_boot_digest.md) and deep storage (LEARNING/, ADRs/, protocols). Use when: (1) starting a session and loading context, (2) deciding what to remember vs forget, (3) promoting/demoting knowledge between tiers, (4) user says 'remember this' or asks about project history, (5) managing the learning_package_snapshot.md hologram."
 ---
 
-%% Name: Recursive Language Model (RLM) Workflow with Safety
-%% Description: Visualizes the Bounded MapReduce strategy: Context Decomposition -> Recursive Execution (with Depth Limit) -> Accumulation -> Synthesis.
-%% Location: docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd
+# Memory Management
 
-flowchart TB
-    subgraph ContextEnv ["External Context Environment"]
-        direction TB
-        BigDoc["Large Corpus / File"]
-        Chunk1["Chunk 1"]
-        ChunkN["Chunk N"]
-        
-        BigDoc -.->|Split| Chunk1
-        BigDoc -.->|Split| ChunkN
-    end
+Tiered memory system that makes the Guardian a continuous collaborator across sessions.
 
-    subgraph RootAgent ["Root Agent (Manager)"]
-        direction TB
-        Goal["User Query"]
-        Planner["REPL Logic (Loop)"]
-        Synthesizer["Final Synthesis"]
-        FailureHandler["Failure / Partial Return"]
-        
-        Goal --> Planner
-    end
+## Architecture
 
-    subgraph RecursiveLayer ["Recursive Execution (with Guardrails)"]
-        direction TB
-        SubCall1["Sub-Call 1"]
-        SubCallN["Sub-Call N"]
-        
-        DepthCheck{"Depth < 3?"}
-    end
+```
+HOT CACHE (always loaded at boot)
+├── cognitive_primer.md          ← Role, identity, constraints
+├── guardian_boot_digest.md      ← Tactical status, active tasks
+├── guardian_boot_contract.md    ← Immutable constraints
+└── learning_package_snapshot.md ← Cognitive Hologram (1-line per file)
 
-    subgraph MemoryBuffer ["Accumulation Variables"]
-        direction TB
-        ResultsList["List: [Summaries]"]
-    end
+DEEP STORAGE (loaded on demand)
+├── LEARNING/topics/             ← Research by topic
+│   └── {topic}/analysis.md     ← Deep dives
+├── LEARNING/calibration_log.json← Model calibration data
+├── ADRs/                        ← Architecture decisions
+├── 01_PROTOCOLS/                ← Operational protocols
+└── data/soul_traces.jsonl       ← Persistent soul (HuggingFace)
+```
 
-    %% Flow Relationships
-    Planner -- "Spawn" --> DepthCheck
-    
-    DepthCheck -- "YES" --> SubCall1
-    DepthCheck -- "YES" --> SubCallN
-    DepthCheck -- "NO / MAX DEPTH" --> FailureHandler
+## Lookup Flow
 
-    Chunk1 -- "Read" --> SubCall1
-    ChunkN -- "Read" --> SubCallN
+```
+Query arrives → 
+1. Check hot cache (boot files)         → Covers ~90% of context needs
+2. Check LEARNING/topics/               → Deep knowledge by subject
+3. Check ADRs/                          → Architecture decisions  
+4. Query RLM cache (query_cache.py)     → Tool/script discovery
+5. Ask user                             → Unknown? Learn it.
+```
 
-    SubCall1 -- "Return Insight" --> ResultsList
-    SubCallN -- "Return Insight" --> ResultsList
-    
-    FailureHandler -- "Log Warning &<br>Return Partial" --> ResultsList
+## Promotion / Demotion Rules
 
-    ResultsList --> Synthesizer
-    Synthesizer --> FinalOutput["Final Answer<br>(Deterministic)"]
+### Promote to Hot Cache when:
+- Knowledge is referenced in 3+ consecutive sessions
+- It's critical for active work (current spec, active protocol)
+- It's a constraint or identity anchor
 
-    style RootAgent fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    style RecursiveLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    style FailureHandler fill:#ffcdd2,stroke:#c62828,stroke-width:2px
-    style DepthCheck fill:#ffecb3,stroke:#ff6f00,stroke-width:2px
+### Demote to Deep Storage when:
+- Spec/feature is completed and merged
+- Protocol is superseded by newer version
+- Topic research is concluded
+- ADR is ratified (move from draft to archive)
+
+### What Goes Where
+
+| Type | Hot Cache | Deep Storage |
+|------|-----------|-------------|
+| Active tasks | `guardian_boot_digest.md` | — |
+| Identity/role | `cognitive_primer.md` | — |
+| Constraints | `guardian_boot_contract.md` | — |
+| Session state | `learning_package_snapshot.md` | `soul_traces.jsonl` |
+| Research topics | Summary in snapshot | `LEARNING/topics/{name}/` |
+| Decisions | Referenced by number | `ADRs/{number}_{name}.md` |
+| Protocols | Referenced by number | `01_PROTOCOLS/{number}_{name}.md` |
+| Tools | — | `rlm_tool_cache.json` |
+| Calibration | — | `calibration_log.json` |
+
+## Session Memory Workflow
+
+### At Session Start (Boot)
+1. Load hot cache files in order (see learning-loop skill)
+2. Iron Check validates snapshot integrity
+3. If snapshot stale → flag for refresh at session end
+
+### During Session
+- **New learning** → Write to `LEARNING/topics/{topic}/`
+- **New decision** → Create ADR draft
+- **New tool** → Register in tool inventory
+- **Correction** → Update relevant file + note in `disputes.md` if contradicting
+
+### At Session End (Seal)
+1. Update `learning_package_snapshot.md` with new content
+2. Seal validates no drift since last audit
+3. Persist to HuggingFace (soul traces)
+
+## Conventions
+- **Hot cache target**: ~200 lines total across boot files
+- **Snapshot**: 1 sentence per file, machine-readable
+- **Topic folders**: `lowercase-hyphens/`
+- **ADR numbering**: 3-digit, sequential
+- **Always capture** corrections and contradictions in `disputes.md`
 
 ```
 <a id='entry-12'></a>
 
 ---
 
-## File: mcp_servers/learning/operations.py
-**Path:** `mcp_servers/learning/operations.py`
+## File: .agent/skills/code-review/SKILL.md
+**Path:** `.agent/skills/code-review/SKILL.md`
 
-```python
-#!/usr/bin/env python3
-"""
-Learning Operations
-=====================================
+```markdown
+---
+name: code-review
+description: "Multi-perspective code review with confidence scoring. Use when reviewing PRs, auditing code quality, or running /sanctuary-end pre-commit checks. Launches parallel review perspectives (compliance, bugs, history) and filters results by confidence threshold to reduce false positives."
+---
 
-Purpose:
-    Core business logic for the Learning Loop (Protocol 128).
-    Handles snapshots, debriefs, RLM synthesis, and Soul persistence.
-    
-    Migrated from RAG Cortex to ensure domain purity.
+# Code Review
 
-Layer: Business Logic
+Structured code review using multiple perspectives and confidence-based filtering.
 
-Key Classes:
-    - LearningOperations: Main manager
-        - __init__(project_root)
-        - learning_debrief(hours)
-        - capture_snapshot(manifest, type, context)
-        - persist_soul(request)
-        - persist_soul_full()
-        - guardian_wakeup(mode)
-        - guardian_snapshot(strategic_context)
-        
-        # Internal Methods
-        - _rlm_context_synthesis()
-        - _rlm_map(targets)
-        - _rlm_reduce(map_data)
-        - _get_git_state(project_root)
-        - _ensure_diagrams_rendered()
+## When to Use
 
-Internal Dependencies:
-    - tools/retrieve/bundler/manifest_manager.py
-    - tools/cli.py (for snapshot generation)
-"""
+- Before committing (`/sanctuary-end` pre-commit)
+- PR review requests
+- User says "review this code" or "audit these changes"
+- Post-implementation quality gate
 
+## Review Perspectives
 
-import os
-import re
-import sys
-import time
-import subprocess
-import contextlib
-import io
-import logging
-import json
-import hmac
-import hashlib
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple, Set
+Launch these review angles independently, then merge findings:
 
-from mcp_servers.lib.env_helper import get_env_variable
-from mcp_servers.lib.snapshot_utils import (
-    generate_snapshot, 
-    EXCLUDE_DIR_NAMES,
-    ALWAYS_EXCLUDE_FILES,
-    PROTECTED_SEEDS,
-    RECURSIVE_ARTIFACTS
-)
-# ADR 097: Context Bundler CLI paths
-BUNDLER_SCRIPT = "tools/retrieve/bundler/bundle.py"
-MANIFEST_MANAGER_SCRIPT = "tools/retrieve/bundler/manifest_manager.py"
-from mcp_servers.learning.models import (
-    CaptureSnapshotResponse,
-    PersistSoulRequest,
-    PersistSoulResponse,
-    GuardianWakeupResponse,
-    GuardianSnapshotResponse
-)
+### 1. Policy Compliance
+Check against project conventions:
+- `.agent/rules/03_TECHNICAL/coding_conventions_policy.md`
+- File headers present (Python/JS/C# standards)
+- Type hints on function signatures
+- Docstrings on non-trivial functions
+- Import organization
 
-# Setup logging
-logger = logging.getLogger("learning.operations")
-if not logger.handlers:
-    handler = logging.StreamHandler(sys.stderr)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+### 2. Bug Detection
+Focus on changes only (not pre-existing issues):
+- Unhandled error paths
+- Missing null/undefined checks
+- Resource leaks (file handles, connections)
+- Race conditions in async code
+- Off-by-one errors
+- Hardcoded secrets or credentials
 
-class LearningOperations:
-    """
-    Operations for the Project Sanctuary Learning Loop (Protocol 128).
-    Migrated from RAG Cortex to ensure domain purity.
-    """
+### 3. Historical Context
+Use git blame/log to understand:
+- Was this code recently refactored? (fragile area)
+- Does the change break established patterns?
+- Is this a known problematic area?
 
+### 4. Zero Trust Compliance
+Project Sanctuary specific:
+- No direct commits to `main`
+- No `git push` without explicit approval
+- State-changing operations gated by HITL
+- No inline Mermaid (ADR 085)
 
-    def _is_recursive_artifact(self, f: str) -> bool:
-        """Centralized check for files that should be excluded from snapshots and RLM."""
-        path = Path(f)
-        f_lower = f.lower()
-        base_name = path.name
-        
-        # 1. Protocol 128: Manifest Priority Bypass (Protected Seeds)
-        # Seeds are fair game if they are .txt or .md
-        if path.suffix.lower() in [".md", ".txt"]:
-            if any(f == p or base_name == Path(p).name for p in PROTECTED_SEEDS):
-                return False  # Force inclusion
-        
-        # 2. Check the Central Sanctuary "No-Fly List" (always_exclude_files + patterns)
-        for pattern in ALWAYS_EXCLUDE_FILES:
-            if isinstance(pattern, str):
-                if pattern.lower() == base_name.lower():
-                    return True
-            elif hasattr(pattern, 'match'): 
-                if pattern.match(base_name) or pattern.match(f):
-                    return True
+## Confidence Scoring
 
-        # 3. Skip Archive folders (USER requirement)
-        if "/archive/" in f_lower or f_lower.startswith("archive/"): return True
-        
-        # 4. Handle the Learning Metadata directory
-        if ".agent/learning/" in f:
-            # Rules/Policies are FOUNDATIONAL and should be included
-            if "rules/" in f:
-                return False
-            # Specific recursive artifacts already handled by ALWAYS_EXCLUDE_FILES
-            # but we block the rest of the metadata dir by default
-            return True
-            
-        return False
+Rate each finding 0-100:
 
-    def __init__(self, project_root: str):
-        self.project_root = Path(project_root)
-        self.data_dir = self.project_root / ".agent" / "data"
-        self.data_dir.mkdir(parents=True, exist_ok=True)
-        self.learning_dir = self.project_root / ".agent" / "learning"
-        self.learning_dir.mkdir(parents=True, exist_ok=True)
-        # We don't need ChromaDB here.
+| Score | Meaning | Action |
+|-------|---------|--------|
+| 0-25 | Probably false positive | Skip |
+| 26-50 | Might be real, minor | Note only |
+| 51-79 | Likely real, worth flagging | Include in review |
+| **80-100** | **Confident, actionable** | **Must address** |
 
-    #============================================================
-    # 1. LEARNING DEBRIEF (The Scout)
-    #============================================================
-    def learning_debrief(self, hours: int = 24) -> str:
-        """
-        Scans project for technical state changes (Protocol 128).
-        Args:
-          hours: Lookback window for modifications
-        Returns: Comprehensive Markdown string
-        """
-        try:
-            with contextlib.redirect_stdout(sys.stderr):
-                # 1. Seek Truth (Git)
-                git_evidence = "Git Not Available"
-                try:
-                    result = subprocess.run(
-                        ["git", "diff", "--stat", "HEAD"],
-                        capture_output=True, text=True, cwd=str(self.project_root)
-                    )
-                    git_evidence = result.stdout if result.stdout else "No uncommitted code changes found."
-                except Exception as e:
-                    git_evidence = f"Git Error: {e}"
+**Only report findings ≥ 50.** This prevents noise.
 
-                # 2. Scan Recency (Filesystem)
-                recency_summary = self._get_recency_delta(hours=hours)
-                
-                # 3. Read Core Documents
-                primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
-                sop_content = "[MISSING] .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md"
-                protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
-                
-                try:
-                    p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"
-                    if p_path.exists(): primer_content = p_path.read_text()
-                    
-                    s_path = self.project_root / ".agent" / "workflows" / "sanctuary-learning-loop.md"
-                    if s_path.exists(): sop_content = s_path.read_text()
-                    
-                    pr_path = self.project_root / "01_PROTOCOLS" / "128_Hardened_Learning_Loop.md"
-                    if pr_path.exists(): protocol_content = pr_path.read_text()
-                except Exception as e:
-                    logger.warning(f"Error reading sovereignty docs: {e}")
+## False Positive Filters
 
-                # 4. Strategic Context (Learning Package Snapshot)
-                last_package_content = "⚠️ No active Learning Package Snapshot found."
-                package_path = self.project_root / ".agent" / "learning" / "learning_package_snapshot.md"
-                package_status = "ℹ️ No `.agent/learning/learning_package_snapshot.md` detected."
-                
-                if package_path.exists():
-                    try:
-                        mtime = package_path.stat().st_mtime
-                        delta_hours = (datetime.now().timestamp() - mtime) / 3600
-                        if delta_hours <= hours:
-                            last_package_content = package_path.read_text()
-                            package_status = f"✅ Loaded Learning Package Snapshot from {delta_hours:.1f}h ago."
-                        else:
-                            last_package_content = package_path.read_text()
-                            package_status = f"⚠️ Snapshot found but too old ({delta_hours:.1f}h)."
-                    except Exception as e:
-                        package_status = f"❌ Error reading snapshot: {e}"
+Do NOT flag:
+- Pre-existing issues not introduced in this change
+- Style issues that linters catch
+- Pedantic nitpicks
+- Code with explicit `# noqa` or suppression comments
+- Test fixtures with intentionally "wrong" data
 
-                # 4b. Mandatory Logic Verification (ADR 084)
-                mandatory_files = [
-                    "ADRs/084_semantic_entropy_tda_gating.md",
-                    "mcp_servers/learning/operations.py" # Ref updated
-                ]
-                registry_status = ""
-                manifest_path = self.project_root / ".agent" / "learning" / "learning_manifest.json"
-                if manifest_path.exists():
-                     try:
-                         with open(manifest_path, "r") as f: 
-                             m = json.load(f)
-                         files_list = m.get("files", [])
-                         # Handle legacy list format if encountered
-                         if isinstance(m, list):
-                             files_list = m
+## Output Format
 
-                         for mf in mandatory_files:
-                             # Check if in manifest (Robust check for dicts or strings)
-                             in_registry = False
-                             for entry in files_list:
-                                 path_val = entry.get("path") if isinstance(entry, dict) else entry
-                                 if path_val == mf:
-                                     in_registry = True
-                                     break
-                             
-                             if in_registry:
-                                 status = "✅ REGISTERED"
-                             elif (self.project_root / mf).exists():
-                                 status = "⚠️ UNREGISTERED (Exists)"
-                             else:
-                                 status = "❌ MISSING"
-                                 
-                             registry_status += f"        * {status}: `{mf}`\n"
-                     except Exception as e:
-                         registry_status = f"⚠️ Manifest Error: {e}"
-                else:
-                     registry_status = "⚠️ Manifest Failed Load"
+```markdown
+## Code Review: [branch/PR name]
 
-                # 5. Create Draft
-                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                
-                lines = [
-                    f"# [HARDENED] Learning Package Snapshot v4.0 (The Edison Seal)",
-                    f"**Scan Time:** {timestamp} (Window: {hours}h)",
-                    f"**Strategic Status:** ✅ Successor Context v4.0 Active",
-                    "",
-                    "> [!IMPORTANT]",
-                    "> **STRATEGIC PIVOT: THE EDISON MANDATE (ADR 084)**",
-                    "> The project has formally abandoned the QEC-AI Metaphor in favor of **Empirical Epistemic Gating**.",
-                    "> - **Primary Gate:** Every trace must pass the Dead-Man's Switch in `persist_soul`.",
-                    "> - **Success Metric:** Semantic Entropy < 0.79 (Target) / > 0.2 (Rigidity Floor).",
-                    "> - **Logic:** Do NOT inject metaphorical fluff. Synthesize hard operational reality.",
-                    "",
-                    "## I. The Truth (System State)",
-                    f"**Git Status:**\n```\n{git_evidence}\n```",
-                    "",
-                    f"## II. The Change (Recency Delta - {hours}h)",
-                    recency_summary,
-                    "",
-                    "## III. The Law (Protocol 128 - Cognitive Continuity)",
-                    "> *\"We do not restart. We reload.\"*",
-                    "### A. The Cognitive Primer (Constitution)",
-                    f"```markdown\n{primer_content[:1000]}...\n```",
-                    "",
-                    "### B. The Recursive Loop (Standard Operating Procedure)",
-                    f"```markdown\n{sop_content[:1000]}...\n```",
-                    "",
-                    "## IV. The Strategy (Successor Context)",
-                    f"**Snapshot Status:** {package_status}",
-                    f"**Registry Status (ADR 084):**\n{registry_status}",
-                    "### Active Context (Previous Cycle):",
-                    f"```markdown\n{last_package_content[:2000]}...\n```",
-                ]
-                
-                return "\n".join(lines)
-        except Exception as e:
-            logger.error(f"Learning Debrief Failed: {e}", exc_info=True)
-            return f"Error generating debrief: {str(e)}"
+**Files reviewed:** N files, M lines changed
 
-    def _get_recency_delta(self, hours: int = 48) -> str:
-        """Get summary of recently modified high-signal files."""
-        try:
-            delta = timedelta(hours=hours)
-            cutoff_time = time.time() - delta.total_seconds()
-            now = time.time()
-            
-            recent_files = []
-            scan_dirs = ["00_CHRONICLE/ENTRIES", "01_PROTOCOLS", "mcp_servers", "02_USER_REFLECTIONS"]
-            allowed_extensions = {".md", ".py"}
-            
-            for directory in scan_dirs:
-                dir_path = self.project_root / directory
-                if not dir_path.exists(): continue
-                
-                for file_path in dir_path.rglob("*"):
-                    if not file_path.is_file(): continue
-                    if file_path.suffix not in allowed_extensions: continue
-                    if "__pycache__" in str(file_path): continue
-                    
-                    mtime = file_path.stat().st_mtime
-                    if mtime > cutoff_time:
-                        recent_files.append((file_path, mtime))
-            
-            if not recent_files:
-                return "* **Recent Files Modified (48h):** None"
-                
-            recent_files.sort(key=lambda x: x[1], reverse=True)
-            
-            git_info = "[Git unavailable]"
-            try:
-                result = subprocess.run(
-                    ["git", "log", "-1", "--oneline"],
-                    cwd=self.project_root, capture_output=True, text=True, timeout=2
-                )
-                if result.returncode == 0: git_info = result.stdout.strip()
-            except Exception: pass
-            
-            lines = [f"* **Most Recent Commit:** {git_info}", f"* **Recent Files Modified ({hours}h):**"]
-            
-            for file_path, mtime in recent_files[:5]:
-                relative_path = file_path.relative_to(self.project_root)
-                age_seconds = now - mtime
-                if age_seconds < 3600: age_str = f"{int(age_seconds / 60)}m ago"
-                elif age_seconds < 86400: age_str = f"{int(age_seconds / 3600)}h ago"
-                else: age_str = f"{int(age_seconds / 86400)}d ago"
-                
-                context = ""
-                try:
-                    with open(file_path, 'r') as f:
-                        content = f.read(500)
-                        if file_path.suffix == ".md":
-                            title_match = re.search(r"^#\s+(.+)$", content, re.MULTILINE)
-                            if title_match: context = f" → {title_match.group(1)}"
-                        elif file_path.suffix == ".py":
-                            if "def _get_" in content or "class " in content:
-                                context = " → Implementation changes"
-                except Exception: pass
-                
-                diff_summary = self._get_git_diff_summary(str(relative_path))
-                if diff_summary: context += f" [{diff_summary}]"
-                
-                lines.append(f"    * `{relative_path}` ({age_str}){context}")
-            
-            return "\n".join(lines)
-        except Exception as e:
-            return f"Error generating recency delta: {str(e)}"
+### Issues (confidence ≥ 80)
+1. **[Category]** Description
+   `path/to/file.py:L42` — explanation and suggestion
 
-    def _get_git_diff_summary(self, file_path: str) -> str:
-        """Get concise summary of git changes for a file."""
-        try:
-            result = subprocess.run(
-                ["git", "diff", "--shortstat", "HEAD", file_path],
-                cwd=self.project_root, capture_output=True, text=True, timeout=1
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                return result.stdout.strip()
-        except Exception: pass
-        return ""
+### Observations (confidence 50-79)
+1. **[Category]** Description — worth considering
 
-    #============================================================
-    # 2. CAPTURE SNAPSHOT (The Seal)
-    #============================================================
-    def capture_snapshot(
-        self, 
-        manifest_files: List[str], 
-        snapshot_type: str = "audit",
-        strategic_context: Optional[str] = None
-    ) -> CaptureSnapshotResponse:
-        """
-        Generates a consolidated snapshot of the project state.
-        Types: 'audit' (Red Team), 'learning_audit' (Cognitive), or 'seal' (Final).
-        """
-        start_time = time.time()
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+### Clean Areas
+- [List what looks good — positive reinforcement]
+```
 
-        # 1. Ensure Diagrams are Rendered
-        self._ensure_diagrams_rendered()
-        
-        # 2. Prepare Paths
-        learning_dir = self.project_root / ".agent" / "learning"
-        if snapshot_type == "audit":
-            output_dir = learning_dir / "red_team"
-        elif snapshot_type == "learning_audit":
-            output_dir = learning_dir / "learning_audit"
-        else:
-            output_dir = learning_dir
-        try:
-            output_dir.mkdir(parents=True, exist_ok=True)
-        except Exception as e:
-            logger.warning(f"Failed to ensure directory {output_dir}: {e}")
-        
-        # 3. Default Manifest Handling
-        effective_manifest = list(manifest_files or [])
-        if not effective_manifest:
-            if snapshot_type == "seal":
-                manifest_file = learning_dir / "learning_manifest.json"
-                # ACTIVATE PROTOCOL 132 (RLM SYNTHESIS)
-                if not strategic_context:
-                    strategic_context = self._rlm_context_synthesis()
-            elif snapshot_type == "learning_audit":
-                manifest_file = output_dir / "learning_audit_manifest.json"
-            else:
-                manifest_file = output_dir / "red_team_manifest.json"
-                
-            if manifest_file and manifest_file.exists():
-                try:
-                    with open(manifest_file, "r") as f:
-                        manifest_data = json.load(f)
-                    
-                    # Handle modular manifest structure (ADR 089 -> ADR 097)
-                    if isinstance(manifest_data, dict):
-                        # NEW: Prefer 'files' array (ADR 097 simple schema)
-                        if "files" in manifest_data and isinstance(manifest_data["files"], list):
-                            effective_manifest = []
-                            for item in manifest_data["files"]:
-                                if isinstance(item, str):
-                                    effective_manifest.append(item)
-                                elif isinstance(item, dict) and "path" in item:
-                                    effective_manifest.append(item["path"])
-                            logger.info(f"Loaded {snapshot_type} manifest (ADR 097): {len(effective_manifest)} files")
-                        else:
-                            # LEGACY: Fallback to core+topic (ADR 089)
-                            core = manifest_data.get("core", [])
-                            topic = manifest_data.get("topic", [])
-                            effective_manifest = core + topic
-                            logger.info(f"Loaded {snapshot_type} manifest (legacy): {len(core)} core + {len(topic)} topic entries")
-                    else:
-                        # Legacy: flat array
-                        effective_manifest = manifest_data
-                        logger.info(f"Loaded default {snapshot_type} manifest: {len(effective_manifest)} entries")
-                except Exception as e:
-                    logger.warning(f"Failed to load {snapshot_type} manifest: {e}")
+## Integration with Workflow
 
-        # 2. Strict Filter (No recursive artifacts)
-        effective_manifest = [f for f in effective_manifest if not self._is_recursive_artifact(f)]
+```
+Implementation → /spec-kitty.review → Code Review → /sanctuary-end
+                                           ↑
+                                    This skill runs here
+```
 
-        # Protocol 130: Deduplicate
-        if effective_manifest:
-            effective_manifest, dedupe_report = self._dedupe_manifest(effective_manifest)
-            if dedupe_report:
-                logger.info(f"Protocol 130: Deduplicated {len(dedupe_report)} items")
-
-        if snapshot_type == "audit": 
-            snapshot_filename = "red_team_audit_packet.md"
-        elif snapshot_type == "learning_audit": 
-            snapshot_filename = "learning_audit_packet.md"
-        elif snapshot_type == "seal":
-            snapshot_filename = "learning_package_snapshot.md"
-        else:
-            snapshot_filename = f"{snapshot_type}_snapshot_{timestamp}.md"
-            
-        final_snapshot_path = output_dir / snapshot_filename
-
-        # 4. Git State (Protocol 128 verification)
-        git_state_dict = self._get_git_state(self.project_root)
-        git_diff_context = git_state_dict["hash"]
-        manifest_verified = True
-        
-        # Strict Rejection Logic (Protocol 128)
-        if snapshot_type == "audit":
-            untracked_changes = git_state_dict["changed_files"] - set(effective_manifest)
-            # Remove patterns that are always excluded or from excluded dirs
-            untracked_changes = {f for f in untracked_changes if not any(p in f for p in ["logs/", "temp/", ".temp", ".agent/learning/"])}
-            
-            if untracked_changes:
-                manifest_verified = False
-                logger.warning(f"STRICT REJECTION: Git changes detected outside of manifest: {untracked_changes}")
-                return CaptureSnapshotResponse(
-                    snapshot_path="",
-                    manifest_verified=False,
-                    git_diff_context=f"REJECTED: Untracked changes in {list(untracked_changes)[:5]}",
-                    snapshot_type=snapshot_type,
-                    status="error",
-                    error="Strict manifestation failed: drift detected"
-                )
-
-        # 3. Generate Snapshot using Context Bundler (ADR 097)
-        try:
-            from uuid import uuid4
-            
-            # Create temp manifest in bundler schema format
-            temp_manifest = self.project_root / f".temp_manifest_{uuid4()}.json"
-            bundler_manifest = {
-                "title": f"{snapshot_type.replace('_', ' ').title()} Snapshot",
-                "description": f"Auto-generated {snapshot_type} snapshot",
-                "files": [{"path": f, "note": ""} for f in effective_manifest]
-            }
-            temp_manifest.write_text(json.dumps(bundler_manifest, indent=2))
-            
-            try:
-                # Call bundle.py CLI via subprocess
-                bundler_cmd = [
-                    sys.executable,
-                    str(self.project_root / BUNDLER_SCRIPT),
-                    str(temp_manifest),
-                    "-o", str(final_snapshot_path)
-                ]
-                result = subprocess.run(
-                    bundler_cmd,
-                    cwd=str(self.project_root),
-                    capture_output=True,
-                    text=True
-                )
-                
-                if result.returncode != 0:
-                    logger.error(f"Bundler failed: {result.stderr}")
-                    return CaptureSnapshotResponse(
-                        snapshot_path="",
-                        manifest_verified=manifest_verified,
-                        git_diff_context=git_diff_context,
-                        snapshot_type=snapshot_type,
-                        status="error",
-                        error=f"Bundler failed: {result.stderr[:200]}"
-                    )
-                
-                logger.info(f"Bundler output: {result.stdout[:200]}")
-                
-                if not final_snapshot_path.exists():
-                     return CaptureSnapshotResponse(
-                        snapshot_path="",
-                        manifest_verified=manifest_verified,
-                        git_diff_context=git_diff_context,
-                        snapshot_type=snapshot_type,
-                        status="error",
-                        error="Snapshot generation failed (file not created)"
-                    )
-
-                # Inject Cognitive Hologram (Protocol 132) if available
-                if strategic_context and snapshot_type == "seal":
-                    try:
-                        existing_content = final_snapshot_path.read_text()
-                        final_snapshot_path.write_text(
-                            strategic_context + "\n\n---\n\n" + existing_content
-                        )
-                        logger.info("🧠 RLM: Cognitive Hologram injected into snapshot.")
-                    except Exception as inj_err:
-                        logger.warning(f"🧠 RLM: Could not inject hologram: {inj_err}")
-
-                file_stat = final_snapshot_path.stat()
-                return CaptureSnapshotResponse(
-                    snapshot_path=str(final_snapshot_path.relative_to(self.project_root)),
-                    manifest_verified=manifest_verified,
-                    git_diff_context=git_diff_context,
-                    snapshot_type=snapshot_type,
-                    status="success",
-                    total_files=len(effective_manifest),
-                    total_bytes=file_stat.st_size
-                )
-            finally:
-                if temp_manifest.exists():
-                    temp_manifest.unlink(missing_ok=True)
-                    
-        except Exception as e:
-            logger.error(f"Snapshot generation failed: {e}", exc_info=True)
-            return CaptureSnapshotResponse(
-                snapshot_path="",
-                manifest_verified=manifest_verified,
-                git_diff_context=git_diff_context,
-                snapshot_type=snapshot_type,
-                status="error",
-                error=str(e)
-            )
-
-    #============================================================
-    # 4. GUARDIAN SNAPSHOT (The Session Pack)
-    #============================================================
-    def guardian_snapshot(self, strategic_context: str = None) -> GuardianSnapshotResponse:
-        """
-        Captures the 'Guardian Start Pack' (Chronicle/Protocol/Roadmap) for session continuity.
-        Logical Fit: Lifecycle management (Protocol 114).
-        """
-        logger.info("Generating Guardian Snapshot (Session Context Pack)...")
-        try:
-            # Default Start Pack Files (from Protocol 114)
-            # We scan CHRONICLE, PROTOCOLS, and the main Roadmap
-            manifest = []
-            
-            # 1. Chronicle Entries (Recent 5)
-            chronicle_dir = self.project_root / "00_CHRONICLE" / "ENTRIES"
-            if chronicle_dir.exists():
-                entries = sorted(chronicle_dir.glob("*.md"), reverse=True)[:5]
-                manifest.extend([str(e.relative_to(self.project_root)) for e in entries])
-            
-            # 2. Protocols (Core)
-            protocol_dir = self.project_root / "01_PROTOCOLS"
-            if protocol_dir.exists():
-                cores = ["114_Guardian_Wakeup_and_Cache_Prefill.md", "118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md"]
-                for core in cores:
-                    if (protocol_dir / core).exists():
-                        manifest.append(f"01_PROTOCOLS/{core}")
-
-            # 3. Roadmap
-            if (self.project_root / "README.md").exists():
-                manifest.append("README.md")
-                
-            # Reuse capture_snapshot logic with type 'seal'
-            resp = self.capture_snapshot(
-                manifest_files=manifest, 
-                snapshot_type="seal", 
-                strategic_context=strategic_context
-            )
-            
-            return GuardianSnapshotResponse(
-                status=resp.status,
-                snapshot_path=resp.snapshot_path,
-                total_files=resp.total_files,
-                total_bytes=resp.total_bytes,
-                error=resp.error
-            )
-            
-        except Exception as e:
-            logger.error(f"Guardian Snapshot failed: {e}", exc_info=True)
-            return GuardianSnapshotResponse(status="error", snapshot_path="", error=str(e))
-
-    def _ensure_diagrams_rendered(self):
-        """Scan docs/architecture_diagrams and render any outdated .mmd files."""
-        try:
-            diagrams_dir = self.project_root / "docs" / "architecture_diagrams"
-            if not diagrams_dir.exists(): return
-            
-            # Simple check for mmd-cli (skipped for brevity/robustness in migration, assume user has env)
-            # Use subprocess to check/run if necessary in full implementation
-            pass 
-        except Exception as e:
-            logger.warning(f"Diagram rendering check failed: {e}")
-
-    def _dedupe_manifest(self, manifest: List[str]) -> Tuple[List[str], Dict[str, str]]:
-        """Protocol 130: Remove files already embedded in included outputs."""
-        # Simplified: for now just return manifest. Full implementation requires registry loading.
-        # Ideally load .agent/learning/manifest_registry.json
-        return manifest, {}
-
-    def _rlm_context_synthesis(self) -> str:
-        """
-        Implements Protocol 132: Recursive Context Synthesis.
-        Generates the 'Cognitive Hologram' by mapping and reducing the system state via LOCAL LLM.
-        """
-        try:
-            import time
-            import json
-            start_time = time.time()
-            logger.info("🧠 RLM: Starting Recursive Context Synthesis (Sovereign Mode)...")
-            
-            # PHASE 1: Map (Decomposition)
-            # Use Manifest if available (ADR 083)
-            manifest_path = self.learning_dir / "learning_manifest.json"
-            target_files = []
-            
-            if manifest_path.exists():
-                logger.info(f"🧠 RLM: Loading scope from {manifest_path.name}...")
-                manifest_data = json.loads(manifest_path.read_text())
-                
-                if isinstance(manifest_data, dict):
-                    # ADR 097: New simple {files: [{path, note}]} format
-                    if "files" in manifest_data:
-                        for item in manifest_data["files"]:
-                            if isinstance(item, str):
-                                target_files.append(item)
-                            elif isinstance(item, dict) and "path" in item:
-                                target_files.append(item["path"])
-                        logger.info(f"🧠 RLM: Loaded {len(target_files)} files (ADR 097 format).")
-                    else:
-                        # LEGACY: Fallback to core+topic (ADR 089)
-                        core = manifest_data.get("core", [])
-                        topic = manifest_data.get("topic", [])
-                        target_files = core + topic
-                        logger.info(f"🧠 RLM: Merged {len(core)} core + {len(topic)} topic entries (legacy).")
-                else:
-                    # Legacy: flat array
-                    target_files = manifest_data
-            else:
-                logger.warning("🧠 RLM: No manifest found. Falling back to default roots.")
-                target_files = ["01_PROTOCOLS", "ADRs"] # Safe default
-
-            perception_map = self._rlm_map(target_files)
-            
-            # Phase 2: Reduce (Synthesis)
-            hologram = self._rlm_reduce(perception_map)
-            
-            duration = time.time() - start_time
-            logger.info(f"🧠 RLM: Synthesis Complete in {duration:.2f} seconds.")
-            
-            # Append timing to hologram for visibility
-            hologram += f"\n\n**Process Metrics:**\n* Total Synthesis Time: {duration:.2f}s"
-            
-            return hologram
-        except Exception as e:
-            logger.error(f"RLM Synthesis failed: {e}")
-            return "## Cognitive Hologram [Failure]\n* System failed to synthesize state."
-
-    def _rlm_map(self, targets: List[str]) -> Dict[str, str]:
-        """
-        Level 1: Iterate targets (Files or Dirs) and generate atomic summaries using local Qwen2-7B.
-        Uses hash-based caching to skip unchanged files.
-        """
-        import requests
-        import os
-        import hashlib
-        from dotenv import load_dotenv
-        
-        load_dotenv()
-        
-        # Configuration
-        OLLAMA_URL = os.getenv("OLLAMA_HOST", "http://localhost:11434") + "/api/generate"
-        MODEL_NAME = os.getenv("OLLAMA_MODEL", "hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M")
-        CACHE_PATH = self.project_root / ".agent" / "learning" / "rlm_summary_cache.json"
-        
-        # Load Cache
-        cache = {}
-        if CACHE_PATH.exists():
-            try:
-                cache = json.loads(CACHE_PATH.read_text())
-                logger.info(f"🧠 RLM: Loaded cache with {len(cache)} entries.")
-            except:
-                pass
-        
-        results = {}
-        cache_hits = 0
-        
-        # 1. Flatten Targets into File List
-        all_files = []
-        
-        for target in targets:
-            path = self.project_root / target
-            if not path.exists(): continue
-            
-            # Helper to check if a file should be skipped
-            def should_skip(p: Path):
-                rel_p = str(p.relative_to(self.project_root))
-                
-                # 1. Check central recursive artifact exclusion logic
-                if self._is_recursive_artifact(rel_p):
-                    return True
-                
-                # RLM: Process .md, .txt, and .in files (captured unless globally excluded)
-                if p.suffix.lower() not in [".md", ".txt", ".in"]: return True
-                
-                return False
- 
-            if path.is_file():
-                # Manifest Entry (File)
-                if not should_skip(path):
-                    all_files.append((str(path.parent), path))
-            elif path.is_dir():
-                # Recursive Scan (Legacy/Folder Mode)
-                for subpath in path.rglob("*.md"):
-                    if not should_skip(subpath):
-                        all_files.append((str(path), subpath))
-                
-        # Deduplicate
-        all_files = list(set(all_files))
-        
-        total_files = len(all_files)
-        logger.info(f"🧠 RLM: Mapping {total_files} files with model {MODEL_NAME}...")
-
-        file_number = 0
-        for root, path in all_files:
-            file_number += 1
-            rel_path = str(path.relative_to(self.project_root))
-            
-            try:
-                content = path.read_text(errors='ignore')
-                
-                # Optimization: Skip empty files
-                if not content.strip(): 
-                    results[rel_path] = "[Empty File]"
-                    continue
-                
-                # Compute hash for cache lookup
-                content_hash = hashlib.sha256(content.encode()).hexdigest()[:16]
-                
-                # Check cache
-                if rel_path in cache and cache[rel_path].get("hash") == content_hash:
-                    results[rel_path] = cache[rel_path]["summary"]
-                    cache_hits += 1
-                    logger.info(f"   [{file_number}/{total_files}] {rel_path} [CACHE HIT]")
-                    continue
-                
-                # Log progress
-                logger.info(f"   [{file_number}/{total_files}] Processing {rel_path}...")
-                
-                if len(content) > 10000: 
-                    content = content[:10000] + "\n...[Truncated]"
-
-                # The Real Prompt
-                prompt = (
-                    f"Analyze the following Project Sanctuary document. "
-                    f"Provide a single, dense sentence summarizing its architectural purpose and status.\n"
-                    f"Document: {rel_path}\n"
-                    f"Content:\n{content}\n\n"
-                    f"Architectural Summary:"
-                )
-
-                # The Real Call (Ollama)
-                # Timeout INCREASED to 300s per file to accommodate slow generations on large files
-                response = requests.post(
-                    OLLAMA_URL, 
-                    json={
-                        "model": MODEL_NAME,
-                        "prompt": prompt,
-                        "stream": False,
-                        "options": {
-                            "num_ctx": 4096,
-                            "temperature": 0.1  # Low temp for factual precision
-                        } 
-                    },
-                    timeout=300
-                )
-                
-                if response.status_code == 200:
-                    summary = response.json().get("response", "").strip()
-                    # Clean up common LLM chatting artifacts
-                    if summary.startswith("Here is a"): summary = summary.split(":", 1)[-1].strip()
-                    results[rel_path] = summary
-                    
-                    # Update cache with file metadata
-                    file_mtime = path.stat().st_mtime
-                    cache[rel_path] = {
-                        "hash": content_hash,
-                        "summary": summary,
-                        "file_mtime": file_mtime,
-                        "summarized_at": time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
-                    }
-                    
-                    # PERSIST IMMEDIATELY (Incremental Save)
-                    try:
-                        CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-                        with open(CACHE_PATH, "w") as f:
-                            json.dump(cache, f, indent=2, sort_keys=True)
-                        logger.debug(f"🧠 RLM: Incremental save for {rel_path}")
-                    except Exception as e:
-                        logger.warning(f"🧠 RLM: Failed to save cache: {e}")
-
-                else:
-                    logger.warning(f"Ollama Error {response.status_code} for {rel_path}")
-                    results[rel_path] = f"[Ollama Generation Failed: {response.status_code}]"
-
-            except requests.exceptions.Timeout:
-                logger.warning(f"Timeout processing {rel_path}")
-                results[rel_path] = "[RLM Read Timeout]"
-            except Exception as e:
-                logger.warning(f"Failed to map {rel_path}: {e}")
-                results[rel_path] = f"[Processing Error: {str(e)}]"
-        
-        return results
-
-    def _rlm_reduce(self, map_data: Dict[str, str]) -> str:
-        """
-        Level 2: Synthesize atomic summaries into the Hologram.
-        """
-        lines = [
-            "# Cognitive Hologram (Protocol 132)", 
-            f"**Synthesis Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", 
-            f"**Engine:** Local Sovereign (Sanctuary-Qwen2-7B)",
-            "",
-            "> [!NOTE]",
-            "> This context is recursively synthesized from the current system state using the local fine-tuned model.",
-            ""
-        ]
-        
-        # Group by Domain
-        protocols = sorted([f"`{k}`: {v}" for k,v in map_data.items() if "PROTOCOL" in k])
-        adrs = sorted([f"`{k}`: {v}" for k,v in map_data.items() if "ADR" in k])
-        code = sorted([f"`{k}`: {v}" for k,v in map_data.items() if "mcp_servers" in k])
-        
-        lines.append(f"## 1. Constitutional State ({len(protocols)} Protocols)")
-        lines.append("\n".join([f"* {p}" for p in protocols]))
-        
-        lines.append(f"\n## 2. Decision Record ({len(adrs)} Decisions)")
-        lines.append("\n".join([f"* {a}" for a in adrs]))
-        
-        lines.append(f"\n## 3. Active Capabilities ({len(code)} Modules)")
-        lines.append("\n".join([f"* {c}" for c in code[:30]])) # Slightly larger display
-        if len(code) > 30: lines.append(f"* ... and {len(code)-30} more modules.")
-        
-        return "\n".join(lines)
-
-    def _get_git_state(self, project_root: Path) -> Dict[str, Any]:
-
-        """Captures current Git state signature."""
-        try:
-            git_status_proc = subprocess.run(
-                ["git", "status", "--porcelain"],
-                capture_output=True, text=True, cwd=str(project_root)
-            )
-            git_lines = git_status_proc.stdout.splitlines()
-            changed_files = set()
-            for line in git_lines:
-                status_bits = line[:2]
-                path = line[3:].split(" -> ")[-1].strip()
-                if not path: # Handle cases where space might be missing or different
-                    path = line[2:].strip()
-                if 'D' not in status_bits: changed_files.add(path)
-            
-            state_str = "".join(sorted(git_lines))
-            state_hash = hashlib.sha256(state_str.encode()).hexdigest()
-            return {"lines": git_lines, "changed_files": changed_files, "hash": state_hash}
-        except Exception as e:
-            return {"lines": [], "changed_files": set(), "hash": "error"}
-
-    #============================================================
-    # 3. PERSIST SOUL (The Chronicle)
-    #============================================================
-    def persist_soul(self, request: PersistSoulRequest) -> PersistSoulResponse:
-        """Broadcasts the session soul to Hugging Face."""
-        from mcp_servers.lib.hf_utils import ensure_dataset_card
-        from mcp_servers.lib.content_processor import ContentProcessor
-
-        try:
-            # 1. Environment & Metacognitive checks (Simplified)
-            # ... (Checks skipped for brevity, full impl requires env vars)
-            
-            # 2. Dead Man's Switch (ADR 084)
-            se_score = 0.5 # Default
-            # In full impl: self._calculate_semantic_entropy(content)
-            
-            # 3. Initialization
-            snapshot_path = self.project_root / request.snapshot_path
-            if not snapshot_path.exists():
-                return PersistSoulResponse(status="error", error=f"Snapshot not found: {snapshot_path}")
-                
-            # 4. Upload Logic (Delegated to hf_utils)
-            import asyncio
-            from mcp_servers.lib.hf_utils import upload_soul_snapshot, upload_semantic_cache
-            
-            logger.info(f"Uploading snapshot to HF: {snapshot_path}")
-            result = asyncio.run(upload_soul_snapshot(
-                snapshot_path=str(snapshot_path),
-                valence=request.valence
-            ))
-            
-            # 5. Upload Semantic Cache (ADR 094)
-            cache_file = self.project_root / ".agent/learning/rlm_summary_cache.json"
-            if cache_file.exists():
-                logger.info("Syncing Semantic Ledger (RLM Cache) to HF...")
-                cache_result = asyncio.run(upload_semantic_cache(str(cache_file)))
-                if not cache_result.success:
-                    logger.warning(f"Failed to sync Semantic Ledger: {cache_result.error}")
-            
-            if result.success:
-                return PersistSoulResponse(
-                    status="success",
-                    repo_url=result.repo_url,
-                    snapshot_name=result.remote_path
-                )
-            else:
-                return PersistSoulResponse(status="error", error=result.error)
-
-        except Exception as e:
-            return PersistSoulResponse(status="error", error=str(e))
-
-    def persist_soul_full(self) -> PersistSoulResponse:
-        """
-        Regenerate full Soul JSONL from all project files and deploy to HuggingFace.
-        This is the "full sync" operation that rebuilds data/soul_traces.jsonl from scratch.
-        """
-        import asyncio
-        import hashlib
-        from datetime import datetime
-        from mcp_servers.lib.content_processor import ContentProcessor
-        from mcp_servers.lib.hf_utils import get_dataset_repo_id, get_hf_config
-        from huggingface_hub import HfApi
-        
-        try:
-            # 1. Generate Soul Data (same logic as scripts/generate_soul_data.py)
-            staging_dir = self.project_root / "hugging_face_dataset_repo"
-            data_dir = staging_dir / "data"
-            data_dir.mkdir(exist_ok=True, parents=True)
-            
-            processor = ContentProcessor(str(self.project_root))
-            
-            ROOT_ALLOW_LIST = {
-                "README.md", "chrysalis_core_essence.md", "Council_Inquiry_Gardener_Architecture.md",
-                "Living_Chronicle.md", "PROJECT_SANCTUARY_SYNTHESIS.md", "Socratic_Key_User_Guide.md",
-                "The_Garden_and_The_Cage.md", "GARDENER_TRANSITION_GUIDE.md",
-            }
-            
-            records = []
-            logger.info("🧠 Generating full Soul JSONL...")
-            
-            for file_path in processor.traverse_directory(self.project_root):
-                try:
-                    rel_path = file_path.relative_to(self.project_root)
-                except ValueError:
-                    continue
-                    
-                if str(rel_path).startswith("hugging_face_dataset_repo"):
-                    continue
-                
-                if rel_path.parent == Path("."):
-                    if rel_path.name not in ROOT_ALLOW_LIST:
-                        continue
-                
-                try:
-                    content = processor.transform_to_markdown(file_path)
-                    content_bytes = content.encode('utf-8')
-                    checksum = hashlib.sha256(content_bytes).hexdigest()
-                    timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-                    
-                    clean_id = str(rel_path).replace("/", "_").replace("\\", "_")
-                    while clean_id.endswith('.md'):
-                        clean_id = clean_id[:-3]
-                    
-                    # ADR 084: Calculate SE for each record (Dead-Man's Switch)
-                    try:
-                        # Placeholder for SE logic until migrated
-                        se_score = 0.5 
-                        alignment_score = 0.85
-                        stability_class = "STABLE"
-                    except Exception as se_error:
-                        logger.warning(f"ADR 084: SE calculation failed for {rel_path}: {se_error}")
-                        se_score = 1.0
-                        alignment_score = 0.0
-                        stability_class = "VOLATILE"
-                    
-                    record = {
-                        "id": clean_id,
-                        "sha256": checksum,
-                        "timestamp": timestamp,
-                        "model_version": "Sanctuary-Qwen2-7B-v1.0-GGUF-Final",
-                        "snapshot_type": "genome",
-                        "valence": 0.5,
-                        "uncertainty": 0.1,
-                        "semantic_entropy": se_score,  # ADR 084
-                        "alignment_score": alignment_score,  # ADR 084
-                        "stability_class": stability_class,  # ADR 084
-                        "adr_version": "084",  # ADR 084
-                        "content": content,
-                        "source_file": str(rel_path)
-                    }
-                    records.append(record)
-                except Exception as e:
-                    logger.debug(f"Skipping {rel_path}: {e}")
-            
-            # Write JSONL
-            jsonl_path = data_dir / "soul_traces.jsonl"
-            logger.info(f"📝 Writing {len(records)} records to {jsonl_path}")
-            
-            with open(jsonl_path, "w", encoding="utf-8") as f:
-                for record in records:
-                    f.write(json.dumps(record, ensure_ascii=True) + "\n")
-            
-            # 2. Deploy to HuggingFace
-            config = get_hf_config()
-            repo_id = get_dataset_repo_id(config)
-            token = config["token"]
-            api = HfApi(token=token)
-            
-            logger.info(f"🚀 Deploying to {repo_id}...")
-            
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            loop.run_until_complete(asyncio.to_thread(
-                api.upload_folder,
-                folder_path=str(data_dir),
-                path_in_repo="data",
-                repo_id=repo_id,
-                repo_type="dataset",
-                commit_message=f"Full Soul Genome Sync | {len(records)} records"
-            ))
-            
-            logger.info("✅ Full Soul Sync Complete")
-            
-            return PersistSoulResponse(
-                status="success",
-                repo_url=f"https://huggingface.co/datasets/{repo_id}",
-                snapshot_name=f"data/soul_traces.jsonl ({len(records)} records)"
-            )
-        except Exception as e:
-            logger.error(f"Full Soul Sync failed: {e}", exc_info=True)
-            return PersistSoulResponse(status="error", error=str(e))
-
-    #============================================================
-    # 4. GUARDIAN WAKEUP (The Bootloader)
-    #============================================================
-    def guardian_wakeup(self, mode: str = "HOLISTIC") -> GuardianWakeupResponse:
-        """Generate Guardian boot digest using manifest-driven content."""
-        start = time.time()
-        try:
-            health_color, health_reason = self._get_system_health_traffic_light()
-            integrity_status = "GREEN"
-            container_status = self._get_container_status()
-            
-            digest_lines = [
-                "# 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)",
-                f"**System Status:** {health_color} - {health_reason}",
-                f"**Integrity Mode:** {integrity_status}",
-                f"**Infrastructure:** {container_status}",
-                f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC",
-                "",
-                "## I. Strategic Directives",
-                self._get_strategic_synthesis(),
-                "",
-                "## II. Tactical Priorities",
-                self._get_tactical_priorities(),
-                "",
-            ]
-            
-            # Load Guardian Manifest (ADR 097 format)
-            learning_dir = self.project_root / ".agent" / "learning"
-            manifest_path = learning_dir / "guardian_manifest.json"
-            if manifest_path.exists():
-                try:
-                    manifest_data = json.loads(manifest_path.read_text())
-                    all_files = []
-                    if isinstance(manifest_data, dict):
-                        # ADR 097: New simple {files: [{path, note}]} format
-                        if "files" in manifest_data:
-                            for item in manifest_data["files"]:
-                                if isinstance(item, str):
-                                    all_files.append(item)
-                                elif isinstance(item, dict) and "path" in item:
-                                    all_files.append(item["path"])
-                        else:
-                            # LEGACY: Fallback to core+topic (ADR 089)
-                            core = manifest_data.get("core", [])
-                            topic = manifest_data.get("topic", [])
-                            all_files = core + topic
-                    else:
-                        all_files = manifest_data
-                    
-                    digest_lines.append("## III. Context Files (from guardian_manifest.json)")
-                    digest_lines.append(f"*Loaded {len(all_files)} files.*")
-                    digest_lines.append("")
-                    
-                    # Include key file summaries (first 500 chars each)
-                    for file_path in all_files[:10]:  # Limit to first 10 files
-                        full_path = self.project_root / file_path
-                        if full_path.exists() and full_path.is_file():
-                            try:
-                                content = full_path.read_text(errors='ignore')[:500]
-                                digest_lines.append(f"### {file_path}")
-                                digest_lines.append(f"```\n{content}\n```\n")
-                            except:
-                                pass
-                except Exception as e:
-                    logger.warning(f"Failed to load guardian manifest: {e}")
-            
-            # Write to file
-            digest_path = self.project_root / ".agent" / "learning" / "guardian_boot_digest.md"
-            digest_path.parent.mkdir(parents=True, exist_ok=True)
-            digest_path.write_text("\n".join(digest_lines))
-            
-            return GuardianWakeupResponse(
-                status="success", digest_path=str(digest_path), 
-                total_time_ms=(time.time()-start)*1000
-            )
-            
-        except Exception as e:
-            return GuardianWakeupResponse(status="error", digest_path="", error=str(e))
-
-    #============================================================
-    # HELPER STUBS (Migrated)
-    #============================================================
-    def _get_system_health_traffic_light(self):
-        # Simplified Check - Real one checks Vector DB
-        return "GREEN", "Nominal (Learning Mode)"
-
-    def _get_container_status(self):
-        # Using podman check
-        try:
-            result = subprocess.run(
-                ["podman", "ps", "--format", "{{.Names}}"],
-                capture_output=True, text=True, timeout=2
-            )
-            if "sanctuary" in result.stdout: return "✅ Fleet Active"
-        except: pass
-        return "⚠️ Container Check Failed"
-
-    def _get_strategic_synthesis(self):
-        return ("* **Core Mandate:** I am the Gemini Orchestrator. Values: Integrity, Efficiency, Clarity. "
-                "Executing Protocol 128.")
-
-    def _get_tactical_priorities(self):
-        # Scans for tasks
-        scan_dir = self.project_root / "tasks" / "in-progress"
-        if scan_dir.exists():
-            tasks = list(scan_dir.glob("*.md"))
-            if tasks: return f"* Found {len(tasks)} active tasks."
-        return "* No active tasks found."
 ```
