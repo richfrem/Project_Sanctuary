@@ -9,7 +9,7 @@ description: Agent-powered RLM cache distillation. Replaces the slow local Ollam
 
 Distill (summarize) files directly into the RLM caches **using the agent's own intelligence** instead of the slow local Ollama model (qwen2:7b on M1 Mac). The agent reads the file, writes a summary, and updates the cache JSON in-place.
 
-Should leverage frontier model ability to produce a superior summary for a file faster than can be done with a slow local CPU. 
+Should leverage frontier model ability to produce a superior summary for a file faster than can be done with a slow local CPU.
 
 ## Why This Exists
 
