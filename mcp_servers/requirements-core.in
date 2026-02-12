@@ -13,3 +13,7 @@ tiktoken
 # SECURITY BASELINES (GH Alerts Jan 2026)
 urllib3>=2.2.2
 aiohttp>=3.9.4
+
+# SECURITY PATCHES (Feb 2026)
+python-multipart>=0.0.22
+cryptography>=46.0.5

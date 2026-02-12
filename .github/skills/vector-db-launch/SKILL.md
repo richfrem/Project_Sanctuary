@@ -91,6 +91,23 @@ The other 6 fleet containers (`sanctuary_cortex`, `sanctuary_utils`, etc.) are o
 | `mcp_network` not found | Create it: `podman network create mcp_network` |
 | Image pull fails | `podman pull docker.io/chromadb/chroma:latest` |
 
+## Ingestion Options
+
+Once ChromaDB is running, you have multiple ingest strategies:
+
+```bash
+# Full ingest (rebuilds entire collection — slow, ~5-10 min)
+python3 tools/cli.py ingest
+
+# Incremental ingest (only files modified in last N hours — fast)
+python3 tools/cli.py ingest --incremental --hours 1
+
+# Incremental with no-purge (safest for mid-session updates)
+python3 tools/cli.py ingest --no-purge --incremental --hours 2
+```
+
+**Prefer incremental** for mid-session updates. Use full ingest only when the collection is stale or corrupted.
+
 ## Integration Points
 
 - **Protocol 128 Phase IX**: `tools/cli.py ingest` requires ChromaDB
