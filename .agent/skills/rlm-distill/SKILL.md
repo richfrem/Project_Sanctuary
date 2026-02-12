@@ -11,6 +11,20 @@ Distill (summarize) files directly into the RLM caches **using the agent's own i
 
 Should leverage frontier model ability to produce a superior summary for a file faster than can be done with a slow local CPU.
 
+## 🎯 Agent Execution Protocol (The "Brain Upgrade")
+
+**Context**: You (the Agent) are faster and smarter than the local `distiller.py` script.
+**Directive**: When asked to "update RLM" or "summarize x", **DO NOT** run `python distiller.py` immediately.
+
+### Protocol
+1.  **Check**: Is the request for < 10 files?
+2.  **Action**: If YES -> **Read & Write Manually**.
+    *   Read the target file (`view_file`).
+    *   Generate the summary (Mental Step).
+    *   Edit `rlm_summary_cache.json` or `rlm_tool_cache.json` directly (`replace_file_content` or `ed`).
+    *   Log: "Updated cache for [file] via Agent Distill."
+3.  **Fallback**: If NO (Batch > 10 files) -> Run `python distiller.py` (The script is better for bulk/boring work).
+
 ## Why This Exists
 
 The existing `tools/codify/rlm/distiller.py` calls Ollama locally, which:
@@ -27,6 +41,10 @@ The agent (Claude, Gemini, Antigravity) is already a better summarizer. This ski
 |:------|:-----|:-------------|:---------------|
 | **Summary Cache** | `.agent/learning/rlm_summary_cache.json` | Docs, protocols, ADRs, workflows, rules | Plain text paragraph |
 | **Tool Cache** | `.agent/learning/rlm_tool_cache.json` | Python/JS scripts, CLI tools | JSON object with structured fields |
+
+### Prerequisites
+*   **Directory**: Ensure `.agent/learning/` exists (`mkdir -p .agent/learning`).
+*   **File**: If cache files don't exist, create them as empty JSON objects: `echo "{}" > .agent/learning/rlm_summary_cache.json`.
 
 ## Cache Entry Schema
 

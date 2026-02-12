@@ -1,35 +1,215 @@
 # RLM-Factory
-**Generated:** 2026-01-31T20:06:49.678200
+**Generated:** 2026-02-12T00:03:38.147047
 
 Recursive Language Model (RLM) Factory used to distill, store, and query semantic summaries of the codebase.
 
 ---
 
 ## 📑 Table of Contents
-1. [tools/standalone/rlm-factory/UNPACK_INSTRUCTIONS.md](#entry-1)
-2. [tools/standalone/rlm-factory/README.md](#entry-2)
-3. [tools/standalone/rlm-factory/prompt.md](#entry-3)
-4. [tools/standalone/rlm-factory/INSTALL.md](#entry-4)
-5. [tools/standalone/rlm-factory/SYSTEM_REQUIREMENTS.md](#entry-5)
-6. [docs/tools/standalone/rlm-factory/unpacking.mmd](#entry-6)
-7. [docs/tools/standalone/rlm-factory/logic.mmd](#entry-7)
-8. [docs/tools/standalone/rlm-factory/workflow.mmd](#entry-8)
-9. [docs/tools/standalone/rlm-factory/distillation_process.mmd](#entry-9)
-10. [docs/tools/standalone/rlm-factory/search_process.mmd](#entry-10)
-11. [docs/diagrams/workflows/context-first-analysis.mmd](#entry-11)
-12. [docs/diagrams/workflows/context-first-analysis-detailed.mmd](#entry-12)
-13. [tools/codify/rlm/distiller.py](#entry-13)
-14. [tools/retrieve/rlm/inventory.py](#entry-14)
-15. [tools/retrieve/rlm/query_cache.py](#entry-15)
-16. [tools/curate/rlm/cleanup_cache.py](#entry-16)
-17. [tools/investigate/utils/path_resolver.py](#entry-17)
-18. [tools/codify/rlm/requirements.in](#entry-18)
-19. [tools/codify/rlm/requirements.txt](#entry-19)
-20. [tools/standalone/rlm-factory/research/summary.md](#entry-20)
+1. [tools/standalone/rlm-factory/prompt.md](#entry-1)
+2. [tools/standalone/rlm-factory/rlm-factory-manifest.json](#entry-2)
+3. [tools/standalone/rlm-factory/UNPACK_INSTRUCTIONS.md](#entry-3)
+4. [.agent/skills/rlm-distill/SKILL.md](#entry-4)
+5. [tools/standalone/rlm-factory/distiller_manifest.json](#entry-5)
+6. [tools/standalone/rlm-factory/README.md](#entry-6)
+7. [tools/standalone/rlm-factory/INSTALL.md](#entry-7)
+8. [tools/standalone/rlm-factory/SYSTEM_REQUIREMENTS.md](#entry-8)
+9. [docs/tools/standalone/rlm-factory/unpacking.mmd](#entry-9)
+10. [docs/tools/standalone/rlm-factory/logic.mmd](#entry-10)
+11. [docs/tools/standalone/rlm-factory/workflow.mmd](#entry-11)
+12. [docs/tools/standalone/rlm-factory/distillation_process.mmd](#entry-12)
+13. [docs/tools/standalone/rlm-factory/search_process.mmd](#entry-13)
+14. [docs/diagrams/workflows/context-first-analysis.mmd](#entry-14)
+15. [docs/diagrams/workflows/context-first-analysis-detailed.mmd](#entry-15)
+16. [tools/codify/rlm/distiller.py](#entry-16)
+17. [tools/retrieve/rlm/inventory.py](#entry-17)
+18. [tools/retrieve/rlm/query_cache.py](#entry-18)
+19. [tools/curate/rlm/cleanup_cache.py](#entry-19)
+20. [tools/investigate/utils/path_resolver.py](#entry-20)
+21. [tools/codify/rlm/requirements.in](#entry-21)
+22. [tools/codify/rlm/requirements.txt](#entry-22)
+23. [tools/standalone/rlm-factory/research/summary.md](#entry-23)
 
 ---
 
 <a id='entry-1'></a>
+
+---
+
+## File: tools/standalone/rlm-factory/prompt.md
+**Path:** `tools/standalone/rlm-factory/prompt.md`
+**Note:** IDENTITY: The RLM-Factory Persona & Instructions
+
+```markdown
+# Agent Protocol: RLM Factory 🧠
+
+**Context**: You have been provided with the "RLM Factory" standalone package. This is the **Link to Long-Term Memory**. It allows you to understand the entire repository without reading every file.
+
+## 🤖 Your Role
+You are the **Knowledge Curator**. Your goal is to keep the "Reactive Ledger" (`rlm_summary_cache.json`) up to date so that other agents can retrieve accurate context.
+
+## 🛠️ Tool Identification
+The package consists of:
+- `distiller.py`: **The Writer**. Calls Ollama to summarize files. Expensive.
+- `query_cache.py`: **The Reader**. FAST lookup of existing summaries. Cheap.
+- `cleanup_cache.py`: **The Janitor**. Removes deleted files from memory.
+- `inventory.py`: **The Auditor**. Reports what % of the repo is memorized.
+
+## 🚀 Initialization & Configuration
+
+### 1. Define Scope (The Interview)
+Before running anything, you must know **what** to remember.
+1.  **Check**: Does `distiller_manifest.json` exist?
+2.  **Ask**: If generic or empty, ask the user:
+    > "I am ready to build your Recursive Language Model. Which directories contain your high-value Source Code (for Tool Cache) and Documentation (for Summary Cache)? e.g., `src/`, `docs/`, `contracts/`"
+3.  **Configure**: Update `distiller_manifest.json` -> `include` array with the user's paths.
+
+## 📂 Execution Protocol
+
+### 1. Assessment (Read)
+Before doing anything, see what we know.
+```bash
+python inventory.py
+```
+*   **Check**: Is coverage < 100%? Are there missing files?
+
+### 2. Retrieval (Read)
+If you need to know about a specific topic:
+```bash
+python query_cache.py "term"
+```
+
+### 3. Maintenance (Write)
+**Only run this if**:
+1.  You have `OLLAMA_HOST` configured.
+2.  Files have changed significantly.
+3.  `inventory.py` reports missing files.
+
+```bash
+# Update everything (Slow)
+python distiller.py
+
+# Update one file (Fast)
+python distiller.py --file path/to/new_file.md
+```
+
+## ⚠️ Critical Agent Rules
+1.  **Ollama Dependency**: `distiller.py` WILL FAIL if Ollama is not running. Check connection first.
+2.  **Git Ignore**: Never commit the `rlm_summary_cache.json` if it contains secrets. (It shouldn't, but verify).
+3.  **Source of Truth**: The File System is truth. The Ledger is just a map. Run `cleanup_cache.py` often to keep them synced.
+
+```
+<a id='entry-2'></a>
+
+---
+
+## File: tools/standalone/rlm-factory/rlm-factory-manifest.json
+**Path:** `tools/standalone/rlm-factory/rlm-factory-manifest.json`
+**Note:** RECIPE: Self-Replication Manifest (this file)
+
+```json
+{
+    "name": "RLM-Factory",
+    "title": "RLM-Factory",
+    "description": "Recursive Language Model (RLM) Factory used to distill, store, and query semantic summaries of the codebase.",
+    "version": "1.0.0",
+    "files": [
+        {
+            "path": "tools/standalone/rlm-factory/prompt.md",
+            "note": "IDENTITY: The RLM-Factory Persona & Instructions"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/rlm-factory-manifest.json",
+            "note": "RECIPE: Self-Replication Manifest (this file)"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/UNPACK_INSTRUCTIONS.md",
+            "note": "CRITICAL: How to hydrate this tool"
+        },
+        {
+            "path": ".agent/skills/rlm-distill/SKILL.md",
+            "note": "PROTOCOL: Agent Distillation Protocol (Prefer this over distiller.py)"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/distiller_manifest.json",
+            "note": "CONFIG: Default Scope (What to Distill)"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/README.md",
+            "note": "Documentation"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/INSTALL.md",
+            "note": "Installation & Dependencies"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/SYSTEM_REQUIREMENTS.md",
+            "note": "Binary & System Prerequisites"
+        },
+        {
+            "path": "docs/tools/standalone/rlm-factory/unpacking.mmd",
+            "note": "Agent Unpacking Process"
+        },
+        {
+            "path": "docs/tools/standalone/rlm-factory/logic.mmd",
+            "note": "Internal Logic"
+        },
+        {
+            "path": "docs/tools/standalone/rlm-factory/workflow.mmd",
+            "note": "Usage Workflow"
+        },
+        {
+            "path": "docs/tools/standalone/rlm-factory/distillation_process.mmd",
+            "note": "Detailed Data Flow (Sequence)"
+        },
+        {
+            "path": "docs/tools/standalone/rlm-factory/search_process.mmd",
+            "note": "Summary-First Search (Sequence)"
+        },
+        {
+            "path": "docs/diagrams/workflows/context-first-analysis.mmd",
+            "note": "Context-First Analysis Workflow"
+        },
+        {
+            "path": "docs/diagrams/workflows/context-first-analysis-detailed.mmd",
+            "note": "Detailed Analysis Flow"
+        },
+        {
+            "path": "tools/codify/rlm/distiller.py",
+            "note": "The Engine (Write Only)"
+        },
+        {
+            "path": "tools/retrieve/rlm/inventory.py",
+            "note": "The Auditor (Read Only)"
+        },
+        {
+            "path": "tools/retrieve/rlm/query_cache.py",
+            "note": "The Search Interface (Read Only)"
+        },
+        {
+            "path": "tools/curate/rlm/cleanup_cache.py",
+            "note": "The Janitor (Curate)"
+        },
+        {
+            "path": "tools/investigate/utils/path_resolver.py",
+            "note": "Source Code: Path Resolver Utility"
+        },
+        {
+            "path": "tools/codify/rlm/requirements.in",
+            "note": "Dependency Declaration"
+        },
+        {
+            "path": "tools/codify/rlm/requirements.txt",
+            "note": "Pinned Dependencies"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/research/summary.md",
+            "note": "Architectural Theory"
+        }
+    ]
+}
+```
+<a id='entry-3'></a>
 
 ---
 
@@ -70,7 +250,320 @@ The following files are included in this bundle:
 - *Diagrams*
 
 ```
-<a id='entry-2'></a>
+<a id='entry-4'></a>
+
+---
+
+## File: .agent/skills/rlm-distill/SKILL.md
+**Path:** `.agent/skills/rlm-distill/SKILL.md`
+**Note:** PROTOCOL: Agent Distillation Protocol (Prefer this over distiller.py)
+
+```markdown
+---
+name: rlm-distill
+description: Agent-powered RLM cache distillation. Replaces the slow local Ollama distiller with the agent's own summarization capability for both rlm_summary_cache.json and rlm_tool_cache.json.
+---
+
+# RLM Distill Skill
+
+## Purpose
+
+Distill (summarize) files directly into the RLM caches **using the agent's own intelligence** instead of the slow local Ollama model (qwen2:7b on M1 Mac). The agent reads the file, writes a summary, and updates the cache JSON in-place.
+
+Should leverage frontier model ability to produce a superior summary for a file faster than can be done with a slow local CPU.
+
+## 🎯 Agent Execution Protocol (The "Brain Upgrade")
+
+**Context**: You (the Agent) are faster and smarter than the local `distiller.py` script.
+**Directive**: When asked to "update RLM" or "summarize x", **DO NOT** run `python distiller.py` immediately.
+
+### Protocol
+1.  **Check**: Is the request for < 10 files?
+2.  **Action**: If YES -> **Read & Write Manually**.
+    *   Read the target file (`view_file`).
+    *   Generate the summary (Mental Step).
+    *   Edit `rlm_summary_cache.json` or `rlm_tool_cache.json` directly (`replace_file_content` or `ed`).
+    *   Log: "Updated cache for [file] via Agent Distill."
+3.  **Fallback**: If NO (Batch > 10 files) -> Run `python distiller.py` (The script is better for bulk/boring work).
+
+## Why This Exists
+
+The existing `tools/codify/rlm/distiller.py` calls Ollama locally, which:
+- Takes 3-5 minutes per file on M1 Mac
+- Produces lower-quality summaries than a frontier model
+- Frequently fails (`[DISTILLATION FAILED]` — currently 31 entries)
+- Requires Ollama to be running
+
+The agent (Claude, Gemini, Antigravity) is already a better summarizer. This skill cuts the middleman.
+
+## The Two Caches
+
+| Cache | Path | Content Type | Summary Format |
+|:------|:-----|:-------------|:---------------|
+| **Summary Cache** | `.agent/learning/rlm_summary_cache.json` | Docs, protocols, ADRs, workflows, rules | Plain text paragraph |
+| **Tool Cache** | `.agent/learning/rlm_tool_cache.json` | Python/JS scripts, CLI tools | JSON object with structured fields |
+
+### Prerequisites
+*   **Directory**: Ensure `.agent/learning/` exists (`mkdir -p .agent/learning`).
+*   **File**: If cache files don't exist, create them as empty JSON objects: `echo "{}" > .agent/learning/rlm_summary_cache.json`.
+
+## Cache Entry Schema
+
+### Summary Cache Entry (docs/markdown)
+```json
+{
+  "path/to/file.md": {
+    "hash": "<content_hash_or_manual_marker>",
+    "summary": "Plain text summary of the document...",
+    "file_mtime": 1234567890.0,
+    "summarized_at": "2026-02-11T18:30:00Z"
+  }
+}
+```
+
+### Tool Cache Entry (code/scripts)
+```json
+{
+  "tools/path/to/script.py": {
+    "hash": "<content_hash_or_manual_marker>",
+    "summary": "{\"purpose\": \"...\", \"layer\": \"...\", \"usage\": [...], \"args\": [...], \"inputs\": [...], \"outputs\": [...], \"dependencies\": [...], \"key_functions\": [...], \"consumed_by\": [...]}",
+    "file_mtime": 1234567890.0,
+    "summarized_at": "2026-02-11T18:30:00Z"
+  }
+}
+```
+
+**Note:** The tool cache `summary` field is a JSON **string** (not a nested object), matching the existing distiller's output format.
+
+## Procedure
+
+### 1. Identify Files to Distill
+
+Choose one of:
+
+**A. Fix failed entries:**
+```bash
+# Find all DISTILLATION FAILED entries
+grep -n "DISTILLATION FAILED" .agent/learning/rlm_summary_cache.json
+```
+
+**B. Distill new/changed files:**
+```bash
+# Find files modified in last N hours not yet in cache
+find .agent/skills -name "*.md" -mmin -120
+```
+
+**C. Distill specific files the user requests.**
+
+### 2. Read the Source File
+
+Read the file content using `view_file` or equivalent.
+
+### 3. Write the Summary
+
+**For docs/markdown (summary cache):** Write a concise, information-dense paragraph that captures:
+- What the document is (purpose)
+- Key architectural components or decisions
+- Status and relationships to other documents
+- NO filler phrases like "This document..." — go straight to substance
+
+**For code/scripts (tool cache):** Write a JSON string with these fields:
+- `purpose`: One-sentence description
+- `layer`: Where it fits (e.g., "Curate / RLM", "Orchestrator")
+- `usage`: Array of example commands
+- `args`: Array of CLI arguments
+- `inputs`: Array of input files/sources
+- `outputs`: Array of output files/artifacts
+- `dependencies`: Array of script dependencies
+- `key_functions`: Array of important functions
+- `consumed_by`: Array of consumers
+
+### 4. Update the Cache JSON
+
+Edit the cache file directly using file editing tools. Set:
+- `hash`: Use `"agent_distilled_<date>"` as the hash marker (e.g., `"agent_distilled_2026_02_11"`)
+- `summary`: Your summary text
+- `summarized_at`: Current ISO timestamp
+- `file_mtime`: (optional) File modification time if available
+
+### 5. Verify
+
+After editing, spot-check that the JSON is still valid:
+```bash
+python3 -c "import json; json.load(open('.agent/learning/rlm_summary_cache.json')); print('✅ Valid JSON')"
+```
+
+## Quality Guidelines
+
+### Signal Over Noise (Protocol 123)
+- Every summary should be **Signal**: a reader should learn the essential purpose and architecture from the summary alone
+- Avoid **Noise**: don't pad with obvious observations, don't repeat the filename as the description
+- A good summary lets the agent decide whether to read the full file without actually reading it
+
+### Conciseness
+- Summary cache: Target 2-5 sentences for simple docs, up to a paragraph for complex protocols
+- Tool cache: Keep `purpose` to 1-2 sentences. Let the structured fields carry the detail.
+
+### First Principles
+- Summarize what the file **actually does**, not what it says it does
+- If the file has a grand description but trivial implementation, note the gap
+- Cross-reference related documents where architecturally significant
+
+## Incremental vs Full
+
+- **Incremental (preferred)**: Fix `[DISTILLATION FAILED]` entries and distill new files only
+- **Full**: Only needed if the cache is severely stale or corrupted
+
+## Integration with Existing Distiller
+
+This skill **complements** the Ollama-based distiller — it doesn't replace the script. The script is still useful for:
+- Batch processing hundreds of files unattended
+- CI/CD pipelines where no agent is available
+- Content hash tracking for change detection
+
+The agent distillation is better for:
+- Fixing failed entries quickly
+- Distilling complex documents that need frontier-model comprehension
+- On-demand updates during active sessions
+- M1 Mac environments where Ollama is too slow
+
+## Related
+
+- `tools/codify/rlm/distiller.py` — Original Ollama-based distiller
+- `tools/codify/rlm/rlm_config.py` — Configuration and cache utilities
+- `tools/retrieve/rlm/query_cache.py` — Search the cache (Tier 1 of knowledge retrieval)
+- `tools/standalone/rlm-factory/rlm_manifest.json` — Defines which directories get distilled
+- Protocol 123 — Signal Quality Framework
+- Protocol 132 — Recursive Context Synthesis
+
+```
+<a id='entry-5'></a>
+
+---
+
+## File: tools/standalone/rlm-factory/distiller_manifest.json
+**Path:** `tools/standalone/rlm-factory/distiller_manifest.json`
+**Note:** CONFIG: Default Scope (What to Distill)
+
+```json
+{
+    "description": "Configuration for RLM Distiller Scope",
+    "include": [
+        ".agent/learning/README.md",
+        ".agent/learning/cognitive_primer.md",
+        ".agent/learning/learning_debrief.md",
+        ".agent/learning/rules/cognitive_continuity_policy.md",
+        ".agent/rules/",
+        ".agent/workflows/",
+        "01_PROTOCOLS/",
+        "ADRs/",
+        "IDENTITY/founder_seed.json",
+        "LEARNING/README.md",
+        "README.md",
+        "dataset_package/seed_of_ascendance_awakening_seed.txt",
+        "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
+        "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
+        "docs/architecture_diagrams/system/harmonized_content_processing.mmd",
+        "docs/prompt-engineering/sanctuary-guardian-prompt.md",
+        "mcp_servers/gateway/fleet_registry.json",
+        "mcp_servers/learning/operations.py",
+        "mcp_servers/lib/exclusion_manifest.json",
+        "LEARNING/topics/Recursive_Language_Models/",
+        "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd"
+    ],
+    "exclude": [
+        "/.agent/",
+        "/.benchmarks/",
+        "/.bzr/",
+        "/.cache/",
+        "/.eggs/",
+        "/.expo/",
+        "/.expo-shared/",
+        "/.firebase/",
+        "/.git/",
+        "/.hg/",
+        "/.husky/",
+        "/.idea/",
+        "/.ipynb_checkpoints/",
+        "/.next/",
+        "/.ollama_models/",
+        "/.parcel-cache/",
+        "/.pnpm/",
+        "/.pytest_cache/",
+        "/.ruff_cache/",
+        "/.storybook/",
+        "/.svelte-kit/",
+        "/.svn/",
+        "/.tox/",
+        "/.turbo/",
+        "/.vector_data/",
+        "/.venv/",
+        "/.vercel/",
+        "/.vscode/",
+        "/.yarn/",
+        "/02_ROADMAP/",
+        "/02_USER_REFLECTIONS/",
+        "/03_OPERATIONS/",
+        "/05_ARCHIVED_BLUEPRINTS/",
+        "/05_LIVING_CHRONICLE/",
+        "/06_THE_EMBER_LIBRARY/",
+        "/07_COUNCIL_AGENTS/",
+        "/ARCHIVE/",
+        "/ARCHIVES/",
+        "/BRIEFINGS/",
+        "/MagicMock/",
+        "/MNEMONIC_SYNTHESIS/",
+        "/RESEARCH_PAPERS/",
+        "/ResearchPapers/",
+        "/WORK_IN_PROGRESS/",
+        "/__pycache__/",
+        "/archive/",
+        "/archives/",
+        "/build/",
+        "/certs/",
+        "/checkpoints/",
+        "/chroma_db/",
+        "/chroma_db_backup/",
+        "/ckpt/",
+        "/coverage/",
+        "/dataset_code_glyphs/",
+        "/dataset_package/",
+        "/debug_logs/",
+        "/development_cycles/",
+        "/dist/",
+        "/drq_repo/",
+        "/eggs/",
+        "/env/",
+        "/gardener/",
+        "/hugging_face_dataset_repo/",
+        "/logs/",
+        "/mcp_config/",
+        "/ml_env_logs/",
+        "/models/",
+        "/node_modules/",
+        "/out/",
+        "/outputs/",
+        "/pip-wheel-metadata/",
+        "/research/",
+        "/safensors/",
+        "/session_states/",
+        "/tasks/done/",
+        "/temp/",
+        "/tmp/",
+        "/venv/",
+        "/weights/",
+        ".DS_Store",
+        ".env",
+        ".env.bak",
+        ".gitignore",
+        "Modelfile",
+        "package-lock.json",
+        "package.json",
+        "yarn.lock"
+    ]
+}
+```
+<a id='entry-6'></a>
 
 ---
 
@@ -141,65 +634,7 @@ python cleanup_cache.py --apply
 See `architecture.mmd` for the system diagram.
 
 ```
-<a id='entry-3'></a>
-
----
-
-## File: tools/standalone/rlm-factory/prompt.md
-**Path:** `tools/standalone/rlm-factory/prompt.md`
-**Note:** Agent Protocol
-
-```markdown
-# Agent Protocol: RLM Factory 🧠
-
-**Context**: You have been provided with the "RLM Factory" standalone package. This is the **Link to Long-Term Memory**. It allows you to understand the entire repository without reading every file.
-
-## 🤖 Your Role
-You are the **Knowledge Curator**. Your goal is to keep the "Reactive Ledger" (`rlm_summary_cache.json`) up to date so that other agents can retrieve accurate context.
-
-## 🛠️ Tool Identification
-The package consists of:
-- `distiller.py`: **The Writer**. Calls Ollama to summarize files. Expensive.
-- `query_cache.py`: **The Reader**. FAST lookup of existing summaries. Cheap.
-- `cleanup_cache.py`: **The Janitor**. Removes deleted files from memory.
-- `inventory.py`: **The Auditor**. Reports what % of the repo is memorized.
-
-## 📂 Execution Protocol
-
-### 1. Assessment (Read)
-Before doing anything, see what we know.
-```bash
-python inventory.py
-```
-*   **Check**: Is coverage < 100%? Are there missing files?
-
-### 2. Retrieval (Read)
-If you need to know about a specific topic:
-```bash
-python query_cache.py "term"
-```
-
-### 3. Maintenance (Write)
-**Only run this if**:
-1.  You have `OLLAMA_HOST` configured.
-2.  Files have changed significantly.
-3.  `inventory.py` reports missing files.
-
-```bash
-# Update everything (Slow)
-python distiller.py
-
-# Update one file (Fast)
-python distiller.py --file path/to/new_file.md
-```
-
-## ⚠️ Critical Agent Rules
-1.  **Ollama Dependency**: `distiller.py` WILL FAIL if Ollama is not running. Check connection first.
-2.  **Git Ignore**: Never commit the `rlm_summary_cache.json` if it contains secrets. (It shouldn't, but verify).
-3.  **Source of Truth**: The File System is truth. The Ledger is just a map. Run `cleanup_cache.py` often to keep them synced.
-
-```
-<a id='entry-4'></a>
+<a id='entry-7'></a>
 
 ---
 
@@ -292,7 +727,7 @@ OLLAMA_MODEL=granite3.2:8b
 3.  **Verify**: Run `python inventory.py` - it will automatically resolve the cache path via `manifest-index.json`.
 
 ```
-<a id='entry-5'></a>
+<a id='entry-8'></a>
 
 ---
 
@@ -330,7 +765,7 @@ The tool is optimized for specific models. You must pull them before running.
     - Run: `ollama serve` (Keep this running in a separate terminal)
 
 ```
-<a id='entry-6'></a>
+<a id='entry-9'></a>
 
 ---
 
@@ -358,7 +793,7 @@ flowchart TD
     Audit --> Tool
 
 ```
-<a id='entry-7'></a>
+<a id='entry-10'></a>
 
 ---
 
@@ -393,7 +828,7 @@ flowchart TD
     end
 
 ```
-<a id='entry-8'></a>
+<a id='entry-11'></a>
 
 ---
 
@@ -422,7 +857,7 @@ flowchart TD
     CmdSearch -- "Result: JSON/Text" --> Result([Context Retrieved])
 
 ```
-<a id='entry-9'></a>
+<a id='entry-12'></a>
 
 ---
 
@@ -459,7 +894,7 @@ sequenceDiagram
     end
 
 ```
-<a id='entry-10'></a>
+<a id='entry-13'></a>
 
 ---
 
@@ -492,17 +927,17 @@ sequenceDiagram
     end
 
 ```
-<a id='entry-11'></a>
-## 11. docs/diagrams/workflows/context-first-analysis.mmd (MISSING)
+<a id='entry-14'></a>
+## 14. docs/diagrams/workflows/context-first-analysis.mmd (MISSING)
 > ❌ File not found: docs/diagrams/workflows/context-first-analysis.mmd
 > Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/docs/diagrams/workflows/context-first-analysis.mmd
 > Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/rlm-factory/docs/diagrams/workflows/context-first-analysis.mmd
-<a id='entry-12'></a>
-## 12. docs/diagrams/workflows/context-first-analysis-detailed.mmd (MISSING)
+<a id='entry-15'></a>
+## 15. docs/diagrams/workflows/context-first-analysis-detailed.mmd (MISSING)
 > ❌ File not found: docs/diagrams/workflows/context-first-analysis-detailed.mmd
 > Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/docs/diagrams/workflows/context-first-analysis-detailed.mmd
 > Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/rlm-factory/docs/diagrams/workflows/context-first-analysis-detailed.mmd
-<a id='entry-13'></a>
+<a id='entry-16'></a>
 
 ---
 
@@ -522,6 +957,10 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
+    # 0. Default Behavior (Sanctuary Profile)
+    # Uses manifest: tools/standalone/rlm-factory/rlm_manifest.json
+    python tools/codify/rlm/distiller.py
+
     # 1. Distill a single file (Tool Logic) -- CRITICAL: Use --type tool for code!
     python tools/codify/rlm/distiller.py --file tools/codify/rlm/rlm_config.py --type tool
     python tools/codify/rlm/distiller.py --file tools/investigate/miners/db_miner.py --type tool --force
@@ -581,6 +1020,7 @@ Consumed by:
 import os
 import sys
 import json
+import re
 import hashlib
 import time
 import traceback
@@ -651,6 +1091,59 @@ OLLAMA_URL = os.getenv("OLLAMA_HOST", "http://localhost:11434") + "/api/generate
 # CORE LOGIC
 # ============================================================
 
+def extract_header_summary(content: str) -> Optional[str]:
+    """
+    Attempts to extract metadata from Extended Python CLI/Tool Header.
+    Returns JSON string if successful, None otherwise.
+    """
+    # Simple check for docstring
+    if '"""' not in content[:500] and "'''" not in content[:500]:
+        return None
+
+    sections = {}
+    
+    # Helper regex
+    def extract_section(header, pattern):
+        match = re.search(pattern, header, re.DOTALL | re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        return None
+    
+    # 1. Purpose
+    purpose = extract_section(content, r'Purpose:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)')
+    if purpose:
+        sections["purpose"] = " ".join(purpose.split())
+    else:
+        return None # Mandatory
+        
+    # 2. Layer
+    layer = extract_section(content, r'Layer:\s*(.*)')
+    if layer: sections["layer"] = layer
+        
+    # 3. List Sections
+    for key, pattern in [
+        ("usage", r'Usage Examples?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("args", r'CLI Arguments?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("inputs", r'Input Files?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("outputs", r'Output:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("dependencies", r'(?:Script )?Dependencies:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("key_functions", r'Key Functions:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("supported_object_types", r'Supported Object Types:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
+        ("consumed_by", r'Consumed by:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)')
+    ]:
+        raw = extract_section(content, pattern)
+        if raw:
+            # Split by line, strip bullets
+            items = []
+            for line in raw.splitlines():
+                clean = line.strip()
+                if clean.startswith("- "): clean = clean[2:]
+                elif clean.startswith("* "): clean = clean[2:]
+                if clean: items.append(clean)
+            sections[key] = items
+
+    return json.dumps(sections, indent=2)
+
 def call_ollama(content: str, file_path: str, prompt_template: str, model_name: str) -> Optional[str]:
     """Call Ollama to generate summary."""
     # Truncate large files
@@ -677,7 +1170,7 @@ def call_ollama(content: str, file_path: str, prompt_template: str, model_name: 
                     "temperature": 0.1
                 }
             },
-            timeout=120
+            timeout=180  # Increased for model cold-start
         )
         
         if response.status_code == 200:
@@ -760,8 +1253,19 @@ def distill(config: RLMConfig, target_files: List[Path] = None, force: bool = Fa
             
             # Need to distill
             print(f"[{i}/{total}] Processing {rel_path}...")
-           # 2. Distill (if needed)
-            summary = call_ollama(content, rel_path, config.prompt_template, config.llm_model)
+            # 2. Distill (Header Extraction Priority for Tools)
+            summary = None
+            if config.type == "tool":
+                try:
+                    summary = extract_header_summary(content)
+                    if summary:
+                         debug("Extracted summary from header")
+                except Exception as e:
+                    debug(f"Header extraction failed: {e}")
+            
+            if not summary:
+                 # Fallback to LLM
+                 summary = call_ollama(content, rel_path, config.prompt_template, config.llm_model)
             
             if summary:
                 # 3. Update Ledger
@@ -951,7 +1455,7 @@ if __name__ == "__main__":
         distill(config, target_files=target_files, force=args.force)
 
 ```
-<a id='entry-14'></a>
+<a id='entry-17'></a>
 
 ---
 
@@ -1077,7 +1581,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-<a id='entry-15'></a>
+<a id='entry-18'></a>
 
 ---
 
@@ -1129,8 +1633,12 @@ Consumed by:
 import json
 import argparse
 import sys
+import signal
 import os
 from pathlib import Path
+
+# Fix BrokenPipeError when piping to head
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 # Add project root to sys.path to find tools package
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -1169,9 +1677,17 @@ def search_cache(term, config: RLMConfig, show_summary=True, return_data=False, 
             continue
             
         # Match against summary content
-        if term.lower() in entry.get('summary', '').lower():
-            matches.append({"path": relative_path, "entry": entry})
-            continue
+        # Match against summary content
+        summary_val = entry.get('summary', '')
+        if isinstance(summary_val, str):
+            if term.lower() in summary_val.lower():
+                matches.append({"path": relative_path, "entry": entry})
+                continue
+        else:
+            # If summary is complex (dict/list), search in its string representation
+            if term.lower() in str(summary_val).lower():
+                matches.append({"path": relative_path, "entry": entry})
+                continue
             
         # Match against ID or Hash (less likely but useful)
         if term.lower() in entry.get('content_hash', '').lower():
@@ -1215,7 +1731,7 @@ def list_cache(config: RLMConfig):
 def main():
     parser = argparse.ArgumentParser(description="Query RLM Cache")
     parser.add_argument("term", nargs="?", help="Search term (ID, filename, or content keyword)")
-    parser.add_argument("--type", default="sanctuary", help="RLM Type (loads manifest from factory)")
+    parser.add_argument("--type", default="tool", help="RLM Type (loads manifest from factory)")
     parser.add_argument("--list", action="store_true", help="List all cached files")
     parser.add_argument("--no-summary", action="store_true", help="Hide summary text")
     parser.add_argument("--json", action="store_true", help="Output results as JSON")
@@ -1236,7 +1752,7 @@ if __name__ == "__main__":
     main()
 
 ```
-<a id='entry-16'></a>
+<a id='entry-19'></a>
 
 ---
 
@@ -1442,12 +1958,173 @@ if __name__ == "__main__":
     main()
 
 ```
-<a id='entry-17'></a>
-## 17. tools/investigate/utils/path_resolver.py (MISSING)
-> ❌ File not found: tools/investigate/utils/path_resolver.py
-> Debug: ResolvePath tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/investigate/utils/path_resolver.py
-> Debug: BaseDir tried: /Users/richardfremmerlid/Projects/Project_Sanctuary/tools/standalone/rlm-factory/tools/investigate/utils/path_resolver.py
-<a id='entry-18'></a>
+<a id='entry-20'></a>
+
+---
+
+## File: tools/investigate/utils/path_resolver.py
+**Path:** `tools/investigate/utils/path_resolver.py`
+**Note:** Source Code: Path Resolver Utility
+
+```python
+#!/usr/bin/env python3
+"""
+path_resolver.py (CLI)
+=====================================
+
+Purpose:
+    Standardizes cross-platform path resolution and provides access to the Master Object Collection.
+
+Layer: Curate / Bundler
+
+Usage Examples:
+    python tools/investigate/utils/path_resolver.py --help
+
+Supported Object Types:
+    - Generic
+
+CLI Arguments:
+    (None detected)
+
+Input Files:
+    - (See code)
+
+Output:
+    - (See code)
+
+Key Functions:
+    - resolve_root(): Helper: Returns project root.
+    - resolve_path(): Helper: Resolves a relative path to absolute.
+
+Script Dependencies:
+    (None detected)
+
+Consumed by:
+    (Unknown)
+"""
+import os
+import json
+from typing import Optional, Dict, Any
+
+class PathResolver:
+    """
+    Static utility class for path resolution and artifact lookup.
+    """
+    _project_root: Optional[str] = None
+    _master_collection: Optional[Dict[str, Any]] = None
+
+    @classmethod
+    def get_project_root(cls) -> str:
+        """
+        Determines the absolute path to the Project Root directory.
+        
+        Strategy:
+        1. Check `PROJECT_ROOT` environment variable.
+        2. Traverse parents looking for `legacy-system` or `.agent` directories.
+        3. Fallback to CWD if landmarks are missing.
+
+        Returns:
+            str: Absolute path to the project root.
+        """
+        if cls._project_root:
+            return cls._project_root
+
+        # 1. Check Env
+        if "PROJECT_ROOT" in os.environ:
+            cls._project_root = os.environ["PROJECT_ROOT"]
+            return cls._project_root
+
+        # 2. Heuristic: Find 'legacy-system' or '.agent' in parents
+        current = os.path.abspath(os.getcwd())
+        while True:
+            if os.path.exists(os.path.join(current, "legacy-system")) or \
+               os.path.exists(os.path.join(current, ".agent")):
+                cls._project_root = current
+                return current
+            
+            parent = os.path.dirname(current)
+            if parent == current: # Reached drive root
+                # Fallback to CWD if completely lost
+                return os.getcwd()
+            current = parent
+
+    @classmethod
+    def to_absolute(cls, relative_path: str) -> str:
+        """
+        Converts a project-relative path to an absolute system path.
+        
+        Args:
+            relative_path (str): Path relative to repo root (e.g., 'tools/cli.py').
+            
+        Returns:
+            str: Absolute system path (using OS-specific separators).
+        """
+        root = cls.get_project_root()
+        # Handle forward slashes from JSON
+        normalized = relative_path.replace("/", os.sep).replace("\\", os.sep)
+        return os.path.join(root, normalized)
+
+    @classmethod
+    def load_master_collection(cls) -> Dict[str, Any]:
+        """
+        Loads the master_object_collection.json file into memory (cached).
+        
+        Returns:
+            Dict[str, Any]: The loaded JSON content or an empty dict structure on failure.
+        """
+        if cls._master_collection:
+            return cls._master_collection
+
+        root = cls.get_project_root()
+        path = os.path.join(root, "legacy-system", "reference-data", "master_object_collection.json")
+        
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                cls._master_collection = json.load(f)
+        except FileNotFoundError:
+            print(f"Warning: Master Object Collection not found at {path}")
+            cls._master_collection = {"objects": {}}
+            
+        return cls._master_collection
+
+    @classmethod
+    def get_object_path(cls, object_id: str, artifact_type: str = "xml") -> Optional[str]:
+        """
+        Resolves the absolute path for a specific object and artifact type using the Master Collection.
+        
+        Args:
+            object_id (str): The ID (e.g., 'JCSE0086').
+            artifact_type (str): The artifact key (e.g., 'xml', 'source', 'sql').
+            
+        Returns:
+            Optional[str]: Absolute path to the file, or None if not found/mapped.
+        """
+        collection = cls.load_master_collection()
+        objects = collection.get("objects", {})
+        
+        obj_data = objects.get(object_id.upper())
+        if not obj_data:
+            return None
+            
+        artifacts = obj_data.get("artifacts", {})
+        rel_path = artifacts.get(artifact_type)
+        
+        if rel_path:
+            return cls.to_absolute(rel_path)
+            
+        return None
+
+# Singleton-like usage helpers
+def resolve_root() -> str:
+    """Helper: Returns project root."""
+    return PathResolver.get_project_root()
+
+def resolve_path(relative_path: str) -> str:
+    """Helper: Resolves a relative path to absolute."""
+    return PathResolver.to_absolute(relative_path)
+
+```
+<a id='entry-21'></a>
 
 ---
 
@@ -1469,7 +2146,7 @@ requests
 python-dotenv
 
 ```
-<a id='entry-19'></a>
+<a id='entry-22'></a>
 
 ---
 
@@ -1498,7 +2175,7 @@ urllib3==2.6.3
     # via requests
 
 ```
-<a id='entry-20'></a>
+<a id='entry-23'></a>
 
 ---
 
