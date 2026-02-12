@@ -204,7 +204,7 @@ langchain-classic==1.0.1
     # via langchain-community
 langchain-community==0.4.1
     # via -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
-langchain-core==1.2.6
+langchain-core==1.2.11
     # via
     #   -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
     #   langchain
