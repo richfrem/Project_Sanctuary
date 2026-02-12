@@ -199,6 +199,12 @@
     "summarized_at": "2026-02-12T11:10:16.151960",
     "summary": "Project Sanctuary's Self-Correction Pattern, derived from Ralph Loop methodology and adapted for Protocol 128 Phase VIII, aims to enhance iterative refinement by autonomously improving each task iteration using previous work as input, with clear completion criteria, incremental goals, and escape hatches; it is optimally suited for tasks with automatic verification and well-defined success criteria, integrating within the broader Learning Loop framework where failures serve as data informing subsequent attempts."
   },
+  ".agent/skills/mcp-builder/LICENSE.txt": {
+    "file_mtime": 1770881593.5147235,
+    "hash": "58d1e17ffe5109a7",
+    "summarized_at": "2026-02-12T11:19:40.534455",
+    "summary": "This Apache License 2.0 document outlines the terms and conditions for using, reproducing, and distributing a software project (referred to as 'Work'), granting perpetual, worldwide, non-exclusive rights with no charge or royalty; it also includes provisions for patent licenses, redistribution requirements, trademark usage, disclaimer of warranties, limitation of liability, and contribution submission guidelines, currently active and applicable to the Project Sanctuary's MCP Builder."
+  },
   ".agent/skills/mcp-builder/SKILL.md": {
     "file_mtime": 1770862083.5467033,
     "hash": "0f4592dcb53cf2b5",
@@ -230,6 +236,12 @@
     "hash": "2da52f77e6751910",
     "summarized_at": "2026-02-12T11:01:57.677692",
     "summary": "The Python MCP Server Implementation Guide outlines best practices for building MCP servers using the MCP Python SDK, emphasizing server setup, tool registration with Pydantic models for input validation, error handling, and adherence to specific naming conventions and structure; it aims to create efficient, well-documented, and maintainable tools for integrating various services into a unified Model Context Protocol (MCP) framework."
+  },
+  ".agent/skills/mcp-builder/scripts/requirements.txt": {
+    "file_mtime": 1770881593.522114,
+    "hash": "d5d7558b2368ecea",
+    "summarized_at": "2026-02-12T11:20:03.741385",
+    "summary": "The Project Sanctuary document, specifically the 'requirements.txt' file within the 'mcp-builder' scripts directory, outlines essential dependencies for the MCP (Modular Crafting Processor) Builder agent, with Anthropic version 0.39.0 and MCP version 1.1.0 or higher being mandatory, indicating an active development phase focused on integrating advanced AI capabilities into a modular crafting system."
   },
   ".agent/skills/memory-management/SKILL.md": {
     "file_mtime": 1770862399.7509305,
