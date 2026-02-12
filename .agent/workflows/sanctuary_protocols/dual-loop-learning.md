@@ -23,11 +23,17 @@ track: B
 
 ### Phase I: Strategy (Outer Loop)
 1.  **Initiate**: User runs `/sanctuary-dual-loop "Goal Description"`.
-2.  **Spec Generation**:
-    *   System checks for existing spec.
-    *   **If New**: System internally triggers `/spec-kitty.specify` to define the architecture/task.
-    *   **If Existing**: System loads the current context.
-3.  **Workspace Prep**: Antigravity runs `/spec-kitty.implement <WP-ID>`.
+2.  **Define (Specify)**:
+    *   **Action**: Execute `/spec-kitty.specify`
+    *   **Output**: `spec.md` (What & Why)
+3.  **Architect (Plan)**:
+    *   **Action**: Execute `/spec-kitty.plan`
+    *   **Output**: `plan.md` (How & Contracts)
+4.  **Decompose (Tasking)**:
+    *   **Action**: Execute `/spec-kitty.tasks`
+    *   **Output**: `tasks.md` and `tasks/WP-*.md` (Actionable Prompts)
+    *   **Check**: Run `tools/orchestrator/verify_workflow_state.py --feature <SLUG> --phase tasks`
+5.  **Workspace Prep**: Antigravity runs `/spec-kitty.implement <WP-ID>`.
     *   Creates isolated worktree: `.worktrees/feature-WP01`.
     *   Isolates Opus from main repo noise.
 4.  **Distill**: Creates a **Minimal Context Object** for Opus *inside* the worktree.
@@ -49,9 +55,9 @@ track: B
 
 ### Phase IV: Verification (Outer Loop)
 1.  **Switch**: User returns to Antigravity.
-2.  **Verify**: Antigravity inspects the *diff* (not the chat history).
+2.  **Verify**: Antigravity runs `tools/orchestrator/dual_loop/verify_inner_loop_result.py`.
 3.  **Judge**:
-    *   **Pass**: Run `/sanctuary-seal`.
+    *   **Pass**: Commit in worktree (`git add . && git commit`), then Update `tasks.md`.
     *   **Fail**: Generate `correction_packet_NNN.md` and repeat Phase II.
 
 ### Phase V: Dual-Loop Retrospective (Protocol 128 Phase VIII)

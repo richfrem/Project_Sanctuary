@@ -25,9 +25,10 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 1.  **Access Mode Check**:
     - **IDE Mode**: Read `cognitive_primer.md` first, then run `cortex_guardian_wakeup`
     - **MCP-Only Mode**: Run `cortex_guardian_wakeup` directly (returns primer + HMAC)
-2.  **Iron Check**: If FAIL → Safe Mode (read-only). If PASS → proceed.
-3.  **Run Debrief**: Execute `/sanctuary-scout` (calls `cortex_learning_debrief`)
-4.  **Truth Anchor**: `learning_package_snapshot.md` is embedded in debrief response
+3.  **Meta-Task Setup (Mandatory)**: Copy `.agent/templates/workflow/learning-loop-meta-tasks.md` to task list.
+4.  **Iron Check**: If FAIL → Safe Mode (read-only). If PASS → proceed.
+5.  **Run Debrief**: Execute `/sanctuary-scout` (calls `cortex_learning_debrief`)
+6.  **Truth Anchor**: `learning_package_snapshot.md` is embedded in debrief response
 
 ## Phase II: Intelligence Synthesis
 

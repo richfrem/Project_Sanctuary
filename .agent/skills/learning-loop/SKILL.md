@@ -57,14 +57,14 @@ Scout → Synthesize → Gate → Audit → Seal → Persist → Retrospective �
 For detailed phase instructions, see [references/phases.md](references/phases.md).
 
 ## Pre-Departure Checklist
+**Governed by Rule**: `.agent/rules/01_PROCESS/workflow_artifacts_integrity.md`
 
-Before ending any session:
+Refer to the **Learning Loop Meta-Tasks** template (`.agent/templates/workflow/learning-loop-meta-tasks.md`) for the authoritative checklist.
 
-- [ ] Retrospective filled (`loop_retrospective.md`)
-- [ ] Seal ran (`/sanctuary-seal`)
-- [ ] Persist ran (`/sanctuary-persist`)
-- [ ] Ingest ran (`/sanctuary-ingest`)
-- [ ] Temp files cleaned: `rm -rf temp/context-bundles/*.md temp/*.md temp/*.json`
+Common Failure Points:
+- Skipping `/sanctuary-retrospective` (Self-Audit).
+- Simulating `/sanctuary-seal` output.
+- Failing to verify RLM Cache before persist.
 
 ## Key Files
 

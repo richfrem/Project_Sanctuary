@@ -7,6 +7,16 @@ description: Standard operating procedures for the Spec Kitty agentic workflow (
 
 This skill documents the standard lifecycle for implementing features using Spec Kitty.
 
+## 0. Mandatory Planning Phase (Do NOT Skip)
+Before implementing any code, you MUST generate the architectural artifacts using the CLI. **Manual creation of `spec.md`, `plan.md`, or `tasks/` files is STRICTLY FORBIDDEN.**
+
+1.  **Specify**: `/spec-kitty.specify` → Generates `spec.md`
+2.  **Plan**: `/spec-kitty.plan` → Generates `plan.md`
+3.  **Tasking**: `/spec-kitty.tasks` → Generates `tasks.md` & `tasks/WP-*.md` prompt files
+
+**Verification**: Run `python3 tools/orchestrator/verify_workflow_state.py --feature <SLUG> --phase tasks` to confirm artifacts exist.
+**Rule**: Do NOT mark a meta-task as complete unless the verification tool passes.
+
 ## 1. Start a Work Package (WP)
 Always start by creating an isolated worktree for the task.
 
@@ -18,24 +28,13 @@ spec-kitty agent workflow implement --task-id WP-06 --agent "Antigravity"
 ```
 
 **Output Parsing**:
-The command will output the path to the created worktree. You MUST capture this and change directory into it.
-Example output:
-```
-...
-SUCCESS: Worktree created at .worktrees/006-feature-WP-06
-To start working:
-cd .worktrees/006-feature-WP-06
-...
-```
-
-**Note**: If the previous WP was merged to main, use `--base main` if the tool doesn't auto-detect it.
-```bash
-spec-kitty implement WP06 --base main
-```
+1. Capture the path from the tool output.
+2. If output is truncated or unclear, run `git worktree list` to find the newest worktree.
+3. **CRITICAL**: Do NOT guess the path. Verify it exists.
 
 ## 2. Implementation Loop
-1.  **Navigate**: `cd .worktrees/<WP-ID>`
-2.  **Install**: `npm install` (backend/frontend)
+1.  **Navigate**: `cd .worktrees/<WP-ID>` (Verify with `pwd`)
+2.  **Setup**: Install dependencies if needed (detect project type: Python/Node/etc).
 3.  **Code**: Implement the feature.
 4.  **Verify**: Run tests or manual verification.
 5.  **Commit**: `git add . && git commit -m "feat(WPxx): description"` (Local worktree commit)
