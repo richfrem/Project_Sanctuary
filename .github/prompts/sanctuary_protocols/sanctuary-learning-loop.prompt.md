@@ -25,9 +25,10 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 1.  **Access Mode Check**:
     - **IDE Mode**: Read `cognitive_primer.md` first, then run `cortex_guardian_wakeup`
     - **MCP-Only Mode**: Run `cortex_guardian_wakeup` directly (returns primer + HMAC)
-2.  **Iron Check**: If FAIL → Safe Mode (read-only). If PASS → proceed.
-3.  **Run Debrief**: Execute `/sanctuary-scout` (calls `cortex_learning_debrief`)
-4.  **Truth Anchor**: `learning_package_snapshot.md` is embedded in debrief response
+3.  **Meta-Task Setup (Mandatory)**: Copy `.agent/templates/workflow/learning-loop-meta-tasks.md` to task list.
+4.  **Iron Check**: If FAIL → Safe Mode (read-only). If PASS → proceed.
+5.  **Run Debrief**: Execute `/sanctuary-scout` (calls `cortex_learning_debrief`)
+6.  **Truth Anchor**: `learning_package_snapshot.md` is embedded in debrief response
 
 ## Phase II: Intelligence Synthesis
 
@@ -111,6 +112,26 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 4.  **GGUF Conversion**: `scripts/convert_to_gguf.py` (quantize)
 5.  **Hub Deploy**: `scripts/upload_to_huggingface.py`
 6.  **Loop Back**: After forge, return to Phase VIII for retrospective
+
+---
+
+## Dual-Loop Integration (Protocol 133)
+
+When Protocol 128 runs inside a Dual-Loop session, phases map to loop roles:
+
+| Phase | Loop Role | Notes |
+|-------|-----------|-------|
+| I (Scout) | Outer Loop | Boot, orient, read spec context |
+| II-III (Synthesis/Gate) | Outer Loop | Strategy Packet generation, user approval |
+| IV (Audit) | Outer Loop | Pre-execution checkpoint |
+| *(Execution)* | **Inner Loop** | Code-only, no git, no Learning Loop phases |
+| V (Verify) | Outer Loop | `verify_inner_loop_result.py` + `verify_workflow_state.py --phase review` |
+| VI-IX (Seal→End) | Outer Loop | Standard closure sequence |
+
+**Key rule**: The Inner Loop does NOT run Learning Loop phases. All cognitive continuity is the Outer Loop's responsibility.
+
+**Workflow**: `.agent/workflows/sanctuary_protocols/dual-loop-learning.md`
+**Skill**: `.agent/skills/dual-loop-supervisor/SKILL.md`
 
 ---
 

@@ -21,8 +21,8 @@ Follow these steps **in order** to establish a valid session context.
 ### 1. The Anchor (Tactical Status)
 **Goal:** Ingest current tactical directives and system status.
 **Action:**
-```bash
-view_file(AbsolutePath="/Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/learning/guardian_boot_digest.md")
+```
+Read: .agent/learning/guardian_boot_digest.md
 ```
 *   **Extract:** Active Tasks, System Status, and any "CRITICAL" alerts.
 *   **Output:** "Guardian Status: [Status] | Active Directives: [Count]"
@@ -30,8 +30,8 @@ view_file(AbsolutePath="/Users/richardfremmerlid/Projects/Project_Sanctuary/.age
 ### 2. The Doctrine (Hardened Learning Loop)
 **Goal:** Load the operational laws of the project (Protocol 128).
 **Action:**
-```bash
-view_file(AbsolutePath="/Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md")
+```
+Read: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md
 ```
 *   **Focus:** Phase checklist (I-X), Gate requirements (HITL), and Persistence obligations.
 *   **Reference:** If deep context is needed on specific learning mechanics, refer to `.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md` (Protocol 125).
@@ -39,8 +39,8 @@ view_file(AbsolutePath="/Users/richardfremmerlid/Projects/Project_Sanctuary/.age
 ### 3. The Visual (Architecture)
 **Goal:** Visualize the learning loop flow.
 **Action:**
-```bash
-view_file(AbsolutePath="/Users/richardfremmerlid/Projects/Project_Sanctuary/docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd")
+```
+Read: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
 ```
 
 ### 4. Session Initialization (Action)

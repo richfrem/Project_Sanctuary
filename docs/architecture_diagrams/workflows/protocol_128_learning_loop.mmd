@@ -137,11 +137,32 @@ flowchart TB
     end
     style PhaseX fill:#f8d7da,stroke:#721c24,stroke-width:2px
 
+    subgraph DualLoopBranch ["Protocol 133: Dual-Loop (Optional)"]
+        direction TB
+        DL_Entry["Outer Loop delegates to Inner Loop<br>(Strategy Packet)"]:::inner
+        DL_Execute["Inner Loop: Code & Test<br>(No Git, No Learning Phases)"]:::inner
+        DL_Verify["Outer Loop: verify_workflow_state.py --phase review<br>+ verify_inner_loop_result.py"]:::outer
+        DL_Fallback["Fallback: Branch-Direct Mode<br>(if worktree inaccessible)"]:::outer
+
+        DL_Entry --> DL_Execute
+        DL_Execute --> DL_Verify
+        DL_Execute -.->|worktree fail| DL_Fallback
+        DL_Fallback --> DL_Verify
+    end
+    style DualLoopBranch fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px,stroke-dasharray: 5 5
+
+    classDef inner fill:#cc99ff,stroke:#333,stroke-width:2px
+    classDef outer fill:#99ccff,stroke:#333,stroke-width:2px
+
     %% Flow - Phase Connections
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
-    
+
     GovApproval -- "PASS" --> AgreeTopic
+
+    %% Dual-Loop branch: Outer Loop can delegate after Audit
+    TechApproval -.->|"Protocol 133<br>(Dual-Loop Mode)"| DL_Entry
+    DL_Verify -.->|"Return to<br>Closure"| CaptureSeal
     
     %% ============================================================
     %% CRITICAL: Protocol 128 Closure Sequence (MUST BE THIS ORDER)

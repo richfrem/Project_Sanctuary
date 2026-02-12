@@ -185,19 +185,93 @@ def generate_report(
 """
 
     if not all_pass:
-        report += """
+        # Build specific correction instructions from failed criteria
+        failed = [
+            (i, c)
+            for i, (c, exists) in enumerate(
+                zip(packet["criteria"], [check_file_exists(c, worktree) for c in packet["criteria"]]),
+                1,
+            )
+            if not exists
+        ]
+        issue_lines = "\n".join(
+            f"- **Issue {i}**: {criterion} — File not found or criterion unmet."
+            for i, criterion in failed
+        )
+        if not issue_lines:
+            issue_lines = "- Manual review required. Automated checks could not determine specific failures."
+
+        report += f"""
 ## Issues
 
-> Manual review required. The automated check detected potential failures.
-> Run a full diff review to confirm.
+{issue_lines}
 
 ## Correction Prompt
 
-> Review the FAIL items above. Fix only the specific issues identified.
+> Fix ONLY the issues listed above. Do NOT re-implement the entire task.
 > Reference the original Strategy Packet for full context.
+> Do NOT use git commands.
 """
 
     return report, all_pass
+
+
+HANDOFFS_DIR = PROJECT_ROOT / ".agent" / "handoffs"
+
+
+def generate_correction_packet(
+    packet: dict, report: str, original_packet_path: Path
+) -> Path | None:
+    """Generate a correction packet from a failed verification report.
+
+    Returns the path to the correction packet, or None on error.
+    """
+    HANDOFFS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Find next correction number
+    existing = list(HANDOFFS_DIR.glob("correction_packet_*.md"))
+    numbers = []
+    for f in existing:
+        match = re.search(r"correction_packet_(\d+)", f.name)
+        if match:
+            numbers.append(int(match.group(1)))
+    next_num = max(numbers) + 1 if numbers else 1
+
+    # Extract failed criteria from report
+    failed_lines = re.findall(r"\| \d+ \| (.+?) \| FAIL \| (.+?) \|", report)
+
+    corrections = ""
+    for criterion, note in failed_lines:
+        corrections += f"- {criterion.strip()} ({note.strip()})\n"
+    if not corrections:
+        corrections = "- Review the verification report for specific failures.\n"
+
+    content = f"""# Correction: {packet['title']}
+**(Delta Fix for Inner Loop / Opus)**
+
+> **Objective:** Fix ONLY the issues below. Do NOT re-implement the full task.
+
+## Original Packet
+`{original_packet_path}`
+
+## Issues to Fix
+
+{corrections.strip()}
+
+## Constraints
+- **NO GIT COMMANDS**: The Outer Loop handles all version control.
+- **Delta Only**: Fix the specific issues above, nothing else.
+- **File Paths**: Use exact paths from the original Strategy Packet.
+
+## Acceptance Criteria
+- [ ] All issues listed above are resolved.
+- [ ] No git commands were executed.
+- [ ] No files outside the original scope were modified.
+"""
+
+    output_path = HANDOFFS_DIR / f"correction_packet_{next_num:03d}.md"
+    output_path.write_text(content, encoding="utf-8")
+    return output_path
 
 
 class TaskStatusUpdater:
@@ -334,6 +408,13 @@ def main() -> None:
         sys.exit(0)
     else:
         print("[RESULT] FAIL — Correction needed. See report above.")
+        # Generate correction packet
+        correction_path = generate_correction_packet(
+            packet, report, args.packet
+        )
+        if correction_path:
+            print(f"[INFO] Correction packet written to: {correction_path}")
+            print(f'[INFO] Hand off: claude "Read {correction_path}. Fix the issues. Do NOT use git."')
         sys.exit(1)
 
 

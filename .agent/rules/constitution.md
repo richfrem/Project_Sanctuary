@@ -1,4 +1,8 @@
-# Project Sanctuary Constitution v3
+---
+trigger: always_on
+---
+
+# Project Sanctuary Constitution V3
 
 > **THE SUPREME LAW: HUMAN GATE**
 > You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.

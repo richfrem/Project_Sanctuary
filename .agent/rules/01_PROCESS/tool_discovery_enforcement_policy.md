@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # 🛡️ Tool Discovery & Use Policy (Summary)
 
 **Full workflow → `.agent/skills/tool_discovery/SKILL.md`**

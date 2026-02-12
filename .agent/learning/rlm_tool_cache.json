@@ -1,4 +1,9 @@
 {
+  ".kittify/scripts/tasks/task_helpers.py": {
+    "hash": "6b88cea39cfd719f",
+    "summarized_at": "2026-02-12T13:29:22.356995",
+    "summary": "[DISTILLATION FAILED]"
+  },
   "forge/scripts/upload_to_huggingface.py": {
     "file_mtime": 1769984471.618009,
     "hash": "9c03fabeb9c063f6",
@@ -160,6 +165,12 @@
     "hash": "f4e65d54cc5539b3",
     "summarized_at": "2026-02-11T19:01:08.291661",
     "summary": "{\"purpose\": \"Proof-of-Work validator for spec-driven development. Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. Prevents 'checkbox fraud' \u2014 marking tasks done without actual code changes.\", \"layer\": \"Orchestrator / Verification\", \"usage\": [\"python tools/orchestrator/proof_check.py --spec-dir specs/0005-human-gate-protocols\", \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-foo --json\"], \"args\": [\"--spec-dir: Path to spec directory (required)\", \"--project-root: Project root directory (default: current)\", \"--json: Output in JSON format\"], \"inputs\": [\"specs/[ID]/spec.md\", \"specs/[ID]/plan.md\", \"specs/[ID]/tasks.md\"], \"outputs\": [\"Summary report of modified/unchanged files\", \"Exit code 1 if fail, 0 if pass\"], \"dependencies\": [\"Git (must be in a git repository)\"], \"key_functions\": [\"extract_file_refs()\", \"check_file_modified()\", \"run_proof_check()\", \"main()\"], \"consumed_by\": [\"tools/cli.py workflow retrospective\", \"/sanctuary-retrospective workflow\"]}"
+  },
+  "tools/orchestrator/verify_workflow_state.py": {
+    "file_mtime": 1770925675.5663764,
+    "hash": "7c0295dd2ce435d4",
+    "summarized_at": "2026-02-12T11:50:02.042518",
+    "summary": "{\n  \"purpose\": \"A programmatic integrity checker for the Spec Kitty workflow. Ensures that artifacts (spec, plan, tasks, worktrees) actually exist on disk before allowing the Agent to proceed.\",\n  \"layer\": \"Application\",\n  \"supported_object_types\": [\"Feature\", \"Work Package\"],\n  \"usage\": [\n    \"python3 verify_workflow_state.py --feature <slug> --phase <specify|plan|tasks>\",\n    \"python3 verify_workflow_state.py --wp <wp-id> --phase <implement|review>\"\n  ],\n  \"args\": [\n    {\n      \"name\": \"--feature\",\n      \"description\": \"Feature slug (e.g. dual-loop-arch)\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"--wp\",\n      \"description\": \"Work Package ID (e.g. WP-001)\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"--phase\",\n      \"description\": \"Phase of the workflow (specify, plan, tasks, implement, review). Required argument.\",\n      \"type\": \"string\",\n      \"choices\": [\"specify\", \"plan\", \"tasks\", \"implement\", \"review\"]\n    }\n  ],\n  \"inputs\": [\n    {\n      \"name\": \"root directory\",\n      \"description\": \"The current working directory (os.getcwd())\"\n    },\n    {\n      \"name\": \"Feature slug\",\n      \"description\": \"A string representing the feature's identifier in kitty-specs directory.\"\n    },\n    {\n      \"name\": \"Work Package ID\",\n      \"description\": \"A string representing the work package's identifier.\"\n    }\n  ],\n  \"outputs\": [\n    \"Printed messages indicating integrity failures (\u274c INTEGRITY FAILURE: ...) or passes (\u2705 ...) based on the verification results.\"\n  ],\n  \"dependencies\": [\"argparse\", \"os\", \"sys\", \"pathlib\"],\n  \"consumed_by\": \"Spec Kitty workflow\",\n  \"key_functions\": [\n    \"fail(msg)\",\n    \"pass_check(msg)\",\n    \"find_feature_dir(root, slug)\",\n    \"verify_feature_phase(root, slug, phase)\",\n    \"verify_wp_phase(root, wp_id, phase)\"\n  ]\n}"
   },
   "tools/orchestrator/workflow_manager.py": {
     "file_mtime": 1770828416.5462549,

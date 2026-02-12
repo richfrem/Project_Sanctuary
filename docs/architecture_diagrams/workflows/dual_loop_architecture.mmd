@@ -2,84 +2,86 @@ flowchart TD
     %% ----------------------------------------------------
     %% Dual-Loop Agent Architecture (Protocol 133 + 128)
     %% ----------------------------------------------------
-    
+
     %% Colors
     classDef human fill:#ff9966,stroke:#333,stroke-width:2px;
     classDef outer fill:#99ccff,stroke:#333,stroke-width:2px;
     classDef inner fill:#cc99ff,stroke:#333,stroke-width:2px;
     classDef storage fill:#ffff99,stroke:#333,stroke-width:2px;
-    classDef protocol fill:#ffffff,stroke:#333,stroke-dasharray:5 5;
 
     %% Actors
     User([User / Human Bridge]):::human
-    FileSystem[(Project Files)]:::storage
-    
+
     %% ----------------------------------------------------
-    %% THE OUTER LOOP (Antigravity / Gemini)
-    %% Focused on Strategy, Oversight, and Protocol 128
+    %% PHASE I: STRATEGY (Outer Loop)
     %% ----------------------------------------------------
-    subgraph OuterLoop ["Outer Loop (Strategic Controller)"]
+    subgraph OuterStrategy ["Phase I: Strategy (Outer Loop)"]
         direction TB
-        
-        %% Phase I: Scout
-        Start(["Start: /sanctuary-dual-loop"]):::outer --> Scout[I. Scout: Debrief & Orientation]:::outer
-        Scout -->|Read Context| Context[(RLM / Spec Context)]:::storage
-        
-        %% Phase IV: Audit
-        Scout --> Audit[IV. Audit: Capture Snapshot]:::outer
-        
-        %% Strategy Core
-        Audit --> Strategy[Strategy: /spec-kitty.specify]:::outer
-        Strategy -->|Generate| Spec[Spec.md]:::storage
-        Strategy -->|Generate| Plan[Plan.md]:::storage
-        
-        Plan --> TaskGen[Task Generation: /spec-kitty.tasks]:::outer
-        TaskGen -->|Output| Tasks[Tasks.md]:::storage
-        
-        %% Handoff Preparation
-        Tasks --> HandoffPrep[Prepare Strategy Packet]:::outer
-        HandoffPrep -->|Distill| Packet["Strategy Packet<br>(Minimal Context + Constraints)"]:::storage
+
+        Start(["Start"]):::outer --> Scout[I. Scout: Boot & Orient]:::outer
+        Scout -->|Read Boot Files| Context[(RLM / Spec Context)]:::storage
+
+        Scout --> SpecKitty[Spec Kitty: Specify → Plan → Tasks]:::outer
+        SpecKitty -->|Verify| StateCheck[verify_workflow_state.py<br>--phase tasks]:::outer
+        StateCheck --> Worktree[Create Worktree<br>/spec-kitty.implement]:::outer
+        Worktree --> PacketGen[Generate Strategy Packet<br>generate_strategy_packet.py]:::outer
+        PacketGen -->|Output| Packet[".agent/handoffs/<br>task_packet_NNN.md"]:::storage
     end
 
     %% ----------------------------------------------------
-    %% PARALLEL EXECUTION ENGINE (Multiple Worktrees)
+    %% PHASE II: HAND-OFF (Human Bridge)
     %% ----------------------------------------------------
-    HandoffPrep -->|Signal 'Ready'| User
-    User -->|Launch Instances| ParallelStart([Multiple Opus Terminals]):::inner
-    
-    subgraph ExecutionEngine ["Parallel Execution Engine (Inner Loops)"]
+    Packet -->|Signal 'Ready'| User
+    User -->|Launch Claude| InnerStart([Inner Loop Terminal]):::inner
+
+    %% ----------------------------------------------------
+    %% PHASE III: EXECUTION (Inner Loop)
+    %% ----------------------------------------------------
+    subgraph InnerExec ["Phase III: Execution (Inner Loop)"]
         direction TB
-        
-        ParallelStart -->|Instance 1| WP1[Worktree 1 (Task A)]:::storage
-        ParallelStart -->|Instance 2| WP2[Worktree 2 (Task B)]:::storage
-        
-        WP1 --> Exec1[Execute Task A]:::inner
-        WP2 --> Exec2[Execute Task B]:::inner
-        
-        Exec1 -->|No Git| WP1
-        Exec2 -->|No Git| WP2
-        
-        Exec1 --> Test1[Verify A]:::inner
-        Exec2 --> Test2[Verify B]:::inner
+
+        InnerStart --> ReadPacket[Read Strategy Packet]:::inner
+        ReadPacket --> Code[Write Code & Run Tests]:::inner
+        Code -->|No Git| Verify[Self-Verify vs Criteria]:::inner
+        Verify --> Done[Signal Completion]:::inner
     end
 
-    Test1 & Test2 -->|Completion Signals| User
-    User -->|Return to Controller| VerifyStart(["Resume: Antigravity"]):::outer
-    
-    subgraph VerificationGate ["Verification & Closure"]
+    Done -->|Return| User
+    User -->|Switch to Outer Loop| VerifyStart(["Resume Outer Loop"]):::outer
+
+    %% ----------------------------------------------------
+    %% PHASE IV: VERIFICATION (Outer Loop)
+    %% ----------------------------------------------------
+    subgraph Verification ["Phase IV: Verification (Outer Loop)"]
         direction TB
-        VerifyStart --> Check[Inspect Diff & Tests]:::outer
-        Check --> Decision{Pass Verification?}:::outer
-        
-        %% Failure Handling
-        Decision -- No --> Correction[Generate Correction Prompt]:::outer
-        Correction -->|New Packet| Packet
-        Correction -->|Loop Back| User
-        
-        %% Success Protocol (128)
-        Decision -- Yes --> Seal[VI. Seal: Snapshot State]:::outer
-        Seal --> Persist[VII. Persist: Save to Soul]:::outer
+        VerifyStart --> DiffCheck[verify_inner_loop_result.py<br>Inspect Diff + Criteria]:::outer
+        DiffCheck --> CleanCheck[verify_workflow_state.py<br>--phase review]:::outer
+        CleanCheck --> Decision{Pass?}:::outer
+
+        Decision -- No --> Correction[Auto-generate<br>correction_packet_NNN.md]:::outer
+        Correction -->|Delta Fix| User
+
+        Decision -- Yes --> Commit[Commit in Worktree]:::outer
+        Commit --> LaneUpdate[Update Task Lane → done]:::outer
+    end
+
+    %% ----------------------------------------------------
+    %% PHASE V+: CLOSURE (Protocol 128)
+    %% ----------------------------------------------------
+    subgraph Closure ["Phase V+: Closure (Protocol 128)"]
+        direction TB
+        LaneUpdate --> Seal[VI. Seal]:::outer
+        Seal --> Persist[VII. Persist → HuggingFace]:::outer
         Persist --> Retro[VIII. Retrospective]:::outer
-        Retro --> Ingest[IX. Ingest: Update RAG]:::outer
-        Ingest --> End([End Workflow]):::outer
+        Retro --> End([IX. End]):::outer
     end
+
+    %% Fallback
+    subgraph FallbackMode ["Fallback: Branch-Direct"]
+        direction TB
+        FallbackNote[Inner Loop codes on<br>feature branch directly<br>Log in friction log]:::inner
+    end
+    style FallbackMode fill:#fff3e0,stroke:#e65100,stroke-width:2px,stroke-dasharray: 5 5
+
+    InnerStart -.->|worktree unavailable| FallbackNote
+    FallbackNote -.->|completion| User
