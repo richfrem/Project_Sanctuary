@@ -21,7 +21,7 @@ openai
 tiktoken
 
 # SECURITY PATCHES (Feb 2026)
-langchain-core>=0.3.81
+langchain-core>=1.2.11
 langsmith>=0.6.3
 pyasn1>=0.6.2
 protobuf>=6.33.5
