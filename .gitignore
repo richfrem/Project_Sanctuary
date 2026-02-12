@@ -199,16 +199,20 @@ LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 !scripts/archive/
 
 # Added by Spec Kitty CLI (auto-managed)
-.claude/
+#.claude/
 .codex/
 .opencode/
-.windsurf/
-.gemini/
+#.windsurf/
+#.gemini/
 .cursor/
 .qwen/
 .kilocode/
 .augment/
 .roo/
 .amazonq/
-.github/copilot/
+#.github/copilot/
 .kittify/.dashboard
+.claude/
+.windsurf/
+.gemini/
+.github/copilot/
