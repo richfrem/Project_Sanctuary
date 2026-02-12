@@ -93,9 +93,10 @@ The main entry point for running a Dual-Loop task.
 1.  **Define**: Execute `/spec-kitty.specify` (Spec).
 2.  **Architect**: Execute `/spec-kitty.plan` (Plan).
 3.  **Tasking**: Execute `/spec-kitty.tasks` (Prompts).
-4.  **Launch**: Run `run_workflow.py` for a specific WP ID.
+4.  **Check**: Run `tools/orchestrator/verify_workflow_state.py --feature <SLUG> --phase tasks`.
+5.  **Launch**: Run `run_workflow.py` for a specific WP ID.
     - *Troubleshooting*: If worktree path is not auto-detected, use `git worktree list`.
-5.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).
+6.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).
 6.  **Verify**: Outer Loop runs `tools/orchestrator/dual_loop/verify_inner_loop_result.py`.
 7.  **Seal**: 
     - **Commit**: `cd .worktrees/<WP> && git add . && git commit -m "feat(WP): ..."`
