@@ -101,7 +101,7 @@ fastapi==0.128.0
     # via -r mcp_servers/requirements-core.in
 fastmcp==2.14.2
     # via -r mcp_servers/requirements-core.in
-filelock==3.20.2
+filelock==3.20.3
     # via
     #   -r mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in
     #   huggingface-hub
