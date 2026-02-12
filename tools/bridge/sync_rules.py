@@ -42,13 +42,14 @@ def read_rule(rule_filename):
     return rule_path.read_text()
 
 def get_all_rules_content():
-    """Reads all markdown files in the rules directory."""
+    """Reads all markdown files in the rules directory (including subdirectories)."""
     content = []
     if not RULES_DIR.exists():
         return ""
-        
-    for rule_file in sorted(RULES_DIR.glob("*.md")):
-        content.append(f"\n\n--- RULE: {rule_file.name} ---\n\n")
+
+    for rule_file in sorted(RULES_DIR.rglob("*.md")):
+        rel_path = rule_file.relative_to(RULES_DIR)
+        content.append(f"\n\n--- RULE: {rel_path} ---\n\n")
         content.append(rule_file.read_text())
     return "".join(content)
 

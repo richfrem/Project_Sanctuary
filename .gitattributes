@@ -1,2 +1,9 @@
 # Protocol 101 v3.0: commit_manifest.json system permanently removed
 # No special merge strategies needed
+
+# Bridge-synced files: auto-resolve by taking "ours" (feature branch)
+# After merge, re-run: python3 tools/bridge/sync_rules.py --all && python3 tools/bridge/sync_skills.py --all
+.github/skills/** merge=ours
+.claude/skills/** merge=ours
+GEMINI.md merge=ours
+.github/copilot-instructions.md merge=ours
