@@ -19,3 +19,10 @@ einops
 ollama
 openai
 tiktoken
+
+# SECURITY PATCHES (Feb 2026)
+langchain-core>=0.3.81
+langsmith>=0.6.3
+pyasn1>=0.6.2
+protobuf>=6.33.5
+filelock>=3.20.3
