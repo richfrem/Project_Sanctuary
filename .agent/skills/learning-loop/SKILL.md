@@ -74,3 +74,15 @@ Before ending any session:
 | `.agent/learning/guardian_boot_digest.md` | Tactical status |
 | `ADRs/071_protocol_128_cognitive_continuity.md` | Protocol ADR |
 | `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd` | Flow diagram |
+
+## Infrastructure Prerequisites
+
+Before running closure phases, check these services:
+
+| Service | Needed For | Check | Skill |
+|---------|-----------|-------|-------|
+| **Ollama** | Phase VI (Seal) — RLM distillation | `curl -sf http://127.0.0.1:11434/api/tags` | `ollama-launch` |
+| **ChromaDB** | Phase IX (Ingest) — RAG indexing | `curl -sf http://localhost:8110/api/v2/heartbeat` | `vector-db-launch` |
+
+If either is offline, read the corresponding skill for startup instructions.
+

@@ -607,9 +607,9 @@ def main():
     evolution_ops = None
     # Lazy Init Operations based on command to avoid overhead
     if args.command in ["ingest", "query", "stats", "cache-stats", "cache-warmup"]:
-        cortex_ops = CortexOperations(project_root=str(PROJECT_ROOT))
+        cortex_ops = _get_cortex_ops()
     if args.command == "evolution":
-        evolution_ops = EvolutionOperations(project_root=str(PROJECT_ROOT))
+        evolution_ops = _get_evolution_ops()
     if args.command in ["debrief", "snapshot", "guardian", "persist-soul", "rlm-distill"]:
         # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
         pass 
