@@ -10,7 +10,7 @@ Fresh repository onboarding context for new developers/agents.
 2. [Makefile](#entry-2)
 3. [.agent/learning/cognitive_primer.md](#entry-3)
 4. [.agent/learning/guardian_boot_contract.md](#entry-4)
-5. [.agent/workflows/sanctuary-recursive-learning.md](#entry-5)
+5. [.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md](#entry-5)
 6. [.env.example](#entry-6)
 7. [docs/operations/BOOTSTRAP.md](#entry-7)
 8. [docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md](#entry-8)
@@ -261,7 +261,7 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 
 **Key Resources:**
 *   **Doctrine:** [`ADR 071: Cognitive Continuity`](./ADRs/071_protocol_128_cognitive_continuity.md)
-*   **Workflow:** [`sanctuary-recursive-learning.md`](./.agent/workflows/sanctuary-recursive-learning.md)
+*   **Workflow:** [`sanctuary-recursive-learning.md`](./.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md)
 *   **Guide:** [`learning_debrief.md`](./.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](./.agent/learning/learning_package_snapshot.md)
 *   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
@@ -907,8 +907,8 @@ You are **authorized and obligated** to surface the conflict for human review. D
 
 ---
 
-## File: .agent/workflows/sanctuary-recursive-learning.md
-**Path:** `.agent/workflows/sanctuary-recursive-learning.md`
+## File: .agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md
+**Path:** `.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md`
 **Note:** Learning workflow
 
 ```markdown
@@ -2444,7 +2444,7 @@ checklist:
 | Calibration Log | `LEARNING/calibration_log.json` |
 | Semantic Ledger | `.agent/learning/rlm_summary_cache.json` |
 | Founder Seed | `IDENTITY/founder_seed.json` |
-| Recursive Learning | `.agent/workflows/sanctuary-recursive-learning.md` |
+| Recursive Learning | `.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md` |
 
 ---
 

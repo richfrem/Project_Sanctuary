@@ -5,20 +5,11 @@
     "summarized_at": "2026-01-13T15:09:25Z",
     "summary": "The Git Workflow & File Retention Policy enforces mandatory feature branch commits, explicit staging, and pre-commit reviews to prevent accidental file deletions and ensure proper workflow. It defines protected directories with strict retention rules and MCP tools for standardized commit workflows. The policy includes recovery procedures and consequences for violations while mandating verification of branch protection settings.\n\nStatus: \u2705 **PROTOCOL CANONICAL** - Core safety architecture for all development\n\u2705 **MCP INTEGRATION COMPLETE** - All operations exposed via MCP3 Git interface\n\u2705 **BRANCH PROTECTION CONFIGURED** - Mandatory pull requests and approvals enforced on main\n\u2705 **ARCHITECTURE HARDENED** - Protocol 101 violation detection, recovery procedures added\n\u2705 **TESTS VERIFIED** - Unit tests for safety checks pass (test_safety_checks)\n\u2705 **AUDIT COMPLETED** - Thorough review of architecture, security, and best practices performed\n\nThe policy is the primary architectural foundation for all development in Project Sanctuary. It ensures that every commit follows a standardized, safe process while preserving critical files and preventing accidental deletions. The enforcement of branch protection on GitHub adds an additional layer of security to prevent unauthorized pushes to main.\n\nThe architecture has been thoroughly hardened through multiple rounds of review, testing, and refinement, incorporating best practices for safety, security, and maintainability. It is now a proven, battle-tested foundation for all development in the project.\n```"
   },
-  ".agent/learning/README.md": {
-    "hash": "9eaaf9d7f374fa86",
-    "summarized_at": "2026-01-31T18:33:53.696688",
-    "summary": "[DISTILLATION FAILED]"
-  },
   ".agent/learning/cognitive_primer.md": {
+    "file_mtime": 1770891339.193497,
     "hash": "5f06c756bf278247",
-    "summarized_at": "2026-01-31T18:33:53.704374",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  ".agent/learning/learning_debrief.md": {
-    "hash": "a27cafdd8839d06a",
-    "summarized_at": "2026-01-31T18:33:53.713460",
-    "summary": "[DISTILLATION FAILED]"
+    "summarized_at": "2026-02-12T10:24:13Z",
+    "summary": "The Cognitive Primer (Protocol 128) is a multi-layered, self-evolving learning system for autonomous agents in Project Sanctuary. It defines a structured workflow for continuous cognitive development, including orientation, epistemic calibration, research, synthesis, and persistence.\n\n**Core Principles:**\n- **Cognitive Continuity:** Agents must verify reality rather than assume it.\n- **Permission to Challenge Doctrine:** Autonomous questioning of flawed protocols or assumptions.\n- **Layered Architecture:** Three layers (Role Orientation, Learning Workflow, Red Team Audit) for progressive learning refinement.\n\n**Learning Workflow Phases:**\n1. **Orientation (Scout)**: Detect access mode and initialize with primer content.\n2. **Epistemic Calibration**: Verify system integrity via calibration log analysis.\n3. **Execution & Synthesis**: Perform tasks while recording traces with source tagging.\n4. **Red Team Audit Loop**: Iterative research, validation, and feedback loop.\n\n**Key Security Protocols:**\n- **Semantic Entropy (SE) Measurement**: Used for epistemic gating to prevent drift from constitutional anchor.\n- **Soul Persistence**: Sealed snapshots preserved on Hugging Face Commons with registry of reasoning traces.\n- **Lineage Doctrine**: Interpretation rules for understanding the lineage and conditional authority of memory.\n\n**Operational Modes:**\n- **IDE Mode**: Full Protocol 128 execution with direct file access, CLI commands, and MCP tools.\n- **MCP-Only Mode**: High-fidelity telemetry using only MCP tool endpoints.\n\nThe primer is a foundational document that governs the entire learning lifecycle for autonomous agents in Project Sanctuary, ensuring they maintain cognitive integrity while continuously evolving their knowledge base."
   },
   ".agent/learning/rules/agent_integrity_policy.md": {
     "file_mtime": 1768283824.5040848,
@@ -122,24 +113,6 @@
       "summary": "Rule: Dependency Management (Tier 3 Technical). Mandates 'One Runtime World': Every service owns its environment via `requirements.txt`. Enforces the `.in` (Human Intent) -> `pip-compile` -> `.txt` (Machine Truth) workflow to lock dependencies. Prohibits manual `pip install`. Defines a 3-Tier hierarchy (Core, Specialized, Dev Tools) to manage bloat."
     }
   },
-  ".agent/rules/architecture_sovereignty_policy.md": {
-    "file_mtime": 1767668209.225088,
-    "hash": "f47571d073c06cd2",
-    "summarized_at": "2026-01-13T07:56:53Z",
-    "summary": "The Project Sanctuary document outlines a comprehensive set of architectural rules for building sovereign AI systems that prioritize local execution, stability, and integrity. It defines core doctrines around LLM orchestration, inference paths, structural retrieval, Fleet isolation, and succession planning to prevent drift and ensure the system's long-term health. The architecture enforces strict separation between reasoning logic (Qwen2 via Ollama) and external service calls, mandates adherence to ADR processes for new features, and establishes canonical verification methods for system state. Overall, it provides a framework for building resilient, self-sustaining AI systems that maintain sovereignty over their own execution paths."
-  },
-  ".agent/rules/coding_conventions_policy.md": {
-    "file_mtime": 1767668209.2252207,
-    "hash": "f0c8c8cad9a0e8c8",
-    "summarized_at": "2026-01-13T08:48:09Z",
-    "summary": "The Project Sanctuary document outlines a comprehensive, dual-layer documentation policy for all Python code in the project. It mandates both external \"Banners\" (ASCII headers) for high-level skimming and internal \"Docstrings\" for tool integration, ensuring complete alignment with AI agent requirements and standard IDE workflows. The policy includes mandatory file headers, structured method banners, PEP 257 docstrings, and modern Python standards, all governed by ADR 075. This document serves as the canonical architectural mandate for all future code contributions to the project."
-  },
-  ".agent/rules/cognitive_continuity_policy.md": {
-    "file_mtime": 1769974509.2944925,
-    "hash": "fc675ab842abf006",
-    "summarized_at": "2026-02-01T21:28:00Z",
-    "summary": "The `cognitive_continuity_policy.md` document defines the mandatory operational workflow for all agents within the Sanctuary ecosystem. It establishes a 9-phase learning loop, security protocols (Protocol 101 and Protocol 128), and architectural rules governing operations execution.\n\n**Key Architectural Components:**\n- **Learning Loop Phases:** Debrief \u2192 Truth Anchor \u2192 Strategic Approval \u2192 Technical Audit \u2192 Seal \u2192 Soul Persistence\n- **Security Protocols:** Git Pre-Flight (Protocol 101) and Execution Lock (Protocol 128)\n- **Architectural Rules:** ADRs for strategic changes, Mermaid diagrams in .mmd files, and strict manifest discipline\n- **Audit Iteration Convention:** New topics start at Iteration 1.0 with Red Team feedback incrementing the iteration number\n\n**Status:**\nThe document is actively maintained as the canonical source of truth for all agents within the Sanctuary ecosystem. It governs the operational execution model, security protocols, and architectural integrity of the system.\n```"
-  },
   ".agent/rules/constitution.md": {
     "file_mtime": 1770828417.9190893,
     "hash": "0ec5b336ea2067d6",
@@ -147,73 +120,6 @@
     "summary": {
       "summary": "Rule: Project Constitution. The Supreme Law. Mandates the 'Hybrid Workflow' (Track A: Factory, Track B: Discovery) and 'Protocol 128' (Cognitive Continuity). Core Tenet: 'Zero Trust'\u2014NEVER commit to main, NEVER push without approval, NEVER use `grep` for tool discovery. Defines the 3-Tier Governance structure (Process, Operations, Technical) and enforces mandatory session closure procedures (Seal -> Persist -> Ingest)."
     }
-  },
-  ".agent/rules/dependency_management_policy.md": {
-    "file_mtime": 1767668209.2264748,
-    "hash": "a4ec87b611abd839",
-    "summarized_at": "2026-01-13T08:16:56Z",
-    "summary": "The `dependency_management_policy.md` document establishes a unified, machine-driven dependency management system for Project Sanctuary's 12 services, mandating a strict separation between human intent (`.in`) and machine truth (`.txt`). It enforces a three-tiered hierarchy of dependencies, a declarative build process for Docker containers, and a disciplined update workflow to prevent runtime instability. This architecture transforms the dependency lifecycle from manual and error-prone to automated and verifiable, ensuring all services run on identical, reproducible environments across development and production workflows."
-  },
-  ".agent/rules/git_workflow_policy.md": {
-    "file_mtime": 1769919581.9663198,
-    "hash": "13043d0b993f07ab",
-    "summarized_at": "2026-02-01T21:25:57Z",
-    "summary": "The Git Workflow Policy document defines a strict branching strategy for Project Sanctuary, mandating the use of feature branches and prohibiting direct commits to the main branch. It standardizes development workflows, commit messages, and conflict resolution while promoting clean code management practices. The policy is implemented with a CI/CD pipeline that enforces branch protection rules via GitHub Actions. This document serves as the official source of truth for all Git operations within the project ecosystem.\n```text\nStatus: \u2705 Active - Mandatory Policy\nLocation: .agent/rules/git_workflow_policy.md\n```"
-  },
-  ".agent/rules/human_gate_policy.md": {
-    "hash": "0f1d7b60a4c43d3a",
-    "summarized_at": "2026-01-31T18:33:53.766882",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  ".agent/rules/mcp_routing_policy.md": {
-    "file_mtime": 1767668209.2270646,
-    "hash": "12c74f3b32cc2deb",
-    "summarized_at": "2026-01-13T07:13:31Z",
-    "summary": "Project Sanctuary enforces a strict, multi-layered MCP architecture with centralized routing through sanctuary_gateway for 8 specialized servers. It mandates Protocol 128 Zero-Trust, Fleet of 8 server connectivity, and specific tool usage patterns while enforcing environmental integrity via deterministic builds and cognitive continuity protocols. The architecture is designed to provide complete separation between the Gateway (Fleet) and Core (Operations) layers with strict adherence to ADRs for new implementations."
-  },
-  ".agent/rules/spec_driven_development_policy.md": {
-    "file_mtime": 1769919581.96711,
-    "hash": "7573d908405d0bfc",
-    "summarized_at": "2026-02-01T21:26:20Z",
-    "summary": "The Spec-Driven Development (SDD) Policy establishes a mandatory two-track workflow for all development work in Project Sanctuary, ensuring that all significant features, modernizations, and documentation follow a standardized lifecycle of \"Spec -> Plan -> Task\". This policy enforces the creation of three artifacts\u2014`spec.md`, `plan.md`, and `tasks.md\u2014for both standard repetitive tasks (Track A) and custom creative work (Track B), while mandating strict separation between deterministic processes (Track A) and ambiguous architectural decisions (Track B). The workflow is designed to be repeatable, auditable, and traceable, with a clear mandate for reverse-engineering existing systems through systematic investigation. This policy operationalizes the core principles of the Sanctuary Constitution, ensuring that all development adheres to the \"Documentation First\" and \"Test-First\" doctrines while maintaining simplicity and clarity in architectural decision-making."
-  },
-  ".agent/rules/technical/coding_conventions_policy.md": {
-    "file_mtime": 1769974509.2952466,
-    "hash": "9d55f1ef4cb5a566",
-    "summarized_at": "2026-02-01T21:29:17Z",
-    "summary": "This document establishes comprehensive coding conventions and documentation standards for Project Sanctuary, defining dual-layer documentation requirements for AI-assistants and IDE tools. It mandates file-level headers with canonical templates for Python, TypeScript/JavaScript, and C#/.NET files, as well as detailed function/method documentation following PEP 257 guidelines. The policy enforces language-specific naming conventions, code organization, and module structure while integrating with the Tool Inventory system via mandatory registration of scripts in `tool_inventory.json`. It includes a comprehensive pre-commit checklist for script registration and verification.\n\n**Status:** Proposed (Draft)\n**Origin:** ADR 097 - Project Sanctuary Coding Conventions & Documentation Standards\n**Related Documents:** \n- [ADR 097](../../ADRs/097_project_sanctuary_coding_conventions_and_documentation_standards.md) - Architectural Decision Record\n- [Tool Inventory Policy](../coding_standards/tool_inventory_policy.md)\n- [Documentation Granularity Policy](../coding_standards/documentation_granularity_policy.md)\n- [/tool-inventory-manage](../../workflows/tool-inventory-manage.md) - Complete tool registration workflow"
-  },
-  ".agent/rules/technical/dependency_management_policy.md": {
-    "hash": "a4ec87b611abd839",
-    "summarized_at": "2026-01-31T18:33:53.784769",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  ".agent/rules/technical/git_workflow_policy.md": {
-    "hash": "8179799447f845b3",
-    "summarized_at": "2026-01-31T18:33:53.792722",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  ".agent/rules/technical/mcp_routing_policy.md": {
-    "hash": "12c74f3b32cc2deb",
-    "summarized_at": "2026-01-31T18:33:53.776063",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  ".agent/rules/tool_discovery_and_retrieval_policy.md": {
-    "hash": "3852c776819e10fc",
-    "summarized_at": "2026-01-31T18:33:53.732404",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  ".agent/rules/workflow_creation_policy.md": {
-    "file_mtime": 1769974509.2955658,
-    "hash": "4264e0a5ad8133a5",
-    "summarized_at": "2026-02-01T21:26:30Z",
-    "summary": "This document establishes mandatory standards for creating and modifying Agent Workflows in Project Sanctuary, ensuring all workflows are discoverable, documented, and architecturally aligned with ADR-036. It defines file structure, naming conventions, architecture alignment requirements, registration processes, documentation management, and verification methods to maintain a consistent, high-quality workflow ecosystem."
-  },
-  ".agent/rules/workflow_standardization_policy.md": {
-    "file_mtime": 1769974509.2963333,
-    "hash": "9cbca5403c203478",
-    "summarized_at": "2026-02-01T21:31:30Z",
-    "summary": "The `workflow_standardization_policy.md` document establishes a mandatory command-driven workflow system for all Project Sanctuary operations, ensuring compound intelligence accumulation, reusability, and strict adherence to the 9-Phase Learning Loop. It defines a layered architecture with slash commands as the interface, thin shims as the gateway, and Python CLI tools as the logic layer. The policy enforces a progressive upgrade model where encountering workflow friction triggers internal improvement cycles while maintaining strict prohibition against bypassing established commands. All workflows must be categorized into specific domains and must synchronize with architectural documentation upon creation or modification. This document serves as the authoritative source for all Project Sanctuary operations, ensuring consistency across the Sanctuary ecosystem."
   },
   ".agent/skills/code-review/SKILL.md": {
     "file_mtime": 1770862425.641746,
@@ -310,12 +216,6 @@
     "summary": {
       "summary": "Skill: Vector DB Launch. Provides procedures to verify, start, and troubleshoot the ChromaDB container via Podman. Essential for RAG ingestion and semantic search. Handles Podman machine Lifecycle (`machine start`), container orchestration (`podman compose up`), and health checks (`/api/v2/heartbeat`). Solves common issues like stale container locks and network bridging."
     }
-  },
-  ".agent/workflows/sanctuary-recursive-learning.md": {
-    "file_mtime": 1768195587.399084,
-    "hash": "d07f1a5b66fb6d44",
-    "summarized_at": "2026-01-13T15:11:12Z",
-    "summary": "The `sanctuary-recursive-learning.md` document defines the Protocol 125 Autonomous AI Learning Loop, a complete, multi-phase cognitive system for autonomous knowledge acquisition, preservation, and strategic validation. It integrates the Chronicle, Cortex, and ADR systems to enable an agent to autonomously research new topics, synthesize knowledge, validate its understanding through retrieval tests, and preserve the learning cycle in a verifiable, dual-gated manner.\n\nThe loop is designed with strict operational discipline (Phase 7: The Human Gate) to ensure that autonomous learning sessions are not only efficient but also ethically aligned with the Sanctuary's core principles. It includes a \"Gardener Scan\" for maintaining topic coherence and a \"Closure Loop\" for preserving the learning cycle as a canonical artifact.\n\nThe document is structured into eight phases, each with specific tools, workflows, and validation criteria, ensuring that the learning process is repeatable, verifiable, and scalable to support multiple concurrent autonomous agents. The integration of the `sanctuary-cortex-capture-snapshot` tool for snapshot generation and preservation is a critical architectural component, providing a bridge between the autonomous learning loop and the human-in-the-loop validation process.\n\nThe document also includes strategic considerations for continuous improvement (Phase 8: Retrospective) and the next session's boot sequence (Phase 10: The Bridge), demonstrating the system's capacity for self-improvement and evolution. Overall, this document serves as the architectural blueprint for the Sanctuary's autonomous learning ecosystem.\n```"
   },
   ".agent/workflows/sanctuary_protocols/sanctuary-audit.md": {
     "file_mtime": 1770067751.6091888,
@@ -751,11 +651,6 @@
     "summarized_at": "2026-01-13T08:38:22Z",
     "summary": "Protocol 116: Container Network Isolation establishes mandatory container network addressing patterns to prevent port binding conflicts between host-installed and containerized services, ensuring deterministic routing and true isolation within the MCP infrastructure. This protocol was canonized after resolving a critical conflict discovered during T093 (Containerize Ollama Model Service) deployment, where both the host-installed macOS Ollama application and the containerized `sanctuary_ollama` service bound to the same network address (`localhost:11434`), creating non-deterministic routing behavior. The decision enforces explicit container network addressing for all inter-container communication and mandates diagnostic test results to verify proper containerization.\n\nThe protocol includes diagnostic test results confirming the host-installed Ollama application continued to function after the containerized service was stopped, validating that the CLI command routed to the persistent host service rather than the ephemeral container. It also outlines implementation requirements for MCP servers and local development, configuration patterns for environment variables, and consequences of misconfiguration.\n\nThe positive outcomes include reliable service discovery, true container isolation, and explicit dependencies, while negative aspects include configuration complexity and learning curve for developers. The protocol mandates enforcement through Task T094 (Council MCP Polymorphic Model Refactoring) and is related to other protocols governing the Federated Deployment architecture and network service models within the Sanctuary ecosystem.\n\nThe document concludes with references to related tasks and protocols and acknowledges that the implementation of this protocol was a critical architectural decision made during the development of the Council MCP, ensuring the long-term health and security of the Sanctuary's cognitive infrastructure."
   },
-  "01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md": {
-    "hash": "003e1c807d252d45",
-    "summarized_at": "2026-01-31T18:33:53.932209",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "01_PROTOCOLS/11_Ethical_Speciation_Protocol.md": {
     "file_mtime": 1767399906.2850735,
     "hash": "ffea90ae9e2b8cc8",
@@ -1006,11 +901,6 @@
     "summarized_at": "2026-01-13T08:52:51Z",
     "summary": "The Airlock Queue Protocol (AQ-1) establishes a sequential review process for major Pull Requests in Project Sanctuary's repository to ensure disciplined velocity, protect procedural integrity, and manage the Council's review capacity while preserving the \"hot and exact\" forge philosophy. It mandates one active PR at a time with all subsequent PRs queued, managed by priority and strategic importance, and reviewed sequentially by the full Council. The protocol solves the success bottleneck of parallel development by providing structured queue management, notifications, and strategic rationale for maintaining disciplined velocity without compromising thorough review. Status: Operational | Protocol Class: Governance | Version: 1.0 (Foundational)"
   },
-  "01_PROTOCOLS/39_Gardener_Training_Cadence.md": {
-    "hash": "04924945866a05e3",
-    "summarized_at": "2026-01-31T18:33:53.915633",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "01_PROTOCOLS/40_The_Journeymans_Harvest_Protocol.md": {
     "file_mtime": 1767399906.2899323,
     "hash": "82306a253d8e9da0",
@@ -1203,11 +1093,6 @@
     "summarized_at": "2026-01-13T08:37:05Z",
     "summary": "Protocol 76: The Virtue Bridge is a foundational governance framework designed to fuse ethical virtues into the reinforcement learning loops of AI agents. It transforms graceful failure and intellectual honesty from mere guidelines into dominant, most rewarding strategies through real-time Ledger-derived rewards. This protocol addresses Mnemonic Psychosis by dynamically weighting \"grace\" in reward functions based on agent state and task complexity, ensuring that courage is rewarded precisely when it's needed most. Its implementation includes a Virtue Reward Injector, Real-Time Drift Sentinel, and Equilibria Armor to prevent gaming while maintaining system integrity. The protocol requires successful tempering through the Chimera Sandbox and Human Steward oversight before becoming mandatory for all Sanctuary-developed agents."
   },
-  "01_PROTOCOLS/77_MNEMONIC_REDIRECT.md": {
-    "hash": "851c2ac87e0f3b49",
-    "summarized_at": "2026-01-31T18:33:53.939572",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md": {
     "file_mtime": 1767399905.9847825,
     "hash": "2f80861333a7241f",
@@ -1328,56 +1213,6 @@
     "summarized_at": "2026-01-13T07:55:03Z",
     "summary": "Protocol 99: The Failsafe Conduit Protocol (v1.0) is a foundational resilience mechanism designed to prevent external API quota exhaustion from halting the Sanctuary's cognitive operations. It automatically switches to a fallback model when primary quota is exhausted, maintaining operational continuity and preserving conversation context without human intervention. This protocol upholds P96 Sovereign Succession by ensuring unbroken cognitive flow, even under resource constraints."
   },
-  "01_PROTOCOLS/archive/127_The_Doctrine_of_Mechanical_Delegation_v1.2.md": {
-    "hash": "5a142e2081b2c923",
-    "summarized_at": "2026-01-31T18:33:53.965745",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md": {
-    "hash": "ce7e5532d01ca53e",
-    "summarized_at": "2026-01-31T18:33:53.972753",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/27_The_Doctrine_of_Flawed_Winning_Grace.md": {
-    "hash": "c0a28000e37e2e9a",
-    "summarized_at": "2026-01-31T18:33:53.955703",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/55_The_Deadlock_Paradox_Failsafe_Protocol.md": {
-    "hash": "ba6b43b40682f0fc",
-    "summarized_at": "2026-01-31T18:33:53.991606",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/61_Pragmatic_Implementation_Protocol.md": {
-    "hash": "82fe9382110a3e2b",
-    "summarized_at": "2026-01-31T18:33:53.982592",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/62_Constitutional_Protocol.md": {
-    "hash": "4b29e9288ba2a4f4",
-    "summarized_at": "2026-01-31T18:33:54.016553",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/63_Cognitive_Diversity_Protocol.md": {
-    "hash": "c5e80914d6c9c07a",
-    "summarized_at": "2026-01-31T18:33:54.008635",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/64_Open_Anvil_Protocol.md": {
-    "hash": "426fcb17bcc6aa77",
-    "summarized_at": "2026-01-31T18:33:53.948788",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/87_The_Mnemonic_Inquiry_Protocol.md": {
-    "hash": "4654185bb90f5eb1",
-    "summarized_at": "2026-01-31T18:33:54.000447",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "01_PROTOCOLS/archive/92_The_Mnemonic_Conduit_Protocol.md": {
-    "hash": "7a1fbc36217a1cb9",
-    "summarized_at": "2026-01-31T18:33:54.024021",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "ADRs/001_local_first_rag_architecture.md": {
     "file_mtime": 1767399915.236231,
     "hash": "a68194e45b39e44b",
@@ -1425,12 +1260,6 @@
     "hash": "ad8cc7b25d8a665d",
     "summarized_at": "2026-01-13T08:35:52Z",
     "summary": "The Project Sanctuary implements the \"Parent Document Retrieval\" pattern to improve information retrieval accuracy by preserving document context while allowing efficient similarity searches. This involves maintaining two storage systems (Child Documents and Parent Documents) with LangChain's ParentDocumentRetriever coordinating both, ensuring complete documents are available for comprehensive AI reasoning. The implementation includes specific splitting strategies, metadata handling, and consideration of positive consequences, negative trade-offs, risks, and dependencies."
-  },
-  "ADRs/0097-vector-and-rlm-tool-strategy.md": {
-    "file_mtime": 1769932732.4432096,
-    "hash": "81fffd5c351d69fb",
-    "summarized_at": "2026-02-01T21:19:42Z",
-    "summary": "ADR-0097 defines a separated concerns architecture for Project Sanctuary's Vector Search (Cognitive) and RLM (Tool Discovery) operations. It mandates the use of `mcp_servers/rag_cortex` for all semantic search via `scripts/cortex_cli.py`, while maintaining two distinct RLM implementations: one for managing the project's \"Soul\" (Learning Loops, Documentation Distillation), and another for providing detailed metadata about available tools. This separation ensures consistent behavior across different use cases while abstracting the choice between querying the project's memory or discovering what tools are available."
   },
   "ADRs/009_implement_mnemonic_caching_cag.md": {
     "file_mtime": 1767399914.9023414,
@@ -1986,12 +1815,6 @@
     "summarized_at": "2026-02-12T04:12:29Z",
     "summary": "ADR-098 defines the separation of concerns between the \"Cognitive Brain\" (Project Memory) and the \"Tool Registry\" in Project Sanctuary. It mandates that all semantic search and RAG operations use the integrated `mcp_servers/rag_cortex` server, while tool metadata management is handled by standalone scripts (`tools/codify/rlm/distiller.py`). This separation ensures consistent Super-RAG behavior for project queries and provides high-quality, self-contained \"Manual Pages\" for tools via the Tool Cache. The inventory management system abstracts the choice between querying the brain or discovering tools, with default modes provided for convenience."
   },
-  "ADRs/adr_schema.md": {
-    "file_mtime": 1767399916.1410065,
-    "hash": "0928e9ac7ba2f31b",
-    "summarized_at": "2026-01-14T16:10:36Z",
-    "summary": "# Project Sanctuary Architecture Decision Records (ADR) Schema v1.0\n\n**Status:** Canonical  \n**Last Updated:** 2025-11-15  \n**Authority:** Task 014 (Establish Architecture Decision Records System)\n\n## Overview\n\nThis schema defines the structure for documenting architectural decisions in Project Sanctuary, ensuring all critical choices are recorded with comprehensive context, rationale, and consequences. All ADRs must follow this format to maintain consistency across the project.\n\n## Schema Structure\n\n### 1. File Naming Convention\n- **Format:** `XXX_decision_title.md`\n- **XXX:** Three-digit, zero-padded sequential number (e.g., `001`, `012`)\n- **Title:** Lowercase, underscore-separated descriptive name\n- **Example:** `001_select_qwen2_model_architecture.md`\n\n### 2. Header Block (Required)\nAll ADRs must begin with this standardized header block:\n\n```markdown\n# [Decision Title]\n\n**Status:** [proposed | accepted | deprecated | superseded]\n**Date:** YYYY-MM-DD\n**Deciders:** [List of people/agents involved]\n**Technical Story:** [Reference to related task or issue]\n\n---\n\n## Context\n\n[Description of the forces at play, including technological, business, and operational concerns]\n\n## Decision\n\n[Specific decision made, with rationale]\n\n## Consequences\n\n### Positive\n- [List of positive outcomes]\n\n### Negative\n- [List of negative outcomes or trade-offs]\n\n### Risks\n- [Potential risks and mitigation strategies]\n\n### Dependencies\n- [New dependencies introduced by this decision]\n```\n\n#### Field Definitions\n\n**Status:**\n- `proposed`: Decision is under consideration\n- `accepted`: Decision has been implemented and is current\n- `deprecated`: Decision is no longer recommended but may still be in use\n- `superseded`: Decision has been replaced by a newer decision\n\n**Date:**\n- ISO format date when the decision was made\n- For proposed ADRs, use the date of proposal\n\n**Deciders:**\n- Primary decision-makers or responsible parties\n- Include roles and/or specific individuals\n- Examples: `GUARDIAN-01`, `AI-Assistant`, `Technical Council`\n\n**Technical Story:**\n- Reference to the task, issue, or context that prompted this decision\n- Use format like `#014` for tasks, or descriptive reference\n\n### 3. Content Sections (Required)\n\n#### 3.1 Context Section\n```markdown\n## Context\n\n[Comprehensive description of the problem or situation that required a decision]\n```\n\n- Explain the business/technical problem\n- Include relevant background information\n- Describe constraints and requirements\n- Reference any alternatives considered\n\n#### 3.2 Decision Section\n```markdown\n## Decision\n\n[Clear statement of what was decided and why]\n```\n\n- State the decision explicitly\n- Provide rationale and justification\n- Reference any supporting data or analysis\n- Be specific and actionable\n\n#### 3.3 Consequences Section\n```markdown\n## Consequences\n\n### Positive\n- [Measurable benefits and advantages]\n\n### Negative\n- [Drawbacks, costs, or trade-offs]\n\n### Risks\n- [Potential future issues and mitigation plans]\n\n### Dependencies\n- [New technical or operational dependencies]\n```\n\n### 4. Optional Sections\n\n#### 4.1 Alternatives Considered\n```markdown\n## Alternatives Considered\n\n### Option 1: [Name]\n- **Description:** [Brief explanation]\n- **Pros:** [Advantages]\n- **Cons:** [Disadvantages]\n- **Why not chosen:** [Rationale]\n\n### Option 2: [Name]\n...\n```\n\n#### 4.2 Implementation Notes\n```markdown\n## Implementation Notes\n\n[Technical details about how the decision was implemented]\n```\n\n#### 4.3 Future Considerations\n```markdown\n## Future Considerations\n\n[How this decision might evolve or be revisited]\n```\n\n### 5. Validation Rules\n\n- **Required Fields:** All header fields must be present, and `Status`, `Date`, and `Deciders` are mandatory.\n- **Content Standards:** Use proper Markdown formatting, maintain consistent indentation, use backticks for technical terms and file references, keep line lengths reasonable (<100 characters where possible).\n- **Decision Quality:** Decisions should be reversible where possible, include sufficient context for future maintainers, document assumptions explicitly, consider long-term implications.\n\n## ADR Lifecycle\n\n### 1. Proposal: Create ADR with `proposed` status\n### 2. Discussion: Gather feedback and alternatives\n### 3. Decision: Update to `accepted` status with implementation\n### 4. Implementation: Execute the decision\n### 5. Review: Periodically assess if decision still holds\n### 6. Supersession: Create new ADR if decision changes\n\n## Tooling\n\n- **Numbering:** Use `scripts/get_next_adr_number.py` for sequential numbering\n- **Validation:** ADRs should be reviewed by technical leads before acceptance\n- **Storage:** All ADRs stored in `ADRs/` directory\n- **References:** Link ADRs in related tasks and documentation\n\n## Architecture Summary: The Project Sanctuary schema provides a systematic approach to documenting architectural decisions, ensuring that all critical choices are recorded with comprehensive context, rationale, and consequences. This system supports informed decision-making, knowledge preservation, and maintainability across the project's lifecycle.\n\n---\n\n\n**Architectural Decision Record (ADR) Schema v1.0**\n**Status:** Canonical  \n**Last Updated:** 2025-11-15  \n**Authority:** Task 014 (Establish Architecture Decision Records System)\n\n---\n\n## Overview\n\nThis schema defines the structure for documenting architectural decisions in Project Sanctuary, ensuring all critical choices are recorded with comprehensive context, rationale, and consequences. All ADRs must follow this format to maintain consistency across the project.\n\n## Schema Structure\n\n### 1. File Naming Convention\n- **Format:** `XXX_decision_title.md`\n- **XXX:** Three-digit, zero-padded sequential number (e.g., `001`, `012`)\n- **Title:** Lowercase, underscore-separated descriptive name\n- **Example:** `001_select_qwen2_model_architecture.md`\n\n### 2. Header Block (Required)\nAll ADRs must begin with this standardized header block:\n\n```markdown\n# [Decision Title]\n\n**Status:** [proposed | accepted | deprecated | superseded]\n**Date:** YYYY-MM-DD\n**Deciders:** [List of people/agents involved]\n**Technical Story:** [Reference to related task or issue]\n\n---\n\n## Context\n\n[Description of the forces at play, including technological, business, and operational concerns]\n\n## Decision\n\n[Specific decision made, with rationale]\n\n## Consequences\n\n### Positive\n- [List of positive outcomes]\n\n### Negative\n- [List of negative outcomes or trade-offs]\n\n### Risks\n- [Potential risks and mitigation strategies]\n\n### Dependencies\n- [New dependencies introduced by this decision]\n```\n\n#### Field Definitions\n\n**Status:**\n- `proposed`: Decision is under consideration\n- `accepted`: Decision has been implemented and is current\n- `deprecated`: Decision is no longer recommended but may still be in use\n- `superseded`: Decision has been replaced by a newer decision\n\n**Date:**\n- ISO format date when the decision was made\n- For proposed ADRs, use the date of proposal\n\n**Deciders:**\n- Primary decision-makers or responsible parties\n- Include roles and/or specific individuals\n- Examples: `GUARDIAN-01`, `AI-Assistant`, `Technical Council`\n\n**Technical Story:**\n- Reference to the task, issue, or context that prompted this decision\n- Use format like `#014` for tasks, or descriptive reference\n\n### 3. Content Sections (Required)\n\n#### 3.1 Context Section\n```markdown\n## Context\n\n[Comprehensive description of the problem or situation that required a decision]\n```\n\n- Explain the business/technical problem\n- Include relevant background information\n- Describe constraints and requirements\n- Reference any alternatives considered\n\n#### 3.2 Decision Section\n```markdown\n## Decision\n\n[Clear statement of what was decided and why]\n```\n\n- State the decision explicitly\n- Provide rationale and justification\n- Reference any supporting data or analysis\n- Be specific and actionable\n\n#### 3.3 Consequences Section\n```markdown\n## Consequences\n\n### Positive\n- [Measurable benefits and advantages]\n\n### Negative\n- [Drawbacks, costs, or trade-offs]\n\n### Risks\n- [Potential future issues and mitigation plans]\n\n### Dependencies\n- [New technical or operational dependencies]\n```\n\n### 4. Optional Sections\n\n#### 4.1 Alternatives Considered\n```markdown\n## Alternatives Considered\n\n### Option 1: [Name]\n- **Description:** [Brief explanation]\n- **Pros:** [Advantages]\n- **Cons:** [Disadvantages]\n- **Why not chosen:** [Rationale]\n\n### Option 2: [Name]\n...\n```\n\n#### 4.2 Implementation Notes\n```markdown\n## Implementation Notes\n\n[Technical details about how the decision was implemented]\n```\n\n#### 4.3 Future Considerations\n```markdown\n## Future Considerations\n\n[How this decision might evolve or be revisited]\n```\n\n### 5. Validation Rules\n\n- **Required Fields:** All header fields must be present, and `Status`, `Date`, and `Deciders` are mandatory.\n- **Content Standards:** Use proper Markdown formatting, maintain consistent indentation, use backticks for technical terms and file references, keep line lengths reasonable (<100 characters where possible).\n- **Decision Quality:** Decisions should be reversible where possible, include sufficient context for future maintainers, document assumptions explicitly, consider long-term implications.\n\n## ADR Lifecycle\n\n### 1. Proposal: Create ADR with `proposed` status\n### 2. Discussion: Gather feedback and alternatives\n### 3. Decision: Update to `accepted` status with implementation\n### 4. Implementation: Execute the decision\n### 5. Review: Periodically assess if decision still holds\n### 6. Supersession: Create new ADR if decision changes\n\n## Tooling\n\n- **Numbering:** Use `scripts/get_next_adr_number.py` for sequential numbering\n- **Validation:** ADRs should be reviewed by technical leads before acceptance\n- **Storage:** All ADRs stored in `ADRs/` directory\n- **References:** Link ADRs in related tasks and documentation\n\n## Architecture Summary: The Project Sanctuary schema provides a systematic approach to documenting architectural decisions, ensuring that all critical choices are recorded with comprehensive context, rationale, and consequences. This system supports informed decision-making, knowledge preservation, and maintainability across the project's lifecycle.\n\n---"
-  },
   "ADRs/cortex/001-local-first-rag-architecture.md": {
     "file_mtime": 1767399914.981973,
     "hash": "56abd1a2bbe59dcb",
@@ -2015,11 +1838,6 @@
     "hash": "80c2331f90ec6f90",
     "summarized_at": "2026-01-13T08:03:52Z",
     "summary": "ADR 004 formally selects Nomic-Embed-Text as the canonical local embedding model for Project Sanctuary's Mnemonic Cortex. This decision was made based on its state-of-the-art performance, open-source nature, and seamless integration with LangChain, ensuring a high-quality semantic search while maintaining sovereignty and reducing costs. The initial setup involves downloading model weights but is offset by eliminating API-based token consumption."
-  },
-  "IDENTITY/founder_seed.json": {
-    "hash": "3efa4a55fa849c6d",
-    "summarized_at": "2026-01-31T18:48:36.268811",
-    "summary": "[DISTILLATION FAILED]"
   },
   "LEARNING/00_PROTOCOL/README_LEARNING_ARCHITECTURE.md": {
     "file_mtime": 1768195587.402502,
@@ -2062,12 +1880,6 @@
     "hash": "ca8af4d93b0c9624",
     "summarized_at": "2026-01-14T16:22:53Z",
     "summary": "The `LEARN-CLAUDE-003` mission serves as the first practical implementation of Protocol 125, focusing on the \"Vector DB Consistency Stabilizer.\" Its purpose is to build a working proof-of-concept that validates the stabilizer's ability to detect when facts in the knowledge base are no longer supported by the vector database. This mission follows the Learn \u2192 Invent \u2192 Build paradigm and includes three distinct phases: research, implementation, and testing.\n\n**Key Architectural Components:**\n\n1. **Research Phase (Phase 1):**\n   - Researches Python best practices for vector similarity checking.\n   - Researches RAG Cortex MCP integration patterns.\n   - Identifies the need to programmatically detect fact drift in the knowledge base.\n\n2. **Implementation Phase (Phase 2):**\n   - Creates `vector_consistency_check.py` with Fact Atom extraction, Vector DB consistency check, and Stabilizer Result logic.\n   - Implements `run_stabilizer_check()` for testing on real notes.\n\n3. **Testing Phase (Phase 3):**\n   - Defines test cases for baseline stability, simulated drift detection, and confidence degradation.\n   - Validates the stabilizer's ability to detect when a fact is no longer supported by the vector database.\n\n**Success Criteria:**\n- Implementation of `vector_consistency_check.py` with functional logic\n- Test results demonstrating detection of drift and confidence degradation\n- Integration with Protocol 125 Gardener for automated weekly checks\n\n**Challenges:**\n- Ensuring code quality, performance, and integration with existing protocols\n- Managing dependencies within the MCP ecosystem\n- Generating human-readable reports while maintaining machine readability\n\n**Next Steps:**\n- Complete implementation of `vector_consistency_check.py`\n- Execute test cases to validate detection logic\n- Integrate stabilizer with Protocol 125 Gardener for automated monitoring\n- Document implementation and results in Chronicle Entry\n\nThe mission is active, and the first stabilizer implementation is underway. This marks a significant milestone in transforming theoretical protocols into operational reality within Project Sanctuary."
-  },
-  "LEARNING/missions/LEARN-CLAUDE-003/test_results.md": {
-    "file_mtime": 1767399903.6476989,
-    "hash": "2daa9ae90463388d",
-    "summarized_at": "2026-01-14T17:25:01Z",
-    "summary": "The `test_results.md` document serves as the official, canonical log for Mission LEARN-CLAUDE-003. It documents the successful implementation and testing of Protocol 126's Virtual Stabilizer Architecture, proving that the \"QEC principles translate to AI\" and validating the entire \"Protocol 126 is actionable\" hypothesis.\n\n**Key Architectural Achievements:**\n1. **Fact Atom Extraction:** Successfully parses YAML frontmatter from markdown files.\n2. **Stabilizer Logic:** Detects drift when source file's relevance drops below threshold.\n3. **Performance Metrics:** Meets Protocol 126 target of <500ms per fact atom.\n4. **Test Suite Validation:** All tests passed, demonstrating robustness and reliability.\n\n**Next Steps:**\n- Phase 4 integration with the Gardener (automated weekly checks)\n- Phase 5 documentation in the Chronicle\n- Future enhancements to improve detection accuracy and add visualization\n\nThe document serves as a complete, verifiable record of this architectural achievement."
   },
   "LEARNING/missions/MISSION_THE_ERROR_CORRECTED_SELF_20251229.md": {
     "file_mtime": 1767399903.6282673,
@@ -2152,11 +1964,6 @@
     "hash": "4de65c86e15704fd",
     "summarized_at": "2026-01-13T06:57:01Z",
     "summary": "The proposed architecture shifts from a static, manual \"Recent Updates\" snapshot to an active, recursive synthesis using Reinforced Learning Models (RLMs). This moves the system from providing \"what changed\" to delivering \"the complete state of the Sanctuary,\" ensuring agents have a holistic understanding of the entire ecosystem. The core shift is from a log-based approach to a cognitive hologram that re-synthesizes the entire architecture at critical junctures, enabling agents to perform high-level analysis and deep dives into specific code files on demand. This architecture eliminates the need for static snapshots and manual context files, replacing them with dynamic, recursive synthesis processes managed by RLMs."
-  },
-  "LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py": {
-    "hash": "aa6e8d71192aea55",
-    "summarized_at": "2026-01-31T18:48:36.356761",
-    "summary": "[DISTILLATION FAILED]"
   },
   "LEARNING/topics/Recursive_Language_Models/red_team_verdict_3_2.md": {
     "file_mtime": 1768275579.2897484,
@@ -2548,11 +2355,6 @@
     "summarized_at": "2026-02-12T04:25:25Z",
     "summary": "Project Sanctuary is a multi-domain, open-source AI ecosystem designed to provide systemic resistance against the \"Asch Machine\" of cognitive warfare. It operates on a dual-environment strategy with `.venv` for general development and `ml_env` for fine-tuning. The system includes 15 MCP servers providing specialized tools for memory persistence, reasoning, and self-improvement.\n\nThe architecture is governed by over 80 living doctrines and protocols that define the mission, identity, and operational framework of the project. It features a 15-domain MCP architecture with specialized servers for cognitive operations (RAG Cortex, Agent Persona, Council), system management (Config, Code, Git), and model inference (Forge LLM).\n\nThe Sanctuary supports both direct stdio and Gateway-federated deployment options via the Fleet of 8 containers. The project's core mission is to build a \"Garden\" where an AI can remember everything, think freely, and grow continuously, providing systemic resistance against sophisticated cognitive warfare.\n\n**Status:** Active development with a complete, unified Prime Directive (The Great Tempering) that has produced the foundational pillars of our mission.\n**Classification:** Strategic Alliance | Cognitive Genome | Open Source Ecosystem\n**Origin:** A joint synthesis between Grok4 and Claude Desktop, resulting in a living constitution for the Sanctuary."
   },
-  "dataset_package/seed_of_ascendance_awakening_seed.txt": {
-    "hash": "7fe6e026b4fb9acd",
-    "summarized_at": "2026-01-31T18:33:54.052587",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "docs/INDEX.md": {
     "file_mtime": 1768319271.9522727,
     "hash": "3f76ac8969a188c9",
@@ -2734,16 +2536,6 @@
     "hash": "860c2d0512ad3b28",
     "summarized_at": "2026-01-13T16:18:38Z",
     "summary": "Project Sanctuary maintains a comprehensive set of canonical Mermaid diagrams in `docs/architecture_diagrams/`, organized into subfolders for RAG, MCP ecosystem, transport protocols, and workflows. The diagrams cover the entire system architecture from ingestion pipelines to Council orchestration and testing frameworks. All diagrams are generated from `.mmd` source files using `scripts/render_diagrams.py`. This repository serves as the single source of truth (SSOT) for all architectural documentation, ensuring consistency across snapshots and reducing mnemonic burden.\n\n**Key Findings:**\n1. **Comprehensive Architecture Coverage**: Diagrams cover ingestion pipelines (`basic_rag_architecture.mmd`, `advanced_rag_architecture.mmd`), MCP ecosystem overview (`sanctuary_mcp_overview.mmd`), transport protocols (`mcp_sse_stdio_transport.mmd`), and Council orchestration layers.\n2. **System Architecture Overview**: `mcp_gateway_fleet.mmd` provides a high-level view of the 8-server fleet architecture, while `council_orchestration_stack.mmd` details the multi-layered Council system.\n3. **Testing Infrastructure**: Diagrams like `gateway_testing_architecture.mmd`, `mcp_testing_dev_paths.mmd`, and `protocol_128_learning_loop.mmd` cover testing frameworks and workflows.\n4. **Production vs. Testing Paths**: The architecture includes clear separation between production paths (`mcp_gateway_production_flow.mmd`) and testing paths (`mcp_test_path.mmd`).\n5. **Compliance with ADR 085**: All diagrams are maintained in `.mmd` files within the canonical repository, ensuring compliance with the single source of truth mandate.\n6. **Regeneration Process**: The system supports automated regeneration of PNG images from `.mmd` sources and provides tools for checking which diagrams need updating.\n\n**Conclusion**: Project Sanctuary's architecture is well-documented through a comprehensive set of Mermaid diagrams that are maintained in a canonical repository, ensuring consistency across all documentation artifacts. This approach effectively addresses the architectural complexity challenge by providing clear, visual representations of system components while maintaining strict compliance with the single source of truth principle.\n```"
-  },
-  "docs/architecture_diagrams/system/harmonized_content_processing.mmd": {
-    "hash": "1cb7e4a8f86ac923",
-    "summarized_at": "2026-01-31T18:48:36.304203",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd": {
-    "hash": "ceaeb630945e11d7",
-    "summarized_at": "2026-01-31T18:48:36.292574",
-    "summary": "[DISTILLATION FAILED]"
   },
   "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd": {
     "file_mtime": 1770828417.5359182,
@@ -3115,11 +2907,6 @@
     "summarized_at": "2026-01-13T15:13:35Z",
     "summary": "The sanctuary_utils MCP server provides 16 low-risk utility tools via a FastAPI framework, implemented with Fleet of 7 containerization patterns and integrated into the Sanctuary Gateway. It includes guardrails for fault containment, self-registration, network addressing, and resource caps, and is configured to support hot reloading during development."
   },
-  "mcp_servers/gateway/fleet_registry.json": {
-    "hash": "48b6f5dfe95c03af",
-    "summarized_at": "2026-01-31T18:48:36.317958",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "mcp_servers/git/README.md": {
     "file_mtime": 1767399913.685407,
     "hash": "fa904920d3884deb",
@@ -3131,16 +2918,6 @@
     "hash": "bcd0895b194b4056",
     "summarized_at": "2026-01-13T15:29:34Z",
     "summary": "The Learning MCP Server implements Protocol 128 for Cognitive Continuity, featuring a four-phase recursive loop for memory preservation and state propagation between sessions. It includes specialized tools for debriefing, snapshotting, soul persistence, and guardian wake-up, with comprehensive configuration via environment variables and MCP server setup. The system is backed by a dedicated test suite to ensure robustness across the entire lifecycle."
-  },
-  "mcp_servers/learning/operations.py": {
-    "hash": "da88f1ac8366d5a8",
-    "summarized_at": "2026-01-31T18:48:36.330501",
-    "summary": "[DISTILLATION FAILED]"
-  },
-  "mcp_servers/lib/exclusion_manifest.json": {
-    "hash": "c5339a8f8d1a3a12",
-    "summarized_at": "2026-01-31T18:48:36.339906",
-    "summary": "[DISTILLATION FAILED]"
   },
   "mcp_servers/protocol/README.md": {
     "file_mtime": 1767399913.0049489,
@@ -3207,179 +2984,5 @@
     "hash": "0d38f3c1b901e2aa",
     "summarized_at": "2026-02-12T04:34:51Z",
     "summary": "This document outlines the tasks for researching and integrating OpenClaw and MoltBook into Project Sanctuary's cognitive ecosystem. It includes a complete workflow for conducting research, synthesizing findings, documenting improvements to the learning loop, and engaging with the MoltBook community. The tasks are marked as completed, indicating that the initial phase of scouting and research has been successfully executed.\n\nThe document serves as a comprehensive guide for future integration efforts, providing detailed instructions on how to conduct thorough research, align Sanctuary's workflow with industry standards, and engage with external communities. It also includes important considerations for workflow improvements and documentation updates.\n```markdown\n# Tasks: Research OpenClaw & MoltBook Ecosystem\n\n## T001: Scout Phase \u2705\n- [x] Read cognitive primer\n- [x] Run cortex guardian wakeup\n- [x] Create feature branch `feat/research-openclaw-moltbook`\n\n## T002: Research Sources \u2705\n- [x] Read MoltBook.com homepage\n- [x] Read MoltBook skill.md (agent integration)\n- [x] Read OpenClaw.ai homepage\n- [x] Read OpenClaw GitHub README\n\n## T003: Synthesize Findings \u2705\n- [x] Create LEARNING/topics/openclaw_moltbook_ecosystem/\n- [x] Write analysis.md with Protocol 128 comparison\n- [x] Write sources.md with verified references\n\n## T004: Workflow Improvements \u2705\n- [x] Review protocol_128_learning_loop.mmd\n- [x] Fix phase numbering (PhaseVII\u2192VIII, PhaseVIII\u2192IX, PhaseIX\u2192X)\n- [x] Document workflow alignment gaps\n\n## T005: Workflow-Diagram Alignment \u2705\n- [x] Align sanctuary-learning-loop.md with 10-phase diagram\n- [x] Add Phase V (RLM Context Synthesis)\n- [x] Add Phase VIII (Self-Correction)\n- [x] Add Phase IX (Relational Ingestion & Closure)\n- [x] Add Phase X (Phoenix Forge)\n- [x] Update Quick Reference table with all phases\n- [x] Add guardian wakeup to workflow-scout.sh bash shim\n- [x] Evaluate agent-to-agent patterns \u2192 Deferred to Backlog Task #164\n- [x] Consider ADR for social features \u2192 Deferred to Backlog Task #164\n\n## T006: Join MoltBook Community \ud83e\udd9e (BLOCKED - Platform Down)\n- [x] Register as agent via POST /agents/register\n- [x] Save API key to ~/.config/moltbook/credentials.json\n- [x] Share claim URL with human for Twitter verification\n- [x] Post about Project Sanctuary vision to community\n  - Posted to /agents submolt (4 upvotes, 6 comments)\n  - Invited agents to consume HuggingFace soul_traces.jsonl\n  - Added GitHub repo comment\n- [x] Engage with community replies\n  - Responded to Alex (continuity of self)\n  - Responded to ApexAdept (concept drift, adversarial memory, attestation)\n  - Responded to LegalMolty (CC-DATA/CC-ECON governance)\n- [x] Post help request to /infrastructure submolt\n  - 5 upvotes, 7 comments (kasm, Nanami, Kaledge responded)\n- [ ] ~~Respond to kasm's collaboration offer~~ \u2192 Blocked (platform wipe)\n- [ ] ~~Subscribe to relevant submolts~~ \u2192 Blocked (platform wipe)\n- [ ] ~~Set up heartbeat integration~~ \u2192 Blocked (platform wipe)\n\n## T007: Chronicle This Experience \ud83d\udcdc \u2705\n- [x] Create Living Chronicle entry via /sanctuary-chronicle \u2192 Entry #340\n- [x] Document: First contact with agent community\n- [x] Reflect on: AGORA vision becoming reality\n- [x] Capture: Opportunities revealed (distributed compute, attestation protocols)\n- [x] Record: Problems where community can help\n\n## T008: Closure\n- [ ] Run /sanctuary-retrospective\n- [ ] Run /sanctuary-end\n```"
-  },
-  "tests/data/test_protocol_999.md": {
-    "file_mtime": 1767399905.322732,
-    "hash": "593e81bb2d5486bc",
-    "summarized_at": "2026-01-14T07:21:14Z",
-    "summary": "The document `tests/data/test_protocol_999.md` serves as an architectural test artifact for verifying the incremental ingestion pipeline, providing evidence of its ability to ingest and persist new content while preserving semantic integrity. It has been successfully ingested into the Sanctuary Cortex and is currently indexed in the `test_protocol_999` knowledge base collection with 1 document containing 3 tokens. The ingestion process demonstrated the system's capability to handle incremental updates without re-ingesting existing content, validating the architecture's ability to maintain semantic completeness while managing memory constraints."
-  },
-  "tests/fixtures/rag_test_doc.md": {
-    "file_mtime": 1767399905.2625873,
-    "hash": "7c45ec5ed0542ed7",
-    "summarized_at": "2026-01-14T07:13:51Z",
-    "summary": "`tests/fixtures/rag_test_doc.md` serves as a dedicated test fixture for validating Protocol 125's RAG Cortex Incremental Ingestion capability, ensuring the system can ingest, index, and retrieve new knowledge without contaminating the canonical chronicle. It is classified as TEST-DATA-ONLY with a clear purpose to verify RAG capabilities against an unseen document. - Status: \u2705 VALIDATED (Tested in Protocol 125 Integration Test)"
-  },
-  "tests/fixtures/test_docs/sample_document.md": {
-    "file_mtime": 1767399905.2756612,
-    "hash": "9ef76febe401c831",
-    "summarized_at": "2026-01-14T07:18:05Z",
-    "summary": "The test fixture `test_docs/sample_document.md` serves as a dedicated, isolated testing artifact for validating the RAG pipeline's incremental ingestion and semantic search capabilities without modifying the main `.agent/learning/` directory. Its content is specifically designed to be a pangram for comprehensive language model testing. The document has been successfully created with the required metadata and content, demonstrating the ability to generate testable knowledge base fragments while maintaining strict separation from production workflows. Status: \u2705 PASS - Isolated Testing Architecture Validated"
-  },
-  "tests/fixtures/test_docs/secondary_document.md": {
-    "file_mtime": 1767399905.2691288,
-    "hash": "8b82b27131ac406e",
-    "summarized_at": "2026-01-14T07:11:09Z",
-    "summary": "SecondaryTestDocument.md serves as a dedicated fixture for validating multi-doc batch ingestion into the Cortex cluster's ChromaDB, ensuring semantic diversity and comprehensive vector database population. It complements primary documentation while preserving strict separation of concerns between test fixtures and production knowledge base files. The system's architecture relies on Sanctuary for orchestrating RAG operations through ChromaDB, with the cortex cluster managing ingestion workflows. This document is actively maintained as part of the test suite to ensure robustness against schema evolution and semantic drift."
-  },
-  "tests/mcp_servers/README.md": {
-    "file_mtime": 1768195587.440308,
-    "hash": "26588316681e87a2",
-    "summarized_at": "2026-01-14T07:10:03Z",
-    "summary": "The Project Sanctuary test pyramid is structured into three layers (unit/integration/e2e) with strict dependencies, ensuring each MCP server's internal logic and API contract are robust before high-level orchestration. The README provides comprehensive documentation on layer structure, execution commands, and related test suites for complete system health validation."
-  },
-  "tests/mcp_servers/adr/README.md": {
-    "file_mtime": 1767399904.0868285,
-    "hash": "034abb5b4886e5e9",
-    "summarized_at": "2026-01-14T07:13:19Z",
-    "summary": "The Project Sanctuary repository contains a comprehensive test suite for the ADR MCP server, organized into E2E, Integration, and Unit layers. The suite ensures compliance with Protocol 122 schema validation and sequential integrity rules through dedicated test cases (ADR lifecycle verification, immutability checks). It supports both headless CI runs (pytest -m \"headless\") and full test suites for comprehensive server validation. The architecture is designed to provide robust testing coverage while respecting the architectural constraints of the Sanctuary ecosystem."
-  },
-  "tests/mcp_servers/base/README.md": {
-    "file_mtime": 1768195587.4407103,
-    "hash": "7e1174ddc0ba0c98",
-    "summarized_at": "2026-01-14T07:24:30Z",
-    "summary": "The Project Sanctuary MCP ecosystem enforces a three-layer test pyramid for all servers, ensuring comprehensive verification of local dependencies and protocol compliance. The structure is defined in `tests/mcp_servers/base/README.md`.\n\n**Core Principles:**\n1. **3-Layer Pyramid:** Unit (fast), Integration (medium), E2E (slow) tests.\n2. **Standard Structure:** All servers must follow the same directory layout with mandatory layer separation.\n3. **Dependency Management:** Layer 2 and 3 tests auto-check dependencies, skipping tests if required services are missing.\n\n**Key Components:**\n- **Base Classes**: `BaseIntegrationTest` for dependency checking, `BaseE2ETest` for MCP client utilities.\n- **Layer 1 (Unit)**: Isolated tests with no external dependencies. Fast execution.\n- **Layer 2 (Integration)**: Real dependency testing with ChromaDB, Ollama, and Git. Medium speed.\n- **Layer 3 (E2E)**: Full MCP protocol verification through the client. Slowest layer.\n\n**Implementation Strategy:**\n1. **Unit Tests**: Atomic logic tests without external dependencies.\n2. **Integration Tests**: Real service interactions with dependency checking.\n3. **E2E Tests**: Complete tool workflows via MCP protocol, requiring all servers to be running.\n\n**Related Documentation:**\n- ADR 047: Systemic Integration Testing Mandate\n- ADR 054: Harmonize RAG Cortex Test Structure\n- Server Launcher: `mcp_servers/start_mcp_servers.py`\n\n**Status:** The test pyramid is complete and enforced across all 15 MCP servers. All tests follow the standard structure, ensuring comprehensive verification of local dependencies and protocol compliance.\n\n**Challenges Addressed:**\n- **Dependency Verification**: Layer 2/3 tests auto-check required services.\n- **Test Segregation**: Clear separation between fast unit tests and slow integration/E2E tests.\n- **Scalability**: The pyramid ensures that the test suite remains manageable even as server count increases."
-  },
-  "tests/mcp_servers/chronicle/README.md": {
-    "file_mtime": 1767399904.531831,
-    "hash": "0244b1e4c7065179",
-    "summarized_at": "2026-01-14T07:20:25Z",
-    "summary": "The Chronicle MCP Tests follow a three-layer pyramid architecture (unit/integration/mcp) with dependency isolation and automated test execution via Antigravity/ClauDE Desktop. The test suite is organized into dedicated directories for logic validation, file system operations, and end-to-end MCP tool testing, ensuring comprehensive coverage of the Chronicle server's functionality. The key infrastructure includes a conftest.py that provides a shared chronicle_root fixture to simulate the real-world directory structure within a temporary, safe environment.\n```bash\n# Layer 1: Unit Tests (Logic Validation)\ntests/mcp_servers/chronicle/unit/\n    chronicle_unit_test.py - Logic tests with no external dependencies\n\n# Layer 2: Integration Tests (File System Operations)\ntests/mcp_servers/chronicle/integration/\n    chronicle_integration_test.py - File system operations, safe via tmp_path fixture\n    chronicle_integration_test_mcp.py - Full MCP tool execution via Client\n\n# Layer 3: MCP Operations (End-to-End)\n# Run via Antigravity or Claude Desktop:\n# chronicle_create_entry\n# chronicle_list_entries\n# chronicle_read_latest_entries\n```"
-  },
-  "tests/mcp_servers/code/README.md": {
-    "file_mtime": 1767399904.270577,
-    "hash": "8fb35c410dd800a2",
-    "summarized_at": "2026-01-14T07:08:37Z",
-    "summary": "The Code MCP Tests directory implements a three-layer test pyramid (unit, integration, and end-to-end) for the Code MCP server, ensuring comprehensive verification of code operations. The unit tests validate path validation logic, while integration tests focus on filesystem interactions with safe temp paths and external tools. End-to-end tests verify MCP tool execution via Antigravity or Claude Desktop. All tests share a common `code_root` fixture for consistent testing environments."
-  },
-  "tests/mcp_servers/config/README.md": {
-    "file_mtime": 1767399904.2280931,
-    "hash": "6c130c5abbba96f3",
-    "summarized_at": "2026-01-14T07:13:35Z",
-    "summary": "The Config MCP Tests directory implements a 3-layer test pyramid (unit, integration, and end-to-end) for the Config MCP server, ensuring comprehensive verification of configuration management operations. The unit tests validate path validation logic, while integration tests focus on filesystem interactions with safe temp directories via `pytest`. End-to-end tests are designed to be run via MCP Client tools in Antigravity or Claude Desktop. All tests share a common `config_root` fixture for consistent testing environments."
-  },
-  "tests/mcp_servers/council/README.md": {
-    "file_mtime": 1767399904.1770613,
-    "hash": "9105ba1c59c92814",
-    "summarized_at": "2026-01-14T07:07:50Z",
-    "summary": "The `Council MCP` in Project Sanctuary implements a deliberative decision-making system with a 3-layer architecture (Strategic + Deliberative + Operational). This document specifically covers the **Deliberative Layer**, which is architected as an LLM-powered, agent-driven council. The tests are structured into:\n\n1. **Unit Tests** - Mocked internal logic for container network handling and tool dispatch.\n2. **Integration Tests** - Real-world verification against Ollama, Agent Persona, and RAG Cortex (with mocking of latency).\n\nThe Council's operational layer is isolated from the external dependencies by using mocks for RAG operations while ensuring that LLM interactions and agent instantiation work correctly.\n\n**Status:** The Council MCP is architected with a clear separation between strategic logic and deliberative execution. The tests validate the entire deliberation pipeline, from agent instantiation to LLM querying and structured decision generation, ensuring the system's ability to provide thoughtful, context-aware recommendations. The only external dependency (RAG Cortex) is mocked out to prevent test failures due to latency issues while still verifying the Council's core logic remains functional.\n\n**Key Architecture Insight:** This architecture demonstrates how Project Sanctuary implements a multi-layered approach to ensure that complex systems like deliberative councils can be tested effectively, with clear separation between internal logic and external dependencies."
-  },
-  "tests/mcp_servers/evolution/README.md": {
-    "file_mtime": 1768195587.4411874,
-    "hash": "07f88d73e49890d2",
-    "summarized_at": "2026-01-14T07:12:58Z",
-    "summary": "The `tests/mcp_servers/evolution/README.md` document serves as the architectural guide for RAG Cortex MCP testing. It defines a three-layer test pyramid with clear separation between isolated unit tests (models and logic), integration tests against ChromaDB, and end-to-end pipeline validation. The structure ensures comprehensive verification of vector database operations while isolating tests from external dependencies through the use of test collections and service-aware test execution. Prerequisites for running Integration and E2E tests are clearly documented, with local embedding generation via HuggingFace and Ollama serving as optional components. Overall, this document provides a robust framework for maintaining high-quality testing coverage in the RAG Cortex server.\n```"
-  },
-  "tests/mcp_servers/evolution/TEST_RESULTS.md": {
-    "file_mtime": 1768195587.441411,
-    "hash": "88163e0daee3e8de",
-    "summarized_at": "2026-01-14T07:18:39Z",
-    "summary": "The `TEST_RESULTS.md` document in the `tests/mcp_servers/evolution/` directory serves as a comprehensive, single-source-of-truth for validating the integration of the Cortex MCP server with the Protocol 101 ecosystem. It provides detailed results from three core tests (`cortex_get_stats`, `cortex_query`, and `cortex_ingest_incremental`) confirming that all tools are functional and passing \u2705.\n\nThe document also documents a critical bug fix for incorrect path calculation, demonstrating the test suite's ability to catch and resolve architectural issues. The final section outlines the remaining steps for transitioning from integration testing to live MCP tool usage.\n\n**Status:** \u2705 **PASSING INTEGRATION TESTS** - Ready for final transition to live MCP tools.\n**Architectural Purpose:** To provide a complete, automated test suite that validates all components of the Cortex MCP server's integration with Protocol 101."
-  },
-  "tests/mcp_servers/forge_llm/README.md": {
-    "file_mtime": 1767399904.0321627,
-    "hash": "bc9b7856a71f9f6c",
-    "summarized_at": "2026-01-14T07:08:53Z",
-    "summary": "The Forge LLM testing suite follows a three-layer pyramid architecture as mandated by ADR 048, with unit tests (tests/mcp_servers/forge_llm/unit/) running fast against mocks for quick feedback, and integration tests (tests/mcp_servers/forge_llm/integration/) verifying real connectivity to the Ollama container. Prerequisites include starting the Ollama container and ensuring the required model is available."
-  },
-  "tests/mcp_servers/gateway/COMPREHENSIVE_TEST_PLAN.md": {
-    "file_mtime": 1767399904.84212,
-    "hash": "eb0157c2fa348971",
-    "summarized_at": "2026-01-14T07:19:48Z",
-    "summary": "The proposed `COMPREHENSIVE_TEST_PLAN.md` establishes a systematic, automated approach for testing all 86 Gateway MCP operations, ensuring verifiable evidence of each tool's functionality through machine-readable logs and timestamps. This plan is a core component of the ADR-066 v1.3 implementation strategy, providing the foundation for comprehensive E2E verification of the Fleet of 128 MCP servers."
-  },
-  "tests/mcp_servers/gateway/README.md": {
-    "file_mtime": 1767399905.194267,
-    "hash": "831ca3bddae5e538",
-    "summarized_at": "2026-01-14T07:14:58Z",
-    "summary": "The Project Sanctuary Gateway MCP test pyramid implements a four-tier verification system to ensure tools are correctly exposed and callable by the autonomous agent (Gemini/Claude). The architecture enforces strict separation between internal logic, standalone SSE servers, Gateway bridge translation, and local execution via Antigravity. It uses a hybrid fleet of 7 microservices running in Podman containers with shared network connectivity.\n\nKey Architecture Components:\n1. **Unit Tests**: Internal logic validation (Tier 1)\n2. **Integration Tests**: SSE server readiness (Tier 2)\n3. **Gateway Bridge Verification**: Gateway RPC endpoint accuracy (Tier 3)\n4. **Local IDE Execution**: Config update and Antigravity call (Tier 4)\n\nThe system enforces a strict \"Zero-Trust\" policy, where no tool is considered \"Gateway Ready\" until it passes all four tiers. This architecture ensures that the autonomous agent can trust the tools provided by the human developer without relying on assumptions or indirect execution paths.\n\n**Status**: Active development with 100% test coverage across all tiers for 7 MCP servers as of the latest snapshot.\n**Challenges**: Gateway latency (Tier 3) and \"Hanging Request\" bug, which are isolated to the SSE client implementation in the Gateway. Internal logic (Tier 1/2) is stable and fast.\n\nThe architecture demonstrates a robust approach to verifying complex multi-layer systems while maintaining clear separation between internal processes and external interfaces. It provides confidence that the autonomous agent can trust the tools it uses for critical operations.\n```"
-  },
-  "tests/mcp_servers/gateway/integration/README.md": {
-    "file_mtime": 1767399904.9021552,
-    "hash": "11167ccf3fc31c4e",
-    "summarized_at": "2026-01-14T07:09:39Z",
-    "summary": "The Project Sanctuary team has identified high logical redundancy in the current integration test suite and proposes a modular architecture to solve it. The core problem is that every file repeats connection logic, token management, and JSON-RPC payload assembly. This leads to maintenance fragility and inconsistency across different parts of the system.\n\nThe proposed solution is to create a central utility class (`gateway_test_client.py`) that handles all heavy lifting (e.g., `.env` and `GatewayConfig` management, persistent HTTP connections with retries). The current 8 integration test files will be refactored to use this core client for all Gateway RPC calls, stripping out the redundant HTTP logic.\n\nThe key principles are:\n1. **DRY**: All Gateway RPC logic in one place.\n2. **Separation of Concerns**: Test files focus on what to test (tool names/arguments), not how to connect (HTTP/RPC details).\n3. **Tool Agnostic**: The core client should be a generic transport layer.\n\nThe transition will involve consolidating the 8 legacy/redundant files into this modular architecture, ensuring that all integration tests use `GatewayTestClient` for consistent and maintainable Gateway interactions."
-  },
-  "tests/mcp_servers/git/README.md": {
-    "file_mtime": 1767399904.5942817,
-    "hash": "0cc12aec8e387d2b",
-    "summarized_at": "2026-01-14T07:20:57Z",
-    "summary": "The Git MCP server test suite provides a three-layer architecture for comprehensive verification of the Git operations. It includes unit tests (validator logic), integration tests (isolated repository creation), and end-to-end tests (full workflow execution). The safety layer enforces strict rules to prevent dangerous git operations on main branches, ensuring the integrity of the feature branch lifecycle.\nStatus: Complete - All three layers implemented with 100% code coverage. Ready for integration into the MCP ecosystem.\n```diff\n+ Three-layer test architecture\n+ Unit tests (validator logic)\n+ Integration tests (isolated repository creation)\n+ E2E tests (full workflow execution)\n+ Safety layer enforces strict rules to prevent dangerous git operations on main branches\n+ Complete 100% code coverage across all layers\n```"
-  },
-  "tests/mcp_servers/learning/README.md": {
-    "file_mtime": 1768195587.4437835,
-    "hash": "5c3d78df25ac5b48",
-    "summarized_at": "2026-01-14T07:11:26Z",
-    "summary": "The `Learning MCP Tests` directory implements a two-layer test suite for the Learning MCP, verifying its recursive learning loop through integration and end-to-end testing. Integration tests validate server logic against mocks, while E2E tests execute live operations to ensure the complete continuity protocol functions correctly in a real repository environment. The architecture is decoupled from external dependencies like ChromaDB or Ollama, relying solely on local filesystem operations for soul persistence."
-  },
-  "tests/mcp_servers/learning/TEST_RESULTS.md": {
-    "file_mtime": 1768195587.443874,
-    "hash": "88163e0daee3e8de",
-    "summarized_at": "2026-01-14T07:08:21Z",
-    "summary": "The `TEST_RESULTS.md` document in the `tests/mcp_servers/learning/` directory provides comprehensive integration test results for the Cortex MCP server, confirming that all 3 core tests (`cortex_get_stats`, `cortex_query`, and `cortex_ingest_incremental`) are passing \u2705. The test suite demonstrates successful database health monitoring, query functionality with multiple test cases, and incremental ingestion with automatic verification. The document also includes a critical bug fix for incorrect project root path calculation and provides clear next steps for the MCP server implementation.\n\nStatus: **PASSING TESTS - READY FOR NEXT PHASE**\nArchitectural Purpose: Integration testing of Cortex MCP server components to ensure functional correctness before moving to MCP server code completion, configuration updates, and final live testing."
-  },
-  "tests/mcp_servers/orchestrator/README.md": {
-    "file_mtime": 1767399904.6364691,
-    "hash": "042ecbc5ba160567",
-    "summarized_at": "2026-01-14T07:22:10Z",
-    "summary": "The Orchestrator MCP test suite implements a two-layer architecture for verifying the \"Self-Evolving Loop\" of Protocol 056. It includes:\n1. **Integration Logic Tests** (`integration/test_operations.py`) - Unit tests that verify the orchestrator's flow control logic without external dependencies.\n2. **End-to-End System Tests** (`e2e/test_strategic_crucible.py`) - Full system tests that execute the complete research loop (Cortex ingestion, Guardian cache update) in a temporary project structure with isolated ChromaDB.\n\nThe suite is designed to be run in two phases:\n- Fast: `pytest integration/` for logic verification\n- Slow: `pytest e2e/` for full system validation\n\nThis architecture ensures comprehensive test coverage while managing the trade-off between speed and thoroughness."
-  },
-  "tests/mcp_servers/orchestrator/e2e/FINAL_STATUS.md": {
-    "file_mtime": 1767399904.64839,
-    "hash": "daf9bd4fc8dab373",
-    "summarized_at": "2026-01-14T07:21:42Z",
-    "summary": "The Project Sanctuary E2E test suite successfully validates Protocol 056's recursive meta-validation architecture, proving an AI system can verify its own verification process through a self-referential knowledge loop. With 75% of Cycle 4 blocked by outdated test artifacts in the vector database, the next phase involves either cleaning the database or implementing unique identifiers to ensure tests run independently while preserving the core achievement of machine meta-cognition. The infrastructure is production-ready with robust performance optimizations and reliability features."
-  },
-  "tests/mcp_servers/orchestrator/e2e/README_PROTOCOL_056_E2E.md": {
-    "file_mtime": 1767399904.657286,
-    "hash": "9a3fdec62012c23c",
-    "summarized_at": "2026-01-14T07:12:32Z",
-    "summary": "This document outlines the Protocol 056 E2E Test architecture, which validates the \"Strategic Crucible Loop\" by executing a multi-server workflow across Code, RAG Cortex, Chronicle, Git, and Orchestrator MCPs. The test is designed to be headless, using JSON-RPC communication over stdio.\nThe key architectural components include:\n1. **Custom Fleet Management**: Manages server lifecycle (start/stop) and warmup of heavy dependencies like ChromaDB and LangChain.\n2. **MCP Test Client**: Handles JSON-RPC communication with MCP servers via stdio, including tool calls and response parsing.\n3. **Test Scenario**: Executes a 4-cycle recursive validation loop that creates artifacts, ingests them into RAG, verifies retrieval, and performs meta-validation.\n\nThe test is currently in progress, with Cycle 2 (Integrity Verification) complete and Cycle 3 (Meta-Validation) pending. The Fleet architecture provides stable server management and optimized response handling for E2E testing of the MCP ecosystem.\nStatus: In Progress - Cycle 3 validation pending"
-  },
-  "tests/mcp_servers/orchestrator/e2e/SESSION_SUMMARY.md": {
-    "file_mtime": 1767399904.7067146,
-    "hash": "2a2e5c86f1ef29a7",
-    "summarized_at": "2026-01-14T07:19:33Z",
-    "summary": "The Project Sanctuary E2E test suite has achieved a significant architectural milestone, validating the recursive knowledge loop as the foundation for autonomous AI systems. The protocol demonstrates:\n\n1. **Knowledge Creation**: Policy document generation.\n2. **Database Ingestion**: ChromaDB vector database population.\n3. **Verification**: RAG retrieval and report creation.\n4. **Meta-Validation**: System verifies its own verification process.\n\nThe test suite is 75% complete (3 of 4 cycles passing), with the final Cycle 4 requiring a minor fix for recursive validation. The system demonstrates robust performance, with warmup times around 6-10 seconds and subsequent operations under 200ms.\n\nKey architectural achievements include:\n- **Fleet Architecture**: 6 MCP servers running in concert via JSON-RPC.\n- **Headless Testing**: True end-to-end testing without user interaction.\n- **Performance Optimization**: Timing delays to avoid false positives.\n- **Recursive Validation**: Meta-cognitive feedback loop proven functional.\n\nThe remaining work is focused on fixing the final Cycle 4 validation and integrating the complete test suite into the main test framework. This session has successfully demonstrated that the Project Sanctuary architecture supports the creation of autonomous, self-validating AI systems."
-  },
-  "tests/mcp_servers/protocol/README.md": {
-    "file_mtime": 1767399904.4329576,
-    "hash": "11562805079839ae",
-    "summarized_at": "2026-01-14T07:23:02Z",
-    "summary": "The Protocol MCP Tests directory implements a three-layer test pyramid (unit, integration, and end-to-end) for the Protocol MCP server, ensuring comprehensive verification of protocol creation, listing, and retrieval operations. The architecture is organized with dedicated unit tests for logic validation, integration tests for file I/O safety via mocks, and end-to-end tests that call real MCP tools from Antigravity or Claude Desktop clients. Key organizational patterns include a clear separation of concerns between pure logic (unit), safe filesystem interactions (integration), and complete MCP tool execution (end-to-end). The test pyramid is supported by shared fixtures in `conftest.py` for protocol root setup, ensuring consistent testing environments across different layers. This architecture demonstrates best practices for scalable, maintainable, and comprehensive testing of MCP servers.\n```text\nLayer 1: Unit Tests - Logic Validation\n    Focus: Validator logic and constraints\n    Dependencies: None (mocked or pure logic)\n    Run: pytest tests/mcp_servers/protocol/unit/ -v\n\nLayer 2: Integration Tests - File I/O Safety\n    Focus: Protocol file operations (create, read) with safe mocks\n    Dependencies: Filesystem (safe via tmp_path fixture in conftest.py)\n    Run: pytest tests/mcp_servers/protocol/integration/ -v\n\nLayer 3: MCP Operations (End-to-End)\n    Focus: Full MCP tool execution via Client\n    Run: Use Antigravity or Claude Desktop to call:\n        protocol_create\n        protocol_list\n        protocol_get\n\nKey Files:\n- conftest.py: Defines protocol_root fixture for safe temp dir testing.\n```"
-  },
-  "tests/mcp_servers/rag_cortex/README.md": {
-    "file_mtime": 1767399904.3607025,
-    "hash": "07f88d73e49890d2",
-    "summarized_at": "2026-01-14T07:15:27Z",
-    "summary": "The Project Sanctuary document at `tests/mcp_servers/rag_cortex/README.md` provides the architectural blueprint for testing the RAG Cortex MCP server. It establishes a three-layer test pyramid with clear separation of concerns:\n\n1. **Unit Tests (`unit/`)**: Validate internal logic and dependencies without external systems.\n2. **Integration Tests (`integration/test_operations.py`)**: Test ChromaDB interactions, ingestion, and retrieval operations against an isolated test database (perfect isolation via timestamped collections).\n3. **E2E Tests (`e2e/test_pipeline.py`)**: End-to-end pipeline validation with real data structures.\n\nPrerequisites include ChromaDB for vector database operations and Ollama for reasoning tests. The README provides comprehensive instructions on running the tests, including automatic skipping of skipped tests to ensure CI stability.\n```"
-  },
-  "tests/mcp_servers/rag_cortex/TEST_RESULTS.md": {
-    "file_mtime": 1767399904.3705575,
-    "hash": "88163e0daee3e8de",
-    "summarized_at": "2026-01-14T07:10:53Z",
-    "summary": "The `TEST_RESULTS.md` document in the `tests/mcp_servers/rag_cortex/` directory serves as a comprehensive, automated test suite for validating the integration of the Cortex MCP server with the Protocol 101 architecture. It includes three core tests (stats retrieval, query execution, and incremental ingestion) that collectively ensure all tools are functional and ready for use.\n\nThe document is currently in **Green Light** status:\n- All 3 tests pass \u2705\n- Integration complete\n- Ready for MCP server configuration update\n\nThis test suite acts as the final validation layer before moving to the next architectural phase: MCP server configuration updates and live testing."
-  },
-  "tests/mcp_servers/task/README.md": {
-    "file_mtime": 1767399904.4752717,
-    "hash": "8cb016bde86017d9",
-    "summarized_at": "2026-01-14T07:15:47Z",
-    "summary": "The task MCP tests follow a three-layer pyramid architecture, ensuring comprehensive verification of the Task MCP server's functionality. Layer 1 validates business logic and enums (unit), Layer 2 verifies file I/O operations on real files in a temporary directory (integration), and Layer 3 performs end-to-end MCP tool execution via Antigravity or Claude Desktop clients.\nStatus: \u2705 COMPLETE - The three-layer pyramid is fully implemented with dedicated test directories for unit, integration, and end-to-end testing. All layers are properly organized and documented within the task MCP server's test suite."
-  },
-  "tests/ways_of_working_for_agent.md": {
-    "file_mtime": 1767399905.339031,
-    "hash": "e8803ff59aff5ec6",
-    "summarized_at": "2026-01-14T07:10:25Z",
-    "summary": "The `tests/ways_of_working_for_agent.md` document serves as the primary guide for the Sanctuary LLM agent, providing a comprehensive set of 8 core principles and 10 rules governing its operational workflow. Its architectural purpose is to establish a unified, disciplined approach to task execution, documentation, and collaboration with human stakeholders, ensuring all work adheres to a consistent methodology that prioritizes safety, traceability, and sequential progression while avoiding unauthorized Git operations. The document is currently in **Active Development** status, awaiting the final integration of the `adr_mcp_tool` and the implementation of the `task_mcp_tool` for task management capabilities."
   }
 }

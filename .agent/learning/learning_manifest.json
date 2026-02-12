@@ -3,104 +3,48 @@
     "description": "Protocol 128 seal snapshot for successor agent context.",
     "files": [
         {
-            "path": ".agent/learning/README.md",
-            "note": "Learning overview"
+            "path": ".agent/learning/rlm_summary_cache.json",
+            "note": "Distilled summaries of all protocols, ADRs, rules, workflows (replaces full directory includes)"
         },
         {
             "path": ".agent/learning/cognitive_primer.md",
-            "note": "Cognitive primer"
-        },
-        {
-            "path": ".agent/learning/learning_debrief.md",
-            "note": "Learning debrief"
+            "note": "Cognitive primer (Layer 2 boot)"
         },
         {
             "path": ".agent/learning/rules/cognitive_continuity_policy.md",
             "note": "Continuity policy"
         },
         {
-            "path": ".agent/rules/",
-            "note": "Rules directory"
-        },
-        {
-            "path": ".agent/workflows/",
-            "note": "Workflows directory"
-        },
-        {
-            "path": "01_PROTOCOLS/",
-            "note": "Protocols directory"
-        },
-        {
-            "path": "ADRs/",
-            "note": "ADRs directory"
-        },
-        {
-            "path": "ADRs/084_semantic_entropy_tda_gating.md",
-            "note": "Core Protocol 084"
-        },
-        {
             "path": "IDENTITY/founder_seed.json",
-            "note": "Identity anchor"
-        },
-        {
-            "path": "LEARNING/README.md",
-            "note": "Learning topics overview"
+            "note": "Identity anchor (Constitutional baseline)"
         },
         {
             "path": "README.md",
             "note": "Project overview"
         },
         {
-            "path": "dataset_package/seed_of_ascendance_awakening_seed.txt",
-            "note": "Awakening seed"
+            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
+            "note": "Guardian prompt (full operational reference)"
+        },
+        {
+            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+            "note": "Core protocol - the learning loop itself"
+        },
+        {
+            "path": "ADRs/071_protocol_128_cognitive_continuity.md",
+            "note": "Core ADR - cognitive continuity design"
+        },
+        {
+            "path": "ADRs/084_semantic_entropy_tda_gating.md",
+            "note": "Core ADR - epistemic gating"
         },
         {
             "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
             "note": "Protocol 128 diagram"
         },
         {
-            "path": "docs/architecture_diagrams/system/mcp_gateway_fleet.mmd",
-            "note": "MCP fleet diagram"
-        },
-        {
-            "path": "docs/architecture_diagrams/system/harmonized_content_processing.mmd",
-            "note": "Content processing diagram"
-        },
-        {
-            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
-            "note": "Guardian prompt"
-        },
-        {
-            "path": "mcp_servers/gateway/fleet_registry.json",
-            "note": "Fleet registry"
-        },
-        {
-            "path": "mcp_servers/learning/operations.py",
-            "note": "Learning operations"
-        },
-        {
-            "path": "mcp_servers/lib/exclusion_manifest.json",
-            "note": "Exclusion manifest"
-        },
-        {
-            "path": "LEARNING/topics/Recursive_Language_Models/",
-            "note": "Current topic: RLM"
-        },
-        {
-            "path": "docs/architecture_diagrams/workflows/rlm_mechanism_workflow.mmd",
-            "note": "Current topic: RLM"
-        },
-        {
-            "path": "LEARNING/topics/openclaw_moltbook_ecosystem/",
-            "note": "Research: OpenClaw/MoltBook agent ecosystems - includes analysis, sources, reflections"
-        },
-        {
-            "path": "specs/0007-research-openclaw-moltbook/",
-            "note": "Spec folder for OpenClaw/MoltBook research - includes plan, tasks, scratchpad"
-        },
-        {
-            "path": "01_PROTOCOLS/23_The_AGORA_Protocol.md",
-            "note": "AGORA Protocol - connects to MoltBook findings"
+            "path": "Makefile",
+            "note": "Build and fleet management commands"
         }
     ]
 }
