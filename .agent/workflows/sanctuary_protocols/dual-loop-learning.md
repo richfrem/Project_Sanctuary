@@ -23,11 +23,16 @@ track: B
 
 ### Phase I: Strategy (Outer Loop)
 1.  **Initiate**: User runs `/sanctuary-dual-loop "Goal Description"`.
-2.  **Spec Generation**:
-    *   System checks for existing spec.
-    *   **If New**: System internally triggers `/spec-kitty.specify` to define the architecture/task.
-    *   **If Existing**: System loads the current context.
-3.  **Workspace Prep**: Antigravity runs `/spec-kitty.implement <WP-ID>`.
+2.  **Define (Specify)**:
+    *   **Action**: Execute `/spec-kitty.specify`
+    *   **Output**: `spec.md` (What & Why)
+3.  **Architect (Plan)**:
+    *   **Action**: Execute `/spec-kitty.plan`
+    *   **Output**: `plan.md` (How & Contracts)
+4.  **Decompose (Tasking)**:
+    *   **Action**: Execute `/spec-kitty.tasks`
+    *   **Output**: `tasks.md` and `tasks/WP-*.md` (Actionable Prompts)
+5.  **Workspace Prep**: Antigravity runs `/spec-kitty.implement <WP-ID>`.
     *   Creates isolated worktree: `.worktrees/feature-WP01`.
     *   Isolates Opus from main repo noise.
 4.  **Distill**: Creates a **Minimal Context Object** for Opus *inside* the worktree.

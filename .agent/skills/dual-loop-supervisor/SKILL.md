@@ -90,11 +90,13 @@ The main entry point for running a Dual-Loop task.
 
 **Mandatory**: Before executing any Dual-Loop task, copy the meta-tasks from `.agent/templates/workflow/dual-loop-meta-tasks.md` into your task list.
 
-1.  **Plan**: Define work in `tasks.md` via Spec Kitty.
-2.  **Launch**: Run the wrapper script for a specific Task ID.
-3.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).
-4.  **Verify**: Outer Loop runs verification tool.
-5.  **Seal**: Outer Loop updates `tasks.md` and commits.
+1.  **Define**: Execute `/spec-kitty.specify` (Spec).
+2.  **Architect**: Execute `/spec-kitty.plan` (Plan).
+3.  **Tasking**: Execute `/spec-kitty.tasks` (Prompts).
+4.  **Launch**: Run `run_workflow.py` for a specific WP ID.
+5.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).
+6.  **Verify**: Outer Loop runs verification tool.
+7.  **Seal**: Outer Loop updates `tasks.md` and commits.
 
 ## Constraints
 
