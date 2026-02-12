@@ -1,0 +1,85 @@
+flowchart TD
+    %% ----------------------------------------------------
+    %% Dual-Loop Agent Architecture (Protocol 133 + 128)
+    %% ----------------------------------------------------
+    
+    %% Colors
+    classDef human fill:#ff9966,stroke:#333,stroke-width:2px;
+    classDef outer fill:#99ccff,stroke:#333,stroke-width:2px;
+    classDef inner fill:#cc99ff,stroke:#333,stroke-width:2px;
+    classDef storage fill:#ffff99,stroke:#333,stroke-width:2px;
+    classDef protocol fill:#ffffff,stroke:#333,stroke-dasharray:5 5;
+
+    %% Actors
+    User([User / Human Bridge]):::human
+    FileSystem[(Project Files)]:::storage
+    
+    %% ----------------------------------------------------
+    %% THE OUTER LOOP (Antigravity / Gemini)
+    %% Focused on Strategy, Oversight, and Protocol 128
+    %% ----------------------------------------------------
+    subgraph OuterLoop ["Outer Loop (Strategic Controller)"]
+        direction TB
+        
+        %% Phase I: Scout
+        Start(["Start: /sanctuary-dual-loop"]):::outer --> Scout[I. Scout: Debrief & Orientation]:::outer
+        Scout -->|Read Context| Context[(RLM / Spec Context)]:::storage
+        
+        %% Phase IV: Audit
+        Scout --> Audit[IV. Audit: Capture Snapshot]:::outer
+        
+        %% Strategy Core
+        Audit --> Strategy[Strategy: /spec-kitty.specify]:::outer
+        Strategy -->|Generate| Spec[Spec.md]:::storage
+        Strategy -->|Generate| Plan[Plan.md]:::storage
+        
+        Plan --> TaskGen[Task Generation: /spec-kitty.tasks]:::outer
+        TaskGen -->|Output| Tasks[Tasks.md]:::storage
+        
+        %% Handoff Preparation
+        Tasks --> HandoffPrep[Prepare Strategy Packet]:::outer
+        HandoffPrep -->|Distill| Packet["Strategy Packet<br>(Minimal Context + Constraints)"]:::storage
+    end
+
+    %% ----------------------------------------------------
+    %% PARALLEL EXECUTION ENGINE (Multiple Worktrees)
+    %% ----------------------------------------------------
+    HandoffPrep -->|Signal 'Ready'| User
+    User -->|Launch Instances| ParallelStart([Multiple Opus Terminals]):::inner
+    
+    subgraph ExecutionEngine ["Parallel Execution Engine (Inner Loops)"]
+        direction TB
+        
+        ParallelStart -->|Instance 1| WP1[Worktree 1 (Task A)]:::storage
+        ParallelStart -->|Instance 2| WP2[Worktree 2 (Task B)]:::storage
+        
+        WP1 --> Exec1[Execute Task A]:::inner
+        WP2 --> Exec2[Execute Task B]:::inner
+        
+        Exec1 -->|No Git| WP1
+        Exec2 -->|No Git| WP2
+        
+        Exec1 --> Test1[Verify A]:::inner
+        Exec2 --> Test2[Verify B]:::inner
+    end
+
+    Test1 & Test2 -->|Completion Signals| User
+    User -->|Return to Controller| VerifyStart(["Resume: Antigravity"]):::outer
+    
+    subgraph VerificationGate ["Verification & Closure"]
+        direction TB
+        VerifyStart --> Check[Inspect Diff & Tests]:::outer
+        Check --> Decision{Pass Verification?}:::outer
+        
+        %% Failure Handling
+        Decision -- No --> Correction[Generate Correction Prompt]:::outer
+        Correction -->|New Packet| Packet
+        Correction -->|Loop Back| User
+        
+        %% Success Protocol (128)
+        Decision -- Yes --> Seal[VI. Seal: Snapshot State]:::outer
+        Seal --> Persist[VII. Persist: Save to Soul]:::outer
+        Persist --> Retro[VIII. Retrospective]:::outer
+        Retro --> Ingest[IX. Ingest: Update RAG]:::outer
+        Ingest --> End([End Workflow]):::outer
+    end
