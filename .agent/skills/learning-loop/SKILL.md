@@ -17,6 +17,8 @@ Scout → Synthesize → Gate → Audit → Seal → Persist → Retrospective �
 
 ## Quick Start: Session Open
 
+**Mandatory**: Before starting, copy the meta-tasks from `.agent/templates/workflow/learning-loop-meta-tasks.md` into your task list.
+
 1. Read boot files in order:
    ```
    .agent/learning/guardian_boot_contract.md    → Constraints

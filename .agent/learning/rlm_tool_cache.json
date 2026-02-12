@@ -143,6 +143,12 @@
     "summarized_at": "2026-02-12T10:39:17.466052",
     "summary": "{\n  \"purpose\": \"CLI tool for the Outer Loop (Strategic Controller) to distill a tasks.md item into a minimal, token-efficient Strategy Packet for the Inner Loop.\",\n  \"outputs\": [\n    \"Optional output path (default: .agent/handoffs/)\",\n    \"--spec:       Optional path to spec.md for context injection\",\n    \"--plan:       Optional path to plan.md for context injection\"\n  ]\n}"
   },
+  "tools/orchestrator/dual_loop/run_workflow.py": {
+    "file_mtime": 1770921625.1864345,
+    "hash": "5cad09441bd4703f",
+    "summarized_at": "2026-02-12T10:49:51.769947",
+    "summary": "{\n  \"purpose\": \"Orchestrates the Dual-Loop Workflow which includes creating a worktree (Spec Kitty Implement), generating a Strategy Packet, launching an Inner Loop (Claude) in isolation, and optionally running verification.\",\n  \"layer\": \"Application\",\n  \"supported_object_types\": [\"Task ID\"],\n  \"usage\": [\n    \"python3 spec_kitty_dual_loop_wrapper.py <TASK_ID>\",\n    \"python3 spec_kitty_dual_loop_wrapper.py <TASK_ID> --tasks-file PATH\"\n  ],\n  \"args\": [\n    {\n      \"name\": \"task_id\",\n      \"type\": \"string\",\n      \"description\": \"Task ID (e.g., '3', 'WP-06')\"\n    },\n    {\n      \"name\": \"--tasks-file\",\n      \"type\": \"Path\",\n      \"default\": \"kitty-specs/001-dual-loop-agent-architecture/tasks.md\",\n      \"description\": \"Path to tasks.md relative to project root\"\n    }\n  ],\n  \"inputs\": [\n    {\n      \"name\": \"tasks.md\",\n      \"type\": \"file\",\n      \"description\": \"Relative path to tasks.md file from the project root\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"Strategy Packet\",\n      \"type\": \"file\",\n      \"description\": \"Generated Strategy Packet in markdown format\"\n    },\n    {\n      \"name\": \"Verification Update\",\n      \"type\": \"none\",\n      \"description\": \"Update to tasks.md file if verification is run and successful\"\n    }\n  ],\n  \"dependencies\": [\n    \"spec-kitty\",\n    \"claude\",\n    \"generate_strategy_packet.py\",\n    \"verify_inner_loop_result.py\"\n  ],\n  \"consumed_by\": [\"Inner Loop (Claude)\"],\n  \"key_functions\": [\n    \"main()\",\n    \"run_workflow()\"\n  ]\n}"
+  },
   "tools/orchestrator/dual_loop/verify_inner_loop_result.py": {
     "file_mtime": 1770920930.644963,
     "hash": "ba90057d6d79f04a",

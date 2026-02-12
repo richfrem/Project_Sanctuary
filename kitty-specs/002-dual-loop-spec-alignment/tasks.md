@@ -18,8 +18,8 @@
 
 ## Phase 2: Workflow Integration
 
-- [ ] **Create `spec-kitty-dual-loop.sh` Wrapper** <!-- id: 3 -->
-  - **Task**: Shell script that chains the commands.
+- [x] **Create `run_workflow.py` (Pure Python Orchestrator)** <!-- id: 3 -->
+  - **Task**: Python script that chains the commands (replacing .sh).
   - **Input**: Task ID.
   - **Logic**:
     1. Call internal generation tool.
@@ -27,6 +27,39 @@
     3. (Optional) Wait for user signal to run verification.
   - **Goal**: One-click experience.
 
-- [ ] **Update Documentation** <!-- id: 4 -->
+- [x] **Update Documentation** <!-- id: 4 -->
   - **Task**: Update `tools/orchestrator/dual_loop/README.md`.
   - **Task**: Update `SKILL.md` to reflect new workflow.
+
+---
+# Meta-Tasks (Automated Checklist)
+
+## Learning Loop (Protocol 128)
+- [x] **Read Boot Contract & Primer**
+- [x] **Review Learning Snapshot**
+- [x] **Check Tool RLM Cache**
+- [x] **Identify New Tools/Skills**
+- [x] **Code Audit** (Pure Python Verified)
+- [x] **Distill RLM Cache** (Tools Added)
+- [x] **Run Retrospective**
+- [x] **Update Learning Handoff**
+- [x] **Seal Session**
+- [x] **Persist Soul**
+
+## Dual-Loop (Protocol 133)
+- [x] **Generate Strategy Packet**
+- [x] **Launch Inner Loop**
+- [x] **Monitor Inner Loop**
+- [x] **Verify Result**
+- [x] **Update Task Status**
+- [x] **Review Snapshot**
+
+## Spec Kitty Workflow
+- [x] **Check Prerequisites**
+- [x] **Plan Workflow**
+- [x] **Generate Tasks**
+- [x] **Visualize Status**
+- [x] **Review Completed WPs**
+- [x] **Move to Review**
+- [ ] **Final Acceptance**
+- [ ] **Merge Feature**

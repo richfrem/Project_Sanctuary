@@ -88,6 +88,8 @@ The main entry point for running a Dual-Loop task.
 
 ## Workflow (Protocol 133)
 
+**Mandatory**: Before executing any Dual-Loop task, copy the meta-tasks from `.agent/templates/workflow/dual-loop-meta-tasks.md` into your task list.
+
 1.  **Plan**: Define work in `tasks.md` via Spec Kitty.
 2.  **Launch**: Run the wrapper script for a specific Task ID.
 3.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-02-12T10:47:30.973922",
+    "last_updated": "2026-02-12T10:49:51.961569",
     "status": "Deduplicated"
   },
   "python": {
@@ -235,8 +235,8 @@
         {
           "name": "run_workflow.py",
           "path": "tools/orchestrator/dual_loop/run_workflow.py",
-          "description": "TBD",
-          "last_updated": "2026-02-12T10:47:30.973873",
+          "description": "Orchestrates the Dual-Loop Workflow which includes creating a worktree (Spec Kitty Implement), generating a Strategy Packet, launching an Inner Loop (Claude) in isolation, and optionally running verification.",
+          "last_updated": "2026-02-12T10:49:51.961545",
           "compliance_status": "needs_review",
           "header_style": "minimal"
         },
