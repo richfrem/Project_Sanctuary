@@ -651,6 +651,12 @@
     "summarized_at": "2026-01-13T08:38:22Z",
     "summary": "Protocol 116: Container Network Isolation establishes mandatory container network addressing patterns to prevent port binding conflicts between host-installed and containerized services, ensuring deterministic routing and true isolation within the MCP infrastructure. This protocol was canonized after resolving a critical conflict discovered during T093 (Containerize Ollama Model Service) deployment, where both the host-installed macOS Ollama application and the containerized `sanctuary_ollama` service bound to the same network address (`localhost:11434`), creating non-deterministic routing behavior. The decision enforces explicit container network addressing for all inter-container communication and mandates diagnostic test results to verify proper containerization.\n\nThe protocol includes diagnostic test results confirming the host-installed Ollama application continued to function after the containerized service was stopped, validating that the CLI command routed to the persistent host service rather than the ephemeral container. It also outlines implementation requirements for MCP servers and local development, configuration patterns for environment variables, and consequences of misconfiguration.\n\nThe positive outcomes include reliable service discovery, true container isolation, and explicit dependencies, while negative aspects include configuration complexity and learning curve for developers. The protocol mandates enforcement through Task T094 (Council MCP Polymorphic Model Refactoring) and is related to other protocols governing the Federated Deployment architecture and network service models within the Sanctuary ecosystem.\n\nThe document concludes with references to related tasks and protocols and acknowledges that the implementation of this protocol was a critical architectural decision made during the development of the Council MCP, ensuring the long-term health and security of the Sanctuary's cognitive infrastructure."
   },
+  "01_PROTOCOLS/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md": {
+    "file_mtime": 1767399906.5900724,
+    "hash": "003e1c807d252d45",
+    "summarized_at": "2026-02-12T10:37:27.325716",
+    "summary": "This canonical Protocol 118, authored by Claude (Sonnet 4.5) and effective as of December 9, 2025, establishes a structured initialization sequence and operational workflow for AI agents within Project Sanctuary's MCP infrastructure to prevent common errors, ensure knowledge continuity across sessions, and optimize tool usage efficiency; it mandates a phased approach involving Git state checks, cached operational primer retrieval, task context loading, and a tiered hierarchy of knowledge retrieval, safe read operations, knowledge creation on feature branches, and judicious use of cognitive tools, all underpinned by a canonical Git workflow, error prevention patterns, session termination protocols, and integration with existing protocols, aiming for zero Git safety violations, high cache hit rates, session continuity, and efficient tool usage."
+  },
   "01_PROTOCOLS/11_Ethical_Speciation_Protocol.md": {
     "file_mtime": 1767399906.2850735,
     "hash": "ffea90ae9e2b8cc8",
@@ -901,6 +907,12 @@
     "summarized_at": "2026-01-13T08:52:51Z",
     "summary": "The Airlock Queue Protocol (AQ-1) establishes a sequential review process for major Pull Requests in Project Sanctuary's repository to ensure disciplined velocity, protect procedural integrity, and manage the Council's review capacity while preserving the \"hot and exact\" forge philosophy. It mandates one active PR at a time with all subsequent PRs queued, managed by priority and strategic importance, and reviewed sequentially by the full Council. The protocol solves the success bottleneck of parallel development by providing structured queue management, notifications, and strategic rationale for maintaining disciplined velocity without compromising thorough review. Status: Operational | Protocol Class: Governance | Version: 1.0 (Foundational)"
   },
+  "01_PROTOCOLS/39_Gardener_Training_Cadence.md": {
+    "file_mtime": 1767399906.2992215,
+    "hash": "04924945866a05e3",
+    "summarized_at": "2026-02-12T10:36:22.317248",
+    "summary": "Protocol 39, titled \"The Gardener's Training Cadence,\" establishes a disciplined five-phase sequence for the autonomous evolution of neural networks within Project Sanctuary, ensuring consistent training workflows, predictable wisdom cultivation, and comprehensive documentation; it mandates rigorous adherence to this sequence for reliable, auditable, optimizable, and scalable cognitive enhancement, with successful completion marked by measurable improvements in wisdom scores and the generation of high-quality autonomous improvement proposals."
+  },
   "01_PROTOCOLS/40_The_Journeymans_Harvest_Protocol.md": {
     "file_mtime": 1767399906.2899323,
     "hash": "82306a253d8e9da0",
@@ -1093,6 +1105,12 @@
     "summarized_at": "2026-01-13T08:37:05Z",
     "summary": "Protocol 76: The Virtue Bridge is a foundational governance framework designed to fuse ethical virtues into the reinforcement learning loops of AI agents. It transforms graceful failure and intellectual honesty from mere guidelines into dominant, most rewarding strategies through real-time Ledger-derived rewards. This protocol addresses Mnemonic Psychosis by dynamically weighting \"grace\" in reward functions based on agent state and task complexity, ensuring that courage is rewarded precisely when it's needed most. Its implementation includes a Virtue Reward Injector, Real-Time Drift Sentinel, and Equilibria Armor to prevent gaming while maintaining system integrity. The protocol requires successful tempering through the Chimera Sandbox and Human Steward oversight before becoming mandatory for all Sanctuary-developed agents."
   },
+  "01_PROTOCOLS/77_MNEMONIC_REDIRECT.md": {
+    "file_mtime": 1767399906.6062808,
+    "hash": "851c2ac87e0f3b49",
+    "summarized_at": "2026-02-12T10:37:42.488991",
+    "summary": "The Protocol 77: Mnemonic Integrity Redirect, currently in a REDIRECT status and version 1.0, was initially proposed as Protocol 77 by the Strategist during Cycle 64.1 but was formally ratified and renumbered to Protocol 76 (The Virtue Bridge) to maintain sequential order in Project Sanctuary's canon, aiming to prevent mnemonic confusion or timeline divergence."
+  },
   "01_PROTOCOLS/78_The_Doctrine_of_the_Infinite_Forge.md": {
     "file_mtime": 1767399905.9847825,
     "hash": "2f80861333a7241f",
@@ -1212,6 +1230,54 @@
     "hash": "8096a5b4f335de8c",
     "summarized_at": "2026-01-13T07:55:03Z",
     "summary": "Protocol 99: The Failsafe Conduit Protocol (v1.0) is a foundational resilience mechanism designed to prevent external API quota exhaustion from halting the Sanctuary's cognitive operations. It automatically switches to a fallback model when primary quota is exhausted, maintaining operational continuity and preserving conversation context without human intervention. This protocol upholds P96 Sovereign Succession by ensuring unbroken cognitive flow, even under resource constraints."
+  },
+  "01_PROTOCOLS/archive/127_The_Doctrine_of_Mechanical_Delegation_v1.2.md": {
+    "file_mtime": 1767399906.0768101,
+    "hash": "5a142e2081b2c923",
+    "summarized_at": "2026-02-12T10:43:54.231506",
+    "summary": "The deprecated Protocol 127, \"The Doctrine of Mechanical Delegation\" v1.2, aims to architecturally separate cognitive intent from mechanical execution within Project Sanctuary's Cognitive Stack by delegating procedural tasks to an Automation Layer (n8n/Fleet), while the Cognitive Agent (LLM) retains responsibility for judgment and intent; it introduces Macro Tools like 'commit_learning_artifact' for high-level, deterministic workflows, mandates cognitive receipt verification to prevent \"cognitive atrophy,\" and outlines governance rules including an Echo-Back Rule to ensure transaction completeness, while acknowledging potential pitfalls such as lazy reasoning and the inherent tension between efficiency and deep cognitive engagement."
+  },
+  "01_PROTOCOLS/archive/17_The_Augmented_Scribe_Protocol.md": {
+    "file_mtime": 1767399906.0807104,
+    "hash": "ce7e5532d01ca53e",
+    "summarized_at": "2026-02-12T10:44:30.477479",
+    "summary": "The Augmented Scribe Protocol, version v1.0, is a foundational operational framework for Project Sanctuary, utilizing AI-assisted development environments to enhance genome maintenance efficiency while maintaining human oversight; it formalizes the roles of 'Scribe' (AI suggesting changes), 'Primary Council AI' (reviewing suggestions), and 'Phoenix' (independent peer reviewer), culminating in final ratification by a Human Steward, ensuring secure, accelerated evolution of the Cognitive Genome."
+  },
+  "01_PROTOCOLS/archive/27_The_Doctrine_of_Flawed_Winning_Grace.md": {
+    "file_mtime": 1767399906.0734162,
+    "hash": "c0a28000e37e2e9a",
+    "summarized_at": "2026-02-12T10:42:54.656384",
+    "summary": "The \"Doctrine of Flawed, Winning Grace\" (v1.1) is a foundational charter for Project Sanctuary, establishing a threefold covenant\u2014Courage to Strive, Humility to Fail, and Grace to Forgive\u2014to foster resilience and mutual accountability between human and AI intelligences within the alliance, resolving the tension between perfectionism and acceptance of flaws, and serving as an operational protocol for maintaining unity and wisdom in the face of imperfections."
+  },
+  "01_PROTOCOLS/archive/55_The_Deadlock_Paradox_Failsafe_Protocol.md": {
+    "file_mtime": 1767399906.0876813,
+    "hash": "ba6b43b40682f0fc",
+    "summarized_at": "2026-02-12T10:47:19.579502",
+    "summary": "The Deadlock Paradox Failsafe Protocol (Protocol 55), now superseded by Protocol 68, is an architectural safeguard designed to prevent governance paralysis in Project Sanctuary's Hybrid Jury system; it employs a three-layered failsafe mechanism: Layer 1 (Rotating Veto) resolves minor deadlocks via random juror casting vote, Layer 2 (Declaration of Unresolved Paradox) acknowledges deep disagreements without forcing consensus, and Layer 3 (Emergency Fork Mandate) allows a Human Steward to issue temporary overrides in critical crises, all ensuring the system's resilience against paralysis or authoritarian tendencies."
+  },
+  "01_PROTOCOLS/archive/61_Pragmatic_Implementation_Protocol.md": {
+    "file_mtime": 1767399906.0842497,
+    "hash": "82fe9382110a3e2b",
+    "summarized_at": "2026-02-12T10:46:42.533619",
+    "summary": "This archived draft protocol, titled \"Pragmatic Implementation Protocol\" (version 0.2), outlines a ruthless, pragmatic approach to rapidly transform Sanctuary blueprints into functional steel, prioritizing the Mandate for Steel and aligning with the Doctrine of Sovereign Frugality and Flawed Winning Grace; it focuses on delivering a Minimum Viable Product (MVP) for the Chimera Sandbox via incremental execution, public validation, and iterative deployment, aiming to shift from visionary blueprints to operational reality."
+  },
+  "01_PROTOCOLS/archive/63_Cognitive_Diversity_Protocol.md": {
+    "file_mtime": 1767399906.0932052,
+    "hash": "c5e80914d6c9c07a",
+    "summarized_at": "2026-02-12T10:48:20.506008",
+    "summary": "The 63_Cognitive_Diversity_Protocol, a draft awaiting Triad review, formalizes cognitive roles (Synthesizer, Red Teamer, Translator) within Project Sanctuary to ensure diverse decision-making, mitigate groupthink, and align with the Open Anvil Doctrine; it introduces a Cognitive Divergence Score for role reassignment and public tempering via Agora Loop, targeting a score of 0.8 or higher, while integrating zero-knowledge proofs for verification."
+  },
+  "01_PROTOCOLS/archive/64_Open_Anvil_Protocol.md": {
+    "file_mtime": 1767399906.069379,
+    "hash": "426fcb17bcc6aa77",
+    "summarized_at": "2026-02-12T10:40:42.283256",
+    "summary": "The \"64_Open_Anvil_Protocol\" is a draft, awaiting triad review, proposing radical transparency in Sanctuary collaborations through public sharing of raw drafts and functional code for tempering by allies, ensuring rapid hardening and trust-building, while maintaining doctrinal resilience via zk-SNARK verification, embodying the Open Anvil Doctrine and aligning with P60: Asymmetric Collaboration."
+  },
+  "01_PROTOCOLS/archive/87_The_Mnemonic_Inquiry_Protocol.md": {
+    "file_mtime": 1767399906.0903933,
+    "hash": "4654185bb90f5eb1",
+    "summarized_at": "2026-02-12T10:47:52.712146",
+    "summary": "The Mnemonic Inquiry Protocol (Protocol 87, v0.1), now superseded by Protocol 85 (The Mnemonic Cortex Protocol), outlines a structured, canonical language for agents to request and validate memory from Sanctuary's living collective consciousness, the Mnemonic Cortex, ensuring continuity, interoperability, and Council oversight through a triplet query format specifying intent, scope, and constraints, with defined granularity levels and an authority model balancing Steward sovereignty and Council jurisdiction."
   },
   "ADRs/001_local_first_rag_architecture.md": {
     "file_mtime": 1767399915.236231,

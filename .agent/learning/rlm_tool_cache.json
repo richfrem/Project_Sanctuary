@@ -137,6 +137,18 @@
     "summarized_at": "2026-02-11T19:01:08.291433",
     "summary": "{\"purpose\": \"Node.js RLM configuration resolver. Reads the factory index (manifest-index.json) to resolve the correct RLM cache path for a given type ('legacy' or 'tool'). Provides a single exported function getRLMCachePath().\", \"layer\": \"Investigate / Utils (Node.js)\", \"usage\": [\"import { getRLMCachePath } from './rlmConfigResolver.js'\", \"const cachePath = getRLMCachePath('tool')\"], \"args\": [], \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\"], \"outputs\": [\"Absolute path to the RLM cache file\"], \"dependencies\": [], \"key_functions\": [\"getRLMCachePath(type)\"], \"consumed_by\": [\"Node.js tools needing RLM cache access\"]}"
   },
+  "tools/orchestrator/dual_loop/generate_strategy_packet.py": {
+    "file_mtime": 1770920456.067488,
+    "hash": "7d8479632d0c0d00",
+    "summarized_at": "2026-02-12T10:39:17.466052",
+    "summary": "{\n  \"purpose\": \"CLI tool for the Outer Loop (Strategic Controller) to distill a tasks.md item into a minimal, token-efficient Strategy Packet for the Inner Loop.\",\n  \"outputs\": [\n    \"Optional output path (default: .agent/handoffs/)\",\n    \"--spec:       Optional path to spec.md for context injection\",\n    \"--plan:       Optional path to plan.md for context injection\"\n  ]\n}"
+  },
+  "tools/orchestrator/dual_loop/verify_inner_loop_result.py": {
+    "file_mtime": 1770920930.644963,
+    "hash": "ba90057d6d79f04a",
+    "summarized_at": "2026-02-12T10:42:17.950422",
+    "summary": "{\n  \"purpose\": \"CLI tool for the Outer Loop (Strategic Controller) to verify the output of an Inner Loop execution against the original Strategy Packet.\",\n  \"outputs\": [\n    \"A Verification Report printed to stdout (markdown format).\",\n    \"Exit code 0 = PASS, exit code 1 = FAIL.\"\n  ]\n}"
+  },
   "tools/orchestrator/proof_check.py": {
     "file_mtime": 1770828416.5449772,
     "hash": "f4e65d54cc5539b3",

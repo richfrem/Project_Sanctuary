@@ -200,6 +200,58 @@ def generate_report(
     return report, all_pass
 
 
+class TaskStatusUpdater:
+    """Updates task status in a tasks.md file by checking off completed items.
+
+    Finds a task by its ID (in <!-- id: N --> comments) and toggles
+    the checkbox from [ ] to [x].
+    """
+
+    def __init__(self, tasks_path: Path) -> None:
+        self.tasks_path = tasks_path
+
+    def mark_complete(self, task_id: str) -> bool:
+        """Mark a task as complete by checking its checkbox.
+
+        Args:
+            task_id: The task identifier to match (e.g., "1", "WP-001").
+
+        Returns:
+            True if the task was found and updated, False otherwise.
+        """
+        if not self.tasks_path.exists():
+            print(f"[ERROR] Tasks file not found: {self.tasks_path}", file=sys.stderr)
+            return False
+
+        content = self.tasks_path.read_text(encoding="utf-8")
+        # Pattern: - [ ] **Title** <!-- id: TASK_ID -->
+        pattern = re.compile(
+            r"^(- \[) \]( \*\*.+?\*\*\s*<!--\s*id:\s*"
+            + re.escape(task_id)
+            + r"\s*-->)",
+            re.MULTILINE | re.IGNORECASE,
+        )
+
+        new_content, count = pattern.subn(r"\1x]\2", content)
+        
+        # Also try legacy header format ### ID. Title
+        if count == 0:
+             # This is a simplified fallback for legacy headers if needed, 
+             # but primarily we support the new list format.
+             pass
+
+        if count == 0:
+            print(
+                f"[WARN] Task '{task_id}' not found (or already checked) in {self.tasks_path}",
+                file=sys.stderr,
+            )
+            return False
+
+        self.tasks_path.write_text(new_content, encoding="utf-8")
+        print(f"[OK] Task '{task_id}' marked as complete in {self.tasks_path}")
+        return True
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Verify Inner Loop output against a Strategy Packet (Dual-Loop Architecture).",
@@ -228,12 +280,31 @@ def main() -> None:
         action="store_true",
         help="Include full diff in the report.",
     )
+    parser.add_argument(
+        "--update-status",
+        type=Path,
+        default=None,
+        help="Path to tasks.md to update task status on PASS.",
+    )
+    parser.add_argument(
+        "--task-id",
+        type=str,
+        default=None,
+        help="Task ID to mark complete on PASS (requires --update-status).",
+    )
 
     args = parser.parse_args()
 
     # Validate
     if not args.packet.exists():
         print(f"[ERROR] Packet not found: {args.packet}", file=sys.stderr)
+        sys.exit(1)
+
+    if args.update_status and not args.task_id:
+        print(
+            "[ERROR] --task-id is required when using --update-status",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     # Load packet
@@ -256,6 +327,10 @@ def main() -> None:
 
     if passed:
         print("[RESULT] PASS — Ready for Seal (Protocol 128 Phase VI).")
+        # Update task status if requested
+        if args.update_status and args.task_id:
+            updater = TaskStatusUpdater(args.update_status)
+            updater.mark_complete(args.task_id)
         sys.exit(0)
     else:
         print("[RESULT] FAIL — Correction needed. See report above.")

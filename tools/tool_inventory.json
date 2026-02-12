@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-02-01T12:47:10.222017",
+    "last_updated": "2026-02-12T10:47:30.973922",
     "status": "Deduplicated"
   },
   "python": {
@@ -217,12 +217,36 @@
       ],
       "orchestrator": [
         {
+          "name": "generate_strategy_packet.py",
+          "path": "tools/orchestrator/dual_loop/generate_strategy_packet.py",
+          "description": "CLI tool for the Outer Loop (Strategic Controller) to distill a tasks.md item into a minimal, token-efficient Strategy Packet for the Inner Loop.",
+          "last_updated": "2026-02-12T10:39:17.544067",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
           "name": "proof_check.py",
           "path": "tools/orchestrator/proof_check.py",
           "description": "Validates task completion by checking file modifications against the Git index. Ensures Proof of Work.",
           "last_updated": "2026-01-31T13:57:26.855955",
           "compliance_status": "compliant",
           "header_style": "extended"
+        },
+        {
+          "name": "run_workflow.py",
+          "path": "tools/orchestrator/dual_loop/run_workflow.py",
+          "description": "TBD",
+          "last_updated": "2026-02-12T10:47:30.973873",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "verify_inner_loop_result.py",
+          "path": "tools/orchestrator/dual_loop/verify_inner_loop_result.py",
+          "description": "CLI tool for the Outer Loop (Strategic Controller) to verify the output of an Inner Loop execution against the original Strategy Packet.",
+          "last_updated": "2026-02-12T10:42:17.963360",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
         }
       ],
       "root": [
@@ -309,6 +333,16 @@
           "last_updated": "2026-01-31T21:47:58.363525",
           "compliance_status": "compliant",
           "header_style": "extended"
+        }
+      ],
+      "utility": [
+        {
+          "name": "tasks_cli.py",
+          "path": ".kittify/scripts/tasks/tasks_cli.py",
+          "description": "CLI utilities for managing Spec Kitty work-package prompts and acceptance.",
+          "last_updated": "2026-02-12T10:40:14.794765",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
         }
       ]
     }

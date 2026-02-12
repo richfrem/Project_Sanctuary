@@ -53,37 +53,53 @@ This skill maps to the following Learning Loop phases:
 | VIII | Retrospective | Outer Loop self-reviews process |
 | IX | Ingest | Outer Loop updates RAG |
 
-## Commands
+## Tooling
 
-### `generate_packet`
+### 1. `generate_strategy_packet.py`
+Distill a `tasks.md` item into a minimal, token-efficient Strategy Packet.
 
-Distill a `tasks.md` item into a minimal, token-efficient Strategy Packet for the Inner Loop.
+```bash
+python3 tools/orchestrator/dual_loop/generate_strategy_packet.py \
+  --tasks-file <path/to/tasks.md> \
+  --task-id <ID> \
+  --output .agent/handoffs/task_packet_NNN.md
+```
 
-**Prompt**: [`prompts/strategy_generation.md`](prompts/strategy_generation.md)
+### 2. `verify_inner_loop_result.py`
+Verify the output of an Inner Loop execution.
 
-**Input**: A task item from `tasks.md` + relevant spec/plan context.
-**Output**: A self-contained markdown file (the Strategy Packet) written to `.agent/handoffs/`.
+```bash
+python3 tools/orchestrator/dual_loop/verify_inner_loop_result.py \
+  --packet .agent/handoffs/task_packet_NNN.md \
+  --verbose \
+  --update-status <path/to/tasks.md> \
+  --task-id <ID>
+```
 
-**Packet structure**:
-1. Mission (1-2 sentences)
-2. Tasks (numbered, atomic)
-3. Constraints (hard rules)
-4. Acceptance Criteria (verifiable outcomes)
+### 3. `run_workflow.py` (Outer Loop CLI)
+The main entry point for running a Dual-Loop task.
 
-### `verify_output`
+```bash
+./tools/orchestrator/dual_loop/run_workflow.py <TASK_ID>
+```
+1.  Creates a worktree via `spec-kitty implement`.
+2.  Generates the Strategy Packet.
+3.  Launches Claude (Inner Loop) inside the worktree.
 
-Review the Inner Loop's file changes and decide Pass or Fail.
+## Workflow (Protocol 133)
 
-**Prompt**: [`prompts/verification.md`](prompts/verification.md)
-
-**Input**: `git diff` of the Inner Loop's worktree changes.
-**Output**: Structured verdict — Pass (proceed to Seal) or Fail (generate correction prompt).
+1.  **Plan**: Define work in `tasks.md` via Spec Kitty.
+2.  **Launch**: Run the wrapper script for a specific Task ID.
+3.  **Execute**: Inner Loop (Claude) writes code in the worktree (NO GIT).
+4.  **Verify**: Outer Loop runs verification tool.
+5.  **Seal**: Outer Loop updates `tasks.md` and commits.
 
 ## Constraints
 
 - The Inner Loop MUST NOT run git commands. Only the Outer Loop manages version control.
+- **Worktree Isolation**: All coding happens in `.worktrees/`.
 - Strategy Packets must be minimal. No conversation history, no redundant context.
-- The Human Gate applies at every loop boundary (Outer→Inner launch, Inner→Outer return).
+- The Human Gate applies at every loop boundary.
 - All verification failures produce a correction prompt, not a rejection.
 
 ## Related

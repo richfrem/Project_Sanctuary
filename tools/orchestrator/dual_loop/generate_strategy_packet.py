@@ -48,30 +48,51 @@ PROMPT_PATH = (
 def parse_tasks_file(tasks_path: Path) -> list[dict]:
     """Parse a tasks.md file into a list of task dicts.
 
-    Extracts tasks by looking for markdown headings that contain task
-    identifiers (e.g., '### A.', '### WP-001:').
+    Supports two formats:
+    1. List items: '- [ ] **Title** <!-- id: N -->'
+    2. Legacy headers: '### A. Title' or '### WP-001: Title'
 
     Returns a list of dicts with keys: id, title, body.
     """
     content = tasks_path.read_text(encoding="utf-8")
     tasks = []
-    # Match headings like "### A. Title" or "### WP-001: Title"
-    pattern = r"^###\s+([A-Z0-9][\w-]*)[.:\s]+(.+)$"
     lines = content.split("\n")
     current_task = None
 
+    # List-item pattern: - [ ] or - [x] with <!-- id: ... -->
+    list_pattern = r"^- \[[x ]\]\s+\*\*(.+?)\*\*\s*<!--\s*id:\s*(.+?)\s*-->"
+    # Legacy header pattern: ### A. Title or ### WP-001: Title
+    header_pattern = r"^###\s+([A-Z0-9][\w-]*)[.:\s]+(.+)$"
+
     for line in lines:
-        match = re.match(pattern, line)
-        if match:
+        list_match = re.match(list_pattern, line, re.IGNORECASE)
+        header_match = re.match(header_pattern, line) if not list_match else None
+
+        if list_match:
             if current_task:
                 tasks.append(current_task)
             current_task = {
-                "id": match.group(1),
-                "title": match.group(2).strip(),
+                "id": list_match.group(2).strip(),
+                "title": list_match.group(1).strip(),
+                "body": "",
+            }
+        elif header_match:
+            if current_task:
+                tasks.append(current_task)
+            current_task = {
+                "id": header_match.group(1),
+                "title": header_match.group(2).strip(),
                 "body": "",
             }
         elif current_task:
-            current_task["body"] += line + "\n"
+            # Indented lines belong to the current task body;
+            # a non-indented, non-empty line that isn't a task ends it
+            if line.startswith("  ") or line.strip() == "":
+                current_task["body"] += line + "\n"
+            else:
+                # Non-indented content (e.g., phase headers) — end current task
+                tasks.append(current_task)
+                current_task = None
 
     if current_task:
         tasks.append(current_task)
