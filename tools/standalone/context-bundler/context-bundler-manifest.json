@@ -3,8 +3,16 @@
   "description": "Complete context bundle for the Context Bundler tool — bundled with itself.",
   "files": [
     {
+      "path": "tools/standalone/context-bundler/prompt.md",
+      "note": "IDENTITY: The Context Bundler Persona & Instructions"
+    },
+    {
+      "path": "tools/standalone/context-bundler/context-bundler-manifest.json",
+      "note": "RECIPE: Self-Replication Manifest (this file)"
+    },
+    {
       "path": "tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md",
-      "note": "How to unpack a bundle"
+      "note": "PROTOCOL: How to unpack a bundle"
     },
     {
       "path": "tools/standalone/context-bundler/README.md",

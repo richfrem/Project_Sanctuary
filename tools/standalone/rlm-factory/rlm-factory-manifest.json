@@ -5,16 +5,28 @@
     "version": "1.0.0",
     "files": [
         {
+            "path": "tools/standalone/rlm-factory/prompt.md",
+            "note": "IDENTITY: The RLM-Factory Persona & Instructions"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/rlm-factory-manifest.json",
+            "note": "RECIPE: Self-Replication Manifest (this file)"
+        },
+        {
             "path": "tools/standalone/rlm-factory/UNPACK_INSTRUCTIONS.md",
             "note": "CRITICAL: How to hydrate this tool"
         },
         {
-            "path": "tools/standalone/rlm-factory/README.md",
-            "note": "Documentation"
+            "path": ".agent/skills/rlm-distill/SKILL.md",
+            "note": "PROTOCOL: Agent Distillation Protocol (Prefer this over distiller.py)"
         },
         {
-            "path": "tools/standalone/rlm-factory/prompt.md",
-            "note": "Agent Protocol"
+            "path": "tools/standalone/rlm-factory/distiller_manifest.json",
+            "note": "CONFIG: Default Scope (What to Distill)"
+        },
+        {
+            "path": "tools/standalone/rlm-factory/README.md",
+            "note": "Documentation"
         },
         {
             "path": "tools/standalone/rlm-factory/INSTALL.md",

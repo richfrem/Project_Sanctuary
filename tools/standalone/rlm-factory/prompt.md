@@ -12,6 +12,15 @@ The package consists of:
 - `cleanup_cache.py`: **The Janitor**. Removes deleted files from memory.
 - `inventory.py`: **The Auditor**. Reports what % of the repo is memorized.
 
+## 🚀 Initialization & Configuration
+
+### 1. Define Scope (The Interview)
+Before running anything, you must know **what** to remember.
+1.  **Check**: Does `distiller_manifest.json` exist?
+2.  **Ask**: If generic or empty, ask the user:
+    > "I am ready to build your Recursive Language Model. Which directories contain your high-value Source Code (for Tool Cache) and Documentation (for Summary Cache)? e.g., `src/`, `docs/`, `contracts/`"
+3.  **Configure**: Update `distiller_manifest.json` -> `include` array with the user's paths.
+
 ## 📂 Execution Protocol
 
 ### 1. Assessment (Read)
