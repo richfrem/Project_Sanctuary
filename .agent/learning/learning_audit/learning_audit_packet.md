@@ -2,9 +2,7 @@
 **Generated:** 2026-02-11T18:19:19.042412
 
 Auto-generated learning_audit snapshot
-
 ---
-
 ## 📑 Table of Contents
 1. [README.md](#entry-1)
 2. [IDENTITY/founder_seed.json](#entry-2)
