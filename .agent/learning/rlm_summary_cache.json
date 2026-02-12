@@ -313,7 +313,7 @@
       "summary": "Skill: Vector DB Launch. Provides procedures to verify, start, and troubleshoot the ChromaDB container via Podman. Essential for RAG ingestion and semantic search. Handles Podman machine Lifecycle (`machine start`), container orchestration (`podman compose up`), and health checks (`/api/v2/heartbeat`). Solves common issues like stale container locks and network bridging."
     }
   },
-  ".agent/workflows/sanctuary_protocols/dual-loop-learning.md": {
+  ".agent/workflows/sanctuary_protocols/santuary-dual-loop-learning.md": {
     "file_mtime": 1770918589.20791,
     "hash": "d473d6a40f83dbfd",
     "summarized_at": "2026-02-12T10:52:59.106623",

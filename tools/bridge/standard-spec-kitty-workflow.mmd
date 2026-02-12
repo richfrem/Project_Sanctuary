@@ -2,13 +2,19 @@ graph TD
     %% Nodes - Feature Level (Start)
     Start(("Start Feature<br>(Start)"))
     Specify["fa:fa-file-alt Specify Feature<br>(Cmd: spec-kitty specify)"]
-    Plan["fa:fa-map Plan & Tasks<br>(Cmd: spec-kitty plan / tasks)"]
-    
+    VerifySpec["fa:fa-shield-alt Verify Specify<br>(verify_workflow_state.py --phase specify)"]
+    Plan["fa:fa-map Plan Implementation<br>(Cmd: spec-kitty plan)"]
+    VerifyPlan["fa:fa-shield-alt Verify Plan<br>(verify_workflow_state.py --phase plan)"]
+    Tasks["fa:fa-tasks Generate Tasks<br>(Cmd: spec-kitty tasks)"]
+    VerifyTasks["fa:fa-shield-alt Verify Tasks<br>(verify_workflow_state.py --phase tasks)"]
+
     %% Nodes - WP Level (Loop)
     subgraph WP_Loop["WP Execution Loop (Repeated per WP)"]
         Implement["fa:fa-tools Start WP<br>(Cmd: spec-kitty implement WP-xx)<br>(Creates: .worktrees/WP-xx)"]
+        VerifyImpl["fa:fa-shield-alt Verify Implement<br>(verify_workflow_state.py --phase implement)"]
         Code["fa:fa-code Code & Test<br>(Context: Inside Worktree)"]
         Commit["fa:fa-save Git Commit (Local)<br>(git commit -m 'feat...')"]
+        VerifyReview["fa:fa-shield-alt Verify Review<br>(verify_workflow_state.py --phase review)<br>(Worktree clean?)"]
         MoveReview["fa:fa-arrow-right Move to Review<br>(Cmd: spec-kitty agent tasks move-task)"]
         Review["fa:fa-glasses Review WP<br>(Cmd: spec-kitty review)<br>(Moves to 'Done')"]
     end
@@ -20,21 +26,38 @@ graph TD
         End(("Feature Done<br>(Clean Repo)"))
     end
 
-    %% Flow
+    %% Dual-Loop Mode (Optional)
+    subgraph DualLoop["Dual-Loop Mode (Protocol 133)"]
+        DL_Packet["Outer Loop: Generate<br>Strategy Packet"]
+        DL_Handoff["Human Bridge:<br>Switch to Inner Loop"]
+        DL_Execute["Inner Loop: Code<br>(No Git)"]
+        DL_Return["Human Bridge:<br>Return to Outer Loop"]
+        DL_Packet --> DL_Handoff --> DL_Execute --> DL_Return
+    end
+
+    %% Flow - Planning Phase
     Start --> Specify
-    Specify --> Plan
-    Plan --> Implement
-    
+    Specify --> VerifySpec
+    VerifySpec --> Plan
+    Plan --> VerifyPlan
+    VerifyPlan --> Tasks
+    Tasks --> VerifyTasks
+    VerifyTasks --> Implement
+
     %% Loop Logic
-    Implement -->|cd .worktrees/WP-xx| Code
+    Implement --> VerifyImpl
+    VerifyImpl -->|cd .worktrees/WP-xx| Code
+    VerifyImpl -.->|Dual-Loop?| DL_Packet
+    DL_Return -.-> Commit
     Code --> Commit
-    Commit --> MoveReview
+    Commit --> VerifyReview
+    VerifyReview --> MoveReview
     MoveReview --> Review
-    
+
     %% Iterate or Finish
     Review -->|Next WP?| Implement
     Review -->|All WPs Done?| Accept
-    
+
     %% Finalization
     Accept --> Merge
     Merge --> End
@@ -43,7 +66,11 @@ graph TD
     classDef feature fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
     classDef wp fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
     classDef done fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef verify fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px;
+    classDef dualloop fill:#cc99ff,stroke:#333,stroke-width:2px;
 
-    class Specify,Plan feature;
+    class Specify,Plan,Tasks feature;
     class Implement,Code,Commit,MoveReview,Review wp;
     class Accept,Merge,End done;
+    class VerifySpec,VerifyPlan,VerifyTasks,VerifyImpl,VerifyReview verify;
+    class DL_Packet,DL_Handoff,DL_Execute,DL_Return dualloop;

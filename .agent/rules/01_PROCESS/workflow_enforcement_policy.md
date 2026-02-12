@@ -1,3 +1,7 @@
+---
+trigger: manual
+---
+
 # Workflow Enforcement Policy
 
 **Tool discovery details → `.agent/skills/tool_discovery/SKILL.md`**
