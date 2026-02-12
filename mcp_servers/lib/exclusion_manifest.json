@@ -121,7 +121,6 @@
         "red_team_audit_packet.md",
         "red_team_audit_prompts.md",
         "red_team_manifest.json",
-        "rlm_summary_cache.json",
         "soul_traces.jsonl"
     ],
     "exclude_patterns": [

@@ -16,7 +16,7 @@
   "00_CHRONICLE/ENTRIES/337_autonomous_curiosity_exploration___strange_loops_and_egyptian_labyrinths.md",
   ".agent/learning/learning_debrief.md",
   ".agent/learning/cognitive_primer.md",
-  ".agent/workflows/sanctuary-recursive-learning.md",
+  ".agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md",
   "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
   "mcp_servers/rag_cortex/operations.py",
   ".agent/learning/learning_audit/learning_audit_prompts.md",

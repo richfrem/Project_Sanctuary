@@ -117,7 +117,7 @@ Auto-generated seal snapshot
 ## 📑 Table of Contents
 1. [README.md](#entry-1)
 2. [Makefile](#entry-2)
-3. [.agent/workflows/sanctuary-recursive-learning.md](#entry-3)
+3. [.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md](#entry-3)
 4. [.env.example](#entry-4)
 5. [docs/operations/BOOTSTRAP.md](#entry-5)
 6. [docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md](#entry-6)

@@ -113,6 +113,9 @@ class LearningOperations:
             # Rules/Policies are FOUNDATIONAL and should be included
             if "rules/" in f:
                 return False
+            # RLM cache and cognitive primer are explicit manifest inputs
+            if base_name in ("rlm_summary_cache.json", "cognitive_primer.md"):
+                return False
             # Specific recursive artifacts already handled by ALWAYS_EXCLUDE_FILES
             # but we block the rest of the metadata dir by default
             return True

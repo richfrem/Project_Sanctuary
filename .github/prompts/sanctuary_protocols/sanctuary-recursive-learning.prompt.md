@@ -60,7 +60,7 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 1.  **The Seal**: Once the audit is approved, the agent calls `sanctuary-cortex-cortex-capture-snapshot` with `snapshot_type='seal'`.
 2.  **Successor Update**: The tool generates the final `learning_package_snapshot.md` for total technical continuity. 
     > [!IMPORTANT]
-    > **Meta-Preservation**: The manifest for the Seal MUST include this SOP (`.agent/workflows/sanctuary-recursive-learning.md`) if any logical optimizations were made during the session.
+    > **Meta-Preservation**: The manifest for the Seal MUST include this SOP (`.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md`) if any logical optimizations were made during the session.
 3.  **Preservation**: Commit all learning artifacts as per Protocol 101 Preservation.
 
 ---
@@ -73,7 +73,7 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 1.  **Reflect:** Did this session feel efficient? Were there friction points?
 2.  **Optimize:**
     *   If a tool failed >2 times, note it for Task 139 (Tool Hardening).
-    *   If the workflow felt rigid, update this file (`.agent/workflows/sanctuary-recursive-learning.md`) immediately.
+    *   If the workflow felt rigid, update this file (`.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md`) immediately.
 3.  **Log:** If significant improvements were identified, mention them in the Chronicle Entry.
 
 ---
