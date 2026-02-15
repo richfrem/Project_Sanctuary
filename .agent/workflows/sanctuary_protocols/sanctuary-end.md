@@ -12,10 +12,11 @@ tier: 1
 
 **Called By:** All `/codify-*` and `/spec-kitty.*` workflows
 
-> [!IMPORTANT] **Protocol 128 Pre-Requisites (Must Complete First):**
+> [!IMPORTANT] **Verify Protocol 128 Pre-Requisites (Must Be Complete):**
 > 1. **Seal** → `/sanctuary-seal` (snapshot created)
 > 2. **Persist** → `/sanctuary-persist` (HuggingFace upload)
 > 3. **Retrospective** → `/sanctuary-retrospective` (self-reflection)
+> 4. **Ingest** → `/sanctuary-ingest` (RAG update)
 
 ---
 
@@ -25,11 +26,12 @@ tier: 1
 2. **Present Links**: Provide the **Review Items** section with artifact links.
 3. **Wait for LGTM**: Obtain explicit developer approval in chat.
 
-> > [!IMPORTANT] **Protocol 128 Pre-Requisites (Must Complete First):**
+> > [!IMPORTANT] **Verify Protocol 128 Pre-Requisites (Must Be Complete):**
 > **Do NOT proceed** until user explicitly approves (e.g., "LGTM", "approved", "go ahead").
 > 1. **Seal** → `/workflow-seal` (snapshot created)
 > 2. **Persist** → `/workflow-persist` (HuggingFace upload)
 > 3. **Retrospective** → `/workflow-retrospective` (self-reflection)
+> 4. **Ingest** → `/workflow-ingest` (RAG update)
 
 ---
 
