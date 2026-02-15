@@ -5,7 +5,7 @@
 
 ## 1. Executive Summary
 
-OpenClaw is a Node.js/TypeScript-based autonomous agent framework designed with a "Gateway" architecture. It explicitly supports a **Sandbox Mode** and has robust, built-in security mechanisms for **Command Execution (HITL)** and **Network Isolation**.
+This analysis covers the **official OpenClaw** repository (`openclaw/openclaw`). It is a personal AI assistant framework that natively supports agentic workflows (often referred to as "Agent Zero" or "Pi Agent" in its documentation) through its Gateway architecture. It explicitly supports a **Sandbox Mode** and has robust, built-in security mechanisms.
 
 Its architecture aligns perfectly with the "Sanctum" strategy, specifically its ability to run as a non-root container and its built-in approval hooks.
 

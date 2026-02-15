@@ -57,7 +57,25 @@ We will mount a pre-configured approvals file into the container at `/home/node/
 *   **`ask`: "always"**: Triggers an approval request for *every* command (or "on-miss" for unlisted ones).
 *   **`askFallback`: "deny"**: If the user cannot be reached to approve, the command is blocked.
 
-### 3.2 Approval Workflow
+### 3.2 Authorization Table (Gated vs Autonomous)
+
+| Action Category | Specific Action | Status | Approval Required? |
+| :--- | :--- | :--- | :--- |
+| **Reading (Safe)** | `browser.goto(url)` | **Autonomous** | ❌ No |
+| | `browser.click(selector)` | **Autonomous** | ❌ No |
+| | `fs.readFile(path)` | **Autonomous** | ❌ No (if in allowed dir) |
+| | `http.get(url)` | **Autonomous** | ❌ No |
+| **Writing (Gated)** | `fs.writeFile(path)` | **Protected** | ✅ **YES** (HITL) |
+| | `fs.delete(path)` | **Protected** | ✅ **YES** (HITL) |
+| | `child_process.exec` | **Protected** | ✅ **YES** (HITL) |
+| | `http.post(url)` | **Protected** | ✅ **YES** (HITL) |
+| **System (Critical)** | `process.exit()` | **Protected** | ✅ **YES** (HITL) |
+| | `npm install` | **Protected** | ✅ **YES** (HITL) |
+
+*   **Autonomous**: Agent can decide to do this freely to gather information.
+*   **Protected**: Agent must ask the Guard, who asks the User. Default is DENY.
+
+### 3.3 Approval Workflow
 1.  Agent attempts to run `curl https://example.com`.
 2.  `RuntimeGuard` intercepts execution.
 3.  Approvals Socket (`~/.openclaw/exec-approvals.sock`) emits a **Request**.

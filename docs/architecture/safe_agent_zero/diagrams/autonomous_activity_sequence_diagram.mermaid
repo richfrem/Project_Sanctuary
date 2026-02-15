@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant Scheduled as Scheduler (Cron/Loop)
+    participant Agent as Agent Zero (Brain)
+    participant Scout as Scout (Browser)
+    participant Guard as Nginx Guard (Gatekeeper)
+    participant User as User (Subscriber)
+
+    Note over Agent: "Self-Interest" Loop (e.g. Daily Research)
+
+    Scheduled->>Agent: Trigger: "Daily AI News Check"
+    activate Agent
+    Agent->>Agent: Think: "I want to check openclaw.ai/blog"
+    
+    %% Action 1: Safe Browsing (Whitelisted/Read-Only)
+    Agent->>Scout: Command: browser.goto("https://openclaw.ai/blog")
+    activate Scout
+    Scout-->>Agent: Return: Page Content (Text Tree)
+    deactivate Scout
+    
+    Agent->>Agent: Analyze: "New release found!"
+    
+    %% Action 2: Privileged Action (Write to Disk)
+    Agent->>Agent: Decision: "Write report to 'daily_report.md'"
+    
+    %% Security Interception (Even for autonomous tasks!)
+    Agent->>Guard: Request: fs.writeFile("daily_report.md")
+    activate Guard
+    Guard->>User: Alert: "Agent wants to write 'daily_report.md'. Approve?"
+    
+    User->>Guard: Click "Approve"
+    Guard-->>Agent: Token: Allowed
+    deactivate Guard
+    
+    Agent->>Agent: Write File "daily_report.md"
+    deactivate Agent
