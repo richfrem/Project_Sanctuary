@@ -20,12 +20,12 @@ flowchart TB
     guard -- "Proxy / Commands" --> agent
 
     %% Egress Flow (Filtered)
-    agent -- "Whitelisted APIs (Anthropic, GitHub)" --> guard
+    agent -- "Whitelist Only (LLM APIs, GitHub)" --> guard
     guard -- "Egress" --> subscriber
 
     %% Execution Flow (Isolated)
-    agent -- "CDP / Control" --> scout
-    scout -- "Browsing" --> subscriber
+    agent -- "Command: Browse(URL)" --> scout
+    scout -- "Open Internet (Any Site)" --> subscriber
 
     %% Styling
     style guard fill:#f9f,stroke:#333,stroke-width:2px
@@ -35,8 +35,8 @@ flowchart TB
     %% Cross-Network Restrictions
     linkStyle 4 stroke:red,stroke-width:4px,stroke-dasharray: 5 5;
     
-    note_guard[Guard blocks all non-whitelisted traffic]
-    note_exec[Scout connects to Internet to render pages<br/>Agent only receives rendered output (pixels/a11y)]
+    note_guard["Guard blocks all non-whitelisted traffic"]
+    note_exec["Scout connects to Internet to render pages<br/>Returns: Screenshots & Text Tree (DOM snapshot)"]
     
     guard -.-> note_guard
     scout -.-> note_exec
