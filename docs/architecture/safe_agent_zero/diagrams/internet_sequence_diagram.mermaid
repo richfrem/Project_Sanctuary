@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant Subscriber as User (Subscriber)
+    participant Guard as Nginx Guard (Gatekeeper)
+    participant Agent as Agent Zero (Brain)
+    participant Scout as Scout (Browser)
+    participant Web as Internet (External)
+
+    Note over Agent, Scout: Execution Network (Air-Gapped)
+    Note over Guard, Agent: Control Network (Internal)
+
+    Subscriber->>Guard: "Research OpenClaw" (Command)
+    Guard->>Agent: Forward Command (Authenticated)
+    
+    activate Agent
+    Agent->>Agent: Think: "I need to browse openclaw.ai"
+    
+    %% Step 1: Browse Command
+    Agent->>Scout: Command: browser.goto("https://openclaw.ai")
+    activate Scout
+    
+    %% Step 2: Execution (Isolated)
+    Scout->>Web: HTTP GET openclaw.ai
+    Web-->>Scout: 200 OK (HTML/JS/CSS)
+    Scout->>Scout: Execute JS / Render DOM
+    
+    %% Step 3: Return Safe Artifacts
+    Scout-->>Agent: Return: [Screenshot.png, AccessibilityTree.json]
+    deactivate Scout
+    
+    %% Step 4: Analysis
+    Agent->>Agent: Analyze Text Tree (No JS Execution)
+    Agent-->>Guard: "Research Complete: Summary..."
+    deactivate Agent
+    
+    Guard-->>Subscriber: Display Result

@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant User as User (Subscriber)
+    participant Guard as Nginx Guard (Interface)
+    participant Agent as Agent Zero (Brain)
+    participant System as Local System (Files/CLI)
+
+    Note over Guard, Agent: Control Network (Secure WebSocket)
+
+    %% 1. User initiates a complex task
+    User->>Guard: "Create a Python script to calculate Pi"
+    Guard->>Agent: ACP: prompt("Create a Python script...")
+    
+    activate Agent
+    Agent->>Agent: Think: "I need to write to file 'pi.py'"
+
+    %% 2. Agent attempts privileged action
+    Agent->>System: Tool Call: fs.writeFile("pi.py")
+    
+    %% 3. Security Interception (HITL)
+    activate System
+    System-->>Guard: Intercept: "Execution Approval Required"
+    deactivate System
+    
+    Guard->>User: Alert: "Agent wants to write 'pi.py'. Approve?"
+    
+    %% 4. User Approval
+    User->>Guard: Click "Approve"
+    Guard->>System: Allow Execution (token)
+    
+    %% 5. Execution completes
+    activate System
+    System->>System: Write File
+    System-->>Agent: Success
+    deactivate System
+    
+    %% 6. Final Response
+    Agent-->>Guard: "I have created the script."
+    deactivate Agent
+    Guard-->>User: Display Response
