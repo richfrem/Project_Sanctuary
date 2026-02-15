@@ -31,6 +31,8 @@
 *   **Action**: Update `docker-compose.yml`.
     *   Set `read_only: true` for agent service.
     *   Drop all capabilities via `cap_drop: [ALL]`.
+    *   **Resource Limits**: `pids_limit: 100`, `mem_limit: 512m`, `cpus: 1.0`. [NEW]
+    *   **ulimits**: `nofile: { soft: 1024, hard: 2048 }`. [NEW]
 
 ---
 
@@ -45,6 +47,11 @@
         *   Block known exploit paths (e.g., `.env`, `.git`).
         *   Enforce `client_max_body_size 1M`.
     *   **Auth**: Implement Basic Auth (or OIDC proxy sidecar) for *all* routes.
+
+### 2.3 Egress Control (Forward Proxy) [NEW]
+*   **Action**: Add `squid` service to `docker-compose.yml` (on `execution-net` & external).
+*   **Configuration**: `squid.conf` whitelist: `.anthropic.com`, `.googleapis.com`, `.github.com`. Deny all others.
+*   **Agent Config**: Set `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY` environment variables in `agent_zero` container.
 
 ### 2.2 Integration Locking (Chatbots)
 *   **Action**: Create `config/integration_whitelist.json`.
@@ -97,6 +104,7 @@
         *   Port Scan (Nmap against container).
         *   Prompt Injection (Payload fuzzing).
         *   Path Traversal attempts.
+        *   **Container Escape**: Run `amicontained` and `deepce` to verify privilege dropping. [NEW]
 *   **Action**: Create `Makefile` target `audit-sanctum` that runs the Red Agent.
 
 ---
