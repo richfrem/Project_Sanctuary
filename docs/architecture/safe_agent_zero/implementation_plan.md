@@ -26,10 +26,12 @@
 
 ### 1.3 Unified Security Sidecar (Consolidated) [NEW - Round 5/8 Fix]
 *   **Action**: Create `docker/sidecar/Dockerfile` (Alpine + Squid + Dnsmasq).
-*   **DNS Role**: Replaces CoreDNS. Dnsmasq configured to resolve allowlisted domains and block everything else.
+*   **Hardening**: Run as user `squid`. Apply `agent-profile.json` (Seccomp). [NEW - Final Review Fix]
+*   **DNS Role**: Dnsmasq configured to resolve allowlisted domains and block everything else.
 *   **Proxy Role**: 
     *   Port 3128: Agent Proxy (Strict API Allowlist).
     *   Port 3129: Scout Proxy (Browsing Allowlist + Logging).
+    *   **Domain Pinning**: NO Wildcards allowed (except specific subdomains if strictly necessary). [NEW - Final Review Fix]
 *   **Health**: Bind health checks to localhost. `restart: always`.
 
 ### 1.4 Container Hardening (Docker)
@@ -42,6 +44,7 @@
     *   Drop all capabilities via `cap_drop: [ALL]`.
     *   **Security Opts**: `security_opt: [no-new-privileges:true]`.
     *   **Seccomp**: Create and apply `docker/seccomp/agent-profile.json`.
+    *   **Policy Mount**: Mount `config/policy.yaml` as `/etc/sanctum/policy.yaml:ro`. [NEW - Final Review Fix]
     *   **Resource Limits**: `pids_limit: 100`, `mem_limit: 512m`.
 
 ---
@@ -70,8 +73,9 @@
 ### 3.1 Permission Policy Enforcement
 *   **Action**: Create `config/agent_permissions.yaml` implementing the **Operational Policy Matrix**.
     *   `ExecAllowlist`: `['ls', 'cat', 'grep', 'git status']`.
-    *   `ExecBlocklist`: `['rm', 'chmod', 'sudo', 'npm install', 'pip install']`.
+    *   `ExecBlocklist`: `['rm', 'chmod', 'sudo', 'npm install', 'pip install', 'git pull', 'git reset']`. [NEW - Final Review Fix]
     *   `HitlTrigger`: `['fs.writeFile', 'fs.unlink', 'shell.exec']` (Require "Human Approval").
+    *   **Implementation**: Logic loader must read from `/etc/sanctum/policy.yaml` (Read-Only Mount), NOT from the workspace. [NEW - Final Review Fix]
 
 ### 3.2 Secret Management
 *   **Action**: Audit code to ensure NO secrets are read from `config.json`.
@@ -89,8 +93,9 @@
 
 ### 4.2 Browser Tool Sanitization
 *   **Action**: Modify/Configure Agent's Browser Tool.
-    *   **Deny**: Local `puppeteer` launch.
-    *   **Allow**: Remote connection to `ws://scout:3000`.
+    *   **Deny**: Local `puppeteer`/`playwright` launch (Remove `ensure_playwright_binary`). [Updated]
+    *   **Allow**: Remote connection to `ws://sanctum-scout:3000` (CDP).
+    *   **Patch**: Modify `python/tools/browser_agent.py` to use `connect_over_cdp` instead of `launch`.
     *   **Sanitization**: Ensure returned content is Text/Markdown or Screenshot, strictly stripping script tags/active content before ingestion by the LLM.
     *   **Network Isolation**: Scout is attached ONLY to `execution-net` and `browsing-net`. No direct internet access.
     *   **Browsing Proxy**: All Scout traffic routed through `sanctum-sidecar` on `browsing-net`.

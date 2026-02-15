@@ -1,0 +1,34 @@
+{
+    "title": "Safe Agent Zero: Gold Master Architecture Bundle",
+    "description": "The definitive, frozen architecture specification for Safe Agent Zero (MVSA 4-Container Model). Use this for implementation.",
+    "files": [
+        {
+            "path": "README.md",
+            "note": "Project Overview and Context"
+        },
+        {
+            "path": "docs/architecture/safe_agent_zero/implementation_plan.md",
+            "note": "The Execution Plan (Step-by-Step Build Instructions)"
+        },
+        {
+            "path": "docs/architecture/safe_agent_zero/defense_in_depth_strategy.md",
+            "note": "The 10-Layer Defense Strategy (Why we built it this way)"
+        },
+        {
+            "path": "docs/architecture/safe_agent_zero/operational_policy_matrix.md",
+            "note": "The Rules of Engagement (Policy Source of Truth)"
+        },
+        {
+            "path": "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT.md",
+            "note": "The Audit Trail (Why it is safe)"
+        },
+        {
+            "path": "docker/",
+            "note": "Base Docker Configuration & Hardening Profiles"
+        },
+        {
+            "path": "docs/architecture/safe_agent_zero/",
+            "note": "Full Architecture Documentation Folder"
+        }
+    ]
+}

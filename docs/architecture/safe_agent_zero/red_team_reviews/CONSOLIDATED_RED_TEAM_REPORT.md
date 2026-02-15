@@ -1,77 +1,78 @@
-# Safe Agent Zero: Consolidated Red Team Report (Git-Backed)
+# Safe Agent Zero: Consolidated Red Team Report (Final Gold Master)
 
 **Date:** 2026-02-15
-**Status:** **Approved for Build (With Round 5 Simplifications)**
-**Scope:** Rounds 2-5 (Genuine Claude Opus Reviews)
-**Reviewers:** Claude Opus (Red Teamer, Security Auditor, Architect Personas)
+**Status:** **APPROVED FOR BUILD ( CONDITIONAL )**
+**Scope:** Full Architectural Review (Automated + Manual)
+**Reviewers:** Claude Opus (CLI), GPT-4o (Manual), Grok 3 (Manual), Gemini 1.5 Pro (Manual)
 
 ---
 
 ## 1. Executive Summary
 
-We executed 4 rounds of genuine adversarial review using the Claude CLI. The architecture evolved from a basic setup to a hardened, isolated environment.
+The "Safe Agent Zero" architecture has undergone a rigorous, multi-model adversarial review. The consensus is that the move to the **MVSA (4-Container Model)** was the correct decision to reduce "Accidental Complexity," but specific high-value weaknesses remain in the **Control Plane** and **Sidecar Trust Model**.
 
-**Review History:**
-*   **Round 2 (Baseline):** "Conditional GO". Identified need for explicit DNS firewall and `no-new-privileges`.
-*   **Round 3 (Hardening):** "Conditional GO". Validated Seccomp profile. Flagged Squid wildcard looseness.
-*   **Round 4 (Pen-Test):** **"CRITICAL"**. Identified "Scout Exfiltration" (Agent puppeteering Scout to bypass proxy) as a fatal flaw.
-*   **Round 5 (Architecture):** **"HIGH IMPACT"**. Validated Security but flagged "Sidecar Sprawl" (6+ containers). Recommended **Remote Browser Isolation** and **Sidecar Consolidation**.
+**Verdict by Model:**
+*   **Gemini (The Pragmatist):** **"A" (Secure & Simple)**. Validates the 4-container model. Highlights danger of `git pull` in agent logic.
+*   **Grok (The Adversary):** **"Conditional Safe"**. Identifies "Scout as Exfiltration Oracle" and "Sidecar Trust Collapse". Demands domain pinning.
+*   **GPT-4o (The Architect):** **"Conditional"**. Flags "Trust Boundary Ambiguity" in Policy Engine. Demands strict JSON schema for policy.
 
-**Final Decision:** Stop Red Teaming. Implement the **Round 5 Architect's Recommendations** (The "MVSA" Model).
-
----
-
-## 2. Critical Findings & Adopted Fixes
-
-### 2.1 The "Scout Exfiltration" Flaw (Round 4)
-*   **Risk:** Agent puts secrets in URL params -> Navigates Scout -> Scout (on open internet) sends to attacker. Bypass of all Agent proxies.
-*   **Adopted Fix (Round 5 Recommendation):** **Scout Network Isolation**.
-    *   Scout is removed from the Internet.
-    *   Scout is attached *only* to a `browsing-net`.
-    *   Traffic egresses via a dedicated proxy on `browsing-net`.
-
-### 2.2 The "Distributed Monolith" Risk (Round 5)
-*   **Risk:** Architecture grew to 6 containers (`Guard`, `Agent`, `Scout`, `CoreDNS`, `Squid`, `ScoutProxy`). Too complex to maintain or verify.
-*   **Adopted Fix (Round 5 Recommendation):** **Unified Security Sidecar**.
-    *   Consolidated `CoreDNS` + `Squid` into a single `security-sidecar`.
-    *   Reduces topology to 4 containers.
-
-### 2.3 Container Breakout (Round 3)
-*   **Risk:** Privilege escalation via syscalls.
-*   **Adopted Fix:** Custom `seccomp` profile (blocking `ptrace`, `mount`, `keyctl`) + `no-new-privileges`.
+**Final Decision:** Proceed to Build, with **3 Mandatory Fixes** derived from this review.
 
 ---
 
-## 3. The "Gold Master" Architecture (4-Container Model)
+## 2. Critical Findings & Mandatory Fixes
 
-Based on the Architect's feedback in Round 5, this is the build target:
+### 2.1 Scout Exfiltration (The "Oracle" Problem)
+*   **Finding (Grok):** Even with network isolation, the Agent controls Scout via CDP. It can instruct Scout to screenshot a secret and then exfiltrate that screenshot via steganography or timing channels.
+*   **Fix:** **CDP Command Filter** (or strict operational limits).
+    *   *Implementation:* We will enforce strict **Domain Pinning** (No Wildcards) in the Sidecar Proxy.
+    *   *Implementation:* We will block `Page.captureScreenshot` in the Agent's tool definition wrapper (Layer 9).
+
+### 2.2 Sidecar Trust Collapse
+*   **Finding (Grok):** The "Unified Sidecar" is a single point of failure. If compromised, it has access to all networks.
+*   **Fix:** **Least Privilege Sidecar**.
+    *   *Implementation:* Run Squid and Dnsmasq as non-root user `squid`.
+    *   *Implementation:* Apply the same `agent-profile.json` Seccomp profile to the Sidecar.
+
+### 2.3 Policy Ambiguity
+*   **Finding (GPT):** "Where does the policy live?" If the Agent can modify its own guardrails, the game is over.
+*   **Fix:** **Immutable Policy Mounts**.
+    *   *Implementation:* `policy.yaml` must be mounted `read-only` into the Agent container.
+    *   *Implementation:* The `ActionValidator` logic must be loaded from a read-only path, separate from the writable workspace.
+
+### 2.4 Operational Guardrails
+*   **Finding (Gemini):** A simple `git pull` could wipe the local worktree.
+*   **Fix:** **Destructive Command Blocklist**.
+    *   *Implementation:* Explicitly block `git pull`, `git reset`, `rm -rf` in the `ActionValidator`.
+
+---
+
+## 3. The "Gold Master" Architecture (Frozen)
 
 ### 1. `sanctum-guard` (Nginx)
-*   **Context:** Host <-> Internal.
-*   **Role:** Authentication, Rate Limiting, API Gateway.
+*   **Role:** User-Facing Ingress.
+*   **Security:** Basic Auth, Rate Limiting.
 
 ### 2. `sanctum-agent` (Node.js)
-*   **Context:** Internal (Controller).
-*   **Networks:** `control-net`, `execution-net`.
-*   **Hardening:** Read-Only Root, Seccomp, No Internet.
+*   **Role:** The Brain.
+*   **Hardening:**
+    *   `read-only` rootfs.
+    *   `no-new-privileges: true`.
+    *   Seccomp: `agent-profile.json`.
+    *   **Policy:** Read-Only mount at `/etc/sanctum/policy.yaml`.
 
 ### 3. `sanctum-scout` (Chromium)
-*   **Context:** Internal (Browser).
-*   **Networks:** `execution-net`, `browsing-net`.
-*   **Hardening:** Read-Only Root, Seccomp, No Internet.
+*   **Role:** The Browser.
+*   **Isolation:** `execution-net` (CDP) + `browsing-net` (Proxy). **NO INTERNET.**
 
 ### 4. `sanctum-sidecar` (Squid + Dnsmasq)
-*   **Context:** Egress Gateway.
-*   **Networks:** `control-net`, `execution-net`, `browsing-net`, Host.
-*   **Role:**
-    *   DNS Resolver (via Dnsmasq).
-    *   Agent Proxy (via Squid port 3128).
-    *   Scout Proxy (via Squid port 3129).
+*   **Role:** The Jailer.
+*   **Hardening:** Run as `squid` user. Seccomp profile applied.
+*   **Policy:** Strict Domain Pinning (Allowlist ONLY, NO Wildcards).
 
 ---
 
-## 4. Conclusion
+## 4. Next Steps
 
-The Red Team Loop is complete. We have sufficient feedback to build a secure, scalable v1. Further theoretical reviews yield diminishing returns until we have a running artifact to pentest.
-
-**Action:** Proceed to **WP-004: Build & Implementation**.
+1.  **Update `implementation_plan.md`** to include "Sidecar Seccomp" and "Read-Only Policy Mounts".
+2.  **Execute WP-004**: Build the system.
