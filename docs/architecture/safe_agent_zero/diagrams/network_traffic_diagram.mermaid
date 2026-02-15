@@ -1,5 +1,5 @@
 flowchart TB
-    subscriber((User / Internet))
+    internet((User / Internet / API))
 
     subgraph "Docker Host (MacBook Pro)"
         subgraph "Frontend Network (Public)"
@@ -8,35 +8,39 @@ flowchart TB
 
         subgraph "Control Network (Internal)"
             agent["fa:fa-brain Agent Zero<br/>(OpenClaw)"]
+            dns["fa:fa-compass CoreDNS<br/>(DNS Filter)"]
         end
 
-        subgraph "Execution Network (Air-Gapped)"
+        subgraph "Execution Network (Air-Gapped / Egress Controlled)"
             scout["fa:fa-eye Scout<br/>(Browser Sub-Agent)"]
+            squid["fa:fa-filter Squid Proxy<br/>(Egress Control)"]
         end
     end
 
     %% Ingress Flow
-    subscriber -- "HTTPS:443" --> guard
-    guard -- "Proxy / Commands" --> agent
+    internet -- "HTTPS:443 (MFA)" --> guard
+    guard -- "ACP Command" --> agent
+
+    %% Internal Services
+    agent -- "DNS Query (Whitelist)" --> dns
+    dns -.->|Block| internet
 
     %% Egress Flow (Filtered)
-    agent -- "Whitelist Only (LLM APIs, GitHub)" --> guard
-    guard -- "Egress" --> subscriber
-
+    agent -- "HTTP CONNECT (Explicit Proxy)" --> squid
+    squid -- "Whitelisted APIs Only" --> internet
+    
     %% Execution Flow (Isolated)
-    agent -- "Command: Browse(URL)" --> scout
-    scout -- "Open Internet (Any Site)" --> subscriber
+    agent -- "CDP Control (Unidirectional)" --> scout
+    scout -- "Open Internet (Any Site)" --> internet
+    
+    %% Lateral Movement Block
+    scout -.->|FIREWALL DENY| agent
 
     %% Styling
     style guard fill:#f9f,stroke:#333,stroke-width:2px
     style agent fill:#bbf,stroke:#333,stroke-width:2px
     style scout fill:#bfb,stroke:#333,stroke-width:2px
+    style squid fill:#f96,stroke:#333,stroke-width:2px
+    style dns fill:#9f9,stroke:#333,stroke-width:2px
 
-    %% Cross-Network Restrictions
-    linkStyle 4 stroke:red,stroke-width:4px,stroke-dasharray: 5 5;
-    
-    note_guard["Guard blocks all non-whitelisted traffic"]
-    note_exec["Scout connects to Internet to render pages<br/>Returns: Screenshots & Text Tree (DOM snapshot)"]
-    
-    guard -.-> note_guard
-    scout -.-> note_exec
+    linkStyle 7 stroke:red,stroke-width:4px,stroke-dasharray: 5 5;

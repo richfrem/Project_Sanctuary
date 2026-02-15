@@ -16,23 +16,33 @@
 *   **Settings**: `PasswordAuthentication no`, `PermitRootLogin no`, `AllowUsers <admin_user>`.
 *   **Verification**: Manual audit of host `/etc/ssh/sshd_config`.
 
-### 1.2 Network Segmentation
+### 1.2 Network Segmentation (The "MVSA" 4-Container Model)
 *   **Action**: Define Docker networks in `docker-compose.yml`.
-    *   `frontend-net`: Exposes Guard (Nginx) to host/internet (if tunneled).
-    *   `control-net`: Connects Guard to Agent (Internal ONLY).
-    *   `execution-net`: Connects Agent to Scout (Internal ONLY).
-*   **Constraint**: `agent_zero` must NOT be attached to `frontend-net`.
+    *   `frontend-net`: Host <-> Guard (Nginx).
+    *   `control-net`: Guard <-> Agent <-> Sidecar.
+    *   `execution-net`: Agent <-> Scout <-> Sidecar. **NO INTERNET.**
+    *   `browsing-net`: Scout <-> Sidecar. **NO INTERNET (Direct).**
+*   **Lateral Movement**: Rules enforce `Agent -> Scout` (CDP) and `Agent -> Sidecar` (DNS/Proxy). `Scout -> Agent` is DENIED.
 
-### 1.3 Container Hardening (Docker)
+### 1.3 Unified Security Sidecar (Consolidated) [NEW - Round 5/8 Fix]
+*   **Action**: Create `docker/sidecar/Dockerfile` (Alpine + Squid + Dnsmasq).
+*   **DNS Role**: Replaces CoreDNS. Dnsmasq configured to resolve allowlisted domains and block everything else.
+*   **Proxy Role**: 
+    *   Port 3128: Agent Proxy (Strict API Allowlist).
+    *   Port 3129: Scout Proxy (Browsing Allowlist + Logging).
+*   **Health**: Bind health checks to localhost. `restart: always`.
+
+### 1.4 Container Hardening (Docker)
 *   **Action**: Create `docker/Dockerfile.agent`.
     *   **Base**: Official OpenClaw image (pinned version).
     *   **User**: Create non-root user `openclaw` (UID 1000).
-    *   **Filesystem**: Run strictly as read-only, with specific writable volumes for `workspace/` and `scratchpad/`.
+    *   **Filesystem**: Run strictly as read-only. Mount `/tmp` and `/dev/shm` with `noexec,nosuid,nodev`.
 *   **Action**: Update `docker-compose.yml`.
     *   Set `read_only: true` for agent service.
     *   Drop all capabilities via `cap_drop: [ALL]`.
-    *   **Resource Limits**: `pids_limit: 100`, `mem_limit: 512m`, `cpus: 1.0`. [NEW]
-    *   **ulimits**: `nofile: { soft: 1024, hard: 2048 }`. [NEW]
+    *   **Security Opts**: `security_opt: [no-new-privileges:true]`.
+    *   **Seccomp**: Create and apply `docker/seccomp/agent-profile.json`.
+    *   **Resource Limits**: `pids_limit: 100`, `mem_limit: 512m`.
 
 ---
 
@@ -42,21 +52,15 @@
 ### 2.1 Nginx Guard Configuration
 *   **Action**: Create `docker/nginx/conf.d/default.conf`.
     *   **Upstream**: Define `upstream agent { server agent:18789; }`.
-    *   **Ingress Rules**:
-        *   Only allow `GET/POST` to specific API endpoints.
-        *   Block known exploit paths (e.g., `.env`, `.git`).
-        *   Enforce `client_max_body_size 1M`.
-    *   **Auth**: Implement Basic Auth (or OIDC proxy sidecar) for *all* routes.
-
-### 2.3 Egress Control (Forward Proxy) [NEW]
-*   **Action**: Add `squid` service to `docker-compose.yml` (on `execution-net` & external).
-*   **Configuration**: `squid.conf` whitelist: `.anthropic.com`, `.googleapis.com`, `.github.com`. Deny all others.
-*   **Agent Config**: Set `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY` environment variables in `agent_zero` container.
+    *   **Ingress Rules**: Allow specific API endpoints. Block exploits. Limit body size.
+    *   **Auth**: Implement Basic Auth / OIDC.
 
 ### 2.2 Integration Locking (Chatbots)
 *   **Action**: Create `config/integration_whitelist.json`.
     *   Define allowed User IDs for Telegram/Discord.
-*   **Action**: Implement middleware `src/middleware/chat_guard.ts` (or similar) to check incoming messages against this whitelist before processing.
+*   **Action**: Implement middleware to check incoming messages.
+
+
 
 ---
 
@@ -88,6 +92,9 @@
     *   **Deny**: Local `puppeteer` launch.
     *   **Allow**: Remote connection to `ws://scout:3000`.
     *   **Sanitization**: Ensure returned content is Text/Markdown or Screenshot, strictly stripping script tags/active content before ingestion by the LLM.
+    *   **Network Isolation**: Scout is attached ONLY to `execution-net` and `browsing-net`. No direct internet access.
+    *   **Browsing Proxy**: All Scout traffic routed through `sanctum-sidecar` on `browsing-net`.
+    *   **Egress Monitoring**: Proxy logs all URLs. navigation to non-whitelisted domains requires HITL or is blocked (Configurable).
 
 ---
 
