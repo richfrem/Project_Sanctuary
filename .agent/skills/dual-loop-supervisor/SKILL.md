@@ -76,6 +76,16 @@ python3 tools/orchestrator/verify_workflow_state.py --feature <SLUG> --phase tas
 **PROOF**: Paste verification output showing checkmarks.
 **STOP**: Do NOT proceed to Step 2 until verification passes.
 
+### Step 1.5: Protocol 128 Audit (Mandatory)
+
+> **Red Team Review**: Before generating the strategy packet, you MUST run the audit to bundle context for the Red Team.
+
+```bash
+/sanctuary-audit
+```
+**PROOF**: Paste output showing the audit packet generation.
+**STOP**: Do NOT proceed to Step 2 until the audit is complete.
+
 ---
 
 ### Step 2: Prepare Worktree & Packet (Outer Loop)

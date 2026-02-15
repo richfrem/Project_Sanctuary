@@ -112,8 +112,8 @@ Scout → Synthesize → Gate → Audit → [Execution / Dual-Loop] → Seal →
 
 **Option B: Dual Loop (Protocol 133)**
 *   **Action**: Delegate execution to Inner Loop.
-*   **Command**: Follow `dual-loop-supervisor` Skill.
-*   **Return**: Once Inner Loop finishes, resume here at **Phase V (RLM Synthesis)**.
+*   **Command**: Open `dual-loop-supervisor` SKILL. Execute starting from **Step 1**.
+*   **Return**: Once Inner Loop finishes (Step 5 "Done"), resume here at **Phase V (RLM Synthesis)**.
 
 ---
 

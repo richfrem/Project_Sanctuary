@@ -61,4 +61,4 @@
 - [ ] **No Issues**: Everything was perfect.
 
 **Action Details**:
-> Patched `workflow_manager.py` to support `specs/` branch prefix. Created `workflow-retrospective-template.md`. Updated `sanctuary-audit.md` with manifest/prompt steps.
+> Patched `workflow_manager.py` to support `specs/` branch prefix. Created `workflow-retrospective-template.md`. Updated `sanctuary-audit.md` with manifest/prompt steps. Reset `learning_audit_manifest.json` and `learning_audit_prompts.md` to reusable templates.
