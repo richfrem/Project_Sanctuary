@@ -135,3 +135,12 @@ Each service `.in` file begins with `-r ../../../requirements-core.in` to inheri
 - **Pinning `==` instead of `>=`** for security floors — use `>=` so `pip-compile` can resolve freely.
 - **Adding dev tools to production `.in` files** — keep `pytest`, `ruff`, etc. in `requirements-dev.in`.
 - **Committing `.txt` without `.in`** — always commit them as a pair.
+
+## 🎯 Agent Diagnostics (The Dependency Doctor)
+If `pip-compile` fails:
+1.  **Check for Conflict**: Read the error. Is `package A` requiring `lib<2.0` while `package B` needs `lib>=3.0`?
+    *   **Action**: Check if `package A` has a newer version. Bump it in `.in`.
+2.  **Circular Dependency**:
+    *   **Action**: Temporarily comment out the circular ref in `.in`, compile, then uncomment.
+3.  **Environment Mismatch**:
+    *   **Action**: Run `pip list` to ensure your local env isn't polluting the build. Use a fresh `venv` if unsure.

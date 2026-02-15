@@ -1,0 +1,45 @@
+{
+    "description": "Standalone utility for validating and fixing documentation links.",
+    "files": [
+        {
+            "path": "UNPACK_INSTRUCTIONS.md",
+            "note": "CRITICAL: How to hydrate this tool"
+        },
+        {
+            "path": "README.md",
+            "note": "Documentation"
+        },
+        {
+            "path": "tools/standalone/link-checker/prompt.md",
+            "note": "Agent Protocol"
+        },
+        {
+            "path": "INSTALL.md",
+            "note": "Installation Guide"
+        },
+        {
+            "path": "docs/tools/standalone/link-checker/unpacking.mmd",
+            "note": "Diagram: Unpacking Process"
+        },
+        {
+            "path": "docs/tools/standalone/link-checker/logic.mmd",
+            "note": "Diagram: Internal Logic"
+        },
+        {
+            "path": "docs/tools/standalone/link-checker/workflow.mmd",
+            "note": "Diagram: Workflow"
+        },
+        {
+            "path": "tools/curate/link-checker/check_broken_paths.py",
+            "note": "Script: The Inspector"
+        },
+        {
+            "path": "tools/curate/link-checker/map_repository_files.py",
+            "note": "Script: The Mapper"
+        },
+        {
+            "path": "tools/curate/link-checker/smart_fix_links.py",
+            "note": "Script: The Fixer"
+        }
+    ]
+}

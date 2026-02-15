@@ -139,6 +139,14 @@ python3 -c "import json; json.load(open('.agent/learning/rlm_summary_cache.json'
 - Avoid **Noise**: don't pad with obvious observations, don't repeat the filename as the description
 - A good summary lets the agent decide whether to read the full file without actually reading it
 
+### 🎯 Quality Gate (The Editor)
+**Before saving to cache**, critique your own summary:
+1.  **Does it answer "Why?"**: "This script runs the server" (BAD) vs "Launches backend on port 3001 and handles Questrade auth" (GOOD).
+2.  **Is it specific?**: Avoid "various functions". Name the key classes.
+3.  **Is it hallucinations-free?**: Did you actually see that port number in the code?
+
+**IF FAILED**: Rewrite immediately. Do not save garbage.
+
 ### Conciseness
 - Summary cache: Target 2-5 sentences for simple docs, up to a paragraph for complex protocols
 - Tool cache: Keep `purpose` to 1-2 sentences. Let the structured fields carry the detail.

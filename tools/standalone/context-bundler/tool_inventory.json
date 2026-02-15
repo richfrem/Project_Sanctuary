@@ -26,6 +26,15 @@
                     "description": "Utility: Handles cross-platform path resolution for the toolchain."
                 }
             ]
+        },
+        "skills": {
+            "core": [
+                {
+                    "name": "context-bundling",
+                    "path": ".agent/skills/context-bundling",
+                    "description": "Agent skill for creating and managing technical context bundles."
+                }
+            ]
         }
     }
 }

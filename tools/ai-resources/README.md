@@ -1,10 +1,10 @@
 # AI Resources for LLM Analysis
 
-This directory provides prompts, checklists, and guidance for using LLMs in Project Sanctuary workflows.
+This directory provides prompts, checklists, and guidance for using LLMs to analyze and modernize Oracle Forms code.
 
 ## Quick Start
 
-1. **Load the System Prompt** → `prompts/Context_Bundler_System_Prompt.md`
+1. **Load the System Prompt** → `prompts/Investment_stock_valuation_expert_prompt.md`
 2. **Gather Context** → Use checklist in `checklists/context-gathering-checklist.md`
 3. **Choose a Task Prompt:**
 
@@ -12,17 +12,17 @@ This directory provides prompts, checklists, and guidance for using LLMs in Proj
 |------|-------------|
 | Extract Business Rules | `prompts/LLM-prompt-to-find-businessrules.md` |
 | Analyze Access Control | `prompts/AccessControl_DeepDive_Prompt.md` |
-| Code Analysis | `prompts/Code_Conversion_Prompt.md` |
+| Convert to React/.NET | `prompts/Code_Conversion_Prompt.md` |
 
 ## Directory Structure
 
 ```
 tools/ai-resources/
 ├── prompts/
-│   ├── Context_Bundler_System_Prompt.md       # Load first (persona + file map)
+│   ├── Investment_stock_valuation_expert_prompt.md   # Load first (persona + file map)
 │   ├── LLM-prompt-to-find-businessrules.md    # Business rule extraction
 │   ├── AccessControl_DeepDive_Prompt.md       # Access control analysis
-│   └── Code_Conversion_Prompt.md              # Code analysis and conversion
+│   └── Code_Conversion_Prompt.md              # Oracle → React/.NET conversion
 └── checklists/
     └── context-gathering-checklist.md          # What to paste into LLM
 ```
@@ -36,6 +36,6 @@ tools/ai-resources/
 
 ## Related Resources
 
-- [Tool Inventory](../../tools/TOOL_INVENTORY.md) - Available CLI tools
-- [Workflow Inventory](../../docs/antigravity/workflow/WORKFLOW_INVENTORY.md) - Available workflows
-- [RLM Summary Cache](../../.agent/learning/rlm_summary_cache.json) - Semantic context
+- [Form Relationships] (Reference Missing: ) - Dependency analysis scripts
+- [Business Rule Extraction] (Reference Missing: ) - Analysis templates
+- [Analysis Outputs] (Reference Missing: ) - Previous analysis results

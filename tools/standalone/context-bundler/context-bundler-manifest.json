@@ -1,6 +1,6 @@
 {
   "title": "Context Bundler Self-Bundle",
-  "description": "Complete context bundle for the Context Bundler tool — bundled with itself.",
+  "description": "Complete context bundle for the Context Bundler tool \u2014 bundled with itself.",
   "files": [
     {
       "path": "tools/standalone/context-bundler/prompt.md",
@@ -69,6 +69,10 @@
     {
       "path": "tools/standalone/context-bundler/base-manifests",
       "note": "Base manifest templates directory"
+    },
+    {
+      "path": ".agent/skills/context-bundling",
+      "note": "Skill: Context Bundling Instructions"
     }
   ]
 }

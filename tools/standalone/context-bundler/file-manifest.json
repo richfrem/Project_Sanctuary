@@ -1,66 +1,77 @@
 {
-  "title": "Context Bundler Self-Bundle",
-  "description": "Complete context bundle for the Context Bundler tool — bundled with itself.",
+  "title": "Round 2.1 Review: Stock Valuation Context Bundle",
   "files": [
     {
-      "path": "tools/standalone/context-bundler/UNPACK_INSTRUCTIONS.md",
-      "note": "How to unpack a bundle"
+      "path": "README.md",
+      "note": "Project overview"
     },
     {
-      "path": "tools/standalone/context-bundler/README.md",
-      "note": "Bundler overview and usage"
+      "path": "temp/round_2_prompt.md",
+      "note": "Opus 4.6 Review Prompt"
     },
     {
-      "path": "tools/standalone/context-bundler/INSTALL.md",
-      "note": "Installation guide"
+      "path": "docs/architecture/stock-valuation/README.md",
+      "note": "Valuation Agent Usage Guide"
     },
     {
-      "path": "tools/standalone/context-bundler/TOOL_INVENTORY.md",
-      "note": "Tool inventory entry"
+      "path": "docs/architecture/stock-valuation/valuation-persistence.md",
+      "note": "Architecture Proposal"
     },
     {
-      "path": "docs/tools/standalone/context-bundler/bundler-internal-logic.mmd",
-      "note": "Mermaid diagram: internal logic flow"
+      "path": "docs/architecture/stock-valuation/red_team_review_round_2_1.md",
+      "note": "Round 2.1 Feedback"
     },
     {
-      "path": "docs/tools/standalone/context-bundler/setup-lifecycle-workflow.mmd",
-      "note": "Mermaid diagram: setup lifecycle"
+      "path": "docs/architecture/ai-portfolio-analyst-strategy/AI-augmented-stock-valuation-and-thesis-alignment.md",
+      "note": "High-Level AI Strategy"
     },
     {
-      "path": "docs/tools/standalone/context-bundler/agent-unpacking-process.mmd",
-      "note": "Mermaid diagram: agent unpacking process"
+      "path": "docs/ADRs/020-robust-valuation-persistence.md",
+      "note": "ADR 020"
     },
     {
-      "path": "tools/retrieve/bundler/bundle.py",
-      "note": "Core bundler script"
+      "path": "tools/investment-screener/frontend/src/components/ValuationModeler.tsx",
+      "note": "Frontend: Valuation Modeler"
     },
     {
-      "path": "tools/retrieve/bundler/manifest_manager.py",
-      "note": "Manifest management utilities"
+      "path": "tools/investment-screener/frontend/src/components/ProjectionsPanel.tsx",
+      "note": "Frontend: Projections Panel"
     },
     {
-      "path": "tools/investigate/utils/path_resolver.py",
-      "note": "Path resolution utility"
+      "path": "tools/investment-screener/frontend/src/services/api.ts",
+      "note": "Frontend: API Service"
     },
     {
-      "path": "tools/standalone/context-bundler/file-manifest-schema.json",
-      "note": "JSON schema for manifests"
+      "path": "tools/investment-screener/frontend/src/services/storage.ts",
+      "note": "Frontend: Storage Service"
     },
     {
-      "path": ".agent/workflows/utilities/bundle-manage.md",
-      "note": "Workflow: create/manage bundles"
+      "path": "tools/investment-screener/backend/src/index.ts",
+      "note": "Backend: Entry Point"
     },
     {
-      "path": "docs/diagrams/workflows/curate-bundle.mmd",
-      "note": "Mermaid diagram: curate bundle workflow"
+      "path": "tools/investment-screener/backend/src/services/ProjectionService.ts",
+      "note": "Backend: Projection Service"
     },
     {
-      "path": "docs/tools/standalone/context-bundler/architecture.md",
-      "note": "Architecture documentation"
+      "path": "tools/investment-screener/backend/src/utils/zod-schemas.ts",
+      "note": "Backend: Zod Schemas"
     },
     {
-      "path": "tools/standalone/context-bundler/base-manifests",
-      "note": "Base manifest templates directory"
+      "path": ".agent/skills/stock_valuation/SKILL.md",
+      "note": "Stock Valuation Skill"
+    },
+    {
+      "path": ".agent/skills/stock_valuation/references/analysis_prompt.md",
+      "note": "Analysis Prompt"
+    },
+    {
+      "path": ".agent/skills/stock_valuation/references/example_NVDA.json",
+      "note": "Example Projection"
+    },
+    {
+      "path": ".agent/workflows/stock-and-portfolio-evaluation/evaluate-stock.md",
+      "note": "Workflow Trigger"
     }
   ]
 }
