@@ -9,29 +9,25 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
-    # 0. Default Behavior (Sanctuary Profile)
-    # Uses manifest: tools/standalone/rlm-factory/rlm_manifest.json
-    python tools/codify/rlm/distiller.py
-
     # 1. Distill a single file (Tool Logic) -- CRITICAL: Use --type tool for code!
     python tools/codify/rlm/distiller.py --file tools/codify/rlm/rlm_config.py --type tool
     python tools/codify/rlm/distiller.py --file tools/investigate/miners/db_miner.py --type tool --force
 
-    # 2. Distill project documentation (Default: --type sanctuary)
-    python tools/codify/rlm/distiller.py --file ADRs/083_manifest_centric_architecture.md
+    # 2. Distill legacy system documentation (Default: --type legacy)
+    python tools/codify/rlm/distiller.py --file legacy-system/oracle-forms-overviews/forms/FORM0000-Overview.md
 
     # 3. Incremental update (files changed in last 24 hours)
-    python tools/codify/rlm/distiller.py --since 24 --type sanctuary
+    python tools/codify/rlm/distiller.py --since 24 --type legacy
 
     # 4. Process specific directory
-    python tools/codify/rlm/distiller.py --target ADRs/ --type sanctuary
+    python tools/codify/rlm/distiller.py --target legacy-system/business-rules --type legacy
     
     # 5. Force update (regenerate summaries even if unchanged)
     python tools/codify/rlm/distiller.py --target tools/investigate/miners --type tool --force
 
     IMPORTANT: Check tools/standalone/rlm-factory/manifest-index.json for defined profiles.
-    - sanctuary: Documentation & Core Files (rlm_summary_cache.json)
-    - tool:      Code/Scripts (rlm_tool_cache.json)
+    - legacy: Documentation only (rlm_summary_cache.json)
+    - tool:   Code/Scripts (rlm_tool_cache.json)
 
 Supported Object Types:
     - Generic
@@ -72,7 +68,6 @@ Consumed by:
 import os
 import sys
 import json
-import re
 import hashlib
 import time
 import traceback
@@ -143,59 +138,6 @@ OLLAMA_URL = os.getenv("OLLAMA_HOST", "http://localhost:11434") + "/api/generate
 # CORE LOGIC
 # ============================================================
 
-def extract_header_summary(content: str) -> Optional[str]:
-    """
-    Attempts to extract metadata from Extended Python CLI/Tool Header.
-    Returns JSON string if successful, None otherwise.
-    """
-    # Simple check for docstring
-    if '"""' not in content[:500] and "'''" not in content[:500]:
-        return None
-
-    sections = {}
-    
-    # Helper regex
-    def extract_section(header, pattern):
-        match = re.search(pattern, header, re.DOTALL | re.IGNORECASE)
-        if match:
-            return match.group(1).strip()
-        return None
-    
-    # 1. Purpose
-    purpose = extract_section(content, r'Purpose:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)')
-    if purpose:
-        sections["purpose"] = " ".join(purpose.split())
-    else:
-        return None # Mandatory
-        
-    # 2. Layer
-    layer = extract_section(content, r'Layer:\s*(.*)')
-    if layer: sections["layer"] = layer
-        
-    # 3. List Sections
-    for key, pattern in [
-        ("usage", r'Usage Examples?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("args", r'CLI Arguments?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("inputs", r'Input Files?:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("outputs", r'Output:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("dependencies", r'(?:Script )?Dependencies:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("key_functions", r'Key Functions:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("supported_object_types", r'Supported Object Types:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)'),
-        ("consumed_by", r'Consumed by:\s*(.*?)(?=\n\s*\n|\n[A-Z][a-z]+:)')
-    ]:
-        raw = extract_section(content, pattern)
-        if raw:
-            # Split by line, strip bullets
-            items = []
-            for line in raw.splitlines():
-                clean = line.strip()
-                if clean.startswith("- "): clean = clean[2:]
-                elif clean.startswith("* "): clean = clean[2:]
-                if clean: items.append(clean)
-            sections[key] = items
-
-    return json.dumps(sections, indent=2)
-
 def call_ollama(content: str, file_path: str, prompt_template: str, model_name: str) -> Optional[str]:
     """Call Ollama to generate summary."""
     # Truncate large files
@@ -222,7 +164,7 @@ def call_ollama(content: str, file_path: str, prompt_template: str, model_name: 
                     "temperature": 0.1
                 }
             },
-            timeout=180  # Increased for model cold-start
+            timeout=120
         )
         
         if response.status_code == 200:
@@ -305,19 +247,8 @@ def distill(config: RLMConfig, target_files: List[Path] = None, force: bool = Fa
             
             # Need to distill
             print(f"[{i}/{total}] Processing {rel_path}...")
-            # 2. Distill (Header Extraction Priority for Tools)
-            summary = None
-            if config.type == "tool":
-                try:
-                    summary = extract_header_summary(content)
-                    if summary:
-                         debug("Extracted summary from header")
-                except Exception as e:
-                    debug(f"Header extraction failed: {e}")
-            
-            if not summary:
-                 # Fallback to LLM
-                 summary = call_ollama(content, rel_path, config.prompt_template, config.llm_model)
+           # 2. Distill (if needed)
+            summary = call_ollama(content, rel_path, config.prompt_template, config.llm_model)
             
             if summary:
                 # 3. Update Ledger
@@ -439,7 +370,7 @@ if __name__ == "__main__":
     from datetime import datetime, timedelta
     
     parser = argparse.ArgumentParser(description="Recursive Learning Model (RLM) Distiller")
-    parser.add_argument("--type", default="sanctuary", help="RLM Type (loads manifest from factory)")
+    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
     parser.add_argument("--target", "-t", nargs="+", help="Override target directories to process")
     parser.add_argument("--file", "-f", help="Single file to process")
     parser.add_argument("--model", "-m", help="Ollama model to use")

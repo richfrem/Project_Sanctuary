@@ -15,6 +15,10 @@ Usage Examples:
     python tools/curate/inventories/manage_tool_inventory.py remove --path "path/to/tool.py"
     python tools/curate/inventories/manage_tool_inventory.py update --path "tool.py" --desc "New description"
     python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub
+    python tools/curate/inventories/manage_tool_inventory.py summarize-missing
+    python tools/curate/inventories/manage_tool_inventory.py sync-from-cache
+    python tools/curate/inventories/manage_tool_inventory.py reset-from-cache
+    python tools/curate/inventories/manage_tool_inventory.py clear-inventory
 
 Supported Object Types:
     - Generic
@@ -250,8 +254,7 @@ class InventoryManager:
         print(f"✅ Added {tool_path} to category '{category}' (status: {new_entry['compliance_status']})")
         
         # Trigger RLM Update
-        # DISABLED (Temporary): Perf issues with Ollama
-        # self._trigger_distillation(tool_path)
+        self._trigger_distillation(tool_path)
 
     def list_tools(self):
         """Print all tools."""
@@ -418,7 +421,7 @@ class InventoryManager:
              # Use the NEW path if updated, else original
              # Note: if path changed, we should use new path.
              target_path = new_path if new_path else tool_path
-             # self._trigger_distillation(target_path) # FIXED: Method name & Disabled
+             self._distill_tool(target_path)
         else:
              print(f"ℹ️  Skipped distillation (suppressed).")
         
@@ -544,26 +547,28 @@ class InventoryManager:
             'json_configs': []
         }
         
-        # Scan Python files
-        for f in scan_dir.rglob("*.py"):
-            # Directories to ignore
-            ignore_dirs = {
-                '.git', '__pycache__', 'node_modules', 'venv', '.venv', 'env', 
-                '.agent', 'temp', 'logs', 'coverage', '.idea', '.vscode',
-                'modernization', 'sandbox'
-            }
-            # Skip virtual envs, tests, __pycache__, etc.
-            if any(d in f.parts for d in ignore_dirs):
-                continue
-            
-            if str(f.resolve()) not in tracked_paths:
-                rel = str(f.relative_to(self.root_dir))
-                docstring = extract_docstring(f)
+        # Scan Python and JS files
+        extensions = [".py", ".js"]
+        for ext in extensions:
+            for f in scan_dir.rglob(f"*{ext}"):
+                # Directories to ignore
+                ignore_dirs = {
+                    '.git', '__pycache__', 'node_modules', 'venv', '.venv', 'env', 
+                    '.agent', 'temp', 'logs', 'coverage', '.idea', '.vscode',
+                    'modernization', 'sandbox'
+                }
+                # Skip virtual envs, tests, __pycache__, etc.
+                if any(d in f.parts for d in ignore_dirs):
+                    continue
                 
-                if docstring and docstring != 'TBD':
-                    results['with_docstring'].append((rel, docstring))
-                else:
-                    results['without_docstring'].append(rel)
+                if str(f.resolve()) not in tracked_paths:
+                    rel = str(f.relative_to(self.root_dir))
+                    docstring = extract_docstring(f)
+                    
+                    if docstring and docstring != 'TBD':
+                        results['with_docstring'].append((rel, docstring))
+                    else:
+                        results['without_docstring'].append(rel)
         
         # Optionally scan JSON files
         if include_json:
@@ -987,6 +992,116 @@ Key Functions:
             
         print(f"✅ Removed {len(to_remove)} tools.")
 
+    def reset_inventory(self):
+        """
+        Clears all script entries from the inventory while keeping metadata.
+        """
+        print("🗑️ Resetting tool inventory (clearing all script registrations)...")
+        if "python" in self.data:
+            self.data["python"]["tools"] = {}
+        if "javascript" in self.data:
+            self.data["javascript"]["tools"] = {}
+        if "scripts" in self.data:
+            self.data["scripts"] = {}
+        
+        self.save()
+        print("✅ Inventory reset successfully.")
+
+    def sync_from_cache(self, cache_path: str = ".agent/learning/rlm_tool_cache.json"):
+        """
+        Populates tool descriptions from the RLM tool cache.
+        """
+        cache_file = self.root_dir / cache_path
+        if not cache_file.exists():
+            print(f"❌ Cache not found at {cache_file}")
+            return
+
+        with open(cache_file, 'r') as f:
+            cache = json.load(f)
+
+        updated_count = 0
+        
+        def process_node(node):
+            nonlocal updated_count
+            if isinstance(node, list):
+                for entry in node:
+                    if isinstance(entry, dict) and 'path' in entry:
+                        path = entry['path']
+                        if path in cache:
+                            cached_data = cache[path]
+                            if 'summary' in cached_data:
+                                try:
+                                    summary_json = json.loads(cached_data['summary'])
+                                    purpose = summary_json.get('purpose', 'TBD')
+                                    if purpose and purpose != 'TBD':
+                                        entry['description'] = purpose
+                                        updated_count += 1
+                                        print(f"✅ Updated {path}")
+                                except json.JSONDecodeError:
+                                    entry['description'] = cached_data['summary']
+                                    updated_count += 1
+                                    print(f"✅ Updated {path} (plain string)")
+            elif isinstance(node, dict):
+                for v in node.values():
+                    process_node(v)
+
+        print(f"🔄 Syncing descriptions from {cache_path}...")
+        if "python" in self.data:
+            process_node(self.data["python"].get("tools", {}))
+        if "javascript" in self.data:
+            process_node(self.data["javascript"].get("tools", {}))
+        if "scripts" in self.data:
+            process_node(self.data["scripts"])
+
+        if updated_count > 0:
+            self.save()
+            print(f"✨ Successfully enriched {updated_count} tool descriptions.")
+        else:
+            print("ℹ️ No matching tools found in cache to enrich.")
+
+    def summarize_missing(self, cache_path: str = ".agent/learning/rlm_tool_cache.json"):
+        """
+        Identify tools missing from cache and trigger RLM distillation.
+        """
+        cache_file = self.root_dir / cache_path
+        cache = {}
+        if cache_file.exists():
+            with open(cache_file, 'r') as f:
+                cache = json.load(f)
+        
+        missing_paths = []
+        
+        def collect_missing(node):
+            if isinstance(node, list):
+                for entry in node:
+                    if isinstance(entry, dict) and 'path' in entry:
+                        path = entry['path']
+                        # Only summarize code files
+                        if path.endswith(('.py', '.js')) and path not in cache:
+                            missing_paths.append(path)
+            elif isinstance(node, dict):
+                for v in node.values():
+                    collect_missing(v)
+
+        if "python" in self.data:
+            collect_missing(self.data["python"].get("tools", {}))
+        if "javascript" in self.data:
+            collect_missing(self.data["javascript"].get("tools", {}))
+        if "scripts" in self.data:
+            collect_missing(self.data["scripts"])
+
+        if not missing_paths:
+            print("✅ All inventory tools are already summarized in cache.")
+            return
+
+        print(f"🔎 Found {len(missing_paths)} tools missing from cache.")
+        for i, path in enumerate(missing_paths, 1):
+            print(f"[{i}/{len(missing_paths)}] ", end="")
+            self._trigger_distillation(path)
+        
+        print(f"✨ Finished summarizing {len(missing_paths)} tools.")
+        print("💡 Tip: Run 'sync-from-cache' now to update descriptions in inventory.")
+
 # -----------------------------------------------------------------------------
 # Documentation Generator (The "View" Layer)
 # -----------------------------------------------------------------------------
@@ -1124,6 +1239,15 @@ def main():
 
     subparsers.add_parser("reset-compliance", help="Reset compliance status for all tools")
     
+    subparsers.add_parser("clear-inventory", help="Clear all registered tools from inventory")
+    
+    sync_parser = subparsers.add_parser("sync-from-cache", help="Sync tool descriptions from RLM cache")
+    sync_parser.add_argument("--cache", default=".agent/learning/rlm_tool_cache.json", help="Path to RLM tool cache")
+
+    subparsers.add_parser("reset-from-cache", help="Full reset: Clear, Discover, and Sync from Cache")
+
+    subparsers.add_parser("summarize-missing", help="Trigger RLM distillation for tools missing from cache")
+
     clean_ext_parser = subparsers.add_parser("cleanup-types", help="Remove tools by extension")
     clean_ext_parser.add_argument("--ext", nargs="+", required=True, help="Extensions to remove (e.g. .ts .tsx)")
 
@@ -1272,6 +1396,37 @@ def main():
     elif args.command == "reset-compliance":
         manager.reset_compliance()
     
+    elif args.command == "clear-inventory":
+        manager.reset_inventory()
+    
+    elif args.command == "sync-from-cache":
+        manager.sync_from_cache(args.cache)
+    
+    elif args.command == "reset-from-cache":
+        print("🚀 Performing full tool inventory reset from cache...")
+        manager.reset_inventory()
+        gaps = manager.discover_gaps(include_json=True)
+        
+        # Auto-stub
+        print(f"📝 Creating stubs for {len(gaps['with_docstring']) + len(gaps['without_docstring'])} scripts...")
+        for path, desc in gaps['with_docstring']:
+            manager.create_stub(path, extracted_desc=desc)
+        for path in gaps['without_docstring']:
+            manager.create_stub(path)
+        manager.save()
+        
+        # Sync
+        manager.sync_from_cache()
+        
+        # Generate
+        inv_path = Path(args.inventory)
+        out_path = inv_path.parent / "TOOL_INVENTORY.md"
+        generate_markdown(manager, out_path)
+        print("✅ Full reset from cache complete.")
+
+    elif args.command == "summarize-missing":
+        manager.summarize_missing()
+
     elif args.command == "cleanup-types":
         manager.cleanup_by_extension(args.ext)
 

@@ -5,19 +5,19 @@ inventory.py (CLI)
 
 Purpose:
     RLM Auditor: Reports coverage of the semantic ledger against the filesystem.
-    Uses the Shared RLMConfig to dynamically switch between 'Sanctuary' (Documentation) and 'Tool' (CLI) audit modes.
+    Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.
 
 Layer: Curate / Rlm
 
 Supported Object Types:
-    - RLM Cache (Sanctuary)
+    - RLM Cache (Legacy)
     - RLM Cache (Tool)
 
 CLI Arguments:
-    --type  : [sanctuary|tool] Selects the configuration profile (default: sanctuary).
+    --type  : [legacy|tool] Selects the configuration profile (default: legacy).
 
 Input Files:
-    - .agent/learning/rlm_summary_cache.json (Sanctuary)
+    - .agent/learning/rlm_summary_cache.json (Legacy)
     - .agent/learning/rlm_tool_cache.json (Tool)
     - Filesystem targets (defined in manifests)
     - tool_inventory.json
@@ -101,7 +101,7 @@ def audit_inventory(config: RLMConfig):
 
 def main():
     parser = argparse.ArgumentParser(description="Audit RLM Cache Coverage")
-    parser.add_argument("--type", default="sanctuary", help="RLM Type (loads manifest from factory)")
+    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
     
     args = parser.parse_args()
     

@@ -43,7 +43,7 @@ Key Functions:
 
 Consumed by:
     - tools/cli.py workflow retrospective (via workflow_manager.py)
-    - /sanctuary-retrospective workflow
+    - /workflow-retrospective workflow
 
 Script Dependencies:
     - Git (must be in a git repository)

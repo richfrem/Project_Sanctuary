@@ -5,21 +5,19 @@ rlm_config.py (Shared Module)
 
 Purpose:
     Centralized configuration and utility logic for the RLM Toolchain.
-    Implements the "Manifest Factory" pattern (ADR-0024) to dynamically
-    resolve manifests, cache files, and vector DB configs based on the 
-    Analysis Type (Sanctuary vs Tool).
+    Implement the "Manifest Factory" pattern (ADR-0024) to dynamically
+    resolve manifests and cache files based on the Analysis Type (Legacy vs Tool).
 
     This module is the Single Source of Truth for RLM logic.
 
-Layer: Codify / Rlm
-
-Usage Examples:
-    from tools.codify.rlm.rlm_config import RLMConfig
-    config = RLMConfig(run_type="tool")
+Layer: Curate / Rlm
 
 Supported Object Types:
-    - RLM Config (Sanctuary Documentation)
+    - RLM Config (Legacy Documentation)
     - RLM Config (Tool Discovery)
+
+CLI Arguments (Consumed by Scripts):
+    --type  : [legacy|tool] Selects the configuration profile.
 
 Input Files:
     - tools/standalone/rlm-factory/manifest-index.json
@@ -29,10 +27,8 @@ Output:
     - RLMConfig object (Typed configuration)
     - Shared Utility Pointers (load_cache, save_cache, etc.)
 
-Key Classes:
+Key Classes/Functions:
     - RLMConfig: Loads and validates configuration from the factory index.
-
-Key Functions:
     - load_cache(): Shared cache loader.
     - save_cache(): Shared cache persister.
     - collect_files(): Centralized file discovery logic (Glob vs Inventory).
@@ -44,6 +40,7 @@ Consumed by:
     - tools/codify/rlm/distiller.py
     - tools/retrieve/rlm/query_cache.py
     - tools/curate/rlm/cleanup_cache.py
+    - tools/retrieve/rlm/inventory.py
 """
 import os
 import sys
@@ -61,7 +58,7 @@ PROJECT_ROOT = current_dir.parents[2]
 FACTORY_INDEX_PATH = PROJECT_ROOT / "tools" / "standalone" / "rlm-factory" / "manifest-index.json"
 
 class RLMConfig:
-    def __init__(self, run_type="tool", override_targets=None):
+    def __init__(self, run_type="legacy", override_targets=None):
         self.type = run_type
         self.manifest_data = {}
         self.cache_path = None
@@ -103,9 +100,6 @@ class RLMConfig:
         # Load LLM Model (Manifest > Env > Default)
         self.llm_model = config_def.get("llm_model") or os.getenv("OLLAMA_MODEL", "granite3.2:8b")
         
-        # Load Vector DB Configuration (New Schema)
-        self.vector_config = config_def.get("vector_config", {})
-        
         # Load Prompt from Path (Relative to Project Root)
         prompt_rel_path = config_def.get("prompt_path")
         if prompt_rel_path:
@@ -142,67 +136,8 @@ class RLMConfig:
                 data = json.load(f)
                 
             if self.parser_type == "directory_glob":
-                self.targets = []
-                
-                # 1. RLM Manifest Schema v2.0 (target_directories + core_files)
-                if "target_directories" in data:
-                    t_dirs = data.get("target_directories", [])
-                    for d in t_dirs:
-                        if isinstance(d, dict) and "path" in d:
-                            self.targets.append(d["path"])
-                        elif isinstance(d, str):
-                            self.targets.append(d)
-                            
-                if "core_files" in data:
-                    c_files = data.get("core_files", [])
-                    for f in c_files:
-                        if isinstance(f, dict) and "path" in f:
-                            self.targets.append(f["path"])
-                        elif isinstance(f, str):
-                            self.targets.append(f)
-                            
-                # 2. ADR 097 Simple Schema (files array)
-                if "files" in data:
-                    files = data.get("files", [])
-                    for item in files:
-                        if isinstance(item, str):
-                            self.targets.append(item)
-                        elif isinstance(item, dict) and "path" in item:
-                            self.targets.append(item["path"])
-
-                # 3. Original Simple Schema (include array)
-                if "include" in data:
-                     self.targets.extend(data.get("include", []))
-
-                # 4. Fallback for Classic Schema (core + topic) (Legacy ADR 089)
-                if not self.targets and ("core" in data or "topic" in data):
-                    self.targets = data.get("core", []) + data.get("topic", [])
-                
-                self.exclude_patterns = data.get("exclude_patterns", data.get("exclude", []))
-
-                # Fallback: Inherit Global Exclusions from Ingest Manifest if missing
-                if not self.exclude_patterns:
-                    # Try local exclusion manifest first (new standard)
-                    excl_path = PROJECT_ROOT / "mcp_servers" / "lib" / "exclusion_manifest.json"
-                    if excl_path.exists():
-                         try:
-                            with open(excl_path, "r") as f:
-                                excl_data = json.load(f)
-                                self.exclude_patterns = excl_data.get("global_exclusions", [])
-                         except Exception:
-                             pass
-                    
-                    # Fallback to older location
-                    if not self.exclude_patterns:
-                        ingest_path = PROJECT_ROOT / "tools" / "standalone" / "vector-db" / "ingest_manifest.json"
-                        if ingest_path.exists():
-                            try:
-                                with open(ingest_path, "r") as f:
-                                    ingest_data = json.load(f)
-                                    self.exclude_patterns = ingest_data.get("exclude", [])
-                            except Exception as e:
-                                print(f"⚠️  Failed to load global exclusions: {e}")
-
+                self.targets = data.get("include", [])
+                self.exclude_patterns = data.get("exclude", [])
             elif self.parser_type == "inventory_dict":
                  # For inventory, we treat the keys or specific fields as targets
                  # Assuming tool_inventory.json structure: {"category": {"tool_name": { "path": "..." }}}
@@ -267,13 +202,8 @@ def should_skip(file_path: Path, config: RLMConfig, debug_fn=None) -> bool:
         if file_path.suffix.lower() not in [".py", ".js", ".sh", ".ts"]:
             log(f"Skipping due to unsupported suffix: {file_path.suffix}")
             return True
-    elif config.type == "sanctuary":
-        # Allow documentation and whitelisted code/config files
-        if file_path.suffix.lower() not in [".md", ".txt", ".py", ".json", ".mmd"]:
-             log(f"Skipping due to unsupported suffix: {file_path.suffix}")
-             return True
     else:
-        # Fallback for strict documentation profiles
+        # Only process .md and .txt files for Legacy Docs
         if file_path.suffix.lower() not in [".md", ".txt"]:
             log(f"Skipping due to unsupported suffix: {file_path.suffix}")
             return True

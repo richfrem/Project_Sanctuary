@@ -1,44 +1,15 @@
 #!/usr/bin/env python3
 """
-export_mmd_to_image.py (CLI)
-=====================================
+Mermaid Diagram Renderer (Task #154 - Phase 3)
 
-Purpose:
-    Core Utility for converting Mermaid logic definitions (.mmd) into
-    visual assets (.png/.svg) for documentation and reports.
-    Enforces ADR 085 (Content Hygiene) by ensuring diagrams are rendered
-    to static artifacts rather than relying on dynamic GitHub rendering.
+Renders all .mmd files in docs/architecture_diagrams/ to PNG images.
+Run this script whenever diagrams are updated to regenerate images.
 
-Layer: Codify / Diagrams
-
-Usage Examples:
-    python3 tools/codify/diagrams/export_mmd_to_image.py --input docs/
-    python3 tools/codify/diagrams/export_mmd_to_image.py --check
-    python3 tools/codify/diagrams/export_mmd_to_image.py my_diagram.mmd
-
-CLI Arguments:
-    --input, -i     : Input MMD file or directory (optional)
-    --output, -o    : Output file path or directory (optional)
-    --check         : Dry-run check for outdated images
-    --svg           : Render as SVG instead of PNG (default: PNG)
-    targets         : Positional arguments for partial filename matching (Legacy mode)
-
-Input Files:
-    - .mmd files in target directory or specific file
-
-Output:
-    - .png/.svg image files
-
-Key Functions:
-    - render_diagram_explicit(): Calls headless mermaid-cli.
-    - main(): Argument parsing and batch processing logic.
-
-Script Dependencies:
-    - npm package: @mermaid-js/mermaid-cli
-
-Consumed by:
-    - scripts/render_diagrams.py (wrapper - deprecated)
-    - CI/CD Pipelines
+Usage:
+    python3 scripts/export_mmd_to_image.py                 # Render all
+    python3 scripts/export_mmd_to_image.py my_diagram.mmd  # Render specific file(s)
+    python3 scripts/export_mmd_to_image.py --svg           # Render as SVG instead
+    python3 scripts/export_mmd_to_image.py --check         # Check for outdated images
 """
 
 import subprocess
