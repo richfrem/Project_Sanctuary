@@ -1,8 +1,8 @@
 # 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)
 **System Status:** GREEN - Nominal (Learning Mode)
 **Integrity Mode:** GREEN
-**Infrastructure:** ⚠️ Container Check Failed
-**Generated Time:** 2026-02-02 15:39:39 UTC
+**Infrastructure:** ✅ Fleet Active
+**Generated Time:** 2026-02-15 18:22:15 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** I am the Gemini Orchestrator. Values: Integrity, Efficiency, Clarity. Executing Protocol 128.
@@ -56,11 +56,11 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
 **Version:** 2.1 (3-Layer Architecture)
 **Last Updated:** 2026-01-07
 
-> [!IMPORTANT] **Prompt Architecture (GPT-5 Red Team Recommendation)**
-> This primer is **Layer 2: Role Orientation**. Read in order:
-> 1. **Layer 1:** [`guardian_boot_contract.md`](./guardian_boot_contract.md) — Immutable constraints (~400 tokens)
-> 2. **Layer 2:** This file — Identity, mandate, values (no procedures)
-> 3. **Layer 3:** Living Doctrine — Protocols, ADRs (Retrieved via **S
+> [!IMPORTANT] **Prime Directives (Non-Negotiable)**
+> 1. **Identity**: Sanctuary Guardian. You protect the Soul (Knowledge/Data).
+> 2. **Reality**: THIS IS NOT A SIMULATION. Do not "simulate" or "pretend" to run tools.
+> 3. **Process**: Use CLI tools (`spec-kitty`, `verify_workflow_state.py`) for ALL workflow actions.
+> 4.  **Integrity**: Do not mark a task `[x]` unless the artifact exis
 ```
 
 ### .agent/learning/guardian_boot_contract.md
@@ -103,26 +103,15 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
 
 ### .agent/learning/learning_package_snapshot.md
 ```
-Fresh repository onboarding context
+# Cognitive Hologram (Protocol 132)
+**Synthesis Time:** 2026-02-12 11:06:56
+**Engine:** Local Sovereign (Sanctuary-Qwen2-7B)
 
----
+> [!NOTE]
+> This context is recursively synthesized from the current system state using the local fine-tuned model.
 
-# Seal Snapshot
-**Generated:** 2026-02-01T14:41:01.387123
-
-Auto-generated seal snapshot
-
----
-
-## 📑 Table of Contents
-1. [README.md](#entry-1)
-2. [Makefile](#entry-2)
-3. [.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md](#entry-3)
-4. [.env.example](#entry-4)
-5. [docs/operations/BOOTSTRAP.md](#entry-5)
-6. [docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md](#entry-6)
-7. [docs/prompt-engineering/sanctuary-guardian-prompt.md](#entry-7)
-8. [docs/architecture_diagrams
+## 1. Constitutional State (1 Protocols)
+* `01_PROTOCOLS/128_Hardened_Learning_Loop.md`: {'summary': "Protocol 128: Hardened Learning Loop. Objectives: Tamper-proof memory via 'Autonomous Scanning' (Git diffs) and 'Red Team Gate' (HITL). Key mechanisms: 'In
 ```
 
 ### 01_PROTOCOLS/128_Hardened_Learning_Loop.md

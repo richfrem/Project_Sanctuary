@@ -1,8 +1,8 @@
-# Learning Audit Prompt: Recursive Language Models (RLM) & Titans
-**Current Topic:** Recursive Language Models (RLM) vs DeepMind Titans
-**Iteration:** 3.2 (Mock Implementation Review)
-**Date:** 2026-01-12
-**Epistemic Status:** [IMPLEMENTATION STAGED - SEEKING SAFETY CHECK]
+# Learning Audit Prompt: Safe Agent Zero / Sanctum Architecture
+**Current Topic:** Safe Agent Zero (OpenClaw Security Hardening)
+**Iteration:** 4.0 (Architecture Review)
+**Date:** 2026-02-15
+**Epistemic Status:** [PLANNING FROZEN - SEEKING RED TEAM VERIFICATION]
 
 ---
 
@@ -11,36 +11,41 @@
 
 ---
 
-## 📋 Topic Status: RLM Integration (Phase IX)
+## 📋 Topic Status: Safe Agent Zero (Phase IV)
 
-**Iteration 3.1 Verdict:**
-- **Status:** Protocols Approved.
-- **Feedback:** "The Strategy is sound."
-- **New User Requirement:** "Include the implementation code in the packet for review."
+### 🚀 Iteration 4.0 Goals (Defense in Depth)
+We have designed the "Sanctum" architecture to isolate the OpenClaw agent.
+*   **Goal:** Prove that the 10-Layer Defense Strategy is sufficient to mitigate the risks of a fully autonomous agent.
+*   **Key Components:** 10-Layer Defense, Operational Policy Matrix, Scout Sanitization, Red Teaming.
+*   **Constraint:** NO EXECUTION. Verify architecture and plan only.
 
-### 🚀 Iteration 3.2 Goals (Code Verification)
-We have injected the RLM logic into `mcp_servers/learning/operations.py`.
-*   **Shadow Mode:** The functions `_rlm_map` and `_rlm_reduce` are implemented but *not yet wired* to the `capture_snapshot` trigger.
-*   **Purpose:** Prove that the logic matches Protocol 132 without risking a runtime break during the seal.
-
-### Key Artifacts for Review (Added in v3.2)
+### Key Artifacts for Review
 
 | Artifact | Location | Purpose |
 |:---------|:---------|:--------|
-| **Source Code** | `mcp_servers/learning/operations.py` | Contains the `_rlm_context_synthesis` implementation. |
-| **Logic Trace** | `LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py` | Standalone POC proving the concept. |
+| **Strategy** | `docs/architecture/safe_agent_zero/defense_in_depth_strategy.md` | The 10 distinct layers of defense. |
+| **Policy** | `docs/architecture/safe_agent_zero/operational_policy_matrix.md` | Single Source of Truth for Allow/Block actions. |
+| **Plan** | `docs/architecture/safe_agent_zero/implementation_plan.md` | Detailed execution steps for building Sanctum. |
+| **Research** | `docs/architecture/safe_agent_zero/research/` | Analysis of 40k+ vulnerable agents (TechZine/eSecurityPlanet). |
 
 ---
 
-## 🎭 Red Team Focus (Iteration 3.2)
+## 🎭 Red Team Focus (Iteration 4.0)
 
 ### Primary Questions
 
-1.  **Code Safety**
-    - Does the injected code in `operations.py` pose any risk to existing functionality? (Verify it is dormant/shadow).
-    - Is the `_rlm_map` -> `_rlm_reduce` logic a faithful implementation of Protocol 132?
+1.  **Completeness**
+    - Does the Policy Matrix cover all critical attack vectors (Network, File, Command, Secret)?
+    - Are there any "Allowed" actions that should be "Blocked"?
+
+2.  **Robustness**
+    - Is the Nginx Guard configuration (MFA + Whitelist) sufficient to prevent unauthorized access?
+    - Is the "Red Agent" strategy (Layer 10) viable for continuous validation?
+
+3.  **Implementation Feasibility**
+    - Does the Implementation Plan correctly translate the Strategy into Docker/Network/App configurations?
 
 ---
 
 > [!IMPORTANT]
-> **Goal:** Validated the code implementation as "Safe to Merge."
+> **Goal:** Validate the Architecture and Plan as "Safe to Build."

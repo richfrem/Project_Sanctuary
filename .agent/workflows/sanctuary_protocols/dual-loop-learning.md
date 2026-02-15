@@ -27,6 +27,9 @@ track: B
 ## 2. The Workflow (5 Phases)
 
 ### Phase I: Strategy (Outer Loop)
+
+> **Prerequisite**: Complete Protocol 128 (Learning Loop) Phases I-IV (Scout -> Audit) before entering this execution branch.
+
 1. **Specify**: `/spec-kitty.specify` → `spec.md`
 2. **Plan**: `/spec-kitty.plan` → `plan.md`
 3. **Task**: `/spec-kitty.tasks` → `tasks.md` + `tasks/WP-*.md`
@@ -97,8 +100,9 @@ This is a degraded mode — investigate and fix for next iteration.
 | I (Scout) | Outer Loop boots, orients | Reads boot files + spec context |
 | II-III (Synthesis/Gate) | Outer Loop plans, user approves | Strategy Packet generated |
 | IV (Audit) | Outer Loop snapshots before delegation | Pre-execution checkpoint |
-| *(Execution)* | **Inner Loop** codes | No git, no P128 phases |
-| V (Verify) | Outer Loop inspects output | `verify_inner_loop_result.py` |
+| *Execution* | **Inner Loop** codes | No git, no P128 phases |
+| *Verification* | Outer Loop inspects output | `verify_inner_loop_result.py` |
+| V (RLM Synthesis) | Outer Loop (Automated) | Cognitive Hologram generation |
 | VI-IX (Seal→End) | Outer Loop closure | Standard seal/persist/retro/end |
 
 ---

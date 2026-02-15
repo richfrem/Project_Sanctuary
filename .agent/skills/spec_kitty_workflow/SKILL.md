@@ -216,22 +216,14 @@ python3 .kittify/scripts/tasks/tasks_cli.py update <FEATURE> <WP-ID> done \
 
 ---
 
-## 5. Dual-Loop Mode (Protocol 133)
+## 5. Dual-Loop Integration (Protocol 133)
 
-When Spec Kitty runs inside a Dual-Loop session, roles are split:
+> **Authority**: See **Protocol 133** (`.agent/workflows/sanctuary_protocols/dual-loop-learning.md`) for all execution rules.
+> Spec Kitty provides the **Artifacts** (Spec/Plan/Task); Protocol 133 provides the **Execution Management**.
 
-| Step | Who | Action |
-|------|-----|--------|
-| Specify/Plan/Tasks | **Outer Loop** (Antigravity) | Generates all artifacts |
-| Implement | **Outer Loop** creates worktree, then **Inner Loop** (Claude) codes | Inner Loop receives Strategy Packet |
-| Review/Merge | **Outer Loop** | Verifies output, commits, merges |
-
-**Inner Loop constraints**:
-- No git commands — Outer Loop owns version control
-- Scope limited to the Strategy Packet — no exploratory changes
-- If worktree is inaccessible, may implement on feature branch (fallback — log in friction log)
-
-**Cross-reference**: [dual-loop-supervisor SKILL](../dual-loop-supervisor/SKILL.md) | [Protocol 133 workflow](../../workflows/sanctuary_protocols/dual-loop-learning.md)
+**Roles**:
+- **Spec Kitty**: Generates the "Strategy Packet".
+- **Dual Loop**: Consumes the packet and manages the Inner/Outer loop flow.
 
 ---
 

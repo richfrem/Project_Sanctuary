@@ -39,6 +39,11 @@ view_file .agent/rules/constitution.md
 
 **Ask if unclear:** "Is this a Standard workflow, Custom feature, or Quick fix?"
 
+### Step 1.1: Select Execution Mode
+*   **Standard Agent**: You execute the work yourself (Single Loop).
+*   **Dual Loop**: You delegate execution to an Inner Loop agent (Protocol 133).
+    *   *Requires*: `spec-kitty` workflow.
+
 ---
 
 ## Step 1.5: Parent Context Check (The Nesting Guard)
