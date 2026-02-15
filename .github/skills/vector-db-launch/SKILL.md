@@ -20,7 +20,14 @@ ChromaDB provides the vector database backend for semantic search (RAG Cortex).
 curl -sf http://localhost:8110/api/v2/heartbeat && echo "✅ ChromaDB running" || echo "❌ ChromaDB not running"
 ```
 
-If running, you're done. If not, proceed.
+### 🎯 Agentic Self-Healing (The Fixer)
+**If the check fails or the port is busy:**
+1.  **Kill Zombies**:
+    ```bash
+    lsof -i :8110 | awk 'NR>1 {print $2}' | xargs kill -9 2>/dev/null
+    podman rm -f sanctuary_vector_db 2>/dev/null
+    ```
+2.  **Retry**: Proceed to Step 1.
 
 ## Step 1: Ensure Podman Machine is Running
 

@@ -19,7 +19,7 @@ Note:
   - .gemini/ reads .agent/workflows/ natively (no sync needed).
 
 Usage:
-    python tools/bridge/sync_workflows.py
+    python3 tools/bridge/sync_workflows.py
 """
 import os
 import shutil

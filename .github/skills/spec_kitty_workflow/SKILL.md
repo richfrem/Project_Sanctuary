@@ -21,8 +21,19 @@ Standard lifecycle for implementing features using Spec Kitty.
 3. **Kanban neglect**: Not updating task lanes, so dashboard shows stale state
 4. **Verification skip**: Marking a phase complete without running `verify_workflow_state.py`
 5. **Closure amnesia**: Finishing code but skipping review/merge/closure steps
+6. **Premature cleanup**: Manually deleting worktrees before running `spec-kitty merge` (breaks pre-flight)
+7. **Ignoring .gitignore**: Forgetting that untracked files (e.g., .env, .cache) in worktrees are deleted during merge
+8. **Reactive posture**: Waiting for the user to prompt the "next logical step" instead of proposing and executing the sequence.
 
 ---
+
+## 0. Workflow Ownership & Proactivity
+
+> **THE AGENT OWNS THE PROCESS.**
+> You are not a passive tool runner; you are the coordinator of the feature lifecycle.
+> - **Anticipate**: If a WP is done, the next step is ALWAYS `verify` -> `for_review` -> `commit specs`. Do not ask "what should I do next?".
+> - **Batching**: Group related cleanup steps (merge, worktree removal, branch deletion) into single proactive blocks.
+> - **Visibility**: Always maintain the `task.md` and `/spec-kitty.status` board. If the board is stale, curiosity is your failure.
 
 ## 0. Mandatory Planning Phase (Do NOT Skip)
 
@@ -67,6 +78,12 @@ python3 tools/orchestrator/verify_workflow_state.py --feature <SLUG> --phase tas
 ```
 **PROOF**: Paste the verification output.
 **STOP**: Do NOT proceed to Implementation until verification passes.
+
+### Step 0d: Pre-Flight Strategy (The Strategist)
+**Before starting the work**, take a step back.
+1.  **Read the Plan**: Does `plan.md` actually make sense? Are we missing a migration?
+2.  **Check the Order**: Does `tasks.md` put the database schema *before* the API endpoint?
+3.  **Self-Correction**: If you see a flaw, use `/spec-kitty.clarify` or manually fix the plan *now*, before writing code.
 
 ---
 
@@ -143,15 +160,46 @@ git commit -m "docs(specs): mark <WP-ID> complete"
 
 ## 4. Merge & Cleanup
 
-### Step 4a: Accept
+### Step 4a: Version Check (Prerequisite)
+Verify CLI and Project versions are aligned.
 ```bash
-spec-kitty accept
+spec-kitty upgrade --dry-run
+```
+If a mismatch is detected, run `spec-kitty upgrade --force` before proceeding.
+
+### Step 4b: Accept
+Run from the **Main Repository Root**.
+```bash
+cd <PROJECT_ROOT>
+spec-kitty accept --feature <FEATURE-SLUG> --mode local --actor "<AGENT-NAME>"
+```
+**PROOF**: Paste JSON or text output showing `summary.ok: true`.
+
+### Step 4c: Merge & Finalize (The Home Stretch)
+Run from the **Main Repository Root** for workspace-per-WP features. 
+**PROACTIVE RULE**: Execute this as a single chain unless blocked.
+
+```bash
+# 1. Final state preservation (Proactive)
+cp .worktrees/<WP-ID>/.env .env.backup  # Example
+
+# 2. Automated Merge
+spec-kitty merge --feature <FEATURE-SLUG> --strategy squash --push
+
+# 3. Final Kanban Sync (Don't wait for reminder)
+python3 .kittify/scripts/tasks/tasks_cli.py update <FEATURE-SLUG> <WP-ID> done \
+  --agent "<AGENT-NAME>" --note "Feature fully integrated and verified"
+
+# 4. Final Status Check
+/spec-kitty.status
 ```
 
-### Step 4b: Merge
-```bash
-spec-kitty merge
-```
+> [!CAUTION]
+> **State Preservation**: The merge tool deletes worktrees. If you have untracked state (like `.questrade_cache`) that needs to persist, manually COPY IT to the main repo root BEFORE merging.
+
+**TROUBLESHOOTING**: 
+- **Pre-flight Error: Missing Worktree**: The merge command requires all WP worktrees to exist for its check. If deleted, recreate them: `git worktree add .worktrees/<WP-FOLDER> <WP-BRANCH>`.
+- **Merge Error: Nothing to squash**: Occurs if the WP is already partially/fully integrated. Audit with `git diff main <WP-BRANCH>`. If no diff, manually delete branch/worktree and move to `done`.
 If this fails, use the manual fallback:
 ```bash
 git merge <WP-BRANCH-NAME>
@@ -225,4 +273,5 @@ python3 .kittify/scripts/tasks/tasks_cli.py status --feature <FEATURE-SLUG>
   git checkout -b <WP-BRANCH-NAME>
   ```
 - **"Already on main"**: Merge commands must run from project root, not inside a worktree.
-- **Kanban not updating**: Verify you're using the CLI, not manually editing frontmatter.
+- **"Nothing to squash"**: Occurs if the WP branch contains no new changes relative to the target branch. Verify with `git log main..<WP-BRANCH>`. If empty, manually delete the branch/worktree and move to `done`.
+- **Kanban not updating**: Verify you're using the CLI, not manually editing frontmatter. Always run `/spec-kitty.status` as proof of the final state.

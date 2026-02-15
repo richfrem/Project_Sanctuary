@@ -2,6 +2,46 @@
 
 This directory contains the "Universal Bridge" tools for synchronizing Spec Kitty definitions across multiple AI agents (Antigravity, Claude, Gemini, Copilot).
 
+## Prerequisites & Setup Sequence
+
+### 0. Install Spec Kitty CLI
+First, install the CLI tool using pip or uv:
+
+```bash
+# Option A: pip
+pip install spec-kitty-cli
+
+# Option B: uv (Recommended)
+uv tool install spec-kitty-cli
+```
+
+### 1. Initialize Framework
+Initialize the Spec Kitty structure with the Windsurf AI profile:
+
+```bash
+spec-kitty init . --ai windsurf
+```
+
+### 2. Run Bridge Synchronization
+Execute the bridge scripts in the following order to ensure a complete sync:
+
+1.  **Universal Bridge**: Projects core configs.
+    ```bash
+    python3 tools/bridge/speckit_system_bridge.py
+    ```
+2.  **Sync Rules**: Propagates rule updates.
+    ```bash
+    python3 tools/bridge/sync_rules.py
+    ```
+3.  **Sync Skills**: Distributes agent skills.
+    ```bash
+    python3 tools/bridge/sync_skills.py
+    ```
+4.  **Sync Workflows**: Updates agent workflows.
+    ```bash
+    python3 tools/bridge/sync_workflows.py
+    ```
+
 ## Scripts
 
 ### 1. [`speckit_system_bridge.py`](speckit_system_bridge.py)
@@ -24,6 +64,22 @@ This directory contains the "Universal Bridge" tools for synchronizing Spec Kitt
 > [!WARNING]
 > **Restart Required**: After running any sync scripts, you must **restart the IDE** for slash commands to appear in your AI agent.
 
+## Agent Integration
+
+The bridge now includes native capabilities for AI agents to manage themselves.
+
+### 1. Bridge Skill
+**Location**: `.agent/skills/spec-kitty-bridge/`
+**Capabilities**:
+-   Universal Sync (`speckit_system_bridge.py`)
+-   Integrity Verification (`verify_bridge_integrity.py`)
+-   Targeted Resource Sync (Rules, Skills, Workflows)
+
+### 2. User Workflow
+**Trigger**: `/spec-kitty.bridge`
+**Usage**:
+-   `/spec-kitty.bridge` -> Runs Universal Sync (Default)
+-   `/spec-kitty.bridge verify` -> Runs Integrity Check
 
 ## Post-Setup
 
