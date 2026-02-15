@@ -41,8 +41,16 @@ while not os.path.exists(os.path.join(current, ".agent")):
     if parent == current:
         break # Hit root
     current = parent
+sys.path.append(current)
 
-REPO_ROOT = Path(current)
+try:
+    from tools.investigate.utils.path_resolver import PathResolver
+except ImportError:
+    print("Error: Could not import PathResolver. Ensure running from project root.")
+    sys.exit(1)
+
+# Use PathResolver for robust paths
+REPO_ROOT = Path(PathResolver.get_project_root())
 WORKFLOWS_DIR = REPO_ROOT / ".agent" / "workflows"
 OUTPUT_DIR = REPO_ROOT / "docs" / "antigravity" / "workflow"
 JSON_PATH = OUTPUT_DIR / "workflow_inventory.json"
@@ -125,7 +133,7 @@ def scan_workflows():
             # Detect track from filename if not in frontmatter
             track = meta.get('track')
             if track is None:
-                if f.name.startswith("spec-kitty."):
+                if f.name.startswith("speckit-"):
                     track = "Discovery"
                 else:
                     track = "Factory"

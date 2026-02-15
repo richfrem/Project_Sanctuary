@@ -1,44 +1,22 @@
 #!/usr/bin/env python3
 """
-fetch_tool_context.py (CLI)
-=====================================
+fetch_tool_context.py
+=====================
 
 Purpose:
     Retrieves the "Gold Standard" tool definition from the RLM Tool Cache
     and formats it into an Agent-readable "Manual Page".
-    
-    This is the second step of the Late-Binding Protocol: after query_cache.py
-    finds a tool, this script provides the detailed context needed to use it.
 
-Layer: Retrieve
-
-Usage Examples:
+Usage:
     python tools/retrieve/rlm/fetch_tool_context.py --file tools/cli.py
-    python tools/retrieve/rlm/fetch_tool_context.py --file scripts/domain_cli.py
-
-CLI Arguments:
-    --file : Path to the tool script (required, e.g., tools/cli.py)
 
 Output:
-    Markdown-formatted technical specification to stdout:
+    Markdown-formatted technical specification:
     - Purpose
     - Usage
     - Arguments
     - Inputs/Outputs
     - Dependencies
-
-Input Files:
-    - .agent/learning/rlm_tool_cache.json (The Cache)
-
-Key Functions:
-    - fetch_context(): Loads entry from cache or falls back to docstring parsing.
-    - format_context(): Formats JSON into Markdown manual.
-
-Script Dependencies:
-    - tools/codify/rlm/rlm_config.py: RLM configuration and cache loading
-
-Consumed by:
-    - Agent during Late-Binding tool discovery flow
 """
 import sys
 import os

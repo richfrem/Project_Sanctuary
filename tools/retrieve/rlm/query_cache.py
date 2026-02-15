@@ -41,12 +41,8 @@ Consumed by:
 import json
 import argparse
 import sys
-import signal
 import os
 from pathlib import Path
-
-# Fix BrokenPipeError when piping to head
-signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 # Add project root to sys.path to find tools package
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -85,17 +81,9 @@ def search_cache(term, config: RLMConfig, show_summary=True, return_data=False, 
             continue
             
         # Match against summary content
-        # Match against summary content
-        summary_val = entry.get('summary', '')
-        if isinstance(summary_val, str):
-            if term.lower() in summary_val.lower():
-                matches.append({"path": relative_path, "entry": entry})
-                continue
-        else:
-            # If summary is complex (dict/list), search in its string representation
-            if term.lower() in str(summary_val).lower():
-                matches.append({"path": relative_path, "entry": entry})
-                continue
+        if term.lower() in entry.get('summary', '').lower():
+            matches.append({"path": relative_path, "entry": entry})
+            continue
             
         # Match against ID or Hash (less likely but useful)
         if term.lower() in entry.get('content_hash', '').lower():
@@ -139,7 +127,7 @@ def list_cache(config: RLMConfig):
 def main():
     parser = argparse.ArgumentParser(description="Query RLM Cache")
     parser.add_argument("term", nargs="?", help="Search term (ID, filename, or content keyword)")
-    parser.add_argument("--type", default="tool", help="RLM Type (loads manifest from factory)")
+    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
     parser.add_argument("--list", action="store_true", help="List all cached files")
     parser.add_argument("--no-summary", action="store_true", help="Hide summary text")
     parser.add_argument("--json", action="store_true", help="Output results as JSON")

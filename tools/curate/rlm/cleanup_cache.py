@@ -55,9 +55,10 @@ except ImportError:
 
 def main():
     parser = argparse.ArgumentParser(description="Clean up RLM cache.")
-    parser.add_argument("--type", default="sanctuary", help="RLM Type (loads manifest from factory)")
+    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
     parser.add_argument("--apply", action="store_true", help="Perform the deletion")
     parser.add_argument("--prune-orphans", action="store_true", help="Remove entries not matching manifest")
+    parser.add_argument("--prune-failed", action="store_true", help="Remove entries with [DISTILLATION FAILED]")
     parser.add_argument("--v", action="store_true", help="Verbose mode")
     args = parser.parse_args()
     
@@ -82,17 +83,26 @@ def main():
     entries_to_remove = []
     authorized_files = None
     
-    for relative_path in list(cache.keys()):
+    for relative_path, entry in list(cache.items()):
         full_path = PROJECT_ROOT / relative_path
         
-        # 1. Check existence (Stale)
+        # 1. Check Distillation Failure (Explicit request)
+        if args.prune_failed:
+            summary = entry.get("summary", "")
+            if summary == "[DISTILLATION FAILED]":
+                entries_to_remove.append(relative_path)
+                if args.v:
+                    print(f"  [FAILED] {relative_path}")
+                continue
+
+        # 2. Check existence (Stale)
         if not full_path.exists():
             entries_to_remove.append(relative_path)
             if args.v:
                 print(f"  [MISSING] {relative_path}")
             continue
 
-        # 2. Check manifest (Orphan)
+        # 3. Check manifest (Orphan)
         if args.prune_orphans:
             # STRICT ORPHAN CHECK:
             # If the file is not in the list of files matched by the configuration (Manifest/Inventory),
@@ -136,7 +146,8 @@ def main():
     if args.apply:
         print(f"Removing {remove_count} entries...")
         for key in entries_to_remove:
-            del cache[key]
+            if key in cache:
+                del cache[key]
         
         save_cache(cache, config.cache_path)
         print("Cache updated successfully.")

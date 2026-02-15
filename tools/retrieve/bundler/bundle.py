@@ -125,52 +125,9 @@ def bundle_files(manifest_path: str, output_path: str) -> None:
     # Prefer 'title', fall back to 'name' or 'tool_name' or Default
     title = manifest.get('title') or manifest.get('name') or manifest.get('tool_name') or 'Context Bundle'
     description = manifest.get('description', '')
-    
-    files = []
-    
-    # CASE A: Standard 'files' key (PREFERRED - ADR 097)
-    if 'files' in manifest:
-        files.extend(manifest['files'])
-        
-    # CASE B: Composite Manifests (DEPRECATED - legacy support only)
-    # These keys are deprecated as of 2026-02-01. Use 'files' array instead.
-    # See: ADR 097 (Base Manifest Inheritance Architecture)
-    composite_keys = ['core', 'topic', 'generated', 'context', 'bootstrap', 'guardian']
-    legacy_keys_found = []
-    
-    for key in composite_keys:
-        if key in manifest and isinstance(manifest[key], list):
-            legacy_keys_found.append(key)
-            print(f"   ⚠️  DEPRECATED: '{key}' section found. Migrate to 'files' array.")
-            print(f"      See: tools/retrieve/bundler/validate.py --help")
-            print(f"   > Merging composite section: '{key}' ({len(manifest[key])} items)")
-            for item in manifest[key]:
-                # Normalize to object structure {"path": "..."}
-                if isinstance(item, str):
-                    files.append({"path": item, "note": f"Source: {key}"})
-                elif isinstance(item, dict):
-                     # Add source note if not present
-                     if 'note' not in item:
-                         item['note'] = f"Source: {key}"
-                     files.append(item)
-    
-    if legacy_keys_found:
-        print(f"   ⚠️  DEPRECATION NOTICE: Found {len(legacy_keys_found)} legacy sections: {legacy_keys_found}")
-        print(f"      Use 'python3 tools/cli.py snapshot --type TYPE' for Protocol 128 workflows.")
-        print(f"      Legacy format will be removed in v2.0.")
-    
-    # Deduplicate by path (simple set check) - Protocol 130 light
-    # Although full dedupe happens elsewhere, basic uniqueness helps here
-    seen_paths = set()
-    unique_files = []
-    for f in files:
-        p = f.get('path')
-        if p and p not in seen_paths:
-            seen_paths.add(p)
-            unique_files.append(f)
-    files = unique_files
+    files = manifest.get('files', [])
 
-    print(f"📦 Bundling '{title}' ({len(files)} items)...")
+    print(f"📦 Bundling '{title}'...")
 
     with open(output_path, 'w', encoding='utf-8') as out:
         # Header

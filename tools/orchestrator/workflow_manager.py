@@ -31,7 +31,7 @@ Key Functions:
 Usage:
     from tools.orchestrator.workflow_manager import WorkflowManager
     mgr = WorkflowManager()
-    mgr.start_workflow("codify", "MyTarget")
+    mgr.start_workflow("codify-form", "JCSE0001")
 
 Related:
     - tools/cli.py (Consumer)
@@ -248,9 +248,9 @@ class WorkflowManager:
                 # For now, we will rely on `speckit` commands to populate, 
                 # BUT we can drop a README or the SOP if we identify it.
                 # COPY TEMPLATES Logic
-                # Copy sanctuary-start.md to the new folder
+                # Copy workflow-start.md to the new folder
                 template_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-start-template.md"
-                dest_path = new_spec_path / "sanctuary-start.md"
+                dest_path = new_spec_path / "workflow-start.md"
                 
                 if template_path.exists():
                     dest_path.write_text(template_path.read_text())
@@ -263,30 +263,7 @@ class WorkflowManager:
                 scratchpad_dest = new_spec_path / "scratchpad.md"
                 if scratchpad_tpl.exists():
                     scratchpad_dest.write_text(scratchpad_tpl.read_text())
-                    print(f"📄 Created {scratchpad_dest.name} from template")
-
-                # Copy Retrospective Template (Deterministic Lifecycle)
-                retro_tpl = self.project_root / ".agent" / "templates" / "workflow" / "workflow-retrospective-template.md"
-                retro_dest = new_spec_path / "retrospective.md"
-                if retro_tpl.exists():
-                    retro_dest.write_text(retro_tpl.read_text())
-                    print(f"📄 Created {retro_dest.name} from template")
-
-                # Copy Workflow End Template (Deterministic Lifecycle)
-                end_tpl = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
-                end_dest = new_spec_path / "sanctuary-end.md"
-                if end_tpl.exists():
-                    end_dest.write_text(end_tpl.read_text())
-                    print(f"📄 Created {end_dest.name} from template")
-
-                # Copy Core Spec/Plan/Tasks Templates (if not handled by Manifest)
-                # This ensures the folder is fully populated 
-                for doc, tpl_name in [("spec.md", "spec-template.md"), ("plan.md", "plan-template.md"), ("tasks.md", "tasks-template.md")]:
-                     tpl = self.project_root / ".agent" / "templates" / "workflow" / tpl_name
-                     dest = new_spec_path / doc
-                     if tpl.exists() and not dest.exists():
-                         dest.write_text(tpl.read_text())
-                         print(f"📄 Created {dest.name} from template") 
+                    print(f"📄 Created {scratchpad_dest.name} from template") 
             except Exception as e:
                 print(f"❌ Failed to create spec directory: {e}")
                 return False
@@ -310,7 +287,7 @@ class WorkflowManager:
     def run_retrospective(self) -> bool:
         """
         Calculates the active spec and initializes the retrospective artifact.
-        Runs proof check, then INTERACTIVELY prompts user for feedback.
+        Runs proof check FIRST to verify work was done.
         """
         print(f"🕵️  Initializing Retrospective...")
         
@@ -339,42 +316,44 @@ class WorkflowManager:
             
         print(f"✅ Active Spec Context: {target_spec_folder.name}")
         
-        # 2. RUN PROOF CHECK
+        # 2. RUN PROOF CHECK - Verify files mentioned in spec/plan/tasks were modified
         print(f"\n🔍 Running Proof Check...")
         proof_result = self.run_proof_check(target_spec_folder)
         
         if proof_result["unchanged"]:
-            # (Blocking logic remains same as existing code...)
             print("\n" + "="*60)
             print("🛑 PROOF CHECK FAILED - VERIFICATION REQUIRED")
             print("="*60)
-            print("Files checked as modified but found UNCHANGED:")
+            print("")
+            print("🤖 LLM: STOP AND READ THIS CAREFULLY.")
+            print("")
+            print("You checked boxes claiming work was done, but these files")
+            print("have NO CHANGES compared to origin/main:")
+            print("")
             for item in proof_result["unchanged"]:
                 print(f"   ❌ {item['path']}")
-            print("\nDO NOT PROCEED until this check passes.")
+            print("")
+            print("QUESTION: Did you actually do this work, or did you just")
+            print("          check the box without making real changes?")
+            print("")
+            print("REQUIRED ACTIONS:")
+            print("   1. Go back and VERIFY each file was actually modified")
+            print("   2. If you skipped a step, DO THE WORK NOW")
+            print("   3. If the file reference is wrong, FIX the spec/plan/tasks")
+            print("   4. Re-run this check until it passes")
+            print("")
+            print("DO NOT PROCEED until this check passes.")
             print("="*60)
             return False
         
-        print(f"✅ Proof Check Passed: {len(proof_result['modified'])} file(s) verified.")
+        print(f"✅ Proof Check Passed: {len(proof_result['modified'])} file(s) verified as modified")
         
-        # 3. INTERACTIVE FEEDBACK (Part A)
-        print("\n" + "="*50)
-        print("🧠 Protocol 128: Interactive Retrospective")
-        print("="*50)
-        print("Please answer the following questions to close the learning loop:\n")
-        
-        a1 = input("1. What went well? (Observation): ").strip() or "N/A"
-        a2 = input("2. What was frustrating/confusing? (Observation): ").strip() or "N/A"
-        a3 = input("3. Did Agent ignore any feedback? (If yes, details): ").strip() or "No"
-        a4 = input("4. Suggestions for improvement?: ").strip() or "N/A"
-        
-        # 4. Load & Populate Template
+        # 3. Copy Template
         template_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-retrospective-template.md"
         dest_path = target_spec_folder / "retrospective.md"
         
         if dest_path.exists():
             print(f"⚠️  Retrospective file already exists at: {dest_path}")
-            print(f"   (Skipping overwrite to preserve existing data)")
             return True
             
         if not template_path.exists():
@@ -382,55 +361,8 @@ class WorkflowManager:
              return False
              
         try:
-            content = template_path.read_text()
-            
-            # Inject Variables
-            import datetime
-            content = content.replace("[DATE]", str(datetime.date.today()))
-            content = content.replace("[WORKFLOW_NAME]", target_spec_folder.name)
-            
-            # Inject Answers (Simple replacement of placeholders or appending)
-            # The template has checkboxes like - [ ] [User observation]
-            # We'll replace the first occurrence of appropriate placeholders
-            
-            content = content.replace("[User observation]", a1, 1) # A1
-            content = content.replace("[User observation]", a2, 1) # A2 - reused placeholder?
-            # actually template uses same placeholder. Let's be robust.
-            # Strategy: Replace specific text blocks if they exist, or just append answers?
-            # Template:
-            # ### A1. What went well for you?
-            # - [ ] [User observation]
-            
-            # Re-read template structure in memory logic:
-            # We will use regex to robustly replace sections if simple replace is risky.
-            # But simple replace logic:
-            # 1st [User observation] -> A1
-            # 2nd [User observation] -> A2
-            # [Details] -> A3
-            # [User suggestion] -> A4
-            
-            # Let's start fresh with the replacements
-            content = template_path.read_text()
-            content = content.replace("[DATE]", str(datetime.date.today()))
-            content = content.replace("[WORKFLOW_NAME]", target_spec_folder.name)
-            
-            # Replace sequentially
-            content = content.replace("[User observation]", a1, 1)
-            content = content.replace("[User observation]", a2, 1)
-            content = content.replace("[Details]", a3, 1)
-            content = content.replace("[User suggestion]", a4, 1)
-            
-            # Auto-fill Files List
-            file_list_str = ""
-            for m in proof_result["modified"]:
-                file_list_str += f"- [x] `{m['path']}`\n"
-            
-            content = content.replace("- [ ] `path/to/file.py`", file_list_str)
-
-            dest_path.write_text(content)
-            print(f"\n✅ Created Retrospective Artifact: {dest_path}")
-            print("   Part A (User) is populated.")
-            print("   👉 Part B (Agent Self-Assessment): Agent will fill this now (simulated).")
+            dest_path.write_text(template_path.read_text())
+            print(f"📄 Created Retrospective Artifact: {dest_path}")
             return True
         except Exception as e:
             print(f"❌ Error writing file: {e}")
@@ -506,8 +438,8 @@ class WorkflowManager:
         
         # 2. Add Files
         if not files:
-            print("⚠️  No files specified. Adding ALL files (tracked + untracked).")
-            self.run_command(["git", "add", "."])
+            print("⚠️  No files specified. Adding ALL files (modified + untracked).")
+            self.run_command(["git", "add", "-A"])
         else:
             print(f"📦 Staging {len(files)} files...")
             for f in files:
@@ -527,21 +459,11 @@ class WorkflowManager:
                        break
         
         if target_spec_folder:
-             # 1.5a Enforce Retrospective (Protocol 128)
-             retro_path = target_spec_folder / "retrospective.md"
-             if not retro_path.exists():
-                 print(f"\n🛑 BLOCKING: No Retrospective Artifact found.")
-                 print(f"   path: {retro_path}")
-                 print("   The Universal Hybrid Workflow requires a retrospective before closure.")
-                 print("\n👉 ACTION REQUIRED: Run '/sanctuary-retrospective' first.\n")
-                 return False
-
-             # 1.5b Enforce Workflow End Checklist
-             checklist_path = target_spec_folder / "sanctuary-end.md"
+             checklist_path = target_spec_folder / "workflow-end.md"
              if not checklist_path.exists():
-                   # Copy Template
-                   tpl_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
-                   if tpl_path.exists():
+                  # Copy Template
+                  tpl_path = self.project_root / ".agent" / "templates" / "workflow" / "workflow-end-template.md"
+                  if tpl_path.exists():
                        checklist_path.write_text(tpl_path.read_text())
                        print(f"🛑 Checklist Created: {checklist_path}")
                        print("   Please review/complete this checklist, then run 'workflow end' again.")
@@ -562,14 +484,6 @@ class WorkflowManager:
         try:
             self.run_command(["git", "push", "origin", current_branch])
             print(f"✅ Workflow Completed. Branch '{current_branch}' pushed.")
-            
-            print("\n" + "="*50)
-            print("👉 NEXT STEPS:")
-            print(f"   1. Create Pull Request for branch '{current_branch}'")
-            print("   2. Wait for CI/CD & Review")
-            print("   3. Merge to main")
-            print("="*50 + "\n")
-
             return True
         except Exception as e:
             print(f"❌ Push failed: {e}")
@@ -593,67 +507,217 @@ class WorkflowManager:
                 print("❌ Push cancelled by user.")
                 return False
         
-        success = self.end_workflow(message, files)
-        if success:
-             print("\n💡 TIP: Once merged, run: /workflow-cleanup")
-        return success
+        return self.end_workflow(message, files)
 
-    def cleanup_workflow(self, force: bool = False) -> bool:
+    def cleanup_branch(self) -> bool:
         """
-        Step 4: Post-Merge Cleanup.
-        1. Checkout main
-        2. Pull origin main
-        3. Delete local feature branch
+        Post-merge cleanup: switch to main, pull, and delete the feature branch.
         """
         current_branch = self.get_current_branch()
+        
         if current_branch in ["main", "master", "develop"]:
-             print(f"❌ You are already on '{current_branch}'. Cleanup is for feature branches.")
-             return False
+            print(f"⚠️  Already on '{current_branch}'. Nothing to clean up.")
+            return True
         
-        print(f"\n🧹 Cleanup Routine for branch '{current_branch}'")
-        print("   1. Checkout 'main'")
-        print("   2. Pull latest 'main'")
-        print("   3. Delete local branch")
+        print(f"🧹 Cleaning up branch: {current_branch}")
         
-        if not force:
-             print("\n⚠️  PREREQUISITE: Ensure your Pull Request is MERGED first.")
-             resp = input("❓ Ready to proceed? (yes/no): ").strip().lower()
-             if resp != 'yes':
-                  print("❌ Aborting cleanup.")
-                  return False
-
-        print(f"\n🔄 Switching to 'main'...")
+        # 1. Switch to main
+        print("   Switching to main...")
         try:
-             self.run_command(["git", "checkout", "main"])
+            self.run_command(["git", "checkout", "main"])
+        except RuntimeError as e:
+            print(f"❌ Failed to switch to main: {e}")
+            return False
+        
+        # 2. Pull latest
+        print("   Pulling latest changes...")
+        try:
+            self.run_command(["git", "pull", "origin", "main"])
+        except RuntimeError as e:
+            print(f"⚠️  Pull failed (may need manual intervention): {e}")
+        
+        # 3. Delete local branch
+        print(f"   Deleting local branch '{current_branch}'...")
+        try:
+            self.run_command(["git", "branch", "-d", current_branch])
+        except RuntimeError as e:
+            print(f"⚠️  Local branch deletion failed: {e}")
+            print("   Try: git branch -D {current_branch}")
+        
+        # 4. Delete remote branch (optional - may already be done by PR merge)
+        print(f"   Deleting remote branch 'origin/{current_branch}'...")
+        try:
+            self.run_command(["git", "push", "origin", "--delete", current_branch])
+            print(f"✅ Remote branch deleted.")
+        except RuntimeError:
+            print(f"   (Remote branch may already be deleted by PR merge)")
+        
+        print(f"✅ Cleanup complete. Now on 'main'.")
+
+    def update_inventory(self) -> bool:
+        """
+        Scans .agent/workflows and updates docs/antigravity/workflow/workflow_inventory.json
+        """
+        import json
+        
+        print("🔍 Scanning workflows...")
+        workflows_dir = self.project_root / ".agent" / "workflows"
+        inventory_path = self.project_root / "docs" / "antigravity" / "workflow" / "workflow_inventory.json"
+        
+        inventory = {}
+        
+        # Walk through the directory
+        for root, _, files in os.walk(workflows_dir):
+            for file in files:
+                if file.endswith(".md"):
+                    path = Path(root) / file
+                    rel_path = path.relative_to(workflows_dir)
+                    
+                    # Parse Frontmatter
+                    content = path.read_text()
+                    metadata = {}
+                    
+                    # Basic Frontmatter Parser
+                    # Matches lines between ---
+                    fm_match = re.search(r"^---\n(.*?)\n---", content, re.DOTALL)
+                    if fm_match:
+                        fm_content = fm_match.group(1)
+                        for line in fm_content.splitlines():
+                            if ":" in line:
+                                key, val = line.split(":", 1)
+                                metadata[key.strip()] = val.strip()
+                    else:
+                        # Fallback: Look for "description:" line if frontmatter missing
+                        desc_match = re.search(r"description: (.*)", content)
+                        if desc_match:
+                            metadata["description"] = desc_match.group(1).strip()
+                            
+                    # Determine ID (filename without ext)
+                    wf_id = "/" + file.replace(".md", "")
+                    
+                    # Determine Category based on folder
+                    category = "root"
+                    if str(rel_path.parent) != ".":
+                        category = str(rel_path.parent)
+
+                    inventory[wf_id] = {
+                        "path": str(rel_path),
+                        "description": metadata.get("description", "No description"),
+                        "tier": metadata.get("tier", "Unknown"),
+                        "inputs": metadata.get("inputs", "[]"),
+                        "category": category
+                    }
+        
+        # Sort and Save
+        sorted_inventory = dict(sorted(inventory.items()))
+        
+        try:
+            inventory_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(inventory_path, "w") as f:
+                json.dump(sorted_inventory, f, indent=4)
+            print(f"✅ Inventory updated at: {inventory_path}")
+            print(f"   Found {len(sorted_inventory)} workflows.")
+            return True
         except Exception as e:
-             print(f"❌ Failed to checkout main: {e}")
-             return False
+            print(f"❌ Failed to save inventory: {e}")
+            return False
 
-        print(f"⬇️  Pulling 'origin main'...")
-        try:
-             self.run_command(["git", "pull", "origin", "main"])
-        except Exception as e:
-             print(f"❌ Failed to pull main: {e}")
-             # We continue, as we might still want to delete the branch, but safest to warn?
-             # Actually, if pull fails, we might be out of sync. But let's verify branch deletion.
-
-        print(f"🗑️  Deleting branch '{current_branch}'...")
-        try:
-             # Try safe delete first (checks merge status)
-             self.run_command(["git", "branch", "-d", current_branch])
-             print(f"✅ Branch '{current_branch}' deleted successfully.")
-        except Exception:
-             print(f"⚠️  Safe delete failed (maybe commit history mismatch?).")
-             resp = input(f"❓ Force delete '{current_branch}'? (yes/no): ").strip().lower()
-             if resp == 'yes':
-                  try:
-                       self.run_command(["git", "branch", "-D", current_branch])
-                       print(f"✅ Branch '{current_branch}' force deleted.")
-                  except Exception as e:
-                       print(f"❌ Force delete failed: {e}")
-                       return False
-             else:
-                  print("❌ Skipped deletion.")
-                  return False
+    def generate_report(self) -> bool:
+        """
+        Generates WORKFLOW_INVENTORY.md from the JSON inventory.
+        """
+        import json
         
-        return True
+        json_path = self.project_root / "docs" / "antigravity" / "workflow" / "workflow_inventory.json"
+        md_path = self.project_root / "docs" / "antigravity" / "workflow" / "WORKFLOW_INVENTORY.md"
+        
+        if not json_path.exists():
+            print(f"❌ Inventory JSON not found at {json_path}. Run --update-inventory first.")
+            return False
+            
+        with open(json_path, "r") as f:
+            data = json.load(f)
+            
+        # Group by Category
+        categories = {}
+        for wf_id, info in data.items():
+            cat = info.get("category", "root")
+            if cat not in categories:
+                categories[cat] = []
+            info["id"] = wf_id
+            categories[cat].append(info)
+            
+        # Build Markdown
+        lines = [
+            "# Antigravity Workflow Inventory",
+            "",
+            f"**Total Workflows**: {len(data)}",
+            f"**Last Updated**: {subprocess.check_output(['date']).decode().strip()}",
+            "",
+            "## Index",
+            ""
+        ]
+        
+        # Sort categories (root first, then alphabetical)
+        sorted_cats = sorted(categories.keys())
+        if "root" in sorted_cats:
+            sorted_cats.remove("root")
+            sorted_cats.insert(0, "root")
+            
+        for cat in sorted_cats:
+            display_cat = "Core Workflows" if cat == "root" else cat.replace("/", " > ").title()
+            lines.append(f"### {display_cat}")
+            lines.append("| Workflow | Tier | Description |")
+            lines.append("| :--- | :--- | :--- |")
+            
+            for wf in sorted(categories[cat], key=lambda x: x['id']):
+                name = f"[`{wf['id']}`](../../.agent/workflows/{wf['path']})"
+                tier = wf.get("tier", "-")
+                desc = wf.get("description", "")
+                lines.append(f"| {name} | {tier} | {desc} |")
+            
+            lines.append("")
+
+        try:
+            md_path.write_text("\n".join(lines))
+            print(f"✅ Report generated at: {md_path}")
+            return True
+        except Exception as e:
+            print(f"❌ Failed to write report: {e}")
+            return False
+
+if __name__ == "__main__":
+    import argparse
+    import os # Ensure os is imported for walk
+    
+    parser = argparse.ArgumentParser(description="Workflow Manager Orchestrator")
+    parser.add_argument("action",  nargs="?", help="Action to perform: start, end, retro, inventory, report")
+    parser.add_argument("target", nargs="?", help="Target ID (e.g. JCSE0001)")
+    parser.add_argument("type", nargs="?", default="generic", help="Artifact Type")
+    parser.add_argument("--message", help="Commit message for end action")
+    parser.add_argument("--update-inventory", action="store_true", help="Update inventory JSON")
+    parser.add_argument("--report", action="store_true", help="Generate inventory Markdown report")
+    
+    args = parser.parse_args()
+    
+    mgr = WorkflowManager()
+    
+    if args.update_inventory or (args.action == "inventory"):
+        mgr.update_inventory()
+    elif args.report or (args.action == "report"):
+        mgr.generate_report()
+    elif args.action == "start":
+        if not args.target:
+             print("❌ Error: Target ID required for start.")
+             sys.exit(1)
+        mgr.start_workflow(args.target, args.target, args.type) # Using target as name for now? Logic slightly ambiguous in original, adjusting.
+    elif args.action == "retro":
+        mgr.run_retrospective()
+    elif args.action == "end":
+        if not args.message:
+            print("❌ Error: --message required for end.")
+            sys.exit(1)
+        # Note: 'end' logic in class requires file list. Use '.' for all?
+        mgr.end_workflow_with_confirmation(args.message, None)
+    else:
+        parser.print_help()
