@@ -47,52 +47,31 @@
             "note": "Protocol 128 diagram"
         },
         {
-            "path": "LEARNING/topics/agent-skills-open-standard/analysis.md",
-            "note": "Current topic: Agent Skills Open Standard"
+            "path": "docs/architecture/safe_agent_zero/defense_in_depth_strategy.md",
+            "note": "Strategy: 10-Layer Defense"
         },
         {
-            "path": "LEARNING/topics/agent-skills-open-standard/sources.md",
-            "note": "Current topic: Sources"
+            "path": "docs/architecture/safe_agent_zero/operational_policy_matrix.md",
+            "note": "Policy: Allowed Actions"
         },
         {
-            "path": "LEARNING/topics/agent-skills-open-standard/questions.md",
-            "note": "Current topic: Open questions"
+            "path": "docs/architecture/safe_agent_zero/implementation_plan.md",
+            "note": "Plan: Detailed Implementation"
         },
         {
-            "path": ".agent/skills/memory-management/SKILL.md",
-            "note": "Current topic: New memory skill"
+            "topic": "safe_agent_zero",
+            "topic_root": ".agent/learning/LEARNING/topics/safe_agent_zero",
+            "artifacts": [
+                "analysis.md",
+                "questions.md",
+                "sources.md",
+                "strategy_packet.md"
+            ],
+            "note": "Research: Vulnerability Scale"
         },
         {
-            "path": ".agent/skills/code-review/SKILL.md",
-            "note": "Current topic: New code review skill"
-        },
-        {
-            "path": "LEARNING/protocols/dual_loop_implementation_summary.md",
-            "note": "Dual-Loop implementation summary"
-        },
-        {
-            "path": "tools/orchestrator/dual_loop/generate_strategy_packet.py",
-            "note": "Tool: Strategy Packet Generator"
-        },
-        {
-            "path": "tools/orchestrator/dual_loop/verify_inner_loop_result.py",
-            "note": "Tool: Inner Loop Verifier"
-        },
-        {
-            "path": "tools/orchestrator/dual_loop/run_workflow.py",
-            "note": "Tool: Dual-Loop Orchestrator (Python)"
-        },
-        {
-            "path": ".agent/skills/dual-loop-supervisor/SKILL.md",
-            "note": "Dual-Loop Supervisor Skill"
-        },
-        {
-            "path": "docs/architecture_diagrams/workflows/dual_loop_architecture.mmd",
-            "note": "Dual-Loop Architecture Diagram"
-        },
-        {
-            "path": ".agent/workflows/sanctuary_protocols/santuary-santuary-dual-loop-learning.md",
-            "note": "Protocol 133 Workflow"
+            "path": "docs/architecture/safe_agent_zero/research/esecurityplanet_analysis.md",
+            "note": "Research: Exposure Risks"
         }
     ]
 }

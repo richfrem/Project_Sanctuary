@@ -28,34 +28,99 @@ Structured 10-phase cognitive continuity loop ensuring knowledge survives across
 
 ---
 
+---
+
 ## The Iron Chain
 
+> **Prerequisite**: You must have established a Valid Session via `/sanctuary-start` or a manual boot sequence (Protocol 128 Phase I).
+
 ```
-Scout → Synthesize → Gate → Audit → Seal → Persist → Retrospective → Ingest → End
+Scout → Synthesize → Gate → Audit → [Execution / Dual-Loop] → Seal → Persist → Retrospective → Ingest → End
 ```
 
 ---
 
-## Session Open (MANDATORY)
+### Phase I: The Learning Scout (Orientation)
 
-### Step 1: Read boot files
-```
-.agent/learning/guardian_boot_contract.md    → Constraints
-.agent/learning/cognitive_primer.md          → Role
-.agent/learning/learning_package_snapshot.md → Context (read first 500 lines)
-```
-**PROOF**: You must quote at least one line from each file to confirm you read them.
+> **Goal**: Establish Identity & Context.
+> **Trigger**: `/sanctuary-start` (Automated) OR Manual Boot.
 
-### Step 2: Run Scout
-```bash
-/sanctuary-scout
-```
-**PROOF**: Paste the scout output. If it fails, report the error — do NOT fabricate success.
+1.  **Identity Check**:
+    *   Read `.agent/learning/cognitive_primer.md` (Role & Directives)
+    *   Read `.agent/learning/guardian_boot_contract.md` (Constraints)
+    
+2.  **Context Loading (Wakeup)**:
+    *   **Command**: `/sanctuary-scout`
+    *   **Action**: Calls `cortex_learning_debrief` to load the "Cognitive Hologram".
+    *   **Verify**: Did you receive the `learning_package_snapshot.md` content?
 
-### Step 3: Report readiness
-Tell the user: "Boot complete. [summary of context loaded]. Ready to work."
+3.  **Iron Check**:
+    *   Confirm integrity. If FAIL -> Stop (Safe Mode).
+
+4.  **Report Readiness**:
+    *   "Boot complete. Context loaded. Ready."
+
+**STOP**: Do NOT proceed to work until you have completed Phase I.
 
 **STOP**: Do NOT proceed to work until you have completed all 3 steps above.
+
+---
+
+## The Bridge (Why we Seal)
+
+> **Cognitive Continuity**: We Seal (Phase VI) and Persist (Phase VII) so that the **Next Agent** can Resume (Phase I).
+> *   **Snapshot**: Your `seal` output becomes their `boot` input.
+> *   **Trace**: Your `persist` output teaches the Soul model.
+
+---
+
+## Supporting Skills (The Toolkit)
+
+| Skill | Phase | Purpose |
+|-------|-------|---------|
+| **Spec Kitty** | II, III, V | Architecture & Planning (`/spec-kitty.*`) |
+| **Dual Loop** | V | Execution Delegation (`dual-loop-supervisor`) |
+| **Context Bundling** | II, IV | Context Sharing & Review Packets |
+| **Memory Mgmt** | I, VI, VII | Cognitive Continuity & Persistence |
+
+---
+
+## Work Phase (Phases II-V)
+
+### Phase II: Intelligence Synthesis
+1.  **Mode Selection**:
+    *   **Standard**: Update docs/ADRs.
+    *   **Evolutionary (v4.0)**: DRQ Mutation -> Adversary Gate -> Map-Elites (Advanced).
+2.  **Synthesis**: Do your research.
+
+### Phase III: Strategic Gate (HITL)
+> **Human-in-the-Loop Required**
+1.  **Review**: Present findings to User.
+2.  **Gate**: Wait for explicit "Approved" or "Proceed".
+    *   *If FAIL*: Backtrack to Phase VIII (Self-Correction).
+
+### Phase IV: Audit (Red Team)
+1.  **Command**: `/sanctuary-audit`
+2.  **Action**: User reviews the plan/architecture.
+
+### Execution Branch (Post-Audit)
+> **Choose your Execution Mode:**
+
+**Option A: Standard Agent (Single Loop)**
+*   **Action**: You write the code, run tests, and verify yourself.
+*   **Protocol**: Stay in this session.
+
+**Option B: Dual Loop (Protocol 133)**
+*   **Action**: Delegate execution to Inner Loop.
+*   **Command**: Follow `dual-loop-supervisor` Skill.
+*   **Return**: Once Inner Loop finishes, resume here at **Phase V (RLM Synthesis)**.
+
+---
+
+### Phase X: Phoenix Forge (Optional)
+> **Long-running Fine-Tuning**
+1.  **Trigger**: User request or "Time to Forge" decision.
+2.  **Action**: Forge dataset -> QLoRA Train -> Deploy new model.
 
 ---
 
@@ -65,33 +130,26 @@ Tell the user: "Boot complete. [summary of context loaded]. Ready to work."
 > "end session", or similar — you MUST run these steps IN ORDER.
 > Skipping any step means the next session starts blind.
 
-### Step 1: Seal (Phase VI)
-```bash
-/sanctuary-seal
-```
-**PROOF**: Paste the seal output showing snapshot was created.
-**STOP**: Do NOT proceed to Persist until seal output is confirmed.
+### Phase V: RLM Synthesis (Protocol 132)
+> **Automated by Seal**. The sovereign LLM summarizes your work.
+> *Ensure `ollama-launch` has been run.*
 
-### Step 2: Persist (Phase VII)
-```bash
-/sanctuary-persist
-```
-**PROOF**: Paste the persist output showing HuggingFace upload status.
-**STOP**: Do NOT proceed to Retrospective until persist output is confirmed.
+### Phase VI: The Technical Seal
+1.  **Command**: `/sanctuary-seal`
+2.  **Action**: Snapshots state, runs Iron Check, creates `snapshot.md`.
+3.  **Gate**: Must PASS to proceed.
 
-### Step 3: Retrospective (Phase VIII)
-```bash
-/sanctuary-retrospective
-```
-**PROOF**: Paste the retrospective output. This is a self-audit — actually reflect on what happened.
+### Phase VII: Soul Persistence
+1.  **Command**: `/sanctuary-persist`
+2.  **Action**: Uploads session traces to HuggingFace (Long-term Memory).
 
-### Step 4: End (Phase IX)
-```bash
-/sanctuary-end
-```
-**PROOF**: Paste the end output showing git status and closure confirmation.
+### Phase VIII: Self-Correction (Retrospective)
+1.  **Command**: `/sanctuary-retrospective`
+2.  **Action**: Analyze what went well/poorly.
 
-**DONE**: Only after all 4 steps have real output can you consider the session closed.
+### Phase IX: Ingest & End
+1.  **Command**: `/sanctuary-ingest` (Update Vector DB)
+2.  **Command**: `/sanctuary-end` (Git Commit & Close)
 
 ---
 
@@ -133,7 +191,8 @@ When Protocol 128 runs inside a Dual-Loop session:
 | II-III (Synthesis/Gate) | Outer Loop plans, user approves | Strategy Packet generated |
 | IV (Audit) | Outer Loop snapshots before delegation | Pre-execution checkpoint |
 | *(Execution)* | **Inner Loop** performs tactical work | Code-only, no git |
-| V (Verify) | Outer Loop inspects Inner Loop output | `verify_inner_loop_result.py` |
+| *Verification* | Outer Loop inspects Inner Loop output | `verify_inner_loop_result.py` |
+| V (RLM Synthesis) | Outer Loop (Automated) | Cognitive Hologram generation |
 | VI-IX (Seal→End) | Outer Loop closure | Standard seal/persist/retro/end |
 
 **Key rule**: The Inner Loop does NOT run Learning Loop phases. All cognitive continuity is the Outer Loop's responsibility.

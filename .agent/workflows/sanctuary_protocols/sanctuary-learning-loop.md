@@ -21,6 +21,7 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 ## Phase I: The Learning Scout (Orientation)
 
 > **Mandatory first step for every session.**
+> **Trigger**: `/sanctuary-start` (Universal Entry)
 
 1.  **Access Mode Check**:
     - **IDE Mode**: Read `cognitive_primer.md` first, then run `cortex_guardian_wakeup`
@@ -62,6 +63,20 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 8.  **Red Team Feedback**:
     - "More Research" → Capture feedback, loop to step 3
     - "Ready" → Proceed to Phase V
+
+4.  **Backtrack**: If FAIL → return to Phase IX (Self-Correction)
+
+## Phase IV: Red Team Audit
+
+1.  **Generate Packet**: `/sanctuary-audit`
+2.  **Review**: User Check (Gate 2)
+
+## Execution Strategy (Branch Point)
+
+> **Decision Point**:
+> *   **Standard**: Execute changes yourself.
+> *   **Dual Loop**: Switch to `.agent/workflows/sanctuary_protocols/dual-loop-learning.md`.
+> *   **Research**: Skip execution, proceed to Seal.
 
 ## Phase V: RLM Context Synthesis (Protocol 132)
 
@@ -137,11 +152,11 @@ When Protocol 128 runs inside a Dual-Loop session, phases map to loop roles:
 
 ## Pre-Departure Checklist (Protocol 128)
 
+- [ ] **Seal**: Ran `/sanctuary-seal`? (Phase VI)
+- [ ] **Persist**: Ran `/sanctuary-persist`? (Phase VII)
 - [ ] **Retrospective**: Filled `loop_retrospective.md`? (Phase VIII)
 - [ ] **Deployment**: Containers running new code?
 - [ ] **Curiosity Vector**: Recorded "Lines of Inquiry" in `guardian_boot_digest.md`?
-- [ ] **Seal**: Ran `/sanctuary-seal` after Retro? (Phase VI)
-- [ ] **Persist**: Ran `/sanctuary-persist` after Seal? (Phase VII)
 - [ ] **Ingest**: Ran `/sanctuary-ingest` to index changes? (Phase IX)
 - [ ] **Cleanup**: `rm -rf temp/context-bundles/*.md temp/*.md temp/*.json`
 

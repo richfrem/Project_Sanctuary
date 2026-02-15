@@ -54,6 +54,12 @@ flowchart LR
 
 ## Workflow Steps
 
+### Prerequisites (Protocol 128 Context)
+> **CRITICAL**: This is a **Child Protocol**.
+> You must strictly follow the **Parent Protocol (128)** for Session Lifecycle.
+> *   **Parent**: `/sanctuary-start` (Scout/Boot)
+> *   **Diagram**: `protocol_128_learning_loop.mmd` (See "Dual Loop Branch")
+
 ### Step 1: Plan (Outer Loop — Spec Kitty)
 
 ```bash
@@ -190,8 +196,9 @@ Then verify kanban:
 | I (Scout) | Outer Loop | Boot, orient, read spec context |
 | II-III (Synthesis/Gate) | Outer Loop | Strategy planning, user approval |
 | IV (Audit) | Outer Loop | Pre-execution checkpoint |
-| *(Execution)* | **Inner Loop** | Code-only, no git, no P128 phases |
-| V (Verify) | Outer Loop | Inspect diff, run checks |
+| *Execution* | **Inner Loop** | Code-only, no git, no P128 phases |
+| *Verification* | Outer Loop | Inspect diff, run checks |
+| V (RLM Synthesis) | Outer Loop | Cognitive Hologram generation |
 | VI-IX (Seal→End) | Outer Loop | Standard closure sequence |
 
 **Key rule**: The Inner Loop does NOT run Learning Loop phases. All cognitive continuity is the Outer Loop's responsibility.
