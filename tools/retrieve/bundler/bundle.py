@@ -144,7 +144,7 @@ def bundle_files(manifest_path: str, output_path: str) -> None:
         # But expansion happens during processing. 
         # For simplicity in this version, TOC will list the Manifest Entries, mentioning recursion if applicable.
         for i, item in enumerate(files, 1):
-            path_str = item.get('path', 'Unknown')
+            path_str = item.get('path', item.get('topic', 'Unknown'))
             note = item.get('note', '')
             out.write(f"{i}. [{path_str}](#entry-{i})\n")
         out.write("\n---\n\n")
@@ -154,7 +154,13 @@ def bundle_files(manifest_path: str, output_path: str) -> None:
             rel_path = item.get('path')
             note = item.get('note', '')
             
-            out.write(f"<a id='entry-{i}'></a>\n")
+            if not rel_path:
+                # Handle non-file items (e.g. topics) basically by skipping or printing metadata
+                out.write(f"<a id='entry-{i}'></a>\n")
+                if item.get('topic'):
+                    out.write(f"## {i}. Topic: {item.get('topic')}\n")
+                    out.write(f"> ℹ️ Context Topic (See Learning Audit for details)\n")
+                continue
             
             # Resolve path
             found_path = None

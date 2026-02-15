@@ -148,6 +148,7 @@ def add_file(path: str, note: str, manifest_path: Optional[str] = None, base_typ
 
     # Check for duplicate
     for f in manifest["files"]:
+        if "path" not in f: continue
         existing = f["path"].replace('\\', '/')
         if existing == path:
             print(f"⚠️  File already in manifest: {path}")
@@ -250,7 +251,12 @@ def list_manifest(manifest_path: Optional[str] = None, base_type: Optional[str] 
     manifest = load_manifest(manifest_path, base_type)
     print(f"📋 Current Manifest: {manifest['title']}")
     for i, f in enumerate(manifest["files"], 1):
-        print(f"  {i}. {f['path']} - {f.get('note', '')}")
+        if "path" in f:
+            print(f"  {i}. {f['path']} - {f.get('note', '')}")
+        elif "topic" in f:
+            print(f"  {i}. [TOPIC] {f['topic']} - {f.get('note', '')}")
+        else:
+            print(f"  {i}. [UNKNOWN] {f}")
 
 def load_manifest(manifest_path: Optional[str] = None, base_type: Optional[str] = None) -> Dict[str, Any]:
     """
@@ -307,7 +313,7 @@ def remove_file(path: str, manifest_path: Optional[str] = None, base_type: Optio
 
     # Filter out the file
     initial_count = len(manifest["files"])
-    manifest["files"] = [f for f in manifest["files"] if f["path"] != path]
+    manifest["files"] = [f for f in manifest["files"] if f.get("path") != path]
     
     if len(manifest["files"]) < initial_count:
         save_manifest(manifest, manifest_path, base_type)
@@ -346,7 +352,7 @@ def search_files(pattern: str, manifest_path: Optional[str] = None, base_type: O
         base_type: If provided, searches within a base manifest template.
     """
     manifest = load_manifest(manifest_path, base_type)
-    matches = [f for f in manifest["files"] if pattern.lower() in f["path"].lower() or pattern.lower() in f.get("note", "").lower()]
+    matches = [f for f in manifest["files"] if f.get("path") and (pattern.lower() in f["path"].lower() or pattern.lower() in f.get("note", "").lower())]
     
     if matches:
         print(f"🔍 Found {len(matches)} matches in manifest:")
@@ -375,7 +381,7 @@ def update_file(path, note=None, new_path=None, manifest_path=None, base_type=No
 
     found = False
     for f in manifest["files"]:
-        if f["path"] == path:
+        if f.get("path") == path:
             found = True
             if note is not None:
                  f["note"] = note

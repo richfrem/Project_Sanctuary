@@ -1,77 +1,27 @@
 {
-    "title": "Learning Audit Bundle",
-    "description": "Learning audit context for Red Team review. Topic files for current learning focus.",
-    "files": [
-        {
-            "path": "README.md",
-            "note": "Project overview"
-        },
-        {
-            "path": "IDENTITY/founder_seed.json",
-            "note": "Identity anchor"
-        },
-        {
-            "path": ".agent/learning/cognitive_primer.md",
-            "note": "Cognitive primer"
-        },
-        {
-            "path": ".agent/learning/guardian_boot_contract.md",
-            "note": "Guardian contract"
-        },
-        {
-            "path": ".agent/learning/learning_audit/learning_audit_core_prompt.md",
-            "note": "Core audit prompt"
-        },
-        {
-            "path": ".agent/learning/learning_audit/learning_audit_prompts.md",
-            "note": "Audit prompts"
-        },
-        {
-            "path": ".agent/rules/cognitive_continuity_policy.md",
-            "note": "Continuity policy"
-        },
-        {
-            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
-            "note": "Protocol 128"
-        },
-        {
-            "path": "ADRs/071_protocol_128_cognitive_continuity.md",
-            "note": "ADR 071"
-        },
-        {
-            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
-            "note": "Guardian prompt"
-        },
-        {
-            "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
-            "note": "Protocol 128 diagram"
-        },
-        {
-            "path": "docs/architecture/safe_agent_zero/defense_in_depth_strategy.md",
-            "note": "Strategy: 10-Layer Defense"
-        },
-        {
-            "path": "docs/architecture/safe_agent_zero/operational_policy_matrix.md",
-            "note": "Policy: Allowed Actions"
-        },
-        {
-            "path": "docs/architecture/safe_agent_zero/implementation_plan.md",
-            "note": "Plan: Detailed Implementation"
-        },
-        {
-            "topic": "safe_agent_zero",
-            "topic_root": ".agent/learning/LEARNING/topics/safe_agent_zero",
-            "artifacts": [
-                "analysis.md",
-                "questions.md",
-                "sources.md",
-                "strategy_packet.md"
-            ],
-            "note": "Research: Vulnerability Scale"
-        },
-        {
-            "path": "docs/architecture/safe_agent_zero/research/esecurityplanet_analysis.md",
-            "note": "Research: Exposure Risks"
-        }
-    ]
+  "title": "Learning Audit Bundle",
+  "description": "Learning audit context for Red Team review. Topic files for current learning focus.",
+  "_instructions": "Add files to the 'files' array below that are relevant to the CURRENT review cycle. Remove stale entries from previous cycles.",
+  "files": [
+    {
+      "path": "README.md",
+      "note": "Project overview"
+    },
+    {
+      "path": ".agent/learning/cognitive_primer.md",
+      "note": "Identity anchor"
+    },
+    {
+      "path": ".agent/learning/guardian_boot_contract.md",
+      "note": "Guardian constraint contract"
+    },
+    {
+      "path": ".agent/learning/learning_audit/learning_audit_prompts.md",
+      "note": "Current Audit Prompts (Must be updated per cycle)"
+    },
+    {
+      "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
+      "note": "Protocol 128 context"
+    }
+  ]
 }

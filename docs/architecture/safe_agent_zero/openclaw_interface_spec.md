@@ -88,8 +88,9 @@ We will mount a pre-configured approvals file into the container at `/home/node/
 
 ### 4.1 Implementation Constraints
 *   **User**: `node` (UID 1000). **Strictly NO Root.**
+*   **Hardening**: `cap_drop: [ALL]`, `pids_limit: 100`, `seccomp: agent-profile.json`.
 *   **Read-Only Root**: The container root filesystem (`/`) should be mounted read-only (`--read-only`).
-*   **Tmpfs**: Mount `/tmp` and `/home/node/.openclaw/sessions` as writable tmpfs or volumes to allow operation without persistent state bloat.
+*   **Safe Mounts**: `/tmp` and `/dev/shm` must be mounted `noexec,nosuid,nodev`. Writable `workspace/` is accepted risk (mitigated by HITL).
 
 ### 4.2 Network Interfaces
 *   **`eth0` (Control)**: Connected to `control-net`. Gateway API reachable here.

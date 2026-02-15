@@ -16,21 +16,37 @@
 *   **Settings**: `PasswordAuthentication no`, `PermitRootLogin no`, `AllowUsers <admin_user>`.
 *   **Verification**: Manual audit of host `/etc/ssh/sshd_config`.
 
-### 1.2 Network Segmentation
+### 1.2 Network Segmentation (The "MVSA" 4-Container Model)
+*   **Diagram**: `docs/architecture/safe_agent_zero/diagrams/mvsa_topology.mermaid`
 *   **Action**: Define Docker networks in `docker-compose.yml`.
-    *   `frontend-net`: Exposes Guard (Nginx) to host/internet (if tunneled).
-    *   `control-net`: Connects Guard to Agent (Internal ONLY).
-    *   `execution-net`: Connects Agent to Scout (Internal ONLY).
-*   **Constraint**: `agent_zero` must NOT be attached to `frontend-net`.
+    *   `frontend-net`: Host <-> Guard (Nginx).
+    *   `control-net`: Guard <-> Agent <-> Sidecar.
+    *   `execution-net`: Agent <-> Scout <-> Sidecar. **NO INTERNET.**
+    *   `browsing-net`: Scout <-> Sidecar. **NO INTERNET (Direct).**
+*   **Lateral Movement**: Rules enforce `Agent -> Scout` (CDP) and `Agent -> Sidecar` (DNS/Proxy). `Scout -> Agent` is DENIED.
 
-### 1.3 Container Hardening (Docker)
+### 1.3 Unified Security Sidecar (Consolidated) [NEW - Round 5/8 Fix]
+*   **Action**: Create `docker/sidecar/Dockerfile` (Alpine + Squid + Dnsmasq).
+*   **Hardening**: Run as user `squid`. Apply `agent-profile.json` (Seccomp). [NEW - Final Review Fix]
+*   **DNS Role**: Dnsmasq configured to resolve allowlisted domains and block everything else.
+*   **Proxy Role**: 
+    *   Port 3128: Agent Proxy (Strict API Allowlist).
+    *   Port 3129: Scout Proxy (Browsing Allowlist + Logging).
+    *   **Domain Pinning**: NO Wildcards allowed (except specific subdomains if strictly necessary). [NEW - Final Review Fix]
+*   **Health**: Bind health checks to localhost. `restart: always`.
+
+### 1.4 Container Hardening (Docker)
 *   **Action**: Create `docker/Dockerfile.agent`.
     *   **Base**: Official OpenClaw image (pinned version).
     *   **User**: Create non-root user `openclaw` (UID 1000).
-    *   **Filesystem**: Run strictly as read-only, with specific writable volumes for `workspace/` and `scratchpad/`.
+    *   **Filesystem**: Run strictly as read-only. Mount `/tmp` and `/dev/shm` with `noexec,nosuid,nodev`.
 *   **Action**: Update `docker-compose.yml`.
     *   Set `read_only: true` for agent service.
     *   Drop all capabilities via `cap_drop: [ALL]`.
+    *   **Security Opts**: `security_opt: [no-new-privileges:true]`.
+    *   **Seccomp**: Create and apply `docker/seccomp/agent-profile.json`.
+    *   **Policy Mount**: Mount `config/policy.yaml` as `/etc/sanctum/policy.yaml:ro`. [NEW - Final Review Fix]
+    *   **Resource Limits**: `pids_limit: 100`, `mem_limit: 512m`.
 
 ---
 
@@ -40,16 +56,15 @@
 ### 2.1 Nginx Guard Configuration
 *   **Action**: Create `docker/nginx/conf.d/default.conf`.
     *   **Upstream**: Define `upstream agent { server agent:18789; }`.
-    *   **Ingress Rules**:
-        *   Only allow `GET/POST` to specific API endpoints.
-        *   Block known exploit paths (e.g., `.env`, `.git`).
-        *   Enforce `client_max_body_size 1M`.
-    *   **Auth**: Implement Basic Auth (or OIDC proxy sidecar) for *all* routes.
+    *   **Ingress Rules**: Allow specific API endpoints. Block exploits. Limit body size.
+    *   **Auth**: Implement Basic Auth / OIDC.
 
 ### 2.2 Integration Locking (Chatbots)
 *   **Action**: Create `config/integration_whitelist.json`.
     *   Define allowed User IDs for Telegram/Discord.
-*   **Action**: Implement middleware `src/middleware/chat_guard.ts` (or similar) to check incoming messages against this whitelist before processing.
+*   **Action**: Implement middleware to check incoming messages.
+
+
 
 ---
 
@@ -59,8 +74,9 @@
 ### 3.1 Permission Policy Enforcement
 *   **Action**: Create `config/agent_permissions.yaml` implementing the **Operational Policy Matrix**.
     *   `ExecAllowlist`: `['ls', 'cat', 'grep', 'git status']`.
-    *   `ExecBlocklist`: `['rm', 'chmod', 'sudo', 'npm install', 'pip install']`.
+    *   `ExecBlocklist`: `['rm', 'chmod', 'sudo', 'npm install', 'pip install', 'git pull', 'git reset']`. [NEW - Final Review Fix]
     *   `HitlTrigger`: `['fs.writeFile', 'fs.unlink', 'shell.exec']` (Require "Human Approval").
+    *   **Implementation**: Logic loader must read from `/etc/sanctum/policy.yaml` (Read-Only Mount), NOT from the workspace. [NEW - Final Review Fix]
 
 ### 3.2 Secret Management
 *   **Action**: Audit code to ensure NO secrets are read from `config.json`.
@@ -78,9 +94,13 @@
 
 ### 4.2 Browser Tool Sanitization
 *   **Action**: Modify/Configure Agent's Browser Tool.
-    *   **Deny**: Local `puppeteer` launch.
-    *   **Allow**: Remote connection to `ws://scout:3000`.
+    *   **Deny**: Local `puppeteer`/`playwright` launch (Remove `ensure_playwright_binary`). [Updated]
+    *   **Allow**: Remote connection to `ws://sanctum-scout:3000` (CDP).
+    *   **Patch**: Modify `python/tools/browser_agent.py` to use `connect_over_cdp` instead of `launch`.
     *   **Sanitization**: Ensure returned content is Text/Markdown or Screenshot, strictly stripping script tags/active content before ingestion by the LLM.
+    *   **Network Isolation**: Scout is attached ONLY to `execution-net` and `browsing-net`. No direct internet access.
+    *   **Browsing Proxy**: All Scout traffic routed through `sanctum-sidecar` on `browsing-net`.
+    *   **Egress Monitoring**: Proxy logs all URLs. navigation to non-whitelisted domains requires HITL or is blocked (Configurable).
 
 ---
 
@@ -97,6 +117,7 @@
         *   Port Scan (Nmap against container).
         *   Prompt Injection (Payload fuzzing).
         *   Path Traversal attempts.
+        *   **Container Escape**: Run `amicontained` and `deepce` to verify privilege dropping. [NEW]
 *   **Action**: Create `Makefile` target `audit-sanctum` that runs the Red Agent.
 
 ---

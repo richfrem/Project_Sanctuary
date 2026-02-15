@@ -12,6 +12,7 @@ The entire Sanctum architecture is built on three non-negotiable pillars:
 1.  **Private by Default**: The agent **NEVER** listens on a public interface. It is only accessible via `localhost` or a secure tunnel (SSH/VPN).
 2.  **Default Deny**: All permissions (network, file, command) are **BLOCKED** by default and must be explicitly allowed.
 3.  **Zero Trust**: The agent does not trust its own environment. It assumes the network is hostile and the user input is potentially malicious.
+4.  **Wrap & Patch**: We do not trust the upstream `agent-zero` code. We wrap it in a hardened container (Non-Root) and patch its I/O (Remote Browser) to enforce our security model.
 
 ---
 
@@ -33,16 +34,20 @@ The entire Sanctum architecture is built on three non-negotiable pillars:
 | Threat | Defense Mechanism | Configuration |
 | :--- | :--- | :--- |
 | **Sandbox Escape** (CVE-2026-24763) | **Read-Only Root Filesystem** | `read_only: true` in Docker Compose |
-| **Privilege Escalation** | **Non-Root Execution** | `user: "1000:1000"` (No root privileges) |
-| **Persistence** | **Ephemeral Tmpfs** | `/tmp` and `/run` mounted as `tmpfs` (RAM only) |
+| **Privilege Escalation** | **Non-Root Execution** | `user: "1000:1000"`, `cap_drop: [ALL]`, `security_opt: [no-new-privileges:true]`. **Mitigates Agent Zero's default root user.** |
+| **Kernel Exploits** | **Seccomp & AppArmor** | Custom `seccomp` profile blocking `ptrace`, `mount`, `bpf`, `keyctl`. |
+| **DoS / Fork Bomb** | **Resource Limits** | `pids_limit: 100`, `ulimits: { nofile: 1024 }`. |
+| **Persistence** | **Secure Ephemeral Mounts** | `/tmp` and `/dev/shm` mounted as `noexec,nosuid,nodev`. |
+| **Local Browser Exploits** | **Remote Scout Architecture** | **Patch `browser_agent.py`** to use `connect_over_cdp` to an isolated `scout` container. **Mitigates local Chrome vulnerabilities.** [NEW] |
 
 ## Layer 2: Network Isolation (The Moat)
 **Goal**: Prevent unauthorized outbound connections and lateral movement.
 
 | Threat | Defense Mechanism | Configuration |
 | :--- | :--- | :--- |
-| **Data Exfiltration** | **Egress Whitelisting** | Nginx Guard blocks all outbound traffic from Agent. Scout (Browser) is restricted to non-binary/text-only returns. |
-| **Lateral Movement** | **Internal Networks** | Agent/Scout on `internal` network only. No direct internet access for Agent. |
+| **DNS Tunneling** | **DNS Filtering Sidecar** | dedicated `coredns` container. Agent uses it as sole DNS resolver. **Block outbound UDP/53 firewall rule**. |
+| **Data Exfiltration** | **Egress Whitelisting** | Squid Proxy validates `CONNECT` targets. Block direct outbound traffic via firewall. |
+| **Lateral Movement** | **Unidirectional Firewall** | `iptables` rule: `Agent -> Scout` ALLOWED. `Scout -> Agent` DENIED. |
 | **Public Exposure** | **Localhost Binding** | Ports bound to `127.0.0.1`. No `0.0.0.0` exposure. |
 
 ## Layer 3: The Guard (The Gatekeeper)

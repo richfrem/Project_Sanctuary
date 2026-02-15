@@ -1,0 +1,37 @@
+graph TD
+    subgraph Host [Host Machine]
+        User((User)) -->|HTTPS/WSS + Auth| Guard[Nginx Guard<br/>(Ingress)]
+        Guard -->|Proxy| Agent[Sanctum Agent<br/>(Agent Zero Wrapped)]
+        
+        subgraph Docker [Docker Isolation]
+            direction TB
+            
+            Agent -->|DNS/HTTP| Sidecar[Sanctum Sidecar<br/>(Squid + Dnsmasq)]
+            Scout[Sanctum Scout<br/>(Hardened Chrome)] -->|HTTP/HTTPS| Sidecar
+            
+            Agent -->|CDP (ws://scout:3000)| Scout
+            
+            subgraph Networks
+                NetControl[control-net] --- Agent
+                NetControl --- Guard
+                NetControl --- Sidecar
+                
+                NetExec[execution-net] --- Agent
+                NetExec --- Scout
+                NetExec --- Sidecar
+                
+                NetBrowse[browsing-net] --- Scout
+                NetBrowse --- Sidecar
+            end
+        end
+        
+        Sidecar -->|Filtered Egress| Internet((Internet))
+    end
+
+    classDef container fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef net fill:#f3e5f5,stroke:#4a148c,stroke-dasharray: 5 5;
+    classDef actor fill:#fff3e0,stroke:#e65100;
+
+    class Guard,Agent,Sidecar,Scout container;
+    class NetControl,NetExec,NetBrowse net;
+    class User,Internet actor;
