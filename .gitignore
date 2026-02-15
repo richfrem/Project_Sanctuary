@@ -20,11 +20,13 @@ venv/
 .env.local/
 env/
 
+
 # ML Environment Logs - Machine learning environment logging artifacts
 ml_env_logs/
 
 # Ignore Python cache and compiled files
 __pycache__/
+*__pycache__/
 *.pyc
 *.pyo
 *.pyd
@@ -110,6 +112,13 @@ archives/
 !forge/archive/
 !.agent/learning/archive/
 research/RESEARCH_PAPERS/
+### Large Binary & Log Files ###
+gardener/logs/
+archive/05_ARCHIVED_BLUEPRINTS/gardener_pytorch_rl_v1/logs/
+*.dylib
+*.so
+*.bin
+
 *.log
 nohup.out
 mcp_servers/agent_persona/state/
@@ -117,6 +126,7 @@ mcp_servers/rag_cortex/data/
 dataset_package/
 debug_logs/
 *.py.md
+
 tests/mcp_servers/operations_instrumentation.json
 
 # Protocol 128: Learning Artifacts - TRACKED for portability (ADR 089)
@@ -174,6 +184,8 @@ mcp_config/
 
 05_ARCHIVED_BLUEPRINTS/
 
+# reference repos
+LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 
 # Temp folder - Ephemeral context bundles and working files
 temp/
@@ -216,3 +228,8 @@ LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 .windsurf/
 .gemini/
 .github/copilot/
+
+#other working folders
+.agent/handoffs/
+.agent/frictionlogs/
+.codex/

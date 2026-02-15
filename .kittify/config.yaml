@@ -3,10 +3,6 @@ vcs:
 agents:
   available:
   - windsurf
-  - claude
-  - antigravity
-  - gemini
-  - copilot
   selection:
     strategy: preferred
     preferred_implementer: windsurf

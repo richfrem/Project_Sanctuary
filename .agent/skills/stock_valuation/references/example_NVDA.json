@@ -1,0 +1,65 @@
+{
+    "ticker": "NVDA",
+    "id": "e8a9d1c2-4b5f-4a3b-9c8d-7e6f5a4b3c2d",
+    "source": "AI_AGENT",
+    "schemaVersion": "1.1",
+    "version": 1,
+    "savedAt": "2026-02-14T12:00:00Z",
+    "updatedAt": "2026-02-14T12:00:00Z",
+    "name": "AI Deep Dive — NVDA — 2026-02-14",
+    "rationale": "NVIDIA remains the dominant player in AI acceleration with a wide competitive moat. While growth is naturally decelerating from hyper-growth levels, the Data Center segment continues to expand. Base case assumes sustained leadership but aggressive competition entering from AMD and custom silicon (CSPs).",
+    "snapshot": {
+        "price": 136.21,
+        "currency": "USD",
+        "shares": 24500000000,
+        "revenue": 96000000000,
+        "lastActualPS": 34.7,
+        "fiscalPeriod": "TTM",
+        "analystGrowthEstimate": 65.5,
+        "analystMarginEstimate": 53.0
+    },
+    "dataPreferences": {
+        "growthBasis": "next",
+        "marginBasis": "ttm"
+    },
+    "scenarios": {
+        "bear": {
+            "weight": 0.20,
+            "growthRate": 30.0,
+            "netMargin": 35.0,
+            "exitPE": 20.0,
+            "qualityMultiplier": 1.0,
+            "shareChange": 1.0,
+            "rationale": "Competition from CSP in-house silicon (AWS Trainium, Google TPU) erodes market share faster than expected. Margins compress as software stack (CUDA) moat weakens."
+        },
+        "base": {
+            "weight": 0.60,
+            "growthRate": 55.0,
+            "netMargin": 48.0,
+            "exitPE": 30.0,
+            "qualityMultiplier": 1.2,
+            "shareChange": -2.0,
+            "rationale": "Strong execution continues. Sovereign AI demand buffers enterprise lumpiness. Margins remain best-in-class but normalize slightly as H200/Blackwell volume ramps."
+        },
+        "bull": {
+            "weight": 0.20,
+            "growthRate": 75.0,
+            "netMargin": 52.0,
+            "exitPE": 40.0,
+            "qualityMultiplier": 1.5,
+            "shareChange": -4.0,
+            "rationale": "AI demand is in early innings. Inference market explodes, and NVIDIA captures 85%+ share. Software revenue (NVIDIA NIMs) becomes a material high-margin recurring stream."
+        }
+    },
+    "aiThesis": {
+        "model": "gemini-3-pro",
+        "rationale": "### Investment Thesis\\n\\nNVIDIA is a generational company... (Markdown content)",
+        "fairValue": 185.00,
+        "action": "BUY",
+        "analyzedAt": "2026-02-14T12:00:00Z"
+    },
+    "globalSettings": {
+        "discountRate": 10.0,
+        "timeHorizon": 5
+    }
+}
