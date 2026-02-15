@@ -17,6 +17,7 @@
 *   **Verification**: Manual audit of host `/etc/ssh/sshd_config`.
 
 ### 1.2 Network Segmentation (The "MVSA" 4-Container Model)
+*   **Diagram**: `docs/architecture/safe_agent_zero/diagrams/mvsa_topology.mermaid`
 *   **Action**: Define Docker networks in `docker-compose.yml`.
     *   `frontend-net`: Host <-> Guard (Nginx).
     *   `control-net`: Guard <-> Agent <-> Sidecar.
