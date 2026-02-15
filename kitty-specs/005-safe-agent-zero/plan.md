@@ -23,7 +23,10 @@ Perform a Red Team review of the existing "Safe Agent Zero" (Sanctum) implementa
 
 ### Problem / Solution
 - **Problem**: The current implementation plan has not been vetted by an adversarial "Red Team" perspective.
-- **Solution**: Conduct a structured review and harden the plan before writing code.
+- **Solution**: Conducted a 5-Round Red Team review, resulting in the **"MVSA" (Minimum Viable Secure Architecture)**.
+    - **Architecture**: 4-Container Model (Guard, Agent, Scout, Sidecar).
+    - **Strategy**: "Wrap & Patch" `agent-zero` (Non-Root Container + Remote CDP Browser).
+    - **Artifacts**: `GOLD_MASTER_ARCHITECTURE.md`, `mvsa_topology.mermaid`.
 
 ## Project Structure
 

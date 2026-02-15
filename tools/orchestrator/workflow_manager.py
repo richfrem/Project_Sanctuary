@@ -64,12 +64,14 @@ class WorkflowManager:
             self.investigate_utils = Path(resolve_path("tools/investigate/utils"))
             self.next_num_script = self.investigate_utils / "next_number.py"
             self.specs_dir = self.project_root / "specs"
+            self.kitty_specs_dir = self.project_root / "kitty-specs"
             self.cli_script = Path(resolve_path("tools/cli.py"))
         except Exception as e:
             # Fallback for unit testing or pure python env without resolver context
             self.project_root = Path(__file__).resolve().parent.parent.parent
             self.next_num_script = self.project_root / "tools" / "investigate" / "utils" / "next_number.py"
             self.specs_dir = self.project_root / "specs"
+            self.kitty_specs_dir = self.project_root / "kitty-specs"
             self.cli_script = self.project_root / "tools" / "cli.py"
 
     def run_command(self, cmd: list, cwd: Path = None, capture_output: bool = True) -> subprocess.CompletedProcess:
@@ -295,20 +297,27 @@ class WorkflowManager:
         current_branch = self.get_current_branch()
         spec_id = None
         
-        if "spec/" in current_branch:
-            # Extract spec ID from branch "spec/0001-foo"
+        if "spec/" in current_branch or "specs/" in current_branch:
+            # Extract spec ID from branch "spec/0001-foo" or "specs/0001-foo"
             try:
-                spec_id = current_branch.split("spec/")[1].split("-")[0]
+                if "specs/" in current_branch:
+                    spec_id = current_branch.split("specs/")[1].split("-")[0]
+                else:
+                    spec_id = current_branch.split("spec/")[1].split("-")[0]
             except IndexError:
                 pass
         
         target_spec_folder = None
         if spec_id:
-            # Find folder
-            for f in self.specs_dir.iterdir():
-                if f.is_dir() and f.name.startswith(spec_id):
-                    target_spec_folder = f
-                    break
+            # Find folder in specs OR kitty-specs
+            for directory in [self.specs_dir, self.kitty_specs_dir]:
+                if not directory.exists(): continue
+                
+                for f in directory.iterdir():
+                    if f.is_dir() and f.name.startswith(spec_id):
+                        target_spec_folder = f
+                        break
+                if target_spec_folder: break
         
         if not target_spec_folder:
             print("❌ Error: Could not determine active Spec context from branch.")
@@ -447,16 +456,23 @@ class WorkflowManager:
 
         # 1.5 Enforce Workflow End Checklist
         spec_id = None
-        if "spec/" in current_branch:
-             try: spec_id = current_branch.split("spec/")[1].split("-")[0]
+        if "spec/" in current_branch or "specs/" in current_branch:
+             try:
+                 if "specs/" in current_branch:
+                     spec_id = current_branch.split("specs/")[1].split("-")[0]
+                 else:
+                     spec_id = current_branch.split("spec/")[1].split("-")[0]
              except: pass
         
         target_spec_folder = None
         if spec_id:
-             for f in self.specs_dir.iterdir():
-                  if f.is_dir() and f.name.startswith(spec_id):
-                       target_spec_folder = f
-                       break
+             for directory in [self.specs_dir, self.kitty_specs_dir]:
+                  if not directory.exists(): continue
+                  for f in directory.iterdir():
+                       if f.is_dir() and f.name.startswith(spec_id):
+                            target_spec_folder = f
+                            break
+                  if target_spec_folder: break
         
         if target_spec_folder:
              checklist_path = target_spec_folder / "workflow-end.md"

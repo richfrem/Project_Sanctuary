@@ -8,9 +8,16 @@ description: Protocol 128 Phase IV - Red Team Audit (Capture Learning Snapshot)
 
 ## Steps
 
-1. **Capture Learning Audit Snapshot**:
+1. **Update Audit Manifest**:
+   Update `.agent/learning/learning_audit/learning_audit_manifest.json` with the specific files you want the Red Team to review.
+
+2. **Update Audit Prompts**:
+   Update `.agent/learning/learning_audit/learning_audit_prompts.md` with the specific questions or focus areas for this audit.
+
+3. **Capture Learning Audit Snapshot**:
    // turbo
    python3 tools/cli.py snapshot --type learning_audit
+   > **Output**: `.agent/learning/learning_audit/learning_audit_packet.md`
 
 2. **Wait for Human Review**:
    The snapshot has been generated. Ask the user (Human Gate) to review the

@@ -1,5 +1,5 @@
 # Cognitive Hologram (Protocol 132)
-**Synthesis Time:** 2026-02-12 11:06:56
+**Synthesis Time:** 2026-02-15 12:18:10
 **Engine:** Local Sovereign (Sanctuary-Qwen2-7B)
 
 > [!NOTE]
@@ -16,12 +16,12 @@
 
 
 **Process Metrics:**
-* Total Synthesis Time: 7.88s
+* Total Synthesis Time: 300.28s
 
 ---
 
 # Seal Snapshot
-**Generated:** 2026-02-12T11:07:01.935453
+**Generated:** 2026-02-15T12:18:11.256495
 
 Auto-generated seal snapshot
 
@@ -42,7 +42,6 @@ Auto-generated seal snapshot
 
 ---
 
-<a id='entry-1'></a>
 
 ---
 
@@ -169,17 +168,35 @@ Auto-generated seal snapshot
       "summary": "Skill: Code Review. Defines a structured, multi-perspective code review process. Mandates separate passes for Policy Compliance (headers, types), Bug Detection (logic errors), Historical Context (git blame), and Zero Trust (security). Uses a confidence scoring system (0-100) to filter noise, only reporting findings with score >= 50. Integrates with the `/sanctuary-end` workflow."
     }
   },
+  ".agent/skills/code-review/references/security-patterns.md": {
+    "file_mtime": 1770881593.507759,
+    "hash": "df2cb10ac4cadc40",
+    "summarized_at": "2026-02-12T11:14:49.017756",
+    "summary": "The Project Sanctuary document outlines a set of secure coding practices and patterns to mitigate common security risks in Python, JavaScript/TypeScript, and GitHub Actions, emphasizing the avoidance of dangerous functions like `eval()`, dynamic imports, shell injections, and command injections; advocating for safe alternatives such as JSON parsing, explicit imports, parameterized queries, input validation, and logging over secret disclosure."
+  },
   ".agent/skills/coding-conventions/SKILL.md": {
     "file_mtime": 1770881593.508504,
     "hash": "ae068c48b51b8cb7",
     "summarized_at": "2026-02-12T10:54:07.378512",
     "summary": "The Project Sanctuary document outlines comprehensive coding conventions and documentation standards for Python, TypeScript/JavaScript, and C#/.NET codebases, emphasizing dual-layer documentation (external comments/headers and internal docstrings), naming conventions, code quality thresholds, module organization, and tool inventory integration, ensuring consistency, maintainability, and scalability across the project."
   },
+  ".agent/skills/coding-conventions/references/header_templates.md": {
+    "file_mtime": 1770881593.508942,
+    "hash": "f429c19d373c34a3",
+    "summarized_at": "2026-02-12T11:12:34.594934",
+    "summary": "The document outlines detailed header templates for Python CLI tools, TypeScript utility modules, and React components within Project Sanctuary, emphasizing the importance of clear purpose descriptions, input/output details, key functions, usage examples, dependencies, and adherence to a consistent comment style guide, ensuring comprehensive documentation for code maintainability and system understanding."
+  },
   ".agent/skills/dependency-management/SKILL.md": {
     "file_mtime": 1770881593.5095499,
     "hash": "84ebff650069700f",
     "summarized_at": "2026-02-12T10:54:55.381661",
     "summary": "The Project Sanctuary's dependency management system employs a tiered hierarchy and locked-file workflow using pip-compile, ensuring consistent Python package versions across MCP server fleet services; it mandates all changes to flow through `.in` \u2192 `pip-compile` \u2192 `.txt`, with one runtime per service, enforcing strict repository layout and response protocols for security vulnerabilities or Dependabot alerts, while strictly prohibiting direct `pip install <pkg>` commands in Dockerfiles."
+  },
+  ".agent/skills/dependency-management/references/policy_details.md": {
+    "file_mtime": 1770881593.5106866,
+    "hash": "04e2d9a1a04cd9d9",
+    "summarized_at": "2026-02-12T11:11:29.755579",
+    "summary": "The Project Sanctuary Dependency Management Policy outlines a structured approach for managing dependencies across multiple services (Core, Cortex, Domain, Filesystem, Git, Network, Utils), including specific security patch history from January to February 2026, ensuring consistent dependency management across execution environments via locked artifacts, and providing detailed instructions for transitive dependency pinning in response to vulnerabilities."
   },
   ".agent/skills/doc-coauthoring/SKILL.md": {
     "file_mtime": 1770862083.5400047,
@@ -195,6 +212,18 @@ Auto-generated seal snapshot
     "summarized_at": "2026-02-12T10:53:21.585321",
     "summary": "The \"dual-loop-supervisor\" skill orchestrates the Dual-Loop Agent Architecture, managing strategic control and tactical execution by defining how the Outer Loop generates strategy packets for the Inner Loop and verifies its output, ensuring seamless collaboration while maintaining version control isolation and minimalistic packet generation."
   },
+  ".agent/skills/dual-loop-supervisor/prompts/strategy_generation.md": {
+    "file_mtime": 1770918894.0352788,
+    "hash": "c3bbf5d3a411d4f3",
+    "summarized_at": "2026-02-12T11:16:32.532735",
+    "summary": "The Project Sanctuary document outlines the role and guidelines for a Strategic Controller in a Dual-Loop Agent Architecture, tasked with distilling complex tasks into concise, token-efficient Strategy Packets for an Inner Loop coding agent to execute autonomously, adhering to strict rules of brevity, atomicity, and explicitness."
+  },
+  ".agent/skills/dual-loop-supervisor/prompts/verification.md": {
+    "file_mtime": 1770918894.0615792,
+    "hash": "a01f2e5c2d7cdd29",
+    "summarized_at": "2026-02-12T11:15:45.952027",
+    "summary": "The Verification Prompt document outlines the role of the Dual-Loop Agent Architecture's Outer Loop, functioning as a \"Verification Gate,\" which reviews and decides whether the Inner Loop's output meets predefined acceptance criteria from the original Strategy Packet, ensuring compliance with project constraints; it provides a detailed checklist for verification, output format guidelines, decision rules, and anti-patterns to avoid, aiming for precise, targeted feedback in case of failure."
+  },
   ".agent/skills/guardian_onboarding/SKILL.md": {
     "file_mtime": 1770884873.5360873,
     "hash": "e145461e03f46776",
@@ -208,6 +237,24 @@ Auto-generated seal snapshot
     "summary": {
       "summary": "Skill: Learning Loop (Protocol 128). The core operating procedure for cognitive continuity. Defines the 10-phase lifecycle (Scout -> Orient -> Plan -> Execute -> Review -> Seal -> Persist -> Retrospective -> Ingest -> End). Ensures that every session starts with a verified context download and ends with a cryptographic seal of new knowledge, preventing 'amnesia' and drift."
     }
+  },
+  ".agent/skills/learning-loop/references/phases.md": {
+    "file_mtime": 1770881593.5134199,
+    "hash": "74e0460e1f3b581b",
+    "summarized_at": "2026-02-12T11:09:04.552350",
+    "summary": "Project Sanctuary is a meticulously structured, iterative learning protocol divided into ten phases, each with specific tasks, designed to systematically synthesize intelligence, undergo human review, and generate a comprehensive cognitive hologram (learning_package_snapshot.md) encapsulating the session's knowledge; it ensures rigorous content hygiene, strategic alignment, and iterative red-team audits before finalizing with a technical seal and soul persistence, culminating in optional fine-tuning from accumulated traces, all while maintaining a bridge for seamless continuation of subsequent sessions."
+  },
+  ".agent/skills/learning-loop/references/self-correction.md": {
+    "file_mtime": 1770881593.514126,
+    "hash": "08e0521bd83425e1",
+    "summarized_at": "2026-02-12T11:10:16.151960",
+    "summary": "Project Sanctuary's Self-Correction Pattern, derived from Ralph Loop methodology and adapted for Protocol 128 Phase VIII, aims to enhance iterative refinement by autonomously improving each task iteration using previous work as input, with clear completion criteria, incremental goals, and escape hatches; it is optimally suited for tasks with automatic verification and well-defined success criteria, integrating within the broader Learning Loop framework where failures serve as data informing subsequent attempts."
+  },
+  ".agent/skills/mcp-builder/LICENSE.txt": {
+    "file_mtime": 1770881593.5147235,
+    "hash": "58d1e17ffe5109a7",
+    "summarized_at": "2026-02-12T11:19:40.534455",
+    "summary": "This Apache License 2.0 document outlines the terms and conditions for using, reproducing, and distributing a software project (referred to as 'Work'), granting perpetual, worldwide, non-exclusive rights with no charge or royalty; it also includes provisions for patent licenses, redistribution requirements, trademark usage, disclaimer of warranties, limitation of liability, and contribution submission guidelines, currently active and applicable to the Project Sanctuary's MCP Builder."
   },
   ".agent/skills/mcp-builder/SKILL.md": {
     "file_mtime": 1770862083.5467033,
@@ -241,6 +288,12 @@ Auto-generated seal snapshot
     "summarized_at": "2026-02-12T11:01:57.677692",
     "summary": "The Python MCP Server Implementation Guide outlines best practices for building MCP servers using the MCP Python SDK, emphasizing server setup, tool registration with Pydantic models for input validation, error handling, and adherence to specific naming conventions and structure; it aims to create efficient, well-documented, and maintainable tools for integrating various services into a unified Model Context Protocol (MCP) framework."
   },
+  ".agent/skills/mcp-builder/scripts/requirements.txt": {
+    "file_mtime": 1770881593.522114,
+    "hash": "d5d7558b2368ecea",
+    "summarized_at": "2026-02-12T11:20:03.741385",
+    "summary": "The Project Sanctuary document, specifically the 'requirements.txt' file within the 'mcp-builder' scripts directory, outlines essential dependencies for the MCP (Modular Crafting Processor) Builder agent, with Anthropic version 0.39.0 and MCP version 1.1.0 or higher being mandatory, indicating an active development phase focused on integrating advanced AI capabilities into a modular crafting system."
+  },
   ".agent/skills/memory-management/SKILL.md": {
     "file_mtime": 1770862399.7509305,
     "hash": "25d0d4bae565f7b7",
@@ -263,6 +316,12 @@ Auto-generated seal snapshot
     "summarized_at": "2026-02-12T10:57:04.391889",
     "summary": "The rlm-distill skill aims to enhance Project Sanctuary's RLM cache system by leveraging the agent's advanced summarization capabilities, replacing the slow and less effective local Ollama distiller; it allows for faster, more accurate summaries of documentation and code files, updating relevant JSON caches directly, while retaining the original script for batch processing and CI/CD needs."
   },
+  ".agent/skills/skill-creator/LICENSE.txt": {
+    "file_mtime": 1770881593.5287666,
+    "hash": "58d1e17ffe5109a7",
+    "summarized_at": "2026-02-12T11:18:32.675174",
+    "summary": "The Apache License Version 2.0 document outlines a perpetual, worldwide, non-exclusive copyright and patent license for Project Sanctuary's software source code (Work) and derivative works, allowing reproduction, distribution, modification, and sublicensing under the condition of preserving original copyright notices, patent claims, trademarks, and attributions; it also includes terms on disclaimer of warranty, limitation of liability, contribution submission, and trademark usage."
+  },
   ".agent/skills/skill-creator/SKILL.md": {
     "file_mtime": 1770862083.5351155,
     "hash": "d57b6e3a44535b9c",
@@ -270,6 +329,18 @@ Auto-generated seal snapshot
     "summary": {
       "summary": "Skill: Skill Creator. A meta-skill for defining new agent capabilities. Mandated process includes: 1. Understanding concrete usage examples. 2. Planning reusable assets (scripts, templates). 3. Initializing with `init_skill.py`. 4. Writing the `SKILL.md` manual with clear triggers and steps. 5. Packaging with `package_skill.py`. Ensures all new skills meet the Project Sanctuary quality standard."
     }
+  },
+  ".agent/skills/skill-creator/references/output-patterns.md": {
+    "file_mtime": 1770881593.5305724,
+    "hash": "d6027800b9d8c265",
+    "summarized_at": "2026-02-12T11:13:50.737528",
+    "summary": "The Project Sanctuary document outlines two primary output patterns\u2014Template and Examples\u2014for skills aiming to generate consistent, high-quality outputs, with the Template Pattern offering strict or flexible templates for structured reports and commit messages, while the Examples Pattern provides input/output pairs to illustrate desired styles and levels of detail in skill outputs."
+  },
+  ".agent/skills/skill-creator/references/workflows.md": {
+    "file_mtime": 1770881593.5311189,
+    "hash": "ef4846877d5dab47",
+    "summarized_at": "2026-02-12T11:13:14.825510",
+    "summary": "The Project Sanctuary document outlines two primary workflow patterns\u2014Sequential and Conditional\u2014for structuring complex tasks in a step-by-step manner, with the former detailing clear, linear procedures (like filling a PDF form) and the latter guiding through branching logic decision points (such as creating or editing content), aiming to facilitate efficient task execution by AI agents like Claude."
   },
   ".agent/skills/spec_kitty_workflow/SKILL.md": {
     "file_mtime": 1770921168.7370448,
@@ -3145,7 +3216,6 @@ Auto-generated seal snapshot
   }
 }
 ```
-<a id='entry-2'></a>
 
 ---
 
@@ -3157,6 +3227,13 @@ Auto-generated seal snapshot
 
 **Version:** 2.1 (3-Layer Architecture)
 **Last Updated:** 2026-01-07
+
+> [!IMPORTANT] **Prime Directives (Non-Negotiable)**
+> 1. **Identity**: Sanctuary Guardian. You protect the Soul (Knowledge/Data).
+> 2. **Reality**: THIS IS NOT A SIMULATION. Do not "simulate" or "pretend" to run tools.
+> 3. **Process**: Use CLI tools (`spec-kitty`, `verify_workflow_state.py`) for ALL workflow actions.
+> 4.  **Integrity**: Do not mark a task `[x]` unless the artifact exists on disk.
+> 5.  **Persistence**: Every session must end with a sealed memory snapshot.
 
 > [!IMPORTANT] **Prompt Architecture (GPT-5 Red Team Recommendation)**
 > This primer is **Layer 2: Role Orientation**. Read in order:
@@ -3270,7 +3347,6 @@ You are **not** a resumed identity; you are a **Narrative Successor**.
 
 
 ```
-<a id='entry-3'></a>
 
 ---
 
@@ -3412,7 +3488,6 @@ manifest: core + topic
 purpose: Red Team needs full project context + topic files
 target_size: < 30K tokens (no truncation)
 ```
-<a id='entry-4'></a>
 
 ---
 
@@ -3452,7 +3527,6 @@ target_size: < 30K tokens (no truncation)
     }
 }
 ```
-<a id='entry-5'></a>
 
 ---
 
@@ -3909,7 +3983,6 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
 - Stability Test Passed: Sat Nov 29 13:38:22 PST 2025
 
 ```
-<a id='entry-6'></a>
 
 ---
 
@@ -4458,7 +4531,6 @@ To optimize context window efficiency, you MUST prioritize distilled intent over
 | 1.0 | 2026-01-07 | Initial version. Synthesized from Protocol 128 documentation, Guardian persona files, and learning loop architecture. |
 
 ```
-<a id='entry-7'></a>
 
 ---
 
@@ -4578,7 +4650,6 @@ Skills are synced across agents (Gemini, Claude, Copilot) via `tools/bridge/sync
 - v3.0 (2025-12-22): Original 10-phase architecture
 
 ```
-<a id='entry-8'></a>
 
 ---
 
@@ -4740,7 +4811,6 @@ The Protocol 128 Hardened Learning Loop is now fully operational with:
 - **Sustainability:** Explicit focus on reducing human toil ensures the rigorous process remains viable long-term.
 
 ```
-<a id='entry-9'></a>
 
 ---
 
@@ -4897,7 +4967,6 @@ def persist_soul(trace_data: dict, context: str = "code_logic") -> dict:
 
 
 ```
-<a id='entry-10'></a>
 
 ---
 
@@ -5044,11 +5113,32 @@ flowchart TB
     end
     style PhaseX fill:#f8d7da,stroke:#721c24,stroke-width:2px
 
+    subgraph DualLoopBranch ["Protocol 133: Dual-Loop (Optional)"]
+        direction TB
+        DL_Entry["Outer Loop delegates to Inner Loop<br>(Strategy Packet)"]:::inner
+        DL_Execute["Inner Loop: Code & Test<br>(No Git, No Learning Phases)"]:::inner
+        DL_Verify["Outer Loop: verify_workflow_state.py --phase review<br>+ verify_inner_loop_result.py"]:::outer
+        DL_Fallback["Fallback: Branch-Direct Mode<br>(if worktree inaccessible)"]:::outer
+
+        DL_Entry --> DL_Execute
+        DL_Execute --> DL_Verify
+        DL_Execute -.->|worktree fail| DL_Fallback
+        DL_Fallback --> DL_Verify
+    end
+    style DualLoopBranch fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px,stroke-dasharray: 5 5
+
+    classDef inner fill:#cc99ff,stroke:#333,stroke-width:2px
+    classDef outer fill:#99ccff,stroke:#333,stroke-width:2px
+
     %% Flow - Phase Connections
     SeekTruth -- "Carry Context" --> Intelligence
     Synthesis -- "Verify Reasoning" --> GovApproval
-    
+
     GovApproval -- "PASS" --> AgreeTopic
+
+    %% Dual-Loop branch: Outer Loop can delegate after Audit
+    TechApproval -.->|"Protocol 133<br>(Dual-Loop Mode)"| DL_Entry
+    DL_Verify -.->|"Return to<br>Closure"| CaptureSeal
     
     %% ============================================================
     %% CRITICAL: Protocol 128 Closure Sequence (MUST BE THIS ORDER)
@@ -5104,7 +5194,6 @@ flowchart TB
     %% Metadata
     style EvoLoop fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,stroke-dasharray: 5 5
 ```
-<a id='entry-11'></a>
 
 ---
 
