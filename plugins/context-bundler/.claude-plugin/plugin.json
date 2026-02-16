@@ -1,0 +1,20 @@
+{
+    "name": "context-bundler",
+    "description": "Bundle source files and documentation into single-file LLM context packages for portable AI agent distribution",
+    "version": "1.0.0",
+    "author": {
+        "name": "Project Sanctuary",
+        "url": "https://github.com/richfrem/Project_Sanctuary"
+    },
+    "repository": "https://github.com/richfrem/Project_Sanctuary",
+    "license": "MIT",
+    "keywords": [
+        "bundler",
+        "context",
+        "llm",
+        "packaging",
+        "agent-tools"
+    ],
+    "commands_dir": "commands",
+    "skills_dir": "skills"
+}

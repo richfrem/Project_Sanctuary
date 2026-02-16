@@ -1,0 +1,9 @@
+{
+    "context-bundler": "base-context-bundler-file-manifest.json",
+    "generic": "base-generic-file-manifest.json",
+    "learning-audit-core": "base-learning-audit-core.json",
+    "learning": "base-learning-file-manifest.json",
+    "guardian": "base-guardian-file-manifest.json",
+    "bootstrap": "base-bootstrap-file-manifest.json",
+    "red-team": "base-red-team-file-manifest.json"
+}

@@ -1,0 +1,30 @@
+{
+    "title": "[TARGET] Bootstrap Context Bundle",
+    "description": "Fresh repository onboarding context for new developers/agents.",
+    "files": [
+        {
+            "path": "README.md",
+            "note": "Project overview"
+        },
+        {
+            "path": "Makefile",
+            "note": "Build commands"
+        },
+        {
+            "path": ".agent/learning/cognitive_primer.md",
+            "note": "Cognitive primer"
+        },
+        {
+            "path": "docs/operations/BOOTSTRAP.md",
+            "note": "Bootstrap guide"
+        },
+        {
+            "path": "ADRs/071_protocol_128_cognitive_continuity.md",
+            "note": "ADR 071"
+        },
+        {
+            "path": "ADRs/089_modular_manifest_pattern.md",
+            "note": "ADR 089"
+        }
+    ]
+}
