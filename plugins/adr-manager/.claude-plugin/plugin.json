@@ -1,0 +1,17 @@
+{
+    "name": "adr-manager",
+    "description": "Manage Architecture Decision Records \u2014 create, list, search ADRs with auto-numbering",
+    "version": "1.0.0",
+    "author": {
+        "name": "Project Sanctuary"
+    },
+    "license": "MIT",
+    "keywords": [
+        "adr",
+        "architecture",
+        "decisions",
+        "documentation"
+    ],
+    "commands_dir": "commands",
+    "skills_dir": "skills"
+}

@@ -1,0 +1,44 @@
+sequenceDiagram
+    participant User as User / Agent
+    participant Script as capture_code_snapshot.py
+    participant Utils as snapshot_utils.py
+    participant FS as File System
+    participant TK as tiktoken
+
+    Note over User, TK: Mode Selection
+
+    User->>Script: /code-snapshot:capture [subfolder] [--manifest]
+
+    alt Manifest Mode
+        Script->>FS: Load manifest JSON
+        Script->>Script: Use file list from manifest
+    else Subfolder Mode
+        Script->>FS: Walk specified directory
+        Script->>Utils: Filter by extensions & exclusions
+    else Full Genome Mode
+        Script->>FS: Load ingest_manifest.json
+        Script->>FS: Walk entire project
+        Script->>Utils: Filter by extensions & exclusions
+    end
+
+    Note over User, TK: Snapshot Generation
+
+    loop For each eligible file
+        Script->>FS: Read file content
+        Script->>TK: Count tokens (tiktoken)
+        Script->>Utils: Format with file separators
+        Script->>Utils: Append to snapshot buffer
+    end
+
+    Script->>Utils: Generate header (stats, token count)
+    Script->>FS: Write snapshot .txt file
+    Script-->>User: ✅ Snapshot saved (N files, M tokens)
+
+    alt Full Genome Mode
+        Note over Script, FS: Awakening Seed Generation
+        loop For each role (guardian, auditor, coordinator, strategist)
+            Script->>Utils: Generate core essence
+            Script->>FS: Write awakening seed .txt
+        end
+        Script-->>User: ✅ Awakening seeds generated
+    end

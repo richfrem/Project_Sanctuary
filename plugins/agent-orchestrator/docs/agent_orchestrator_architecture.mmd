@@ -1,0 +1,51 @@
+flowchart TD
+    %% ----------------------------------------------------
+    %% Agent Orchestrator: Hierarchical Handoff Pattern
+    %% ----------------------------------------------------
+
+    classDef outer fill:#99ccff,stroke:#333,stroke-width:2px;
+    classDef inner fill:#cc99ff,stroke:#333,stroke-width:2px;
+    classDef storage fill:#ffff99,stroke:#333,stroke-width:2px;
+
+    %% Phase 1: Plan
+    subgraph Planning ["1. Outer Loop: Planning"]
+        direction TB
+        Spec[Spec Kitty: Specify]:::outer --> Plan[Plan]:::outer
+        Plan --> Tasks[Tasks]:::outer
+        Tasks --> Scan[Scan Artifacts]:::outer
+    end
+
+    %% Phase 2: Delegate
+    subgraph Delegation ["2. Outer Loop: Delegation"]
+        direction TB
+        Scan --> PacketGen[Generate Strategy Packet<br>agent_orchestrator.py packet]:::outer
+        PacketGen --> Packet[".agent/handoffs/<br>task_packet_NNN.md"]:::storage
+    end
+
+    %% Phase 3: Execute
+    subgraph Execution ["3. Inner Loop: Execution"]
+        direction TB
+        Packet --> InnerAgent[Inner Agent / Worker]:::inner
+        InnerAgent --> Code[Write Code & Run Tests]:::inner
+        Code --> VerifyRequest[Signal Completion]:::inner
+    end
+
+    %% Phase 4: Verify
+    subgraph Verification ["4. Outer Loop: Verification"]
+        direction TB
+        VerifyRequest --> Verify[Verify Diff & Criteria<br>agent_orchestrator.py verify]:::outer
+        Verify --> Decision{Pass?}:::outer
+        
+        Decision -- No --> Correct[Generate Correction Packet<br>agent_orchestrator.py correct]:::outer
+        Correct --> CorrectionPacket[".agent/handoffs/<br>correction_packet_NNN.md"]:::storage
+        CorrectionPacket --> InnerAgent
+        
+        Decision -- Yes --> Review[Bundle for Review<br>agent_orchestrator.py bundle]:::outer
+    end
+
+    %% Phase 5: Closure
+    subgraph Closure ["5. Outer Loop: Closure"]
+        direction TB
+        Review --> Retro[Retrospective<br>agent_orchestrator.py retro]:::outer
+        Retro --> Done([Done]):::outer
+    end

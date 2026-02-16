@@ -1,0 +1,74 @@
+---
+name: agent-orchestrator
+description: "Hierarchical agent-to-agent delegation pattern. Use this skill when you need to act as an 'Outer Loop' orchestrator that plans work and delegates it to an 'Inner Loop' executor (which may be yourself, another agent, or a user-driven process)."
+---
+
+# Agent Orchestrator: Hierarchical Handoff & Loop Pattern
+
+The **Agent Orchestrator** implements a hierarchical workflow where a **Directing Agent (Outer Loop)** plans work, delegates it to an **Executing Agent (Inner Loop)** via a structured handoff (Task Packet), and then reviews the result (Feedback Loop).
+
+## The Core Loop
+
+1.  **Plan (Strategy)**: You define the work (Spec → Plan → Tasks).
+2.  **Delegate (Handoff)**: You pack the context into a **Task Packet** and assist the user in handing off to the Inner Loop.
+3.  **Execute (Tactics)**: The Inner Loop agent (which has *no* git access) writes code and runs tests.
+4.  **Verify (Review)**: You verify the output against acceptance criteria.
+5.  **Correct (Feedback)**: If verification fails, you generate a **Correction Packet** and loop back to step 3.
+6.  **Seal (Closure)**: Once valid, you commit the work and record learnings in a Retrospective.
+
+## Roles
+
+### You (Outer Loop / Director)
+- **Responsibilities**: Planning, Git Management, Verification, Correction, Retrospective.
+- **Context**: Full repo access, strategic constraints (ADRs), long-term memory.
+- **Tools**: `spec-kitty`, `agent-orchestrator`, `git`.
+
+### Inner Loop (Executor / Worker)
+- **Responsibilities**: Coding, Testing, Debugging.
+- **Context**: Scoped to the Task Packet ONLY. No distractions.
+- **Constraints**: **NO GIT COMMANDS**. Do not touch `.git`.
+- **Tools**: Editor, Terminal, Test Runner.
+
+## Commands
+
+### 1. Planning Status
+Use `agent-orchestrator:plan` to inspect the state of the spec and readiness for delegation.
+```bash
+/agent-orchestrator:plan
+```
+*Tip: Always ensure spec.md and plan.md are foundational before creating tasks.*
+
+### 2. Delegation (Handoff)
+Use `agent-orchestrator:delegate` when a specific Work Package (WP) is ready for implementation.
+```bash
+/agent-orchestrator:delegate
+```
+This generates the `.agent/handoffs/task_packet_NNN.md` file. You must then instruct the user/system to launch the Inner Loop with this file.
+
+### 3. Verification & Correction
+Use `agent-orchestrator:verify` to check the Inner Loop's work.
+```bash
+/agent-orchestrator:verify
+```
+If the work fails criteria, this command will help you generate a `correction_packet` to send back to the Inner Loop.
+
+### 4. Red Team / Peer Review
+Use `agent-orchestrator:review` to bundle files for a human or 3rd-party agent review.
+```bash
+/agent-orchestrator:review
+```
+This creates a single markdown bundle ideal for "paste-to-chat" reviews.
+
+### 5. Retrospective
+Use `agent-orchestrator:retro` to close the session or loop with structured learning.
+```bash
+/agent-orchestrator:retro
+```
+*Mandatory*: You must fix at least one small issue (Boy Scout Rule) before closing.
+
+## Best Practices
+
+1.  **One WP at a Time**: Do not delegate multiple WPs simultaneously unless you are running a swarm.
+2.  **Explicit Context**: The Inner Loop only knows what is in the packet. If it needs a file, list it.
+3.  **No Git in Inner Loop**: This is a hard constraint to prevent state corruption.
+4.  **Correction is Learning**: Do not just "fix it yourself" if the Inner Loop fails. Generate a correction packet. This trains the system logic.
