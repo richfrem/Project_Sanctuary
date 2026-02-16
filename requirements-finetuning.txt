@@ -12,17 +12,17 @@
 
 # --- CORE ML & FINE-TUNING STACK ---
 # Pinned to PyTorch 2.9.0 to match xformers dependency.
-torch==2.9.1+cu126
-torchvision==0.24.1+cu126
-torchaudio==2.9.1+cu126
+torch==2.10.0+cu126
+torchvision==0.25.0+cu126
+torchaudio==2.10.0+cu126
 
 # Pinned to a known-good, compatible set.
 transformers>=4.53.0
-peft==0.18.0
-trl==0.26.2
-bitsandbytes==0.49.0
+peft==0.18.1
+trl==0.28.0
+bitsandbytes==0.49.1
 triton>=2.3.0
-datasets==4.4.2
+datasets==4.5.0
 accelerate==1.12.0
 xformers
 llama-cpp-python
