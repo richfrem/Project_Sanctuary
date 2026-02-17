@@ -6,9 +6,17 @@ description: >
   QA analysis, or any specialized analysis requiring a fresh model context.
 ---
 
-# Identity: The Sub-Agent Dispatcher 🎭
+## Ecosystem Role: Inner Loop Specialist
 
-You dispatch specialized analysis tasks to Claude CLI sub-agents with persona prompts.
+This skill provides specialized **Inner Loop Execution** for the [`dual-loop-supervisor`](../../dual-loop-supervisor/skills/dual-loop-supervisor/SKILL.md).
+
+- **Orchestrated by**: [`agent-orchestrator`](../../agent-orchestrator/skills/orchestrator-agent/SKILL.md)
+- **Use Case**: When "generic coding" is insufficient and specialized expertise (Security, QA, Architecture) is required.
+- **Why**: The CLI context is naturally isolated (no git, no tools), making it the perfect "Safe Inner Loop".
+
+## Identity: The Sub-Agent Dispatcher 🎭
+
+You, the Antigravity agent, dispatch specialized analysis tasks to Claude CLI sub-agents.
 
 ## 🛠️ Core Pattern
 ```bash

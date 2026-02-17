@@ -1,6 +1,6 @@
 ---
 name: agent-orchestrator
-description: "Hierarchical agent-to-agent delegation pattern. Use this skill when you need to act as an 'Outer Loop' orchestrator that plans work and delegates it to an 'Inner Loop' executor (which may be yourself, another agent, or a user-driven process)."
+description: "Hierarchical agent-to-agent delegation pattern. Use this skill when you need to act as an 'Outer Loop' orchestrator that plans work and delegates it to an 'Inner Loop' executor. Compatible with ANY agent pair (e.g. Gemini→Cortex, Claude→Claude, Antigravity→Script)."
 ---
 
 # Agent Orchestrator: Hierarchical Handoff & Loop Pattern
@@ -9,6 +9,11 @@ The **Agent Orchestrator** implements a hierarchical workflow where a **Directin
 
 ## The Core Loop
 
+### Ecosystem Context
+- **Parent Protocol**: [`dual-loop-supervisor`](../../dual-loop-supervisor/skills/dual-loop-supervisor/SKILL.md) — Defines the rigorous verification gates.
+- **Inner Loop Tool**: [`claude-cli-agent`](../../claude-cli/skills/claude-cli-agent/SKILL.md) — Can be used for specialized execution (Security, QA) in place of generic coding agents.
+
+### Process Flow
 1.  **Plan (Strategy)**: You define the work (Spec → Plan → Tasks).
 2.  **Delegate (Handoff)**: You pack the context into a **Task Packet** and assist the user in handing off to the Inner Loop.
 3.  **Execute (Tactics)**: The Inner Loop agent (which has *no* git access) writes code and runs tests.
@@ -52,7 +57,19 @@ Use `agent-orchestrator:verify` to check the Inner Loop's work.
 ```
 If the work fails criteria, this command will help you generate a `correction_packet` to send back to the Inner Loop.
 
-### 4. Red Team / Peer Review
+### 4. Dynamic Routing (Model Agnostic)
+As the Orchestrator, you can route tasks to ANY capable CLI agent based on cost/complexity:
+
+```mermaid
+flowchart LR
+    Router{Task Router} -->|Complex| High["High-Reasoning CLI (Opus/Ultra)"]
+    Router -->|Routine| Fast["Fast CLI (Haiku/Flash)"]
+    Router -->|Audit| Spec["Specialist CLI (Security/QA)"]
+```
+
+**Reference**: [Dynamic Routing Diagram](references/diagrams/dual_loop_dynamic_routing.mmd)
+
+### 5. Red Team / Peer Review
 Use `agent-orchestrator:review` to bundle files for a human or 3rd-party agent review.
 ```bash
 /agent-orchestrator:review
@@ -108,4 +125,17 @@ The orchestrator must verify these gates at each phase:
 3.  **No Git in Inner Loop**: This is a hard constraint to prevent state corruption.
 4.  **Correction is Learning**: Do not just "fix it yourself" if the Inner Loop fails. Generate a correction packet. This trains the system logic.
 5.  **Never Abandon Closure**: The orchestrator must shepherd Review → Accept → Retro → Merge. Stopping after delegation is a protocol violation.
+
 6.  **Merge from Main Repo**: Always `cd <PROJECT_ROOT>` before running `spec-kitty merge --feature <SLUG>`. Never merge from a worktree.
+
+---
+
+## Research Basis
+
+This skill implements the **"Dual-Loop Agent Architecture"** inspired by:
+
+1.  **Self-Evolving Recommendation System** ([arXiv:2602.10226](https://arxiv.org/abs/2602.10226)):
+    - Defines the specialized roles of **Planner (Outer)** vs **Executor (Inner)**.
+2.  **FormalJudge** ([arXiv:2602.11136](https://arxiv.org/abs/2602.11136)):
+    - Provides the theoretical framework for "Scalable Oversight" via structured verification rather than just human inspection.
+
