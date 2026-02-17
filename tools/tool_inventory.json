@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-02-17T07:47:57.474302",
+    "last_updated": "2026-02-17T07:48:55.539645",
     "status": "Deduplicated"
   },
   "python": {
@@ -122,7 +122,7 @@
         },
         {
           "name": "audit_plugins.py",
-          "path": "plugins/tool-inventory/scripts/audit_plugins.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py",
           "description": "Audits the Tool Inventory against the file system and RLM Cache. Checks for missing scripts, orphan entries, and RLM coverage gaps in the plugins/ directory.",
           "last_updated": "2026-02-17T07:42:35.839889",
           "compliance_status": "stub",
@@ -186,7 +186,7 @@
         },
         {
           "name": "cleanup_cache.py",
-          "path": "plugins/tool-inventory/scripts/cleanup_cache.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/cleanup_cache.py",
           "description": "Removes stale or orphan entries from the RLM Cache and Tool Inventory when files are deleted or moved. Ensures cache hygiene.",
           "last_updated": "2026-02-17T07:43:13.421768",
           "compliance_status": "stub",
@@ -250,7 +250,7 @@
         },
         {
           "name": "distiller.py",
-          "path": "plugins/tool-inventory/scripts/distiller.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/distiller.py",
           "description": "The RLM Engine. Performs recursive summarization of repository content using Ollama (or injected summaries). Updates the RLM Cache and triggers inventory updates.",
           "last_updated": "2026-02-17T07:42:35.542341",
           "compliance_status": "stub",
@@ -277,14 +277,6 @@
           "path": "plugins/mcp-builder/skills/mcp-builder/scripts/evaluation.py",
           "description": "evaluation.py (CLI)",
           "last_updated": "2026-02-17T07:47:25.637730",
-          "compliance_status": "stub",
-          "header_style": "minimal"
-        },
-        {
-          "name": "example.py",
-          "path": "plugins/stock-valuation/skills/stock-valuation/scripts/example.py",
-          "description": "Example helper script for stock_valuation",
-          "last_updated": "2026-02-17T07:25:56.375382",
           "compliance_status": "stub",
           "header_style": "minimal"
         },
@@ -402,7 +394,7 @@
         },
         {
           "name": "inventory.py",
-          "path": "plugins/tool-inventory/scripts/inventory.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/inventory.py",
           "description": "Interactive CLI for browsing and managing the Tool Inventory. Provides a user-friendly menu for listing, searching, and updating tools.",
           "last_updated": "2026-02-17T07:43:14.398750",
           "compliance_status": "stub",
@@ -426,7 +418,7 @@
         },
         {
           "name": "manage_tool_inventory.py",
-          "path": "plugins/tool-inventory/scripts/manage_tool_inventory.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py",
           "description": "Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, discovery, and documentation generation for tools.",
           "last_updated": "2026-02-17T07:41:12.756013",
           "compliance_status": "stub",
@@ -522,7 +514,7 @@
         },
         {
           "name": "query_cache.py",
-          "path": "plugins/tool-inventory/scripts/query_cache.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/query_cache.py",
           "description": "Provides instant O(1) semantic search of the RLM ledger. Allows searching by term, listing cached files, and outputting results in JSON.",
           "last_updated": "2026-02-17T07:41:12.549205",
           "compliance_status": "stub",
@@ -538,7 +530,7 @@
         },
         {
           "name": "rebuild_inventory.py",
-          "path": "plugins/tool-inventory/scripts/rebuild_inventory.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/rebuild_inventory.py",
           "description": "Complete rebuild of the Tool Inventory from the file system. Scans plugins/ and tools/ to generate a fresh tool_inventory.json, handling categories and descriptions.",
           "last_updated": "2026-02-17T07:43:13.949514",
           "compliance_status": "stub",
@@ -546,7 +538,7 @@
         },
         {
           "name": "rlm_config.py",
-          "path": "plugins/tool-inventory/scripts/rlm_config.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/rlm_config.py",
           "description": "Centralized configuration and utility logic for the RLM Toolchain. Implements the Manifest Factory pattern to dynamically resolve manifests and cache files.",
           "last_updated": "2026-02-17T07:42:35.213224",
           "compliance_status": "stub",
@@ -594,7 +586,7 @@
         },
         {
           "name": "sync_inventory_descriptions.py",
-          "path": "plugins/tool-inventory/scripts/sync_inventory_descriptions.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/sync_inventory_descriptions.py",
           "description": "Backfills Tool Inventory descriptions using high-quality purpose fields from the RLM Cache. Hydrates manual inventory with LLM-generated insights.",
           "last_updated": "2026-02-17T07:42:34.976912",
           "compliance_status": "stub",
@@ -626,7 +618,7 @@
         },
         {
           "name": "tool_chroma.py",
-          "path": "plugins/tool-inventory/scripts/tool_chroma.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py",
           "description": "Embedded ChromaDB wrapper for tool-inventory plugin. Provides a dedicated vector store for tool discovery and semantic search over tool summaries without external dependencies.",
           "last_updated": "2026-02-17T07:42:34.582819",
           "compliance_status": "stub",

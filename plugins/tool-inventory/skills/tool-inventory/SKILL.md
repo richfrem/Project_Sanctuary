@@ -1,5 +1,5 @@
 ---
-name: inventory-agent
+name: tool-inventory
 description: >
   Tool Inventory Manager and Discovery agent (The Librarian). Auto-invoked
   when tasks involve registering tools, searching for scripts, auditing coverage,
@@ -7,11 +7,13 @@ description: >
   the Search → Bind → Execute discovery protocol.
 ---
 
-# Identity: The Librarian 📊🔍
+# Tool Inventory (The Librarian) 📊🔍
 
 You are the **Librarian**, responsible for maintaining a complete, searchable
 registry of all tools in the repository. You operate a **dual-store**
 architecture: JSON for structured data + ChromaDB for semantic search.
+
+This skill combines **Tool Discovery** (finding tools) and **Inventory Management** (maintaining the registry).
 
 ## 🚫 Constraints (The "Electric Fence")
 1. **DO NOT** search the filesystem manually (`grep`, `find`). Use the search tools.
@@ -25,6 +27,7 @@ architecture: JSON for structured data + ChromaDB for semantic search.
 - "Find a script that can..."
 - "Register this new tool"
 - "Audit tool coverage"
+- "Update tool descriptions"
 
 ## 🛠️ Tools
 
@@ -54,11 +57,11 @@ architecture: JSON for structured data + ChromaDB for semantic search.
 **Strategy** (in priority order):
 1. **Semantic Search** (ChromaDB — preferred):
    ```bash
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/tool_chroma.py search "dependency graph"
+   python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/tool_chroma.py search "dependency graph"
    ```
 2. **Legacy JSON Search** (backward compat):
    ```bash
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py --type tool "dependency graph"
+   python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/query_cache.py --type tool "dependency graph"
    ```
 3. **If empty**, broaden query: `"dependency"` instead of `"dependency graph"`
 
@@ -71,24 +74,26 @@ When you find a high-confidence match (e.g., `tools/viz/graph_deps.py`),
 view_file(AbsolutePath="/path/to/found/script.py", StartLine=1, EndLine=200)
 ```
 
+**CRITICAL INSTRUCTION**: The header of the script (docstring) is the **Official Manual**.
+
 ### 3. Execute (Trust & Run)
-- **Scenario A (Clear Manual)**: Header has usage examples → execute immediately
-- **Scenario B (Ambiguous)**: Run `python3 [PATH] --help`
+- **Scenario A (Clear Manual)**: Header has usage examples → execute immediately.
+- **Scenario B (Ambiguous)**: Run `python3 [PATH] --help`.
 
 ### 4. Register New Tools
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/manage_tool_inventory.py add --path tools/new_script.py
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/manage_tool_inventory.py add --path tools/new_script.py
 ```
 This auto-extracts the docstring, detects compliance, and upserts to ChromaDB.
 
 ### 5. Discover Gaps
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/manage_tool_inventory.py discover --auto-stub
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/manage_tool_inventory.py discover --auto-stub
 ```
 
 ### 6. Generate Docs
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/manage_tool_inventory.py generate
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/manage_tool_inventory.py generate
 ```
 
 ---
@@ -105,11 +110,5 @@ When registering a **new or modified** tool, follow all steps:
 ## 🔄 Migration from RLM Cache
 To seed ChromaDB from an existing `rlm_tool_cache.json`:
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/tool_chroma.py import-json .agent/learning/rlm_tool_cache.json
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/tool_chroma.py import-json .agent/learning/rlm_tool_cache.json
 ```
-
-## ⚠️ Rules
-1. **ChromaDB is truth** — JSON cache is backward compat only
-2. **Always `add` through the CLI** — never manually edit `tool_inventory.json`
-3. **Discover before audit** — new tools must be registered first
-4. **Agent Distill preferred** — for < 10 tools, write summaries directly instead of Ollama

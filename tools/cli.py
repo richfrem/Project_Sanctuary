@@ -156,12 +156,12 @@ except ImportError:
 
 # Resolve Directories (Direct Plugin Paths)
 # Note: specific mapping based on migration
-SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "scripts"
+SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
 DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "scripts" # Placeholder if empty
 TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "scripts"
 SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" 
 RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "scripts"
-INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "scripts"
+INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
 RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "scripts"
 ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "scripts"
 SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "scripts" # Added for verify_workflow

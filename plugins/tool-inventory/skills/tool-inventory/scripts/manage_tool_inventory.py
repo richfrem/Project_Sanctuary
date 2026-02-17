@@ -67,7 +67,7 @@ from pathlib import Path
 
 # Add project root to sys.path to ensure we can import tools package
 SCRIPT_DIR = Path(__file__).parent.resolve()
-PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 import re

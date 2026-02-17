@@ -22,7 +22,7 @@ from pathlib import Path
 
 # Setup paths
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent.parent
 INVENTORY_PATH = PROJECT_ROOT / "tools" / "tool_inventory.json"
 RLM_CACHE_PATH = PROJECT_ROOT / ".agent" / "learning" / "rlm_tool_cache.json"
 
@@ -45,10 +45,27 @@ def main():
     
     # 1. Map Inventory
     inventory_paths = set()
-    scripts_dict = inventory.get("scripts", {})
-    for category, tools in scripts_dict.items():
-        for tool in tools:
-            inventory_paths.add(tool.get("path"))
+    
+    # Handle structured inventory (python/javascript -> tools -> categories)
+    for lang in ["python", "javascript"]:
+        lang_section = inventory.get(lang, {})
+        tools_section = lang_section.get("tools", {})
+        for category, tools in tools_section.items():
+            if isinstance(tools, list):
+                for tool in tools:
+                    path = tool.get("path")
+                    if path:
+                        inventory_paths.add(path)
+
+    # Legacy support (flat scripts key)
+    if "scripts" in inventory:
+        scripts_dict = inventory.get("scripts", {})
+        for category, tools in scripts_dict.items():
+            if isinstance(tools, list):
+                for tool in tools:
+                    path = tool.get("path")
+                    if path:
+                        inventory_paths.add(path)
             
     print(f"   Loaded Inventory: {len(inventory_paths)} unique paths") # Debug
         
@@ -64,6 +81,7 @@ def main():
         if "node_modules" in file_path.parts: continue
         if ".venv" in file_path.parts: continue
         if "__pycache__" in file_path.parts: continue
+        if "templates" in file_path.parts: continue # Skip templates
         
         try:
             rel_path = str(file_path.relative_to(PROJECT_ROOT))
@@ -104,13 +122,15 @@ def main():
             print(f"\n⚠️  Orphan Inventory Entries ({len(confirmed_orphans)}):")
             for p in sorted(confirmed_orphans):
                 print(f"   - {p}")
-    
+    else:
+        confirmed_orphans = []
+
     if missing_in_rlm:
         print(f"\n⚠️  Missing from RLM Cache ({len(missing_in_rlm)}):")
         for p in sorted(missing_in_rlm):
             print(f"   - {p}")
             
-    if not missing_in_inventory and not orphans_in_inventory and not missing_in_rlm:
+    if not missing_in_inventory and not confirmed_orphans and not missing_in_rlm:
         print("\n✨ Perfect System State!")
         sys.exit(0)
     else:
