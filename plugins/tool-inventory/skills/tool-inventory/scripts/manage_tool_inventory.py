@@ -154,7 +154,7 @@ class InventoryManager:
         Triggers the RLM Distiller for a specific tool.
         This ensures the RLM Cache (rlm_tool_cache.json) is always in sync with the Inventory.
         """
-        distiller_script = self.root_dir / "plugins/tool-inventory/scripts/distiller.py"
+        distiller_script = self.root_dir / "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py"
         if not distiller_script.exists():
             print(f"⚠️  Distiller not found at {distiller_script}. Skipping sync.")
             return

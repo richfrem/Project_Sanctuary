@@ -145,7 +145,7 @@ if str(PROJECT_ROOT) not in sys.path:
 try:
     # Try importing from the new plugin location
     # Since plugins have hyphens, we add the path to sys.path
-    PATH_RESOLVER_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "scripts"
+    PATH_RESOLVER_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
     if str(PATH_RESOLVER_DIR) not in sys.path:
         sys.path.append(str(PATH_RESOLVER_DIR))
     from path_resolver import resolve_path

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-02-17T07:48:55.539645",
+    "last_updated": "2026-02-17T08:35:53.695343",
     "status": "Deduplicated"
   },
   "python": {
@@ -135,6 +135,14 @@
           "last_updated": "2026-02-17T07:47:44.121066",
           "compliance_status": "stub",
           "header_style": "basic"
+        },
+        {
+          "name": "audit_structure.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/audit_structure.py",
+          "description": "Audit Plugin Structure",
+          "last_updated": "2026-02-17T08:35:53.474446",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
         },
         {
           "name": "bridge_installer.py",
@@ -313,12 +321,28 @@
           "header_style": "extended"
         },
         {
+          "name": "fix_inventory_paths.py",
+          "path": "plugins/plugin-manager/skills/plugin-manager/scripts/fix_inventory_paths.py",
+          "description": "Fix Inventory Paths",
+          "last_updated": "2026-02-17T08:35:51.085002",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
           "name": "generate_inventory.py",
           "path": "plugins/migration-utils/skills/migration-utils/scripts/generate_inventory.py",
           "description": "generate_inventory.py (CLI)",
           "last_updated": "2026-02-17T07:47:43.960959",
           "compliance_status": "stub",
           "header_style": "none"
+        },
+        {
+          "name": "generate_readmes.py",
+          "path": "plugins/plugin-manager/skills/plugin-manager/scripts/generate_readmes.py",
+          "description": "Generate Plugin READMEs",
+          "last_updated": "2026-02-17T08:35:51.905648",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
         },
         {
           "name": "hf_decorate_readme.py",
@@ -439,6 +463,14 @@
           "last_updated": "2026-02-17T07:45:12.706841",
           "compliance_status": "stub",
           "header_style": "extended"
+        },
+        {
+          "name": "migrate_structure.py",
+          "path": "plugins/plugin-manager/skills/plugin-manager/scripts/migrate_structure.py",
+          "description": "Migrate Plugin Structure",
+          "last_updated": "2026-02-17T08:35:52.694582",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
         },
         {
           "name": "migration_replace.py",
@@ -631,6 +663,14 @@
           "last_updated": "2026-02-01T12:27:52.489333",
           "compliance_status": "compliant",
           "header_style": "extended"
+        },
+        {
+          "name": "vector_consistency_check.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/vector_consistency_check.py",
+          "description": "Vector Consistency Stabilizer - Protocol 126 Implementation",
+          "last_updated": "2026-02-17T08:35:53.695305",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
         },
         {
           "name": "verify_bridge_integrity.py",
