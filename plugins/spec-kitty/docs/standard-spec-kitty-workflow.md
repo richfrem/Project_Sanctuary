@@ -17,25 +17,20 @@ This document outlines the **Correct** Spec-Kitty lifecycle. Unlike the "Increme
 For **EACH** Work Package (WP01, WP02, ...):
 
 1.  **Initialize:**
-    - Command: `spec-kitty implement WP-xx` (Use `--base main` if parent branch is missing)
+    - Command: `spec-kitty implement WP-xx`
     - *System Actions:* Creates isolated worktree (`.worktrees/WP-xx`) and branch (`WP-xx`).
     - *User Action:* **MUST** `cd .worktrees/WP-xx` immediately.
 
 2.  **Implement:**
     - Write code, test, and verify **inside the worktree**.
-    - **NO** changes to Root/Main.
+    - **⚠️ NEVER commit to Root/Main** while a WP is in progress.
 
-3.  **Commit (Local):**
+3.  **Commit (Local Worktree Branch):**
     - `git add .`
     - `git commit -m "feat(WP-xx): ..."`
-    - *Constraint:* Must commit to local feature branch before moving task.
-
-3b. **Backup (Recommended):**
-    - Command: `git push origin WP-xx`
-    - *Purpose:* Safely backs up work to remote without merging.
 
 4.  **Submit for Review:**
-    - Command: `spec-kitty agent tasks move-task WP-xx --to for_review`
+    - Command: `spec-kitty tasks update WP-xx --lane for_review`
     - *System Actions:* Updates `tasks.md`, signals readiness.
 
 5.  **Review:**
@@ -49,14 +44,12 @@ Once **ALL** WPs are in the `done` column:
     - Command: `spec-kitty accept`
     - *System Actions:* Checks all tasks are done, verifies spec requirements.
 
-2.  **The Big Merge (Automated):**
-    - **Context:** `Main Repo Root` (Directory: `InvestmentToolkit/`)
+2.  **Closure Merge:**
     - **Command:** `spec-kitty merge`
     - *System Actions:*
-        - **Detects:** All feature worktrees.
-        - **Merges:** Sequentially merges `WP-01`, `WP-02`... to **LOCAL** `main`.
-        - **Cleans:** Auto-removes all `.worktrees/WP-xx` directories and local `WP-xx` branches.
-        - **Push (Optional):** Pushes to `origin` **only** if `--push` flag used.
+        - **Merges:** Sequentially merges all WPs to **LOCAL** `main`.
+        - **Cleans:** Auto-removes all `.worktrees/WP-xx` directories and `WP-xx` branches.
+        - **Push (Optional):** Pushes to `origin` **only** if approved.
 
 ## Key Differences from Safety Protocol
 | Feature | Standard Spec-Kitty | Incremental Safety |
@@ -78,7 +71,7 @@ Agents often struggle here because:
 
 | ❌ WRONG | ✅ CORRECT |
 |----------|------------|
-| `git commit` while in `/InvestmentToolkit/` | `git commit` while in `/InvestmentToolkit/.worktrees/WP-xx/` |
+| `git commit` while in `/MyProject/` | `git commit` while in `/MyProject/.worktrees/WP-xx/` |
 | `git push origin main` | `git push origin <feature-branch>` (e.g., `002-feature-WP07`) |
 | Editing `kitty-specs/` from main repo | Editing code files in worktree; `kitty-specs/` is auto-managed |
 | Manual worktree deletion | `spec-kitty merge` handles cleanup |

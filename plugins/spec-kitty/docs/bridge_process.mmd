@@ -1,26 +1,25 @@
 flowchart TD
-    subgraph Init [1. Initialization]
-        A[Run: spec-kitty init . --ai windsurf] --> B[.windsurf/workflows]
-        A --> C[.kittify/memory]
-        A --> S[.agent/skills]
+    subgraph Sources [1. Sources of Truth]
+        A[.agent/rules] -->|Project Rules| B{speckit_system_bridge.py}
+        W[.windsurf/workflows] -->|Master SDD| B
+        P[plugins/*] -->|Capabilities| C{bridge_installer.py}
     end
 
-    subgraph Bridge [2. Bridge Script Execution]
-        B & C & S --> D{speckit_system_bridge.py}
+    subgraph Sync [2. Bridge Sync & Install]
+        B -->|Universal Sync| D[Agent Config Headers]
+        B -->|Workflow Sync| E[.agent/workflows/spec-kitty/]
         
-        D -->|Read & Convert| E[Sync Antigravity]
-        D -->|Read & Convert| F[Sync Claude]
-        D -->|Read & Convert| G[Sync Gemini]
-        D -->|Read & Convert| H[Sync Copilot]
+        C -->|Command Projection| F[Agent Command Dirs]
+        C -->|Skill/Resource Sync| G[.agent/skills/ & tools/]
     end
 
-    subgraph Targets [3. Target Agent Configs]
-        E --> I[.agent/workflows & rules]
-        F --> J[.claude/prompts & CLAUDE.md]
-        G --> K[.gemini/commands & GEMINI.md]
-        H --> L[.github/prompts & instructions.md]
+    subgraph Targets [3. Agent Environments]
+        D & E & F & G --> H[.agent/ Antigravity]
+        D & F --> I[.claude/ Claude]
+        D & F --> J[.gemini/ Gemini]
+        D & F --> K[.github/ Copilot]
     end
 
-    subgraph Registration [4. Registry Update]
-        D --> M[.kittify/config.yaml]
+    subgraph Registry [4. Kittify Registry]
+        B & C --> L[.kittify/config.yaml]
     end

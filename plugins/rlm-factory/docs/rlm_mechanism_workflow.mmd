@@ -21,10 +21,10 @@ flowchart TB
 
     subgraph RootAgent ["Root Agent (Manager)"]
         direction TB
-        Goal["User Query"]
-        Planner["REPL Logic (Loop)"]
+        Goal["/rlm-factory_distill Task"]
+        Planner["Splitting Logic"]
         Synthesizer["Final Synthesis"]
-        FailureHandler["Failure / Partial Return"]
+        FailureHandler["Failure Handling"]
         
         Goal --> Planner
     end

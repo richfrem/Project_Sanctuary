@@ -1,13 +1,13 @@
 sequenceDiagram
     participant User as User / Agent
-    participant Script as capture_code_snapshot.py
+    participant Script as /code-snapshot_capture
     participant Utils as snapshot_utils.py
     participant FS as File System
     participant TK as tiktoken
 
     Note over User, TK: Mode Selection
 
-    User->>Script: /code-snapshot:capture [subfolder] [--manifest]
+    User->>Script: /code-snapshot_capture
 
     alt Manifest Mode
         Script->>FS: Load manifest JSON

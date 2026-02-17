@@ -10,10 +10,10 @@ Purpose:
 Layer: Plugin / ADR-Manager
 
 Usage:
-    python3 adr_manager.py create "Title" --context "..." --decision "..." --consequences "..."
-    python3 adr_manager.py list [--limit N]
-    python3 adr_manager.py get N
-    python3 adr_manager.py search "query"
+    python3 plugins/adr-manager/scripts/adr_manager.py create "Title" --context "..." --decision "..." --consequences "..."
+    python3 plugins/adr-manager/scripts/adr_manager.py list [--limit N]
+    python3 plugins/adr-manager/scripts/adr_manager.py get N
+    python3 plugins/adr-manager/scripts/adr_manager.py search "query"
 """
 
 import os

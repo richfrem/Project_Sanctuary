@@ -9,7 +9,7 @@ Purpose:
 Layer: Curate / Vector
 
 Usage Examples:
-    python tools/codify/vector/ingest.py --help
+    python plugins/vector-db/scripts/ingest.py --help
 
 Supported Object Types:
     - Generic

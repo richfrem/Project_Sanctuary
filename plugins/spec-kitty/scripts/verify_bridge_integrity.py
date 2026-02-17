@@ -12,14 +12,14 @@ Purpose:
     4. .github/ (Copilot)
 
 Usage:
-    python tools/bridge/verify_bridge_integrity.py
+    python plugins/spec-kitty/verify_bridge_integrity.py
 """
 import sys
 import os
 from pathlib import Path
 
 # Configuration
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 WINDSURF_DIR = PROJECT_ROOT / ".windsurf"
 KITTIFY_DIR = PROJECT_ROOT / ".kittify"
 

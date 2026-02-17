@@ -19,8 +19,11 @@ Supported Object Types:
 CLI Arguments (Consumed by Scripts):
     --type  : [legacy|tool] Selects the configuration profile.
 
+Usage Examples:
+    # No direct usage (Shared Module)
+
 Input Files:
-    - tools/standalone/rlm-factory/manifest-index.json
+    - plugins/rlm-factory/resources/manifest-index.json
     - (Manifests referenced by the index)
 
 Output:
@@ -37,10 +40,9 @@ Script Dependencies:
     - None (this is a dependency for others)
 
 Consumed by:
-    - tools/codify/rlm/distiller.py
-    - tools/retrieve/rlm/query_cache.py
-    - tools/curate/rlm/cleanup_cache.py
-    - tools/retrieve/rlm/inventory.py
+    - plugins/rlm-factory/scripts/distiller.py
+    - plugins/rlm-factory/scripts/query_cache.py
+    - plugins/rlm-factory/scripts/cleanup_cache.py
 """
 import os
 import sys
@@ -51,14 +53,39 @@ from pathlib import Path
 # CONSTANTS & PROMPTS
 # ============================================================
 
-# Heuristic to find project root (fallback)
 current_dir = Path(__file__).parent.resolve()
-# tools/codify/rlm -> tools/codify -> tools -> root
-PROJECT_ROOT = current_dir.parents[2] 
-FACTORY_INDEX_PATH = PROJECT_ROOT / "tools" / "standalone" / "rlm-factory" / "manifest-index.json"
+
+def find_project_root(start_path: Path) -> Path:
+    """Heuristic to find the project root containing .agent or tools/."""
+    curr = start_path
+    for _ in range(5):
+        if (curr / ".agent").exists() or (curr / "tools").exists():
+            return curr
+        if curr.parent == curr:
+            break
+        curr = curr.parent
+    # Fallback: plugins/name/scripts/ (depth 3) or tools/name/ (depth 2)
+    return start_path.parents[2] if "plugins" in str(start_path) else start_path.parents[1]
+
+PROJECT_ROOT = find_project_root(current_dir)
+
+def find_factory_index(script_dir: Path) -> Path:
+    """Find manifest-index.json in local or parent resources/."""
+    # Option 1: script_dir/resources/ (Flat structure like tools/name/)
+    opt1 = script_dir / "resources" / "manifest-index.json"
+    if opt1.exists():
+        return opt1
+    # Option 2: script_dir/../resources/ (Plugin structure like plugins/name/scripts/)
+    opt2 = script_dir.parent / "resources" / "manifest-index.json"
+    if opt2.exists():
+        return opt2
+    # Default to current_dir / resources (will error gracefully if not found)
+    return opt1
+
+FACTORY_INDEX_PATH = find_factory_index(current_dir)
 
 class RLMConfig:
-    def __init__(self, run_type="legacy", override_targets=None):
+    def __init__(self, run_type="project", override_targets=None):
         self.type = run_type
         self.manifest_data = {}
         self.cache_path = None
@@ -66,6 +93,7 @@ class RLMConfig:
         self.prompt_template = "" # Loaded dynamically
         self.targets = []
         self.exclude_patterns = []
+        self.allowed_suffixes = []
         
         # Load Factory Index
         if not FACTORY_INDEX_PATH.exists():
@@ -79,26 +107,40 @@ class RLMConfig:
             print(f"❌ Invalid Factory Index JSON: {e}")
             sys.exit(1)
             
+        # Resolve Config Definition
         config_def = factory_index.get(run_type)
+
         if not config_def:
             print(f"❌ Unknown RLM Type: '{run_type}'. Available: {list(factory_index.keys())}")
             sys.exit(1)
 
         self.description = config_def.get("description", "RLM Configuration")
+        self.allowed_suffixes = config_def.get("allowed_suffixes", [".md", ".txt"])
             
         # Resolve Paths
         # Manifest is relative to Project Root (Standardized)
         manifest_path_raw = config_def["manifest"]
         self.manifest_path = (PROJECT_ROOT / manifest_path_raw).resolve()
         
-        # Cache is relative to Project Root
-        cache_path_raw = config_def["cache"]
-        self.cache_path = PROJECT_ROOT / cache_path_raw
+        # Cache Path Resolution (Env Overrides Manifest)
+        # Dedicated to General Cache for rlm-factory plugin
+        env_prefix = config_def.get("env_prefix", "RLM_SUMMARY")
+        env_cache_path = os.getenv(f"{env_prefix}_CACHE")
+        
+        if env_cache_path:
+             # If absolute, use as is. If relative, resolve from Project Root.
+             self.cache_path = Path(env_cache_path)
+             if not self.cache_path.is_absolute():
+                   self.cache_path = PROJECT_ROOT / env_cache_path
+        else:
+             # Fallback to manifest default
+             cache_path_raw = config_def["cache"]
+             self.cache_path = PROJECT_ROOT / cache_path_raw
             
         self.parser_type = config_def.get("parser", "directory_glob")
         
-        # Load LLM Model (Manifest > Env > Default)
-        self.llm_model = config_def.get("llm_model") or os.getenv("OLLAMA_MODEL", "granite3.2:8b")
+        # Load LLM Model (Env > Manifest > Default)
+        self.llm_model = os.getenv("OLLAMA_MODEL") or config_def.get("llm_model") or "granite3.2:8b"
         
         # Load Prompt from Path (Relative to Project Root)
         prompt_rel_path = config_def.get("prompt_path")
@@ -197,14 +239,9 @@ def should_skip(file_path: Path, config: RLMConfig, debug_fn=None) -> bool:
             log(f"Skipping {path_str} (exclude pattern: {pattern})")
             return True
     
-    # For Tools, allow .py, .js, .sh, .ts
-    if config.type == "tool":
-        if file_path.suffix.lower() not in [".py", ".js", ".sh", ".ts"]:
-            log(f"Skipping due to unsupported suffix: {file_path.suffix}")
-            return True
-    else:
-        # Only process .md and .txt files for Legacy Docs
-        if file_path.suffix.lower() not in [".md", ".txt"]:
+    # Allowed Suffixes Check
+    if config.allowed_suffixes:
+        if file_path.suffix.lower() not in config.allowed_suffixes:
             log(f"Skipping due to unsupported suffix: {file_path.suffix}")
             return True
     
@@ -232,8 +269,8 @@ def collect_files(config: RLMConfig) -> List[Path]:
                             if not should_skip(full_path, config):
                                 all_files.append(full_path)
                         elif full_path.is_dir():
-                            for ext in ["**/*.py", "**/*.js", "**/*.sh", "**/*.ts", "**/*.md", "**/*.txt"]:
-                                for f in full_path.glob(ext):
+                            for ext in config.allowed_suffixes:
+                                for f in full_path.glob(f"**/*{ext}"):
                                     if f.is_file() and not should_skip(f, config):
                                         all_files.append(f)
                 
@@ -284,8 +321,8 @@ def collect_files(config: RLMConfig) -> List[Path]:
                 continue
                 
             # If target is dir
-            for ext in ["**/*.md", "**/*.txt", "**/*.py", "**/*.js", "**/*.ts"]:
-                for f in path.glob(ext):
+            for ext in config.allowed_suffixes:
+                for f in path.glob(f"**/*{ext}"):
                     if f.is_file() and not should_skip(f, config):
                         all_files.append(f)
                         

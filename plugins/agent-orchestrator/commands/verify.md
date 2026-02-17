@@ -1,39 +1,41 @@
+# /agent-orchestrator_verify — Verification & Correction Loop
+
+**Purpose:** This command closes the loop on an Inner Loop execution. You inspect the implementation against the original Strategy Packet and the architectural standards of the project.
+
 ---
-description: "Inspect inner loop output against acceptance criteria. Pass or generate correction packet."
----
 
-# /agent-handoff:verify — Verification & Correction Loop
+## 🔍 The Verification Protocol
 
-## Steps
-
-1. **Inspect changes**:
+1. **Trigger Automated Audit**:
    ```bash
-   python3 scripts/agent_handoff.py verify \
-     --packet .agent/handoffs/task_packet_NNN.md \
-     --worktree .worktrees/WP-NN
+   /agent-orchestrator_verify --wp WP-NN
    ```
-   This checks:
-   - Files modified match the expected scope
-   - Each acceptance criterion is addressed
-   - No out-of-scope changes
+   *Action:* Inspects the worktree for:
+   - Files modified vs Scope.
+   - Lint/Format compliance.
+   - Proof of verification in command output.
 
-2. **Decision gate**:
+2. **The Decision Gate**:
 
-   ### ✅ PASS
-   - Commit changes in the worktree
-   - Update task lane: `spec-kitty agent tasks move-task WP-NN --to done`
-   - Proceed to next WP or `/agent-handoff:review`
-
-   ### ❌ FAIL
-   - Auto-generate correction packet:
+   ### ✅ PASS (Acceptance)
+   - **Commit**: `git add . && git commit -m "feat(WP-NN): implementation description"`
+   - **Promote Lane**:
      ```bash
-     python3 scripts/agent_handoff.py correct \
-       --packet .agent/handoffs/task_packet_NNN.md \
-       --feedback "Description of what failed"
+     /spec-kitty.review WP-NN --approve
      ```
-   - Output: `.agent/handoffs/correction_packet_NNN.md`
-   - Re-delegate to inner loop with the correction packet
-   - Return to `/agent-handoff:delegate`
+   - **Proceed**: Move to the next WP or start the Feature Merge.
+
+   ### ❌ FAIL (Correction)
+   - **Feedback**: Generate a **Correction Packet** detailing exactly what failed (criteria, bugs, or rule violations).
+     ```bash
+     /agent-orchestrator_verify --feedback "Description of failure"
+     ```
+   - **Loop**: Re-delegate the Correction Packet to the Inner Loop.
+
+---
+
+## 📈 Quality Gates (Recursive Audit)
+- If the implementation reveals a flaw in the original **Plan**, you MUST return to `/agent-orchestrator_plan` and update the strategy before proceeding.
 
 > [!TIP]
-> The correction loop IS the learning mechanism. Each correction refines understanding.
+> The correction loop is not a failure—it's the primary mechanism for preserving architectural integrity and "teaching" the Inner Loop patterns.

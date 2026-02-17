@@ -3,22 +3,22 @@ config:
   theme: base
 ---
 flowchart TB
-    START["1. Workflow: workflow-bundle"] --> INIT["2. manifest_manager.py init --type TYPE"]
+    START["1. Command: /context-bundler_manage"] --> INIT["2. /context-bundler_init --type TYPE"]
     INIT -.- NOTE_TYPES["Types from base-manifests-index.json: generic, context-bundler, learning_audit, red_team, etc."]
     INIT --> BASE_LOADED["Base manifest loaded"]
-    BASE_LOADED --> BUNDLE["3. bundle.py manifest.json -o output.md"]
+    BASE_LOADED --> BUNDLE["3. /context-bundler_bundle"]
     BUNDLE --> OUTPUT["Output: temp/context-bundles/*.md"]
     OUTPUT --> LLM_ACTIVITY["4. LLM Activity"]
     LLM_ACTIVITY --> LLM_WORK["Research / Red Team / Analysis"]
     LLM_WORK --> MODIFY_CHECK{"Modify manifest?"}
-    MODIFY_CHECK -- Add --> ADD_FILE["manifest_manager.py add --path file.md --section topic"]
-    MODIFY_CHECK -- Remove --> REMOVE_FILE["manifest_manager.py remove --path file.md"]
-    ADD_FILE --> REBUNDLE["manifest_manager.py bundle"]
+    MODIFY_CHECK -- Add --> ADD_FILE["/context-bundler_add --path file.md --note '...'"]
+    MODIFY_CHECK -- Remove --> REMOVE_FILE["/context-bundler_remove --path file.md"]
+    ADD_FILE --> REBUNDLE["/context-bundler_bundle"]
     REMOVE_FILE --> REBUNDLE
     REBUNDLE -->|"<b>Recursion</b>: progressive<br/>elaboration based on<br/>additional research or<br/>redteam analysis"| OUTPUT
-    MODIFY_CHECK -- Complete --> SEAL["Workflow: workflow-seal"]
-    SEAL --> PERSIST["Workflow: workflow-persist"]
-    PERSIST --> END["cortex_cli.py persist-soul"]
+    MODIFY_CHECK -- Complete --> SEAL["/sanctuary-seal"]
+    SEAL --> PERSIST["/sanctuary-persist"]
+    PERSIST --> END["/agent-orchestrator_retro"]
 
      START:::phase
      INIT:::action

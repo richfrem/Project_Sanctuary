@@ -19,7 +19,7 @@ Note:
   - .gemini/ reads .agent/workflows/ natively (no sync needed).
 
 Usage:
-    python3 tools/bridge/sync_workflows.py
+    python3 plugins/spec-kitty/sync_workflows.py
 """
 import os
 import shutil
@@ -28,7 +28,7 @@ import argparse
 from pathlib import Path
 
 # Paths
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 SOURCE_WORKFLOWS_DIR = PROJECT_ROOT / ".agent" / "workflows"
 
 # Target Agent Directories

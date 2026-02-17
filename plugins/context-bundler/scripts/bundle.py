@@ -9,7 +9,7 @@ Purpose:
 Layer: Curate / Bundler
 
 Usage Examples:
-    python tools/retrieve/bundler/bundle.py --help
+    python plugins/context-bundler/scripts/bundle.py --help
 
 Supported Object Types:
     - Generic

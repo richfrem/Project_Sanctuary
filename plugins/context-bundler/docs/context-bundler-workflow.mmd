@@ -1,26 +1,27 @@
 sequenceDiagram
     participant User as User / Agent
-    participant CLI as manifest_manager.py
+    participant Init as /context-bundler_init
+    participant Add as /context-bundler_add
+    participant Bundle as /context-bundler_bundle
     participant Templates as resources/base-manifests/
     participant Manifest as file-manifest.json
-    participant Bundler as bundle.py
     participant Output as bundle.md
 
     Note over User, Output: Phase 1: Initialize
 
-    User->>CLI: init --target MyTool --type generic
-    CLI->>Templates: Load base-{type}-file-manifest.json
-    Templates-->>CLI: Template with default entries
-    CLI->>CLI: Substitute [TARGET] placeholders
-    CLI->>Manifest: Write new manifest JSON
-    CLI-->>User: ✅ Manifest initialized
+    User->>Init: init --target MyTool
+    Init->>Templates: Load base-{type}-file-manifest.json
+    Templates-->>Init: Template entries
+    Init->>Init: Substitute [TARGET]
+    Init->>Manifest: Write manifest JSON
+    Init-->>User: ✅ Manifest initialized
 
     Note over User, Output: Phase 2: Curate
 
-    loop Add files to manifest
-        User->>CLI: add --path "src/main.py" --note "Entry point"
-        CLI->>Manifest: Load → deduplicate → append → save
-        CLI-->>User: ✅ Added to manifest
+    loop Add files
+        User->>Add: add --path "..."
+        Add->>Manifest: Load → append → save
+        Add-->>User: ✅ Added
     end
 
     opt Remove unwanted files
@@ -37,21 +38,11 @@ sequenceDiagram
 
     Note over User, Output: Phase 3: Bundle
 
-    User->>CLI: bundle --output my-bundle.md
-    CLI->>Manifest: Load manifest JSON
-    CLI->>Bundler: bundle_files(manifest, output)
-    loop For each file entry
-        Bundler->>Bundler: resolve_path(file.path)
-        alt File exists
-            Bundler->>Bundler: Read content, detect language
-            Bundler->>Output: Write header + fenced code block
-        else File missing
-            Bundler->>Output: Write ❌ MISSING warning
-        end
-        alt Path is directory
-            Bundler->>Bundler: os.walk() recursive expansion
-            Bundler->>Output: Write all child files
-        end
+    User->>Bundle: bundle --output my-bundle.md
+    Bundle->>Manifest: Load manifest JSON
+    loop For each entry
+        Bundle->>Bundle: resolve and read
+        Bundle->>Output: Write block
     end
     Bundler->>Output: Write TOC + all content
     Bundler-->>User: ✅ Bundle created at my-bundle.md

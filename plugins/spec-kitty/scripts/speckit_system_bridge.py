@@ -16,7 +16,7 @@ Purpose:
     and auto-generate the necessary config files for any supported agent.
 
 Usage:
-    python tools/bridge/speckit_system_bridge.py
+    python plugins/spec-kitty/speckit_system_bridge.py
 """
 import os
 import shutil
@@ -33,7 +33,7 @@ except AttributeError:
     pass
 
 # Configuration
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 WINDSURF_DIR = PROJECT_ROOT / ".windsurf"
 KITTIFY_DIR = PROJECT_ROOT / ".kittify"
 
@@ -42,6 +42,10 @@ AGENT_DIR = PROJECT_ROOT / ".agent"
 CLAUDE_DIR = PROJECT_ROOT / ".claude"
 GEMINI_DIR = PROJECT_ROOT / ".gemini"
 GITHUB_DIR = PROJECT_ROOT / ".github"
+
+# Markers for Rule Injection
+MARKER_START = "<!-- RULES_SYNC_START -->"
+MARKER_END = "<!-- RULES_SYNC_END -->"
 
 
 def setup_directories():
@@ -140,7 +144,9 @@ def sync_antigravity(workflows, rules):
     for filename, content in workflows.items():
         fixed_content = content.replace('--actor "windsurf"', '--actor "antigravity"')
         fixed_content = fixed_content.replace('(Missing script command for sh)', 'spec-kitty')
-        (AGENT_DIR / "workflows" / filename).write_text(fixed_content, encoding="utf-8")
+        target_subdir = AGENT_DIR / "workflows" / "spec-kitty"
+        target_subdir.mkdir(parents=True, exist_ok=True)
+        (target_subdir / filename).write_text(fixed_content, encoding="utf-8")
         
     print(f"   ✅ Synced {len(rules)-1 if 'constitution' in rules else len(rules)} rules (skipped constitution) and {len(workflows)} workflows.")
 
@@ -150,13 +156,22 @@ def sync_claude(workflows, rules):
     
     # 1. Context (CLAUDE.md)
     claude_md = CLAUDE_DIR / "CLAUDE.md"
-    content = ["# Claude Assistant Instructions\n"]
-    content.append("Managed by Spec Kitty Bridge.\n\n")
     
-    for name, rule_text in rules.items():
-        content.append(f"## {name}\n\n{rule_text}\n\n---\n\n")
-        
-    claude_md.write_text("".join(content), encoding="utf-8")
+    # Separate Constitution from other rules
+    constitution = rules.get("constitution", "")
+    other_rules = []
+    for name, content in rules.items():
+        if name != "constitution":
+            other_rules.append(f"\n\n--- RULE: {name}.md ---\n\n{content}")
+    
+    rules_block = "".join(other_rules)
+    
+    header = "# Claude Assistant Instructions\nManaged by Spec Kitty Bridge.\n\n"
+    constitution_section = f"## Constitution\n\n{constitution}\n\n---\n\n" if constitution else ""
+    shared_rules_block = f"\n\n{MARKER_START}\n# SHARED RULES FROM .agent/rules/\n{rules_block}\n{MARKER_END}"
+    
+    # Write monolithic file
+    claude_md.write_text(header + constitution_section + shared_rules_block, encoding="utf-8")
     
     # 2. Commands/Prompts (.claude/commands/*.md)
     count = 0
@@ -173,16 +188,22 @@ def sync_gemini(workflows, rules):
     print("\n✨ Syncing Gemini (.gemini)...")
     
     # 1. Context (GEMINI.md)
-    gemini_md = GEMINI_DIR / "GEMINI.md"
     root_gemini_md = PROJECT_ROOT / "GEMINI.md"
     
-    content = ["# Gemini CLI Instructions\n"]
-    content.append("Managed by Spec Kitty Bridge.\n\n")
+    # Separate Constitution from other rules
+    constitution = rules.get("constitution", "")
+    other_rules = []
+    for name, content in rules.items():
+        if name != "constitution":
+            other_rules.append(f"\n\n--- RULE: {name}.md ---\n\n{content}")
     
-    for name, rule_text in rules.items():
-        content.append(f"## {name}\n\n{rule_text}\n\n---\n\n")
-        
-    root_gemini_md.write_text("".join(content), encoding="utf-8")
+    rules_block = "".join(other_rules)
+    
+    header = "# Gemini CLI Instructions\nManaged by Spec Kitty Bridge.\n\n"
+    constitution_section = f"## Constitution\n\n{constitution}\n\n---\n\n" if constitution else ""
+    shared_rules_block = f"\n\n{MARKER_START}\n# SHARED RULES FROM .agent/rules/\n{rules_block}\n{MARKER_END}"
+    
+    root_gemini_md.write_text(header + constitution_section + shared_rules_block, encoding="utf-8")
     
     # 2. Commands (.gemini/commands/*.toml)
     count = 0
@@ -218,19 +239,27 @@ def sync_copilot(workflows, rules):
     # 1. Instructions (copilot-instructions.md)
     instr_file = GITHUB_DIR / "copilot-instructions.md"
 
-    content = ["# Copilot Instructions\n"]
-    content.append("> Managed by Spec Kitty Bridge.\n\n")
+    # Separate Constitution from other rules
+    constitution = rules.get("constitution", "")
+    other_rules = []
+    for name, content in rules.items():
+        if name != "constitution":
+            other_rules.append(f"\n\n--- RULE: {name}.md ---\n\n{content}")
+    
+    rules_block = "".join(other_rules)
 
-    for name, rule_text in rules.items():
-        content.append(f"## Rule: {name}\n\n{rule_text}\n\n---\n\n")
-
+    header = "# Copilot Instructions\n> Managed by Spec Kitty Bridge.\n\n"
+    constitution_section = f"## Constitution\n\n{constitution}\n\n---\n\n" if constitution else ""
+    
     # Index Workflows
-    content.append("\n# Available Workflows\n")
+    workflow_index = "\n# Available Workflows\n"
     for filename in workflows.keys():
         stem = filename.replace(".md", "")
-        content.append(f"- /prompts/{stem}.prompt.md\n")
+        workflow_index += f"- /prompts/{stem}.prompt.md\n"
 
-    instr_file.write_text("".join(content), encoding="utf-8")
+    shared_rules_block = f"\n\n{MARKER_START}\n# SHARED RULES FROM .agent/rules/\n{rules_block}\n{MARKER_END}"
+
+    instr_file.write_text(header + constitution_section + workflow_index + shared_rules_block, encoding="utf-8")
 
     # 2. Prompts (.github/prompts/*.prompt.md)
     count = 0

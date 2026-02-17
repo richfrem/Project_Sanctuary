@@ -10,13 +10,13 @@ Layer: Curate / Bundler
 
 Usage Examples:
     # 1. Initialize a custom manifest in a temp folder
-    python tools/retrieve/bundler/manifest_manager.py --manifest temp/my_manifest.json init --type generic --bundle-title "My Project"
+    python plugins/context-bundler/scripts/manifest_manager.py --manifest temp/my_manifest.json init --type generic --bundle-title "My Project"
 
     # 2. Add files to that custom manifest
-    python tools/retrieve/bundler/manifest_manager.py --manifest temp/my_manifest.json add --path "docs/example.md" --note "Reference doc"
+    python plugins/context-bundler/scripts/manifest_manager.py --manifest temp/my_manifest.json add --path "docs/example.md" --note "Reference doc"
 
     # 3. Bundle using that custom manifest
-    python tools/retrieve/bundler/manifest_manager.py --manifest temp/my_manifest.json bundle --output temp/my_bundle.md
+    python plugins/context-bundler/scripts/manifest_manager.py --manifest temp/my_manifest.json bundle --output temp/my_bundle.md
 
     # NOTE: Global flags like --manifest and --base MUST come BEFORE the subcommand (init, add, bundle, etc.)
 

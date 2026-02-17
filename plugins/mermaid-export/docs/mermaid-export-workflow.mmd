@@ -1,12 +1,12 @@
 sequenceDiagram
     participant User as User / Agent
-    participant Script as export_mmd_to_image.py
+    participant Script as /mermaid-export_render
     participant FS as File System
-    participant NPX as npx @mermaid-js/mermaid-cli
+    participant NPX as mermaid-cli
 
     Note over User, NPX: Option A: Check Mode (--check)
 
-    User->>Script: /mermaid-export:check -i docs/diagrams/
+    User->>Script: /mermaid-export_check
     Script->>FS: Scan for *.mmd files (recursive)
     loop For each .mmd file
         Script->>FS: Compare mtime: .mmd vs .png
@@ -18,7 +18,7 @@ sequenceDiagram
 
     Note over User, NPX: Option B: Render Mode
 
-    User->>Script: /mermaid-export:render -i diagram.mmd
+    User->>Script: /mermaid-export_render
     Script->>Script: Resolve input/output paths
     Script->>NPX: Check mermaid-cli availability
     NPX-->>Script: ✅ Version info

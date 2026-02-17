@@ -1,37 +1,46 @@
+# /agent-orchestrator_delegate — Handoff to Inner Loop
+
+**Purpose:** This command prepares the technical context required for an **Inner Loop (Executor)** to implement a specific Work Package (WP). It bridges the strategic plan to tactical execution.
+
 ---
-description: "Generate a strategy packet and hand off execution to the inner loop agent"
----
 
-# /agent-handoff:delegate — Handoff to Inner Loop
+## 🏗️ The Step-by-Step Handoff
 
-## Steps
-
-1. **Create isolated workspace** (if using worktrees):
+1. **Create Isolated Workspace (MANDATORY)**:
    ```bash
    spec-kitty implement WP-NN
    ```
+   *Action:* Creates a worktree and checks out a feature branch.
 
-2. **Generate strategy packet**:
+2. **Generate Strategy Packet**:
    ```bash
-   python3 scripts/agent_handoff.py packet \
-     --wp WP-01 \
-     --spec-dir kitty-specs/NNN-feature/
+   /agent-orchestrator_delegate --wp WP-NN
    ```
-   Output: `.agent/handoffs/task_packet_NNN.md`
+   *Action:* Leverages `agent_handoff.py` to bundle the spec, plan, and target files into a single mission document.
+   *Output:* `.agent/handoffs/task_packet_NN.md`
 
-3. **Review the packet** — Confirm it contains:
-   - [ ] Clear objective
-   - [ ] Acceptance criteria
-   - [ ] File scope (what to touch)
-   - [ ] Constraints (what NOT to do)
+3. **Packet Review Checklist**:
+   Confirm the generated packet contains:
+   - [ ] **Objective**: The specific goal of this WP.
+   - [ ] **Acceptance Criteria**: Verifiable "Definition of Done".
+   - [ ] **File Scope**: Exactly which files the Inner Loop is allowed to touch.
+   - [ ] **Strategic Constraints**: ADRs or architectural rules to follow.
+   - [ ] **Anti-Simulation Reminder**: Reminds the executor to provide command output proof.
 
-4. **Signal ready** — Tell the user:
-   > "Strategy packet ready at `.agent/handoffs/task_packet_NNN.md`. Launch inner loop agent."
+4.  **Launch Inner Loop**:
+    Instruct the user or launch tool:
+    > "Strategy packet ready at `.agent/handoffs/task_packet_NN.md`. Launching Inner Loop executor."
 
-5. **User launches inner loop**:
-   ```bash
-   claude "Read .agent/handoffs/task_packet_NNN.md and execute the mission. Do NOT use git commands."
-   ```
+---
 
-> [!IMPORTANT]
-> The inner loop agent must NOT run git commands. All version control is the outer loop's responsibility.
+## ⛔ The Git Wall (Inner Loop Constraint)
+
+> [!CAUTION]
+> **The Inner Loop executor MUST NOT run Git commands.** 
+> All state changes, commits, and merges are the exclusive responsibility of the Outer Loop (Orchestrator).
+
+---
+
+## 🛤️ Context Awareness
+- **Track A (Factory):** Packets may be auto-generated from standardized WP templates.
+- **Track B (Discovery):** Packets require manual refinement of instructions to handle ambiguity.

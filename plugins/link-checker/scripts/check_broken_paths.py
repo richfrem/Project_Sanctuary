@@ -9,7 +9,7 @@ Purpose:
 Layer: Curate / Cli_Entry_Points
 
 Usage Examples:
-    python tools/curate/link-checker/check_broken_paths.py --help
+    python plugins/link-checker/scripts/check_broken_paths.py --help
 
 Supported Object Types:
     - Generic

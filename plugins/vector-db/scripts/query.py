@@ -9,7 +9,7 @@ Purpose:
 Layer: Curate / Vector
 
 Usage Examples:
-    python tools/retrieve/vector/query.py --help
+    python plugins/vector-db/scripts/query.py --help
 
 Supported Object Types:
     - Generic
@@ -75,7 +75,7 @@ class VectorDBQuery:
         """Initialize ChromaDB connection."""
         if not VECTOR_DB_PATH.exists():
             print(f"❌ Vector DB not found at: {VECTOR_DB_PATH}")
-            print("   Run: python tools/codify/vector/ingest.py --full")
+            print("   Run: python plugins/vector-db/scripts/ingest.py --full")
             sys.exit(1)
         
         # Use persistent client

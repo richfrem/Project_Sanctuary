@@ -5,24 +5,26 @@ next_number.py (CLI)
 
 Purpose:
     Sequential Identifier Generator.
-    Scans artifact directories (Specs, Tasks, ADRs, Chronicles) to find
+    Scans artifact directories (Specs, Tasks, ADRs, Chronicles, BRs, BWs) to find
     the next available sequence number. Prevents ID collisions.
 
 Layer: Investigate / Utils
 
 Usage Examples:
-    python tools/investigate/utils/next_number.py --type spec
-    python tools/investigate/utils/next_number.py --type task
-    python tools/investigate/utils/next_number.py --type all
+    python plugins/adr-manager/scripts/next_number.py --type spec
+    python plugins/adr-manager/scripts/next_number.py --type task
+    python plugins/adr-manager/scripts/next_number.py --type br
+    python plugins/adr-manager/scripts/next_number.py --type all
 
 CLI Arguments:
-    --type          : Artifact type (spec, task, adr, chronicle, all)
+    --type          : Artifact type (spec, task, adr, chronicle, br, bw, all)
 
 Input Files:
-    - specs/
+    - kitty-specs/
     - tasks/
     - ADRs/
-    - 00_CHRONICLE/ENTRIES/
+    - legacy-system/business-rules/
+    - legacy-system/business-workflows/
 
 Output:
     - Next available ID (e.g. "0045") to stdout
@@ -42,6 +44,20 @@ from pathlib import Path
 
 # Configuration: artifact types and their locations/patterns
 ARTIFACT_TYPES = {
+    "br": {
+        "name": "Business Rule",
+        "directory": "legacy-system/business-rules",
+        "pattern": r"^BR-(\d{3})",
+        "format": "BR-{:03d}",
+        "prefix": "BR-"
+    },
+    "bw": {
+        "name": "Business Workflow",
+        "directory": "legacy-system/business-workflows",
+        "pattern": r"^BW-(\d{3})",
+        "format": "BW-{:03d}",
+        "prefix": "BW-"
+    },
     "task": {
         "name": "Maintenance Task",
         "directory": "tasks",
@@ -53,14 +69,14 @@ ARTIFACT_TYPES = {
     "spec": {
         "name": "Specification",
         "directory": "specs",
-        "pattern": r"^(\d{4})",
-        "format": "{:04d}",
+        "pattern": r"^(\d{3})",
+        "format": "{:03d}",
         "prefix": "",
         "scan_type": "directory"
     },
     "adr": {
         "name": "Architecture Decision Record",
-        "directory": "ADRs",
+        "directory": "docs/ADRs",
         "pattern": r"^(\d{3})",
         "format": "{:03d}",
         "prefix": ""
@@ -79,7 +95,7 @@ def find_max_number(artifact_type: str, project_root: Path) -> int:
     max_num = 0
     
     if config.get("search_subdirs"):
-        dirs_to_search = [base_dir / "backlog", base_dir / "in-progress", base_dir / "done", base_dir / "superseded"]
+        dirs_to_search = [base_dir / "backlog", base_dir / "todo", base_dir / "in-progress", base_dir / "done", base_dir / "superseded"]
     else:
         dirs_to_search = [base_dir]
     
@@ -118,7 +134,7 @@ def get_next_number(artifact_type: str, project_root: Path) -> str:
     existing_numbers = set()
     
     if config.get("search_subdirs"):
-        dirs_to_search = [base_dir / "backlog", base_dir / "in-progress", base_dir / "done", base_dir / "superseded"]
+        dirs_to_search = [base_dir / "backlog", base_dir / "todo", base_dir / "in-progress", base_dir / "done", base_dir / "superseded"]
     else:
         dirs_to_search = [base_dir]
     
@@ -147,7 +163,7 @@ def get_next_number(artifact_type: str, project_root: Path) -> str:
     return config["format"].format(next_num)
 
 
-def find_max_in_directory(directory: Path, pattern: str = r'(\d{4})', recursive: bool = True) -> int:
+def find_max_in_directory(directory: Path, pattern: str = r'(\d{3})', recursive: bool = True) -> int:
     """Find the maximum number in an arbitrary directory using a regex pattern."""
     if not directory.exists():
         return 0
@@ -192,20 +208,17 @@ def main():
                         help='Artifact type')
     group.add_argument('--dir', '-d', help='Ad-hoc directory to scan for 4-digit numbers')
     
-    parser.add_argument('--pattern', help=r'Regex pattern for --dir (default: (\d{4}))', default=r'(\d{4})')
+    parser.add_argument('--pattern', help=r'Regex pattern for --dir (default: (\d{3}))', default=r'(\d{3})')
     parser.add_argument('--recursive', action='store_true', help='Recursive scan for --dir')
     parser.add_argument('--json', action='store_true', help='Output as JSON')
     
     args = parser.parse_args()
     
     # Find project root
+    # plugins/adr-manager/scripts/next_number.py -> scripts -> adr-manager -> plugins -> root
     script_dir = Path(__file__).parent.resolve()
-    # Handle both tools/shared/ and tools/shared/utils/ locations during migration
-    if script_dir.name == "utils":
-        project_root = script_dir.parent.parent.parent
-    else:
-        project_root = script_dir.parent.parent
-        
+    project_root = script_dir.parent.parent.parent
+
     if args.type == 'all':
         show_all(project_root)
     elif args.type:

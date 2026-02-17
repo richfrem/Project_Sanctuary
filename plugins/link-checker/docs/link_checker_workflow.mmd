@@ -13,28 +13,28 @@ flowchart TB
         direction TB
         Start["Start Link Validation"] --> Choice{Which Method?}
         
-        Choice -- "Comprehensive<br/>(Recommended)" --> VerifyLinks["verify_links.py<br/>(Manifests + Markdown)"]
-        Choice -- "Quick Check" --> CheckBroken["check_broken_paths.py<br/>(Markdown Only)"]
+        Choice -- "Comprehensive" --> VerifyLinks["/link-checker_check<br/>(Full Audit)"]
+        Choice -- "Quick Check" --> CheckBroken["/link-checker_check<br/>(Surface Check)"]
         
-        VerifyLinks --> Report1["Output: invalid_links_report.json"]
-        CheckBroken --> Report2["Output: broken_links.log"]
+        VerifyLinks --> Report1["Output: Report"]
+        CheckBroken --> Report2["Output: Log"]
     end
     
     subgraph Repair["Phase 2: Auto-Repair"]
         direction TB
-        MapFiles["map_repository_files.py"] --> Inventory["Output: file_inventory.json"]
-        Inventory --> DryRun["smart_fix_links.py --dry-run"]
+        MapFiles["/link-checker_map"] --> Inventory["Output: Inventory"]
+        Inventory --> DryRun["/link-checker_fix --dry-run"]
         DryRun --> Review{Review Changes?}
-        Review -- "Approve" --> Fix["smart_fix_links.py"]
-        Review -- "Reject" --> Manual["Manual Fixes Required"]
+        Review -- "Approve" --> Fix["/link-checker_fix"]
+        Review -- "Reject" --> Manual["Manual Fixes"]
         Fix --> Fixed["Links Repaired"]
     end
     
     subgraph Verify["Phase 3: Verification"]
         direction TB
-        ReCheck["Re-run verify_links.py"] --> Clean{Clean Report?}
+        ReCheck["Re-run /link-checker_check"] --> Clean{Clean Report?}
         Clean -- "Yes" --> Success["✅ Documentation Healthy"]
-        Clean -- "No" --> Manual2["More Manual Fixes Needed"]
+        Clean -- "No" --> Manual2["Manual Fixes Needed"]
     end
     
     %% Flow connections

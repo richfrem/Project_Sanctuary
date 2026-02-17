@@ -9,7 +9,7 @@ Purpose:
 Layer: Curate / Vector
 
 Usage Examples:
-    python tools/curate/vector/cleanup.py --help
+    python plugins/vector-db/scripts/cleanup.py --help
 
 Supported Object Types:
     - Generic
@@ -104,7 +104,7 @@ def main():
     
     if not VECTOR_DB_PATH.exists():
         print("❌ Vector DB not found.")
-        print("   Run: python tools/codify/vector/ingest.py --full")
+        print("   Run: python plugins/vector-db/scripts/ingest.py --full")
         return
 
     # Connect to ChromaDB
@@ -211,9 +211,9 @@ def main():
         print("\n⚠️  DRY RUN COMPLETE.")
         print("   To actually remove these entries, run:")
         if args.prune_orphans:
-            print("   python tools/curate/vector/cleanup.py --apply --prune-orphans")
+            print("   python plugins/vector-db/scripts/cleanup.py --apply --prune-orphans")
         else:
-            print("   python tools/curate/vector/cleanup.py --apply")
+            print("   python plugins/vector-db/scripts/cleanup.py --apply")
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ Supported Targets:
 - Gemini (.gemini/)
 
 Usage:
-  python3 scripts/bridge_installer.py --plugin <path> [--target <auto|antigravity|github|gemini>]
+  python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin <path> [--target <auto|antigravity|github|gemini>]
 """
 
 import os
@@ -89,11 +89,16 @@ def install_antigravity(plugin_path: Path, root: Path, metadata: dict):
 
     # 1. Workflows (Commands)
     commands_dir = plugin_path / "commands"
+    if not commands_dir.exists():
+        commands_dir = plugin_path / "workflows"
+        
     if commands_dir.exists():
+        plugin_wf_dir = target_wf / plugin_name
+        plugin_wf_dir.mkdir(parents=True, exist_ok=True)
         for f in commands_dir.glob("*.md"):
             content = f.read_text()
             content = transform_content(content, "antigravity")
-            dest = target_wf / f"{plugin_name}_{f.name}" # Namespace conflict prevention
+            dest = plugin_wf_dir / f"{plugin_name}_{f.name}" # Namespace conflict prevention
             dest.write_text(content)
             print(f"    -> Workflow: {dest.relative_to(root)}")
 
@@ -103,14 +108,22 @@ def install_antigravity(plugin_path: Path, root: Path, metadata: dict):
         shutil.copytree(skills_dir, target_skills, dirs_exist_ok=True)
         print(f"    -> Skills: {target_skills.relative_to(root)}")
 
-    # 3. Tools / Scripts
-    scripts_dir = plugin_path / "scripts"
-    if scripts_dir.exists():
-        # Copy to tools/{plugin_name}/
-        dest_tools = target_tools / plugin_name
-        if dest_tools.exists(): shutil.rmtree(dest_tools) 
-        shutil.copytree(scripts_dir, dest_tools)
-        print(f"    -> Tools: {dest_tools.relative_to(root)}")
+    # 3. Tools / Scripts (DEPRECATED: Direct execution from plugins/ preferred)
+    # scripts_dir = plugin_path / "scripts"
+    # if scripts_dir.exists():
+    #     # Copy to tools/{plugin_name}/
+    #     dest_tools = target_tools / plugin_name
+    #     if dest_tools.exists(): shutil.rmtree(dest_tools) 
+    #     # shutil.copytree(scripts_dir, dest_tools)
+    #     # print(f"    -> Tools: {dest_tools.relative_to(root)} (DEPRECATED MIRROR)")
+
+    # 4. Resources (Manifests, Prompts, Configs) - KEPT for RLM path parity
+    resources_dir = plugin_path / "resources"
+    if resources_dir.exists():
+        dest_resources = target_tools / plugin_name / "resources"
+        if dest_resources.exists(): shutil.rmtree(dest_resources)
+        shutil.copytree(resources_dir, dest_resources)
+        print(f"    -> Resources Sync: {dest_resources.relative_to(root)}")
 
 def install_github(plugin_path: Path, root: Path, metadata: dict):
     print("  [GitHub] Installing...")
@@ -121,6 +134,9 @@ def install_github(plugin_path: Path, root: Path, metadata: dict):
 
     # 1. Workflows -> Prompts
     commands_dir = plugin_path / "commands"
+    if not commands_dir.exists():
+        commands_dir = plugin_path / "workflows"
+        
     if commands_dir.exists():
         for f in commands_dir.glob("*.md"):
             content = f.read_text()
@@ -143,6 +159,9 @@ def install_gemini(plugin_path: Path, root: Path, metadata: dict):
 
     # 1. Workflows -> TOML Commands
     commands_dir = plugin_path / "commands"
+    if not commands_dir.exists():
+        commands_dir = plugin_path / "workflows"
+        
     if commands_dir.exists():
         for f in commands_dir.glob("*.md"):
             content = f.read_text()
@@ -163,6 +182,9 @@ def install_claude(plugin_path: Path, root: Path, metadata: dict):
 
     # 1. Workflows (Commands)
     commands_dir = plugin_path / "commands"
+    if not commands_dir.exists():
+        commands_dir = plugin_path / "workflows"
+        
     if commands_dir.exists():
         for f in commands_dir.glob("*.md"):
             content = f.read_text()

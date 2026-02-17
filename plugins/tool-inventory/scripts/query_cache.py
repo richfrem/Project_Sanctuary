@@ -9,7 +9,8 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
-    python tools/retrieve/rlm/query_cache.py --help
+    python plugins/tool-inventory/scripts/query_cache.py --help
+    python plugins/tool-inventory/scripts/query_cache.py "DB Integration"
 
 Supported Object Types:
     - Generic
@@ -51,10 +52,13 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
 try:
-    from tools.codify.rlm.rlm_config import RLMConfig
+    from rlm_config import RLMConfig
 except ImportError:
-    print("❌ Could not import RLMConfig from tools.codify.rlm.rlm_config")
-    sys.exit(1)
+    try:
+        from tools.tool_inventory.rlm_config import RLMConfig
+    except ImportError:
+        print("❌ Could not import RLMConfig (tried local and tools.tool_inventory)")
+        sys.exit(1)
 
 def load_cache(config: RLMConfig):
     if not config.cache_path.exists():
@@ -127,7 +131,7 @@ def list_cache(config: RLMConfig):
 def main():
     parser = argparse.ArgumentParser(description="Query RLM Cache")
     parser.add_argument("term", nargs="?", help="Search term (ID, filename, or content keyword)")
-    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
+    # parser.add_argument("--type", choices=["project", "tool"], default="tool", help="RLM Type (loads manifest from factory)")
     parser.add_argument("--list", action="store_true", help="List all cached files")
     parser.add_argument("--no-summary", action="store_true", help="Hide summary text")
     parser.add_argument("--json", action="store_true", help="Output results as JSON")
@@ -135,7 +139,7 @@ def main():
     args = parser.parse_args()
     
     # Load Config based on Type
-    config = RLMConfig(run_type=args.type)
+    config = RLMConfig(run_type="tool")
     
     if args.list:
         list_cache(config)

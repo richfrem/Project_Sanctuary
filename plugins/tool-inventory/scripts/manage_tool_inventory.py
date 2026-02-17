@@ -9,16 +9,16 @@ Purpose:
 Layer: Curate / Curate
 
 Usage Examples:
-    python tools/curate/inventories/manage_tool_inventory.py --help
-    python tools/curate/inventories/manage_tool_inventory.py list
-    python tools/curate/inventories/manage_tool_inventory.py search "keyword"
-    python tools/curate/inventories/manage_tool_inventory.py remove --path "path/to/tool.py"
-    python tools/curate/inventories/manage_tool_inventory.py update --path "tool.py" --desc "New description"
-    python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub
-    python tools/curate/inventories/manage_tool_inventory.py summarize-missing
-    python tools/curate/inventories/manage_tool_inventory.py sync-from-cache
-    python tools/curate/inventories/manage_tool_inventory.py reset-from-cache
-    python tools/curate/inventories/manage_tool_inventory.py clear-inventory
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py --help
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py list
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py search "keyword"
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py remove --path "path/to/tool.py"
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py update --path "tool.py" --desc "New description"
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py discover --auto-stub
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py summarize-missing
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py sync-from-cache
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py reset-from-cache
+    python plugins/tool-inventory/scripts/manage_tool_inventory.py clear-inventory
 
 Supported Object Types:
     - Generic
@@ -55,11 +55,11 @@ Key Functions:
     - main(): No description.
 
 Script Dependencies:
-    - tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)
-    - tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)
+    - plugins/tool-inventory/scripts/distiller.py (Cyclical: Triggers distillation on update)
+    - plugins/tool-inventory/scripts/cleanup_cache.py (Atomic cleanup on removal)
 
 Consumed by:
-    - tools/codify/rlm/distiller.py (Invokes update_tool for RLM-driven enrichment)
+    - plugins/tool-inventory/scripts/distiller.py (Invokes update_tool for RLM-driven enrichment)
 """
 import os
 import sys
@@ -152,9 +152,9 @@ class InventoryManager:
     def _trigger_distillation(self, tool_path: str):
         """
         Triggers the RLM Distiller for a specific tool.
-        This ensures the RLM Cache (.agent/learning/rlm_tool_cache.json) is always in sync with the Inventory.
+        This ensures the RLM Cache (rlm_tool_cache.json) is always in sync with the Inventory.
         """
-        distiller_script = self.root_dir / "tools/codify/rlm/distiller.py"
+        distiller_script = self.root_dir / "plugins/tool-inventory/scripts/distiller.py"
         if not distiller_script.exists():
             print(f"⚠️  Distiller not found at {distiller_script}. Skipping sync.")
             return
@@ -474,7 +474,7 @@ class InventoryManager:
         """Removes the tool from the RLM Tool Cache using cleanup_cache.py API."""
         try:
             # Dynamic import to avoid circular dependencies if any
-            from tools.curate.rlm.cleanup_cache import remove_entry
+            from tools.tool_inventory.cleanup_cache import remove_entry
             
             # Since we are managing Tools, run_type is 'tool'
             removed = remove_entry(run_type='tool', file_path=tool_path)
@@ -537,38 +537,55 @@ class InventoryManager:
                 tracked_paths.add(str(p.resolve()))
         
         # Scan for untracked
-        scan_dir = self.root_dir / 'tools'
-        if not scan_dir.exists():
-            scan_dir = self.root_dir
-        
         results = {
             'with_docstring': [],
             'without_docstring': [],
             'json_configs': []
         }
         
-        # Scan Python and JS files
-        extensions = [".py", ".js"]
-        for ext in extensions:
-            for f in scan_dir.rglob(f"*{ext}"):
-                # Directories to ignore
-                ignore_dirs = {
-                    '.git', '__pycache__', 'node_modules', 'venv', '.venv', 'env', 
-                    '.agent', 'temp', 'logs', 'coverage', '.idea', '.vscode',
-                    'modernization', 'sandbox'
-                }
-                # Skip virtual envs, tests, __pycache__, etc.
-                if any(d in f.parts for d in ignore_dirs):
-                    continue
-                
-                if str(f.resolve()) not in tracked_paths:
-                    rel = str(f.relative_to(self.root_dir))
-                    docstring = extract_docstring(f)
-                    
-                    if docstring and docstring != 'TBD':
-                        results['with_docstring'].append((rel, docstring))
-                    else:
-                        results['without_docstring'].append(rel)
+        # Recursive scan of tools ONLY (plugins are sources) per user instruction
+        scan_dirs = [self.root_dir / 'tools']
+        found_files = set()
+        
+        for d in scan_dirs:
+            if d.exists():
+                for f in d.rglob("*.py"):
+                    found_files.add(f)
+                # Keep JS scanning if present in tools
+                for f in d.rglob("*.js"):
+                    found_files.add(f)
+
+        for f in found_files:
+             # Blacklist: __init__.py
+             if f.name == "__init__.py":
+                 continue
+
+             # Blacklist: logical folders
+             ignore_parts = {'node_modules', 'venv', '.venv', 'env', '.git', '__pycache__', '.agent'}
+             if any(p in f.parts for p in ignore_parts):
+                 continue
+             
+             # Special Case: investment-screener
+             # Ignore tools/investment-screener UNLESS it is in backend/py_services
+             try:
+                 rel = str(f.relative_to(self.root_dir))
+                 if rel.startswith("tools/investment-screener"):
+                     if not rel.startswith("tools/investment-screener/backend/py_services"):
+                         continue
+             except ValueError:
+                 continue
+             
+             if str(f.resolve()) not in tracked_paths:
+                 try:
+                     docstring = extract_docstring(f)
+                     
+                     if docstring and docstring != 'TBD':
+                         results['with_docstring'].append((rel, docstring))
+                     else:
+                         results['without_docstring'].append(rel)
+                 except Exception as e:
+                     print(f"⚠️ Error processing {f}: {e}")
+                     continue
         
         # Optionally scan JSON files
         if include_json:
@@ -1117,7 +1134,7 @@ def generate_markdown(manager: InventoryManager, output_path: Path):
         "",
         f"> **Auto-generated:** {timestamp}",
         f"> **Source:** [`{inv_rel_path}`]({inv_rel_path})",
-        f"> **Regenerate:** `python tools/curate/inventories/manage_tool_inventory.py generate --inventory {inv_rel_path}`",
+        f"> **Regenerate:** `python plugins/tool-inventory/scripts/manage_tool_inventory.py generate --inventory {inv_rel_path}`",
         "",
         "---",
         ""
@@ -1170,7 +1187,8 @@ def extract_docstring(file_path: Path) -> str:
 
     # Python Docstring
     if file_path.suffix == '.py':
-        match = re.search(r'^"""(.*?)"""', content, re.DOTALL)
+        # Search for docstring (non-anchored to allow shebangs/imports)
+        match = re.search(r'"""(.*?)"""', content, re.DOTALL)
         if match:
             # Get first non-empty line
             lines = [l.strip() for l in match.group(1).split('\n') if l.strip()]

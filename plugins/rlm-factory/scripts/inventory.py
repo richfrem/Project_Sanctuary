@@ -5,22 +5,19 @@ inventory.py (CLI)
 
 Purpose:
     RLM Auditor: Reports coverage of the semantic ledger against the filesystem.
-    Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.
+    Specialized for Sanctuary/Legacy Documentation.
 
 Layer: Curate / Rlm
 
-Supported Object Types:
-    - RLM Cache (Legacy)
-    - RLM Cache (Tool)
+Usage Examples:
+    python plugins/rlm-factory/scripts/inventory.py
 
-CLI Arguments:
-    --type  : [legacy|tool] Selects the configuration profile (default: legacy).
+Supported Object Types:
+    - RLM Cache (Sanctuary)
 
 Input Files:
-    - .agent/learning/rlm_summary_cache.json (Legacy)
-    - .agent/learning/rlm_tool_cache.json (Tool)
+    - .agent/learning/rlm_summary_cache.json
     - Filesystem targets (defined in manifests)
-    - tool_inventory.json
 
 Output:
     - Console report (Statistics, Missing Files, Stale Entries)
@@ -29,7 +26,7 @@ Key Functions:
     - audit_inventory(): Logic to compare cache keys against collected file paths.
 
 Script Dependencies:
-    - tools/codify/rlm/rlm_config.py
+    - plugins/rlm_factory/scripts/rlm_config.py
 """
 import os
 import sys
@@ -44,10 +41,9 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
 try:
-    from tools.codify.rlm.rlm_config import RLMConfig, load_cache, collect_files
+    from rlm_config import RLMConfig, load_cache, collect_files
 except ImportError:
-    print("❌ Could not import RLMConfig from tools.codify.rlm.rlm_config")
-    sys.exit(1)
+    from tools.rlm_factory.rlm_config import RLMConfig, load_cache, collect_files
 
 def audit_inventory(config: RLMConfig):
     """Compare RLM cache against actual file system."""
@@ -101,7 +97,7 @@ def audit_inventory(config: RLMConfig):
 
 def main():
     parser = argparse.ArgumentParser(description="Audit RLM Cache Coverage")
-    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
+    parser.add_argument("--type", choices=["project", "tool"], default="project", help="RLM Type (loads manifest from factory)")
     
     args = parser.parse_args()
     

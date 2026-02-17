@@ -9,7 +9,8 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
-    python tools/curate/rlm/cleanup_cache.py --help
+    python plugins/rlm-factory/scripts/cleanup_cache.py --help
+    python plugins/rlm-factory/scripts/cleanup_cache.py --apply --prune-orphans
 
 Supported Object Types:
     - Generic
@@ -48,14 +49,17 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
 try:
-    from tools.codify.rlm.rlm_config import RLMConfig, load_cache, save_cache, should_skip
+    from rlm_config import RLMConfig, load_cache, save_cache, should_skip
 except ImportError:
-    print("❌ Could not import RLMConfig from tools.codify.rlm.rlm_config")
-    sys.exit(1)
+    try:
+        from tools.tool_inventory.rlm_config import RLMConfig, load_cache, save_cache, should_skip
+    except ImportError:
+        print("❌ Could not import RLMConfig (tried local and tools.tool_inventory)")
+        sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description="Clean up RLM cache.")
-    parser.add_argument("--type", choices=["legacy", "tool"], default="legacy", help="RLM Type (loads manifest from factory)")
+    # parser.add_argument("--type", choices=["project", "tool"], default="project", help="RLM Type (loads manifest from factory)")
     parser.add_argument("--apply", action="store_true", help="Perform the deletion")
     parser.add_argument("--prune-orphans", action="store_true", help="Remove entries not matching manifest")
     parser.add_argument("--prune-failed", action="store_true", help="Remove entries with [DISTILLATION FAILED]")
@@ -63,7 +67,7 @@ def main():
     args = parser.parse_args()
     
     # Load Config based on Type
-    config = RLMConfig(run_type=args.type)
+    config = RLMConfig(run_type="project")
 
     print(f"Checking cache at: {config.cache_path}")
     
@@ -112,7 +116,10 @@ def main():
             if authorized_files is None:
                 print("Building authorized file list from manifest...")
                 # We need to import collect_files from rlm_config
-                from tools.codify.rlm.rlm_config import collect_files
+                try:
+                    from rlm_config import collect_files
+                except ImportError:
+                    from tools.tool_inventory.rlm_config import collect_files
                 files = collect_files(config)
                 # Store as set of resolved strings for fast lookup
                 authorized_files = set(str(f.resolve()) for f in files)
@@ -156,9 +163,9 @@ def main():
         print(f"Found {remove_count} entries to remove (Stale + Orphans).")
         print("To actually remove these entries, run:")
         if args.prune_orphans:
-            print(f"  python tools/curate/rlm/cleanup_cache.py --type {args.type} --apply --prune-orphans")
+            print(f"  python plugins/rlm-factory/scripts/cleanup_cache.py --apply --prune-orphans")
         else:
-            print(f"  python tools/curate/rlm/cleanup_cache.py --type {args.type} --apply")
+            print(f"  python plugins/rlm-factory/scripts/cleanup_cache.py --apply")
 
 def remove_entry(run_type: str, file_path: str) -> bool:
     """

@@ -12,9 +12,18 @@ spec-kitty init . --ai windsurf
 ```
 
 ## Installation
+### Claude CLI
 ```bash
 claude --plugin-dir ./plugins/spec-kitty
 ```
+
+### Antigravity / Windsurf
+1. **Initialize** (if not done): `spec-kitty init . --ai windsurf`
+2. **Sync Bridge**: Run the bridge script to propagate workflows and rules to the IDE.
+   ```bash
+   python plugins/spec-kitty/scripts/speckit_system_bridge.py
+   ```
+3. **Restart IDE**: Reload the window to pick up the new slash commands.
 
 ## Commands (13)
 

@@ -9,8 +9,8 @@ The system follows a **Controller-Manager-Worker** pattern with a shared **State
 | Component | Role | File | Responsibility |
 | :--- | :--- | :--- | :--- |
 | **Interface** | Controller | `tools/cli.py` | Routes user commands (`manifest`, `init-context`) to the Manager. No logic here. |
-| **Manager** | Orchestrator | `tools/retrieve/bundler/manifest_manager.py` | Handles the *Workflow* & *Manifest CRUD*. Inits, Adds, Updates, Removes, and Lists/Queries files. |
-| **Bundler** | Worker | `tools/retrieve/bundler/bundle.py` | Handles the *Action*. Reads state and compiles the Markdown bundle. |
+| **Manager** | Orchestrator | `plugins/context-bundler/scripts/manifest_manager.py` | Handles the *Workflow* & *Manifest CRUD*. Inits, Adds, Updates, Removes, and Lists/Queries files. |
+| **Bundler** | Worker | `plugins/context-bundler/scripts/bundle.py` | Handles the *Action*. Reads state and compiles the Markdown bundle. |
 | **State** | Data Store | `tools/context-bundler/file-manifest.json` | The JSON list of files currently "in scope" for the bundle. |
 
 ## 2. Intelligence Sources (Inputs)

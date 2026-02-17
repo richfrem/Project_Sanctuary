@@ -66,9 +66,46 @@ Use `agent-orchestrator:retro` to close the session or loop with structured lear
 ```
 *Mandatory*: You must fix at least one small issue (Boy Scout Rule) before closing.
 
+### 6. Closure (Feature Completion)
+
+> **THE OUTER LOOP OWNS CLOSURE.**
+> After the Inner Loop finishes coding, the orchestrator MUST drive the full
+> Review → Accept → Retrospective → Merge chain. This is NOT optional.
+> The Inner Loop cannot close a feature — only the Outer Loop can.
+
+```bash
+/spec-kitty.review        # Review each WP (moves for_review → done)
+/spec-kitty.accept        # Validate all WPs done, record acceptance
+/spec-kitty_retrospective # Capture learnings (MANDATORY)
+/spec-kitty.merge         # Merge + cleanup from main repo root
+```
+
+**Closure is complete when**: All WPs merged, worktrees removed, branches deleted, retrospective committed, intelligence synced.
+
+---
+
+## Lifecycle State Tracking
+
+The orchestrator must verify these gates at each phase:
+
+| Phase | Gate | Command |
+|:------|:-----|:--------|
+| **Planning** | `spec.md` + `plan.md` + `tasks.md` exist | `/agent-orchestrator_plan` |
+| **Execution** | WP lanes: `planned` → `doing` → `for_review` | `/agent-orchestrator_delegate` |
+| **Review** | All WPs in `done` lane | `/agent-orchestrator_verify` |
+| **Closure** | Accept passes, retro done, merge clean | Closure protocol (Section 6) |
+
+**No phase may be skipped.** If a gate fails, the orchestrator must resolve it before proceeding.
+
+**Reference**: [Standard Spec-Kitty Workflow Diagram](../../plugins/spec-kitty/docs/standard-spec-kitty-workflow.mmd)
+
+---
+
 ## Best Practices
 
 1.  **One WP at a Time**: Do not delegate multiple WPs simultaneously unless you are running a swarm.
 2.  **Explicit Context**: The Inner Loop only knows what is in the packet. If it needs a file, list it.
 3.  **No Git in Inner Loop**: This is a hard constraint to prevent state corruption.
 4.  **Correction is Learning**: Do not just "fix it yourself" if the Inner Loop fails. Generate a correction packet. This trains the system logic.
+5.  **Never Abandon Closure**: The orchestrator must shepherd Review → Accept → Retro → Merge. Stopping after delegation is a protocol violation.
+6.  **Merge from Main Repo**: Always `cd <PROJECT_ROOT>` before running `spec-kitty merge --feature <SLUG>`. Never merge from a worktree.

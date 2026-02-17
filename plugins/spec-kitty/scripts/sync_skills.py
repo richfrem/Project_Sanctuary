@@ -14,8 +14,8 @@ each agent discovers skills from its own directory. Dumping skill content
 into monolithic config files defeats progressive disclosure and bloats context.
 
 Usage:
-    python3 tools/bridge/sync_skills.py --all
-    python3 tools/bridge/sync_skills.py --clean  (remove old injected blocks only)
+    python3 plugins/spec-kitty/sync_skills.py --all
+    python3 plugins/spec-kitty/sync_skills.py --clean  (remove old injected blocks only)
 
 References:
     - https://docs.anthropic.com/en/docs/claude-code/skills#where-skills-live
@@ -30,7 +30,7 @@ import argparse
 from pathlib import Path
 
 # Paths
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 SOURCE_SKILLS_DIR = PROJECT_ROOT / ".agent" / "skills"
 
 # Native skill directories for each agent
