@@ -1,5 +1,5 @@
 ---
-name: plugin-bridge
+name: plugin-manager
 description: Universal Plugin Installer. Use this skill to install or update plugins in the current agent environment. It supports Antigravity, GitHub Copilot, Gemini, and generic Claude environments.
 allowed-tools: Bash, Write, Read
 ---
@@ -17,12 +17,12 @@ The **Plugin Bridge** allows you to install plugins that follow the standard `.c
 To install or update a specific plugin:
 
 ```bash
-python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/<plugin-name>
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/<plugin-name>
 ```
 
 **Example:**
 ```bash
-python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/plugin-creator
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/plugin-creator
 ```
 
 ### Installing All Plugins
@@ -30,7 +30,7 @@ python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/plugi
 To install all detected plugins in the `plugins/` directory:
 
 ```bash
-python3 plugins/plugin-bridge/scripts/install_all_plugins.py
+python3 plugins/plugin-manager/scripts/install_all_plugins.py
 ```
 
 ## When to Use

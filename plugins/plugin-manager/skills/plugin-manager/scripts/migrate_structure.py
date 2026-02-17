@@ -55,8 +55,24 @@ def migrate_plugin(plugin_path: Path, dry_run: bool = True):
     print(f"   Target Skill: {main_skill.name}")
     
     # 1. Migrate Scripts
-    src_scripts = plugin_path / "scripts"
     tgt_scripts = main_skill / "scripts"
+    
+    # Check for SKILL.md
+    skill_md = main_skill / "SKILL.md"
+    if not skill_md.exists() and not dry_run:
+        print(f"     ➕ Creating basic SKILL.md for {main_skill.name}")
+        skill_md.write_text(f"""---
+name: {plugin_path.name}
+description: Standardized plugin for {plugin_path.name}.
+---
+
+# {plugin_path.name.title()}
+
+This skill provides functionality for {plugin_path.name}.
+
+## Capabilities
+- (Auto-generated stub)
+""")
     
     if src_scripts.exists() and any(src_scripts.iterdir()):
         print(f"   - Found top-level 'scripts/'")

@@ -11,7 +11,7 @@ Supported Targets:
 - Gemini (.gemini/)
 
 Usage:
-  python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin <path> [--target <auto|antigravity|github|gemini>]
+  python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin <path> [--target <auto|antigravity|github|gemini>]
 """
 
 import os

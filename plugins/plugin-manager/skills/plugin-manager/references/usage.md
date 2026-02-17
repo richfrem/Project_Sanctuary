@@ -2,7 +2,7 @@
 
 ## Installer Script (`bridge_installer.py`)
 
-The core script is `plugins/plugin-bridge/scripts/bridge_installer.py`.
+The core script is `plugins/plugin-manager/scripts/bridge_installer.py`.
 
 ### Arguments
 

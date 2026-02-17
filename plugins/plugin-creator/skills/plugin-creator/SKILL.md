@@ -42,10 +42,10 @@ After creating your plugin, use the **Plugin Bridge** to deploy it to your activ
 
 ```bash
 # Deploy a single plugin
-python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/<your-plugin-name>
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/<your-plugin-name>
 
 # Deploy all plugins
-python3 plugins/plugin-bridge/scripts/install_all_plugins.py
+python3 plugins/plugin-manager/scripts/install_all_plugins.py
 ```
 
 For more details, see [references/plugin_bridge_integration.md](references/plugin_bridge_integration.md).

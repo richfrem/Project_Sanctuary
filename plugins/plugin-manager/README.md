@@ -17,13 +17,13 @@ The **Plugin Bridge** allows you to write Agent Plugins *once* in the standard p
 Many plugins (like `rlm-factory`) use a `resources/` directory for configuration. If your plugin requires custom manifests or templates:
 1.  **Edit Local JSONs**: Update the files in `plugins/your-plugin/resources/`.
 2.  **Re-Run Bridge**: Execute the installer to synchronize these changes to the `tools/` fallback directory.
-python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/my-plugin
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/my-plugin
 ```
 
 ## Bulk Installation
 To install **all detected plugins** at once (useful for new setups or full refreshes):
 ```bash
-python3 plugins/plugin-bridge/scripts/install_all_plugins.py
+python3 plugins/plugin-manager/scripts/install_all_plugins.py
 ```
 
 ## Troubleshooting & Verification

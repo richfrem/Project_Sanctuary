@@ -138,7 +138,7 @@
         },
         {
           "name": "bridge_installer.py",
-          "path": "plugins/plugin-bridge/scripts/bridge_installer.py",
+          "path": "plugins/plugin-manager/scripts/bridge_installer.py",
           "description": "Installs a specific Agent Plugin (.claude-plugin structure) into target environments (Antigravity, GitHub Copilot, Gemini, Claude). Handles content transformation (actor swapping) and file placement.",
           "last_updated": "2026-02-17T07:41:10.945605",
           "compliance_status": "stub",
@@ -378,7 +378,7 @@
         },
         {
           "name": "install_all_plugins.py",
-          "path": "plugins/plugin-bridge/scripts/install_all_plugins.py",
+          "path": "plugins/plugin-manager/scripts/install_all_plugins.py",
           "description": "Bulk Plugin Installer that iterates through all directories in plugins/ and executes the bridge_installer.py for each, ensuring a full installation of all available plugins.",
           "last_updated": "2026-02-17T07:41:10.707383",
           "compliance_status": "stub",

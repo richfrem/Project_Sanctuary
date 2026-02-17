@@ -22,7 +22,7 @@ This script ensures the Project Constitution and Core workflows are synchronized
 2.  **Rule Integration**: Injects project-specific rules (`.agent/rules/`) into a dedicated block within the agent configurations, ensuring NO constitution duplication in the synced block.
 3.  **Core Workflows**: Projects master workflows from `.windsurf/workflows/` to `.agent/workflows/spec-kitty/`.
 
-### B. Plugin Bridge Installer (`plugins/plugin-bridge/scripts/bridge_installer.py`)
+### B. Plugin Bridge Installer (`plugins/plugin-manager/scripts/bridge_installer.py`)
 This script manages the installation of standalone plugins into agent environments.
 1.  **Command Projection**: Maps `plugins/*/commands/*.md` to plugin-specific subdirectories (e.g., `.agent/workflows/{plugin}/`, `.claude/commands/`).
 2.  **Skill Integration**: Copies `plugins/*/skills/` to the canonical agent skills directory (`.agent/skills/`).
@@ -30,8 +30,8 @@ This script manages the installation of standalone plugins into agent environmen
 
 ## 4. Automation & Workflows
 -   **Usage (Rules/SDD)**: Run `python3 plugins/spec-kitty/scripts/speckit_system_bridge.py` to sync project rules.
--   **Usage (Plugins)**: Run `python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/<name>` to install a specific plugin.
--   **Batch Install**: `for plugin in plugins/*/; do python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin "$plugin"; done`
+-   **Usage (Plugins)**: Run `python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/<name>` to install a specific plugin.
+-   **Batch Install**: `for plugin in plugins/*/; do python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin "$plugin"; done`
 
 ## 5. Visual Representation
 See `plugins/spec-kitty/docs/bridge_process.mmd` for a detailed process diagram.

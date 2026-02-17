@@ -7,7 +7,7 @@ Iterates through all directories in `plugins/` and runs the `bridge_installer.py
 for each one. This ensures a clean, full installation of all available plugins.
 
 Usage:
-    python3 plugins/plugin-bridge/scripts/install_all_plugins.py
+    python3 plugins/plugin-manager/scripts/install_all_plugins.py
 """
 
 import os
@@ -17,9 +17,8 @@ from pathlib import Path
 
 # Setup paths
 SCRIPT_DIR = Path(__file__).resolve().parent
-PLUGIN_BRIDGE_DIR = SCRIPT_DIR.parent
-PLUGINS_ROOT = PLUGIN_BRIDGE_DIR.parent
-PROJECT_ROOT = PLUGINS_ROOT.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent.parent
+PLUGINS_ROOT = PROJECT_ROOT / "plugins"
 
 INSTALLER_SCRIPT = SCRIPT_DIR / "bridge_installer.py"
 
