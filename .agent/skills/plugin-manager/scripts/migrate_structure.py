@@ -21,36 +21,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent.parent
 PLUGINS_DIR = PROJECT_ROOT / "plugins"
 
-
-
-SKILL_MAPPINGS = {
-    "rlm-factory": "rlm-curator",
-    "context-bundler": "bundler-agent",
-    "spec-kitty": "spec-kitty-agent",
-    "task-manager": "task-agent",
-    "vector-db": "vector-db-agent",
-    "workflow-inventory": "workflow-inventory-agent",
-    "adr-manager": "adr-agent",
-    "chronicle-manager": "chronicle-agent",
-    "protocol-manager": "protocol-agent",
-    "link-checker": "link-checker-agent",
-    "mermaid-export": "diagram-agent",
-    "code-snapshot": "snapshot-agent",
-    "json-hygiene": "json-hygiene-agent",
-}
-
 def get_main_skill(plugin_path: Path) -> Path:
     """
     Heuristic to find the 'main' skill directory.
-    Uses SKILL_MAPPINGS for explicit overrides.
+    If multiple, picks the one matching the plugin name, or the first one.
+    If none, creates one matching the plugin name.
     """
-    # 1. Check Explicit Mapping
-    if plugin_path.name in SKILL_MAPPINGS:
-        target = plugin_path / "skills" / SKILL_MAPPINGS[plugin_path.name]
-        if not target.exists():
-             target.mkdir(parents=True, exist_ok=True)
-        return target
-
     skills_dir = plugin_path / "skills"
     if not skills_dir.exists():
         skills_dir.mkdir(parents=True, exist_ok=True)
@@ -79,7 +55,6 @@ def migrate_plugin(plugin_path: Path, dry_run: bool = True):
     print(f"   Target Skill: {main_skill.name}")
     
     # 1. Migrate Scripts
-    src_scripts = plugin_path / "scripts"
     tgt_scripts = main_skill / "scripts"
     
     # Check for SKILL.md

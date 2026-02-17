@@ -15,12 +15,12 @@ After creating your new plugin with `plugin-creator`:
 
 1.  **Install/Update**: Run the bridge installer to deploy your new plugin.
     ```bash
-    python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin plugins/<your-new-plugin>
+    python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/<your-new-plugin>
     ```
 
 2.  **Bulk Install**: If you have many plugins or want to refresh everything:
     ```bash
-    python3 plugins/plugin-bridge/scripts/install_all_plugins.py
+    python3 plugins/plugin-manager/scripts/install_all_plugins.py
     ```
 
 ## Bridge Best Practices

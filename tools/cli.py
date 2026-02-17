@@ -157,14 +157,14 @@ except ImportError:
 # Resolve Directories (Direct Plugin Paths)
 # Note: specific mapping based on migration
 SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
-DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "scripts" # Placeholder if empty
-TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "scripts"
-SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" 
-RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "scripts"
+DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "skills" / "doc-coauthoring" / "scripts" # Placeholder if empty
+TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "skills" / "task-agent" / "scripts"
+SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" / "skills" / "misc-utils" / "scripts"
+RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
 INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
-RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "scripts"
-ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "scripts"
-SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "scripts" # Added for verify_workflow
+RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "skills" / "rlm-curator" / "scripts"
+ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "skills" / "orchestrator-agent" / "scripts"
+SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "skills" / "spec-kitty-agent" / "scripts"
 
 # Add directories to sys.path for internal imports
 # We add them to sys.path so we can import modules directly (e.g. 'import query_cache')

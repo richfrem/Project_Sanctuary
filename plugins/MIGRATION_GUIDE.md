@@ -14,7 +14,7 @@
 | `dependency-management` | pip-compile locked-file workflow reference | ❌ | pip-tools |
 | `link-checker` | Validate \u0026 auto-repair broken documentation links | ✅ (3) | None |
 | `mermaid-export` | Render .mmd diagrams to PNG/SVG | ✅ (1) | node, @mermaid-js/mermaid-cli |
-| `plugin-bridge` | Universal Installer — maps plugins to agent environments | ✅ (1) | None |
+| `plugin-manager` | Universal Installer — maps plugins to agent environments | ✅ (1) | None |
 | `rlm-factory` | Distill semantic summaries using Ollama for context retrieval | ✅ (5) | ollama, requests |
 | `spec-kitty` | Spec-Driven Development lifecycle + Universal Bridge sync | ✅ (5) | spec-kitty-cli |
 | `task-manager` | JSON-backed kanban board (backlog/todo/in-progress/done) | ✅ (1) | None |
