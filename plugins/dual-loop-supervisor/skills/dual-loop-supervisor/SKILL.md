@@ -29,6 +29,7 @@ Orchestration skill for the Dual-Loop Agent Architecture. The Outer Loop (Antigr
 
 ## Architecture Overview
 
+
 ```mermaid
 flowchart LR
     subgraph Outer["Outer Loop (Strategy)"]
@@ -48,11 +49,41 @@ flowchart LR
     Correct -->|Delta Fix| Receive
 ```
 
-**Reference**: [Architecture Diagram](resources/diagrams/dual_loop_architecture.mmd)
+### Dynamic Routing & Model Agnosticism
+
+The "Inner Loop" isn't a single agent or model. The architecture is **Model Agnostic**:
+
+*   **Outer Loop (Strategy)**: Any high-reasoning agent (e.g., Antigravity, Gemini 1.5 Pro, Claude 3.5 Sonnet).
+*   **Inner Loop (Execution)**: Any CLI-driven agent (e.g., Cortex, Claude Code, Custom Scripts).
+
+The Outer Loop dynamically routes tasks based on complexity:
+
+```mermaid
+flowchart LR
+    Router{Task Router} -->|Complex| High["High-Reasoning CLI (Opus/Ultra)"]
+    Router -->|Routine| Fast["Fast CLI (Haiku/Flash)"]
+    Router -->|Audit| Spec["Specialist CLI (Security/QA)"]
+```
+
+**Reference**:
+- [Standard Loop Architecture](resources/diagrams/dual_loop_architecture.mmd)
+- [Dynamic Routing Architecture](resources/diagrams/dual_loop_dynamic_routing.mmd)
 
 ---
 
-## Workflow Steps
+### Ecosystem Integration (The Trinity)
+
+This skill is the **Protocol Definition**. It is operationalized by two other specialized skills:
+
+1.  **Planner & Coordinator**: [`agent-orchestrator`](../../agent-orchestrator/skills/orchestrator-agent/SKILL.md)
+    -   **Role**: Acts as the "Outer Loop".
+    -   **Function**: Runs `spec-kitty`, generates strategy packets, and reviews work.
+    
+2.  **Executor & Specialist**: [`claude-cli-agent`](../../claude-cli/skills/claude-cli-agent/SKILL.md)
+    -   **Role**: Acts as a specialized "Inner Loop".
+    -   **Function**: Provides persona-based execution (e.g., Security Auditor, QA Expert) via CLI pipe.
+
+### Workflow Steps
 
 ### Prerequisites (Protocol 128 Context)
 > **CRITICAL**: This is a **Child Protocol**.
@@ -254,6 +285,18 @@ python3 .kittify/scripts/tasks/tasks_cli.py update <FEATURE> <WP-ID> done \
 - Worktree Isolation: All coding happens in `.worktrees/` (preferred) or feature branch (fallback).
 
 ---
+
+
+## Research Basis
+
+This skill operationalizes the following advanced agentic patterns:
+
+1.  **Dual-Loop Architecture** (*Self-Evolving Recommendation System*, [arXiv:2602.10226](https://arxiv.org/abs/2602.10226)):
+    - Separates **Strategy (Outer)** from **Execution (Inner)** to optimize token usage and oversight.
+2.  **Neuro-Symbolic Verification** (*FormalJudge*, [arXiv:2602.11136](https://arxiv.org/abs/2602.11136)):
+    - Uses deterministic checks (verification scripts) rather than just LLM-based "vibes" to validate work.
+3.  **Iterative Self-Correction** (*iGRPO*, [arXiv:2602.09000](https://arxiv.org/abs/2602.09000)):
+    - The **Correction Packet** loop implements the bootstrapping mechanism where the agent learns from its own failures.
 
 ## Related
 
