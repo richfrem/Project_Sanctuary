@@ -117,13 +117,12 @@ def install_antigravity(plugin_path: Path, root: Path, metadata: dict):
     #     # shutil.copytree(scripts_dir, dest_tools)
     #     # print(f"    -> Tools: {dest_tools.relative_to(root)} (DEPRECATED MIRROR)")
 
-    # 4. Resources (Manifests, Prompts, Configs) - KEPT for RLM path parity
-    resources_dir = plugin_path / "resources"
-    if resources_dir.exists():
-        dest_resources = target_tools / plugin_name / "resources"
-        if dest_resources.exists(): shutil.rmtree(dest_resources)
-        shutil.copytree(resources_dir, dest_resources)
-        print(f"    -> Resources Sync: {dest_resources.relative_to(root)}")
+    # 4. Resources (Manifests, Prompts, Configs)
+    # DEPRECATED: Resources now live in plugins/<plugin>/resources and are accessed directly.
+    # No copy to tools/ needed.
+    # resources_dir = plugin_path / "resources"
+    # if resources_dir.exists():
+    #    print(f"    -> Resources: {resources_dir.relative_to(root)} (Referenced in-place)")
 
 def install_github(plugin_path: Path, root: Path, metadata: dict):
     print("  [GitHub] Installing...")

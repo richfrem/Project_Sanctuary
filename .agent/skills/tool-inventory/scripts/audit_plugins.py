@@ -74,7 +74,7 @@ def main():
     args_files = set()
     
     print(f"   Scanning {plugins_dir}...")
-    for file_path in plugins_dir.rglob("*.py"):
+    for file_path in plugins_dir.rglob("**/scripts/*.py"):
         # Filters
         if file_path.name == "__init__.py": continue
         if "tests" in file_path.parts: continue

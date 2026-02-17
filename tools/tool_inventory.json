@@ -106,7 +106,7 @@
       "root": [
         {
           "name": "adr_manager.py",
-          "path": "plugins/adr-manager/scripts/adr_manager.py",
+          "path": "plugins/adr-manager/skills/adr-agent/scripts/adr_manager.py",
           "description": "adr_manager.py (CLI)",
           "last_updated": "2026-02-17T07:47:43.663333",
           "compliance_status": "stub",
@@ -114,7 +114,7 @@
         },
         {
           "name": "agent_orchestrator.py",
-          "path": "plugins/agent-orchestrator/scripts/agent_orchestrator.py",
+          "path": "plugins/agent-orchestrator/skills/orchestrator-agent/scripts/agent_orchestrator.py",
           "description": "agent_orchestrator.py (CLI)",
           "last_updated": "2026-02-17T07:47:25.356506",
           "compliance_status": "stub",
@@ -130,7 +130,7 @@
         },
         {
           "name": "audit_stale_refs.py",
-          "path": "plugins/migration-utils/scripts/audit_stale_refs.py",
+          "path": "plugins/migration-utils/skills/migration-utils/scripts/audit_stale_refs.py",
           "description": "audit_stale_refs.py (CLI)",
           "last_updated": "2026-02-17T07:47:44.121066",
           "compliance_status": "stub",
@@ -138,7 +138,7 @@
         },
         {
           "name": "bridge_installer.py",
-          "path": "plugins/plugin-manager/scripts/bridge_installer.py",
+          "path": "plugins/plugin-manager/skills/plugin-manager/scripts/bridge_installer.py",
           "description": "Installs a specific Agent Plugin (.claude-plugin structure) into target environments (Antigravity, GitHub Copilot, Gemini, Claude). Handles content transformation (actor swapping) and file placement.",
           "last_updated": "2026-02-17T07:41:10.945605",
           "compliance_status": "stub",
@@ -146,7 +146,7 @@
         },
         {
           "name": "bundle.py",
-          "path": "plugins/context-bundler/scripts/bundle.py",
+          "path": "plugins/context-bundler/skills/bundler-agent/scripts/bundle.py",
           "description": "bundle.py (CLI)",
           "last_updated": "2026-02-17T07:44:48.508125",
           "compliance_status": "stub",
@@ -154,7 +154,7 @@
         },
         {
           "name": "capture_code_snapshot.py",
-          "path": "plugins/code-snapshot/scripts/capture_code_snapshot.py",
+          "path": "plugins/code-snapshot/skills/snapshot-agent/scripts/capture_code_snapshot.py",
           "description": "capture_code_snapshot.py (CLI)",
           "last_updated": "2026-02-17T07:46:05.985539",
           "compliance_status": "stub",
@@ -162,7 +162,7 @@
         },
         {
           "name": "check_broken_paths.py",
-          "path": "plugins/link-checker/scripts/check_broken_paths.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/check_broken_paths.py",
           "description": "check_broken_paths.py (CLI)",
           "last_updated": "2026-02-17T07:45:12.888621",
           "compliance_status": "stub",
@@ -170,7 +170,7 @@
         },
         {
           "name": "chronicle_manager.py",
-          "path": "plugins/chronicle-manager/scripts/chronicle_manager.py",
+          "path": "plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py",
           "description": "chronicle_manager.py (CLI)",
           "last_updated": "2026-02-17T07:45:43.221113",
           "compliance_status": "stub",
@@ -178,7 +178,7 @@
         },
         {
           "name": "cleanup.py",
-          "path": "plugins/vector-db/scripts/cleanup.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/cleanup.py",
           "description": "cleanup.py (CLI)",
           "last_updated": "2026-02-17T07:47:02.175893",
           "compliance_status": "stub",
@@ -194,7 +194,7 @@
         },
         {
           "name": "cleanup_cache.py",
-          "path": "plugins/rlm-factory/scripts/cleanup_cache.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py",
           "description": "cleanup_cache.py (CLI)",
           "last_updated": "2026-02-17T07:44:25.700023",
           "compliance_status": "stub",
@@ -202,7 +202,7 @@
         },
         {
           "name": "cleanup_mapped_files.py",
-          "path": "plugins/migration-utils/scripts/cleanup_mapped_files.py",
+          "path": "plugins/migration-utils/skills/migration-utils/scripts/cleanup_mapped_files.py",
           "description": "cleanup_mapped_files.py (CLI)",
           "last_updated": "2026-02-17T07:47:57.474288",
           "compliance_status": "stub",
@@ -226,7 +226,7 @@
         },
         {
           "name": "convert.py",
-          "path": "plugins/excel-to-csv/scripts/convert.py",
+          "path": "plugins/excel-to-csv/skills/excel-to-csv/scripts/convert.py",
           "description": "convert.py (CLI)",
           "last_updated": "2026-02-17T07:46:05.415522",
           "compliance_status": "stub",
@@ -234,7 +234,7 @@
         },
         {
           "name": "debug_rlm.py",
-          "path": "plugins/rlm-factory/scripts/debug_rlm.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py",
           "description": "debug_rlm.py (CLI)",
           "last_updated": "2026-02-17T07:44:25.447797",
           "compliance_status": "stub",
@@ -242,7 +242,7 @@
         },
         {
           "name": "distiller.py",
-          "path": "plugins/rlm-factory/scripts/distiller.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py",
           "description": "distiller.py (CLI)",
           "last_updated": "2026-02-17T07:44:25.152826",
           "compliance_status": "stub",
@@ -258,7 +258,7 @@
         },
         {
           "name": "enrich_links_v2.py",
-          "path": "plugins/link-checker/scripts/enrich_links_v2.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/enrich_links_v2.py",
           "description": "enrich_links_v2.py (CLI)",
           "last_updated": "2026-02-17T07:45:12.365542",
           "compliance_status": "stub",
@@ -282,7 +282,7 @@
         },
         {
           "name": "export_mmd_to_image.py",
-          "path": "plugins/mermaid-export/scripts/export_mmd_to_image.py",
+          "path": "plugins/mermaid-export/skills/diagram-agent/scripts/export_mmd_to_image.py",
           "description": "export_mmd_to_image.py (CLI)",
           "last_updated": "2026-02-17T07:45:43.084689",
           "compliance_status": "stub",
@@ -290,7 +290,7 @@
         },
         {
           "name": "fetch_tool_context.py",
-          "path": "plugins/rlm-factory/scripts/fetch_tool_context.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/fetch_tool_context.py",
           "description": "fetch_tool_context.py",
           "last_updated": "2026-02-17T07:44:48.157308",
           "compliance_status": "stub",
@@ -298,7 +298,7 @@
         },
         {
           "name": "find_json_duplicates.py",
-          "path": "plugins/json-hygiene/scripts/find_json_duplicates.py",
+          "path": "plugins/json-hygiene/skills/json-hygiene-agent/scripts/find_json_duplicates.py",
           "description": "find_json_duplicates.py (CLI)",
           "last_updated": "2026-02-17T07:47:25.494628",
           "compliance_status": "stub",
@@ -306,7 +306,7 @@
         },
         {
           "name": "find_source_links.py",
-          "path": "plugins/link-checker/scripts/find_source_links.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/find_source_links.py",
           "description": "find_source_links.py (CLI)",
           "last_updated": "2026-02-17T07:45:13.042242",
           "compliance_status": "stub",
@@ -314,7 +314,7 @@
         },
         {
           "name": "generate_inventory.py",
-          "path": "plugins/migration-utils/scripts/generate_inventory.py",
+          "path": "plugins/migration-utils/skills/migration-utils/scripts/generate_inventory.py",
           "description": "generate_inventory.py (CLI)",
           "last_updated": "2026-02-17T07:47:43.960959",
           "compliance_status": "stub",
@@ -346,7 +346,7 @@
         },
         {
           "name": "ingest.py",
-          "path": "plugins/vector-db/scripts/ingest.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/ingest.py",
           "description": "ingest.py (CLI)",
           "last_updated": "2026-02-17T07:47:01.672367",
           "compliance_status": "stub",
@@ -354,7 +354,7 @@
         },
         {
           "name": "ingest_code_shim.py",
-          "path": "plugins/vector-db/scripts/ingest_code_shim.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/ingest_code_shim.py",
           "description": "ingest_code_shim.py (CLI)",
           "last_updated": "2026-02-17T07:47:01.850370",
           "compliance_status": "stub",
@@ -378,7 +378,7 @@
         },
         {
           "name": "install_all_plugins.py",
-          "path": "plugins/plugin-manager/scripts/install_all_plugins.py",
+          "path": "plugins/plugin-manager/skills/plugin-manager/scripts/install_all_plugins.py",
           "description": "Bulk Plugin Installer that iterates through all directories in plugins/ and executes the bridge_installer.py for each, ensuring a full installation of all available plugins.",
           "last_updated": "2026-02-17T07:41:10.707383",
           "compliance_status": "stub",
@@ -386,7 +386,7 @@
         },
         {
           "name": "inventory.py",
-          "path": "plugins/rlm-factory/scripts/inventory.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py",
           "description": "inventory.py (CLI)",
           "last_updated": "2026-02-17T07:44:48.332760",
           "compliance_status": "stub",
@@ -410,7 +410,7 @@
         },
         {
           "name": "logging_utils.py",
-          "path": "plugins/code-snapshot/scripts/logging_utils.py",
+          "path": "plugins/code-snapshot/skills/snapshot-agent/scripts/logging_utils.py",
           "description": "logging_utils.py (Shared Module)",
           "last_updated": "2026-02-17T07:47:01.516949",
           "compliance_status": "stub",
@@ -426,7 +426,7 @@
         },
         {
           "name": "manifest_manager.py",
-          "path": "plugins/context-bundler/scripts/manifest_manager.py",
+          "path": "plugins/context-bundler/skills/bundler-agent/scripts/manifest_manager.py",
           "description": "manifest_manager.py (CLI)",
           "last_updated": "2026-02-17T07:44:48.736229",
           "compliance_status": "stub",
@@ -434,7 +434,7 @@
         },
         {
           "name": "map_repository_files.py",
-          "path": "plugins/link-checker/scripts/map_repository_files.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/map_repository_files.py",
           "description": "map_repository_files.py (CLI)",
           "last_updated": "2026-02-17T07:45:12.706841",
           "compliance_status": "stub",
@@ -442,7 +442,7 @@
         },
         {
           "name": "migration_replace.py",
-          "path": "plugins/migration-utils/scripts/migration_replace.py",
+          "path": "plugins/migration-utils/skills/migration-utils/scripts/migration_replace.py",
           "description": "migration_replace.py (CLI)",
           "last_updated": "2026-02-17T07:47:57.301278",
           "compliance_status": "stub",
@@ -450,7 +450,7 @@
         },
         {
           "name": "next_number.py",
-          "path": "plugins/adr-manager/scripts/next_number.py",
+          "path": "plugins/adr-manager/skills/adr-agent/scripts/next_number.py",
           "description": "next_number.py (CLI)",
           "last_updated": "2026-02-17T07:47:43.809948",
           "compliance_status": "stub",
@@ -466,7 +466,7 @@
         },
         {
           "name": "path_resolver.py",
-          "path": "plugins/context-bundler/scripts/path_resolver.py",
+          "path": "plugins/context-bundler/skills/bundler-agent/scripts/path_resolver.py",
           "description": "path_resolver.py (CLI)",
           "last_updated": "2026-02-17T07:44:49.105885",
           "compliance_status": "stub",
@@ -474,7 +474,7 @@
         },
         {
           "name": "proof_check.py",
-          "path": "plugins/agent-orchestrator/scripts/proof_check.py",
+          "path": "plugins/agent-orchestrator/skills/orchestrator-agent/scripts/proof_check.py",
           "description": "proof_check.py (CLI)",
           "last_updated": "2026-02-17T07:47:25.070688",
           "compliance_status": "stub",
@@ -482,7 +482,7 @@
         },
         {
           "name": "protocol_manager.py",
-          "path": "plugins/protocol-manager/scripts/protocol_manager.py",
+          "path": "plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py",
           "description": "protocol_manager.py (CLI)",
           "last_updated": "2026-02-17T07:46:05.693975",
           "compliance_status": "stub",
@@ -498,7 +498,7 @@
         },
         {
           "name": "query.py",
-          "path": "plugins/vector-db/scripts/query.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/query.py",
           "description": "query.py (CLI)",
           "last_updated": "2026-02-17T07:47:02.029352",
           "compliance_status": "stub",
@@ -506,7 +506,7 @@
         },
         {
           "name": "query_cache.py",
-          "path": "plugins/rlm-factory/scripts/query_cache.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py",
           "description": "query_cache.py (CLI)",
           "last_updated": "2026-02-17T07:44:24.691452",
           "compliance_status": "stub",
@@ -546,7 +546,7 @@
         },
         {
           "name": "rlm_config.py",
-          "path": "plugins/rlm-factory/scripts/rlm_config.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py",
           "description": "rlm_config.py (Shared Module)",
           "last_updated": "2026-02-17T07:44:24.941403",
           "compliance_status": "stub",
@@ -562,7 +562,7 @@
         },
         {
           "name": "smart_fix_links.py",
-          "path": "plugins/link-checker/scripts/smart_fix_links.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/smart_fix_links.py",
           "description": "smart_fix_links.py (CLI)",
           "last_updated": "2026-02-17T07:45:12.546383",
           "compliance_status": "stub",
@@ -570,7 +570,7 @@
         },
         {
           "name": "snapshot_utils.py",
-          "path": "plugins/code-snapshot/scripts/snapshot_utils.py",
+          "path": "plugins/code-snapshot/skills/snapshot-agent/scripts/snapshot_utils.py",
           "description": "snapshot_utils.py (Shared Module)",
           "last_updated": "2026-02-17T07:46:05.836239",
           "compliance_status": "stub",
@@ -578,7 +578,7 @@
         },
         {
           "name": "speckit_system_bridge.py",
-          "path": "plugins/spec-kitty/scripts/speckit_system_bridge.py",
+          "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/speckit_system_bridge.py",
           "description": "The Universal Bridge Synchronization Engine. Reads Spec Kitty definitions from .windsurf/workflows and .kittify/memory (Source of Truth) and projects them into native configurations for Antigravity, Claude, Gemini, and GitHub Copilot.",
           "last_updated": "2026-02-17T07:41:11.367520",
           "compliance_status": "stub",
@@ -594,7 +594,7 @@
         },
         {
           "name": "sync_skills.py",
-          "path": "plugins/spec-kitty/scripts/sync_skills.py",
+          "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/sync_skills.py",
           "description": "Synchronizes skill directories from .agent/skills/ to the native skill locations expected by each AI agent (Claude, Copilot). Also handles cleanup of old injected blocks in config files.",
           "last_updated": "2026-02-17T07:41:11.757805",
           "compliance_status": "stub",
@@ -602,7 +602,7 @@
         },
         {
           "name": "sync_workflows.py",
-          "path": "plugins/spec-kitty/scripts/sync_workflows.py",
+          "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/sync_workflows.py",
           "description": "Synchronizes custom workflow definitions from .agent/workflows/ to other agent configuration directories (Claude, Copilot, Gemini). Handles format conversions (e.g., Markdown to TOML for Gemini).",
           "last_updated": "2026-02-17T07:41:11.987367",
           "compliance_status": "stub",
@@ -610,7 +610,7 @@
         },
         {
           "name": "task_manager.py",
-          "path": "plugins/task-manager/scripts/task_manager.py",
+          "path": "plugins/task-manager/skills/task-agent/scripts/task_manager.py",
           "description": "Manages tasks and kanban boards for Project Sanctuary. Supports creating, moving, and listing tasks, as well as generating board visualizations.",
           "last_updated": "2026-02-17T07:43:14.705687",
           "compliance_status": "stub",
@@ -634,7 +634,7 @@
         },
         {
           "name": "verify_bridge_integrity.py",
-          "path": "plugins/spec-kitty/scripts/verify_bridge_integrity.py",
+          "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/verify_bridge_integrity.py",
           "description": "Audits the Universal Bridge Synchronization by verifying that artifacts from the Source of Truth (.windsurf, .kittify) are correctly projected into target agent directories (.agent, .claude, .gemini, .github). Checks for file existence and content transformations.",
           "last_updated": "2026-02-17T07:41:11.536554",
           "compliance_status": "stub",
@@ -650,7 +650,7 @@
         },
         {
           "name": "verify_workflow_state.py",
-          "path": "plugins/spec-kitty/scripts/verify_workflow_state.py",
+          "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/verify_workflow_state.py",
           "description": "Validates that valid Spec-Driven Development (SDD) artifacts (spec.md, plan.md, tasks.md) exist and are in the correct state for a given phase (specify, plan, tasks, review).",
           "last_updated": "2026-02-17T07:41:11.122634",
           "compliance_status": "stub",
@@ -658,7 +658,7 @@
         },
         {
           "name": "workflow_inventory_manager.py",
-          "path": "plugins/workflow-inventory/scripts/workflow_inventory_manager.py",
+          "path": "plugins/workflow-inventory/skills/workflow-inventory-agent/scripts/workflow_inventory_manager.py",
           "description": "Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Scans workflow files, extracts frontmatter, generates JSON/Markdown inventories, and supports search/list operations.",
           "last_updated": "2026-02-17T07:41:12.372820",
           "compliance_status": "stub",
@@ -666,7 +666,7 @@
         },
         {
           "name": "workflow_manager.py",
-          "path": "plugins/agent-orchestrator/scripts/workflow_manager.py",
+          "path": "plugins/agent-orchestrator/skills/orchestrator-agent/scripts/workflow_manager.py",
           "description": "workflow_manager.py (CLI)",
           "last_updated": "2026-02-17T07:47:25.215506",
           "compliance_status": "stub",
