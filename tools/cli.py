@@ -141,36 +141,46 @@ PROJECT_ROOT = CLI_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
-# Import path resolver
+# Import path resolver from plugins
 try:
-    from tools.utils.path_resolver import resolve_path
+    # Try importing from the new plugin location
+    # Since plugins have hyphens, we add the path to sys.path
+    PATH_RESOLVER_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "scripts"
+    if str(PATH_RESOLVER_DIR) not in sys.path:
+        sys.path.append(str(PATH_RESOLVER_DIR))
+    from path_resolver import resolve_path
 except ImportError:
-    # Fallback if running from root without package structure
-    sys.path.append(str(PROJECT_ROOT))
-    from tools.utils.path_resolver import resolve_path
+    # Fallback/Bootstrap
+    print("⚠️  Warning: Could not import path_resolver from plugins/context-bundler/scripts")
+    def resolve_path(p): return str(PROJECT_ROOT / p)
 
-# Resolve Directories
-SEARCH_DIR = Path(resolve_path("tools/investigate/search"))
-DOCS_DIR = Path(resolve_path("tools/codify/documentation"))
-TRACKING_DIR = Path(resolve_path("tools/codify/tracking"))
-SHARED_DIR = Path(resolve_path("tools/shared"))
-RETRIEVE_DIR = Path(resolve_path("tools/retrieve/bundler"))
-INVENTORIES_DIR = Path(resolve_path("tools/curate/inventories"))
-RLM_DIR = Path(resolve_path("tools/retrieve/rlm"))
-ORCHESTRATOR_DIR = Path(resolve_path("tools/orchestrator"))
+# Resolve Directories (Direct Plugin Paths)
+# Note: specific mapping based on migration
+SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "scripts"
+DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "scripts" # Placeholder if empty
+TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "scripts"
+SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" 
+RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "scripts"
+INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "scripts"
+RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "scripts"
+ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "scripts"
+SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "scripts" # Added for verify_workflow
 
 # Add directories to sys.path for internal imports
-for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
-    if str(d) not in sys.path:
+# We add them to sys.path so we can import modules directly (e.g. 'import query_cache')
+for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR, SPEC_KITTY_DIR]:
+    if d.exists() and str(d) not in sys.path:
         sys.path.append(str(d))
 
-from tools.utils.path_resolver import resolve_path
+# from tools.utils.path_resolver import resolve_path # Handled above
 from workflow_manager import WorkflowManager
 # Import query_cache for rlm-search
+# Import query_cache for rlm-search
 try:
-    from tools.retrieve.rlm.query_cache import search_cache, RLMConfig
+    # RLM_DIR and INVENTORIES_DIR are in sys.path now.
+    # query_cache is in plugins/tool-inventory/scripts (INVENTORIES_DIR)
+    from query_cache import search_cache, RLMConfig
 except ImportError:
-    # Fallback if imports fail (should be handled by sys.path hacks above)
     pass
 # Lightweight imports (file-based, no external services)
 # Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps

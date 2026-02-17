@@ -18,103 +18,9 @@
           "category": "cli_entry_points"
         }
       ],
-      "bundler": [
-        {
-          "name": "bundle.py",
-          "path": "tools/retrieve/bundler/bundle.py",
-          "description": "Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest. Warns on deprecated legacy keys.",
-          "original_path": "tools/context-bundler/bundle.py",
-          "decision": "moved",
-          "header_style": "extended",
-          "last_updated": "2026-02-01T10:06:00.000000",
-          "compliance_status": "compliant",
-          "category": "bundler"
-        },
-        {
-          "name": "manifest_manager.py",
-          "path": "tools/retrieve/bundler/manifest_manager.py",
-          "description": "Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler. Supports strict type validation.",
-          "original_path": "tools/business-rule-extraction/scripts/manifest_manager.py",
-          "decision": "moved",
-          "header_style": "extended",
-          "last_updated": "2026-02-01T10:06:00.000000",
-          "compliance_status": "compliant",
-          "category": "bundler"
-        }
-      ],
-      "rlm": [
-        {
-          "name": "cleanup_cache.py",
-          "path": "tools/curate/rlm/cleanup_cache.py",
-          "description": "Prunes stale or orphaned entries from the RLM Cache to ensure it matches the filesystem state.",
-          "original_path": "tools/curate/rlm/cleanup_cache.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.677670",
-          "compliance_status": "compliant",
-          "category": "rlm"
-        },
-        {
-          "name": "debug_rlm.py",
-          "path": "tools/codify/rlm/debug_rlm.py",
-          "description": "Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts.",
-          "last_updated": "2026-01-31T22:09:46.957316",
-          "compliance_status": "needs_review",
-          "header_style": "minimal"
-        },
-        {
-          "name": "distiller.py",
-          "path": "tools/codify/rlm/distiller.py",
-          "description": "Recursive summarization of repo content using Ollama.",
-          "original_path": "tools/codify/rlm/distiller.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T17:42:47.661855",
-          "compliance_status": "compliant",
-          "category": "rlm"
-        },
-        {
-          "name": "inventory.py",
-          "path": "tools/retrieve/rlm/inventory.py",
-          "description": "RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.",
-          "original_path": "tools/retrieve/rlm/inventory.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.767578",
-          "compliance_status": "compliant",
-          "category": "rlm"
-        },
-        {
-          "name": "query_cache.py",
-          "path": "tools/retrieve/rlm/query_cache.py",
-          "description": "RLM Search: Instant O(1) semantic search of the ledger.",
-          "original_path": "tools/retrieve/rlm/query_cache.py",
-          "decision": "keep",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.768843",
-          "compliance_status": "compliant",
-          "category": "rlm"
-        },
-        {
-          "name": "rlm_config.py",
-          "path": "tools/codify/rlm/rlm_config.py",
-          "description": "Central configuration factory for RLM. Resolves cache paths and loads manifests.",
-          "last_updated": "2026-01-31T22:09:47.302237",
-          "compliance_status": "needs_review",
-          "header_style": "minimal"
-        }
-      ],
+      "bundler": [],
+      "rlm": [],
       "documentation": [
-        {
-          "name": "export_mmd_to_image.py",
-          "path": "tools/codify/diagrams/export_mmd_to_image.py",
-          "description": "Renders all .mmd files in docs/architecture_diagrams/ to PNG images. Run this script whenever diagrams are updated to regenerate images.",
-          "original_path": "tools/codify/diagrams/export_mmd_to_image.py",
-          "decision": "keep",
-          "header_style": "minimal",
-          "last_updated": "2026-01-31T22:07:51.874081",
-          "compliance_status": "needs_review"
-        },
         {
           "name": "capture_code_snapshot.py",
           "path": "scripts/capture_code_snapshot.py",
@@ -125,56 +31,14 @@
           "last_updated": "2026-02-01T14:48:00.000000",
           "compliance_status": "compliant",
           "category": "documentation"
-        },
-        {
-          "name": "workflow_inventory_manager.py",
-          "path": "tools/curate/documentation/workflow_inventory_manager.py",
-          "description": "Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md.",
-          "original_path": "new-creation",
-          "decision": "keep",
-          "header_style": "basic",
-          "last_updated": "2026-01-29T11:14:20.610263",
-          "compliance_status": "partial"
         }
       ],
       "curate": [
-        {
-          "name": "check_broken_paths.py",
-          "path": "tools/curate/link-checker/check_broken_paths.py",
-          "description": "check_broken_paths.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.377754",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
         {
           "name": "config_manager.py",
           "path": "tools/curate/utils/config_manager.py",
           "description": "config_manager.py (CLI)",
           "last_updated": "2026-02-17T07:25:56.375805",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "enrich_links_v2.py",
-          "path": "tools/curate/link-checker/enrich_links_v2.py",
-          "description": "enrich_links_v2.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.377262",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "find_json_duplicates.py",
-          "path": "tools/curate/hygiene/find_json_duplicates.py",
-          "description": "find_json_duplicates.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.380152",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "find_source_links.py",
-          "path": "tools/curate/link-checker/find_source_links.py",
-          "description": "find_source_links.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.380040",
           "compliance_status": "stub",
           "header_style": "extended"
         },
@@ -195,35 +59,10 @@
           "header_style": "extended"
         },
         {
-          "name": "manage_tool_inventory.py",
-          "path": "tools/curate/inventories/manage_tool_inventory.py",
-          "description": "Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.",
-          "header_style": "extended",
-          "last_updated": "2026-01-29T11:14:20.654524",
-          "compliance_status": "compliant",
-          "category": "curate"
-        },
-        {
-          "name": "map_repository_files.py",
-          "path": "tools/curate/link-checker/map_repository_files.py",
-          "description": "map_repository_files.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.378872",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
           "name": "organize_screenshots.py",
           "path": "tools/curate/utils/organize_screenshots.py",
           "description": "organize_screenshots.py (CLI)",
           "last_updated": "2026-02-17T07:25:56.377846",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "smart_fix_links.py",
-          "path": "tools/curate/link-checker/smart_fix_links.py",
-          "description": "smart_fix_links.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.376659",
           "compliance_status": "stub",
           "header_style": "extended"
         },
@@ -238,28 +77,12 @@
       ],
       "investigate": [
         {
-          "name": "next_number.py",
-          "path": "tools/investigate/utils/next_number.py",
-          "description": "Generates the next sequential ID number for project artifacts (ADRs, Tasks, Specs) by scanning the filesystem for existing files.",
-          "last_updated": "2026-01-31T22:19:42.609674",
-          "compliance_status": "compliant",
-          "header_style": "minimal"
-        },
-        {
           "name": "pathResolver.js",
           "path": "tools/investigate/utils/pathResolver.js",
           "description": "TBD",
           "last_updated": "2026-02-17T07:25:56.380773",
           "compliance_status": "stub",
           "header_style": "none"
-        },
-        {
-          "name": "path_resolver.py",
-          "path": "tools/investigate/utils/path_resolver.py",
-          "description": "Standardizes cross-platform path resolution (Legacy Location).",
-          "last_updated": "2026-01-31T23:55:00.000000",
-          "compliance_status": "manual_entry",
-          "header_style": "manual"
         },
         {
           "name": "rlmConfigResolver.js",
@@ -278,58 +101,8 @@
           "header_style": "minimal"
         }
       ],
-      "Orchestrator": [
-        {
-          "name": "workflow_manager.py",
-          "path": "tools/orchestrator/workflow_manager.py",
-          "description": "Manages the lifecycle of Agent Workflows (Start, Step, End). Tracks state in workflow_state.json.",
-          "last_updated": "2026-01-31T08:47:10.159714",
-          "compliance_status": "compliant",
-          "header_style": "extended"
-        }
-      ],
-      "orchestrator": [
-        {
-          "name": "generate_strategy_packet.py",
-          "path": "tools/orchestrator/dual_loop/generate_strategy_packet.py",
-          "description": "CLI tool for the Outer Loop (Strategic Controller) to distill a tasks.md item into a minimal, token-efficient Strategy Packet for the Inner Loop.",
-          "last_updated": "2026-02-12T10:39:17.544067",
-          "compliance_status": "needs_review",
-          "header_style": "minimal"
-        },
-        {
-          "name": "proof_check.py",
-          "path": "tools/orchestrator/proof_check.py",
-          "description": "Validates task completion by checking file modifications against the Git index. Ensures Proof of Work.",
-          "last_updated": "2026-01-31T13:57:26.855955",
-          "compliance_status": "compliant",
-          "header_style": "extended"
-        },
-        {
-          "name": "run_workflow.py",
-          "path": "tools/orchestrator/dual_loop/run_workflow.py",
-          "description": "Orchestrates the Dual-Loop Workflow which includes creating a worktree (Spec Kitty Implement), generating a Strategy Packet, launching an Inner Loop (Claude) in isolation, and optionally running verification.",
-          "last_updated": "2026-02-12T10:49:51.961545",
-          "compliance_status": "needs_review",
-          "header_style": "minimal"
-        },
-        {
-          "name": "verify_inner_loop_result.py",
-          "path": "tools/orchestrator/dual_loop/verify_inner_loop_result.py",
-          "description": "CLI tool for the Outer Loop (Strategic Controller) to verify the output of an Inner Loop execution against the original Strategy Packet.",
-          "last_updated": "2026-02-12T10:42:17.963360",
-          "compliance_status": "needs_review",
-          "header_style": "minimal"
-        },
-        {
-          "name": "verify_workflow_state.py",
-          "path": "tools/orchestrator/verify_workflow_state.py",
-          "description": "A programmatic integrity checker for the Spec Kitty workflow. Ensures that artifacts (spec, plan, tasks, worktrees) actually exist on disk before allowing the Agent to proceed.",
-          "last_updated": "2026-02-12T11:50:02.061278",
-          "compliance_status": "needs_review",
-          "header_style": "minimal"
-        }
-      ],
+      "Orchestrator": [],
+      "orchestrator": [],
       "root": [
         {
           "name": "adr_manager.py",
@@ -908,26 +681,8 @@
           "header_style": "extended"
         }
       ],
-      "retrieve": [
-        {
-          "name": "fetch_tool_context.py",
-          "path": "tools/retrieve/rlm/fetch_tool_context.py",
-          "description": "Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable 'Manual Page'. This is the second step of the Late-Binding Protocol, following query_cache.py which finds a tool, this script provides the detailed context needed to use it.",
-          "last_updated": "2026-01-31T22:19:42.432516",
-          "compliance_status": "compliant",
-          "header_style": "basic"
-        }
-      ],
-      "utils": [
-        {
-          "name": "path_resolver.py",
-          "path": "tools/utils/path_resolver.py",
-          "description": "Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding.",
-          "last_updated": "2026-01-31T21:47:58.363525",
-          "compliance_status": "compliant",
-          "header_style": "extended"
-        }
-      ],
+      "retrieve": [],
+      "utils": [],
       "utility": [
         {
           "name": "tasks_cli.py",
@@ -938,49 +693,8 @@
           "header_style": "minimal"
         }
       ],
-      "standalone": [
-        {
-          "name": "cleanup.py",
-          "path": "tools/standalone/vector-db/cleanup.py",
-          "description": "cleanup.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.380414",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "ingest.py",
-          "path": "tools/standalone/vector-db/ingest.py",
-          "description": "ingest.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.379331",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "ingest_code_shim.py",
-          "path": "tools/standalone/vector-db/ingest_code_shim.py",
-          "description": "ingest_code_shim.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.375856",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        },
-        {
-          "name": "query.py",
-          "path": "tools/standalone/vector-db/query.py",
-          "description": "query.py (CLI)",
-          "last_updated": "2026-02-17T07:25:56.379563",
-          "compliance_status": "stub",
-          "header_style": "extended"
-        }
-      ],
+      "standalone": [],
       "bridge": [
-        {
-          "name": "speckit_system_bridge.py",
-          "path": "tools/bridge/speckit_system_bridge.py",
-          "description": "speckit_system_bridge.py",
-          "last_updated": "2026-02-17T07:25:56.378311",
-          "compliance_status": "stub",
-          "header_style": "basic"
-        },
         {
           "name": "sync_rules.py",
           "path": "tools/bridge/sync_rules.py",
@@ -988,42 +702,9 @@
           "last_updated": "2026-02-17T07:25:56.378117",
           "compliance_status": "stub",
           "header_style": "minimal"
-        },
-        {
-          "name": "sync_skills.py",
-          "path": "tools/bridge/sync_skills.py",
-          "description": "Sync Skills Bridge",
-          "last_updated": "2026-02-17T07:25:56.379109",
-          "compliance_status": "stub",
-          "header_style": "minimal"
-        },
-        {
-          "name": "sync_workflows.py",
-          "path": "tools/bridge/sync_workflows.py",
-          "description": "Sync Workflows Bridge",
-          "last_updated": "2026-02-17T07:25:56.377907",
-          "compliance_status": "stub",
-          "header_style": "minimal"
-        },
-        {
-          "name": "verify_bridge_integrity.py",
-          "path": "tools/bridge/verify_bridge_integrity.py",
-          "description": "verify_bridge_integrity.py",
-          "last_updated": "2026-02-17T07:25:56.380104",
-          "compliance_status": "stub",
-          "header_style": "basic"
         }
       ],
-      "agent-orchestrator": [
-        {
-          "name": "agent_orchestrator.py",
-          "path": "tools/agent-orchestrator/agent_orchestrator.py",
-          "description": "Agent Orchestrator (Core Script)",
-          "last_updated": "2026-02-17T07:25:56.378044",
-          "compliance_status": "stub",
-          "header_style": "minimal"
-        }
-      ]
+      "agent-orchestrator": []
     }
   },
   "javascript": {
