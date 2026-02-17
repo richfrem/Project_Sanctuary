@@ -1,9 +1,4 @@
 {
-  ".kittify/scripts/tasks/task_helpers.py": {
-    "hash": "6b88cea39cfd719f",
-    "summarized_at": "2026-02-12T13:29:22.356995",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "forge/scripts/upload_to_huggingface.py": {
     "file_mtime": 1769984471.618009,
     "hash": "9c03fabeb9c063f6",
@@ -82,18 +77,6 @@
     "summarized_at": "2026-02-11T19:01:08.288282",
     "summary": "{\"purpose\": \"Centralized configuration factory for the RLM Toolchain. Implements the Manifest Factory pattern (ADR-0024) to dynamically resolve manifests, cache files, prompts, and LLM models based on Analysis Type (sanctuary vs tool). Single Source of Truth for RLM configuration.\", \"layer\": \"Codify / RLM\", \"usage\": [\"from tools.codify.rlm.rlm_config import RLMConfig\", \"config = RLMConfig(run_type='tool')\", \"from tools.codify.rlm.rlm_config import load_cache, save_cache, compute_hash, collect_files\"], \"args\": [], \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\", \"Manifests referenced by the index\"], \"outputs\": [\"RLMConfig object (Typed configuration)\"], \"dependencies\": [], \"key_functions\": [\"RLMConfig.__init__()\", \"RLMConfig.load_manifest_content()\", \"load_cache()\", \"save_cache()\", \"compute_hash()\", \"should_skip()\", \"collect_files()\"], \"consumed_by\": [\"tools/codify/rlm/distiller.py\", \"tools/retrieve/rlm/query_cache.py\", \"tools/curate/rlm/cleanup_cache.py\", \"tools/retrieve/rlm/fetch_tool_context.py\", \"tools/retrieve/rlm/inventory.py\"]}"
   },
-  "tools/codify/tracking/analyze_tracking_status.py": {
-    "file_mtime": 1769919582.0134404,
-    "hash": "cee0f28f096b229c",
-    "summarized_at": "2026-02-11T19:01:08.288450",
-    "summary": "{\"purpose\": \"Generates a summary report of task/spec completion progress. Reads from task_tracking.json or scans the tasks/ directory structure to show completed vs pending tasks for project management visibility.\", \"layer\": \"Codify / Tracking\", \"usage\": [\"python tools/codify/tracking/analyze_tracking_status.py\"], \"args\": [], \"inputs\": [\".agent/learning/task_tracking.json\", \"tasks/ directory\"], \"outputs\": [\"Console summary report\"], \"dependencies\": [], \"key_functions\": [\"analyze_status()\"], \"consumed_by\": [\"Manual project oversight\"]}"
-  },
-  "tools/codify/tracking/generate_todo_list.py": {
-    "file_mtime": 1769919582.013537,
-    "hash": "7a4118df5c41a204",
-    "summarized_at": "2026-02-11T19:01:08.288705",
-    "summary": "{\"purpose\": \"Creates a prioritized TODO list of specs/tasks pending completion. Scans tasks/ for blocked and in-progress items and forge/ for specs missing tasks.md. Outputs a sorted Markdown file with blocked items bubbled to top.\", \"layer\": \"Codify / Tracking\", \"usage\": [\"python tools/codify/tracking/generate_todo_list.py\"], \"args\": [], \"inputs\": [\"tasks/ directory\", \"forge/ directory\"], \"outputs\": [\"TODO_PENDING_TASKS.md\"], \"dependencies\": [], \"key_functions\": [\"generate_todo()\"], \"consumed_by\": [\"Manual project oversight\"]}"
-  },
   "tools/curate/documentation/workflow_inventory_manager.py": {
     "file_mtime": 1770826683.4159508,
     "hash": "d8dee9b8b23b82e2",
@@ -105,12 +88,6 @@
     "hash": "2724fad577f5859e",
     "summarized_at": "2026-02-11T19:01:08.289844",
     "summary": "{\"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, discover, and generate operations against tools/tool_inventory.json. Features automated docstring extraction, compliance tracking, header style detection, gap discovery, and stub creation. Bidirectionally linked with the RLM distiller for cache synchronization.\", \"layer\": \"Curate / Inventories\", \"usage\": [\"python tools/curate/inventories/manage_tool_inventory.py list\", \"python tools/curate/inventories/manage_tool_inventory.py search keyword\", \"python tools/curate/inventories/manage_tool_inventory.py add --path tools/new_script.py\", \"python tools/curate/inventories/manage_tool_inventory.py update --path tool.py --desc 'New description'\", \"python tools/curate/inventories/manage_tool_inventory.py remove --path tools/old.py\", \"python tools/curate/inventories/manage_tool_inventory.py audit\", \"python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub\"], \"args\": [\"--inventory: Path to JSON inventory\", \"--path: Relative path to tool\", \"--category: Category override\", \"--desc: Description override\", \"--status: Filter by compliance status\", \"--new-path: New path for move/rename\", \"--mark-compliant: Set status to compliant\", \"--dry-run: Preview without writing\", \"--batch: Batch operations\", \"--json: JSON output\"], \"inputs\": [\"tools/tool_inventory.json\"], \"outputs\": [\"Updated tools/tool_inventory.json\", \"Console reports\"], \"dependencies\": [\"tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)\", \"tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)\"], \"key_functions\": [\"InventoryManager.__init__()\", \"InventoryManager.add_tool()\", \"InventoryManager.list_tools()\", \"InventoryManager.audit()\", \"InventoryManager.search()\", \"InventoryManager.update_tool()\", \"InventoryManager.remove_tool()\", \"InventoryManager.discover_gaps()\", \"InventoryManager.create_stub()\"], \"consumed_by\": [\"tools/codify/rlm/distiller.py\", \"/tool-inventory-manage workflow\"]}"
-  },
-  "tools/curate/inventories/vibe_cleanup.py": {
-    "file_mtime": 1769932732.4696863,
-    "hash": "bc5b2e24e33aa6c7",
-    "summarized_at": "2026-02-11T19:01:08.290116",
-    "summary": "{\"purpose\": \"Inventory Reconciliation Utility. Scans tool_inventory.json against the filesystem and automatically removes entries for files that no longer exist (pruning). Also lists all current scripts to audit 'ghosts' vs reality. Delegates to manage_tool_inventory.py for actual removal.\", \"layer\": \"Curate / Inventories\", \"usage\": [\"python tools/curate/inventories/vibe_cleanup.py\"], \"args\": [], \"inputs\": [\"tools/tool_inventory.json\", \"Filesystem (tools/ directory)\"], \"outputs\": [\"Updates to tool_inventory.json\", \"Console log of removed files\"], \"dependencies\": [\"tools/curate/inventories/manage_tool_inventory.py\"], \"key_functions\": [\"get_missing_files()\", \"remove_tool()\", \"main()\"], \"consumed_by\": [\"CI/CD Pipelines\", \"Manual maintenance\"]}"
   },
   "tools/curate/rlm/cleanup_cache.py": {
     "file_mtime": 1769919582.0149906,
@@ -189,12 +166,6 @@
     "hash": "4e22398f5d6355f6",
     "summarized_at": "2026-02-11T19:01:08.292763",
     "summary": "{\"purpose\": \"Primary CLI for the Context Bundler system. Handles initialization and modification of context-manager manifests. Supports manifest init (from base templates), file add/remove/update, searching, listing, and bundling execution. Enforces ADR 097 simple schema.\", \"layer\": \"Retrieve / Bundler\", \"usage\": [\"python tools/retrieve/bundler/manifest_manager.py init --bundle-title 'My Feature' --type generic\", \"python tools/retrieve/bundler/manifest_manager.py add --path docs/readme.md --note 'Overview'\", \"python tools/retrieve/bundler/manifest_manager.py remove --path docs/readme.md\", \"python tools/retrieve/bundler/manifest_manager.py bundle --output context.md\"], \"args\": [\"init: Initialize manifest (--bundle-title, --type, --manifest)\", \"add: Add file (--path, --note, --base, --manifest, --section)\", \"remove: Remove file (--path, --base, --manifest)\", \"update: Update file (--path, --note, --new-path, --base, --manifest)\", \"search: Search files (pattern, --base, --manifest)\", \"list: List files (--base, --manifest)\", \"bundle: Execute bundle (--output, --base, --manifest)\"], \"inputs\": [\"tools/standalone/context-bundler/file-manifest.json\", \"tools/standalone/context-bundler/base-manifests/*.json\"], \"outputs\": [\"tools/standalone/context-bundler/file-manifest.json\", \"Context bundles (.md)\"], \"dependencies\": [\"tools/investigate/utils/path_resolver.py\", \"tools/retrieve/bundler/bundle.py\"], \"key_functions\": [\"init_manifest()\", \"add_file()\", \"remove_file()\", \"update_file()\", \"search_files()\", \"list_manifest()\", \"bundle()\"], \"consumed_by\": [\"tools/cli.py manifest *\"]}"
-  },
-  "tools/retrieve/bundler/validate.py": {
-    "file_mtime": 1769974509.3502343,
-    "hash": "8722a2f76eec9146",
-    "summarized_at": "2026-02-11T19:01:08.293010",
-    "summary": "{\"purpose\": \"Validates context bundler manifest files against schema. Checks required fields (title, files), path format, and path traversal vulnerabilities. Can validate individual manifests, all base manifests, or the manifest index.\", \"layer\": \"Retrieve / Bundler\", \"usage\": [\"python tools/retrieve/bundler/validate.py manifest.json\", \"python tools/retrieve/bundler/validate.py --all-base\", \"python tools/retrieve/bundler/validate.py --check-index\"], \"args\": [\"manifest: Path to manifest JSON file\", \"--all-base: Validate all base manifests\", \"--check-index: Validate manifest index\", \"--quiet: Suppress output\"], \"inputs\": [\"Manifest JSON files\", \"file-manifest-schema.json\"], \"outputs\": [\"Validation report (stdout)\", \"Exit code 0 (valid) or 1 (invalid)\"], \"dependencies\": [\"tools/standalone/context-bundler/file-manifest-schema.json\"], \"key_functions\": [\"validate_manifest()\", \"validate_index()\", \"validate_all_base()\"], \"consumed_by\": [\"CI/CD Pipelines\", \"Pre-commit checks\"]}"
   },
   "tools/retrieve/rlm/fetch_tool_context.py": {
     "file_mtime": 1769932732.4721694,

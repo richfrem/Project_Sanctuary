@@ -223,4 +223,4 @@ Run the check commands BEFORE starting closure. If either fails, run the corresp
 | `.agent/learning/guardian_boot_contract.md` | Immutable constraints |
 | `.agent/learning/guardian_boot_digest.md` | Tactical status |
 | `ADRs/071_protocol_128_cognitive_continuity.md` | Protocol ADR |
-| `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd` | Flow diagram |
+| `resources/diagrams/protocol_128_learning_loop.mmd` | Flow diagram |

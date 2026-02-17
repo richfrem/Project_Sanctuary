@@ -40,7 +40,7 @@ Read: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md
 **Goal:** Visualize the learning loop flow.
 **Action:**
 ```
-Read: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
+Read: plugins/learning-loop/resources/diagrams/protocol_128_learning_loop.mmd
 ```
 
 ### 4. Session Initialization (Action)

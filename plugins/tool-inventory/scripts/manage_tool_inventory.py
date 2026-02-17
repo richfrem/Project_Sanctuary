@@ -544,7 +544,7 @@ class InventoryManager:
         }
         
         # Recursive scan of tools ONLY (plugins are sources) per user instruction
-        scan_dirs = [self.root_dir / 'tools']
+        scan_dirs = [self.root_dir / 'tools', self.root_dir / 'plugins']
         found_files = set()
         
         for d in scan_dirs:
