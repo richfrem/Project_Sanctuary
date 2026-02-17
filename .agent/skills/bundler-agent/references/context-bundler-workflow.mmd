@@ -1,0 +1,48 @@
+sequenceDiagram
+    participant User as User / Agent
+    participant Init as /context-bundler_init
+    participant Add as /context-bundler_add
+    participant Bundle as /context-bundler_bundle
+    participant Templates as resources/base-manifests/
+    participant Manifest as file-manifest.json
+    participant Output as bundle.md
+
+    Note over User, Output: Phase 1: Initialize
+
+    User->>Init: init --target MyTool
+    Init->>Templates: Load base-{type}-file-manifest.json
+    Templates-->>Init: Template entries
+    Init->>Init: Substitute [TARGET]
+    Init->>Manifest: Write manifest JSON
+    Init-->>User: ✅ Manifest initialized
+
+    Note over User, Output: Phase 2: Curate
+
+    loop Add files
+        User->>Add: add --path "..."
+        Add->>Manifest: Load → append → save
+        Add-->>User: ✅ Added
+    end
+
+    opt Remove unwanted files
+        User->>CLI: remove --path "old_file.py"
+        CLI->>Manifest: Load → filter → save
+        CLI-->>User: ✅ Removed
+    end
+
+    opt Search / List
+        User->>CLI: list (or search "pattern")
+        CLI->>Manifest: Load → display
+        CLI-->>User: 📋 Manifest contents
+    end
+
+    Note over User, Output: Phase 3: Bundle
+
+    User->>Bundle: bundle --output my-bundle.md
+    Bundle->>Manifest: Load manifest JSON
+    loop For each entry
+        Bundle->>Bundle: resolve and read
+        Bundle->>Output: Write block
+    end
+    Bundler->>Output: Write TOC + all content
+    Bundler-->>User: ✅ Bundle created at my-bundle.md

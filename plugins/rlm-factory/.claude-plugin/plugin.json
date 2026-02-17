@@ -25,7 +25,7 @@
             "python-dotenv"
         ],
         "models": [
-            "granite3.2:8b"
+            "granite3.2:8b (default)"
         ]
     },
     "commands_dir": "commands",

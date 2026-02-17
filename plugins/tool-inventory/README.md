@@ -13,8 +13,19 @@ claude --plugin-dir ./plugins/tool-inventory
 ### Prerequisites
 - **Claude Code** ≥ 1.0.33
 - **Python** ≥ 3.8
-- **ChromaDB**: `pip install chromadb`
-- **Optional**: Ollama + `requests` (for LLM-powered distillation)
+- **Ollama** (Required for `distill` command):
+    1.  **Install**: `brew install ollama` or download from [ollama.com](https://ollama.com/)
+    2.  **Pull Model**: `ollama pull granite3.2:8b` (or your preferred model)
+    3.  **Run Server**: `ollama serve` (must be running for distillation)
+- **Python Dependencies**: `pip install chromadb requests python-dotenv`
+
+### Configuration
+Environment variables can be used to customize behavior:
+- `OPENAI_API_KEY`: Your OpenAI API key for LLM distillation (if not using Ollama).
+- `OLLAMA_HOST`: The host for your Ollama server (default: `http://localhost:11434`).
+- `OLLAMA_MODEL`: The Ollama model to use for distillation (default: `granite3.2:8b`).
+- `RLM_TOOL_CACHE`: Override the default tool cache path (default: `.agent/learning/rlm_tool_cache.json`).
+- `RLM_SUMMARY_CACHE`: Override the default summary cache path (default: `.agent/learning/rlm_summary_cache.json`).
 
 ### Verify Installation
 After loading, `/help` should show:
@@ -53,7 +64,7 @@ After loading, `/help` should show:
 | Store | Location | Purpose |
 |:---|:---|:---|
 | **ChromaDB** | `plugins/tool-inventory/data/chroma/` | Semantic search (primary) |
-| **JSON Inventory** | `tools/tool_inventory.json` | Structured registry |
+| **JSON Inventory** | `tools/tool_inventory.json` | Project-level structured registry |
 | **JSON Cache** | `.agent/learning/rlm_tool_cache.json` | Backward compat |
 
 ChromaDB is the primary truth store. JSON cache is kept for backward compatibility.

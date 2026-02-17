@@ -1,18 +1,15 @@
 {
-    "tool": {
-        "description": "Tool Discovery (CLI Scripts & Capabilities)",
-        "manifest": "tools/tool_inventory.json",
-        "cache": ".agent/learning/rlm_tool_cache.json",
-        "parser": "inventory_dict",
-        "prompt_path": "tools/ai-resources/prompts/rlm/rlm_summarize_tool.md",
-        "llm_model": "granite3.2:8b"
-    },
-    "sanctuary": {
-        "description": "The Project Knowledge Base (Protocols, ADRs, Docs)",
-        "manifest": "tools/standalone/rlm-factory/rlm_manifest.json",
+    "project": {
+        "description": "General Project Knowledge Base (Docs, Readmes)",
+        "manifest": "plugins/rlm-factory/resources/rlm_manifest.json",
         "cache": ".agent/learning/rlm_summary_cache.json",
         "parser": "directory_glob",
-        "prompt_path": "tools/ai-resources/prompts/rlm/rlm_summarize_sanctuary.md",
+        "prompt_path": "plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_sanctuary.md",
+        "env_prefix": "RLM_SUMMARY",
+        "allowed_suffixes": [
+            ".md",
+            ".txt"
+        ],
         "llm_model": "granite3.2:8b"
     }
 }

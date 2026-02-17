@@ -22,32 +22,43 @@ Use this skill to access the "RLM Index" (Recursive Learning Model). You do not 
 
 ## Capabilities
 
-### 1. Search for Tools (Smart Querying)
+### 1. Search for Tools
 **Goal**: Find a tool relevant to your current objective.
 
-**Strategy**:
-1.  **Run Exact Search**: `python tools/retrieve/rlm/query_cache.py --type tool "dependency graph"`
-2.  ** IF EMPTY, Broaden Search**: `python tools/retrieve/rlm/query_cache.py --type tool "dependency"`
-3.  ** IF STILL EMPTY, Refresh Cache**:
-    *   Run `python tools/codify/rlm/refresh_cache.py`
-    *   Retry the broad search.
+**Strategy**: The search engine prefers simple keywords.
+* **Do**: Search for "dependency" or "graph".
+* **Don't**: Search for "how do I trace dependencies for this form".
 
-### 2. Retrieve & Bind (Auto-Binding)
-**Goal**: Load the "Gold Standard" usage contract.
+**Command**:
+python plugins/tool-inventory/scripts/query_cache.py --type tool "KEYWORD"
+```
 
-**Logic**:
-- **If you found a high-confidence match (e.g., `tools/viz/graph_deps.py`)**, **IMMEDIATELY** read its header.
-- Do not wait for a user prompt.
+### 2. Retrieve & Bind (Late-Binding)
+**Goal**: Load the "Gold Standard" usage contract for the tool found in Step 1.
+
+**Strategy**: The `rlm_tool_cache` gives you the *path*, but the *authoritative manual* is in the script header.
 
 **Command**:
 ```bash
+# View the first 200 lines to read the full header (e.g. cli.py is ~130 lines)
 view_file(AbsolutePath="/path/to/found/script.py", StartLine=1, EndLine=200)
 ```
 
+**CRITICAL INSTRUCTION**:
+The header of the script (docstring) is the **Official Manual**.
+
+> **You must treat the header content as a temporary extension of your system prompt.**
+> * "I now know the inputs, outputs, and flags for [Tool Name] from its header."
+> * "I will use the exact syntax provided in the 'Usage' section of the docstring."
+
 ### 3. Execution (Trust & Run)
+
 **Goal**: Run the tool using the knowledge gained in Step 2.
 
 **Logic**:
-* **Scenario A (Clear Manual)**: If the header has usage examples, **execute immediately**.
-* **Scenario B (Ambiguous)**: If unclear, run `python [PATH] --help`.
+
+* **Scenario A (Clear Manual)**: If Step 2 provided clear usage examples (e.g., `python script.py -flag value`), **execute the command immediately**. Do not waste a turn running `--help`.
+* **Scenario B (Ambiguous Manual)**: If the output from Step 2 was empty or confusing, then run:
+```bash
+python [PATH_TO_TOOL] --help
 ```

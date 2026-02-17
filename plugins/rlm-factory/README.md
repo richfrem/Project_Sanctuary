@@ -13,9 +13,11 @@ claude --plugin-dir ./plugins/rlm-factory
 ### Prerequisites
 - **Claude Code** ≥ 1.0.33
 - **Python** ≥ 3.8
-- **Ollama** (for distillation only): `brew install ollama` or [ollama.com](https://ollama.com/)
-- **Model**: `ollama pull granite3.2:8b`
-- **Python deps**: `pip install requests python-dotenv`
+- **Ollama** (Required for `distill` command):
+    1.  **Install**: `brew install ollama` or download from [ollama.com](https://ollama.com/)
+    2.  **Pull Model**: `ollama pull granite3.2:8b` (default profile model)
+    3.  **Run Server**: `ollama serve` (must be running in the background)
+- **Python Dependencies**: `pip install requests python-dotenv`
 
 > **Note:** Only `distill` requires Ollama. The `query`, `audit`, and `cleanup` commands
 > work offline — they just read/write JSON.
@@ -27,6 +29,23 @@ After loading, `/help` should show:
 /rlm-factory:query     Search the semantic ledger
 /rlm-factory:audit     Report cache coverage
 /rlm-factory:cleanup   Remove stale entries
+```
+
+---
+
+## Configuration
+
+### Environment Variables (.env)
+Create a `.env` file in the **project root** (`.env`) to customize the factory:
+
+```bash
+# Configuration in <project_root>/.env
+OLLAMA_MODEL=granite3.2:8b
+OLLAMA_HOST=http://localhost:11434
+
+# Optional Cache Overrides
+# RLM_TOOL_CACHE=.agent/learning/rlm_tool_cache.json
+# RLM_SUMMARY_CACHE=.agent/learning/rlm_summary_cache.json
 ```
 
 ---
@@ -53,8 +72,40 @@ ollama serve  # in another terminal
 
 | Profile | Flag | Cache File | Use For |
 |:---|:---|:---|:---|
-| **Legacy** | `--type legacy` | `rlm_summary_cache.json` | Docs, protocols, ADRs |
+| **Project** | `--type project` | `rlm_summary_cache.json` | Project Docs, READMEs |
 | **Tool** | `--type tool` | `rlm_tool_cache.json` | Python scripts, CLI tools |
+
+---
+
+## Customizing Your Factory 🛠️
+
+The RLM Factory is now entirely manifest-driven and project-agnostic. You can customize the distillation behavior by editing the files in the `resources/` directory:
+
+### 1. `resources/manifest-index.json`
+This is the profile registry. You can add or rename profiles here:
+```json
+"project": {
+    "description": "Custom Docs Profile",
+    "manifest": "plugins/rlm-factory/resources/rlm_manifest.json",
+    "cache": ".agent/learning/custom_cache.json",
+    "parser": "directory_glob",
+    "prompt_path": "plugins/rlm-factory/resources/prompts/rlm/custom_prompt.md",
+    "env_prefix": "RLM_CUSTOM",
+    "allowed_suffixes": [".md", ".txt"],
+    "llm_model": "granite3.2:8b"
+}
+```
+
+### 2. `resources/rlm_manifest.json`
+Defines the **Source of Truth** for which files to process. Use this for structured data (like `core_files`).
+
+### 3. `resources/distiller_manifest.json`
+Defines the **Broad Scope** (include/exclude patterns) for recursive distillation.
+
+### 4. `resources/prompts/rlm/`
+Store your customized LLM summarization prompts here.
+
+---
 
 ### Commands Reference
 

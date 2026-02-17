@@ -1,9 +1,4 @@
 {
-  ".kittify/scripts/tasks/task_helpers.py": {
-    "hash": "6b88cea39cfd719f",
-    "summarized_at": "2026-02-12T13:29:22.356995",
-    "summary": "[DISTILLATION FAILED]"
-  },
   "forge/scripts/upload_to_huggingface.py": {
     "file_mtime": 1769984471.618009,
     "hash": "9c03fabeb9c063f6",
@@ -22,11 +17,371 @@
     "summarized_at": "2026-02-11T19:01:08.286388",
     "summary": "{\"purpose\": \"Hugging Face utility library for soul persistence (ADR 079). Encapsulates huggingface_hub logic for Bicameral Separation. Provides unified async primitives for uploading snapshots, semantic caches, learning history, JSONL training data, and manifest updates.\", \"layer\": \"Retrieve / Curate (Library)\", \"usage\": [\"from mcp_servers.lib.hf_utils import upload_soul_snapshot\", \"from mcp_servers.lib.hf_utils import upload_semantic_cache\", \"from mcp_servers.lib.hf_utils import sync_full_learning_history\"], \"args\": [], \"inputs\": [\".agent/learning/snapshots/*\", \".agent/learning/rlm_summary_cache.json\", \".agent/learning/\"], \"outputs\": [\"Uploaded artifacts on Hugging Face Dataset Hub\"], \"dependencies\": [\"huggingface_hub\", \"mcp_servers.lib.env_helper\"], \"key_functions\": [\"upload_soul_snapshot()\", \"upload_semantic_cache()\", \"sync_full_learning_history()\", \"ensure_dataset_card()\", \"sync_metadata()\", \"append_to_jsonl()\", \"update_manifest()\", \"ensure_dataset_structure()\", \"upload_to_hf_hub()\", \"compute_checksum()\"], \"consumed_by\": [\"tools/cli.py persist-soul\", \"forge/scripts/upload_to_huggingface.py\", \"scripts/hugging-face/hf_upload_assets.py\"]}"
   },
-  "scripts/capture_code_snapshot.py": {
-    "file_mtime": 1769926368.651156,
-    "hash": "f8b6eb151887db67",
-    "summarized_at": "2026-02-11T19:01:08.286675",
-    "summary": "{\"purpose\": \"Generates a single text file snapshot of code files for LLM context sharing. Python port of the legacy Node.js utility. Supports directory traversal and manifest-based file selection. Generates role-specific Awakening Seeds for full-project snapshots.\", \"layer\": \"Curate / Documentation\", \"usage\": [\"python scripts/capture_code_snapshot.py\", \"python scripts/capture_code_snapshot.py mcp_servers/rag_cortex --role guardian\", \"python scripts/capture_code_snapshot.py --manifest .agent/learning/learning_manifest.json --output snapshot.txt\"], \"args\": [\"subfolder: Optional subfolder to process\", \"--role: Target role (guardian, strategist, etc.)\", \"--out: Output directory\", \"--manifest: Path to JSON manifest\", \"--output: Explicit output file path\", \"--operation: Operation specific directory override\"], \"inputs\": [\"Project Source Code\", \"Manifest JSON (optional)\"], \"outputs\": [\"dataset_package/markdown_snapshot_*.txt\", \"dataset_package/*_awakening_seed.txt\"], \"dependencies\": [\"mcp_servers.lib.snapshot_utils\", \"tiktoken\"], \"key_functions\": [\"main()\"], \"consumed_by\": [\"tools/cli.py\", \"Manual Context Gathering\"]}"
+  "plugins/adr-manager/scripts/adr_manager.py": {
+    "file_mtime": 1771339354.9427407,
+    "hash": "ad388ed431dc640b",
+    "summarized_at": "2026-02-17T07:47:43.656143",
+    "summary": "{\"purpose\": \"adr_manager.py (CLI)\", \"layer\": \"Plugin / ADR Manager\", \"usage\": [\"python3 plugins/adr-manager/scripts/adr_manager.py\"], \"args\": [], \"inputs\": [\"adrs\"], \"outputs\": [\"report\"], \"dependencies\": [], \"key_functions\": [\"manage\", \"main\"]}"
+  },
+  "plugins/adr-manager/scripts/next_number.py": {
+    "file_mtime": 1771339354.9433198,
+    "hash": "697018b94c524854",
+    "summarized_at": "2026-02-17T07:47:43.805853",
+    "summary": "{\"purpose\": \"next_number.py (CLI)\", \"layer\": \"Plugin / ADR Manager\", \"usage\": [\"python3 plugins/adr-manager/scripts/next_number.py\"], \"args\": [], \"inputs\": [\"adrs\"], \"outputs\": [\"next number\"], \"dependencies\": [], \"key_functions\": [\"get_next\", \"main\"]}"
+  },
+  "plugins/agent-orchestrator/scripts/agent_orchestrator.py": {
+    "file_mtime": 1771339354.963757,
+    "hash": "61017310912ea0e8",
+    "summarized_at": "2026-02-17T07:47:25.351159",
+    "summary": "{\"purpose\": \"agent_orchestrator.py (CLI)\", \"layer\": \"Plugin / Agent Orchestrator\", \"usage\": [\"python3 plugins/agent-orchestrator/scripts/agent_orchestrator.py\"], \"args\": [], \"inputs\": [\"agents\"], \"outputs\": [\"orchestration\"], \"dependencies\": [], \"key_functions\": [\"orchestrate\", \"main\"]}"
+  },
+  "plugins/agent-orchestrator/scripts/proof_check.py": {
+    "file_mtime": 1771339354.9641912,
+    "hash": "577e2dddf15f369b",
+    "summarized_at": "2026-02-17T07:47:25.065720",
+    "summary": "{\"purpose\": \"proof_check.py (CLI)\", \"layer\": \"Plugin / Agent Orchestrator\", \"usage\": [\"python3 plugins/agent-orchestrator/scripts/proof_check.py\"], \"args\": [], \"inputs\": [\"proof\"], \"outputs\": [\"verification\"], \"dependencies\": [], \"key_functions\": [\"check\", \"main\"]}"
+  },
+  "plugins/agent-orchestrator/scripts/workflow_manager.py": {
+    "file_mtime": 1771339354.964568,
+    "hash": "03049a42458a8d53",
+    "summarized_at": "2026-02-17T07:47:25.210143",
+    "summary": "{\"purpose\": \"workflow_manager.py (CLI)\", \"layer\": \"Plugin / Agent Orchestrator\", \"usage\": [\"python3 plugins/agent-orchestrator/scripts/workflow_manager.py\"], \"args\": [], \"inputs\": [\"workflow\"], \"outputs\": [\"status\"], \"dependencies\": [], \"key_functions\": [\"manage\", \"main\"]}"
+  },
+  "plugins/chronicle-manager/scripts/chronicle_manager.py": {
+    "file_mtime": 1771200446.7334454,
+    "hash": "95ca6ba373ac7238",
+    "summarized_at": "2026-02-17T07:45:43.216342",
+    "summary": "{\"purpose\": \"chronicle_manager.py (CLI)\", \"layer\": \"Plugin / Chronicle Manager\", \"usage\": [\"python3 plugins/chronicle-manager/scripts/chronicle_manager.py\"], \"args\": [], \"inputs\": [\"entries\"], \"outputs\": [\"chronicle\"], \"dependencies\": [], \"key_functions\": [\"manage\", \"main\"]}"
+  },
+  "plugins/code-snapshot/scripts/capture_code_snapshot.py": {
+    "file_mtime": 1771339355.0057342,
+    "hash": "48130605db81e086",
+    "summarized_at": "2026-02-17T07:46:05.980908",
+    "summary": "{\"purpose\": \"capture_code_snapshot.py (CLI)\", \"layer\": \"Plugin / Code Snapshot\", \"usage\": [\"python3 plugins/code-snapshot/scripts/capture_code_snapshot.py\"], \"args\": [], \"inputs\": [\"code\"], \"outputs\": [\"snapshot\"], \"dependencies\": [\"snapshot_utils.py\"], \"key_functions\": [\"capture\", \"main\"]}"
+  },
+  "plugins/code-snapshot/scripts/logging_utils.py": {
+    "file_mtime": 1771339355.005999,
+    "hash": "8828eae7c6b537c8",
+    "summarized_at": "2026-02-17T07:47:01.508665",
+    "summary": "{\"purpose\": \"logging_utils.py (Shared Module)\", \"layer\": \"Plugin / Code Snapshot\", \"usage\": [\"Imported by other scripts\"], \"args\": [], \"inputs\": [], \"outputs\": [\"logger\"], \"dependencies\": [], \"key_functions\": [\"setup_logging\"]}"
+  },
+  "plugins/code-snapshot/scripts/snapshot_utils.py": {
+    "file_mtime": 1771339355.0062928,
+    "hash": "fcc7e5113fddf89d",
+    "summarized_at": "2026-02-17T07:46:05.831121",
+    "summary": "{\"purpose\": \"snapshot_utils.py (Shared Module)\", \"layer\": \"Plugin / Code Snapshot\", \"usage\": [\"Imported by other scripts\"], \"args\": [], \"inputs\": [], \"outputs\": [\"utils\"], \"dependencies\": [], \"key_functions\": [\"capture\"]}"
+  },
+  "plugins/context-bundler/scripts/bundle.py": {
+    "file_mtime": 1771339355.0421095,
+    "hash": "edddfdd96aef5e6b",
+    "summarized_at": "2026-02-17T07:44:48.503030",
+    "summary": "{\"purpose\": \"bundle.py (CLI)\", \"layer\": \"Plugin / Context Bundler\", \"usage\": [\"python3 plugins/context-bundler/scripts/bundle.py\"], \"args\": [], \"inputs\": [\"manifest\"], \"outputs\": [\"bundle.md\"], \"dependencies\": [\"manifest_manager.py\", \"path_resolver.py\"], \"key_functions\": [\"bundle\", \"main\"]}"
+  },
+  "plugins/context-bundler/scripts/manifest_manager.py": {
+    "file_mtime": 1771339355.0426772,
+    "hash": "6f7584fb1a3bbb1b",
+    "summarized_at": "2026-02-17T07:44:48.730163",
+    "summary": "{\"purpose\": \"manifest_manager.py (CLI)\", \"layer\": \"Plugin / Context Bundler\", \"usage\": [\"python3 plugins/context-bundler/scripts/manifest_manager.py\"], \"args\": [], \"inputs\": [], \"outputs\": [\"manifest\"], \"dependencies\": [], \"key_functions\": [\"manage\", \"main\"]}"
+  },
+  "plugins/context-bundler/scripts/path_resolver.py": {
+    "file_mtime": 1771339355.04309,
+    "hash": "77b93e1d01b7eb67",
+    "summarized_at": "2026-02-17T07:44:49.099204",
+    "summary": "{\"purpose\": \"path_resolver.py (CLI)\", \"layer\": \"Plugin / Context Bundler\", \"usage\": [\"python3 plugins/context-bundler/scripts/path_resolver.py\"], \"args\": [], \"inputs\": [], \"outputs\": [\"resolved path\"], \"dependencies\": [], \"key_functions\": [\"resolve\", \"main\"]}"
+  },
+  "plugins/excel-to-csv/scripts/convert.py": {
+    "file_mtime": 1771339355.0722299,
+    "hash": "d421105fb2a710a4",
+    "summarized_at": "2026-02-17T07:46:05.409942",
+    "summary": "{\"purpose\": \"convert.py (CLI)\", \"layer\": \"Plugin / Excel to CSV\", \"usage\": [\"python3 plugins/excel-to-csv/scripts/convert.py\"], \"args\": [], \"inputs\": [\"excel file\"], \"outputs\": [\"csv file\"], \"dependencies\": [\"pandas\"], \"key_functions\": [\"convert\", \"main\"]}"
+  },
+  "plugins/json-hygiene/scripts/find_json_duplicates.py": {
+    "file_mtime": 1771339355.0797095,
+    "hash": "88d20ce365a5f967",
+    "summarized_at": "2026-02-17T07:47:25.490012",
+    "summary": "{\"purpose\": \"find_json_duplicates.py (CLI)\", \"layer\": \"Plugin / JSON Hygiene\", \"usage\": [\"python3 plugins/json-hygiene/scripts/find_json_duplicates.py\"], \"args\": [], \"inputs\": [\"json files\"], \"outputs\": [\"report\"], \"dependencies\": [], \"key_functions\": [\"find\", \"main\"]}"
+  },
+  "plugins/link-checker/scripts/check_broken_paths.py": {
+    "file_mtime": 1771339355.0943995,
+    "hash": "c02dff2435d33260",
+    "summarized_at": "2026-02-17T07:45:12.883987",
+    "summary": "{\"purpose\": \"check_broken_paths.py (CLI)\", \"layer\": \"Plugin / Link Checker\", \"usage\": [\"python3 plugins/link-checker/scripts/check_broken_paths.py\"], \"args\": [], \"inputs\": [\"paths\"], \"outputs\": [\"report\"], \"dependencies\": [], \"key_functions\": [\"check\", \"main\"]}"
+  },
+  "plugins/link-checker/scripts/enrich_links_v2.py": {
+    "file_mtime": 1771339355.0954623,
+    "hash": "86962fa8da5519d8",
+    "summarized_at": "2026-02-17T07:45:12.360173",
+    "summary": "{\"purpose\": \"enrich_links_v2.py (CLI)\", \"layer\": \"Plugin / Link Checker\", \"usage\": [\"python3 plugins/link-checker/scripts/enrich_links_v2.py\"], \"args\": [], \"inputs\": [\"links\"], \"outputs\": [\"enriched links\"], \"dependencies\": [], \"key_functions\": [\"enrich\", \"main\"]}"
+  },
+  "plugins/link-checker/scripts/find_source_links.py": {
+    "file_mtime": 1771339355.0964897,
+    "hash": "4da65b670757f961",
+    "summarized_at": "2026-02-17T07:45:13.038041",
+    "summary": "{\"purpose\": \"find_source_links.py (CLI)\", \"layer\": \"Plugin / Link Checker\", \"usage\": [\"python3 plugins/link-checker/scripts/find_source_links.py\"], \"args\": [], \"inputs\": [\"files\"], \"outputs\": [\"links\"], \"dependencies\": [], \"key_functions\": [\"find\", \"main\"]}"
+  },
+  "plugins/link-checker/scripts/map_repository_files.py": {
+    "file_mtime": 1771339355.0968935,
+    "hash": "6e258febafd9145b",
+    "summarized_at": "2026-02-17T07:45:12.700486",
+    "summary": "{\"purpose\": \"map_repository_files.py (CLI)\", \"layer\": \"Plugin / Link Checker\", \"usage\": [\"python3 plugins/link-checker/scripts/map_repository_files.py\"], \"args\": [], \"inputs\": [\"repo\"], \"outputs\": [\"file map\"], \"dependencies\": [], \"key_functions\": [\"map_files\", \"main\"]}"
+  },
+  "plugins/link-checker/scripts/smart_fix_links.py": {
+    "file_mtime": 1771339355.0973253,
+    "hash": "2f9c647f33065bea",
+    "summarized_at": "2026-02-17T07:45:12.541856",
+    "summary": "{\"purpose\": \"smart_fix_links.py (CLI)\", \"layer\": \"Plugin / Link Checker\", \"usage\": [\"python3 plugins/link-checker/scripts/smart_fix_links.py\"], \"args\": [], \"inputs\": [\"links\"], \"outputs\": [\"fixed links\"], \"dependencies\": [], \"key_functions\": [\"fix\", \"main\"]}"
+  },
+  "plugins/mcp-builder/skills/mcp-builder/scripts/connections.py": {
+    "file_mtime": 1771339355.1072695,
+    "hash": "9403668a20415687",
+    "summarized_at": "2026-02-17T07:47:43.444349",
+    "summary": "{\"purpose\": \"connections.py (CLI)\", \"layer\": \"Plugin / MCP Builder\", \"usage\": [\"python3 plugins/mcp-builder/skills/mcp-builder/scripts/connections.py\"], \"args\": [], \"inputs\": [\"mcp server\"], \"outputs\": [\"connections\"], \"dependencies\": [], \"key_functions\": [\"connect\", \"main\"]}"
+  },
+  "plugins/mcp-builder/skills/mcp-builder/scripts/evaluation.py": {
+    "file_mtime": 1771339355.10766,
+    "hash": "49ed1d17cdce5da1",
+    "summarized_at": "2026-02-17T07:47:25.632836",
+    "summary": "{\"purpose\": \"evaluation.py (CLI)\", \"layer\": \"Plugin / MCP Builder\", \"usage\": [\"python3 plugins/mcp-builder/skills/mcp-builder/scripts/evaluation.py\"], \"args\": [], \"inputs\": [\"mcp server\"], \"outputs\": [\"evaluation\"], \"dependencies\": [], \"key_functions\": [\"evaluate\", \"main\"]}"
+  },
+  "plugins/mermaid-export/scripts/export_mmd_to_image.py": {
+    "file_mtime": 1771339355.1189272,
+    "hash": "124a3dee1a20a504",
+    "summarized_at": "2026-02-17T07:45:43.078608",
+    "summary": "{\"purpose\": \"export_mmd_to_image.py (CLI)\", \"layer\": \"Plugin / Mermaid Export\", \"usage\": [\"python3 plugins/mermaid-export/scripts/export_mmd_to_image.py\"], \"args\": [], \"inputs\": [\"mmd files\"], \"outputs\": [\"images\"], \"dependencies\": [\"mmdc\"], \"key_functions\": [\"export\", \"main\"]}"
+  },
+  "plugins/migration-utils/scripts/audit_stale_refs.py": {
+    "file_mtime": 1771339355.124146,
+    "hash": "63cf3d969079cedd",
+    "summarized_at": "2026-02-17T07:47:44.116638",
+    "summary": "{\"purpose\": \"audit_stale_refs.py (CLI)\", \"layer\": \"Plugin / Migration Utils\", \"usage\": [\"python3 plugins/migration-utils/scripts/audit_stale_refs.py\"], \"args\": [], \"inputs\": [\"refs\"], \"outputs\": [\"audit report\"], \"dependencies\": [], \"key_functions\": [\"audit\", \"main\"]}"
+  },
+  "plugins/migration-utils/scripts/cleanup_mapped_files.py": {
+    "file_mtime": 1771339355.1245978,
+    "hash": "239a4a962603d887",
+    "summarized_at": "2026-02-17T07:47:57.469866",
+    "summary": "{\"purpose\": \"cleanup_mapped_files.py (CLI)\", \"layer\": \"Plugin / Migration Utils\", \"usage\": [\"python3 plugins/migration-utils/scripts/cleanup_mapped_files.py\"], \"args\": [], \"inputs\": [\"map\"], \"outputs\": [\"cleaned files\"], \"dependencies\": [], \"key_functions\": [\"cleanup\", \"main\"]}"
+  },
+  "plugins/migration-utils/scripts/generate_inventory.py": {
+    "file_mtime": 1771339355.1252472,
+    "hash": "e2d08e798c932488",
+    "summarized_at": "2026-02-17T07:47:43.956799",
+    "summary": "{\"purpose\": \"generate_inventory.py (CLI)\", \"layer\": \"Plugin / Migration Utils\", \"usage\": [\"python3 plugins/migration-utils/scripts/generate_inventory.py\"], \"args\": [], \"inputs\": [\"repo\"], \"outputs\": [\"inventory\"], \"dependencies\": [], \"key_functions\": [\"generate\", \"main\"]}"
+  },
+  "plugins/migration-utils/scripts/migration_replace.py": {
+    "file_mtime": 1771339355.125531,
+    "hash": "87919473e3c4759d",
+    "summarized_at": "2026-02-17T07:47:57.293488",
+    "summary": "{\"purpose\": \"migration_replace.py (CLI)\", \"layer\": \"Plugin / Migration Utils\", \"usage\": [\"python3 plugins/migration-utils/scripts/migration_replace.py\"], \"args\": [], \"inputs\": [\"replacements\"], \"outputs\": [\"modified code\"], \"dependencies\": [], \"key_functions\": [\"replace\", \"main\"]}"
+  },
+  "plugins/plugin-bridge/scripts/bridge_installer.py": {
+    "file_mtime": 1771339355.1415513,
+    "hash": "da616dc3ebf4804b",
+    "summarized_at": "2026-02-17T07:41:10.940737",
+    "summary": "{\"purpose\": \"Installs a specific Agent Plugin (.claude-plugin structure) into target environments (Antigravity, GitHub Copilot, Gemini, Claude). Handles content transformation (actor swapping) and file placement.\", \"layer\": \"Plugin / Bridge\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/plugin-bridge/scripts/bridge_installer.py --plugin <path> [--target <auto|antigravity|github|gemini|claude>]\"], \"args\": [\"--plugin: Path to plugin directory\", \"--target: Target environment (default: auto)\"], \"inputs\": [\"Plugin directory content\", \"plugin.json metadata\"], \"outputs\": [\".agent/workflows/\", \".github/prompts/\", \".gemini/commands/\", \".claude/commands/\"], \"dependencies\": [], \"consumed_by\": [\"plugins/plugin-bridge/scripts/install_all_plugins.py\", \"Manual plugin installation\"], \"key_functions\": [\"transform_content\", \"install_antigravity\", \"install_github\", \"install_gemini\", \"install_claude\"]}"
+  },
+  "plugins/plugin-bridge/scripts/install_all_plugins.py": {
+    "file_mtime": 1771339355.1420798,
+    "hash": "5afc198e8e3f758c",
+    "summarized_at": "2026-02-17T07:41:10.652178",
+    "summary": "{\"purpose\": \"Bulk Plugin Installer that iterates through all directories in plugins/ and executes the bridge_installer.py for each, ensuring a full installation of all available plugins.\", \"layer\": \"Plugin / Bridge\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/plugin-bridge/scripts/install_all_plugins.py\"], \"args\": [], \"inputs\": [\"plugins/ directory structure\"], \"outputs\": [\"Installed plugins in target directories (.agent, .github, etc.)\"], \"dependencies\": [\"plugins/plugin-bridge/scripts/bridge_installer.py\"], \"consumed_by\": [\"Manual setup\", \"CI/CD\"], \"key_functions\": [\"main\"]}"
+  },
+  "plugins/plugin-creator/skills/plugin-creator/scripts/init_plugin.py": {
+    "file_mtime": 1771340339.1773503,
+    "hash": "b870b314d8aad823",
+    "summarized_at": "2026-02-17T07:46:05.554798",
+    "summary": "{\"purpose\": \"init_plugin.py (CLI)\", \"layer\": \"Plugin / Plugin Creator\", \"usage\": [\"python3 plugins/plugin-creator/skills/plugin-creator/scripts/init_plugin.py\"], \"args\": [], \"inputs\": [\"template\"], \"outputs\": [\"plugin\"], \"dependencies\": [], \"key_functions\": [\"init\", \"main\"]}"
+  },
+  "plugins/protocol-manager/scripts/protocol_manager.py": {
+    "file_mtime": 1771200446.7821856,
+    "hash": "a3d127bb161105bf",
+    "summarized_at": "2026-02-17T07:46:05.689861",
+    "summary": "{\"purpose\": \"protocol_manager.py (CLI)\", \"layer\": \"Plugin / Protocol Manager\", \"usage\": [\"python3 plugins/protocol-manager/scripts/protocol_manager.py\"], \"args\": [], \"inputs\": [\"protocols\"], \"outputs\": [\"report\"], \"dependencies\": [], \"key_functions\": [\"manage\", \"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/cleanup_cache.py": {
+    "file_mtime": 1771339355.1789203,
+    "hash": "ac634dc034c65067",
+    "summarized_at": "2026-02-17T07:44:25.682443",
+    "summary": "{\"purpose\": \"cleanup_cache.py (CLI)\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"python3 plugins/rlm-factory/scripts/cleanup_cache.py\"], \"args\": [], \"inputs\": [\"rlm_tool_cache.json\"], \"outputs\": [\"cleaned cache\"], \"dependencies\": [\"rlm_config.py\"], \"key_functions\": [\"cleanup\", \"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/debug_rlm.py": {
+    "file_mtime": 1771339355.1791706,
+    "hash": "6cfff3e419d5d994",
+    "summarized_at": "2026-02-17T07:44:25.437807",
+    "summary": "{\"purpose\": \"debug_rlm.py (CLI)\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"python3 plugins/rlm-factory/scripts/debug_rlm.py\"], \"args\": [], \"inputs\": [\"rlm_tool_cache.json\"], \"outputs\": [\"debug info\"], \"dependencies\": [\"rlm_config.py\"], \"key_functions\": [\"debug_cache\", \"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/distiller.py": {
+    "file_mtime": 1771339355.1796746,
+    "hash": "10da2b7f406f250c",
+    "summarized_at": "2026-02-17T07:44:25.147581",
+    "summary": "{\"purpose\": \"distiller.py (CLI)\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"python3 plugins/rlm-factory/scripts/distiller.py --file <path>\"], \"args\": [\"--file: file to distill\"], \"inputs\": [\"source file\"], \"outputs\": [\"rlm_tool_cache.json\"], \"dependencies\": [\"rlm_config.py\"], \"key_functions\": [\"distill\", \"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/fetch_tool_context.py": {
+    "file_mtime": 1771339355.180001,
+    "hash": "b080a285099b2b57",
+    "summarized_at": "2026-02-17T07:44:48.151689",
+    "summary": "{\"purpose\": \"fetch_tool_context.py\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"python3 plugins/rlm-factory/scripts/fetch_tool_context.py\"], \"args\": [], \"inputs\": [], \"outputs\": [\"context\"], \"dependencies\": [], \"key_functions\": [\"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/inventory.py": {
+    "file_mtime": 1771339355.1802502,
+    "hash": "7b4951ece4e03b78",
+    "summarized_at": "2026-02-17T07:44:48.326823",
+    "summary": "{\"purpose\": \"inventory.py (CLI)\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"python3 plugins/rlm-factory/scripts/inventory.py\"], \"args\": [], \"inputs\": [], \"outputs\": [\"UI\"], \"dependencies\": [], \"key_functions\": [\"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/query_cache.py": {
+    "file_mtime": 1771339355.1806333,
+    "hash": "0f4c0252a4a403c8",
+    "summarized_at": "2026-02-17T07:44:24.683149",
+    "summary": "{\"purpose\": \"query_cache.py (CLI)\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"python3 plugins/rlm-factory/scripts/query_cache.py <term>\"], \"args\": [\"term: search term\"], \"inputs\": [\"rlm_tool_cache.json\"], \"outputs\": [\"search results\"], \"dependencies\": [\"rlm_config.py\"], \"key_functions\": [\"search_cache\", \"main\"]}"
+  },
+  "plugins/rlm-factory/scripts/rlm_config.py": {
+    "file_mtime": 1771339355.1811473,
+    "hash": "e3862a7f48241f19",
+    "summarized_at": "2026-02-17T07:44:24.935380",
+    "summary": "{\"purpose\": \"rlm_config.py (Shared Module)\", \"layer\": \"Plugin / RLM Factory\", \"usage\": [\"Imported by other scripts\"], \"args\": [], \"inputs\": [], \"outputs\": [\"RLMConfig object\"], \"dependencies\": [], \"key_functions\": [\"RLMConfig\"]}"
+  },
+  "plugins/skill-creator/skills/skill-creator/scripts/init_skill.py": {
+    "file_mtime": 1771339355.1904936,
+    "hash": "cf12790f1d495879",
+    "summarized_at": "2026-02-17T07:45:43.367296",
+    "summary": "{\"purpose\": \"init_skill.py (CLI)\", \"layer\": \"Plugin / Skill Creator\", \"usage\": [\"python3 plugins/skill-creator/skills/skill-creator/scripts/init_skill.py\"], \"args\": [], \"inputs\": [\"template\"], \"outputs\": [\"skill\"], \"dependencies\": [], \"key_functions\": [\"init\", \"main\"]}"
+  },
+  "plugins/skill-creator/skills/skill-creator/scripts/package_skill.py": {
+    "file_mtime": 1771339355.1909173,
+    "hash": "b31fbcb3e362d5c5",
+    "summarized_at": "2026-02-17T07:45:43.518256",
+    "summary": "{\"purpose\": \"package_skill.py (CLI)\", \"layer\": \"Plugin / Skill Creator\", \"usage\": [\"python3 plugins/skill-creator/skills/skill-creator/scripts/package_skill.py\"], \"args\": [], \"inputs\": [\"skill folder\"], \"outputs\": [\".skill file\"], \"dependencies\": [], \"key_functions\": [\"package\", \"main\"]}"
+  },
+  "plugins/skill-creator/skills/skill-creator/scripts/quick_validate.py": {
+    "file_mtime": 1771339355.191296,
+    "hash": "67cf570340201393",
+    "summarized_at": "2026-02-17T07:45:43.658855",
+    "summary": "{\"purpose\": \"quick_validate.py (CLI)\", \"layer\": \"Plugin / Skill Creator\", \"usage\": [\"python3 plugins/skill-creator/skills/skill-creator/scripts/quick_validate.py\"], \"args\": [], \"inputs\": [\"skill\"], \"outputs\": [\"validation report\"], \"dependencies\": [], \"key_functions\": [\"validate\", \"main\"]}"
+  },
+  "plugins/spec-kitty/scripts/speckit_system_bridge.py": {
+    "file_mtime": 1771339355.2108796,
+    "hash": "429c4cce036bfea0",
+    "summarized_at": "2026-02-17T07:41:11.347052",
+    "summary": "{\"purpose\": \"The Universal Bridge Synchronization Engine. Reads Spec Kitty definitions from .windsurf/workflows and .kittify/memory (Source of Truth) and projects them into native configurations for Antigravity, Claude, Gemini, and GitHub Copilot.\", \"layer\": \"Plugin / Spec-Kitty / Bridge\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/spec-kitty/scripts/speckit_system_bridge.py\"], \"args\": [], \"inputs\": [\".windsurf/workflows/*.md\", \".kittify/memory/*.md\"], \"outputs\": [\".agent/workflows/\", \".agent/rules/\", \".claude/commands/\", \".claude/CLAUDE.md\", \".gemini/commands/\", \"GEMINI.md\", \".github/prompts/\", \".github/copilot-instructions.md\", \".kittify/config.yaml\"], \"dependencies\": [\"toml\", \"yaml\"], \"consumed_by\": [\"Manual sync\", \"Workflow automation\"], \"key_functions\": [\"setup_directories\", \"ingest_rules\", \"ingest_workflows\", \"sync_antigravity\", \"sync_claude\", \"sync_gemini\", \"sync_copilot\", \"update_kittify_config\"]}"
+  },
+  "plugins/spec-kitty/scripts/sync_skills.py": {
+    "file_mtime": 1771339355.2114756,
+    "hash": "247897de568885bd",
+    "summarized_at": "2026-02-17T07:41:11.753264",
+    "summary": "{\"purpose\": \"Synchronizes skill directories from .agent/skills/ to the native skill locations expected by each AI agent (Claude, Copilot). Also handles cleanup of old injected blocks in config files.\", \"layer\": \"Plugin / Spec-Kitty / Bridge\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/spec-kitty/scripts/sync_skills.py --all\", \"python3 plugins/spec-kitty/scripts/sync_skills.py --clean\"], \"args\": [\"--all: Copy ALL skills to native directories\", \"--clean: Only remove old injected blocks\"], \"inputs\": [\".agent/skills/\"], \"outputs\": [\".claude/skills/\", \".github/skills/\"], \"dependencies\": [], \"consumed_by\": [\"speckit_system_bridge.py\", \"Manual sync\"], \"key_functions\": [\"clean_injected_blocks\", \"copy_skills\", \"main\"]}"
+  },
+  "plugins/spec-kitty/scripts/sync_workflows.py": {
+    "file_mtime": 1771339355.211798,
+    "hash": "69499efe81047872",
+    "summarized_at": "2026-02-17T07:41:11.982695",
+    "summary": "{\"purpose\": \"Synchronizes custom workflow definitions from .agent/workflows/ to other agent configuration directories (Claude, Copilot, Gemini). Handles format conversions (e.g., Markdown to TOML for Gemini).\", \"layer\": \"Plugin / Spec-Kitty / Bridge\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/spec-kitty/scripts/sync_workflows.py --all\"], \"args\": [\"--all: Sync workflows to agent directories\"], \"inputs\": [\".agent/workflows/\"], \"outputs\": [\".claude/commands/\", \".github/prompts/\", \".gemini/commands/\"], \"dependencies\": [], \"consumed_by\": [\"speckit_system_bridge.py\", \"Manual sync\"], \"key_functions\": [\"transform_content\", \"sync_recursive\", \"sync_workflows\", \"main\"]}"
+  },
+  "plugins/spec-kitty/scripts/verify_bridge_integrity.py": {
+    "file_mtime": 1771339355.2120497,
+    "hash": "6f1a7626ad754484",
+    "summarized_at": "2026-02-17T07:41:11.531623",
+    "summary": "{\"purpose\": \"Audits the Universal Bridge Synchronization by verifying that artifacts from the Source of Truth (.windsurf, .kittify) are correctly projected into target agent directories (.agent, .claude, .gemini, .github). Checks for file existence and content transformations.\", \"layer\": \"Plugin / Spec-Kitty / Verification\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/spec-kitty/scripts/verify_bridge_integrity.py\"], \"args\": [], \"inputs\": [\".windsurf/\", \".kittify/\", \".agent/\", \".claude/\", \".gemini/\", \".github/\"], \"outputs\": [\"Console integrity report\"], \"dependencies\": [], \"consumed_by\": [\"Manual verification\", \"CI/CD\"], \"key_functions\": [\"Verifier.check_file_exists\", \"Verifier.check_content\", \"main\"]}"
+  },
+  "plugins/spec-kitty/scripts/verify_workflow_state.py": {
+    "file_mtime": 1771339355.2124777,
+    "hash": "bce9f3ced0f3a503",
+    "summarized_at": "2026-02-17T07:41:11.116338",
+    "summary": "{\"purpose\": \"Validates that valid Spec-Driven Development (SDD) artifacts (spec.md, plan.md, tasks.md) exist and are in the correct state for a given phase (specify, plan, tasks, review).\", \"layer\": \"Plugin / Spec-Kitty / Verification\", \"supported_object_types\": [\"SDD Artifacts\"], \"usage\": [\"python3 plugins/spec-kitty/scripts/verify_workflow_state.py --phase <phase> [--feature <slug> | --wp <WP-ID>]\"], \"args\": [\"--phase: Workflow phase (specify, plan, tasks, review)\", \"--feature: Feature directory slug\", \"--wp: Work Package ID\"], \"inputs\": [\"specs/ or kitty-specs/ directories\"], \"outputs\": [\"Console verification report\", \"Exit code 0 (pass) or 1 (fail)\"], \"dependencies\": [], \"consumed_by\": [\"Spec-Kitty Workflows\", \"CI/CD\"], \"key_functions\": [\"verify_specify\", \"verify_plan\", \"verify_tasks\", \"main\"]}"
+  },
+  "plugins/task-manager/scripts/task_manager.py": {
+    "file_mtime": 1771339355.2493427,
+    "hash": "f34484341908d05d",
+    "summarized_at": "2026-02-17T07:43:14.691504",
+    "summary": "{\"purpose\": \"Manages tasks and kanban boards for Project Sanctuary. Supports creating, moving, and listing tasks, as well as generating board visualizations.\", \"layer\": \"Plugin / Task Manager\", \"supported_object_types\": [\"Task\", \"Kanban Board\"], \"usage\": [\"python3 plugins/task-manager/scripts/task_manager.py [create|move|list|board]\"], \"args\": [\"create: New task\", \"move: Change status\", \"list: Show tasks\", \"board: Markdown board\"], \"inputs\": [\"tasks/\"], \"outputs\": [\"tasks/*.md\", \"kanban_board.md\"], \"dependencies\": [], \"consumed_by\": [\"Manual task management\", \"Spec-Kitty\"], \"key_functions\": [\"create_task\", \"move_task\", \"render_board\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py": {
+    "file_mtime": 1771339355.3112764,
+    "hash": "e5cfa64c2f4efd0f",
+    "summarized_at": "2026-02-17T07:42:35.834626",
+    "summary": "{\"purpose\": \"Audits the Tool Inventory against the file system and RLM Cache. Checks for missing scripts, orphan entries, and RLM coverage gaps in the plugins/ directory.\", \"layer\": \"Plugin / Tool Inventory / Audit\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py\"], \"args\": [], \"inputs\": [\"tools/tool_inventory.json\", \"plugins/ tree\", \".agent/learning/rlm_tool_cache.json\"], \"outputs\": [\"Console audit report\", \"Exit code 0 (pass) or 1 (fail)\"], \"dependencies\": [], \"consumed_by\": [\"CI/CD\", \"Manual verify\"], \"key_functions\": [\"load_json\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/cleanup_cache.py": {
+    "file_mtime": 1771339355.3116784,
+    "hash": "b65b38f52118707d",
+    "summarized_at": "2026-02-17T07:43:13.406873",
+    "summary": "{\"purpose\": \"Removes stale or orphan entries from the RLM Cache and Tool Inventory when files are deleted or moved. Ensures cache hygiene.\", \"layer\": \"Plugin / Tool Inventory / Hygiene\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/cleanup_cache.py\"], \"args\": [], \"inputs\": [\"rlm_tool_cache.json\", \"tool_inventory.json\"], \"outputs\": [\"Cleaned cache files\"], \"dependencies\": [\"rlm_config.py\"], \"consumed_by\": [\"manage_tool_inventory.py\", \"CI/CD\"], \"key_functions\": [\"remove_entry\", \"clean_orphans\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/distiller.py": {
+    "file_mtime": 1771339355.3124495,
+    "hash": "953c70a4ad03b2f7",
+    "summarized_at": "2026-02-17T07:42:35.537656",
+    "summary": "{\"purpose\": \"The RLM Engine. Performs recursive summarization of repository content using Ollama (or injected summaries). Updates the RLM Cache and triggers inventory updates.\", \"layer\": \"Plugin / Tool Inventory / RLM\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/distiller.py --file <path>\", \"python3 plugins/tool-inventory/skills/tool-inventory/scripts/distiller.py --since <hours>\"], \"args\": [\"--file: Single file\", \"--target: Directory\", \"--model: Ollama model\", \"--cleanup: Remove stale\", \"--force: Force regen\", \"--summary: Inject summary\"], \"inputs\": [\"Source code/docs\"], \"outputs\": [\"rlm_tool_cache.json\", \"rlm_summary_cache.json\"], \"dependencies\": [\"rlm_config.py\", \"manage_tool_inventory.py\"], \"consumed_by\": [\"manage_tool_inventory.py\", \"Manual invocation\"], \"key_functions\": [\"call_ollama\", \"distill\", \"run_cleanup\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/inventory.py": {
+    "file_mtime": 1771339355.3128707,
+    "hash": "2177590ec8a6d867",
+    "summarized_at": "2026-02-17T07:43:14.388313",
+    "summary": "{\"purpose\": \"Interactive CLI for browsing and managing the Tool Inventory. Provides a user-friendly menu for listing, searching, and updating tools.\", \"layer\": \"Plugin / Tool Inventory / UX\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/inventory.py\"], \"args\": [], \"inputs\": [\"tool_inventory.json\"], \"outputs\": [\"Console UI\"], \"dependencies\": [\"manage_tool_inventory.py\", \"query_cache.py\"], \"consumed_by\": [\"Manual usage\"], \"key_functions\": [\"menu_loop\", \"display_tool\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py": {
+    "file_mtime": 1771341953.7686768,
+    "hash": "f31bfc544409c73f",
+    "summarized_at": "2026-02-17T07:41:12.752188",
+    "summary": "{\"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, discovery, and documentation generation for tools.\", \"layer\": \"Plugin / Tool Inventory / Curate\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py list\", \"python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py add --path <path>\", \"python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py audit\", \"python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py discover --auto-stub\"], \"args\": [\"--inventory: Path to JSON inventory\", \"--path: Tool path\", \"--category: Category override\", \"--desc: Description\", \"--auto-stub: Auto-create stubs\", \"--batch: Process all stubs\", \"--dry-run: Preview changes\"], \"inputs\": [\"tools/tool_inventory.json\", \"plugins/\"], \"outputs\": [\"Updated tool_inventory.json\", \"Console reports\"], \"dependencies\": [\"distiller.py\", \"cleanup_cache.py\"], \"consumed_by\": [\"Manual management\", \"CI/CD\"], \"key_functions\": [\"InventoryManager.add_tool\", \"InventoryManager.update_tool\", \"InventoryManager.remove_tool\", \"InventoryManager.audit\", \"InventoryManager.discover_gaps\", \"InventoryManager.create_stub\", \"InventoryManager.standardize_header\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/query_cache.py": {
+    "file_mtime": 1771339355.3136094,
+    "hash": "e81d729c63454d06",
+    "summarized_at": "2026-02-17T07:41:12.544184",
+    "summary": "{\"purpose\": \"Provides instant O(1) semantic search of the RLM ledger. Allows searching by term, listing cached files, and outputting results in JSON.\", \"layer\": \"Plugin / Tool Inventory / RLM\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/query_cache.py <term>\", \"python3 plugins/tool-inventory/skills/tool-inventory/scripts/query_cache.py --list\"], \"args\": [\"term: Search term\", \"--list: List all cached files\", \"--no-summary: Hide summary\", \"--json: Output JSON\"], \"inputs\": [\".agent/learning/rlm_tool_cache.json\"], \"outputs\": [\"Console search results\"], \"dependencies\": [\"rlm_config.py\"], \"consumed_by\": [\"Manual search\", \"Tool discovery\"], \"key_functions\": [\"load_cache\", \"search_cache\", \"list_cache\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/rebuild_inventory.py": {
+    "file_mtime": 1771339355.3139987,
+    "hash": "35bf7f3d793ba85d",
+    "summarized_at": "2026-02-17T07:43:13.889856",
+    "summary": "{\"purpose\": \"Complete rebuild of the Tool Inventory from the file system. Scans plugins/ and tools/ to generate a fresh tool_inventory.json, handling categories and descriptions.\", \"layer\": \"Plugin / Tool Inventory / Curate\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/rebuild_inventory.py\"], \"args\": [], \"inputs\": [\"plugins/\", \"tools/\"], \"outputs\": [\"tool_inventory.json\"], \"dependencies\": [\"manage_tool_inventory.py\"], \"consumed_by\": [\"Disaster recovery\", \"Migration\"], \"key_functions\": [\"scan_directory\", \"rebuild\", \"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/rlm_config.py": {
+    "file_mtime": 1771339355.3144052,
+    "hash": "e3862a7f48241f19",
+    "summarized_at": "2026-02-17T07:42:35.201655",
+    "summary": "{\"purpose\": \"Centralized configuration and utility logic for the RLM Toolchain. Implements the Manifest Factory pattern to dynamically resolve manifests and cache files.\", \"layer\": \"Plugin / Tool Inventory / RLM\", \"supported_object_types\": [\"RLMConfig\"], \"usage\": [\"Imported by other scripts\"], \"args\": [], \"inputs\": [\"manifest-index.json\"], \"outputs\": [\"RLMConfig object\", \"Shared utilities\"], \"dependencies\": [], \"consumed_by\": [\"distiller.py\", \"query_cache.py\", \"cleanup_cache.py\"], \"key_functions\": [\"RLMConfig.__init__\", \"load_cache\", \"save_cache\", \"collect_files\", \"should_skip\", \"compute_hash\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/sync_inventory_descriptions.py": {
+    "file_mtime": 1771339355.314815,
+    "hash": "63335ba38f793b1a",
+    "summarized_at": "2026-02-17T07:42:34.970643",
+    "summary": "{\"purpose\": \"Backfills Tool Inventory descriptions using high-quality purpose fields from the RLM Cache. Hydrates manual inventory with LLM-generated insights.\", \"layer\": \"Plugin / Tool Inventory / Hygiene\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/sync_inventory_descriptions.py\"], \"args\": [], \"inputs\": [\".agent/learning/rlm_tool_cache.json\", \"tools/tool_inventory.json\"], \"outputs\": [\"Updated tool_inventory.json\"], \"dependencies\": [\"manage_tool_inventory.py\"], \"consumed_by\": [\"Manual consistency check\", \"CI/CD\"], \"key_functions\": [\"main\"]}"
+  },
+  "plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py": {
+    "file_mtime": 1771339355.3151612,
+    "hash": "7be5e9589cbddeaa",
+    "summarized_at": "2026-02-17T07:42:34.576578",
+    "summary": "{\"purpose\": \"Embedded ChromaDB wrapper for tool-inventory plugin. Provides a dedicated vector store for tool discovery and semantic search over tool summaries without external dependencies.\", \"layer\": \"Plugin / Tool Inventory\", \"supported_object_types\": [\"Tool Summaries\"], \"usage\": [\"python3 plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py [stats|list|search|import-json]\"], \"args\": [\"stats: Show collection stats\", \"list: List all entries\", \"search <query>: Semantic search\", \"import-json <path>: Import from RLM cache\"], \"inputs\": [\"rlm_tool_cache.json\"], \"outputs\": [\"ChromaDB persistence directory\"], \"dependencies\": [\"chromadb\"], \"consumed_by\": [\"manage_tool_inventory.py\", \"Manual Discovery\"], \"key_functions\": [\"upsert\", \"remove\", \"search\", \"list_all\", \"import_from_json\", \"main\"]}"
+  },
+  "plugins/vector-db/scripts/cleanup.py": {
+    "file_mtime": 1771339355.3315763,
+    "hash": "74d37812b78c1e85",
+    "summarized_at": "2026-02-17T07:47:02.171746",
+    "summary": "{\"purpose\": \"cleanup.py (CLI)\", \"layer\": \"Plugin / Vector DB\", \"usage\": [\"python3 plugins/vector-db/scripts/cleanup.py\"], \"args\": [], \"inputs\": [\"vector db\"], \"outputs\": [\"cleaned db\"], \"dependencies\": [], \"key_functions\": [\"cleanup\", \"main\"]}"
+  },
+  "plugins/vector-db/scripts/ingest.py": {
+    "file_mtime": 1771339355.3319108,
+    "hash": "ab7a5cad6476f950",
+    "summarized_at": "2026-02-17T07:47:01.668353",
+    "summary": "{\"purpose\": \"ingest.py (CLI)\", \"layer\": \"Plugin / Vector DB\", \"usage\": [\"python3 plugins/vector-db/scripts/ingest.py\"], \"args\": [], \"inputs\": [\"files\"], \"outputs\": [\"vector db\"], \"dependencies\": [\"chromadb\"], \"key_functions\": [\"ingest\", \"main\"]}"
+  },
+  "plugins/vector-db/scripts/ingest_code_shim.py": {
+    "file_mtime": 1771339355.3323345,
+    "hash": "f9ee879606095e4b",
+    "summarized_at": "2026-02-17T07:47:01.843121",
+    "summary": "{\"purpose\": \"ingest_code_shim.py (CLI)\", \"layer\": \"Plugin / Vector DB\", \"usage\": [\"python3 plugins/vector-db/scripts/ingest_code_shim.py\"], \"args\": [], \"inputs\": [\"code\"], \"outputs\": [\"vector db\"], \"dependencies\": [], \"key_functions\": [\"shim\", \"main\"]}"
+  },
+  "plugins/vector-db/scripts/query.py": {
+    "file_mtime": 1771339355.3329751,
+    "hash": "65f38f0d0ededccd",
+    "summarized_at": "2026-02-17T07:47:02.024261",
+    "summary": "{\"purpose\": \"query.py (CLI)\", \"layer\": \"Plugin / Vector DB\", \"usage\": [\"python3 plugins/vector-db/scripts/query.py <text>\"], \"args\": [\"text: query\"], \"inputs\": [\"vector db\"], \"outputs\": [\"results\"], \"dependencies\": [\"chromadb\"], \"key_functions\": [\"query\", \"main\"]}"
+  },
+  "plugins/workflow-inventory/scripts/workflow_inventory_manager.py": {
+    "file_mtime": 1771339355.3428514,
+    "hash": "013a9f0c4bb26a09",
+    "summarized_at": "2026-02-17T07:41:12.368255",
+    "summary": "{\"purpose\": \"Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Scans workflow files, extracts frontmatter, generates JSON/Markdown inventories, and supports search/list operations.\", \"layer\": \"Plugin / Workflow Inventory\", \"supported_object_types\": [], \"usage\": [\"python3 plugins/workflow-inventory/scripts/workflow_inventory_manager.py --scan\", \"python3 plugins/workflow-inventory/scripts/workflow_inventory_manager.py --search <query>\", \"python3 plugins/workflow-inventory/scripts/workflow_inventory_manager.py --list\", \"python3 plugins/workflow-inventory/scripts/workflow_inventory_manager.py --show <name>\"], \"args\": [\"--scan: Regenerate inventory\", \"--search: Search workflows\", \"--list: List all workflows\", \"--show: Show workflow details\"], \"inputs\": [\".agent/workflows/*.md\"], \"outputs\": [\"docs/antigravity/workflow/workflow_inventory.json\", \"docs/antigravity/workflow/WORKFLOW_INVENTORY.md\"], \"dependencies\": [], \"consumed_by\": [\"Manual documentation\", \"Orchestrator\"], \"key_functions\": [\"parse_frontmatter\", \"scan_workflows\", \"generate_json\", \"generate_markdown\", \"search_workflows\", \"list_workflows\", \"show_workflow\", \"main\"]}"
   },
   "scripts/hugging-face/hf_decorate_readme.py": {
     "file_mtime": 1769984471.6397753,
@@ -40,184 +395,10 @@
     "summarized_at": "2026-02-11T19:01:08.287027",
     "summary": "{\"purpose\": \"Synchronizes staged landing-page assets with the Hugging Face Hub (ADR 081). Uploads the final, metadata-rich README.md to the repository root. Complements cli.py persist-soul (which handles machine-readable data) by handling human-readable assets.\", \"layer\": \"Curate / Deployment\", \"usage\": [\"python scripts/hugging-face/hf_upload_assets.py\"], \"args\": [], \"inputs\": [\"hugging_face_dataset_repo/README.md\"], \"outputs\": [\"Uploads README.md to Hugging Face Dataset Root\"], \"dependencies\": [\"huggingface_hub\", \"mcp_servers.lib.hf_utils\"], \"key_functions\": [\"upload_assets()\"], \"consumed_by\": [\"Manual deployment\", \"Soul Persistence workflow\"]}"
   },
-  "scripts/link-checker/smart_fix_links.py": {
-    "file_mtime": 1769932732.452415,
-    "hash": "58f6f0e936df5aa4",
-    "summarized_at": "2026-02-11T19:01:08.287226",
-    "summary": "{\"purpose\": \"Auto-repair utility for broken Markdown links. Uses a file inventory (file_inventory.json) to find the correct location of moved or renamed files and updates links in-place. Supports fuzzy matching for ambiguous cases and dry-run mode.\", \"layer\": \"Curate / Link Checker\", \"usage\": [\"python scripts/link-checker/smart_fix_links.py --dry-run\", \"python scripts/link-checker/smart_fix_links.py\"], \"args\": [\"--dry-run: Report proposed changes without modifying files (Safety Mode)\"], \"inputs\": [\"scripts/link-checker/file_inventory.json (Source of Truth)\", \"**/*.md (Target files to fix)\"], \"outputs\": [\"Modified .md files\", \"Console report of fixes\"], \"dependencies\": [\"mcp_servers/lib/exclusion_config.py\"], \"key_functions\": [\"find_project_root()\", \"should_skip_file()\", \"load_inventory()\", \"fix_links_in_file()\", \"calculate_relative_path()\"], \"consumed_by\": [\"/post-move-link-check (Workflow)\", \"Manual maintenance\"]}"
-  },
-  "scripts/link-checker/verify_links.py": {
-    "file_mtime": 1769932732.4527948,
-    "hash": "61191805e1017d09",
-    "summarized_at": "2026-02-11T19:01:08.287433",
-    "summary": "{\"purpose\": \"Comprehensive integrity checker for the Project Sanctuary knowledge graph. Scans Markdown files and JSON manifests for broken internal links (dead references). Optionally validates external URLs. Enforces Protocol 128: Source Verification (Rule 9).\", \"layer\": \"Curate / Link Checker\", \"usage\": [\"python scripts/link-checker/verify_links.py\", \"python scripts/link-checker/verify_links.py --check-external --output report.json\"], \"args\": [\"--root: Project root directory (default: .)\", \"--check-external: Enable HTTP/HTTPS validation (slower)\", \"--output: JSON report path\"], \"inputs\": [\"**/*.md\", \"**/*manifest.json\"], \"outputs\": [\"JSON Report of broken links\", \"Console summary\"], \"dependencies\": [\"requests (external lib)\"], \"key_functions\": [\"is_external()\", \"resolve_relative_path()\", \"check_external_link()\", \"scan_md_file()\", \"scan_json_manifest()\"], \"consumed_by\": [\"CI/CD Pipelines\", \"Agent (Pre-Flight checks)\"]}"
-  },
   "tools/cli.py": {
     "file_mtime": 1770863335.4779313,
     "hash": "1e040338737cd8db",
     "summarized_at": "2026-02-11T19:01:08.285374",
     "summary": "{\"purpose\": \"Main entry point for the Project Sanctuary Command System. Provides unified CLI access to Protocol 128 Learning Loop (debrief, snapshot, persist-soul, guardian), RAG Cortex (ingest, query, stats, cache), Context Bundling (init-context, manifest), Tool Discovery (tools), Workflow Orchestration (workflow), Evolutionary Metrics (evolution), RLM Distillation (rlm-distill), Domain Entity Management (chronicle, task, adr, protocol), and Fine-Tuned Model (forge).\", \"layer\": \"Tools / Orchestrator\", \"usage\": [\"python tools/cli.py debrief --hours 24\", \"python tools/cli.py snapshot --type seal\", \"python tools/cli.py persist-soul\", \"python tools/cli.py guardian wakeup --mode HOLISTIC\", \"python tools/cli.py ingest --incremental --hours 24\", \"python tools/cli.py query \\\"What is Protocol 128?\\\"\", \"python tools/cli.py workflow start --name workflow-start --target MyFeature\", \"python tools/cli.py workflow retrospective\", \"python tools/cli.py workflow end \\\"feat: implemented feature X\\\"\", \"python tools/cli.py rlm-distill tools/my-script.py\", \"python tools/cli.py chronicle list --limit 10\", \"python tools/cli.py task list --status in-progress\", \"python tools/cli.py adr list --status proposed\", \"python tools/cli.py forge status\"], \"args\": [\"debrief: Phase I - Run Learning Debrief (--hours)\", \"snapshot: Phase V - Capture context snapshot (--type: seal/learning_audit/audit/guardian/bootstrap)\", \"persist-soul: Phase VI - Broadcast learnings to Hugging Face\", \"guardian: Bootloader operations (wakeup, snapshot)\", \"ingest: RAG ingestion (--incremental, --hours, --dirs, --no-purge)\", \"query: Semantic search (--max-results, --use-cache)\", \"stats: View RAG health (--samples, --sample-count)\", \"workflow: Agent lifecycle (start, retrospective, end)\", \"evolution: Evolutionary metrics (fitness, depth, scope)\", \"rlm-distill: Distill semantic summaries from files\", \"chronicle/task/adr/protocol: Domain entity CRUD\", \"forge: Sanctuary Fine-Tuned Model (query, status)\"], \"inputs\": [\".agent/learning/learning_manifest.json\", \".agent/learning/guardian_manifest.json\", \"00_CHRONICLE/ENTRIES/\", \"tasks/\", \"ADRs/\", \"01_PROTOCOLS/\"], \"outputs\": [\"RAG Database (.vector_data/)\", \"Snapshots (.agent/learning/snapshots/)\", \"Context Bundles (temp/context-bundles/)\", \"Soul traces on Hugging Face\", \"Chronicle, Task, ADR, Protocol markdown files\"], \"dependencies\": [\"mcp_servers/learning/operations.py (LearningOperations)\", \"mcp_servers/rag_cortex/operations.py (CortexOperations)\", \"mcp_servers/evolution/operations.py (EvolutionOperations)\", \"mcp_servers/chronicle/operations.py (ChronicleOperations)\", \"mcp_servers/task/operations.py (TaskOperations)\", \"mcp_servers/adr/operations.py (ADROperations)\", \"mcp_servers/protocol/operations.py (ProtocolOperations)\", \"mcp_servers/forge_llm/operations.py (ForgeOperations) [optional]\", \"tools/orchestrator/workflow_manager.py (WorkflowManager)\"], \"key_functions\": [\"main()\", \"verify_iron_core()\", \"_get_learning_ops()\", \"_get_cortex_ops()\", \"_get_evolution_ops()\"], \"consumed_by\": [\"User (Manual CLI)\", \"Agent (via Tool Calls)\", \"CI/CD Pipelines\", \"/workflow-* workflows\"]}"
-  },
-  "tools/codify/diagrams/export_mmd_to_image.py": {
-    "file_mtime": 1769932732.464018,
-    "hash": "3aa12e255496c8ff",
-    "summarized_at": "2026-02-11T19:01:08.287706",
-    "summary": "{\"purpose\": \"Core utility for converting Mermaid diagram definitions (.mmd) into visual assets (.png/.svg) for documentation and reports. Supports batch rendering, outdated-image detection, and explicit input/output paths.\", \"layer\": \"Codify / Diagrams\", \"usage\": [\"python tools/codify/diagrams/export_mmd_to_image.py\", \"python tools/codify/diagrams/export_mmd_to_image.py my_diagram.mmd\", \"python tools/codify/diagrams/export_mmd_to_image.py --svg\", \"python tools/codify/diagrams/export_mmd_to_image.py --check\"], \"args\": [\"files: Optional .mmd files to render\", \"--input: Input MMD file or directory\", \"--output: Output file path or directory\", \"--svg: Render as SVG instead of PNG\", \"--check: Check for outdated images only\"], \"inputs\": [\"docs/architecture_diagrams/**/*.mmd\"], \"outputs\": [\"PNG or SVG images in the specified output directory\"], \"dependencies\": [\"mermaid-cli (npm install -g @mermaid-js/mermaid-cli)\"], \"key_functions\": [\"check_mmdc()\", \"render_diagram()\", \"check_outdated()\", \"render_diagram_explicit()\", \"main()\"], \"consumed_by\": [\"CI/CD Pipelines\", \"Manual documentation updates\"]}"
-  },
-  "tools/codify/rlm/debug_rlm.py": {
-    "file_mtime": 1769932732.4642851,
-    "hash": "04ac37288762b914",
-    "summarized_at": "2026-02-11T19:01:08.287863",
-    "summary": "{\"purpose\": \"Debug utility to inspect the RLMConfiguration state. Instantiates RLMConfig for both 'tool' and 'sanctuary' profiles and prints resolved paths for manifest, cache, and prompt template. Useful for troubleshooting cache path conflicts and factory resolution.\", \"layer\": \"Codify / RLM\", \"usage\": [\"python tools/codify/rlm/debug_rlm.py\"], \"args\": [], \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\", \".env\"], \"outputs\": [\"Console output (State inspection of RLMConfig)\"], \"dependencies\": [\"tools/codify/rlm/rlm_config.py\"], \"key_functions\": [\"(inline script \u2014 no functions)\"], \"consumed_by\": [\"Developers (Manual debugging)\"]}"
-  },
-  "tools/codify/rlm/distiller.py": {
-    "file_mtime": 1769932732.4646266,
-    "hash": "ef54398e3a79f40b",
-    "summarized_at": "2026-02-11T19:01:08.288069",
-    "summary": "{\"purpose\": \"Recursive summarization engine for repo content using Ollama LLM. Reads files from manifest-defined directories, generates semantic summaries, and caches them in rlm_summary_cache.json or rlm_tool_cache.json. Supports single-file, directory, incremental (--since), and forced modes. For tool scripts, prioritizes header extraction over LLM calls.\", \"layer\": \"Codify / RLM\", \"usage\": [\"python tools/codify/rlm/distiller.py --file tools/cli.py --type tool\", \"python tools/codify/rlm/distiller.py --file docs/readme.md\", \"python tools/codify/rlm/distiller.py --since 24 --type sanctuary\", \"python tools/codify/rlm/distiller.py --target ADRs/ --type sanctuary\", \"python tools/codify/rlm/distiller.py --target tools/investigate/miners --type tool --force\"], \"args\": [\"--file: Single file to process\", \"--type: RLM Type \u2014 sanctuary (default) or tool\", \"--model: Ollama model to use\", \"--since: Process only files changed in last N hours\", \"--target: Target directories to process\", \"--force: Force update even if unchanged\", \"--cleanup: Remove stale entries for deleted files\", \"--no-cleanup: Skip auto-cleanup on incremental distills\", \"--debug: Enable debug logging\"], \"inputs\": [\"tools/standalone/rlm-factory/rlm_manifest.json (sanctuary)\", \"tools/tool_inventory.json (tool)\"], \"outputs\": [\".agent/learning/rlm_summary_cache.json\", \".agent/learning/rlm_tool_cache.json\"], \"dependencies\": [\"tools/codify/rlm/rlm_config.py (Configuration)\", \"tools/curate/inventories/manage_tool_inventory.py (Cyclical: Updates inventory descriptions)\", \"tools/curate/rlm/cleanup_cache.py (Orphan Removal)\", \"Ollama (local LLM server)\"], \"key_functions\": [\"extract_header_summary()\", \"call_ollama()\", \"distill()\", \"run_cleanup()\", \"load_cache()\", \"save_cache()\", \"compute_hash()\", \"collect_files()\"], \"consumed_by\": [\"tools/curate/inventories/manage_tool_inventory.py\", \"tools/cli.py rlm-distill\"]}"
-  },
-  "tools/codify/rlm/rlm_config.py": {
-    "file_mtime": 1769932732.4651697,
-    "hash": "22974b3bf821e11c",
-    "summarized_at": "2026-02-11T19:01:08.288282",
-    "summary": "{\"purpose\": \"Centralized configuration factory for the RLM Toolchain. Implements the Manifest Factory pattern (ADR-0024) to dynamically resolve manifests, cache files, prompts, and LLM models based on Analysis Type (sanctuary vs tool). Single Source of Truth for RLM configuration.\", \"layer\": \"Codify / RLM\", \"usage\": [\"from tools.codify.rlm.rlm_config import RLMConfig\", \"config = RLMConfig(run_type='tool')\", \"from tools.codify.rlm.rlm_config import load_cache, save_cache, compute_hash, collect_files\"], \"args\": [], \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\", \"Manifests referenced by the index\"], \"outputs\": [\"RLMConfig object (Typed configuration)\"], \"dependencies\": [], \"key_functions\": [\"RLMConfig.__init__()\", \"RLMConfig.load_manifest_content()\", \"load_cache()\", \"save_cache()\", \"compute_hash()\", \"should_skip()\", \"collect_files()\"], \"consumed_by\": [\"tools/codify/rlm/distiller.py\", \"tools/retrieve/rlm/query_cache.py\", \"tools/curate/rlm/cleanup_cache.py\", \"tools/retrieve/rlm/fetch_tool_context.py\", \"tools/retrieve/rlm/inventory.py\"]}"
-  },
-  "tools/codify/tracking/analyze_tracking_status.py": {
-    "file_mtime": 1769919582.0134404,
-    "hash": "cee0f28f096b229c",
-    "summarized_at": "2026-02-11T19:01:08.288450",
-    "summary": "{\"purpose\": \"Generates a summary report of task/spec completion progress. Reads from task_tracking.json or scans the tasks/ directory structure to show completed vs pending tasks for project management visibility.\", \"layer\": \"Codify / Tracking\", \"usage\": [\"python tools/codify/tracking/analyze_tracking_status.py\"], \"args\": [], \"inputs\": [\".agent/learning/task_tracking.json\", \"tasks/ directory\"], \"outputs\": [\"Console summary report\"], \"dependencies\": [], \"key_functions\": [\"analyze_status()\"], \"consumed_by\": [\"Manual project oversight\"]}"
-  },
-  "tools/codify/tracking/generate_todo_list.py": {
-    "file_mtime": 1769919582.013537,
-    "hash": "7a4118df5c41a204",
-    "summarized_at": "2026-02-11T19:01:08.288705",
-    "summary": "{\"purpose\": \"Creates a prioritized TODO list of specs/tasks pending completion. Scans tasks/ for blocked and in-progress items and forge/ for specs missing tasks.md. Outputs a sorted Markdown file with blocked items bubbled to top.\", \"layer\": \"Codify / Tracking\", \"usage\": [\"python tools/codify/tracking/generate_todo_list.py\"], \"args\": [], \"inputs\": [\"tasks/ directory\", \"forge/ directory\"], \"outputs\": [\"TODO_PENDING_TASKS.md\"], \"dependencies\": [], \"key_functions\": [\"generate_todo()\"], \"consumed_by\": [\"Manual project oversight\"]}"
-  },
-  "tools/curate/documentation/workflow_inventory_manager.py": {
-    "file_mtime": 1770826683.4159508,
-    "hash": "d8dee9b8b23b82e2",
-    "summarized_at": "2026-02-11T19:01:08.289420",
-    "summary": "{\"purpose\": \"Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Scans workflow files, extracts frontmatter metadata (description, inputs, tier, track), generates both JSON and Markdown inventory files, and supports search/list/show operations.\", \"layer\": \"Curate / Documentation\", \"usage\": [\"python tools/curate/documentation/workflow_inventory_manager.py --scan\", \"python tools/curate/documentation/workflow_inventory_manager.py --search keyword\", \"python tools/curate/documentation/workflow_inventory_manager.py --list\", \"python tools/curate/documentation/workflow_inventory_manager.py --show workflow-name\"], \"args\": [\"--scan: Scan workflows dir and regenerate inventory\", \"--search QUERY: Search workflows by keyword\", \"--list: List all workflows\", \"--show NAME: Show details for a workflow\"], \"inputs\": [\".agent/workflows/*.md\"], \"outputs\": [\"docs/antigravity/workflow/workflow_inventory.json\", \"docs/antigravity/workflow/WORKFLOW_INVENTORY.md\"], \"dependencies\": [], \"key_functions\": [\"parse_frontmatter()\", \"extract_called_by()\", \"scan_workflows()\", \"generate_json()\", \"generate_markdown()\", \"search_workflows()\", \"list_workflows()\", \"show_workflow()\"], \"consumed_by\": [\"Manual workflow documentation\"]}"
-  },
-  "tools/curate/inventories/manage_tool_inventory.py": {
-    "file_mtime": 1769932732.4688728,
-    "hash": "2724fad577f5859e",
-    "summarized_at": "2026-02-11T19:01:08.289844",
-    "summary": "{\"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, discover, and generate operations against tools/tool_inventory.json. Features automated docstring extraction, compliance tracking, header style detection, gap discovery, and stub creation. Bidirectionally linked with the RLM distiller for cache synchronization.\", \"layer\": \"Curate / Inventories\", \"usage\": [\"python tools/curate/inventories/manage_tool_inventory.py list\", \"python tools/curate/inventories/manage_tool_inventory.py search keyword\", \"python tools/curate/inventories/manage_tool_inventory.py add --path tools/new_script.py\", \"python tools/curate/inventories/manage_tool_inventory.py update --path tool.py --desc 'New description'\", \"python tools/curate/inventories/manage_tool_inventory.py remove --path tools/old.py\", \"python tools/curate/inventories/manage_tool_inventory.py audit\", \"python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub\"], \"args\": [\"--inventory: Path to JSON inventory\", \"--path: Relative path to tool\", \"--category: Category override\", \"--desc: Description override\", \"--status: Filter by compliance status\", \"--new-path: New path for move/rename\", \"--mark-compliant: Set status to compliant\", \"--dry-run: Preview without writing\", \"--batch: Batch operations\", \"--json: JSON output\"], \"inputs\": [\"tools/tool_inventory.json\"], \"outputs\": [\"Updated tools/tool_inventory.json\", \"Console reports\"], \"dependencies\": [\"tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)\", \"tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)\"], \"key_functions\": [\"InventoryManager.__init__()\", \"InventoryManager.add_tool()\", \"InventoryManager.list_tools()\", \"InventoryManager.audit()\", \"InventoryManager.search()\", \"InventoryManager.update_tool()\", \"InventoryManager.remove_tool()\", \"InventoryManager.discover_gaps()\", \"InventoryManager.create_stub()\"], \"consumed_by\": [\"tools/codify/rlm/distiller.py\", \"/tool-inventory-manage workflow\"]}"
-  },
-  "tools/curate/inventories/vibe_cleanup.py": {
-    "file_mtime": 1769932732.4696863,
-    "hash": "bc5b2e24e33aa6c7",
-    "summarized_at": "2026-02-11T19:01:08.290116",
-    "summary": "{\"purpose\": \"Inventory Reconciliation Utility. Scans tool_inventory.json against the filesystem and automatically removes entries for files that no longer exist (pruning). Also lists all current scripts to audit 'ghosts' vs reality. Delegates to manage_tool_inventory.py for actual removal.\", \"layer\": \"Curate / Inventories\", \"usage\": [\"python tools/curate/inventories/vibe_cleanup.py\"], \"args\": [], \"inputs\": [\"tools/tool_inventory.json\", \"Filesystem (tools/ directory)\"], \"outputs\": [\"Updates to tool_inventory.json\", \"Console log of removed files\"], \"dependencies\": [\"tools/curate/inventories/manage_tool_inventory.py\"], \"key_functions\": [\"get_missing_files()\", \"remove_tool()\", \"main()\"], \"consumed_by\": [\"CI/CD Pipelines\", \"Manual maintenance\"]}"
-  },
-  "tools/curate/rlm/cleanup_cache.py": {
-    "file_mtime": 1769919582.0149906,
-    "hash": "b24915066260a895",
-    "summarized_at": "2026-02-11T19:01:08.290398",
-    "summary": "{\"purpose\": \"RLM Cleanup: Removes stale (deleted files) and orphan (not in manifest) entries from the Recursive Language Model cache. Supports dry-run mode and provides a programmatic API (remove_entry) for other tools to atomically clean individual entries.\", \"layer\": \"Curate / RLM\", \"usage\": [\"python tools/curate/rlm/cleanup_cache.py --type sanctuary\", \"python tools/curate/rlm/cleanup_cache.py --type tool --apply --prune-orphans\", \"python tools/curate/rlm/cleanup_cache.py --type sanctuary --apply -v\"], \"args\": [\"--type: RLM Type (sanctuary or tool)\", \"--apply: Perform the deletion (without this, dry run)\", \"--prune-orphans: Remove entries not matching manifest\", \"--v: Verbose mode\"], \"inputs\": [\".agent/learning/rlm_summary_cache.json\", \".agent/learning/rlm_tool_cache.json\"], \"outputs\": [\"Updated cache files\", \"Console report\"], \"dependencies\": [\"tools/codify/rlm/rlm_config.py\"], \"key_functions\": [\"main()\", \"remove_entry(run_type, file_path)\"], \"consumed_by\": [\"tools/curate/inventories/manage_tool_inventory.py\", \"Manual maintenance\"]}"
-  },
-  "tools/investigate/utils/next_number.py": {
-    "file_mtime": 1769932732.4702034,
-    "hash": "1d99754a89e6fa3d",
-    "summarized_at": "2026-02-11T19:01:08.290749",
-    "summary": "{\"purpose\": \"Sequential Identifier Generator. Scans artifact directories (Specs, Tasks, ADRs) to find the next available sequence number with gap-filling. Prevents ID collisions across the project's numbered artifact system.\", \"layer\": \"Investigate / Utils\", \"usage\": [\"python tools/investigate/utils/next_number.py --type spec\", \"python tools/investigate/utils/next_number.py --type task\", \"python tools/investigate/utils/next_number.py --type all\", \"python tools/investigate/utils/next_number.py --dir custom_dir --pattern '(\\\\d{4})'\"], \"args\": [\"--type: Artifact type (spec, task, adr, all)\", \"--dir: Ad-hoc directory to scan\", \"--pattern: Regex pattern for --dir\", \"--recursive: Recursive scan for --dir\", \"--json: Output as JSON\"], \"inputs\": [\"specs/\", \"tasks/\", \"ADRs/\"], \"outputs\": [\"Next available ID to stdout\"], \"dependencies\": [], \"key_functions\": [\"find_max_number()\", \"get_next_number()\", \"find_max_in_directory()\", \"show_all()\"], \"consumed_by\": [\"tools/orchestrator/workflow_manager.py\", \"Manual workflow execution\"]}"
-  },
-  "tools/investigate/utils/pathResolver.js": {
-    "file_mtime": 1769932732.4705033,
-    "hash": "156baa7e06804aec",
-    "summarized_at": "2026-02-11T19:01:08.291223",
-    "summary": "{\"purpose\": \"Node.js implementation of path resolution logic. Standardizes path resolution relative to PROJECT_ROOT with cross-platform support (Windows/WSL). Provides toRelative(), toAbsolute(), and resolveConfigPath() utilities. ADR 017 compliant.\", \"layer\": \"Investigate / Utils (Node.js)\", \"usage\": [\"import { toRelative, toAbsolute, resolveConfigPath } from './pathResolver.js'\"], \"args\": [], \"inputs\": [\"PROJECT_ROOT env var (optional)\"], \"outputs\": [\"Resolved paths\"], \"dependencies\": [], \"key_functions\": [\"normalizeSeparators()\", \"toRelative()\", \"toAbsolute()\", \"resolveConfigPath()\"], \"consumed_by\": [\"Node.js tools and processors\"]}"
-  },
-  "tools/investigate/utils/path_resolver.py": {
-    "file_mtime": 1769932732.4708712,
-    "hash": "6f0bbac79bfd0c3f",
-    "summarized_at": "2026-02-11T19:01:08.291008",
-    "summary": "{\"purpose\": \"Standardizes cross-platform path resolution and provides access to the Master Object Collection (legacy location). Uses heuristic root detection via landmark directories (legacy-system, .agent). Provides resolve_root() and resolve_path() helpers used throughout the codebase.\", \"layer\": \"Investigate / Utils\", \"usage\": [\"from tools.investigate.utils.path_resolver import resolve_path, resolve_root\"], \"args\": [], \"inputs\": [\"PROJECT_ROOT env var (optional)\", \"legacy-system/reference-data/master_object_collection.json\"], \"outputs\": [\"Resolved absolute paths\"], \"dependencies\": [], \"key_functions\": [\"PathResolver.get_project_root()\", \"PathResolver.to_absolute()\", \"PathResolver.load_master_collection()\", \"PathResolver.get_object_path()\", \"resolve_root()\", \"resolve_path()\"], \"consumed_by\": [\"tools/cli.py\", \"tools/orchestrator/workflow_manager.py\", \"tools/retrieve/bundler/*\"]}"
-  },
-  "tools/investigate/utils/rlmConfigResolver.js": {
-    "file_mtime": 1769932732.4711235,
-    "hash": "007fe118a409f847",
-    "summarized_at": "2026-02-11T19:01:08.291433",
-    "summary": "{\"purpose\": \"Node.js RLM configuration resolver. Reads the factory index (manifest-index.json) to resolve the correct RLM cache path for a given type ('legacy' or 'tool'). Provides a single exported function getRLMCachePath().\", \"layer\": \"Investigate / Utils (Node.js)\", \"usage\": [\"import { getRLMCachePath } from './rlmConfigResolver.js'\", \"const cachePath = getRLMCachePath('tool')\"], \"args\": [], \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\"], \"outputs\": [\"Absolute path to the RLM cache file\"], \"dependencies\": [], \"key_functions\": [\"getRLMCachePath(type)\"], \"consumed_by\": [\"Node.js tools needing RLM cache access\"]}"
-  },
-  "tools/orchestrator/dual_loop/generate_strategy_packet.py": {
-    "file_mtime": 1770920456.067488,
-    "hash": "7d8479632d0c0d00",
-    "summarized_at": "2026-02-12T10:39:17.466052",
-    "summary": "{\n  \"purpose\": \"CLI tool for the Outer Loop (Strategic Controller) to distill a tasks.md item into a minimal, token-efficient Strategy Packet for the Inner Loop.\",\n  \"outputs\": [\n    \"Optional output path (default: .agent/handoffs/)\",\n    \"--spec:       Optional path to spec.md for context injection\",\n    \"--plan:       Optional path to plan.md for context injection\"\n  ]\n}"
-  },
-  "tools/orchestrator/dual_loop/run_workflow.py": {
-    "file_mtime": 1770921625.1864345,
-    "hash": "5cad09441bd4703f",
-    "summarized_at": "2026-02-12T10:49:51.769947",
-    "summary": "{\n  \"purpose\": \"Orchestrates the Dual-Loop Workflow which includes creating a worktree (Spec Kitty Implement), generating a Strategy Packet, launching an Inner Loop (Claude) in isolation, and optionally running verification.\",\n  \"layer\": \"Application\",\n  \"supported_object_types\": [\"Task ID\"],\n  \"usage\": [\n    \"python3 spec_kitty_dual_loop_wrapper.py <TASK_ID>\",\n    \"python3 spec_kitty_dual_loop_wrapper.py <TASK_ID> --tasks-file PATH\"\n  ],\n  \"args\": [\n    {\n      \"name\": \"task_id\",\n      \"type\": \"string\",\n      \"description\": \"Task ID (e.g., '3', 'WP-06')\"\n    },\n    {\n      \"name\": \"--tasks-file\",\n      \"type\": \"Path\",\n      \"default\": \"kitty-specs/001-dual-loop-agent-architecture/tasks.md\",\n      \"description\": \"Path to tasks.md relative to project root\"\n    }\n  ],\n  \"inputs\": [\n    {\n      \"name\": \"tasks.md\",\n      \"type\": \"file\",\n      \"description\": \"Relative path to tasks.md file from the project root\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"Strategy Packet\",\n      \"type\": \"file\",\n      \"description\": \"Generated Strategy Packet in markdown format\"\n    },\n    {\n      \"name\": \"Verification Update\",\n      \"type\": \"none\",\n      \"description\": \"Update to tasks.md file if verification is run and successful\"\n    }\n  ],\n  \"dependencies\": [\n    \"spec-kitty\",\n    \"claude\",\n    \"generate_strategy_packet.py\",\n    \"verify_inner_loop_result.py\"\n  ],\n  \"consumed_by\": [\"Inner Loop (Claude)\"],\n  \"key_functions\": [\n    \"main()\",\n    \"run_workflow()\"\n  ]\n}"
-  },
-  "tools/orchestrator/dual_loop/verify_inner_loop_result.py": {
-    "file_mtime": 1770920930.644963,
-    "hash": "ba90057d6d79f04a",
-    "summarized_at": "2026-02-12T10:42:17.950422",
-    "summary": "{\n  \"purpose\": \"CLI tool for the Outer Loop (Strategic Controller) to verify the output of an Inner Loop execution against the original Strategy Packet.\",\n  \"outputs\": [\n    \"A Verification Report printed to stdout (markdown format).\",\n    \"Exit code 0 = PASS, exit code 1 = FAIL.\"\n  ]\n}"
-  },
-  "tools/orchestrator/proof_check.py": {
-    "file_mtime": 1770828416.5449772,
-    "hash": "f4e65d54cc5539b3",
-    "summarized_at": "2026-02-11T19:01:08.291661",
-    "summary": "{\"purpose\": \"Proof-of-Work validator for spec-driven development. Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. Prevents 'checkbox fraud' \u2014 marking tasks done without actual code changes.\", \"layer\": \"Orchestrator / Verification\", \"usage\": [\"python tools/orchestrator/proof_check.py --spec-dir specs/0005-human-gate-protocols\", \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-foo --json\"], \"args\": [\"--spec-dir: Path to spec directory (required)\", \"--project-root: Project root directory (default: current)\", \"--json: Output in JSON format\"], \"inputs\": [\"specs/[ID]/spec.md\", \"specs/[ID]/plan.md\", \"specs/[ID]/tasks.md\"], \"outputs\": [\"Summary report of modified/unchanged files\", \"Exit code 1 if fail, 0 if pass\"], \"dependencies\": [\"Git (must be in a git repository)\"], \"key_functions\": [\"extract_file_refs()\", \"check_file_modified()\", \"run_proof_check()\", \"main()\"], \"consumed_by\": [\"tools/cli.py workflow retrospective\", \"/sanctuary-retrospective workflow\"]}"
-  },
-  "tools/orchestrator/verify_workflow_state.py": {
-    "file_mtime": 1770925675.5663764,
-    "hash": "7c0295dd2ce435d4",
-    "summarized_at": "2026-02-12T11:50:02.042518",
-    "summary": "{\n  \"purpose\": \"A programmatic integrity checker for the Spec Kitty workflow. Ensures that artifacts (spec, plan, tasks, worktrees) actually exist on disk before allowing the Agent to proceed.\",\n  \"layer\": \"Application\",\n  \"supported_object_types\": [\"Feature\", \"Work Package\"],\n  \"usage\": [\n    \"python3 verify_workflow_state.py --feature <slug> --phase <specify|plan|tasks>\",\n    \"python3 verify_workflow_state.py --wp <wp-id> --phase <implement|review>\"\n  ],\n  \"args\": [\n    {\n      \"name\": \"--feature\",\n      \"description\": \"Feature slug (e.g. dual-loop-arch)\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"--wp\",\n      \"description\": \"Work Package ID (e.g. WP-001)\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"--phase\",\n      \"description\": \"Phase of the workflow (specify, plan, tasks, implement, review). Required argument.\",\n      \"type\": \"string\",\n      \"choices\": [\"specify\", \"plan\", \"tasks\", \"implement\", \"review\"]\n    }\n  ],\n  \"inputs\": [\n    {\n      \"name\": \"root directory\",\n      \"description\": \"The current working directory (os.getcwd())\"\n    },\n    {\n      \"name\": \"Feature slug\",\n      \"description\": \"A string representing the feature's identifier in kitty-specs directory.\"\n    },\n    {\n      \"name\": \"Work Package ID\",\n      \"description\": \"A string representing the work package's identifier.\"\n    }\n  ],\n  \"outputs\": [\n    \"Printed messages indicating integrity failures (\u274c INTEGRITY FAILURE: ...) or passes (\u2705 ...) based on the verification results.\"\n  ],\n  \"dependencies\": [\"argparse\", \"os\", \"sys\", \"pathlib\"],\n  \"consumed_by\": \"Spec Kitty workflow\",\n  \"key_functions\": [\n    \"fail(msg)\",\n    \"pass_check(msg)\",\n    \"find_feature_dir(root, slug)\",\n    \"verify_feature_phase(root, slug, phase)\",\n    \"verify_wp_phase(root, wp_id, phase)\"\n  ]\n}"
-  },
-  "tools/orchestrator/workflow_manager.py": {
-    "file_mtime": 1770828416.5462549,
-    "hash": "23567a2de381911b",
-    "summarized_at": "2026-02-11T19:01:08.292111",
-    "summary": "{\"purpose\": \"Core Workflow Orchestrator (ADR-0030 v2/v3). Manages the full lifecycle of Agent Workflows: Git state checks, context alignment, branch creation/naming, spec directory initialization, manifest setup, retrospective with proof check, commit/push, and post-merge cleanup. Single source of truth for 'Start/End Workflow' logic.\", \"layer\": \"Orchestrator\", \"usage\": [\"from tools.orchestrator.workflow_manager import WorkflowManager\", \"mgr = WorkflowManager()\", \"mgr.start_workflow('codify', 'MyTarget')\", \"mgr.run_retrospective()\", \"mgr.end_workflow('feat: implemented feature X', files)\", \"mgr.cleanup_workflow()\"], \"args\": [\"Workflow Name\", \"Target ID\", \"Artifact Type\"], \"inputs\": [\"Workflow Name\", \"Target ID\"], \"outputs\": [\"Exit Code 0: Success\", \"Exit Code 1: Failure\"], \"dependencies\": [\"tools/investigate/utils/path_resolver.py\", \"Git\"], \"key_functions\": [\"WorkflowManager.start_workflow()\", \"WorkflowManager.run_retrospective()\", \"WorkflowManager.run_proof_check()\", \"WorkflowManager.end_workflow()\", \"WorkflowManager.end_workflow_with_confirmation()\", \"WorkflowManager.cleanup_workflow()\", \"WorkflowManager.get_git_status()\", \"WorkflowManager.get_current_branch()\", \"WorkflowManager.generate_next_id()\"], \"consumed_by\": [\"tools/cli.py\", \"/sanctuary-start workflow\", \"/sanctuary-end workflow\"]}"
-  },
-  "tools/retrieve/bundler/bundle.py": {
-    "file_mtime": 1769974509.3498664,
-    "hash": "a08009a2e2d2c326",
-    "summarized_at": "2026-02-11T19:01:08.292442",
-    "summary": "{\"purpose\": \"Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest. Warns on deprecated legacy keys (core, topic). Designed for creating portable context packages for LLM consumption.\", \"layer\": \"Retrieve / Bundler\", \"usage\": [\"python tools/retrieve/bundler/bundle.py manifest.json\", \"python tools/retrieve/bundler/bundle.py manifest.json -o output.md\"], \"args\": [\"manifest: Path to file-manifest.json\", \"-o, --output: Output markdown file path (default: bundle.md)\"], \"inputs\": [\"file-manifest.json\", \"Source files referenced in manifest\"], \"outputs\": [\"Markdown bundle file (e.g. bundle.md)\"], \"dependencies\": [\"tools/investigate/utils/path_resolver.py\"], \"key_functions\": [\"write_file_content()\", \"bundle_files()\"], \"consumed_by\": [\"tools/retrieve/bundler/manifest_manager.py\", \"tools/cli.py manifest bundle\"]}"
-  },
-  "tools/retrieve/bundler/manifest_manager.py": {
-    "file_mtime": 1769974509.3500676,
-    "hash": "4e22398f5d6355f6",
-    "summarized_at": "2026-02-11T19:01:08.292763",
-    "summary": "{\"purpose\": \"Primary CLI for the Context Bundler system. Handles initialization and modification of context-manager manifests. Supports manifest init (from base templates), file add/remove/update, searching, listing, and bundling execution. Enforces ADR 097 simple schema.\", \"layer\": \"Retrieve / Bundler\", \"usage\": [\"python tools/retrieve/bundler/manifest_manager.py init --bundle-title 'My Feature' --type generic\", \"python tools/retrieve/bundler/manifest_manager.py add --path docs/readme.md --note 'Overview'\", \"python tools/retrieve/bundler/manifest_manager.py remove --path docs/readme.md\", \"python tools/retrieve/bundler/manifest_manager.py bundle --output context.md\"], \"args\": [\"init: Initialize manifest (--bundle-title, --type, --manifest)\", \"add: Add file (--path, --note, --base, --manifest, --section)\", \"remove: Remove file (--path, --base, --manifest)\", \"update: Update file (--path, --note, --new-path, --base, --manifest)\", \"search: Search files (pattern, --base, --manifest)\", \"list: List files (--base, --manifest)\", \"bundle: Execute bundle (--output, --base, --manifest)\"], \"inputs\": [\"tools/standalone/context-bundler/file-manifest.json\", \"tools/standalone/context-bundler/base-manifests/*.json\"], \"outputs\": [\"tools/standalone/context-bundler/file-manifest.json\", \"Context bundles (.md)\"], \"dependencies\": [\"tools/investigate/utils/path_resolver.py\", \"tools/retrieve/bundler/bundle.py\"], \"key_functions\": [\"init_manifest()\", \"add_file()\", \"remove_file()\", \"update_file()\", \"search_files()\", \"list_manifest()\", \"bundle()\"], \"consumed_by\": [\"tools/cli.py manifest *\"]}"
-  },
-  "tools/retrieve/bundler/validate.py": {
-    "file_mtime": 1769974509.3502343,
-    "hash": "8722a2f76eec9146",
-    "summarized_at": "2026-02-11T19:01:08.293010",
-    "summary": "{\"purpose\": \"Validates context bundler manifest files against schema. Checks required fields (title, files), path format, and path traversal vulnerabilities. Can validate individual manifests, all base manifests, or the manifest index.\", \"layer\": \"Retrieve / Bundler\", \"usage\": [\"python tools/retrieve/bundler/validate.py manifest.json\", \"python tools/retrieve/bundler/validate.py --all-base\", \"python tools/retrieve/bundler/validate.py --check-index\"], \"args\": [\"manifest: Path to manifest JSON file\", \"--all-base: Validate all base manifests\", \"--check-index: Validate manifest index\", \"--quiet: Suppress output\"], \"inputs\": [\"Manifest JSON files\", \"file-manifest-schema.json\"], \"outputs\": [\"Validation report (stdout)\", \"Exit code 0 (valid) or 1 (invalid)\"], \"dependencies\": [\"tools/standalone/context-bundler/file-manifest-schema.json\"], \"key_functions\": [\"validate_manifest()\", \"validate_index()\", \"validate_all_base()\"], \"consumed_by\": [\"CI/CD Pipelines\", \"Pre-commit checks\"]}"
-  },
-  "tools/retrieve/rlm/fetch_tool_context.py": {
-    "file_mtime": 1769932732.4721694,
-    "hash": "969fc60ed867be42",
-    "summarized_at": "2026-02-11T19:01:08.293229",
-    "summary": "{\"purpose\": \"Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable Markdown 'Manual Page'. Second step of the Late-Binding Protocol: after query_cache.py finds a tool, this script provides the detailed context (purpose, usage, args, dependencies) needed to use it.\", \"layer\": \"Retrieve / RLM\", \"usage\": [\"python tools/retrieve/rlm/fetch_tool_context.py --file tools/cli.py\", \"python tools/retrieve/rlm/fetch_tool_context.py --file scripts/domain_cli.py\"], \"args\": [\"--file: Path to the tool script (required, e.g., tools/cli.py)\"], \"inputs\": [\".agent/learning/rlm_tool_cache.json\"], \"outputs\": [\"Markdown-formatted technical specification to stdout\"], \"dependencies\": [\"tools/codify/rlm/rlm_config.py\"], \"key_functions\": [\"safe_print()\", \"format_as_manual()\", \"main()\"], \"consumed_by\": [\"Agent during Late-Binding tool discovery flow\"]}"
-  },
-  "tools/retrieve/rlm/inventory.py": {
-    "file_mtime": 1769919582.0158365,
-    "hash": "aa59d09eea33aa9c",
-    "summarized_at": "2026-02-11T19:01:08.293427",
-    "summary": "{\"purpose\": \"RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes. Shows statistics, missing files, and stale entries for cache health monitoring.\", \"layer\": \"Retrieve / RLM\", \"usage\": [\"python tools/retrieve/rlm/inventory.py\", \"python tools/retrieve/rlm/inventory.py --type tool\"], \"args\": [\"--type: Selects the configuration profile (default: legacy, choices: legacy, tool)\"], \"inputs\": [\".agent/learning/rlm_summary_cache.json (Legacy)\", \".agent/learning/rlm_tool_cache.json (Tool)\", \"Filesystem targets (from manifests)\", \"tool_inventory.json\"], \"outputs\": [\"Console report (Statistics, Missing Files, Stale Entries)\"], \"dependencies\": [\"tools/codify/rlm/rlm_config.py\"], \"key_functions\": [\"audit_inventory()\"], \"consumed_by\": [\"Manual cache health checks\"]}"
-  },
-  "tools/retrieve/rlm/query_cache.py": {
-    "file_mtime": 1769974509.350444,
-    "hash": "67d11d55fd15532a",
-    "summarized_at": "2026-02-11T19:01:08.293610",
-    "summary": "{\"purpose\": \"RLM Search: Instant O(1) keyword search of the semantic ledger (rlm_summary_cache.json or rlm_tool_cache.json). Tier 1 of knowledge retrieval \u2014 the agent's primary tool discovery mechanism. Searches file paths, summaries, and metadata by keyword.\", \"layer\": \"Retrieve / RLM\", \"usage\": [\"python tools/retrieve/rlm/query_cache.py 'search term'\", \"python tools/retrieve/rlm/query_cache.py --list\", \"python tools/retrieve/rlm/query_cache.py 'keyword' --no-summary\", \"python tools/retrieve/rlm/query_cache.py 'keyword' --json\"], \"args\": [\"term: Search term (ID, filename, or content keyword)\", \"--list: List all cached files\", \"--no-summary: Hide summary text\", \"--json: Output results as JSON\"], \"inputs\": [\".agent/learning/rlm_summary_cache.json\", \".agent/learning/rlm_tool_cache.json\"], \"outputs\": [\"Matched entries to stdout\"], \"dependencies\": [], \"key_functions\": [\"load_cache()\", \"search_cache()\", \"list_cache()\", \"main()\"], \"consumed_by\": [\"Agent (Tool Discovery \u2014 Tier 1)\", \"Constitution Section IV\"]}"
-  },
-  "tools/utils/path_resolver.py": {
-    "file_mtime": 1769919582.051237,
-    "hash": "2ddc8c3dfd1631c9",
-    "summarized_at": "2026-02-11T19:01:08.293886",
-    "summary": "{\"purpose\": \"Standardizes cross-platform path resolution and provides access to the Master Object Collection (canonical location). Uses heuristic root detection via '.agent' and 'ADRs' landmark directories. Provides resolve_root() and resolve_path() convenience helpers.\", \"layer\": \"Tools / Utils\", \"usage\": [\"from tools.utils.path_resolver import resolve_path, resolve_root\"], \"args\": [], \"inputs\": [\"PROJECT_ROOT env var (optional)\", \".agent/learning/object_collection.json\"], \"outputs\": [\"Resolved absolute paths\"], \"dependencies\": [], \"key_functions\": [\"PathResolver.get_project_root()\", \"PathResolver.to_absolute()\", \"PathResolver.load_master_collection()\", \"PathResolver.get_object_path()\", \"resolve_root()\", \"resolve_path()\"], \"consumed_by\": [\"tools/cli.py (primary import)\", \"tools/orchestrator/workflow_manager.py\"]}"
   }
 }
