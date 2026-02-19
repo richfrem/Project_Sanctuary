@@ -1,7 +1,7 @@
 flowchart TB
     internet((User / Internet / API))
 
-    subgraph "Docker Host (MacBook Pro)"
+    subgraph "Docker Host (MacMini M4)"
         subgraph "Frontend Network (Public)"
             guard[fa:fa-shield Nginx Guard]
         end
@@ -23,7 +23,7 @@ flowchart TB
 
     %% Internal Services
     agent -- "DNS Query (Whitelist)" --> dns
-    dns -.->|Block| internet
+    dns -. "Block" .-> internet
 
     %% Egress Flow (Filtered)
     agent -- "HTTP CONNECT (Explicit Proxy)" --> squid
@@ -34,7 +34,7 @@ flowchart TB
     scout -- "Open Internet (Any Site)" --> internet
     
     %% Lateral Movement Block
-    scout -.->|FIREWALL DENY| agent
+    scout -. "FIREWALL DENY" .-> agent
 
     %% Styling
     style guard fill:#f9f,stroke:#333,stroke-width:2px
