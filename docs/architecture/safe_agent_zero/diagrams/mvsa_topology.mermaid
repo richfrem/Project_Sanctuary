@@ -1,15 +1,15 @@
 graph TD
     subgraph Host [Host Machine]
-        User((User)) -->|HTTPS/WSS + Auth| Guard[Nginx Guard<br/>(Ingress)]
-        Guard -->|Proxy| Agent[Sanctum Agent<br/>(Agent Zero Wrapped)]
+        User((User)) -- "HTTPS/WSS + Auth" --> Guard["Nginx Guard<br/>(Ingress)"]
+        Guard -- Proxy --> Agent["Sanctum Agent<br/>(Agent Zero Wrapped)"]
         
         subgraph Docker [Docker Isolation]
             direction TB
             
-            Agent -->|DNS/HTTP| Sidecar[Sanctum Sidecar<br/>(Squid + Dnsmasq)]
-            Scout[Sanctum Scout<br/>(Hardened Chrome)] -->|HTTP/HTTPS| Sidecar
+            Agent -- "DNS/HTTP" --> Sidecar["Sanctum Sidecar<br/>(Squid + Dnsmasq)"]
+            Scout["Sanctum Scout<br/>(Hardened Chrome)"] -- "HTTP/HTTPS" --> Sidecar
             
-            Agent -->|CDP (ws://scout:3000)| Scout
+            Agent -- "CDP (ws://scout:3000)" --> Scout
             
             subgraph Networks
                 NetControl[control-net] --- Agent
@@ -25,7 +25,7 @@ graph TD
             end
         end
         
-        Sidecar -->|Filtered Egress| Internet((Internet))
+        Sidecar -- "Filtered Egress" --> Internet((Internet))
     end
 
     classDef container fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
