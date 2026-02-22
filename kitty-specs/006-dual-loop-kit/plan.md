@@ -24,7 +24,7 @@ Identity instructions for the kit (if applicable).
 ### Verification Plan
 
 ### Automated Tests
-*   Run `python tools/retrieve/bundler/manifest_manager.py bundle --manifest tools/standalone/dual-loop-kit/dual-loop-manifest.json --output dual-loop-kit.md`
+*   Run `python plugins/context-bundler/scripts/bundle.py bundle --manifest tools/standalone/dual-loop-kit/dual-loop-manifest.json --output dual-loop-kit.md`
 *   Verify the output `dual-loop-kit.md` is generated and contains the expected content.
 *   (Optional but recommended) Unpack `dual-loop-kit.md` into a temporary directory to verify paths resolve correctly.
 

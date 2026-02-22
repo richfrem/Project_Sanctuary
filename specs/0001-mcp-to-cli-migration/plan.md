@@ -139,7 +139,7 @@ docs/operations/mcp/
 ### Manual Verification
 - [ ] Run `python scripts/domain_cli.py chronicle list --limit 5` - should work
 - [ ] Run `python scripts/cortex_cli.py query "workflow"` - should return results
-- [ ] Run `python tools/retrieve/rlm/query_cache.py "chronicle"` - should find domain_cli.py
+- [ ] Run `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py "chronicle"` - should find domain_cli.py
 - [ ] Complete a full spec cycle using only CLI/workflows
 
 ## Complexity Tracking

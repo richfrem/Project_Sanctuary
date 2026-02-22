@@ -59,7 +59,7 @@ Any operation that:
 ## IV. Tool Discovery & Usage
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
 - **fallback IS PROHIBITED**: If `query_cache.py` fails, you MUST STOP and ask user to refresh cache.
-- **ALWAYS** use **Tool Discovery**: `python tools/retrieve/rlm/query_cache.py`. It's your `.agent/skills/SKILL.md`
+- **ALWAYS** use **Tool Discovery**: `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`. It's your `.agent/skills/SKILL.md`
 - **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.ty.*`) over raw scripts.
 - **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
 

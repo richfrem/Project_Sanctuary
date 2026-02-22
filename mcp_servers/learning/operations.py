@@ -29,7 +29,7 @@ Key Classes:
         - _ensure_diagrams_rendered()
 
 Internal Dependencies:
-    - tools/retrieve/bundler/manifest_manager.py
+    - plugins/context-bundler/scripts/bundle.py
     - tools/cli.py (for snapshot generation)
 """
 
@@ -58,8 +58,8 @@ from mcp_servers.lib.snapshot_utils import (
     RECURSIVE_ARTIFACTS
 )
 # ADR 097: Context Bundler CLI paths
-BUNDLER_SCRIPT = "tools/retrieve/bundler/bundle.py"
-MANIFEST_MANAGER_SCRIPT = "tools/retrieve/bundler/manifest_manager.py"
+BUNDLER_SCRIPT = "plugins/context-bundler/scripts/bundle.py"
+MANIFEST_MANAGER_SCRIPT = "plugins/context-bundler/scripts/bundle.py"
 from mcp_servers.learning.models import (
     CaptureSnapshotResponse,
     PersistSoulRequest,

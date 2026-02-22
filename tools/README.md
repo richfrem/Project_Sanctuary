@@ -56,7 +56,7 @@ python tools/codify/vector/ingest.py --full
 ### 2. RLM Distillation
 Generate semantic summaries for tools and docs:
 ```bash
-python tools/codify/rlm/distiller.py --all
+python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --all
 ```
 
 ### 3. Semantic Search
@@ -68,5 +68,5 @@ python tools/retrieve/vector/query.py "search term"
 ### 4. Tool Inventory
 Regenerate the tool inventory:
 ```bash
-python tools/curate/inventories/manage_tool_inventory.py generate
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py generate
 ```

@@ -14,7 +14,7 @@ description: "Tasks for Integrate Snapshot and Persist-Soul into CLI"
 
 ## Phase 1: Setup & Analysis
 - [x] T003 Analyze `mcp_servers/learning/operations.py` to understand direct usage requirements.
-- [x] T004 Run `tools/codify/rlm/distiller.py` via `cli.py` (if possible) or directly to register `tools/cli.py` and related tools in `tools/tool_inventory.json` and `rlm_tool_cache.json`.
+- [x] T004 Run `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` via `cli.py` (if possible) or directly to register `tools/cli.py` and related tools in `tools/tool_inventory.json` and `rlm_tool_cache.json`.
 - [x] T004b Register additional Hugging Face support tools (`upload_to_huggingface.py`, `hf_utils.py`, etc.) ensuring standardized headers and RLM cache entries.
 
 ## Phase 2: Implementation (User Story 1 & 2)

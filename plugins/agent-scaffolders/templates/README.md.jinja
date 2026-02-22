@@ -1,0 +1,32 @@
+# {name} Plugin
+
+Generated via Agent Scaffolder.
+
+## Purpose
+{description}
+
+## Dependencies
+By default, standard library dependencies are assumed. If external packages are required, declare them in `requirements.in` and use the standard `pip-compile` workflow:
+```bash
+cd plugins/{name}
+pip-compile requirements.in
+pip install -r requirements.txt
+```
+
+## Directory Structure
+
+```text
+{name}/
+├── .claude-plugin/
+│   └── plugin.json       # Plugin manifest and routing definitions
+├── skills/               # Directory containing Agent Skills (prompt logic)
+├── agents/               # Directory containing Sub-Agent definitions
+├── commands/             # Slash commands defined as Markdown frontmatter files
+├── hooks/
+│   └── hooks.json        # Agent lifecycle hook subscriptions
+│   └── scripts/          # Event validation scripts
+├── lsp.json              # Language Server Protocol definitions
+├── .mcp.json             # Model Context Protocol integrations
+├── README.md             # This documentation file
+└── {name}-architecture.mmd # Mermaid visual architecture diagram
+```

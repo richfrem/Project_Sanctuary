@@ -30,10 +30,10 @@ Need to analyze and consolidate these overlapping implementations:
 
 | Domain | New (tools/) | Old (mcp_servers/) | Action |
 |--------|------------|-------------------|--------|
-| **RLM Cache** | `tools/retrieve/rlm/query_cache.py` | `mcp_servers/learning/operations.py` | Compare APIs |
+| **RLM Cache** | `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` | `mcp_servers/learning/operations.py` | Compare APIs |
 | **Vector Query** | `tools/retrieve/vector/query.py` | `mcp_servers/rag_cortex/operations.py` | Compare APIs |
 | **Vector Ingest** | `tools/codify/vector/ingest.py` | `mcp_servers/rag_cortex/ingest_code_shim.py` | Check if duplicate |
-| **RLM Distill** | `tools/codify/rlm/distiller.py` | `mcp_servers/learning/operations.py` (rlm ops?) | May be different |
+| **RLM Distill** | `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` | `mcp_servers/learning/operations.py` (rlm ops?) | May be different |
 
 **Question**: Which is source of truth? Should `tools/` import from `mcp_servers/lib/` or vice versa?
 
@@ -42,7 +42,7 @@ Need to analyze and consolidate these overlapping implementations:
 ### RLM / CAG Cache Analysis (NEEDS DEEP DIVE)
 
 **Context from User:**
-- New RLM cache tools (`tools/retrieve/rlm/`) can write to multiple caches
+- New RLM cache tools (`plugins/rlm-factory/skills/rlm-curator/scripts/`) can write to multiple caches
 - Old MCP cache (`cortex-cache-*`) might have different model/value
 - These are NOT the same thing and may both be needed
 
@@ -50,8 +50,8 @@ Need to analyze and consolidate these overlapping implementations:
 
 | New (tools/) | Old (mcp_servers/) | Purpose |
 |-------------|-------------------|---------|
-| `tools/retrieve/rlm/query_cache.py` | `mcp_servers/learning/operations.py` | Tool discovery |
-| `tools/codify/rlm/distiller.py` | ? | Semantic summary creation |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` | `mcp_servers/learning/operations.py` | Tool discovery |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` | ? | Semantic summary creation |
 | `tools/retrieve/vector/query.py` | `mcp_servers/rag_cortex/operations.py` | Vector search |
 | N/A | `cortex-cache-*` (CAG) | Cached Augmented Generation |
 

@@ -31,21 +31,18 @@ This skill combines **Tool Discovery** (finding tools) and **Inventory Managemen
 
 ## 🛠️ Tools
 
-| Script | Role | ChromaDB? |
+| Script | Role | Dependencies |
 |:---|:---|:---|
-| `manage_tool_inventory.py` | **The Registry** — CRUD on tool_inventory.json | Triggers upsert |
-| `tool_chroma.py` | **The Search Engine** — embedded vector store | ✅ Primary |
-| `distiller.py` | **The Distiller** — LLM-powered summaries (optional) | Feeds ChromaDB |
-| `query_cache.py` | **Legacy Search** — JSON cache queries | ❌ Backward compat |
-| `cleanup_cache.py` | **The Janitor** — stale entry cleanup | ❌ JSON only |
+| `manage_tool_inventory.py` | **The Registry** — CRUD on tool_inventory.json | Triggers RLM distllation |
+| `audit_plugins.py` | **The Auditor** — Verify inventory consistency | ❌ Filesystem check |
+
+> **Note**: For Semantic Search, Distillation, Cache Querying, and Cleanup, you **MUST** use the respective scripts inside the `rlm-curator` skill provided by the `rlm-factory` plugin.
 
 ## 📂 Data Storage
 
 | Store | Location | Purpose |
 |:---|:---|:---|
-| **ChromaDB** | `${PLUGIN_ROOT}/data/chroma/` | Semantic search (primary) |
-| **JSON Inventory** | `tools/tool_inventory.json` | Project-level structured registry |
-| **JSON Cache** | `.agent/learning/rlm_tool_cache.json` (project-level) | Backward compat |
+| **JSON Inventory** | `plugins/tool_inventory.json` | Project-level structured registry |
 
 ---
 
@@ -68,7 +65,7 @@ This skill combines **Tool Discovery** (finding tools) and **Inventory Managemen
 ### 2. Retrieve & Bind (Auto-Binding)
 **Goal**: Load the tool's usage contract.
 
-When you find a high-confidence match (e.g., `tools/viz/graph_deps.py`),
+When you find a high-confidence match (e.g., `plugins/viz/graph_deps.py`),
 **immediately** read its header — do not wait for user prompt:
 ```bash
 view_file(AbsolutePath="/path/to/found/script.py", StartLine=1, EndLine=200)
@@ -82,7 +79,7 @@ view_file(AbsolutePath="/path/to/found/script.py", StartLine=1, EndLine=200)
 
 ### 4. Register New Tools
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/manage_tool_inventory.py add --path tools/new_script.py
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/tool-inventory/scripts/manage_tool_inventory.py add --path plugins/new_script.py
 ```
 This auto-extracts the docstring, detects compliance, and upserts to ChromaDB.
 
@@ -103,7 +100,7 @@ When registering a **new or modified** tool, follow all steps:
 
 1. **Register** → `add --path [ToolPath]` (auto-triggers ChromaDB upsert)
 2. **Distill** (optional) → `distiller.py --file [ToolPath] --type tool`
-3. **Generate Docs** → `generate --output tools/TOOL_INVENTORY.md`
+3. **Generate Docs** → `generate --output plugins/TOOL_INVENTORY.md`
 4. **Audit** → `audit` (verify no gaps)
 5. **Verify Search** → `tool_chroma.py search "[keyword]"`
 

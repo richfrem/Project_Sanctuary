@@ -3,7 +3,7 @@
 ## 1. Context & Problem Statement
 The project currently has two parallel bundling capabilities:
 1.  **MCP Layer (`rag_cortex/operations.py`)**: Implements Protocol 130 (Manifest Deduplication) and handles "Special Bundles" (Learning Audits, Red Team).
-2.  **CLI Layer (`tools/retrieve/bundler/bundle.py`)**: A newly imported "dumb" tool that simply zips files into Markdown based on a manifest.
+2.  **CLI Layer (`plugins/context-bundler/scripts/bundle.py`)**: A newly imported "dumb" tool that simply zips files into Markdown based on a manifest.
 
 **The Problem**:
 - Logic duplication: Protocol 130 checks exist in MCP but not in the CLI tool.
@@ -18,7 +18,7 @@ Extract the bundling and deduplication logic into a shared Python library access
 *   **Structure**:
     *   `tools/shared/bundler_core.py`: Contains `dedupe_manifest()` (Protocol 130) and `build_bundle()`.
     *   `mcp_servers/rag_cortex/operations.py`: Imports `bundler_core`.
-    *   `tools/retrieve/bundler/bundle.py`: Imports `bundler_core`.
+    *   `plugins/context-bundler/scripts/bundle.py`: Imports `bundler_core`.
 *   **Pros**: DRY (Don't Repeat Yourself), single source of truth for Protocol 130.
 *   **Cons**: Requires refactoring the stable MCP code.
 

@@ -51,28 +51,23 @@
         },
         "mcp_servers/lib/exclusion_manifest.json": {
             "output": null,
-            "description": "Global file exclusion patterns (Protocol 130/128). Loaded by mcp_servers.lib.exclusion_config. Used by all snapshot tools."
+            "description": "Global file exclusion patterns (Protocol 130/128). Replaced by .agent/learning/learning_manifest.json excludes."
         },
         "mcp_servers/lib/ingest_manifest.json": {
             "output": "dataset_package/markdown_snapshot_full_genome_llm_distilled.txt",
             "command": "scripts/capture_code_snapshot.py",
-            "description": "Defines the 'Base Genome' (common_content). Used by capture_code_snapshot.py (default) and Forge."
+            "description": "Defines the 'Base Genome' (common_content). Replaced by .agent/learning/learning_manifest.json includes."
         },
-        "tools/standalone/rlm-factory/manifest-index.json": {
-            "output": null,
-            "description": "RLM Factory Index. Routes between 'tool' and 'sanctuary' distillation profiles. Defines cache paths, manifests, prompts, and LLM models for each RLM type.",
-            "consumed_by": "tools/codify/rlm/rlm_config.py"
-        },
-        "tools/standalone/rlm-factory/rlm_manifest.json": {
+        ".agent/learning/learning_manifest.json": {
             "output": ".agent/learning/rlm_summary_cache.json",
-            "command": "python tools/codify/rlm/distiller.py --type sanctuary",
-            "description": "Defines target directories and core files for RLM summary distillation (sanctuary profile). Drives the rlm_summary_cache.json."
+            "command": "python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --profile project",
+            "description": "Defines target directories and core files for RLM summary distillation (project profile). Drives the rlm_summary_cache.json."
         },
         "tools/tool_inventory.json": {
             "output": ".agent/learning/rlm_tool_cache.json",
-            "command": "python tools/codify/rlm/distiller.py --type tool",
+            "command": "python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --profile tools",
             "description": "Tool inventory manifest. Defines all registered Python/JS scripts. Used as the manifest for RLM tool cache distillation.",
-            "consumed_by": "tools/codify/rlm/rlm_config.py (parser: inventory_dict)"
+            "consumed_by": "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py"
         }
     }
 }

@@ -24,7 +24,6 @@ def generate_continuity_package():
         "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Sonnet_4_5_Singularity_Chart.md",
         "RESEARCH_SUMMARIES/EXTERNAL_SIGNALS/The_Test-Time_Forge.md",
         "RESEARCH_SUMMARIES/DIPLOMATIC_CORPS/Canadian_AI_Strategy_Auditor_Submission_Summary.md",
-        "tools/verify_manifest.py",
         "tools/scaffolds/generate_continuity_package.py"
     ]
 

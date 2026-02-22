@@ -14,7 +14,7 @@ sequenceDiagram
     
     Skill->>Search: search("vector", store="tool")
     Search->>Cache: Query Index (Fuzzy/Vector)
-    Cache-->>Search: Match: tools/retrieve/vector/query.py
+    Cache-->>Search: Match: plugins/retrieve/vector/query.py
     Search-->>Skill: Return List [Tool ID, Path, Purpose]
 
     note over Agent, FileSystem: Phase 2: Just-In-Time Context Loading
@@ -23,5 +23,5 @@ sequenceDiagram
     Skill-->>Agent: Inject Context: [query.py Usage]
 
     note over Agent, FileSystem: Phase 3: Execution
-    Agent->>FileSystem: Execute: python tools/retrieve/vector/query.py ...
+    Agent->>FileSystem: Execute: python plugins/retrieve/vector/query.py ...
     FileSystem-->>Agent: Success / Output

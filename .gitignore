@@ -234,3 +234,6 @@ LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 .agent/frictionlogs/
 .codex/
 temp/
+
+old_version_452d779/_tmp_plugin_import/
+.kittify/missions/__pycache__/

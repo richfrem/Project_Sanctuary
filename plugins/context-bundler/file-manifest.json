@@ -1,74 +1,22 @@
 {
-  "title": "FISF0000 Context Bundle",
-  "description": "Auto-generated context for FISF0000 (Type: form)",
+  "title": "Context Bundler Source Code",
+  "description": "The source code and documentation for the context-bundler plugin.",
   "files": [
     {
-      "path": "legacy-system/oracle-forms/XML/fisf0000_fmb.xml",
-      "note": "Raw XML Source"
+      "path": "plugins/context-bundler/README.md",
+      "note": "Primary documentation"
     },
     {
-      "path": "legacy-system/oracle-forms-overviews/forms/fisf0000-Overview.md",
-      "note": "Human-written Overview"
+      "path": "plugins/context-bundler/file-manifest.json",
+      "note": "The generic JSON schema example"
     },
     {
-      "path": "legacy-system/oracle-forms-markdown/XML/fisf0000-FormModule.md",
-      "note": "Markdown-converted Source"
+      "path": "plugins/context-bundler/skills/context-bundling/SKILL.md",
+      "note": "The core skill definition"
     },
     {
-      "path": "legacy-system/oracle-database/Views/FIS_D_STAFF_MEMBERS_VW.sql",
-      "note": "Auto-Dep: Views (FIS_D_STAFF_MEMBERS_VW)"
-    },
-    {
-      "path": "legacy-system/oracle-database/Views/FIS_L_USER_OFFICES_VW.sql",
-      "note": "Auto-Dep: Views (FIS_L_USER_OFFICES_VW)"
-    },
-    {
-      "path": "legacy-system/oracle-database/Packages/FIS_CONTEXT_PKG.sql",
-      "note": "Auto-Dep: Packages (FIS_CONTEXT_PKG)"
-    },
-    {
-      "path": "legacy-system/oracle-database/Packages/FIS_ERROR_PKG.sql",
-      "note": "Auto-Dep: Packages (FIS_ERROR_PKG)"
-    },
-    {
-      "path": "legacy-system/oracle-database/Packages/FIS_SECURITY_PKG.sql",
-      "note": "Auto-Dep: Packages (FIS_SECURITY_PKG)"
-    },
-    {
-      "path": "legacy-system/oracle-database/Packages/FIS_UTILS_PKG.sql",
-      "note": "Auto-Dep: Packages (FIS_UTILS_PKG)"
-    },
-    {
-      "path": "legacy-system/oracle-forms/pll/aglib.txt",
-      "note": "Auto-Dep: PLLs (AGLIB)"
-    },
-    {
-      "path": "legacy-system/oracle-forms/pll/fis.txt",
-      "note": "Auto-Dep: PLLs (FIS)"
-    },
-    {
-      "path": "legacy-system/oracle-forms/pll/fisf.txt",
-      "note": "Auto-Dep: PLLs (FISF)"
-    },
-    {
-      "path": "legacy-system/oracle-forms/pll/fis_calendar.txt",
-      "note": "Auto-Dep: PLLs (FIS_CALENDAR)"
-    },
-    {
-      "path": "legacy-system/oracle-forms-overviews/forms/webutil-ObjectLibrary.md",
-      "note": "Auto-Dep: PLLs (WEBUTIL)"
-    },
-    {
-      "path": "legacy-system/oracle-forms-overviews/forms/agobjects-ObjectLibrary.md",
-      "note": "Auto-Dep: Inheritance (AGOBJECTS)"
-    },
-    {
-      "path": "legacy-system/oracle-forms-overviews/forms/fiso-ObjectLibrary.md",
-      "note": "Auto-Dep: Inheritance (FISO)"
-    },
-    {
-      "path": "legacy-system/oracle-forms-overviews/forms/fism0001-MenuModule.md",
-      "note": "Auto-Dep: MenuModule (FISM0001)"
+      "path": "plugins/context-bundler/scripts/bundle.py",
+      "note": "The bundling engine"
     }
   ]
 }

@@ -11,10 +11,10 @@ This document analyzes the current Recursive Learning Model (RLM) architecture a
     *   **Processing**: Recursive walk -> Filter (.md/.txt) -> Ollama (Granite 3.2).
     *   **Prompting**: Hardcoded prompt focused on "Business Function" and "Feature Purpose" (Legacy Context).
     *   **Output**: `.agent/learning/rlm_summary_cache.json`.
-*   **Manifest**: `tools/standalone/rlm-factory/distiller_manifest.json`
+*   **Manifest**: `plugins/standalone/rlm-factory/distiller_manifest.json`
     *   **Scope**: Legacy System Code & Documentation.
     *   **Structure**: `include` directories, `exclude` patterns.
-*   **Inventory**: `tools/tool_inventory.json`
+*   **Inventory**: `plugins/tool_inventory.json`
     *   **Structure**: Categorized list of executable scripts (.py, .js).
     *   **Metadata**: Manually curated descriptions + status.
 
@@ -48,7 +48,7 @@ Refactor `distiller.py` to support distinct **Modes** via CLI arguments.
     *   Requires careful regression testing to ensure Legacy mode is untouched.
 
 ### Option C: The "Hybrid Manifest" (Not Recommended)
-Add `tools/` to the existing `distiller_manifest.json`.
+Add `plugins/` to the existing `distiller_manifest.json`.
 *   **Pros**: Simplest code change.
 *   **Cons**:
     *   Violates "Dual Source of Truth" requirement.

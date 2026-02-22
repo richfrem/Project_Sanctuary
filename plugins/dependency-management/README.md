@@ -7,11 +7,10 @@ Python dependency management with pip-compile locked-file workflow for the MCP s
 claude --plugin-dir ./plugins/dependency-management
 ```
 
-## Commands
-| Command | Description |
+## Passive Rules
+| Rule | Description |
 |:---|:---|
-| `/dependency-management:manage` | Add, upgrade, or security-patch a dependency |
-| `/dependency-management:audit` | Audit tree for conflicts, stale pins, compliance |
+| `rules/dependency-management.mdc` | Automatically injects core dependency workflow constraints (like `.in` to `pip-compile`) when editing `requirements` or `Dockerfile` files. |
 
 ## Core Rules
 1. No manual `pip install` — use `.in` → `pip-compile` → `.txt`
@@ -23,7 +22,7 @@ claude --plugin-dir ./plugins/dependency-management
 ```
 dependency-management/
 ├── .claude-plugin/plugin.json
-├── commands/ (manage, audit)
-├── skills/dependency-agent/SKILL.md
+├── rules/dependency-management.mdc
+├── skills/dependency-management/SKILL.md
 └── README.md
 ```

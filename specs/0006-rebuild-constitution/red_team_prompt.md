@@ -8,7 +8,7 @@ Review the following materials provided in this bundle:
 1.  **The Constitution** (`.agent/rules/constitution.md`): The supreme law.
 2.  **Supporting Rules** (`.agent/rules/**/*`): Process, Operations, and Technical policies.
 3.  **Workflows** (`.agent/workflows/**/*`): The standard operating procedures.
-4.  **Skills & Tools** (`.agent/skills/SKILL.md`, `tools/retrieve/rlm/query_cache.py`).
+4.  **Skills & Tools** (`plugins/tool-inventory/skills/tool-inventory/SKILL.md`, `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`).
 5.  **Scripts** (`scripts/bash/*.sh`): The implementation layer.
 
 ## Analysis Vectors

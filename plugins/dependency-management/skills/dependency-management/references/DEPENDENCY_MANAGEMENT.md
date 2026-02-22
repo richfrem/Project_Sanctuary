@@ -1,5 +1,4 @@
 # Python Dependency Management Guide
-**(Based on ADR 073)**
 
 ## 1. Core Principles
 1.  **Locked Files**: We never use manual `pip install`. We only install from locked `requirements.txt` files.
@@ -13,14 +12,14 @@
 ### Step 1: Identify the Correct `.in` File
 | Scope | File Path |
 |-------|-----------|
-| **Core** (Shared Libs) | `mcp_servers/gateway/requirements-core.in` |
-| **Service** (e.g., Cortex) | `mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in` |
+| **Core** (Shared Libs) | `src/requirements-core.in` |
+| **Service** (e.g., Auth) | `src/services/auth_service/requirements.in` |
 | **Dev Tools** (Local Only) | `requirements-dev.in` |
 
 ### Step 2: Edit Intent
 Add the package name to the `.in` file.
 ```text
-# mcp_servers/gateway/requirements-core.in
+# src/requirements-core.in
 fastapi>=0.110.0
 langchain
 ```
@@ -29,21 +28,21 @@ langchain
 Run `pip-compile` to generate the `.txt` file.
 ```bash
 # Example for Core
-pip-compile mcp_servers/gateway/requirements-core.in --output-file mcp_servers/gateway/requirements-core.txt
+pip-compile src/requirements-core.in --output-file src/requirements-core.txt
 
-# Example for Cortex
-pip-compile mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in --output-file mcp_servers/gateway/clusters/sanctuary_cortex/requirements.txt
+# Example for Auth Service
+pip-compile src/services/auth_service/requirements.in --output-file src/services/auth_service/requirements.txt
 ```
 
 ### Step 4: Install
 **Locally:**
 ```bash
-pip install -r mcp_servers/gateway/requirements-core.txt
+pip install -r src/requirements-core.txt
 ```
 **Container:**
 ```bash
-# Rebuild the specific service
-make up force=true TARGET=sanctuary_cortex
+# Rebuild the specific service container
+docker compose up --build auth_service
 ```
 
 ## 3. How to Update Dependencies
@@ -53,10 +52,10 @@ make up force=true TARGET=sanctuary_cortex
 
 To upgrade a package:
 ```bash
-pip-compile --upgrade-package uvicorn mcp_servers/gateway/requirements-core.in
+pip-compile --upgrade-package uvicorn src/requirements-core.in
 ```
 
 To upgrade everything:
 ```bash
-pip-compile --upgrade mcp_servers/gateway/requirements-core.in
+pip-compile --upgrade src/requirements-core.in
 ```

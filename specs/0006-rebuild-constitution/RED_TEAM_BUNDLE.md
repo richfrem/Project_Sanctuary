@@ -34,7 +34,7 @@ Review the following materials provided in this bundle:
 1.  **The Constitution** (`.agent/rules/constitution.md`): The supreme law.
 2.  **Supporting Rules** (`.agent/rules/**/*`): Process, Operations, and Technical policies.
 3.  **Workflows** (`.agent/workflows/**/*`): The standard operating procedures.
-4.  **Skills & Tools** (`.agent/skills/SKILL.md`, `tools/retrieve/rlm/query_cache.py`).
+4.  **Skills & Tools** (`plugins/tool-inventory/skills/tool-inventory/SKILL.md`, `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`).
 5.  **Scripts** (`scripts/bash/*.sh`): The implementation layer.
 
 ## Analysis Vectors
@@ -114,7 +114,7 @@ For all cognitive sessions, you are bound by **Protocol 128**.
 
 ## IV. Tool Discovery & Usage
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
-- **ALWAYS** use **Tool Discovery**: `python tools/retrieve/rlm/query_cache.py`. It's your `.agent/skills/SKILL.md`
+- **ALWAYS** use **Tool Discovery**: `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`. It's your `plugins/tool-inventory/skills/tool-inventory/SKILL.md`
 - **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.*`) over raw scripts.
 - **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
 
@@ -508,18 +508,18 @@ module/
 ## 6. Tool Inventory Integration
 
 ### Mandatory Registration
-All Python scripts in the `tools/` directory **MUST** be registered in `tools/tool_inventory.json`. This is enforced by the [Tool Inventory Policy](tool_inventory_policy.md).
+All Python scripts in the `tools/` directory **MUST** be registered in `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json`. This is enforced by the [Tool Inventory Policy](tool_inventory_policy.md).
 
 ### After Creating/Modifying a Script
 ```bash
 # Register new script
-python tools/curate/inventories/manage_tool_inventory.py add --path "tools/path/to/script.py"
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py add --path "tools/path/to/script.py"
 
 # Update existing script description (auto-extracts from docstring)
-python tools/curate/inventories/manage_tool_inventory.py update --path "tools/path/to/script.py"
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py update --path "tools/path/to/script.py"
 
 # Verify registration
-python tools/curate/inventories/manage_tool_inventory.py audit
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py audit
 ```
 
 ### Docstring Auto-Extraction & RLM
@@ -767,9 +767,9 @@ When creating new workflows, you MUST follow these standards:
 
 ### 3.3 Registration Process (MANDATORY)
 After creating/modifying a workflow (`.md`) or tool (`.py`):
-1. **Inventory Scan**: `python tools/curate/documentation/workflow_inventory_manager.py --scan`
-2. **Tool Registration**: `python tools/curate/inventories/manage_tool_inventory.py add --path <path>` (if new script)
-3. **RLM Distillation**: `python tools/codify/rlm/distiller.py --file <path> --type tool`
+1. **Inventory Scan**: `python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --scan`
+2. **Tool Registration**: `python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py add --path <path>` (if new script)
+3. **RLM Distillation**: `python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --file <path> --type tool`
 
 ---
 
@@ -792,7 +792,7 @@ find . -name "*.md" | xargs cat
 
 ✅ **Using/Improving Tools**:
 ```bash
-python tools/retrieve/rlm/query_cache.py --type tool "pattern"
+python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --type tool "pattern"
 # If it fails, improve query_cache.py!
 ```
 
@@ -882,12 +882,12 @@ Agent MUST consult cache of tools first before running native file system comman
 * **Trigger:** When you need to find, locate, or search for a tool/script/capability.
 * **Constraint:** You **MUST NOT** use native filesystem commands (`grep`, `find`, `ls -R`, or "search codebase"). These are forbidden for tool discovery.
 * **Constraint:** You **MUST NOT** use `manage_tool_inventory.py` for discovery.
-* **Action:** You **MUST** exclusively use the **Tool Discovery** skill (`tools/retrieve/rlm/query_cache.py`).
+* **Action:** You **MUST** exclusively use the **Tool Discovery** skill (`plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`).
 
 ## 2. Enforcement & Continuous Improvement (Use It or Fix It)
 **The "Bypass Prohibition":**
 * ❌ **NEVER** use `grep` "pattern", `find .`, `Get-Content`, `cat` etc. to search for code or rules.
-* ✅ **ALWAYS** use the appropriate CLI tool (e.g., `tools/retrieve/rlm/query_cache.py`, `tools/investigate/code/search_codebase.py`).
+* ✅ **ALWAYS** use the appropriate CLI tool (e.g., `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`, `tools/investigate/code/search_codebase.py`).
 
 **The "Stop-and-Fix" Mandate:**
 * If you encounter friction (e.g., a tool is missing a flag, or returns bad output):
@@ -907,16 +907,16 @@ Agent MUST consult cache of tools first before running native file system comman
 1. **Follow Coding Conventions**: Use proper file header per `.agent/rules/03_TECHNICAL/coding_conventions_policy.md`
 2. **Register in Inventory**: After creating/modifying a tool, run:
    ```bash
-   python tools/curate/inventories/manage_tool_inventory.py add --path "tools/path/to/script.py"
+   python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py add --path "tools/path/to/script.py"
    ```
 3. **RLM Distillation**: The inventory manager auto-triggers RLM distillation, but you can also run manually:
    ```bash
-   python tools/codify/rlm/distiller.py --file "tools/path/to/script.py" --type tool
+   python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --file "tools/path/to/script.py" --type tool
    ```
 
 **Verification**: Before closing a spec that added tools, run:
 ```bash
-python tools/curate/inventories/manage_tool_inventory.py audit
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py audit
 ```
 
 **Why This Matters**: Unregistered tools are invisible to future LLM sessions. If you create a tool but don't register it, it cannot be discovered.
@@ -1299,7 +1299,7 @@ view_file .agent/rules/constitution.md
 
 ### 2.1 Get Next Spec Number
 ```bash
-python tools/investigate/utils/next_number.py --type spec
+python plugins/adr-manager/skills/adr-management/scripts/next_number.py --type spec
 ```
 
 ### 2.2 Create Spec Bundle Directory
@@ -1742,38 +1742,38 @@ Ask the user:
 If creating a new bundle:
 // turbo
 ```bash
-python3 tools/retrieve/bundler/manifest_manager.py init --type [TYPE] --bundle-title "[Title]"
+python3 plugins/context-bundler/scripts/bundle.py init --type [TYPE] --bundle-title "[Title]"
 ```
 
 ## Step 3: Add Files to Manifest (optional)
 To add files to the manifest (uses `files` array by default):
 // turbo
 ```bash
-python3 tools/retrieve/bundler/manifest_manager.py add --path "[file.md]" --note "Description of file"
+python3 plugins/context-bundler/scripts/bundle.py add --path "[file.md]" --note "Description of file"
 ```
 
 To remove files:
 // turbo
 ```bash
-python3 tools/retrieve/bundler/manifest_manager.py remove --path "[file.md]"
+python3 plugins/context-bundler/scripts/bundle.py remove --path "[file.md]"
 ```
 
 ## Step 4: Validate Manifest (recommended)
 // turbo
 ```bash
-python3 tools/retrieve/bundler/validate.py [ManifestPath]
+python3 plugins/context-bundler/scripts/bundle.py [ManifestPath]
 ```
 
 ## Step 5: Execute Bundle
 // turbo
 ```bash
-python3 tools/retrieve/bundler/manifest_manager.py bundle -o [OutputPath]
+python3 plugins/context-bundler/scripts/bundle.py bundle -o [OutputPath]
 ```
 
 Or directly with bundle.py:
 // turbo
 ```bash
-python3 tools/retrieve/bundler/bundle.py [ManifestPath] -o [OutputPath]
+python3 plugins/context-bundler/scripts/bundle.py [ManifestPath] -o [OutputPath]
 ```
 
 ## Step 6: Verification
@@ -1804,7 +1804,7 @@ For learning workflows, you may need to iterate:
 - ADR 097: Base Manifest Inheritance Architecture
 - ADR 089: Modular Manifest Pattern (legacy core/topic deprecated)
 - Protocol 128: Hardened Learning Loop
-- `tools/retrieve/bundler/validate.py`: Manifest validation tool
+- `plugins/context-bundler/scripts/bundle.py`: Manifest validation tool
 
 ---
 
@@ -1864,7 +1864,7 @@ python tools/cli.py workflow start --name codify-adr --target "[Title]"
 1. **Get Sequence Number:**
    Run the following command to find the next available ADR number:
    ```bash
-   python tools/investigate/utils/next_number.py --type adr
+   python plugins/adr-manager/skills/adr-management/scripts/next_number.py --type adr
    ```
    *Result*: `NNNN` (e.g., `0005`)
 
@@ -3279,7 +3279,7 @@ description: Update tool inventories, RLM cache, and associated artifacts after 
 tier: 2
 track: Curate
 inputs:
-  - ToolPath: Path to the new or modified tool (e.g., tools/retrieve/bundler/validate.py)
+  - ToolPath: Path to the new or modified tool (e.g., plugins/context-bundler/scripts/bundle.py)
 ---
 
 # Workflow: Tool Update
@@ -3297,15 +3297,15 @@ inputs:
 ### Option A: CLI (Automated)
 // turbo
 ```bash
-python3 tools/curate/inventories/manage_tool_inventory.py add --path "[ToolPath]"
+python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py add --path "[ToolPath]"
 ```
 
 ### Option B: Manual Edit (For complex entries)
-Edit `tools/tool_inventory.json` directly, adding an entry like:
+Edit `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json` directly, adding an entry like:
 ```json
 {
   "name": "validate.py",
-  "path": "tools/retrieve/bundler/validate.py",
+  "path": "plugins/context-bundler/scripts/bundle.py",
   "description": "Validates manifest files against schema. Checks required fields, path traversal, and legacy format warnings.",
   "original_path": "new-creation",
   "decision": "keep",
@@ -3316,7 +3316,7 @@ Edit `tools/tool_inventory.json` directly, adding an entry like:
 }
 ```
 
-**Expected Output:** Tool entry exists in `tools/tool_inventory.json`
+**Expected Output:** Tool entry exists in `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json`
 
 ---
 
@@ -3326,16 +3326,16 @@ Edit `tools/tool_inventory.json` directly, adding an entry like:
 The inventory manager auto-triggers RLM distillation. To run manually:
 // turbo
 ```bash
-python3 tools/codify/rlm/distiller.py --file "[ToolPath]" --type tool
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --file "[ToolPath]" --type tool
 ```
 
 ### Option B: Manual Edit (For precise control)
 Edit `.agent/learning/rlm_tool_cache.json` directly, adding an entry like:
 ```json
-"tools/retrieve/bundler/validate.py": {
+"plugins/context-bundler/scripts/bundle.py": {
   "hash": "new_validate_2026",
   "summarized_at": "2026-02-01T10:00:00.000000",
-  "summary": "{\n  \"purpose\": \"Validates manifest files against schema...\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"usage\": [\"python tools/retrieve/bundler/validate.py manifest.json\"],\n  \"args\": [\"manifest: Path to manifest\", \"--all-base\", \"--check-index\"],\n  \"inputs\": [\"Manifest JSON files\"],\n  \"outputs\": [\"Validation report\", \"Exit code 0/1\"],\n  \"dependencies\": [\"file-manifest-schema.json\"],\n  \"consumed_by\": [\"/bundle-manage\", \"CI/CD\"],\n  \"key_functions\": [\"validate_manifest()\", \"validate_index()\"]\n}"
+  "summary": "{\n  \"purpose\": \"Validates manifest files against schema...\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"usage\": [\"python plugins/context-bundler/scripts/bundle.py manifest.json\"],\n  \"args\": [\"manifest: Path to manifest\", \"--all-base\", \"--check-index\"],\n  \"inputs\": [\"Manifest JSON files\"],\n  \"outputs\": [\"Validation report\", \"Exit code 0/1\"],\n  \"dependencies\": [\"file-manifest-schema.json\"],\n  \"consumed_by\": [\"/bundle-manage\", \"CI/CD\"],\n  \"key_functions\": [\"validate_manifest()\", \"validate_index()\"]\n}"
 }
 ```
 
@@ -3347,7 +3347,7 @@ Edit `.agent/learning/rlm_tool_cache.json` directly, adding an entry like:
 Regenerate `tools/TOOL_INVENTORY.md` for human readability:
 // turbo
 ```bash
-python3 tools/curate/inventories/manage_tool_inventory.py generate --output tools/TOOL_INVENTORY.md
+python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py generate --output tools/TOOL_INVENTORY.md
 ```
 
 **Expected Output:** `✅ Generated Markdown: tools/TOOL_INVENTORY.md`
@@ -3358,7 +3358,7 @@ python3 tools/curate/inventories/manage_tool_inventory.py generate --output tool
 Verify no tools are missing from the inventory:
 // turbo
 ```bash
-python3 tools/curate/inventories/manage_tool_inventory.py audit
+python3 plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py audit
 ```
 
 **Expected Output:** `✅ All tools registered` (or list of untracked tools to add)
@@ -3369,7 +3369,7 @@ python3 tools/curate/inventories/manage_tool_inventory.py audit
 Test that the tool is now discoverable via RLM:
 // turbo
 ```bash
-python3 tools/retrieve/rlm/query_cache.py --type tool "[keyword]"
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --type tool "[keyword]"
 ```
 
 **Expected Output:** Tool appears in search results
@@ -3380,7 +3380,7 @@ python3 tools/retrieve/rlm/query_cache.py --type tool "[keyword]"
 
 | Artifact | Path | Purpose |
 |----------|------|---------|
-| Master Inventory | `tools/tool_inventory.json` | Primary tool registry |
+| Master Inventory | `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json` | Primary tool registry |
 | RLM Cache | `.agent/learning/rlm_tool_cache.json` | Semantic search index |
 | Markdown Inventory | `tools/TOOL_INVENTORY.md` | Human-readable inventory |
 
@@ -3638,8 +3638,8 @@ After implementation is complete, execute the standard closure sequence:
 
 ---
 
-## File: .agent/skills/SKILL.md
-**Path:** `.agent/skills/SKILL.md`
+## File: plugins/tool-inventory/skills/tool-inventory/SKILL.md
+**Path:** `plugins/tool-inventory/skills/tool-inventory/SKILL.md`
 **Note:** (Expanded from directory)
 
 ```markdown
@@ -3676,7 +3676,7 @@ Use this skill to access the "RLM Index" (Recursive Learning Model). You do not 
 
 **Command**:
 ```bash
-python tools/retrieve/rlm/query_cache.py --type tool "KEYWORD"
+python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --type tool "KEYWORD"
 ```
 
 ### 2. Retrieve & Bind (Late-Binding)
@@ -3930,12 +3930,12 @@ exec python3 "$CLI_PATH" workflow end "$@"
 
 # Ensure checking for help flag to avoid raw python tracebacks if possible
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    python3 tools/retrieve/bundler/bundle.py --help
+    python3 plugins/context-bundler/scripts/bundle.py --help
     exit 0
 fi
 
 # Execute the python tool directly
-exec python3 tools/retrieve/bundler/bundle.py "$@"
+exec python3 plugins/context-bundler/scripts/bundle.py "$@"
 
 ```
 
@@ -5420,119 +5420,119 @@ fi
     "summarized_at": "2026-01-31T22:55:00.000000",
     "summary": "{\n  \"purpose\": \"Comprehensive integrity checker for the Project Sanctuary knowledge graph. Scans Markdown files and JSON manifests for broken internal links (dead references). Optionally validates external URLs. Enforces Protocol 128: Source Verification (Rule 9).\",\n  \"layer\": \"Curate / Link Checker\",\n  \"supported_object_types\": [\"Markdown\", \"Manifest\"],\n  \"usage\": [\n    \"python scripts/link-checker/verify_links.py\",\n    \"python scripts/link-checker/verify_links.py --check-external --output report.json\"\n  ],\n  \"args\": [\n    \"--root: Project root directory (default: .)\",\n    \"--check-external: Enable HTTP/HTTPS validation (slower)\",\n    \"--output: JSON report path\"\n  ],\n  \"inputs\": [\n    \"**/*.md\",\n    \"**/*manifest.json\"\n  ],\n  \"outputs\": [\n    \"JSON Report of broken links\",\n    \"Console summary\"\n  ],\n  \"dependencies\": [\n    \"requests (external lib)\"\n  ],\n  \"key_functions\": [\n    \"scan_md_file()\",\n    \"resolve_relative_path()\"\n  ],\n  \"consumed_by\": [\n    \"CI/CD Pipelines\",\n    \"Agent (Pre-Flight checks)\"\n  ]\n}"
   },
-  "tools/codify/diagrams/export_mmd_to_image.py": {
+  "plugins/mermaid-to-png/skills/convert-mermaid/scripts/convert.py": {
     "file_mtime": 1769270613.391936,
     "hash": "124a3dee1a20a504",
     "summarized_at": "2026-01-29T10:16:25.019821",
     "summary": "{\n  \"purpose\": \"Renders all .mmd files in docs/architecture_diagrams/ to PNG images. Run this script whenever diagrams are updated to regenerate images.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Mermaid Diagram (.mmd)\"],\n  \"usage\": [\n    \"python3 scripts/export_mmd_to_image.py                 # Render all\",\n    \"python3 scripts/export_mmd_to_image.py my_diagram.mmd  # Render specific file(s)\",\n    \"python3 scripts/export_mmd_to_image.py --svg           # Render as SVG instead\",\n    \"python3 scripts/export_mmd_to_image.py --check         # Check for outdated images\"\n  ],\n  \"args\": [\n    {\n      \"name\": \"--input\",\n      \"type\": \"str\",\n      \"help\": \"Input MMD file or directory\",\n      \"required\": false\n    },\n    {\n      \"name\": \"--output\",\n      \"type\": \"str\",\n      \"help\": \"Output file path or directory\",\n      \"required\": false\n    },\n    {\n      \"name\": \"--svg\",\n      \"action\": \"store_true\",\n      \"help\": \"Render as SVG instead of PNG\"\n    },\n    {\n      \"name\": \"--check\",\n      \"action\": \"store_true\",\n      \"help\": \"Check for outdated images only\"\n    }\n  ],\n  \"inputs\": [\"docs/architecture_diagrams/*.mmd\"],\n  \"outputs\": [\"PNG or SVG images in the specified output directory\"],\n  \"dependencies\": [\"mermaid-cli (npm install -g @mermaid-js/mermaid-cli)\"],\n  \"consumed_by\": [],\n  \"key_functions\": [\n    \"check_mmdc()\",\n    \"render_diagram(mmd_path: Path, output_format: str = \\\"png\\\") -> bool\",\n    \"check_outdated(mmd_path: Path, output_format: str = \\\"png\\\") -> bool\"\n  ]\n}"
   },
-  "tools/codify/rlm/debug_rlm.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py": {
     "file_mtime": 1769707602.6598785,
     "hash": "683125e86c5d11a2",
     "summarized_at": "2026-01-29T10:12:20.551771",
-    "summary": "{\n  \"purpose\": \"Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts.\",\n  \"layer\": \"Standalone\",\n  \"supported_object_types\": [\"RLM Configuration\"],\n  \"usage\": [\"(None)\"],\n  \"args\": [],\n  \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\", \".env\"],\n  \"outputs\": [\"Console output (State inspection)\"],\n  \"dependencies\": [\"tools/codify/rlm/rlm_config.py\"],\n  \"key_functions\": [\"main()\"]\n}"
+    "summary": "{\n  \"purpose\": \"Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts.\",\n  \"layer\": \"Standalone\",\n  \"supported_object_types\": [\"RLM Configuration\"],\n  \"usage\": [\"(None)\"],\n  \"args\": [],\n  \"inputs\": [\"tools/standalone/rlm-factory/manifest-index.json\", \".env\"],\n  \"outputs\": [\"Console output (State inspection)\"],\n  \"dependencies\": [\"plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py\"],\n  \"key_functions\": [\"main()\"]\n}"
   },
-  "tools/codify/rlm/distiller.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py": {
     "file_mtime": 1769737016.6712525,
     "hash": "3a8e416775ada64c",
     "summarized_at": "2026-01-29T17:42:47.074224",
-    "summary": "{\n  \"purpose\": \"Recursive summarization of repo content using Ollama.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"# 1. Distill a single file (Tool Logic)\",\n    \"python tools/codify/rlm/distiller.py --file tools/codify/rlm/rlm_config.py --type tool\",\n    \"python tools/codify/rlm/distiller.py --file tools/investigate/miners/db_miner.py --type tool --force\",\n    \"# 2. Distill legacy system documentation (Default)\",\n    \"python tools/codify/rlm/distiller.py --file filepath.md\",\n    \"# 3. Incremental update (files changed in last 24 hours)\",\n    \"python tools/codify/rlm/distiller.py --since 24 --type legacy\",\n    \"# 4. Process specific directory\",\n    \"python tools/codify/rlm/distiller.py --target folder --type sanctuary\",\n    \"# 5. Force update (regenerate summaries even if unchanged)\",\n    \"python tools/codify/rlm/distiller.py --target tools/investigate/miners --type tool --force\"\n  ],\n  \"args\": [\n    \"--file\",\n    \"Single file to process\",\n    \"--model\",\n    \"Ollama model to use\",\n    \"--cleanup\",\n    \"Remove stale entries for deleted/renamed files\",\n    \"--since\",\n    \"Process only files changed in last N hours\",\n    \"--no-cleanup\",\n    \"Skip auto-cleanup on incremental distills\",\n    \"--target\",\n    \"Target directories to process  (use with caution currently will process all files in the target directory)\",\n    \"--force\",\n    \"Force update (regenerate summaries even if unchanged)\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/rlm_config.py (Configuration)\",\n    \"tools/curate/inventories/manage_tool_inventory.py (Cyclical: Updates inventory descriptions)\",\n    \"tools/curate/rlm/cleanup_cache.py (Orphan Removal)\"\n  ],\n  \"consumed_by\": [\n    \"tools/curate/inventories/manage_tool_inventory.py (Invokes distiller on tool updates)\"\n  ],\n  \"key_functions\": [\n    \"load_manifest()\",\n    \"load_cache()\",\n    \"save_cache()\",\n    \"compute_hash()\",\n    \"call_ollama()\",\n    \"distill()\",\n    \"run_cleanup()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Recursive summarization of repo content using Ollama.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"# 1. Distill a single file (Tool Logic)\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --file plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py --type tool\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --file tools/investigate/miners/db_miner.py --type tool --force\",\n    \"# 2. Distill legacy system documentation (Default)\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --file filepath.md\",\n    \"# 3. Incremental update (files changed in last 24 hours)\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --since 24 --type legacy\",\n    \"# 4. Process specific directory\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --target folder --type sanctuary\",\n    \"# 5. Force update (regenerate summaries even if unchanged)\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --target tools/investigate/miners --type tool --force\"\n  ],\n  \"args\": [\n    \"--file\",\n    \"Single file to process\",\n    \"--model\",\n    \"Ollama model to use\",\n    \"--cleanup\",\n    \"Remove stale entries for deleted/renamed files\",\n    \"--since\",\n    \"Process only files changed in last N hours\",\n    \"--no-cleanup\",\n    \"Skip auto-cleanup on incremental distills\",\n    \"--target\",\n    \"Target directories to process  (use with caution currently will process all files in the target directory)\",\n    \"--force\",\n    \"Force update (regenerate summaries even if unchanged)\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py (Configuration)\",\n    \"plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py (Cyclical: Updates inventory descriptions)\",\n    \"plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py (Orphan Removal)\"\n  ],\n  \"consumed_by\": [\n    \"plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py (Invokes distiller on tool updates)\"\n  ],\n  \"key_functions\": [\n    \"load_manifest()\",\n    \"load_cache()\",\n    \"save_cache()\",\n    \"compute_hash()\",\n    \"call_ollama()\",\n    \"distill()\",\n    \"run_cleanup()\"\n  ]\n}"
   },
-  "tools/codify/rlm/rlm_config.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py": {
     "hash": "c31ca280d008bb57",
     "summarized_at": "2026-01-31T22:55:00.000000",
     "summary": "{\n  \"purpose\": \"Central configuration factory for RLM. Resolves cache paths and loads manifests.\",\n  \"layer\": \"Codify / RLM\",\n  \"supported_object_types\": [\"RLM Config\"],\n  \"usage\": [\"from tools.codify.rlm.rlm_config import RLMConfig\"],\n  \"dependencies\": [],\n  \"key_functions\": [\"RLMConfig\"]\n}"
   },
-  "tools/codify/tracking/analyze_tracking_status.py": {
+  "plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py": {
     "file_mtime": 1769312126.2832038,
     "hash": "67bbe5d3d27fcaa5",
     "summarized_at": "2026-01-29T10:18:06.771048",
-    "summary": "{\n  \"purpose\": \"Generates a summary report of AI Analysis progress from the tracking file. Shows analyzed vs pending forms for project management dashboards.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"AI Analysis Tracking\"],\n  \"usage\": [\"python tools/codify/tracking/analyze_tracking_status.py\"],\n  \"inputs\": [\"file path\"],\n  \"outputs\": [\"Summary report of AI Analysis progress\"],\n  \"dependencies\": [],\n  \"consumed_by\": [\"Project management dashboards\"],\n  \"key_functions\": [\n    \"analyze_status()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Generates a summary report of AI Analysis progress from the tracking file. Shows analyzed vs pending forms for project management dashboards.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"AI Analysis Tracking\"],\n  \"usage\": [\"python plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py\"],\n  \"inputs\": [\"file path\"],\n  \"outputs\": [\"Summary report of AI Analysis progress\"],\n  \"dependencies\": [],\n  \"consumed_by\": [\"Project management dashboards\"],\n  \"key_functions\": [\n    \"analyze_status()\"\n  ]\n}"
   },
-  "tools/codify/tracking/generate_todo_list.py": {
+  "plugins/task-manager/skills/task-agent/scripts/create_task.py": {
     "file_mtime": 1769312126.2832038,
     "hash": "4f8c370b8a7478d1",
     "summarized_at": "2026-01-29T10:18:15.872122",
-    "summary": "{\n  \"purpose\": \"Creates a prioritized TODO list of forms pending AI analysis. Bubbles up Critical and High priority items based on workflow usage.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Forms\"],\n  \"usage\": \"python tools/codify/tracking/generate_todo_list.py\",\n  \"args\": [],\n  \"inputs\": [\n    {\n      \"name\": \"ai_analysis_tracking.json\",\n      \"description\": \"JSON file containing form tracking data.\"\n    },\n    {\n      \"name\": \"Workflow_Summary.md\",\n      \"description\": \"Markdown file containing workflow forms data.\"\n    },\n    {\n      \"name\": \"folderpath\",\n      \"description\": \"Directory containing application overview markdown files.\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"TODO_PENDING_ANALYSIS.md\",\n      \"description\": \"Markdown file listing pending forms for AI analysis, prioritized based on workflow and app core usage.\"\n    }\n  ],\n  \"dependencies\": [\n    \"json\",\n    \"re\",\n    \"pathlib\"\n  ],\n  \"consumed_by\": [\"AI Analysis System\"],\n  \"key_functions\": [\n    \"extract_form_ids\",\n    \"get_priority_forms\",\n    \"generate_todo\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Creates a prioritized TODO list of forms pending AI analysis. Bubbles up Critical and High priority items based on workflow usage.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Forms\"],\n  \"usage\": \"python plugins/task-manager/skills/task-agent/scripts/create_task.py\",\n  \"args\": [],\n  \"inputs\": [\n    {\n      \"name\": \"ai_analysis_tracking.json\",\n      \"description\": \"JSON file containing form tracking data.\"\n    },\n    {\n      \"name\": \"Workflow_Summary.md\",\n      \"description\": \"Markdown file containing workflow forms data.\"\n    },\n    {\n      \"name\": \"folderpath\",\n      \"description\": \"Directory containing application overview markdown files.\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"TODO_PENDING_ANALYSIS.md\",\n      \"description\": \"Markdown file listing pending forms for AI analysis, prioritized based on workflow and app core usage.\"\n    }\n  ],\n  \"dependencies\": [\n    \"json\",\n    \"re\",\n    \"pathlib\"\n  ],\n  \"consumed_by\": [\"AI Analysis System\"],\n  \"key_functions\": [\n    \"extract_form_ids\",\n    \"get_priority_forms\",\n    \"generate_todo\"\n  ]\n}"
   },
-  "tools/curate/documentation/workflow_inventory_manager.py": {
+  "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py": {
     "file_mtime": 1769561175.0164137,
     "hash": "78d0f2c74115efc9",
     "summarized_at": "2026-01-29T10:19:03.519385",
-    "summary": "{\n  \"purpose\": \"Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Workflows\"],\n  \"usage\": [\n    \"# Scan and regenerate inventory\\npython tools/curate/documentation/workflow_inventory_manager.py --scan\",\n    \"# Search workflows\\npython tools/curate/documentation/workflow_inventory_manager.py --search \\\"keyword\\\"\",\n    \"# List all workflows\\npython tools/curate/documentation/workflow_inventory_manager.py --list\",\n    \"# Show workflow details\\npython tools/curate/documentation/workflow_inventory_manager.py --show \\\"workflow-name\\\"\"\n  ],\n  \"args\": [\n    {\n      \"long\": \"--scan\",\n      \"short\": \"\",\n      \"action\": \"store_true\",\n      \"help\": \"Scan workflows dir and regenerate inventory\"\n    },\n    {\n      \"long\": \"--search\",\n      \"short\": \"\",\n      \"type\": \"str\",\n      \"metavar\": \"QUERY\",\n      \"help\": \"Search workflows by keyword\"\n    },\n    {\n      \"long\": \"--list\",\n      \"short\": \"\",\n      \"action\": \"store_true\",\n      \"help\": \"List all workflows\"\n    },\n    {\n      \"long\": \"--show\",\n      \"short\": \"\",\n      \"type\": \"str\",\n      \"metavar\": \"NAME\",\n      \"help\": \"Show details for a workflow\"\n    }\n  ],\n  \"inputs\": [\".agent/workflows/*.md\"],\n  \"outputs\": [\n    \"docs/antigravity/workflow/workflow_inventory.json\",\n    \"docs/antigravity/workflow/WORKFLOW_INVENTORY.md\"\n  ],\n  \"dependencies\": [\"PathResolver\"],\n  \"consumed_by\": [],\n  \"key_functions\": [\n    \"parse_frontmatter\",\n    \"extract_called_by\",\n    \"scan_workflows\",\n    \"load_inventory\",\n    \"save_inventory\",\n    \"generate_json\",\n    \"generate_markdown\",\n    \"search_workflows\",\n    \"list_workflows\",\n    \"show_workflow\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md.\",\n  \"layer\": \"Application Layer\",\n  \"supported_object_types\": [\"Workflows\"],\n  \"usage\": [\n    \"# Scan and regenerate inventory\\npython plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --scan\",\n    \"# Search workflows\\npython plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --search \\\"keyword\\\"\",\n    \"# List all workflows\\npython plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --list\",\n    \"# Show workflow details\\npython plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --show \\\"workflow-name\\\"\"\n  ],\n  \"args\": [\n    {\n      \"long\": \"--scan\",\n      \"short\": \"\",\n      \"action\": \"store_true\",\n      \"help\": \"Scan workflows dir and regenerate inventory\"\n    },\n    {\n      \"long\": \"--search\",\n      \"short\": \"\",\n      \"type\": \"str\",\n      \"metavar\": \"QUERY\",\n      \"help\": \"Search workflows by keyword\"\n    },\n    {\n      \"long\": \"--list\",\n      \"short\": \"\",\n      \"action\": \"store_true\",\n      \"help\": \"List all workflows\"\n    },\n    {\n      \"long\": \"--show\",\n      \"short\": \"\",\n      \"type\": \"str\",\n      \"metavar\": \"NAME\",\n      \"help\": \"Show details for a workflow\"\n    }\n  ],\n  \"inputs\": [\".agent/workflows/*.md\"],\n  \"outputs\": [\n    \"docs/antigravity/workflow/workflow_inventory.json\",\n    \"docs/antigravity/workflow/WORKFLOW_INVENTORY.md\"\n  ],\n  \"dependencies\": [\"PathResolver\"],\n  \"consumed_by\": [],\n  \"key_functions\": [\n    \"parse_frontmatter\",\n    \"extract_called_by\",\n    \"scan_workflows\",\n    \"load_inventory\",\n    \"save_inventory\",\n    \"generate_json\",\n    \"generate_markdown\",\n    \"search_workflows\",\n    \"list_workflows\",\n    \"show_workflow\"\n  ]\n}"
   },
-  "tools/curate/inventories/manage_tool_inventory.py": {
+  "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py": {
     "file_mtime": 1769716444.1697989,
     "hash": "4b4a01331d072e33",
     "summarized_at": "2026-01-29T17:20:29.446699",
-    "summary": "{\n  \"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.\",\n  \"layer\": \"Curate / Curate\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python tools/curate/inventories/manage_tool_inventory.py --help\",\n    \"python tools/curate/inventories/manage_tool_inventory.py list\",\n    \"python tools/curate/inventories/manage_tool_inventory.py search \\\"keyword\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py remove --path \\\"path/to/tool.py\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py update --path \\\"tool.py\\\" --desc \\\"New description\\\"\",\n    \"python tools/curate/inventories/manage_tool_inventory.py discover --auto-stub\"\n  ],\n  \"args\": [\n    \"--inventory\",\n    \"--path\",\n    \"--category\",\n    \"--desc\",\n    \"--output\",\n    \"keyword\",\n    \"--status\",\n    \"--new-path\",\n    \"--mark-compliant\",\n    \"--include-json\",\n    \"--json\",\n    \"--batch\",\n    \"--dry-run\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/distiller.py (Cyclical: Triggers distillation on update)\",\n    \"tools/curate/rlm/cleanup_cache.py (Atomic cleanup on removal)\"\n  ],\n  \"consumed_by\": [\"tools/codify/rlm/distiller.py (Invokes update_tool for RLM-driven enrichment)\"],\n  \"key_functions\": [\n    \"generate_markdown()\",\n    \"extract_docstring()\",\n    \"main()\"\n  ]\n  }"
+    "summary": "{\n  \"purpose\": \"Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations.\",\n  \"layer\": \"Curate / Curate\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --help\",\n    \"python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py list\",\n    \"python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py search \\\"keyword\\\"\",\n    \"python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py remove --path \\\"path/to/tool.py\\\"\",\n    \"python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py update --path \\\"tool.py\\\" --desc \\\"New description\\\"\",\n    \"python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py discover --auto-stub\"\n  ],\n  \"args\": [\n    \"--inventory\",\n    \"--path\",\n    \"--category\",\n    \"--desc\",\n    \"--output\",\n    \"keyword\",\n    \"--status\",\n    \"--new-path\",\n    \"--mark-compliant\",\n    \"--include-json\",\n    \"--json\",\n    \"--batch\",\n    \"--dry-run\"\n  ],\n  \"inputs\": [\"(See code)\"],\n  \"outputs\": [\"(See code)\"],\n  \"dependencies\": [\n    \"plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py (Cyclical: Triggers distillation on update)\",\n    \"plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py (Atomic cleanup on removal)\"\n  ],\n  \"consumed_by\": [\"plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py (Invokes update_tool for RLM-driven enrichment)\"],\n  \"key_functions\": [\n    \"generate_markdown()\",\n    \"extract_docstring()\",\n    \"main()\"\n  ]\n  }"
   },
-  "tools/curate/inventories/vibe_cleanup.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py": {
     "hash": "7727289db71a92cf",
     "summarized_at": "2026-01-31T22:55:00.000000",
-    "summary": "{\n  \"purpose\": \"Inventory Reconciliation Utility. Scans the `tool_inventory.json` against the filesystem and automatically removes entries for files that no longer exist (Pruning). Also lists all current scripts to audit 'ghosts' vs reality.\",\n  \"layer\": \"Curate / Inventories\",\n  \"supported_object_types\": [\"Temp Files\"],\n  \"usage\": [\"python tools/curate/inventories/vibe_cleanup.py\"],\n  \"args\": [\n    \"None\"\n  ],\n  \"inputs\": [\n    \"tools/tool_inventory.json\",\n    \"Filesystem (tools/ directory)\"\n  ],\n  \"outputs\": [\n    \"Updates to tool_inventory.json\",\n    \"Console log of removed files\"\n  ],\n  \"dependencies\": [\n    \"tools/curate/inventories/manage_tool_inventory.py\"\n  ],\n  \"key_functions\": [\n    \"get_missing_files()\",\n    \"remove_tool()\"\n  ],\n  \"consumed_by\": [\n    \"CI/CD Pipelines\",\n    \"Manual maintenance\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Inventory Reconciliation Utility. Scans the `tool_inventory.json` against the filesystem and automatically removes entries for files that no longer exist (Pruning). Also lists all current scripts to audit 'ghosts' vs reality.\",\n  \"layer\": \"Curate / Inventories\",\n  \"supported_object_types\": [\"Temp Files\"],\n  \"usage\": [\"python plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py\"],\n  \"args\": [\n    \"None\"\n  ],\n  \"inputs\": [\n    \"plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json\",\n    \"Filesystem (plugins / directory)\"\n  ],\n  \"outputs\": [\n    \"Updates to tool_inventory.json\",\n    \"Console log of removed files\"\n  ],\n  \"dependencies\": [\n    \"plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py\"\n  ],\n  \"key_functions\": [\n    \"get_missing_files()\",\n    \"remove_tool()\"\n  ],\n  \"consumed_by\": [\n    \"CI/CD Pipelines\",\n    \"Manual maintenance\"\n  ]\n}"
   },
-  "tools/curate/rlm/cleanup_cache.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py": {
     "hash": "04571da937a7cad6",
     "summarized_at": "2026-01-31T22:55:00.000000",
-    "summary": "{\n  \"purpose\": \"RLM Cleanup: Removes stale and orphan entries from the Recursive Language Model ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"RLM Cache Entry\"],\n  \"usage\": [\n    \"python tools/curate/rlm/cleanup_cache.py --help\"\n  ],\n  \"args\": [\n    \"--apply: Perform the deletion\",\n    \"--prune-orphans: Remove entries not matching manifest\",\n    \"--v: Verbose mode\"\n  ],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"tools/codify/rlm/rlm_config.py\"\n  ],\n  \"key_functions\": [\n    \"load_manifest_globs()\",\n    \"matches_any()\",\n    \"main()\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"RLM Cleanup: Removes stale and orphan entries from the Recursive Language Model ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"RLM Cache Entry\"],\n  \"usage\": [\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py --help\"\n  ],\n  \"args\": [\n    \"--apply: Perform the deletion\",\n    \"--prune-orphans: Remove entries not matching manifest\",\n    \"--v: Verbose mode\"\n  ],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py\"\n  ],\n  \"key_functions\": [\n    \"load_manifest_globs()\",\n    \"matches_any()\",\n    \"main()\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ]\n}"
   },
-  "tools/investigate/utils/next_number.py": {
+  "plugins/adr-manager/skills/adr-management/scripts/next_number.py": {
     "hash": "new_hash_1",
     "summarized_at": "2026-01-31T22:55:00.000000",
-    "summary": "{\n  \"purpose\": \"Sequential Identifier Generator. Scans artifact directories (Specs, Tasks, ADRs, Chronicles) to find the next available sequence number. Prevents ID collisions.\",\n  \"layer\": \"Investigate / Utils\",\n  \"supported_object_types\": [\"ADR\", \"Task\", \"Spec\", \"Chronicle\"],\n  \"usage\": [\n    \"python tools/investigate/utils/next_number.py --type spec\",\n    \"python tools/investigate/utils/next_number.py --type task\",\n    \"python tools/investigate/utils/next_number.py --type all\"\n  ],\n  \"args\": [\n    \"--type: Artifact type (spec, task, adr, chronicle, all)\"\n  ],\n  \"inputs\": [\n    \"specs/\",\n    \"tasks/\",\n    \"ADRs/\",\n    \"00_CHRONICLE/ENTRIES/\"\n  ],\n  \"outputs\": [\n    \"Next available ID (e.g. \\\"0045\\\") to stdout\"\n  ],\n  \"dependencies\": [\n    \"pathlib\",\n    \"re\"\n  ],\n  \"key_functions\": [\n    \"main()\"\n  ],\n  \"consumed_by\": [\n    \"scripts/domain_cli.py\",\n    \"Manual workflow execution\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Sequential Identifier Generator. Scans artifact directories (Specs, Tasks, ADRs, Chronicles) to find the next available sequence number. Prevents ID collisions.\",\n  \"layer\": \"Investigate / Utils\",\n  \"supported_object_types\": [\"ADR\", \"Task\", \"Spec\", \"Chronicle\"],\n  \"usage\": [\n    \"python plugins/adr-manager/skills/adr-management/scripts/next_number.py --type spec\",\n    \"python plugins/adr-manager/skills/adr-management/scripts/next_number.py --type task\",\n    \"python plugins/adr-manager/skills/adr-management/scripts/next_number.py --type all\"\n  ],\n  \"args\": [\n    \"--type: Artifact type (spec, task, adr, chronicle, all)\"\n  ],\n  \"inputs\": [\n    \"specs/\",\n    \"tasks/\",\n    \"ADRs/\",\n    \"00_CHRONICLE/ENTRIES/\"\n  ],\n  \"outputs\": [\n    \"Next available ID (e.g. \\\"0045\\\") to stdout\"\n  ],\n  \"dependencies\": [\n    \"pathlib\",\n    \"re\"\n  ],\n  \"key_functions\": [\n    \"main()\"\n  ],\n  \"consumed_by\": [\n    \"scripts/domain_cli.py\",\n    \"Manual workflow execution\"\n  ]\n}"
   },
-  "tools/orchestrator/proof_check.py": {
+  "plugins/agent-loops/skills/orchestrator/scripts/proof_check.py": {
     "hash": "6ffa54cfc3afc26f",
     "summarized_at": "2026-01-31T22:55:00.000000",
-    "summary": "{\n  \"purpose\": \"Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. This tool prevents 'checkbox fraud'.\",\n  \"layer\": \"Orchestrator / Verification\",\n  \"supported_object_types\": [\"Spec artifacts\", \"File references\"],\n  \"usage\": [\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-human-gate-protocols\",\n    \"python tools/orchestrator/proof_check.py --spec-dir specs/0005-foo --json\"\n  ],\n  \"args\": [\n    \"--spec-dir: Path to spec directory (required)\",\n    \"--project-root: Project root directory (default: current)\",\n    \"--json: Output in JSON format (optional)\"\n  ],\n  \"inputs\": [\n    \"specs/[ID]/spec.md\",\n    \"specs/[ID]/plan.md\",\n    \"specs/[ID]/tasks.md\"\n  ],\n  \"outputs\": [\n    \"Summary report of modified/unchanged files\",\n    \"Exit code 1 if fail, 0 if pass\"\n  ],\n  \"dependencies\": [\n    \"Git\"\n  ],\n  \"key_functions\": [\n    \"extract_file_refs()\",\n    \"check_file_modified()\",\n    \"run_proof_check()\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py workflow retrospective\",\n    \"/sanctuary-retrospective workflow\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Scans spec.md, plan.md, and tasks.md for file references and verifies each referenced file has been modified compared to origin/main. This tool prevents 'checkbox fraud'.\",\n  \"layer\": \"Orchestrator / Verification\",\n  \"supported_object_types\": [\"Spec artifacts\", \"File references\"],\n  \"usage\": [\n    \"python plugins/agent-loops/skills/orchestrator/scripts/proof_check.py --spec-dir specs/0005-human-gate-protocols\",\n    \"python plugins/agent-loops/skills/orchestrator/scripts/proof_check.py --spec-dir specs/0005-foo --json\"\n  ],\n  \"args\": [\n    \"--spec-dir: Path to spec directory (required)\",\n    \"--project-root: Project root directory (default: current)\",\n    \"--json: Output in JSON format (optional)\"\n  ],\n  \"inputs\": [\n    \"specs/[ID]/spec.md\",\n    \"specs/[ID]/plan.md\",\n    \"specs/[ID]/tasks.md\"\n  ],\n  \"outputs\": [\n    \"Summary report of modified/unchanged files\",\n    \"Exit code 1 if fail, 0 if pass\"\n  ],\n  \"dependencies\": [\n    \"Git\"\n  ],\n  \"key_functions\": [\n    \"extract_file_refs()\",\n    \"check_file_modified()\",\n    \"run_proof_check()\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py workflow retrospective\",\n    \"/sanctuary-retrospective workflow\"\n  ]\n}"
   },
   "tools/orchestrator/workflow_manager.py": {
     "hash": "ecb4b989fc6c51d2",
     "summarized_at": "2026-01-31T22:55:00.000000",
-    "summary": "{\n  \"purpose\": \"Core logic for the 'Python Orchestrator' architecture (ADR-0030 v2/v3). Handles Git State checks, Context Alignment, Branch Creation & Naming, and Context Manifest Initialization. Acts as the single source of truth for 'Start Workflow' logic.\",\n  \"layer\": \"Orchestrator\",\n  \"supported_object_types\": [\"Workflow State\"],\n  \"usage\": [\n    \"from tools.orchestrator.workflow_manager import WorkflowManager\",\n    \"mgr = WorkflowManager()\",\n    \"mgr.start_workflow('codify', 'MyTarget')\"\n  ],\n  \"args\": [\n    \"Workflow Name\",\n    \"Target ID\",\n    \"Artifact Type\"\n  ],\n  \"inputs\": [\n    \"Workflow Name\",\n    \"Target ID\"\n  ],\n  \"outputs\": [\n    \"Exit Code 0: Success (Proceed)\",\n    \"Exit Code 1: Failure (Stop)\"\n  ],\n  \"dependencies\": [\n    \"tools/investigate/utils/path_resolver.py\"\n  ],\n  \"key_functions\": [\n    \"start_workflow\",\n    \"get_git_status\",\n    \"get_current_branch\",\n    \"generate_next_id\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py\",\n    \"Manual Scripts\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Core logic for the 'Python Orchestrator' architecture (ADR-0030 v2/v3). Handles Git State checks, Context Alignment, Branch Creation & Naming, and Context Manifest Initialization. Acts as the single source of truth for 'Start Workflow' logic.\",\n  \"layer\": \"Orchestrator\",\n  \"supported_object_types\": [\"Workflow State\"],\n  \"usage\": [\n    \"from tools.orchestrator.workflow_manager import WorkflowManager\",\n    \"mgr = WorkflowManager()\",\n    \"mgr.start_workflow('codify', 'MyTarget')\"\n  ],\n  \"args\": [\n    \"Workflow Name\",\n    \"Target ID\",\n    \"Artifact Type\"\n  ],\n  \"inputs\": [\n    \"Workflow Name\",\n    \"Target ID\"\n  ],\n  \"outputs\": [\n    \"Exit Code 0: Success (Proceed)\",\n    \"Exit Code 1: Failure (Stop)\"\n  ],\n  \"dependencies\": [\n    \"plugins/adr-manager/skills/adr-management/scripts/path_resolver.py\"\n  ],\n  \"key_functions\": [\n    \"start_workflow\",\n    \"get_git_status\",\n    \"get_current_branch\",\n    \"generate_next_id\"\n  ],\n  \"consumed_by\": [\n    \"tools/cli.py\",\n    \"Manual Scripts\"\n  ]\n}"
   },
-  "tools/retrieve/bundler/bundle.py": {
+  "plugins/context-bundler/scripts/bundle.py": {
     "file_mtime": 1769525919.0013855,
     "hash": "4c0db7435b49626d",
     "summarized_at": "2026-02-01T16:15:00.000000",
-    "summary": "{\n  \"purpose\": \"Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest. Warns on deprecated legacy keys (core, topic, etc.).\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Context Bundle\", \"Markdown\"],\n  \"usage\": [\n    \"python tools/retrieve/bundler/bundle.py manifest.json\",\n    \"python tools/retrieve/bundler/bundle.py manifest.json -o output.md\"\n  ],\n  \"args\": [\n    \"manifest: Path to file-manifest.json\",\n    \"-o, --output: Output markdown file path (default: bundle.md)\"\n  ],\n  \"inputs\": [\n    \"file-manifest.json\",\n    \"Source files referenced in manifest\"\n  ],\n  \"outputs\": [\n    \"Markdowm bundle file (e.g. bundle.md)\"\n  ],\n  \"dependencies\": [\n    \"tools/investigate/utils/path_resolver.py\"\n  ],\n  \"key_functions\": [\n    \"write_file_content()\",\n    \"bundle_files()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest. Warns on deprecated legacy keys (core, topic, etc.).\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Context Bundle\", \"Markdown\"],\n  \"usage\": [\n    \"python plugins/context-bundler/scripts/bundle.py manifest.json\",\n    \"python plugins/context-bundler/scripts/bundle.py manifest.json -o output.md\"\n  ],\n  \"args\": [\n    \"manifest: Path to file-manifest.json\",\n    \"-o, --output: Output markdown file path (default: bundle.md)\"\n  ],\n  \"inputs\": [\n    \"file-manifest.json\",\n    \"Source files referenced in manifest\"\n  ],\n  \"outputs\": [\n    \"Markdowm bundle file (e.g. bundle.md)\"\n  ],\n  \"dependencies\": [\n    \"plugins/adr-manager/skills/adr-management/scripts/path_resolver.py\"\n  ],\n  \"key_functions\": [\n    \"write_file_content()\",\n    \"bundle_files()\"\n  ]\n}"
   },
-  "tools/retrieve/bundler/manifest_manager.py": {
+  "plugins/context-bundler/scripts/bundle.py": {
     "file_mtime": 1769554275.3037753,
     "hash": "25a46ba715d8df06",
     "summarized_at": "2026-02-01T16:15:00.000000",
-    "summary": "{\n  \"purpose\": \"Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler. Supports manifest initialization, file addition/removal/update, searching, and bundling execution.\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Manifest\", \"Context Bundle\"],\n  \"usage\": [\n    \"# Initialize a new manifest\",\n    \"python tools/retrieve/bundler/manifest_manager.py init --bundle-title 'My Feature' --type generic\",\n    \"# Add a file\",\n    \"python tools/retrieve/bundler/manifest_manager.py add --path 'docs/readme.md' --note 'Overview'\",\n    \"# Remove a file\",\n    \"python tools/retrieve/bundler/manifest_manager.py remove --path 'docs/readme.md'\",\n    \"# Bundle files\",\n    \"python tools/retrieve/bundler/manifest_manager.py bundle --output 'context.md'\"\n  ],\n  \"args\": [\n    \"init: Initialize manifest (--bundle-title, --type, --manifest)\",\n    \"add: Add file (--path, --note, --base, --manifest, --section)\",\n    \"remove: Remove file (--path, --base, --manifest)\",\n    \"update: Update file (--path, --note, --new-path, --base, --manifest)\",\n    \"search: Search files (pattern, --base, --manifest)\",\n    \"list: List files (--base, --manifest)\",\n    \"bundle: Execute bundle (--output, --base, --manifest)\"\n  ],\n  \"inputs\": [\n    \"tools/standalone/context-bundler/file-manifest.json\",\n    \"tools/standalone/context-bundler/base-manifests/*.json\"\n  ],\n  \"outputs\": [\n    \"tools/standalone/context-bundler/file-manifest.json\",\n    \"Context bundles (.md)\"\n  ],\n  \"dependencies\": [\n    \"tools/investigate/utils/path_resolver.py\",\n    \"tools/retrieve/bundler/bundle.py\"\n  ],\n  \"key_functions\": [\n    \"add_file()\",\n    \"bundle()\",\n    \"get_base_manifest_path()\",\n    \"init_manifest()\",\n    \"list_manifest()\",\n    \"load_manifest()\",\n    \"remove_file()\",\n    \"save_manifest()\",\n    \"search_files()\",\n    \"update_file()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler. Supports manifest initialization, file addition/removal/update, searching, and bundling execution.\",\n  \"layer\": \"Curate / Bundler\",\n  \"supported_object_types\": [\"Manifest\", \"Context Bundle\"],\n  \"usage\": [\n    \"# Initialize a new manifest\",\n    \"python plugins/context-bundler/scripts/bundle.py init --bundle-title 'My Feature' --type generic\",\n    \"# Add a file\",\n    \"python plugins/context-bundler/scripts/bundle.py add --path 'docs/readme.md' --note 'Overview'\",\n    \"# Remove a file\",\n    \"python plugins/context-bundler/scripts/bundle.py remove --path 'docs/readme.md'\",\n    \"# Bundle files\",\n    \"python plugins/context-bundler/scripts/bundle.py bundle --output 'context.md'\"\n  ],\n  \"args\": [\n    \"init: Initialize manifest (--bundle-title, --type, --manifest)\",\n    \"add: Add file (--path, --note, --base, --manifest, --section)\",\n    \"remove: Remove file (--path, --base, --manifest)\",\n    \"update: Update file (--path, --note, --new-path, --base, --manifest)\",\n    \"search: Search files (pattern, --base, --manifest)\",\n    \"list: List files (--base, --manifest)\",\n    \"bundle: Execute bundle (--output, --base, --manifest)\"\n  ],\n  \"inputs\": [\n    \"tools/standalone/context-bundler/file-manifest.json\",\n    \"tools/standalone/context-bundler/base-manifests/*.json\"\n  ],\n  \"outputs\": [\n    \"tools/standalone/context-bundler/file-manifest.json\",\n    \"Context bundles (.md)\"\n  ],\n  \"dependencies\": [\n    \"plugins/adr-manager/skills/adr-management/scripts/path_resolver.py\",\n    \"plugins/context-bundler/scripts/bundle.py\"\n  ],\n  \"key_functions\": [\n    \"add_file()\",\n    \"bundle()\",\n    \"get_base_manifest_path()\",\n    \"init_manifest()\",\n    \"list_manifest()\",\n    \"load_manifest()\",\n    \"remove_file()\",\n    \"save_manifest()\",\n    \"search_files()\",\n    \"update_file()\"\n  ]\n}"
   },
-  "tools/retrieve/bundler/validate.py": {
+  "plugins/context-bundler/scripts/bundle.py": {
     "hash": "new_validate_2026",
     "summarized_at": "2026-02-01T16:15:00.000000",
-    "summary": "{\n  \"purpose\": \"Validates context bundler manifest files against the schema. Checks for required fields (title, files), path format, and path traversal vulnerabilities.\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"supported_object_types\": [\"Manifest\", \"Index\"],\n  \"usage\": [\n    \"python tools/retrieve/bundler/validate.py manifest.json\",\n    \"python tools/retrieve/bundler/validate.py --all-base\",\n    \"python tools/retrieve/bundler/validate.py --check-index\"\n  ],\n  \"args\": [\n    \"manifest: Path to manifest JSON file\",\n    \"--all-base: Validate all base manifests\",\n    \"--check-index: Validate manifest index\",\n    \"--quiet: Suppress output\"\n  ],\n  \"inputs\": [\n    \"Manifest JSON files\",\n    \"file-manifest-schema.json\"\n  ],\n  \"outputs\": [\n    \"Validation report (stdout)\",\n    \"Exit code 0 (valid) or 1 (invalid)\"\n  ],\n  \"dependencies\": [\n    \"tools/standalone/context-bundler/file-manifest-schema.json\"\n  ],\n  \"key_functions\": [\n    \"validate_manifest()\",\n    \"validate_index()\",\n    \"validate_all_base()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Validates context bundler manifest files against the schema. Checks for required fields (title, files), path format, and path traversal vulnerabilities.\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"supported_object_types\": [\"Manifest\", \"Index\"],\n  \"usage\": [\n    \"python plugins/context-bundler/scripts/bundle.py manifest.json\",\n    \"python plugins/context-bundler/scripts/bundle.py --all-base\",\n    \"python plugins/context-bundler/scripts/bundle.py --check-index\"\n  ],\n  \"args\": [\n    \"manifest: Path to manifest JSON file\",\n    \"--all-base: Validate all base manifests\",\n    \"--check-index: Validate manifest index\",\n    \"--quiet: Suppress output\"\n  ],\n  \"inputs\": [\n    \"Manifest JSON files\",\n    \"file-manifest-schema.json\"\n  ],\n  \"outputs\": [\n    \"Validation report (stdout)\",\n    \"Exit code 0 (valid) or 1 (invalid)\"\n  ],\n  \"dependencies\": [\n    \"tools/standalone/context-bundler/file-manifest-schema.json\"\n  ],\n  \"key_functions\": [\n    \"validate_manifest()\",\n    \"validate_index()\",\n    \"validate_all_base()\"\n  ]\n}"
   },
-  "tools/retrieve/rlm/fetch_tool_context.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py": {
     "file_mtime": 1769924260.8329458,
     "hash": "e6db97fa1e136a6a",
     "summarized_at": "2026-01-31T22:01:21.015896",
-    "summary": "{\n  \"purpose\": \"Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable 'Manual Page'. This is the second step of the Late-Binding Protocol, following query_cache.py which finds a tool, this script provides the detailed context needed to use it.\",\n  \"layer\": \"Retrieve\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python tools/retrieve/rlm/fetch_tool_context.py --file tools/cli.py\",\n    \"python tools/retrieve/rlm/fetch_tool_context.py --file scripts/domain_cli.py\"\n  ],\n  \"args\": [\n    \"--file : Path to the tool script (required, e.g., tools/cli.py)\"\n  ],\n  \"inputs\": [],\n  \"outputs\": [\"Markdown-formatted technical specification to stdout:\"],\n  \"dependencies\": [\n    \"- tools/codify/rlm/rlm_config.py: RLM configuration and cache loading\"\n  ],\n  \"consumed_by\": [\n    \"- Agent during Late-Binding tool discovery flow\"\n  ],\n  \"key_functions\": [\n    \"format_as_manual(file_path: str, data: dict)\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable 'Manual Page'. This is the second step of the Late-Binding Protocol, following query_cache.py which finds a tool, this script provides the detailed context needed to use it.\",\n  \"layer\": \"Retrieve\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --file tools/cli.py\",\n    \"python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --file scripts/domain_cli.py\"\n  ],\n  \"args\": [\n    \"--file : Path to the tool script (required, e.g., tools/cli.py)\"\n  ],\n  \"inputs\": [],\n  \"outputs\": [\"Markdown-formatted technical specification to stdout:\"],\n  \"dependencies\": [\n    \"- plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py: RLM configuration and cache loading\"\n  ],\n  \"consumed_by\": [\n    \"- Agent during Late-Binding tool discovery flow\"\n  ],\n  \"key_functions\": [\n    \"format_as_manual(file_path: str, data: dict)\"\n  ]\n}"
   },
-  "tools/retrieve/rlm/inventory.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py": {
     "file_mtime": 1769703353.8198912,
     "hash": "e89667d95d7a8297",
     "summarized_at": "2026-01-29T09:54:31.690762",
-    "summary": "{\n  \"purpose\": \"RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"RLM Cache (Legacy)\", \"RLM Cache (Tool)\"],\n  \"usage\": \"No explicit usage examples provided in the code. The script is intended to be run from the command line with optional --type argument.\",\n  \"args\": [\n    {\n      \"name\": \"--type\",\n      \"description\": \"Selects the configuration profile (default: legacy).\",\n      \"choices\": [\"legacy\", \"tool\"]\n    }\n  ],\n  \"inputs\": [\n    \".agent/learning/rlm_summary_cache.json (Legacy)\",\n    \".agent/learning/rlm_tool_cache.json (Tool)\",\n    \"Filesystem targets (defined in manifests)\",\n    \"tool_inventory.json\"\n  ],\n  \"outputs\": [\"Console report (Statistics, Missing Files, Stale Entries)\"],\n  \"dependencies\": [\n    \"tools/codify/rlm/rlm_config.py\"\n  ],\n  \"key_functions\": [\n    \"audit_inventory()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"RLM Cache (Legacy)\", \"RLM Cache (Tool)\"],\n  \"usage\": \"No explicit usage examples provided in the code. The script is intended to be run from the command line with optional --type argument.\",\n  \"args\": [\n    {\n      \"name\": \"--type\",\n      \"description\": \"Selects the configuration profile (default: legacy).\",\n      \"choices\": [\"legacy\", \"tool\"]\n    }\n  ],\n  \"inputs\": [\n    \".agent/learning/rlm_summary_cache.json (Legacy)\",\n    \".agent/learning/rlm_tool_cache.json (Tool)\",\n    \"Filesystem targets (defined in manifests)\",\n    \"tool_inventory.json\"\n  ],\n  \"outputs\": [\"Console report (Statistics, Missing Files, Stale Entries)\"],\n  \"dependencies\": [\n    \"plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py\"\n  ],\n  \"key_functions\": [\n    \"audit_inventory()\"\n  ]\n}"
   },
-  "tools/retrieve/rlm/query_cache.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py": {
     "file_mtime": 1769702294.5297713,
     "hash": "fd76ff31721cc98a",
     "summarized_at": "2026-01-29T10:12:28.812250",
-    "summary": "{\n  \"purpose\": \"RLM Search: Instant O(1) semantic search of the ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python tools/retrieve/rlm/query_cache.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"term\",\n      \"description\": \"Search term (ID, filename, or content keyword)\"\n    },\n    {\n      \"name\": \"--list\",\n      \"description\": \"List all cached files\"\n    },\n    {\n      \"name\": \"--no-summary\",\n      \"description\": \"Hide summary text\"\n    },\n    {\n      \"name\": \"--json\",\n      \"description\": \"Output results as JSON\"\n    }\n  ],\n  \"inputs\": [\"- (See code)\"],\n  \"outputs\": [\"- (See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"load_cache()\",\n    \"search_cache()\",\n    \"list_cache()\",\n    \"main()\"\n  ]\n}"
+    "summary": "{\n  \"purpose\": \"RLM Search: Instant O(1) semantic search of the ledger.\",\n  \"layer\": \"Curate / Rlm\",\n  \"supported_object_types\": [\"Generic\"],\n  \"usage\": [\"python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --help\"],\n  \"args\": [\n    {\n      \"name\": \"term\",\n      \"description\": \"Search term (ID, filename, or content keyword)\"\n    },\n    {\n      \"name\": \"--list\",\n      \"description\": \"List all cached files\"\n    },\n    {\n      \"name\": \"--no-summary\",\n      \"description\": \"Hide summary text\"\n    },\n    {\n      \"name\": \"--json\",\n      \"description\": \"Output results as JSON\"\n    }\n  ],\n  \"inputs\": [\"- (See code)\"],\n  \"outputs\": [\"- (See code)\"],\n  \"dependencies\": [\"(None detected)\"],\n  \"consumed_by\": [\"(Unknown)\"],\n  \"key_functions\": [\n    \"load_cache()\",\n    \"search_cache()\",\n    \"list_cache()\",\n    \"main()\"\n  ]\n}"
   },
-  "tools/utils/path_resolver.py": {
+  "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py": {
     "hash": "new_hash_3",
     "summarized_at": "2026-01-31T22:55:00.000000",
     "summary": "{\n  \"purpose\": \"Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding.\",\n  \"layer\": \"Tools / Utils\",\n  \"supported_object_types\": [\"Generic\", \"Path\"],\n  \"usage\": [\n    \"from tools.utils.path_resolver import resolve_path\"\n  ],\n  \"args\": [\n    \"(None detected)\"\n  ],\n  \"inputs\": [\n    \"(See code)\"\n  ],\n  \"outputs\": [\n    \"(See code)\"\n  ],\n  \"dependencies\": [\n    \"(None detected)\"\n  ],\n  \"key_functions\": [\n    \"resolve_root()\",\n    \"resolve_path()\"\n  ],\n  \"consumed_by\": [\n    \"(Unknown)\"\n  ]\n}"
   },
-  "tools/investigate/utils/path_resolver.py": {
+  "plugins/adr-manager/skills/adr-management/scripts/path_resolver.py": {
     "summary": {
       "purpose": "Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding.",
       "layer": "Curate / Bundler",
@@ -5542,7 +5542,7 @@ fi
     },
     "summarized_at": "2026-01-31T23:55:00.000000"
   },
-  "tools/investigate/utils/pathResolver.js": {
+  "plugins/adr-manager/skills/adr-management/scripts/pathResolver.js": {
     "summary": {
       "purpose": "Node.js implementation of path resolution logic.",
       "layer": "Utility",
@@ -5552,7 +5552,7 @@ fi
     },
     "summarized_at": "2026-01-31T23:55:00.000000"
   },
-  "tools/investigate/utils/rlmConfigResolver.js": {
+  "plugins/adr-manager/skills/adr-management/scripts/rlmConfigResolver.js": {
     "summary": {
       "purpose": "Resolves RLM configuration paths for Node.js tools.",
       "layer": "Configuration",

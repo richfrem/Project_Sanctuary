@@ -112,6 +112,7 @@ Store your customized LLM summarization prompts here.
 | Command | Script | Ollama? | Description |
 |:---|:---|:---|:---|
 | `/rlm-factory:distill` | `distiller.py` | ✅ | LLM-powered file summarization |
+| `/rlm-factory:distill-agent` | Agent intelligence | ❌ | Agent-powered summarization (faster, higher quality) |
 | `/rlm-factory:query` | `query_cache.py` | ❌ | Search the semantic ledger |
 | `/rlm-factory:audit` | `inventory.py` | ❌ | Coverage report (fs vs cache) |
 | `/rlm-factory:cleanup` | `cleanup_cache.py` | ❌ | Remove stale/orphan entries |
@@ -139,11 +140,11 @@ graph LR
     C -->|Curate| E["Cleanup 🧹"]
 ```
 
-Additional diagrams (from original tool):
-- [distillation_process.mmd](docs/distillation_process.mmd) — Detailed data flow
-- [search_process.mmd](docs/search_process.mmd) — Summary-first search
-- [logic.mmd](docs/logic.mmd) — Internal decision logic
-- [workflow.mmd](docs/workflow.mmd) — User workflow
+Additional diagrams:
+- [distillation_process.mmd](skills/rlm-curator/references/distillation_process.mmd) — Detailed data flow
+- [search_process.mmd](skills/rlm-curator/references/search_process.mmd) — Summary-first search
+- [logic.mmd](skills/rlm-curator/references/logic.mmd) — Internal decision logic
+- [workflow.mmd](skills/rlm-curator/references/workflow.mmd) — User workflow
 
 ### How It Works
 1. **Distiller** reads each file, computes a content hash
@@ -160,31 +161,23 @@ rlm-factory/
 │   └── plugin.json              # Plugin identity + runtime deps
 ├── commands/
 │   ├── distill.md               # /rlm-factory:distill
+│   ├── distill-agent.md         # /rlm-factory:distill-agent
 │   ├── query.md                 # /rlm-factory:query
 │   ├── audit.md                 # /rlm-factory:audit
 │   └── cleanup.md               # /rlm-factory:cleanup
 ├── skills/
-│   └── rlm-curator/
-│       └── SKILL.md             # Auto-invoked curator skill
-├── scripts/
-│   ├── distiller.py             # The Writer (Ollama)
-│   ├── query_cache.py           # The Reader
-│   ├── inventory.py             # The Auditor
-│   ├── cleanup_cache.py         # The Janitor
-│   └── rlm_config.py            # Shared config (RLMConfig)
+│   ├── rlm-curator/
+│   │   ├── SKILL.md             # Auto-invoked curator skill
+│   │   ├── references/          # Architecture docs, diagrams, research
+│   │   └── scripts/             # distiller.py, query_cache.py, etc.
+│   ├── rlm-distill/
+│   │   └── SKILL.md             # Agent-powered distillation protocol
+│   └── ollama-launch/
+│       └── SKILL.md             # Ollama server management
 ├── resources/
 │   ├── manifest-index.json      # Profile registry
 │   ├── distiller_manifest.json  # Default scope config
 │   └── rlm_manifest.json        # Legacy manifest
-├── docs/
-│   ├── rlm-factory-workflow.mmd # Plugin sequence diagram
-│   ├── BLUEPRINT.md             # Architecture theory
-│   ├── research-summary.md      # RLM research paper summary
-│   ├── distillation_process.mmd # Data flow detail
-│   ├── search_process.mmd       # Search flow
-│   ├── logic.mmd                # Internal logic
-│   ├── workflow.mmd             # User workflow
-│   └── unpacking.mmd            # Legacy unpacking
 ├── requirements.in              # Python dependencies
 └── README.md
 ```

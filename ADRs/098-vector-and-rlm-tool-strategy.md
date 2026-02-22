@@ -31,7 +31,7 @@ We will maintain TWO distinct implementations of RLM for different domains:
     *   **Manifest**: `learning_manifest.json`.
 
 *   **Tooling RLM (Tool Manuals)**:
-    *   **Manager**: `tools/codify/rlm/distiller.py` (via `manage_tool_inventory.py`).
+    *   **Manager**: `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` (via `manage_tool_inventory.py`).
     *   **Cache**: `.agent/learning/rlm_tool_cache.json`.
     *   **Purpose**: Manages detailed metadata (headers, args, usage) for the `tool_inventory.json`.
     *   **Manifest**: `distiller_manifest.json` (Managed by Inventory).
@@ -50,5 +50,5 @@ We will maintain TWO distinct implementations of RLM for different domains:
     *   Agents must know which RLM to query (Brain vs Tool). This is abstracted via the Agent's Tool definitions (`cortex_query` vs `fetch_tool_context`).
 
 ## Compliance
-*   `tools/retrieve/rlm/query_cache.py` and `fetch_tool_context.py` default to "Tool Mode" for easy tool discovery.
+*   `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` and `fetch_tool_context.py` default to "Tool Mode" for easy tool discovery.
 *   `scripts/cortex_cli.py` defaults to "Legacy Mode" for project memory.

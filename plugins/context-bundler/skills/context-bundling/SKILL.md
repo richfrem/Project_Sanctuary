@@ -6,51 +6,75 @@ description: Create technical bundles of code, design, and documentation for ext
 # Context Bundling Skill 📦
 
 ## Overview
-This skill centralizes the knowledge and workflows for creating "Context Bundles" using the project's internal bundling tools. These bundles are essential for sharing large amounts of code and design context with other AI agents or for human review.
+This skill centralizes the knowledge and workflows for creating "Context Bundles." These bundles are essential for compiling large amounts of code and design context into a single, portable Markdown file for sharing with other AI agents or for human review.
 
-## Key Tools
-- **Manifest Manager**: `plugins/context-bundler/scripts/manifest_manager.py` (Handles manifest creation and file management)
-- **Bundler Engine**: `plugins/context-bundler/scripts/bundle.py` (Performs the actual Markdown generation)
+## 🎯 Primary Directive
+**Curate, Consolidate, and Convey.** You do not just "list files"; you architect context. You ensure that any bundle you create is:
+1. **Complete:** Contains all required dependencies, documentation, and source code.
+2. **Ordered:** Flows logically (Identity/Prompt → Manifest → Design Docs → Source Code).
+3. **Annotated:** Every file must include a brief note explaining its purpose in the bundle.
 
-## Core Workflow: Custom Temporary Bundles
-When you need to create a one-off bundle for a specific task (like a Red Team review):
+## Core Workflow: Generating a Bundle
 
-### 1. Initialize a Temporary Manifest
-Always create temporary manifests in the `temp/` directory to keep the main tool configuration clean.
-```bash
-python3 plugins/context-bundler/scripts/manifest_manager.py --manifest temp/my_manifest.json init --type generic --bundle-title "Bundle Title"
-```
-> [!IMPORTANT]
-> Global flags like `--manifest` MUST come **BEFORE** the subcommand (`init`, `add`, `bundle`).
+The context bundler operates through a simple JSON manifest pattern. 
 
-### 2. Add Relevant Files
-Add design docs, source code, and custom prompts to the manifest.
-```bash
-python3 plugins/context-bundler/scripts/manifest_manager.py --manifest temp/my_manifest.json add --path "docs/design.md" --note "Primary design"
-```
+### 1. Analyze the Intent
+Before bundling, determine what the user is trying to accomplish:
+- **Code Review**: Include implementation files and overarching logic.
+- **Red Team / Security**: Include architecture diagrams and security protocols.
+- **Bootstrapping**: Include `README`, `.env.example`, and structural scaffolding.
 
-### 3. Generate the Bundle
-Compile the files into a single Markdown artifact.
-```bash
-python3 plugins/context-bundler/scripts/manifest_manager.py --manifest temp/my_manifest.json bundle --output temp/my_bundle.md
-```
-
-## Best Practices
-1. **Contextual Notes**: Always provide a `--note` when adding files to help the recipient understand why that specific file is included.
-2. **Cleanup**: Mention in your walkthrough that temporary files in `temp/` can be safely deleted after the bundle is used.
-3. **Red Team Prompts**: When bundling for review, always include a specialized "Red Team Prompt" (e.g., `docs/architecture/red-team-*.md`) to guide the external LLM's review process.
-
-## Manifest Schema (Reference)
-If you need to manually edit a manifest:
+### 2. Define the Manifest Schema
+You must formulate a JSON manifest containing the exact files to be bundled.
 ```json
 {
   "title": "Bundle Title",
-  "description": "Context description",
+  "description": "Short explanation of the bundle's goal.",
   "files": [
     {
-      "path": "path/to/file.ts",
-      "note": "Description of why this file is here"
+      "path": "docs/architecture.md",
+      "note": "Primary design document"
+    },
+    {
+      "path": "src/main.py",
+      "note": "Core implementation logic"
     }
   ]
 }
 ```
+
+### 3. Generate the Markdown Bundle
+Use your native tools (e.g., `cat`, `view_file`, or custom scripts depending on the host agent environment) to read the contents of each file listed in the manifest and compile them into a target `output.md` file.
+
+The final bundle format must follow this structure:
+
+```markdown
+# [Bundle Title]
+**Description:** [Description]
+
+## Index
+1. `docs/architecture.md` - Primary design document
+2. `src/main.py` - Core implementation logic
+
+---
+
+## File: `docs/architecture.md`
+> Note: Primary design document
+
+\`\`\`markdown
+... file contents ...
+\`\`\`
+
+---
+
+## File: `src/main.py`
+> Note: Core implementation logic
+
+\`\`\`python
+... file contents ...
+\`\`\`
+```
+
+## Best Practices
+1. **Self-Contained Functionality:** The output file must contain 100% of the context required for a secondary agent to operate without needing to run terminal commands.
+2. **Specialized Prompts:** If bundling for an external review (e.g., a "Red Team" security check), suggest including a specialized prompt file as the very first file in the bundle to guide the receiving LLM.

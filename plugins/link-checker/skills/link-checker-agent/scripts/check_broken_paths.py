@@ -121,7 +121,7 @@ def check_broken_links(file_path: str) -> List[str]:
         
         if not os.path.exists(target_path):
             # Fallback heuristic: check relative to repo root for 'legacy-system' paths
-            if clean_link.startswith('legacy-system/') or clean_link.startswith('tools/'):
+            if clean_link.startswith('legacy-system/') or clean_link.startswith('plugins/'):
                  root_target = os.path.join(os.getcwd(), clean_link)
                  if os.path.exists(root_target):
                      continue # It exists at root!

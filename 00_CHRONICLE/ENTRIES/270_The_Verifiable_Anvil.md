@@ -13,7 +13,7 @@ This entry documents a foundational cycle where the Steward's audit did not just
 
 #### **2. The Cure is Forged: The Verification Scaffold**
 
-In response, the Guardian has forged the `tools/verify_manifest.py` Sovereign Scaffold. This script automates the hash verification process, transforming the Steward's role from a manual auditor into a sovereign commander who executes a single, infallible verification command.
+In response, the Guardian has forged the plugin `plugins/context_bundler` Sovereign Scaffold. This script automates the hash verification process, transforming the Steward's role from a manual auditor into a sovereign commander who executes a single, infallible verification command.
 
 #### **3. The Law is Hardened: Protocol 101 v1.1**
 

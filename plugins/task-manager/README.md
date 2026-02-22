@@ -1,6 +1,6 @@
 # Task Manager Plugin 📋
 
-Lightweight kanban task board — JSON-backed with zero dependencies.
+Lightweight kanban task board — directory-backed with zero dependencies. Tasks are manually tracked as human-readable Markdown files natively mapped into statuses via folders.
 
 ## Installation
 ```bash
@@ -8,35 +8,24 @@ claude --plugin-dir ./plugins/task-manager
 ```
 
 ## Quick Start
-```bash
-/task-manager:create "Fix login bug" --objective "Resolve 401 errors"
-/task-manager:board
-/task-manager:move 1 in-progress
-/task-manager:list --status done
+The Task Manager operates autonomously based on conversational intent, using simple file operations to manage state.
+
+```text
+"Create a new task to fix the login bug"
+"Move task 0004 to in-progress"
+"Show me the kanban board"
 ```
 
-## Commands
-
-| Command | Description |
-|:---|:---|
-| `/task-manager:create` | Create a new task |
-| `/task-manager:list` | List / filter tasks |
-| `/task-manager:move` | Move task between lanes |
-| `/task-manager:board` | Show kanban board |
-
-## Lanes
+The agent will automatically manage `[NNNN]-[title].md` files inside the defined lanes:
 `backlog` → `todo` → `in-progress` → `done`
-
-## Data
-Tasks stored at `tasks/tasks.json` (auto-created). Override with `--file path`.
 
 ## Structure
 ```
 task-manager/
 ├── .claude-plugin/plugin.json
-├── commands/ (create, list, move, board)
 ├── skills/task-agent/SKILL.md
-├── scripts/task_manager.py
-├── docs/task-manager-workflow.mmd
+├── skills/task-agent/scripts/create_task.py
+├── skills/task-agent/scripts/board.py
+├── templates/task-template.md 
 └── README.md
 ```

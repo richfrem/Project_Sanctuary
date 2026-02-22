@@ -1,7 +1,7 @@
 # Spec-0002: Test Bundling Tool Mechanics
 
 ## 1. Context & Problem Statement
-The user recently imported a `bundling` tool (`tools/retrieve/bundler/bundle.py`) and wants to verify its functionality.
+The user recently imported a `bundling` tool (`plugins/context-bundler/scripts/bundle.py`) and wants to verify its functionality.
 Currently, the tool might not be fully registered in the RLM cache, and its mechanics need to be tested to ensure it can successfully create a markdown bundle from a JSON manifest.
 
 ## 2. Goals & Objectives
@@ -11,7 +11,7 @@ Currently, the tool might not be fully registered in the RLM cache, and its mech
 - **Documentation**: Ensure the tool has proper docstrings and usage examples.
 
 ## 3. Scope
-- Files: `tools/retrieve/bundler/bundle.py`.
+- Files: `plugins/context-bundler/scripts/bundle.py`.
 - Tools: `query_cache.py`, `manage_tool_inventory.py`.
 - Test Artifacts: `temp/test_manifest.json`, `temp/output_bundle.md`.
 

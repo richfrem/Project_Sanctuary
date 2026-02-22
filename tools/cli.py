@@ -141,47 +141,34 @@ PROJECT_ROOT = CLI_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
-# Import path resolver from plugins
-try:
-    # Try importing from the new plugin location
-    # Since plugins have hyphens, we add the path to sys.path
-    PATH_RESOLVER_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
-    if str(PATH_RESOLVER_DIR) not in sys.path:
-        sys.path.append(str(PATH_RESOLVER_DIR))
-    from path_resolver import resolve_path
-except ImportError:
-    # Fallback/Bootstrap
-    print("⚠️  Warning: Could not import path_resolver from plugins/context-bundler/scripts")
-    def resolve_path(p): return str(PROJECT_ROOT / p)
+# Inline path resolver (formerly in tools.utils.path_resolver)
+def resolve_path(relative_path: str, base_path: Path = None) -> str:
+    """
+    Resolves a relative path against the project root or a specified base path.
+    Handles potential inconsistencies in path separators and ensures a clean, absolute path.
+    """
+    if base_path is None:
+        base_path = PROJECT_ROOT
+    full_path = base_path / relative_path
+    return str(full_path.resolve())
 
-# Resolve Directories (Direct Plugin Paths)
-# Note: specific mapping based on migration
-SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
-DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "skills" / "doc-coauthoring" / "scripts" # Placeholder if empty
-TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "skills" / "task-agent" / "scripts"
-SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" / "skills" / "misc-utils" / "scripts"
-RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
-INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
-RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "skills" / "rlm-curator" / "scripts"
-ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "skills" / "orchestrator-agent" / "scripts"
-SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "skills" / "spec-kitty-agent" / "scripts"
+# Resolve Directories
+# SEARCH_DIR removed — no longer used (migrated to plugins)
+# DOCS_DIR removed — no longer used (migrated to plugins)
+# TRACKING_DIR removed — no longer used (migrated to plugins)
+# SHARED_DIR removed — no longer used (migrated to plugins)
+RETRIEVE_DIR = PROJECT_ROOT / "plugins/context-bundler/scripts"
+INVENTORIES_DIR = PROJECT_ROOT / "plugins/tool-inventory/skills/tool-inventory/scripts"
+RLM_DIR = PROJECT_ROOT / "plugins/rlm-factory/skills/rlm-curator/scripts"
+ORCHESTRATOR_DIR = Path(resolve_path("tools/orchestrator"))
 
 # Add directories to sys.path for internal imports
-# We add them to sys.path so we can import modules directly (e.g. 'import query_cache')
-for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR, SPEC_KITTY_DIR]:
-    if d.exists() and str(d) not in sys.path:
+for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
+    if str(d) not in sys.path:
         sys.path.append(str(d))
 
-# from tools.utils.path_resolver import resolve_path # Handled above
-from workflow_manager import WorkflowManager
-# Import query_cache for rlm-search
-# Import query_cache for rlm-search
-try:
-    # RLM_DIR and INVENTORIES_DIR are in sys.path now.
-    # query_cache is in plugins/tool-inventory/scripts (INVENTORIES_DIR)
-    from query_cache import search_cache, RLMConfig
-except ImportError:
-    pass
+
+
 # Lightweight imports (file-based, no external services)
 # Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
 try:
@@ -366,12 +353,6 @@ def main():
     # Command: rlm-distill (Protocol 132)
     rlm_parser = subparsers.add_parser("rlm-distill", aliases=["rlm-test"], help="Distill semantic summaries")
     rlm_parser.add_argument("target", help="File or folder path to distill")
-
-    # Command: rlm-search (Protocol 132)
-    rlm_search_parser = subparsers.add_parser("rlm-search", help="Search RLM Cache")
-    rlm_search_parser.add_argument("term", help="Search term")
-    rlm_search_parser.add_argument("--type", default="tool", help="RLM Type (tool/sanctuary)")
-    rlm_search_parser.add_argument("--json", action="store_true", help="Output as JSON")
 
 
     # Init-Context Command: Quick setup - initializes manifest and auto-bundles
@@ -629,9 +610,9 @@ def main():
     evolution_ops = None
     # Lazy Init Operations based on command to avoid overhead
     if args.command in ["ingest", "query", "stats", "cache-stats", "cache-warmup"]:
-        cortex_ops = _get_cortex_ops()
+        cortex_ops = CortexOperations(project_root=str(PROJECT_ROOT))
     if args.command == "evolution":
-        evolution_ops = _get_evolution_ops()
+        evolution_ops = EvolutionOperations(project_root=str(PROJECT_ROOT))
     if args.command in ["debrief", "snapshot", "guardian", "persist-soul", "rlm-distill"]:
         # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
         pass 
@@ -765,16 +746,6 @@ def main():
         print(f"📊 Files Processed: {len(results)}")
         for fp, s in results.items():
             print(f"\n📄 {fp}\n   {s}")
-
-    # RLM Search: Query the semantic ledger
-    elif args.command == "rlm-search":
-        # Initialize Config
-        try:
-            config = RLMConfig(run_type=args.type)
-            search_cache(args.term, config, show_summary=True, output_json=args.json)
-        except Exception as e:
-            print(f"❌ Error during RLM search: {e}")
-            sys.exit(1)
 
     # Init-Context Command: Initialize manifest from base template and auto-bundle
     elif args.command == "init-context":
@@ -1091,61 +1062,30 @@ def main():
 
     # Workflow Command: Agent lifecycle management (Start/End/Retro)
     elif args.command == "workflow":
+        orchestrator_script = str(PROJECT_ROOT / "plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py")
+        if not os.path.exists(orchestrator_script):
+            print(f"❌ Error: agent_orchestrator.py not found at {orchestrator_script}")
+            sys.exit(1)
+
         if args.workflow_action == "start":
-            try:
-                # WorkflowManager is already imported at the top
-                manager = WorkflowManager()
-                success = manager.start_workflow(args.name, args.target, args.type)
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
-                print(f"❌ Workflow Start Failed: {e}")
-                sys.exit(1)
+            print("🚀 'workflow start' is deprecated via CLI router. Use task-manager or agent-loops directly.")
+            print(f"👉 To scan spec: python3 {orchestrator_script} scan")
+            sys.exit(0)
         
         elif args.workflow_action == "retrospective":
             try:
-                manager = WorkflowManager()
-                success = manager.run_retrospective()
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
+                subprocess.run([sys.executable, orchestrator_script, "retro"], check=True)
+            except subprocess.CalledProcessError as e:
                 print(f"❌ Retrospective Failed: {e}")
                 sys.exit(1)
 
         elif args.workflow_action == "end":
-            try:
-                manager = WorkflowManager()
-                force = getattr(args, 'force', False)
-                
-                message = args.message
-                if not message:
-                    # Interactive prompt if running in TTY
-                    if sys.stdin.isatty():
-                        try:
-                            message = input("📝 Enter Commit Message: ").strip()
-                        except EOFError:
-                            pass
-                    
-                    if not message:
-                        print("❌ Error: Commit message is required.")
-                        sys.exit(1)
-
-                success = manager.end_workflow_with_confirmation(message, args.files, force=force)
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
-                print(f"❌ Workflow End Failed: {e}")
-                sys.exit(1)
+            print("🚀 'workflow end' is deprecated. Use agent-loops retro and manual git flow.")
+            sys.exit(0)
 
         elif args.workflow_action == "cleanup":
-            try:
-                manager = WorkflowManager()
-                success = manager.cleanup_workflow(force=getattr(args, 'force', False))
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
-                print(f"❌ Cleanup Failed: {e}")
-                sys.exit(1)
+            print("🚀 'workflow cleanup' is deprecated.")
+            sys.exit(0)
 
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     # DOMAIN COMMAND HANDLERS
