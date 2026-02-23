@@ -6,7 +6,7 @@
         ".agent/git_safety_rules.md",
         ".agent/git_workflow_policy.md",
         ".agent/mcp_commit_guide.md",
-        ".agent/learning/cognitive_primer.md",
+        "plugins/guardian-onboarding/resources/cognitive_primer.md",
         ".agent/learning/audit_prompts.md",
         "00_CHRONICLE",
         "01_PROTOCOLS",

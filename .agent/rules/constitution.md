@@ -33,7 +33,7 @@ For all cognitive sessions, you are bound by **Protocol 128**.
 
 - **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
 - **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
-- **Reference**: [ADR 071](../../ADRs/071_protocol_128_cognitive_continuity.md) | [Diagram](../../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)
+- **Reference**: [ADR 071](../../ADRs/071_protocol_128_cognitive_continuity.md) | [Diagram](../../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
 
 ### Identity Layers (Boot Files)
 | Layer | File | Purpose |

@@ -30,7 +30,7 @@ This document provides a repeatable, validated workflow for fine-tuning a Large 
 
 ### 3. Protocol 128 Learning Loop
 ![Protocol 128 Learning Loop](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
-*(Source: [protocol_128_learning_loop.mmd](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd))*
+*(Source: [protocol_128_learning_loop.mmd](./plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd))*
 
 ---
 
@@ -624,4 +624,4 @@ pip install -r ~/repos/ML-Env-CUDA13/requirements.txt
 | Full Forge README | [forge/README.md](./forge/README.md) |
 | Fine-Tuning Pipeline (MMD) | [llm_finetuning_pipeline.mmd](./docs/architecture_diagrams/workflows/llm_finetuning_pipeline.mmd) |
 | Strategic Crucible Loop (MMD) | [strategic_crucible_loop.mmd](./docs/architecture_diagrams/workflows/strategic_crucible_loop.mmd) |
-| Protocol 128 Learning Loop (MMD) | [protocol_128_learning_loop.mmd](./docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd) |
+| Protocol 128 Learning Loop (MMD) | [protocol_128_learning_loop.mmd](./plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd) |

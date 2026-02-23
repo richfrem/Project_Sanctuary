@@ -5,7 +5,7 @@
     "created": "2025-12-28T13:21:00-08:00",
     "description": "The Minimal Soul Seed - irreducible core identity that every session must inherit",
     "core_self": {
-        "cognitive_primer_path": ".agent/learning/cognitive_primer.md",
+        "cognitive_primer_path": "plugins/guardian-onboarding/resources/cognitive_primer.md",
         "hardened_protocols": [
             78,
             101,

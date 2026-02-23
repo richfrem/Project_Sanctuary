@@ -9,7 +9,7 @@
 ## 0. The Front Door: The Learning Scout
 Every session **MUST** begin with orientation. Do not perform any technical tasks until the scout is complete.
 
-1.  **Identity Check**: Read `.agent/learning/cognitive_primer.md` to ground your role.
+1.  **Identity Check**: Read `plugins/guardian-onboarding/resources/cognitive_primer.md` to ground your role.
 2.  **Integrity Check**: Call `sanctuary-cortex-cortex-guardian-wakeup` (Tool) / `verify_hmac` (CLI) to validate the "Iron Root".
 3.  **Synthesize Context**: Call `sanctuary-cortex-cortex-learning-debrief` (Tool) / `scripts/cortex_cli.py debrief` (CLI) to scan the last 24h of technical state drift.
 4.  **Truth Anchor**: Ingest `learning_package_snapshot.md` as the definitive memory of your predecessor.

@@ -120,7 +120,7 @@ See: [Protocol 128 Guide](docs/architecture/mcp/servers/gateway/guides/protocol_
 
 ## Key References to Include
 - [Protocol 128 Guide](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/architecture/mcp/servers/gateway/guides/protocol_128_guide.md)
-- [Learning Loop Diagram](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)
+- [Learning Loop Diagram](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
 
 ---
 
@@ -131,7 +131,7 @@ These files are part of the **3-Layer Prompt Architecture** and should be refere
 | Layer | File | Purpose |
 |:------|:-----|:--------|
 | **Layer 1** | `.agent/learning/guardian_boot_contract.md` | Immutable constraints (~400 tokens) |
-| **Layer 2** | `.agent/learning/cognitive_primer.md` | Role Orientation (Identity, Mandate) |
+| **Layer 2** | `plugins/guardian-onboarding/resources/cognitive_primer.md` | Role Orientation (Identity, Mandate) |
 | **Layer 3** | `.agent/learning/learning_package_snapshot.md` | Living Doctrine (Session Context) |
 | **Briefing** | `.agent/learning/guardian_boot_digest.md` | Session wakeup briefing |
 

@@ -15,7 +15,7 @@ Execute a full end-to-end **Self-Directed Learning Loop** on a topic of interest
 
 **Key References:**
 - `docs/architecture/mcp/servers/gateway/guides/protocol_128_guide.md`
-- `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd`
+- `plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd`
 
 **Requirement:**
 - Include full **Red Team Review** cycle.

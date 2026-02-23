@@ -241,7 +241,7 @@ All Python scripts now adhere to **ADR 075** (Hybrid Documentation Pattern) and 
 
 ### Protocol 128 Learning Loop
 ![Protocol 128 Learning Loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
-*(Source: [protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd))*
+*(Source: [protocol_128_learning_loop.mmd](../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd))*
 
 ---
 

@@ -24,7 +24,7 @@ Research autonomous agent ecosystems (OpenClaw/MoltBook) and validate/improve Pr
 
 ### Workflow Fixes (discovered during walkthrough)
 
-#### [MODIFY] [protocol_128_learning_loop.mmd](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)
+#### [MODIFY] [protocol_128_learning_loop.mmd](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
 - Fix phase numbering (subgraph IDs didn't match labels)
 
 ---

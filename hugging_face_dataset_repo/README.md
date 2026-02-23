@@ -218,12 +218,12 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 *   **Workflow:** [`sanctuary-learning-loop.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)
 *   **Guide:** [`learning_debrief.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/learning_package_snapshot.md)
-*   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/cognitive_primer.md)
+*   **Cognitive Primer:** [`plugins/guardian-onboarding/resources/cognitive_primer.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/guardian-onboarding/resources/cognitive_primer.md)
 *   **Audit Packets:** [`.agent/learning/red_team/red_team_audit_packet.md`](https://github.com/richfrem/Project_Sanctuary/blob/main/.agent/learning/red_team/red_team_audit_packet.md)
 
 ![protocol_128_learning_loop](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](https://github.com/richfrem/Project_Sanctuary/blob/main/docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ### 3.3 Advanced RAG Strategies & Diagrams
 #### Basic RAG Architecture

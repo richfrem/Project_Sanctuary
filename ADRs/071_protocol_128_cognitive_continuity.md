@@ -35,7 +35,7 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 ## Visual Architecture
 ![protocol_128_learning_loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 
@@ -130,7 +130,7 @@ To support the Red Team Packet, all capture tools must implement the `--manifest
 *   **Output:** A folder of `.png` glyphs and a `provenance.json` log.
 
 ### B. The Cognitive Primer
-Located at `[.agent/learning/cognitive_primer.md](../.agent/learning/cognitive_primer.md)`.
+Located at `[plugins/guardian-onboarding/resources/cognitive_primer.md](../plugins/guardian-onboarding/resources/cognitive_primer.md)`.
 The "Constitution" for the agent.
 **Guardian Mandate:** The `guardian_wakeup` operation MUST check for this file and inject a directive to read it immediately.
 

@@ -1,0 +1,17 @@
+{
+    "name": "chronicle-manager",
+    "description": "Living Chronicle journaling \u2014 create, list, search project event entries with status and classification",
+    "version": "1.0.0",
+    "author": {
+        "name": "Project Sanctuary"
+    },
+    "license": "MIT",
+    "keywords": [
+        "chronicle",
+        "journal",
+        "events",
+        "history"
+    ],
+    "commands_dir": "commands",
+    "skills_dir": "skills"
+}

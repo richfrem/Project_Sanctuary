@@ -92,7 +92,7 @@ Best for Learning Loops where context is layered.
 ```json
 {
   "title": "Learning Loop 1.0",
-  "core": ["01_PROTOCOLS/128_Hardened_Learning_Loop.md"],
+  "core": ["plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md"],
   "topic": ["ADRs/New_Idea.md"],
   "context": ["src/related_code.py"]
 }

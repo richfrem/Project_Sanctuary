@@ -36,7 +36,7 @@ Transient artifacts generated *during* the current session's loop.
 ### **Protocol 128: The Hardened Learning Loop**
 The master workflow governing how this directory is used.
 
-*   **Diagram (Mermaid)**: [`protocol_128_learning_loop.mmd`](../../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)
+*   **Diagram (Mermaid)**: [`protocol_128_learning_loop.mmd`](../../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
 *   **Visual Flow**: [`protocol_128_learning_loop.png`](../../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
 ### **Key Architectural Decision Records (ADRs)**

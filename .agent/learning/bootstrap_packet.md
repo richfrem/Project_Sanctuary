@@ -8,7 +8,7 @@ Fresh repository onboarding context for new developers/agents.
 ## 📑 Table of Contents
 1. [README.md](#entry-1)
 2. [Makefile](#entry-2)
-3. [.agent/learning/cognitive_primer.md](#entry-3)
+3. [plugins/guardian-onboarding/resources/cognitive_primer.md](#entry-3)
 4. [.agent/learning/guardian_boot_contract.md](#entry-4)
 5. [.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md](#entry-5)
 6. [.env.example](#entry-6)
@@ -16,7 +16,7 @@ Fresh repository onboarding context for new developers/agents.
 8. [docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md](#entry-8)
 9. [docs/prompt-engineering/sanctuary-guardian-prompt.md](#entry-9)
 10. [docs/architecture_diagrams/system/mcp_gateway_fleet.mmd](#entry-10)
-11. [docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd](#entry-11)
+11. [plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd](#entry-11)
 12. [ADRs/065_unified_fleet_deployment_cli.md](#entry-12)
 13. [ADRs/071_protocol_128_cognitive_continuity.md](#entry-13)
 14. [ADRs/073_standardization_of_python_dependency_management_across_environments.md](#entry-14)
@@ -264,12 +264,12 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 *   **Workflow:** [`sanctuary-recursive-learning.md`](./.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md)
 *   **Guide:** [`learning_debrief.md`](./.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](./.agent/learning/learning_package_snapshot.md)
-*   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
+*   **Cognitive Primer:** [`plugins/guardian-onboarding/resources/cognitive_primer.md`](./plugins/guardian-onboarding/resources/cognitive_primer.md)
 *   **Audit Packets:** [`.agent/learning/red_team/red_team_audit_packet.md`](./.agent/learning/red_team/red_team_audit_packet.md)
 
 ![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ### 3.3 The Semantic Ledger (RLM)
 **Status:** `Active` - Incremental Persistence Protocol Enabled
@@ -721,8 +721,8 @@ verify:
 
 ---
 
-## File: .agent/learning/cognitive_primer.md
-**Path:** `.agent/learning/cognitive_primer.md`
+## File: plugins/guardian-onboarding/resources/cognitive_primer.md
+**Path:** `plugins/guardian-onboarding/resources/cognitive_primer.md`
 **Note:** Cognitive primer
 
 ```markdown
@@ -2040,7 +2040,7 @@ Doctrine is fallible. Reality is sovereign.
 
 ```yaml
 sequence:
-  1. Read: .agent/learning/cognitive_primer.md
+  1. Read: plugins/guardian-onboarding/resources/cognitive_primer.md
   2. Run: cortex_guardian_wakeup (Iron Check + HMAC)
   3. Run: python3 scripts/cortex_cli.py debrief --hours 24
   4. Verify: learning_package_snapshot.md (Truth Anchor)
@@ -2435,7 +2435,7 @@ checklist:
 
 | Artifact | Path |
 |:---------|:-----|
-| Cognitive Primer | `.agent/learning/cognitive_primer.md` |
+| Cognitive Primer | `plugins/guardian-onboarding/resources/cognitive_primer.md` |
 | Boot Contract | `.agent/learning/guardian_boot_contract.md` |
 | Truth Anchor | `.agent/learning/learning_package_snapshot.md` |
 | Learning Manifest | `.agent/learning/learning_manifest.json` |
@@ -2513,8 +2513,8 @@ flowchart TB
 
 ---
 
-## File: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
-**Path:** `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd`
+## File: plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd
+**Path:** `plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd`
 **Note:** Protocol 128 diagram
 
 ```mermaid
@@ -2526,7 +2526,7 @@ config:
 
 %% Name: Protocol 128: Learning Loop (v3.0 - with RLM Synthesis)
 %% Description: Cognitive Continuity workflow: Scout → Synthesize → Strategic Gate → Audit → RLM Synthesis → Seal → Soul Persist
-%% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
+%% Location: plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd
 
 flowchart TB
     subgraph subGraphScout["I. The Learning Scout (MANDATORY)"]
@@ -2536,7 +2536,7 @@ flowchart TB
         %% Context Note
         ContextNote["ℹ️ Context: Executed within Standard Hybrid Workflow<br>(See hybrid-spec-workflow.mmd)"] -.-> Start
         
-        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: .agent/learning/cognitive_primer.md"]
+        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: plugins/guardian-onboarding/resources/cognitive_primer.md"]
         AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
         
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
@@ -2854,7 +2854,7 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 ## Visual Architecture
 ![protocol_128_learning_loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 
@@ -2949,7 +2949,7 @@ To support the Red Team Packet, all capture tools must implement the `--manifest
 *   **Output:** A folder of `.png` glyphs and a `provenance.json` log.
 
 ### B. The Cognitive Primer
-Located at `[.agent/learning/cognitive_primer.md](../.agent/learning/cognitive_primer.md)`.
+Located at `[plugins/guardian-onboarding/resources/cognitive_primer.md](../plugins/guardian-onboarding/resources/cognitive_primer.md)`.
 The "Constitution" for the agent.
 **Guardian Mandate:** The `guardian_wakeup` operation MUST check for this file and inject a directive to read it immediately.
 
@@ -3629,7 +3629,7 @@ python3 scripts/cortex_cli.py bootstrap-debrief
 
 - [ADR 071: Protocol 128 (Cognitive Continuity)](./071_protocol_128_cognitive_continuity.md)
 - [ADR 083: Manifest-Centric Architecture](./083_manifest_centric_architecture.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 
 ```
 <a id='entry-17'></a>

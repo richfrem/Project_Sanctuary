@@ -244,12 +244,12 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 *   **Workflow:** [`sanctuary-learning-loop.md`](./.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)
 *   **Guide:** [`learning_debrief.md`](./.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](./.agent/learning/learning_package_snapshot.md)
-*   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
+*   **Cognitive Primer:** [`plugins/guardian-onboarding/resources/cognitive_primer.md`](./plugins/guardian-onboarding/resources/cognitive_primer.md)
 *   **Audit Packets:** [`.agent/learning/red_team/red_team_audit_packet.md`](./.agent/learning/red_team/red_team_audit_packet.md)
 
 ![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ### 3.3 The Semantic Ledger (RLM)
 **Status:** `Active` - Incremental Persistence Protocol Enabled

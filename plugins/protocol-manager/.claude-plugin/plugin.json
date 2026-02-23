@@ -1,0 +1,17 @@
+{
+    "name": "protocol-manager",
+    "description": "Manage Protocol documents \u2014 create, list, search, update with auto-numbering and status tracking",
+    "version": "1.0.0",
+    "author": {
+        "name": "Project Sanctuary"
+    },
+    "license": "MIT",
+    "keywords": [
+        "protocol",
+        "documentation",
+        "governance",
+        "status"
+    ],
+    "commands_dir": "commands",
+    "skills_dir": "skills"
+}

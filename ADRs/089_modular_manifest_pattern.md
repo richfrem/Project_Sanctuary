@@ -67,7 +67,7 @@ All manifests follow the simple JSON structure:
             "note": "Project overview"
         },
         {
-            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+            "path": "plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md",
             "note": "Protocol 128"
         }
     ]
@@ -234,4 +234,4 @@ python3 scripts/cortex_cli.py bootstrap-debrief
 
 - [ADR 071: Protocol 128 (Cognitive Continuity)](./071_protocol_128_cognitive_continuity.md)
 - [ADR 083: Manifest-Centric Architecture](./083_manifest_centric_architecture.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md

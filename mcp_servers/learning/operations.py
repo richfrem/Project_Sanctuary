@@ -157,9 +157,9 @@ class LearningOperations:
                 recency_summary = self._get_recency_delta(hours=hours)
                 
                 # 3. Read Core Documents
-                primer_content = "[MISSING] .agent/learning/cognitive_primer.md"
+                primer_content = "[MISSING] plugins/guardian-onboarding/resources/cognitive_primer.md"
                 sop_content = "[MISSING] .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md"
-                protocol_content = "[MISSING] 01_PROTOCOLS/128_Hardened_Learning_Loop.md"
+                protocol_content = "[MISSING] plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md"
                 
                 try:
                     p_path = self.project_root / ".agent" / "learning" / "cognitive_primer.md"

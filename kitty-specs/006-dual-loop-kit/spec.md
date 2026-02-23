@@ -21,7 +21,7 @@ Create `tools/standalone/dual-loop-kit/` with:
 The kit MUST include:
 *   **Diagrams**:
     *   `docs/architecture_diagrams/workflows/dual_loop_architecture.mmd`
-    *   `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd`
+    *   `plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd`
 *   **Skills**:
     *   `.agent/skills/dual-loop-supervisor/SKILL.md`
     *   `.agent/skills/learning-loop/SKILL.md`

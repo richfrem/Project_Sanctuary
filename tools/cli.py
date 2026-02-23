@@ -116,17 +116,6 @@ Usage Examples:
     # Fine-Tuned Model (requires ollama)
     python tools/cli.py forge status
     python tools/cli.py forge query "What are the core principles of Project Sanctuary?"
-
-Dependencies:
-    - mcp_servers.learning.operations (LearningOperations)
-    - mcp_servers.rag_cortex.operations (CortexOperations)
-    - mcp_servers.evolution.operations (EvolutionOperations)
-    - mcp_servers.chronicle.operations (ChronicleOperations)
-    - mcp_servers.task.operations (TaskOperations)
-    - mcp_servers.adr.operations (ADROperations)
-    - mcp_servers.protocol.operations (ProtocolOperations)
-    - mcp_servers.forge_llm.operations (ForgeOperations) [optional]
-    - tools.orchestrator.workflow_manager (WorkflowManager)
 """
 import sys
 import argparse
@@ -1071,9 +1060,15 @@ def main():
             sys.exit(1)
 
         if args.workflow_action == "start":
-            print("🚀 'workflow start' is deprecated via CLI router. Use task-manager or agent-loops directly.")
-            print(f"👉 To scan spec: python3 {orchestrator_script} scan")
-            sys.exit(0)
+            print(f"🚀 Routing 'workflow start' to Orchestrator ({args.name})...")
+            try:
+                cmd = [sys.executable, orchestrator_script, "scan"]
+                if getattr(args, 'target', None) and os.path.isdir(args.target):
+                    cmd.extend(["--spec-dir", args.target])
+                subprocess.run(cmd, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Orchestrator Scan Failed: {e}")
+                sys.exit(1)
         
         elif args.workflow_action == "retrospective":
             try:

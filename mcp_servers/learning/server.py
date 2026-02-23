@@ -27,7 +27,7 @@ Key Functions / MCP Tools:
 
 Related:
     - mcp_servers/learning/operations.py
-    - 01_PROTOCOLS/128_Hardened_Learning_Loop.md
+    - plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 """
 import sys
 import logging

@@ -57,15 +57,16 @@ Both paths converge at: **Context Acquired** (debrief contains reference to `lea
     7. Share path: `.agent/learning/learning_audit/learning_audit_packet.md`
     8. Receive Red Team feedback → Capture in topic folder → Repeat
     9. When ready → Gate 2: HITL Approval
-## 6. Phase VI: Self-Correction (Retrospective)
--   **Retrospective**: Fill `.agent/learning/templates/loop_retrospective_template.md`.
--   **Meta-Learning**: Feed insights into next loop.
 
-## 7. Phase VII: Seal & Persistence (The Ledger)
--   **Seal**: Run `cortex_capture_snapshot --type seal`. (Uses and updates the RLM Ledger).
--   **Persist**: Broadcast to Hugging Face (Syncs Snapshot + Semantic Cache).
+## 6. Phase V: Orchestrator Retrospective
+-   **Retrospective**: Filled out by `agent_orchestrator.py retro`.
+-   **Meta-Learning**: Feeds insights back into the loop prior to closure.
+
+## 7. Phase VI-VIII: Seal & Persistence (The Guardian Closure)
+-   **Seal**: Run `/sanctuary-seal` (Uses and updates the RLM Ledger).
+-   **Persist**: Broadcast to Hugging Face (`/sanctuary-persist`).
 -   **Distill**: Use `rlm-distill` to pre-calculate essence for new/modified folders.
--   **Incremental Ingestion**: Run `cortex-ingest-incremental` (Last 24h).
+-   **End**: Formally close the session via `/sanctuary-end`.
 
 ## 3. The Rules of Reality (No Hallucination)
 -   **Rule 1**: If you claim a file changed, you must cite the *exact* file path and git hash.

@@ -7,7 +7,7 @@
    - Date: 2026-01-02
    - Purpose: Primary diagnostic tool for link integrity.
 
-2. **[Protocol 128: Hardened Learning Loop](../../../01_PROTOCOLS/128_Hardened_Learning_Loop.md)**
+2. **[Protocol 128: Hardened Learning Loop](../../plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md**
    - Author: Guardian
    - Date: 2025-12-30
    - Purpose: Governs the cognitive continuity and integrity of the project.

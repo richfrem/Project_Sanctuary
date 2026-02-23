@@ -91,7 +91,7 @@ All models validated HINDSIGHT conceptually, but noted complexity concerns.
 ## Files for Review (Next Iteration)
 - `LEARNING/topics/llm_memory_architectures_2025/red_team_feedback.md`
 - `ADRs/084_semantic_entropy_tda_gating.md` (pending updates)
-- `01_PROTOCOLS/128_Hardened_Learning_Loop.md` (pending updates)
+- `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md` (pending updates)
 
 ---
 
