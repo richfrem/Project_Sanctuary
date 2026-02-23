@@ -705,197 +705,76 @@ def main():
         else:
             print(f"⚠️  \033[93mWARNING: IRON CORE CHECK OVERRIDDEN\033[0m")
 
-        # Protocol 128 Snapshot Generation (Delegated to LearningOperations)
-        print(f"📸 Generating {args.type} snapshot via Learning Operations...")
-        
-        ops = _get_learning_ops()
-        
-        # Manifest Handling
-        manifest_list = []
-        if args.manifest:
-            p = Path(args.manifest)
-            if p.exists():
-                try:
-                    data = json.loads(p.read_text())
-                    if isinstance(data, list): 
-                        manifest_list = data
-                    elif isinstance(data, dict):
-                        # ADR 097 support
-                        if "files" in data: 
-                            manifest_list = [f["path"] if isinstance(f, dict) else f for f in data["files"]]
-                        else:
-                            # Try legacy keys or fallback
-                            manifest_list = data.get("core", []) + data.get("topic", [])
-                except Exception as e:
-                    print(f"⚠️ Could not parse custom manifest {args.manifest}: {e}")
-
-        # Execute
-        result = ops.capture_snapshot(
-            manifest_files=manifest_list,
-            snapshot_type=args.type,
-            strategic_context=args.context
-        )
-        
-        if result.status == "success":
-            print(f"✅ Snapshot created: {result.snapshot_path}")
-            print(f"   Files: {result.total_files}, Bytes: {result.total_bytes}")
-            if not result.manifest_verified:
-                print(f"   ⚠️ Manifest Verification Failed: {result.git_diff_context}")
-        else:
-            print(f"❌ Error: {result.error}")
-            if result.git_diff_context:
-                print(f"   Context: {result.git_diff_context}")
+        # Protocol 128 Snapshot Generation → guardian-onboarding plugin
+        print(f"📸 Generating {args.type} snapshot...")
+        script = str(GUARDIAN_SCRIPTS / "capture_snapshot.py")
+        cmd = [sys.executable, script, "--type", args.type]
+        if args.context:
+            cmd.extend(["--context", args.context])
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(result.stderr if result.stderr else "❌ Snapshot failed")
             sys.exit(1)
+        # capture_snapshot.py outputs JSON
+        print(result.stdout)
 
-    # Protocol 128 Debrief: Orientation for fresh sessions (Truth Anchor)
+    # Protocol 128 Debrief → guardian-onboarding plugin
     elif args.command == "debrief":
-        print(f"📡 Running Learning Debrief (Protocol 128 Phase I)...")
-        ops = _get_learning_ops()
-        
-        # Debrief returns a formatted Markdown string
-        debrief_content = ops.learning_debrief(hours=args.hours)
-        
+        script = str(GUARDIAN_SCRIPTS / "learning_debrief.py")
+        cmd = [sys.executable, script, "--hours", str(args.hours)]
         if args.output:
-            output_path = Path(args.output)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(output_path, 'w') as f:
-                f.write(debrief_content)
-            print(f"✅ Debrief written to: {output_path}")
-            print(f"📊 Content length: {len(debrief_content)} characters")
-        else:
-            # Output to stdout
-            print(debrief_content)
+            cmd.extend(["--output", args.output])
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Guardian Command: Session pack and Boot Digest (Lifecycle)
+    # Guardian Command → guardian-onboarding plugin
     elif args.command == "guardian":
-        # Initialize ops locally to ensure availability
-        ops = _get_learning_ops()
-        
         if args.guardian_action == "wakeup":
-            # Load manifest if exists (using proper arg now)
-            manifest_path_str = args.manifest if args.manifest else ".agent/learning/guardian_manifest.json"
-            manifest_path = Path(manifest_path_str)
-            
-            if manifest_path.exists():
-                try:
-                    with open(manifest_path, 'r') as f:
-                        manifest = json.load(f)
-                    print(f"📋 Loaded guardian manifest: {len(manifest)} files")
-                except Exception as e:
-                    print(f"⚠️  Error reading guardian manifest: {e}")
-            else:
-                print(f"⚠️  Guardian manifest not found at {manifest_path_str}. Using defaults.")
-
-            # ROUTED TO LEARNING MCP
-            response = ops.guardian_wakeup(mode=args.mode)
-            
-            if response.status == "success":
-                print(f"✅ Boot Digest Generated: {response.digest_path}")
-                print(f"   Time: {response.total_time_ms:.2f}ms")
-            else:
-                print(f"❌ Error: {response.error}")
-                sys.exit(1)
+            script = str(GUARDIAN_SCRIPTS / "guardian_wakeup.py")
+            cmd = [sys.executable, script, "--mode", args.mode]
+            result = subprocess.run(cmd)
+            if result.returncode != 0:
+                sys.exit(result.returncode)
 
         elif args.guardian_action == "snapshot":
-            print(f"🛡️  Guardian Snapshot: Capturing Session Pack...")
-            response = ops.guardian_snapshot(strategic_context=args.context)
-            
-            if response.status == "success":
-                print(f"✅ Session Pack Captured: {response.snapshot_path}")
-                print(f"   Files: {response.total_files}, Bytes: {response.total_bytes}")
-            else:
-                print(f"❌ Error: {response.error}")
-                sys.exit(1)
+            script = str(GUARDIAN_SCRIPTS / "capture_snapshot.py")
+            cmd = [sys.executable, script, "--type", "audit"]
+            if hasattr(args, 'context') and args.context:
+                cmd.extend(["--context", args.context])
+            result = subprocess.run(cmd)
+            if result.returncode != 0:
+                sys.exit(result.returncode)
 
-    # Persist Soul Command: Protocol 128 Phase VI (Hugging Face Broadcast)
+    # Persist Soul → guardian-onboarding plugin
     elif args.command == "persist-soul":
-        print(f"📡 Initiating Soul Persistence (Protocol 128 Phase VI)...")
-        print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty} | Full Sync: {args.full_sync}")
-        ops = _get_learning_ops()
-        
-        # Default snapshot for seal is usually 'learning/learning_package_snapshot.md'
-        snapshot_path = args.snapshot
-        if not snapshot_path:
-            snapshot_path = ".agent/learning/learning_package_snapshot.md"
-            
-        PersistSoulRequest, _, _ = _get_learning_models()
-        req = PersistSoulRequest(
-            snapshot_path=snapshot_path,
-            valence=args.valence,
-            uncertainty=args.uncertainty,
-            is_full_sync=args.full_sync
-        )
-        
-        result = ops.persist_soul(req)
-        
-        if result.status == "success":
-            print(f"✅ Persistence Complete!")
-            print(f"   Repo: {result.repo_url}")
-            print(f"   Artifact: {result.snapshot_name}")
-        elif result.status == "quarantined":
-            print(f"🚫 Quarantined: {result.error}")
-        else:
-            print(f"❌ Persistence Failed: {result.error}")
-            sys.exit(1)
+        script = str(GUARDIAN_SCRIPTS / "persist_soul.py")
+        cmd = [sys.executable, script]
+        snapshot = getattr(args, 'snapshot', None) or ".agent/learning/learning_package_snapshot.md"
+        cmd.extend(["--snapshot", snapshot])
+        if hasattr(args, 'valence'):
+            cmd.extend(["--valence", str(args.valence)])
+        if getattr(args, 'full_sync', False):
+            cmd.append("--full-sync")
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Persist Soul Full: ADR 081 Full Dataset Regeneration
+    # Persist Soul Full → persist_soul.py --full-sync
     elif args.command == "persist-soul-full":
-        print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace (ADR 081)...")
-        ops = _get_learning_ops()
-        
-        result = ops.persist_soul_full()
-        
-        if result.status == "success":
-            print(f"✅ Full Sync Complete!")
-            print(f"   Repo: {result.repo_url}")
-            print(f"   Output: {result.snapshot_name}")
-        else:
-            print(f"❌ Error: {result.error}")
-            sys.exit(1)
+        script = str(GUARDIAN_SCRIPTS / "persist_soul.py")
+        cmd = [sys.executable, script, "--full-sync"]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Bootstrap Debrief Command: Fresh Repo Onboarding
+    # Bootstrap Debrief → capture_snapshot.py (seal type)
     elif args.command == "bootstrap-debrief":
-        print(f"🏗️  Generating Bootstrap Context Packet...")
-        ops = _get_learning_ops()
-        
-        # Load manifest
-        manifest_path = Path(args.manifest)
-        manifest_list = []
-        if manifest_path.exists():
-            try:
-                data = json.loads(manifest_path.read_text())
-                if isinstance(data, list): 
-                    manifest_list = data
-                elif isinstance(data, dict): 
-                    # Extract 'path' from dict entries if present, or use raw strings
-                    raw_files = data.get("files", [])
-                    manifest_list = [f.get("path") if isinstance(f, dict) else f for f in raw_files]
-                print(f"📋 Loaded bootstrap manifest: {len(manifest_list)} items")
-            except Exception as e:
-                print(f"⚠️  Error reading manifest: {e}")
-        else:
-            print(f"⚠️  Bootstrap manifest not found at {args.manifest}. Using defaults/empty.")
-
-        # Generate snapshot
-        res = ops.capture_snapshot(
-            manifest_files=manifest_list,
-            snapshot_type="seal",
-            strategic_context="Fresh repository onboarding context"
-        )
-        
-        if res.status == "success":
-            # Copy to output path
-            output_path = Path(args.output)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            import shutil
-            shutil.copy(res.snapshot_path, output_path)
-            
-            print(f"✅ Bootstrap packet generated: {output_path}")
-            print(f"📊 Files: {res.total_files} | Bytes: {res.total_bytes}")
-        else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+        script = str(GUARDIAN_SCRIPTS / "capture_snapshot.py")
+        cmd = [sys.executable, script, "--type", "seal", "--context", "Fresh repository onboarding context"]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     # Tools Command: Manage tool inventory (list, search, add, update, remove)
     elif args.command == "tools":
