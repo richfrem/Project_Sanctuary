@@ -95,7 +95,8 @@ Usage Examples:
 
     # Evolution & RLM
     python tools/cli.py evolution fitness --file docs/my-document.md
-    python tools/cli.py rlm-distill tools/my-script.py
+    python tools/cli.py rlm-distill --profile project plugins/adr-manager/README.md
+    python tools/cli.py rlm-distill --profile tools plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py
 
     # Domain Entities
     python tools/cli.py chronicle list --limit 10
@@ -160,7 +161,7 @@ def resolve_path(relative_path: str, base_path: Path = None) -> str:
 RETRIEVE_DIR = PROJECT_ROOT / "plugins/context-bundler/scripts"
 INVENTORIES_DIR = PROJECT_ROOT / "plugins/tool-inventory/skills/tool-inventory/scripts"
 RLM_DIR = PROJECT_ROOT / "plugins/rlm-factory/skills/rlm-curator/scripts"
-ORCHESTRATOR_DIR = Path(resolve_path("tools/orchestrator"))
+ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-loops" / "skills" / "orchestrator" / "scripts"
 
 # Add directories to sys.path for internal imports
 for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
@@ -353,6 +354,7 @@ def main():
     # Command: rlm-distill (Protocol 132)
     rlm_parser = subparsers.add_parser("rlm-distill", aliases=["rlm-test"], help="Distill semantic summaries")
     rlm_parser.add_argument("target", help="File or folder path to distill")
+    rlm_parser.add_argument("--profile", default="project", choices=["project", "tools"], help="RLM profile: 'project' (docs/markdown) or 'tools' (code/scripts)")
 
 
     # Init-Context Command: Quick setup - initializes manifest and auto-bundles
@@ -740,12 +742,13 @@ def main():
             
     # RLM Distillation: Atomic summarization of files (Protocol 132 Level 1)
     elif args.command in ["rlm-distill", "rlm-test"]:
-        print(f"🧠 RLM: Distilling '{args.target}'...")
-        ops = _get_learning_ops()
-        results = ops._rlm_map([args.target])
-        print(f"📊 Files Processed: {len(results)}")
-        for fp, s in results.items():
-            print(f"\n📄 {fp}\n   {s}")
+        profile = getattr(args, 'profile', 'project')
+        print(f"🧠 RLM: Distilling '{args.target}' [profile={profile}]...")
+        distiller_script = str(RLM_DIR / "distiller.py")
+        cmd = [sys.executable, distiller_script, "--profile", profile, "--file", args.target]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     # Init-Context Command: Initialize manifest from base template and auto-bundle
     elif args.command == "init-context":
