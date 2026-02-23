@@ -561,122 +561,61 @@ def main():
 
     # RAG Ingestion → vector-db plugin
     if args.command == "ingest":
+        script = str(VECTOR_DB_SCRIPTS / "ingest.py")
+        cmd = [sys.executable, script]
         if args.incremental:
-            print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
-            import time
-            from datetime import timedelta
-            
-            cutoff_time = time.time() - (args.hours * 3600)
-            modified_files = []
-            
-            exclude_dirs = {'.git', '.vector_data', '__pycache__', 'node_modules', 'venv', 'env', 
-                            'dataset_package', 'docs/site', 'training_logs'}
-            
-            for path in PROJECT_ROOT.rglob('*'):
-                if path.is_file():
-                    if any(part in exclude_dirs for part in path.parts):
-                        continue
-                    if path.suffix not in ['.md', '.py', '.js', '.ts', '.txt', '.json']:
-                        continue
-                    if path.stat().st_mtime > cutoff_time:
-                        modified_files.append(str(path))
-            
-            if not modified_files:
-                print(f"⚠️ No files modified in the last {args.hours} hours. Skipping ingestion.")
-                sys.exit(0)
-                
-            print(f"📄 Found {len(modified_files)} modified files.")
-            res = cortex_ops.ingest_incremental(file_paths=modified_files)
-            
-            # res.status contains "success" or "error"
-            if res.status == "success":
-                print(f"✅ Success: {res.documents_added} added, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
-            else:
-                print(f"❌ Error: {res.error}")
-                sys.exit(1)
+            cmd.extend(["--since", str(args.hours)])
         else:
-            # Full Ingestion: Purges and rebuilds the collection
-            print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
-            res = cortex_ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
-            if res.status == "success":
-                print(f"✅ Success: {res.documents_processed} docs, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
-            else:
-                print(f"❌ Error: {res.error}")
-                sys.exit(1)
+            cmd.append("--full")
+        if hasattr(args, 'profile') and args.profile:
+            cmd.extend(["--profile", args.profile])
+        print(f"🔄 Delegating ingestion to vector-db plugin...")
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Vector Query Command: Semantic search against the RAG collection
+    # Vector Query → vector-db plugin
     elif args.command == "query":
-        print(f"🔍 Querying: {args.query_text}")
-        res = cortex_ops.query(
-            query=args.query_text,
-            max_results=args.max_results,
-            use_cache=args.use_cache
-        )
-        if res.status == "success":
-            print(f"✅ Found {len(res.results)} results in {res.query_time_ms:.2f}ms")
-            print(f"💾 Cache hit: {res.cache_hit}")
-            for i, result in enumerate(res.results, 1):
-                print(f"\n--- Result {i} (Score: {result.relevance_score:.4f}) ---")
-                print(f"Content: {result.content[:300]}...")
-                if result.metadata:
-                    print(f"Source: {result.metadata.get('source', 'Unknown')}")
-        else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+        script = str(VECTOR_DB_SCRIPTS / "query.py")
+        cmd = [sys.executable, script, args.query_text, "--limit", str(args.max_results)]
+        if hasattr(args, 'profile') and args.profile:
+            cmd.extend(["--profile", args.profile])
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # RAG Stats Command: View health and collection metrics
+    # RAG Stats → vector-db plugin operations
     elif args.command == "stats":
-        stats = cortex_ops.get_stats(include_samples=args.samples, sample_count=args.sample_count)
-        print(f"🏥 Health: {stats.health_status}")
-        print(f"📚 Documents: {stats.total_documents}")
-        print(f"🧩 Chunks: {stats.total_chunks}")
-        if stats.collections:
-            print("\n📊 Collections:")
-            for name, coll in stats.collections.items():
-                print(f"  - {coll.name}: {coll.count} items")
-        if stats.samples:
-            print(f"\n🔍 Sample Documents:")
-            for i, sample in enumerate(stats.samples, 1):
-                print(f"\n  {i}. ID: {sample.id}")
-                print(f"     Preview: {sample.content_preview[:100]}...")
+        print("ℹ️  Use the vector-db plugin directly for stats:")
+        print(f"   python3 {VECTOR_DB_SCRIPTS / 'query.py'} --help")
 
-    # Cache Stats Command: View Semantic Cache efficiency metrics
+    # Cache Stats — DEPRECATED (semantic cache not in vector-db plugin)
     elif args.command == "cache-stats":
-        stats = cortex_ops.get_cache_stats()
-        print(f"💾 Cache Statistics: {stats}")
+        print("⚠️  'cache-stats' is deprecated. The semantic cache layer was removed.")
+        print("   Use the vector-db plugin for RAG operations instead.")
 
-    # Cache Warmup Command: Pre-populate cache with common queries
+    # Cache Warmup — DEPRECATED
     elif args.command == "cache-warmup":
-        print(f"🔥 Warming up cache...")
-        res = cortex_ops.cache_warmup(genesis_queries=args.queries)
-        if res.status == "success":
-            print(f"✅ Cached {res.queries_cached} queries in {res.total_time_ms/1000:.2f}s")
-        else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+        print("⚠️  'cache-warmup' is deprecated. The semantic cache layer was removed.")
+        print("   Use the vector-db plugin for RAG operations instead.")
 
-    # Evolution Metrics Command: Protocol 131 Fitness/Depth/Scope metrics
+    # Evolution Metrics → guardian-onboarding plugin
     elif args.command == "evolution":
+        script = str(GUARDIAN_SCRIPTS / "evolution_metrics.py")
         if not args.evolution_subcommand:
             print("❌ Subcommand required (fitness, depth, scope)")
             sys.exit(1)
-        content = args.content
+        cmd = [sys.executable, script, args.evolution_subcommand]
         if args.file:
-            try:
-                content = Path(args.file).read_text()
-            except Exception as e:
-                print(f"❌ Error reading file: {e}")
-                sys.exit(1)
-        if not content:
-            print("❌ No content provided.")
+            cmd.extend(["--file", args.file])
+        elif args.content:
+            cmd.append(args.content)
+        else:
+            print("❌ No content provided. Use --file or pass text.")
             sys.exit(1)
-            
-        if args.evolution_subcommand == "fitness":
-            print(json.dumps(evolution_ops.calculate_fitness(content), indent=2))
-        elif args.evolution_subcommand == "depth":
-            print(f"Depth: {evolution_ops.measure_depth(content)}")
-        elif args.evolution_subcommand == "scope":
-            print(f"Scope: {evolution_ops.measure_scope(content)}")
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
             
     # RLM Distillation: Atomic summarization of files (Protocol 132 Level 1)
     elif args.command in ["rlm-distill", "rlm-test"]:
