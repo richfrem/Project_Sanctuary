@@ -5,7 +5,7 @@
 
 ## Summary
 
-Implement a unit test suite for `tools/orchestrator/verify_workflow_state.py` to ensure it correctly validates workflow artifacts (spec, plan, tasks, worktrees) and handles edge cases. Refactor the tool if necessary to improve robustness (e.g., path handling).
+Implement a unit test suite for `plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py` to ensure it correctly validates workflow artifacts (spec, plan, tasks, worktrees) and handles edge cases. Refactor the tool if necessary to improve robustness (e.g., path handling).
 
 ## Technical Context
 

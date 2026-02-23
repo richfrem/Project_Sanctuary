@@ -10,10 +10,17 @@ Compare the ledger against the actual filesystem to report coverage gaps.
 ## Usage
 ```bash
 # Audit legacy docs coverage
+<<<<<<< HEAD
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/inventory.py
+
+# Audit tool scripts coverage
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/inventory.py --type tool
+=======
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inventory.py
 
 # Audit tool scripts coverage
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inventory.py --type tool
+>>>>>>> origin/main
 ```
 
 ## Output

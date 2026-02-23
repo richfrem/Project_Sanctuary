@@ -48,7 +48,7 @@
   - Output: A "Verification Report" for the Outer Loop to read.
 
 - [ ] **Register Tools in Inventory** <!-- id: 6 -->
-  - Update `tools/tool_inventory.json` with the new scripts.
+  - Update `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json` with the new scripts.
   - Ensure they are accessible to Antigravity (Outer Loop).
 
 ## Phase 3: Pilot Run (Verification)

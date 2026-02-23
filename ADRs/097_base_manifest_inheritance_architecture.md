@@ -14,7 +14,7 @@ The project currently has multiple specialized manifest files for different bund
 Each manifest explicitly defines its own `core` and `topic` sections:
 ```json
 {
-  "core": ["01_PROTOCOLS/128_Hardened_Learning_Loop.md", "ADRs/...", ...],
+  "core": ["plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md", "ADRs/...", ...],
   "topic": ["specific_file.md"]
 }
 ```
@@ -24,7 +24,7 @@ Each manifest explicitly defines its own `core` and `topic` sections:
 ## Decision
 Adopt a **Base Manifest Inheritance** pattern where:
 
-1. **Base Manifests** are stored in `tools/standalone/context-bundler/base-manifests/`
+1. **Base Manifests** are stored in `plugins/context-bundler/`
 2. **Base Manifest Index** (`base-manifests-index.json`) maps type IDs to file paths
 3. **Specialized Manifests** use an `extends` property to inherit from a base manifest
 4. **Dynamic Topic Section** is managed via `manifest_manager.py` CLI (add/remove)
@@ -99,7 +99,7 @@ See Tasks: `specs/0002-spec-0002/tasks.md` (Phase 2: Migration)
 
 ## Related Documents
 - [ADR 089: Modular Manifest Pattern](089_modular_manifest_pattern.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 - [Protocol 130: Manifest Deduplication](../01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md)
 - [Design Proposal](../docs/architecture/designs/bundling-architecture-proposal.md)
 

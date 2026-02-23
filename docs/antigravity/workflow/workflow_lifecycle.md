@@ -22,8 +22,8 @@ This policy governs the lifecycle of Agent Workflows in Project Sanctuary. All w
 
 ## 4. Registration Process
 After creating or modifying a workflow file (`.md`):
-1. **Inventory Scan**: Run `python tools/curate/documentation/workflow_inventory_manager.py --scan` to update `WORKFLOW_INVENTORY.md`.
-2. **Tool Integration**: If the workflow uses a new tool, ensure the tool is registered in `tools/tool_inventory.json`.
+1. **Inventory Scan**: Run `python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --scan` to update `WORKFLOW_INVENTORY.md`.
+2. **Tool Integration**: If the workflow uses a new tool, ensure the tool is registered in `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json`.
 
 ## 5. Documentation
 - **Self-Documenting**: The `.md` file is the source of truth.

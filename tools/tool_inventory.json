@@ -1,7 +1,12 @@
 {
   "metadata": {
+<<<<<<< HEAD
+    "last_updated": "2026-02-22T16:44:44.974502",
+    "status": "Cleaned"
+=======
     "last_updated": "2026-02-17T08:35:53.695343",
     "status": "Deduplicated"
+>>>>>>> origin/main
   },
   "python": {
     "tools": {
@@ -9,15 +14,65 @@
         {
           "name": "cli.py",
           "path": "tools/cli.py",
-          "description": "Main entry point for the Antigravity Command System. Supports Context Bundling, Tool Discovery, and Protocol 128 Learning Operations (Snapshot, Debrief, Guardian, Soul Persistence). Decoupled from mcp_servers.",
-          "original_path": "tools/business-rule-extraction/cli.py",
-          "decision": "keep",
-          "header_style": "basic",
+          "description": "Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution.",
           "last_updated": "2026-02-01T12:47:10.221991",
           "compliance_status": "compliant",
+          "header_style": "extended",
           "category": "cli_entry_points"
         }
       ],
+<<<<<<< HEAD
+      "adr-manager": [
+        {
+          "name": "create_adr.py",
+          "path": "plugins/adr-manager/skills/adr-management/scripts/create_adr.py",
+          "description": "create_adr.py (CLI)",
+          "last_updated": "2026-02-22T16:44:33.484113",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "next_number.py",
+          "path": "plugins/adr-manager/skills/adr-management/scripts/next_number.py",
+          "description": "next_number.py (CLI)",
+          "last_updated": "2026-02-22T16:44:33.799037",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "agent-loops": [
+        {
+          "name": "agent_orchestrator.py",
+          "path": "plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py",
+          "description": "Agent Orchestrator (Core Script)",
+          "last_updated": "2026-02-22T16:44:34.202572",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "closure-guard.sh",
+          "path": "plugins/agent-loops/hooks/closure-guard.sh",
+          "description": "TBD",
+          "last_updated": "2026-02-22T16:44:34.003646",
+          "compliance_status": "needs_review",
+          "header_style": "none"
+        },
+        {
+          "name": "proof_check.py",
+          "path": "plugins/agent-loops/skills/orchestrator/scripts/proof_check.py",
+          "description": "Proof Check (CLI)",
+          "last_updated": "2026-02-22T16:44:34.406109",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "agent-scaffolders": [
+        {
+          "name": "audit.py",
+          "path": "plugins/agent-scaffolders/scripts/audit.py",
+          "description": "audit.py (CLI)",
+          "last_updated": "2026-02-22T16:44:34.611488",
+=======
       "bundler": [],
       "rlm": [],
       "documentation": [
@@ -221,10 +276,53 @@
           "path": "tools/cli.py",
           "description": "Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution.",
           "last_updated": "2026-01-31T21:26:39.882399",
+>>>>>>> origin/main
           "compliance_status": "compliant",
           "header_style": "extended"
         },
         {
+<<<<<<< HEAD
+          "name": "scaffold.py",
+          "path": "plugins/agent-scaffolders/scripts/scaffold.py",
+          "description": "scaffold.py (CLI)",
+          "last_updated": "2026-02-22T16:44:34.789463",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "coding-conventions": [
+        {
+          "name": "js-tool-header-template.js",
+          "path": "plugins/coding-conventions/templates/js-tool-header-template.js",
+          "description": "",
+          "last_updated": "2026-02-22T16:44:34.989036",
+          "compliance_status": "needs_review",
+          "header_style": "none"
+        },
+        {
+          "name": "python-tool-header-template.py",
+          "path": "plugins/coding-conventions/templates/python-tool-header-template.py",
+          "description": "{{script_name}} (CLI)",
+          "last_updated": "2026-02-22T16:44:35.191059",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "context-bundler": [
+        {
+          "name": "bundle.py",
+          "path": "plugins/context-bundler/scripts/bundle.py",
+          "description": "Context Bundler Engine",
+          "last_updated": "2026-02-22T16:44:35.382462",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "manifest_manager.py",
+          "path": "plugins/context-bundler/scripts/manifest_manager.py",
+          "description": "TBD",
+          "last_updated": "2026-02-22T16:44:35.575146",
+=======
           "name": "connections.py",
           "path": "plugins/mcp-builder/skills/mcp-builder/scripts/connections.py",
           "description": "connections.py (CLI)",
@@ -277,10 +375,37 @@
           "path": "mcp_servers/lib/env_helper.py",
           "description": "Simple environment variable helper with proper fallback (Env -> .env). Ensures consistent secret loading across Project Sanctuary.",
           "last_updated": "2026-02-01T12:28:27.745494",
+>>>>>>> origin/main
           "compliance_status": "compliant",
           "header_style": "extended"
         },
         {
+<<<<<<< HEAD
+          "name": "path_resolver.py",
+          "path": "plugins/context-bundler/scripts/path_resolver.py",
+          "description": "path_resolver.py (CLI)",
+          "last_updated": "2026-02-22T16:44:35.764817",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "excel-to-csv": [
+        {
+          "name": "convert.py",
+          "path": "plugins/excel-to-csv/skills/excel-to-csv/scripts/convert.py",
+          "description": "excel_to_csv.py (CLI)",
+          "last_updated": "2026-02-22T16:44:35.963017",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "link-checker": [
+        {
+          "name": "check_broken_paths.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/check_broken_paths.py",
+          "description": "check_broken_paths.py (CLI)",
+          "last_updated": "2026-02-22T16:44:36.219051",
+=======
           "name": "evaluation.py",
           "path": "plugins/mcp-builder/skills/mcp-builder/scripts/evaluation.py",
           "description": "evaluation.py (CLI)",
@@ -349,22 +474,31 @@
           "path": "scripts/hugging-face/hf_decorate_readme.py",
           "description": "Prepares the local Hugging Face staging directory for upload. Modifies 'hugging_face_dataset_repo/README.md' in-place with YAML frontmatter per ADR 081.",
           "last_updated": "2026-02-01T12:28:25.588884",
+>>>>>>> origin/main
           "compliance_status": "compliant",
           "header_style": "extended"
         },
         {
-          "name": "hf_upload_assets.py",
-          "path": "scripts/hugging-face/hf_upload_assets.py",
-          "description": "Synchronizes staged landing-page assets with the Hugging Face Hub (ADR 081). Uploads the final, metadata-rich README.md to the repository root.",
-          "last_updated": "2026-02-01T12:28:30.133968",
+          "name": "enrich_links_v2.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/enrich_links_v2.py",
+          "description": "enrich_links_v2.py (CLI)",
+          "last_updated": "2026-02-22T16:44:36.417418",
           "compliance_status": "compliant",
           "header_style": "extended"
         },
         {
-          "name": "hf_utils.py",
-          "path": "mcp_servers/lib/hf_utils.py",
-          "description": "Hugging Face utility library for soul persistence (ADR 079). Encapsulates huggingface_hub logic. Provides unified async primitives for uploading files, folders, and updating datasets.",
-          "last_updated": "2026-02-01T12:27:54.714138",
+          "name": "find_source_links.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/find_source_links.py",
+          "description": "find_source_links.py (CLI)",
+          "last_updated": "2026-02-22T16:44:36.613727",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "map_repository_files.py",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/map_repository_files.py",
+          "description": "map_repository_files.py (CLI)",
+          "last_updated": "2026-02-22T16:44:36.814841",
           "compliance_status": "compliant",
           "header_style": "extended"
         },
@@ -586,13 +720,47 @@
         },
         {
           "name": "smart_fix_links.py",
-          "path": "scripts/link-checker/smart_fix_links.py",
-          "description": "Auto-repair utility for broken Markdown links using a file inventory.",
-          "last_updated": "2026-01-31T22:10:58.475815",
+          "path": "plugins/link-checker/skills/link-checker-agent/scripts/smart_fix_links.py",
+          "description": "smart_fix_links.py (CLI)",
+          "last_updated": "2026-02-22T16:44:37.045287",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "mermaid-to-png": [
+        {
+          "name": "convert.py",
+          "path": "plugins/mermaid-to-png/skills/convert-mermaid/scripts/convert.py",
+          "description": "convert.py (CLI)",
+          "last_updated": "2026-02-22T16:44:37.237410",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "plugin-manager": [
+        {
+          "name": "audit_structure.py",
+          "path": "plugins/plugin-manager/scripts/audit_structure.py",
+          "description": "Audit Plugin Structure",
+          "last_updated": "2026-02-22T16:44:37.469986",
           "compliance_status": "needs_review",
           "header_style": "basic"
         },
         {
+<<<<<<< HEAD
+          "name": "bulk_replicator.py",
+          "path": "plugins/plugin-manager/scripts/bulk_replicator.py",
+          "description": "Update All Plugins",
+          "last_updated": "2026-02-22T16:44:37.695203",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "clean_orphans.py",
+          "path": "plugins/plugin-manager/scripts/clean_orphans.py",
+          "description": "Plugin Orphan Cleaner",
+          "last_updated": "2026-02-22T16:44:37.892051",
+=======
           "name": "smart_fix_links.py",
           "path": "plugins/link-checker/skills/link-checker-agent/scripts/smart_fix_links.py",
           "description": "smart_fix_links.py (CLI)",
@@ -669,10 +837,17 @@
           "path": "plugins/vector-db/skills/vector-db-agent/scripts/vector_consistency_check.py",
           "description": "Vector Consistency Stabilizer - Protocol 126 Implementation",
           "last_updated": "2026-02-17T08:35:53.695305",
+>>>>>>> origin/main
           "compliance_status": "needs_review",
           "header_style": "minimal"
         },
         {
+<<<<<<< HEAD
+          "name": "cleanup_targets.py",
+          "path": "plugins/plugin-manager/scripts/cleanup_targets.py",
+          "description": "TBD",
+          "last_updated": "2026-02-22T16:44:38.073583",
+=======
           "name": "verify_bridge_integrity.py",
           "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/verify_bridge_integrity.py",
           "description": "Audits the Universal Bridge Synchronization by verifying that artifacts from the Source of Truth (.windsurf, .kittify) are correctly projected into target agent directories (.agent, .claude, .gemini, .github). Checks for file existence and content transformations.",
@@ -685,10 +860,80 @@
           "path": "scripts/link-checker/verify_links.py",
           "description": "Verifies the integrity of internal links across the documentation base. Part of Protocol 128 validation.",
           "last_updated": "2026-01-31T22:10:58.689853",
+>>>>>>> origin/main
           "compliance_status": "needs_review",
           "header_style": "none"
         },
         {
+<<<<<<< HEAD
+          "name": "generate_readmes.py",
+          "path": "plugins/plugin-manager/scripts/generate_readmes.py",
+          "description": "Generate Plugin READMEs",
+          "last_updated": "2026-02-22T16:44:38.254480",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "plugin_bootstrap.py",
+          "path": "plugins/plugin-manager/scripts/plugin_bootstrap.py",
+          "description": "plugin_bootstrap.py (CLI)",
+          "last_updated": "2026-02-22T16:44:38.442803",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "plugin_inventory.py",
+          "path": "plugins/plugin-manager/scripts/plugin_inventory.py",
+          "description": "Plugin Inventory Generator",
+          "last_updated": "2026-02-22T16:44:38.627290",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "plugin_replicator.py",
+          "path": "plugins/plugin-manager/scripts/plugin_replicator.py",
+          "description": "Plugin Replicator",
+          "last_updated": "2026-02-22T16:44:38.820306",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "sync_with_inventory.py",
+          "path": "plugins/plugin-manager/scripts/sync_with_inventory.py",
+          "description": "Sync Plugins with Inventory",
+          "last_updated": "2026-02-22T16:44:39.084933",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "update_agent_system.py",
+          "path": "plugins/plugin-manager/scripts/update_agent_system.py",
+          "description": "Update Agent System (Master Sync)",
+          "last_updated": "2026-02-22T16:44:39.335499",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        }
+      ],
+      "plugin-mapper": [
+        {
+          "name": "bridge_installer.py",
+          "path": "plugins/plugin-mapper/skills/agent-bridge/scripts/bridge_installer.py",
+          "description": "bridge_installer.py (CLI)",
+          "last_updated": "2026-02-22T16:44:39.535932",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "install_all_plugins.py",
+          "path": "plugins/plugin-mapper/skills/agent-bridge/scripts/install_all_plugins.py",
+          "description": "install_all_plugins.py (CLI)",
+          "last_updated": "2026-02-22T16:44:39.929322",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        }
+      ],
+      "rlm-factory": [
+=======
           "name": "verify_workflow_state.py",
           "path": "plugins/spec-kitty/skills/spec-kitty-agent/scripts/verify_workflow_state.py",
           "description": "Validates that valid Spec-Driven Development (SDD) artifacts (spec.md, plan.md, tasks.md) exist and are in the correct state for a given phase (specify, plan, tasks, review).",
@@ -716,11 +961,220 @@
       "retrieve": [],
       "utils": [],
       "utility": [
+>>>>>>> origin/main
         {
-          "name": "tasks_cli.py",
-          "path": ".kittify/scripts/tasks/tasks_cli.py",
-          "description": "CLI utilities for managing Spec Kitty work-package prompts and acceptance.",
-          "last_updated": "2026-02-12T10:40:14.794765",
+          "name": "cleanup_cache.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py",
+          "description": "cleanup_cache.py",
+          "last_updated": "2026-02-22T16:44:40.116319",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "debug_rlm.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py",
+          "description": "debug_rlm.py",
+          "last_updated": "2026-02-22T16:44:40.296522",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "distiller.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py",
+          "description": "distiller.py",
+          "last_updated": "2026-02-22T16:44:40.483094",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "inventory.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py",
+          "description": "inventory.py",
+          "last_updated": "2026-02-22T16:44:40.669104",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "query_cache.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py",
+          "description": "query_cache.py",
+          "last_updated": "2026-02-22T16:44:40.856802",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "rlm_config.py",
+          "path": "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py",
+          "description": "rlm_config.py",
+          "last_updated": "2026-02-22T16:44:41.049102",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        }
+      ],
+      "spec-kitty-plugin": [
+        {
+          "name": "sync_configuration.py",
+          "path": "plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/sync_configuration.py",
+          "description": "Spec Kitty Configuration Sync",
+          "last_updated": "2026-02-22T16:44:41.232028",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "verify_workflow_state.py",
+          "path": "plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py",
+          "description": "verify_workflow_state.py",
+          "last_updated": "2026-02-22T16:44:41.411488",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        }
+      ],
+      "task-manager": [
+        {
+          "name": "board.py",
+          "path": "plugins/task-manager/skills/task-agent/scripts/board.py",
+          "description": "board.py (CLI)",
+          "last_updated": "2026-02-22T16:44:41.731985",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "create_task.py",
+          "path": "plugins/task-manager/skills/task-agent/scripts/create_task.py",
+          "description": "create_task.py (CLI)",
+          "last_updated": "2026-02-22T16:44:41.976599",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        }
+      ],
+      "tool-inventory": [
+        {
+          "name": "audit_plugins.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py",
+          "description": "Audit Plugin Inventory",
+          "last_updated": "2026-02-22T16:44:42.170641",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "fix_inventory_paths.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/fix_inventory_paths.py",
+          "description": "Fix Inventory Paths",
+          "last_updated": "2026-02-22T16:44:42.359585",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "generate_tools_manifest.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/generate_tools_manifest.py",
+          "description": "Purpose:",
+          "last_updated": "2026-02-22T16:44:42.546669",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "manage_tool_inventory.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py",
+          "description": "TBD",
+          "last_updated": "2026-02-22T16:44:42.729510",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "rebuild_inventory.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/rebuild_inventory.py",
+          "description": "rebuild_inventory.py",
+          "last_updated": "2026-02-22T16:44:42.906825",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "sync_inventory_descriptions.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/sync_inventory_descriptions.py",
+          "description": "sync_inventory_descriptions.py",
+          "last_updated": "2026-02-22T16:44:43.098895",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "tool_chroma.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py",
+          "description": "tool_chroma.py — Embedded ChromaDB wrapper for tool-inventory plugin",
+          "last_updated": "2026-02-22T16:44:43.276637",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        },
+        {
+          "name": "tool_inventory_init.py",
+          "path": "plugins/tool-inventory/skills/tool-inventory-init/scripts/tool_inventory_init.py",
+          "description": "Tool Inventory Setup (Librarian Bootstrapper)",
+          "last_updated": "2026-02-22T16:44:43.457030",
+          "compliance_status": "needs_review",
+          "header_style": "basic"
+        }
+      ],
+      "vector-db": [
+        {
+          "name": "cleanup.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/cleanup.py",
+          "description": "cleanup.py (CLI)",
+          "last_updated": "2026-02-22T16:44:43.658308",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "ingest.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/ingest.py",
+          "description": "ingest.py (CLI)",
+          "last_updated": "2026-02-22T16:44:43.872503",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "ingest_code_shim.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/ingest_code_shim.py",
+          "description": "ingest_code_shim.py (CLI)",
+          "last_updated": "2026-02-22T16:44:44.064924",
+          "compliance_status": "compliant",
+          "header_style": "extended"
+        },
+        {
+          "name": "init.py",
+          "path": "plugins/vector-db/skills/vector-db-init/scripts/init.py",
+          "description": "init.py (CLI)",
+          "last_updated": "2026-02-22T16:44:44.974477",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "operations.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/operations.py",
+          "description": "Core domain logic for Vector DB operations.",
+          "last_updated": "2026-02-22T16:44:44.255320",
+          "compliance_status": "needs_review",
+          "header_style": "none"
+        },
+        {
+          "name": "query.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/query.py",
+          "description": "query.py (CLI)",
+          "last_updated": "2026-02-22T16:44:44.436736",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "vector_config.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/vector_config.py",
+          "description": "Wraps the raw manifest JSON dict and provides file discovery methods.",
+          "last_updated": "2026-02-22T16:44:44.619828",
+          "compliance_status": "needs_review",
+          "header_style": "minimal"
+        },
+        {
+          "name": "vector_consistency_check.py",
+          "path": "plugins/vector-db/skills/vector-db-agent/scripts/vector_consistency_check.py",
+          "description": "Vector Consistency Stabilizer",
+          "last_updated": "2026-02-22T16:44:44.793458",
           "compliance_status": "needs_review",
           "header_style": "minimal"
         }
@@ -740,26 +1194,6 @@
     }
   },
   "javascript": {
-    "tools": {
-      "xml_to_markdown": [],
-      "utilities": [
-        {
-          "name": "pathResolver.js",
-          "path": "tools/investigate/utils/pathResolver.js",
-          "description": "Node.js implementation of path resolution logic.",
-          "last_updated": "2026-01-31T23:55:00.000000",
-          "compliance_status": "manual_entry",
-          "header_style": "manual"
-        },
-        {
-          "name": "rlmConfigResolver.js",
-          "path": "tools/investigate/utils/rlmConfigResolver.js",
-          "description": "Resolves RLM configuration paths for Node.js tools.",
-          "last_updated": "2026-01-31T23:55:00.000000",
-          "compliance_status": "manual_entry",
-          "header_style": "manual"
-        }
-      ]
-    }
+    "tools": {}
   }
 }

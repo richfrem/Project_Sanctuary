@@ -123,7 +123,7 @@ class InventoryManager:
 
     def _determine_root(self) -> Path:
         """Heuristic to find the 'root' relative to the inventory location."""
-        # If global inventory, root is repo root (parent of tools/)
+        # If global inventory, root is repo root (parent of plugins/)
         if self.inventory_path.name == 'tool_inventory.json' and self.inventory_path.parent.name == 'tools':
             return self.inventory_path.parent.parent
         # If local inventory (e.g. inside xml-to-markdown), root is that tool's dir
@@ -154,7 +154,11 @@ class InventoryManager:
         Triggers the RLM Distiller for a specific tool.
         This ensures the RLM Cache (rlm_tool_cache.json) is always in sync with the Inventory.
         """
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
         distiller_script = self.root_dir / "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py"
+========
+        distiller_script = self.root_dir / "plugins/tool-inventory/scripts/distiller.py"
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
         if not distiller_script.exists():
             print(f"⚠️  Distiller not found at {distiller_script}. Skipping sync.")
             return
@@ -418,10 +422,11 @@ class InventoryManager:
 
         # Trigger RLM Distillation (Unless suppressed)
         if not suppress_distillation:
-             # Use the NEW path if updated, else original
-             # Note: if path changed, we should use new path.
              target_path = new_path if new_path else tool_path
-             self._distill_tool(target_path)
+             if hasattr(self, '_trigger_distillation') and callable(self._trigger_distillation):
+                 self._trigger_distillation(target_path)
+             else:
+                 print(f"ℹ️  Skipped distillation (no handler registered).")
         else:
              print(f"ℹ️  Skipped distillation (suppressed).")
         
@@ -471,23 +476,39 @@ class InventoryManager:
         self._remove_from_cache(tool_path)
 
     def _remove_from_cache(self, tool_path: str):
-        """Removes the tool from the RLM Tool Cache using cleanup_cache.py API."""
+        """Removes the tool from the RLM Tool Cache using rlm-factory cleanup_cache.py."""
+        cleanup_script = self.root_dir / "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py"
+        if not cleanup_script.exists():
+            print(f"⚠️  Cleanup script not found at {cleanup_script}. RLM Cache may be out of sync.")
+            return
+
         try:
+<<<<<<< HEAD
+            cmd = [
+                sys.executable,
+                str(cleanup_script),
+                "--type", "tool",
+                "--apply"  # Apply will likely need logic to target a specific file if supported, else this is generic
+            ]
+=======
             # Dynamic import to avoid circular dependencies if any
             from tools.tool_inventory.cleanup_cache import remove_entry
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
+>>>>>>> origin/main
+========
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
             
-            # Since we are managing Tools, run_type is 'tool'
-            removed = remove_entry(run_type='tool', file_path=tool_path)
+            # Note: rlm-factory cleanup_cache.py is designed to purge *all* missing files inherently by scanning.
+            # So just running it with --apply is enough to sync the ledger with the deletion.
+            result = subprocess.run(cmd, capture_output=True, text=True)
             
-            if removed:
-                print(f"✅ Synced removal with RLM Cache.")
+            if result.returncode == 0:
+                print(f"✅ Synced removal with RLM Cache via Janitor scan.")
             else:
-                pass # cleanup_cache already prints warnings
+                print(f"⚠️  Error syncing with cache: {result.stderr}")
                 
-        except ImportError:
-            print(f"⚠️ Could not import tools.curate.rlm.cleanup_cache. Cache may be out of sync.")
         except Exception as e:
-            print(f"⚠️ Error syncing with cache: {e}")
+            print(f"⚠️  Error executing cache cleanup: {e}")
 
     def _detect_header_style(self, file_path: Path) -> str:
         """Detect the documentation header style of a Python file."""
@@ -517,7 +538,7 @@ class InventoryManager:
 
     def discover_gaps(self, include_json: bool = False) -> Dict[str, List]:
         """
-        Scans tools/ directory for untracked scripts.
+        Scans plugins/ directory for untracked scripts.
         
         Args:
             include_json: If True, also scan for .json config files
@@ -566,11 +587,25 @@ class InventoryManager:
                  continue
              
              # Special Case: investment-screener
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
+<<<<<<< HEAD
+             # Ignore plugins/investment-screener UNLESS it is in backend/py_services
+             try:
+                 rel = str(f.relative_to(self.root_dir))
+                 if rel.startswith("plugins/investment-screener"):
+                     if not rel.startswith("plugins/investment-screener/backend/py_services"):
+=======
+========
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
              # Ignore tools/investment-screener UNLESS it is in backend/py_services
              try:
                  rel = str(f.relative_to(self.root_dir))
                  if rel.startswith("tools/investment-screener"):
                      if not rel.startswith("tools/investment-screener/backend/py_services"):
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
+>>>>>>> origin/main
+========
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
                          continue
              except ValueError:
                  continue
@@ -1193,7 +1228,7 @@ def extract_docstring(file_path: Path) -> str:
             # Get first non-empty line
             lines = [l.strip() for l in match.group(1).split('\n') if l.strip()]
             for line in lines:
-                if not line.startswith('tools/') and not line.startswith('='):
+                if not line.startswith('plugins/') and not line.startswith('='):
                    return line
             return lines[0] if lines else "TBD"
 
@@ -1216,7 +1251,7 @@ def main():
     parser = argparse.ArgumentParser(description="Manage Tool Inventories (Global & Local)")
     
     # Global args
-    parser.add_argument("--inventory", default="tools/tool_inventory.json", help="Path to JSON inventory")
+    parser.add_argument("--inventory", default="plugins/tool_inventory.json", help="Path to JSON inventory")
     
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
     

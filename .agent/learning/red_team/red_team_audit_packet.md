@@ -652,7 +652,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 ### Fleet of 7: Physical Container Inventory
 
-| # | Container Name | Type | Logical Cluster | Role | Tools/Services |
+| # | Container Name | Type | Logical Cluster | Role | Plugins/Services |
 |---|---------------|------|-----------------|------|----------------|
 | 1 | `sanctuary_utils` | **NEW** | Utils (Low Risk) | MCP Server | Time, Calculator, UUID, String |
 | 2 | `sanctuary_filesystem` | **NEW** | Filesystem (Privileged) | MCP Server | File Ops, Grep, Patch, Code |
@@ -1971,7 +1971,7 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 ## Visual Architecture
 ![protocol_128_learning_loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 
@@ -2066,7 +2066,7 @@ To support the Red Team Packet, all capture tools must implement the `--manifest
 *   **Output:** A folder of `.png` glyphs and a `provenance.json` log.
 
 ### B. The Cognitive Primer
-Located at `[.agent/learning/cognitive_primer.md](../.agent/learning/cognitive_primer.md)`.
+Located at `[plugins/guardian-onboarding/resources/cognitive_primer.md](../plugins/guardian-onboarding/resources/cognitive_primer.md)`.
 The "Constitution" for the agent.
 **Guardian Mandate:** The `guardian_wakeup` operation MUST check for this file and inject a directive to read it immediately.
 
@@ -3164,7 +3164,7 @@ The Forge scripts that generate training data must:
 
 - [ADR 079: Soul Persistence via Hugging Face](./079_soul_persistence_hugging_face.md)
 - [ADR 081: Soul Dataset Structure](./081_soul_dataset_structure.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 - [ingest_code_shim.py](../mcp_servers/rag_cortex/ingest_code_shim.py)
 - [snapshot_utils.py](../mcp_servers/lib/snapshot_utils.py)
 

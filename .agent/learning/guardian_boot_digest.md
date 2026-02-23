@@ -49,7 +49,7 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
             "The Rig
 ```
 
-### .agent/learning/cognitive_primer.md
+### plugins/guardian-onboarding/resources/cognitive_primer.md
 ```
 # The Cognitive Primer (Protocol 128)
 
@@ -111,10 +111,10 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
 > This context is recursively synthesized from the current system state using the local fine-tuned model.
 
 ## 1. Constitutional State (1 Protocols)
-* `01_PROTOCOLS/128_Hardened_Learning_Loop.md`: {'summary': "Protocol 128: Hardened Learning Loop. Objectives: Tamper-proof memory via 'Autonomous Scanning' (Git diffs) and 'Red Team Gate' (HITL). Key mechanisms: 'In
+* `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md`: {'summary': "Protocol 128: Hardened Learning Loop. Objectives: Tamper-proof memory via 'Autonomous Scanning' (Git diffs) and 'Red Team Gate' (HITL). Key mechanisms: 'In
 ```
 
-### 01_PROTOCOLS/128_Hardened_Learning_Loop.md
+### plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 ```
 # Protocol 128: The Hardened Learning Loop (Zero-Trust)
 

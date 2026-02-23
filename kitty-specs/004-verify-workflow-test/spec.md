@@ -4,7 +4,7 @@
 **Category**: Process
 **Created**: 2026-02-12
 **Status**: Draft  
-**Input**: User description: "Verify tools/orchestrator/verify_workflow_state.py within a clean Dual-Loop execution"
+**Input**: User description: "Verify plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py within a clean Dual-Loop execution"
 
 ## User Scenarios & Testing *(mandatory)*
 

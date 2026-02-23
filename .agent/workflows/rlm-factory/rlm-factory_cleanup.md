@@ -10,6 +10,18 @@ Remove stale entries (deleted files) and orphans (files outside manifest scope).
 ## Usage
 ```bash
 # Dry run — see what would be removed
+<<<<<<< HEAD
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/cleanup_cache.py --type legacy
+
+# Actually remove stale entries
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/cleanup_cache.py --type legacy --apply
+
+# Also prune orphans (entries not matching manifest scope)
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/cleanup_cache.py --type tool --apply --prune-orphans
+
+# Remove failed distillation entries
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/cleanup_cache.py --apply --prune-failed
+=======
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/cleanup_cache.py --type legacy
 
 # Actually remove stale entries
@@ -20,6 +32,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/cleanup_cache.py --type tool --apply --pru
 
 # Remove failed distillation entries
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/cleanup_cache.py --apply --prune-failed
+>>>>>>> origin/main
 ```
 
 ## Safety

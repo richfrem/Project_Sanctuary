@@ -2,10 +2,10 @@
 
 ## Backlog / Future Tasks
 - [ ] **Consolidate Code Snapshot Tools**: 
-    - `tools/codify/utils/capture-code-snapshot.js` (Keep? Node.js usually faster/native for JS projects?)
+    - `plugins/context-bundler/` (Keep? Node.js usually faster/native for JS projects?)
     - `scripts/capture_code_snapshot.py` (Keep? Python alignment?)
     - *Action*: Decide on one (likely Python for ecosystem consistency) and delete the other.
-    - *Decision*: Consolidated to Python. Deleted `tools/codify/utils/capture-code-snapshot.js`.
+    - *Decision*: Consolidated to Python. Deleted `plugins/context-bundler/`.
 - [ ] **Migrate Domain CLI**:
     - Move `scripts/domain_cli.py` to `tools/cli.py` (Task created).
 

@@ -5,7 +5,7 @@ description: Start and verify the local Ollama LLM server. Use when Ollama is ne
 
 # Ollama Launch
 
-Ollama provides local LLM inference for Protocol 128 seals (RLM distillation) and embeddings.
+Ollama provides local LLM inference for RLM distillation (seal phase summarization) and embeddings.
 
 ## When You Need This
 
@@ -55,6 +55,6 @@ ollama pull qwen2:7b
 
 ## Integration Points
 
-- **Protocol 128 Phase VI (Seal)**: RLM synthesis calls Ollama for distillation
-- **`tools/cli.py snapshot --type seal`**: Triggers Ollama for cognitive hologram generation
-- **`memory-management` skill**: Tiered memory may reference LLM for deep storage queries
+- **Learning Loop Seal Phase**: RLM synthesis calls Ollama for distillation
+- **RLM Factory**: `/rlm-factory:distill` requires Ollama for batch summarization
+- **Embeddings**: Any tool that needs local vector embeddings

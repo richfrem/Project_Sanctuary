@@ -9,6 +9,7 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/distiller.py
     # 1. Distill a single file (Tool Logic)
     python plugins/tool-inventory/scripts/distiller.py --file plugins/tool-inventory/scripts/rlm_config.py
     python plugins/tool-inventory/scripts/distiller.py --file plugins/tool-inventory/scripts/distiller.py --force
@@ -26,6 +27,16 @@ Usage Examples:
     python plugins/rlm-factory/scripts/distiller.py --target tools/investigate/miners --type tool --force
 
     IMPORTANT: Check tools/standalone/rlm-factory/manifest-index.json for defined profiles.
+========
+    # 1. Distill general documentation (Default)
+    python plugins/rlm-factory/scripts/distiller.py --file docs/architecture/overview.md
+    python plugins/rlm-factory/scripts/distiller.py --since 24
+
+    # 2. Force update
+    python plugins/rlm-factory/scripts/distiller.py --target docs/ --force
+
+    IMPORTANT: Check tools/standalone/rlm_factory/manifest-index.json for defined profiles.
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/distiller.py
     - project: Documentation only (rlm_summary_cache.json)
     - tool:    Code/Scripts (rlm_tool_cache.json)
 
@@ -57,12 +68,20 @@ Key Functions:
     - run_cleanup(): Remove stale entries for deleted/renamed files.
 
 Script Dependencies:
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/distiller.py
     - plugins/tool-inventory/scripts/rlm_config.py (Configuration)
     - plugins/tool-inventory/scripts/manage_tool_inventory.py (Cyclical: Updates inventory descriptions)
     - plugins/tool-inventory/scripts/cleanup_cache.py (Orphan Removal)
 
 Consumed by:
     - plugins/tool-inventory/scripts/manage_tool_inventory.py (Invokes distiller on tool updates)
+========
+    - plugins/rlm-factory/scripts/rlm_config.py (Configuration)
+    - plugins/rlm-factory/scripts/cleanup_cache.py (Orphan Removal)
+
+Consumed by:
+    - (None Detected)
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/distiller.py
 """
 
 import os
@@ -285,8 +304,13 @@ def distill(config: RLMConfig, target_files: List[Path] = None, force: bool = Fa
                         if purpose:
                             # Import locally to avoid circular top-level imports
                             # (Though headers say cyclic, we defer import to runtime)
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/distiller.py
                             sys.path.append(str(PROJECT_ROOT / "plugins/tool-inventory/scripts"))
                             from manage_tool_inventory import InventoryManager
+========
+                            sys.path.append(str(PROJECT_ROOT)) # ensure path
+                            from tools.tool_inventory.manage_tool_inventory import InventoryManager
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/distiller.py
                             
                             mgr = InventoryManager(PROJECT_ROOT / "tools/tool_inventory.json")
                             mgr.update_tool(
@@ -389,7 +413,11 @@ if __name__ == "__main__":
     parser.add_argument("--no-cleanup", action="store_true", help="Skip auto-cleanup on incremental distills")
     parser.add_argument("--debug", action="store_true", help="Enable verbose debug logging for troubleshooting")
     parser.add_argument("--force", action="store_true", help="Force re-distillation of files (bypass cache)")
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/distiller.py
     parser.add_argument("--summary", help="Inject a pre-generated JSON summary (skips Ollama)")
+========
+    parser.add_argument("--summary", help="Inject a pre-generated JSON or Text summary (skips Ollama)")
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/distiller.py
     
     args = parser.parse_args()
     
@@ -401,7 +429,11 @@ if __name__ == "__main__":
         
     # Load Config based on Type
     try:
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/distiller.py
         config = RLMConfig(run_type="tool", override_targets=args.target)
+========
+        config = RLMConfig(run_type="project", override_targets=args.target)
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/distiller.py
         if args.model:
             config.llm_model = args.model  # Override model in config
             print(f"🤖 Using model override: {config.llm_model}")

@@ -239,7 +239,7 @@ After uploading `.md` snapshot:
 ## Related Documents
 
 - [ADR 079: Soul Persistence via Hugging Face](./079_soul_persistence_hugging_face.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 - [Protocol 129: The Sovereign Sieve Internal Pre-Audit](../01_PROTOCOLS/129_The_Sovereign_Sieve_Internal_Pre_Audit.md)
 - [HF Dataset Card Guide](https://huggingface.co/docs/hub/datasets-cards)
 

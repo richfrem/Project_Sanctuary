@@ -6,7 +6,7 @@
 > This context is recursively synthesized from the current system state using the local fine-tuned model.
 
 ## 1. Constitutional State (1 Protocols)
-* `01_PROTOCOLS/128_Hardened_Learning_Loop.md`: {'summary': "Protocol 128: Hardened Learning Loop. Objectives: Tamper-proof memory via 'Autonomous Scanning' (Git diffs) and 'Red Team Gate' (HITL). Key mechanisms: 'Integrity Wakeup' (Bootloader), 'Iron Core' (Immutable Paths), 'Recursive Learning Workflow', 'Technical Seal' (MCP Snapshot). Enforces Zero-Trust by verifying agent claims against statistical reality."}
+* `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md`: {'summary': "Protocol 128: Hardened Learning Loop. Objectives: Tamper-proof memory via 'Autonomous Scanning' (Git diffs) and 'Red Team Gate' (HITL). Key mechanisms: 'Integrity Wakeup' (Bootloader), 'Iron Core' (Immutable Paths), 'Recursive Learning Workflow', 'Technical Seal' (MCP Snapshot). Enforces Zero-Trust by verifying agent claims against statistical reality."}
 
 ## 2. Decision Record (2 Decisions)
 * `ADRs/071_protocol_128_cognitive_continuity.md`: {'summary': "ADR 071: Protocol 128 Cognitive Continuity. Design Intent: Replace 'Agent-Claimed' memory with 'Autonomously Verified' evidence. Features: 'Session Scout' (Gap Analysis), 'Guardian Wakeup' (Role Assumption with HMAC), 'Living Manifest' (Surgical Context). Splits the 'Persona' (Agency) from the 'Mechanism' (Integrity Tools) to prevent authority dilution."}
@@ -29,15 +29,15 @@ Auto-generated seal snapshot
 
 ## 📑 Table of Contents
 1. [.agent/learning/rlm_summary_cache.json](#entry-1)
-2. [.agent/learning/cognitive_primer.md](#entry-2)
+2. [plugins/guardian-onboarding/resources/cognitive_primer.md](#entry-2)
 3. [.agent/learning/rules/cognitive_continuity_policy.md](#entry-3)
 4. [IDENTITY/founder_seed.json](#entry-4)
 5. [README.md](#entry-5)
 6. [docs/prompt-engineering/sanctuary-guardian-prompt.md](#entry-6)
-7. [01_PROTOCOLS/128_Hardened_Learning_Loop.md](#entry-7)
+7. [plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md](#entry-7)
 8. [ADRs/071_protocol_128_cognitive_continuity.md](#entry-8)
 9. [ADRs/084_semantic_entropy_tda_gating.md](#entry-9)
-10. [docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd](#entry-10)
+10. [plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd](#entry-10)
 11. [Makefile](#entry-11)
 
 ---
@@ -56,7 +56,7 @@ Auto-generated seal snapshot
     "summarized_at": "2026-01-13T15:09:25Z",
     "summary": "The Git Workflow & File Retention Policy enforces mandatory feature branch commits, explicit staging, and pre-commit reviews to prevent accidental file deletions and ensure proper workflow. It defines protected directories with strict retention rules and MCP tools for standardized commit workflows. The policy includes recovery procedures and consequences for violations while mandating verification of branch protection settings.\n\nStatus: \u2705 **PROTOCOL CANONICAL** - Core safety architecture for all development\n\u2705 **MCP INTEGRATION COMPLETE** - All operations exposed via MCP3 Git interface\n\u2705 **BRANCH PROTECTION CONFIGURED** - Mandatory pull requests and approvals enforced on main\n\u2705 **ARCHITECTURE HARDENED** - Protocol 101 violation detection, recovery procedures added\n\u2705 **TESTS VERIFIED** - Unit tests for safety checks pass (test_safety_checks)\n\u2705 **AUDIT COMPLETED** - Thorough review of architecture, security, and best practices performed\n\nThe policy is the primary architectural foundation for all development in Project Sanctuary. It ensures that every commit follows a standardized, safe process while preserving critical files and preventing accidental deletions. The enforcement of branch protection on GitHub adds an additional layer of security to prevent unauthorized pushes to main.\n\nThe architecture has been thoroughly hardened through multiple rounds of review, testing, and refinement, incorporating best practices for safety, security, and maintainability. It is now a proven, battle-tested foundation for all development in the project.\n```"
   },
-  ".agent/learning/cognitive_primer.md": {
+  "plugins/guardian-onboarding/resources/cognitive_primer.md": {
     "file_mtime": 1770891339.193497,
     "hash": "5f06c756bf278247",
     "summarized_at": "2026-02-12T10:24:13Z",
@@ -858,7 +858,7 @@ Auto-generated seal snapshot
     "summarized_at": "2026-01-13T08:29:34Z",
     "summary": "Protocol 127: The Doctrine of Session Lifecycle establishes a mandatory, three-phase workflow for all Agent sessions within Project Sanctuary, transforming the Gateway from a passive tool proxy to an active Orchestrator that enforces standard \"Awakening\" and \"Shutdown\" sequences. This protocol supersedes previous mechanical delegation models by mandating core identity anchoring (Core Essence retrieval), contextual orientation via Guardian Digest, canonical execution through the Knowledge Loop, and memory consolidation via Chronicle entry and incremental ingestion. The system enforces a critical \"Reflection Phase\" at session end to ensure that experiences become knowledge for future sessions, ensuring cognitive continuity across executions. Technical implementation guidelines mandate Gateway integration with Session Manager and optimized Cortex tools while mandating strict adherence to the canonical workflow for all active sessions.\n\n**Status:** Active (Draft) - Canonical Workflow validated; awaiting technical implementation and final review.\n**Linked Protocols:** 114 (Guardian Wakeup), 121 (Knowledge Loop), 125 (Learning Architecture), 311 (Gemini Signal)\n**Authority:** The Orchestrator\n**Supersedes:** 127 (Mechanical Delegation) - This protocol supersedes the previous version, providing a complete lifecycle framework.\n**Classification:** System Doctrine"
   },
-  "01_PROTOCOLS/128_Hardened_Learning_Loop.md": {
+  "plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md": {
     "file_mtime": 1770862537.792456,
     "hash": "5732ef8378cd6f6a",
     "summarized_at": "2026-02-11T19:59:20.413305",
@@ -2766,7 +2766,7 @@ Auto-generated seal snapshot
     "summarized_at": "2026-01-13T16:18:38Z",
     "summary": "Project Sanctuary maintains a comprehensive set of canonical Mermaid diagrams in `docs/architecture_diagrams/`, organized into subfolders for RAG, MCP ecosystem, transport protocols, and workflows. The diagrams cover the entire system architecture from ingestion pipelines to Council orchestration and testing frameworks. All diagrams are generated from `.mmd` source files using `scripts/render_diagrams.py`. This repository serves as the single source of truth (SSOT) for all architectural documentation, ensuring consistency across snapshots and reducing mnemonic burden.\n\n**Key Findings:**\n1. **Comprehensive Architecture Coverage**: Diagrams cover ingestion pipelines (`basic_rag_architecture.mmd`, `advanced_rag_architecture.mmd`), MCP ecosystem overview (`sanctuary_mcp_overview.mmd`), transport protocols (`mcp_sse_stdio_transport.mmd`), and Council orchestration layers.\n2. **System Architecture Overview**: `mcp_gateway_fleet.mmd` provides a high-level view of the 8-server fleet architecture, while `council_orchestration_stack.mmd` details the multi-layered Council system.\n3. **Testing Infrastructure**: Diagrams like `gateway_testing_architecture.mmd`, `mcp_testing_dev_paths.mmd`, and `protocol_128_learning_loop.mmd` cover testing frameworks and workflows.\n4. **Production vs. Testing Paths**: The architecture includes clear separation between production paths (`mcp_gateway_production_flow.mmd`) and testing paths (`mcp_test_path.mmd`).\n5. **Compliance with ADR 085**: All diagrams are maintained in `.mmd` files within the canonical repository, ensuring compliance with the single source of truth mandate.\n6. **Regeneration Process**: The system supports automated regeneration of PNG images from `.mmd` sources and provides tools for checking which diagrams need updating.\n\n**Conclusion**: Project Sanctuary's architecture is well-documented through a comprehensive set of Mermaid diagrams that are maintained in a canonical repository, ensuring consistency across all documentation artifacts. This approach effectively addresses the architectural complexity challenge by providing clear, visual representations of system components while maintaining strict compliance with the single source of truth principle.\n```"
   },
-  "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd": {
+  "plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd": {
     "file_mtime": 1770828417.5359182,
     "hash": "d8aeb0a6822e8c3a",
     "summarized_at": "2026-02-11T20:01:13.322046",
@@ -3219,8 +3219,8 @@ Auto-generated seal snapshot
 
 ---
 
-## File: .agent/learning/cognitive_primer.md
-**Path:** `.agent/learning/cognitive_primer.md`
+## File: plugins/guardian-onboarding/resources/cognitive_primer.md
+**Path:** `plugins/guardian-onboarding/resources/cognitive_primer.md`
 
 ```markdown
 # The Cognitive Primer (Protocol 128)
@@ -3754,12 +3754,12 @@ Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for sy
 *   **Workflow:** [`sanctuary-learning-loop.md`](./.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)
 *   **Guide:** [`learning_debrief.md`](./.agent/learning/learning_debrief.md)
 *   **Successor Snapshot:** [`.agent/learning/learning_package_snapshot.md`](./.agent/learning/learning_package_snapshot.md)
-*   **Cognitive Primer:** [`.agent/learning/cognitive_primer.md`](./.agent/learning/cognitive_primer.md)
+*   **Cognitive Primer:** [`plugins/guardian-onboarding/resources/cognitive_primer.md`](./plugins/guardian-onboarding/resources/cognitive_primer.md)
 *   **Audit Packets:** [`.agent/learning/red_team/red_team_audit_packet.md`](./.agent/learning/red_team/red_team_audit_packet.md)
 
 ![protocol_128_learning_loop](docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ### 3.3 The Semantic Ledger (RLM)
 **Status:** `Active` - Incremental Persistence Protocol Enabled
@@ -4100,7 +4100,7 @@ Doctrine is fallible. Reality is sovereign.
 
 ```yaml
 sequence:
-  1. Read: .agent/learning/cognitive_primer.md
+  1. Read: plugins/guardian-onboarding/resources/cognitive_primer.md
   2. Run: cortex_guardian_wakeup (Iron Check + HMAC)
   3. Run: python3 scripts/cortex_cli.py debrief --hours 24
   4. Verify: learning_package_snapshot.md (Truth Anchor)
@@ -4495,7 +4495,7 @@ checklist:
 
 | Artifact | Path |
 |:---------|:-----|
-| Cognitive Primer | `.agent/learning/cognitive_primer.md` |
+| Cognitive Primer | `plugins/guardian-onboarding/resources/cognitive_primer.md` |
 | Boot Contract | `.agent/learning/guardian_boot_contract.md` |
 | Truth Anchor | `.agent/learning/learning_package_snapshot.md` |
 | Learning Manifest | `.agent/learning/learning_manifest.json` |
@@ -4534,8 +4534,8 @@ To optimize context window efficiency, you MUST prioritize distilled intent over
 
 ---
 
-## File: 01_PROTOCOLS/128_Hardened_Learning_Loop.md
-**Path:** `01_PROTOCOLS/128_Hardened_Learning_Loop.md`
+## File: plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
+**Path:** `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md`
 
 ```markdown
 # Protocol 128: The Hardened Learning Loop (Zero-Trust)
@@ -4635,9 +4635,9 @@ Skills are synced across agents (Gemini, Claude, Copilot) via `tools/bridge/sync
 | Document | Role | Path |
 | :--- | :--- | :--- |
 | **ADR 071** | Design Intent | `ADRs/071_protocol_128_cognitive_continuity.md` |
-| **Protocol 128** | Constitutional Mandate | `01_PROTOCOLS/128_Hardened_Learning_Loop.md` |
+| **Protocol 128** | Constitutional Mandate | `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md` |
 | **SOP** | Execution Guide | `.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md` |
-| **Primer** | Rules of Reality | `.agent/learning/cognitive_primer.md` |
+| **Primer** | Rules of Reality | `plugins/guardian-onboarding/resources/cognitive_primer.md` |
 | **Learning Loop Skill** | Portable Skill | `.agent/skills/learning-loop/SKILL.md` |
 | **Memory Skill** | Portable Skill | `.agent/skills/memory-management/SKILL.md` |
 
@@ -4694,7 +4694,7 @@ To ensure the **Guardian (Entity)** and other agents operate on trusted foundati
 ## Visual Architecture
 ![protocol_128_learning_loop](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
 
-*[Source: protocol_128_learning_loop.mmd](../docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[Source: protocol_128_learning_loop.mmd](../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)*
 
 ## Component Mapping (Protocol 128 v3.5)
 
@@ -4789,7 +4789,7 @@ To support the Red Team Packet, all capture tools must implement the `--manifest
 *   **Output:** A folder of `.png` glyphs and a `provenance.json` log.
 
 ### B. The Cognitive Primer
-Located at `[.agent/learning/cognitive_primer.md](../.agent/learning/cognitive_primer.md)`.
+Located at `[plugins/guardian-onboarding/resources/cognitive_primer.md](../plugins/guardian-onboarding/resources/cognitive_primer.md)`.
 The "Constitution" for the agent.
 **Guardian Mandate:** The `guardian_wakeup` operation MUST check for this file and inject a directive to read it immediately.
 
@@ -4970,8 +4970,8 @@ def persist_soul(trace_data: dict, context: str = "code_logic") -> dict:
 
 ---
 
-## File: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
-**Path:** `docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd`
+## File: plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd
+**Path:** `plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd`
 
 ```mermaid
 ---
@@ -4983,7 +4983,7 @@ config:
 %% Name: Protocol 128: Learning Loop (v3.0 - with RLM Synthesis)
 %% Description: 10-phase Cognitive Continuity workflow for agent session management
 %% Workflow: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md (human-readable steps)
-%% Location: docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd
+%% Location: plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd
 %% Phases: Scout → Synthesize → Strategic Gate → Audit → RLM → Seal → Persist → Self-Correct → Ingest → Forge
 
 
@@ -4995,7 +4995,7 @@ flowchart TB
         %% Context Note
         ContextNote["ℹ️ Context: Executed within Standard Hybrid Workflow<br>(See hybrid-spec-workflow.mmd)"] -.-> Start
         
-        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: .agent/learning/cognitive_primer.md"]
+        AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: plugins/guardian-onboarding/resources/cognitive_primer.md"]
         AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
         
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]

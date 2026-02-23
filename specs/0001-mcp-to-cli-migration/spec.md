@@ -147,7 +147,7 @@ As a developer, I need new CLI tools to be automatically registered in the tool 
 
 ### Key Entities
 
-- **Tool Inventory** (`tools/tool_inventory.json`): Registry of all CLI tools with metadata
+- **Tool Inventory** (`plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json`): Registry of all CLI tools with metadata
 - **RLM Cache** (`.agent/learning/rlm_summary_cache.json`): Semantic summaries for discovery
 - **Workflow Manager** (`tools/orchestrator/workflow_manager.py`): Central workflow orchestration
 - **CLI Entry Point** (`tools/cli.py`): Unified command interface

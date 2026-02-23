@@ -1,5 +1,20 @@
 # Dependency Management Policy — Detailed Reference
 
+<<<<<<< HEAD
+## Service Inventory (Example)
+
+All isolated services that own a lockfile:
+
+| Service | Path | Notes |
+|---------|------|-------|
+| Core | `src/requirements-core.in` | Baseline for all services |
+| Auth | `src/services/auth_service/requirements.in` | Authentication layer |
+| Database | `src/services/db_service/requirements.in` | Database connections |
+| Payments | `src/services/payments_service/requirements.in` | Payment gateways |
+
+### Acknowledged Advisories (No Fix Available)
+- `diskcache==5.6.3` — Inherent pickle deserialization risk.
+=======
 ## Service Inventory
 
 All MCP services that own a lockfile:
@@ -33,6 +48,7 @@ All MCP services that own a lockfile:
 
 ### Acknowledged Advisories (No Fix Available)
 - `diskcache==5.6.3` — Inherent pickle deserialization risk (transitive via `py-key-value-aio`).
+>>>>>>> origin/main
   Latest version is 5.6.3. Mitigations: avoid storing untrusted data in cache, or use `JSONDisk` serialization.
 
 ## Parity Requirement
@@ -60,13 +76,20 @@ pip-compile \
   --output-file requirements.txt
 ```
 
+<<<<<<< HEAD
+=======
 ## Transitive Dependency Pinning
 
+>>>>>>> origin/main
 When a vulnerability exists in a transitive dependency:
 
 1. Identify which direct dependency pulls it in:
    ```bash
+<<<<<<< HEAD
+   grep -B2 "package-name" src/requirements-core.txt
+=======
    grep -B2 "package-name" mcp_servers/requirements-core.txt
+>>>>>>> origin/main
    # Look for "# via" comments
    ```
 

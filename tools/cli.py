@@ -95,7 +95,8 @@ Usage Examples:
 
     # Evolution & RLM
     python tools/cli.py evolution fitness --file docs/my-document.md
-    python tools/cli.py rlm-distill tools/my-script.py
+    python tools/cli.py rlm-distill --profile project plugins/adr-manager/README.md
+    python tools/cli.py rlm-distill --profile tools plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py
 
     # Domain Entities
     python tools/cli.py chronicle list --limit 10
@@ -115,17 +116,6 @@ Usage Examples:
     # Fine-Tuned Model (requires ollama)
     python tools/cli.py forge status
     python tools/cli.py forge query "What are the core principles of Project Sanctuary?"
-
-Dependencies:
-    - mcp_servers.learning.operations (LearningOperations)
-    - mcp_servers.rag_cortex.operations (CortexOperations)
-    - mcp_servers.evolution.operations (EvolutionOperations)
-    - mcp_servers.chronicle.operations (ChronicleOperations)
-    - mcp_servers.task.operations (TaskOperations)
-    - mcp_servers.adr.operations (ADROperations)
-    - mcp_servers.protocol.operations (ProtocolOperations)
-    - mcp_servers.forge_llm.operations (ForgeOperations) [optional]
-    - tools.orchestrator.workflow_manager (WorkflowManager)
 """
 import sys
 import argparse
@@ -141,6 +131,34 @@ PROJECT_ROOT = CLI_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
+<<<<<<< HEAD
+# Inline path resolver (formerly in tools.utils.path_resolver)
+def resolve_path(relative_path: str, base_path: Path = None) -> str:
+    """
+    Resolves a relative path against the project root or a specified base path.
+    Handles potential inconsistencies in path separators and ensures a clean, absolute path.
+    """
+    if base_path is None:
+        base_path = PROJECT_ROOT
+    full_path = base_path / relative_path
+    return str(full_path.resolve())
+
+# Resolve Directories
+# SEARCH_DIR removed — no longer used (migrated to plugins)
+# DOCS_DIR removed — no longer used (migrated to plugins)
+# TRACKING_DIR removed — no longer used (migrated to plugins)
+# SHARED_DIR removed — no longer used (migrated to plugins)
+RETRIEVE_DIR = PROJECT_ROOT / "plugins/context-bundler/scripts"
+INVENTORIES_DIR = PROJECT_ROOT / "plugins/tool-inventory/skills/tool-inventory/scripts"
+RLM_DIR = PROJECT_ROOT / "plugins/rlm-factory/skills/rlm-curator/scripts"
+ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-loops" / "skills" / "orchestrator" / "scripts"
+
+# Add directories to sys.path for internal imports
+for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
+    if str(d) not in sys.path:
+        sys.path.append(str(d))
+
+=======
 # Import path resolver from plugins
 try:
     # Try importing from the new plugin location
@@ -198,48 +216,25 @@ except ImportError:
     from mcp_servers.task.models import taskstatus, TaskPriority
     from mcp_servers.adr.operations import ADROperations
     from mcp_servers.protocol.operations import ProtocolOperations
+>>>>>>> origin/main
 
-# Heavy imports - LAZY LOADED (require chromadb, requests, Ollama, etc.)
-# LearningOperations, CortexOperations, EvolutionOperations are imported only when needed
-LearningOperations = None
-CortexOperations = None
-EvolutionOperations = None
 
-def _get_learning_ops():
-    """Lazy load LearningOperations (requires requests, Ollama for RLM)"""
-    global LearningOperations
-    if LearningOperations is None:
-        from mcp_servers.learning.operations import LearningOperations as _LearnOps
-        LearningOperations = _LearnOps
-    return LearningOperations(project_root=str(PROJECT_ROOT))
+# ─────────────────────────────────────────────────────────────
+# Plugin Script Paths — Zero mcp_servers dependencies.
+# All commands delegate to self-contained plugin scripts.
+# ─────────────────────────────────────────────────────────────
 
-def _get_learning_models():
-    """Lazy load LearningOperations model classes"""
-    from mcp_servers.learning.operations import PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
-    return PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
+# Guardian Onboarding (Protocol 128: Debrief, Snapshot, Persist, Wakeup)
+GUARDIAN_SCRIPTS  = PROJECT_ROOT / "plugins/guardian-onboarding/scripts"
 
-def _get_cortex_ops():
-    """Lazy load CortexOperations (requires chromadb)"""
-    global CortexOperations
-    if CortexOperations is None:
-        from mcp_servers.rag_cortex.operations import CortexOperations as _CortexOps
-        CortexOperations = _CortexOps
-    return CortexOperations(project_root=str(PROJECT_ROOT))
+# Vector DB (RAG Ingestion and Semantic Query)
+VECTOR_DB_SCRIPTS = PROJECT_ROOT / "plugins/vector-db/skills/vector-db-agent/scripts"
 
-def _get_evolution_ops():
-    """Lazy load EvolutionOperations (requires chromadb)"""
-    global EvolutionOperations
-    if EvolutionOperations is None:
-        from mcp_servers.evolution.operations import EvolutionOperations as _EvoOps
-        EvolutionOperations = _EvoOps
-    return EvolutionOperations(project_root=str(PROJECT_ROOT))
-
-# Forge LLM Operations (optional - requires ollama package)
-try:
-    from mcp_servers.forge_llm.operations import ForgeOperations
-    FORGE_AVAILABLE = True
-except ImportError:
-    FORGE_AVAILABLE = False
+# Domain Entity Managers
+CHRONICLE_SCRIPTS = PROJECT_ROOT / "plugins/chronicle-manager/skills/chronicle-agent/scripts"
+PROTOCOL_SCRIPTS  = PROJECT_ROOT / "plugins/protocol-manager/skills/protocol-agent/scripts"
+ADR_SCRIPTS       = PROJECT_ROOT / "plugins/adr-manager/skills/adr-management/scripts"
+TASK_SCRIPTS      = PROJECT_ROOT / "plugins/task-manager/skills/task-agent/scripts"
 
 # ADR 090: Iron Core Definitions
 IRON_CORE_PATHS = [
@@ -366,12 +361,7 @@ def main():
     # Command: rlm-distill (Protocol 132)
     rlm_parser = subparsers.add_parser("rlm-distill", aliases=["rlm-test"], help="Distill semantic summaries")
     rlm_parser.add_argument("target", help="File or folder path to distill")
-
-    # Command: rlm-search (Protocol 132)
-    rlm_search_parser = subparsers.add_parser("rlm-search", help="Search RLM Cache")
-    rlm_search_parser.add_argument("term", help="Search term")
-    rlm_search_parser.add_argument("--type", default="tool", help="RLM Type (tool/sanctuary)")
-    rlm_search_parser.add_argument("--json", action="store_true", help="Output as JSON")
+    rlm_parser.add_argument("--profile", default="project", choices=["project", "tools"], help="RLM profile: 'project' (docs/markdown) or 'tools' (code/scripts)")
 
 
     # Init-Context Command: Quick setup - initializes manifest and auto-bundles
@@ -624,157 +614,78 @@ def main():
 
 
     args = parser.parse_args()
-    
-    cortex_ops = None
-    evolution_ops = None
-    # Lazy Init Operations based on command to avoid overhead
-    if args.command in ["ingest", "query", "stats", "cache-stats", "cache-warmup"]:
-        cortex_ops = _get_cortex_ops()
-    if args.command == "evolution":
-        evolution_ops = _get_evolution_ops()
-    if args.command in ["debrief", "snapshot", "guardian", "persist-soul", "rlm-distill"]:
-        # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
-        pass 
 
-    # --- Command Handlers ---
+    # ─────────────────────────────────────────────────────────
+    # Command Handlers — all delegated to plugin scripts
+    # ─────────────────────────────────────────────────────────
 
-    # RAG Ingestion Command: Processes files into the Vector DB
+    # RAG Ingestion → vector-db plugin
     if args.command == "ingest":
+        script = str(VECTOR_DB_SCRIPTS / "ingest.py")
+        cmd = [sys.executable, script]
         if args.incremental:
-            print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
-            import time
-            from datetime import timedelta
-            
-            cutoff_time = time.time() - (args.hours * 3600)
-            modified_files = []
-            
-            exclude_dirs = {'.git', '.vector_data', '__pycache__', 'node_modules', 'venv', 'env', 
-                            'dataset_package', 'docs/site', 'training_logs'}
-            
-            for path in PROJECT_ROOT.rglob('*'):
-                if path.is_file():
-                    if any(part in exclude_dirs for part in path.parts):
-                        continue
-                    if path.suffix not in ['.md', '.py', '.js', '.ts', '.txt', '.json']:
-                        continue
-                    if path.stat().st_mtime > cutoff_time:
-                        modified_files.append(str(path))
-            
-            if not modified_files:
-                print(f"⚠️ No files modified in the last {args.hours} hours. Skipping ingestion.")
-                sys.exit(0)
-                
-            print(f"📄 Found {len(modified_files)} modified files.")
-            res = cortex_ops.ingest_incremental(file_paths=modified_files)
-            
-            # res.status contains "success" or "error"
-            if res.status == "success":
-                print(f"✅ Success: {res.documents_added} added, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
-            else:
-                print(f"❌ Error: {res.error}")
-                sys.exit(1)
+            cmd.extend(["--since", str(args.hours)])
         else:
-            # Full Ingestion: Purges and rebuilds the collection
-            print(f"🔄 Starting full ingestion (Purge: {args.purge})...")
-            res = cortex_ops.ingest_full(purge_existing=args.purge, source_directories=args.dirs)
-            if res.status == "success":
-                print(f"✅ Success: {res.documents_processed} docs, {res.chunks_created} chunks in {res.ingestion_time_ms/1000:.2f}s")
-            else:
-                print(f"❌ Error: {res.error}")
-                sys.exit(1)
+            cmd.append("--full")
+        if hasattr(args, 'profile') and args.profile:
+            cmd.extend(["--profile", args.profile])
+        print(f"🔄 Delegating ingestion to vector-db plugin...")
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Vector Query Command: Semantic search against the RAG collection
+    # Vector Query → vector-db plugin
     elif args.command == "query":
-        print(f"🔍 Querying: {args.query_text}")
-        res = cortex_ops.query(
-            query=args.query_text,
-            max_results=args.max_results,
-            use_cache=args.use_cache
-        )
-        if res.status == "success":
-            print(f"✅ Found {len(res.results)} results in {res.query_time_ms:.2f}ms")
-            print(f"💾 Cache hit: {res.cache_hit}")
-            for i, result in enumerate(res.results, 1):
-                print(f"\n--- Result {i} (Score: {result.relevance_score:.4f}) ---")
-                print(f"Content: {result.content[:300]}...")
-                if result.metadata:
-                    print(f"Source: {result.metadata.get('source', 'Unknown')}")
-        else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+        script = str(VECTOR_DB_SCRIPTS / "query.py")
+        cmd = [sys.executable, script, args.query_text, "--limit", str(args.max_results)]
+        if hasattr(args, 'profile') and args.profile:
+            cmd.extend(["--profile", args.profile])
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # RAG Stats Command: View health and collection metrics
+    # RAG Stats → vector-db plugin operations
     elif args.command == "stats":
-        stats = cortex_ops.get_stats(include_samples=args.samples, sample_count=args.sample_count)
-        print(f"🏥 Health: {stats.health_status}")
-        print(f"📚 Documents: {stats.total_documents}")
-        print(f"🧩 Chunks: {stats.total_chunks}")
-        if stats.collections:
-            print("\n📊 Collections:")
-            for name, coll in stats.collections.items():
-                print(f"  - {coll.name}: {coll.count} items")
-        if stats.samples:
-            print(f"\n🔍 Sample Documents:")
-            for i, sample in enumerate(stats.samples, 1):
-                print(f"\n  {i}. ID: {sample.id}")
-                print(f"     Preview: {sample.content_preview[:100]}...")
+        print("ℹ️  Use the vector-db plugin directly for stats:")
+        print(f"   python3 {VECTOR_DB_SCRIPTS / 'query.py'} --help")
 
-    # Cache Stats Command: View Semantic Cache efficiency metrics
+    # Cache Stats — DEPRECATED (semantic cache not in vector-db plugin)
     elif args.command == "cache-stats":
-        stats = cortex_ops.get_cache_stats()
-        print(f"💾 Cache Statistics: {stats}")
+        print("⚠️  'cache-stats' is deprecated. The semantic cache layer was removed.")
+        print("   Use the vector-db plugin for RAG operations instead.")
 
-    # Cache Warmup Command: Pre-populate cache with common queries
+    # Cache Warmup — DEPRECATED
     elif args.command == "cache-warmup":
-        print(f"🔥 Warming up cache...")
-        res = cortex_ops.cache_warmup(genesis_queries=args.queries)
-        if res.status == "success":
-            print(f"✅ Cached {res.queries_cached} queries in {res.total_time_ms/1000:.2f}s")
-        else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+        print("⚠️  'cache-warmup' is deprecated. The semantic cache layer was removed.")
+        print("   Use the vector-db plugin for RAG operations instead.")
 
-    # Evolution Metrics Command: Protocol 131 Fitness/Depth/Scope metrics
+    # Evolution Metrics → guardian-onboarding plugin
     elif args.command == "evolution":
+        script = str(GUARDIAN_SCRIPTS / "evolution_metrics.py")
         if not args.evolution_subcommand:
             print("❌ Subcommand required (fitness, depth, scope)")
             sys.exit(1)
-        content = args.content
+        cmd = [sys.executable, script, args.evolution_subcommand]
         if args.file:
-            try:
-                content = Path(args.file).read_text()
-            except Exception as e:
-                print(f"❌ Error reading file: {e}")
-                sys.exit(1)
-        if not content:
-            print("❌ No content provided.")
+            cmd.extend(["--file", args.file])
+        elif args.content:
+            cmd.append(args.content)
+        else:
+            print("❌ No content provided. Use --file or pass text.")
             sys.exit(1)
-            
-        if args.evolution_subcommand == "fitness":
-            print(json.dumps(evolution_ops.calculate_fitness(content), indent=2))
-        elif args.evolution_subcommand == "depth":
-            print(f"Depth: {evolution_ops.measure_depth(content)}")
-        elif args.evolution_subcommand == "scope":
-            print(f"Scope: {evolution_ops.measure_scope(content)}")
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
             
     # RLM Distillation: Atomic summarization of files (Protocol 132 Level 1)
     elif args.command in ["rlm-distill", "rlm-test"]:
-        print(f"🧠 RLM: Distilling '{args.target}'...")
-        ops = _get_learning_ops()
-        results = ops._rlm_map([args.target])
-        print(f"📊 Files Processed: {len(results)}")
-        for fp, s in results.items():
-            print(f"\n📄 {fp}\n   {s}")
-
-    # RLM Search: Query the semantic ledger
-    elif args.command == "rlm-search":
-        # Initialize Config
-        try:
-            config = RLMConfig(run_type=args.type)
-            search_cache(args.term, config, show_summary=True, output_json=args.json)
-        except Exception as e:
-            print(f"❌ Error during RLM search: {e}")
-            sys.exit(1)
+        profile = getattr(args, 'profile', 'project')
+        print(f"🧠 RLM: Distilling '{args.target}' [profile={profile}]...")
+        distiller_script = str(RLM_DIR / "distiller.py")
+        cmd = [sys.executable, distiller_script, "--profile", profile, "--file", args.target]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     # Init-Context Command: Initialize manifest from base template and auto-bundle
     elif args.command == "init-context":
@@ -854,197 +765,76 @@ def main():
         else:
             print(f"⚠️  \033[93mWARNING: IRON CORE CHECK OVERRIDDEN\033[0m")
 
-        # Protocol 128 Snapshot Generation (Delegated to LearningOperations)
-        print(f"📸 Generating {args.type} snapshot via Learning Operations...")
-        
-        ops = _get_learning_ops()
-        
-        # Manifest Handling
-        manifest_list = []
-        if args.manifest:
-            p = Path(args.manifest)
-            if p.exists():
-                try:
-                    data = json.loads(p.read_text())
-                    if isinstance(data, list): 
-                        manifest_list = data
-                    elif isinstance(data, dict):
-                        # ADR 097 support
-                        if "files" in data: 
-                            manifest_list = [f["path"] if isinstance(f, dict) else f for f in data["files"]]
-                        else:
-                            # Try legacy keys or fallback
-                            manifest_list = data.get("core", []) + data.get("topic", [])
-                except Exception as e:
-                    print(f"⚠️ Could not parse custom manifest {args.manifest}: {e}")
-
-        # Execute
-        result = ops.capture_snapshot(
-            manifest_files=manifest_list,
-            snapshot_type=args.type,
-            strategic_context=args.context
-        )
-        
-        if result.status == "success":
-            print(f"✅ Snapshot created: {result.snapshot_path}")
-            print(f"   Files: {result.total_files}, Bytes: {result.total_bytes}")
-            if not result.manifest_verified:
-                print(f"   ⚠️ Manifest Verification Failed: {result.git_diff_context}")
-        else:
-            print(f"❌ Error: {result.error}")
-            if result.git_diff_context:
-                print(f"   Context: {result.git_diff_context}")
+        # Protocol 128 Snapshot Generation → guardian-onboarding plugin
+        print(f"📸 Generating {args.type} snapshot...")
+        script = str(GUARDIAN_SCRIPTS / "capture_snapshot.py")
+        cmd = [sys.executable, script, "--type", args.type]
+        if args.context:
+            cmd.extend(["--context", args.context])
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(result.stderr if result.stderr else "❌ Snapshot failed")
             sys.exit(1)
+        # capture_snapshot.py outputs JSON
+        print(result.stdout)
 
-    # Protocol 128 Debrief: Orientation for fresh sessions (Truth Anchor)
+    # Protocol 128 Debrief → guardian-onboarding plugin
     elif args.command == "debrief":
-        print(f"📡 Running Learning Debrief (Protocol 128 Phase I)...")
-        ops = _get_learning_ops()
-        
-        # Debrief returns a formatted Markdown string
-        debrief_content = ops.learning_debrief(hours=args.hours)
-        
+        script = str(GUARDIAN_SCRIPTS / "learning_debrief.py")
+        cmd = [sys.executable, script, "--hours", str(args.hours)]
         if args.output:
-            output_path = Path(args.output)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(output_path, 'w') as f:
-                f.write(debrief_content)
-            print(f"✅ Debrief written to: {output_path}")
-            print(f"📊 Content length: {len(debrief_content)} characters")
-        else:
-            # Output to stdout
-            print(debrief_content)
+            cmd.extend(["--output", args.output])
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Guardian Command: Session pack and Boot Digest (Lifecycle)
+    # Guardian Command → guardian-onboarding plugin
     elif args.command == "guardian":
-        # Initialize ops locally to ensure availability
-        ops = _get_learning_ops()
-        
         if args.guardian_action == "wakeup":
-            # Load manifest if exists (using proper arg now)
-            manifest_path_str = args.manifest if args.manifest else ".agent/learning/guardian_manifest.json"
-            manifest_path = Path(manifest_path_str)
-            
-            if manifest_path.exists():
-                try:
-                    with open(manifest_path, 'r') as f:
-                        manifest = json.load(f)
-                    print(f"📋 Loaded guardian manifest: {len(manifest)} files")
-                except Exception as e:
-                    print(f"⚠️  Error reading guardian manifest: {e}")
-            else:
-                print(f"⚠️  Guardian manifest not found at {manifest_path_str}. Using defaults.")
-
-            # ROUTED TO LEARNING MCP
-            response = ops.guardian_wakeup(mode=args.mode)
-            
-            if response.status == "success":
-                print(f"✅ Boot Digest Generated: {response.digest_path}")
-                print(f"   Time: {response.total_time_ms:.2f}ms")
-            else:
-                print(f"❌ Error: {response.error}")
-                sys.exit(1)
+            script = str(GUARDIAN_SCRIPTS / "guardian_wakeup.py")
+            cmd = [sys.executable, script, "--mode", args.mode]
+            result = subprocess.run(cmd)
+            if result.returncode != 0:
+                sys.exit(result.returncode)
 
         elif args.guardian_action == "snapshot":
-            print(f"🛡️  Guardian Snapshot: Capturing Session Pack...")
-            response = ops.guardian_snapshot(strategic_context=args.context)
-            
-            if response.status == "success":
-                print(f"✅ Session Pack Captured: {response.snapshot_path}")
-                print(f"   Files: {response.total_files}, Bytes: {response.total_bytes}")
-            else:
-                print(f"❌ Error: {response.error}")
-                sys.exit(1)
+            script = str(GUARDIAN_SCRIPTS / "capture_snapshot.py")
+            cmd = [sys.executable, script, "--type", "audit"]
+            if hasattr(args, 'context') and args.context:
+                cmd.extend(["--context", args.context])
+            result = subprocess.run(cmd)
+            if result.returncode != 0:
+                sys.exit(result.returncode)
 
-    # Persist Soul Command: Protocol 128 Phase VI (Hugging Face Broadcast)
+    # Persist Soul → guardian-onboarding plugin
     elif args.command == "persist-soul":
-        print(f"📡 Initiating Soul Persistence (Protocol 128 Phase VI)...")
-        print(f"   Valence: {args.valence} | Uncertainty: {args.uncertainty} | Full Sync: {args.full_sync}")
-        ops = _get_learning_ops()
-        
-        # Default snapshot for seal is usually 'learning/learning_package_snapshot.md'
-        snapshot_path = args.snapshot
-        if not snapshot_path:
-            snapshot_path = ".agent/learning/learning_package_snapshot.md"
-            
-        PersistSoulRequest, _, _ = _get_learning_models()
-        req = PersistSoulRequest(
-            snapshot_path=snapshot_path,
-            valence=args.valence,
-            uncertainty=args.uncertainty,
-            is_full_sync=args.full_sync
-        )
-        
-        result = ops.persist_soul(req)
-        
-        if result.status == "success":
-            print(f"✅ Persistence Complete!")
-            print(f"   Repo: {result.repo_url}")
-            print(f"   Artifact: {result.snapshot_name}")
-        elif result.status == "quarantined":
-            print(f"🚫 Quarantined: {result.error}")
-        else:
-            print(f"❌ Persistence Failed: {result.error}")
-            sys.exit(1)
+        script = str(GUARDIAN_SCRIPTS / "persist_soul.py")
+        cmd = [sys.executable, script]
+        snapshot = getattr(args, 'snapshot', None) or ".agent/learning/learning_package_snapshot.md"
+        cmd.extend(["--snapshot", snapshot])
+        if hasattr(args, 'valence'):
+            cmd.extend(["--valence", str(args.valence)])
+        if getattr(args, 'full_sync', False):
+            cmd.append("--full-sync")
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Persist Soul Full: ADR 081 Full Dataset Regeneration
+    # Persist Soul Full → persist_soul.py --full-sync
     elif args.command == "persist-soul-full":
-        print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace (ADR 081)...")
-        ops = _get_learning_ops()
-        
-        result = ops.persist_soul_full()
-        
-        if result.status == "success":
-            print(f"✅ Full Sync Complete!")
-            print(f"   Repo: {result.repo_url}")
-            print(f"   Output: {result.snapshot_name}")
-        else:
-            print(f"❌ Error: {result.error}")
-            sys.exit(1)
+        script = str(GUARDIAN_SCRIPTS / "persist_soul.py")
+        cmd = [sys.executable, script, "--full-sync"]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Bootstrap Debrief Command: Fresh Repo Onboarding
+    # Bootstrap Debrief → capture_snapshot.py (seal type)
     elif args.command == "bootstrap-debrief":
-        print(f"🏗️  Generating Bootstrap Context Packet...")
-        ops = _get_learning_ops()
-        
-        # Load manifest
-        manifest_path = Path(args.manifest)
-        manifest_list = []
-        if manifest_path.exists():
-            try:
-                data = json.loads(manifest_path.read_text())
-                if isinstance(data, list): 
-                    manifest_list = data
-                elif isinstance(data, dict): 
-                    # Extract 'path' from dict entries if present, or use raw strings
-                    raw_files = data.get("files", [])
-                    manifest_list = [f.get("path") if isinstance(f, dict) else f for f in raw_files]
-                print(f"📋 Loaded bootstrap manifest: {len(manifest_list)} items")
-            except Exception as e:
-                print(f"⚠️  Error reading manifest: {e}")
-        else:
-            print(f"⚠️  Bootstrap manifest not found at {args.manifest}. Using defaults/empty.")
-
-        # Generate snapshot
-        res = ops.capture_snapshot(
-            manifest_files=manifest_list,
-            snapshot_type="seal",
-            strategic_context="Fresh repository onboarding context"
-        )
-        
-        if res.status == "success":
-            # Copy to output path
-            output_path = Path(args.output)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            import shutil
-            shutil.copy(res.snapshot_path, output_path)
-            
-            print(f"✅ Bootstrap packet generated: {output_path}")
-            print(f"📊 Files: {res.total_files} | Bytes: {res.total_bytes}")
-        else:
-            print(f"❌ Error: {res.error}")
-            sys.exit(1)
+        script = str(GUARDIAN_SCRIPTS / "capture_snapshot.py")
+        cmd = [sys.executable, script, "--type", "seal", "--context", "Fresh repository onboarding context"]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     # Tools Command: Manage tool inventory (list, search, add, update, remove)
     elif args.command == "tools":
@@ -1091,278 +881,178 @@ def main():
 
     # Workflow Command: Agent lifecycle management (Start/End/Retro)
     elif args.command == "workflow":
+        orchestrator_script = str(PROJECT_ROOT / "plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py")
+        if not os.path.exists(orchestrator_script):
+            print(f"❌ Error: agent_orchestrator.py not found at {orchestrator_script}")
+            sys.exit(1)
+
         if args.workflow_action == "start":
+            print(f"🚀 Routing 'workflow start' to Orchestrator ({args.name})...")
             try:
-                # WorkflowManager is already imported at the top
-                manager = WorkflowManager()
-                success = manager.start_workflow(args.name, args.target, args.type)
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
-                print(f"❌ Workflow Start Failed: {e}")
+                cmd = [sys.executable, orchestrator_script, "scan"]
+                if getattr(args, 'target', None) and os.path.isdir(args.target):
+                    cmd.extend(["--spec-dir", args.target])
+                subprocess.run(cmd, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Orchestrator Scan Failed: {e}")
                 sys.exit(1)
         
         elif args.workflow_action == "retrospective":
             try:
-                manager = WorkflowManager()
-                success = manager.run_retrospective()
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
+                subprocess.run([sys.executable, orchestrator_script, "retro"], check=True)
+            except subprocess.CalledProcessError as e:
                 print(f"❌ Retrospective Failed: {e}")
                 sys.exit(1)
 
         elif args.workflow_action == "end":
-            try:
-                manager = WorkflowManager()
-                force = getattr(args, 'force', False)
-                
-                message = args.message
-                if not message:
-                    # Interactive prompt if running in TTY
-                    if sys.stdin.isatty():
-                        try:
-                            message = input("📝 Enter Commit Message: ").strip()
-                        except EOFError:
-                            pass
-                    
-                    if not message:
-                        print("❌ Error: Commit message is required.")
-                        sys.exit(1)
-
-                success = manager.end_workflow_with_confirmation(message, args.files, force=force)
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
-                print(f"❌ Workflow End Failed: {e}")
-                sys.exit(1)
+            print("🚀 'workflow end' is deprecated. Use agent-loops retro and manual git flow.")
+            sys.exit(0)
 
         elif args.workflow_action == "cleanup":
-            try:
-                manager = WorkflowManager()
-                success = manager.cleanup_workflow(force=getattr(args, 'force', False))
-                if not success:
-                    sys.exit(1)
-            except Exception as e:
-                print(f"❌ Cleanup Failed: {e}")
-                sys.exit(1)
+            print("🚀 'workflow cleanup' is deprecated.")
+            sys.exit(0)
 
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     # DOMAIN COMMAND HANDLERS
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     
-    # Chronicle Command Handler
+    # Chronicle → chronicle-manager plugin
     elif args.command == "chronicle":
-        chron_ops = ChronicleOperations(os.path.join(PROJECT_ROOT, "00_CHRONICLE/ENTRIES"))
-        
+        script = str(CHRONICLE_SCRIPTS / "chronicle_manager.py")
+        cmd = [sys.executable, script]
+
         if args.chronicle_action == "list":
-            res = chron_ops.list_entries(limit=args.limit)
-            for e in res:
-                print(f"[{e['number']:03d}] {e['title']} ({e['date']})")
+            cmd.append("list")
+            if hasattr(args, 'limit') and args.limit:
+                cmd.extend(["--limit", str(args.limit)])
         elif args.chronicle_action == "search":
-            res = chron_ops.search_entries(args.query)
-            for e in res:
-                print(f"[{e['number']:03d}] {e['title']}")
+            cmd.extend(["search", args.query])
         elif args.chronicle_action == "get":
-            res = chron_ops.get_entry(args.number)
-            print(f"[{res['number']:03d}] {res['title']}")
-            print("-" * 40)
-            print(res['content'])
+            cmd.extend(["get", str(args.number)])
         elif args.chronicle_action == "create":
-            res = chron_ops.create_entry(
-                title=args.title,
-                content=str(args.content).replace("\\n", "\n"),
-                author=args.author,
-                status=args.status,
-                classification=args.classification
-            )
-            print(f"✅ Created Chronicle Entry #{res['entry_number']:03d}: {res['file_path']}")
-        elif args.chronicle_action == "update":
-            updates = {}
-            if args.title:
-                updates['title'] = args.title
+            cmd.extend(["create", args.title])
             if args.content:
-                updates['content'] = str(args.content).replace("\\n", "\n")
-            if args.status:
-                updates['status'] = args.status
-            res = chron_ops.update_entry(args.number, updates, args.reason)
-            print(f"✅ Updated Chronicle Entry #{args.number:03d}")
+                cmd.extend(["--content", str(args.content).replace("\\n", "\n")])
+            if hasattr(args, 'author') and args.author:
+                cmd.extend(["--author", args.author])
         else:
-            print("❌ Chronicle subcommand required (list, search, get, create, update)")
+            print("❌ Chronicle subcommand required (list, search, get, create)")
             sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Task Command Handler
+    # Task → task-manager plugin
     elif args.command == "task":
-        task_ops = TaskOperations(PROJECT_ROOT)
-        
+        script = str(TASK_SCRIPTS / "task_manager.py")
+        cmd = [sys.executable, script]
+
         if args.task_action == "list":
-            status_obj = taskstatus(args.status) if args.status else None
-            res = task_ops.list_tasks(status=status_obj)
-            for t in res:
-                print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
-        elif args.task_action == "get":
-            res = task_ops.get_task(args.number)
-            if not res:
-                print(f"❌ Task {args.number} not found")
-                sys.exit(1)
-            print(f"[{res['number']:03d}] {res['title']}")
-            print(f"Status: {res['status']} | Priority: {res['priority']} | Lead: {res['lead']}")
-            print("-" * 40)
-            print(res['content'])
-        elif args.task_action == "create":
-            res = task_ops.create_task(
-                title=args.title,
-                objective=str(args.objective).replace("\\n", "\n"),
-                deliverables=args.deliverables,
-                acceptance_criteria=args.acceptance_criteria,
-                priority=TaskPriority(args.priority.capitalize()),
-                status=taskstatus(args.task_status.lower()),
-                lead=args.lead
-            )
-            if res.status == "success":
-                print(f"✅ Created Task #{res.task_number:03d} at {res.file_path}")
-            else:
-                print(f"❌ Creation failed: {res.message}")
-                sys.exit(1)
-        elif args.task_action == "update-status":
-            task_ops.update_task_status(args.number, taskstatus(args.new_status), args.notes)
-            print(f"✅ Task {args.number} moved to {args.new_status}")
-        elif args.task_action == "search":
-            res = task_ops.search_tasks(args.query)
-            for t in res:
-                print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
-        elif args.task_action == "update":
-            updates = {}
-            if args.title:
-                updates['title'] = args.title
-            if args.objective:
-                updates['objective'] = args.objective
-            if args.priority:
-                updates['priority'] = args.priority
-            if args.lead:
-                updates['lead'] = args.lead
-            res = task_ops.update_task(args.number, updates)
-            print(f"✅ Updated Task #{args.number:03d}")
-        else:
-            print("❌ Task subcommand required (list, get, create, update-status, search, update)")
-            sys.exit(1)
-
-    # ADR Command Handler
-    elif args.command == "adr":
-        adr_ops = ADROperations(os.path.join(PROJECT_ROOT, "ADRs"))
-        
-        if args.adr_action == "list":
-            res = adr_ops.list_adrs(status=args.status.upper() if args.status else None)
-            for a in res:
-                print(f"[{a['number']:03d}] {a['title']} [{a['status']}]")
-        elif args.adr_action == "search":
-            res = adr_ops.search_adrs(args.query)
-            for a in res:
-                print(f"[{a['number']:03d}] {a['title']}")
-        elif args.adr_action == "get":
-            res = adr_ops.get_adr(args.number)
-            print(f"ADR-{res['number']:03d}: {res['title']}")
-            print(f"Status: {res['status']}")
-            print("-" * 40)
-            print(f"# Context\n{res['context']}\n")
-            print(f"# Decision\n{res['decision']}\n")
-            print(f"# Consequences\n{res['consequences']}")
-        elif args.adr_action == "create":
-            res = adr_ops.create_adr(
-                title=args.title,
-                context=str(args.context).replace("\\n", "\n"),
-                decision=str(args.decision).replace("\\n", "\n"),
-                consequences=str(args.consequences).replace("\\n", "\n"),
-                status=args.status
-            )
-            print(f"✅ Created ADR-{res['adr_number']:03d} at {res['file_path']}")
-        elif args.adr_action == "update-status":
-            res = adr_ops.update_adr_status(args.number, args.new_status.upper(), args.reason)
-            print(f"✅ ADR-{args.number:03d} status updated to {args.new_status.upper()}")
-        else:
-            print("❌ ADR subcommand required (list, search, get, create, update-status)")
-            sys.exit(1)
-
-    # Protocol Command Handler
-    elif args.command == "protocol":
-        prot_ops = ProtocolOperations(os.path.join(PROJECT_ROOT, "01_PROTOCOLS"))
-        
-        if args.protocol_action == "list":
-            res = prot_ops.list_protocols(status=args.status.upper() if args.status else None)
-            for p in res:
-                print(f"[{p['number']:03d}] {p['title']} [{p['status']}]")
-        elif args.protocol_action == "search":
-            res = prot_ops.search_protocols(args.query)
-            for p in res:
-                print(f"[{p['number']:03d}] {p['title']}")
-        elif args.protocol_action == "get":
-            res = prot_ops.get_protocol(args.number)
-            print(f"Protocol-{res['number']:03d}: {res['title']}")
-            print(f"v{res['version']} | {res['status']} | {res['classification']}")
-            print("-" * 40)
-            print(res['content'])
-        elif args.protocol_action == "create":
-            res = prot_ops.create_protocol(
-                number=None,  # Auto-generate
-                title=args.title,
-                status=args.status,
-                classification=args.classification,
-                version=args.version,
-                authority=args.authority,
-                content=str(args.content).replace("\\n", "\n")
-            )
-            print(f"✅ Created Protocol-{res['protocol_number']:03d} at {res['file_path']}")
-        elif args.protocol_action == "update":
-            updates = {}
-            if args.title:
-                updates['title'] = args.title
-            if args.content:
-                updates['content'] = str(args.content).replace("\\n", "\n")
+            cmd.append("list")
             if args.status:
-                updates['status'] = args.status
-            if args.version:
-                updates['version'] = args.version
-            res = prot_ops.update_protocol(args.number, updates, args.reason)
-            print(f"✅ Updated Protocol-{args.number:03d}")
+                cmd.extend(["--lane", args.status])
+        elif args.task_action == "get":
+            cmd.extend(["get", str(args.number)])
+        elif args.task_action == "create":
+            cmd.extend(["create", args.title])
+            if hasattr(args, 'objective') and args.objective:
+                cmd.extend(["--objective", str(args.objective)])
+            if hasattr(args, 'task_status') and args.task_status:
+                cmd.extend(["--lane", args.task_status])
+        elif args.task_action == "update-status":
+            cmd.extend(["move", str(args.number), args.new_status])
+            if hasattr(args, 'notes') and args.notes:
+                cmd.extend(["--note", args.notes])
+        elif args.task_action == "search":
+            cmd.extend(["search", args.query])
+        else:
+            print("❌ Task subcommand required (list, get, create, update-status, search)")
+            sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
+
+    # ADR → adr-manager plugin
+    elif args.command == "adr":
+        script = str(ADR_SCRIPTS / "adr_manager.py")
+        cmd = [sys.executable, script]
+
+        if args.adr_action == "list":
+            cmd.append("list")
+            if hasattr(args, 'limit') and args.limit:
+                cmd.extend(["--limit", str(args.limit)])
+        elif args.adr_action == "search":
+            cmd.extend(["search", args.query])
+        elif args.adr_action == "get":
+            cmd.extend(["get", str(args.number)])
+        elif args.adr_action == "create":
+            cmd.extend(["create", args.title])
+            if args.context:
+                cmd.extend(["--context", str(args.context).replace("\\n", "\n")])
+            if args.decision:
+                cmd.extend(["--decision", str(args.decision).replace("\\n", "\n")])
+            if args.consequences:
+                cmd.extend(["--consequences", str(args.consequences).replace("\\n", "\n")])
+        elif args.adr_action == "update-status":
+            print("⚠️  ADR update-status: use adr_manager.py directly (not yet wired).")
+        else:
+            print("❌ ADR subcommand required (list, search, get, create)")
+            sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
+
+    # Protocol → protocol-manager plugin
+    elif args.command == "protocol":
+        script = str(PROTOCOL_SCRIPTS / "protocol_manager.py")
+        cmd = [sys.executable, script]
+
+        if args.protocol_action == "list":
+            cmd.append("list")
+            if hasattr(args, 'limit') and args.limit:
+                cmd.extend(["--limit", str(args.limit)])
+            if args.status:
+                cmd.extend(["--status", args.status])
+        elif args.protocol_action == "search":
+            cmd.extend(["search", args.query])
+        elif args.protocol_action == "get":
+            cmd.extend(["get", str(args.number)])
+        elif args.protocol_action == "create":
+            cmd.extend(["create", args.title])
+            if args.content:
+                cmd.extend(["--content", str(args.content).replace("\\n", "\n")])
+            if args.status:
+                cmd.extend(["--status", args.status])
+        elif args.protocol_action == "update":
+            cmd.extend(["update", str(args.number)])
+            if args.status:
+                cmd.extend(["--status", args.status])
+            if hasattr(args, 'reason') and args.reason:
+                cmd.extend(["--reason", args.reason])
         else:
             print("❌ Protocol subcommand required (list, search, get, create, update)")
             sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Forge LLM Command Handler
+    # Forge → guardian-onboarding plugin
     elif args.command == "forge":
-        if not FORGE_AVAILABLE:
-            print("❌ Forge LLM not available. Install ollama: pip install ollama")
-            sys.exit(1)
-        forge_ops = ForgeOperations(str(PROJECT_ROOT))
-        
+        script = str(GUARDIAN_SCRIPTS / "forge_llm.py")
+        cmd = [sys.executable, script]
+
         if args.forge_action == "query":
-            print(f"🤖 Querying Sanctuary Model...")
-            res = forge_ops.query_sanctuary_model(
-                prompt=args.prompt,
-                temperature=args.temperature,
-                max_tokens=getattr(args, 'max_tokens', 2048),
-                system_prompt=getattr(args, 'system', None)
-            )
-            if res.status == "success":
-                print(f"\n{res.response}")
-                print(f"\n📊 Tokens: {res.total_tokens or 'N/A'} | Temp: {res.temperature}")
-            else:
-                print(f"❌ Error: {res.error}")
-                sys.exit(1)
+            cmd.extend(["query", args.prompt])
+            if hasattr(args, 'temperature'):
+                cmd.extend(["--temperature", str(args.temperature)])
         elif args.forge_action == "status":
-            print("🔍 Checking Sanctuary Model availability...")
-            res = forge_ops.check_model_availability()
-            if res.get("status") == "success":
-                print(f"✅ Model: {res['model']}")
-                print(f"   Available: {res['available']}")
-                if res.get('all_models'):
-                    print(f"   All Models: {', '.join(res['all_models'][:5])}{'...' if len(res['all_models']) > 5 else ''}")
-            else:
-                print(f"❌ Error: {res.get('error', 'Unknown error')}")
-                sys.exit(1)
+            cmd.append("status")
         else:
             print("❌ Forge subcommand required (query, status)")
             sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     else:
         parser.print_help()

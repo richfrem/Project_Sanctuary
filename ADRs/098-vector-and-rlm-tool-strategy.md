@@ -9,7 +9,7 @@ Accepted
 ## Context
 Project Sanctuary had accumulated two competing sets of tools for Vector Search and RLM (Recursive Language Model) operations:
 1.  **Legacy (Integrated)**: `mcp_servers/rag_cortex` and `mcp_servers/learning`. Used by Protocol 128 (Learning Loop).
-2.  **New (Standalone)**: `tools/codify/vector` and `tools/codify/rlm`. Used by the new `generate_kit` workflow.
+2.  **New (Standalone)**: `plugins/vector-db/` and `plugins/rlm-factory/`. Used by the new `generate_kit` workflow.
 
 This duplication caused confusion about which tool to use for "Project Querying" vs "Tool Discovery". The standalone vector tools lacked critical features (like Parent-Child chunk hydration) present in the integrated Cortex RAG.
 
@@ -17,8 +17,8 @@ This duplication caused confusion about which tool to use for "Project Querying"
 We have decided to **Separated Concerns** between the "Cognitive Brain" and the "Tool Registry".
 
 ### 1. Vector Strategy (Reject Standalone)
-*   **Decision**: We reject the standalone `tools/codify/vector` implementation.
-*   **Action**: The `tools/codify/vector` directory has been deleted.
+*   **Decision**: We reject the standalone `plugins/vector-db/` implementation.
+*   **Action**: The `plugins/vector-db/` directory has been deleted.
 *   **Replacement**: All semantic search and RAG operations must use `mcp_servers/rag_cortex` (via `scripts/cortex_cli.py`). This ensures access to the full "Super-RAG" capabilities (Parent-Child, Time-Weighting).
 
 ### 2. RLM Strategy (Split Concerns)
@@ -31,7 +31,7 @@ We will maintain TWO distinct implementations of RLM for different domains:
     *   **Manifest**: `learning_manifest.json`.
 
 *   **Tooling RLM (Tool Manuals)**:
-    *   **Manager**: `tools/codify/rlm/distiller.py` (via `manage_tool_inventory.py`).
+    *   **Manager**: `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` (via `manage_tool_inventory.py`).
     *   **Cache**: `.agent/learning/rlm_tool_cache.json`.
     *   **Purpose**: Manages detailed metadata (headers, args, usage) for the `tool_inventory.json`.
     *   **Manifest**: `distiller_manifest.json` (Managed by Inventory).
@@ -50,5 +50,5 @@ We will maintain TWO distinct implementations of RLM for different domains:
     *   Agents must know which RLM to query (Brain vs Tool). This is abstracted via the Agent's Tool definitions (`cortex_query` vs `fetch_tool_context`).
 
 ## Compliance
-*   `tools/retrieve/rlm/query_cache.py` and `fetch_tool_context.py` default to "Tool Mode" for easy tool discovery.
+*   `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` and `fetch_tool_context.py` default to "Tool Mode" for easy tool discovery.
 *   `scripts/cortex_cli.py` defaults to "Legacy Mode" for project memory.

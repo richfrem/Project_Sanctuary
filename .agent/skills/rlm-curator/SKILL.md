@@ -27,14 +27,23 @@ without reading every file.
 
 ### 1. Assessment (Always First)
 ```bash
+<<<<<<< HEAD
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/inventory.py --type legacy
+=======
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inventory.py --type legacy
+>>>>>>> origin/main
 ```
 Check: Is coverage < 100%? Are there missing files?
 
 ### 2. Retrieval (Read — Fast)
 ```bash
+<<<<<<< HEAD
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/query_cache.py "search_term"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/query_cache.py "term" --type tool
+=======
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py "search_term"
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py "term" --type tool
+>>>>>>> origin/main
 ```
 
 ### 3. Distillation (Write — Slow)
@@ -42,6 +51,18 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py "term" --type tool
 
 ```bash
 # Batch distill (all files in scope)
+<<<<<<< HEAD
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py
+
+# Single file
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py --file path/to/file.md
+
+# Tool scripts
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py --type tool
+
+# Only recent changes
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py --since 2
+=======
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py
 
 # Single file
@@ -52,11 +73,16 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py --type tool
 
 # Only recent changes
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py --since 2
+>>>>>>> origin/main
 ```
 
 ### 4. Cleanup (Curate)
 ```bash
+<<<<<<< HEAD
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/cleanup_cache.py --type legacy --apply
+=======
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/cleanup_cache.py --type legacy --apply
+>>>>>>> origin/main
 ```
 
 ## 🎯 Agent Distillation Protocol (The "Brain Upgrade")
@@ -102,7 +128,11 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/cleanup_cache.py --type legacy --apply
 **Tool Cache** (code):
 ```json
 {
+<<<<<<< HEAD
+  "plugins/path/to/script.py": {
+=======
   "tools/path/to/script.py": {
+>>>>>>> origin/main
     "hash": "<content_hash>",
     "summary": "{\"purpose\": \"...\", \"layer\": \"...\", \"usage\": [...], \"args\": [...]}",
     "file_mtime": 1234567890.0,

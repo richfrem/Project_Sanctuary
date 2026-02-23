@@ -11,7 +11,7 @@
             "note": "Identity anchor"
         },
         {
-            "path": ".agent/learning/cognitive_primer.md",
+            "path": "plugins/guardian-onboarding/resources/cognitive_primer.md",
             "note": "Cognitive primer"
         },
         {
@@ -27,7 +27,7 @@
             "note": "Previous snapshot"
         },
         {
-            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+            "path": "plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md",
             "note": "Protocol 128"
         },
         {

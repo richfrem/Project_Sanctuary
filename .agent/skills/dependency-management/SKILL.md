@@ -1,9 +1,9 @@
 ---
 name: dependency-management
 description: >
-  Python dependency and environment management for Project Sanctuary's MCP server fleet.
+  Python dependency and environment management for multi-service or monorepo python backends.
   Use when: (1) adding, upgrading, or removing a Python package, (2) responding to Dependabot
-  or security vulnerability alerts (GHSA/CVE), (3) creating a new MCP service that needs its
+  or security vulnerability alerts (GHSA/CVE), (3) creating a new service that needs its
   own requirements files, (4) debugging pip install failures or Docker build issues related
   to dependencies, (5) reviewing or auditing the dependency tree, (6) running pip-compile.
   Enforces the pip-compile locked-file workflow and tiered dependency hierarchy.
@@ -15,31 +15,22 @@ description: >
 
 1. **Never `pip install <pkg>` directly.** All changes flow through `.in` → `pip-compile` → `.txt`.
 2. **Always commit both `.in` and `.txt` together.** The `.in` is human intent; the `.txt` is the machine-verified lockfile.
-3. **One runtime per service.** Each MCP service owns its own `requirements.txt` lockfile.
+3. **One runtime per service.** Each isolated service owns its own `requirements.txt` lockfile.
 
-## Repository Layout
+## Repository Layout (Example)
 
 ```
-mcp_servers/
-├── requirements-core.in          # Tier 1: shared baseline (fastapi, pydantic, mcp…)
+src/
+├── requirements-core.in          # Tier 1: shared baseline (fastapi, pydantic…)
 ├── requirements-core.txt         # Lockfile for core
-├── gateway/clusters/
-│   ├── sanctuary_cortex/
-│   │   ├── requirements.in       # Tier 2: inherits core + heavy ML deps
+├── services/
+│   ├── auth_service/
+│   │   ├── requirements.in       # Tier 2: inherits core + auth deps
 │   │   └── requirements.txt
-│   ├── sanctuary_domain/
+│   ├── payments_service/
 │   │   ├── requirements.in
 │   │   └── requirements.txt
-│   ├── sanctuary_filesystem/
-│   │   ├── requirements.in
-│   │   └── requirements.txt
-│   ├── sanctuary_git/
-│   │   ├── requirements.in
-│   │   └── requirements.txt
-│   ├── sanctuary_network/
-│   │   ├── requirements.in
-│   │   └── requirements.txt
-│   └── sanctuary_utils/
+│   └── database_service/
 │       ├── requirements.in
 │       └── requirements.txt
 ```
@@ -48,11 +39,11 @@ mcp_servers/
 
 | Tier | Scope | File | Examples |
 |------|-------|------|----------|
-| **1 – Core** | Shared by >80% of services | `requirements-core.in` | `fastapi`, `pydantic`, `fastmcp`, `httpx` |
-| **2 – Specialized** | Service-specific heavyweights | `<service>/requirements.in` | `chromadb`, `langchain`, `sentence-transformers` |
+| **1 – Core** | Shared by >80% of services | `requirements-core.in` | `fastapi`, `pydantic`, `httpx` |
+| **2 – Specialized** | Service-specific heavyweights | `<service>/requirements.in` | `stripe`, `redis`, `asyncpg` |
 | **3 – Dev tools** | Never in production containers | `requirements-dev.in` | `pytest`, `black`, `ruff` |
 
-Each service `.in` file begins with `-r ../../../requirements-core.in` to inherit the core.
+Each service `.in` file usually begins with `-r ../../requirements-core.in` to inherit the core dependencies.
 
 ## Workflow: Adding or Upgrading a Package
 
@@ -64,21 +55,21 @@ Each service `.in` file begins with `-r ../../../requirements-core.in` to inheri
 2. **Lock** — Compile the lockfile:
    ```bash
    # Core
-   pip-compile mcp_servers/requirements-core.in \
-     --output-file mcp_servers/requirements-core.txt
+   pip-compile src/requirements-core.in \
+     --output-file src/requirements-core.txt
 
-   # Individual service (example: cortex)
-   pip-compile mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in \
-     --output-file mcp_servers/gateway/clusters/sanctuary_cortex/requirements.txt
+   # Individual service (example: auth)
+   pip-compile src/services/auth_service/requirements.in \
+     --output-file src/services/auth_service/requirements.txt
    ```
    Because services inherit core via `-r`, recompiling a service also picks up core changes.
 
 3. **Sync** — Install locally to verify:
    ```bash
-   pip install -r mcp_servers/gateway/clusters/<service>/requirements.txt
+   pip install -r src/services/<service>/requirements.txt
    ```
 
-4. **Verify** — Rebuild the affected Podman container to confirm stable builds.
+4. **Verify** — Rebuild the affected Docker/Podman container to confirm stable builds.
 
 5. **Commit** — Stage and commit **both** `.in` and `.txt` files together.
 
@@ -103,21 +94,20 @@ Each service `.in` file begins with `-r ../../../requirements-core.in` to inheri
    recompiling every service lockfile. Use this compilation order:
    ```bash
    # 1. Core first
-   pip-compile mcp_servers/requirements-core.in \
-     --output-file mcp_servers/requirements-core.txt
+   pip-compile src/requirements-core.in \
+     --output-file src/requirements-core.txt
 
    # 2. Then each service
-   for svc in sanctuary_cortex sanctuary_domain sanctuary_filesystem \
-              sanctuary_git sanctuary_network sanctuary_utils; do
-     pip-compile "mcp_servers/gateway/clusters/${svc}/requirements.in" \
-       --output-file "mcp_servers/gateway/clusters/${svc}/requirements.txt"
+   for svc in auth_service payments_service database_service; do
+     pip-compile "src/services/${svc}/requirements.in" \
+       --output-file "src/services/${svc}/requirements.txt"
    done
    ```
 
 6. **Verify the patched version appears** in all affected `.txt` files:
    ```bash
-   grep -i "package-name" mcp_servers/requirements-core.txt \
-     mcp_servers/gateway/clusters/*/requirements.txt
+   grep -i "package-name" src/requirements-core.txt \
+     src/services/*/requirements.txt
    ```
 
 7. **If no newer version exists** (e.g., inherent design risk like pickle deserialization),

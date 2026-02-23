@@ -1,12 +1,27 @@
 # Vector DB Dependencies (Intent File)
 # Workflow:
 #   1. Edit this file
-#   2. pip-compile tools/codify/vector/requirements.in
-#   3. pip install -r tools/codify/vector/requirements.txt
+<<<<<<< HEAD
+#   2. pip-compile plugins/vector-db/skills/vector-db-agent/scripts/requirements.in
+#   3. pip install -r plugins/vector-db/skills/vector-db-agent/scripts/requirements.txt
+=======
+#   2. pip-compile plugins/vector-db/requirements.in --output-file plugins/vector-db/requirements.txt
+#   3. pip install -r plugins/vector-db/requirements.txt
+
+# Core
+python-frontmatter
+pydantic
+>>>>>>> origin/main
 
 # Core Chroma DB
 chromadb
 
+<<<<<<< HEAD
+=======
+# LangChain Base
+langchain
+
+>>>>>>> origin/main
 # LangChain Integration
 langchain-chroma
 langchain-huggingface
@@ -16,9 +31,12 @@ langchain-text-splitters
 # Embeddings
 sentence-transformers
 
-# Environment
-python-dotenv
+<<<<<<< HEAD
+# Frontmatter (for vector_consistency_check.py)
+python-frontmatter
 
+=======
+>>>>>>> origin/main
 # Security Overrides
 protobuf>=6.33.5
 langchain-core>=1.2.11

@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "default_profile": "project",
+    "profiles": {
+        "project": {
+            "description": "Project Sanctuary documentation, protocols, ADRs, workflows",
+            "manifest": ".agent/learning/rlm_plugins_manifest.json",
+            "cache": ".agent/learning/rlm_summary_cache.json",
+            "extensions": [
+                ".md",
+                ".txt"
+            ]
+        },
+        "tools": {
+            "description": "Python/JS scripts and CLI tools across plugins/",
+            "manifest": ".agent/learning/rlm_tools_manifest.json",
+            "cache": ".agent/learning/rlm_tool_cache.json",
+            "extensions": [
+                ".py",
+                ".js",
+                ".ts"
+            ]
+        }
+    }
+}

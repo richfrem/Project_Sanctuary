@@ -67,7 +67,7 @@ All manifests follow the simple JSON structure:
             "note": "Project overview"
         },
         {
-            "path": "01_PROTOCOLS/128_Hardened_Learning_Loop.md",
+            "path": "plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md",
             "note": "Protocol 128"
         }
     ]
@@ -91,7 +91,7 @@ All manifests follow the simple JSON structure:
 - Legacy `core`/`topic` structure (v2.0) is deprecated but still functional
 
 **Base Manifest Inheritance (ADR 097):**
-Pre-defined base manifests in `tools/standalone/context-bundler/base-manifests/` provide common file sets. Use `manifest_manager.py init --type <TYPE>` to initialize from a base.
+Pre-defined base manifests in `plugins/context-bundler/` provide common file sets. Use `manifest_manager.py init --type <TYPE>` to initialize from a base.
 
 ### 4. Evolution Path
 New use cases are added by:
@@ -234,4 +234,4 @@ python3 scripts/cortex_cli.py bootstrap-debrief
 
 - [ADR 071: Protocol 128 (Cognitive Continuity)](./071_protocol_128_cognitive_continuity.md)
 - [ADR 083: Manifest-Centric Architecture](./083_manifest_centric_architecture.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md

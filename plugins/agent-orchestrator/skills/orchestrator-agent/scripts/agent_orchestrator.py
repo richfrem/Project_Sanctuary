@@ -176,8 +176,7 @@ def cmd_packet(args):
         tasks=content, # Embed the full prompt content
         acceptance_criteria=criteria
     )
-    
-    out_dir = Path(".agent/handoffs")
+    out_dir = Path("handoffs")
     out_dir.mkdir(parents=True, exist_ok=True)
     out_file = out_dir / f"task_packet_{wp_id}.md"
     out_file.write_text(packet)
@@ -261,8 +260,7 @@ def cmd_retro(args):
     """Generate retrospective."""
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     content = RETRO_TEMPLATE.format(session_id="SESSION", date=timestamp)
-    
-    out_dir = Path(".agent/retros")
+    out_dir = Path("retros")
     out_dir.mkdir(parents=True, exist_ok=True)
     
     out_file = out_dir / f"retro_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.md"

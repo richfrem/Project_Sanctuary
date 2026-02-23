@@ -1,0 +1,35 @@
+{
+    "description": "Centralized configuration for directory scopes used by RAG Cortex and Forge.",
+    "common_content": [
+        ".agent/rules",
+        ".agent/workflows",
+        ".agent/git_safety_rules.md",
+        ".agent/git_workflow_policy.md",
+        ".agent/mcp_commit_guide.md",
+        "plugins/guardian-onboarding/resources/cognitive_primer.md",
+        ".agent/learning/audit_prompts.md",
+        "00_CHRONICLE",
+        "01_PROTOCOLS",
+        "ADRs",
+        "docs",
+        "forge",
+        "scripts",
+        "hugging_face_dataset_repo",
+        "tests",
+        "mcp_servers",
+        "docs/philosophy/chrysalis_core_essence.md",
+        "Living_Chronicle.md",
+        "docs/PROJECT_SANCTUARY_SYNTHESIS.md",
+        "README.md",
+        "docs/operations/processes/Socratic_Key_User_Guide.md"
+    ],
+    "unique_rag_content": [
+        "04_THE_FORTRESS",
+        "tasks"
+    ],
+    "unique_forge_content": [],
+    "unique_soul_content": [
+        ".agent/learning",
+        "RESEARCH_SUMMARIES"
+    ]
+}

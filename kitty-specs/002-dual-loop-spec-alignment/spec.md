@@ -25,7 +25,7 @@ The current Dual-Loop Architecture (Protocol 133) requires significant manual or
 2.  **Enhance `verify_inner_loop_result.py`**:
     - Add logic to update `tasks.md` (checkbox toggling) upon successful verification.
 3.  **Integrate with Workflow**:
-    - Update `tools/orchestrator/dual_loop/README.md` with the new integrated commands.
+    - Update `plugins/agent-loops/personas/README.md` with the new integrated commands.
     - (Optionally) Create a wrapper script `spec-kitty-dual-loop.sh` that chains `implement` -> `generate` -> `launch`.
 
 ## 5. Constraints

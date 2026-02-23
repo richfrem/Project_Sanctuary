@@ -512,7 +512,7 @@ PYTHONPATH=. python3 tests/mcp_servers/config/unit/test_operations.py
 ## 9. Code MCP Server
 
 **Domain:** Code operations  
-**Directory:** `src/, scripts/, tools/`  
+**Directory:** `src/, scripts/, plugins/`  
 **Server Code:** [mcp_servers/code/server.py](../../../mcp_servers/code/server.py)  
 **README:** [Code MCP README](../../../mcp_servers/code/README.md)  
 **Class Diagram:** [../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/code_mcp_server.mmd)

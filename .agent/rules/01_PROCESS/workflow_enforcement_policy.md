@@ -4,7 +4,7 @@ trigger: manual
 
 # Workflow Enforcement Policy
 
-**Tool discovery details → `.agent/skills/tool_discovery/SKILL.md`**
+**Tool discovery details → `plugins/tool-inventory/skills/tool-inventory/SKILL.md`**
 **Spec workflow details → `.agent/skills/spec_kitty_workflow/SKILL.md`**
 
 ## Core Principle
@@ -29,8 +29,8 @@ All agent interactions MUST be mediated by **Slash Commands** (`.agent/workflows
 
 ## Registration (MANDATORY after creating/modifying workflows or tools)
 ```bash
-python tools/curate/documentation/workflow_inventory_manager.py --scan
-python tools/curate/inventories/manage_tool_inventory.py add --path <path>
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py --scan
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py add --path <path>
 ```
 
 ## Workflow File Standards

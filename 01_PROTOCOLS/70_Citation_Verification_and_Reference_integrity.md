@@ -21,7 +21,7 @@ All links / references you propose, ensure you open those links and verify they 
 
 ## 2. Verification Process
 
-* **Step 1:** Automated initial scan — use trusted tools/scripts to validate URLs and DOI functionality.
+* **Step 1:** Automated initial scan — use trusted in plugins/../scripts/to validate URLs and DOI functionality.
 * **Step 2:** Manual cross-check — assigned reviewer reads the cited paper/book abstract or relevant sections to verify content relevance and authorship accuracy.
 * **Step 3:** Metadata confirmation — check author names, titles, dates, and publication venue against official databases (e.g., arXiv, IEEE, ACM, publisher sites).
 

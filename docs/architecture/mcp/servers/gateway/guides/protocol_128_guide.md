@@ -16,9 +16,9 @@ The system establishes a **Zero-Trust Gate** between the agent's work and the pr
 
 ## 🔗 Key Resources
 - **[ADR 071: Decision Record](../../../../../../ADRs/071_protocol_128_cognitive_continuity.md)**: Why we chose the Red Team Gate and how the architecture works.
-- **[Protocol 128: Constitutional Mandate](../../../../../../01_PROTOCOLS/128_Hardened_Learning_Loop.md)**: The unbreakable rules for cognitive continuity.
+- **[Protocol 128: Constitutional Mandate](../../../../../plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md**: The unbreakable rules for cognitive continuity.
 - **[Recursive Learning SOP](../../../../../../.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)**: The step-by-step guide for agents to acquire and preserve knowledge.
-- **[Cognitive Primer](../../../../../../.agent/learning/cognitive_primer.md)**: The "Rules of Reality" that agents must follow on every boot.
+- **[Cognitive Primer](../../../../../../plugins/guardian-onboarding/resources/cognitive_primer.md)**: The "Rules of Reality" that agents must follow on every boot.
 
 ### Supporting Skills (`.agent/skills/`)
 - **`learning-loop`**: Portable skill encoding the 10-phase Protocol 128 workflow.

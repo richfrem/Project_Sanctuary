@@ -1,95 +1,145 @@
 # Tool Inventory
 
-> **Auto-generated:** 2026-02-01 14:52
+> **Auto-generated:** 2026-02-22 16:45
 > **Source:** [`tools/tool_inventory.json`](tools/tool_inventory.json)
-> **Regenerate:** `python tools/curate/inventories/manage_tool_inventory.py generate --inventory tools/tool_inventory.json`
+> **Regenerate:** `python plugins/tool-inventory/scripts/manage_tool_inventory.py generate --inventory tools/tool_inventory.json`
 
 ---
 
-## 📁 Orchestrator
+## 📁 Adr-Manager
 
 | Script | Description |
 | :--- | :--- |
-| [`workflow_manager.py`](tools/orchestrator/workflow_manager.py) | Manages the lifecycle of Agent Workflows (Start, Step, End). Tracks state in workflow_state.json. |
+| [`create_adr.py`](plugins/adr-manager/skills/adr-management/scripts/create_adr.py) | create_adr.py (CLI) |
+| [`next_number.py`](plugins/adr-manager/skills/adr-management/scripts/next_number.py) | next_number.py (CLI) |
 
-## 📦 Bundler
+## 📁 Agent-Loops
 
 | Script | Description |
 | :--- | :--- |
-| [`bundle.py`](tools/retrieve/bundler/bundle.py) | Bundles multiple source files into a single Markdown 'Context Bundle' based on a JSON manifest. Warns on deprecated legacy keys. |
-| [`manifest_manager.py`](tools/retrieve/bundler/manifest_manager.py) | Handles initialization and modification of the context-manager manifest. Acts as the primary CLI for the Context Bundler. Supports strict type validation. |
-| [`validate.py`](tools/retrieve/bundler/validate.py) | Validates context bundler manifest files against schema. Checks required fields, path format, path traversal attacks, and legacy format warnings. |
+| [`agent_orchestrator.py`](plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py) | Agent Orchestrator (Core Script) |
+| [`closure-guard.sh`](plugins/agent-loops/hooks/closure-guard.sh) | TBD |
+| [`proof_check.py`](plugins/agent-loops/skills/orchestrator/scripts/proof_check.py) | Proof Check (CLI) |
+
+## 📁 Agent-Scaffolders
+
+| Script | Description |
+| :--- | :--- |
+| [`audit.py`](plugins/agent-scaffolders/scripts/audit.py) | audit.py (CLI) |
+| [`scaffold.py`](plugins/agent-scaffolders/scripts/scaffold.py) | scaffold.py (CLI) |
 
 ## 📁 Cli Entry Points
 
 | Script | Description |
 | :--- | :--- |
-| [`cli.py`](tools/cli.py) | Main entry point for the Antigravity Command System. Supports Context Bundling, Tool Discovery, and Protocol 128 Learning Operations (Snapshot, Debrief, Guardian, Soul Persistence). Decoupled from mcp_servers. |
-
-## 📁 Curate
-
-| Script | Description |
-| :--- | :--- |
-| [`manage_tool_inventory.py`](tools/curate/inventories/manage_tool_inventory.py) | Comprehensive manager for Tool Inventories. Supports list, add, update, remove, search, audit, and generate operations. |
-| [`vibe_cleanup.py`](tools/curate/inventories/vibe_cleanup.py) | Maintenance script to clean up temporary/vibe files (logs, temp artifacts) from the workspace to ensure hygiene. |
-
-## 📝 Documentation
-
-| Script | Description |
-| :--- | :--- |
-| [`analyze_tracking_status.py`](tools/codify/tracking/analyze_tracking_status.py) | Generates a summary report of AI Analysis progress from the tracking file. Shows analyzed vs pending forms for project management dashboards. |
-| [`capture_code_snapshot.py`](scripts/capture_code_snapshot.py) | Generates a single text file snapshot of code files for LLM context sharing. Direct Python port of the legacy Node.js utility. |
-| [`export_mmd_to_image.py`](tools/codify/diagrams/export_mmd_to_image.py) | Renders all .mmd files in docs/architecture_diagrams/ to PNG images. Run this script whenever diagrams are updated to regenerate images. |
-| [`generate_todo_list.py`](tools/codify/tracking/generate_todo_list.py) | Creates a prioritized TODO list of forms pending AI analysis. Bubbles up Critical and High priority items based on workflow usage. |
-| [`workflow_inventory_manager.py`](tools/curate/documentation/workflow_inventory_manager.py) | Manages the workflow inventory for agent workflows (.agent/workflows/*.md). Provides search, scan, add, and update capabilities. Outputs are docs/antigravity/workflow/workflow_inventory.json and docs/antigravity/workflow/WORKFLOW_INVENTORY.md. |
-
-## 📁 Investigate
-
-| Script | Description |
-| :--- | :--- |
-| [`next_number.py`](tools/investigate/utils/next_number.py) | Generates the next sequential ID number for project artifacts (ADRs, Tasks, Specs) by scanning the filesystem for existing files. |
-| [`path_resolver.py`](tools/investigate/utils/path_resolver.py) | Standardizes cross-platform path resolution (Legacy Location). |
-
-## 📁 Orchestrator
-
-| Script | Description |
-| :--- | :--- |
-| [`proof_check.py`](tools/orchestrator/proof_check.py) | Validates task completion by checking file modifications against the Git index. Ensures Proof of Work. |
-
-## 📁 Retrieve
-
-| Script | Description |
-| :--- | :--- |
-| [`fetch_tool_context.py`](tools/retrieve/rlm/fetch_tool_context.py) | Retrieves the 'Gold Standard' tool definition from the RLM Tool Cache and formats it into an Agent-readable 'Manual Page'. This is the second step of the Late-Binding Protocol, following query_cache.py which finds a tool, this script provides the detailed context needed to use it. |
-
-## 🧠 Rlm
-
-| Script | Description |
-| :--- | :--- |
-| [`cleanup_cache.py`](tools/curate/rlm/cleanup_cache.py) | Prunes stale or orphaned entries from the RLM Cache to ensure it matches the filesystem state. |
-| [`debug_rlm.py`](tools/codify/rlm/debug_rlm.py) | Debug utility to inspect the RLMConfiguration state. Verifies path resolution, manifest loading, and environment variable overrides. Useful for troubleshooting cache path conflicts. |
-| [`distiller.py`](tools/codify/rlm/distiller.py) | Recursive summarization of repo content using Ollama. |
-| [`inventory.py`](tools/retrieve/rlm/inventory.py) | RLM Auditor: Reports coverage of the semantic ledger against the filesystem. Uses the Shared RLMConfig to dynamically switch between 'Legacy' (Documentation) and 'Tool' (CLI) audit modes. |
-| [`query_cache.py`](tools/retrieve/rlm/query_cache.py) | RLM Search: Instant O(1) semantic search of the ledger. |
-| [`rlm_config.py`](tools/codify/rlm/rlm_config.py) | Central configuration factory for RLM. Resolves cache paths and loads manifests. |
-
-## 🚀 Root
-
-| Script | Description |
-| :--- | :--- |
 | [`cli.py`](tools/cli.py) | Universal Tool & Workflow Router. The primary interface for Tool Discovery and Workflow Execution. |
-| [`cortex_cli.py`](scripts/cortex_cli.py) | Main CLI entry point for the Cortex Agentic Operations (Protocol 128). Orchestrates Cognitive functions (Memory, Learning, Debrief, Stats). |
-| [`domain_cli.py`](scripts/domain_cli.py) | Domain-Specific CLI for managing specific Project Entities (Tasks, ADRs, Chronicles, Protocols). Maps CLI commands to MCP business logic. |
-| [`env_helper.py`](mcp_servers/lib/env_helper.py) | Simple environment variable helper with proper fallback (Env -> .env). Ensures consistent secret loading across Project Sanctuary. |
-| [`hf_decorate_readme.py`](scripts/hugging-face/hf_decorate_readme.py) | Prepares the local Hugging Face staging directory for upload. Modifies 'hugging_face_dataset_repo/README.md' in-place with YAML frontmatter per ADR 081. |
-| [`hf_upload_assets.py`](scripts/hugging-face/hf_upload_assets.py) | Synchronizes staged landing-page assets with the Hugging Face Hub (ADR 081). Uploads the final, metadata-rich README.md to the repository root. |
-| [`hf_utils.py`](mcp_servers/lib/hf_utils.py) | Hugging Face utility library for soul persistence (ADR 079). Encapsulates huggingface_hub logic. Provides unified async primitives for uploading files, folders, and updating datasets. |
-| [`smart_fix_links.py`](scripts/link-checker/smart_fix_links.py) | Auto-repair utility for broken Markdown links using a file inventory. |
-| [`upload_to_huggingface.py`](forge/scripts/upload_to_huggingface.py) | Manages the upload of model weights, GGUF files, and metadata to Hugging Face Hub (Phase 6). Handles artifact selection, repo creation, and secure transport. |
-| [`verify_links.py`](scripts/link-checker/verify_links.py) | Verifies the integrity of internal links across the documentation base. Part of Protocol 128 validation. |
 
-## 🛠️ Utils
+## 📁 Coding-Conventions
 
 | Script | Description |
 | :--- | :--- |
-| [`path_resolver.py`](tools/utils/path_resolver.py) | Standardizes cross-platform path resolution and provides access to the Master Object Collection (MOC). Acts as a central utility for file finding. |
+| [`js-tool-header-template.js`](plugins/coding-conventions/templates/js-tool-header-template.js) |  |
+| [`python-tool-header-template.py`](plugins/coding-conventions/templates/python-tool-header-template.py) | {{script_name}} (CLI) |
+
+## 📁 Context-Bundler
+
+| Script | Description |
+| :--- | :--- |
+| [`bundle.py`](plugins/context-bundler/scripts/bundle.py) | Context Bundler Engine |
+| [`manifest_manager.py`](plugins/context-bundler/scripts/manifest_manager.py) | TBD |
+| [`path_resolver.py`](plugins/context-bundler/scripts/path_resolver.py) | path_resolver.py (CLI) |
+
+## 📁 Excel-To-Csv
+
+| Script | Description |
+| :--- | :--- |
+| [`convert.py`](plugins/excel-to-csv/skills/excel-to-csv/scripts/convert.py) | excel_to_csv.py (CLI) |
+
+## 🔗 Link-Checker
+
+| Script | Description |
+| :--- | :--- |
+| [`check_broken_paths.py`](plugins/link-checker/skills/link-checker-agent/scripts/check_broken_paths.py) | check_broken_paths.py (CLI) |
+| [`enrich_links_v2.py`](plugins/link-checker/skills/link-checker-agent/scripts/enrich_links_v2.py) | enrich_links_v2.py (CLI) |
+| [`find_source_links.py`](plugins/link-checker/skills/link-checker-agent/scripts/find_source_links.py) | find_source_links.py (CLI) |
+| [`map_repository_files.py`](plugins/link-checker/skills/link-checker-agent/scripts/map_repository_files.py) | map_repository_files.py (CLI) |
+| [`smart_fix_links.py`](plugins/link-checker/skills/link-checker-agent/scripts/smart_fix_links.py) | smart_fix_links.py (CLI) |
+
+## 📁 Mermaid-To-Png
+
+| Script | Description |
+| :--- | :--- |
+| [`convert.py`](plugins/mermaid-to-png/skills/convert-mermaid/scripts/convert.py) | convert.py (CLI) |
+
+## 📁 Plugin-Manager
+
+| Script | Description |
+| :--- | :--- |
+| [`audit_structure.py`](plugins/plugin-manager/scripts/audit_structure.py) | Audit Plugin Structure |
+| [`bulk_replicator.py`](plugins/plugin-manager/scripts/bulk_replicator.py) | Update All Plugins |
+| [`clean_orphans.py`](plugins/plugin-manager/scripts/clean_orphans.py) | Plugin Orphan Cleaner |
+| [`cleanup_targets.py`](plugins/plugin-manager/scripts/cleanup_targets.py) | TBD |
+| [`generate_readmes.py`](plugins/plugin-manager/scripts/generate_readmes.py) | Generate Plugin READMEs |
+| [`plugin_bootstrap.py`](plugins/plugin-manager/scripts/plugin_bootstrap.py) | plugin_bootstrap.py (CLI) |
+| [`plugin_inventory.py`](plugins/plugin-manager/scripts/plugin_inventory.py) | Plugin Inventory Generator |
+| [`plugin_replicator.py`](plugins/plugin-manager/scripts/plugin_replicator.py) | Plugin Replicator |
+| [`sync_with_inventory.py`](plugins/plugin-manager/scripts/sync_with_inventory.py) | Sync Plugins with Inventory |
+| [`update_agent_system.py`](plugins/plugin-manager/scripts/update_agent_system.py) | Update Agent System (Master Sync) |
+
+## 📁 Plugin-Mapper
+
+| Script | Description |
+| :--- | :--- |
+| [`bridge_installer.py`](plugins/plugin-mapper/skills/agent-bridge/scripts/bridge_installer.py) | bridge_installer.py (CLI) |
+| [`install_all_plugins.py`](plugins/plugin-mapper/skills/agent-bridge/scripts/install_all_plugins.py) | install_all_plugins.py (CLI) |
+
+## 📁 Rlm-Factory
+
+| Script | Description |
+| :--- | :--- |
+| [`cleanup_cache.py`](plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py) | cleanup_cache.py |
+| [`debug_rlm.py`](plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py) | debug_rlm.py |
+| [`distiller.py`](plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py) | distiller.py |
+| [`inventory.py`](plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py) | inventory.py |
+| [`query_cache.py`](plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py) | query_cache.py |
+| [`rlm_config.py`](plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py) | rlm_config.py |
+
+## 📁 Spec-Kitty-Plugin
+
+| Script | Description |
+| :--- | :--- |
+| [`sync_configuration.py`](plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/sync_configuration.py) | Spec Kitty Configuration Sync |
+| [`verify_workflow_state.py`](plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py) | verify_workflow_state.py |
+
+## 📁 Task-Manager
+
+| Script | Description |
+| :--- | :--- |
+| [`board.py`](plugins/task-manager/skills/task-agent/scripts/board.py) | board.py (CLI) |
+| [`create_task.py`](plugins/task-manager/skills/task-agent/scripts/create_task.py) | create_task.py (CLI) |
+
+## 📁 Tool-Inventory
+
+| Script | Description |
+| :--- | :--- |
+| [`audit_plugins.py`](plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py) | Audit Plugin Inventory |
+| [`fix_inventory_paths.py`](plugins/tool-inventory/skills/tool-inventory/scripts/fix_inventory_paths.py) | Fix Inventory Paths |
+| [`generate_tools_manifest.py`](plugins/tool-inventory/skills/tool-inventory/scripts/generate_tools_manifest.py) | Purpose: |
+| [`manage_tool_inventory.py`](plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py) | TBD |
+| [`rebuild_inventory.py`](plugins/tool-inventory/skills/tool-inventory/scripts/rebuild_inventory.py) | rebuild_inventory.py |
+| [`sync_inventory_descriptions.py`](plugins/tool-inventory/skills/tool-inventory/scripts/sync_inventory_descriptions.py) | sync_inventory_descriptions.py |
+| [`tool_chroma.py`](plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py) | tool_chroma.py — Embedded ChromaDB wrapper for tool-inventory plugin |
+| [`tool_inventory_init.py`](plugins/tool-inventory/skills/tool-inventory-init/scripts/tool_inventory_init.py) | Tool Inventory Setup (Librarian Bootstrapper) |
+
+## 📁 Vector-Db
+
+| Script | Description |
+| :--- | :--- |
+| [`cleanup.py`](plugins/vector-db/skills/vector-db-agent/scripts/cleanup.py) | cleanup.py (CLI) |
+| [`ingest.py`](plugins/vector-db/skills/vector-db-agent/scripts/ingest.py) | ingest.py (CLI) |
+| [`ingest_code_shim.py`](plugins/vector-db/skills/vector-db-agent/scripts/ingest_code_shim.py) | ingest_code_shim.py (CLI) |
+| [`init.py`](plugins/vector-db/skills/vector-db-init/scripts/init.py) | init.py (CLI) |
+| [`operations.py`](plugins/vector-db/skills/vector-db-agent/scripts/operations.py) | Core domain logic for Vector DB operations. |
+| [`query.py`](plugins/vector-db/skills/vector-db-agent/scripts/query.py) | query.py (CLI) |
+| [`vector_config.py`](plugins/vector-db/skills/vector-db-agent/scripts/vector_config.py) | Wraps the raw manifest JSON dict and provides file discovery methods. |
+| [`vector_consistency_check.py`](plugins/vector-db/skills/vector-db-agent/scripts/vector_consistency_check.py) | Vector Consistency Stabilizer |

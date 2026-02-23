@@ -1,13 +1,13 @@
 # Self-Correction Patterns
 
-Extracted from the Ralph Loop methodology and adapted for Protocol 128 Phase VIII.
+Extracted from the Ralph Loop methodology and adapted for Learning Loop Phase VIII.
 
 ## Core Insight
 
 > The best agent loops are **self-referential**: each iteration sees its own previous work 
 > and autonomously improves. The prompt stays the same; the state changes.
 
-## Application to Protocol 128
+## Application to Learning Loops
 
 Phase VIII (Self-Correction) benefits from iterative refinement:
 

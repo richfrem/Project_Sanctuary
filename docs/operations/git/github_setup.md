@@ -213,7 +213,7 @@ git commit -m "test: secret scanning"
 
 **Jobs:**
 1. **Protocol 101 Verification** - Validates commit manifests
-2. **ShellCheck** - Lints shell scripts in `tools/`
+2. **ShellCheck** - Lints shell scripts in `plugins/`
 3. **Python Linting** - Black and Flake8 checks
 4. **Test Council Orchestrator** - Runs pytest for orchestrator
 5. **Test Mnemonic Cortex** - Runs pytest for RAG system

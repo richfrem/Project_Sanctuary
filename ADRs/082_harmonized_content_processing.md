@@ -291,7 +291,7 @@ The Forge scripts that generate training data must:
 
 - [ADR 079: Soul Persistence via Hugging Face](./079_soul_persistence_hugging_face.md)
 - [ADR 081: Soul Dataset Structure](./081_soul_dataset_structure.md)
-- [Protocol 128: Hardened Learning Loop](../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 - [ingest_code_shim.py](../mcp_servers/rag_cortex/ingest_code_shim.py)
 - [snapshot_utils.py](../mcp_servers/lib/snapshot_utils.py)
 

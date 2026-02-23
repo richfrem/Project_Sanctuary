@@ -47,8 +47,8 @@ CLI Arguments:
             --output [path] : Custom path for the resulting .md file
 
 Input Files:
-    - tools/standalone/context-bundler/base-manifests/*.json (Templates)
-    - tools/standalone/context-bundler/base-manifests-index.json (Template Registry)
+    - plugins/standalone/context-bundler/base-manifests/*.json (Templates)
+    - plugins/standalone/context-bundler/base-manifests-index.json (Template Registry)
     - [Manifest JSON] (Input for bundling/listing)
 
 Output:
@@ -289,7 +289,7 @@ def load_manifest(manifest_path: Optional[str] = None, base_type: Optional[str] 
 
     Args:
         manifest_path: Optional custom path to the manifest file. 
-                       Defaults to tools/standalone/context-bundler/file-manifest.json.
+                       Defaults to plugins/standalone/context-bundler/file-manifest.json.
         base_type: If provided, loads a base manifest template instead of a specific manifest file.
 
     Returns:
@@ -353,7 +353,7 @@ def save_manifest(manifest: Dict[str, Any], manifest_path: Optional[str] = None,
     Args:
         manifest: The dictionary content to save.
         manifest_path: Optional custom destination path. 
-                       Defaults to tools/standalone/context-bundler/file-manifest.json.
+                       Defaults to plugins/standalone/context-bundler/file-manifest.json.
         base_type: If provided, saves to a base manifest template path.
     """
     if base_type:

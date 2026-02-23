@@ -1,7 +1,7 @@
 # Tasks-0002: Context Bundler Migration
 
 ## Completed (Phase 1)
-- [x] **Register Tool**: Check and add `tools/retrieve/bundler/bundle.py` to tool inventory. <!-- id: 0 -->
+- [x] **Register Tool**: Check and add `plugins/context-bundler/scripts/bundle.py` to tool inventory. <!-- id: 0 -->
 - [x] **Verify Discovery**: Confirm tool appears in `query_cache.py` output. <!-- id: 1 -->
 - [x] **Create Test Assets**: Generate `test_manifest.json` and source files in `temp_bundler_test/`. <!-- id: 2 -->
 - [x] **Execute Bundle Test**: Run `bundle.py` against the test manifest. <!-- id: 3 -->
@@ -13,7 +13,7 @@
 - [x] **Create ADR**: Codify design as ADR 097 (Base Manifest Inheritance Architecture). <!-- id: 33 -->
 
 ## Completed (Phase 1.5 - Workflow Improvements) - 2026-02-01
-- [x] **Create validate.py**: Add manifest validation tool (`tools/retrieve/bundler/validate.py`). <!-- id: 37 -->
+- [x] **Create validate.py**: Add manifest validation tool (`plugins/context-bundler/scripts/bundle.py`). <!-- id: 37 -->
 - [x] **Register validate.py**: Add to tool inventories (master, RLM cache, standalone). <!-- id: 38 -->
 - [x] **Update workflow-bundle**: Add validation step (Step 4) and cleanup step (Step 7). <!-- id: 39 -->
 - [x] **Create /tool-inventory-manage**: New workflow for registering tools in discovery system. <!-- id: 40 -->
@@ -28,7 +28,7 @@
 **Schema**: All manifests follow `{title, description, files: [{path, note}]}`  
 **Resolution**: `manifest_manager.py init --type X` loads base manifest from `base-manifests-index.json`
 
-### Task 2.1: Create Base Manifests (in `tools/standalone/context-bundler/base-manifests/`)
+### Task 2.1: Create Base Manifests (in `plugins/context-bundler/`)
 
 | Type | Source | Base Manifest | Status |
 |------|--------|---------------|--------|
@@ -79,7 +79,7 @@ Code that reads `core`/`topic` and merges them must be refactored to read `files
 
 ### Task 2.5: Update bundle.py
 
-**File**: `tools/retrieve/bundler/bundle.py`
+**File**: `plugins/context-bundler/scripts/bundle.py`
 
 Current code (lines 138-151) handles composite keys (`core`, `topic`, etc.). This is already working but needs cleanup.
 

@@ -171,7 +171,7 @@ The `.agent/learning/hf_soul_metadata/` directory mirrors the dataset structure:
 ## Related Documents
 
 - [ADR 079: Soul Persistence via Hugging Face](../../../ADRs/079_soul_persistence_hugging_face.md)
-- [Protocol 128: Hardened Learning Loop](../../../01_PROTOCOLS/128_Hardened_Learning_Loop.md)
+- [Protocol 128: Hardened Learning Loop](../../plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 - [HF Dataset Card Guide](https://huggingface.co/docs/hub/datasets-cards)
 
 ---

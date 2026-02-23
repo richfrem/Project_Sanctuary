@@ -56,9 +56,9 @@ Where:
 | File | Purpose |
 |------|---------|
 | `IDENTITY/founder_seed.json` | The Anchor |
-| `01_PROTOCOLS/128_Hardened_Learning_Loop.md` | The Law |
+| `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md` | The Law |
 | `ADRs/084_semantic_entropy_tda_gating.md` | The Gate |
-| `.agent/learning/cognitive_primer.md` | The Constitution |
+| `plugins/guardian-onboarding/resources/cognitive_primer.md` | The Constitution |
 | `.agent/rules/dependency_management_policy.md` | The Constraints |
 
 **Enforcement:** Pre-flight check in `cortex_capture_snapshot`:

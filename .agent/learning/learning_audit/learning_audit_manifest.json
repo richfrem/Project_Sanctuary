@@ -8,7 +8,7 @@
       "note": "Project overview"
     },
     {
-      "path": ".agent/learning/cognitive_primer.md",
+      "path": "plugins/guardian-onboarding/resources/cognitive_primer.md",
       "note": "Identity anchor"
     },
     {
@@ -20,7 +20,7 @@
       "note": "Current Audit Prompts (Must be updated per cycle)"
     },
     {
-      "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
+      "path": "plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd",
       "note": "Protocol 128 context"
     }
   ]

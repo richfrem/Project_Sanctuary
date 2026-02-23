@@ -88,7 +88,7 @@ When adding new manifests or changing output paths:
 [
     "README.md",
     ".agent/learning/learning_package_snapshot.md",
-    ".agent/learning/cognitive_primer.md"
+    "plugins/guardian-onboarding/resources/cognitive_primer.md"
 ]
 ```
 
@@ -96,7 +96,7 @@ When adding new manifests or changing output paths:
 ```
 Protocol 130: Found 2 embedded duplicates, removing from manifest
   - README.md: Already embedded in .agent/learning/learning_package_snapshot.md
-  - .agent/learning/cognitive_primer.md: Already embedded in ...
+  - plugins/guardian-onboarding/resources/cognitive_primer.md: Already embedded in ...
 ```
 
 **Deduped manifest:**

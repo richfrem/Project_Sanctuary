@@ -3,7 +3,7 @@ description: Update tool inventories, RLM cache, and associated artifacts after 
 tier: 2
 track: Curate
 inputs:
-  - ToolPath: Path to the new or modified tool (e.g., tools/retrieve/bundler/validate.py)
+  - ToolPath: Path to the new or modified tool (e.g., plugins/retrieve/bundler/validate.py)
 ---
 
 # Workflow: Tool Update
@@ -25,11 +25,11 @@ python3 plugins/tool-inventory/scripts/manage_tool_inventory.py add --path "[Too
 ```
 
 ### Option B: Manual Edit (For complex entries)
-Edit `tools/tool_inventory.json` directly, adding an entry like:
+Edit `plugins/tool_inventory.json` directly, adding an entry like:
 ```json
 {
   "name": "validate.py",
-  "path": "tools/retrieve/bundler/validate.py",
+  "path": "plugins/retrieve/bundler/validate.py",
   "description": "Validates manifest files against schema. Checks required fields, path traversal, and legacy format warnings.",
   "original_path": "new-creation",
   "decision": "keep",
@@ -40,7 +40,7 @@ Edit `tools/tool_inventory.json` directly, adding an entry like:
 }
 ```
 
-**Expected Output:** Tool entry exists in `tools/tool_inventory.json`
+**Expected Output:** Tool entry exists in `plugins/tool_inventory.json`
 
 ---
 
@@ -56,10 +56,10 @@ python3 plugins/rlm-factory/scripts/distiller.py --file "[ToolPath]" --type tool
 ### Option B: Manual Edit (For precise control)
 Edit `.agent/learning/rlm_tool_cache.json` directly, adding an entry like:
 ```json
-"tools/retrieve/bundler/validate.py": {
+"plugins/retrieve/bundler/validate.py": {
   "hash": "new_validate_2026",
   "summarized_at": "2026-02-01T10:00:00.000000",
-  "summary": "{\n  \"purpose\": \"Validates manifest files against schema...\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"usage\": [\"python tools/retrieve/bundler/validate.py manifest.json\"],\n  \"args\": [\"manifest: Path to manifest\", \"--all-base\", \"--check-index\"],\n  \"inputs\": [\"Manifest JSON files\"],\n  \"outputs\": [\"Validation report\", \"Exit code 0/1\"],\n  \"dependencies\": [\"file-manifest-schema.json\"],\n  \"consumed_by\": [\"/bundle-manage\", \"CI/CD\"],\n  \"key_functions\": [\"validate_manifest()\", \"validate_index()\"]\n}"
+  "summary": "{\n  \"purpose\": \"Validates manifest files against schema...\",\n  \"layer\": \"Retrieve / Bundler\",\n  \"usage\": [\"python plugins/retrieve/bundler/validate.py manifest.json\"],\n  \"args\": [\"manifest: Path to manifest\", \"--all-base\", \"--check-index\"],\n  \"inputs\": [\"Manifest JSON files\"],\n  \"outputs\": [\"Validation report\", \"Exit code 0/1\"],\n  \"dependencies\": [\"file-manifest-schema.json\"],\n  \"consumed_by\": [\"/bundle-manage\", \"CI/CD\"],\n  \"key_functions\": [\"validate_manifest()\", \"validate_index()\"]\n}"
 }
 ```
 
@@ -68,13 +68,17 @@ Edit `.agent/learning/rlm_tool_cache.json` directly, adding an entry like:
 ---
 
 ## Step 3: Generate Markdown Inventory
-Regenerate `tools/TOOL_INVENTORY.md` for human readability:
+Regenerate `plugins/TOOL_INVENTORY.md` for human readability:
 // turbo
 ```bash
+<<<<<<< HEAD
+python3 plugins/tool-inventory/scripts/manage_tool_inventory.py generate --output plugins/TOOL_INVENTORY.md
+=======
 python3 plugins/tool-inventory/scripts/manage_tool_inventory.py generate --output tools/TOOL_INVENTORY.md
+>>>>>>> origin/main
 ```
 
-**Expected Output:** `✅ Generated Markdown: tools/TOOL_INVENTORY.md`
+**Expected Output:** `✅ Generated Markdown: plugins/TOOL_INVENTORY.md`
 
 ---
 
@@ -104,9 +108,9 @@ python3 plugins/rlm-factory/scripts/query_cache.py --type tool "[keyword]"
 
 | Artifact | Path | Purpose |
 |----------|------|---------|
-| Master Inventory | `tools/tool_inventory.json` | Primary tool registry |
+| Master Inventory | `plugins/tool_inventory.json` | Primary tool registry |
 | RLM Cache | `.agent/learning/rlm_tool_cache.json` | Semantic search index |
-| Markdown Inventory | `tools/TOOL_INVENTORY.md` | Human-readable inventory |
+| Markdown Inventory | `plugins/TOOL_INVENTORY.md` | Human-readable inventory |
 
 ---
 

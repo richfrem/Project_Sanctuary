@@ -11,7 +11,7 @@
             "note": "Build commands"
         },
         {
-            "path": ".agent/learning/cognitive_primer.md",
+            "path": "plugins/guardian-onboarding/resources/cognitive_primer.md",
             "note": "Cognitive primer"
         },
         {
@@ -31,7 +31,7 @@
             "note": "Fleet diagram"
         },
         {
-            "path": "docs/architecture_diagrams/workflows/protocol_128_learning_loop.mmd",
+            "path": "plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd",
             "note": "Protocol 128 diagram"
         },
         {

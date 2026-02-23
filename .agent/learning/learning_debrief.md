@@ -113,7 +113,7 @@ Generated On: 2026-01-11T21:27:16.334572
   ./01_PROTOCOLS/114_Guardian_Wakeup_and_Cache_Prefill.md
   ./01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md
   ./01_PROTOCOLS/127_The_Doctrine_of_Session_Lifecycle.md
-  ./01_PROTOCOLS/128_Hardened_Learning_Loop.md
+  ./plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
   ./01_PROTOCOLS/129_The_Sovereign_Sieve_Internal_Pre_Audit.md
   ./00_CHRONICLE/ENTRIES/285_strategic_crucible_loop_validation_protocol_056.md
   ./00_CHRONICLE/ENTRIES/286_protocol_056_meta_analysis_the_self_evolving_loop_is_operational.md

@@ -50,23 +50,23 @@ Self-contained tool suites with bundled documentation.
 ### 1. Vector Database Ingestion
 Ingest project files into semantic search:
 ```bash
-python tools/codify/vector/ingest.py --full
+python plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --full
 ```
 
 ### 2. RLM Distillation
 Generate semantic summaries for tools and docs:
 ```bash
-python tools/codify/rlm/distiller.py --all
+python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --all
 ```
 
 ### 3. Semantic Search
 Query the vector database:
 ```bash
-python tools/retrieve/vector/query.py "search term"
+python plugins/vector-db/skills/vector-db-agent/scripts/query.py "search term"
 ```
 
 ### 4. Tool Inventory
 Regenerate the tool inventory:
 ```bash
-python tools/curate/inventories/manage_tool_inventory.py generate
+python plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py generate
 ```

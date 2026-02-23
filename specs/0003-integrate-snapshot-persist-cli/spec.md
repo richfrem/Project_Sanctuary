@@ -43,7 +43,7 @@ As a system, I want all relevant CLI tools and functions registered in `tool_inv
 
 **Why this priority**: Required for agentic discovery ("Late-Binding" environment).
 
-**Independent Test**: Check `tools/tool_inventory.json` for `cli.py` and related scripts.
+**Independent Test**: Check `plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json` for `cli.py` and related scripts.
 
 **Acceptance Scenarios**:
 1. **Given** `cli.py` and `distiller.py`, **When** I run the registration task, **Then** `tool_inventory.json` contains up-to-date entries for these tools.

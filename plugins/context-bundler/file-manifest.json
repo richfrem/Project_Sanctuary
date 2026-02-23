@@ -1,4 +1,24 @@
 {
+<<<<<<< HEAD
+  "title": "Context Bundler Source Code",
+  "description": "The source code and documentation for the context-bundler plugin.",
+  "files": [
+    {
+      "path": "plugins/context-bundler/README.md",
+      "note": "Primary documentation"
+    },
+    {
+      "path": "plugins/context-bundler/file-manifest.json",
+      "note": "The generic JSON schema example"
+    },
+    {
+      "path": "plugins/context-bundler/skills/context-bundling/SKILL.md",
+      "note": "The core skill definition"
+    },
+    {
+      "path": "plugins/context-bundler/scripts/bundle.py",
+      "note": "The bundling engine"
+=======
   "title": "FISF0000 Context Bundle",
   "description": "Auto-generated context for FISF0000 (Type: form)",
   "files": [
@@ -69,6 +89,7 @@
     {
       "path": "legacy-system/oracle-forms-overviews/forms/fism0001-MenuModule.md",
       "note": "Auto-Dep: MenuModule (FISM0001)"
+>>>>>>> origin/main
     }
   ]
 }

@@ -108,7 +108,11 @@ Doctrine is fallible. Reality is sovereign.
 
 ```yaml
 sequence:
+<<<<<<< HEAD
+  1. Read: plugins/guardian-onboarding/resources/cognitive_primer.md
+=======
   1. Read: .agent/learning/cognitive_primer.md
+>>>>>>> origin/main
   2. Run: cortex_guardian_wakeup (Iron Check + HMAC)
   3. Run: python3 scripts/cortex_cli.py debrief --hours 24
   4. Verify: learning_package_snapshot.md (Truth Anchor)
@@ -503,7 +507,11 @@ checklist:
 
 | Artifact | Path |
 |:---------|:-----|
+<<<<<<< HEAD
+| Cognitive Primer | `plugins/guardian-onboarding/resources/cognitive_primer.md` |
+=======
 | Cognitive Primer | `.agent/learning/cognitive_primer.md` |
+>>>>>>> origin/main
 | Boot Contract | `.agent/learning/guardian_boot_contract.md` |
 | Truth Anchor | `.agent/learning/learning_package_snapshot.md` |
 | Learning Manifest | `.agent/learning/learning_manifest.json` |

@@ -35,7 +35,7 @@ ws://127.0.0.1:18789
         └── SKILL.md  # Skill definition
 ```
 
-**Insight**: This mirrors our `.agent/learning/cognitive_primer.md` pattern but with clearer separation of concerns.
+**Insight**: This mirrors our `plugins/guardian-onboarding/resources/cognitive_primer.md` pattern but with clearer separation of concerns.
 
 #### 1.3 Agent-to-Agent Communication
 - `sessions_list` - Discover active sessions/agents

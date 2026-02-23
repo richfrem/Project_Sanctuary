@@ -32,42 +32,42 @@
 
 | Tool | Header | Inventory | RLM Cache | Workflow | Notes |
 |:-----|:------:|:---------:|:---------:|:--------:|:------|
-| `tools/retrieve/rlm/query_cache.py` | ✅ | ✅ | ✅ | N/A | Tool discovery (Late-Binding) |
-| `tools/retrieve/rlm/fetch_tool_context.py` | ✅ | ✅ | ✅ | N/A | Context fetch after discovery |
-| `tools/retrieve/bundler/bundle.py` | ✅ | ✅ | ✅ | N/A | Context bundling |
-| `tools/retrieve/bundler/manifest_manager.py` | ✅ | ✅ | ✅ | N/A | Manifest management |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` | ✅ | ✅ | ✅ | N/A | Tool discovery (Late-Binding) |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` | ✅ | ✅ | ✅ | N/A | Context fetch after discovery |
+| `plugins/context-bundler/scripts/bundle.py` | ✅ | ✅ | ✅ | N/A | Context bundling |
+| `plugins/context-bundler/scripts/bundle.py` | ✅ | ✅ | ✅ | N/A | Manifest management |
 
 ### Cluster: Codify (Content Creation)
 
 | Tool | Header | Inventory | RLM Cache | Workflow | Notes |
 |:-----|:------:|:---------:|:---------:|:--------:|:------|
-| `tools/codify/rlm/distiller.py` | ✅ | ✅ | ✅ | N/A | RLM summary distillation |
-| `tools/codify/rlm/rlm_config.py` | ✅ | ✅ | ✅ | N/A | RLM configuration |
-| `tools/codify/rlm/debug_rlm.py` | ✅ | ✅ | ✅ | N/A | RLM debugging |
-| `tools/codify/diagrams/export_mmd_to_image.py` | ✅ | ✅ | ✅ | N/A | Mermaid to PNG |
-| `tools/codify/tracking/analyze_tracking_status.py` | ✅ | ✅ | ✅ | N/A | Task tracking analysis |
-| `tools/codify/tracking/generate_todo_list.py` | ✅ | ✅ | ✅ | N/A | TODO generation |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` | ✅ | ✅ | ✅ | N/A | RLM summary distillation |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py` | ✅ | ✅ | ✅ | N/A | RLM configuration |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py` | ✅ | ✅ | ✅ | N/A | RLM debugging |
+| `plugins/mermaid-to-png/skills/convert-mermaid/scripts/convert.py` | ✅ | ✅ | ✅ | N/A | Mermaid to PNG |
+| `plugins/tool-inventory/skills/tool-inventory/scripts/audit_plugins.py` | ✅ | ✅ | ✅ | N/A | Task tracking analysis |
+| `plugins/task-manager/skills/task-agent/scripts/create_task.py` | ✅ | ✅ | ✅ | N/A | TODO generation |
 
 ### Cluster: Curate (Maintenance)
 
 | Tool | Header | Inventory | RLM Cache | Workflow | Notes |
 |:-----|:------:|:---------:|:---------:|:--------:|:------|
-| `tools/curate/inventories/manage_tool_inventory.py` | ✅ | ✅ | ✅ | N/A | Tool registration |
-| `tools/curate/inventories/vibe_cleanup.py` | ✅ | ✅ | ✅ | N/A | Session cleanup |
-| `tools/curate/rlm/cleanup_cache.py` | ✅ | ✅ | ✅ | N/A | RLM cache maintenance |
-| `tools/curate/documentation/workflow_inventory_manager.py` | ✅ | ✅ | ✅ | N/A | Workflow docs |
+| `plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py` | ✅ | ✅ | ✅ | N/A | Tool registration |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py` | ✅ | ✅ | ✅ | N/A | Session cleanup |
+| `plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py` | ✅ | ✅ | ✅ | N/A | RLM cache maintenance |
+| `plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py` | ✅ | ✅ | ✅ | N/A | Workflow docs |
 
 ### Cluster: Investigate (Analysis)
 
 | Tool | Header | Inventory | RLM Cache | Workflow | Notes |
 |:-----|:------:|:---------:|:---------:|:--------:|:------|
-| `tools/investigate/utils/next_number.py` | ✅ | ✅ | ✅ | N/A | Sequential numbering for ADRs/Specs |
+| `plugins/adr-manager/skills/adr-management/scripts/next_number.py` | ✅ | ✅ | ✅ | N/A | Sequential numbering for ADRs/Specs |
 
 ### Cluster: Orchestrator (Workflow Execution)
 
 | Tool | Header | Inventory | RLM Cache | Workflow | Notes |
 |:-----|:------:|:---------:|:---------:|:--------:|:------|
-| `tools/orchestrator/proof_check.py` | ✅ | ✅ | ✅ | N/A | Task proof verification |
+| `plugins/agent-loops/skills/orchestrator/scripts/proof_check.py` | ✅ | ✅ | ✅ | N/A | Task proof verification |
 | `tools/orchestrator/workflow_manager.py` | ✅ | ✅ | ✅ | N/A | Workflow state management |
 
 ---

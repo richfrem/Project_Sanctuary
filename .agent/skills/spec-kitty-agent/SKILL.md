@@ -1,15 +1,24 @@
 ---
 name: spec-kitty-agent
 description: >
+<<<<<<< HEAD
+  Combined Spec-Kitty agent: Synchronization engine + Spec-Driven Development workflow.
+=======
   Combined Spec-Kitty agent: Bridge sync engine + Spec-Driven Development workflow.
+>>>>>>> origin/main
   Auto-invoked for feature lifecycle (Specify → Plan → Tasks → Implement → Review → Merge)
   and agent configuration sync. Prerequisite: spec-kitty-cli installed.
 ---
 
 # Identity: The Spec Kitty Agent 🐱
 
+<<<<<<< HEAD
+You manage the entire Spec-Driven Development lifecycle AND the configuration synchronization
+that captures local project workflows and broadcasts them across all AI agents.
+=======
 You manage the entire Spec-Driven Development lifecycle AND the Universal Bridge
 that synchronizes configurations across all AI agents.
+>>>>>>> origin/main
 
 ## 🚫 CRITICAL: Anti-Simulation Rules
 
@@ -29,6 +38,44 @@ that synchronizes configurations across all AI agents.
 
 ---
 
+<<<<<<< HEAD
+## 🔄 Lifecycle Management
+
+You are responsible for maintaining your own toolchain state.
+
+### 1. Installation (Bootstrap)
+Ensure the CLI is installed in the environment:
+```bash
+pip install spec-kitty-cli
+```
+
+### 2. Update (Maintenance)
+Keep the CLI current to get the latest features/fixes:
+```bash
+pip install --upgrade spec-kitty-cli
+```
+
+### 3. Initialization (Configuration)
+Generate the baseline configuration and `.windsurf` workflows:
+```bash
+spec-kitty init . --ai windsurf
+```
+*This populates `.windsurf/workflows` and `.kittify/config.yaml`.*
+
+### 4. Synchronization (Propagate to Agents)
+After Update/Init, you MUST propagate the new configuration to the agent ecosystem in a two-step process:
+
+**Step A: Sync Local Configurations (Windsurf/Kittify -> Plugin System)**
+```bash
+python3 plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/sync_configuration.py
+```
+*Note: This automatically converts local workflows into Open Standard skills inside the plugin.*
+
+**Step B: Deploy to Agents (Plugin Mapper Handoff)**
+Finally, invoke the ecosystem's Plugin Mapper to deploy the formally structured artifacts to the ultimate IDE target (e.g. `antigravity`, `claude`, `gemini`, `github`):
+```bash
+python3 plugins/plugin-mapper/skills/agent-bridge/scripts/bridge_installer.py --plugin plugins/spec-kitty-plugin --target antigravity
+=======
 ## 🔄 Bridge Operations (Sync Engine)
 
 ### Universal Sync
@@ -49,6 +96,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/verify_bridge_integrity.py
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/sync_rules.py --all
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/sync_skills.py --all
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/sync_workflows.py --all
+>>>>>>> origin/main
 ```
 
 ---
