@@ -13,11 +13,11 @@ processes, workflows, and standards.
 ## 🛠️ Commands
 | Action | Command |
 |:---|:---|
-| Create | `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/protocol_manager.py create "Title" --content "..."` |
-| List | `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/protocol_manager.py list [--limit N] [--status STATUS]` |
-| Get | `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/protocol_manager.py get N` |
-| Search | `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/protocol_manager.py search "query"` |
-| Update | `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/protocol_manager.py update N --status STATUS --reason "..."` |
+| Create | `python3 plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py create "Title" --content "..."` |
+| List | `python3 plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py list [--limit N] [--status STATUS]` |
+| Get | `python3 plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py get N` |
+| Search | `python3 plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py search "query"` |
+| Update | `python3 plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py update N --status STATUS --reason "..."` |
 
 ## 📋 Status Lifecycle
 `PROPOSED` → `CANONICAL` → `DEPRECATED`

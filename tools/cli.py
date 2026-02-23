@@ -856,218 +856,143 @@ def main():
     # DOMAIN COMMAND HANDLERS
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     
-    # Chronicle Command Handler
+    # Chronicle → chronicle-manager plugin
     elif args.command == "chronicle":
-        chron_ops = ChronicleOperations(os.path.join(PROJECT_ROOT, "00_CHRONICLE/ENTRIES"))
-        
+        script = str(CHRONICLE_SCRIPTS / "chronicle_manager.py")
+        cmd = [sys.executable, script]
+
         if args.chronicle_action == "list":
-            res = chron_ops.list_entries(limit=args.limit)
-            for e in res:
-                print(f"[{e['number']:03d}] {e['title']} ({e['date']})")
+            cmd.append("list")
+            if hasattr(args, 'limit') and args.limit:
+                cmd.extend(["--limit", str(args.limit)])
         elif args.chronicle_action == "search":
-            res = chron_ops.search_entries(args.query)
-            for e in res:
-                print(f"[{e['number']:03d}] {e['title']}")
+            cmd.extend(["search", args.query])
         elif args.chronicle_action == "get":
-            res = chron_ops.get_entry(args.number)
-            print(f"[{res['number']:03d}] {res['title']}")
-            print("-" * 40)
-            print(res['content'])
+            cmd.extend(["get", str(args.number)])
         elif args.chronicle_action == "create":
-            res = chron_ops.create_entry(
-                title=args.title,
-                content=str(args.content).replace("\\n", "\n"),
-                author=args.author,
-                status=args.status,
-                classification=args.classification
-            )
-            print(f"✅ Created Chronicle Entry #{res['entry_number']:03d}: {res['file_path']}")
-        elif args.chronicle_action == "update":
-            updates = {}
-            if args.title:
-                updates['title'] = args.title
+            cmd.extend(["create", args.title])
             if args.content:
-                updates['content'] = str(args.content).replace("\\n", "\n")
-            if args.status:
-                updates['status'] = args.status
-            res = chron_ops.update_entry(args.number, updates, args.reason)
-            print(f"✅ Updated Chronicle Entry #{args.number:03d}")
+                cmd.extend(["--content", str(args.content).replace("\\n", "\n")])
+            if hasattr(args, 'author') and args.author:
+                cmd.extend(["--author", args.author])
         else:
-            print("❌ Chronicle subcommand required (list, search, get, create, update)")
+            print("❌ Chronicle subcommand required (list, search, get, create)")
             sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Task Command Handler
+    # Task → task-manager plugin
     elif args.command == "task":
-        task_ops = TaskOperations(PROJECT_ROOT)
-        
+        script = str(TASK_SCRIPTS / "task_manager.py")
+        cmd = [sys.executable, script]
+
         if args.task_action == "list":
-            status_obj = taskstatus(args.status) if args.status else None
-            res = task_ops.list_tasks(status=status_obj)
-            for t in res:
-                print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
-        elif args.task_action == "get":
-            res = task_ops.get_task(args.number)
-            if not res:
-                print(f"❌ Task {args.number} not found")
-                sys.exit(1)
-            print(f"[{res['number']:03d}] {res['title']}")
-            print(f"Status: {res['status']} | Priority: {res['priority']} | Lead: {res['lead']}")
-            print("-" * 40)
-            print(res['content'])
-        elif args.task_action == "create":
-            res = task_ops.create_task(
-                title=args.title,
-                objective=str(args.objective).replace("\\n", "\n"),
-                deliverables=args.deliverables,
-                acceptance_criteria=args.acceptance_criteria,
-                priority=TaskPriority(args.priority.capitalize()),
-                status=taskstatus(args.task_status.lower()),
-                lead=args.lead
-            )
-            if res.status == "success":
-                print(f"✅ Created Task #{res.task_number:03d} at {res.file_path}")
-            else:
-                print(f"❌ Creation failed: {res.message}")
-                sys.exit(1)
-        elif args.task_action == "update-status":
-            task_ops.update_task_status(args.number, taskstatus(args.new_status), args.notes)
-            print(f"✅ Task {args.number} moved to {args.new_status}")
-        elif args.task_action == "search":
-            res = task_ops.search_tasks(args.query)
-            for t in res:
-                print(f"[{t['number']:03d}] {t['title']} ({t['status']})")
-        elif args.task_action == "update":
-            updates = {}
-            if args.title:
-                updates['title'] = args.title
-            if args.objective:
-                updates['objective'] = args.objective
-            if args.priority:
-                updates['priority'] = args.priority
-            if args.lead:
-                updates['lead'] = args.lead
-            res = task_ops.update_task(args.number, updates)
-            print(f"✅ Updated Task #{args.number:03d}")
-        else:
-            print("❌ Task subcommand required (list, get, create, update-status, search, update)")
-            sys.exit(1)
-
-    # ADR Command Handler
-    elif args.command == "adr":
-        adr_ops = ADROperations(os.path.join(PROJECT_ROOT, "ADRs"))
-        
-        if args.adr_action == "list":
-            res = adr_ops.list_adrs(status=args.status.upper() if args.status else None)
-            for a in res:
-                print(f"[{a['number']:03d}] {a['title']} [{a['status']}]")
-        elif args.adr_action == "search":
-            res = adr_ops.search_adrs(args.query)
-            for a in res:
-                print(f"[{a['number']:03d}] {a['title']}")
-        elif args.adr_action == "get":
-            res = adr_ops.get_adr(args.number)
-            print(f"ADR-{res['number']:03d}: {res['title']}")
-            print(f"Status: {res['status']}")
-            print("-" * 40)
-            print(f"# Context\n{res['context']}\n")
-            print(f"# Decision\n{res['decision']}\n")
-            print(f"# Consequences\n{res['consequences']}")
-        elif args.adr_action == "create":
-            res = adr_ops.create_adr(
-                title=args.title,
-                context=str(args.context).replace("\\n", "\n"),
-                decision=str(args.decision).replace("\\n", "\n"),
-                consequences=str(args.consequences).replace("\\n", "\n"),
-                status=args.status
-            )
-            print(f"✅ Created ADR-{res['adr_number']:03d} at {res['file_path']}")
-        elif args.adr_action == "update-status":
-            res = adr_ops.update_adr_status(args.number, args.new_status.upper(), args.reason)
-            print(f"✅ ADR-{args.number:03d} status updated to {args.new_status.upper()}")
-        else:
-            print("❌ ADR subcommand required (list, search, get, create, update-status)")
-            sys.exit(1)
-
-    # Protocol Command Handler
-    elif args.command == "protocol":
-        prot_ops = ProtocolOperations(os.path.join(PROJECT_ROOT, "01_PROTOCOLS"))
-        
-        if args.protocol_action == "list":
-            res = prot_ops.list_protocols(status=args.status.upper() if args.status else None)
-            for p in res:
-                print(f"[{p['number']:03d}] {p['title']} [{p['status']}]")
-        elif args.protocol_action == "search":
-            res = prot_ops.search_protocols(args.query)
-            for p in res:
-                print(f"[{p['number']:03d}] {p['title']}")
-        elif args.protocol_action == "get":
-            res = prot_ops.get_protocol(args.number)
-            print(f"Protocol-{res['number']:03d}: {res['title']}")
-            print(f"v{res['version']} | {res['status']} | {res['classification']}")
-            print("-" * 40)
-            print(res['content'])
-        elif args.protocol_action == "create":
-            res = prot_ops.create_protocol(
-                number=None,  # Auto-generate
-                title=args.title,
-                status=args.status,
-                classification=args.classification,
-                version=args.version,
-                authority=args.authority,
-                content=str(args.content).replace("\\n", "\n")
-            )
-            print(f"✅ Created Protocol-{res['protocol_number']:03d} at {res['file_path']}")
-        elif args.protocol_action == "update":
-            updates = {}
-            if args.title:
-                updates['title'] = args.title
-            if args.content:
-                updates['content'] = str(args.content).replace("\\n", "\n")
+            cmd.append("list")
             if args.status:
-                updates['status'] = args.status
-            if args.version:
-                updates['version'] = args.version
-            res = prot_ops.update_protocol(args.number, updates, args.reason)
-            print(f"✅ Updated Protocol-{args.number:03d}")
+                cmd.extend(["--lane", args.status])
+        elif args.task_action == "get":
+            cmd.extend(["get", str(args.number)])
+        elif args.task_action == "create":
+            cmd.extend(["create", args.title])
+            if hasattr(args, 'objective') and args.objective:
+                cmd.extend(["--objective", str(args.objective)])
+            if hasattr(args, 'task_status') and args.task_status:
+                cmd.extend(["--lane", args.task_status])
+        elif args.task_action == "update-status":
+            cmd.extend(["move", str(args.number), args.new_status])
+            if hasattr(args, 'notes') and args.notes:
+                cmd.extend(["--note", args.notes])
+        elif args.task_action == "search":
+            cmd.extend(["search", args.query])
+        else:
+            print("❌ Task subcommand required (list, get, create, update-status, search)")
+            sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
+
+    # ADR → adr-manager plugin
+    elif args.command == "adr":
+        script = str(ADR_SCRIPTS / "adr_manager.py")
+        cmd = [sys.executable, script]
+
+        if args.adr_action == "list":
+            cmd.append("list")
+            if hasattr(args, 'limit') and args.limit:
+                cmd.extend(["--limit", str(args.limit)])
+        elif args.adr_action == "search":
+            cmd.extend(["search", args.query])
+        elif args.adr_action == "get":
+            cmd.extend(["get", str(args.number)])
+        elif args.adr_action == "create":
+            cmd.extend(["create", args.title])
+            if args.context:
+                cmd.extend(["--context", str(args.context).replace("\\n", "\n")])
+            if args.decision:
+                cmd.extend(["--decision", str(args.decision).replace("\\n", "\n")])
+            if args.consequences:
+                cmd.extend(["--consequences", str(args.consequences).replace("\\n", "\n")])
+        elif args.adr_action == "update-status":
+            print("⚠️  ADR update-status: use adr_manager.py directly (not yet wired).")
+        else:
+            print("❌ ADR subcommand required (list, search, get, create)")
+            sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
+
+    # Protocol → protocol-manager plugin
+    elif args.command == "protocol":
+        script = str(PROTOCOL_SCRIPTS / "protocol_manager.py")
+        cmd = [sys.executable, script]
+
+        if args.protocol_action == "list":
+            cmd.append("list")
+            if hasattr(args, 'limit') and args.limit:
+                cmd.extend(["--limit", str(args.limit)])
+            if args.status:
+                cmd.extend(["--status", args.status])
+        elif args.protocol_action == "search":
+            cmd.extend(["search", args.query])
+        elif args.protocol_action == "get":
+            cmd.extend(["get", str(args.number)])
+        elif args.protocol_action == "create":
+            cmd.extend(["create", args.title])
+            if args.content:
+                cmd.extend(["--content", str(args.content).replace("\\n", "\n")])
+            if args.status:
+                cmd.extend(["--status", args.status])
+        elif args.protocol_action == "update":
+            cmd.extend(["update", str(args.number)])
+            if args.status:
+                cmd.extend(["--status", args.status])
+            if hasattr(args, 'reason') and args.reason:
+                cmd.extend(["--reason", args.reason])
         else:
             print("❌ Protocol subcommand required (list, search, get, create, update)")
             sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
-    # Forge LLM Command Handler
+    # Forge → guardian-onboarding plugin
     elif args.command == "forge":
-        if not FORGE_AVAILABLE:
-            print("❌ Forge LLM not available. Install ollama: pip install ollama")
-            sys.exit(1)
-        forge_ops = ForgeOperations(str(PROJECT_ROOT))
-        
+        script = str(GUARDIAN_SCRIPTS / "forge_llm.py")
+        cmd = [sys.executable, script]
+
         if args.forge_action == "query":
-            print(f"🤖 Querying Sanctuary Model...")
-            res = forge_ops.query_sanctuary_model(
-                prompt=args.prompt,
-                temperature=args.temperature,
-                max_tokens=getattr(args, 'max_tokens', 2048),
-                system_prompt=getattr(args, 'system', None)
-            )
-            if res.status == "success":
-                print(f"\n{res.response}")
-                print(f"\n📊 Tokens: {res.total_tokens or 'N/A'} | Temp: {res.temperature}")
-            else:
-                print(f"❌ Error: {res.error}")
-                sys.exit(1)
+            cmd.extend(["query", args.prompt])
+            if hasattr(args, 'temperature'):
+                cmd.extend(["--temperature", str(args.temperature)])
         elif args.forge_action == "status":
-            print("🔍 Checking Sanctuary Model availability...")
-            res = forge_ops.check_model_availability()
-            if res.get("status") == "success":
-                print(f"✅ Model: {res['model']}")
-                print(f"   Available: {res['available']}")
-                if res.get('all_models'):
-                    print(f"   All Models: {', '.join(res['all_models'][:5])}{'...' if len(res['all_models']) > 5 else ''}")
-            else:
-                print(f"❌ Error: {res.get('error', 'Unknown error')}")
-                sys.exit(1)
+            cmd.append("status")
         else:
             print("❌ Forge subcommand required (query, status)")
             sys.exit(1)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     else:
         parser.print_help()

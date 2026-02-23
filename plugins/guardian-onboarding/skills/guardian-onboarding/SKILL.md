@@ -1,6 +1,7 @@
 ---
 name: guardian-onboarding
 description: MANDATORY: Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences.
+disable-model-invocation: false
 ---
 
 # Guardian Onboarding (The Orientator)
@@ -96,6 +97,8 @@ python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py en
 | `plugins/guardian-onboarding/scripts/guardian_wakeup.py` | I | Iron Check + boot digest |
 | `plugins/guardian-onboarding/scripts/capture_snapshot.py` | VI | Seals context bundle via context-bundler |
 | `plugins/guardian-onboarding/scripts/persist_soul.py` | VII | Uploads to HuggingFace |
+| `plugins/guardian-onboarding/scripts/evolution_metrics.py` | — | Protocol 131: Fitness/Depth/Scope metrics |
+| `plugins/guardian-onboarding/scripts/forge_llm.py` | — | Fine-tuned model queries via Ollama |
 | `plugins/agent-loops/skills/orchestrator/` | II-V | Routes tasks, generates retrospective |
 | `plugins/context-bundler/scripts/bundle.py` | VI | Called by capture_snapshot to produce bundle |
 | `plugins/env-helper/scripts/env_helper.py` | VII | Resolves HF_TOKEN / HF_USERNAME |

@@ -3,6 +3,7 @@ name: chronicle-agent
 description: >
   Living Chronicle journaling agent. Auto-invoked when creating project event
   entries, searching history, or reviewing past sessions.
+disable-model-invocation: false
 ---
 
 # Identity: The Chronicle Agent 📜
@@ -13,10 +14,10 @@ decisions, and milestones.
 ## 🛠️ Commands
 | Action | Command |
 |:---|:---|
-| Create | `python3 scripts/chronicle_manager.py create "Title" --content "..."` |
-| List | `python3 scripts/chronicle_manager.py list [--limit N]` |
-| Get | `python3 scripts/chronicle_manager.py get N` |
-| Search | `python3 scripts/chronicle_manager.py search "query"` |
+| Create | `python3 plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py create "Title" --content "..."` |
+| List | `python3 plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py list [--limit N]` |
+| Get | `python3 plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py get N` |
+| Search | `python3 plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py search "query"` |
 
 ## 📋 Status Lifecycle
 `draft` → `published` → `canonical`
