@@ -30,8 +30,13 @@ An iterative review loop where research is bundled via `context-bundler` and dis
 
 ## Dependencies
 
-- **`context-bundling`** — Generates the review packets (`plugins/context-bundler/skills/context-bundling/SKILL.md`). The Red Team Review loop natively invokes the context bundler to compile structured context packets for analysis. 
-- **Personas** — Adversarial personas in `personas/` directory (e.g., `security-audit.md`, `architect-review.md`)
+| Plugin/Skill | Role |
+|:---|:---|
+| `plugins/context-bundler/scripts/bundle.py` | **Required** — generates the structured review packet for each loop iteration |
+| `plugins/context-bundler/skills/context-bundling/SKILL.md` | Skill wrapper that defines the bundling format and manifest schema |
+| `personas/` | Adversarial reviewer configs (e.g., `security-audit.md`, `architect-review.md`) |
+| `plugins/guardian-onboarding/skills/session-closure/` | Invoked after approval to Seal the session |
+| `plugins/rlm-factory/` | RLM cache updated with research findings at end of loop |
 
 ## Diagram
 

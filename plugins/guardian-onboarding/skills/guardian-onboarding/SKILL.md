@@ -30,10 +30,10 @@ Read: .agent/learning/guardian_boot_digest.md
 **Goal:** Load the operational laws of the project (Protocol 128).
 **Action:**
 ```
-Read: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md
+Read: plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 ```
-*   **Focus:** Phase checklist (I-X), Gate requirements (HITL), and Persistence obligations.
-*   **Reference:** If deep context is needed on specific learning mechanics, refer to `.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md` (Protocol 125).
+*   **Focus:** Phase checklist (I-VIII), Gate requirements (HITL), and Persistence obligations.
+*   **Reference:** Architecture diagram: `plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd`
 
 ### 3. The Visual (Architecture)
 **Goal:** Visualize the Orchestrator flow and closure sequence.
@@ -48,7 +48,7 @@ Read: plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop
 
 ---
 
-## 🔒 The Guardian Closure Sequence (Protocol 128 Phase V-IX)
+## 🔒 The Guardian Closure Sequence (Protocol 128 Phase V-VIII)
 
 When a task or session is complete, the Guardian resumes control to orchestrate the unified closure sequence. The orchestrator retro occurs *first*, capturing learnings, before the Guardian formally seals the session state.
 
@@ -56,30 +56,47 @@ When a task or session is complete, the Guardian resumes control to orchestrate 
 **Trigger:** Task execution complete.
 **Action:** Let the Orchestrator generate the structured retrospective to capture learnings.
 ```bash
-# Workflow: Retrospective
-/sanctuary-retrospective
+python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py retro
 ```
 
 ### Phase VI: The Technical Seal
 **Trigger:** Retrospective is complete and learnings are captured.
-**Action:** Execute the snapshot tool to generate the formal evidence and update the learning package.
+**Action:** Execute the seal script to generate the formal evidence bundle and update the learning package.
 ```bash
-# Workflow: Seal
-/sanctuary-seal
+python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
 ```
-*If this fails (Iron Check), you must Backtrack to Phase VIII (Self-Correction).*
+*If this fails (Iron Check / drift detected), you must halt and alert the user.*
 
 ### Phase VII: Soul Persistence
 **Trigger:** Seal is successfully completed.
 **Action:** Broadcast the verified state to Hugging Face.
 ```bash
-# Workflow: Persist
-/sanctuary-persist
+python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md
 
-# Optional: Ingest Changes
-python3 tools/cli.py ingest --incremental --hours 24
+# Optional: Ingest Changes into local vector DB
+python3 plugins/vector-db/skills/vector-db/scripts/ingest.py --incremental --hours 24
 ```
 
-### Phase IX: Session End
+### Phase VIII: Session End
 **Trigger:** Post-persistence.
-**Action:** Run `/sanctuary-end` to completely shut down the loop safely.
+**Action:** Formally end the loop.
+```bash
+python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py end
+```
+
+---
+
+## Plugin Dependencies
+
+| Plugin/Skill | Phase | Role |
+|:---|:---|:---|
+| `plugins/guardian-onboarding/skills/session-bootloader/` | I | Boot sequence (debrief + Iron Check) |
+| `plugins/guardian-onboarding/skills/session-closure/` | VI-VIII | Seal + Persist + Close |
+| `plugins/guardian-onboarding/scripts/learning_debrief.py` | I | Generates Truth Anchor snapshot |
+| `plugins/guardian-onboarding/scripts/guardian_wakeup.py` | I | Iron Check + boot digest |
+| `plugins/guardian-onboarding/scripts/capture_snapshot.py` | VI | Seals context bundle via context-bundler |
+| `plugins/guardian-onboarding/scripts/persist_soul.py` | VII | Uploads to HuggingFace |
+| `plugins/agent-loops/skills/orchestrator/` | II-V | Routes tasks, generates retrospective |
+| `plugins/context-bundler/scripts/bundle.py` | VI | Called by capture_snapshot to produce bundle |
+| `plugins/env-helper/scripts/env_helper.py` | VII | Resolves HF_TOKEN / HF_USERNAME |
+| `plugins/rlm-factory/` | I, VI | RLM cache read (boot) and synthesis (seal) |
