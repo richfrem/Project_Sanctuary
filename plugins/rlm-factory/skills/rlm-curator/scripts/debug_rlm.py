@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+<<<<<<< HEAD
 debug_rlm.py
 =====================================
 
@@ -71,3 +72,62 @@ if __name__ == "__main__":
     # Inspect all standard profiles
     for profile in ["plugins", "tools"]:
         inspect_profile(profile)
+=======
+debug_rlm.py (CLI)
+=====================================
+
+Purpose:
+    Debug utility to inspect the RLMConfiguration state.
+    Verifies path resolution, manifest loading, and environment variable overrides.
+    Useful for troubleshooting cache path conflicts.
+
+Usage Examples:
+    python plugins/rlm-factory/scripts/query_cache.py --help
+    python plugins/rlm-factory/scripts/query_cache.py "Project Sanctuary"
+
+Input Files:
+    - plugins/rlm-factory/resources/manifest-index.json
+    - .env
+
+Output:
+    - Console output (State inspection)
+
+Key Functions:
+    - main(): Prints configuration details for 'tool' and 'sanctuary' modes.
+
+Script Dependencies:
+    - plugins/rlm-factory/scripts/rlm_config.py
+"""
+import os
+import sys
+from pathlib import Path
+
+# Setup path
+SCRIPT_DIR = Path(__file__).parent.resolve()
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent
+sys.path.append(str(PROJECT_ROOT))
+
+# Debug Env
+# Debug Env
+
+try:
+    from rlm_config import RLMConfig
+    
+    print("\n--- Testing RLMConfig(type='tool') ---")
+    config = RLMConfig(run_type="tool")
+    print(f"Config Type: {config.type}")
+    print(f"Manifest Path: {config.manifest_path}")
+    print(f"Cache Path: {config.cache_path}")
+    print(f"Prompt Template Length: {len(config.prompt_template)}")
+    
+    print("\n--- Testing RLMConfig(type='sanctuary') ---")
+    config = RLMConfig(run_type="sanctuary")
+    print(f"Config Type: {config.type}")
+    print(f"Manifest Path: {config.manifest_path}")
+    print(f"Cache Path: {config.cache_path}")
+    
+except ImportError as e:
+    print(f"Import Error: {e}")
+except Exception as e:
+    print(f"Error: {e}")
+>>>>>>> origin/main

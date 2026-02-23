@@ -1,0 +1,50 @@
+{
+  "title": "Context Bundler Tool",
+  "description": "A standalone utility to concatenate multiple source files into a single context bundle for LLM analysis.",
+  "files": [
+    {
+      "path": "plugins/context-bundler/README.md",
+      "note": "Documentation and Usage Guide"
+    },
+    {
+      "path": "plugins/context-bundler/docs/bundler-internal-logic.mmd",
+      "note": "Architecture Diagram (Internal Logic)"
+    },
+    {
+      "path": "plugins/context-bundler/docs/setup-lifecycle-workflow.mmd",
+      "note": "User Workflow Diagram (Lifecycle)"
+    },
+    {
+      "path": "plugins/context-bundler/docs/agent-unpacking-process.mmd",
+      "note": "Agent Unpacking Flow Diagram"
+    },
+    {
+      "path": "plugins/context-bundler/scripts/bundle.py",
+      "note": "Core Bundling Logic"
+    },
+    {
+      "path": "plugins/context-bundler/scripts/manifest_manager.py",
+      "note": "Source Code: Manifest Manager"
+    },
+    {
+      "path": "plugins/context-bundler/scripts/path_resolver.py",
+      "note": "Source Code: Path Resolver Utility"
+    },
+    {
+      "path": "plugins/context-bundler/resources/file-manifest-schema.json",
+      "note": "Input Schema Definition"
+    },
+    {
+      "path": "plugins/context-bundler/docs/context-bundler-workflow.mmd",
+      "note": "Workflow Diagram: Curate Bundle"
+    },
+    {
+      "path": "plugins/context-bundler/docs/architecture.md",
+      "note": "Architecture & Recursive Workflow Logic"
+    },
+    {
+      "path": "plugins/context-bundler/resources/base-manifests",
+      "note": "Base Manifest Templates (Standard Configurations)"
+    }
+  ]
+}

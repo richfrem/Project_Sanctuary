@@ -20,7 +20,11 @@ ChromaDB provides the vector database backend for semantic search. If configured
 curl -sf http://127.0.0.1:8110/api/v1/heartbeat > /dev/null && echo "✅ ChromaDB running" || echo "❌ ChromaDB not running"
 ```
 
+<<<<<<< HEAD
 If it prints "✅ ChromaDB running", you're done. If not, proceed.
+=======
+If running, you're done. If not, proceed.
+>>>>>>> origin/main
 
 ## Launching the Server
 

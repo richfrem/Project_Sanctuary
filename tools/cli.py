@@ -131,6 +131,7 @@ PROJECT_ROOT = CLI_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
+<<<<<<< HEAD
 # Inline path resolver (formerly in tools.utils.path_resolver)
 def resolve_path(relative_path: str, base_path: Path = None) -> str:
     """
@@ -157,6 +158,65 @@ for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
     if str(d) not in sys.path:
         sys.path.append(str(d))
 
+=======
+# Import path resolver from plugins
+try:
+    # Try importing from the new plugin location
+    # Since plugins have hyphens, we add the path to sys.path
+    PATH_RESOLVER_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
+    if str(PATH_RESOLVER_DIR) not in sys.path:
+        sys.path.append(str(PATH_RESOLVER_DIR))
+    from path_resolver import resolve_path
+except ImportError:
+    # Fallback/Bootstrap
+    print("⚠️  Warning: Could not import path_resolver from plugins/context-bundler/scripts")
+    def resolve_path(p): return str(PROJECT_ROOT / p)
+
+# Resolve Directories (Direct Plugin Paths)
+# Note: specific mapping based on migration
+SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
+DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "skills" / "doc-coauthoring" / "scripts" # Placeholder if empty
+TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "skills" / "task-agent" / "scripts"
+SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" / "skills" / "misc-utils" / "scripts"
+RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
+INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
+RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "skills" / "rlm-curator" / "scripts"
+ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "skills" / "orchestrator-agent" / "scripts"
+SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "skills" / "spec-kitty-agent" / "scripts"
+
+# Add directories to sys.path for internal imports
+# We add them to sys.path so we can import modules directly (e.g. 'import query_cache')
+for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR, SPEC_KITTY_DIR]:
+    if d.exists() and str(d) not in sys.path:
+        sys.path.append(str(d))
+
+# from tools.utils.path_resolver import resolve_path # Handled above
+from workflow_manager import WorkflowManager
+# Import query_cache for rlm-search
+# Import query_cache for rlm-search
+try:
+    # RLM_DIR and INVENTORIES_DIR are in sys.path now.
+    # query_cache is in plugins/tool-inventory/scripts (INVENTORIES_DIR)
+    from query_cache import search_cache, RLMConfig
+except ImportError:
+    pass
+# Lightweight imports (file-based, no external services)
+# Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
+try:
+    from mcp_servers.chronicle.operations import ChronicleOperations
+    from mcp_servers.task.operations import TaskOperations
+    from mcp_servers.task.models import taskstatus, TaskPriority
+    from mcp_servers.adr.operations import ADROperations
+    from mcp_servers.protocol.operations import ProtocolOperations
+except ImportError:
+    # Fallback/Bootstrap if pathing is tricky
+    sys.path.append(str(PROJECT_ROOT))
+    from mcp_servers.chronicle.operations import ChronicleOperations
+    from mcp_servers.task.operations import TaskOperations
+    from mcp_servers.task.models import taskstatus, TaskPriority
+    from mcp_servers.adr.operations import ADROperations
+    from mcp_servers.protocol.operations import ProtocolOperations
+>>>>>>> origin/main
 
 
 # ─────────────────────────────────────────────────────────────

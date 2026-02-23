@@ -36,10 +36,23 @@ We successfully separated agentic duties into two distinct loops to optimize for
 5.  **Outer Loop**: Runs `verify_inner_loop_result.py` to check diffs.
 6.  **Outer Loop**: Commits & Seals.
 
-## 4. Research Connection
-This implementation directly applies the **"Model-Based/Model-Free"** dichotomy from the research:
-- **Outer Loop** = Model-Based (Planning, Long-term constraints).
-- **Inner Loop** = Model-Free (Reactive coding, immediate feedback).
+## 4. Research Connection (References)
+This implementation synthesizes architectures from the following key papers:
+
+### 1. The Dual-Loop Engine
+**Source:** *Self-Evolving Recommendation System: End-To-End Autonomous Model Optimization* ([arXiv:2602.10226](https://arxiv.org/abs/2602.10226))
+- Defines the split between **Outer Loop** (Strategy/Curator) and **Inner Loop** (Execution/Proposer).
+- **Outer Loop (Model-Based)**: Focuses on planning, long-term constraints, and promoting successful experiments.
+- **Inner Loop (Model-Free)**: Focuses on reactive coding, rapid iteration, and immediate feedback cycles.
+
+### 2. Neuro-Symbolic Oversight
+**Source:** *FormalJudge: A Neuro-Symbolic Paradigm for Agentic Oversight* ([arXiv:2602.11136](https://arxiv.org/abs/2602.11136))
+- Influences the **Verification Phase** of the Outer Loop.
+- Uses formal specifications (in our case, `spec.md` and explicit constraints) to deterministically judge the output of the stochastic Inner Loop.
+
+### 3. Agentic Self-Correction
+**Source:** *iGRPO: Self-Feedback-Driven LLM Reasoning* ([arXiv:2602.09000](https://arxiv.org/abs/2602.09000))
+- Validates the **Refinement Step** where the Outer Loop feeds critique back into the Inner Loop for iterative improvement (bootstrapping).
 
 ## 5. Next Steps
 - [ ] Pilot a real feature using this flow.

@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 description: Install and bridge a plugin into agent environments.
 args:
   plugin_name:
@@ -38,4 +39,29 @@ fi
 # 3. Bridge/Convert (The Core Action)
 echo "Bridging '$PLUGIN_NAME' to environment '$TARGET_ENV'..."
 python plugins/plugin-mapper/skills/agent-bridge/scripts/bridge_installer.py --plugin "plugins/$PLUGIN_NAME" --target "$TARGET_ENV"
+=======
+description: "Install an Agent Plugin into the local environment(s)"
+---
+
+# /plugin-manager:install
+
+Installs a portable agent plugin into Antigravity (`.agent/`), GitHub (`.github/`), and/or Gemini (`.gemini/`).
+
+## Usage
+
+```bash
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin <path-to-plugin> [--target <auto|antigravity|github|gemini>]
+```
+
+## Examples
+
+### Install Agent Orchestrator (Auto-detect)
+```bash
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/agent-orchestrator
+```
+
+### Force Install to GitHub
+```bash
+python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/agent-orchestrator --target github
+>>>>>>> origin/main
 ```

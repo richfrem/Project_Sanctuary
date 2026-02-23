@@ -1,0 +1,33 @@
+flowchart TD
+    subgraph Received [Input Artifact]
+        Bundle(tool-bundle.md)
+    end
+
+    subgraph Hydration [Agent Actions]
+        Parse{Parse Markdown}
+        Split(Identify Files & Paths)
+        Mkdir(Create Directories)
+        Write(Write File Content)
+    end
+    
+    subgraph Localization [Environment Adaptation]
+        Detect[Detect Local Root]
+        UpdateMD[Update README.md Paths]
+        UpdatePy[Update Python Imports]
+    end
+
+    subgraph Ready [Working Tool]
+        Tool[Target Tool Directory]
+    end
+
+    Bundle --> Parse
+    Parse -->|Regex/Split| Split
+    Split --> Mkdir
+    Mkdir --> Write
+    Write --> Detect
+    
+    Detect --> UpdateMD
+    Detect --> UpdatePy
+    
+    UpdateMD --> Tool
+    UpdatePy --> Tool

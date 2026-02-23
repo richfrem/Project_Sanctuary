@@ -3,6 +3,7 @@
   "description": "[TODO: Brief description of what this plugin does]",
   "version": "1.0.0",
   "author": {
+<<<<<<< HEAD
     "name": "Richard Fremmerlid"
   },
   "dependencies": [
@@ -12,4 +13,8 @@
     "orchestrator",
     "vector-db"
   ]
+=======
+    "name": "[TODO: Author Name]"
+  }
+>>>>>>> origin/main
 }

@@ -71,7 +71,11 @@ Edit `.agent/learning/rlm_tool_cache.json` directly, adding an entry like:
 Regenerate `plugins/TOOL_INVENTORY.md` for human readability:
 // turbo
 ```bash
+<<<<<<< HEAD
 python3 plugins/tool-inventory/scripts/manage_tool_inventory.py generate --output plugins/TOOL_INVENTORY.md
+=======
+python3 plugins/tool-inventory/scripts/manage_tool_inventory.py generate --output tools/TOOL_INVENTORY.md
+>>>>>>> origin/main
 ```
 
 **Expected Output:** `✅ Generated Markdown: plugins/TOOL_INVENTORY.md`

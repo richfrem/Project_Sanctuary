@@ -7,7 +7,7 @@ trigger: manual
 **Effective Date**: 2026-01-29
 **Related Constitution Articles**: IV (Documentation First), V (Test-First), VI (Simplicity)
 
-**Full workflow details → `.agent/skills/spec_kitty_workflow/SKILL.md`**
+**Full workflow details → `plugins/spec-kitty/skills/spec_kitty_workflow/SKILL.md`**
 
 ## Core Mandate
 **All significant work** must follow the **Spec → Plan → Tasks** lifecycle.

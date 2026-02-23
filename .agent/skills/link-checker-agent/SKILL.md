@@ -26,21 +26,33 @@ The plugin provides three scripts that **must be run in order**:
 ### 1. Initialization (Mapping)
 **MUST** run first. The fixer depends on a current file inventory.
 ```bash
+<<<<<<< HEAD
 python3 plugins/link-checker/skills/link-checker-agent/scripts/map_repository_files.py
+=======
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/map_repository_files.py
+>>>>>>> origin/main
 ```
 Verify: Ensure `file_inventory.json` is created.
 
 ### 2. Analysis & Repair
 Auto-resolve broken links using fuzzy filename matching.
 ```bash
+<<<<<<< HEAD
 python3 plugins/link-checker/skills/link-checker-agent/scripts/smart_fix_links.py
+=======
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/smart_fix_links.py
+>>>>>>> origin/main
 ```
 Verify: Check console output for `Fixed:` messages.
 
 ### 3. Verification & Reporting
 Final inspection to generate a report of remaining issues.
 ```bash
+<<<<<<< HEAD
 python3 plugins/link-checker/skills/link-checker-agent/scripts/check_broken_paths.py
+=======
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_broken_paths.py
+>>>>>>> origin/main
 ```
 Verify: Read `broken_links.log` for any deviations.
 

@@ -4,7 +4,11 @@
         "manifest": "plugins/rlm-factory/resources/rlm_manifest.json",
         "cache": ".agent/learning/rlm_summary_cache.json",
         "parser": "directory_glob",
+<<<<<<< HEAD
         "prompt_path": "plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_legacy.md",
+=======
+        "prompt_path": "plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_sanctuary.md",
+>>>>>>> origin/main
         "env_prefix": "RLM_SUMMARY",
         "allowed_suffixes": [
             ".md",

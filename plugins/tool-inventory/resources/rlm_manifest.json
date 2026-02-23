@@ -1,4 +1,8 @@
 {
     "description": "Tool Inventory RLM configuration",
+<<<<<<< HEAD
     "manifest": "plugins/tool_inventory.json"
+=======
+    "manifest": "tools/tool_inventory.json"
+>>>>>>> origin/main
 }

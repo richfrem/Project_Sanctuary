@@ -27,6 +27,7 @@ OLLAMA_HOST=http://localhost:11434
 ## Usage
 ```bash
 # Distill all files in default scope (legacy docs)
+<<<<<<< HEAD
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py
 
 # Distill tool scripts
@@ -40,6 +41,21 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py --since 2
 
 # Use a different model
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/distiller.py --model qwen2.5:7b
+=======
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py
+
+# Distill tool scripts
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py --type tool
+
+# Distill a single file
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py --file path/to/new_file.py
+
+# Only files changed in the last 2 hours
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py --since 2
+
+# Use a different model
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/distiller.py --model qwen2.5:7b
+>>>>>>> origin/main
 ```
 
 ## Memory Banks

@@ -148,4 +148,34 @@ When a Learning Loop runs inside a Dual-Loop session:
 
 **Key rule**: The Inner Loop does NOT run Learning Loop phases. All cognitive continuity is the Outer Loop's responsibility.
 
+<<<<<<< HEAD
 **Cross-reference**: [dual-loop SKILL](../dual-loop/SKILL.md)
+=======
+**Cross-reference**: [dual-loop-supervisor SKILL](../dual-loop-supervisor/SKILL.md) | [Protocol 133 workflow](../../workflows/sanctuary_protocols/dual-loop-learning.md)
+
+---
+
+## Infrastructure Prerequisites
+
+Before running closure phases, check these services:
+
+| Service | Needed For | Check Command | Start Skill |
+|---------|-----------|---------------|-------------|
+| **Ollama** | Phase VI (Seal) | `curl -sf http://127.0.0.1:11434/api/tags` | `ollama-launch` |
+| **ChromaDB** | Phase IX (Ingest) | `curl -sf http://localhost:8110/api/v2/heartbeat` | `vector-db-launch` |
+
+Run the check commands BEFORE starting closure. If either fails, run the corresponding skill first.
+
+---
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `.agent/learning/cognitive_primer.md` | Role orientation |
+| `.agent/learning/learning_package_snapshot.md` | Cognitive Hologram |
+| `.agent/learning/guardian_boot_contract.md` | Immutable constraints |
+| `.agent/learning/guardian_boot_digest.md` | Tactical status |
+| `ADRs/071_protocol_128_cognitive_continuity.md` | Protocol ADR |
+| `resources/diagrams/protocol_128_learning_loop.mmd` | Flow diagram |
+>>>>>>> origin/main

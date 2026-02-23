@@ -40,7 +40,11 @@ The Distiller pushes the generated "Purpose" back into the Tool Inventory, ensur
 ├── learning/
 │   ├── rlm_tool_cache.json   # Distilled Tool Knowledge
 │   └── rlm_legacy_cache.json # Distilled Legacy Knowledge
+<<<<<<< HEAD
 plugins/
+=======
+tools/
+>>>>>>> origin/main
 ├── curate/
 │   ├── inventories/manage_tool_inventory.py  # CRUD + Trigger
 │   └── rlm/cleanup_cache.py                  # Atomic Consistency

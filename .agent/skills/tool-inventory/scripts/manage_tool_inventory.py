@@ -154,7 +154,11 @@ class InventoryManager:
         Triggers the RLM Distiller for a specific tool.
         This ensures the RLM Cache (rlm_tool_cache.json) is always in sync with the Inventory.
         """
+<<<<<<< HEAD
         distiller_script = self.root_dir / "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py"
+=======
+        distiller_script = self.root_dir / "plugins/tool-inventory/scripts/distiller.py"
+>>>>>>> origin/main
         if not distiller_script.exists():
             print(f"⚠️  Distiller not found at {distiller_script}. Skipping sync.")
             return
@@ -479,12 +483,17 @@ class InventoryManager:
             return
 
         try:
+<<<<<<< HEAD
             cmd = [
                 sys.executable,
                 str(cleanup_script),
                 "--type", "tool",
                 "--apply"  # Apply will likely need logic to target a specific file if supported, else this is generic
             ]
+=======
+            # Dynamic import to avoid circular dependencies if any
+            from tools.tool_inventory.cleanup_cache import remove_entry
+>>>>>>> origin/main
             
             # Note: rlm-factory cleanup_cache.py is designed to purge *all* missing files inherently by scanning.
             # So just running it with --apply is enough to sync the ledger with the deletion.
@@ -575,11 +584,19 @@ class InventoryManager:
                  continue
              
              # Special Case: investment-screener
+<<<<<<< HEAD
              # Ignore plugins/investment-screener UNLESS it is in backend/py_services
              try:
                  rel = str(f.relative_to(self.root_dir))
                  if rel.startswith("plugins/investment-screener"):
                      if not rel.startswith("plugins/investment-screener/backend/py_services"):
+=======
+             # Ignore tools/investment-screener UNLESS it is in backend/py_services
+             try:
+                 rel = str(f.relative_to(self.root_dir))
+                 if rel.startswith("tools/investment-screener"):
+                     if not rel.startswith("tools/investment-screener/backend/py_services"):
+>>>>>>> origin/main
                          continue
              except ValueError:
                  continue

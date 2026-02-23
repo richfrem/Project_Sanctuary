@@ -30,7 +30,15 @@ Instead, you must **act as the distiller yourself**.
 
 ## Why This Exists (The RLM Philosophy)
 
+<<<<<<< HEAD
 The fundamental purpose of the Recursive Learning Model (RLM) cache is **"Read Once, Cache Forever."** 
+=======
+The existing `plugins/rlm-factory/scripts/distiller.py` calls Ollama locally, which:
+- Takes 3-5 minutes per file on M1 Mac
+- Produces lower-quality summaries than a frontier model
+- Frequently fails (`[DISTILLATION FAILED]` — currently 31 entries)
+- Requires Ollama to be running
+>>>>>>> origin/main
 
 You should perform a deep, comprehensive read and summarize the file with an exceptionally good summary **once**. The goal is to entirely **remove the need for you to read those complex files many times** just to figure out what they do. 
 
@@ -175,7 +183,16 @@ The agent distillation is better for:
 
 ## Related
 
+<<<<<<< HEAD
 - `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` — Original Ollama-based distiller
 - `plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py` — Configuration and cache utilities
 - `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` — Search the cache
 - `plugins/rlm-factory/resources/rlm_manifest.json` — Defines which directories get distilled
+=======
+- `plugins/rlm-factory/scripts/distiller.py` — Original Ollama-based distiller
+- `plugins/tool-inventory/scripts/rlm_config.py` — Configuration and cache utilities
+- `plugins/rlm-factory/scripts/query_cache.py` — Search the cache (Tier 1 of knowledge retrieval)
+- `tools/standalone/rlm-factory/rlm_manifest.json` — Defines which directories get distilled
+- Protocol 123 — Signal Quality Framework
+- Protocol 132 — Recursive Context Synthesis
+>>>>>>> origin/main

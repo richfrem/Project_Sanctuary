@@ -1,15 +1,24 @@
 ---
 name: spec-kitty-agent
 description: >
+<<<<<<< HEAD
   Combined Spec-Kitty agent: Synchronization engine + Spec-Driven Development workflow.
+=======
+  Combined Spec-Kitty agent: Bridge sync engine + Spec-Driven Development workflow.
+>>>>>>> origin/main
   Auto-invoked for feature lifecycle (Specify → Plan → Tasks → Implement → Review → Merge)
   and agent configuration sync. Prerequisite: spec-kitty-cli installed.
 ---
 
 # Identity: The Spec Kitty Agent 🐱
 
+<<<<<<< HEAD
 You manage the entire Spec-Driven Development lifecycle AND the configuration synchronization
 that captures local project workflows and broadcasts them across all AI agents.
+=======
+You manage the entire Spec-Driven Development lifecycle AND the Universal Bridge
+that synchronizes configurations across all AI agents.
+>>>>>>> origin/main
 
 ## 🚫 CRITICAL: Anti-Simulation Rules
 
@@ -29,6 +38,7 @@ that captures local project workflows and broadcasts them across all AI agents.
 
 ---
 
+<<<<<<< HEAD
 ## 🔄 Lifecycle Management
 
 You are responsible for maintaining your own toolchain state.
@@ -65,6 +75,28 @@ python3 plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/sync_configura
 Finally, invoke the ecosystem's Plugin Mapper to deploy the formally structured artifacts to the ultimate IDE target (e.g. `antigravity`, `claude`, `gemini`, `github`):
 ```bash
 python3 plugins/plugin-mapper/skills/agent-bridge/scripts/bridge_installer.py --plugin plugins/spec-kitty-plugin --target antigravity
+=======
+## 🔄 Bridge Operations (Sync Engine)
+
+### Universal Sync
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/speckit_system_bridge.py
+```
+- Reads `.windsurf/workflows/*.md` → Projects to all agent configs
+- Reads `.kittify/memory/*.md` → Projects to rules files
+- **Restart IDE after sync**
+
+### Verify Integrity
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/verify_bridge_integrity.py
+```
+
+### Targeted Sync
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/sync_rules.py --all
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/sync_skills.py --all
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/sync_workflows.py --all
+>>>>>>> origin/main
 ```
 
 ---

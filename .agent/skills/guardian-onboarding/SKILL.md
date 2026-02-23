@@ -1,11 +1,17 @@
 ---
+<<<<<<< HEAD
 name: guardian-onboarding
 description: MANDATORY: Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences.
 disable-model-invocation: false
+=======
+name: Guardian Onboarding (The Orientator)
+description: MANDATORY: Master initialization skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), current tactical directives, and project context.
+>>>>>>> origin/main
 ---
 
 # Guardian Onboarding (The Orientator)
 
+<<<<<<< HEAD
 **Version:** 5.0 (Protocol 128 Compliant)
 **Purpose:** Ensure every agent session begins with a verified context download (Phase I) and routes to the `orchestrator` skill. Provide the explicit closure commands (Phase V-IX) to Seal and Persist the session.
 
@@ -13,6 +19,16 @@ disable-model-invocation: false
 *   **Start of Session:** "I am a new agent session."
 *   **End of Session:** "Seal the session," "Persist the soul," "Run the closure sequence."
 *   **Protocol Check:** "What is the current learning protocol?"
+=======
+**Version:** 1.0 (Protocol 128 Compliant)
+**Purpose:** Ensure every agent session begins with a verified, consistent context download, preventing "amnesia" and ensuring adherence to the Hardened Learning Loop.
+
+## ⚡ Triggers (When to use this)
+*   **Start of Session:** "I am a new agent session."
+*   **Context Loss:** "I need to re-orient myself."
+*   **Protocol Check:** "What is the current learning protocol?"
+*   [User Request]: "Boot sequence", "Orientation", "Status report"
+>>>>>>> origin/main
 
 ## 🛡️ The Guardian Boot Sequence (Protocol 128)
 
@@ -31,6 +47,7 @@ Read: .agent/learning/guardian_boot_digest.md
 **Goal:** Load the operational laws of the project (Protocol 128).
 **Action:**
 ```
+<<<<<<< HEAD
 Read: plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 ```
 *   **Focus:** Phase checklist (I-VIII), Gate requirements (HITL), and Persistence obligations.
@@ -103,3 +120,29 @@ python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py en
 | `plugins/context-bundler/scripts/bundle.py` | VI | Called by capture_snapshot to produce bundle |
 | `plugins/env-helper/scripts/env_helper.py` | VII | Resolves HF_TOKEN / HF_USERNAME |
 | `plugins/rlm-factory/` | I, VI | RLM cache read (boot) and synthesis (seal) |
+=======
+Read: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md
+```
+*   **Focus:** Phase checklist (I-X), Gate requirements (HITL), and Persistence obligations.
+*   **Reference:** If deep context is needed on specific learning mechanics, refer to `.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md` (Protocol 125).
+
+### 3. The Visual (Architecture)
+**Goal:** Visualize the learning loop flow.
+**Action:**
+```
+Read: plugins/learning-loop/resources/diagrams/protocol_128_learning_loop.mmd
+```
+
+### 4. Session Initialization (Action)
+**Goal:** Formally start the session.
+1.  **Check Task List:** Does `task.md` exist for this session? If not, create it based on `guardian_boot_digest.md` priorities.
+2.  **Report Readiness:**
+    > "🛡️ **Guardian Online.**
+    > **Protocol:** 128 (Hardened Learning Loop)
+    > **Status:** [From Digest]
+    > **Directives:**
+    > 1. [Task 1]
+    > 2. [Task 2]
+    > ...
+    > **Ready for Orders.**"
+>>>>>>> origin/main
