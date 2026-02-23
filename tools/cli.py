@@ -131,34 +131,6 @@ PROJECT_ROOT = CLI_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
-<<<<<<< HEAD
-# Inline path resolver (formerly in tools.utils.path_resolver)
-def resolve_path(relative_path: str, base_path: Path = None) -> str:
-    """
-    Resolves a relative path against the project root or a specified base path.
-    Handles potential inconsistencies in path separators and ensures a clean, absolute path.
-    """
-    if base_path is None:
-        base_path = PROJECT_ROOT
-    full_path = base_path / relative_path
-    return str(full_path.resolve())
-
-# Resolve Directories
-# SEARCH_DIR removed — no longer used (migrated to plugins)
-# DOCS_DIR removed — no longer used (migrated to plugins)
-# TRACKING_DIR removed — no longer used (migrated to plugins)
-# SHARED_DIR removed — no longer used (migrated to plugins)
-RETRIEVE_DIR = PROJECT_ROOT / "plugins/context-bundler/scripts"
-INVENTORIES_DIR = PROJECT_ROOT / "plugins/tool-inventory/skills/tool-inventory/scripts"
-RLM_DIR = PROJECT_ROOT / "plugins/rlm-factory/skills/rlm-curator/scripts"
-ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-loops" / "skills" / "orchestrator" / "scripts"
-
-# Add directories to sys.path for internal imports
-for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
-    if str(d) not in sys.path:
-        sys.path.append(str(d))
-
-=======
 # Import path resolver from plugins
 try:
     # Try importing from the new plugin location
@@ -193,30 +165,12 @@ for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTOR
 # from tools.utils.path_resolver import resolve_path # Handled above
 from workflow_manager import WorkflowManager
 # Import query_cache for rlm-search
-# Import query_cache for rlm-search
 try:
     # RLM_DIR and INVENTORIES_DIR are in sys.path now.
     # query_cache is in plugins/tool-inventory/scripts (INVENTORIES_DIR)
     from query_cache import search_cache, RLMConfig
 except ImportError:
     pass
-# Lightweight imports (file-based, no external services)
-# Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
-try:
-    from mcp_servers.chronicle.operations import ChronicleOperations
-    from mcp_servers.task.operations import TaskOperations
-    from mcp_servers.task.models import taskstatus, TaskPriority
-    from mcp_servers.adr.operations import ADROperations
-    from mcp_servers.protocol.operations import ProtocolOperations
-except ImportError:
-    # Fallback/Bootstrap if pathing is tricky
-    sys.path.append(str(PROJECT_ROOT))
-    from mcp_servers.chronicle.operations import ChronicleOperations
-    from mcp_servers.task.operations import TaskOperations
-    from mcp_servers.task.models import taskstatus, TaskPriority
-    from mcp_servers.adr.operations import ADROperations
-    from mcp_servers.protocol.operations import ProtocolOperations
->>>>>>> origin/main
 
 
 # ─────────────────────────────────────────────────────────────
