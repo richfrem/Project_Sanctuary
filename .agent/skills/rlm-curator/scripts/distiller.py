@@ -732,4 +732,7 @@ if __name__ == "__main__":
             target_files = [f_path]
             
         distill(config, target_files=target_files, force=args.force, injected_summary=args.summary)
+<<<<<<<< HEAD:.agent/skills/rlm-curator/scripts/distiller.py
 >>>>>>> origin/main
+========
+>>>>>>>> origin/main:plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py

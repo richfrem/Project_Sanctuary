@@ -9,8 +9,13 @@ Purpose:
 Layer: Curate / Rlm
 
 Usage Examples:
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/cleanup_cache.py
     python plugins/tool-inventory/scripts/cleanup_cache.py --help
     python plugins/tool-inventory/scripts/cleanup_cache.py --apply --prune-orphans
+========
+    python plugins/rlm-factory/scripts/cleanup_cache.py --help
+    python plugins/rlm-factory/scripts/cleanup_cache.py --apply --prune-orphans
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/cleanup_cache.py
 
 Supported Object Types:
     - Generic
@@ -59,7 +64,11 @@ except ImportError:
 
 def main():
     parser = argparse.ArgumentParser(description="Clean up RLM cache.")
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/cleanup_cache.py
     # parser.add_argument("--type", choices=["project", "tool"], default="tool", help="RLM Type (loads manifest from factory)")
+========
+    # parser.add_argument("--type", choices=["project", "tool"], default="project", help="RLM Type (loads manifest from factory)")
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/cleanup_cache.py
     parser.add_argument("--apply", action="store_true", help="Perform the deletion")
     parser.add_argument("--prune-orphans", action="store_true", help="Remove entries not matching manifest")
     parser.add_argument("--prune-failed", action="store_true", help="Remove entries with [DISTILLATION FAILED]")
@@ -67,7 +76,11 @@ def main():
     args = parser.parse_args()
     
     # Load Config based on Type
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/cleanup_cache.py
     config = RLMConfig(run_type="tool")
+========
+    config = RLMConfig(run_type="project")
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/cleanup_cache.py
 
     print(f"Checking cache at: {config.cache_path}")
     
@@ -163,9 +176,15 @@ def main():
         print(f"Found {remove_count} entries to remove (Stale + Orphans).")
         print("To actually remove these entries, run:")
         if args.prune_orphans:
+<<<<<<<< HEAD:.agent/skills/tool-inventory/scripts/cleanup_cache.py
             print(f"  python plugins/tool-inventory/scripts/cleanup_cache.py --apply --prune-orphans")
         else:
             print(f"  python plugins/tool-inventory/scripts/cleanup_cache.py --apply")
+========
+            print(f"  python plugins/rlm-factory/scripts/cleanup_cache.py --apply --prune-orphans")
+        else:
+            print(f"  python plugins/rlm-factory/scripts/cleanup_cache.py --apply")
+>>>>>>>> origin/main:.agent/skills/rlm-curator/scripts/cleanup_cache.py
 
 def remove_entry(run_type: str, file_path: str) -> bool:
     """

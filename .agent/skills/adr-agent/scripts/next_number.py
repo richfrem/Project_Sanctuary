@@ -215,6 +215,7 @@ def main():
     args = parser.parse_args()
     
     # Find project root
+<<<<<<<< HEAD:.agent/skills/adr-agent/scripts/next_number.py
 <<<<<<<< HEAD:plugins/adr-manager/skills/adr-management/scripts/next_number.py
     # plugins/adr-manager/skills/adr-management/scripts/next_number.py -> scripts -> adr-management -> skills -> adr-manager -> plugins -> root
     script_path = Path(__file__).resolve()
@@ -225,6 +226,11 @@ def main():
     script_dir = Path(__file__).parent.resolve()
     project_root = script_dir.parent.parent.parent
 >>>>>>>> origin/main:.agent/skills/adr-agent/scripts/next_number.py
+========
+    # plugins/adr-manager/scripts/next_number.py -> scripts -> adr-manager -> plugins -> root
+    script_dir = Path(__file__).parent.resolve()
+    project_root = script_dir.parent.parent.parent
+>>>>>>>> origin/main:plugins/adr-manager/skills/adr-agent/scripts/next_number.py
 
     if args.type == 'all':
         show_all(project_root)

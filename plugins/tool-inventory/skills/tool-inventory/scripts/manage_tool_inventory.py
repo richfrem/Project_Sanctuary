@@ -154,7 +154,11 @@ class InventoryManager:
         Triggers the RLM Distiller for a specific tool.
         This ensures the RLM Cache (rlm_tool_cache.json) is always in sync with the Inventory.
         """
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
         distiller_script = self.root_dir / "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py"
+========
+        distiller_script = self.root_dir / "plugins/tool-inventory/scripts/distiller.py"
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
         if not distiller_script.exists():
             print(f"⚠️  Distiller not found at {distiller_script}. Skipping sync.")
             return
@@ -489,7 +493,10 @@ class InventoryManager:
 =======
             # Dynamic import to avoid circular dependencies if any
             from tools.tool_inventory.cleanup_cache import remove_entry
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
 >>>>>>> origin/main
+========
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
             
             # Note: rlm-factory cleanup_cache.py is designed to purge *all* missing files inherently by scanning.
             # So just running it with --apply is enough to sync the ledger with the deletion.
@@ -580,6 +587,7 @@ class InventoryManager:
                  continue
              
              # Special Case: investment-screener
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
 <<<<<<< HEAD
              # Ignore plugins/investment-screener UNLESS it is in backend/py_services
              try:
@@ -587,12 +595,17 @@ class InventoryManager:
                  if rel.startswith("plugins/investment-screener"):
                      if not rel.startswith("plugins/investment-screener/backend/py_services"):
 =======
+========
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
              # Ignore tools/investment-screener UNLESS it is in backend/py_services
              try:
                  rel = str(f.relative_to(self.root_dir))
                  if rel.startswith("tools/investment-screener"):
                      if not rel.startswith("tools/investment-screener/backend/py_services"):
+<<<<<<<< HEAD:plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py
 >>>>>>> origin/main
+========
+>>>>>>>> origin/main:.agent/skills/tool-inventory/scripts/manage_tool_inventory.py
                          continue
              except ValueError:
                  continue
