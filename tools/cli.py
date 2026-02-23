@@ -159,64 +159,22 @@ for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
 
 
 
-# Lightweight imports (file-based, no external services)
-# Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
-try:
-    from mcp_servers.chronicle.operations import ChronicleOperations
-    from mcp_servers.task.operations import TaskOperations
-    from mcp_servers.task.models import taskstatus, TaskPriority
-    from mcp_servers.adr.operations import ADROperations
-    from mcp_servers.protocol.operations import ProtocolOperations
-except ImportError:
-    # Fallback/Bootstrap if pathing is tricky
-    sys.path.append(str(PROJECT_ROOT))
-    from mcp_servers.chronicle.operations import ChronicleOperations
-    from mcp_servers.task.operations import TaskOperations
-    from mcp_servers.task.models import taskstatus, TaskPriority
-    from mcp_servers.adr.operations import ADROperations
-    from mcp_servers.protocol.operations import ProtocolOperations
+# ─────────────────────────────────────────────────────────────
+# Plugin Script Paths — Zero mcp_servers dependencies.
+# All commands delegate to self-contained plugin scripts.
+# ─────────────────────────────────────────────────────────────
 
-# Heavy imports - LAZY LOADED (require chromadb, requests, Ollama, etc.)
-# LearningOperations, CortexOperations, EvolutionOperations are imported only when needed
-LearningOperations = None
-CortexOperations = None
-EvolutionOperations = None
+# Guardian Onboarding (Protocol 128: Debrief, Snapshot, Persist, Wakeup)
+GUARDIAN_SCRIPTS  = PROJECT_ROOT / "plugins/guardian-onboarding/scripts"
 
-def _get_learning_ops():
-    """Lazy load LearningOperations (requires requests, Ollama for RLM)"""
-    global LearningOperations
-    if LearningOperations is None:
-        from mcp_servers.learning.operations import LearningOperations as _LearnOps
-        LearningOperations = _LearnOps
-    return LearningOperations(project_root=str(PROJECT_ROOT))
+# Vector DB (RAG Ingestion and Semantic Query)
+VECTOR_DB_SCRIPTS = PROJECT_ROOT / "plugins/vector-db/skills/vector-db-agent/scripts"
 
-def _get_learning_models():
-    """Lazy load LearningOperations model classes"""
-    from mcp_servers.learning.operations import PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
-    return PersistSoulRequest, GuardianWakeupResponse, GuardianSnapshotResponse
-
-def _get_cortex_ops():
-    """Lazy load CortexOperations (requires chromadb)"""
-    global CortexOperations
-    if CortexOperations is None:
-        from mcp_servers.rag_cortex.operations import CortexOperations as _CortexOps
-        CortexOperations = _CortexOps
-    return CortexOperations(project_root=str(PROJECT_ROOT))
-
-def _get_evolution_ops():
-    """Lazy load EvolutionOperations (requires chromadb)"""
-    global EvolutionOperations
-    if EvolutionOperations is None:
-        from mcp_servers.evolution.operations import EvolutionOperations as _EvoOps
-        EvolutionOperations = _EvoOps
-    return EvolutionOperations(project_root=str(PROJECT_ROOT))
-
-# Forge LLM Operations (optional - requires ollama package)
-try:
-    from mcp_servers.forge_llm.operations import ForgeOperations
-    FORGE_AVAILABLE = True
-except ImportError:
-    FORGE_AVAILABLE = False
+# Domain Entity Managers
+CHRONICLE_SCRIPTS = PROJECT_ROOT / "plugins/chronicle-manager/skills/chronicle-agent/scripts"
+PROTOCOL_SCRIPTS  = PROJECT_ROOT / "plugins/protocol-manager/skills/protocol-agent/scripts"
+ADR_SCRIPTS       = PROJECT_ROOT / "plugins/adr-manager/skills/adr-management/scripts"
+TASK_SCRIPTS      = PROJECT_ROOT / "plugins/task-manager/skills/task-agent/scripts"
 
 # ADR 090: Iron Core Definitions
 IRON_CORE_PATHS = [
@@ -596,21 +554,12 @@ def main():
 
 
     args = parser.parse_args()
-    
-    cortex_ops = None
-    evolution_ops = None
-    # Lazy Init Operations based on command to avoid overhead
-    if args.command in ["ingest", "query", "stats", "cache-stats", "cache-warmup"]:
-        cortex_ops = CortexOperations(project_root=str(PROJECT_ROOT))
-    if args.command == "evolution":
-        evolution_ops = EvolutionOperations(project_root=str(PROJECT_ROOT))
-    if args.command in ["debrief", "snapshot", "guardian", "persist-soul", "rlm-distill"]:
-        # Ensure LearningOps is available (cli.py already inits it locally in some blocks, consolidating here recommended)
-        pass 
 
-    # --- Command Handlers ---
+    # ─────────────────────────────────────────────────────────
+    # Command Handlers — all delegated to plugin scripts
+    # ─────────────────────────────────────────────────────────
 
-    # RAG Ingestion Command: Processes files into the Vector DB
+    # RAG Ingestion → vector-db plugin
     if args.command == "ingest":
         if args.incremental:
             print(f"🔄 Starting INCREMENTAL ingestion (Last {args.hours}h)...")
