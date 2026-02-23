@@ -193,30 +193,13 @@ for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTOR
 # from tools.utils.path_resolver import resolve_path # Handled above
 from workflow_manager import WorkflowManager
 # Import query_cache for rlm-search
-# Import query_cache for rlm-search
 try:
     # RLM_DIR and INVENTORIES_DIR are in sys.path now.
     # query_cache is in plugins/tool-inventory/scripts (INVENTORIES_DIR)
     from query_cache import search_cache, RLMConfig
 except ImportError:
     pass
-# Lightweight imports (file-based, no external services)
-# Domain Operations (Chronicle, Task, ADR, Protocol) - pure file I/O, no heavy deps
-try:
-    from mcp_servers.chronicle.operations import ChronicleOperations
-    from mcp_servers.task.operations import TaskOperations
-    from mcp_servers.task.models import taskstatus, TaskPriority
-    from mcp_servers.adr.operations import ADROperations
-    from mcp_servers.protocol.operations import ProtocolOperations
-except ImportError:
-    # Fallback/Bootstrap if pathing is tricky
-    sys.path.append(str(PROJECT_ROOT))
-    from mcp_servers.chronicle.operations import ChronicleOperations
-    from mcp_servers.task.operations import TaskOperations
-    from mcp_servers.task.models import taskstatus, TaskPriority
-    from mcp_servers.adr.operations import ADROperations
-    from mcp_servers.protocol.operations import ProtocolOperations
->>>>>>> origin/main
+
 
 
 # ─────────────────────────────────────────────────────────────
