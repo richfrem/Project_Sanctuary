@@ -31,7 +31,6 @@ def reconcile():
     plugins_dir = root / "plugins"
     
     # 1. Valid tools
-    # We still check this to be safe, but we primarily use physical existence check
     valid_tools = set()
     if tools_dir.exists():
         for f in tools_dir.rglob("*"):
@@ -51,7 +50,8 @@ def reconcile():
     pattern = re.compile(r'tools/[\w\-/.]+')
     
     # Exclusions
-    exclude_dirs = {'.agent', '.github', '.claude', '.kittify', '.vendor', '.venv', 'dataset_package', '.vector_data'}
+    # USER REQUEST: Ignore archive-tests/
+    exclude_dirs = {'.agent', '.github', '.claude', '.kittify', '.vendor', '.venv', 'dataset_package', '.vector_data', 'archive-tests'}
     exclude_file_patterns = [re.compile(r'.*bundle.*\.md$'), re.compile(r'.*\.jsonl$')]
     
     print(f"--- Scanning codebase for 'tools/' references ---")
@@ -105,12 +105,21 @@ def reconcile():
         basename = os.path.basename(ref)
         target_path = None
 
+        # RULE 0: Specific Shared/Orchestrator Mappings
+        # USER REQUEST: tools/shared/bundler_core.py is the bundler plugin
+        if "tools/shared/bundler_core.py" in ref:
+            target_path = "plugins/context-bundler/scripts/bundle.py"
+        
+        # USER REQUEST: tools/orchestrator/ replace with .../agent_orchestrator.py
+        elif "tools/orchestrator/" in ref or ref == "tools/orchestrator":
+            target_path = "plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py"
+
         # RULE 1: RLM
-        if "rlm" in ref_lower:
+        elif "rlm" in ref_lower:
             target_path = "plugins/rlm-factory/"
-            # Try to find specific script match
+            # Try to find specific script match in rlm-factory scripts/ dir
             for p_name, p_path in plugin_map.items():
-                if "rlm-factory" in p_path and p_name == basename:
+                if "rlm-factory" in p_path and "scripts" in p_path and p_name == basename:
                     target_path = p_path
                     break
         
@@ -118,12 +127,12 @@ def reconcile():
         elif "vector" in ref_lower:
             target_path = "plugins/vector-db/"
             for p_name, p_path in plugin_map.items():
-                if "vector-db" in p_path and p_name == basename:
+                if "vector-db" in p_path and "scripts" in p_path and p_name == basename:
                     target_path = p_path
                     break
         
         # RULE 3: Bundler / Context Bundler
-        elif "context-bundler" in ref_lower or "capture-code-snapshot.js" in ref:
+        elif "context-bundler" in ref_lower or "capture-code-snapshot.js" in ref or "manifest_manager.py" in ref_lower:
             target_path = "plugins/context-bundler/"
             for p_name, p_path in plugin_map.items():
                 if "context-bundler" in p_path and p_name == basename:
@@ -133,7 +142,7 @@ def reconcile():
         # RULE 4: Bridge
         elif "tools/bridge/" in ref or ref == "tools/bridge":
             target_path = "plugins/plugin-mapper/"
-
+        
         # RULE 5: Link Checker
         elif "link-checker" in ref_lower:
             target_path = "plugins/link-checker/"

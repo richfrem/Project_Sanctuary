@@ -1,7 +1,7 @@
 """
 test_verify_workflow_state.py
 
-Unit tests for tools/orchestrator/verify_workflow_state.py.
+Unit tests for plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py.
 Uses tempfile to create isolated directory structures for each test.
 """
 

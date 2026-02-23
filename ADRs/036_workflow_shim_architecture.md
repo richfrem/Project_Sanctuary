@@ -1,7 +1,7 @@
 # ADR-036: Workflow Architect (Python Orchestrator)
 
 ## Status
-Accepted (v2 - Python Pivot)
+Superseded by [ADR-096](096_pure_python_orchestration.md)
 
 ## Context
 The project utilizes a "Hybrid Workflow" model. Agents originally struggled with abstract Markdown commands.
@@ -9,6 +9,7 @@ An initial attempt (v1) used Bash Shims for enforcement. A Red Team analysis rev
 
 ## Decision
 We adopt the **Thick Python / Thin Shim** architecture.
+*(Note: This decision was later superseded by Pure Python Orchestration in ADR-096)*
 
 ### 1. The Python Orchestrator (`WorkflowManager`)
 All "Enforcement" logic resides in `tools/orchestrator/workflow_manager.py`:

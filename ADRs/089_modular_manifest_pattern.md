@@ -91,7 +91,7 @@ All manifests follow the simple JSON structure:
 - Legacy `core`/`topic` structure (v2.0) is deprecated but still functional
 
 **Base Manifest Inheritance (ADR 097):**
-Pre-defined base manifests in `tools/standalone/context-bundler/base-manifests/` provide common file sets. Use `manifest_manager.py init --type <TYPE>` to initialize from a base.
+Pre-defined base manifests in `plugins/context-bundler/` provide common file sets. Use `manifest_manager.py init --type <TYPE>` to initialize from a base.
 
 ### 4. Evolution Path
 New use cases are added by:

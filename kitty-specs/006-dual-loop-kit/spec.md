@@ -34,7 +34,7 @@ The kit MUST include:
 *   **Orchestrator Scripts**:
     *   `tools/orchestrator/dual_loop/*.py`
     *   `tools/orchestrator/workflow_manager.py`
-    *   `tools/orchestrator/verify_workflow_state.py`
+    *   `plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py`
 *   **Templates**:
     *   `.agent/templates/workflow/*.md`
 

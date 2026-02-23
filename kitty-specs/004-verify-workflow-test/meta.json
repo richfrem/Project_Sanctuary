@@ -3,7 +3,7 @@
     "slug": "004-verify-workflow-test",
     "friendly_name": "Verify Workflow State Test",
     "mission": "software-dev",
-    "source_description": "Verify tools/orchestrator/verify_workflow_state.py within a clean Dual-Loop execution",
+    "source_description": "Verify plugins/spec-kitty-plugin/skills/spec-kitty-agent/scripts/verify_workflow_state.py within a clean Dual-Loop execution",
     "created_at": "2026-02-12T12:05:00-08:00",
     "target_branch": "main",
     "vcs": "git"

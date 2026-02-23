@@ -89,7 +89,7 @@ Protocol 128 is operationalized through portable skills in `.agent/skills/`:
 | **`guardian_onboarding`** | I | Session boot and orientation |
 | **`tool_discovery`** | II, IV | RLM cache query for tool lookup |
 
-Skills are synced across agents (Gemini, Claude, Copilot) via `tools/bridge/sync_skills.py`.
+Skills are synced across agents (Gemini, Claude, Copilot) via `plugins/plugin-mapper/`.
 
 ## 7. Document Matrix
 | Document | Role | Path |

@@ -40,7 +40,7 @@ from pathlib import Path
 
 # Setup paths
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parents[4] # Root directory (Project_Sanctuary)
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent # c:/.../claude-plugins
 PLUGINS_ROOT = PROJECT_ROOT / "plugins"
 
 INSTALLER_SCRIPT = SCRIPT_DIR / "bridge_installer.py"

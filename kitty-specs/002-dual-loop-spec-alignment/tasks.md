@@ -28,7 +28,7 @@
   - **Goal**: One-click experience.
 
 - [x] **Update Documentation** <!-- id: 4 -->
-  - **Task**: Update `tools/orchestrator/dual_loop/README.md`.
+  - **Task**: Update `plugins/agent-loops/personas/README.md`.
   - **Task**: Update `SKILL.md` to reflect new workflow.
 
 ---

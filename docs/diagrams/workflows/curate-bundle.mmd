@@ -9,7 +9,7 @@ flowchart TB
   end
     subgraph subGraph2["Intelligence Sources"]
         RLM[("RLM Cache")]
-        BaseManifests["Base Manifests<br>(tools/standalone/context-bundler/base-manifests/*.json)"]
+        BaseManifests["Base Manifests<br>(plugins/context-bundler/*.json)"]
         Manifest["file-manifest.json"]
         Miners["Miners: XML, PLL, DB"]
         DepMap["Dependency Map"]
@@ -55,5 +55,5 @@ flowchart TB
     classDef logic fill:#ffe,stroke:#333,stroke-width:1px
     classDef output fill:#faa,stroke:#333,stroke-width:2px
     click EntryPoint "../../../tools/cli.py"
-    click ManifestMgr "../../../tools/retrieve/bundler/manifest_manager.py"
-    click Bundler "../../../tools/retrieve/bundler/bundle.py"
+    click ManifestMgr "./../../plugins/context-bundler/scripts/manifest_manager.py"
+    click Bundler "../../../plugins/context-bundler/scripts/bundle.py"

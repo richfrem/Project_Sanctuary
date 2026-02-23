@@ -1,10 +1,10 @@
 # Broken Tool References Audit (Unmapped Only)
-**Date:** Sun Feb 22 14:55:48 PST 2026
+**Date:** Sun Feb 22 16:14:34 PST 2026
 
 ## Summary
-- Unique broken `tools/` references found: **373**
-- Unmapped references: **264**
-- Source files containing unmapped references: **95**
+- Unique broken `tools/` references found: **267**
+- Unmapped references: **246**
+- Source files containing unmapped references: **72**
 
 ---
 
@@ -63,22 +63,18 @@
   - `broken_tool_references.md`
 - `[ ]` `tools/business-rule-extraction/cli.py`
   - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/business-rule-extraction/prompts/`
   - `broken_tool_references.md`
-- `[ ]` `tools/business-rule-extraction/scripts/manifest_manager.py`
-  - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/cache.py`
   - `broken_tool_references.md`
 - `[ ]` `tools/calculator_tool.py`
   - `broken_tool_references.md`
   - `mcp_servers/gateway/clusters/sanctuary_utils/tools/calculator_tool.py`
 - `[ ]` `tools/call`
-  - `archive-tests/mcp_servers/base/mcp_test_client.py`
-  - `archive-tests/mcp_servers/gateway/integration/test_gateway_cortex.py`
-  - `archive-tests/mcp_servers/gateway/protocol_125_loop.py`
-  - ... and 12 more files
+  - `broken_tool_references.md`
+  - `docs/architecture/mcp/servers/gateway/guides/agent_gateway_guide.md`
+  - `docs/architecture_diagrams/archive/rejected_synaptic_phase_sequence.mmd`
+  - ... and 7 more files
 - `[ ]` `tools/ci_build/github/android/nnapi_supported_ops.md`
   - `broken_tool_references.md`
 - `[ ]` `tools/ci_build/github/apple/coreml_supported_mlprogram_ops.md`
@@ -93,10 +89,8 @@
   - `scripts/update_legacy_paths.py`
 - `[ ]` `tools/codify/tracking/analyze_tracking_status.py`
   - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/codify/tracking/generate_todo_list.py`
   - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/command/bdist_rpm.py`
   - `broken_tool_references.md`
 - `[ ]` `tools/command/build_ext.py`
@@ -112,7 +106,6 @@
 - `[ ]` `tools/curate/documentation/workflow_inventory_manager.py`
   - `ARCHIVE/workflow_creation_policy.md`
   - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/curate/hf_utils.py`
   - `broken_tool_references.md`
   - `tasks/backlog/166_external-knowledge-sharing-protocol.md`
@@ -121,13 +114,6 @@
 - `[ ]` `tools/curate/hygiene/standardize_manifests.py`
   - `broken_tool_references.md`
 - `[ ]` `tools/curate/inventories/vibe_cleanup.py`
-  - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
-- `[ ]` `tools/curate/link-checker/`
-  - `broken_tool_references.md`
-- `[ ]` `tools/curate/link-checker/fix_analysis_links.py`
-  - `broken_tool_references.md`
-- `[ ]` `tools/curate/link-checker/fix_pdf_links.py`
   - `broken_tool_references.md`
 - `[ ]` `tools/curate/utils/config_manager.py`
   - `broken_tool_references.md`
@@ -279,15 +265,8 @@
   - `specs/0001-mcp-to-cli-migration/retrospective.md`
 - `[ ]` `tools/investigate/utils/`
   - `broken_tool_references.md`
-- `[ ]` `tools/investigate/utils/next_number.py`
-  - `broken_tool_references.md`
-  - `scripts/update_legacy_paths.py`
 - `[ ]` `tools/investigate/utils/pathResolver.js`
   - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
-- `[ ]` `tools/investigate/utils/path_resolver.py`
-  - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/investigate/utils/test_infrastructure.py`
   - `broken_tool_references.md`
 - `[ ]` `tools/investment-screener`
@@ -361,13 +340,11 @@
   - `broken_tool_references.md`
 - `[ ]` `tools/library/src`
   - `broken_tool_references.md`
-- `[ ]` `tools/link-checker/`
-  - `broken_tool_references.md`
 - `[ ]` `tools/list`
   - `ARCHIVE/scripts/verify_mcp_server.py`
-  - `archive-tests/mcp_servers/base/mcp_test_client.py`
-  - `archive-tests/mcp_servers/gateway/protocol_125_loop.py`
-  - ... and 6 more files
+  - `broken_tool_references.md`
+  - `docs/architecture_diagrams/transport/archive/mcp_sse_bridge_approach.mmd`
+  - ... and 4 more files
 - `[ ]` `tools/list_changed`
   - `broken_tool_references.md`
 - `[ ]` `tools/literate-programming.html`
@@ -409,27 +386,6 @@
   - `tasks/done/160_refactor_rag_ingest_cli_architecture.md`
 - `[ ]` `tools/optimize/quantization_utils.cc`
   - `broken_tool_references.md`
-- `[ ]` `tools/orchestrator/dual_loop/`
-  - `broken_tool_references.md`
-  - `kitty-specs/001-dual-loop-agent-architecture/retrospective.md`
-  - `kitty-specs/001-dual-loop-agent-architecture/tasks.md`
-  - ... and 1 more files
-- `[ ]` `tools/orchestrator/dual_loop/generate_strategy_packet.py`
-  - `LEARNING/protocols/dual_loop_implementation_summary.md`
-  - `broken_tool_references.md`
-- `[ ]` `tools/orchestrator/dual_loop/verify_inner_loop_result.py`
-  - `LEARNING/protocols/dual_loop_implementation_summary.md`
-  - `broken_tool_references.md`
-- `[ ]` `tools/orchestrator/test_verify_workflow_state.py`
-  - `broken_tool_references.md`
-  - `kitty-specs/004-verify-workflow-test/plan.md`
-  - `kitty-specs/004-verify-workflow-test/tasks.md`
-  - ... and 2 more files
-- `[ ]` `tools/orchestrator/workflow_manager.py`
-  - `ADRs/036_workflow_shim_architecture.md`
-  - `GEMINI.md`
-  - `broken_tool_references.md`
-  - ... and 12 more files
 - `[ ]` `tools/overlay_page`
   - `broken_tool_references.md`
   - `temp/agent-zero/webui/vendor/ace-min/ext-keybinding_menu.js`
@@ -495,14 +451,9 @@
   - `temp/agent-zero/docs/developer/extensions.md`
 - `[ ]` `tools/retrieve/bundler/`
   - `broken_tool_references.md`
-- `[ ]` `tools/retrieve/bundler/manifest_manager.py`
-  - `broken_tool_references.md`
-  - `docs/diagrams/workflows/curate-bundle.mmd`
-  - `scripts/update_legacy_paths.py`
 - `[ ]` `tools/retrieve/bundler/validate.py`
   - `broken_tool_references.md`
   - `temp/bundler-architecture-review-manifest.json`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/retrieve/ingest/cli.py`
   - `broken_tool_references.md`
   - `tasks/done/160_refactor_rag_ingest_cli_architecture.md`
@@ -542,11 +493,6 @@
   - `broken_tool_references.md`
   - `docs/architecture/bundling/bundling-architecture-proposal.md`
   - `specs/0002-spec-0002/design-proposal-bundling-architecture.md`
-- `[ ]` `tools/shared/bundler_core.py`
-  - `ADRs/097_base_manifest_inheritance_architecture.md`
-  - `broken_tool_references.md`
-  - `docs/architecture/bundling/bundling-architecture-proposal.md`
-  - ... and 1 more files
 - `[ ]` `tools/shared/module_loader`
   - `broken_tool_references.md`
 - `[ ]` `tools/shared/test_infrastructure.py`
@@ -576,12 +522,6 @@
   - `kitty-specs/006-dual-loop-kit/plan.md`
   - `kitty-specs/006-dual-loop-kit/tasks.md`
   - ... and 2 more files
-- `[ ]` `tools/standalone/link-checker/INSTALL.md`
-  - `broken_tool_references.md`
-- `[ ]` `tools/standalone/link-checker/UNPACK_INSTRUCTIONS.md`
-  - `broken_tool_references.md`
-- `[ ]` `tools/standalone/link-checker/tool-bundle.md`
-  - `broken_tool_references.md`
 - `[ ]` `tools/standalone/xml-to-markdown`
   - `broken_tool_references.md`
   - `docs/tools/standalone/xml-to-markdown/unpacking.mmd`
@@ -662,9 +602,6 @@
   - ... and 2 more files
 - `[ ]` `tools/utils.py`
   - `broken_tool_references.md`
-- `[ ]` `tools/utils/path_resolver.py`
-  - `broken_tool_references.md`
-  - `tools/tool_inventory.json`
 - `[ ]` `tools/utils/shell_compat.py`
   - `broken_tool_references.md`
   - `specs/0001-mcp-to-cli-migration/spec.md`
@@ -683,10 +620,6 @@
   - `broken_tool_references.md`
 
 ## Source Files Containing Unmapped References (The 'Where')
-- **ADRs/036_workflow_shim_architecture.md**
-  - References: tools/orchestrator/workflow_manager.py
-- **ADRs/097_base_manifest_inheritance_architecture.md**
-  - References: tools/shared/bundler_core.py
 - **ARCHIVE/mnemonic_cortex/INQUIRY_TEMPLATES/Protocol87OperationalTemplateOverview.md**
   - References: tools/steward_validation/validate_inquiry.py
 - **ARCHIVE/scripts/verify_mcp_server.py**
@@ -699,20 +632,6 @@
   - References: tools/steward_validation/validate_inquiry.py
 - **ARCHIVE/workflow_creation_policy.md**
   - References: tools/curate/documentation/workflow_inventory_manager.py
-- **GEMINI.md**
-  - References: tools/orchestrator/workflow_manager.py
-- **LEARNING/protocols/dual_loop_implementation_summary.md**
-  - References: tools/orchestrator/dual_loop/generate_strategy_packet.py, tools/orchestrator/dual_loop/verify_inner_loop_result.py
-- **archive-tests/mcp_servers/base/mcp_test_client.py**
-  - References: tools/call, tools/list
-- **archive-tests/mcp_servers/gateway/integration/test_gateway_cortex.py**
-  - References: tools/call
-- **archive-tests/mcp_servers/gateway/protocol_125_loop.py**
-  - References: tools/call, tools/list
-- **archive-tests/mcp_servers/gateway/verify_gateway_connection.py**
-  - References: tools/call
-- **archive-tests/verification_scripts/verify_rag_capacities.py**
-  - References: tools/call
 - **ast_utilities/js_transformer/node_modules/escodegen/README.md**
   - References: tools/escodegen, tools/escodegen.svg, tools/escodegen/dev-status.svg, tools/escodegen/wiki/API
 - **ast_utilities/js_transformer/node_modules/escodegen/package.json**
@@ -734,9 +653,9 @@
 - **ast_utilities/js_transformer/node_modules/source-map/README.md**
   - References: tools/toolkit/sourcemap/source-map.js
 - **broken_tool_references.md**
-  - References: tools/__init__.py, tools/_core_metadata.py, tools/_distutils/command/build_ext.py, tools/_distutils/compilers/C/tests/test_base.py, tools/_distutils/compilers/C/tests/test_mingw.py, tools/_distutils/tests/test_build_ext.py, tools/_normalization.py, tools/_static.py, tools/_vendor/jaraco/functools/__init__.py, tools/_vendor/more_itertools/recipes.py, tools/api/latest/authentication.html, tools/api/latest/dbfs.html, tools/archive/SOMECOMMIT.zip, tools/autograd, tools/autograd/derivatives.yaml, tools/autograd/gen_autograd.py, tools/autograd/templates/, tools/autograd/templates/python_variable_methods.cpp, tools/azure/test_pytest_soft_dependency.sh, tools/blob/7e97def47723303fafabe48b22168bbc11bb4821/setuptools/dist.py, tools/blob/d8b901bc/docs/pkg_resources.txt, tools/blob/main/coremltools/converters/mil/frontend/torch/converter.py, tools/bootstrap_protocol_87.sh, tools/browser_agent.py, tools/build/lib/build/lib/, tools/business-rule-extraction/cli.py, tools/business-rule-extraction/prompts/, tools/business-rule-extraction/scripts/manifest_manager.py, tools/cache.py, tools/calculator_tool.py, tools/call, tools/ci_build/github/android/nnapi_supported_ops.md, tools/ci_build/github/apple/coreml_supported_mlprogram_ops.md, tools/ci_build/github/apple/coreml_supported_neuralnetwork_ops.md, tools/cli, tools/codify/diagrams/export_mmd_to_image.py, tools/codify/tracking/analyze_tracking_status.py, tools/codify/tracking/generate_todo_list.py, tools/command/bdist_rpm.py, tools/command/build_ext.py, tools/command/develop.py, tools/command/easy_install.py, tools/config/_apply_pyprojecttoml.py, tools/coverage_plugins_package/src/coverage_plugins/jit_plugin.py, tools/curate/documentation/workflow_inventory_manager.py, tools/curate/hf_utils.py, tools/curate/hygiene/find_json_duplicates.py, tools/curate/hygiene/standardize_manifests.py, tools/curate/inventories/vibe_cleanup.py, tools/curate/link-checker/, tools/curate/link-checker/fix_analysis_links.py, tools/curate/link-checker/fix_pdf_links.py, tools/curate/utils/config_manager.py, tools/curate/utils/organize_screenshots.py, tools/datasets/multilabel.html, tools/depcache-pyX.Y.json, tools/deps/analyze_dependencies.py, tools/deps/check_licenses.py, tools/deps/create_offline_bundle.py, tools/deps/scan_vulnerabilities.py, tools/deps/update_dependencies.py, tools/deps/validate_environment.py, tools/dev/generate_punctuation_chars.py, tools/distutils, tools/domain/, tools/embedding, tools/embedding/, tools/entry-point.js, tools/escodegen, tools/escodegen.git, tools/escodegen.svg, tools/escodegen/dev-status.svg, tools/escodegen/wiki/API, tools/esmangle, tools/estraverse, tools/estraverse.git, tools/estraverse.svg, tools/estraverse/wiki/Usage, tools/esutils, tools/esutils.git, tools/esutils.svg, tools/example_tool/enable, tools/extension.py, tools/extensions, tools/file-search, tools/fix, tools/fix_remaining_paths.py, tools/fixupbundle.js, tools/functions, tools/gen.py, tools/generate-fixtures.js, tools/generate-identifier-regex.js, tools/generate-unicode-regex.js, tools/generate-xhtml-entities.js, tools/generate_proxy_methods.py, tools/generate_sql_functions.py, tools/generate_tuple_map_overloads.py, tools/get_editor_keyboard_shortcuts, tools/github/, tools/gmail/, tools/idna-data, tools/ingest/cli.py, tools/investigate/code/search_codebase.py, tools/investigate/miners, tools/investigate/miners/db_miner.py, tools/investigate/utils, tools/investigate/utils/, tools/investigate/utils/next_number.py, tools/investigate/utils/pathResolver.js, tools/investigate/utils/path_resolver.py, tools/investigate/utils/test_infrastructure.py, tools/investment-screener, tools/investment-screener/backend/data/research, tools/investment-screener/backend/data/research/, tools/investment-screener/backend/py_services/fetch_financials.py, tools/investment-screener/backend/py_services/persist_projection.py, tools/issues/1024, tools/issues/1202, tools/issues/1988, tools/issues/2003, tools/issues/207, tools/issues/2252, tools/issues/3197, tools/issues/3648, tools/issues/4150, tools/issues/4167, tools/issues/417, tools/issues/4316, tools/issues/4456, tools/issues/4529, tools/issues/4601, tools/issues/4629, tools/issues/4826, tools/issues/4853, tools/issues/4892, tools/issues/4894, tools/issues/4910, tools/issues/4976, tools/issues/5, tools/issues/851, tools/issues/917, tools/issues/new, tools/lib/operations/, tools/library/include, tools/library/scripts/gemm_operation.py, tools/library/src, tools/link-checker/, tools/list, tools/list_changed, tools/literate-programming.html, tools/lowercase_and_remove_accent.py, tools/math/ElementaryFunction.html, tools/matlab/laplacian/laplacian.m, tools/mcp_server.py, tools/meson.html, tools/mne-python/blob/main/mne/time_frequency/tests/test_stft.py, tools/mo_example_tool/enable, tools/mobile_helpers/usability_checker.py, tools/monkey.py, tools/more-itertools/issues/823, tools/more-itertools/issues/889, tools/my-script.py, tools/new_utility.py, tools/openapi-generator, tools/operations/, tools/optimize/quantization_utils.cc, tools/orchestrator/dual_loop/, tools/orchestrator/dual_loop/generate_strategy_packet.py, tools/orchestrator/dual_loop/verify_inner_loop_result.py, tools/orchestrator/test_verify_workflow_state.py, tools/orchestrator/workflow_manager.py, tools/overlay_page, tools/path/to/script.py, tools/performance/establish_baselines.py, tools/performance/monitor.py, tools/performance/profile_memory_usage.py, tools/performance/profile_rag_pipeline.py, tools/pkg_resources, tools/prompts/resources, tools/pull/2865, tools/pull/4228, tools/pull/4422, tools/pull/4837, tools/pull/5006, tools/python/util/__init__append.py, tools/pytorch-quantization, tools/quantization/matmul_nbits_quantizer.py, tools/quantization/onnx_model.py, tools/raw/2fd87a94b8d3861d80e9e4236cd480bfdd21c90d/setup.cfg, tools/raw/52c990172fec37766b3566679724aa8bf70ae06d/setup.cfg, tools/recipes.py, tools/release.js, tools/releases/platforms, tools/resolver.py, tools/response.py, tools/retrieve/bundler/, tools/retrieve/bundler/manifest_manager.py, tools/retrieve/bundler/validate.py, tools/retrieve/ingest/cli.py, tools/rst2, tools/s5/credits.html, tools/scaffolds/execute_phoenix_forge_v2.py, tools/scaffolds/forge_qwen2_dataset.py, tools/scaffolds/generate_continuity_package.py, tools/scaffolds/verify_substrates.py, tools/scripts, tools/security/analyze_audit_log.py, tools/settings_menu.css, tools/shared/bundler/, tools/shared/bundler/dedupe.py, tools/shared/bundler_core.py, tools/shared/module_loader, tools/shared/test_infrastructure.py, tools/standalone/, tools/standalone/dual-loop-kit, tools/standalone/dual-loop-kit/, tools/standalone/dual-loop-kit/INSTALL.md, tools/standalone/dual-loop-kit/UNPACK_INSTRUCTIONS.md, tools/standalone/dual-loop-kit/dual-loop-manifest.json, tools/standalone/link-checker/INSTALL.md, tools/standalone/link-checker/UNPACK_INSTRUCTIONS.md, tools/standalone/link-checker/tool-bundle.md, tools/standalone/xml-to-markdown, tools/standalone/xml-to-markdown/, tools/steward_validation, tools/steward_validation/validate_inquiry.py, tools/string_tool.py, tools/swagger-ui/usage/oauth2/, tools/symbolic_shape_infer.py, tools/tests/config, tools/tests/config/downloads/preload.py, tools/tests/config/setupcfg_examples.txt, tools/tests/config/test_apply_pyprojecttoml.py, tools/tests/config/test_pyprojecttoml.py, tools/tests/config/test_setupcfg.py, tools/tests/fixtures.py, tools/tests/test_bdist_wheel.py, tools/tests/test_core_metadata.py, tools/tests/test_develop.py, tools/tests/test_sdist.py, tools/tests/test_virtualenv.py, tools/tests/test_wheel.py, tools/time.get_current_time, tools/time_formats.html, tools/time_tool.py, tools/tool-use/memory-tool, tools/tool.py, tools/tool_choice, tools/toolkit/sourcemap/source-map.js, tools/transformers, tools/travis-test.sh, tools/update_masked_docs.py, tools/util/include, tools/util/include/cutlass/util/host_reorder.h, tools/utils, tools/utils.py, tools/utils/path_resolver.py, tools/utils/shell_compat.py, tools/uuid_tool.py, tools/vendor_array_api_compat.sh, tools/vendor_array_api_extra.sh, tools/verify_manifest.py, tools/viz/graph_deps.py, tools/writer.py
+  - References: tools/__init__.py, tools/_core_metadata.py, tools/_distutils/command/build_ext.py, tools/_distutils/compilers/C/tests/test_base.py, tools/_distutils/compilers/C/tests/test_mingw.py, tools/_distutils/tests/test_build_ext.py, tools/_normalization.py, tools/_static.py, tools/_vendor/jaraco/functools/__init__.py, tools/_vendor/more_itertools/recipes.py, tools/api/latest/authentication.html, tools/api/latest/dbfs.html, tools/archive/SOMECOMMIT.zip, tools/autograd, tools/autograd/derivatives.yaml, tools/autograd/gen_autograd.py, tools/autograd/templates/, tools/autograd/templates/python_variable_methods.cpp, tools/azure/test_pytest_soft_dependency.sh, tools/blob/7e97def47723303fafabe48b22168bbc11bb4821/setuptools/dist.py, tools/blob/d8b901bc/docs/pkg_resources.txt, tools/blob/main/coremltools/converters/mil/frontend/torch/converter.py, tools/bootstrap_protocol_87.sh, tools/browser_agent.py, tools/build/lib/build/lib/, tools/business-rule-extraction/cli.py, tools/business-rule-extraction/prompts/, tools/cache.py, tools/calculator_tool.py, tools/call, tools/ci_build/github/android/nnapi_supported_ops.md, tools/ci_build/github/apple/coreml_supported_mlprogram_ops.md, tools/ci_build/github/apple/coreml_supported_neuralnetwork_ops.md, tools/cli, tools/codify/diagrams/export_mmd_to_image.py, tools/codify/tracking/analyze_tracking_status.py, tools/codify/tracking/generate_todo_list.py, tools/command/bdist_rpm.py, tools/command/build_ext.py, tools/command/develop.py, tools/command/easy_install.py, tools/config/_apply_pyprojecttoml.py, tools/coverage_plugins_package/src/coverage_plugins/jit_plugin.py, tools/curate/documentation/workflow_inventory_manager.py, tools/curate/hf_utils.py, tools/curate/hygiene/find_json_duplicates.py, tools/curate/hygiene/standardize_manifests.py, tools/curate/inventories/vibe_cleanup.py, tools/curate/utils/config_manager.py, tools/curate/utils/organize_screenshots.py, tools/datasets/multilabel.html, tools/depcache-pyX.Y.json, tools/deps/analyze_dependencies.py, tools/deps/check_licenses.py, tools/deps/create_offline_bundle.py, tools/deps/scan_vulnerabilities.py, tools/deps/update_dependencies.py, tools/deps/validate_environment.py, tools/dev/generate_punctuation_chars.py, tools/distutils, tools/domain/, tools/embedding, tools/embedding/, tools/entry-point.js, tools/escodegen, tools/escodegen.git, tools/escodegen.svg, tools/escodegen/dev-status.svg, tools/escodegen/wiki/API, tools/esmangle, tools/estraverse, tools/estraverse.git, tools/estraverse.svg, tools/estraverse/wiki/Usage, tools/esutils, tools/esutils.git, tools/esutils.svg, tools/example_tool/enable, tools/extension.py, tools/extensions, tools/file-search, tools/fix, tools/fix_remaining_paths.py, tools/fixupbundle.js, tools/functions, tools/gen.py, tools/generate-fixtures.js, tools/generate-identifier-regex.js, tools/generate-unicode-regex.js, tools/generate-xhtml-entities.js, tools/generate_proxy_methods.py, tools/generate_sql_functions.py, tools/generate_tuple_map_overloads.py, tools/get_editor_keyboard_shortcuts, tools/github/, tools/gmail/, tools/idna-data, tools/ingest/cli.py, tools/investigate/code/search_codebase.py, tools/investigate/miners, tools/investigate/miners/db_miner.py, tools/investigate/utils, tools/investigate/utils/, tools/investigate/utils/pathResolver.js, tools/investigate/utils/test_infrastructure.py, tools/investment-screener, tools/investment-screener/backend/data/research, tools/investment-screener/backend/data/research/, tools/investment-screener/backend/py_services/fetch_financials.py, tools/investment-screener/backend/py_services/persist_projection.py, tools/issues/1024, tools/issues/1202, tools/issues/1988, tools/issues/2003, tools/issues/207, tools/issues/2252, tools/issues/3197, tools/issues/3648, tools/issues/4150, tools/issues/4167, tools/issues/417, tools/issues/4316, tools/issues/4456, tools/issues/4529, tools/issues/4601, tools/issues/4629, tools/issues/4826, tools/issues/4853, tools/issues/4892, tools/issues/4894, tools/issues/4910, tools/issues/4976, tools/issues/5, tools/issues/851, tools/issues/917, tools/issues/new, tools/lib/operations/, tools/library/include, tools/library/scripts/gemm_operation.py, tools/library/src, tools/list, tools/list_changed, tools/literate-programming.html, tools/lowercase_and_remove_accent.py, tools/math/ElementaryFunction.html, tools/matlab/laplacian/laplacian.m, tools/mcp_server.py, tools/meson.html, tools/mne-python/blob/main/mne/time_frequency/tests/test_stft.py, tools/mo_example_tool/enable, tools/mobile_helpers/usability_checker.py, tools/monkey.py, tools/more-itertools/issues/823, tools/more-itertools/issues/889, tools/my-script.py, tools/new_utility.py, tools/openapi-generator, tools/operations/, tools/optimize/quantization_utils.cc, tools/overlay_page, tools/path/to/script.py, tools/performance/establish_baselines.py, tools/performance/monitor.py, tools/performance/profile_memory_usage.py, tools/performance/profile_rag_pipeline.py, tools/pkg_resources, tools/prompts/resources, tools/pull/2865, tools/pull/4228, tools/pull/4422, tools/pull/4837, tools/pull/5006, tools/python/util/__init__append.py, tools/pytorch-quantization, tools/quantization/matmul_nbits_quantizer.py, tools/quantization/onnx_model.py, tools/raw/2fd87a94b8d3861d80e9e4236cd480bfdd21c90d/setup.cfg, tools/raw/52c990172fec37766b3566679724aa8bf70ae06d/setup.cfg, tools/recipes.py, tools/release.js, tools/releases/platforms, tools/resolver.py, tools/response.py, tools/retrieve/bundler/, tools/retrieve/bundler/validate.py, tools/retrieve/ingest/cli.py, tools/rst2, tools/s5/credits.html, tools/scaffolds/execute_phoenix_forge_v2.py, tools/scaffolds/forge_qwen2_dataset.py, tools/scaffolds/generate_continuity_package.py, tools/scaffolds/verify_substrates.py, tools/scripts, tools/security/analyze_audit_log.py, tools/settings_menu.css, tools/shared/bundler/, tools/shared/bundler/dedupe.py, tools/shared/module_loader, tools/shared/test_infrastructure.py, tools/standalone/, tools/standalone/dual-loop-kit, tools/standalone/dual-loop-kit/, tools/standalone/dual-loop-kit/INSTALL.md, tools/standalone/dual-loop-kit/UNPACK_INSTRUCTIONS.md, tools/standalone/dual-loop-kit/dual-loop-manifest.json, tools/standalone/xml-to-markdown, tools/standalone/xml-to-markdown/, tools/steward_validation, tools/steward_validation/validate_inquiry.py, tools/string_tool.py, tools/swagger-ui/usage/oauth2/, tools/symbolic_shape_infer.py, tools/tests/config, tools/tests/config/downloads/preload.py, tools/tests/config/setupcfg_examples.txt, tools/tests/config/test_apply_pyprojecttoml.py, tools/tests/config/test_pyprojecttoml.py, tools/tests/config/test_setupcfg.py, tools/tests/fixtures.py, tools/tests/test_bdist_wheel.py, tools/tests/test_core_metadata.py, tools/tests/test_develop.py, tools/tests/test_sdist.py, tools/tests/test_virtualenv.py, tools/tests/test_wheel.py, tools/time.get_current_time, tools/time_formats.html, tools/time_tool.py, tools/tool-use/memory-tool, tools/tool.py, tools/tool_choice, tools/toolkit/sourcemap/source-map.js, tools/transformers, tools/travis-test.sh, tools/update_masked_docs.py, tools/util/include, tools/util/include/cutlass/util/host_reorder.h, tools/utils, tools/utils.py, tools/utils/shell_compat.py, tools/uuid_tool.py, tools/vendor_array_api_compat.sh, tools/vendor_array_api_extra.sh, tools/verify_manifest.py, tools/viz/graph_deps.py, tools/writer.py
 - **docs/architecture/bundling/bundling-architecture-proposal.md**
-  - References: tools/shared/bundler/, tools/shared/bundler/dedupe.py, tools/shared/bundler_core.py
+  - References: tools/shared/bundler/, tools/shared/bundler/dedupe.py
 - **docs/architecture/mcp/servers/gateway/guides/agent_gateway_guide.md**
   - References: tools/call
 - **docs/architecture/safe_agent_zero/implementation_plan.md**
@@ -753,8 +672,6 @@
   - References: tools/call, tools/list
 - **docs/archive/mcp_research/research/02_gateway_patterns_and_implementations.md**
   - References: tools/call, tools/list
-- **docs/diagrams/workflows/curate-bundle.mmd**
-  - References: tools/retrieve/bundler/manifest_manager.py
 - **docs/tools/standalone/xml-to-markdown/unpacking.mmd**
   - References: tools/standalone/xml-to-markdown, tools/standalone/xml-to-markdown/
 - **forge/archive/execute_phoenix_forge_v2.py**
@@ -763,22 +680,12 @@
   - References: tools/scaffolds/forge_qwen2_dataset.py
 - **forge/archive/generate_continuity_package.py**
   - References: tools/scaffolds/generate_continuity_package.py
-- **kitty-specs/001-dual-loop-agent-architecture/retrospective.md**
-  - References: tools/orchestrator/dual_loop/
 - **kitty-specs/001-dual-loop-agent-architecture/tasks.md**
-  - References: tools/orchestrator/dual_loop/, tools/utils
-- **kitty-specs/004-verify-workflow-test/plan.md**
-  - References: tools/orchestrator/test_verify_workflow_state.py
-- **kitty-specs/004-verify-workflow-test/tasks.md**
-  - References: tools/orchestrator/test_verify_workflow_state.py
-- **kitty-specs/004-verify-workflow-test/tasks/WP-001.md**
-  - References: tools/orchestrator/test_verify_workflow_state.py
-- **kitty-specs/005-safe-agent-zero/retrospective.md**
-  - References: tools/orchestrator/workflow_manager.py
+  - References: tools/utils
 - **kitty-specs/006-dual-loop-kit/plan.md**
   - References: tools/standalone/dual-loop-kit, tools/standalone/dual-loop-kit/, tools/standalone/dual-loop-kit/INSTALL.md, tools/standalone/dual-loop-kit/UNPACK_INSTRUCTIONS.md, tools/standalone/dual-loop-kit/dual-loop-manifest.json
 - **kitty-specs/006-dual-loop-kit/spec.md**
-  - References: tools/orchestrator/dual_loop/, tools/orchestrator/workflow_manager.py, tools/standalone/dual-loop-kit/
+  - References: tools/standalone/dual-loop-kit/
 - **kitty-specs/006-dual-loop-kit/tasks.md**
   - References: tools/standalone/dual-loop-kit/, tools/standalone/dual-loop-kit/INSTALL.md, tools/standalone/dual-loop-kit/UNPACK_INSTRUCTIONS.md, tools/standalone/dual-loop-kit/dual-loop-manifest.json
 - **kitty-specs/006-dual-loop-kit/tasks/WP-001.md**
@@ -805,28 +712,20 @@
   - References: tools/call
 - **mcp_servers/lib/sse_adaptor.py**
   - References: tools/call, tools/list
-- **scripts/apply_tool_migration.sh**
-  - References: tools/orchestrator/test_verify_workflow_state.py
 - **scripts/update_legacy_paths.py**
-  - References: tools/codify/diagrams/export_mmd_to_image.py, tools/investigate/utils/next_number.py, tools/orchestrator/workflow_manager.py, tools/retrieve/bundler/manifest_manager.py
-- **specs/0001-mcp-to-cli-migration/operations_matrix.md**
-  - References: tools/orchestrator/workflow_manager.py
+  - References: tools/codify/diagrams/export_mmd_to_image.py
 - **specs/0001-mcp-to-cli-migration/plan.md**
   - References: tools/domain/
 - **specs/0001-mcp-to-cli-migration/retrospective.md**
   - References: tools/investigate/utils, tools/utils
 - **specs/0001-mcp-to-cli-migration/spec.md**
-  - References: tools/orchestrator/workflow_manager.py, tools/utils/shell_compat.py
+  - References: tools/utils/shell_compat.py
 - **specs/0002-spec-0002/design-proposal-bundling-architecture.md**
-  - References: tools/shared/bundler/, tools/shared/bundler/dedupe.py, tools/shared/bundler_core.py
-- **specs/0002-spec-0002/retrospective.md**
-  - References: tools/orchestrator/workflow_manager.py
+  - References: tools/shared/bundler/, tools/shared/bundler/dedupe.py
 - **specs/0004-refactor-rag-ingest/cli_gap_analysis.md**
   - References: tools/cli, tools/utils
 - **specs/0006-rebuild-constitution/RED_TEAM_BUNDLE.md**
-  - References: tools/investigate/code/search_codebase.py, tools/investigate/miners, tools/investigate/miners/db_miner.py, tools/my-script.py, tools/orchestrator/workflow_manager.py, tools/path/to/script.py, tools/scripts
-- **specs/0006-rebuild-constitution/retrospective.md**
-  - References: tools/orchestrator/workflow_manager.py
+  - References: tools/investigate/code/search_codebase.py, tools/investigate/miners, tools/investigate/miners/db_miner.py, tools/my-script.py, tools/path/to/script.py, tools/scripts
 - **tasks/backlog/020E_secrets_access_audit_trail.md**
   - References: tools/security/analyze_audit_log.py
 - **tasks/backlog/020_security_hardening_and_secrets_management.md**
@@ -841,8 +740,6 @@
   - References: tools/performance/establish_baselines.py, tools/performance/monitor.py, tools/performance/profile_memory_usage.py, tools/performance/profile_rag_pipeline.py
 - **tasks/backlog/158_unify_tool_utils_imports.md**
   - References: tools/utils
-- **tasks/backlog/165_implement-pure-python-orchestration.md**
-  - References: tools/orchestrator/workflow_manager.py
 - **tasks/backlog/166_external-knowledge-sharing-protocol.md**
   - References: tools/curate/hf_utils.py
 - **tasks/done/020A_hardcoded_paths_remediation.md**
@@ -865,11 +762,5 @@
   - References: tools/overlay_page, tools/settings_menu.css
 - **temp/bundler-architecture-review-manifest.json**
   - References: tools/retrieve/bundler/validate.py
-- **temp/constitution.md**
-  - References: tools/orchestrator/workflow_manager.py
-- **tools/TOOL_INVENTORY.md**
-  - References: tools/orchestrator/workflow_manager.py
 - **tools/cli.py**
   - References: tools/my-script.py
-- **tools/tool_inventory.json**
-  - References: tools/business-rule-extraction/cli.py, tools/business-rule-extraction/scripts/manifest_manager.py, tools/codify/tracking/analyze_tracking_status.py, tools/codify/tracking/generate_todo_list.py, tools/curate/documentation/workflow_inventory_manager.py, tools/curate/inventories/vibe_cleanup.py, tools/investigate/utils/pathResolver.js, tools/investigate/utils/path_resolver.py, tools/orchestrator/workflow_manager.py, tools/retrieve/bundler/validate.py, tools/utils/path_resolver.py

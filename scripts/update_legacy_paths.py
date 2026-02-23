@@ -16,22 +16,22 @@ from pathlib import Path
 # The exact string mappings to securely target ONLY moved files
 EXACT_MAPPINGS = {
     # RLM Factory
-    "tools/retrieve/rlm/query_cache.py": "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py",
-    "tools/codify/rlm/distiller.py": "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py",
-    "tools/codify/rlm/rlm_config.py": "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py",
-    "tools/codify/rlm/debug_rlm.py": "plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py",
-    "tools/curate/rlm/cleanup_cache.py": "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py",
-    "tools/retrieve/rlm/inventory.py": "plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py",
-    "tools/retrieve/rlm/fetch_tool_context.py": "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py",
-    "tools/codify/rlm/refresh_cache.py": "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py",
+    "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py": "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py",
+    "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py": "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py",
+    "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py": "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py",
+    "plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py": "plugins/rlm-factory/skills/rlm-curator/scripts/debug_rlm.py",
+    "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py": "plugins/rlm-factory/skills/rlm-curator/scripts/cleanup_cache.py",
+    "plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py": "plugins/rlm-factory/skills/rlm-curator/scripts/inventory.py",
+    "plugins/rlm-factory/": "plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py",
+    "plugins/rlm-factory/": "plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py",
     
     # Tool Inventory
-    "tools/curate/inventories/manage_tool_inventory.py": "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py",
+    "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py": "plugins/tool-inventory/skills/tool-inventory/scripts/manage_tool_inventory.py",
     "tools/tool_inventory.json": "plugins/tool-inventory/skills/tool-inventory/scripts/tool_inventory.json",
     ".agent/skills/SKILL.md": "plugins/tool-inventory/skills/tool-inventory/SKILL.md",
     
     # Context Bundler
-    "tools/retrieve/bundler/bundle.py": "plugins/context-bundler/scripts/bundle.py",
+    "plugins/context-bundler/scripts/bundle.py": "plugins/context-bundler/scripts/bundle.py",
     "tools/retrieve/bundler/manifest_manager.py": "plugins/context-bundler/scripts/bundle.py",
     
     # Mermaid
@@ -41,7 +41,7 @@ EXACT_MAPPINGS = {
     "tools/investigate/utils/next_number.py": "plugins/adr-manager/skills/adr-management/scripts/next_number.py",
     
     # Agent Loops / Orchestrator
-    "tools/orchestrator/proof_check.py": "plugins/agent-loops/skills/orchestrator/scripts/proof_check.py",
+    "plugins/agent-loops/skills/orchestrator/scripts/proof_check.py": "plugins/agent-loops/skills/orchestrator/scripts/proof_check.py",
     # We do NOT map tools/orchestrator/workflow_manager.py here because it still exists in tools/
 }
 

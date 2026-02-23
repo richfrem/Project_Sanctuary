@@ -24,7 +24,7 @@ Each manifest explicitly defines its own `core` and `topic` sections:
 ## Decision
 Adopt a **Base Manifest Inheritance** pattern where:
 
-1. **Base Manifests** are stored in `tools/standalone/context-bundler/base-manifests/`
+1. **Base Manifests** are stored in `plugins/context-bundler/`
 2. **Base Manifest Index** (`base-manifests-index.json`) maps type IDs to file paths
 3. **Specialized Manifests** use an `extends` property to inherit from a base manifest
 4. **Dynamic Topic Section** is managed via `manifest_manager.py` CLI (add/remove)

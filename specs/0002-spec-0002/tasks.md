@@ -28,7 +28,7 @@
 **Schema**: All manifests follow `{title, description, files: [{path, note}]}`  
 **Resolution**: `manifest_manager.py init --type X` loads base manifest from `base-manifests-index.json`
 
-### Task 2.1: Create Base Manifests (in `tools/standalone/context-bundler/base-manifests/`)
+### Task 2.1: Create Base Manifests (in `plugins/context-bundler/`)
 
 | Type | Source | Base Manifest | Status |
 |------|--------|---------------|--------|

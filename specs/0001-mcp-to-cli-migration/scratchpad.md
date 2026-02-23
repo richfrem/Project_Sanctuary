@@ -31,8 +31,8 @@ Need to analyze and consolidate these overlapping implementations:
 | Domain | New (tools/) | Old (mcp_servers/) | Action |
 |--------|------------|-------------------|--------|
 | **RLM Cache** | `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` | `mcp_servers/learning/operations.py` | Compare APIs |
-| **Vector Query** | `tools/retrieve/vector/query.py` | `mcp_servers/rag_cortex/operations.py` | Compare APIs |
-| **Vector Ingest** | `tools/codify/vector/ingest.py` | `mcp_servers/rag_cortex/ingest_code_shim.py` | Check if duplicate |
+| **Vector Query** | `plugins/vector-db/skills/vector-db-agent/scripts/query.py` | `mcp_servers/rag_cortex/operations.py` | Compare APIs |
+| **Vector Ingest** | `plugins/vector-db/skills/vector-db-agent/scripts/ingest.py` | `mcp_servers/rag_cortex/ingest_code_shim.py` | Check if duplicate |
 | **RLM Distill** | `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` | `mcp_servers/learning/operations.py` (rlm ops?) | May be different |
 
 **Question**: Which is source of truth? Should `tools/` import from `mcp_servers/lib/` or vice versa?
@@ -52,7 +52,7 @@ Need to analyze and consolidate these overlapping implementations:
 |-------------|-------------------|---------|
 | `plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py` | `mcp_servers/learning/operations.py` | Tool discovery |
 | `plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` | ? | Semantic summary creation |
-| `tools/retrieve/vector/query.py` | `mcp_servers/rag_cortex/operations.py` | Vector search |
+| `plugins/vector-db/skills/vector-db-agent/scripts/query.py` | `mcp_servers/rag_cortex/operations.py` | Vector search |
 | N/A | `cortex-cache-*` (CAG) | Cached Augmented Generation |
 
 **Key Question**: What does CAG cache store vs RLM cache?

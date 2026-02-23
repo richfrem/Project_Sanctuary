@@ -1,7 +1,7 @@
 # ADR-096: Pure Python Orchestration
 
 ## Status
-Deferred (Pending ADR-036 validation)
+Accepted
 
 ## Context
 ADR-036 (v2) introduced a "Thick Python / Thin Shim" architecture where `.sh` files acted as dumb wrappers around `cli.py workflow start`. 

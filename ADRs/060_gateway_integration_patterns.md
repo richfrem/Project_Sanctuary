@@ -87,7 +87,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 ### Fleet of 7: Physical Container Inventory
 
-| # | Container Name | Type | Logical Cluster | Role | Tools/Services |
+| # | Container Name | Type | Logical Cluster | Role | Plugins/Services |
 |---|---------------|------|-----------------|------|----------------|
 | 1 | `sanctuary_utils` | **NEW** | Utils (Low Risk) | MCP Server | Time, Calculator, UUID, String |
 | 2 | `sanctuary_filesystem` | **NEW** | Filesystem (Privileged) | MCP Server | File Ops, Grep, Patch, Code |

@@ -11,7 +11,7 @@ The system follows a **Controller-Manager-Worker** pattern with a shared **State
 | **Interface** | Controller | `tools/cli.py` | Routes user commands (`manifest`, `init-context`) to the Manager. No logic here. |
 | **Manager** | Orchestrator | `plugins/context-bundler/scripts/bundle.py` | Handles the *Workflow* & *Manifest CRUD*. Inits, Adds, Updates, Removes, and Lists/Queries files. |
 | **Bundler** | Worker | `plugins/context-bundler/scripts/bundle.py` | Handles the *Action*. Reads state and compiles the Markdown bundle. |
-| **State** | Data Store | `tools/context-bundler/file-manifest.json` | The JSON list of files currently "in scope" for the bundle. |
+| **State** | Data Store | `plugins/context-bundler/file-manifest.json` | The JSON list of files currently "in scope" for the bundle. |
 
 ## 2. Intelligence Sources (Inputs)
 
@@ -20,7 +20,7 @@ The Manager queries these sources to populate the State (`file-manifest.json`):
 *   **dependency_map.json**: *The Graph*. Tells the manager *why* file B is needed (e.g. "Form A calls Table B").
 *   **Miners (XML/PLL)**: *The Source Truth*. Extract declarative dependencies from raw code.
 *   **Base Manifests**: *The Templates*. Provide the mandatory starting point for each analysis type (Form, Lib, etc.).
-    *   *Index*: `tools/standalone/context-bundler/base-manifests-index.json` maps Type -> Template.
+    *   *Index*: `plugins/context-bundler/` maps Type -> Template.
 
 ## 3. The Recursive Context Loop
 
@@ -42,7 +42,7 @@ Bundling is not a one-time event. It is a **Recursive Discovery Process**.
 
 ## 5. Tool Distribution & Configuration
 
-The tool is self-contained in `tools/standalone/context-bundler/`.
+The tool is self-contained in `plugins/context-bundler/`.
 
 *   **Logic**: `manifest_manager.py`, `bundle.py`
 *   **Configuration**:
