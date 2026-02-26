@@ -1,0 +1,54 @@
+{
+    "title": "Obsidian Integration Suite Red Team Review",
+    "description": "A comprehensive bundle of the architecture, research, and planned work packages for the Obsidian Agent Integration Suite, submitted for Red Team architectural review.",
+    "files": [
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/red-team-prompt.md",
+            "note": "Primary instructions for the Red Team Reviewer."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/spec.md",
+            "note": "The foundational rules and feature descriptions."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/plan.md",
+            "note": "The overarching technical context and implementation plan."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/research.md",
+            "note": "The synthesis of Gemini 3.1 Pro continuous deep research and integration decisions."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/research/obsidian-plugin-architecture.md",
+            "note": "The specific breakdown of the 6 new Agent Skills within the proposed obsidian-integration plugin."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/research/Obsidian Vault for AI Agents.md",
+            "note": "Raw output from the Gemini 3.1 Pro Deep Research analysis (Provides raw ground-truth for the Red Team)."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP01-research-integration-strategy.md",
+            "note": "Work Package 1: The Research Phase (Complete)."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-data-mapping-hf-schema.md",
+            "note": "Work Package 2: The HF Data Mapping rules."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-build-obsidian-crud-skill.md",
+            "note": "Work Package 3: The CRUD operations for standard notes and .base dashboards."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-build-obsidian-graph-skill.md",
+            "note": "Work Package 4: The semantic link Graph Traversal operations."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-forge-soul-skill.md",
+            "note": "Work Package 5: The Forge Soul HF Exporter pipeline."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-legacy-scrubbing.md",
+            "note": "Work Package 6: Automated Link Refactoring and repository cleanup."
+        }
+    ]
+}
