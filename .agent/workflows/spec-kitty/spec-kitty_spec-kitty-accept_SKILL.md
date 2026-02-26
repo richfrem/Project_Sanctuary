@@ -49,11 +49,7 @@ Ask one focused question per item and confirm the summary before continuing. End
    - Append `--feature "<slug>"` when the user supplied a slug.
    - Append `--mode <mode>` (`pr`, `local`, or `checklist`).
    - Append `--test "<command>"` for each validation command provided.
-<<<<<<<< HEAD:.agent/workflows/spec-kitty/spec-kitty_spec-kitty-accept_SKILL.md
 2. Run `(Missing script command for sh)` (the CLI wrapper) with the assembled arguments **and** `--json`.
-========
-2. Run `(Missing script command for ps)` (the CLI wrapper) with the assembled arguments **and** `--json`.
->>>>>>>> origin/main:plugins/spec-kitty/workflows/spec-kitty.accept.md
 3. Parse the JSON response. It contains:
    - `summary.ok` (boolean) and other readiness details.
    - `summary.outstanding` categories when issues remain.

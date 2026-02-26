@@ -10,7 +10,6 @@ Instant O(1) search of the semantic ledger. **No Ollama required** — reads JSO
 ## Usage
 ```bash
 # Search for a topic
-<<<<<<< HEAD
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/query_cache.py "bail"
 
 # Search tool cache
@@ -21,18 +20,6 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/query_cache.py --list
 
 # JSON output for programmatic use
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/rlm-curator/scripts/query_cache.py "config" --json
-=======
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py "bail"
-
-# Search tool cache
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py "distiller" --type tool
-
-# List all cached entries
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py --list
-
-# JSON output for programmatic use
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/query_cache.py "config" --json
->>>>>>> origin/main
 ```
 
 ## Matches Against

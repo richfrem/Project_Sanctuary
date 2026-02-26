@@ -56,9 +56,5 @@ This allows us to document a massive codebase with standard context windows, ach
 
 ## 5. Tooling Reference
 *   **Distiller:** `plugins/rlm-factory/scripts/distiller.py` (Maintains the RLM Cache)
-<<<<<<< HEAD
 *   **Discovery CLI:** `plugins/cli.py` (Recursive Scanner)
-=======
-*   **Discovery CLI:** `tools/cli.py` (Recursive Scanner)
->>>>>>> origin/main
 *   **Query Cache:** `plugins/rlm-factory/scripts/query_cache.py` (Tool Discovery)
