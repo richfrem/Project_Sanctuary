@@ -1,0 +1,63 @@
+---
+work_package_id: "WP01"
+subtasks:
+  - "T001"
+  - "T002"
+  - "T003"
+  - "T004"
+title: "Research Obsidian Integration Strategy & Capability Overlap"
+phase: "Phase 0 - Research"
+lane: "planned"  
+assignee: ""      
+agent: ""         
+shell_pid: ""     
+review_status: "" 
+reviewed_by: ""   
+dependencies: []
+history:
+  - timestamp: "2026-02-26T16:15:00Z"
+    lane: "planned"
+    agent: "system"
+    shell_pid: ""
+    action: "Prompt generated via /spec-kitty.tasks"
+---
+
+# Work Package Prompt: WP01 – Research Obsidian Integration Strategy & Capability Overlap
+
+## ⚠️ IMPORTANT: Review Feedback Status
+
+**Read this first if you are implementing this task!**
+- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
+
+---
+
+## Objectives & Success Criteria
+- Identify the best technical path (REST API vs Custom Plugin vs Markdown) for interacting with the Vault.
+- Explicitly map Obsidian's native capabilities against Project Sanctuary's existing RLM and Vector-DB plugins.
+- Publish a formally approved Architecture Decision Record (ADR).
+
+## Context & Constraints
+- Constitution rules mandate Human Gates (Article I) and clear Spec/Plans (Article IV).
+- See `kitty-specs/007-obsidian-agent-integration-suite/plan.md`.
+
+## Subtasks & Detailed Guidance
+
+### Subtask T001 – Analyze Obsidian's core mechanisms
+- **Purpose**: Understand how the project will retrieve read/write capabilities locally.
+- **Steps**: Investigate local REST API plugin reliability versus writing a custom TypeScript plugin versus direct Python `pathlib`/`frontmatter` scraping. Document pros and cons of each approach looking at maintenance overhead and script reliability.
+
+### Subtask T002 – Analyze capability overlap
+- **Purpose**: Preemptively avoid rebuilding features Obsidian already possesses.
+- **Steps**: Compare Obsidian's native semantic features to the `rlm-factory` and `vector-db` Python skills to determine pivot opportunities. What does Obsidian offer out of the box? Are our bespoke semantic models redundant? 
+
+### Subtask T003 – Draft ADR
+- **Purpose**: Document the chosen direction.
+- **Steps**: Follow standard ADR templates to combine findings from T001 and T002 into an Architectural Decision Record covering integration tools and capability impact mapping.
+
+### Subtask T004 – Obtain human steward approval
+- **Purpose**: Ensure alignment with the Architect before code is written.
+- **Steps**: Wait for human review or run `spec-kitty review` to get the ADR formally accepted before checking off the task.
+
+## Activity Log
+
+- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
