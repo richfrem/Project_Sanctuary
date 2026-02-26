@@ -2,40 +2,33 @@
 *Path: [templates/plan-template.md](templates/plan-template.md)*
 
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/kitty-specs/[###-feature-name]/spec.md`
-
-**Note**: This template is filled in by the `/spec-kitty.plan` command. See `src/specify_cli/missions/software-dev/command-templates/plan.md` for the execution workflow.
-
-The planner will not begin until all planning questions have been answered—capture those answers in this document before progressing to later phases.
+**Branch**: `007-obsidian-agent-integration-suite` | **Date**: 2026-02-26 | **Spec**: [kitty-specs/007-obsidian-agent-integration-suite/spec.md](spec.md)
+**Input**: Feature specification from `/kitty-specs/007-obsidian-agent-integration-suite/spec.md`
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+The Obsidian Agent Integration Suite replaces the legacy monolithic sync script with a modular Plugin-and-Skills ecosystem. 
+It establishes a formalized integration strategy (ADRs for architecture and data mapping) and provides autonomous agents with explicit skills to interact with the local vault (CRUD operations, Graph traversal) and export sealed knowledge fragments to Hugging Face JSONL format (`soul_traces.jsonl`).
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Python 3.13 
+**Primary Dependencies**: `datasets`, `huggingface_hub`, built-in JSON/Pathlib. The integration strategy is explicitly deferred to Phase 0 Research (WP01). WP01 MUST aggressively evaluate Obsidian's capabilities to determine overlap with our existing `rlm-factory` and `vector-db` plugins.   
+**Storage**: Local Filesystem (Obsidian Markdown Vault) & Hugging Face Hub (JSONL)  
+**Testing**: Unittest framework, local dry-run verifications.  
+**Target Platform**: CLI / Agent Environment.
+**Project Type**: Python Plugin ecosystem (`plugins/` directory). 
+**Performance Goals**: Fast graph traversal (< 2 seconds for a graph of 50 links). Seamless linking between disparate research files.
+**Constraints**: Must strictly adhere to the Hugging Face `soul_traces.jsonl` schema (ADR 081). Must handle rate limits and strictly ignore large binary attachments.
+**Scale/Scope**: 6 Work Packages representing pure Research (ADRs), 3 Agent Skills (CRUD, Graph, Export), and 1 Repository Cleanup task.
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [x] **Zero Trust Git**: Ensure WP05 (Forge Soul) does not push to HF without a Git clean-state check.
+- [x] **Tool Discovery**: Ensure agent dependencies on `rlm-factory` and `vector-db` are explicitly audited in WP01.
+- [x] **Docs First**: ADR must precede code for both the Obsidian Integration Strategy and the HF Data Mapping.
 
 ## Project Structure
 
@@ -52,57 +45,47 @@ kitty-specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+plugins/obsidian-integration/
+├── skills/
+│   ├── obsidian-crud/
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   ├── obsidian-graph/
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   └── forge-soul/
+│       ├── SKILL.md
+│       └── scripts/
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: This feature will establish a new `obsidian-integration` plugin containing the three autonomous skills, cleanly separating the system from legacy MCP logic.
 
-## Complexity Tracking
+## Work Packages
 
-*Fill ONLY if Constitution Check has violations that must be justified*
+The implementation of `007-obsidian-agent-integration-suite` is structured into 6 sequential Work Packages (WPs). Note that `tasks.md` will be formally generated by the `/spec-kitty.tasks` command based on this plan.
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+1. **WP01: Research Obsidian Integration Strategy & Capability Overlap (ADR)**
+   - **Goal:** Determine the optimal architectural pattern for reading/writing Obsidian nodes (Direct Markdown parsing vs. Local REST API vs. Custom Plugin). Crucially, this research MUST map Obsidian's native capabilities against Project Sanctuary's existing `rlm-factory` and `vector-db` skills to determine overlaps, redundancies, or pivot opportunities.
+   - **Output:** An approved Architectural Decision Record (ADR) detailing the chosen strategy and capability alignment.
+
+2. **WP02: Research Data Mapping to HF Schema (ADR)**
+   - **Goal:** Analyze how complex nested folders and frontmatter arrays safely map to the existing `HF_JSONL` schema (ADR 081) while adhering to the rule that all images and binary attachments are strictly ignored.
+   - **Output:** An approved ADR detailing how `source_path` metadata replaces physical directory nesting.
+
+3. **WP03: Build Obsidian CRUD Skill**
+   - **Goal:** Implement the `obsidian-crud` plugin skill based on the WP01 ADR.
+   - **Output:** A self-contained Agent Skill capable of reading, writing, and updating local Obsidian vault notes with verification testing.
+
+4. **WP04: Build Obsidian Graph Traversal Skill**
+   - **Goal:** Implement the `obsidian-graph` plugin skill capable of parsing internal links to return a localized relationship map (backlinks and forward links) for a target node.
+   - **Output:** A verified traversal skill.
+
+5. **WP05: Build 'Forge Soul' Semantic Exporter Skill**
+   - **Goal:** Implement the `forge-soul` plugin skill capable of aggregating sealed Obsidian notes and formatting them into the `soul_traces.jsonl` export schema according to the rules from WP02.
+   - **Output:** A verified semantic export skill.
+
+6. **WP06: Legacy Scrubbing & Automated Link Refactoring**
+   - **Goal:** Remove all references to the obsolete "MCP architecture" from existing prompt templates. Develop and run a Python script to locate legacy relative markdown links (e.g., `[Link](../../file.md)`) and convert them into Obsidian wikilinks (`[[file]]`) across the `01_PROTOCOLS/` and `02_LEARNING/` directories.
+   - **Output:** Clean `grep` results for "MCP", and all relevant relative links refactored to wikilinks.
