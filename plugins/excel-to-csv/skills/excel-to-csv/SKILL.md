@@ -1,6 +1,5 @@
 ---
 name: excel-to-csv
-<<<<<<< HEAD
 description: >
   Excel to CSV conversion skill. Auto-invoked to convert specific tables 
   or worksheets within an `.xlsx` or `.xls` file into flat `.csv` format 
@@ -38,14 +37,3 @@ If converting to use as context for your own current conversation, you can now r
 ## Best Practices
 1. **Target Specific Sheets**: Excel files can be massive. Always try to determine the specific `--sheets` needed rather than dumping the entire workbook.
 2. **Missing Dependencies**: This script requires `pandas` and `openpyxl`. If the script fails due to a missing dependency, alert the user or offer to `pip install pandas openpyxl` if environment policy permits.
-=======
-description: Standardized plugin for excel-to-csv.
----
-
-# Excel-To-Csv
-
-This skill provides functionality for excel-to-csv.
-
-## Capabilities
-- (Auto-generated stub)
->>>>>>> origin/main

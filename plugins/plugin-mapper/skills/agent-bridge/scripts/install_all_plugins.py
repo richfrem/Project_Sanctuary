@@ -40,7 +40,7 @@ from pathlib import Path
 
 # Setup paths
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent.parent  # scripts → agent-bridge → skills → plugin-mapper → plugins → root
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent.parent.parent # Project root
 PLUGINS_ROOT = PROJECT_ROOT / "plugins"
 
 INSTALLER_SCRIPT = SCRIPT_DIR / "bridge_installer.py"

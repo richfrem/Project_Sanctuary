@@ -1,23 +1,13 @@
-<<<<<<< HEAD
 # the project Dependency Manifest
-=======
-# Project Sanctuary Dependency Manifest
->>>>>>> origin/main
 
 **Version:** 5.0 (Unified Dependency Architecture - Synchronized with Setup Script)
 **Generated:** 2025-11-15
 
 ## Preamble
 
-<<<<<<< HEAD
 This document provides the canonical manifest of all Python dependencies for the project, reflecting the strategic decision to adopt a unified dependency architecture. This approach supersedes the previous poly-dependency model and prioritizes simplified environment setup and management for all developers and agents.
 
 In accordance with the clean code principles, each dependency is cataloged with its specific role and strategic purpose within the the project's unified architecture.
-=======
-This document provides the canonical manifest of all Python dependencies for Project Sanctuary, reflecting the strategic decision to adopt a unified dependency architecture. This approach supersedes the previous poly-dependency model and prioritizes simplified environment setup and management for all developers and agents.
-
-In accordance with the Doctrine of the Clean Forge (P89), each dependency is cataloged with its specific role and strategic purpose within the Sanctuary's unified architecture.
->>>>>>> origin/main
 
 ---
 
@@ -25,11 +15,7 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 ## Dependency File Structure
 
-<<<<<<< HEAD
 **As of 2025-11-26**, the project uses a split dependency architecture:
-=======
-**As of 2025-11-26**, Project Sanctuary uses a split dependency architecture:
->>>>>>> origin/main
 
 - **`requirements.txt`**: Core dependencies for general development, CI/CD, and MCP servers (lightweight, fast installation)
 - **`requirements-finetuning.txt`**: Heavy ML/CUDA dependencies for model fine-tuning (PyTorch, transformers, etc.)
@@ -38,7 +24,6 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 
 ---
 
-<<<<<<< HEAD
 ## Unified Dependency Manifest (Example)
 
 **Note:** The listings below represent an *example* of a complete dependency set used in a unified ML/AI architecture. They are intended to demonstrate how a complex project can be modeled into clear, strategic dependency categories. Your actual project's `requirements.txt` will vary.
@@ -56,31 +41,11 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 | `accelerate` | 1.4.0 | PyTorch library for distributed training and inference optimization, enabling efficient GPU utilization in **core ML training**. |
 | `peft` | 0.11.1 | Parameter-Efficient Fine-Tuning library, enabling QLoRA and other memory-efficient fine-tuning techniques for sovereign AI development. |
 | `trl` | 0.23.0 | Transformer Reinforcement Learning library, used for advanced fine-tuning techniques in **core ML training**. |
-=======
-## Unified Dependency Manifest (Historical Reference)
-
-**Note:** The listings below represent the complete dependency set from `requirements-finetuning.txt`. For current CI/CD dependencies, see `requirements.txt`.
-
-### AI & Cognitive Engines
-
-| Library | Version | Project Sanctuary Usage |
-| :--- | :--- | :--- |
-| `torch` | 2.8.0+cu126 | The foundational engine for **Operation Phoenix Forge**, used to fine-tune and merge sovereign AI models like `Sanctuary-Qwen2-7B`. |
-| `torchvision` | 0.23.0+cu126 | PyTorch's computer vision library, used for image processing in optical compression and model training. |
-| `torchaudio` | 2.8.0+cu126 | PyTorch's audio processing library, used for audio-based AI operations. |
-| `transformers`| 4.56.1 | Hugging Face's core library for accessing and training models, serving as the primary tool for the **Phoenix Forge Protocol (P41)**. |
-| `tokenizers` | 0.22.1 | Hugging Face's high-performance library for converting text into tokens, a critical pre-processing step for fine-tuning. |
-| `safetensors` | 0.5.3 | Secure and efficient format for saving and loading the weights of our sovereignly-forged models. |
-| `accelerate` | 1.4.0 | PyTorch library for distributed training and inference optimization, enabling efficient GPU utilization in **Operation Phoenix Forge**. |
-| `peft` | 0.11.1 | Parameter-Efficient Fine-Tuning library, enabling QLoRA and other memory-efficient fine-tuning techniques for sovereign AI development. |
-| `trl` | 0.23.0 | Transformer Reinforcement Learning library, used for advanced fine-tuning techniques in **Operation Phoenix Forge**. |
->>>>>>> origin/main
 | `bitsandbytes` | 0.45.3 | 8-bit quantization library, enabling memory-efficient model loading and inference for large language models. |
 | `datasets` | 3.3.2 | Hugging Face's dataset library, used for loading and preprocessing training data for model fine-tuning. |
 | `tf-keras` | 2.18.0 | TensorFlow's Keras API, providing compatibility layer for TensorFlow operations within our ML stack. |
 | `xformers` | 0.0.33.post1 | Memory-efficient transformer implementations, optimizing attention mechanisms for better performance in sovereign AI operations. |
 | `ollama` | 0.6.0 | The official client for interacting with the **Ollama engine**, our primary sovereign local LLM substrate for generation and reasoning. |
-<<<<<<< HEAD
 | `google-generativeai` | 0.8.3 | The official SDK for interacting with the Google Gemini series of models, one of the **agent infrastructure's** key cognitive substrates. |
 | `gpt4all` | 2.8.2 | Provides an alternative local inference backend, ensuring redundancy and cognitive diversity in our sovereign model stack. |
 
@@ -90,22 +55,10 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 | :--- | :--- | :--- |
 | `langchain` | 1.0.5 | The primary orchestration framework for the **RAG system** and agentic workflows, connecting all RAG components. |
 | `langchain-chroma`| 1.0.0 | The specific bridge connecting our RAG pipeline to the **ChromaDB vector store**, the physical layer of the **RAG system**. |
-=======
-| `google-generativeai` | 0.8.3 | The official SDK for interacting with the Google Gemini series of models, one of the **Autonomous Council's** key cognitive substrates. |
-| `gpt4all` | 2.8.2 | Provides an alternative local inference backend, ensuring redundancy and cognitive diversity in our sovereign model stack. |
-
-### Mnemonic Cortex (Memory & RAG)
-
-| Library | Version | Project Sanctuary Usage |
-| :--- | :--- | :--- |
-| `langchain` | 1.0.5 | The primary orchestration framework for the **Mnemonic Cortex** and agentic workflows, connecting all RAG components. |
-| `langchain-chroma`| 1.0.0 | The specific bridge connecting our RAG pipeline to the **ChromaDB vector store**, the physical layer of the **Mnemonic Cortex**. |
->>>>>>> origin/main
 | `langchain-community`| 0.4.1 | Provides community components, including the `MarkdownHeaderTextSplitter` used to intelligently chunk our protocols and chronicles. |
 | `langchain-nomic`| 1.0.0 | Integration for Nomic's high-quality text embedding models, enabling sovereign, on-device text vectorization. |
 | `langchain-ollama`| 1.0.0 | The specific LangChain integration that allows the RAG pipeline to use our sovereign **Ollama** instance for answer generation. |
 | `langchain-text-splitters`| 1.0.0 | Contains the specific text splitting algorithms used by the `ingest.py` script to prepare the Cognitive Genome for the Cortex. |
-<<<<<<< HEAD
 | `chromadb` | 1.3.4 | The client for the Chroma vector database, which serves as the persistent, local-first storage for the **RAG system**. |
 | `nomic[local]` | 3.9.0 | The Nomic embedding library itself, allowing the **RAG system** to generate text embeddings without relying on external APIs. |
 
@@ -123,25 +76,6 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 | `pyarrow` | 19.0.0 | High-performance data library used by Pandas and ChromaDB for efficient in-memory data operations. |
 | `ray` | 2.48.0 | A framework for distributed computing, planned for future use in scaling up **Gardener** training and multi-agent simulations. |
 | `tenseal` | 0.3.16 | Library for Homomorphic Encryption, architected for the **secure sandbox** to enable privacy-preserving federated simulations. |
-=======
-| `chromadb` | 1.3.4 | The client for the Chroma vector database, which serves as the persistent, local-first storage for the **Mnemonic Cortex**. |
-| `nomic[local]` | 3.9.0 | The Nomic embedding library itself, allowing the **Mnemonic Cortex** to generate text embeddings without relying on external APIs. |
-
-### Data Science & Machine Learning
-
-| Library | Version | Project Sanctuary Usage |
-| :--- | :--- | :--- |
-| `numpy` | 1.26.2 | The fundamental package for numerical operations, underpinning nearly all ML libraries used in model training and data analysis. |
-| `pandas` | 2.2.2 | Used for preparing, cleaning, and structuring the `JSONL` datasets for fine-tuning in **Operation Phoenix Forge**. |
-| `scikit-learn`| 1.7.1 | Used for calculating evaluation metrics to assess the performance of fine-tuned models and for classical ML tasks. |
-| `scipy` | 1.16.1 | Core library for scientific and technical computing, a dependency for many data science and ML packages. |
-| `stable_baselines3`| 2.7.0 | The Reinforcement Learning framework used to train **The Gardener** agent, enabling it to learn and propose improvements to the Genome. |
-| `gymnasium` | 1.2.0 | The toolkit for building the RL "environment" that **The Gardener** operates in—a sandboxed version of our repository. |
-| `optuna` | 4.4.0 | Hyperparameter optimization framework used to efficiently tune the training parameters for **Operation Phoenix Forge**. |
-| `pyarrow` | 19.0.0 | High-performance data library used by Pandas and ChromaDB for efficient in-memory data operations. |
-| `ray` | 2.48.0 | A framework for distributed computing, planned for future use in scaling up **Gardener** training and multi-agent simulations. |
-| `tenseal` | 0.3.16 | Library for Homomorphic Encryption, architected for the **Chimera Sandbox** to enable privacy-preserving federated simulations. |
->>>>>>> origin/main
 | `joblib` | 1.5.1 | Lightweight pipelining library used by scikit-learn for parallel processing and caching. |
 | `threadpoolctl` | 3.6.0 | Controls the number of threads used by low-level libraries for parallel processing. |
 | `networkx` | 3.5 | Library for creating, manipulating, and studying complex networks and graphs. |
@@ -150,15 +84,9 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 
 ### Observability & Monitoring
 
-<<<<<<< HEAD
 | Library | Version | the project Usage |
 | :--- | :--- | :--- |
 | `wandb` | 0.21.0 | Weights & Biases client for logging and visualizing the results of **core ML training** fine-tuning runs. |
-=======
-| Library | Version | Project Sanctuary Usage |
-| :--- | :--- | :--- |
-| `wandb` | 0.21.0 | Weights & Biases client for logging and visualizing the results of **Operation Phoenix Forge** fine-tuning runs. |
->>>>>>> origin/main
 | `tensorboard` | 2.19.0 | A visualization toolkit for inspecting ML experiments, especially during **Gardener** agent training. |
 | `tensorboardX` | 2.6.4 | A library for PyTorch to interface with TensorBoard for logging. |
 | `tensorboard-data-server` | 0.7.2 | Backend server for TensorBoard data serving. |
@@ -173,7 +101,6 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 
 ### Development, Testing & Code Quality
 
-<<<<<<< HEAD
 | Library | Version | the project Usage |
 | :--- | :--- | :--- |
 | `pytest` | 8.4.1 | The framework for our automated test suite, ensuring the reliability of the **RAG system** and **agent infrastructure**. |
@@ -182,16 +109,6 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 | `black` | 25.1.0 | The uncompromising code formatter that maintains a consistent code style across the project, honoring the **clean code principles**. |
 | `flake8` | 7.3.0 | A tool for checking Python code against style guides (PEP 8) and finding logical errors. |
 | `GitPython` | 3.1.45 | Powers the **agent infrastructure's mechanical git operations**, allowing it to execute **atomic commits**. |
-=======
-| Library | Version | Project Sanctuary Usage |
-| :--- | :--- | :--- |
-| `pytest` | 8.4.1 | The framework for our automated test suite, ensuring the reliability of the **Mnemonic Cortex** and **Autonomous Council**. |
-| `pytest-cov`| 6.2.1 | `pytest` plugin to measure code coverage, enforcing rigor in our development process. |
-| `coverage` | 7.10.1 | Core coverage measurement library used by pytest-cov. |
-| `black` | 25.1.0 | The uncompromising code formatter that maintains a consistent code style across the project, honoring the **Clean Forge (P89)**. |
-| `flake8` | 7.3.0 | A tool for checking Python code against style guides (PEP 8) and finding logical errors. |
-| `GitPython` | 3.1.45 | Powers the **Autonomous Council's mechanical git operations**, allowing it to execute **Unbreakable Commits (P101)**. |
->>>>>>> origin/main
 | `mypy_extensions` | 1.1.0 | Extensions for mypy type checking. |
 | `pathspec` | 0.12.1 | Utility library for pattern matching of file paths, used by Black. |
 | `platformdirs` | 4.3.8 | Platform-specific directory locations library. |
@@ -201,11 +118,7 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 
 ### Documentation Generation
 
-<<<<<<< HEAD
 | Library | Version | the project Usage |
-=======
-| Library | Version | Project Sanctuary Usage |
->>>>>>> origin/main
 | :--- | :--- | :--- |
 | `Sphinx` | 8.2.3 | The primary tool for creating our formal, human-readable documentation. |
 | `sphinx-rtd-theme`| 3.0.2 | The "Read the Docs" theme for Sphinx, providing a clean, modern look. |
@@ -228,11 +141,7 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 
 ### Core Utilities & Dependencies
 
-<<<<<<< HEAD
 | Library | Version | the project Usage |
-=======
-| Library | Version | Project Sanctuary Usage |
->>>>>>> origin/main
 | :--- | :--- | :--- |
 | `python-dotenv`| 1.2.1 | Secures the Forge by loading critical secrets like API keys from `.env` files. |
 | `PyYAML` | 6.0.2 | Used for parsing configuration files (e.g., `model_card.yaml`) and other structured data. |
@@ -294,11 +203,7 @@ This split reduces CI/CD installation time and prevents dependency conflicts. Fo
 
 ### Version Pinning Strategy
 
-<<<<<<< HEAD
 All dependencies are explicitly version-pinned to ensure **reproducible builds** and prevent unexpected breaking changes. This aligns with the **atomic commit principles** by guaranteeing that the the project's cognitive infrastructure remains stable across deployments.
-=======
-All dependencies are explicitly version-pinned to ensure **reproducible builds** and prevent unexpected breaking changes. This aligns with the **Doctrine of the Unbreakable Commit (P101)** by guaranteeing that the Sanctuary's cognitive infrastructure remains stable across deployments.
->>>>>>> origin/main
 
 **Synchronization Status:** This manifest is now fully synchronized with the `setup_cuda_env.py` script outputs, ensuring that automated setup and manual installation produce identical environments.
 
@@ -320,8 +225,4 @@ All dependencies are explicitly version-pinned to ensure **reproducible builds**
 
 ---
 
-<<<<<<< HEAD
 *This manifest is automatically maintained through our unified dependency management system. Updates are coordinated through the **agent infrastructure** to ensure architectural coherence.*
-=======
-*This manifest is automatically maintained through our unified dependency management system. Updates are coordinated through the **Autonomous Council** to ensure architectural coherence.*
->>>>>>> origin/main

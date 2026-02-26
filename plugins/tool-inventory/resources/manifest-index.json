@@ -1,11 +1,7 @@
 {
     "tool": {
         "description": "Tool Discovery (CLI Scripts & Capabilities)",
-<<<<<<< HEAD
         "manifest": "plugins/tool_inventory.json",
-=======
-        "manifest": "tools/tool_inventory.json",
->>>>>>> origin/main
         "cache": ".agent/learning/rlm_tool_cache.json",
         "parser": "inventory_dict",
         "prompt_path": "plugins/tool-inventory/resources/prompts/rlm/rlm_summarize_tool.md",

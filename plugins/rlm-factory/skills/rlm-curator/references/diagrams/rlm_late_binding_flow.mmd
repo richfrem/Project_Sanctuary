@@ -14,11 +14,7 @@ sequenceDiagram
     
     Skill->>Search: search("business rule", store="tool")
     Search->>Cache: Query Index (Fuzzy/Vector)
-<<<<<<< HEAD
     Cache-->>Search: Match: plugins/codify/business_rule.py
-=======
-    Cache-->>Search: Match: tools/codify/business_rule.py
->>>>>>> origin/main
     Search-->>Skill: Return List [Tool ID, Path, Purpose]
 
     note over Agent, FileSystem: Phase 2: Just-In-Time Context Loading
@@ -27,9 +23,5 @@ sequenceDiagram
     Skill-->>Agent: Inject Context: [business_rule.py Usage]
 
     note over Agent, FileSystem: Phase 3: Execution
-<<<<<<< HEAD
     Agent->>FileSystem: Execute: python plugins/codify/business_rule.py ...
-=======
-    Agent->>FileSystem: Execute: python tools/codify/business_rule.py ...
->>>>>>> origin/main
     FileSystem-->>Agent: Success / Output

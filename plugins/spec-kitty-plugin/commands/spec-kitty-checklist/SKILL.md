@@ -32,11 +32,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Execution Steps
 
-<<<<<<<< HEAD:plugins/spec-kitty-plugin/commands/spec-kitty-checklist/SKILL.md
 1. **Setup**: Run `(Missing script command for sh)` from repo root and parse JSON for FEATURE_DIR and AVAILABLE_DOCS list.
-========
-1. **Setup**: Run `(Missing script command for ps)` from repo root and parse JSON for FEATURE_DIR and AVAILABLE_DOCS list.
->>>>>>>> origin/main:plugins/spec-kitty/workflows/spec-kitty.checklist.md
    - All file paths must be absolute.
 
 2. **Clarify intent (dynamic)**: Derive up to THREE initial contextual clarifying questions (no pre-baked catalog). They MUST:

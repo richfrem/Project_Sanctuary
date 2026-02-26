@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Excel To Csv Plugin 📊
 
 Convert Excel files (entire workbooks or specific worksheets/tables) into CSV format natively via agent execution.
@@ -27,19 +26,3 @@ excel-to-csv/
 
 ## Usage
 The skill is invoked automatically. Claude will use the local `scripts/convert.py` to flatten your `.xlsx` data into accessible tabular CSV data for easier text processing.
-=======
-# Excel To Csv Plugin
-
-Standardized plugin for excel-to-csv.
-
-## Overview
-This plugin provides capabilities for the **excel-to-csv** domain.
-It follows the standard Project Sanctuary plugin architecture.
-
-## Structure
-- `skills/`: Contains the agent skills instructions (`SKILL.md`) and executable scripts.
-- `.claude-plugin/`: Plugin manifest and configuration.
-
-## Usage
-This plugin is automatically loaded by the Agent Environment.
->>>>>>> origin/main
