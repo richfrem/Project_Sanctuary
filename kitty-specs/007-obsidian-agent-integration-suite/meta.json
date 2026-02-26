@@ -1,0 +1,9 @@
+{
+  "feature_number": "007",
+  "slug": "007-obsidian-agent-integration-suite",
+  "feature_slug": "007-obsidian-agent-integration-suite",
+  "friendly_name": "obsidian agent integration suite",
+  "mission": "software-dev",
+  "target_branch": "main",
+  "created_at": "2026-02-26T15:36:30.983794+00:00"
+}
