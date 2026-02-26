@@ -53,11 +53,15 @@ history:
 - **Purpose**: Preemptively avoid rebuilding features Obsidian already possesses.
 - **Steps**: Compare Obsidian's native semantic features to the `rlm-factory` and `vector-db` Python skills to determine pivot opportunities. What does Obsidian offer out of the box? Are our bespoke semantic models redundant? 
 
-### Subtask T003 – Draft ADR
-- **Purpose**: Document the chosen direction.
-- **Steps**: Follow standard ADR templates to combine findings from T001 and T002 into an Architectural Decision Record covering integration tools and capability impact mapping.
+### Subtask T003 – Architect Agent Skills and Plugin Boundaries
+- **Purpose**: Define how Sanctuary agents will actually use Obsidian capabilities.
+- **Steps**: Review `research/obsidian-capabilities-summary.md`. Architect a plugin and skill structure to support "Obsidian Markdown Mastery" (Callouts, Wikilinks), "Obsidian Bases Manager" (`.base` YAML data), and "JSON Canvas Architect" (`.canvas` visual files). Establish the required host software installations (e.g. Obsidian CLI).
 
-### Subtask T004 – Obtain human steward approval
+### Subtask T004 – Draft ADR
+- **Purpose**: Document the chosen direction.
+- **Steps**: Follow standard ADR templates to combine findings from T001, T002, and T003 into an Architectural Decision Record covering integration tools, required installations, and capability impact mapping.
+
+### Subtask T005 – Obtain human steward approval
 - **Purpose**: Ensure alignment with the Architect before code is written.
 - **Steps**: Wait for human review or run `spec-kitty review` to get the ADR formally accepted before checking off the task.
 

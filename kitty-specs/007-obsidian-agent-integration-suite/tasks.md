@@ -22,10 +22,11 @@
 **Prompt**: `/tasks/WP01-research-integration-strategy.md`
 
 ### Included Subtasks
-- [ ] T001 Analyze Obsidian's core mechanisms (Local REST API, direct Markdown, Custom Plugin).
+- [ ] T001 Analyze Obsidian's core mechanisms (Local REST API, direct Markdown, Custom Plugin) relative to the Agent Client Protocol (ACP) integrations.
 - [ ] T002 Analyze capability overlap with `rlm-factory` and `vector-db` plugins.
-- [ ] T003 Draft ADR detailing the chosen read/write strategy and capability alignment.
-- [ ] T004 Obtain human steward approval on the ADR.
+- [ ] T003 Architect explicitly how Project Sanctuary agents will leverage Obsidian skills (Markdown Mastery, Obsidian Bases, JSON Canvas) and define the necessary plugin boundaries.
+- [ ] T004 Draft ADR detailing the chosen read/write strategy, capability alignment, and required software installations (Obsidian CLI).
+- [ ] T005 Obtain human steward approval on the ADR.
 
 ### Implementation Notes
 - Crucial that WP01 is completely resolved before WP03 and WP04 begin.
@@ -77,8 +78,8 @@
 ### Included Subtasks
 - [ ] T010 Create `obsidian-crud` plugin directory and SKILL.md.
 - [ ] T011 Implement read mechanisms per WP01 ADR.
-- [ ] T012 Implement create/update mechanisms per WP01 ADR.
-- [ ] T013 Write unit verification tests for note lifecycle.
+- [ ] T012 Implement create/update mechanisms per WP01 ADR, explicitly handling both standard `.md` and Obsidian `.base` (YAML dashboard) file architectures.
+- [ ] T013 Write unit verification tests for note and `.base` lifecycle.
 
 ### Implementation Notes
 - Implementation hinges on the architecture chosen in WP01.
@@ -102,7 +103,7 @@
 
 ### Included Subtasks
 - [ ] T014 Create `obsidian-graph` plugin directory and SKILL.md.
-- [ ] T015 Implement link parsing logic to identify wikilinks.
+- [ ] T015 Implement link parsing logic to identify wikilinks, callouts, and embeds.
 - [ ] T016 Implement backlink resolution.
 - [ ] T017 Implement forward link resolution.
 - [ ] T018 Write verification tests for 3-back, 2-forward node relationship.

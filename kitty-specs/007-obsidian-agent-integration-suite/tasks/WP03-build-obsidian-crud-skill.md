@@ -47,15 +47,15 @@ history:
 
 ### Subtask T011 – Implement read mechanisms
 - **Purpose**: Retrieve vault markdown files dynamically.
-- **Steps**: Implement retrieval scripts conforming to the WP01 architecture choice. Support fetching exact strings, frontmatter fields, and folder discovery.
+- **Steps**: Implement retrieval scripts conforming to the WP01 architecture choice. Support fetching exact strings, frontmatter fields, and folder discovery. Ensure output formatting is compatible with Agent Client Protocol (ACP) standard contexts.
 
 ### Subtask T012 – Implement create/update mechanisms
 - **Purpose**: Edit note material directly from Agent environment.
-- **Steps**: Create write scripts capable of adding or appending text logic inside target vault markdown notes, managing frontmatter securely. Ensure idempotency where necessary.
+- **Steps**: Create write scripts capable of adding or appending text logic inside target vault markdown notes. **Crucially, implement write parity for `.base` files (Obsidian Bases Manager YAML tables)** so the agent can construct dynamic dashboards autonomously. Ensure idempotency where necessary.
 
 ### Subtask T013 – Write unit verification tests
 - **Purpose**: Automated regression coverage.
-- **Steps**: Create unit test files that mimic lifecycle states: init note -> read note -> modify note -> read updated note -> assert results -> teardown.
+- **Steps**: Create unit test files that mimic lifecycle states: init note -> read note -> modify note -> read updated note -> assert results. Test creation of both standard `.md` and dynamic `.base` YAML dashboards. Teardown.
 
 ## Activity Log
 
