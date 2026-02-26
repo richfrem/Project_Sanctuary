@@ -1,25 +1,28 @@
 ---
-work_package_id: "WP01"
-subtasks:
-  - "T001"
-  - "T002"
-  - "T003"
-  - "T004"
-title: "Research Obsidian Integration Strategy & Capability Overlap"
-phase: "Phase 0 - Research"
-lane: "planned"  
-assignee: ""      
-agent: ""         
-shell_pid: ""     
-review_status: "" 
-reviewed_by: ""   
+work_package_id: WP01
+title: Research Obsidian Integration Strategy & Capability Overlap
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 8ed66bfb638cfbebf2a2c1aa1abfee0c66bac1ba
+created_at: '2026-02-26T16:25:25.932061+00:00'
+subtasks:
+- T001
+- T002
+- T003
+- T004
+phase: Phase 0 - Research
+assignee: ''
+agent: ''
+shell_pid: "62896"
+review_status: ''
+reviewed_by: ''
 history:
-  - timestamp: "2026-02-26T16:15:00Z"
-    lane: "planned"
-    agent: "system"
-    shell_pid: ""
-    action: "Prompt generated via /spec-kitty.tasks"
+- timestamp: '2026-02-26T16:15:00Z'
+  lane: planned
+  agent: system
+  shell_pid: ''
+  action: Prompt generated via /spec-kitty.tasks
 ---
 
 # Work Package Prompt: WP01 – Research Obsidian Integration Strategy & Capability Overlap
