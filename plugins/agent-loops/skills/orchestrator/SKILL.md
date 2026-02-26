@@ -173,20 +173,6 @@ The orchestrator must verify these gates at each phase:
 
 ---
 
-## Plugin Dependencies
-
-| Plugin/Skill | Role |
-|:---|:---|
-| `plugins/agent-loops/skills/learning-loop/` | Pattern 1: Research & document loop |
-| `plugins/agent-loops/skills/red-team-review/` | Pattern 2: Adversarial audit loop |
-| `plugins/agent-loops/skills/dual-loop/` | Pattern 3: Outer/Inner delegation loop |
-| `plugins/agent-loops/skills/agent-swarm/` | Pattern 4: Parallel worktree execution |
-| `plugins/context-bundler/scripts/bundle.py` | Used by `bundle` command for red team packets |
-| `plugins/rlm-factory/` | Invoked via `persist` command to sync session traces to RLM cache |
-| `plugins/guardian-onboarding/skills/session-closure/` | Guardian owns Seal/Persist/Close after retro completes |
-
----
-
 ## Research Basis
 
 This skill implements the **"Dual-Loop Agent Architecture"** inspired by:

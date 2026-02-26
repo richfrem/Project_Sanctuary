@@ -37,11 +37,7 @@ except ImportError:
 def main():
     # Cache and Inventory paths
     cache_path = PROJECT_ROOT / ".agent/learning/rlm_tool_cache.json"
-<<<<<<< HEAD
     inventory_path = PROJECT_ROOT / "plugins/tool_inventory.json"
-=======
-    inventory_path = PROJECT_ROOT / "tools/tool_inventory.json"
->>>>>>> origin/main
 
     
     if not cache_path.exists():

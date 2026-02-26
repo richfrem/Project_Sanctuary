@@ -1,5 +1,4 @@
 ---
-<<<<<<< HEAD
 description: Install a new plugin from the vendor collection.
 args:
   plugin_name:
@@ -38,29 +37,4 @@ cp -r "$VENDOR_PATH" "plugins/"
 # 3. Activate (Inventory Sync)
 echo "Activating plugin capabilities..."
 python plugins/plugin-manager/scripts/sync_with_inventory.py
-=======
-description: "Install an Agent Plugin into the local environment(s)"
----
-
-# /plugin-manager:install
-
-Installs a portable agent plugin into Antigravity (`.agent/`), GitHub (`.github/`), and/or Gemini (`.gemini/`).
-
-## Usage
-
-```bash
-python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin <path-to-plugin> [--target <auto|antigravity|github|gemini>]
-```
-
-## Examples
-
-### Install Agent Orchestrator (Auto-detect)
-```bash
-python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/agent-orchestrator
-```
-
-### Force Install to GitHub
-```bash
-python3 plugins/plugin-manager/scripts/bridge_installer.py --plugin plugins/agent-orchestrator --target github
->>>>>>> origin/main
 ```

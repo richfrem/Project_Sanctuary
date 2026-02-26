@@ -17,7 +17,7 @@ An iterative review loop where research is bundled via `context-bundler` and dis
 ## Process Flow
 
 1. **Research & Analyze** — Deep-dive into the problem domain. Create analysis docs, capture sources.
-2. **Bundle Context** — Formally invoke the `context-bundling` skill to compile all relevant files into a structured review packet that conforms to the bundle manifest schema.
+2. **Bundle Context** — Use `context-bundler` to compile all relevant files into a review packet.
 3. **Dispatch to Reviewers** — Send the bundle to:
    - Human reviewers (paste-to-chat or browser)
    - CLI agents with adversarial personas (security auditor, devil's advocate)
@@ -30,14 +30,9 @@ An iterative review loop where research is bundled via `context-bundler` and dis
 
 ## Dependencies
 
-| Plugin/Skill | Role |
-|:---|:---|
-| `plugins/context-bundler/scripts/bundle.py` | **Required** — generates the structured review packet for each loop iteration |
-| `plugins/context-bundler/skills/context-bundling/SKILL.md` | Skill wrapper that defines the bundling format and manifest schema |
-| `personas/` | Adversarial reviewer configs (e.g., `security-audit.md`, `architect-review.md`) |
-| `plugins/guardian-onboarding/skills/session-closure/` | Invoked after approval to Seal the session |
-| `plugins/rlm-factory/` | RLM cache updated with research findings at end of loop |
+- **`context-bundler`** — Required for creating review packets
+- **Personas** — Adversarial personas in `personas/` directory (e.g., `security-audit.md`, `architect-review.md`)
 
 ## Diagram
 
-See: [protocol_128_learning_loop.mmd](../../../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
+See: [red_team_review_loop.mmd](../../resources/diagrams/red_team_review_loop.mmd)

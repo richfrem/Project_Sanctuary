@@ -1,0 +1,24 @@
+---
+config:
+  theme: base
+---
+%% Name: MCP Protocol Creation Workflow
+%% Source: docs/architecture/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Location: docs/architecture_diagrams/workflows/mcp_protocol_creation_workflow.mmd
+%% Description: Workflow example for creating a Protocol via MCP
+
+sequenceDiagram
+    participant LLM as LLM Assistant
+    participant Protocol as Protocol MCP
+    participant Chronicle as Chronicle MCP
+    participant Git as Git Operations
+    
+    LLM->>Protocol: create_protocol(115, "MCP Ecosystem", ...)
+    Protocol->>Git: commit_with_manifest(...)
+    Git-->>Protocol: commit_hash
+    Protocol-->>LLM: {file_path, commit_hash}
+    
+    LLM->>Chronicle: create_chronicle_entry(279, "P115 Canonized", ...)
+    Chronicle->>Git: commit_with_manifest(...)
+    Git-->>Chronicle: commit_hash
+    Chronicle-->>LLM: {file_path, commit_hash}
