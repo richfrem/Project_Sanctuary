@@ -1,9 +1,13 @@
 ---
 work_package_id: WP09
 title: Build 'Forge Soul' Semantic Exporter Skill
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 8c26eafb4e219af244c99dd11f175a00ddc3e907
+created_at: '2026-02-27T23:07:23.519004+00:00'
 subtasks: [T040, T041, T042, T043, T044, T045]
+shell_pid: "55083"
 ---
 
 # Work Package Prompt: WP09 – Build 'Forge Soul' Semantic Exporter Skill
