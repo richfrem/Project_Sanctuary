@@ -33,8 +33,8 @@ Orientation → Synthesis → Strategic Gate → Red Team Audit → [Execution] 
 > **Goal**: Establish Identity & Context.
 > **Trigger**: First action upon environment initialization.
 
-1.  **Identity Check**: Read any local `cognitive_primer.md` or orientation documents provided by the user's environment.
-2.  **Context Loading**: Retrieve the historical session state (the "Cognitive Hologram" or `learning_package_snapshot.md`) to understand what the previous agent accomplished.
+1.  **Identity Check**: Read any local orientation documents or primers provided by the user's environment.
+2.  **Context Loading**: Retrieve the historical session state (the "Context Snapshot" or equivalent state file) to understand what the previous agent accomplished.
 3.  **Report Readiness**: Output: "Orientation complete. Context loaded. Ready."
 
 **STOP**: Do NOT proceed to work until you have completed Phase I.
@@ -82,7 +82,7 @@ Orientation → Synthesis → Strategic Gate → Red Team Audit → [Execution] 
 
 > **Automated Summarization**.
 1. Synthesize all completed work, modified files, and new protocols into a dense summary.
-2. Update the system's "Cognitive Hologram" (`learning_package_snapshot.md` or equivalent state file).
+2. Update the system's "Context Snapshot" (or equivalent state file).
 
 ### Phase VI: The Technical Seal
 
@@ -143,7 +143,7 @@ When a Learning Loop runs inside a Dual-Loop session:
 | IV (Audit) | Outer Loop snapshots before delegation | Pre-execution checkpoint |
 | *(Execution)* | **Inner Loop** performs tactical work | Code-only, isolated |
 | *Verification* | Outer Loop inspects Inner Loop output | Validates against criteria |
-| V (Context Synthesis) | Outer Loop | Cognitive Hologram generation |
+| V (Context Synthesis) | Outer Loop | Context Snapshot generation |
 | VI-IX (Seal→Closure) | Outer Loop closure | Standard seal/persist/retro/end |
 
 **Key rule**: The Inner Loop does NOT run Learning Loop phases. All cognitive continuity is the Outer Loop's responsibility.
