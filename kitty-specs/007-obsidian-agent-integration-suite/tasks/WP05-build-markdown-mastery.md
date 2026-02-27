@@ -1,9 +1,13 @@
 ---
 work_package_id: WP05
 title: Build Obsidian Markdown Mastery Skill
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 0076d81527e4c8ac68076ac5fc46badb43271d1c
+created_at: '2026-02-27T22:06:53.251039+00:00'
 subtasks: [T020, T021, T022, T023, T024]
+shell_pid: "55083"
 ---
 
 # Work Package Prompt: WP05 – Build Obsidian Markdown Mastery Skill
