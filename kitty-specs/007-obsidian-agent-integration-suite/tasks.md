@@ -99,11 +99,11 @@
 **Prompt**: `/tasks/WP05-build-markdown-mastery.md`
 
 ### Included Subtasks
-- [ ] T020 Scaffold the `obsidian-markdown-mastery` skill framework.
-- [ ] T021 Build the shared `obsidian-parser` module for deep wikilink inspection.
-- [ ] T022 Handle block reference, heading, alias, and embed mappings.
-- [ ] T023 Implement Callout parsing logic according to Obsidian flavors.
-- [ ] T024 Write parsing tests ensuring edge cases are caught.
+- [x] T020 Scaffold the `obsidian-markdown-mastery` skill framework.
+- [x] T021 Build the shared `obsidian-parser` module for deep wikilink inspection.
+- [x] T022 Handle block reference, heading, alias, and embed mappings.
+- [x] T023 Implement Callout parsing logic according to Obsidian flavors.
+- [x] T024 Write parsing tests ensuring edge cases are caught.
 
 ### Dependencies
 - WP01, WP02
