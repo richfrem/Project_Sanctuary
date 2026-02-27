@@ -1,7 +1,7 @@
 ---
 work_package_id: WP09
 title: Build 'Forge Soul' Semantic Exporter Skill
-lane: "doing"
+lane: "for_review"
 dependencies: []
 base_branch: main
 base_commit: 8c26eafb4e219af244c99dd11f175a00ddc3e907
@@ -50,3 +50,4 @@ agent: "Antigravity"
 ## Activity Log
 
 - 2026-02-27T23:07:24Z – Antigravity – shell_pid=55083 – lane=doing – Assigned agent via workflow command
+- 2026-02-27T23:18:21Z – Antigravity – shell_pid=55083 – lane=for_review – Forge Soul Exporter + huggingface-utils plugin complete. Guardian rewired as thin wrapper. Config validates from worktrees.
