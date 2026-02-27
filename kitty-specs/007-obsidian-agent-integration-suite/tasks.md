@@ -64,11 +64,11 @@
 **Prompt**: `/tasks/WP03-research-hf-schema-mapping.md`
 
 ### Included Subtasks
-- [ ] T011 Analyze HF `soul_traces.jsonl` schema (ADR 081).
-- [ ] T012 Define exact mapping rules for nested folders via `source_path`.
-- [ ] T013 Formalize the rule that images and binary attachments are strictly ignored.
-- [ ] T014 Draft ADR detailing the mapping strategy.
-- [ ] T015 Obtain human steward approval on the mapping ADR.
+- [x] T011 Analyze HF `soul_traces.jsonl` schema (ADR 081).
+- [x] T012 Define exact mapping rules for nested folders via `source_path`.
+- [x] T013 Formalize the rule that images and binary attachments are strictly ignored.
+- [x] T014 Draft ADR detailing the mapping strategy.
+- [x] T015 Obtain human steward approval on the mapping ADR.
 
 ### Dependencies
 - WP01
