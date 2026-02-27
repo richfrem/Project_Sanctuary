@@ -2,7 +2,7 @@
 work_package_id: "WP02"
 title: "Deep Analyze Kepano Obsidian Skills Repository"
 lane: "planned"
-dependencies: []
+dependencies: ["WP01"]
 subtasks: ["T006", "T007", "T008", "T009", "T010"]
 ---
 

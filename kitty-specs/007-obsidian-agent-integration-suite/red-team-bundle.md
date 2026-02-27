@@ -1,5 +1,7 @@
 # Obsidian Integration Suite Red Team Review
-**Description:** A comprehensive bundle of the architecture, research, and planned work packages for the Obsidian Agent Integration Suite, submitted for Red Team architectural review.
+**Generated:** 2026-02-27 06:17:10
+
+A comprehensive bundle of the architecture, research, and planned work packages for the Obsidian Agent Integration Suite, submitted for Red Team architectural review.
 
 ## Index
 1. `kitty-specs/007-obsidian-agent-integration-suite/red-team-prompt.md` - Primary instructions for the Red Team Reviewer.
@@ -8,19 +10,23 @@
 4. `kitty-specs/007-obsidian-agent-integration-suite/research.md` - The synthesis of Gemini 3.1 Pro continuous deep research and integration decisions.
 5. `kitty-specs/007-obsidian-agent-integration-suite/research/obsidian-plugin-architecture.md` - The specific breakdown of the 6 new Agent Skills within the proposed obsidian-integration plugin.
 6. `kitty-specs/007-obsidian-agent-integration-suite/research/Obsidian Vault for AI Agents.md` - Raw output from the Gemini 3.1 Pro Deep Research analysis (Provides raw ground-truth for the Red Team).
-7. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP01-research-integration-strategy.md` - Work Package 1: The Research Phase (Complete).
-8. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-data-mapping-hf-schema.md` - Work Package 2: The HF Data Mapping rules.
-9. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-build-obsidian-crud-skill.md` - Work Package 3: The CRUD operations for standard notes and .base dashboards.
-10. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-build-obsidian-graph-skill.md` - Work Package 4: The semantic link Graph Traversal operations.
-11. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-forge-soul-skill.md` - Work Package 5: The Forge Soul HF Exporter pipeline.
-12. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-legacy-scrubbing.md` - Work Package 6: Automated Link Refactoring and repository cleanup.
+7. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP01-research-integration-strategy.md` - Work Package 1: ADR Research.
+8. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-analyze-kepano-skills.md` - Work Package 2: Github Repository deep dive.
+9. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-research-hf-schema-mapping.md` - Work Package 3: HF JSONL Data Mapping rules.
+10. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-legacy-scrubbing.md` - Work Package 4: Automated Link Refactoring.
+11. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-markdown-mastery.md` - Work Package 5: Parser.
+12. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-build-obsidian-crud.md` - Work Package 6: Vault CRUD.
+13. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP07-build-dynamic-views.md` - Work Package 7: YAML Bases and JSON Canvas.
+14. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP08-build-graph-traversal.md` - Work Package 8: Graph Engine.
+15. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP09-build-forge-soul.md` - Work Package 9: Knowledge Exporter.
+16. `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP10-integration-testing.md` - Work Package 10: Integration Testing.
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/red-team-prompt.md`
 > Note: Primary instructions for the Red Team Reviewer.
 
-```markdown
+````markdown
 You are the Red Team Architectural Reviewer.
 
 Your objective is to review the proposed integration strategy between Project Sanctuary's autonomous AI agents and an external Obsidian Vault. 
@@ -40,15 +46,14 @@ Provide a critical 'Red Team' evaluation of this design:
 3. **Execution Feasibility**: Are the Work Packages sized correctly, and are the dependencies logical?
 
 Please provide your findings, categorized by Risk Level (Critical, High, Medium, Low), and propose concrete adjustments to the Work Packages or Architecture if necessary.
-
-```
+````
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/spec.md`
 > Note: The foundational rules and feature descriptions.
 
-```markdown
+````markdown
 # Feature Specification: Obsidian Agent Integration Suite
 
 **Feature Branch**: `[007-obsidian-agent-integration-suite]`  
@@ -174,15 +179,14 @@ The repository contains broken links from moved files and outdated references to
 - **SC-003**: A test note with 3 backlinks and 2 forward links returns a correct 5-node relationship graph via the traversal skill.
 - **SC-004**: Running the "Forge Soul" skill generates a valid JSONL payload that passes Hugging Face schema validation, and explicitly fails if uncommitted Git changes are present.
 - **SC-005**: `grep -i "mcp "` run against `.agent/` and `plugins/guardian-onboarding/` returns zero results, and relative links in `01_PROTOCOLS/` and `02_LEARNING/` are successfully refactored to wikilinks.
-
-```
+````
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/plan.md`
 > Note: The overarching technical context and implementation plan.
 
-```markdown
+````markdown
 # Implementation Plan: [FEATURE]
 *Path: [templates/plan-template.md](templates/plan-template.md)*
 
@@ -204,8 +208,8 @@ It establishes a formalized integration strategy (ADRs for architecture and data
 **Target Platform**: CLI / Agent Environment.
 **Project Type**: Python Plugin ecosystem (`plugins/` directory). 
 **Performance Goals**: Fast graph traversal (< 2 seconds for a graph of 50 links). Seamless linking between disparate research files.
-**Constraints**: Must strictly adhere to the Hugging Face `soul_traces.jsonl` schema (ADR 081). Must handle rate limits and strictly ignore large binary attachments.
-**Scale/Scope**: 6 Work Packages representing pure Research (ADRs), 3 Agent Skills (CRUD, Graph, Export), and 1 Repository Cleanup task.
+**Constraints**: Must strictly adhere to the Hugging Face `soul_traces.jsonl` schema (ADR 081). Must handle rate limits and strictly ignore large binary attachments. Must enforce Atomic Writes and Advisory Locks when modifying active vaults to prevent silent corruption.
+**Scale/Scope**: 10 Work Packages representing Research (ADRs), 6 Agent Skills + 1 Shared Parser Utility, 1 Cleanup Task, and 1 Integration Testing Suite.
 
 ## Constitution Check
 
@@ -232,56 +236,72 @@ kitty-specs/[###-feature]/
 ### Source Code (repository root)
 
 ```
+```text
 plugins/obsidian-integration/
+├── obsidian-parser/            # Shared proprietary markdown parser
 ├── skills/
-│   ├── obsidian-crud/
-│   │   ├── SKILL.md
-│   │   └── scripts/
-│   ├── obsidian-graph/
-│   │   ├── SKILL.md
-│   │   └── scripts/
-│   └── forge-soul/
-│       ├── SKILL.md
-│       └── scripts/
+│   ├── obsidian-markdown-mastery/
+│   ├── obsidian-vault-crud/
+│   ├── obsidian-graph-traversal/
+│   ├── obsidian-bases-manager/
+│   ├── obsidian-canvas-architect/
+│   └── forge-soul-exporter/
+└── templates/                  # Synthetic testing vaults
 ```
 
-**Structure Decision**: This feature will establish a new `obsidian-integration` plugin containing the three autonomous skills, cleanly separating the system from legacy MCP logic.
+**Structure Decision**: This feature will establish a new `obsidian-integration` plugin containing the 6 autonomous skills outlined in `obsidian-plugin-architecture.md`, cleanly separating the system from legacy MCP logic. A shared `obsidian-parser` module will anchor the varied wikilink and callout syntaxes to prevent regex fragmentation across the skills.
 
 ## Work Packages
 
 The implementation of `007-obsidian-agent-integration-suite` is structured into 6 sequential Work Packages (WPs). Note that `tasks.md` will be formally generated by the `/spec-kitty.tasks` command based on this plan.
 
 1. **WP01: Research Obsidian Integration Strategy & Capability Overlap (ADR)**
-   - **Goal:** Determine the optimal architectural pattern for reading/writing Obsidian nodes (Direct Markdown parsing vs. Local REST API vs. Custom Plugin). Crucially, this research MUST map Obsidian's native capabilities against Project Sanctuary's existing `rlm-factory` and `vector-db` skills to determine overlaps, redundancies, or pivot opportunities.
-   - **Output:** An approved Architectural Decision Record (ADR) detailing the chosen strategy and capability alignment.
+   - **Goal:** Determine the architectural pattern for reading/writing Obsidian nodes. Map Obsidian's native capabilities against Project Sanctuary's existing `rlm-factory` and `vector-db` skills.
+   - **Output:** An approved Architectural Decision Record (ADR) detailing the chosen strategy (Direct Filesystem + Antigravity Multi-root) and defining the 6 required Plugin Skills.
 
-2. **WP02: Research Data Mapping to HF Schema (ADR)**
-   - **Goal:** Analyze how complex nested folders and frontmatter arrays safely map to the existing `HF_JSONL` schema (ADR 081) while adhering to the rule that all images and binary attachments are strictly ignored.
-   - **Output:** An approved ADR detailing how `source_path` metadata replaces physical directory nesting.
+2. **WP02: Deep Analyze Kepano Obsidian Skills Repository**
+   - **Goal:** Clone `https://github.com/kepano/obsidian-skills` into a temporary directory and perform a deep analysis of its codebase to identify best practices, potential overlaps, and standard approaches to bridging agents with Obsidian.
+   - **Output:** An architectural synthesis report documenting code patterns and specific integrations that can map into our own sovereign plugin ecosystem.
 
-3. **WP03: Build Obsidian CRUD Skill**
-   - **Goal:** Implement the `obsidian-crud` plugin skill based on the WP01 ADR.
-   - **Output:** A self-contained Agent Skill capable of reading, writing, and updating local Obsidian vault notes with verification testing.
+3. **WP03: Research Data Mapping to HF Schema (ADR)**
+   - **Goal:** Analyze nested folder and frontmatter mapping to the existing `HF_JSONL` schema (ADR 081). Ignore binary attachments.
+   - **Output:** An approved ADR detailing how `source_path` metadata replaces physical directory nesting, explicitly noting unsupported edge cases.
 
-4. **WP04: Build Obsidian Graph Traversal Skill**
-   - **Goal:** Implement the `obsidian-graph` plugin skill capable of parsing internal links to return a localized relationship map (backlinks and forward links) for a target node.
-   - **Output:** A verified traversal skill.
+4. **WP04: Legacy Scrubbing & Automated Link Refactoring**
+   - **Goal:** Remove references to obsolete "MCP architecture". Develop a Python script (with a mandatory Dry-Run preview) to convert legacy relative markdown links into Obsidian wikilinks (`[[file]]`) across `01_PROTOCOLS/` and `02_LEARNING/`.
+   - **Output:** Clean `grep` results for "MCP", and safe wikilink refactoring to establish a clean graph for downstream traversal tests.
 
-5. **WP05: Build 'Forge Soul' Semantic Exporter Skill**
-   - **Goal:** Implement the `forge-soul` plugin skill capable of aggregating sealed Obsidian notes and formatting them into the `soul_traces.jsonl` export schema according to the rules from WP02.
-   - **Output:** A verified semantic export skill.
+5. **WP05: Build Obsidian Markdown Mastery Skill**
+   - **Goal:** Implement the formatting controller skill (`obsidian-markdown-mastery`) and the shared `obsidian-parser` module.
+   - **Output:** A self-contained utility that handles all complex link mapping (`[[Note|Alias]]`, `[[Note#^block]]`, Embeds) and acts as the gatekeeper for all vault I/O.
 
-6. **WP06: Legacy Scrubbing & Automated Link Refactoring**
-   - **Goal:** Remove all references to the obsolete "MCP architecture" from existing prompt templates. Develop and run a Python script to locate legacy relative markdown links (e.g., `[Link](../../file.md)`) and convert them into Obsidian wikilinks (`[[file]]`) across the `01_PROTOCOLS/` and `02_LEARNING/` directories.
-   - **Output:** Clean `grep` results for "MCP", and all relevant relative links refactored to wikilinks.
-```
+6. **WP06: Build Obsidian Vault CRUD Skill**
+   - **Goal:** Implement the `obsidian-vault-crud` plugin skill for interacting with standard Markdown notes.
+   - **Output:** A verified agent skill utilizing Atomic Writes (POSIX rename) and a `.agent-lock` protocol for human-active vaults.
+
+7. **WP07: Build Obsidian Dynamic Views Skills (Bases & Canvas)**
+   - **Goal:** Implement the `obsidian-bases-manager` and `obsidian-canvas-architect` plugin skills.
+   - **Output:** Agent Skills capable of reading/updating `.base` and `.canvas` files, featuring lossless YAML parsing (`ruamel.yaml`) and forward-compatible schema logic.
+
+8. **WP08: Build Obsidian Graph Traversal Skill**
+   - **Goal:** Implement the `obsidian-graph-traversal`, anchored by the shared `obsidian-parser` utility index built in WP05.
+   - **Output:** Verified traversal skill utilizing a lightweight in-memory cache index to natively resolve global wikilink ambiguities and backward link references accurately in < 2 seconds.
+
+9. **WP09: Build 'Forge Soul' Semantic Exporter Skill**
+   - **Goal:** Implement the `forge-soul-exporter` plugin to format sealed knowledge into `soul_traces.jsonl`.
+   - **Output:** A verified semantic export pipeline that enforces an absolute **Snapshot Isolation Lock** (tree hash parity) during the run, failing instantly if file `mtime` changes are detected midway to avoid exporting fragmented notes.
+
+10. **WP10: Phase 1.5 Integration & Synthetic Edge-Case Testing**
+   - **Goal:** Provide end-to-end integration safety.
+   - **Output:** A synthetic testing vault loaded with 100+ edge-case notes (e.g., malformed YAML, complex block transclusions, spaces in paths). Run an end-to-end simulated concurrent read/write test and a dry run of the Forge Soul export.
+````
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/research.md`
 > Note: The synthesis of Gemini 3.1 Pro continuous deep research and integration decisions.
 
-```markdown
+````markdown
 # Research & Decisions: Obsidian Agent Integration Suite
 
 **Feature**: 007-obsidian-agent-integration-suite
@@ -333,15 +353,14 @@ This document synthesizes strategic findings from the Gemini 3.1 Pro deep resear
 ---
 
 > **Note**: This research concludes WP01. The strategy has been defined (Direct Filesystem + Antigravity Multi-root), capability overlap has been resolved (Keep Sanctuary Vector tools, treat Obsidian as pure data layer), and the deep research has been fully integrated into the evidence logs.
-
-```
+````
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/research/obsidian-plugin-architecture.md`
 > Note: The specific breakdown of the 6 new Agent Skills within the proposed obsidian-integration plugin.
 
-```markdown
+````markdown
 # Obsidian Integration Suite: Architectural Blueprint
 
 **Feature**: 007-obsidian-agent-integration-suite
@@ -427,15 +446,14 @@ To achieve true "Obsidian Mastery" for our autonomous agents (Gemini, Claude), w
 
 1.  **Antigravity Multi-root**: We will attach the physical Obsidian Vault directory (`.obsidian/` containing) directly to the agent's IDE workspace. 
 2.  **No IPC Lock Required**: By using direct filesystem parsing (`pathlib` and `frontmatter` libraries) rather than the Obsidian CLI, these 6 skills can operate completely headless. This ensures background CI/CD validation tasks can run even if the Obsidian desktop application is closed.
-
-```
+````
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/research/Obsidian Vault for AI Agents.md`
 > Note: Raw output from the Gemini 3.1 Pro Deep Research analysis (Provides raw ground-truth for the Red Team).
 
-```markdown
+````markdown
 # **Architecting Autonomous Intelligence: The Integration of Google Antigravity and Obsidian for Persistent Agentic Knowledge Systems**
 
 The evolution of artificial intelligence from conversational chatbots to autonomous agents represents a fundamental shift in the computational landscape. As of late 2025 and early 2026, the emergence of platforms like Google Antigravity has redefined the interface through which large language models, specifically frontier models such as Gemini 3.1 Pro and Claude 3.5 Sonnet, interact with the physical and digital world.1 A critical challenge in this agentic era is the management of persistent knowledge. While traditional models suffer from transient context windows and "context rot," the integration of local-first knowledge management systems like Obsidian provides a sovereign, durable, and interlinked memory bank.3 This report explores the technical architecture of Google Antigravity, the command-line capabilities of the Obsidian CLI, the specialized agent skills that empower models to master Obsidian’s unique formats, and the practical workflows through which agents can preserve and link their own learning to achieve long-horizon task autonomy.
@@ -695,49 +713,23 @@ As agents like Gemini 3.1 Pro continue to evolve, the ability to maintain a loca
 44. interactive-writing-assistant | Skil... \- LobeHub, accessed February 26, 2026, [https://lobehub.com/ar/skills/jykim-claude-obsidian-skills-interactive-writing-assistant](https://lobehub.com/ar/skills/jykim-claude-obsidian-skills-interactive-writing-assistant)
 
 [image1]: <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAYCAYAAADtaU2/AAABUklEQVR4XmNgGAWjYBQMNzARiFOR+B1AXIPEJxbUAnEPuiAQaKMLiAPxJSg7F4h/AfF/KP8sA3ZDcIFnQKwExH+B+CCaHMhMWXQBGOCB8vWB2ALKjkCSxwcUgTgLygbpO4Uklw8VQwFGSOwyBlQFHEhsQsABSgsyQMyQRkgxvIeK4QSfGAgoIALsY8A0A8TfiCaGAkAKFqMLkghAZsDSDAgwQ8WQQ5ZBACqozICIXy0k+atIbBDgZIDEFz4AMiMdiV8KFUMBM6GCIAPPQdmgRAICoAS2AsqGAZA8CJuhiSMDkPw6KJsJysewmBFJwpUB4nMYvw5JHQwEAfFTIF6ILoEEQNkTZsZFKL0KRQWZgBeIy9EFoQDkEeScYMWACFGKAT7fogcriH0ciU82EAbiPeiCSABkERuU/QCIdyOkKAPs6AJoABQNU4B4FgMkx4yCgQUAByBJZBB3zXcAAAAASUVORK5CYII=>
-```
+````
 
 ---
 
 ## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP01-research-integration-strategy.md`
-> Note: Work Package 1: The Research Phase (Complete).
+> Note: Work Package 1: ADR Research.
 
-```markdown
+````markdown
 ---
-work_package_id: WP01
-title: Research Obsidian Integration Strategy & Capability Overlap
-lane: "doing"
+work_package_id: "WP01"
+title: "Research Obsidian Integration Strategy & Capability Overlap"
+lane: "planned"
 dependencies: []
-base_branch: main
-base_commit: 8ed66bfb638cfbebf2a2c1aa1abfee0c66bac1ba
-created_at: '2026-02-26T16:25:25.932061+00:00'
-subtasks:
-- T001
-- T002
-- T003
-- T004
-phase: Phase 0 - Research
-assignee: ''
-agent: ''
-shell_pid: "62896"
-review_status: ''
-reviewed_by: ''
-history:
-- timestamp: '2026-02-26T16:15:00Z'
-  lane: planned
-  agent: system
-  shell_pid: ''
-  action: Prompt generated via /spec-kitty.tasks
+subtasks: ["T001", "T002", "T003", "T004", "T005"]
 ---
 
 # Work Package Prompt: WP01 – Research Obsidian Integration Strategy & Capability Overlap
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
-
----
 
 ## Objectives & Success Criteria
 - Identify the best technical path (REST API vs Custom Plugin vs Markdown) for interacting with the Vault.
@@ -769,386 +761,435 @@ history:
 ### Subtask T005 – Obtain human steward approval
 - **Purpose**: Ensure alignment with the Architect before code is written.
 - **Steps**: Wait for human review or run `spec-kitty review` to get the ADR formally accepted before checking off the task.
-
-## Activity Log
-
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
-
-```
+````
 
 ---
 
-## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-data-mapping-hf-schema.md`
-> Note: Work Package 2: The HF Data Mapping rules.
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-analyze-kepano-skills.md`
+> Note: Work Package 2: Github Repository deep dive.
 
-```markdown
+````markdown
 ---
 work_package_id: "WP02"
-subtasks:
-  - "T005"
-  - "T006"
-  - "T007"
-  - "T008"
-  - "T009"
-title: "Research Data Mapping to HF Schema"
-phase: "Phase 0 - Research"
-lane: "planned"  
-assignee: ""      
-agent: ""         
-shell_pid: ""     
-review_status: "" 
-reviewed_by: ""   
+title: "Deep Analyze Kepano Obsidian Skills Repository"
+lane: "planned"
 dependencies: []
-history:
-  - timestamp: "2026-02-26T16:15:00Z"
-    lane: "planned"
-    agent: "system"
-    shell_pid: ""
-    action: "Prompt generated via /spec-kitty.tasks"
+subtasks: ["T006", "T007", "T008", "T009", "T010"]
 ---
 
-# Work Package Prompt: WP02 – Research Data Mapping to HF Schema
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
-
----
+# Work Package Prompt: WP02 – Deep Analyze Kepano Obsidian Skills Repository
 
 ## Objectives & Success Criteria
-- Define mapping rules avoiding strict directory syncing in favor of `source_path` attributes.
-- Author an ADR formalizing mapping structures according to `HF_JSONL` specifications (ADR 081).
-- Ignore attachments cleanly.
+- Perform a thorough architectural analysis of the `kepano/obsidian-skills` github project.
+- Find best practices and overlaps for constructing Agent capabilities over standard Markdown Vaults.
+- Synthesize an intelligence payload to guide downstream implementation logic.
+
+## Context & Constraints
+- We are building a sovereign Python suite; any JS/TS plugin dependencies mapped by Kepano must be strictly evaluated against our "Direct Filesystem Read" architecture rules.
 
 ## Subtasks & Detailed Guidance
 
-### Subtask T005 – Analyze HF soul_traces.jsonl schema
-- **Purpose**: Baseline mapping schema against existing HF targets.
-- **Steps**: Retrieve HF JSONL mapping schemas defined in ADR 081. Note JSON fields like `id`, `sha256`, `timestamp`, `content`.
+### Subtask T006 – Clone codebase to temp directory
+- **Purpose**: Safely acquire the source logic over the network.
+- **Steps**: Execute `git clone https://github.com/kepano/obsidian-skills /tmp/kepano-obsidian-skills`. 
 
-### Subtask T006 – Define mapping rules for nested folders
-- **Purpose**: How directory nesting applies to JSON payload string fields.
-- **Steps**: Establish explicit transformation instructions to flatten filesystem hierarchy properties directly into the `source_path` metadata column within the target JSONL file.
+### Subtask T007 – Analyze agent integration architecture
+- **Purpose**: Surface how Kepano structures LLM prompts inside Obsidian.
+- **Steps**: Sweep the repository for skill configurations, prompt structures, and external tool endpoints (e.g., search, fetch, list files). Look for specific JSON schemas.
 
-### Subtask T007 – Formalize the image/binary ignore rule
-- **Purpose**: Keep the dataset pure and textual.
-- **Steps**: Solidify the requirement that all binaries and images within Obsidian are filtered from JSON.
+### Subtask T008 – Compare with Sanctuary architecture
+- **Purpose**: Map Kepano's strategies to Sanctuary's plugins.
+- **Steps**: Identify what Kepano does through the Obsidian API versus what Sanctuary does natively through `ruamel.yaml` and `pathlib` Python hooks. Determine if anything can be strictly transposed.
 
-### Subtask T008 – Draft ADR
-- **Purpose**: Create physical documentation of data mapping decisions.
-- **Steps**: Distill T005-T007 into an official Architectural Decision Record.
+### Subtask T009 – Compile Context Bundler payload
+- **Purpose**: Ensure downstream WPs can directly read the insights from this deep dive.
+- **Steps**: Create an architectural synthesis report (`research/kepano-analysis.md`). This must be added to the Red Team Bundle and loaded as context during WP05 and WP06.
 
-### Subtask T009 – Obtain human steward approval
-- **Purpose**: Final sign-off.
-- **Steps**: Submit the ADR for review and block on formal clearance.
-
-## Activity Log
-
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
-
-```
+### Subtask T010 – Cleanup Temporary clone
+- **Purpose**: Maintain workspace hygiene.
+- **Steps**: Ensure `/tmp/kepano-obsidian-skills` is purged (`rm -rf`) after the analysis report is validated and saved.
+````
 
 ---
 
-## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-build-obsidian-crud-skill.md`
-> Note: Work Package 3: The CRUD operations for standard notes and .base dashboards.
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-research-hf-schema-mapping.md`
+> Note: Work Package 3: HF JSONL Data Mapping rules.
 
-```markdown
+````markdown
 ---
-work_package_id: WP03
-title: Build Obsidian CRUD Skill
-lane: planned
-dependencies: []
-subtasks:
-- T010
-- T011
-- T012
-- T013
-phase: Phase 1 - Implementation
-assignee: ''
-agent: ''
-shell_pid: ''
-review_status: ''
-reviewed_by: ''
-history:
-- timestamp: '2026-02-26T16:15:00Z'
-  lane: planned
-  agent: system
-  shell_pid: ''
-  action: Prompt generated via /spec-kitty.tasks
+work_package_id: "WP03"
+title: "Research Data Mapping to HF Schema"
+lane: "planned"
+dependencies: ["WP01"]
+subtasks: ["T011", "T012", "T013", "T014", "T015"]
 ---
 
-# Work Package Prompt: WP03 – Build Obsidian CRUD Skill
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
-
----
+# Work Package Prompt: WP03 – Research Data Mapping to HF Schema
 
 ## Objectives & Success Criteria
-- Implement fundamental Obsidian vault read/write operations via an Agent Skill.
-- Note creation, retrieval, and append updates must function autonomously without manual human interaction.
-- Passes explicit local CRUD lifecycle unit tests.
+- Resolve how highly-nested markdown vaults map to `soul_traces.jsonl`.
+- Provide an approved ADR standardizing the data translation.
+
+## Context & Constraints
+- Must adhere strictly to the `HF_JSONL` schema detailed in ADR 081.
+
+## Subtasks & Detailed Guidance
+
+### Subtask T011 – Analyze HF `soul_traces.jsonl` schema
+- **Purpose**: Standardize integration target.
+- **Steps**: Pull ADR 081 into context. Note constraints around JSON fields such as `content`, `domain`, and `timestamp`.
+
+### Subtask T012 – Define folder mapping
+- **Purpose**: Translate hierarchy to tags.
+- **Steps**: An Obsidian vault has infinite directory depths. Define exact mapping rules on how nested folders project down into the JSONL `source_path` array.
+
+### Subtask T013 – Formalize Attachment Rules
+- **Purpose**: Protect the semantic vector spaces from huge binaries.
+- **Steps**: Create explicit code filtering rules dictating that images, `.pdf`, `.mp4`, etc., are strictly ignored by the exporter.
+
+### Subtask T014 – Draft ADR
+- **Purpose**: Document the data mapping definitions.
+- **Steps**: Generate the new Architectural Decision Record spanning the rules established in T012 and T013.
+
+### Subtask T015 – Obtain human steward approval
+- **Purpose**: Gate progress.
+- **Steps**: Request human review for the ADR.
+````
+
+---
+
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-legacy-scrubbing.md`
+> Note: Work Package 4: Automated Link Refactoring.
+
+````markdown
+---
+work_package_id: "WP04"
+title: "Legacy Scrubbing & Automated Link Refactoring"
+lane: "planned"
+dependencies: []
+subtasks: ["T016", "T017", "T018", "T019"]
+---
+
+# Work Package Prompt: WP04 – Legacy Scrubbing & Automated Link Refactoring
+
+## Objectives & Success Criteria
+- Ensure zero Legacy internal relative links (`[Link](../../like-this.md)`) remain in the learning databanks.
+- Purge legacy term "MCP architecture" acting as noise in context prompts.
+
+## Context & Constraints
+- Link transformation must happen early to create a clean testing graph for WP08.
+- Must execute safely via a Dry-Run first.
+
+## Subtasks & Detailed Guidance
+
+### Subtask T016 – Develop refactoring script
+- **Purpose**: Safe and verifiable substitution.
+- **Steps**: Write a Python script targeting the regex pattern of markdown relative links. It MUST implement a dry-run flag (`--dry-run`) printing proposed changes without executing them. Exclude text inside triple-backtick code fences.
+
+### Subtask T017 – Apply refactoring
+- **Purpose**: Actual execution.
+- **Steps**: Run the script against the `01_PROTOCOLS/` and `02_LEARNING/` directories. Commit the changes cleanly.
+
+### Subtask T018 – Scrub "MCP" references
+- **Purpose**: Remove confusing vocabulary.
+- **Steps**: Hunt down "MCP" and "Model Context Protocol" occurrences in `sanctuary-guardian-prompt.md` and related context boot files. Replace them with "Agent Plugin Integration".
+
+### Subtask T019 – Verify clean grep
+- **Purpose**: Prove completion.
+- **Steps**: Execute exhaustive greps proving neither standard relative markdown links nor "MCP" references remain in target paths.
+````
+
+---
+
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-markdown-mastery.md`
+> Note: Work Package 5: Parser.
+
+````markdown
+---
+work_package_id: "WP05"
+title: "Build Obsidian Markdown Mastery Skill"
+lane: "planned"
+dependencies: ["WP01", "WP02"]
+subtasks: ["T020", "T021", "T022", "T023", "T024"]
+---
+
+# Work Package Prompt: WP05 – Build Obsidian Markdown Mastery Skill
+
+## Objectives & Success Criteria
+- Implement the baseline parser required to format and read Obsidian distinct syntax correctly.
+- Establish the `obsidian-parser` as a standalone utility module importable by other skills (like Graph Traversal).
+
+## Context & Constraints
+- Must map heading anchors, block references, wikilink aliases, and image transclusions distinctly.
+
+## Subtasks & Detailed Guidance
+
+### Subtask T020 – Scaffold Skill framework
+- **Purpose**: Setup plugin root.
+- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-markdown-mastery/SKILL.md` and the `scripts/` folder.
+
+### Subtask T021 – Build `obsidian-parser` Shared Utility
+- **Purpose**: Prevent regex drift.
+- **Steps**: Write a centralized Python module in `plugins/obsidian-integration/obsidian-parser/`. This is the universal gatekeeper for extracting and injecting wikilinks.
+
+### Subtask T022 – Handle Edge Case Link Mappings
+- **Purpose**: Account for Obsidian's proprietary capabilities identified by Red Team.
+- **Steps**: Inside the parser, implement regex/AST logic specific to:
+    - `[[Note#Heading]]` (Heading-level linking)
+    - `[[Note#^block-id]]` (Block-level linking)
+    - `[[Note|Alias Text]]` (Aliasing)
+    - `![[Note]]` (Transclusion/Embed - Must be identified uniquely so the Graph Traverser doesn't parse it as a standard node).
+
+### Subtask T023 – Callout Parsing Logic
+- **Purpose**: Correct formatting of highlighted contexts.
+- **Steps**: Add functions to wrap string sections in Obsidian-flavored Callouts (`> [!info]`). 
+
+### Subtask T024 – Write Verification Tests
+- **Purpose**: Prove resilience.
+- **Steps**: Expose the parser to strings containing complex links and callouts. Assert that the correct types (Embed vs Link) and metadata (Alias, Heading, Block) are accurately extracted.
+````
+
+---
+
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-build-obsidian-crud.md`
+> Note: Work Package 6: Vault CRUD.
+
+````markdown
+---
+work_package_id: "WP06"
+title: "Build Obsidian Vault CRUD Skill"
+lane: "planned"
+dependencies: ["WP01", "WP05"]
+subtasks: ["T025", "T026", "T027", "T028", "T029"]
+---
+
+# Work Package Prompt: WP06 – Build Obsidian Vault CRUD Skill
+
+## Objectives & Success Criteria
+- Implement the baseline agent capability for reading, creating, and updating standard local Obsidian `.md` notes.
+- Integrate POSIX atomic renames to prevent corruption when Obsidian auto-saves concurrently.
 
 ## Context & Constraints
 - Must align strictly with the implementation pattern decided upon in the WP01 ADR.
+- The `obsidian-markdown-mastery` utility handles syntax; WP06 strictly handles disk I/O and locking.
 
 ## Subtasks & Detailed Guidance
 
-### Subtask T010 – Create obsidian-crud plugin directory
-- **Purpose**: Establish project plugin environment.
-- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-crud/` directory and bootstrap standard `SKILL.md` template structure adhering to sanctuary guidelines.
+### Subtask T025 – Scaffold Plugin Framework
+- **Purpose**: Prepare architecture.
+- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-vault-crud/SKILL.md` and `scripts/`.
 
-### Subtask T011 – Implement read mechanisms
-- **Purpose**: Retrieve vault markdown files dynamically.
-- **Steps**: Implement retrieval scripts conforming to the WP01 architecture choice. Support fetching exact strings, frontmatter fields, and folder discovery. Ensure output formatting is compatible with Agent Client Protocol (ACP) standard contexts.
+### Subtask T026 – Implement Atomic Writes
+- **Purpose**: Prevent partial disk writes from crashing active clients.
+- **Steps**: Any Python write mechanism MUST write the mutated data to a hidden `.tmp` file in the same directory, then perform `os.rename()` (which is atomic on POSIX) to instantly swap the old note for the new one.
 
-### Subtask T012 – Implement create/update mechanisms
-- **Purpose**: Edit note material directly from Agent environment.
-- **Steps**: Create write scripts capable of adding or appending text logic inside target vault markdown notes. **Crucially, implement write parity for `.base` files (Obsidian Bases Manager YAML tables)** so the agent can construct dynamic dashboards autonomously. Ensure idempotency where necessary.
+### Subtask T027 – Implement `.agent-lock` protocol
+- **Purpose**: Human-Active Vault Protection.
+- **Steps**: Build logic that checks for a `.agent-lock` file at the root of the vault. If this exists (or if we build a mechanism identifying the Obsidian desktop app is focusing the file), abort write operations to prevent conflict.
 
-### Subtask T013 – Write unit verification tests
-- **Purpose**: Automated regression coverage.
-- **Steps**: Create unit test files that mimic lifecycle states: init note -> read note -> modify note -> read updated note -> assert results. Test creation of both standard `.md` and dynamic `.base` YAML dashboards. Teardown.
+### Subtask T028 – Detect Concurrent Edits
+- **Purpose**: Avoid overwriting human inputs.
+- **Steps**: Capture file `mtime` before reading. Before writing the `.tmp` file back over it, check `mtime` again. If it shifted, a user edited the file mid-agent-thought. Abort and alert.
 
-## Activity Log
-
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
-
-```
-
----
-
-## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-build-obsidian-graph-skill.md`
-> Note: Work Package 4: The semantic link Graph Traversal operations.
-
-```markdown
----
-work_package_id: WP04
-title: Build Obsidian Graph Traversal Skill
-lane: planned
-dependencies: []
-subtasks:
-- T014
-- T015
-- T016
-- T017
-- T018
-phase: Phase 1 - Implementation
-assignee: ''
-agent: ''
-shell_pid: ''
-review_status: ''
-reviewed_by: ''
-history:
-- timestamp: '2026-02-26T16:15:00Z'
-  lane: planned
-  agent: system
-  shell_pid: ''
-  action: Prompt generated via /spec-kitty.tasks
----
-
-# Work Package Prompt: WP04 – Build Obsidian Graph Traversal Skill
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
+### Subtask T029 – Lossless YAML Parsing
+- **Purpose**: Prevent breaking Dataview.
+- **Steps**: Ensure PyYAML is NOT used. Use `ruamel.yaml` to read/write the note frontmatter perfectly preserving comments, indentation, and array styles.
+````
 
 ---
+
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP07-build-dynamic-views.md`
+> Note: Work Package 7: YAML Bases and JSON Canvas.
+
+````markdown
+---
+work_package_id: "WP07"
+title: "Build Obsidian Dynamic Views Skills (Bases & Canvas)"
+lane: "planned"
+dependencies: ["WP01", "WP06"]
+subtasks: ["T030", "T031", "T032", "T033", "T034"]
+---
+
+# Work Package Prompt: WP07 – Build Obsidian Dynamic Views Skills (Bases & Canvas)
 
 ## Objectives & Success Criteria
-- Enable semantic traversal of the Obsidian vault by parsing `[[wikilinks]]`.
-- Given a target note, an agent can ask for its relationship graph (both backlinks and forward links).
-- A 5-node test relationship must succeed programmatically.
+- Programmatic read/write access to DB-like `.base` views and `.canvas` flowcharts.
+- Robust schema validation ensuring the agent doesn't corrupt dynamic files.
 
 ## Context & Constraints
-- Performance is a constraint: traversal of 50 links should occur in under 2 seconds.
-- Implementation depends heavily on the integration mechanism determined in WP01.
+- These structures are highly proprietary. Degrade gracefully if schemas evolve unexpectedly.
 
 ## Subtasks & Detailed Guidance
 
-### Subtask T014 – Create obsidian-graph plugin directory
-- **Purpose**: Scaffold discrete code boundary.
-- **Steps**: Initialize `plugins/obsidian-integration/skills/obsidian-graph/` with standard `SKILL.md` instruction file.
+### Subtask T030 – Scaffold Plugin Frameworks
+- **Purpose**: Prepare architectures.
+- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-bases-manager/` and `plugins/obsidian-integration/skills/obsidian-canvas-architect/` alongside their corresponding `SKILL.md` documents.
 
-### Subtask T015 – Implement link parsing logic
-- **Purpose**: Semantic awareness of markdown files.
-- **Steps**: Develop regex or AST parsers capable of surfacing standard `[[Linked Note]]` formats within the body of a markdown file. Provide hooks for dealing with alias formats `[[Linked Note|Alias]]`.
+### Subtask T031 – `.base` Table Manipulation
+- **Purpose**: Interact with dashboard state.
+- **Steps**: Write logic decoding the YAML structure native to `Obsidian Bases`. Build functions allowing an agent to confidently append or update row data while leaving view configurations untouched.
 
-### Subtask T016 – Implement backlink resolution
-- **Purpose**: Graph context (who points to me).
-- **Steps**: Create a reverse-lookup mechanism. If direct filesystem, this might require a cached graph index to remain performant. Return list of paths.
+### Subtask T032 – JSON Canvas Specifications
+- **Purpose**: Visual flowchart mapping.
+- **Steps**: Build a client utilizing `JSON Canvas Spec 1.0`. Structure logic to programmatically place semantic `nodes` and connect them with directional `edges`.
 
-### Subtask T017 – Implement forward link resolution
-- **Purpose**: Graph context (who do I point to).
-- **Steps**: Using logic from T015, return a structured list of outbound nodes from a specific file.
+### Subtask T033 – Graceful Error Degradation
+- **Purpose**: System stability.
+- **Steps**: Ensure any `KeyError` or schema mismatch caught when loading these files issues a clean API warning back to the agent rather than crashing the loop or wiping the file.
 
-### Subtask T018 – Write verification tests
-- **Purpose**: Prove the graph engine works.
-- **Steps**: Scaffold a dummy vault folder with a central Note A. Give Note A 2 forward links (B, C) and give 3 surrounding notes (D, E, F) backlinks to Note A. Assert the script parses exactly those 5 connections correctly.
-
-## Activity Log
-
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
-
-```
+### Subtask T034 – Schema Verifications
+- **Purpose**: Safety.
+- **Steps**: Write verification unit tests mapping against synthetic `.base` files and mock `.canvas` boards.
+````
 
 ---
 
-## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-forge-soul-skill.md`
-> Note: Work Package 5: The Forge Soul HF Exporter pipeline.
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP08-build-graph-traversal.md`
+> Note: Work Package 8: Graph Engine.
 
-```markdown
+````markdown
 ---
-work_package_id: WP05
-title: Build 'Forge Soul' Semantic Exporter Skill
-lane: planned
-dependencies: []
-subtasks:
-- T019
-- T020
-- T021
-- T022
-- T023
-- T024
-phase: Phase 1 - Implementation
-assignee: ''
-agent: ''
-shell_pid: ''
-review_status: ''
-reviewed_by: ''
-history:
-- timestamp: '2026-02-26T16:15:00Z'
-  lane: planned
-  agent: system
-  shell_pid: ''
-  action: Prompt generated via /spec-kitty.tasks
+work_package_id: "WP08"
+title: "Build Obsidian Graph Traversal Skill"
+lane: "planned"
+dependencies: ["WP05", "WP06"]
+subtasks: ["T035", "T036", "T037", "T038", "T039"]
 ---
 
-# Work Package Prompt: WP05 – Build 'Forge Soul' Semantic Exporter Skill
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
-
----
+# Work Package Prompt: WP08 – Build Obsidian Graph Traversal Skill
 
 ## Objectives & Success Criteria
-- Push verified Obsidian contextual data (Soul Traces) exclusively into Hugging Face `soul_traces.jsonl`.
-- Must firmly deny state-change execution if uncommitted Git drift exists (Protocol 101 execution lock).
-- Must drop all binary attributes and successfully compile JSON payloads according to WP02 structure rules.
+- Allow agents to query "What connects to Note X?" and receive an instant back/forward graph map.
+- Performance < 2 seconds for deep queries without re-scanning the entire vault.
 
 ## Context & Constraints
-- Constitution rules mandate Zero Trust Git. The script must execute a `git status` parity lock before touching remote layers.
-- See ADR 081 for JSONL expected schema.
+- Needs to parse thousands of internal Markdown files rapidly.
+- Relies on the `obsidian-parser` built in WP05 to find the links.
 
 ## Subtasks & Detailed Guidance
 
-### Subtask T019 – Create forge-soul plugin directory
-- **Purpose**: Establish plugin boundary.
-- **Steps**: Scaffold `plugins/obsidian-integration/skills/forge-soul/` with an instructive `SKILL.md`.
+### Subtask T035 – Scaffold Plugin Framework
+- **Purpose**: Establish root.
+- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-graph-traversal/`. Add `SKILL.md` detailing the semantic bridging capabilities.
 
-### Subtask T020 – Implement Git Pre-Flight Check (Protocol 101) logic
-- **Purpose**: Zero Trust execution block.
-- **Steps**: Inject pre-flight validation logic to evaluate the working directory using `git status`. If there are uncommitted changes, abort process automatically and flag an error.
+### Subtask T036 – Hook into `obsidian-parser`
+- **Purpose**: Don't reinvent the wheel.
+- **Steps**: Import the link extraction regex/AST logic from WP05. Ensure it safely filters out Image transclusions (`![[image.png]]`) while collecting note nodes.
 
-### Subtask T021 – Implement logic to identify sealed notes
-- **Purpose**: Only export approved memories.
-- **Steps**: Traverse the local vault explicitly searching for files with contextual approval frontmatter blocks (e.g., `status: sealed`, `#ADR`). Skip all draft or WIP notes.
+### Subtask T037 – Build In-Memory Graph Index
+- **Purpose**: Solve performance limits via cache.
+- **Steps**: To avoid full-vault scans on every query, build a lightweight JSON or SQLite graph index mapping `Source -> Target`. Add an invalidation mechanism responding to file `mtime` changes.
 
-### Subtask T022 – Implement data transformation logic
-- **Purpose**: Adhere to HF constraints.
-- **Steps**: Compile parsed files into dictionaries matching `id`, `sha256`, `timestamp`, `content`. Drop ALL attachment code (e.g. `![[image.png]]`) cleanly from text blobs, and map directories via `source_path` as strictly established in WP02.
+### Subtask T038 – Forward/Backward Resolution
+- **Purpose**: Graph logic endpoints.
+- **Steps**: Write query logic traversing the index. E.g. `get_backlinks("Project Plan")` or `get_2nd_degree_connections("Concept A")`. 
 
-### Subtask T023 – Implement export/append
-- **Purpose**: Final network sync.
-- **Steps**: Take transformed dictionaries and write locally to `.jsonl` then leverage the huggingface_hub api to push an updated version of the dataset safely.
-
-### Subtask T024 – Write tests validating schema and Git blocks
-- **Purpose**: Prove the gate works.
-- **Steps**: Create test mock directories. Verify JSON payload structures via unit testing. Create a test executing the script in an artificially "dirty" git directory and assert it throws the defined abort exception.
-
-## Activity Log
-
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
-
-```
+### Subtask T039 – Synthetic Performance Testing
+- **Purpose**: Verification of the 2-second target.
+- **Steps**: Generate a synthetic graph of 50 interlinked test nodes. Write a python test that asserts the index generation and querying executes within boundary constraints.
+````
 
 ---
 
-## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-legacy-scrubbing.md`
-> Note: Work Package 6: Automated Link Refactoring and repository cleanup.
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP09-build-forge-soul.md`
+> Note: Work Package 9: Knowledge Exporter.
 
-```markdown
+````markdown
 ---
-work_package_id: "WP06"
-subtasks:
-  - "T025"
-  - "T026"
-  - "T027"
-  - "T028"
-title: "Legacy Scrubbing & Automated Link Refactoring"
-phase: "Phase 2 - Cleanup"
-lane: "planned"  
-assignee: ""      
-agent: ""         
-shell_pid: ""     
-review_status: "" 
-reviewed_by: ""   
-dependencies: []
-history:
-  - timestamp: "2026-02-26T16:15:00Z"
-    lane: "planned"
-    agent: "system"
-    shell_pid: ""
-    action: "Prompt generated via /spec-kitty.tasks"
+work_package_id: "WP09"
+title: "Build 'Forge Soul' Semantic Exporter Skill"
+lane: "planned"
+dependencies: ["WP03", "WP06"]
+subtasks: ["T040", "T041", "T042", "T043", "T044", "T045"]
 ---
 
-# Work Package Prompt: WP06 – Legacy Scrubbing & Automated Link Refactoring
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
-
----
+# Work Package Prompt: WP09 – Build 'Forge Soul' Semantic Exporter Skill
 
 ## Objectives & Success Criteria
-- Establish graph cohesiveness by mass-migrating relative reference strings into valid format wikilinks.
-- Hard delete all legacy references pointing to "MCP" design semantics.
-- Return zero failures upon grep checks on core repositories.
+- Format sealed Obsidian notes natively into the `soul_traces.jsonl` export schema.
+- Secure the pipeline to completely prevent fragmented/corrupt exports mid-run.
 
 ## Context & Constraints
-- Only mutate `01_PROTOCOLS/` and `02_LEARNING/` for the link migrations to avoid breaking upstream pipeline files elsewhere.
-- Remove outdated language from foundational system prompts (`.agent/`, `plugins/guardian-onboarding/`).
+- Relies on Data Mapping logic from WP03.
+- MUST implement absolute Snapshot Isolation.
 
 ## Subtasks & Detailed Guidance
 
-### Subtask T025 – Develop relative to wikilink converter script
-- **Purpose**: Utility logic.
-- **Steps**: Write a Python parser utilizing regex to identify `[Title](../path/file.md)` patterns inside markdown context and emit `[[file]]` replacements. Ensure it strips `.md` correctly.
+### Subtask T040 – Scaffold Plugin
+- **Purpose**: Architecture setup.
+- **Steps**: Create `plugins/obsidian-integration/skills/forge-soul-exporter/`. Setup the `SKILL.md` and dependencies.
 
-### Subtask T026 – Apply refactoring
-- **Purpose**: Graph realization.
-- **Steps**: Execute parser across all nested files uniquely belonging to `.agent/learning/` (e.g., `01_PROTOCOLS` and `02_LEARNING` directories in the repository).
+### Subtask T041 – Dual Git Pre-Flight Check
+- **Purpose**: Guarantee clean state before export.
+- **Steps**: Write logic checking `git status --porcelain`. Crucially, if the Vault is mounted outside the main plugin GitHub repository, ensure the script explicitly tests the `git status` of the **Vault Root** as well. Abort if any uncommitted changes are detected.
 
-### Subtask T027 – Scrub MCP references
-- **Purpose**: Enforce agent skill terminology.
-- **Steps**: Traverse `sanctuary-guardian-prompt.md` and related `.agent/` and `plugins/guardian-onboarding/` files to systematically delete the term "MCP" or replace it dynamically with "Agent Skills" or "Plugins".
+### Subtask T042 – Sealed Note Identification & Frontmatter Isolation
+- **Purpose**: Targeting.
+- **Steps**: Search for `status: sealed` in frontmatters. Crucially, wrap this in try/except blocks to gracefully warn and skip nodes exhibiting malformed YAML, avoiding pipeline crashes.
 
-### Subtask T028 – Verify clean results
-- **Purpose**: Hard validation gating.
-- **Steps**: Build regression tests asserting `grep -i "mcp "` returns a non-zero exit code (i.e. zero lines matched) in the protected directories.
+### Subtask T043 – Snapshot Isolation Parity Check
+- **Purpose**: Prevent fragmented exports due to concurrent updates.
+- **Steps**: At the very beginning of the export run, capture a high-speed tree hash (or record `mtime` across all parsed files). Before initiating the network push, verify the hashes/mtimes haven't moved. Abort if they did.
 
-## Activity Log
+### Subtask T044 – Payload Formulation
+- **Purpose**: Data shaping.
+- **Steps**: Format output strictly to `HF_JSONL` mapping rules (WP03 ADR). Strip all binaries.
 
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
-
-```
+### Subtask T045 – Hugging Face API Exponential Backoff
+- **Purpose**: Network resilience.
+- **Steps**: Build the final upload loop using the `huggingface_hub` package. Do not rely on default retries; explicitly configure an exponential backoff retry mechanism to survive rate limits. Provide detailed terminal failure readouts.
+````
 
 ---
+
+## File: `kitty-specs/007-obsidian-agent-integration-suite/tasks/WP10-integration-testing.md`
+> Note: Work Package 10: Integration Testing.
+
+````markdown
+---
+work_package_id: "WP10"
+title: "Phase 1.5 Integration & Synthetic Edge-Case Testing"
+lane: "planned"
+dependencies: ["WP04", "WP07", "WP08", "WP09"]
+subtasks: ["T046", "T047", "T048", "T049", "T050"]
+---
+
+# Work Package Prompt: WP10 – Phase 1.5 Integration & Synthetic Edge-Case Testing
+
+## Objectives & Success Criteria
+- Provide end-to-end integration safety.
+- Expose the assembled `obsidian-integration` plugin suite to 100+ highly varied margin-case notes to prove the parser and CRUD engines won't crash.
+
+## Context & Constraints
+- Due to the risk of silent corruption on a real vault, these integration tests MUST run against an isolated `Synthetic Vault` instantiated in `/tmp` natively through Python Pytest fixtures.
+
+## Subtasks & Detailed Guidance
+
+### Subtask T046 – Spin Up Synthetic Vault
+- **Purpose**: A safe sandbox.
+- **Steps**: Write a Pytest fixture that creates a temporary directory mirroring an Obsidian vault structure.
+
+### Subtask T047 – Seed Edge Casing Notes
+- **Purpose**: Stress test the parsing engines.
+- **Steps**: Programmatically generate notes featuring:
+   - Malformed YAML (unquoted colons).
+   - Massive strings with thousands of sequential Wikilinks.
+   - Deeply nested directories (`path/to/very/deep/folder/note.md`).
+   - `.canvas` nodes connected to non-existent nodes.
+   - Standard text mixed heavily with triple-backtick bash output containing `[[` strings to ensure they are excluded from linking.
+
+### Subtask T048 – Concurrent I/O Simulation
+- **Purpose**: Stress test the WP06 atomic `.agent-lock` strategy.
+- **Steps**: Unleash 10 asynchronous threads attempting to simultaneously update, link, and traverse the synthetic vault notes using the `obsidian-vault-crud` and `obsidian-graph-traversal` tools. Assert that no corruption or deadlock occurs.
+
+### Subtask T049 – Dry Run Forge Soul Export
+- **Purpose**: Complete the pipeline.
+- **Steps**: Take the final synthetic state. Trigger the semantic export pipeline in "dry-run" mode (writing JSONL to disk rather than network) and validate against the schema.
+
+### Subtask T050 – Analyze Code Coverage and Error Flags
+- **Purpose**: Confirm safety.
+- **Steps**: Collect coverage metrics. Resolve any failing tests. The plugin MUST achieve ~90% functional logic coverage before WP10 is signed off.
+````
+
+---
+

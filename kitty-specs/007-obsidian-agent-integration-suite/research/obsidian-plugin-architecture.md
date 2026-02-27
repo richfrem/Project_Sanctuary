@@ -17,6 +17,7 @@ Following the Project Sanctuary plugin manifest standard, we will establish a si
 ### Directory Layout
 ```text
 plugins/obsidian-integration/
+├── obsidian-parser/                    # Shared proprietary markdown parser
 ├── skills/
 │   ├── obsidian-markdown-mastery/      # Logic formatting
 │   ├── obsidian-vault-crud/            # Core I/O
@@ -29,7 +30,13 @@ plugins/obsidian-integration/
 
 ## 3. Skill Definitions & Capabilities
 
-To achieve true "Obsidian Mastery" for our autonomous agents (Gemini, Claude), we must divide the vault interactions into specialized sub-agents. 
+To achieve true "Obsidian Mastery" for our autonomous agents (Gemini, Claude), we must divide the vault interactions into specialized sub-agents, anchored by a shared parser utility.
+
+### 3.0. `obsidian-parser`
+*   **Purpose**: The central shared utility module that all downstream skills depend on.
+*   **Capabilities**:
+    *   Acts as the universal gatekeeper for extracting and injecting wikilinks.
+    *   Distinguishes block quotes, heading aliases, and embed semantics natively without regex duplication.
 
 ### 3.1. `obsidian-markdown-mastery`
 *   **Purpose**: A formatting controller skill. Ensures the agent syntax natively aligns with Obsidian's renderer.

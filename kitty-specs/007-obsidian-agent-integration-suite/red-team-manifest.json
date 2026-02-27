@@ -28,27 +28,43 @@
         },
         {
             "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP01-research-integration-strategy.md",
-            "note": "Work Package 1: The Research Phase (Complete)."
+            "note": "Work Package 1: ADR Research."
         },
         {
-            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-data-mapping-hf-schema.md",
-            "note": "Work Package 2: The HF Data Mapping rules."
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-analyze-kepano-skills.md",
+            "note": "Work Package 2: Github Repository deep dive."
         },
         {
-            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-build-obsidian-crud-skill.md",
-            "note": "Work Package 3: The CRUD operations for standard notes and .base dashboards."
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-research-hf-schema-mapping.md",
+            "note": "Work Package 3: HF JSONL Data Mapping rules."
         },
         {
-            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-build-obsidian-graph-skill.md",
-            "note": "Work Package 4: The semantic link Graph Traversal operations."
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-legacy-scrubbing.md",
+            "note": "Work Package 4: Automated Link Refactoring."
         },
         {
-            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-forge-soul-skill.md",
-            "note": "Work Package 5: The Forge Soul HF Exporter pipeline."
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-markdown-mastery.md",
+            "note": "Work Package 5: Parser."
         },
         {
-            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-legacy-scrubbing.md",
-            "note": "Work Package 6: Automated Link Refactoring and repository cleanup."
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-build-obsidian-crud.md",
+            "note": "Work Package 6: Vault CRUD."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP07-build-dynamic-views.md",
+            "note": "Work Package 7: YAML Bases and JSON Canvas."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP08-build-graph-traversal.md",
+            "note": "Work Package 8: Graph Engine."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP09-build-forge-soul.md",
+            "note": "Work Package 9: Knowledge Exporter."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP10-integration-testing.md",
+            "note": "Work Package 10: Integration Testing."
         }
     ]
 }

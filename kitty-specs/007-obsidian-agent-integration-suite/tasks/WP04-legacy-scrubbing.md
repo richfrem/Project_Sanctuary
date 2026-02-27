@@ -2,7 +2,7 @@
 work_package_id: "WP04"
 title: "Legacy Scrubbing & Automated Link Refactoring"
 lane: "planned"
-dependencies: []
+dependencies: []  # Independent execution is intentional
 subtasks: ["T016", "T017", "T018", "T019"]
 ---
 

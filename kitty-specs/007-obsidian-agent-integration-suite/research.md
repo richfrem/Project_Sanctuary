@@ -34,8 +34,8 @@ This document synthesizes strategic findings from the Gemini 3.1 Pro deep resear
 | :--- | :--- | :--- | :--- |
 | **F-002** | Antigravity multi-root workspaces support direct filesystem access to vaults. | S-018 | Validates our direct markdown/frontmatter approach for CRUD operations. |
 | **F-004** | Obsidian CLI requires an active app instance (IPC singleton lock). | S-022 | Rules out the CLI for headless background CI/CD operations. |
-| **F-006** | "Obsidian Mastery" skills emphasize precise Wikilink, Callout, and Embed construction. | S-026 | WP03 (CRUD Skill) and WP06 (Refactoring) must strictly format outputs as `[[wikilinks]]`, not relative paths. |
-| **F-010** | Continuous "Automatic Backlinking" workflow creates 'Knowledge Notes'. | S-013 | WP05 (Forge Soul) will be critical to extract these Knowledge Notes accurately to HF. |
+| **F-006** | "Obsidian Mastery" skills emphasize precise Wikilink, Callout, and Embed construction. | S-026 | WP06 (CRUD Skill) and WP04 (Refactoring) must strictly format outputs as `[[wikilinks]]`, not relative paths. |
+| **F-010** | Continuous "Automatic Backlinking" workflow creates 'Knowledge Notes'. | S-013 | WP09 (Forge Soul) will be critical to extract these Knowledge Notes accurately to HF. |
 
 *(See `research/evidence-log.csv` and `research/source-register.csv` for the complete 44-source manifest.)*
 

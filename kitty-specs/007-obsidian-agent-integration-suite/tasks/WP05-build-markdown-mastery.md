@@ -18,12 +18,12 @@ subtasks: ["T020", "T021", "T022", "T023", "T024"]
 ## Subtasks & Detailed Guidance
 
 ### Subtask T020 – Scaffold Skill framework
-- **Purpose**: Setup plugin root.
-- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-markdown-mastery/SKILL.md` and the `scripts/` folder.
+- **Purpose**: Setup plugin root and shared configuration.
+- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-markdown-mastery/SKILL.md` and the `scripts/` folder. Define a `plugins/obsidian-integration/config.yaml` or environment variable (`SANCTUARY_VAULT_PATH`) to ensure all downstream skills import from this single source.
 
 ### Subtask T021 – Build `obsidian-parser` Shared Utility
 - **Purpose**: Prevent regex drift.
-- **Steps**: Write a centralized Python module in `plugins/obsidian-integration/obsidian-parser/`. This is the universal gatekeeper for extracting and injecting wikilinks.
+- **Steps**: Write a centralized Python module in `plugins/obsidian-integration/obsidian-parser/`. This is the universal gatekeeper for extracting and injecting wikilinks. Incorporate any applicable non-violating patterns from WP02 Kepano analysis into the shared `obsidian-parser`.
 
 ### Subtask T022 – Handle Edge Case Link Mappings
 - **Purpose**: Account for Obsidian's proprietary capabilities identified by Red Team.

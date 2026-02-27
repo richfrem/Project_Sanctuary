@@ -9,7 +9,7 @@ Please review the following provided context bundle, which contains:
 2. The Implementation Plan (`plan.md`)
 3. The foundational research (`research.md`)
 4. The generated plugin architecture (`obsidian-plugin-architecture.md`)
-5. The 6 generated Work Packages (`WP01` through `WP06`)
+5. The 10 generated Work Packages (`WP01` through `WP10`)
 
 Provide a critical 'Red Team' evaluation of this design:
 1. **Security & State Integrity**: Does the choice to use direct `pathlib`/`frontmatter` libraries against live Obsidian `.md` and `.base` files risk file corruption if the user actively has the Obsidian app open?

@@ -29,7 +29,7 @@ subtasks: ["T001", "T002", "T003", "T004", "T005"]
 
 ### Subtask T003 – Architect Agent Skills and Plugin Boundaries
 - **Purpose**: Define how Sanctuary agents will actually use Obsidian capabilities.
-- **Steps**: Review `research/obsidian-capabilities-summary.md`. Architect a plugin and skill structure to support "Obsidian Markdown Mastery" (Callouts, Wikilinks), "Obsidian Bases Manager" (`.base` YAML data), and "JSON Canvas Architect" (`.canvas` visual files). Establish the required host software installations (e.g. Obsidian CLI).
+- **Steps**: Architect a plugin and skill structure to support "Obsidian Markdown Mastery" (Callouts, Wikilinks), "Obsidian Bases Manager" (`.base` YAML data), and "JSON Canvas Architect" (`.canvas` visual files). Establish the required host software installations (e.g. Obsidian CLI).
 
 ### Subtask T004 – Draft ADR
 - **Purpose**: Document the chosen direction.

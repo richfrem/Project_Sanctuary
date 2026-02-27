@@ -32,7 +32,7 @@ subtasks: ["T046", "T047", "T048", "T049", "T050"]
 
 ### Subtask T048 – Concurrent I/O Simulation
 - **Purpose**: Stress test the WP06 atomic `.agent-lock` strategy.
-- **Steps**: Unleash 10 asynchronous threads attempting to simultaneously update, link, and traverse the synthetic vault notes using the `obsidian-vault-crud` and `obsidian-graph-traversal` tools. Assert that no corruption or deadlock occurs.
+- **Steps**: Unleash 10 asynchronous threads attempting to simultaneously update, link, and traverse the synthetic vault notes using the `obsidian-vault-crud` and `obsidian-graph-traversal` tools. Add a background thread that simulates Obsidian desktop behavior (periodically reading and rewriting a note file mimicking auto-save) while agent threads attempt concurrent CRUD operations. Assert that mtime detection catches every simulated conflict and no silent overwrites occur.
 
 ### Subtask T049 – Dry Run Forge Soul Export
 - **Purpose**: Complete the pipeline.

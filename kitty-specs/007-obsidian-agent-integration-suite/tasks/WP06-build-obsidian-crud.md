@@ -28,7 +28,7 @@ subtasks: ["T025", "T026", "T027", "T028", "T029"]
 
 ### Subtask T027 – Implement `.agent-lock` protocol
 - **Purpose**: Human-Active Vault Protection.
-- **Steps**: Build logic that checks for a `.agent-lock` file at the root of the vault. If this exists (or if we build a mechanism identifying the Obsidian desktop app is focusing the file), abort write operations to prevent conflict.
+- **Steps**: Build logic that creates a bidirectional advisory `.agent-lock` file at the root of the vault before any write batch and removes it after. This does not strictly stop Obsidian, but governs agent-vs-agent. Optionally, add process-level detection (`pgrep` or equivalent checking for `.obsidian/workspace.json` lock) as a "warm vault" warning signal, not a hard gate.
 
 ### Subtask T028 – Detect Concurrent Edits
 - **Purpose**: Avoid overwriting human inputs.
