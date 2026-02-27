@@ -1,9 +1,11 @@
 ---
 work_package_id: "WP01"
 title: "Research Obsidian Integration Strategy & Capability Overlap"
-lane: "planned"
+lane: "doing"
 dependencies: []
 subtasks: ["T001", "T002", "T003", "T004", "T005"]
+agent: "Antigravity"
+shell_pid: "62896"
 ---
 
 # Work Package Prompt: WP01 – Research Obsidian Integration Strategy & Capability Overlap
@@ -38,3 +40,7 @@ subtasks: ["T001", "T002", "T003", "T004", "T005"]
 ### Subtask T005 – Obtain human steward approval
 - **Purpose**: Ensure alignment with the Architect before code is written.
 - **Steps**: Wait for human review or run `spec-kitty review` to get the ADR formally accepted before checking off the task.
+
+## Activity Log
+
+- 2026-02-27T16:53:50Z – Antigravity – shell_pid=62896 – lane=doing – Started implementation via workflow command
