@@ -1,6 +1,6 @@
 # **Sanctuary Council — Evolution Plan (Phases 1 → 2 → 3 → Protocol 113)**
 
-**Version:** 2.1 (Updated 2025-11-30 - MCP Migration)
+**Version:** 2.1 (Updated 2025-11-30 - Agent Plugin Integration Migration)
 **Status:** Authoritative Roadmap
 **Location:** `docs/architecture/mcp/cortex_evolution.md`
 
@@ -10,8 +10,8 @@ This document defines the complete evolution of the Sanctuary Council cognitive 
 
 There are five phases, which must be completed **in strict order**:
 
-0. **Phase 0 – MCP Migration** ✅ *(complete - 2025-11-30)*
-1. **Phase 1 – MCP Foundation (RAG Services)** ✅ *(complete - 2025-11-28)*
+0. **Phase 0 – Agent Plugin Integration Migration** ✅ *(complete - 2025-11-30)*
+1. **Phase 1 – Agent Plugin Integration Foundation (RAG Services)** ✅ *(complete - 2025-11-28)*
 2. **Phase 2 – Self-Querying Retriever** *(current)*
 3. **Phase 3 – Mnemonic Caching (CAG)** *(next)*
 4. **Protocol 113 – Council Memory Adaptor** *(final)*
@@ -20,8 +20,8 @@ Each phase enhances a different tier of the Nested Learning architecture:
 
 | Memory Tier    | System Component       | Phase                         | Status |
 | -------------- | ---------------------- | ----------------------------- | ------ |
-| Migration      | Legacy → MCP           | Phase 0                       | ✅ Complete |
-| Infrastructure | MCP Service Layer      | Phase 1                       | ✅ Complete |
+| Migration      | Legacy → Agent Plugin Integration           | Phase 0                       | ✅ Complete |
+| Infrastructure | Agent Plugin Integration Service Layer      | Phase 1                       | ✅ Complete |
 | Slow Memory    | Council Memory Adaptor | Protocol 113                  | ⏸️ Blocked |
 | Medium Memory  | Mnemonic Cortex        | (Supported across all phases) | ✅ Active |
 | Fast Memory    | Mnemonic Cache (CAG)   | Phase 3                       | ⏸️ Blocked |
@@ -31,7 +31,7 @@ Each phase enhances a different tier of the Nested Learning architecture:
 
 # -------------------------------------------------------
 
-# ✅ **PHASE 0 — MCP Migration - COMPLETE**
+# ✅ **PHASE 0 — Agent Plugin Integration Migration - COMPLETE**
 
 # -------------------------------------------------------
 
@@ -39,10 +39,10 @@ Each phase enhances a different tier of the Nested Learning architecture:
 **Status:** ✅ COMPLETE
 
 **Purpose:**
-Migrate legacy `mnemonic_cortex` script-based architecture to MCP-first architecture. Refactor `CortexOperations` to directly implement robust batching and retry logic, removing `IngestionService` dependency.
+Migrate legacy `mnemonic_cortex` script-based architecture to Agent Plugin Integration-first architecture. Refactor `CortexOperations` to directly implement robust batching and retry logic, removing `IngestionService` dependency.
 
 **Why it matters:**
-This migration eliminates unnecessary abstraction layers, fixes misleading reporting (`chunks_created: 0`), and consolidates all Cortex documentation and tests into standard MCP locations.
+This migration eliminates unnecessary abstraction layers, fixes misleading reporting (`chunks_created: 0`), and consolidates all Cortex documentation and tests into standard Agent Plugin Integration locations.
 
 ---
 
@@ -90,7 +90,7 @@ This migration eliminates unnecessary abstraction layers, fixes misleading repor
 
 # -------------------------------------------------------
 
-# ✅ **PHASE 1 — MCP Foundation (RAG Services) - COMPLETE**
+# ✅ **PHASE 1 — Agent Plugin Integration Foundation (RAG Services) - COMPLETE**
 
 # -------------------------------------------------------
 
@@ -98,7 +98,7 @@ This migration eliminates unnecessary abstraction layers, fixes misleading repor
 **Status:** ✅ COMPLETE
 
 **Purpose:**
-Establish the foundational MCP (Model Context Protocol) service layer that exposes Mnemonic Cortex capabilities as standardized, callable tools for AI agents and external systems.
+Establish the foundational Agent Plugin Integration (Agent Plugin Integration) service layer that exposes Mnemonic Cortex capabilities as standardized, callable tools for AI agents and external systems.
 
 **Why it matters:**
 This is the **Service Infrastructure** that makes the Mnemonic Cortex accessible, testable, and integrable with the broader Sanctuary ecosystem. Without this layer, the Cortex remains isolated and difficult to leverage programmatically.
@@ -107,7 +107,7 @@ This is the **Service Infrastructure** that makes the Mnemonic Cortex accessible
 
 ## ✅ **Phase 1 Deliverables**
 
-### 1. **Native MCP Server Implementation**
+### 1. **Native Agent Plugin Integration Server Implementation**
 
 ✅ Created `mcp_servers/cognitive/cortex/` with:
 * `server.py` - FastMCP server exposing 4 core tools
@@ -116,7 +116,7 @@ This is the **Service Infrastructure** that makes the Mnemonic Cortex accessible
 * `validator.py` - Comprehensive input validation
 * `requirements.txt` - Dependency management
 
-### 2. **Four Core MCP Tools**
+### 2. **Four Core Agent Plugin Integration Tools**
 
 ✅ Implemented and tested:
 * `cortex_ingest_full` - Full knowledge base re-ingestion
@@ -131,11 +131,11 @@ This is the **Service Infrastructure** that makes the Mnemonic Cortex accessible
 * 3 integration tests (stats, query, incremental ingest)
 * All tests passing with production-ready quality
 
-### 4. **MCP Integration**
+### 4. **Agent Plugin Integration Integration**
 
 ✅ Configuration:
-* Antigravity MCP config updated
-* Claude Desktop MCP config updated
+* Antigravity Agent Plugin Integration config updated
+* Claude Desktop Agent Plugin Integration config updated
 * Example configuration provided
 * Documentation complete
 
@@ -143,11 +143,11 @@ This is the **Service Infrastructure** that makes the Mnemonic Cortex accessible
 
 ## ✅ **Definition of Done (Phase 1)**
 
-* ✅ 4 MCP tools operational and tested
-* ✅ All tools callable via MCP protocol
+* ✅ 4 Agent Plugin Integration tools operational and tested
+* ✅ All tools callable via Agent Plugin Integration protocol
 * ✅ 31 tests passing (28 unit + 3 integration)
 * ✅ Parent Document Retriever integrated
-* ✅ MCP configs updated for Antigravity and Claude Desktop
+* ✅ Agent Plugin Integration configs updated for Antigravity and Claude Desktop
 * ✅ Comprehensive documentation (README.md)
 
 ---

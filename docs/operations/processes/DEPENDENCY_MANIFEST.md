@@ -17,7 +17,7 @@ In accordance with the Doctrine of the Clean Forge (P89), each dependency is cat
 
 **As of 2025-11-26**, Project Sanctuary uses a split dependency architecture:
 
-- **`requirements.txt`**: Core dependencies for general development, CI/CD, and MCP servers (lightweight, fast installation)
+- **`requirements.txt`**: Core dependencies for general development, CI/CD, and Agent Plugin Integration servers (lightweight, fast installation)
 - **`requirements-finetuning.txt`**: Heavy ML/CUDA dependencies for model fine-tuning (PyTorch, transformers, etc.)
 
 This split reduces CI/CD installation time and prevents dependency conflicts. For fine-tuning tasks, use `requirements-finetuning.txt`. For general development and testing, use `requirements.txt`.

@@ -9,7 +9,7 @@ During T093 (Containerize Ollama Model Service) deployment, a critical **port bi
 
 ## Decision
 
-**All inter-container communication within the MCP infrastructure MUST use container service aliases, not localhost.**
+**All inter-container communication within the Agent Plugin Integration infrastructure MUST use container service aliases, not localhost.**
 
 ### Mandated Network Addressing Pattern
 
@@ -50,12 +50,12 @@ ollama list
 
 ## Implementation Requirements
 
-### For MCP Servers (Inter-Container Communication)
+### For Agent Plugin Integration Servers (Inter-Container Communication)
 
-When MCP servers need to communicate with other containerized services, they MUST use service aliases:
+When Agent Plugin Integration servers need to communicate with other containerized services, they MUST use service aliases:
 
 ```python
-# Example: Council MCP connecting to Forge LLM MCP
+# Example: Council Agent Plugin Integration connecting to Forge LLM Agent Plugin Integration
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama_model_mcp:11434")
 ```
 
@@ -100,7 +100,7 @@ OLLAMA_HOST=http://localhost:11434  # For host development
 
 ## Enforcement
 
-**Task T094 (Council MCP Polymorphic Model Refactoring) is MANDATORY** to implement this protocol for the Council MCP's Ollama integration.
+**Task T094 (Council Agent Plugin Integration Polymorphic Model Refactoring) is MANDATORY** to implement this protocol for the Council Agent Plugin Integration's Ollama integration.
 
 ## Related Protocols
 
@@ -109,7 +109,7 @@ OLLAMA_HOST=http://localhost:11434  # For host development
 
 ## References
 
-- [T093: Containerize Ollama Model Service](../tasks/done/093_containerize_ollama_model_service_podman.md)
-- [T094: Council MCP Polymorphic Model Refactoring](../tasks/backlog/094_council_mcp_polymorphic_model_refactoring.md)
+- [[093_containerize_ollama_model_service_podman|T093: Containerize Ollama Model Service]]
+- [[094_council_mcp_polymorphic_model_refactoring|T094: Council Agent Plugin Integration Polymorphic Model Refactoring]]
 - [Docker Compose Networking](https://docs.docker.com/compose/networking/)
 

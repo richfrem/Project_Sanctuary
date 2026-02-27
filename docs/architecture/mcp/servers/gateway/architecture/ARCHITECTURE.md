@@ -1,4 +1,4 @@
-# MCP Gateway Architecture Specification
+# Agent Plugin Integration Gateway Architecture Specification
 
 **Version:** 2.2 (Fleet Management)  
 **Status:** Canonical  
@@ -9,7 +9,7 @@
 
 ## 1. Overview
 
-This document defines the technical architecture for the **Sanctuary MCP Gateway**, a centralized external broker that unifies 14+ MCP servers into a single endpoint for Claude Desktop.
+This document defines the technical architecture for the **Sanctuary Agent Plugin Integration Gateway**, a centralized external broker that unifies 14+ Agent Plugin Integration servers into a single endpoint for Claude Desktop.
 
 **Core Philosophy:**
 1.  **Externalization (ADR 058):** The Gateway runs as a "Black Box" service via Podman, decoupled from the main repo.
@@ -23,9 +23,9 @@ This document defines the technical architecture for the **Sanctuary MCP Gateway
 
 The architecture consolidates individual tools into risk-based clusters to prevent orchestration fatigue while maintaining security boundaries.
 
-![mcp_gateway_fleet](../../../../../architecture_diagrams/system/mcp_gateway_fleet.png)
+![[mcp_gateway_fleet.png|mcp_gateway_fleet]]
 
-*[Source: mcp_gateway_fleet.mmd](../../../../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
+*[[mcp_gateway_fleet.mmd|Source: mcp_gateway_fleet.mmd]]*
 ```
 
 ### 2.2 Fleet Management (Registration & Discovery)
@@ -50,7 +50,7 @@ The management of the Fleet follows a **3-Layer Declarative Pattern**, decouplin
 3.  **sanctuary_network**: External web access (Brave, Fetch). Isolated from filesystem.
 4.  **sanctuary_git**: Dual-permission (Filesystem + Network). Completely isolated container.
 5.  **sanctuary-intelligence**:
-    *   **Cortex (MCP):** The "Brain" that processes queries, manages **Cognitive Continuity (P128)**, and safeguards the **Guardian Role**.
+    *   **Cortex (Agent Plugin Integration):** The "Brain" that processes queries, manages **Cognitive Continuity (P128)**, and safeguards the **Guardian Role**.
     *   **VectorDB (Backend):** ChromaDB storage.
     *   **Ollama (Backend):** LLM inference.
 6.  **sanctuary_domain**:
@@ -106,17 +106,17 @@ services:
 
 The following diagram shows how the Learning Loop (Protocol 125) operates through the Gateway:
 
-![recursive_learning_gateway_flow](../../../../../architecture_diagrams/workflows/recursive_learning_gateway_flow.png)
+![[recursive_learning_gateway_flow.png|recursive_learning_gateway_flow]]
 
-*[Source: recursive_learning_gateway_flow.mmd](../../../../../architecture_diagrams/workflows/recursive_learning_gateway_flow.mmd)*
+*[[recursive_learning_gateway_flow.mmd|Source: recursive_learning_gateway_flow.mmd]]*
 
 ### 5.2 Cognitive Continuity (P128)
 
 Protocol 128 enforces a "Red Team Gate" and persistent identity via the **Guardian Role**.
 
-![protocol_128_learning_loop](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![[protocol_128_learning_loop.png|protocol_128_learning_loop]]
 
-*[Source: protocol_128_learning_loop.mmd](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[[protocol_128_learning_loop.mmd|Source: protocol_128_learning_loop.mmd]]*
 
 ---
 

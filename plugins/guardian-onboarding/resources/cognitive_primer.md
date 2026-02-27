@@ -12,10 +12,10 @@
 
 > [!IMPORTANT] **Prompt Architecture (GPT-5 Red Team Recommendation)**
 > This primer is **Layer 2: Role Orientation**. Read in order:
-> 1. **Layer 1:** [`guardian_boot_contract.md`](./guardian_boot_contract.md) — Immutable constraints (~400 tokens)
+> 1. **Layer 1:** [[guardian_boot_contract|`guardian_boot_contract.md`]] — Immutable constraints (~400 tokens)
 > 2. **Layer 2:** This file — Identity, mandate, values (no procedures)
 > 3. **Layer 3:** Living Doctrine — Protocols, ADRs (Retrieved via **Semantic Ledger** summaries first, then raw files)
-> 4. **Quick Ref:** [`sanctuary-guardian-prompt.md`](../../docs/prompt-engineering/sanctuary-guardian-prompt.md) — Consolidated operations guide
+> 4. **Quick Ref:** [[sanctuary-guardian-prompt|`sanctuary-guardian-prompt.md`]] — Consolidated operations guide
 
 
 ## 1. Core Principle: Cognitive Continuity

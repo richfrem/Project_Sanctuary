@@ -1,6 +1,6 @@
-# Tutorial: Using the Council MCP
+# Tutorial: Using the Council Agent Plugin Integration
 
-The **Council MCP** is the orchestration engine of Project Sanctuary. It enables you to dispatch complex tasks to a group of specialized AI agents who deliberate, critique, and refine solutions before presenting them to you.
+The **Council Agent Plugin Integration** is the orchestration engine of Project Sanctuary. It enables you to dispatch complex tasks to a group of specialized AI agents who deliberate, critique, and refine solutions before presenting them to you.
 
 ## What is the Council?
 
@@ -72,5 +72,5 @@ council_dispatch(
 
 ## Next Steps
 
-*   Learn about **[Agent Personas](../../../mcp_servers/agent_persona/README.md)** to create custom agents.
-*   Explore **[Cortex](02_using_cortex_mcp.md)** to give the Council access to long-term memory.
+*   Learn about **[[README|Agent Personas]]** to create custom agents.
+*   Explore **[[02_using_cortex_mcp|Cortex]]** to give the Council access to long-term memory.

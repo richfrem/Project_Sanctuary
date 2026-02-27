@@ -36,13 +36,13 @@ Transient artifacts generated *during* the current session's loop.
 ### **Protocol 128: The Hardened Learning Loop**
 The master workflow governing how this directory is used.
 
-*   **Diagram (Mermaid)**: [`protocol_128_learning_loop.mmd`](../../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
-*   **Visual Flow**: [`protocol_128_learning_loop.png`](../../docs/architecture_diagrams/workflows/protocol_128_learning_loop.png)
+*   **Diagram (Mermaid)**: [[protocol_128_learning_loop.mmd|`protocol_128_learning_loop.mmd`]]
+*   **Visual Flow**: [[protocol_128_learning_loop.png|`protocol_128_learning_loop.png`]]
 
 ### **Key Architectural Decision Records (ADRs)**
-*   **ADR 071**: [Cognitive Continuity](../../ADRs/071_protocol_128_cognitive_continuity.md) - *Why we do this.*
-*   **ADR 079**: [Soul Persistence](../../ADRs/079_soul_persistence_hugging_face.md) - *How we save to Hugging Face.*
-*   **ADR 088**: [Lineage Doctrine](../../ADRs/088_lineage_memory_interpretation.md) - *How to interpret the "Soul" (Constitutional Memory).*
+*   **ADR 071**: [[071_protocol_128_cognitive_continuity|Cognitive Continuity]] - *Why we do this.*
+*   **ADR 079**: [[079_soul_persistence_hugging_face|Soul Persistence]] - *How we save to Hugging Face.*
+*   **ADR 088**: [[088_lineage_memory_interpretation|Lineage Doctrine]] - *How to interpret the "Soul" (Constitutional Memory).*
 
 ---
 

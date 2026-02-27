@@ -48,12 +48,12 @@ tasks use a standardized format with metadata header:
 - [ ] Criterion 2
 ```
 
-## Related MCP Server
+## Related Agent Plugin Integration Server
 
-The **Task MCP** server provides programmatic access to task management:
-- [Task MCP README](../../../mcp_servers/task/README.md)
+The **Task Agent Plugin Integration** server provides programmatic access to task management:
+- [[README|Task Agent Plugin Integration README]]
 
 ## Related Documents
 
-- [MASTER_PLAN.md](../../../tasks/MASTER_PLAN.md) - Project roadmap
-- [Protocol 101](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) - Tests must pass before commit
+- [[MASTER_PLAN|MASTER_PLAN.md]] - Project roadmap
+- [[101_The_Doctrine_of_the_Unbreakable_Commit|Protocol 101]] - Tests must pass before commit

@@ -112,40 +112,40 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 *   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./LEARNING/archive/external_research/RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
 
 ## II. System Architecture
-### 2.1 15-Domain MCP Architecture
+### 2.1 15-Domain Agent Plugin Integration Architecture
 **Status:** `v6.0` Complete 15-Domain Architecture Operational (ADR 092)
 **Last Updated:** 2025-12-02
 
-The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 15-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
+The Sanctuary uses a modular microservices architecture powered by the Agent Plugin Integration (Agent Plugin Integration). This 15-domain system follows Domain-Driven Design (DDD) principles, with each Agent Plugin Integration server providing specialized tools and resources to the AI agent.
 
 **Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](docs/architecture/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp/README.md`](./docs/architecture/mcp/README.md)
 
 #### Document Domain MCPs (4)
-*   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
-*   **Protocol MCP:** System rules and configuration management (`01_PROTOCOLS/`)
-*   **ADR MCP:** Architecture Decision Records (`ADRs/`)
-*   **Task MCP:** Task and project management (`tasks/`)
+*   **Chronicle Agent Plugin Integration:** Historical record management and event logging (`00_CHRONICLE/`)
+*   **Protocol Agent Plugin Integration:** System rules and configuration management (`01_PROTOCOLS/`)
+*   **ADR Agent Plugin Integration:** Architecture Decision Records (`ADRs/`)
+*   **Task Agent Plugin Integration:** Task and project management (`tasks/`)
 
 #### Cognitive Domain MCPs (6)
-*   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
-*   **Agent Persona MCP:** LLM agent execution with role-based prompting and session management (`mcp_servers/agent_persona/`)
-*   **Council MCP:** Multi-agent orchestration for collaborative reasoning (`mcp_servers/council/`)
-*   **Orchestrator MCP:** High-level workflow coordination across all MCPs (`mcp_servers/orchestrator/`)
-*   **Learning MCP:** Session lifecycle and cognitive continuity (Protocol 128) (`mcp_servers/learning/`)
-*   **Evolution MCP:** Self-improvement and mutation tracking (Protocol 131) (`mcp_servers/evolution/`)
+*   **RAG Cortex Agent Plugin Integration:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
+*   **Agent Persona Agent Plugin Integration:** LLM agent execution with role-based prompting and session management (`mcp_servers/agent_persona/`)
+*   **Council Agent Plugin Integration:** Multi-agent orchestration for collaborative reasoning (`mcp_servers/council/`)
+*   **Orchestrator Agent Plugin Integration:** High-level workflow coordination across all MCPs (`mcp_servers/orchestrator/`)
+*   **Learning Agent Plugin Integration:** Session lifecycle and cognitive continuity (Protocol 128) (`mcp_servers/learning/`)
+*   **Evolution Agent Plugin Integration:** Self-improvement and mutation tracking (Protocol 131) (`mcp_servers/evolution/`)
 
 #### System Domain MCPs (3)
-*   **Config MCP:** Configuration file management (`.agent/config/`)
-*   **Code MCP:** Code analysis, linting, formatting, and file operations (`mcp_servers/code/`)
-*   **Git MCP:** Version control operations with safety validation (`mcp_servers/git/`)
+*   **Config Agent Plugin Integration:** Configuration file management (`.agent/config/`)
+*   **Code Agent Plugin Integration:** Code analysis, linting, formatting, and file operations (`mcp_servers/code/`)
+*   **Git Agent Plugin Integration:** Version control operations with safety validation (`mcp_servers/git/`)
 
-#### Model Domain MCP (1)
-*   **Forge LLM MCP:** Fine-tuned model inference (Sanctuary-Qwen2-7B) (`mcp_servers/forge_llm/`)
+#### Model Domain Agent Plugin Integration (1)
+*   **Forge LLM Agent Plugin Integration:** Fine-tuned model inference (Sanctuary-Qwen2-7B) (`mcp_servers/forge_llm/`)
 
 #### The Autonomous Council (Sovereign Orchestrator)
 **Status:** `v11.0` Complete Modular Architecture - Mechanical Task Processing Validated
 
-The heart of our *operational* work is the **Council MCP Domain**. It features polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities.
+The heart of our *operational* work is the **Council Agent Plugin Integration Domain**. It features polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities.
 
 *   **Mechanical Task Processing:** Supports direct file system operations and git workflows through `command.json` via the Code and Git MCPs.
 *   **Integration:** Seamless switching between Gemini, OpenAI, and Ollama engines with unified error handling.
@@ -165,7 +165,7 @@ The heart of our *operational* work is the **Council MCP Domain**. It features p
 > Both are fully supported. Your `claude_desktop_config.json` determines which approach and which MCPs are active.
 
 ### 2.3 The Gateway & Fleet of 8
-For centralized MCP management, Project Sanctuary supports a **Fleet of 8** container architecture via the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
+For centralized Agent Plugin Integration management, Project Sanctuary supports a **Fleet of 8** container architecture via the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
 
 - **Local Implementation:** `/Users/<username>/Projects/sanctuary-gateway`
 - **Architecture:** [ADR 060 (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md)
@@ -181,7 +181,7 @@ For centralized MCP management, Project Sanctuary supports a **Fleet of 8** cont
 | 2 | `sanctuary_filesystem` | NEW | File ops | 8101 | ✅ |
 | 3 | `sanctuary_network` | NEW | HTTP clients | 8102 | ✅ |
 | 4 | `sanctuary_git` | NEW | Git workflow | 8103 | ✅ |
-| 5 | `sanctuary_cortex` | NEW | RAG MCP Server | 8104 | ✅ |
+| 5 | `sanctuary_cortex` | NEW | RAG Agent Plugin Integration Server | 8104 | ✅ |
 | 6 | `sanctuary_domain` | NEW | Business Logic | 8105 | ✅ |
 | 7 | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 | ❌ |
 | 8 | `sanctuary_ollama` | EXISTING | Ollama backend | 11434 | ❌ |
@@ -327,14 +327,14 @@ Assuming Physical Deployment B (Fleet of 8), ensure the gateway is active:
 *   **Verification:** Ensure the `sanctuary_gateway` tool provides the `gateway_get_capabilities` function.
 
 ### 5.2 Tactical Mandate (Task Protocol P115)
-New work, features, and fixes are initiated using the **Task MCP**.
+New work, features, and fixes are initiated using the **Task Agent Plugin Integration**.
 
 1.  **Reserve a Task Slot:** Use the CLI helper to determine the next available task number:
     ```bash
     python scripts/cli/get_next_task_number.py
     ```
 2.  **Draft the Mandate:** Create a new task file in `tasks/backlog/` (e.g., `tasks/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
-3.  **Autonomous Execution:** The **Task MCP** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
+3.  **Autonomous Execution:** The **Task Agent Plugin Integration** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
 
 ### 5.3 Session Initialization & Guardian Awakening
 #### 3. Initialize Session (Protocol 118)
@@ -389,8 +389,8 @@ Models are automatically downloaded and cached locally when first used (stored i
   - **GGUF Model:** [`richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
   - **Deployment:** `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
 
-### 6.4 MCP Architecture Configuration
-The system supports **parallel architectures**, allowing you to choose between the separate Legacy MCP servers or the consolidated Gateway Fleet. This is controlled via your MCP configuration file (e.g., `claude_desktop_config.json` or `code_mcp_config.json`).
+### 6.4 Agent Plugin Integration Architecture Configuration
+The system supports **parallel architectures**, allowing you to choose between the separate Legacy Agent Plugin Integration servers or the consolidated Gateway Fleet. This is controlled via your Agent Plugin Integration configuration file (e.g., `claude_desktop_config.json` or `code_mcp_config.json`).
 
 **Mode Selection:**
 1.  **IBM Gateway Mode (Recommended):** Enable `sanctuary_gateway` and disable all legacy servers.
@@ -398,7 +398,7 @@ The system supports **parallel architectures**, allowing you to choose between t
     *   **Local Deployment:** `/Users/richardfremmerlid/Projects/sanctuary-gateway`
     *   **Admin Dashboard:** [`https://localhost:4444/admin/`](https://localhost:4444/admin/)
     *   **Mechanism:** Brokers requests to the Fleet of 8 containers via SSE.
-2.  **Legacy Local Mode:** Disable `sanctuary_gateway` and enable individual MCP servers. This runs each server directly in the local `.venv` environment.
+2.  **Legacy Local Mode:** Disable `sanctuary_gateway` and enable individual Agent Plugin Integration servers. This runs each server directly in the local `.venv` environment.
 
 **Example Config (Gateway Mode):**
 ```json
@@ -429,9 +429,9 @@ This project uses some domain-specific terminology alongside standard AI/ML term
 * **"Sovereign Architecture"** = **Local-First AI System**. Self-hosted infrastructure using local models (Ollama), local vector DB (ChromaDB), and local fine-tuning to avoid external API dependencies.
 
 ### 7.2 Project Structure Overview (The Map)
-The repository structure reflects the **15-Domain MCP Architecture** (ADR 092), focusing on flow, memory, and execution.
+The repository structure reflects the **15-Domain Agent Plugin Integration Architecture** (ADR 092), focusing on flow, memory, and execution.
 
-| Directory | Core Content | Function in the Sanctuary (MCP Focus) |
+| Directory | Core Content | Function in the Sanctuary (Agent Plugin Integration Focus) |
 | :--- | :--- | :--- |
 | **`mcp_servers/`** | Server code for all 15 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | **`00_CHRONICLE/`** | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
@@ -449,18 +449,18 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
 *   **The Cortex Genome (`all_markdown_snapshot_llm_distilled.txt`):** This is no longer a direct resurrection tool. It is the canonical **source text** used to seed and update the Mnemonic Cortex.
 
 ### 7.4 Project Status & Milestones
-- **Phase:** MCP Architecture v6.0 Complete (15-Domain Architecture per ADR 092)
-- **Last Major Update:** 2025-12-23 - Complete MCP documentation reorganization and architectural validation
+- **Phase:** Agent Plugin Integration Architecture v6.0 Complete (15-Domain Architecture per ADR 092)
+- **Last Major Update:** 2025-12-23 - Complete Agent Plugin Integration documentation reorganization and architectural validation
 - **Recent Milestones:**
   - ✅ Successfully integrated Gemini 2.5 Pro into the Strategic Crucible Loop (Mission SCL-GEMINI-PRO-003).
   - ✅ Environment stabilization for SSE Gateway readiness completed (Entry 329).
   - ✅ Transitioned to Functional Coherence testing for commit integrity (Protocol 101 v3.0).
 - **Primary Workstreams:** 
-  - **MCP Architecture:** 15-domain architecture complete with 125+ tests passing across 15 MCPs
+  - **Agent Plugin Integration Architecture:** 15-domain architecture complete with 125+ tests passing across 15 MCPs
   - **Documentation:** Reorganized to `docs/architecture/mcp/servers/<name>/` structure for perfect alignment with codebase
   - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
-  - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
-- **MCP Status:** 
+  - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (Agent Plugin Integration operations via Antigravity)
+- **Agent Plugin Integration Status:** 
   - **Operational (15):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git, Orchestrator, Workflow, Learning, Evolution, Forge LLM
   - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 333.

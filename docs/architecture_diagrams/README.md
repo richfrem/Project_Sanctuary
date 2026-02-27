@@ -8,7 +8,7 @@ Central repository for all Project Sanctuary architecture diagrams.
 docs/architecture_diagrams/
 ├── rag/                    # RAG architecture diagrams
 ├── system/                 # System/infrastructure diagrams  
-├── transport/              # MCP transport diagrams
+├── transport/              # Agent Plugin Integration transport diagrams
 ├── workflows/              # Process/workflow diagrams
 └── README.md               # This file
 ```
@@ -19,9 +19,9 @@ docs/architecture_diagrams/
 |------|-------------|
 | **rag/** | |
 | `basic_rag_architecture.mmd` | Ingestion and query pipelines for basic RAG |
-| `advanced_rag_architecture.mmd` | MCP-enabled RAG with caching and routing |
+| `advanced_rag_architecture.mmd` | Agent Plugin Integration-enabled RAG with caching and routing |
 | **system/** | |
-| `sanctuary_mcp_overview.mmd` | High-level MCP ecosystem overview |
+| `sanctuary_mcp_overview.mmd` | High-level Agent Plugin Integration ecosystem overview |
 | `mcp_gateway_fleet.mmd` | Gateway-hosted fleet of 8 servers |
 | `mcp_ecosystem_legacy_stdio.mmd` | Legacy 12-server stdio architecture |
 | `council_orchestration_stack.mmd` | Council orchestration layers |
@@ -74,7 +74,7 @@ The render script uses [mermaid-cli](https://github.com/mermaid-js/mermaid-cli).
 
 ## Single Source of Truth (SSOT)
 
-All Mermaid diagrams MUST be maintained here per **[ADR 085: Canonical Mermaid Diagram Management](../../ADRs/085_canonical_mermaid_diagram_management.md)**.
+All Mermaid diagrams MUST be maintained here per **[[085_canonical_mermaid_diagram_management|ADR 085: Canonical Mermaid Diagram Management]]**.
 
 Inline `\`\`\`mermaid` blocks in other docs are **prohibited**. Replace with image references pointing to these canonical sources. This reduces "Mnemonic Bloat" in snapshots and ensures consistency.
 

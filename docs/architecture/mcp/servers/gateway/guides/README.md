@@ -1,4 +1,4 @@
-# MCP Gateway Guides
+# Agent Plugin Integration Gateway Guides
 
 **Status:** Pending Implementation  
 **Purpose:** How-to guides and tutorials for Gateway users
@@ -7,13 +7,13 @@
 
 ## Overview
 
-This section contains practical guides for working with the MCP Gateway.
+This section contains practical guides for working with the Agent Plugin Integration Gateway.
 
 ---
 
 ## Available Guides
 
-### [Agent Gateway Integration](./agent_gateway_guide.md)
+### [[agent_gateway_guide|Agent Gateway Integration]]
 Learn how to use the **Fleet-Aware Gateway Client** (`mcp_servers/gateway/gateway_client.py`) to resolve clusters and execute tools using the 3-Layer Fleet Pattern.
 
 ---
@@ -27,7 +27,7 @@ Learn how to use the **Fleet-Aware Gateway Client** (`mcp_servers/gateway/gatewa
 - Testing with Claude Desktop
 
 ### Server Management
-- Adding new MCP servers
+- Adding new Agent Plugin Integration servers
 - Updating server configurations
 - Removing servers
 - Health check configuration

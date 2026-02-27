@@ -55,9 +55,9 @@ if effective_manifest:
 - `_get_output_to_manifest_map()` - Inverts registry for lookup
 ### 3. Workflow Diagram
 
-![protocol_130_deduplication_flow](../docs/architecture_diagrams/workflows/protocol_130_deduplication_flow.png)
+![[protocol_130_deduplication_flow.png|protocol_130_deduplication_flow]]
 
-*[Source: protocol_130_deduplication_flow.mmd](../docs/architecture_diagrams/workflows/protocol_130_deduplication_flow.mmd)*
+*[[protocol_130_deduplication_flow.mmd|Source: protocol_130_deduplication_flow.mmd]]*
 
 ---
 

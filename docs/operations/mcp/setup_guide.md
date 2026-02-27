@@ -1,24 +1,24 @@
-# MCP Server Setup Guide
+# Agent Plugin Integration Server Setup Guide
 
 > [!IMPORTANT]
 > **🚀 Unified Fleet Deployment (ADR 065)**  
-> As of December 2025, Project Sanctuary uses a **unified Makefile-based deployment** for the Fleet of 8 MCP servers.  
-> For deploying the complete fleet, see [Podman Operations Guide](../processes/PODMAN_OPERATIONS_GUIDE.md).
+> As of December 2025, Project Sanctuary uses a **unified Makefile-based deployment** for the Fleet of 8 Agent Plugin Integration servers.  
+> For deploying the complete fleet, see [[PODMAN_OPERATIONS_GUIDE|Podman Operations Guide]].
 >
-> This guide covers **individual MCP server development and standalone deployment** for advanced use cases.
+> This guide covers **individual Agent Plugin Integration server development and standalone deployment** for advanced use cases.
 
-This guide documents the standard process for creating, containerizing, and integrating MCP servers with Claude Desktop, based on the implementation of the Task MCP server.
+This guide documents the standard process for creating, containerizing, and integrating Agent Plugin Integration servers with Claude Desktop, based on the implementation of the Task Agent Plugin Integration server.
 
 ## 1. Project Structure
 
-Ensure your MCP server follows this structure to be importable as a module:
+Ensure your Agent Plugin Integration server follows this structure to be importable as a module:
 
 ```
 mcp_servers/
 ├── __init__.py          # CRITICAL: Required for python -m execution
 └── server_name/
     ├── __init__.py      # Package init
-    ├── server.py        # Main entry point (MCP server)
+    ├── server.py        # Main entry point (Agent Plugin Integration server)
     ├── models.py        # Data models
     ├── operations.py    # Core logic (separation of concerns)
     ├── validator.py     # Input validation
@@ -33,7 +33,7 @@ mcp_servers/
 
 ## 2. Configuration Template
 
-A template configuration file is available at [`docs/architecture/mcp/claude_desktop_config_template.json`](claude_desktop_config_template.json).
+A template configuration file is available at [[claude_desktop_config_template.json|`docs/architecture/mcp/claude_desktop_config_template.json`]].
 
 **Important:** Claude Desktop **requires absolute paths**. You cannot use relative paths (like `./` or `../`) in the configuration file because Claude Desktop launches from its own application directory, not your project directory.
 
@@ -92,7 +92,7 @@ We recommend using **simplified keys** (e.g., `tasks`) combined with a `displayN
 {
   "mcpServers": {
     "tasks": {
-      "displayName": "Task MCP",
+      "displayName": "Task Agent Plugin Integration",
       "command": "/Users/username/Projects/Project_Sanctuary/.venv/bin/python",
       "args": [
         "-m",
@@ -118,7 +118,7 @@ Claude Desktop does not load your shell's `.bashrc` or `.zshrc`, so it doesn't k
 1.  **Restart Claude Desktop** (Quit completely via Cmd+Q).
 2.  **Check Connection:** Look for the 🔌 icon or ask "What tools are available?".
 3.  **Test with Natural Language:**
-    > "Create a test task #099 to verify MCP integration."
+    > "Create a test task #099 to verify Agent Plugin Integration integration."
 
 ---
 
@@ -133,5 +133,5 @@ Claude Desktop does not load your shell's `.bashrc` or `.zshrc`, so it doesn't k
 ---
 
 **Related Documentation:**
-- [Task MCP README](../../../mcp_servers/task/README.md)
-- [Prerequisites](prerequisites.md)
+- [[README|Task Agent Plugin Integration README]]
+- [[prerequisites|Prerequisites]]

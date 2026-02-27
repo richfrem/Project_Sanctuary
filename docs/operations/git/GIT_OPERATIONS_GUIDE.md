@@ -6,7 +6,7 @@
 **NO DIRECT WORK ON MAIN.**
 Always create a feature branch (`feat/name` or `fix/name`) before editing files.
 
-## 2. MCP Tools Overview
+## 2. Agent Plugin Integration Tools Overview
 The `sanctuary_git` server provides "Smart" tools that handle safety checks for you.
 
 | Tool | Purpose | "Happy Path" Behavior |

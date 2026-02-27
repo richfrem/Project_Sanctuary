@@ -1,6 +1,6 @@
 # Agent Gateway Integration Guide
 
-This guide explains how an AI agent (Gemini/Antigravity) can consume MCP tools via the Sanctuary Gateway.
+This guide explains how an AI agent (Gemini/Antigravity) can consume Agent Plugin Integration tools via the Sanctuary Gateway.
 
 ---
 
@@ -145,5 +145,5 @@ export MCPGATEWAY_BEARER_TOKEN=$(grep MCPGATEWAY_BEARER_TOKEN .env | cut -d'=' -
 |-------|----------|
 | `401 Invalid token` | Check token is correct RS256 JWT |
 | `405 Method Not Allowed` | Use `/rpc` endpoint, not `/tools/call` |
-| `503 Service Unavailable` | MCP server unreachable - check container network |
+| `503 Service Unavailable` | Agent Plugin Integration server unreachable - check container network |
 | Tool not found | Use full namespaced name from `GET /tools` |

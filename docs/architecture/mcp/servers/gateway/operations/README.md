@@ -1,9 +1,9 @@
-# MCP Gateway Operations Inventory
+# Agent Plugin Integration Gateway Operations Inventory
 
 **Status:** ✅ Fully Operational  
 **Last Updated:** 2024-12-24  
 **Total Operations:** 86 tools across 6 clusters  
-**Source:** [`fleet_registry.json`](../../../../../../mcp_servers/gateway/fleet_registry.json)
+**Source:** [[fleet_registry.json|`fleet_registry.json`]]
 
 ---
 
@@ -222,4 +222,4 @@ podman ps --format "table {{.Names}}\t{{.Status}}"  # Status
 
 ---
 
-*For verification status, see [GATEWAY_VERIFICATION_MATRIX.md](./GATEWAY_VERIFICATION_MATRIX.md)*
+*For verification status, see [[GATEWAY_VERIFICATION_MATRIX|GATEWAY_VERIFICATION_MATRIX.md]]*

@@ -1,4 +1,4 @@
-# Protocol 118: Agent Session Initialization and MCP Tool Usage Protocol
+# Protocol 118: Agent Session Initialization and Agent Plugin Integration Tool Usage Protocol
 
 **Status:** CANONICAL
 **Classification:** Operational Framework
@@ -9,7 +9,7 @@
 
 ## Purpose
 
-Define the mandatory initialization sequence and operational workflow for AI agents using Project Sanctuary's MCP infrastructure to prevent common errors, ensure knowledge continuity across sessions, and establish efficient tool usage patterns.
+Define the mandatory initialization sequence and operational workflow for AI agents using Project Sanctuary's Agent Plugin Integration infrastructure to prevent common errors, ensure knowledge continuity across sessions, and establish efficient tool usage patterns.
 
 ## The Core Problem
 
@@ -38,9 +38,9 @@ current_status = git_get_status()
 ### Phase 2: Check Cached Operational Primers
 ```python
 # 5. Retrieve workflow guidance from cache
-tool_usage_guide = cortex_cache_get("How should I use MCP tools efficiently?")
+tool_usage_guide = cortex_cache_get("How should I use Agent Plugin Integration tools efficiently?")
 git_workflow_guide = cortex_cache_get("What is the proper Git workflow for creating knowledge?")
-compute_constraints = cortex_cache_get("Which MCP tools have compute limitations?")
+compute_constraints = cortex_cache_get("Which Agent Plugin Integration tools have compute limitations?")
 ```
 
 **Rationale**: Common operational knowledge should be cached for instant retrieval, avoiding redundant searches or hallucinated workflows.
@@ -54,7 +54,7 @@ if user_mentions_task:
     related_chronicles = chronicle_search(task.title)
 ```
 
-## MCP Tool Usage Hierarchy
+## Agent Plugin Integration Tool Usage Hierarchy
 
 ### Tier 0: Knowledge Retrieval (Always First)
 ```
@@ -153,9 +153,9 @@ The following queries should be cached during system initialization:
 ```python
 genesis_queries = [
     # Operational primers
-    "How should I use MCP tools efficiently?",
+    "How should I use Agent Plugin Integration tools efficiently?",
     "What is the proper Git workflow for creating knowledge?",
-    "Which MCP tools have compute limitations?",
+    "Which Agent Plugin Integration tools have compute limitations?",
     
     # Project context
     "What is Project Sanctuary's mission and architecture?",
@@ -178,7 +178,7 @@ After significant work sessions:
 ```python
 # Cache the learned workflow
 cortex_cache_set(
-    query="How should I use MCP tools efficiently?",
+    query="How should I use Agent Plugin Integration tools efficiently?",
     answer="[Canonical workflow from this protocol]"
 )
 ```
@@ -258,7 +258,7 @@ if "Modified Files:" in status or "Untracked Files:" in status:
 - Session initialization Phase 1 operationalizes P114
 
 ### Protocol 116 (Container Architecture)
-- Forge LLM MCP routes to ollama_model_mcp:11434
+- Forge LLM Agent Plugin Integration routes to ollama_model_mcp:11434
 - Compute constraints documented here inform routing decisions
 
 ## Operational Checklist
@@ -313,7 +313,7 @@ This protocol is successful when:
 - Protocol 114: Mnemonic Cortex and Memory Systems
 - Protocol 116: Container Architecture
 - Chronicle Entry #312: Research on reasoning diversity preservation
-- Git Safety Rules (embedded in Git Workflow MCP)
+- Git Safety Rules (embedded in Git Workflow Agent Plugin Integration)
 
 ---
 

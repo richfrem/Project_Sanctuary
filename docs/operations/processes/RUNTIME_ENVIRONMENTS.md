@@ -10,7 +10,7 @@ Project Sanctuary uses a **Dual Environment Strategy** to separate heavy machine
 | **Purpose** | Daily coding, RAG, Gateway, Audits, Git Ops | Fine-Tuning, Merging, Quantization (ML Ops) |
 | **Key Libraries** | `fastapi`, `langchain`, `chromadb`, `mcp` | `torch` (CUDA), `transformers`, `unsloth`, `bitsandbytes` |
 | **Hardware** | CPU / Standard | GPU (CUDA 12.x) |
-| **Management** | [**P073**](../../../ADRs/073_standardization_of_python_dependency_management_across_environments.md) / [**Rules**](../../../.agent/rules/dependency_management_policy.md) | **External** (Governed by `ML-Env-CUDA13`) |
+| **Management** | [[073_standardization_of_python_dependency_management_across_environments|**P073**]] / [[dependency_management_policy|**Rules**]] | **External** (Governed by `ML-Env-CUDA13`) |
 | **Size** | ~200MB - 500MB | ~5GB - 10GB |
 
 > **Governance Note:** The **`ml_env`** is a shared resource governed by the external [**`ML-Env-CUDA13`**](https://github.com/richfrem/ML-Env-CUDA13) project. Project Sanctuary *consumes* it for Forge operations to ensure optimized CUDA alignment across all AI initiatives.
