@@ -138,7 +138,7 @@ The orchestrator must verify these gates at each phase:
 | **Planning** | Spec or plan is coherent and broken into tasks. |
 | **Execution** | Packets are generated and handed off. |
 | **Review** | Output passes verification criteria. |
-| **Bundling** | Context compiled for red team / peer review (via external bundling tool). |
+| **Bundling** | Context compiled for red team / peer review (via `context-bundler`). |
 | **Persistence** | Session traces appended to long-term memory (via external memory store). |
 | **Closure** | Retrospective created, learnings documented, loop infrastructure improved. |
 

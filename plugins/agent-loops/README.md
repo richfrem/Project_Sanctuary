@@ -34,11 +34,11 @@ This plugin focuses on **loop execution patterns**. It does NOT own:
 | Concern | Owned By | Relationship |
 |---------|----------|-------------|
 | Worktree / workspace creation | External tooling | Agent-loops receives a workspace and runs its pattern inside it. Works standalone. |
-| Context bundling | External utility | Used by red-team-review and seal phases. Optional dependency. |
+| Context bundling | `context-bundler` | Used by red-team-review and seal phases. **Required generic dependency.** |
 | Memory synthesis | External utility | Used during orientation to load prior context. Optional dependency. |
 | Remote archival (e.g., HuggingFace) | User's choice | Out of scope — external skill or manual step. |
 
-> **Key Principle**: Agent-loops works standalone. You can run a simple learning loop with zero dependencies. More complex patterns optionally leverage external bundling, memory, or task management tools.
+> **Key Principle**: Agent-loops works standalone for basic activities. Complex patterns require the generic `context-bundler` utility.
 
 ## Directory Structure
 
