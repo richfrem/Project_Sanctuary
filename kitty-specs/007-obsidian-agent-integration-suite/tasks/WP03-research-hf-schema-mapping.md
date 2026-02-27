@@ -1,7 +1,7 @@
 ---
 work_package_id: WP03
 title: Research Data Mapping to HF Schema
-lane: "doing"
+lane: "for_review"
 dependencies: []
 base_branch: main
 base_commit: e0f38e5a4133dcaa7ff1ff0823b9feb6a49a4aca
@@ -45,3 +45,4 @@ agent: "Antigravity"
 ## Activity Log
 
 - 2026-02-27T21:42:14Z – Antigravity – shell_pid=62896 – lane=doing – Assigned agent via workflow command
+- 2026-02-27T21:48:08Z – Antigravity – shell_pid=62896 – lane=for_review – Completed HF schema mapping and ADR 100
