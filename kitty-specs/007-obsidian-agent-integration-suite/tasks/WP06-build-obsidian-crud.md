@@ -1,0 +1,39 @@
+---
+work_package_id: "WP06"
+title: "Build Obsidian Vault CRUD Skill"
+lane: "planned"
+dependencies: ["WP01", "WP05"]
+subtasks: ["T025", "T026", "T027", "T028", "T029"]
+---
+
+# Work Package Prompt: WP06 – Build Obsidian Vault CRUD Skill
+
+## Objectives & Success Criteria
+- Implement the baseline agent capability for reading, creating, and updating standard local Obsidian `.md` notes.
+- Integrate POSIX atomic renames to prevent corruption when Obsidian auto-saves concurrently.
+
+## Context & Constraints
+- Must align strictly with the implementation pattern decided upon in the WP01 ADR.
+- The `obsidian-markdown-mastery` utility handles syntax; WP06 strictly handles disk I/O and locking.
+
+## Subtasks & Detailed Guidance
+
+### Subtask T025 – Scaffold Plugin Framework
+- **Purpose**: Prepare architecture.
+- **Steps**: Create `plugins/obsidian-integration/skills/obsidian-vault-crud/SKILL.md` and `scripts/`.
+
+### Subtask T026 – Implement Atomic Writes
+- **Purpose**: Prevent partial disk writes from crashing active clients.
+- **Steps**: Any Python write mechanism MUST write the mutated data to a hidden `.tmp` file in the same directory, then perform `os.rename()` (which is atomic on POSIX) to instantly swap the old note for the new one.
+
+### Subtask T027 – Implement `.agent-lock` protocol
+- **Purpose**: Human-Active Vault Protection.
+- **Steps**: Build logic that checks for a `.agent-lock` file at the root of the vault. If this exists (or if we build a mechanism identifying the Obsidian desktop app is focusing the file), abort write operations to prevent conflict.
+
+### Subtask T028 – Detect Concurrent Edits
+- **Purpose**: Avoid overwriting human inputs.
+- **Steps**: Capture file `mtime` before reading. Before writing the `.tmp` file back over it, check `mtime` again. If it shifted, a user edited the file mid-agent-thought. Abort and alert.
+
+### Subtask T029 – Lossless YAML Parsing
+- **Purpose**: Prevent breaking Dataview.
+- **Steps**: Ensure PyYAML is NOT used. Use `ruamel.yaml` to read/write the note frontmatter perfectly preserving comments, indentation, and array styles.

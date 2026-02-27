@@ -29,149 +29,172 @@
 - [ ] T005 Obtain human steward approval on the ADR.
 
 ### Implementation Notes
-- Crucial that WP01 is completely resolved before WP03 and WP04 begin.
-
-### Parallel Opportunities
-- None. Needs strictly sequential resolution.
+- Crucial that WP01 is completely resolved before WP05 and WP06 begin.
 
 ### Dependencies
 - None.
 
-### Risks & Mitigations
-- Foundational error risk. Mitigation: strict human review gate for the ADR.
+---
+
+## Work Package WP02: Deep Analyze Kepano Obsidian Skills Repository (Priority: P1)
+
+**Goal**: Clone the `kepano/obsidian-skills` repo to glean architecture context.
+**Independent Test**: Summary document outlining patterns discovered.
+**Prompt**: `/tasks/WP02-analyze-kepano-skills.md`
+
+### Included Subtasks
+- [ ] T006 Clone `https://github.com/kepano/obsidian-skills` to a secure temp directory.
+- [ ] T007 Analyze the tools and agent integrations mapped in that repo.
+- [ ] T008 Compare Kepano's plugin approach to the Sanctuary direct-filesystem approach.
+- [ ] T009 Compile an architectural synthesis payload for the context bundler.
+- [ ] T010 Clean up the repository from `/tmp`.
+
+### Implementation Notes
+- Should inform the plugin design mapped out in WP01 ADR.
+
+### Dependencies
+- None.
 
 ---
 
-## Work Package WP02: Research Data Mapping to HF Schema (Priority: P2)
+## Work Package WP03: Research Data Mapping to HF Schema (Priority: P2)
 
 **Goal**: Define JSONL data mapping rules and explicitly ignore attachment logic.
 **Independent Test**: ADR approved defining the `source_path` flattening strategy.
-**Prompt**: `/tasks/WP02-data-mapping-hf-schema.md`
+**Prompt**: `/tasks/WP03-research-hf-schema-mapping.md`
 
 ### Included Subtasks
-- [ ] T005 Analyze HF `soul_traces.jsonl` schema (ADR 081).
-- [ ] T006 Define exact mapping rules for nested folders via `source_path`.
-- [ ] T007 Formalize the rule that images and binary attachments are strictly ignored.
-- [ ] T008 Draft ADR detailing the mapping strategy.
-- [ ] T009 Obtain human steward approval on the mapping ADR.
+- [ ] T011 Analyze HF `soul_traces.jsonl` schema (ADR 081).
+- [ ] T012 Define exact mapping rules for nested folders via `source_path`.
+- [ ] T013 Formalize the rule that images and binary attachments are strictly ignored.
+- [ ] T014 Draft ADR detailing the mapping strategy.
+- [ ] T015 Obtain human steward approval on the mapping ADR.
 
-### Implementation Notes
-- Can run concurrently with WP01 since it does not depend on *how* we access the data, only *what* data maps to what HF structure.
+### Dependencies
+- WP01
 
-### Parallel Opportunities
-- Entire package can run parallel to WP01.
+---
+
+## Work Package WP04: Legacy Scrubbing & Automated Link Refactoring (Priority: P3)
+
+**Goal**: Remove obsolete architecture and fix broken repo paths.
+**Independent Test**: 0 broken links, 0 'MCP' usages in core setup.
+**Prompt**: `/tasks/WP04-legacy-scrubbing.md`
+
+### Included Subtasks
+- [ ] T016 Develop a dry-run enabled script to convert `[Link](../../file.md)` into Obsidian wikilinks `[[file]]`.
+- [ ] T017 Apply refactoring across `01_PROTOCOLS/` and `02_LEARNING/` directories.
+- [ ] T018 Scrub "MCP" references from `sanctuary-guardian-prompt.md`.
+- [ ] T019 Verify clean grep results for obsolete syntax.
 
 ### Dependencies
 - None.
 
-### Risks & Mitigations
-- Schema violation risk. Mitigation: strictly align with ADR 081 definitions.
+---
+
+## Work Package WP05: Build Obsidian Markdown Mastery Skill (Priority: P1)
+
+**Goal**: Build the format controller and shared `obsidian-parser`.
+**Independent Test**: Can reliably parse varying link syntaxes (`[[Note|Alias]]`, Embeds).
+**Prompt**: `/tasks/WP05-build-markdown-mastery.md`
+
+### Included Subtasks
+- [ ] T020 Scaffold the `obsidian-markdown-mastery` skill framework.
+- [ ] T021 Build the shared `obsidian-parser` module for deep wikilink inspection.
+- [ ] T022 Handle block reference, heading, alias, and embed mappings.
+- [ ] T023 Implement Callout parsing logic according to Obsidian flavors.
+- [ ] T024 Write parsing tests ensuring edge cases are caught.
+
+### Dependencies
+- WP01, WP02
 
 ---
 
-## Work Package WP03: Build Obsidian CRUD Skill (Priority: P1)
+## Work Package WP06: Build Obsidian Vault CRUD Skill (Priority: P1)
 
 **Goal**: Establish base agent skill for note interaction.
 **Independent Test**: Create, read, and append to a note autonomously.
-**Prompt**: `/tasks/WP03-build-obsidian-crud-skill.md`
+**Prompt**: `/tasks/WP06-build-obsidian-crud.md`
 
 ### Included Subtasks
-- [ ] T010 Create `obsidian-crud` plugin directory and SKILL.md.
-- [ ] T011 Implement read mechanisms per WP01 ADR.
-- [ ] T012 Implement create/update mechanisms per WP01 ADR, explicitly handling both standard `.md` and Obsidian `.base` (YAML dashboard) file architectures.
-- [ ] T013 Write unit verification tests for note and `.base` lifecycle.
-
-### Implementation Notes
-- Implementation hinges on the architecture chosen in WP01.
-
-### Parallel Opportunities
-- T011 and T012 can be mapped out in parallel once framework is set.
+- [ ] T025 Scaffold the `obsidian-vault-crud` plugin directory.
+- [ ] T026 Implement atomic writes (write `.tmp`, `os.rename`) to prevent partial corruption.
+- [ ] T027 Implement an `.agent-lock` advisory lock protocol before writing.
+- [ ] T028 Check file `mtime` to detect concurrent user edits mid-operation.
+- [ ] T029 Enforce lossless YAML parsing with `ruamel.yaml`.
 
 ### Dependencies
-- Depends on: WP01.
-
-### Risks & Mitigations
-- File corruption. Mitigation: safe file-locks if using direct filesystem access.
+- WP01, WP05
 
 ---
 
-## Work Package WP04: Build Obsidian Graph Traversal Skill (Priority: P2)
+## Work Package WP07: Build Obsidian Dynamic Views Skills (Bases & Canvas) (Priority: P2)
+
+**Goal**: Enable reading/writing `.base` and `.canvas` files natively.
+**Independent Test**: Safely parse, modify, and export a JSON canvas definition.
+**Prompt**: `/tasks/WP07-build-dynamic-views.md`
+
+### Included Subtasks
+- [ ] T030 Scaffold `obsidian-bases-manager` and `obsidian-canvas-architect` plugins.
+- [ ] T031 Implement `.base` table/grid manipulation logic preserving structure.
+- [ ] T032 Build `json-canvas-spec` 1.0 logic to programmaticly draw nodes and edges.
+- [ ] T033 Handle malformed JSON/YAML by degrading gracefully and reporting format errors.
+- [ ] T034 Verify operations against standard schemas.
+
+### Dependencies
+- WP01, WP06
+
+---
+
+## Work Package WP08: Build Obsidian Graph Traversal Skill (Priority: P2)
 
 **Goal**: Enable semantic link traversal for context bridging.
-**Independent Test**: Identify a 5-node relationship accurately.
-**Prompt**: `/tasks/WP04-build-obsidian-graph-skill.md`
+**Independent Test**: Identify a 5-node relationship accurately in < 2s.
+**Prompt**: `/tasks/WP08-build-graph-traversal.md`
 
 ### Included Subtasks
-- [ ] T014 Create `obsidian-graph` plugin directory and SKILL.md.
-- [ ] T015 Implement link parsing logic to identify wikilinks, callouts, and embeds.
-- [ ] T016 Implement backlink resolution.
-- [ ] T017 Implement forward link resolution.
-- [ ] T018 Write verification tests for 3-back, 2-forward node relationship.
-
-### Implementation Notes
-- Purely read-only; heavily string/semantic parsing focused.
-
-### Parallel Opportunities
-- Can be run in parallel with WP03.
+- [ ] T035 Scaffold `obsidian-graph-traversal` plugin directory.
+- [ ] T036 Integrate the `obsidian-parser` from WP05 to analyze edge links.
+- [ ] T037 Build an in-memory graph index cache to answer queries without full scans.
+- [ ] T038 Implement fast backlink and forward-link resolution methods.
+- [ ] T039 Execute verify tests proving sub-2 second query returns.
 
 ### Dependencies
-- Depends on: WP01.
-
-### Risks & Mitigations
-- Performance scaling. Mitigation: caching mechanisms if scanning vault dynamically.
+- WP05, WP06
 
 ---
 
-## Work Package WP05: Build 'Forge Soul' Semantic Exporter Skill (Priority: P2)
+## Work Package WP09: Build 'Forge Soul' Semantic Exporter Skill (Priority: P2)
 
 **Goal**: Securely format and export sealed knowledge to Hugging Face JSONL.
 **Independent Test**: Valid JSONL push after passing Git verification gate.
-**Prompt**: `/tasks/WP05-build-forge-soul-skill.md`
+**Prompt**: `/tasks/WP09-build-forge-soul.md`
 
 ### Included Subtasks
-- [ ] T019 Create `forge-soul` plugin directory and SKILL.md.
-- [ ] T020 Implement Git Pre-Flight Check (Protocol 101) logic.
-- [ ] T021 Implement logic to identify sealed notes.
-- [ ] T022 Implement data transformation logic perfectly adhering to WP02 schema rules.
-- [ ] T023 Implement the export/append step to Hugging Face `soul_traces.jsonl`.
-- [ ] T024 Write tests validating schema compliance and Git failure blocks.
-
-### Implementation Notes
-- This is the highest risk integration point. Git verification gate must fail hard on uncommitted work.
-
-### Parallel Opportunities
-- T020 (Git Check) and T022 (Data transform) can run in parallel.
+- [ ] T040 Scaffold `forge-soul-exporter` plugin.
+- [ ] T041 Implement Git Pre-Flight check across both standard Repo and isolated Vault root.
+- [ ] T042 Identify `status: sealed` notes, failing gracefully if frontmatter is corrupt.
+- [ ] T043 Apply Snapshot Isolation parity checks (aborting if tree hashes change mid-run).
+- [ ] T044 Formulate payload according to WP03 schema rules.
+- [ ] T045 Build Hugging Face export step enforcing exponential backoff for rate limits.
 
 ### Dependencies
-- Depends on: WP02.
-
-### Risks & Mitigations
-- Vault sync corruption. Mitigation: strict HF testing validations and the mandatory Protocol 101 gate.
+- WP03, WP06
 
 ---
 
-## Work Package WP06: Legacy Scrubbing & Automated Link Refactoring (Priority: P3)
+## Work Package WP10: Phase 1.5 Integration & Synthetic Edge-Case Testing (Priority: P2)
 
-**Goal**: Remove obsolete architecture and fix broken repo paths.
-**Independent Test**: 0 broken links, 0 'MCP' usages in core setup.
-**Prompt**: `/tasks/WP06-legacy-scrubbing.md`
+**Goal**: End-to-end traversal mapping across edge-cases.
+**Independent Test**: Agent correctly traverses malformed data.
+**Prompt**: `/tasks/WP10-integration-testing.md`
 
 ### Included Subtasks
-- [ ] T025 Develop a script to detect and convert `[Link](../../file.md)` into Obsidian wikilinks (`[[file]]`).
-- [ ] T026 Apply refactoring across `01_PROTOCOLS/` and `02_LEARNING/`.
-- [ ] T027 Scrub all outdated "MCP" references from `sanctuary-guardian-prompt.md`.
-- [ ] T028 Verify clean `grep` results for "mcp ".
-
-### Implementation Notes
-- Global regexes needed.
-
-### Parallel Opportunities
-- Link conversion and MCP scrubbing are fully independent.
+- [ ] T046 Spin up a synthetic Test Vault decoupled from live data.
+- [ ] T047 Seed 100+ edge-case notes (malformed YAML, broken links, deeply nested transclusions).
+- [ ] T048 Run CRUD + Graph logic on the vault concurrently.
+- [ ] T049 Perform a dry-run test of the Forge Soul export.
+- [ ] T050 Collect coverage results and flag errors.
 
 ### Dependencies
-- None. Can be done immediately.
-
-### Risks & Mitigations
-- Over-aggressive regex matching. Mitigation: strictly bind search domain.
-
----
+- WP04, WP07, WP08, WP09

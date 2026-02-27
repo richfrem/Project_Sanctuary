@@ -1,38 +1,12 @@
 ---
-work_package_id: WP01
-title: Research Obsidian Integration Strategy & Capability Overlap
-lane: "doing"
+work_package_id: "WP01"
+title: "Research Obsidian Integration Strategy & Capability Overlap"
+lane: "planned"
 dependencies: []
-base_branch: main
-base_commit: 8ed66bfb638cfbebf2a2c1aa1abfee0c66bac1ba
-created_at: '2026-02-26T16:25:25.932061+00:00'
-subtasks:
-- T001
-- T002
-- T003
-- T004
-phase: Phase 0 - Research
-assignee: ''
-agent: ''
-shell_pid: "62896"
-review_status: ''
-reviewed_by: ''
-history:
-- timestamp: '2026-02-26T16:15:00Z'
-  lane: planned
-  agent: system
-  shell_pid: ''
-  action: Prompt generated via /spec-kitty.tasks
+subtasks: ["T001", "T002", "T003", "T004", "T005"]
 ---
 
 # Work Package Prompt: WP01 – Research Obsidian Integration Strategy & Capability Overlap
-
-## ⚠️ IMPORTANT: Review Feedback Status
-
-**Read this first if you are implementing this task!**
-- **Has review feedback?**: Check the `review_status` field above. If it says `has_feedback`, scroll to the **Review Feedback** section immediately (right below this notice).
-
----
 
 ## Objectives & Success Criteria
 - Identify the best technical path (REST API vs Custom Plugin vs Markdown) for interacting with the Vault.
@@ -64,7 +38,3 @@ history:
 ### Subtask T005 – Obtain human steward approval
 - **Purpose**: Ensure alignment with the Architect before code is written.
 - **Steps**: Wait for human review or run `spec-kitty review` to get the ADR formally accepted before checking off the task.
-
-## Activity Log
-
-- 2026-02-26T16:15:00Z – system – lane=planned – Prompt created
