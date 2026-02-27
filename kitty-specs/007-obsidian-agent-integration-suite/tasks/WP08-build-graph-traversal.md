@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP08"
-title: "Build Obsidian Graph Traversal Skill"
-lane: "planned"
-dependencies: ["WP05", "WP06"]
-subtasks: ["T035", "T036", "T037", "T038", "T039"]
+work_package_id: WP08
+title: Build Obsidian Graph Traversal Skill
+lane: planned
+dependencies: []
+subtasks: [T035, T036, T037, T038, T039]
 ---
 
 # Work Package Prompt: WP08 – Build Obsidian Graph Traversal Skill

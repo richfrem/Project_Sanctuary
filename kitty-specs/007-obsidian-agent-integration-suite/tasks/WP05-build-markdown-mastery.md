@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP05"
-title: "Build Obsidian Markdown Mastery Skill"
-lane: "planned"
-dependencies: ["WP01", "WP02"]
-subtasks: ["T020", "T021", "T022", "T023", "T024"]
+work_package_id: WP05
+title: Build Obsidian Markdown Mastery Skill
+lane: planned
+dependencies: []
+subtasks: [T020, T021, T022, T023, T024]
 ---
 
 # Work Package Prompt: WP05 – Build Obsidian Markdown Mastery Skill

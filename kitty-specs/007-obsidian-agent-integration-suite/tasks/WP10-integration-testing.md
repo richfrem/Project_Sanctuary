@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP10"
-title: "Phase 1.5 Integration & Synthetic Edge-Case Testing"
-lane: "planned"
-dependencies: ["WP04", "WP07", "WP08", "WP09"]
-subtasks: ["T046", "T047", "T048", "T049", "T050"]
+work_package_id: WP10
+title: Phase 1.5 Integration & Synthetic Edge-Case Testing
+lane: planned
+dependencies: []
+subtasks: [T046, T047, T048, T049, T050]
 ---
 
 # Work Package Prompt: WP10 – Phase 1.5 Integration & Synthetic Edge-Case Testing

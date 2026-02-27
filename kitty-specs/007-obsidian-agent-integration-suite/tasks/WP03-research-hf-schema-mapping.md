@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP03"
-title: "Research Data Mapping to HF Schema"
-lane: "planned"
-dependencies: ["WP01"]
-subtasks: ["T011", "T012", "T013", "T014", "T015"]
+work_package_id: WP03
+title: Research Data Mapping to HF Schema
+lane: planned
+dependencies: []
+subtasks: [T011, T012, T013, T014, T015]
 ---
 
 # Work Package Prompt: WP03 – Research Data Mapping to HF Schema

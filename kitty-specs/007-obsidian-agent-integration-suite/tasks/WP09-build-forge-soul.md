@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP09"
-title: "Build 'Forge Soul' Semantic Exporter Skill"
-lane: "planned"
-dependencies: ["WP03", "WP05", "WP06"]
-subtasks: ["T040", "T041", "T042", "T043", "T044", "T045"]
+work_package_id: WP09
+title: Build 'Forge Soul' Semantic Exporter Skill
+lane: planned
+dependencies: []
+subtasks: [T040, T041, T042, T043, T044, T045]
 ---
 
 # Work Package Prompt: WP09 – Build 'Forge Soul' Semantic Exporter Skill

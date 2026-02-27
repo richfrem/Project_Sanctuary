@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP06"
-title: "Build Obsidian Vault CRUD Skill"
-lane: "planned"
-dependencies: ["WP01", "WP05"]
-subtasks: ["T025", "T026", "T027", "T028", "T029"]
+work_package_id: WP06
+title: Build Obsidian Vault CRUD Skill
+lane: planned
+dependencies: []
+subtasks: [T025, T026, T027, T028, T029]
 ---
 
 # Work Package Prompt: WP06 – Build Obsidian Vault CRUD Skill

@@ -1,9 +1,9 @@
 ---
-work_package_id: "WP07"
-title: "Build Obsidian Dynamic Views Skills (Bases & Canvas)"
-lane: "planned"
-dependencies: ["WP01", "WP06"]
-subtasks: ["T030", "T031", "T032", "T033", "T034"]
+work_package_id: WP07
+title: Build Obsidian Dynamic Views Skills (Bases & Canvas)
+lane: planned
+dependencies: []
+subtasks: [T030, T031, T032, T033, T034]
 ---
 
 # Work Package Prompt: WP07 – Build Obsidian Dynamic Views Skills (Bases & Canvas)
