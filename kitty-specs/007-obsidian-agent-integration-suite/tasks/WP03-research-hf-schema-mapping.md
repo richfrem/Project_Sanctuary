@@ -1,9 +1,13 @@
 ---
 work_package_id: WP03
 title: Research Data Mapping to HF Schema
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: e0f38e5a4133dcaa7ff1ff0823b9feb6a49a4aca
+created_at: '2026-02-27T21:42:14.047135+00:00'
 subtasks: [T011, T012, T013, T014, T015]
+shell_pid: "62896"
 ---
 
 # Work Package Prompt: WP03 – Research Data Mapping to HF Schema
