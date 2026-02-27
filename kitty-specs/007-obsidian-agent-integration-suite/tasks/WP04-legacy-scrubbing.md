@@ -1,9 +1,13 @@
 ---
-work_package_id: "WP04"
-title: "Legacy Scrubbing & Automated Link Refactoring"
-lane: "planned"
+work_package_id: WP04
+title: Legacy Scrubbing & Automated Link Refactoring
+lane: "doing"
 dependencies: []  # Independent execution is intentional
-subtasks: ["T016", "T017", "T018", "T019"]
+base_branch: main
+base_commit: 235fa6ef83bdab384cf33db2f99c0d31586df231
+created_at: '2026-02-27T21:52:47.194250+00:00'
+subtasks: [T016, T017, T018, T019]
+shell_pid: "62896"
 ---
 
 # Work Package Prompt: WP04 – Legacy Scrubbing & Automated Link Refactoring
