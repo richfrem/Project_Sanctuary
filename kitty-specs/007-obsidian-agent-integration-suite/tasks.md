@@ -171,12 +171,12 @@
 **Prompt**: `/tasks/WP09-build-forge-soul.md`
 
 ### Included Subtasks
-- [ ] T040 Scaffold `forge-soul-exporter` plugin.
-- [ ] T041 Implement Git Pre-Flight check across both standard Repo and isolated Vault root.
-- [ ] T042 Identify `status: sealed` notes, failing gracefully if frontmatter is corrupt.
-- [ ] T043 Apply Snapshot Isolation parity checks (aborting if tree hashes change mid-run).
-- [ ] T044 Formulate payload according to WP03 schema rules.
-- [ ] T045 Build Hugging Face export step enforcing exponential backoff for rate limits.
+- [x] T040 Scaffold `forge-soul-exporter` plugin.
+- [x] T041 Implement Git Pre-Flight check across both standard Repo and isolated Vault root.
+- [x] T042 Identify `status: sealed` notes, failing gracefully if frontmatter is corrupt.
+- [x] T043 Apply Snapshot Isolation parity checks (aborting if tree hashes change mid-run).
+- [x] T044 Formulate payload according to WP03 schema rules.
+- [x] T045 Build Hugging Face export step enforcing exponential backoff for rate limits.
 
 ### Dependencies
 - WP03, WP06
