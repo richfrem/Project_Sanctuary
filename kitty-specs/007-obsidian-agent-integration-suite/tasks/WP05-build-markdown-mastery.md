@@ -8,6 +8,7 @@ base_commit: 0076d81527e4c8ac68076ac5fc46badb43271d1c
 created_at: '2026-02-27T22:06:53.251039+00:00'
 subtasks: [T020, T021, T022, T023, T024]
 shell_pid: "55083"
+agent: "Antigravity"
 ---
 
 # Work Package Prompt: WP05 – Build Obsidian Markdown Mastery Skill
@@ -44,3 +45,7 @@ shell_pid: "55083"
 ### Subtask T024 – Write Verification Tests
 - **Purpose**: Prove resilience.
 - **Steps**: Expose the parser to strings containing complex links and callouts. Assert that the correct types (Embed vs Link) and metadata (Alias, Heading, Block) are accurately extracted.
+
+## Activity Log
+
+- 2026-02-27T22:06:54Z – Antigravity – shell_pid=55083 – lane=doing – Assigned agent via workflow command
