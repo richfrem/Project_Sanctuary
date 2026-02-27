@@ -46,3 +46,4 @@ agent: "Antigravity"
 
 - 2026-02-27T21:42:14Z – Antigravity – shell_pid=62896 – lane=doing – Assigned agent via workflow command
 - 2026-02-27T21:48:08Z – Antigravity – shell_pid=62896 – lane=for_review – Completed HF schema mapping and ADR 100
+- 2026-02-27T21:49:01Z – Antigravity – shell_pid=62896 – lane=for_review – Completed HF schema mapping and ADR 100 with user clarification on uni-directional export
