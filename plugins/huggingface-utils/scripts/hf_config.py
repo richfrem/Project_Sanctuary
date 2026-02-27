@@ -57,23 +57,55 @@ class HFUploadResult:
 
 
 def _get_project_root() -> Path:
-    """Walk up from CWD to find the project root (.git marker)."""
-    current = Path.cwd()
-    for parent in [current] + list(current.parents):
+    """Find the project root. Checks PROJECT_ROOT env, then walks up from script location."""
+    # 1. Check explicit PROJECT_ROOT env var (set in .env itself)
+    env_root = os.getenv("PROJECT_ROOT")
+    if env_root and Path(env_root).exists():
+        return Path(env_root)
+
+    # 2. Walk up from this script's location (works from worktrees too)
+    current = Path(__file__).resolve()
+    for parent in current.parents:
+        if (parent / ".env").exists():
+            return parent
+        # Stop at .git root
         if (parent / ".git").exists():
             return parent
+
+    # 3. Fallback: CWD
+    current = Path.cwd()
+    for parent in [current] + list(current.parents):
+        if (parent / ".env").exists():
+            return parent
+        if (parent / ".git").exists():
+            return parent
+
     return current
 
 
 def _load_dotenv() -> None:
-    """Load .env from project root if dotenv is available."""
+    """Load .env from project root. Searches multiple locations for worktree compatibility."""
     try:
         from dotenv import load_dotenv
-        env_file = _get_project_root() / ".env"
+    except ImportError:
+        return
+
+    # Try multiple .env locations
+    candidates = [
+        _get_project_root() / ".env",
+    ]
+    # Also check common parent for worktrees (e.g., .worktrees/WP09 -> project root)
+    script_path = Path(__file__).resolve()
+    for parent in script_path.parents:
+        env_candidate = parent / ".env"
+        if env_candidate.exists() and env_candidate not in candidates:
+            candidates.append(env_candidate)
+            break
+
+    for env_file in candidates:
         if env_file.exists():
             load_dotenv(env_file)
-    except ImportError:
-        pass
+            return
 
 
 def _get_env(key: str, required: bool = True, default: str = None) -> Optional[str]:
