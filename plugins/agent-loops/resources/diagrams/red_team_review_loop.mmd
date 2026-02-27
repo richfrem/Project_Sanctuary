@@ -13,10 +13,14 @@ flowchart TB
     
     subgraph Execution["Review Packet Generation"]
         Research["Deep-Dive Research & Analysis"]
+        Prompt["Create/Update Review Prompt<br>(Define Red Team Context)"]
+        Manifest["Update File Manifest<br>(Select Context Files)"]
         Bundler{{"context-bundler<br>Plugin"}}
         
         Orient --> Research
-        Research -->|Request Packet| Bundler
+        Research --> Prompt
+        Prompt --> Manifest
+        Manifest -->|Assemble Packet| Bundler
     end
     
     Bundler --> Dispatch["Dispatch to Red Team<br>(Browser Agents / CLI Agents / Human)"]
