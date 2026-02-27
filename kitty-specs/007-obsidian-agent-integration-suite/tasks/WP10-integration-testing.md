@@ -1,7 +1,7 @@
 ---
 work_package_id: WP10
 title: Phase 1.5 Integration & Synthetic Edge-Case Testing
-lane: "doing"
+lane: "for_review"
 dependencies: []
 base_branch: main
 base_commit: da97dddc8356edf3ef0db1456c04c9dbfdc61a28
@@ -50,3 +50,4 @@ agent: "Antigravity"
 ## Activity Log
 
 - 2026-02-27T23:18:47Z – Antigravity – shell_pid=55083 – lane=doing – Assigned agent via workflow command
+- 2026-02-27T23:58:31Z – Antigravity – shell_pid=55083 – lane=for_review – Moved to for_review
