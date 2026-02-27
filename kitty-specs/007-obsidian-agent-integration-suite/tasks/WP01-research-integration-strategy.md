@@ -1,7 +1,7 @@
 ---
 work_package_id: "WP01"
 title: "Research Obsidian Integration Strategy & Capability Overlap"
-lane: "for_review"
+lane: "doing"
 dependencies: []
 subtasks: ["T001", "T002", "T003", "T004", "T005"]
 agent: "Antigravity"
@@ -45,3 +45,4 @@ shell_pid: "62896"
 
 - 2026-02-27T16:53:50Z – Antigravity – shell_pid=62896 – lane=doing – Started implementation via workflow command
 - 2026-02-27T20:14:20Z – Antigravity – shell_pid=62896 – lane=for_review – Completed capability overlap analysis and ADR 099
+- 2026-02-27T23:59:25Z – Antigravity – shell_pid=62896 – lane=doing – Started review via workflow command
