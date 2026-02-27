@@ -1,9 +1,13 @@
 ---
 work_package_id: WP06
 title: Build Obsidian Vault CRUD Skill
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 465d8e7f4bfa0673ecfdbc47b492271cbeeeae1e
+created_at: '2026-02-27T22:24:54.088132+00:00'
 subtasks: [T025, T026, T027, T028, T029]
+shell_pid: "55083"
 ---
 
 # Work Package Prompt: WP06 – Build Obsidian Vault CRUD Skill
