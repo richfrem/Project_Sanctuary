@@ -8,6 +8,7 @@ base_commit: 235fa6ef83bdab384cf33db2f99c0d31586df231
 created_at: '2026-02-27T21:52:47.194250+00:00'
 subtasks: [T016, T017, T018, T019]
 shell_pid: "62896"
+agent: "Antigravity"
 ---
 
 # Work Package Prompt: WP04 – Legacy Scrubbing & Automated Link Refactoring
@@ -37,3 +38,7 @@ shell_pid: "62896"
 ### Subtask T019 – Verify clean grep
 - **Purpose**: Prove completion.
 - **Steps**: Execute exhaustive greps proving neither standard relative markdown links nor "MCP" references remain in target paths.
+
+## Activity Log
+
+- 2026-02-27T21:52:49Z – Antigravity – shell_pid=62896 – lane=doing – Assigned agent via workflow command
