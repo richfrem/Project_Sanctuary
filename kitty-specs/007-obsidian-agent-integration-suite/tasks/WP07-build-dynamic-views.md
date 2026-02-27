@@ -1,9 +1,13 @@
 ---
 work_package_id: WP07
 title: Build Obsidian Dynamic Views Skills (Bases & Canvas)
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 14b3f303280a607153ae407b84919b4bc8679cc4
+created_at: '2026-02-27T22:54:35.136132+00:00'
 subtasks: [T030, T031, T032, T033, T034]
+shell_pid: "55083"
 ---
 
 # Work Package Prompt: WP07 – Build Obsidian Dynamic Views Skills (Bases & Canvas)
