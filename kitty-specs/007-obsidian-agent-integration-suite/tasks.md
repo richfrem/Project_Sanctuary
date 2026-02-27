@@ -82,10 +82,10 @@
 **Prompt**: `/tasks/WP04-legacy-scrubbing.md`
 
 ### Included Subtasks
-- [ ] T016 Develop a dry-run enabled script to convert `[Link](../../file.md)` into Obsidian wikilinks `[[file]]`.
-- [ ] T017 Apply refactoring across `01_PROTOCOLS/` and `02_LEARNING/` directories.
-- [ ] T018 Scrub "MCP" references from `sanctuary-guardian-prompt.md`.
-- [ ] T019 Verify clean grep results for obsolete syntax.
+- [x] T016 Develop a dry-run enabled script to convert `[Link](../../file.md)` into Obsidian wikilinks `[[file]]`.
+- [x] T017 Apply refactoring across `01_PROTOCOLS/` and `02_LEARNING/` directories.
+- [x] T018 Scrub "MCP" references from `sanctuary-guardian-prompt.md`.
+- [x] T019 Verify clean grep results for obsolete syntax.
 
 ### Dependencies
 - None.
