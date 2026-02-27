@@ -43,11 +43,11 @@
 **Prompt**: `/tasks/WP02-analyze-kepano-skills.md`
 
 ### Included Subtasks
-- [ ] T006 Clone `https://github.com/kepano/obsidian-skills` to a secure temp directory.
-- [ ] T007 Analyze the tools and agent integrations mapped in that repo.
-- [ ] T008 Compare Kepano's plugin approach to the Sanctuary direct-filesystem approach.
-- [ ] T009 Compile an architectural synthesis payload for the context bundler.
-- [ ] T010 Clean up the repository from `/tmp`.
+- [x] T006 Clone `https://github.com/kepano/obsidian-skills` to a secure temp directory.
+- [x] T007 Analyze the tools and agent integrations mapped in that repo.
+- [x] T008 Compare Kepano's plugin approach to the Sanctuary direct-filesystem approach.
+- [x] T009 Compile an architectural synthesis payload for the context bundler.
+- [x] T010 Clean up the repository from `/tmp`.
 
 ### Implementation Notes
 - Should inform the plugin design mapped out in WP01 ADR.
