@@ -22,11 +22,11 @@
 **Prompt**: `/tasks/WP01-research-integration-strategy.md`
 
 ### Included Subtasks
-- [ ] T001 Analyze Obsidian's core mechanisms (Local REST API, direct Markdown, Custom Plugin) relative to the Agent Client Protocol (ACP) integrations.
-- [ ] T002 Analyze capability overlap with `rlm-factory` and `vector-db` plugins.
-- [ ] T003 Architect explicitly how Project Sanctuary agents will leverage Obsidian skills (Markdown Mastery, Obsidian Bases, JSON Canvas) and define the necessary plugin boundaries.
-- [ ] T004 Draft ADR detailing the chosen read/write strategy, capability alignment, and required software installations (Obsidian CLI).
-- [ ] T005 Obtain human steward approval on the ADR.
+- [x] T001 Analyze Obsidian's core mechanisms (Local REST API, direct Markdown, Custom Plugin) relative to the Agent Client Protocol (ACP) integrations.
+- [x] T002 Analyze capability overlap with `rlm-factory` and `vector-db` plugins.
+- [x] T003 Architect explicitly how Project Sanctuary agents will leverage Obsidian skills (Markdown Mastery, Obsidian Bases, JSON Canvas) and define the necessary plugin boundaries.
+- [x] T004 Draft ADR detailing the chosen read/write strategy, capability alignment, and required software installations (Obsidian CLI).
+- [x] T005 Obtain human steward approval on the ADR.
 
 ### Implementation Notes
 - Crucial that WP01 is completely resolved before WP05 and WP06 begin.
