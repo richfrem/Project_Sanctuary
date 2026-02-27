@@ -31,5 +31,13 @@ As mandated by Project Sanctuary's `plugin-architecture`, our upcoming Obsidian 
 2. **`scripts/`**: Will contain the Python execution scripts (e.g., `read_canvas.py`, `write_base.py`, `parse_wikilinks.py`) that actually do the filesystem reading/writing. 
 3. **Iron Core**: Agents will invoke the scripts rather than using native file editing tools to manipulate the complex `.canvas` and `.base` JSON/YAML trees.
 
-## 4. Conclusion
-Kepano's repository is an excellent **Data Dictionary** for Obsidian formats, but it is not a structural blueprint for Project Sanctuary. We will extract the schemas and layout rules from his skills and embed them securely into our deterministically executing Python ecosystem.
+## 4. Agnosticism vs Orchestration (The Guardian Boundary)
+
+A critical architectural distinction must be maintained when building these new skills:
+- **The Obsidian Skills MUST BE AGNOSTIC**: The `json-canvas-architect`, `obsidian-bases-manager`, and `obsidian-markdown` tools must know **nothing** about Project Sanctuary, the Constitution, the RLM, or Hugging Face. They are pure, generic tools that read and write Obsidian formats. They could be dropped into any other project and work perfectly.
+- **The Guardian MUST BE CONTEXT-AWARE**: It is the `guardian-onboarding` skill (and the Orchestrator) that possesses the domain knowledge of Project Sanctuary. The Guardian will determine *what* Sanctuary data needs to be visualized, and it will invoke the generic Obsidian skills and pass them the payload to do the drawing.
+
+*(Note: This mirrors the exact separation of concerns achieved in the `agent-loops` vs `orchestrator` refactor, where execution loops remain agnostic and the orchestrator handles the domain-specific routing).*
+
+## 5. Conclusion
+Kepano's repository is an excellent **Data Dictionary** for Obsidian formats, but it is not a structural blueprint for Project Sanctuary. We will extract the schemas and layout rules from his skills and embed them securely into our deterministically executing, completely agnostic Python ecosystem.
