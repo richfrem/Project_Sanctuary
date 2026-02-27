@@ -14,21 +14,20 @@ flowchart TB
     subgraph Execution["Cognitive Synthesis"]
         Research["Research & Synthesize"]
         Document["Document Findings"]
-        Bundler{{"context-bundler<br>Plugin"}}
         
         Research --> Document
         Document --> Iterate{"More to Learn?"}
         
         Iterate -- Yes --> Deepen["Deepen / Refine"]
-        Deepen --> Bundler
-        Bundler -->|Refresh Context| Research
+        Deepen --> Research
     end
     
     Orient --> Execution
     
     Iterate -- No --> Seal["Seal Session State"]
-    Seal -.->|Requires Final Snapshot| Bundler
-    Seal --> Persist["Persist to Long-Term Memory"]
+    Bundler{{"context-bundler<br>Plugin"}}
+    Seal -->|Bundle Artifacts| Bundler
+    Bundler --> Persist["Persist to Long-Term Memory"]
     Persist --> Retro["Retrospective"]
     Retro -.->|"Next Session"| Start
 
