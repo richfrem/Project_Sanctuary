@@ -1,9 +1,13 @@
 ---
 work_package_id: WP02
 title: Deep Analyze Kepano Obsidian Skills Repository
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 90369c8e2790f7f5cf4cdeaa77451d7acebe0553
+created_at: '2026-02-27T20:20:39.483054+00:00'
 subtasks: [T006, T007, T008, T009, T010]
+shell_pid: "62896"
 ---
 
 # Work Package Prompt: WP02 – Deep Analyze Kepano Obsidian Skills Repository
