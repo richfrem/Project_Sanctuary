@@ -10,9 +10,16 @@ config:
 flowchart TB
     Start(["Trigger:<br>Architecture / Design / Problem to Review"])
     Start --> Orient["Load Prior Context"]
-    Orient --> Research["Deep-Dive Research & Analysis"]
-    Research --> Bundle["Bundle Context for Review<br>(context-bundler)"]
-    Bundle --> Dispatch["Dispatch to Red Team<br>(Browser Agents / CLI Agents / Human)"]
+    
+    subgraph Execution["Review Packet Generation"]
+        Research["Deep-Dive Research & Analysis"]
+        Bundler{{"context-bundler<br>Plugin"}}
+        
+        Orient --> Research
+        Research -->|Request Packet| Bundler
+    end
+    
+    Bundler --> Dispatch["Dispatch to Red Team<br>(Browser Agents / CLI Agents / Human)"]
 
     Dispatch --> Review{"Red Team Verdict"}
     Review -- "More Research Needed" --> Feedback["Capture Feedback"]
@@ -28,3 +35,4 @@ flowchart TB
     style Review fill:#fce4ec,stroke:#880e4f,stroke-width:2px
     style Dispatch fill:#fce4ec,stroke:#880e4f,stroke-width:2px
     style Retro fill:#d4edda,stroke:#155724,stroke-width:2px
+    style Bundler fill:#81c784,stroke:#2e7d32,stroke-width:2px,stroke-dasharray: 5 5
