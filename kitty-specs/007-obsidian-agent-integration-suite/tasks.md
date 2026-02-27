@@ -135,11 +135,11 @@
 **Prompt**: `/tasks/WP07-build-dynamic-views.md`
 
 ### Included Subtasks
-- [ ] T030 Scaffold `obsidian-bases-manager` and `obsidian-canvas-architect` plugins.
-- [ ] T031 Implement `.base` table/grid manipulation logic preserving structure.
-- [ ] T032 Build `json-canvas-spec` 1.0 logic to programmaticly draw nodes and edges.
-- [ ] T033 Handle malformed JSON/YAML by degrading gracefully and reporting format errors.
-- [ ] T034 Verify operations against standard schemas.
+- [x] T030 Scaffold `obsidian-bases-manager` and `obsidian-canvas-architect` plugins.
+- [x] T031 Implement `.base` table/grid manipulation logic preserving structure.
+- [x] T032 Build `json-canvas-spec` 1.0 logic to programmaticly draw nodes and edges.
+- [x] T033 Handle malformed JSON/YAML by degrading gracefully and reporting format errors.
+- [x] T034 Verify operations against standard schemas.
 
 ### Dependencies
 - WP01, WP06
