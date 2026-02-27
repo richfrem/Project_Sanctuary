@@ -192,7 +192,7 @@
 ### Included Subtasks
 - [x] T046 Spin up a synthetic Test Vault decoupled from live data.
 - [x] T047 Seed 100+ edge-case notes (malformed YAML, broken links, deeply nested transclusions).
-- [ ] T048 Run CRUD + Graph logic on the vault concurrently.
+- [x] T048 Run CRUD + Graph logic on the vault concurrently.
 - [ ] T049 Perform a dry-run test of the Forge Soul export.
 - [ ] T050 Collect coverage results and flag errors.
 
