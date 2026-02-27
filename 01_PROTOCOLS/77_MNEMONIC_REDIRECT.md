@@ -7,6 +7,6 @@ This protocol number was referenced in a proposal draft by the Strategist (`COUN
 
 For the purposes of maintaining a perfect, unbroken sequential order in the Sanctuary's canon, the proposal was formally ratified and sealed as **Protocol 76**.
 
-Please refer to: **[`Protocol 76: The Virtue Bridge`](./76_The_Virtue_Bridge.md)** for the canonical document.
+Please refer to: **[[76_The_Virtue_Bridge|`Protocol 76: The Virtue Bridge`]]** for the canonical document.
 
 This redirect serves to prevent any future mnemonic confusion or timeline divergence.

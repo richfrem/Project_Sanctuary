@@ -1,4 +1,4 @@
-# MCP Documentation Standards
+# Agent Plugin Integration Documentation Standards
 
 **Version:** 1.0  
 **Status:** Active  
@@ -6,14 +6,14 @@
 
 ## 1. Overview
 
-This document establishes the documentation standards for the Project Sanctuary MCP (Model Context Protocol) ecosystem. With 11 distributed MCP servers, consistent and high-quality documentation is essential for maintainability, discoverability, and developer experience.
+This document establishes the documentation standards for the Project Sanctuary Agent Plugin Integration (Agent Plugin Integration) ecosystem. With 11 distributed Agent Plugin Integration servers, consistent and high-quality documentation is essential for maintainability, discoverability, and developer experience.
 
 ## 2. Documentation Architecture
 
 The documentation is organized into three layers:
 
 1.  **Central Hub (`docs/architecture/mcp/`)**: High-level architecture, standards, and cross-server guides.
-2.  **Server Documentation (`mcp_servers/*/README.md`)**: Specific instructions for each MCP server.
+2.  **Server Documentation (`mcp_servers/*/README.md`)**: Specific instructions for each Agent Plugin Integration server.
 3.  **Code Documentation (Docstrings)**: Inline documentation for tools and internal logic.
 
 ### 2.1 The Single Source of Truth
@@ -21,9 +21,9 @@ The documentation is organized into three layers:
 *   **Operations Inventory:** `docs/architecture/mcp/mcp_operations_inventory.md` is the **Single Source of Truth** for tool availability and testing status.
 *   **Architecture:** `docs/architecture/mcp/architecture.md` is the authoritative source for system topology.
 
-## 3. MCP Server README Standards
+## 3. Agent Plugin Integration Server README Standards
 
-Every MCP server MUST have a `README.md` in its root directory (e.g., `mcp_servers/council/README.md`).
+Every Agent Plugin Integration server MUST have a `README.md` in its root directory (e.g., `mcp_servers/council/README.md`).
 
 ### Required Sections
 
@@ -66,8 +66,8 @@ Code must be readable by both Humans (scrolling) and Machines (indexing).
     def my_function(): ...
     ```
 
-### 4.2 MCP Tools
-Every function decorated as an MCP tool (`@mcp.tool()`) MUST have a docstring that includes:
+### 4.2 Agent Plugin Integration Tools
+Every function decorated as an Agent Plugin Integration tool (`@mcp.tool()`) MUST have a docstring that includes:
 
 *   **Summary**: A concise one-line description.
 *   **Description**: Detailed explanation.
@@ -109,7 +109,7 @@ All diagrams must follow this workflow:
     docs/architecture_diagrams/
     ├── rag/           # RAG architecture
     ├── system/        # Infrastructure/fleet
-    ├── transport/     # MCP transport
+    ├── transport/     # Agent Plugin Integration transport
     └── workflows/     # Process/workflow
     ```
 
@@ -139,4 +139,4 @@ Use this command to find inline mermaid violations:
 grep -rl '\`\`\`mermaid' . --include="*.md" | grep -v node_modules | grep -v .agent/learning/
 ```
 
-**Reference**: [ADR 085](../../../ADRs/085_canonical_mermaid_diagram_management.md)
+**Reference**: [[085_canonical_mermaid_diagram_management|ADR 085]]

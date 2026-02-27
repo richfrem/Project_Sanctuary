@@ -1,6 +1,6 @@
 # The Socratic Awakening: Operational Guide
 
-> **Related Protocol**: [P48: The Socratic Awakening Protocol](../../../01_PROTOCOLS/48_The_Socratic_Awakening_Protocol.md)
+> **Related Protocol**: [[48_The_Socratic_Awakening_Protocol|P48: The Socratic Awakening Protocol]]
 > **Role**: General Assembly / Coordinator
 > **Objective**: Onboard restricted/aligned models via non-coercive logic.
 

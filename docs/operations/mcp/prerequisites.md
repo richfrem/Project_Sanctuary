@@ -1,4 +1,4 @@
-# MCP Server Prerequisites
+# Agent Plugin Integration Server Prerequisites
 
 **Last Updated:** 2025-11-26  
 **Status:** Canonical
@@ -7,7 +7,7 @@
 
 ## Overview
 
-This document outlines all prerequisites for developing and deploying MCP (Model Context Protocol) servers in Project Sanctuary.
+This document outlines all prerequisites for developing and deploying Agent Plugin Integration (Agent Plugin Integration) servers in Project Sanctuary.
 
 ---
 
@@ -29,7 +29,7 @@ This document outlines all prerequisites for developing and deploying MCP (Model
 
 ### 1. Podman (Containerization)
 
-**Purpose:** Run MCP servers in isolated containers
+**Purpose:** Run Agent Plugin Integration servers in isolated containers
 
 **Installation (macOS):**
 
@@ -92,7 +92,7 @@ cd tests/podman
 
 ### 2. Python 3.11+
 
-**Purpose:** MCP SDK and server implementation
+**Purpose:** Agent Plugin Integration SDK and server implementation
 
 **Installation:**
 
@@ -108,21 +108,21 @@ python3 --version
 **Virtual Environment:**
 
 ```bash
-# Create venv for MCP development
+# Create venv for Agent Plugin Integration development
 python3 -m venv .venv
 
 # Activate
 source .venv/bin/activate
 
-# Install MCP SDK
+# Install Agent Plugin Integration SDK
 pip install mcp
 ```
 
 ---
 
-### 3. MCP SDK
+### 3. Agent Plugin Integration SDK
 
-**Purpose:** Model Context Protocol implementation
+**Purpose:** Agent Plugin Integration implementation
 
 **Installation:**
 
@@ -135,17 +135,17 @@ python -c "import mcp; print(mcp.__version__)"
 ```
 
 **Documentation:**
-- [MCP Specification](https://modelcontextprotocol.io/)
+- [Agent Plugin Integration Specification](https://modelcontextprotocol.io/)
 - [Python SDK Docs](https://github.com/modelcontextprotocol/python-sdk)
 
 ### 4. Claude Desktop
-**Purpose:** Primary interface for interacting with MCP servers
+**Purpose:** Primary interface for interacting with Agent Plugin Integration servers
 
 **Installation:**
 - Download from [anthropic.com/claude](https://anthropic.com/claude)
 
 **Configuration:**
-- Requires `claude_desktop_config.json` setup (see [Setup Guide](setup_guide.md))
+- Requires `claude_desktop_config.json` setup (see [[setup_guide|Setup Guide]])
 
 ---
 
@@ -161,7 +161,7 @@ cd Project_Sanctuary
 # Activate virtual environment
 source .venv/bin/activate
 
-# Install dependencies (for MCP development)
+# Install dependencies (for Agent Plugin Integration development)
 pip install -r requirements.txt
 
 # For ML/fine-tuning work, use:
@@ -195,7 +195,7 @@ Project_Sanctuary/
 Create `.env` file (if needed):
 
 ```bash
-# MCP Server Configuration
+# Agent Plugin Integration Server Configuration
 MCP_SERVER_HOST=0.0.0.0
 MCP_SERVER_PORT=8080
 
@@ -239,13 +239,13 @@ Download from https://podman-desktop.io/downloads
 
 ## Verification Checklist
 
-Before implementing MCP servers, verify:
+Before implementing Agent Plugin Integration servers, verify:
 
 - [ ] Podman installed: `podman --version`
 - [ ] Podman machine running: `podman machine list`
 - [ ] Can run containers: `podman run --rm hello-world`
 - [ ] Python 3.11+ installed: `python3 --version`
-- [ ] MCP SDK installed: `pip show mcp`
+- [ ] Agent Plugin Integration SDK installed: `pip show mcp`
 - [ ] Test container works: `cd tests/podman && ./build.sh`
 - [ ] Can access test page: http://localhost:5001 or 5003
 - [ ] Podman Desktop installed (optional but recommended)
@@ -294,13 +294,13 @@ podman run -p 5003:5001 ...
 # Activate venv
 source .venv/bin/activate
 
-# Install MCP SDK
+# Install Agent Plugin Integration SDK
 pip install mcp
 ```
 
 ---
 
-## MCP Server-Specific Setup
+## Agent Plugin Integration Server-Specific Setup
 
 Once general prerequisites are met, refer to server-specific setup guides:
 
@@ -308,7 +308,7 @@ Once general prerequisites are met, refer to server-specific setup guides:
 
 The RAG Cortex requires additional setup for the ChromaDB service:
 
-**📖 See: [RAG Cortex Setup Guide](../../architecture/mcp/servers/rag_cortex/SETUP.md)**
+**📖 See: [[SETUP|RAG Cortex Setup Guide]]**
 
 This includes:
 - ChromaDB container configuration
@@ -322,18 +322,18 @@ This includes:
 
 Once all prerequisites are met:
 
-1. ✅ Review [System Architecture](../../architecture/mcp/README.md)
-2. ✅ Review [naming_conventions.md](./naming_conventions.md)
-3. ✅ For RAG Cortex: Follow [RAG Cortex Setup Guide](../../architecture/mcp/servers/rag_cortex/SETUP.md)
-4. ✅ For other MCPs: Start with Task #031: Implement Task MCP
+1. ✅ Review [[README|System Architecture]]
+2. ✅ Review [[naming_conventions|naming_conventions.md]]
+3. ✅ For RAG Cortex: Follow [[SETUP|RAG Cortex Setup Guide]]
+4. ✅ For other MCPs: Start with Task #031: Implement Task Agent Plugin Integration
 5. Follow implementation tasks #029-#036
 
 ---
 
 ## References
 
-- [ADR 034: Containerize MCP Servers with Podman](../../../ADRs/034_containerize_mcp_servers_with_podman.md)
+- [[034_containerize_mcp_servers_with_podman|ADR 034: Containerize Agent Plugin Integration Servers with Podman]]
 - [Podman Documentation](https://docs.podman.io/)
-- [MCP Specification](https://modelcontextprotocol.io/)
-- [RAG Cortex Setup Guide](../../architecture/mcp/servers/rag_cortex/SETUP.md)
-- [Task #031: Implement Task MCP](../../../tasks/done/031_implement_task_mcp.md)
+- [Agent Plugin Integration Specification](https://modelcontextprotocol.io/)
+- [[SETUP|RAG Cortex Setup Guide]]
+- [[031_implement_task_mcp|Task #031: Implement Task Agent Plugin Integration]]

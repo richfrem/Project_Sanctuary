@@ -22,7 +22,7 @@ No uncommitted code changes found.
     * `mcp_servers/rag_cortex/server.py` (20h ago)
     * `mcp_servers/rag_cortex/operations.py` (20h ago)
     * `mcp_servers/rag_cortex/models.py` (20h ago) → Implementation changes
-    * `mcp_servers/rag_cortex/README.md` (20h ago) → Cortex MCP Server
+    * `mcp_servers/rag_cortex/README.md` (20h ago) → Cortex Agent Plugin Integration Server
 
 ## III. The Law (Protocol 128 - Cognitive Continuity)
 > *"We do not restart. We reload."*
@@ -58,7 +58,7 @@ description: "Standard operating procedure for the Protocol 125 Recursive Learni
 
 **Objective:** Autonomous acquisition and preservation of new knowledge.
 **Reference:** `01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md`
-**Tools:** Web Search, Code MCP, RAG Cortex, Chronicle
+**Tools:** Web Search, Code Agent Plugin Integration, RAG Cortex, Chronicle
 
 ## Phase 1: Discovery
 1.  **Define Research Question:** What exactly are we learning? (e.g., "Latest features of library X")

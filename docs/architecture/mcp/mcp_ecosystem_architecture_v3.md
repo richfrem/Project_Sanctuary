@@ -1,28 +1,28 @@
-# Project Sanctuary MCP Ecosystem Architecture
+# Project Sanctuary Agent Plugin Integration Ecosystem Architecture
 
 **Version:** 3.0 (Complete)  
 **Status:** Architecture Complete - Ready for Implementation  
 **Last Updated:** 2025-11-25  
-**Purpose:** Define the domain-driven MCP server architecture for Project Sanctuary
+**Purpose:** Define the domain-driven Agent Plugin Integration server architecture for Project Sanctuary
 
 ---
 
 ## Overview
 
-This document defines the **Model Context Protocol (MCP) ecosystem** for Project Sanctuary, replacing manual `command.json` workflows with domain-specific MCP servers that provide LLM assistants with safe, structured tools.
+This document defines the **Agent Plugin Integration (Agent Plugin Integration) ecosystem** for Project Sanctuary, replacing manual `command.json` workflows with domain-specific Agent Plugin Integration servers that provide LLM assistants with safe, structured tools.
 
-**Key Principle:** **Domain-Driven Design** - Each MCP server owns a specific domain with clear boundaries, schemas, and safety rules.
+**Key Principle:** **Domain-Driven Design** - Each Agent Plugin Integration server owns a specific domain with clear boundaries, schemas, and safety rules.
 
 ---
 
 ## Ecosystem Overview
 
 ### 2.1 Physical Deployment A: Legacy Virtual Environment Deployment
-This deployment mode runs each MCP server as a separate process within a local `.venv`, mapped 1:1 with the logical domains.
+This deployment mode runs each Agent Plugin Integration server as a separate process within a local `.venv`, mapped 1:1 with the logical domains.
 
-![mcp_ecosystem_architecture_v3](../../architecture_diagrams/system/mcp_ecosystem_architecture_v3.png)
+![[mcp_ecosystem_architecture_v3.png|mcp_ecosystem_architecture_v3]]
 
-*[Source: mcp_ecosystem_architecture_v3.mmd](../../architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd)*
+*[[mcp_ecosystem_architecture_v3.mmd|Source: mcp_ecosystem_architecture_v3.mmd]]*
 
 ### 2.2 Physical Deployment B: IBM Gateway Fleet Architecture
 The **Hybrid Fleet Strategy** consolidates the 15 domains (ADR 092) into **8 containerized services** accessed via a single **IBM ContextForge Gateway**.
@@ -30,23 +30,23 @@ The **Hybrid Fleet Strategy** consolidates the 15 domains (ADR 092) into **8 con
 - **Reference:** [`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)
 - **Mechanism:** The Gateway acts as a broker, routing client requests to the appropriate backend container via SSE transport.
 
-![mcp_gateway_fleet](../../architecture_diagrams/system/mcp_gateway_fleet.png)
+![[mcp_gateway_fleet.png|mcp_gateway_fleet]]
 
-*[Source: mcp_gateway_fleet.mmd](../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
+*[[mcp_gateway_fleet.mmd|Source: mcp_gateway_fleet.mmd]]*
 
 ---
 
 ## Domain Specifications
 
-### 1. Chronicle MCP Server
+### 1. Chronicle Agent Plugin Integration Server
 
 **Domain:** Historical truth and canonical records  
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create and manage chronicle entries (file operations only)
 
-![chronicle_mcp_server](../../architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.png)
+![[chronicle_mcp_server.png|chronicle_mcp_server]]
 
-*[Source: chronicle_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/chronicle_mcp_server.mmd)*
+*[[chronicle_mcp_server.mmd|Source: chronicle_mcp_server.mmd]]*
 
 **Tool Signatures:**
 
@@ -81,16 +81,16 @@ update_chronicle_entry(
 - Entry numbers are auto-generated and sequential
 - Cannot modify entries >7 days old without approval override
 - Must follow chronicle entry template
-- **No Git operations** - returns file path for Git Workflow MCP to commit
+- **No Git operations** - returns file path for Git Workflow Agent Plugin Integration to commit
 - Cannot delete entries (mark as deprecated only)
 
 **Workflow Pattern:**
 ```typescript
-// Step 1: Create entry (Chronicle MCP)
+// Step 1: Create entry (Chronicle Agent Plugin Integration)
 const result = chronicle.create_chronicle_entry(...)
 // Returns: { file_path: "00_CHRONICLE/ENTRIES/280_mcp_architecture.md" }
 
-// Step 2: Commit (Git Workflow MCP)
+// Step 2: Commit (Git Workflow Agent Plugin Integration)
 git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
 ```
 
@@ -98,9 +98,9 @@ git_workflow.commit_files([result.file_path], "chronicle: add entry #280")
 **Directory:** `00_CHRONICLE/ENTRIES/`  
 **Purpose:** Create, read, update chronicle entries with automatic git commits
 
-![chronicle_ecosystem_context](../../architecture_diagrams/system/chronicle_ecosystem_context.png)
+![[chronicle_ecosystem_context.png|chronicle_ecosystem_context]]
 
-*[Source: chronicle_ecosystem_context.mmd](../../architecture_diagrams/system/chronicle_ecosystem_context.mmd)*
+*[[chronicle_ecosystem_context.mmd|Source: chronicle_ecosystem_context.mmd]]*
 
 **Tool Signatures:**
 
@@ -148,15 +148,15 @@ search_chronicle(query: string) => ChronicleEntry[]
 
 ---
 
-### 2. Protocol MCP Server
+### 2. Protocol Agent Plugin Integration Server
 
 **Domain:** Protocol creation and management  
 **Directory:** `01_PROTOCOLS/`  
 **Purpose:** Create, read, update protocols with versioning and changelog
 
-![protocol_mcp_server](../../architecture_diagrams/system/legacy_mcps/protocol_mcp_server.png)
+![[protocol_mcp_server.png|protocol_mcp_server]]
 
-*[Source: protocol_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/protocol_mcp_server.mmd)*
+*[[protocol_mcp_server.mmd|Source: protocol_mcp_server.mmd]]*
 
 **Tool Signatures:**
 
@@ -212,15 +212,15 @@ archive_protocol(number: number, reason: string) => {
 
 ---
 
-### 3. ADR MCP Server
+### 3. ADR Agent Plugin Integration Server
 
 **Domain:** Architecture Decision Records  
 **Directory:** `ADRs/`  
 **Purpose:** Document architectural decisions with status tracking
 
-![adr_mcp_server](../../architecture_diagrams/system/legacy_mcps/adr_mcp_server.png)
+![[adr_mcp_server.png|adr_mcp_server]]
 
-*[Source: adr_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/adr_mcp_server.mmd)*
+*[[adr_mcp_server.mmd|Source: adr_mcp_server.mmd]]*
 
 **Tool Signatures:**
 
@@ -265,15 +265,15 @@ search_adrs(query: string) => ADR[]
 
 ---
 
-### 4. Task MCP Server
+### 4. Task Agent Plugin Integration Server
 
 **Domain:** Task management  
 **Directory:** `tasks/`  
 **Purpose:** Create, update, track tasks across backlog/active/completed
 
-![task_mcp_server](../../architecture_diagrams/system/legacy_mcps/task_mcp_server.png)
+![[task_mcp_server.png|task_mcp_server]]
 
-*[Source: task_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/task_mcp_server.mmd)*
+*[[task_mcp_server.mmd|Source: task_mcp_server.mmd]]*
 
 **Tool Signatures:**
 
@@ -332,15 +332,15 @@ search_tasks(query: string) => Task[]
 
 ---
 
-### 5. RAG MCP (Cortex) - Retrieval-Augmented Generation
+### 5. RAG Agent Plugin Integration (Cortex) - Retrieval-Augmented Generation
 
 **Domain:** RAG operations  
 **Directory:** `mcp_servers/rag_cortex/`  
 **Purpose:** Query vector database, ingest documents, manage knowledge
 
-![rag_cortex_mcp_server](../../architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.png)
+![[rag_cortex_mcp_server.png|rag_cortex_mcp_server]]
 
-*[Source: rag_cortex_mcp_server.mmd](../../architecture_diagrams/system/legacy_mcps/rag_cortex_mcp_server.mmd)*
+*[[rag_cortex_mcp_server.mmd|Source: rag_cortex_mcp_server.mmd]]*
 
 **Tool Signatures:**
 
@@ -417,7 +417,7 @@ get_result(task_id: string) => {
 
 ---
 
-### 7. Config MCP Server (High Safety)
+### 7. Config Agent Plugin Integration Server (High Safety)
 
 **Domain:** System configuration management  
 **Directory:** `.agent/config/`, `.env`, `config/`  
@@ -477,7 +477,7 @@ list_config_files() => string[]
 
 ---
 
-### 8. Code MCP Server (Highest Risk)
+### 8. Code Agent Plugin Integration Server (Highest Risk)
 
 **Domain:** Source code and documentation management  
 **Directory:** `src/`, `scripts/`, `tools/`, `docs/`, `*.py`, `*.ts`, `*.js`, `*.md`  
@@ -548,7 +548,7 @@ search_code(query: string, file_pattern?: string) => SearchResult[]
 
 ---
 
-### 9. Fine-Tuning MCP (Forge) Server (Extreme Safety - CUDA Required)
+### 9. Fine-Tuning Agent Plugin Integration (Forge) Server (Extreme Safety - CUDA Required)
 
 **Domain:** Model fine-tuning and artifact creation  
 **Directory:** `forge/`  
@@ -595,7 +595,7 @@ check_resource_availability() => {
 initiate_model_forge(
   forge_id: string,                    // Required (e.g., "guardian-02-v1")
   base_model: string,                  // Required (e.g., "mistralai/Mistral-7B-v0.1")
-  authorization_task_id: number,       // Required (links to Task MCP)
+  authorization_task_id: number,       // Required (links to Task Agent Plugin Integration)
   hyperparameters: {
     learning_rate: number,
     epochs: number,
@@ -693,7 +693,7 @@ retrieve_registry_artifact(
 
 **Forge State Machine:**
 
-The Fine-Tuning MCP (Forge) enforces safety through an internal state machine with two layers:
+The Fine-Tuning Agent Plugin Integration (Forge) enforces safety through an internal state machine with two layers:
 
 **Layer 1: Operational State (Server-Level)**
 
@@ -733,7 +733,7 @@ publish_to_registry(job_id)
 **Safety Rules:**
 - **Environment gate**: Must check `CUDA_FORGE_ACTIVE` marker
 - **Resource reservation**: Check GPU memory and disk space before starting
-- **Task linkage**: All jobs must link to Task MCP entry for audit trail
+- **Task linkage**: All jobs must link to Task Agent Plugin Integration entry for audit trail
 - **Script whitelist**: Only whitelisted scripts can execute (no arbitrary commands)
 - **Artifact integrity**: SHA-256 validation for all artifacts (P101-style)
 - **Asynchronous execution**: Long-running jobs run in background with status polling
@@ -742,7 +742,7 @@ publish_to_registry(job_id)
 
 ---
 
-### 10. Git Workflow MCP Server (Minimal - Safe Operations Only)
+### 10. Git Workflow Agent Plugin Integration Server (Minimal - Safe Operations Only)
 
 **Domain:** Git workflow automation  
 **Directory:** `.git/`, repository root  
@@ -819,7 +819,7 @@ compare_branches(
 - **Read-only by default**: Most operations are status checks
 - **Auto-stash**: Uncommitted changes stashed before branch switching
 - **No destructive operations**: No `delete_branch`, `merge`, `rebase`, `force_push`
-- **User-controlled merges**: PR merges happen on GitHub, not via MCP
+- **User-controlled merges**: PR merges happen on GitHub, not via Agent Plugin Integration
 - **No history rewriting**: No `reset --hard`, `rebase`, `amend` operations
 - **Branch protection**: Cannot switch to or modify protected branches
 
@@ -834,10 +834,10 @@ compare_branches(
 **Workflow Integration:**
 ```typescript
 // Example: Safe workflow automation
-1. Git MCP: create_feature_branch("feature/task-030")
-2. Task MCP: create_task(30, ...) → auto-commits
-3. Code MCP: write_code_file(...) → auto-commits
-4. Git MCP: push_current_branch() → pushes to origin
+1. Git Agent Plugin Integration: create_feature_branch("feature/task-030")
+2. Task Agent Plugin Integration: create_task(30, ...) → auto-commits
+3. Code Agent Plugin Integration: write_code_file(...) → auto-commits
+4. Git Agent Plugin Integration: push_current_branch() → pushes to origin
 5. USER: Reviews PR on GitHub, merges manually
 6. USER: Switches to main, pulls, deletes feature branch manually
 ```
@@ -875,7 +875,7 @@ class GitOperations {
 
 ### Safety Validator Module
 
-**Purpose:** Enforce safety rules across all MCP servers
+**Purpose:** Enforce safety rules across all Agent Plugin Integration servers
 
 ```typescript
 class SafetyValidator {
@@ -916,27 +916,27 @@ class SchemaValidator {
 
 ### Example 1: Protocol Creation with Documentation
 
-![mcp_protocol_creation_workflow](../../architecture_diagrams/workflows/mcp_protocol_creation_workflow.png)
+![[mcp_protocol_creation_workflow.png|mcp_protocol_creation_workflow]]
 
-*[Source: mcp_protocol_creation_workflow.mmd](../../architecture_diagrams/workflows/mcp_protocol_creation_workflow.mmd)*
+*[[mcp_protocol_creation_workflow.mmd|Source: mcp_protocol_creation_workflow.mmd]]*
 
 ### Example 2: Research → Deliberation → Decision
 
-![mcp_deliberation_workflow](../../architecture_diagrams/workflows/mcp_deliberation_workflow.png)
+![[mcp_deliberation_workflow.png|mcp_deliberation_workflow]]
 
-*[Source: mcp_deliberation_workflow.mmd](../../architecture_diagrams/workflows/mcp_deliberation_workflow.mmd)*
+*[[mcp_deliberation_workflow.mmd|Source: mcp_deliberation_workflow.mmd]]*
 
 ---
 
 ## Risk Assessment Matrix
 
-| MCP Server | File System | Git Ops | Hardware | Risk Level | Auto-Execute |
+| Agent Plugin Integration Server | File System | Git Ops | Hardware | Risk Level | Auto-Execute |
 |------------|-------------|---------|----------|------------|--------------| 
 | Chronicle | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
 | Protocol | ✅ Write | ✅ Auto | Standard | HIGH | ✅ Yes* |
 | ADR | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
 | Task | ✅ Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
-| RAG MCP (Cortex) | ✅ Read/Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
+| RAG Agent Plugin Integration (Cortex) | ✅ Read/Write | ✅ Auto | Standard | MODERATE | ✅ Yes* |
 | Agent Orchestrator (Council) | ❌ No | ❌ No | Standard | SAFE | ✅ Yes |
 | Config | ✅ Write | ✅ Auto | Standard | CRITICAL | ⚠️ Two-Step Approval |
 | Code | ✅ Write | ✅ Auto | Standard | HIGH | ⚠️ Tests Required |
@@ -950,35 +950,35 @@ class SchemaValidator {
 ## Implementation Roadmap
 
 ### Phase 0: Pre-Migration (Week 0)
-- [ ] Update pre-commit hooks to work with MCP architecture (Task #028)
+- [ ] Update pre-commit hooks to work with Agent Plugin Integration architecture (Task #028)
 - [ ] Disable or adapt `command.json` validation hooks
-- [ ] Add MCP-aware commit message validation
-- [ ] Document migration strategy from manual workflows to MCP
+- [ ] Add Agent Plugin Integration-aware commit message validation
+- [ ] Document migration strategy from manual workflows to Agent Plugin Integration
 
 ### Phase 1: Foundation (Week 1)
 - [ ] Implement `GitOperations` module with P101 compliance
 - [ ] Implement `SafetyValidator` module with protection levels
 - [ ] Implement `SchemaValidator` module with domain schemas
 - [ ] Implement `SecretVault` module for sensitive data
-- [ ] Create MCP server boilerplate template
+- [ ] Create Agent Plugin Integration server boilerplate template
 
 ### Phase 2: Document Domains (Week 2) - Easiest
-- [ ] Implement Chronicle MCP Server (Task #029)
-- [ ] Implement ADR MCP Server (Task #030)
-- [ ] Implement Task MCP Server (Task #031)
-- [ ] Implement Protocol MCP Server (Task #032)
+- [ ] Implement Chronicle Agent Plugin Integration Server (Task #029)
+- [ ] Implement ADR Agent Plugin Integration Server (Task #030)
+- [ ] Implement Task Agent Plugin Integration Server (Task #031)
+- [ ] Implement Protocol Agent Plugin Integration Server (Task #032)
 
 ### Phase 3: Cognitive Domains (Week 3) - Moderate
-- [ ] Implement RAG MCP (Cortex) - Task #025 (refactor existing)
-- [ ] Implement Agent Orchestrator MCP (Council) - Task #026 (refactor existing)
+- [ ] Implement RAG Agent Plugin Integration (Cortex) - Task #025 (refactor existing)
+- [ ] Implement Agent Orchestrator Agent Plugin Integration (Council) - Task #026 (refactor existing)
 
 ### Phase 4: System Domains (Week 4) - High Risk
-- [ ] Implement Config MCP Server (Task #033)
-- [ ] Implement Code MCP Server (Task #034)
-- [ ] Implement Git Workflow MCP Server (Task #035)
+- [ ] Implement Config Agent Plugin Integration Server (Task #033)
+- [ ] Implement Code Agent Plugin Integration Server (Task #034)
+- [ ] Implement Git Workflow Agent Plugin Integration Server (Task #035)
 
 ### Phase 5: Model Domain (Week 5) - Hardest
-- [ ] Implement Fine-Tuning MCP (Forge) Server (Task #036)
+- [ ] Implement Fine-Tuning Agent Plugin Integration (Forge) Server (Task #036)
 - [ ] CUDA environment setup and validation
 - [ ] Integration testing with full 10-step pipeline
 - [ ] Documentation and deployment
@@ -996,7 +996,7 @@ class SchemaValidator {
 5. **Council Results**: 90-day retention, high-value decisions moved to Chronicle/ADR
 6. **Config Changes**: Two-step approval process (request → approve)
 7. **Code Commits**: Mandatory testing pipeline before any git commit
-8. **Forge Jobs**: Must link to Task MCP entry for authorization and audit trail
+8. **Forge Jobs**: Must link to Task Agent Plugin Integration entry for authorization and audit trail
 
 ### Domain Prioritization Rationale
 
@@ -1006,10 +1006,10 @@ class SchemaValidator {
 
 **Phase 4 (High Risk):** System domains require sophisticated safety mechanisms (Config: two-step approval, Code: testing pipeline). High stakes.
 
-**Phase 5 (Hardest):** Fine-Tuning MCP (Forge) requires specialized hardware (CUDA), asynchronous job management, multi-step pipeline orchestration, and extreme safety validation. Most complex implementation.
+**Phase 5 (Hardest):** Fine-Tuning Agent Plugin Integration (Forge) requires specialized hardware (CUDA), asynchronous job management, multi-step pipeline orchestration, and extreme safety validation. Most complex implementation.
 
 ---
 
 **Status:** Architecture Complete - Ready for Implementation  
-**Next Action:** Create individual backlog tasks (#028-#034) for each MCP server  
+**Next Action:** Create individual backlog tasks (#028-#034) for each Agent Plugin Integration server  
 **Owner:** Guardian (via Gemini 2.0 Flash Thinking Experimental)

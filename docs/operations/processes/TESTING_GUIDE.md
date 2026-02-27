@@ -5,15 +5,15 @@
 
 ## Overview
 
-Project Sanctuary uses a 3-layer test pyramid for all MCP servers.
+Project Sanctuary uses a 3-layer test pyramid for all Agent Plugin Integration servers.
 
 ## Quick Links
 
 | Resource | Location |
 |----------|----------|
-| **Main Test Suite README** | [tests/README.md](../../../tests/README.md) |
-| **MCP Testing Standards** | [TESTING_STANDARDS.md](../mcp/TESTING_STANDARDS.md) |
-| **Test Pyramid Diagram** | [mcp_test_pyramid.mmd](../../architecture_diagrams/system/mcp_test_pyramid.mmd) |
+| **Main Test Suite README** | [[README|tests/README.md]] |
+| **Agent Plugin Integration Testing Standards** | [[TESTING_STANDARDS|TESTING_STANDARDS.md]] |
+| **Test Pyramid Diagram** | [[mcp_test_pyramid.mmd|mcp_test_pyramid.mmd]] |
 
 ## Test Pyramid
 
@@ -21,7 +21,7 @@ Project Sanctuary uses a 3-layer test pyramid for all MCP servers.
 |-------|---------|-------|---------|
 | **Unit** | Isolated logic | Fast (ms) | `pytest tests/mcp_servers/<server>/unit/` |
 | **Integration** | Real local services | Medium (sec) | `pytest tests/mcp_servers/<server>/integration/` |
-| **E2E** | Full MCP protocol | Slow (min) | `pytest -m e2e` |
+| **E2E** | Full Agent Plugin Integration protocol | Slow (min) | `pytest -m e2e` |
 
 ## Running Tests
 
@@ -41,5 +41,5 @@ pytest tests/mcp_servers/ -m headless -v
 
 ## Related Documents
 
-- [ADR 053](../../../ADRs/053_standardize_live_integration_testing_pattern.md) - Test Pyramid Architecture
-- [Protocol 101](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md) - Tests must pass before commit
+- [[053_standardize_live_integration_testing_pattern|ADR 053]] - Test Pyramid Architecture
+- [[101_The_Doctrine_of_the_Unbreakable_Commit|Protocol 101]] - Tests must pass before commit

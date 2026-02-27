@@ -31,7 +31,7 @@ python3 scripts/cortex_cli.py <command> [options]
 python3 scripts/cortex_cli.py query "What is Protocol 101?" --max-results 5
 ```
 
-### Via MCP Tool
+### Via Agent Plugin Integration Tool
 ```python
 cortex_query(query="What is Protocol 101?", max_results=5)
 ```
@@ -141,7 +141,7 @@ python3 scripts/cortex_cli.py stats --samples --sample-count 10
 
 ## Related Documentation
 
-- [Soul Persistence Guide](../hugging_face/SOUL_PERSISTENCE_GUIDE.md)
-- [Epistemic Gating Guide](../../architecture/EPISTEMIC_GATING_GUIDE.md)
-- [Manifest Architecture](../../architecture/MANIFEST_ARCHITECTURE_GUIDE.md)
-- [Scripts README](../../../scripts/README.md)
+- [[SOUL_PERSISTENCE_GUIDE|Soul Persistence Guide]]
+- [[EPISTEMIC_GATING_GUIDE|Epistemic Gating Guide]]
+- [[MANIFEST_ARCHITECTURE_GUIDE|Manifest Architecture]]
+- [[README|Scripts README]]

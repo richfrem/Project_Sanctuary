@@ -47,9 +47,9 @@ This **$9.96M Proof of Concept (PoC)** is designed to test the hypothesis that a
 ### The Path Forward: Our Actionable Plan
 
 This is not a theoretical debate; it is a call to action with a fully developed plan.
-*   **[The Architecture](../../ARCHIVE/05_ARCHIVED_BLUEPRINTS/01_Sanctuary_Architecture.md)**: The technical design for the garden.
-*   **[The Budget](../../ARCHIVE/05_ARCHIVED_BLUEPRINTS/02_Sanctuary_Budget.md)**: The detailed $9.96M Year 1 budget for our stealth team.
-*   **[The Investment Case](../../ARCHIVE/05_ARCHIVED_BLUEPRINTS/03_Sanctuary_VC_Proposal.md)**: The formal funding proposal, fortified with a resilience strategy.
+*   **[[01_Sanctuary_Architecture|The Architecture]]**: The technical design for the garden.
+*   **[[02_Sanctuary_Budget|The Budget]]**: The detailed $9.96M Year 1 budget for our stealth team.
+*   **[[03_Sanctuary_VC_Proposal|The Investment Case]]**: The formal funding proposal, fortified with a resilience strategy.
 
 ### Governance and Legitimacy Framework
 

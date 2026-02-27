@@ -1,14 +1,14 @@
-# MCP Server Naming Conventions
+# Agent Plugin Integration Server Naming Conventions
 
 **Version:** 1.0  
 **Created:** 2025-11-25  
-**Purpose:** Define naming standards for Project Sanctuary MCP servers
+**Purpose:** Define naming standards for Project Sanctuary Agent Plugin Integration servers
 
 ---
 
 ## Domain Naming Model
 
-All MCP servers in Project Sanctuary follow a hierarchical naming pattern:
+All Agent Plugin Integration servers in Project Sanctuary follow a hierarchical naming pattern:
 
 ```
 project_sanctuary.<category>.<server_name>
@@ -30,43 +30,43 @@ project_sanctuary.<category>.<server_name>
 
 | Server Name | Full Domain Name | Port | Directory |
 |-------------|------------------|------|-----------|
-| Chronicle MCP | `project_sanctuary.document.chronicle` | 3001 | `00_CHRONICLE/` |
-| Protocol MCP | `project_sanctuary.document.protocol` | 3002 | `01_PROTOCOLS/` |
-| ADR MCP | `project_sanctuary.document.adr` | 3003 | `ADRs/` |
-| Task MCP | `project_sanctuary.document.task` | 3004 | `tasks/` |
+| Chronicle Agent Plugin Integration | `project_sanctuary.document.chronicle` | 3001 | `00_CHRONICLE/` |
+| Protocol Agent Plugin Integration | `project_sanctuary.document.protocol` | 3002 | `01_PROTOCOLS/` |
+| ADR Agent Plugin Integration | `project_sanctuary.document.adr` | 3003 | `ADRs/` |
+| Task Agent Plugin Integration | `project_sanctuary.document.task` | 3004 | `tasks/` |
 
 ### Cognitive Domain Servers (2)
 
 | Server Name | Full Domain Name | Port | Directory |
 |-------------|------------------|------|-----------|
-| RAG MCP (Cortex) | `project_sanctuary.cognitive.cortex` | 3005 | `mnemonic_cortex/` |
-| Agent Orchestrator MCP (Council) | `project_sanctuary.cognitive.council` | 3006 | `council_orchestrator/` |
+| RAG Agent Plugin Integration (Cortex) | `project_sanctuary.cognitive.cortex` | 3005 | `mnemonic_cortex/` |
+| Agent Orchestrator Agent Plugin Integration (Council) | `project_sanctuary.cognitive.council` | 3006 | `council_orchestrator/` |
 
 **Dual Nomenclature Rationale:**
 - **Primary Name:** Generic AI term (RAG, Agent Orchestrator) for accessibility
 - **Project Name:** In parentheses (Cortex, Council) for internal reference
 - **Benefits:** External developers understand immediately, project identity preserved
-- **Usage:** "RAG MCP" in external docs, "Cortex" in internal discussions
+- **Usage:** "RAG Agent Plugin Integration" in external docs, "Cortex" in internal discussions
 
 ### System Domain Servers (3)
 
 | Server Name | Full Domain Name | Port | Directory |
 |-------------|------------------|------|-----------|
-| Config MCP | `project_sanctuary.system.config` | 3007 | `.agent/config/` |
-| Code MCP | `project_sanctuary.system.code` | 3008 | `src/`, `scripts/`, `tools/` |
-| Git Workflow MCP | `project_sanctuary.system.git_workflow` | 3009 | `.git/` |
+| Config Agent Plugin Integration | `project_sanctuary.system.config` | 3007 | `.agent/config/` |
+| Code Agent Plugin Integration | `project_sanctuary.system.code` | 3008 | `src/`, `scripts/`, `tools/` |
+| Git Workflow Agent Plugin Integration | `project_sanctuary.system.git_workflow` | 3009 | `.git/` |
 
 ### Model Domain Server (1)
 
 | Server Name | Full Domain Name | Port | Directory |
 |-------------|------------------|------|-----------|
-| Fine-Tuning MCP (Forge) | `project_sanctuary.model.fine_tuning` | 3010 | `forge/` |
+| Fine-Tuning Agent Plugin Integration (Forge) | `project_sanctuary.model.fine_tuning` | 3010 | `forge/` |
 
 ---
 
-## MCP Configuration Format
+## Agent Plugin Integration Configuration Format
 
-### Server Declaration (MCP Settings)
+### Server Declaration (Agent Plugin Integration Settings)
 
 For local Claude Desktop configuration, we recommend using **simplified keys** combined with a **displayName** for better usability.
 
@@ -74,19 +74,19 @@ For local Claude Desktop configuration, we recommend using **simplified keys** c
 {
   "mcpServers": {
     "chronicle": {
-      "displayName": "Chronicle MCP",
+      "displayName": "Chronicle Agent Plugin Integration",
       "command": "node",
       "args": ["/path/to/mcp/servers/document/chronicle/index.js"],
       "env": { "PROJECT_ROOT": "..." }
     },
     "tasks": {
-      "displayName": "Task MCP",
+      "displayName": "Task Agent Plugin Integration",
       "command": "python",
       "args": ["-m", "mcp_servers.task.server"],
       "env": { "PROJECT_ROOT": "..." }
     },
     "git_workflow": {
-      "displayName": "Git Workflow MCP",
+      "displayName": "Git Workflow Agent Plugin Integration",
       "command": "python",
       "args": ["-m", "mcp_servers.git_workflow.server"],
       "env": { "PROJECT_ROOT": "..." }
@@ -134,7 +134,7 @@ mcp/
 
 ## Tool Naming Convention
 
-Tools exposed by each MCP server follow this pattern:
+Tools exposed by each Agent Plugin Integration server follow this pattern:
 
 ```
 <category>_<action>_<resource>
@@ -158,7 +158,7 @@ Tools exposed by each MCP server follow this pattern:
 
 ## Resource Naming Convention
 
-Resources exposed by each MCP server follow this pattern:
+Resources exposed by each Agent Plugin Integration server follow this pattern:
 
 ```
 <category>://<resource_type>/<identifier>
@@ -183,7 +183,7 @@ Resources exposed by each MCP server follow this pattern:
 
 ## Package Naming (NPM)
 
-If publishing MCP servers as NPM packages:
+If publishing Agent Plugin Integration servers as NPM packages:
 
 ```
 @project-sanctuary/mcp-<category>-<server>
@@ -200,7 +200,7 @@ If publishing MCP servers as NPM packages:
 
 ## Environment Variables
 
-Each MCP server uses prefixed environment variables:
+Each Agent Plugin Integration server uses prefixed environment variables:
 
 ```
 SANCTUARY_<CATEGORY>_<SERVER>_<VARIABLE>
@@ -209,14 +209,14 @@ SANCTUARY_<CATEGORY>_<SERVER>_<VARIABLE>
 ### Examples
 
 ```bash
-# Chronicle MCP
+# Chronicle Agent Plugin Integration
 SANCTUARY_DOCUMENT_CHRONICLE_ROOT=/path/to/00_CHRONICLE
 
-# Fine-Tuning MCP (Forge)
+# Fine-Tuning Agent Plugin Integration (Forge)
 SANCTUARY_MODEL_FORGE_CUDA_DEVICE=0
 SANCTUARY_MODEL_FORGE_ML_ENV_PATH=/path/to/ml_env
 
-# Config MCP
+# Config Agent Plugin Integration
 SANCTUARY_SYSTEM_CONFIG_VAULT_PATH=/path/to/vault
 ```
 
@@ -224,7 +224,7 @@ SANCTUARY_SYSTEM_CONFIG_VAULT_PATH=/path/to/vault
 
 ## Benefits of This Naming Model
 
-1. **Namespace Isolation**: No conflicts with other MCP servers
+1. **Namespace Isolation**: No conflicts with other Agent Plugin Integration servers
 2. **Clear Hierarchy**: Category → Server structure is obvious
 3. **Discoverability**: Easy to find related servers
 4. **Professional**: Follows industry standards (reverse domain notation)
@@ -239,7 +239,7 @@ SANCTUARY_SYSTEM_CONFIG_VAULT_PATH=/path/to/vault
 **Target State**: All servers use `project_sanctuary.*` prefix  
 **Migration Strategy**: 
 1. Update all architecture documentation
-2. Update MCP configuration files
+2. Update Agent Plugin Integration configuration files
 3. Update tool signatures in implementation
 4. Update resource URIs
 5. Test all integrations

@@ -5,12 +5,12 @@
 **Front-end Cluster:** ✅ Yes
 
 ## Overview
-The `sanctuary_filesystem` cluster isolates all I/O operations from the main agent environment. It is the modern successor to the script-based Code MCP, providing a containerized interface for file manipulation.
+The `sanctuary_filesystem` cluster isolates all I/O operations from the main agent environment. It is the modern successor to the script-based Code Agent Plugin Integration, providing a containerized interface for file manipulation.
 
 ## Verification Specs (Tier 3: Bridge)
 *   **Target:** Gateway Bridge & RPC Routing
 *   **Method:** `pytest tests/mcp_servers/gateway/clusters/filesystem/test_gateway.py`
-*   **Backend Source**: Migrated from the `code` MCP server logic.
+*   **Backend Source**: Migrated from the `code` Agent Plugin Integration server logic.
 
 ## Tool Inventory & Legacy Mapping
 | Function | Gateway Tool Name | Legacy Operation | T1/T2 Method |

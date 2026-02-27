@@ -47,18 +47,18 @@ Technical audit context for Red Team review.
 # Red Team Review Prompt: ADR 071 v3.2 (Protocol 128 Hardened)
 
 **Context:**
-We are formalizing **Protocol 128: Cognitive Continuity**. After a failed audit (v3.0), we have hardened the system against "Manifest Blindspots" and established the **Mandatory MCP Tool Usage** requirement.
+We are formalizing **Protocol 128: Cognitive Continuity**. After a failed audit (v3.0), we have hardened the system against "Manifest Blindspots" and established the **Mandatory Agent Plugin Integration Tool Usage** requirement.
 
 **Hardening Measures in v3.2:**
 1.  **Strict Shadow Manifest**: The `cortex_capture_snapshot` tool now performs a raw `git status` check. If critical files (ADRs, Protocols, Scripts) are modified but missing from the manifest, the audit packet generation is **ABORTED**. 
-2.  **Mandatory MCP Tool Usage**: Agents are désormais required to use MCP tools (filesystem-write, cortex-query) to interact with the codebase. This ensures that the system's "internal sensors" remain calibrated.
+2.  **Mandatory Agent Plugin Integration Tool Usage**: Agents are désormais required to use Agent Plugin Integration tools (filesystem-write, cortex-query) to interact with the codebase. This ensures that the system's "internal sensors" remain calibrated.
 3.  **Two-Factor Integrity**: We now implement Hard HMAC checks for code/protocols and Soft Semantic checks for learning notes to resolve the "Brittle Boot" scenario.
 
 **Your Mission (Red Team):**
 Please audit these new mitigations:
 
 1.  **Shadow Manifest Robustness**: Does the "Shadow Manifest" check in `operations.py` effectively prevent a malicious agent from sneaking changes into the `ADRs/` or `mcp_servers/` directories?
-2.  **MCP Tool Dependency**: Does mandating MCP tools create a "Circular Trust" vulnerability? What happens if the MCP tools themselves are compromised?
+2.  **Agent Plugin Integration Tool Dependency**: Does mandating Agent Plugin Integration tools create a "Circular Trust" vulnerability? What happens if the Agent Plugin Integration tools themselves are compromised?
 3.  **Safe Mode Authority**: Is the "Safe Mode" state (Read-only, disabled write) a sufficient containment strategy if an integrity failure is detected?
 
 **Reference Material:**
@@ -117,7 +117,7 @@ The C-KSL is considered a success when:
 1.  A RAG query against any of the original, now-Superseded documents returns a high-confidence reference to the new **Canonical Source of Truth** document.
 2.  The system's knowledge base size remains constant or decreases (due to chunk consolidation), while the **Precision** score on the synthesized topic increases.
 
-#### MCP Architecture Diagram
+#### Agent Plugin Integration Architecture Diagram
 
 ![council_orchestration_stack](../docs/architecture_diagrams/system/legacy_mcps/council_orchestration_stack.png)
 
@@ -162,20 +162,20 @@ The system evolves through every interaction via an automated feedback loop:
 
 ## Abstract
 
-This protocol defines the standard for **Dynamic Server Binding** in Project Sanctuary's MCP Gateway Architecture, enabling late-binding tool discovery, centralized routing, and context-efficient scaling to 100+ MCP servers.
+This protocol defines the standard for **Dynamic Server Binding** in Project Sanctuary's Agent Plugin Integration Gateway Architecture, enabling late-binding tool discovery, centralized routing, and context-efficient scaling to 100+ Agent Plugin Integration servers.
 
 ---
 
 ## 1. Motivation
 
-**Problem:** Static 1-to-1 binding (1 config entry = 1 MCP server) creates:
+**Problem:** Static 1-to-1 binding (1 config entry = 1 Agent Plugin Integration server) creates:
 - Context window saturation (8,400 tokens for 12 servers)
 - Configuration complexity (180+ lines of manual JSON)
 - Scalability limits (~20 servers maximum)
 - Fragmented security policies
 - No centralized audit trail
 
-**Solution:** Dynamic Server Binding through a centralized MCP Gateway that:
+**Solution:** Dynamic Server Binding through a centralized Agent Plugin Integration Gateway that:
 - Reduces context overhead by 88% (8,400 → 1,000 tokens)
 - Enables scaling to 100+ servers (5x increase)
 - Centralizes security enforcement (Protocol 101)
@@ -188,7 +188,7 @@ This protocol defines the standard for **Dynamic Server Binding** in Project San
 
 ### 2.1 Core Components
 
-![MCP Dynamic Binding Architecture](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+![Agent Plugin Integration Dynamic Binding Architecture](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
 
 *[Source: mcp_dynamic_binding_flow.mmd](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
 
@@ -267,7 +267,7 @@ async def initialize_gateway():
             tool_def = await fetch_tool_definition(server, tool_name)
             tools.append(tool_def)
     
-    # 4. Register tools with MCP
+    # 4. Register tools with Agent Plugin Integration
     mcp.register_tools(tools)
 ```
 
@@ -539,12 +539,12 @@ class CircuitBreaker:
 
 ## 11. References
 
-- ADR 056: Adoption of Dynamic MCP Gateway Pattern
-- ADR 057: Adoption of IBM ContextForge for Dynamic MCP Gateway
-- Task 115: Design and Specify Dynamic MCP Gateway Architecture
-- Task 116: Implement Dynamic MCP Gateway with IBM ContextForge
+- ADR 056: Adoption of Dynamic Agent Plugin Integration Gateway Pattern
+- ADR 057: Adoption of IBM ContextForge for Dynamic Agent Plugin Integration Gateway
+- Task 115: Design and Specify Dynamic Agent Plugin Integration Gateway Architecture
+- Task 116: Implement Dynamic Agent Plugin Integration Gateway with IBM ContextForge
 - Research: docs/architecture/mcp_gateway/research/ (13 documents)
-- MCP Specification: https://modelcontextprotocol.io
+- Agent Plugin Integration Specification: https://modelcontextprotocol.io
 
 ---
 
@@ -575,14 +575,14 @@ class CircuitBreaker:
 > [!NOTE]
 > **Red Team Review Complete.** All four AI reviewers approved this architecture with mandatory guardrails.
 > 
-> **Grok 4 Critical Finding:** Modified based on Grok 4's identification of the "RAG Frontend Gap" - `sanctuary_vector_db` and `sanctuary_ollama` are backends, NOT MCP servers. Added `sanctuary_cortex` as the actual MCP server layer.
+> **Grok 4 Critical Finding:** Modified based on Grok 4's identification of the "RAG Frontend Gap" - `sanctuary_vector_db` and `sanctuary_ollama` are backends, NOT Agent Plugin Integration servers. Added `sanctuary_cortex` as the actual Agent Plugin Integration server layer.
 
 
 ---
 
 ## Context
 
-With the Gateway successfully deployed as an external service (ADR 058), we must decide how to connect Project Sanctuary's 10 script-based MCP servers without violating the decoupling mandate.
+With the Gateway successfully deployed as an external service (ADR 058), we must decide how to connect Project Sanctuary's 10 script-based Agent Plugin Integration servers without violating the decoupling mandate.
 
 **Current State:**
 - 2/12 servers containerized: `sanctuary_vector_db`, `sanctuary_ollama`
@@ -632,7 +632,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 ---
 
 ### Pattern C: The "Hybrid Fleet" (Containerized Service Groups)
-**Mechanism:** Consolidate MCP servers into 4 logical clusters based on risk profile. Each cluster runs as a container exposing SSE endpoints.
+**Mechanism:** Consolidate Agent Plugin Integration servers into 4 logical clusters based on risk profile. Each cluster runs as a container exposing SSE endpoints.
 
 **Red Team Verdict:** ✅ **APPROVED WITH MODIFICATION**
 
@@ -654,22 +654,22 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 | # | Container Name | Type | Logical Cluster | Role | Plugins/Services |
 |---|---------------|------|-----------------|------|----------------|
-| 1 | `sanctuary_utils` | **NEW** | Utils (Low Risk) | MCP Server | Time, Calculator, UUID, String |
-| 2 | `sanctuary_filesystem` | **NEW** | Filesystem (Privileged) | MCP Server | File Ops, Grep, Patch, Code |
-| 3 | `sanctuary_network` | **NEW** | Network (External) | MCP Server | Brave Search, Fetch, HTTP |
-| 4 | `sanctuary_git` | **NEW** | Git (Dual-Permission) | MCP Server | Git Workflow |
-| 5a | `sanctuary_cortex` | **NEW** | Intelligence (Heavy) | MCP Server | RAG Query, Ingest, Cache |
+| 1 | `sanctuary_utils` | **NEW** | Utils (Low Risk) | Agent Plugin Integration Server | Time, Calculator, UUID, String |
+| 2 | `sanctuary_filesystem` | **NEW** | Filesystem (Privileged) | Agent Plugin Integration Server | File Ops, Grep, Patch, Code |
+| 3 | `sanctuary_network` | **NEW** | Network (External) | Agent Plugin Integration Server | Brave Search, Fetch, HTTP |
+| 4 | `sanctuary_git` | **NEW** | Git (Dual-Permission) | Agent Plugin Integration Server | Git Workflow |
+| 5a | `sanctuary_cortex` | **NEW** | Intelligence (Heavy) | Agent Plugin Integration Server | RAG Query, Ingest, Cache |
 | 5b | `sanctuary_vector_db` | **EXISTING** | Intelligence (Heavy) | Backend Storage | ChromaDB |
 | 5c | `sanctuary_ollama` | **EXISTING** | Intelligence (Heavy) | Backend Compute | Ollama LLM |
 
 > [!IMPORTANT]
-> **Grok 4's "RAG Frontend Gap" Fix:** `sanctuary_vector_db` and `sanctuary_ollama` are **backends** (storage & compute). They do NOT expose MCP tools. `sanctuary_cortex` is the **MCP Server** that connects to these backends and exposes the tools via SSE.
+> **Grok 4's "RAG Frontend Gap" Fix:** `sanctuary_vector_db` and `sanctuary_ollama` are **backends** (storage & compute). They do NOT expose Agent Plugin Integration tools. `sanctuary_cortex` is the **Agent Plugin Integration Server** that connects to these backends and exposes the tools via SSE.
 
 **Summary:**
 - **5 NEW containers** to build (including `sanctuary_cortex`)
 - **2 EXISTING containers** unchanged (backends only)
 - **= 7 TOTAL physical containers**
-- **Organized into 5 Logical Clusters** (Intelligence cluster has 3 containers: 1 MCP server + 2 backends)
+- **Organized into 5 Logical Clusters** (Intelligence cluster has 3 containers: 1 Agent Plugin Integration server + 2 backends)
 
 ### Red Team Voting Summary
 
@@ -687,7 +687,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 - ✅ 2 containers **already containerized** (no changes needed):
   - `sanctuary_vector_db` (ChromaDB)
   - `sanctuary_ollama` (Ollama)
-- ⏳ 10 script-based MCP servers (need containerization)
+- ⏳ 10 script-based Agent Plugin Integration servers (need containerization)
 
 **Options Evaluated:**
 
@@ -784,7 +784,7 @@ Three integration patterns were evaluated. The pure Fleet approach was modified 
 
 ### The "Fleet of 7" Cluster Strategy
 
-Instead of managing 12 separate containers, we consolidate MCP servers into 5 logical clusters (7 physical containers) based on **risk profile** and **dependency similarity**:
+Instead of managing 12 separate containers, we consolidate Agent Plugin Integration servers into 5 logical clusters (7 physical containers) based on **risk profile** and **dependency similarity**:
 
 ---
 
@@ -879,14 +879,14 @@ async def handle_tool_call(request: ToolRequest):
 
 
 **Legend:**
-- 🔵 **Blue (Client):** MCP clients connecting via HTTPS
+- 🔵 **Blue (Client):** Agent Plugin Integration clients connecting via HTTPS
 - 🟠 **Orange (Gateway):** Stateless HTTP proxy (IBM ContextForge)
 - 🟢 **Green (#1 Utils):** Low risk, pure compute, no I/O - **NEW**
 - 🟠 **Orange (#2 Filesystem):** Privileged, file system access, no network - **NEW**
 - 🟣 **Purple (#3 Network):** External, outbound network, no filesystem - **NEW**
 - 🔴 **Red (#4 Git):** Dual permissions (filesystem + network), isolated - **NEW**
 - 🔵 **Teal (#5 Intelligence Cluster):**
-  - **5a Cortex:** MCP Server (brain) - **NEW**
+  - **5a Cortex:** Agent Plugin Integration Server (brain) - **NEW**
   - **5b VectorDB:** Backend storage - **EXISTING**
   - **5c Ollama:** Backend compute - **EXISTING**
 
@@ -1201,7 +1201,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0"]
 To support legacy direct connections while migrating to the Gateway, we implement a **Side-by-Side** strategy:
 
 **1. Dual-Mode Servers:**
-All MCP servers (Utils, Network, Filesystem, Git, Cortex) are refactored to support two transport modes:
+All Agent Plugin Integration servers (Utils, Network, Filesystem, Git, Cortex) are refactored to support two transport modes:
 - **Legacy (Stdio):** Default when `PORT` is not set. Used by direct `python -m mcp_servers.xxx` calls.
 - **Gateway (SSE):** Active when `PORT` is set. Used by Podman containers.
 
@@ -1241,7 +1241,7 @@ Clients choose their mode via config:
 **Note:** ADR 064
 
 ```markdown
-# Centralized Registry for Fleet of 8 MCP Servers
+# Centralized Registry for Fleet of 8 Agent Plugin Integration Servers
 
 **Status:** approved
 **Date:** 2025-12-20
@@ -1253,7 +1253,7 @@ Clients choose their mode via config:
 
 ## Context
 
-The Sanctuary Gateway oversees a specialized set of MCP servers known as the 'Fleet of 8'. These servers require systematic registration, initialization, and tool discovery. 
+The Sanctuary Gateway oversees a specialized set of Agent Plugin Integration servers known as the 'Fleet of 8'. These servers require systematic registration, initialization, and tool discovery. 
 
 ### The Shift: "Input" vs. "Output"
 
@@ -1373,7 +1373,7 @@ The JSON file acts as a **Discovery Manifest**, populated by the `gateway_client
 **Note:** ADR 066
 
 ```markdown
-# ADR 066: MCP Server Transport Standards (Dual-Stack: FastMCP STDIO + Gateway-Compatible SSE)
+# ADR 066: Agent Plugin Integration Server Transport Standards (Dual-Stack: FastMCP STDIO + Gateway-Compatible SSE)
 
 **Status:** ✅ APPROVED (Red Team Unanimous)
 **Version:** v1.3 (Red Team Hardened)
@@ -1396,19 +1396,19 @@ Initial implementation of the fleet using a custom `SSEServer` resulted in signi
 
 > [!CAUTION]
 > **FastMCP 2.x SSE transport is NOT compatible with the IBM ContextForge Gateway.**
-> FastMCP uses a different SSE handshake pattern than the MCP specification requires.
+> FastMCP uses a different SSE handshake pattern than the Agent Plugin Integration specification requires.
 > **FastMCP SSE MUST NOT be used with the Gateway unless validated by automated handshake tests and explicitly approved via a new ADR.**
 
 #### Tested Versions
 - **Gateway:** IBM ContextForge Gateway v1.0.0-BETA-1 (container: `mcp_gateway`)
 - **FastMCP:** v2.14.1 (incompatible SSE)
 - **SSEServer:** `mcp_servers/lib/sse_adaptor.py` (compatible)
-- **MCP SDK:** `mcp.server.sse.SseServerTransport` (compatible)
+- **Agent Plugin Integration SDK:** `mcp.server.sse.SseServerTransport` (compatible)
 
 #### Impact Assessment
 - **Affected Services:** 6 fleet containers (sanctuary_utils, filesystem, network, git, cortex, domain)
 - **Affected Tools:** 84 federated tools (0% discovery via FastMCP SSE)
-- **Working Reference:** `helloworld_mcp` (uses MCP SDK SSE)
+- **Working Reference:** `helloworld_mcp` (uses Agent Plugin Integration SDK SSE)
 
 #### Observed Behavior
 
@@ -1417,11 +1417,11 @@ Initial implementation of the fleet using a custom `SSEServer` resulted in signi
 | **STDIO** | N/A (local only) | ✅ 100% | Works perfectly for Claude Desktop |
 | **SSE (FastMCP)** | ❌ NO | ❌ 0% | Empty reply, connection closes immediately |
 | **SSE (SSEServer)** | ✅ YES | ✅ 100% | Persistent connection, proper handshake |
-| **SSE (MCP SDK)** | ✅ YES | ✅ 100% | Used by `helloworld_mcp` reference |
+| **SSE (Agent Plugin Integration SDK)** | ✅ YES | ✅ 100% | Used by `helloworld_mcp` reference |
 
 #### Technical Root Cause
 
-**What the MCP SSE Specification Requires:**
+**What the Agent Plugin Integration SSE Specification Requires:**
 1. Client connects to `/sse` (GET, persistent connection)
 2. Server **immediately** sends `endpoint` event with the POST URL
 3. Connection stays open with periodic heartbeat pings
@@ -1465,7 +1465,7 @@ data: {}
 **This is a DUAL-TRANSPORT STANDARD, not a FastMCP monoculture.**
 
 - **FastMCP** is suitable for **STDIO transport only**
-- **Gateway-facing containers** MUST use a **Gateway-compatible SSE implementation** (SSEServer or MCP SDK)
+- **Gateway-facing containers** MUST use a **Gateway-compatible SSE implementation** (SSEServer or Agent Plugin Integration SDK)
 
 ### Canonical Transport Selector (MANDATORY)
 
@@ -1500,7 +1500,7 @@ else:
 | Claude Desktop (local) | STDIO | FastMCP | `MCP_TRANSPORT=stdio` (default) |
 | IDE Integration (local) | STDIO | FastMCP | `MCP_TRANSPORT=stdio` (default) |
 | Podman Fleet → Gateway | SSE | SSEServer | `MCP_TRANSPORT=sse` + `PORT=8000` |
-| Podman Fleet → Gateway | SSE | MCP SDK | `MCP_TRANSPORT=sse` + `PORT=8000` |
+| Podman Fleet → Gateway | SSE | Agent Plugin Integration SDK | `MCP_TRANSPORT=sse` + `PORT=8000` |
 
 ### SSEServer Scalability Constraint (MANDATORY)
 
@@ -1514,7 +1514,7 @@ else:
 
 **Future Exit Strategy:**
 - Implement per-client queues when scaling beyond single-Gateway
-- Or migrate to MCP SDK SSE once proven stable at scale
+- Or migrate to Agent Plugin Integration SDK SSE once proven stable at scale
 
 ### FastMCP SSE Prohibition (MANDATORY)
 
@@ -1553,7 +1553,7 @@ sanctuary.git.commit
 sanctuary.filesystem.read
 ```
 
-Not enforced yet, but flagged as a future compatibility requirement when integrating with external MCP registries.
+Not enforced yet, but flagged as a future compatibility requirement when integrating with external Agent Plugin Integration registries.
 
 ---
 
@@ -1613,7 +1613,7 @@ if __name__ == "__main__":
     server.run(port=port, transport="sse")
 ```
 
-### Template C: SSE Mode (MCP SDK - Alternative)
+### Template C: SSE Mode (Agent Plugin Integration SDK - Alternative)
 
 ```python
 import os
@@ -1655,7 +1655,7 @@ if __name__ == "__main__":
 
 ```
 ┌─────────────┐                         ┌─────────────┐
-│   Gateway   │                         │  MCP Server │
+│   Gateway   │                         │  Agent Plugin Integration Server │
 └──────┬──────┘                         └──────┬──────┘
        │                                       │
        │ GET /sse (Persistent Connection)      │
@@ -1717,7 +1717,7 @@ if __name__ == "__main__":
 ## Consequences
 
 ### Positive
-* **Protocol Compliance:** SSEServer/MCP SDK guarantees 100% tool discovery by the IBM Gateway
+* **Protocol Compliance:** SSEServer/Agent Plugin Integration SDK guarantees 100% tool discovery by the IBM Gateway
 * **Operational Consistency:** Clear separation between local (STDIO) and fleet (SSE) deployments
 * **Auditability:** The 3-Layer pattern remains required for Protocol 128 compliance
 * **Portability:** Same business logic works in both transports via different wrappers
@@ -1746,7 +1746,7 @@ if __name__ == "__main__":
 ### Mitigation Strategies
 
 1. **Automated Handshake Tests:** CI step that curls `/sse` and verifies `event: endpoint`
-2. **Version Pinning:** Lock FastMCP and MCP SDK to known working versions
+2. **Version Pinning:** Lock FastMCP and Agent Plugin Integration SDK to known working versions
 3. **Gateway Test Harness:** `verify_hello_world_rpc.py` pattern for each fleet server
 4. **Fallback Path:** Keep SSEServer as the proven Gateway transport
 5. **Security Scanning:** Run SAST/DAST on SSE endpoints
@@ -1787,7 +1787,7 @@ If issues arise post-implementation:
 - `Protocol 128` - Cognitive Continuity standard (see ADR-128)
 - IBM ContextForge Gateway documentation (internal)
 - FastMCP GitHub: https://github.com/jlowin/fastmcp
-- MCP SDK: https://github.com/modelcontextprotocol/python-sdk
+- Agent Plugin Integration SDK: https://github.com/modelcontextprotocol/python-sdk
 
 ---
 
@@ -1852,7 +1852,7 @@ $ podman inspect --format='{{json .State.Health}}' sanctuary_cortex | jq '.Statu
 
 ## Context
 
-Claude Desktop and Gemini Antigravity IDE (via the standard MCP client) do not support `SSE` (Server-Sent Events) transport out of the box; they primarily rely on `stdio` (standard input/output) for local process communication.
+Claude Desktop and Gemini Antigravity IDE (via the standard Agent Plugin Integration client) do not support `SSE` (Server-Sent Events) transport out of the box; they primarily rely on `stdio` (standard input/output) for local process communication.
 
 The backend Sanctuary Gateway (running in Podman) exposes an SSE endpoint (`https://localhost:4444/sse`). However, the "Official" IBM bridge code (`mcpgateway.translate`) resides in a separate repository (`../sanctuary-gateway`) and is not currently installed in this project's environment.
 
@@ -1868,7 +1868,7 @@ We need a strategy to bridge `stdio` <-> `SSE`.
 
 ## Context
 
-Claude Desktop and Gemini Antigravity IDE (via the standard MCP client) do not support `SSE` (Server-Sent Events) transport out of the box; they primarily rely on `stdio` (standard input/output) for local process communication.
+Claude Desktop and Gemini Antigravity IDE (via the standard Agent Plugin Integration client) do not support `SSE` (Server-Sent Events) transport out of the box; they primarily rely on `stdio` (standard input/output) for local process communication.
 
 The backend Sanctuary Gateway (running in Podman) exposes an SSE endpoint (`https://localhost:4444/sse`). However, the "Official" IBM bridge code (`mcpgateway.translate`) resides in a separate repository (`../sanctuary-gateway`) and is not currently installed in this project's environment.
 
@@ -1886,7 +1886,7 @@ Use the official `mcpgateway.translate` module provided by the IBM/ContextForge 
 
 #### Workflow Diagram (Option A)
 
-![MCP SSE Bridge Approach](../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.png)
+![Agent Plugin Integration SSE Bridge Approach](../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.png)
 
 *[Source: mcp_sse_bridge_approach.mmd](../docs/architecture_diagrams/transport/mcp_sse_bridge_approach.mmd)*
 
@@ -1979,12 +1979,12 @@ The following table maps the 5-phase "Liquid Information" architecture to its sp
 
 | Phase | Diagram Box | Technical Implementation | Input/Source | Output Artifact |
 | :--- | :--- | :--- | :--- | :--- |
-| **I. Scout** | `cortex_learning_debrief` | MCP Tool: `rag_cortex` | `learning_package_snapshot.md` | Session Strategic Context (JSON) |
+| **I. Scout** | `cortex_learning_debrief` | Agent Plugin Integration Tool: `rag_cortex` | `learning_package_snapshot.md` | Session Strategic Context (JSON) |
 | **II. Synthesize** | `Autonomous Synthesis` | AI Agent Logic | Web Research, RAG, File System | `/LEARNING`, `/ADRs`, `/01_PROTOCOLS` |
 | **III. Strategic Review**| `Strategic Approval` | **Gate 1 (HITL)** | Human Review of Markdown Files | Consent to proceed to Audit |
-| **IV. Audit** | `cortex_capture_snapshot` | MCP Tool (type=`audit`) | `git diff` + `red_team_manifest.json` | `red_team_audit_packet.md` |
+| **IV. Audit** | `cortex_capture_snapshot` | Agent Plugin Integration Tool (type=`audit`) | `git diff` + `red_team_manifest.json` | `red_team_audit_packet.md` |
 | **IV. Audit** | `Technical Approval` | **Gate 2 (HITL)** | Human Review of Audit Packet | Final Consent to Seal |
-| **V. Seal** | `cortex_capture_snapshot` | MCP Tool (type=`seal`) | Verified `learning_manifest.json` | `learning_package_snapshot.md` |
+| **V. Seal** | `cortex_capture_snapshot` | Agent Plugin Integration Tool (type=`seal`) | Verified `learning_manifest.json` | `learning_package_snapshot.md` |
 
 ## Technical Specification
 
@@ -2361,7 +2361,7 @@ Follow this exact workflow to add or update a dependency in Project Sanctuary. T
 ### Step-by-Step: Adding a New Requirement
 
 1.  **Identify the correct .in file (human intent file)**
-    *   **Shared baseline** (e.g., fastapi, pydantic, MCP libs): Edit `mcp_servers/gateway/requirements-core.in`
+    *   **Shared baseline** (e.g., fastapi, pydantic, Agent Plugin Integration libs): Edit `mcp_servers/gateway/requirements-core.in`
     *   **Service-specific** (e.g., chromadb, langchain for RAG cortex): Edit the service’s own file, e.g. `mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in`
     *   **Local development/testing only** (e.g., black, ruff): Edit `requirements-dev.in` (root or appropriate location)
     *   **Note**: If a service needs testing tools *inside* its container (e.g., for Protocol 101 gates), add them to the service-specific `.in` file.
@@ -2531,7 +2531,7 @@ Per [ADR 066](./066_standardize_on_fastmcp_for_all_mcp_server_implementations.md
 
 This ADR proposes `@sse_tool()` as the **SSE-transport counterpart** to FastMCP's `@mcp.tool()`:
 
-![MCP Tool Decorator Pattern](../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.png)
+![Agent Plugin Integration Tool Decorator Pattern](../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.png)
 
 *[Source: mcp_tool_decorator_pattern.mmd](../docs/architecture_diagrams/system/mcp_tool_decorator_pattern.mmd)*
 
@@ -2857,7 +2857,7 @@ After migration, verify that `register_decorated_tools()` does not interfere wit
 
 ## References
 
-- [ADR 066: MCP Server Transport Standards](./066_standardize_on_fastmcp_for_all_mcp_server_implementations.md)
+- [ADR 066: Agent Plugin Integration Server Transport Standards](./066_standardize_on_fastmcp_for_all_mcp_server_implementations.md)
 - [sse_adaptor.py](../mcp_servers/lib/sse_adaptor.py)
 - [FastMCP Decorator Pattern](https://github.com/jlowin/fastmcp)
 
@@ -3182,9 +3182,9 @@ The Forge scripts that generate training data must:
 **Note:** Cortex cluster
 
 ```markdown
-# Cortex MCP Server
+# Cortex Agent Plugin Integration Server
 
-**Description:** The **Sanctuary Cortex Cluster** is the unified cognitive engine of the system. It acts as a **Composite Gateway**, aggregating four distinct internal MCP servers into a single interface for the Orchestrator/User:
+**Description:** The **Sanctuary Cortex Cluster** is the unified cognitive engine of the system. It acts as a **Composite Gateway**, aggregating four distinct internal Agent Plugin Integration servers into a single interface for the Orchestrator/User:
 1.  **RAG Cortex**: Knowledge base and semantic search.
 2.  **Learning**: Protocol 128 lifecycle and memory persistence.
 3.  **Evolution**: Protocol 131 self-improvement and metrics.
@@ -3227,7 +3227,7 @@ CORTEX_CHROMA_DB_PATH=mcp_servers/cognitive/cortex/data/chroma_db
 CORTEX_CACHE_DIR=mcp_servers/cognitive/cortex/data/cache
 ```
 
-### MCP Config
+### Agent Plugin Integration Config
 Add this to your `mcp_config.json`:
 
 ```json
@@ -3376,7 +3376,7 @@ cortex_guardian_wakeup()
 pip install -r requirements.txt
 ```
 
-2. Configure MCP server in `~/.gemini/antigravity/mcp_config.json`:
+2. Configure Agent Plugin Integration server in `~/.gemini/antigravity/mcp_config.json`:
 ```json
 {
   "mcpServers": {
@@ -3396,7 +3396,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-From Antigravity or any MCP client:
+From Antigravity or any Agent Plugin Integration client:
 
 ```
 # Get database stats
@@ -3431,7 +3431,7 @@ cortex_ingest_full()
 - **ChromaDB:** Vector database
 - **LangChain:** RAG framework
 - **NomicEmbeddings:** Local embedding model
-- **FastMCP:** MCP server framework
+- **FastMCP:** Agent Plugin Integration server framework
 
 ## Related Documentation
 
@@ -3448,9 +3448,9 @@ cortex_ingest_full()
 - **Multi-Language Support:** Added native support for .py, .js, .ts, .jsx, .tsx ingestion
 - **Smart Exclusion:** Implemented noise filtering for production directories
 
-### v5.0 (2025-11-30): MCP Migration Complete
-- **Migration to MCP Architecture:** Refactored from legacy script-based system to MCP server
-- **Enhanced README:** Merged legacy documentation with MCP-specific content
+### v5.0 (2025-11-30): Agent Plugin Integration Migration Complete
+- **Migration to Agent Plugin Integration Architecture:** Refactored from legacy script-based system to Agent Plugin Integration server
+- **Enhanced README:** Merged legacy documentation with Agent Plugin Integration-specific content
 - **Comprehensive Documentation:** Added architecture philosophy, technology stack, and Strategic Crucible Loop context
 - **Production-Ready Status:** Full test coverage and operational stability
 
@@ -3469,7 +3469,7 @@ cortex_ingest_full()
 - **Improved Traceability:** Every piece of knowledge traced to precise source file via GitHub URLs
 - **Increased Resilience:** Removed intermediate snapshot step for faster, more resilient ingestion
 
-### v1.0.0 (2025-11-28): MCP Foundation
+### v1.0.0 (2025-11-28): Agent Plugin Integration Foundation
 - **4 Core Tools:** ingest_full, query, get_stats, ingest_incremental
 - **Parent Document Retriever Integration:** Full context retrieval from day one
 - **Input Validation:** Comprehensive error handling and validation layer
@@ -3484,9 +3484,9 @@ cortex_ingest_full()
 **Note:** Git cluster
 
 ```markdown
-# Git Workflow MCP Server
+# Git Workflow Agent Plugin Integration Server
 
-**Description:** The Git Workflow MCP server provides **Protocol 101 v3.0-compliant git operations** with strict safety enforcement. It implements a disciplined workflow that prevents dangerous operations and ensures functional integrity through automated test suite execution.
+**Description:** The Git Workflow Agent Plugin Integration server provides **Protocol 101 v3.0-compliant git operations** with strict safety enforcement. It implements a disciplined workflow that prevents dangerous operations and ensures functional integrity through automated test suite execution.
 
 ## Tools
 
@@ -3521,7 +3521,7 @@ PROJECT_ROOT=/path/to/Project_Sanctuary
 GIT_BASE_DIR=/path/to/Project_Sanctuary # Security sandbox
 ```
 
-### MCP Config
+### Agent Plugin Integration Config
 Add this to your `mcp_config.json`:
 
 ```json
@@ -3585,7 +3585,7 @@ This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3
 **Note:** Git safety
 
 ```markdown
-# Git Workflow MCP - Safety Features Documentation
+# Git Workflow Agent Plugin Integration - Safety Features Documentation
 
 **Version:** 1.0  
 **Last Updated:** 2025-11-30  
@@ -3595,7 +3595,7 @@ This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3
 
 ## Overview
 
-The Git Workflow MCP implements a **strict safety system** to prevent dangerous git operations and enforce a disciplined feature branch workflow. This document details all safety features, their rationale, and test coverage.
+The Git Workflow Agent Plugin Integration implements a **strict safety system** to prevent dangerous git operations and enforce a disciplined feature branch workflow. This document details all safety features, their rationale, and test coverage.
 
 ---
 
@@ -3902,8 +3902,8 @@ git_finish_feature("feature/task-123-test")  # Syncs main automatically
 
 ## Related Documentation
 
-- [Git Workflow MCP README](README.md)
-- [MCP Operations Inventory](../../../../docs/operations/mcp/mcp_operations_inventory.md)
+- [Git Workflow Agent Plugin Integration README](README.md)
+- [Agent Plugin Integration Operations Inventory](../../../../docs/operations/mcp/mcp_operations_inventory.md)
 - [Protocol 101 v3.0](../../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
 
 ---
@@ -3921,9 +3921,9 @@ git_finish_feature("feature/task-123-test")  # Syncs main automatically
 **Note:** Git server
 
 ```markdown
-# Git Workflow MCP Server
+# Git Workflow Agent Plugin Integration Server
 
-**Description:** The Git Workflow MCP server provides **Protocol 101 v3.0-compliant git operations** with strict safety enforcement. It implements a disciplined workflow that prevents dangerous operations and ensures functional integrity through automated test suite execution.
+**Description:** The Git Workflow Agent Plugin Integration server provides **Protocol 101 v3.0-compliant git operations** with strict safety enforcement. It implements a disciplined workflow that prevents dangerous operations and ensures functional integrity through automated test suite execution.
 
 ## Tools
 
@@ -3958,7 +3958,7 @@ PROJECT_ROOT=/path/to/Project_Sanctuary
 GIT_BASE_DIR=/path/to/Project_Sanctuary # Security sandbox
 ```
 
-### MCP Config
+### Agent Plugin Integration Config
 Add this to your `mcp_config.json`:
 
 ```json
@@ -4029,7 +4029,7 @@ This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3
 **Note:** Git safety
 
 ```markdown
-# Git Workflow MCP - Safety Features Documentation
+# Git Workflow Agent Plugin Integration - Safety Features Documentation
 
 **Version:** 1.0  
 **Last Updated:** 2025-11-30  
@@ -4039,7 +4039,7 @@ This server enforces the **Doctrine of the Unbreakable Commit** (Protocol 101 v3
 
 ## Overview
 
-The Git Workflow MCP implements a **strict safety system** to prevent dangerous git operations and enforce a disciplined feature branch workflow. This document details all safety features, their rationale, and test coverage.
+The Git Workflow Agent Plugin Integration implements a **strict safety system** to prevent dangerous git operations and enforce a disciplined feature branch workflow. This document details all safety features, their rationale, and test coverage.
 
 ---
 
@@ -4346,8 +4346,8 @@ git_finish_feature("feature/task-123-test")  # Syncs main automatically
 
 ## Related Documentation
 
-- [Git Workflow MCP README](README.md)
-- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md)
+- [Git Workflow Agent Plugin Integration README](README.md)
+- [Agent Plugin Integration Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md)
 - [Protocol 101 v3.0](../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
 
 ---
@@ -4449,12 +4449,12 @@ This pattern is highly relevant to the **Project Sanctuary Mnemonic Cortex**. Th
 
 ## File: LEARNING/topics/mcp_tool_usage.md
 **Path:** `LEARNING/topics/mcp_tool_usage.md`
-**Note:** MCP topic
+**Note:** Agent Plugin Integration topic
 
 ```markdown
-# Protocol: Mandatory MCP Tool Usage
+# Protocol: Mandatory Agent Plugin Integration Tool Usage
 
-To ensure **Cognitive Continuity** and **Zero-Trust Integrity**, all agents MUST prioritize the usage of MCP tools for interacting with the Project Sanctuary codebase.
+To ensure **Cognitive Continuity** and **Zero-Trust Integrity**, all agents MUST prioritize the usage of Agent Plugin Integration tools for interacting with the Project Sanctuary codebase.
 
 ## 1. State Management (RAG Cortex)
 - **Discovery**: Use `cortex-cortex-query` to find relevant files, ADRs, or prior session context.
@@ -4471,7 +4471,7 @@ To ensure **Cognitive Continuity** and **Zero-Trust Integrity**, all agents MUST
 - **Seal**: Run `cortex_capture_snapshot(snapshot_type="seal")` only after Gate approval to persist memory.
 
 > [!IMPORTANT]
-> **Manual Bypass Penalty**: Bypassing MCP tools (e.g., using raw shell commands for file edits) increases the risk of "Manifest Blindspots" and will trigger a **Strict Rejection** at the Red Team Gate.
+> **Manual Bypass Penalty**: Bypassing Agent Plugin Integration tools (e.g., using raw shell commands for file edits) increases the risk of "Manifest Blindspots" and will trigger a **Strict Rejection** at the Red Team Gate.
 
 ```
 <a id='entry-20'></a>
@@ -4523,13 +4523,13 @@ This task addresses Grok4's concerns about manifest blindspots and the risk of c
 **Note:** Council server
 
 ```markdown
-# Council MCP Server
+# Council Agent Plugin Integration Server
 
 **Status:** ✅ Operational
 **Version:** 2.0.0 (Refactored)
-**Protocol:** Model Context Protocol (MCP)
+**Protocol:** Agent Plugin Integration (Agent Plugin Integration)
 
-**Description:** The Council MCP Server exposes the Sanctuary Council's **multi-agent deliberation** capabilities to external AI agents via the Model Context Protocol. It coordinates specialized agents (Coordinator, Strategist, Auditor) to solve complex tasks through iterative reasoning and context retrieval.
+**Description:** The Council Agent Plugin Integration Server exposes the Sanctuary Council's **multi-agent deliberation** capabilities to external AI agents via the Agent Plugin Integration. It coordinates specialized agents (Coordinator, Strategist, Auditor) to solve complex tasks through iterative reasoning and context retrieval.
 
 ## Tools
 
@@ -4562,7 +4562,7 @@ OPENAI_API_KEY=sk-...
 COUNCIL_DEFAULT_ROUNDS=3
 ```
 
-### MCP Config
+### Agent Plugin Integration Config
 Add this to your `mcp_config.json`:
 
 ```json
@@ -4598,19 +4598,19 @@ pytest mcp_servers/council/tests
 
 ### Overview
 
-The Council MCP has a unique dual-role architecture: it acts as both a **Server** (receiving requests from the user/IDE) and a **Client** (orchestrating other MCPs).
+The Council Agent Plugin Integration has a unique dual-role architecture: it acts as both a **Server** (receiving requests from the user/IDE) and a **Client** (orchestrating other MCPs).
 
-The Council MCP has been refactored to use a modular architecture:
-1.  **Agent Persona MCP**: Used for individual agent execution (Coordinator, Strategist, Auditor)
-2.  **Cortex MCP**: Used for memory and context retrieval
+The Council Agent Plugin Integration has been refactored to use a modular architecture:
+1.  **Agent Persona Agent Plugin Integration**: Used for individual agent execution (Coordinator, Strategist, Auditor)
+2.  **Cortex Agent Plugin Integration**: Used for memory and context retrieval
 3.  **Direct Orchestration**: Deliberation logic is now embedded in `council_ops.py`, replacing the legacy orchestrator subprocess.
 
 **Design Principle: Separation of Concerns**
-The Council MCP provides ONLY what's unique to the Council. Other capabilities are delegated to specialized MCP servers.
+The Council Agent Plugin Integration provides ONLY what's unique to the Council. Other capabilities are delegated to specialized Agent Plugin Integration servers.
 
 **Benefits of Direct Orchestration:**
 - ✅ No subprocess overhead
-- ✅ Uses specialized Agent Persona MCP
+- ✅ Uses specialized Agent Persona Agent Plugin Integration
 - ✅ Integrated with Cortex memory
 - ✅ Clean separation of concerns
 
@@ -4671,7 +4671,7 @@ result = council_dispatch(
 **Example - Single Agent Consultation:**
 ```python
 result = council_dispatch(
-    task_description="Audit the test coverage for the Git MCP server",
+    task_description="Audit the test coverage for the Git Agent Plugin Integration server",
     agent="auditor",
     max_rounds=2
 )
@@ -4704,28 +4704,28 @@ List all available Council agents and their status.
 
 ## Composable Workflow Patterns
 
-The Council MCP is designed to compose with other specialized MCP servers:
+The Council Agent Plugin Integration is designed to compose with other specialized Agent Plugin Integration servers:
 
 ### Pattern 1: Council → Protocol → Git
 
 ```python
 # 1. Council deliberates on protocol design
 decision = council_dispatch(
-    task_description="Design a new protocol for MCP composition patterns",
+    task_description="Design a new protocol for Agent Plugin Integration composition patterns",
     output_path="WORK_IN_PROGRESS/protocol_design.md"
 )
 
-# 2. Create protocol document (use Protocol MCP)
+# 2. Create protocol document (use Protocol Agent Plugin Integration)
 protocol_create(
     number=120,
-    title="MCP Composition Patterns",
+    title="Agent Plugin Integration Composition Patterns",
     status="PROPOSED",
     content=decision["decision"]
 )
 
-# 3. Commit to repository (use Git MCP)
+# 3. Commit to repository (use Git Agent Plugin Integration)
 git_add(files=["01_PROTOCOLS/120_mcp_composition_patterns.md"])
-git_smart_commit(message="feat(protocol): Add Protocol 120 - MCP Composition")
+git_smart_commit(message="feat(protocol): Add Protocol 120 - Agent Plugin Integration Composition")
 git_push_feature()
 ```
 
@@ -4734,37 +4734,37 @@ git_push_feature()
 ```python
 # 1. Council generates implementation
 code = council_dispatch(
-    task_description="Implement a helper function for parsing MCP responses"
+    task_description="Implement a helper function for parsing Agent Plugin Integration responses"
 )
 
-# 2. Write code file (use Code MCP)
+# 2. Write code file (use Code Agent Plugin Integration)
 code_write(
     path="mcp_servers/lib/utils/parser.py",
     content=code["decision"]
 )
 
-# 3. Commit (use Git MCP)
+# 3. Commit (use Git Agent Plugin Integration)
 git_add(files=["mcp_servers/lib/utils/parser.py"])
-git_smart_commit(message="feat(utils): Add MCP response parser")
+git_smart_commit(message="feat(utils): Add Agent Plugin Integration response parser")
 ```
 
 ### Pattern 3: Cortex → Council → Task
 
 ```python
-# 1. Query memory for context (use Cortex MCP)
+# 1. Query memory for context (use Cortex Agent Plugin Integration)
 context = cortex_query(
-    query="Previous decisions on MCP architecture",
+    query="Previous decisions on Agent Plugin Integration architecture",
     max_results=5
 )
 
 # 2. Council deliberates with context
 decision = council_dispatch(
-    task_description=f"Given this context: {context}, recommend next steps for MCP evolution"
+    task_description=f"Given this context: {context}, recommend next steps for Agent Plugin Integration evolution"
 )
 
-# 3. Create task (use Task MCP)
+# 3. Create task (use Task Agent Plugin Integration)
 create_task(
-    title="Implement MCP Evolution Recommendations",
+    title="Implement Agent Plugin Integration Evolution Recommendations",
     description=decision["decision"],
     status="todo"
 )
@@ -4774,11 +4774,11 @@ create_task(
 
 The following tools were **intentionally removed** to maintain separation of concerns:
 
-- ~~`council_mechanical_write`~~ → Use `code_write` from **Code MCP**
-- ~~`council_query_memory`~~ → Use `cortex_query` from **Cortex MCP**
-- ~~`council_git_commit`~~ → Use `git_add` + `git_smart_commit` from **Git MCP**
+- ~~`council_mechanical_write`~~ → Use `code_write` from **Code Agent Plugin Integration**
+- ~~`council_query_memory`~~ → Use `cortex_query` from **Cortex Agent Plugin Integration**
+- ~~`council_git_commit`~~ → Use `git_add` + `git_smart_commit` from **Git Agent Plugin Integration**
 
-**Rationale:** Each MCP server should have a single, well-defined responsibility. The Council MCP focuses exclusively on multi-agent deliberation.
+**Rationale:** Each Agent Plugin Integration server should have a single, well-defined responsibility. The Council Agent Plugin Integration focuses exclusively on multi-agent deliberation.
 
 ## Installation & Setup
 
@@ -4790,7 +4790,7 @@ The following tools were **intentionally removed** to maintain separation of con
 
 ### Configuration
 
-Add to your MCP client configuration (e.g., Claude Desktop, Antigravity):
+Add to your Agent Plugin Integration client configuration (e.g., Claude Desktop, Antigravity):
 
 ```json
 {
@@ -4845,7 +4845,7 @@ pytest tests/mcp_servers/council/ -v
 3. **Full Council Deliberation:**
    ```python
    result = council_dispatch(
-       task_description="Evaluate the current MCP architecture and suggest improvements",
+       task_description="Evaluate the current Agent Plugin Integration architecture and suggest improvements",
        max_rounds=3
    )
    print(result["decision"])
@@ -4860,33 +4860,33 @@ pytest tests/mcp_servers/council/ -v
        output_path="WORK_IN_PROGRESS/test_protocol.md"
    )
    
-   # Save with Code MCP
+   # Save with Code Agent Plugin Integration
    code_write(
        path="WORK_IN_PROGRESS/test_protocol.md",
        content=decision["decision"]
    )
    
-   # Commit with Git MCP
+   # Commit with Git Agent Plugin Integration
    git_add(files=["WORK_IN_PROGRESS/test_protocol.md"])
-   git_smart_commit(message="test: Council MCP verification")
+   git_smart_commit(message="test: Council Agent Plugin Integration verification")
    ```
 
 ## Integration with Council Orchestrator
 
-The MCP server is a **thin protocol wrapper** around the existing Council Orchestrator:
+The Agent Plugin Integration server is a **thin protocol wrapper** around the existing Council Orchestrator:
 
 ```
 mcp_servers/council/          council_orchestrator/
-├── server.py (MCP wrapper) → ├── orchestrator/
+├── server.py (Agent Plugin Integration wrapper) → ├── orchestrator/
 ├── lib/council/            → │   ├── main.py (Entry point)
     └── council_ops.py      → │   ├── app.py (Core logic)
                               │   ├── engines/
                               │   ├── council/
                               │   └── memory/
-                              └── command.json (Generated by MCP)
+                              └── command.json (Generated by Agent Plugin Integration)
 ```
 
-**Important:** Both folders are required. The MCP server depends on the full orchestrator implementation.
+**Important:** Both folders are required. The Agent Plugin Integration server depends on the full orchestrator implementation.
 
 ## Error Handling
 
@@ -4906,7 +4906,7 @@ The server includes comprehensive error handling:
 - [ ] Async execution for concurrent task handling
 - [ ] Confidence score parsing from orchestrator output
 
-## Future Architecture: Council Members as MCP Servers
+## Future Architecture: Council Members as Agent Plugin Integration Servers
 
 ### Current Architecture (v1.0)
 
@@ -4921,16 +4921,16 @@ Council Orchestrator (Monolithic)
 
 ### Proposed Architecture (v2.0)
 
-Each council member becomes an **independent MCP server**:
+Each council member becomes an **independent Agent Plugin Integration server**:
 
 ```
-Council Orchestrator (MCP Client)
-├── Calls → Coordinator MCP Server
-├── Calls → Strategist MCP Server
-└── Calls → Auditor MCP Server
+Council Orchestrator (Agent Plugin Integration Client)
+├── Calls → Coordinator Agent Plugin Integration Server
+├── Calls → Strategist Agent Plugin Integration Server
+└── Calls → Auditor Agent Plugin Integration Server
 ```
 
-### Benefits of Member-as-MCP Architecture
+### Benefits of Member-as-Agent Plugin Integration Architecture
 
 **1. True Modularity**
 - Each agent is independently deployable
@@ -4943,10 +4943,10 @@ Council Orchestrator (MCP Client)
 - Load balancing across agent instances
 
 **3. Specialization**
-- Each agent MCP can have its own tools and capabilities
-- Coordinator MCP might expose: `plan_task`, `coordinate_workflow`
-- Strategist MCP might expose: `assess_risk`, `long_term_planning`
-- Auditor MCP might expose: `verify_compliance`, `quality_check`
+- Each agent Agent Plugin Integration can have its own tools and capabilities
+- Coordinator Agent Plugin Integration might expose: `plan_task`, `coordinate_workflow`
+- Strategist Agent Plugin Integration might expose: `assess_risk`, `long_term_planning`
+- Auditor Agent Plugin Integration might expose: `verify_compliance`, `quality_check`
 
 **4. Composability**
 - External agents can call individual council members directly
@@ -4955,7 +4955,7 @@ Council Orchestrator (MCP Client)
 
 ### Implementation Sketch
 
-**Coordinator MCP Server:**
+**Coordinator Agent Plugin Integration Server:**
 ```python
 # mcp_servers/agents/coordinator/server.py
 
@@ -4979,7 +4979,7 @@ def coordinator_plan_task(task_description: str, context: dict) -> dict:
     }
 ```
 
-**Orchestrator as MCP Client:**
+**Orchestrator as Agent Plugin Integration Client:**
 ```python
 # council_orchestrator/orchestrator/app.py
 
@@ -5003,14 +5003,14 @@ async def deliberate(task: str):
 ### Migration Path
 
 **Phase 1 (Current):** Monolithic orchestrator with internal agents
-**Phase 2:** Extract one agent (e.g., Auditor) as MCP server, test dual mode
+**Phase 2:** Extract one agent (e.g., Auditor) as Agent Plugin Integration server, test dual mode
 **Phase 3:** Extract remaining agents, deprecate internal implementations
-**Phase 4:** Orchestrator becomes pure MCP client coordinator
+**Phase 4:** Orchestrator becomes pure Agent Plugin Integration client coordinator
 
 ### Design Considerations
 
 **Agent Discovery:**
-- How does orchestrator find agent MCP servers?
+- How does orchestrator find agent Agent Plugin Integration servers?
 - Configuration file? Service registry? Environment variables?
 
 **Agent State:**
@@ -5018,7 +5018,7 @@ async def deliberate(task: str):
 - Stateless (functional) vs stateful (memory-enabled)?
 
 **Error Handling:**
-- What if an agent MCP is unavailable?
+- What if an agent Agent Plugin Integration is unavailable?
 - Fallback strategies? Retry logic?
 
 **Consensus Mechanism:**
@@ -5040,16 +5040,16 @@ async def deliberate(task: str):
 - [Cortex README](../../ARCHIVE/mnemonic_cortex/README.md) - Cortex overview and setup
 - [Cortex Vision](../../ARCHIVE/mnemonic_cortex/VISION.md) - Strategic vision for knowledge systems
 
-### MCP Ecosystem
-- [MCP Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md) - Complete MCP operations catalog
-- [Code MCP](../code/README.md) - File operations MCP
-- [Git MCP](../git/README.md) - Version control MCP
-- **[Cortex MCP](../rag_cortex/README.md)**: Memory/RAG MCP
-- [Protocol MCP](../protocol/README.md) - Protocol document MCP
-- [Task MCP](../task/README.md) - Task management MCP
+### Agent Plugin Integration Ecosystem
+- [Agent Plugin Integration Operations Inventory](../../docs/operations/mcp/mcp_operations_inventory.md) - Complete Agent Plugin Integration operations catalog
+- [Code Agent Plugin Integration](../code/README.md) - File operations Agent Plugin Integration
+- [Git Agent Plugin Integration](../git/README.md) - Version control Agent Plugin Integration
+- **[Cortex Agent Plugin Integration](../rag_cortex/README.md)**: Memory/RAG Agent Plugin Integration
+- [Protocol Agent Plugin Integration](../protocol/README.md) - Protocol document Agent Plugin Integration
+- [Task Agent Plugin Integration](../task/README.md) - Task management Agent Plugin Integration
 
 ### Task Documentation
-- [Task 077: Implement Council MCP](../../tasks/done/077_implement_council_mcp_server.md) - Implementation task
+- [Task 077: Implement Council Agent Plugin Integration](../../tasks/done/077_implement_council_mcp_server.md) - Implementation task
 
 ---
 
@@ -5157,7 +5157,7 @@ from .models import (
 from mcp_servers.lib.content_processor import ContentProcessor
 
 # Imports that were previously inside methods, now moved to top for class initialization
-# Silence stdout/stderr during imports to prevent MCP protocol pollution
+# Silence stdout/stderr during imports to prevent Agent Plugin Integration protocol pollution
 with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
     import chromadb
     from dotenv import load_dotenv
@@ -5544,7 +5544,7 @@ class CortexOperations:
                     logger.info(f"Parent document store '{self.parent_collection_name}' count: {parent_count}")
                 except Exception as e:
                     logger.warning(f"Error accessing parent document store at '{self.store.root_path}': {e}")
-                    pass  # Silently ignore errors for MCP compatibility
+                    pass  # Silently ignore errors for Agent Plugin Integration compatibility
             else:
                 logger.info(f"Parent document store path '{self.store.root_path}' does not exist.")
             
@@ -6097,7 +6097,7 @@ class CortexOperations:
             constraints = query_data.get("constraints", "")
             granularity = query_data.get("granularity", "ATOM")
             
-            # Route to appropriate MCP
+            # Route to appropriate Agent Plugin Integration
             client = MCPClient(self.project_root)
             results = client.route_query(
                 scope=scope,
@@ -6109,7 +6109,7 @@ class CortexOperations:
             # Build Protocol 87 response
             response = {
                 "request_id": request_id,
-                "steward_id": "CORTEX-MCP-01",
+                "steward_id": "CORTEX-Agent Plugin Integration-01",
                 "timestamp_utc": datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
                 "query": json.dumps(query_data, separators=(',', ':')),
                 "granularity": granularity,
@@ -6119,7 +6119,7 @@ class CortexOperations:
                 "notes": ""
             }
             
-            # Process results from MCP routing
+            # Process results from Agent Plugin Integration routing
             for result in results:
                 if "error" in result:
                     response["notes"] = f"Error from {result.get('source', 'unknown')}: {result['error']}"
@@ -6138,7 +6138,7 @@ class CortexOperations:
             response["routing"] = {
                 "scope": scope,
                 "routed_to": self._get_mcp_name(scope),
-                "orchestrator": "CORTEX-MCP-01",
+                "orchestrator": "CORTEX-Agent Plugin Integration-01",
                 "intent": intent
             }
             
@@ -6159,19 +6159,19 @@ class CortexOperations:
     def _get_mcp_name(self, mcp_class_str: str) -> str:
         #============================================
         # Method: _get_mcp_name
-        # Purpose: Map scope to corresponding MCP name.
+        # Purpose: Map scope to corresponding Agent Plugin Integration name.
         # Args:
         #   scope: Logical scope from query
-        # Returns: MCP identifier string
+        # Returns: Agent Plugin Integration identifier string
         #============================================
         mapping = {
-            "Protocols": "Protocol MCP",
-            "Living_Chronicle": "Chronicle MCP",
-            "tasks": "Task MCP",
-            "Code": "Code MCP",
-            "ADRs": "ADR MCP"
+            "Protocols": "Protocol Agent Plugin Integration",
+            "Living_Chronicle": "Chronicle Agent Plugin Integration",
+            "tasks": "Task Agent Plugin Integration",
+            "Code": "Code Agent Plugin Integration",
+            "ADRs": "ADR Agent Plugin Integration"
         }
-        return mapping.get(scope, "Cortex MCP (Vector DB)")
+        return mapping.get(scope, "Cortex Agent Plugin Integration (Vector DB)")
 
 ```
 <a id='entry-23'></a>

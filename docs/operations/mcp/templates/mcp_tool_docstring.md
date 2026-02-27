@@ -1,4 +1,4 @@
-# MCP Tool Docstring Template
+# Agent Plugin Integration Tool Docstring Template
 
 Use this template for all functions decorated with `@mcp.tool()`.
 

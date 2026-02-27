@@ -11,20 +11,20 @@
 
 ## Abstract
 
-This protocol defines the standard for **Dynamic Server Binding** in Project Sanctuary's MCP Gateway Architecture, enabling late-binding tool discovery, centralized routing, and context-efficient scaling to 100+ MCP servers.
+This protocol defines the standard for **Dynamic Server Binding** in Project Sanctuary's Agent Plugin Integration Gateway Architecture, enabling late-binding tool discovery, centralized routing, and context-efficient scaling to 100+ Agent Plugin Integration servers.
 
 ---
 
 ## 1. Motivation
 
-**Problem:** Static 1-to-1 binding (1 config entry = 1 MCP server) creates:
+**Problem:** Static 1-to-1 binding (1 config entry = 1 Agent Plugin Integration server) creates:
 - Context window saturation (8,400 tokens for 12 servers)
 - Configuration complexity (180+ lines of manual JSON)
 - Scalability limits (~20 servers maximum)
 - Fragmented security policies
 - No centralized audit trail
 
-**Solution:** Dynamic Server Binding through a centralized MCP Gateway that:
+**Solution:** Dynamic Server Binding through a centralized Agent Plugin Integration Gateway that:
 - Reduces context overhead by 88% (8,400 → 1,000 tokens)
 - Enables scaling to 100+ servers (5x increase)
 - Centralizes security enforcement (Protocol 101)
@@ -37,9 +37,9 @@ This protocol defines the standard for **Dynamic Server Binding** in Project San
 
 ### 2.1 Core Components
 
-![MCP Dynamic Binding Architecture](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+![[mcp_dynamic_binding_flow.png|Agent Plugin Integration Dynamic Binding Architecture]]
 
-*[Source: mcp_dynamic_binding_flow.mmd](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
+*[[mcp_dynamic_binding_flow.mmd|Source: mcp_dynamic_binding_flow.mmd]]*
 
 ### 2.2 Service Registry Schema
 
@@ -116,7 +116,7 @@ async def initialize_gateway():
             tool_def = await fetch_tool_definition(server, tool_name)
             tools.append(tool_def)
     
-    # 4. Register tools with MCP
+    # 4. Register tools with Agent Plugin Integration
     mcp.register_tools(tools)
 ```
 
@@ -147,9 +147,9 @@ async def cortex_query(query: str, max_results: int = 5) -> str:
 
 ### 3.3 Request Flow Diagram
 
-![mcp_dynamic_binding_flow](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.png)
+![[mcp_dynamic_binding_flow.png|mcp_dynamic_binding_flow]]
 
-*[Source: mcp_dynamic_binding_flow.mmd](../docs/architecture_diagrams/system/mcp_dynamic_binding_flow.mmd)*
+*[[mcp_dynamic_binding_flow.mmd|Source: mcp_dynamic_binding_flow.mmd]]*
 
 ---
 
@@ -388,12 +388,12 @@ class CircuitBreaker:
 
 ## 11. References
 
-- ADR 056: Adoption of Dynamic MCP Gateway Pattern
-- ADR 057: Adoption of IBM ContextForge for Dynamic MCP Gateway
-- Task 115: Design and Specify Dynamic MCP Gateway Architecture
-- Task 116: Implement Dynamic MCP Gateway with IBM ContextForge
+- ADR 056: Adoption of Dynamic Agent Plugin Integration Gateway Pattern
+- ADR 057: Adoption of IBM ContextForge for Dynamic Agent Plugin Integration Gateway
+- Task 115: Design and Specify Dynamic Agent Plugin Integration Gateway Architecture
+- Task 116: Implement Dynamic Agent Plugin Integration Gateway with IBM ContextForge
 - Research: docs/architecture/mcp_gateway/research/ (13 documents)
-- MCP Specification: https://modelcontextprotocol.io
+- Agent Plugin Integration Specification: https://modelcontextprotocol.io
 
 ---
 

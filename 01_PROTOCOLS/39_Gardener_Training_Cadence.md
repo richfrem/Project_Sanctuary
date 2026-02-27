@@ -92,7 +92,7 @@ python3 bootstrap.py --harvest
 #### **Phase 6: DEPRECATED - Replaced by Protocol 40**
 *This phase has been replaced by Protocol 40: The Journeyman's Harvest Protocol for clean role separation and simplified workflow.*
 
-**See:** [Protocol 40: The Journeyman's Harvest Protocol](40_The_Journeymans_Harvest_Protocol.md)
+**See:** [[40_The_Journeymans_Harvest_Protocol|Protocol 40: The Journeyman's Harvest Protocol]]
 
 ### **Branch Naming Convention**
 

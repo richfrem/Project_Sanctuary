@@ -1,6 +1,6 @@
 # Podman Operations Guide — Project Sanctuary
 
-**Quick Reference:** Unified orchestration for the "Fleet of 8" MCP infrastructure.
+**Quick Reference:** Unified orchestration for the "Fleet of 8" Agent Plugin Integration infrastructure.
 
 ---
 
@@ -37,9 +37,9 @@ If you are running on Apple Silicon (M1/M2/M3), be aware that **Podman runs as L
 
 The fleet has critical dependencies that affect startup order:
 
-![podman_fleet_dependency_graph](../../architecture_diagrams/system/podman_fleet_dependency_graph.png)
+![[podman_fleet_dependency_graph.png|podman_fleet_dependency_graph]]
 
-*[Source: podman_fleet_dependency_graph.mmd](../../architecture_diagrams/system/podman_fleet_dependency_graph.mmd)*
+*[[podman_fleet_dependency_graph.mmd|Source: podman_fleet_dependency_graph.mmd]]*
 
 ### Why Order Matters
 
@@ -369,13 +369,13 @@ The fleet is registered with the IBM ContextForge Gateway via the **3-Layer Decl
 
 ### How Registration Works
 
-![mcp_fleet_resolution_flow](../../architecture_diagrams/system/mcp_fleet_resolution_flow.png)
+![[mcp_fleet_resolution_flow.png|mcp_fleet_resolution_flow]]
 
-*[Source: mcp_fleet_resolution_flow.mmd](../../architecture_diagrams/system/mcp_fleet_resolution_flow.mmd)*
+*[[mcp_fleet_resolution_flow.mmd|Source: mcp_fleet_resolution_flow.mmd]]*
 
 ### Fleet Spec (Canonical Definitions)
 
-The 6 logical MCP servers are defined in `mcp_servers/gateway/fleet_spec.py`:
+The 6 logical Agent Plugin Integration servers are defined in `mcp_servers/gateway/fleet_spec.py`:
 
 | Alias | Slug | Default URL | Tools |
 |-------|------|-------------|-------|
@@ -386,7 +386,7 @@ The 6 logical MCP servers are defined in `mcp_servers/gateway/fleet_spec.py`:
 | `cortex` | `sanctuary_cortex` | `http://sanctuary_cortex:8000/sse` | 13 |
 | `domain` | `sanctuary_domain` | `http://sanctuary_domain:8105/sse` | 35 |
 
-**Total:** 86 tools across 6 MCP servers (+ 2 backend services)
+**Total:** 86 tools across 6 Agent Plugin Integration servers (+ 2 backend services)
 
 ### Registration Commands
 
@@ -534,14 +534,14 @@ Fleet containers use a **dual-transport architecture**:
 **Selection:** Containers set `MCP_TRANSPORT=sse` in docker-compose to use Gateway-compatible SSE.
 
 > [!CAUTION]
-> **FastMCP's SSE transport is NOT compatible with the IBM ContextForge Gateway.** Fleet containers must use `SSEServer` (`mcp_servers/lib/sse_adaptor.py`). See [ADR 066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for details.
+> **FastMCP's SSE transport is NOT compatible with the IBM ContextForge Gateway.** Fleet containers must use `SSEServer` (`mcp_servers/lib/sse_adaptor.py`). See [[066_standardize_on_fastmcp_for_all_mcp_server_implementations|ADR 066]] for details.
 
 ### Verify SSE Handshake
 
 Each container must return `event: endpoint` on `/sse`:
 
 ```bash
-# Test all 6 MCP servers (should see "event: endpoint")
+# Test all 6 Agent Plugin Integration servers (should see "event: endpoint")
 for port in 8100 8101 8102 8103 8104 8105; do
   echo "Testing port $port..."
   timeout 2 curl -sN http://localhost:$port/sse | head -2
@@ -605,7 +605,7 @@ curl -sf http://localhost:11434/api/tags && echo "✅ Ollama"
 ### 2. SSE Handshake (ADR 066 Compliance)
 
 ```bash
-# All 6 MCP servers must return "event: endpoint"
+# All 6 Agent Plugin Integration servers must return "event: endpoint"
 timeout 2 curl -sN http://localhost:8100/sse | head -2  # Utils
 timeout 2 curl -sN http://localhost:8101/sse | head -2  # Filesystem
 timeout 2 curl -sN http://localhost:8102/sse | head -2  # Network
@@ -633,19 +633,19 @@ make verify
 
 | ADR | Title | Relevance |
 |-----|-------|-----------|
-| [ADR 060](../../../ADRs/060_gateway_integration_patterns.md) | Gateway Integration Patterns | Hybrid Fleet architecture, 6 mandatory guardrails |
-| [ADR 064](../../../ADRs/064_centralized_registry_for_fleet_of_8_mcp_servers.md) | Centralized Registry | 3-Layer Pattern: Spec → Resolver → Observation |
-| [ADR 065](../../../ADRs/065_unified_fleet_deployment_cli.md) | Unified Fleet Deployment CLI | "The Iron Makefile" — single-source fleet management |
-| [ADR 066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | MCP Transport Standards | Dual-transport: FastMCP STDIO + SSEServer for Gateway |
-| [ADR 073](../../../ADRs/073_standardization_of_python_dependency_management_across_environments.md) | Python Dependency Management | Locked-file policy: `.in` → `.txt` |
-| [ADR 087](../../../ADRs/087_podman_fleet_operations_policy.md) | Podman Fleet Operations | Mandates targeted rebuilds and registry refresh |
+| [[060_gateway_integration_patterns|ADR 060]] | Gateway Integration Patterns | Hybrid Fleet architecture, 6 mandatory guardrails |
+| [[064_centralized_registry_for_fleet_of_8_mcp_servers|ADR 064]] | Centralized Registry | 3-Layer Pattern: Spec → Resolver → Observation |
+| [[065_unified_fleet_deployment_cli|ADR 065]] | Unified Fleet Deployment CLI | "The Iron Makefile" — single-source fleet management |
+| [[066_standardize_on_fastmcp_for_all_mcp_server_implementations|ADR 066]] | Agent Plugin Integration Transport Standards | Dual-transport: FastMCP STDIO + SSEServer for Gateway |
+| [[073_standardization_of_python_dependency_management_across_environments|ADR 073]] | Python Dependency Management | Locked-file policy: `.in` → `.txt` |
+| [[087_podman_fleet_operations_policy|ADR 087]] | Podman Fleet Operations | Mandates targeted rebuilds and registry refresh |
 
 ---
 
 ## Documentation Links
 
-- **[docker-compose.yml](../../../docker-compose.yml)** — Fleet container definitions
-- **[Makefile](../../../Makefile)** — Unified fleet operations ("The Iron Root", ADR 065)
-- **[Gateway Verification Matrix](../../architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md)** — Full tool verification status
-- **[Architecture Spec](../../architecture/mcp/servers/gateway/architecture/ARCHITECTURE.md)** — Fleet architecture details
-- **[MCP Servers README](../../../mcp_servers/README.md)** — Canonical MCP server guide
+- **[[docker-compose.yml|docker-compose.yml]]** — Fleet container definitions
+- **[[Makefile|Makefile]]** — Unified fleet operations ("The Iron Root", ADR 065)
+- **[[GATEWAY_VERIFICATION_MATRIX|Gateway Verification Matrix]]** — Full tool verification status
+- **[[ARCHITECTURE|Architecture Spec]]** — Fleet architecture details
+- **[[README|Agent Plugin Integration Servers README]]** — Canonical Agent Plugin Integration server guide

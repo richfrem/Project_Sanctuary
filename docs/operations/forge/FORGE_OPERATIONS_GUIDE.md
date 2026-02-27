@@ -12,9 +12,9 @@ Project Sanctuary includes a complete LLM fine-tuning pipeline called **Operatio
 
 | Resource | Location |
 |----------|----------|
-| **Full Documentation** | [forge/README.md](../../../forge/README.md) |
-| **Environment Setup** | [CUDA-ML-ENV-SETUP.md](../../../forge/CUDA-ML-ENV-SETUP.md) |
-| **Pipeline Diagram** | [llm_finetuning_pipeline.mmd](../../architecture_diagrams/workflows/llm_finetuning_pipeline.mmd) |
+| **Full Documentation** | [[README|forge/README.md]] |
+| **Environment Setup** | [[CUDA-ML-ENV-SETUP|CUDA-ML-ENV-SETUP.md]] |
+| **Pipeline Diagram** | [[llm_finetuning_pipeline.mmd|llm_finetuning_pipeline.mmd]] |
 | **Deployed Model** | [Hugging Face](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final) |
 
 ## Pipeline Phases
@@ -42,6 +42,6 @@ Project Sanctuary includes a complete LLM fine-tuning pipeline called **Operatio
 
 ## Related Documents
 
-- [Content Processing Guide](../../architecture/CONTENT_PROCESSING_GUIDE.md) - How Forge integrates with unified content pipeline
-- [Manifest Architecture](../../architecture/MANIFEST_ARCHITECTURE_GUIDE.md) - Dataset scope definition
-- [P41: Phoenix Forge Protocol](../../../01_PROTOCOLS/41_The_Phoenix_Forge_Protocol.md)
+- [[CONTENT_PROCESSING_GUIDE|Content Processing Guide]] - How Forge integrates with unified content pipeline
+- [[MANIFEST_ARCHITECTURE_GUIDE|Manifest Architecture]] - Dataset scope definition
+- [[41_The_Phoenix_Forge_Protocol|P41: Phoenix Forge Protocol]]
