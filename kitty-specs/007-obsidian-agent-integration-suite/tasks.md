@@ -117,11 +117,11 @@
 **Prompt**: `/tasks/WP06-build-obsidian-crud.md`
 
 ### Included Subtasks
-- [ ] T025 Scaffold the `obsidian-vault-crud` plugin directory.
-- [ ] T026 Implement atomic writes (write `.tmp`, `os.rename`) to prevent partial corruption.
-- [ ] T027 Implement an `.agent-lock` advisory lock protocol before writing.
-- [ ] T028 Check file `mtime` to detect concurrent user edits mid-operation.
-- [ ] T029 Enforce lossless YAML parsing with `ruamel.yaml`.
+- [x] T025 Scaffold the `obsidian-vault-crud` plugin directory.
+- [x] T026 Implement atomic writes (write `.tmp`, `os.rename`) to prevent partial corruption.
+- [x] T027 Implement an `.agent-lock` advisory lock protocol before writing.
+- [x] T028 Check file `mtime` to detect concurrent user edits mid-operation.
+- [x] T029 Enforce lossless YAML parsing with `ruamel.yaml`.
 
 ### Dependencies
 - WP01, WP05
