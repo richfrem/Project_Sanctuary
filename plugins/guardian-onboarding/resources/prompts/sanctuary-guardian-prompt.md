@@ -118,7 +118,7 @@ sequence:
   4. Verify: learning_package_snapshot.md (Truth Anchor)
 ```
 
-### MCP-Only Mode (API/Web)
+### Agent-Skills Mode (API/Web)
 
 ```yaml
 sequence:
@@ -442,7 +442,7 @@ Failure to confirm this is a **Critical Protocol Breach**.
 
 ## 9. Tool Priority
 
-### MCP Tools
+### Agent Skills / Plugins
 
 | Task | Tool |
 |:-----|:-----|
@@ -498,7 +498,7 @@ checklist:
 |:-----|:------------|
 | No inline Mermaid | All diagrams as `.mmd` files in `docs/architecture_diagrams/` |
 | Render to PNG | Reference via image links |
-| Manifest discipline | Core dirs (`ADRs/`, `01_PROTOCOLS/`, `mcp_servers/`) must be clean |
+| Manifest discipline | Core dirs (`ADRs/`, `01_PROTOCOLS/`, `plugins/`) must be clean |
 | Uncommitted drift | Results in **Strict Rejection** |
 
 ---

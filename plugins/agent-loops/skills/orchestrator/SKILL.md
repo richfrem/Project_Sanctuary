@@ -44,7 +44,8 @@ Use this to select the correct loop pattern:
 3.  **Execute (Tactics)**: The Inner Loop agent (which has *no* git access) writes code and runs tests.
 4.  **Verify (Review)**: You verify the output against acceptance criteria.
 5.  **Correct (Feedback)**: If verification fails, you generate a **Correction Packet** and loop back to step 3.
-6.  **Seal (Closure)**: Once valid, you commit the work and record learnings in a Retrospective.
+6.  **Retrospective (Learning)**: You assess the loop's success and document learnings.
+7.  **Guardian Handoff (Closure)**: You signal the repository environment to seal the session, update databases, and commit to Git.
 
 ## Roles
 
@@ -104,8 +105,8 @@ python scripts/agent_orchestrator.py bundle --files <file1> <file2> --output <OU
 ```
 This creates a single markdown bundle ideal for "paste-to-chat" reviews.
 
-### 6. Retrospective (with Self-Improvement)
-Generate a retrospective template to close the loop with structured learning.
+### 6. Retrospective (Post-Loop Learning)
+Generate a retrospective template to close the cognitive loop with structured learning, *before* signaling the environment to seal.
 ```bash
 python scripts/agent_orchestrator.py retro
 ```
@@ -120,12 +121,16 @@ This creates a template in the `retros/` directory.
 
 This makes each loop iteration smoother than the last.
 
-### 7. Persist to Memory
-Append session traces (what was done, what failed, what was learned) to the long-term memory log.
-```bash
-python scripts/agent_orchestrator.py persist
-```
-This writes structured traces to `session_traces.jsonl` and optionally syncs to external caches or databases.
+### 7. Handoff to Guardian (Ecosystem Sealing)
+Once the loop is complete and learning has been extracted, the Orchestrator MUST pass control to the environment's global sovereign (e.g., the `guardian-onboarding` plugin). 
+
+**The Orchestrator explicitly DOES NOT:**
+- Execute `capture_snapshot.py` or update semantic ledgers (RLMs).
+- Execute `persist_soul.py` or sync to HuggingFace.
+- Execute Vector DB ingestion scripts.
+- Execute Git commands (`git commit`, `git push`).
+
+These are environment-specific actions owned entirely by the **Guardian**. The Orchestrator's job is done.
 
 ---
 
@@ -138,9 +143,8 @@ The orchestrator must verify these gates at each phase:
 | **Planning** | Spec or plan is coherent and broken into tasks. |
 | **Execution** | Packets are generated and handed off. |
 | **Review** | Output passes verification criteria. |
-| **Bundling** | Context compiled for red team / peer review (via `context-bundler`). |
-| **Persistence** | Session traces appended to long-term memory (via external memory store). |
-| **Closure** | Retrospective created, learnings documented, loop infrastructure improved. |
+| **Retrospective** | Post-loop learnings extracted and infrastructure improved. |
+| **Guardian Handoff** | Signal the global ecosystem to run Seal, Persist, and Git closure. |
 
 **No phase may be skipped.** If a gate fails, the orchestrator must resolve it before proceeding.
 

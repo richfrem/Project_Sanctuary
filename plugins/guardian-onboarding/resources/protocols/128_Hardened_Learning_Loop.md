@@ -5,7 +5,7 @@ Establish a persistent, tamper-proof, and high-fidelity mechanism for orchestrat
 
 ## 2. The Red Team Gate (Zero-Trust Mode)
 No cognitive update may be persisted to the long-term Cortex without meeting the following criteria:
-8. In section 2 (Red Team Gate), the `cortex_learning_debrief` MCP tool reference should now be:
+8. In section 2 (Red Team Gate), the `cortex_learning_debrief` plugin skill reference should now be:
    - **Script**: `python3 plugins/guardian-onboarding/scripts/learning_debrief.py --hours 24`
 2. **Discrepancy Reporting**: The tool must highlight any gap between the agent's internal claims and the statistical reality on disk.
 3. **HITL Review**: A human steward must review the targeted "Red Team Packet" (Briefing, Manifest, Snapshot) before approval.

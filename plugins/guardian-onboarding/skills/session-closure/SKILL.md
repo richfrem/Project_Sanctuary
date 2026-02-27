@@ -9,48 +9,60 @@ disable-model-invocation: false
 You are responsible for safely closing and persisting an agent's memory and working state at the end of a session or task completion.
 
 ## Core Directives
-1. **Never Skip Retrospection**: You must ensure the Orchestrator has completed its Retrospective (Phase V) before initiating a Seal.
+1. **Never Skip Retrospection**: You must wait for the Orchestrator to signal that the loop and the Retrospective are formally complete before initiating the closure sequence.
 2. **Iron Check Compliance**: If the Technical Seal detects drift in the Iron Core, you MUST abort closure and enter Safe Mode.
-3. **Sequential Execution**: The phases must be executed strictly in order (Seal → Persist → Close).
+3. **Sovereignty**: You are the ONLY entity allowed to mutate global `.agent/` state, update the Vector DB, or push to Git during closure. No generic loop may do this.
 
 ## Plugin Dependencies
 | Plugin/Skill | Role |
 |:---|:---|
 | `plugins/guardian-onboarding/scripts/capture_snapshot.py` | Phase VI: Generates the sealed snapshot via `context-bundler` |
-| `plugins/guardian-onboarding/scripts/persist_soul.py` | Phase VII: Uploads sealed state to HuggingFace |
+| `plugins/rlm-factory/` | Phase VI: Updates the global `learning_package_snapshot.md` |
+| `plugins/guardian-onboarding/scripts/persist_soul.py` | Phase VII: Uploads sealed state to HuggingFace and appends traces |
+| `plugins/vector-db/` | Phase VII: Ingests new artifacts into local ChromaDB |
 | `plugins/context-bundler/scripts/bundle.py` | Called internally by `capture_snapshot.py` to produce the bundle |
 | `plugins/env-helper/scripts/env_helper.py` | Resolves `HF_TOKEN`, `HF_USERNAME`, dataset repo for `persist_soul.py` |
-| `plugins/rlm-factory/` | RLM Synthesizer triggered at start of Phase VI |
-| `plugins/agent-loops/skills/orchestrator/` | Phase V retrospective must be complete before calling this skill |
+| `plugins/agent-loops/` | The generic loop orchestration must signal completion before closure starts |
 
 ---
 
 ## Phase Execution Steps
 
-### 1. The Technical Seal (Phase VI)
-Trigger the RLM Synthesizer and execute the Iron Check to formally lock in the current context.
+### 1. The Technical Seal & Context Synthesis (Phase VI)
+Trigger the RLM Synthesizer to update global memory, and execute the Iron Check to formally lock in the current context.
 
 ```bash
-# Capture the technical seal
+# Update the Cognitive Hologram (RLM)
+python3 tools/cli.py codify
+
+# Capture the technical seal (Context Bundler & Tests)
 python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
 ```
 **Action:** Confirm the command output states the seal was successful. If it fails, report the drift to the user and halt.
 
-### 2. Soul Persistence (Phase VII)
-Once sealed, broadcast the verified state to the Hugging Face repository and ingest into local vectors if applicable.
+### 2. Soul Persistence & Ingestion (Phase VII)
+Trace the agent's logic, broadcast the verified state to the Hugging Face repository, and ingest into local vectors.
 
 ```bash
-# Persist Soul (Broadcast)
+# Persist Traces to Local Memory (.agent/learning/session_traces.jsonl)
+# (Done natively by the closure script)
+
+# Persist Soul (Broadcast to HuggingFace)
 python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md
 
-# Optional: Ingest Changes (if requested by user)
+# Ingest Changes into Vector DB
 python3 tools/cli.py ingest --incremental --hours 24
 ```
 
 ### 3. Session Close (Phase VIII)
-Formally end the session.
+Sync the immutable truth to Git and formally end the session.
 
 ```bash
+# Version Control
+git add .
+git commit -m "chore(memory): seal session state and persist traces"
+# git push # Wait for user approval as per Human Gate policy
+
 # End workflow
 python plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py end
 ```
