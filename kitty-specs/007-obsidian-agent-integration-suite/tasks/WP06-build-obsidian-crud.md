@@ -1,9 +1,14 @@
 ---
 work_package_id: WP06
 title: Build Obsidian Vault CRUD Skill
-lane: planned
+lane: "for_review"
 dependencies: []
+base_branch: main
+base_commit: 465d8e7f4bfa0673ecfdbc47b492271cbeeeae1e
+created_at: '2026-02-27T22:24:54.088132+00:00'
 subtasks: [T025, T026, T027, T028, T029]
+shell_pid: "55083"
+agent: "Antigravity"
 ---
 
 # Work Package Prompt: WP06 – Build Obsidian Vault CRUD Skill
@@ -37,3 +42,8 @@ subtasks: [T025, T026, T027, T028, T029]
 ### Subtask T029 – Lossless YAML Parsing
 - **Purpose**: Prevent breaking Dataview.
 - **Steps**: Ensure PyYAML is NOT used. Use `ruamel.yaml` to read/write the note frontmatter perfectly preserving comments, indentation, and array styles.
+
+## Activity Log
+
+- 2026-02-27T22:24:54Z – Antigravity – shell_pid=55083 – lane=doing – Assigned agent via workflow command
+- 2026-02-27T22:43:34Z – Antigravity – shell_pid=55083 – lane=for_review – CRUD skill complete with atomic writes, locking, mtime guard, ruamel.yaml. Added obsidian-init onboarding skill with prereq installation docs. Bundled research resources for portability.
