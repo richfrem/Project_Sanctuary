@@ -1,0 +1,57 @@
+graph TD
+    classDef human fill:#ffd54f,stroke:#333,stroke-width:2px;
+    classDef agent fill:#64b5f6,stroke:#333,stroke-width:2px;
+    classDef plugin fill:#81c784,stroke:#333,stroke-width:2px;
+    classDef vault fill:#e0e0e0,stroke:#333,stroke-width:2px;
+    classDef core fill:#ffb74d,stroke:#333,stroke-width:2px;
+
+    Agent["🤖 Agent (Guardian / Spec Kitty)"]:::agent
+    Human["👤 Human Steward"]:::human
+
+    subgraph "Sanctuary Plugin Ecosystem" 
+        Parser{"obsidian-parser\n(Syntax Gatekeeper)"}:::core
+
+        CRUD["obsidian-vault-crud\n(Atomic Disk I/O)"]:::plugin
+        Markdown["obsidian-markdown-mastery\n(Format Controller)"]:::plugin
+        Graph["obsidian-graph-traversal\n(In-Memory Indexer)"]:::plugin
+        Bases["obsidian-bases-manager\n(YAML Dashboards)"]:::plugin
+        Canvas["obsidian-canvas-architect\n(JSON Flowcharts)"]:::plugin
+        Export["forge-soul-exporter\n(HF Pipeline)"]:::plugin
+
+        CRUD -.->|Parses Frontmatter & Links| Parser
+        Graph -.->|Extracts Node Edges| Parser
+        Markdown -.->|Injects Proprietary Syntax| Parser
+        Export -.->|Identifies Binary Embeds| Parser
+    end
+
+    subgraph "Physical Obsidian Vault (Multi-Root Workspace)"
+        ObsidianApp(("Obsidian Desktop App\n(Active Client)")):::human
+        Files[("Markdown, .base, .canvas")]:::vault
+        LockFile>".agent-lock"]:::vault
+    end
+
+    HF[("Hugging Face Hub\n(soul_traces.jsonl)")]:::core
+
+    %% Human Usage
+    Human ===>|Interacts Natively| ObsidianApp
+    ObsidianApp -->|Background Auto-saves| Files
+
+    %% Agent Invocation
+    Agent ===>|Write/Update| CRUD
+    Agent ===>|Query Context| Graph
+    Agent ===>|Format Output| Markdown
+    Agent ===>|Update Matrix| Bases
+    Agent ===>|Map Visuals| Canvas
+    Agent ===>|Run Daily Sync| Export
+
+    %% I/O & Safety Protocols
+    CRUD ==>|1. Check/Create Advisory Lock| LockFile
+    CRUD -->|2. Abort if M-Time Drifted| Files
+    CRUD ==>|3. Atomic Write (os.rename .tmp)| Files
+
+    Bases -->|ruamel.yaml Lossless Append| Files
+    Canvas -->|JSON Canvas 1.0 Write| Files
+    Graph -->|High-speed Snapshot Read| Files
+
+    Export -->|Strict Snapshot Isolation Check| Files
+    Export ===>|Exponential Backoff Push| HF
