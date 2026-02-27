@@ -153,11 +153,11 @@
 **Prompt**: `/tasks/WP08-build-graph-traversal.md`
 
 ### Included Subtasks
-- [ ] T035 Scaffold `obsidian-graph-traversal` plugin directory.
-- [ ] T036 Integrate the `obsidian-parser` from WP05 to analyze edge links.
-- [ ] T037 Build an in-memory graph index cache to answer queries without full scans.
-- [ ] T038 Implement fast backlink and forward-link resolution methods.
-- [ ] T039 Execute verify tests proving sub-2 second query returns.
+- [x] T035 Scaffold `obsidian-graph-traversal` plugin directory.
+- [x] T036 Integrate the `obsidian-parser` from WP05 to analyze edge links.
+- [x] T037 Build an in-memory graph index cache to answer queries without full scans.
+- [x] T038 Implement fast backlink and forward-link resolution methods.
+- [x] T039 Execute verify tests proving sub-2 second query returns.
 
 ### Dependencies
 - WP05, WP06
