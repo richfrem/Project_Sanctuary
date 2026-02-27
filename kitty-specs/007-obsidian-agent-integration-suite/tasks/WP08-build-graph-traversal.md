@@ -1,9 +1,13 @@
 ---
 work_package_id: WP08
 title: Build Obsidian Graph Traversal Skill
-lane: planned
+lane: "doing"
 dependencies: []
+base_branch: main
+base_commit: 6cd6db93806a492d7c315ef22f06cbdf4b3d26be
+created_at: '2026-02-27T22:59:16.685984+00:00'
 subtasks: [T035, T036, T037, T038, T039]
+shell_pid: "55083"
 ---
 
 # Work Package Prompt: WP08 – Build Obsidian Graph Traversal Skill
