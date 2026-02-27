@@ -24,7 +24,9 @@ This addresses WP03 Subtasks T011, T012, and T013.
 ## Decision
 
 ### 1. Folder Mapping: The `source_file` Projection
-Obsidian allows arbitrary folder nesting (e.g., `Domain/Subdomain/Topic/Note.md`). We will **not** attempt to flatten this into rigid categories.
+**Architectural Clarification**: The Obsidian Vault is the *Single Source of Truth* for active content. The `soul_traces.jsonl` is a unidirectional *compile target* meant purely for Hugging Face LLM ingestion (as defined in ADR 081). The system will read notes *from* the Obsidian vault, format them into JSON strings, and append them to the `.jsonl` file. We are *not* maintaining two separate active databases.
+
+Obsidian allows arbitrary folder nesting (e.g., `Domain/Subdomain/Topic/Note.md`). We will **not** attempt to flatten this into rigid categories in the Vault.
 Instead, the entire relative path from the Obsidian Vault root will be projected directly into the `source_file` field of the `HF_JSONL` record.
 
 Example mapping:
