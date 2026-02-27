@@ -1,9 +1,14 @@
 ---
 work_package_id: WP05
 title: Build Obsidian Markdown Mastery Skill
-lane: planned
+lane: "for_review"
 dependencies: []
+base_branch: main
+base_commit: 0076d81527e4c8ac68076ac5fc46badb43271d1c
+created_at: '2026-02-27T22:06:53.251039+00:00'
 subtasks: [T020, T021, T022, T023, T024]
+shell_pid: "55083"
+agent: "Antigravity"
 ---
 
 # Work Package Prompt: WP05 – Build Obsidian Markdown Mastery Skill
@@ -40,3 +45,8 @@ subtasks: [T020, T021, T022, T023, T024]
 ### Subtask T024 – Write Verification Tests
 - **Purpose**: Prove resilience.
 - **Steps**: Expose the parser to strings containing complex links and callouts. Assert that the correct types (Embed vs Link) and metadata (Alias, Heading, Block) are accurately extracted.
+
+## Activity Log
+
+- 2026-02-27T22:06:54Z – Antigravity – shell_pid=55083 – lane=doing – Assigned agent via workflow command
+- 2026-02-27T22:15:31Z – Antigravity – shell_pid=55083 – lane=for_review – Completed parser implementation. Tests passing. Note: protocol-manager and chronicle-manager will need SANCTUARY_VAULT_PATH updates soon.
