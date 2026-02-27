@@ -1,9 +1,14 @@
 ---
 work_package_id: WP10
 title: Phase 1.5 Integration & Synthetic Edge-Case Testing
-lane: planned
+lane: "for_review"
 dependencies: []
+base_branch: main
+base_commit: da97dddc8356edf3ef0db1456c04c9dbfdc61a28
+created_at: '2026-02-27T23:18:47.371767+00:00'
 subtasks: [T046, T047, T048, T049, T050]
+shell_pid: "55083"
+agent: "Antigravity"
 ---
 
 # Work Package Prompt: WP10 – Phase 1.5 Integration & Synthetic Edge-Case Testing
@@ -41,3 +46,8 @@ subtasks: [T046, T047, T048, T049, T050]
 ### Subtask T050 – Analyze Code Coverage and Error Flags
 - **Purpose**: Confirm safety.
 - **Steps**: Collect coverage metrics. Resolve any failing tests. The plugin MUST achieve ~90% functional logic coverage before WP10 is signed off.
+
+## Activity Log
+
+- 2026-02-27T23:18:47Z – Antigravity – shell_pid=55083 – lane=doing – Assigned agent via workflow command
+- 2026-02-27T23:58:31Z – Antigravity – shell_pid=55083 – lane=for_review – Moved to for_review
