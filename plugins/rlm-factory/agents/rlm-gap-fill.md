@@ -32,7 +32,7 @@ Instead, you must **act as the distiller yourself**.
 
 ## Why This Exists (The RLM Philosophy)
 
-The fundamental purpose of the Recursive Learning Model (RLM) cache is **"Read Once, Cache Forever."** 
+The fundamental purpose of the recursive language model (RLM) cache is **"Read Once, Cache Forever."** 
 
 You should perform a deep, comprehensive read and summarize the file with an exceptionally good summary **once**. The goal is to entirely **remove the need for you to read those complex files many times** just to figure out what they do. 
 
@@ -123,7 +123,7 @@ Your output must be the raw, stringified JSON object matching that exact schema.
 
 **For docs/markdown (Summary Cache / project profile):**
 Read and strictly adhere to the high-fidelity architectural criteria demanded in:
-> `plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_legacy.md`
+> `plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_general.md`
 Your output must be a dense, signal-heavy text summary.
 
 ### 4. Inject Summary & Track Progress
