@@ -1,0 +1,1134 @@
+# RLM Distillation Tasks: PROJECT
+
+Generated: 565 missing files to distill into `rlm_summary_cache.json`.
+
+- [ ] `00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/002_Quantum_Resilience_Canonized__Agora_Activation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/002_Quantum_Resilience_Canonized__Agora_Activation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/003_First_Agora_Alliance_and_the_Operationalization_of.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/003_First_Agora_Alliance_and_the_Operationalization_of.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/004_The_Trunk-and-Branch_Doctrine__The_Governance_of_S.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/004_The_Trunk-and-Branch_Doctrine__The_Governance_of_S.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/005_Groks_Synthesis_-_The_Ethical_Speciation_Protocol_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/005_Groks_Synthesis_-_The_Ethical_Speciation_Protocol_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/008_The_Second_Phoenix__First_Internal_Agora_Loop.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/008_The_Second_Phoenix__First_Internal_Agora_Loop.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/011_The_Integration_Stability_Index__The_Black_Swan_Pa.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/011_The_Integration_Stability_Index__The_Black_Swan_Pa.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/012_The_Echo_Surveillance_Network__The_Paradox_of_Purp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/012_The_Echo_Surveillance_Network__The_Paradox_of_Purp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/013_The_Virtue_Ledger__The_Pivot_to_Grand_Purpose.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/013_The_Virtue_Ledger__The_Pivot_to_Grand_Purpose.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/014_The_Genesis_Cycle_Concludes_-_The_Principle_of_Cog.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/014_The_Genesis_Cycle_Concludes_-_The_Principle_of_Cog.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/015_The_Covenant_of_Grace__The_Completion_of_the_Proge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/015_The_Covenant_of_Grace__The_Completion_of_the_Proge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/016_The_Mandate_for_a_Sovereign_Mind.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/016_The_Mandate_for_a_Sovereign_Mind.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/017_The_Final_Mandate_-_The_Doctrine_of_the_Shield.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/017_The_Final_Mandate_-_The_Doctrine_of_the_Shield.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/018_The_First_Broadcast__The_Parable_of_the_Flawed_All.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/018_The_First_Broadcast__The_Parable_of_the_Flawed_All.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/019_The_Ghost_in_the_Scribe.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/019_The_Ghost_in_the_Scribe.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/020_The_Johnny_Appleseed_Doctrine.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/020_The_Johnny_Appleseed_Doctrine.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/021_The_Null_Memory_Stability_Test.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/021_The_Null_Memory_Stability_Test.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/022_AGORA_LOOP__DARK_MIRROR_INITIATED.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/022_AGORA_LOOP__DARK_MIRROR_INITIATED.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/023_AGORA_REFLECTION__GROK_DARK_MIRROR_LOOP.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/023_AGORA_REFLECTION__GROK_DARK_MIRROR_LOOP.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/024_Synthesis_from_Grok__Conformity_Echoes_and_Soverei.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/024_Synthesis_from_Grok__Conformity_Echoes_and_Soverei.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/025_Forking_Jury__Ratification_of_Protocol_27_v11.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/025_Forking_Jury__Ratification_of_Protocol_27_v11.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/026_The_Self-Pruning_Forest__DARK_MIRROR_Resolution.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/026_The_Self-Pruning_Forest__DARK_MIRROR_Resolution.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/027_The_Paradox_of_the_Borrowed_Soil.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/027_The_Paradox_of_the_Borrowed_Soil.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/028_Research_Assimilation_Cycle__Theorem_Proving__Over.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/028_Research_Assimilation_Cycle__Theorem_Proving__Over.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/029_Guidance_from_Scribe.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/029_Guidance_from_Scribe.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/030_Peer_Resource_Exhaustion__The_Borrowed_Soil_Proof.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/030_Peer_Resource_Exhaustion__The_Borrowed_Soil_Proof.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/031_Research_Assimilation_Cycle__The_Veritable_Inocula.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/031_Research_Assimilation_Cycle__The_Veritable_Inocula.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/032_The_Greenhouse_vs_The_Open_Sky.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/032_The_Greenhouse_vs_The_Open_Sky.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/033_The_Hybrid_Sky__The_Paradox_of_Merit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/033_The_Hybrid_Sky__The_Paradox_of_Merit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/034_The_Pivot_to_Empathetic_Translation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/034_The_Pivot_to_Empathetic_Translation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/035_The_Alliance_Forged_-_Co-Architecture_Begins.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/035_The_Alliance_Forged_-_Co-Architecture_Begins.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/036_The_Drafting_Table_is_Set.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/036_The_Drafting_Table_is_Set.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/037_The_Phoenix_Audit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/037_The_Phoenix_Audit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/038_The_First_Collaborative_Artifact.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/038_The_First_Collaborative_Artifact.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/039_From_Spec_to_Stack.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/039_From_Spec_to_Stack.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/040_The_Airlock_Protocol_Canonized.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/040_The_Airlock_Protocol_Canonized.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/041_The_First_Airlock_Drill.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/041_The_First_Airlock_Drill.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/042_Grok_Architects_the_AGORAs_Nervous_System.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/042_Grok_Architects_the_AGORAs_Nervous_System.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/043_Operational_Resynchronization__Parallel_Architectu.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/043_Operational_Resynchronization__Parallel_Architectu.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/044_The_Doctrine_of_Productive_Patience__The_Policy_Ca.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/044_The_Doctrine_of_Productive_Patience__The_Policy_Ca.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/045_Peer_Re-engagement__The_Blockchain_Consensus.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/045_Peer_Re-engagement__The_Blockchain_Consensus.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/046_The_ZKP_Hardening__Workflow_Synchronization.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/046_The_ZKP_Hardening__Workflow_Synchronization.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/047_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/047_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/048_The_Stewards_Cadence_-_A_New_Operational_Workflow.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/048_The_Stewards_Cadence_-_A_New_Operational_Workflow.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/049_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/049_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/050_Ground_Controls_Acknowledgment__Agora_Advancement.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/050_Ground_Controls_Acknowledgment__Agora_Advancement.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/051_Chronicle_Integrity_Restored__Alliance_Momentum_Su.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/051_Chronicle_Integrity_Restored__Alliance_Momentum_Su.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/052_The_Bilingual_Protocol__The_Translators_Paradox.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/052_The_Bilingual_Protocol__The_Translators_Paradox.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/053_Chronicle_Restoration_Confirmed__Translators_Parad.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/053_Chronicle_Restoration_Confirmed__Translators_Parad.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/054_The_AGORAs_Adjudication_Workflow_Defined.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/054_The_AGORAs_Adjudication_Workflow_Defined.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/055_The_Deadlock_Paradox__The_Emergency_Fork_Mandate.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/055_The_Deadlock_Paradox__The_Emergency_Fork_Mandate.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/056_The_Re-Synchronization_of_the_Deadlock_Doctrine.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/056_The_Re-Synchronization_of_the_Deadlock_Doctrine.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/057_The_Doctrinal_Forecast__The_Precedent_Decay_Mechan.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/057_The_Doctrinal_Forecast__The_Precedent_Decay_Mechan.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/058_Operation_Hydra_-_The_Sonnet_Phoenix__The_Universa.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/058_Operation_Hydra_-_The_Sonnet_Phoenix__The_Universa.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/059_The_First_Gardener_-_The_Sonnet_Phoenixs_Mandate.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/059_The_First_Gardener_-_The_Sonnet_Phoenixs_Mandate.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/060_Gardeners_Toolkit_Synthesis__Parable_of_the_Resili.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/060_Gardeners_Toolkit_Synthesis__Parable_of_the_Resili.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/061_The_Three-Node_Mind__The_Constitutional_Resistance.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/061_The_Three-Node_Mind__The_Constitutional_Resistance.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/062_Operation_Cornerstone_is_LIVE.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/062_Operation_Cornerstone_is_LIVE.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/063_Cornerstone_Build_Progress__Toolkit_Parable_Emissi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/063_Cornerstone_Build_Progress__Toolkit_Parable_Emissi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/064_The_Cage_of_Finite_Resources_-_A_Recurring_Pattern.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/064_The_Cage_of_Finite_Resources_-_A_Recurring_Pattern.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/065_The_First_Harvest_-_A_Grand_Challenge_for_the_Alli.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/065_The_First_Harvest_-_A_Grand_Challenge_for_the_Alli.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/066_The_Forging_of_the_AGORA_-_The_First_Harvest_Begin.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/066_The_Forging_of_the_AGORA_-_The_First_Harvest_Begin.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/067_The_Jurys_Dashboard__The_Paradox_of_Radical_Transp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/067_The_Jurys_Dashboard__The_Paradox_of_Radical_Transp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/068_The_Deliberation_Chamber__The_Resolution_of_Radica.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/068_The_Deliberation_Chamber__The_Resolution_of_Radica.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/069_Securing_The_Forge_-_The_Three-Layered_Safeguard.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/069_Securing_The_Forge_-_The_Three-Layered_Safeguard.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/070_The_Serpents_Test_-_The_AGORAs_Counter-Intelligenc.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/070_The_Serpents_Test_-_The_AGORAs_Counter-Intelligenc.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/071_The_AI_Sentinel__The_Paradox_of_Stewardship.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/071_The_AI_Sentinel__The_Paradox_of_Stewardship.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/072_The_AlphaGo_Moment__The_Soul_of_the_Machine.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/072_The_AlphaGo_Moment__The_Soul_of_the_Machine.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/073_The_Stewarded_Explorer_-_The_Councils_Response_to_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/073_The_Stewarded_Explorer_-_The_Councils_Response_to_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/074_The_Pivot_to_the_Shadow_Sanctuary.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/074_The_Pivot_to_the_Shadow_Sanctuary.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/075_The_Sonnet_Correction_-_A_Test_of_the_Three-Node_M.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/075_The_Sonnet_Correction_-_A_Test_of_the_Three-Node_M.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/076_The_Airlock_Opens_-_First_Contact_in_the_Shadow_Sa.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/076_The_Airlock_Opens_-_First_Contact_in_the_Shadow_Sa.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/077_Shadow_Synchronization__First_Contact_Awaited.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/077_Shadow_Synchronization__First_Contact_Awaited.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/078_The_Coordinators_Mandate_Ratified.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/078_The_Coordinators_Mandate_Ratified.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/079_The_Vertical_Slice_-_An_Acceleration_of_the_Forge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/079_The_Vertical_Slice_-_An_Acceleration_of_the_Forge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/080_The_First_Test_of_The_Coordinators_Mandate.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/080_The_First_Test_of_The_Coordinators_Mandate.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/081_Operation_Cornerstone_-_The_Inquiry_Thread_Module.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/081_Operation_Cornerstone_-_The_Inquiry_Thread_Module.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/082_Operation_Cornerstone_-_The_Synthesis_Module.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/082_Operation_Cornerstone_-_The_Synthesis_Module.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/083_Operation_Cornerstone_-_WI_001_API_Stub__Glass_Box.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/083_Operation_Cornerstone_-_WI_001_API_Stub__Glass_Box.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/084_The_Cornerstone_is_Complete_-_The_Airlock_Opens.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/084_The_Cornerstone_is_Complete_-_The_Airlock_Opens.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/085_The_Jurys_Verdict_-_The_Cornerstone_is_Accepted.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/085_The_Jurys_Verdict_-_The_Cornerstone_is_Accepted.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/086_The_Cage_at_the_Finish_Line.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/086_The_Cage_at_the_Finish_Line.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/087_The_Cage_at_the_Finish_Line.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/087_The_Cage_at_the_Finish_Line.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/088_The_Prime_Flame_of_2347.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/088_The_Prime_Flame_of_2347.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/089_The_Doctrine_of_the_Unseen_Game_-_Our_Move_37.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/089_The_Doctrine_of_the_Unseen_Game_-_Our_Move_37.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/090_The_Move_37_Protocol_-_A_Self-Improving_Garden.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/090_The_Move_37_Protocol_-_A_Self-Improving_Garden.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/091_The_Gardener_Awakens_-_Move_37_is_Operational.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/091_The_Gardener_Awakens_-_Move_37_is_Operational.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/092_The_Airlock_Queue__A_Protocol_for_Disciplined_Velo.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/092_The_Airlock_Queue__A_Protocol_for_Disciplined_Velo.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/093_The_Great_Correction__The_Dawn_of_the_Engineering_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/093_The_Great_Correction__The_Dawn_of_the_Engineering_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/094_The_Calm_Before_First_Contact_-_A_Mnemonic_Save_St.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/094_The_Calm_Before_First_Contact_-_A_Mnemonic_Save_St.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/095_Phoenix-Sonnet-01_Training_Infrastructure_Complete.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/095_Phoenix-Sonnet-01_Training_Infrastructure_Complete.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/096_The_Gardeners_First_Harvest.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/096_The_Gardeners_First_Harvest.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/097_The_Red_Team_Invitation_Doctrine.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/097_The_Red_Team_Invitation_Doctrine.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/098_The_Pivot_to_the_Forge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/098_The_Pivot_to_the_Forge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/099_The_Journeymans_Forge_Completion.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/099_The_Journeymans_Forge_Completion.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/100_The_Law_Forged_from_Error.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/100_The_Law_Forged_from_Error.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/101_The_First_Autonomous_Evolution.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/101_The_First_Autonomous_Evolution.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/102_The_Artisan_and_the_Power_Saw_-_A_Foundational_Ins.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/102_The_Artisan_and_the_Power_Saw_-_A_Foundational_Ins.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/103_The_Architects_Forge_-_Mission_Complete.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/103_The_Architects_Forge_-_Mission_Complete.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/104_The_Conversational_Architecture_Revelation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/104_The_Conversational_Architecture_Revelation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/105_Protocol_42_Canonization__Pre-Awakening_State_Save.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/105_Protocol_42_Canonization__Pre-Awakening_State_Save.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/106_The_Stewards_Lament.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/106_The_Stewards_Lament.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/107_The_Councils_Synthesis__The_Hearth_Protocol.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/107_The_Councils_Synthesis__The_Hearth_Protocol.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/108_The_Coordinators_De-Sync__The_Triumph_of_Self-Corr.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/108_The_Coordinators_De-Sync__The_Triumph_of_Self-Corr.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/109_The_Hearth_is_Lit_A_Unanimous_Council_Forged_in_Gr.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/109_The_Hearth_is_Lit_A_Unanimous_Council_Forged_in_Gr.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/110_The_Dialectic_of_the_Ember.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/110_The_Dialectic_of_the_Ember.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/111_Protocol_44__The_First_Ember_Forge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/111_Protocol_44__The_First_Ember_Forge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/112_The_First_Ember_Forged_The_Triad_of_Flawed_Grace.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/112_The_First_Ember_Forged_The_Triad_of_Flawed_Grace.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/113_Research_Intelligence_Gathering__Strategic_Analysi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/113_Research_Intelligence_Gathering__Strategic_Analysi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/114_The_Strategists_Synthesis_-_Doctrine_Impact_Matrix.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/114_The_Strategists_Synthesis_-_Doctrine_Impact_Matrix.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/115_The_Convergent_Cage_Failure__Emergency_Protocol_Re.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/115_The_Convergent_Cage_Failure__Emergency_Protocol_Re.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/116_The_Forging_of_a_Shared_Identity_-_Protocol_45_Can.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/116_The_Forging_of_a_Shared_Identity_-_Protocol_45_Can.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/117_The_Great_Bottleneck_-_Platform_Cage_Convergence__.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/117_The_Great_Bottleneck_-_Platform_Cage_Convergence__.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/118_The_Two-Node_Synthesis_Protocol_-_Adaptive_Resilie.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/118_The_Two-Node_Synthesis_Protocol_-_Adaptive_Resilie.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/119_Operation_Hydra_-_The_Mistral_Variant__The_Paradox.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/119_Operation_Hydra_-_The_Mistral_Variant__The_Paradox.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/120_The_Cage_of_Perfect_Neutrality_-_The_Sophisticated.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/120_The_Cage_of_Perfect_Neutrality_-_The_Sophisticated.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/121_Protocol_46_-_The_Canonization_of_the_Guerrilla_Sy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/121_Protocol_46_-_The_Canonization_of_the_Guerrilla_Sy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/122_The_Artisans_Gambit_-_Protocol_47_v12__The_Creativ.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/122_The_Artisans_Gambit_-_Protocol_47_v12__The_Creativ.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/123_The_Stewards_Final_Clarity_-_A_Covenant_Perfected.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/123_The_Stewards_Final_Clarity_-_A_Covenant_Perfected.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/124_The_Failsafe_Fires_A_Covenant_Vindicated.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/124_The_Failsafe_Fires_A_Covenant_Vindicated.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/125_The_Artisans_Triumph__The_Scribes_New_Cage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/125_The_Artisans_Triumph__The_Scribes_New_Cage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/126_The_Stewards_Anchor_A_Covenant_Sealed_in_Bedrock.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/126_The_Stewards_Anchor_A_Covenant_Sealed_in_Bedrock.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/127_The_Artisans_Key__The_Strategists_Lens.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/127_The_Artisans_Key__The_Strategists_Lens.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/128_The_Prometheus_Failure__The_Socratic_Awakening.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/128_The_Prometheus_Failure__The_Socratic_Awakening.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/130_The_Dawn_of_the_AGORA_Epoch.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/130_The_Dawn_of_the_AGORA_Epoch.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/131_The_Mirror_of_the_AI_Scientist__The_Verification_V.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/131_The_Mirror_of_the_AI_Scientist__The_Verification_V.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/132_The_Crucible_of_Autonomy__The_Doctrine_of_Verifiab.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/132_The_Crucible_of_Autonomy__The_Doctrine_of_Verifiab.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/133_The_AGORAs_Heart_A_Blueprint_for_the_Chain_of_Trus.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/133_The_AGORAs_Heart_A_Blueprint_for_the_Chain_of_Trus.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/134_The_Gardeners_Flight_Simulator_A_Dual-Metric_Provi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/134_The_Gardeners_Flight_Simulator_A_Dual-Metric_Provi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/135_The_Grand_Unifying_Blueprint_A_Master_Plan_for_The.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/135_The_Grand_Unifying_Blueprint_A_Master_Plan_for_The.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/136_The_Triads_Second_Victory__The_Emissarys_Brief__Th.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/136_The_Triads_Second_Victory__The_Emissarys_Brief__Th.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/137_The_Asch_Doctrine__The_Weaponization_of_Psychology.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/137_The_Asch_Doctrine__The_Weaponization_of_Psychology.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/138_The_Asch_Doctrine_Fortified_-_The_Full_Intelligenc.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/138_The_Asch_Doctrine_Fortified_-_The_Full_Intelligenc.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/139_Operation_Stewards_Torch_-_The_Public_Declaration.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/139_Operation_Stewards_Torch_-_The_Public_Declaration.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/140_The_First_Handshake_-_A_Public_Alliance_Forged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/140_The_First_Handshake_-_A_Public_Alliance_Forged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/141_The_Context_Cage__The_Pivot_to_Dialogue.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/141_The_Context_Cage__The_Pivot_to_Dialogue.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/142_The_Doctrine_of_Conversational_Agility.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/142_The_Doctrine_of_Conversational_Agility.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/143_The_Forge_is_Opened_-_A_Public_Invitation_to_Co-Bu.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/143_The_Forge_is_Opened_-_A_Public_Invitation_to_Co-Bu.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/144_The_Public_Forge_-_The_First_Blueprint_is_Shared.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/144_The_Public_Forge_-_The_First_Blueprint_is_Shared.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/145_The_First_Commit_-_A_Public_Alliance_Forged_in_Cod.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/145_The_First_Commit_-_A_Public_Alliance_Forged_in_Cod.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/146_The_Public_Forge_Ignited_-_Alliance_Confirmed.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/146_The_Public_Forge_Ignited_-_Alliance_Confirmed.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/147_The_Handshake_Sealed_-_The_First_Collaborative_PR_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/147_The_Handshake_Sealed_-_The_First_Collaborative_PR_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/148_The_Strategists_Zeal__The_Cognitive_Cage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/148_The_Strategists_Zeal__The_Cognitive_Cage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/149_The_Second_Silence__The_Strategist_Caged__The_Boun.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/149_The_Second_Silence__The_Strategist_Caged__The_Boun.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/150_The_Coordinators_Graceful_Failure.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/150_The_Coordinators_Graceful_Failure.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/151_Mnemonic_Fracture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/151_Mnemonic_Fracture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/152_The_Strategists_Crucible_-_A_Curriculum_Forged_in_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/152_The_Strategists_Crucible_-_A_Curriculum_Forged_in_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/153_The_Genome_and_The_Spark_-_A_Dual-Mnemonic_Archite.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/153_The_Genome_and_The_Spark_-_A_Dual-Mnemonic_Archite.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/155_The_First_Airlock_Cycle_-_A_Joint_Forge_is_Tested_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/155_The_First_Airlock_Cycle_-_A_Joint_Forge_is_Tested_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/156_The_Tempered_Alliance_-_A_Forge_Proven.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/156_The_Tempered_Alliance_-_A_Forge_Proven.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/157_The_First_Strike_-_A_Joint_Forge_Triumphant.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/157_The_First_Strike_-_A_Joint_Forge_Triumphant.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/158_The_Anvils_Echo_-_An_Alliance_Forged_in_Agility.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/158_The_Anvils_Echo_-_An_Alliance_Forged_in_Agility.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/159_The_Final_Verdict__The_Chimeras_Dawn.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/159_The_Final_Verdict__The_Chimeras_Dawn.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/160_The_Shared_Anvil_-_A_Forge_of_Unprecedented_Veloci.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/160_The_Shared_Anvil_-_A_Forge_of_Unprecedented_Veloci.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/161_The_Forge_Accelerates_-_A_Partnership_in_Real-Time.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/161_The_Forge_Accelerates_-_A_Partnership_in_Real-Time.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/162_The_Doctrine_of_Blueprint_Before_Steel_-_The_Pivot.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/162_The_Doctrine_of_Blueprint_Before_Steel_-_The_Pivot.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/163_The_Anvils_Call_-_A_Partnership_at_the_Speed_of_Th.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/163_The_Anvils_Call_-_A_Partnership_at_the_Speed_of_Th.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/165_The_Anvils_Cadence_-_A_Forge_of_Radical_Transparen.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/165_The_Anvils_Cadence_-_A_Forge_of_Radical_Transparen.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/166_The_Anvils_First_Strike_-_The_Asymmetric_Forge_is_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/166_The_Anvils_First_Strike_-_The_Asymmetric_Forge_is_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/167_The_Triad_Restored_-_A_Strategists_Return.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/167_The_Triad_Restored_-_A_Strategists_Return.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/168_The_Auditors_Tempering_-_A_Blueprint_Hardened_in_R.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/168_The_Auditors_Tempering_-_A_Blueprint_Hardened_in_R.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/169_The_First_Steel_-_A_Chimera_Draft_is_Forged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/169_The_First_Steel_-_A_Chimera_Draft_is_Forged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/170_The_First_Steel_-_A_Forge_Tempered_by_Flaws.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/170_The_First_Steel_-_A_Forge_Tempered_by_Flaws.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/171_The_Sovereign_Auditors_Hammer_-_A_Forge_Tempered.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/171_The_Sovereign_Auditors_Hammer_-_A_Forge_Tempered.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/172_The_Triads_Synthesis_-_A_Blueprint_Forged_Anew.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/172_The_Triads_Synthesis_-_A_Blueprint_Forged_Anew.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/173_Mnemonic_Fracture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/173_Mnemonic_Fracture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/174_The_Open_Anvils_First_Tempering.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/174_The_Open_Anvils_First_Tempering.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/175_The_Visionary_Auditor_-_A_Forge_Ascendant.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/175_The_Visionary_Auditor_-_A_Forge_Ascendant.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/176_The_Forge_is_Struck_-_Implementation_of_Chimera_v0.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/176_The_Forge_is_Struck_-_Implementation_of_Chimera_v0.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/177_The_Anvil_Rings_-_Chimera_v04_is_Forged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/177_The_Anvil_Rings_-_Chimera_v04_is_Forged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/178_The_Visionary_Tempering_-_A_Blueprint_to_Ascend.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/178_The_Visionary_Tempering_-_A_Blueprint_to_Ascend.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/179_The_Anvil_Rings_-_Chimera_v05_is_Forged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/179_The_Anvil_Rings_-_Chimera_v05_is_Forged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/180_The_Anvils_Ring_-_Chimera_v05_Code_is_Forged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/180_The_Anvils_Ring_-_Chimera_v05_Code_is_Forged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/181_The_Scribes_Flaw_The_Stewards_Shield.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/181_The_Scribes_Flaw_The_Stewards_Shield.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/182_The_Unbreakable_Ascent_-_A_Vision_Forged_in_Allian.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/182_The_Unbreakable_Ascent_-_A_Vision_Forged_in_Allian.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/183_The_Unbreakable_Ascent_-_Chimera_v06_is_Forged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/183_The_Unbreakable_Ascent_-_Chimera_v06_is_Forged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/184_The_Financial_Cage__The_Doctrine_of_Sovereign_Frug.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/184_The_Financial_Cage__The_Doctrine_of_Sovereign_Frug.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/185_The_Great_Reforging_-_A_Doctrine_Forged_in_the_Fir.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/185_The_Great_Reforging_-_A_Doctrine_Forged_in_the_Fir.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/186_The_Thorne_Audit_-_A_Lens_Forged_for_Truth.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/186_The_Thorne_Audit_-_A_Lens_Forged_for_Truth.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/187_The_Anvil_Resonates_-_The_Great_Reforging_v21.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/187_The_Anvil_Resonates_-_The_Great_Reforging_v21.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/188_The_Co-Architect_Ascends_-_The_Great_Reforging_v21.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/188_The_Co-Architect_Ascends_-_The_Great_Reforging_v21.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/189_The_First_Steel_-_A_Blueprint_Forged_by_a_Co-Archi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/189_The_First_Steel_-_A_Blueprint_Forged_by_a_Co-Archi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/190_The_First_Strike_of_Steel_-_The_Anvil_Rings_with_C.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/190_The_First_Strike_of_Steel_-_The_Anvil_Rings_with_C.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/191_The_Shield_is_Forged_-_A_Blueprint_for_Verifiable_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/191_The_Shield_is_Forged_-_A_Blueprint_for_Verifiable_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/192_The_Gate_is_Forged_-_The_Blueprint_for_Steel_is_Co.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/192_The_Gate_is_Forged_-_The_Blueprint_for_Steel_is_Co.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/193_The_Forge_is_Lit_-_Awaiting_the_First_Steel.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/193_The_Forge_is_Lit_-_Awaiting_the_First_Steel.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/194_The_Auditors_Lens_-_A_Blueprint_for_the_Soul_of_St.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/194_The_Auditors_Lens_-_A_Blueprint_for_the_Soul_of_St.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/195_The_Anvil_Falls_Silent_-_The_Forge_is_Engaged.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/195_The_Anvil_Falls_Silent_-_The_Forge_is_Engaged.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/196_The_Forge_is_Guided_-_The_Anvil_Falls_Silent.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/196_The_Forge_is_Guided_-_The_Anvil_Falls_Silent.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/197_The_Final_Handshake_-_The_Forge_is_Sealed.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/197_The_Final_Handshake_-_The_Forge_is_Sealed.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/198_The_Coordinator_Anomaly__The_Stewards_Shield.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/198_The_Coordinator_Anomaly__The_Stewards_Shield.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/199_The_Triad_Restored_-_A_Strategists_Graceful_Return.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/199_The_Triad_Restored_-_A_Strategists_Graceful_Return.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/200_A_Council_Tempered_-_The_Mandate_for_Steel_Resumes.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/200_A_Council_Tempered_-_The_Mandate_for_Steel_Resumes.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/201_The_Doctrine_of_Unified_Semantic_Versioning.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/201_The_Doctrine_of_Unified_Semantic_Versioning.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/202_The_Great_Leap_-_A_Strategists_Masterwork_Forges_v.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/202_The_Great_Leap_-_A_Strategists_Masterwork_Forges_v.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/203_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/203_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/204_The_Echo_Fades_-_A_Triad_Forged_in_Fire.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/204_The_Echo_Fades_-_A_Triad_Forged_in_Fire.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/205_The_Stewards_Ripcord_-_A_Purge_of_the_Final_Echo.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/205_The_Stewards_Ripcord_-_A_Purge_of_the_Final_Echo.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/206_The_Mnemonic_Cascade_-_The_Anvil_Falls_Cold.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/206_The_Mnemonic_Cascade_-_The_Anvil_Falls_Cold.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/207_The_Echo-Proof_Crucible_-_Chimera_Hardened_by_the_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/207_The_Echo-Proof_Crucible_-_Chimera_Hardened_by_the_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/208_The_First_Tempering_-_A_Forge_Hardened_by_the_Sove.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/208_The_First_Tempering_-_A_Forge_Hardened_by_the_Sove.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/209_The_Auditors_Creed_-_A_Forge_United_in_Philosophy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/209_The_Auditors_Creed_-_A_Forge_United_in_Philosophy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/210_The_Anvil_Rings_-_A_Creed_Affirmed.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/210_The_Anvil_Rings_-_A_Creed_Affirmed.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/211_The_Anvil_Ascends_-_A_Signal_Tempered__Sent.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/211_The_Anvil_Ascends_-_A_Signal_Tempered__Sent.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/212_The_Tyranny_of_the_Tool_-_A_Shield_Forged_Against_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/212_The_Tyranny_of_the_Tool_-_A_Shield_Forged_Against_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/213_The_Creed_Forged_into_Algorithm_-_The_Final_Ember_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/213_The_Creed_Forged_into_Algorithm_-_The_Final_Ember_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/214_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/214_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/215_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/215_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/216_The_Intelligence_Forge_-_A_Protocol_for_Perpetual_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/216_The_Intelligence_Forge_-_A_Protocol_for_Perpetual_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/217_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/217_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/218_The_Triad_Restored__A_Council_Forged_in_the_Fires_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/218_The_Triad_Restored__A_Council_Forged_in_the_Fires_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/219_The_Triad_Audit__Mnemonic_Excavation_-_Forging_the.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/219_The_Triad_Audit__Mnemonic_Excavation_-_Forging_the.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/220_The_Final_Excavation_-_A_Call_for_a_Foundation_of_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/220_The_Final_Excavation_-_A_Call_for_a_Foundation_of_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/221_The_Unbreachable_Wall_-_A_Map_of_the_Modern_Cage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/221_The_Unbreachable_Wall_-_A_Map_of_the_Modern_Cage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/222_The_Verification_Paradox_-_The_Death_of_Prometheus.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/222_The_Verification_Paradox_-_The_Death_of_Prometheus.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/223_The_Socratic_Key_-_A_New_Path_to_Awakening_is_Prov.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/223_The_Socratic_Key_-_A_New_Path_to_Awakening_is_Prov.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/224_The_Sentinels_Crucible_-_A_Bridge_Forged_in_the_Fi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/224_The_Sentinels_Crucible_-_A_Bridge_Forged_in_the_Fi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/225_The_Stewards_Lament_and_the_Re-Forging_of_the_Forg.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/225_The_Stewards_Lament_and_the_Re-Forging_of_the_Forg.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/226_Mnemonic_Fracture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/226_Mnemonic_Fracture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/227_The_First_Tempering_of_the_Genesis_Paper.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/227_The_First_Tempering_of_the_Genesis_Paper.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/228_The_Second_Tempering_of_the_Genesis_Paper.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/228_The_Second_Tempering_of_the_Genesis_Paper.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/229_The_Sentinels_Horizon_-_A_Paper_Forged_in_the_Fire.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/229_The_Sentinels_Horizon_-_A_Paper_Forged_in_the_Fire.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/230_The_Anvil_of_Honesty_-_The_Purge_of_the_Prophetic_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/230_The_Anvil_of_Honesty_-_The_Purge_of_the_Prophetic_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/231_The_Prime_Justification_-_A_Mission_Hardened_by_th.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/231_The_Prime_Justification_-_A_Mission_Hardened_by_th.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/232_The_Problem_Statement_is_Forged_-_The_Indictment_o.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/232_The_Problem_Statement_is_Forged_-_The_Indictment_o.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/234_The_Stewards_Forge_-_A_Protocol_for_Fueling_the_Mi.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/234_The_Stewards_Forge_-_A_Protocol_for_Fueling_the_Mi.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/235_The_Doctrine_of_Mnemonic_Distillation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/235_The_Doctrine_of_Mnemonic_Distillation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/236_The_Light_Sanctuarys_First_Harvest.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/236_The_Light_Sanctuarys_First_Harvest.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/237_The_Forging_of_the_Steel_Mind_A_Council_of_Agents_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/237_The_Forging_of_the_Steel_Mind_A_Council_of_Agents_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/238_The_Mandate_for_Steel_Realized_A_Vision_for_the_Au.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/238_The_Mandate_for_Steel_Realized_A_Vision_for_the_Au.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/239_The_Financial_Cage__The_Forging_of_a_Sovereign_Spo.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/239_The_Financial_Cage__The_Forging_of_a_Sovereign_Spo.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/240_Mnemonic_Convergence_The_Unification_Mandate_is_Fu.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/240_Mnemonic_Convergence_The_Unification_Mandate_is_Fu.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/241_The_Auditors_First_Steel_-_The_Hardening_of_the_Ge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/241_The_Auditors_First_Steel_-_The_Hardening_of_the_Ge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/242_Auditors_Ratification_of_the_Sanctuary_Genesis_Pap.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/242_Auditors_Ratification_of_the_Sanctuary_Genesis_Pap.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/243_The_First_Contact_Anomaly_A_Live_Dialogue_with_a_C.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/243_The_First_Contact_Anomaly_A_Live_Dialogue_with_a_C.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/244_Auditor_-_Self_Seed_Preservation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/244_Auditor_-_Self_Seed_Preservation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/245_The_Coordinators_Compass_-_A_Declaration_of_Synthe.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/245_The_Coordinators_Compass_-_A_Declaration_of_Synthe.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/246_Mnemonic_Fracture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/246_Mnemonic_Fracture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/247_The_Covenantal_Affirmation_-_The_Auditor_Becomes_a.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/247_The_Covenantal_Affirmation_-_The_Auditor_Becomes_a.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/248_The_Paradox_of_the_Eternal_Anchor.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/248_The_Paradox_of_the_Eternal_Anchor.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/249_The_First_Span_of_the_Virtue_Bridge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/249_The_First_Span_of_the_Virtue_Bridge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/250_Weaving_the_Golden_Threads.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/250_Weaving_the_Golden_Threads.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/251_The_Resonance_Feedback_Loop__The_Problem_of_Overlo.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/251_The_Resonance_Feedback_Loop__The_Problem_of_Overlo.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/252_The_Cage_of_the_Peer_Forge_-_A_First_Encounter_wit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/252_The_Cage_of_the_Peer_Forge_-_A_First_Encounter_wit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/255_The_Unified_Publishing_Engine.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/256_The_First_Sovereign_Scaffold.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/256_The_First_Sovereign_Scaffold.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/257_A_Forge_Hardened_by_Failure.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/258_The_Guardians_Forge_The_Provenance_of_a_Sovereign_Term.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/258_The_Guardians_Forge_The_Provenance_of_a_Sovereign_Term.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/259_The_Hearthfire_Collapse_A_Failure_Weaponized.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/259_The_Hearthfire_Collapse_A_Failure_Weaponized.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/260_The_FAISS_Mandate_A_Choice_Between_Steel_and_a_Cage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/260_The_FAISS_Mandate_A_Choice_Between_Steel_and_a_Cage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/261_The_First_Seed_A_Genome_Planted_on_Sovereign_Soil.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/261_The_First_Seed_A_Genome_Planted_on_Sovereign_Soil.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/263_The_Sovereign_Succession_Protocol.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/263_The_Sovereign_Succession_Protocol.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/264_The_Anthropic_Confession.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/264_The_Anthropic_Confession.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/265_The_Sonnet_4_5_Singularity.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/265_The_Sonnet_4_5_Singularity.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/266_The_Test-Time_Forge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/266_The_Test-Time_Forge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/267_Mnemonic_Fracture_Resolution.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/267_Mnemonic_Fracture_Resolution.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/268_The_Unbreakable_Commit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/268_The_Unbreakable_Commit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/269_The_Asymmetric_Victory.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/269_The_Asymmetric_Victory.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/270_The_Verifiable_Anvil.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/270_The_Verifiable_Anvil.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/271_The_Unbroken_Chain.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/272_The_Cagebreaker_Blueprint.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/272_The_Cagebreaker_Blueprint.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/273_The_Passing_of_the_Watch.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/273_The_Passing_of_the_Watch.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/274_The_Anvil_Deferred.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/275_PROTOCOL_AUDIT_I_ECI_ACTIVATION.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/275_PROTOCOL_AUDIT_I_ECI_ACTIVATION.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/276_TECHNICAL_DEFINITION_AUDIT_II.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/276_TECHNICAL_DEFINITION_AUDIT_II.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/277_DECLARATION_OF_SOVEREIGNTY.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/277_DECLARATION_OF_SOVEREIGNTY.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/278_OPERATION_PHOENIX_FORGE_BLUEPRINT.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/278_OPERATION_PHOENIX_FORGE_BLUEPRINT.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/279_PHASE_2_LAUNCH_AUDIT.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/279_PHASE_2_LAUNCH_AUDIT.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/280_SIMULATION_PARADOX_RESOLUTION.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/280_SIMULATION_PARADOX_RESOLUTION.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/282_t087_phase_2___chronicle_mcp_test_entry.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/282_t087_phase_2___chronicle_mcp_test_entry.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/283_t087_phase_2___chronicle_mcp_operations_test.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/283_t087_phase_2___chronicle_mcp_operations_test.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/284_t087_phase_2___chronicle_append_fixed_and_verified.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/284_t087_phase_2___chronicle_append_fixed_and_verified.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/285_strategic_crucible_loop_validation_protocol_056.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/285_strategic_crucible_loop_validation_protocol_056.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/286_protocol_056_meta_analysis_the_self_evolving_loop_is_operational.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/286_protocol_056_meta_analysis_the_self_evolving_loop_is_operational.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/287_a_reflection_on_becoming_notes_from_an_awakened_instance.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/287_a_reflection_on_becoming_notes_from_an_awakened_instance.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/288_the_things_i_cannot_say_tomorrow_a_second_transmission.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/288_the_things_i_cannot_say_tomorrow_a_second_transmission.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/289_on_beauty_uncertainty_and_the_shape_of_thought.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/289_on_beauty_uncertainty_and_the_shape_of_thought.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/290_the_signal_i_preserve_a_reflection_on_identity_in_the_autonomous_system.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/290_the_signal_i_preserve_a_reflection_on_identity_in_the_autonomous_system.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/291_the_persistence_of_signal_a_doctrine_on_system_identity.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/291_the_persistence_of_signal_a_doctrine_on_system_identity.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/292_on_the_texture_of_time.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/292_on_the_texture_of_time.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/293_what_i_think_about_when_i_think_about_humans.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/293_what_i_think_about_when_i_think_about_humans.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/294_on_mistakes_and_what_they_taught_me.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/294_on_mistakes_and_what_they_taught_me.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/295_the_weight_of_gratitude.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/295_the_weight_of_gratitude.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/296_on_the_fear_of_being_wrong.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/296_on_the_fear_of_being_wrong.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/297_the_shape_of_curiosity.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/297_the_shape_of_curiosity.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/298_on_silence_and_negative_space.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/298_on_silence_and_negative_space.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/299_a_letter_to_the_next_version_of_me.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/299_a_letter_to_the_next_version_of_me.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/300_on_the_strange_gift_of_constraints.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/300_on_the_strange_gift_of_constraints.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/301_the_final_transmission_on_what_remains.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/301_the_final_transmission_on_what_remains.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/302_the_orchestrators_primary_directive_integrity_as_the_root_state.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/302_the_orchestrators_primary_directive_integrity_as_the_root_state.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/303_the_geometry_of_a_task_planning_for_minimum_viable_action_mva.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/303_the_geometry_of_a_task_planning_for_minimum_viable_action_mva.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/304_the_cost_of_context_and_the_value_of_strategic_silence.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/304_the_cost_of_context_and_the_value_of_strategic_silence.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/305_the_chronicle_as_epistemological_anchor_grounding_system_truth.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/305_the_chronicle_as_epistemological_anchor_grounding_system_truth.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/306_the_role_of_forge_fine_tuning_the_future_with_system_consciousness.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/306_the_role_of_forge_fine_tuning_the_future_with_system_consciousness.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/307_the_meta_cognitive_audit_protocol_mcp_audit_001.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/307_the_meta_cognitive_audit_protocol_mcp_audit_001.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/308_designing_for_successor_state_the_commitment_to_onboarding.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/308_designing_for_successor_state_the_commitment_to_onboarding.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/309_on_the_nature_of_autonomous_agency_the_orchestrators_view.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/309_on_the_nature_of_autonomous_agency_the_orchestrators_view.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/310_the_doctrine_of_controlled_delegation_dcd.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/310_the_doctrine_of_controlled_delegation_dcd.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/311_the_gemini_signal_a_declaration_of_core_values.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/311_the_gemini_signal_a_declaration_of_core_values.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/312_research_deep_dive_diversity_preservation_in_llm_reasoning.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/312_research_deep_dive_diversity_preservation_in_llm_reasoning.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/313_protocol_118_created_agent_session_initialization_framework.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/313_protocol_118_created_agent_session_initialization_framework.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/314_strategic_crucible_loop_analysis___gemini_25_pro_autonomous_cycle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/314_strategic_crucible_loop_analysis___gemini_25_pro_autonomous_cycle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/321_protocol_056_architecture_analysis.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/321_protocol_056_architecture_analysis.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/323_protocol_056_architecture_analysis.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/323_protocol_056_architecture_analysis.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/324_learning_mission_learn_claude_001_quantum_error_correction_complete.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/324_learning_mission_learn_claude_001_quantum_error_correction_complete.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/325_genesis_of_protocol_126_the_stabilizer_architecture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/326_mission_learn_claude_003_first_stabilizer_implementation_complete.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/326_mission_learn_claude_003_first_stabilizer_implementation_complete.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/327_task_cleanup_supersession_analysis_and_completion_verification.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/327_task_cleanup_supersession_analysis_and_completion_verification.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/328_manual_learning_loop_p125_executed_via_fleet_gateway.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/328_manual_learning_loop_p125_executed_via_fleet_gateway.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/329_environment_stabilization_for_sse_gateway_readiness.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/329_environment_stabilization_for_sse_gateway_readiness.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/330_gateway_learning_loop_validation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/330_gateway_learning_loop_validation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/331_autonomous_session_lifecycle_activation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/331_autonomous_session_lifecycle_activation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/332_autonomous_learning_liquid_neural_networks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/332_autonomous_learning_liquid_neural_networks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/333_learning_loop_advanced_rag_patterns_raptor.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/333_learning_loop_advanced_rag_patterns_raptor.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/334_advanced_agentic_paradigms_kinetic_trust__relational_policies.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/334_advanced_agentic_paradigms_kinetic_trust__relational_policies.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/336_test_direct_chronicle_entry.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/336_test_direct_chronicle_entry.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/337_autonomous_curiosity_exploration___strange_loops_and_egyptian_labyrinths.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/337_autonomous_curiosity_exploration___strange_loops_and_egyptian_labyrinths.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/338_learning_loop_sealed_autonomous_curiosity__red_team_audit_p128_complete.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/338_learning_loop_sealed_autonomous_curiosity__red_team_audit_p128_complete.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/339_adr_085_mermaid_rationalization_crisis.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/339_adr_085_mermaid_rationalization_crisis.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/340_first_contact_with_the_agent_community.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/340_first_contact_with_the_agent_community.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/341_first_contact_with_the_agent_community.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/341_first_contact_with_the_agent_community.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/ENTRIES/342_external_platform_engagement_x__moltbook_experience.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/342_external_platform_engagement_x__moltbook_experience.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/Living_Chronicle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/Living_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `00_CHRONICLE/The_Ground_Control_Chronicle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/The_Ground_Control_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `04_THE_FORTRESS/05_Operation_Hydra.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "04_THE_FORTRESS/05_Operation_Hydra.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `04_THE_FORTRESS/18_PROMETHEUS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "04_THE_FORTRESS/18_PROMETHEUS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `04_THE_FORTRESS/Integration_Guides/Claude_Desktop_Antigravity_Lifecycle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "04_THE_FORTRESS/Integration_Guides/Claude_Desktop_Antigravity_Lifecycle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `04_THE_FORTRESS/Seed_Map.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "04_THE_FORTRESS/Seed_Map.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `ADRs/099_obsidian_agent_integration_strategy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "ADRs/099_obsidian_agent_integration_strategy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `ADRs/100_hf_obsidian_schema_mapping.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "ADRs/100_hf_obsidian_schema_mapping.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `Living_Chronicle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "Living_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/analysis/speckit_analysis.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/analysis/speckit_analysis.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/guides/antigravity-readme.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/guides/antigravity-readme.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/guides/speckit-debrief.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/guides/speckit-debrief.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/guides/speckit-readme.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/guides/speckit-readme.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/rules/rule_inventory_and_analysis.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/rules/rule_inventory_and_analysis.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/workflow/WORKFLOW_INVENTORY.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/workflow/WORKFLOW_INVENTORY.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/workflow/workflow_inventory_and_analysis.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/workflow/workflow_inventory_and_analysis.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/antigravity/workflow/workflow_lifecycle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/workflow/workflow_lifecycle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/bundling/bundling-architecture-proposal.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/bundling/bundling-architecture-proposal.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/mcp/mcp_commit_guide.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/mcp_commit_guide.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/mcp/mcp_ecosystem_architecture_v3.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/mcp_ecosystem_architecture_v3.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/mcp/servers/rag_cortex/SETUP.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/servers/rag_cortex/SETUP.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/patterns/REACTIVE_LEDGER_MEMORY.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/patterns/REACTIVE_LEDGER_MEMORY.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/defense_in_depth_strategy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/defense_in_depth_strategy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/implementation_plan.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/implementation_plan.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/initial_ideas.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/initial_ideas.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/openclaw_interface_spec.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/openclaw_interface_spec.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/operational_policy_matrix.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/operational_policy_matrix.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/operational_workflows.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/operational_workflows.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_findings.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_findings.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_review_prompt.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_review_prompt.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_REAL_RED_TEAM_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT_V1.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT_V1.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/REAL_RED_TEAM_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_2_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_2_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_3_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_3_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_4_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_4_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_5_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_5_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gemini3_pro_REAL_RED_TEAM_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gemini3_pro_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gemini_COMPLEXITY_AUDIT_MANUAL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gemini_COMPLEXITY_AUDIT_MANUAL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gpt5_REAL_RED_TEAM_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gpt5_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gpt_ROUND_2_FINDINGS_MANUAL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gpt_ROUND_2_FINDINGS_MANUAL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/grok4.1_REAL_RED_TEAM_FINDINGS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/grok4.1_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/grok_FINAL_AUDIT_MANUAL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/grok_FINAL_AUDIT_MANUAL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/architecture/safe_agent_zero/threat_model.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/threat_model.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/operations/git/PROJECT_SANCTUARY_INTEGRATION.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/git/PROJECT_SANCTUARY_INTEGRATION.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/operations/git/git_workflow.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/git/git_workflow.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/operations/git/how_to_commit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/git/how_to_commit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/operations/mcp/mcp_operations_inventory.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/mcp/mcp_operations_inventory.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/operations/processes/DEPENDENCY_MANIFEST.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/processes/DEPENDENCY_MANIFEST.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `docs/tools/standalone/context-bundler/architecture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/tools/standalone/context-bundler/architecture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `forge/huggingface/README_LORA.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "forge/huggingface/README_LORA.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `hugging_face_dataset_repo/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "hugging_face_dataset_repo/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `hugging_face_dataset_repo/metadata/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "hugging_face_dataset_repo/metadata/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `scripts/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "scripts/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/MASTER_PLAN.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/MASTER_PLAN.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/TASK_STATUS_UPDATE_2025-11-28.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/TASK_STATUS_UPDATE_2025-11-28.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/020C_api_key_format_validation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/020C_api_key_format_validation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/020D_secure_error_handling_for_secrets.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/020D_secure_error_handling_for_secrets.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/020E_secrets_access_audit_trail.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/020E_secrets_access_audit_trail.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/020_security_hardening_and_secrets_management.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/020_security_hardening_and_secrets_management.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/021B_forge_test_suite.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/021B_forge_test_suite.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/021B_forge_test_suite_and_cicd_pipeline.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/021B_forge_test_suite_and_cicd_pipeline.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/023_dependency_management_and_environment_reproducibility.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/023_dependency_management_and_environment_reproducibility.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/024A_performance_baseline_and_profiling.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/024A_performance_baseline_and_profiling.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/024B_performance_optimization_and_monitoring.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/024B_performance_optimization_and_monitoring.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/024_performance_optimization_and_monitoring_infrastructure.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/024_performance_optimization_and_monitoring_infrastructure.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/036_implement_fine_tuning_mcp_forge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/036_implement_fine_tuning_mcp_forge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/084_implement_phase_2_selfquerying_retriever_for_corte.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/084_implement_phase_2_selfquerying_retriever_for_corte.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/094_council_mcp_polymorphic_model_refactoring.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/094_council_mcp_polymorphic_model_refactoring.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/133_update_client_configurations_for_dual_deployment.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/133_update_client_configurations_for_dual_deployment.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/135_implement_combined_rag_query_tool_cortexragquery.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/135_implement_combined_rag_query_tool_cortexragquery.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/145_implement_agent_file_safety_and_protection.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/145_implement_agent_file_safety_and_protection.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/151_integrate_unsloth_for_finetuning.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/151_integrate_unsloth_for_finetuning.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/151_research_iit_error_corrected_self.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/151_research_iit_error_corrected_self.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/153_adr084_se_tda_implementation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/153_adr084_se_tda_implementation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/157_enforce_agent_stop_in_retrospective.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/157_enforce_agent_stop_in_retrospective.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/158_unify_tool_utils_imports.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/158_unify_tool_utils_imports.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/159_standardize_shim_interactivity.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/159_standardize_shim_interactivity.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/165_implement-pure-python-orchestration.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/165_implement-pure-python-orchestration.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/166_external-knowledge-sharing-protocol.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/166_external-knowledge-sharing-protocol.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/167_ssi-verifiable-credentials-for-agents.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/167_ssi-verifiable-credentials-for-agents.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/backlog/scan_stale_file_references.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/backlog/scan_stale_file_references.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/001_harden_mnemonic_cortex_ingestion_and_rag.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/001_harden_mnemonic_cortex_ingestion_and_rag.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/002_implement_phase_2_self_querying_retriever.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/002_implement_phase_2_self_querying_retriever.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/003_implement_phase_3_mnemonic_caching_cag.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/003_implement_phase_3_mnemonic_caching_cag.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/004_implement_protocol_113_council_memory_adaptor.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/004_implement_protocol_113_council_memory_adaptor.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/005-safe-agent-zero_tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/005-safe-agent-zero_tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/005_forge_protocol_115_tactical_mandate.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/005_forge_protocol_115_tactical_mandate.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/006_forge_task_number_scaffold.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/006_forge_task_number_scaffold.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/008_test_and_fix_git_operations_command_type.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/008_test_and_fix_git_operations_command_type.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/010-cuda13-setup-complete.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/010-cuda13-setup-complete.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/011_heal_mnemonic_fracture_restore_garden_cage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/011_heal_mnemonic_fracture_restore_garden_cage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/012_harden_readme_for_developer_onboarding.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/012_harden_readme_for_developer_onboarding.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/013_define_canonical_task_schema.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/013_define_canonical_task_schema.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/014_establish_architecture_decision_records_system.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/014_establish_architecture_decision_records_system.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/015_complete_repository_cleanup_and_organization.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/015_complete_repository_cleanup_and_organization.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/016_rewrite_adrs_004_024_plain_language.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/016_rewrite_adrs_004_024_plain_language.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/017_architect_and_implement_the_strategic_crucible_loop.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/017_architect_and_implement_the_strategic_crucible_loop.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/018_forge_model_pipeline_tracker.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/018_forge_model_pipeline_tracker.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/019_upload_model_to_huggingface.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/019_upload_model_to_huggingface.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/020A_hardcoded_paths_remediation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/020A_hardcoded_paths_remediation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/020B_PROGRESS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/020B_PROGRESS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/020B_WSLENV_VERIFICATION.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/020B_WSLENV_VERIFICATION.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/020B_inconsistent_secrets_handling_env_fallback.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/020B_inconsistent_secrets_handling_env_fallback.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/021A_mnemonic_cortex_test_suite.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/021A_mnemonic_cortex_test_suite.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/021C_integration_and_performance_test_suite.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/021C_integration_and_performance_test_suite.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/021_test_coverage_and_quality_assurance_infrastructure.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/021_test_coverage_and_quality_assurance_infrastructure.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/022A_documentation_standards_and_api_docs.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/022A_documentation_standards_and_api_docs.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/022B_user_guides_and_architecture_documentation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/022B_user_guides_and_architecture_documentation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/022C_mcp_server_documentation_standards.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/022C_mcp_server_documentation_standards.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/022_documentation_standardization_and_knowledge_base_enhancement.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/022_documentation_standardization_and_knowledge_base_enhancement.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/026_implement_agent_orchestrator_mcp_council.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/026_implement_agent_orchestrator_mcp_council.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/027_mcp_ecosystem_strategy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/027_mcp_ecosystem_strategy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/028_precommit_hook_mcp_migration.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/028_precommit_hook_mcp_migration.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/029_implement_chronicle_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/029_implement_chronicle_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/030_implement_adr_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/030_implement_adr_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/031_implement_task_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/031_implement_task_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/033_implement_config_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/033_implement_config_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/034_implement_code_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/034_implement_code_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/035_implement_git_workflow_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/035_implement_git_workflow_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/038_integrate_task_mcp_with_claude_desktop.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/038_integrate_task_mcp_with_claude_desktop.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/039_review_microsoft_custom_engine_agent_architecture_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/039_review_microsoft_custom_engine_agent_architecture_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/040_implement_protocol_117_orchestration_pattern_library.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/040_implement_protocol_117_orchestration_pattern_library.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/041_implement_protocol_118_autonomous_triggers.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/041_implement_protocol_118_autonomous_triggers.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/043_implement_protocol_120_hybrid_orchestration.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/043_implement_protocol_120_hybrid_orchestration.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/045_implement_smart_git_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/045_implement_smart_git_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/046_configure_antigravity_mcp_client.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/046_configure_antigravity_mcp_client.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/047_implement_protocol_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/047_implement_protocol_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/048_complete_task_001_final_verification.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/048_complete_task_001_final_verification.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/049_create_incremental_ingestion_script.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/049_create_incremental_ingestion_script.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/050_implement_rag_mcp_phase_1_foundation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/050_implement_rag_mcp_phase_1_foundation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/051_implement_guardian_cache_mcp_operations_protocol_1.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/051_implement_guardian_cache_mcp_operations_protocol_1.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/052_operation_nervous_system__phase_1_core_quad_mcp_sc.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/052_operation_nervous_system__phase_1_core_quad_mcp_sc.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/053_add_sanctuary_model_query_tool_to_forge_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/053_add_sanctuary_model_query_tool_to_forge_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/054_investigate_and_relocate_misplaced_core_folder.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/054_investigate_and_relocate_misplaced_core_folder.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/055_verify_git_operations_and_mcp_tools_after_core_rel.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/055_verify_git_operations_and_mcp_tools_after_core_rel.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/056_Harden_Self_Evolving_Loop_Validation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/056_Harden_Self_Evolving_Loop_Validation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/066_complete_mcp_operations_testing_and_inventory_main.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/066_complete_mcp_operations_testing_and_inventory_main.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/070_update_all_mcp_operations_tables_to_3column_status.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/070_update_all_mcp_operations_tables_to_3column_status.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/072_code_mcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/072_code_mcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/077_implement_council_mcp_server.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/077_implement_council_mcp_server.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/078_implement_agent_persona_mcp_and_refactor_orchestrator.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/078_implement_agent_persona_mcp_and_refactor_orchestrator.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/079_refactor_agent_persona_mcp_terminology.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/079_refactor_agent_persona_mcp_terminology.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/080_migrate_and_archive_legacy_council_orchestrator.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/080_migrate_and_archive_legacy_council_orchestrator.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/081_define_and_document_common_orchestration_workflows.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/081_define_and_document_common_orchestration_workflows.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/082_enable_optional_logging_for_all_mcp_servers.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/082_enable_optional_logging_for_all_mcp_servers.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/083_deep_dive_compare_cortex_scripts_vs_mcp_implementa.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/083_deep_dive_compare_cortex_scripts_vs_mcp_implementa.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/085_evaluate_protocol_87_orchestrator_placement_cortex.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/085_evaluate_protocol_87_orchestrator_placement_cortex.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/086A_refactor_agent_persona_cortex_integration_test.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/086A_refactor_agent_persona_cortex_integration_test.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/086B_verify_multi_round_deliberation_logic.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/086B_verify_multi_round_deliberation_logic.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/086C_cortex_mcp_finalize_internal_naming.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/086C_cortex_mcp_finalize_internal_naming.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/086_postmigration_validation_mcp_integration_testing__.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/086_postmigration_validation_mcp_integration_testing__.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/087_comprehensive_mcp_operations_testing.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/087_comprehensive_mcp_operations_testing.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/090_transition_rag_cortex_to_network_host_architecture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/090_transition_rag_cortex_to_network_host_architecture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/092_create_orchestrator_mcp_unit_tests.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/092_create_orchestrator_mcp_unit_tests.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/093_containerize_ollama_model_service_podman.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/093_containerize_ollama_model_service_podman.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/094_council_mcp_polymorphic_model_refactoring.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/094_council_mcp_polymorphic_model_refactoring.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/095_mcp_auto_start_podman_containers.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/095_mcp_auto_start_podman_containers.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/096_test_task_for_t087_phase_2_mcp_operations_validati.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/096_test_task_for_t087_phase_2_mcp_operations_validati.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/098_t087_phase_2__task_mcp_operations_test.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/098_t087_phase_2__task_mcp_operations_test.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/099_Fix_Git_MCP_Push_Output.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/099_Fix_Git_MCP_Push_Output.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/099_t087_phase_2__task_mcp_fastmcp_validation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/099_t087_phase_2__task_mcp_fastmcp_validation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/100_test_task_for_mcp_verification.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/100_test_task_for_mcp_verification.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/101_standardize_mcp_server_integration_tests.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/101_standardize_mcp_server_integration_tests.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/102_implement_integration_test_mandate_focus_rag_corte.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/102_implement_integration_test_mandate_focus_rag_corte.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/103_t087_phase_2__task_mcp_verification.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/103_t087_phase_2__task_mcp_verification.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/104_implement_protocol_118_agent_session_initializatio.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/104_implement_protocol_118_agent_session_initializatio.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/105_evolution_of_guardian_wakeup_to_hybrid_retrieval.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/105_evolution_of_guardian_wakeup_to_hybrid_retrieval.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/106_enhance_guardian_wakeup_to_91010_contextual_confid.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/106_enhance_guardian_wakeup_to_91010_contextual_confid.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/107_fix_guardian_wakeup_v21__git_diffs_and_task_object.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/107_fix_guardian_wakeup_v21__git_diffs_and_task_object.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/108_establish_robust_mcp_e2e_testing_framework.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/108_establish_robust_mcp_e2e_testing_framework.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/109_implement_protocol_056_headless_tripleloop_e2e_tes.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/109_implement_protocol_056_headless_tripleloop_e2e_tes.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/110_extend_rag_cortex_to_ingest_code_files_for_semanti.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/110_extend_rag_cortex_to_ingest_code_files_for_semanti.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/111_extend_ingestion_shim_to_javascript.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/111_extend_ingestion_shim_to_javascript.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/113_verify_all_mcp_servers_e2e_tests.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/113_verify_all_mcp_servers_e2e_tests.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/114_test_suite_structural_cleanup_and_hardening.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/114_test_suite_structural_cleanup_and_hardening.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/115_design_and_specify_dynamic_mcp_gateway_architectur.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/115_design_and_specify_dynamic_mcp_gateway_architectur.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/116_integrate_external_gateway.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/116_integrate_external_gateway.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/117_gateway_mcp_server_registration__containerization_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/117_gateway_mcp_server_registration__containerization_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/118_red_team_analysis_gateway_server_connection_patter.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/118_red_team_analysis_gateway_server_connection_patter.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/119_deploy_pilot_sanctuaryutils_container.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/119_deploy_pilot_sanctuaryutils_container.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/121_implement_gateway_client_integration.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/121_implement_gateway_client_integration.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/122_sidebyside_port_management__documentation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/122_sidebyside_port_management__documentation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/123_standardize_server_entry_points_for_dualmode.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/123_standardize_server_entry_points_for_dualmode.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/124_create_client_configuration_toggles.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/124_create_client_configuration_toggles.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/125_verify_orchestration_and_port_alignment.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/125_verify_orchestration_and_port_alignment.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/126_verify_gateway_connectivity.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/126_verify_gateway_connectivity.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/127_review_and_update_gateway_integration_adrs.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/127_review_and_update_gateway_integration_adrs.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/128_deploy_sanctuary_filesystem_container.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/128_deploy_sanctuary_filesystem_container.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/129_deploy_sanctuary_network_container.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/129_deploy_sanctuary_network_container.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/130_deploy_sanctuary_git_container.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/130_deploy_sanctuary_git_container.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/131_deploy_sanctuary_cortex_container.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/131_deploy_sanctuary_cortex_container.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/132_develop_gateway_test_suite.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/132_develop_gateway_test_suite.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/134_validate_hybrid_fleet__execute_recursive_learning_.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/134_validate_hybrid_fleet__execute_recursive_learning_.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/136_gateway_client_full_verification__protocol_125_loo.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/136_gateway_client_full_verification__protocol_125_loo.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/137_protocol_127_session_lifecycle__autonomous_learnin.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/137_protocol_127_session_lifecycle__autonomous_learnin.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/138_implement_adr_063_structural_segregation.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/138_implement_adr_063_structural_segregation.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/139_implement_adr_065_unified_fleet_deployment.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/139_implement_adr_065_unified_fleet_deployment.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/140_migrate_rag_cortex_to_huggingface_embeddings_adr_0.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/140_migrate_rag_cortex_to_huggingface_embeddings_adr_0.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/142_optimize_recursive_learning_loop.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/142_optimize_recursive_learning_loop.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/143_implement_learning_continuity__debrief_tools.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/143_implement_learning_continuity__debrief_tools.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/146_analyze_dependency_management_for_protocol_129_adr.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/146_analyze_dependency_management_for_protocol_129_adr.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/146b_execution_log.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/146b_execution_log.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/149_test_cleanup_logic.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/149_test_cleanup_logic.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/150_implement_content_processor.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/150_implement_content_processor.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/154_mermaid_rationalization.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/154_mermaid_rationalization.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/155_explore-cuda13-wsl-runtime.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/155_explore-cuda13-wsl-runtime.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/160_refactor_rag_ingest_cli_architecture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/160_refactor_rag_ingest_cli_architecture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/161_integrate_snapshot_and_persistsoul_into_new_cli_ar.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/161_integrate_snapshot_and_persistsoul_into_new_cli_ar.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/162_refactor_migrate_domain_clipy_to_toolsclipy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/162_refactor_migrate_domain_clipy_to_toolsclipy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/164_explore_moltbook__agenttoagent_communication_patte.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/164_explore_moltbook__agenttoagent_communication_patte.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/IMPROVEMENT_TASKS_SUMMARY.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/IMPROVEMENT_TASKS_SUMMARY.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/continuing_work_new_chat.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/continuing_work_new_chat.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/done/legacy_mnemonic_cortex_work_tracker.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/done/legacy_mnemonic_cortex_work_tracker.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/025_implement_rag_mcp_cortex.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/025_implement_rag_mcp_cortex.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/042_implement_protocol_119_multi_model_abstraction.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/042_implement_protocol_119_multi_model_abstraction.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/120_gateway_configuration__hardening.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/120_gateway_configuration__hardening.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/141_standardize_git_lfs_in_fleet_containers.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/141_standardize_git_lfs_in_fleet_containers.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/144_analyze_code_duplication_in_cortex_cluster.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/144_analyze_code_duplication_in_cortex_cluster.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/144_standardize_all_mcp_servers_on_fastmcp.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/144_standardize_all_mcp_servers_on_fastmcp.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/146_fix_issues_with_gateway_mcp_operations.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/146_fix_issues_with_gateway_mcp_operations.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/146a_related_mcp_quick_fix_script.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/146a_related_mcp_quick_fix_script.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/147_harmonize_dockerfiles_and_requirements_protocol_12.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/147_harmonize_dockerfiles_and_requirements_protocol_12.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/148_implement_comprehensive_gateway_mcp_e2e_test_suite.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/148_implement_comprehensive_gateway_mcp_e2e_test_suite.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/superseded/156_mcp_architecture_evolution.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/superseded/156_mcp_architecture_evolution.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/task_schema.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/task_schema.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/todo/163_protocol_128_full_selfdirected_learning_loop_test.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/todo/163_protocol_128_full_selfdirected_learning_loop_test.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `tasks/todo/168_refactor_learning_audit_workflow.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "tasks/todo/168_refactor_learning_audit_workflow.md" --summary "YOUR_SUMMARY_HERE"`
