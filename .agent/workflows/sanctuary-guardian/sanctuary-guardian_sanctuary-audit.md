@@ -3,7 +3,7 @@ description: Protocol 128 Phase IV - Red Team Audit (Capture Learning Snapshot)
 ---
 # Workflow: Audit
 
-> **CLI Command**: `python3 tools/cli.py snapshot --type learning_audit`
+> **CLI Command**: `python3 plugins/sanctuary-guardian/scripts/capture_snapshot.py --type learning_audit`
 > **Output**: `.agent/learning/learning_audit/learning_audit_packet.md`
 
 ## Steps
@@ -16,7 +16,7 @@ description: Protocol 128 Phase IV - Red Team Audit (Capture Learning Snapshot)
 
 3. **Capture Learning Audit Snapshot**:
    // turbo
-   python3 tools/cli.py snapshot --type learning_audit
+   python3 plugins/sanctuary-guardian/scripts/capture_snapshot.py --type learning_audit
    > **Output**: `.agent/learning/learning_audit/learning_audit_packet.md`
 
 2. **Wait for Human Review**:
