@@ -1,34 +1,19 @@
 ---
-<<<<<<< HEAD
 name: guardian-onboarding
-description: MANDATORY: Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences.
+description: MANDATORY: Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences. 
 disable-model-invocation: false
-=======
-name: Guardian Onboarding (The Orientator)
-description: MANDATORY: Master initialization skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), current tactical directives, and project context.
->>>>>>> origin/main
 ---
 
 # Guardian Onboarding (The Orientator)
 
-<<<<<<< HEAD
 **Version:** 5.0 (Protocol 128 Compliant)
-**Purpose:** Ensure every agent session begins with a verified context download (Phase I) and routes to the `orchestrator` skill. Provide the explicit closure commands (Phase V-IX) to Seal and Persist the session.
+**Purpose:** Ensure every agent session begins with a verified context download (Phase I), routes feature work through `spec-kitty`, delegates to the `orchestrator`, and executes the formal Seal/Persist closure sequences involving `vector-db`, `rlm-factory`, and `context-bundler`.
 
 ## ⚡ Triggers (When to use this)
 *   **Start of Session:** "I am a new agent session."
 *   **End of Session:** "Seal the session," "Persist the soul," "Run the closure sequence."
 *   **Protocol Check:** "What is the current learning protocol?"
-=======
-**Version:** 1.0 (Protocol 128 Compliant)
-**Purpose:** Ensure every agent session begins with a verified, consistent context download, preventing "amnesia" and ensuring adherence to the Hardened Learning Loop.
-
-## ⚡ Triggers (When to use this)
-*   **Start of Session:** "I am a new agent session."
-*   **Context Loss:** "I need to re-orient myself."
-*   **Protocol Check:** "What is the current learning protocol?"
 *   [User Request]: "Boot sequence", "Orientation", "Status report"
->>>>>>> origin/main
 
 ## 🛡️ The Guardian Boot Sequence (Protocol 128)
 
@@ -47,7 +32,6 @@ Read: .agent/learning/guardian_boot_digest.md
 **Goal:** Load the operational laws of the project (Protocol 128).
 **Action:**
 ```
-<<<<<<< HEAD
 Read: plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md
 ```
 *   **Focus:** Phase checklist (I-VIII), Gate requirements (HITL), and Persistence obligations.
@@ -61,7 +45,8 @@ Read: plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop
 ```
 
 ### 4. Orchestrator Handoff
-**Goal:** Transfer control to the `orchestrator` skill to determine the appropriate execution pattern (Learning, Red Team, Dual-Loop, Swarm).
+**Goal:** Transfer control to the `orchestrator` skill to determine the appropriate execution pattern (Learning, Red Team, Dual-Loop, Swarm). 
+**Note on Spec-Kitty**: The Guardian is fully aware of `spec-kitty`. If the requested work is a Custom Feature, the Guardian explicitly mandates using `/spec-kitty` to generate the Work Packages before handing off to the Orchestrator.
 **Action:** Let the user know you are ready, and invoke the orchestrator logic.
 
 ---
@@ -116,33 +101,9 @@ python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py en
 | `plugins/guardian-onboarding/scripts/persist_soul.py` | VII | Uploads to HuggingFace |
 | `plugins/guardian-onboarding/scripts/evolution_metrics.py` | — | Protocol 131: Fitness/Depth/Scope metrics |
 | `plugins/guardian-onboarding/scripts/forge_llm.py` | — | Fine-tuned model queries via Ollama |
-| `plugins/agent-loops/skills/orchestrator/` | II-V | Routes tasks, generates retrospective |
+| `plugins/agent-loops/skills/orchestrator/` | II-V | Routes tasks, manages specific loops, generates retrospective. Completely agnostic to spec-kitty. |
+| `plugins/spec-kitty-plugin/skills/spec-kitty-workflow/` | II | The authorized Work Package generator for Custom Features. Used by Guardian to frame work before Orchestrator handoff. |
 | `plugins/context-bundler/scripts/bundle.py` | VI | Called by capture_snapshot to produce bundle |
 | `plugins/env-helper/scripts/env_helper.py` | VII | Resolves HF_TOKEN / HF_USERNAME |
 | `plugins/rlm-factory/` | I, VI | RLM cache read (boot) and synthesis (seal) |
-=======
-Read: .agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md
-```
-*   **Focus:** Phase checklist (I-X), Gate requirements (HITL), and Persistence obligations.
-*   **Reference:** If deep context is needed on specific learning mechanics, refer to `.agent/workflows/sanctuary_protocols/sanctuary-recursive-learning.md` (Protocol 125).
-
-### 3. The Visual (Architecture)
-**Goal:** Visualize the learning loop flow.
-**Action:**
-```
-Read: plugins/learning-loop/resources/diagrams/protocol_128_learning_loop.mmd
-```
-
-### 4. Session Initialization (Action)
-**Goal:** Formally start the session.
-1.  **Check Task List:** Does `task.md` exist for this session? If not, create it based on `guardian_boot_digest.md` priorities.
-2.  **Report Readiness:**
-    > "🛡️ **Guardian Online.**
-    > **Protocol:** 128 (Hardened Learning Loop)
-    > **Status:** [From Digest]
-    > **Directives:**
-    > 1. [Task 1]
-    > 2. [Task 2]
-    > ...
-    > **Ready for Orders.**"
->>>>>>> origin/main
+| `plugins/vector-db/skills/vector-db/scripts/ingest.py` | VIII | Vector Database embeddings update for semantic search capabilities |

@@ -19,8 +19,7 @@ Standard lifecycle for implementing features using Spec Kitty.
 1. **Checkbox theater**: Marking `[x]` without running the command or verification tool
 2. **Manual file creation**: Writing spec.md/plan.md/tasks.md by hand instead of using CLI
 3. **Kanban neglect**: Not updating task lanes, so dashboard shows stale state
-4. **Verification skip**: Marking a phase complete without running `verify_workflow_state.py`
-5. **Closure amnesia**: Finishing code but skipping review/merge/closure steps
+4. **Closure amnesia**: Finishing code but skipping review/merge/closure steps
 
 ---
 
@@ -30,43 +29,25 @@ Before implementing any code, you MUST generate artifacts using the CLI.
 **Manual creation of `spec.md`, `plan.md`, or `tasks/` files is STRICTLY FORBIDDEN.**
 
 ### Step 0a: Specify
+To specify a feature, read the workflow instructions in `.windsurf/workflows/spec-kitty.specify.md` or use the CLI:
 ```bash
-/spec-kitty.specify
+spec-kitty agent feature create-feature "<slug>"
 ```
 **PROOF**: Paste output confirming spec.md was generated.
 
-Then verify:
-```bash
-python3 plugins/spec-kitty/scripts/verify_workflow_state.py --feature <SLUG> --phase specify
-```
-**PROOF**: Paste the verification output showing the checkmark.
-**STOP**: Do NOT proceed to Plan until verification passes.
-
 ### Step 0b: Plan
+To plan a feature, read the workflow instructions in `.windsurf/workflows/spec-kitty.plan.md` or use the CLI:
 ```bash
-/spec-kitty.plan
+spec-kitty agent feature setup-plan --feature <SLUG>
 ```
 **PROOF**: Paste output confirming plan.md was generated.
 
-Then verify:
-```bash
-python3 plugins/spec-kitty/scripts/verify_workflow_state.py --feature <SLUG> --phase plan
-```
-**PROOF**: Paste the verification output.
-**STOP**: Do NOT proceed to Tasks until verification passes.
-
 ### Step 0c: Tasks
+To generate tasks, read the workflow instructions in `.windsurf/workflows/spec-kitty.tasks.md`.
 ```bash
 /spec-kitty.tasks
 ```
 **PROOF**: Paste output confirming tasks.md and WP files were generated.
-
-Then verify:
-```bash
-python3 plugins/spec-kitty/scripts/verify_workflow_state.py --feature <SLUG> --phase tasks
-```
-**PROOF**: Paste the verification output.
-**STOP**: Do NOT proceed to Implementation until verification passes.
 
 ---
 
@@ -119,10 +100,8 @@ Then verify the board:
 - [ ] No untracked files that should be committed
 
 ### Step 3a: Verify clean state
-```bash
-python3 plugins/spec-kitty/scripts/verify_workflow_state.py --wp <WP-ID> --phase review
-```
-**PROOF**: Paste the output. Must show "Worktree is clean".
+Run `git status` to ensure all files are committed.
+**PROOF**: Paste the output. Must show "nothing to commit, working tree clean".
 **STOP**: Do NOT proceed if there are uncommitted changes.
 
 ### Step 3b: Update kanban to for_review
@@ -188,7 +167,40 @@ spec-kitty accept --mode local --feature <SLUG>
 > **This step is NOT optional.** Every feature closure MUST include a retrospective.
 > The retrospective file MUST exist in `kitty-specs/<SPEC-ID>/` before merge.
 
-### Step 4d: Pre-merge safety check
+### Step 4d: Pre-merge remote backup (MANDATORY)
+
+> ⚠️ **DATA SAFETY**: Before ANY merge or worktree cleanup, ALL WP branches
+> MUST be pushed to GitHub origin and verified. This prevents data loss if
+> the merge fails or worktrees are deleted before content is preserved.
+
+**Push each WP branch to origin:**
+```bash
+cd <PROJECT_ROOT>
+for wt in .worktrees/<FEATURE>-WP*/; do
+  branch=$(basename "$wt")
+  echo "Pushing $branch..."
+  git -C "$wt" push origin "$branch"
+done
+```
+**PROOF**: Paste push output for each branch.
+
+**Verify remote state:**
+```bash
+for wt in .worktrees/<FEATURE>-WP*/; do
+  branch=$(basename "$wt")
+  local_sha=$(git -C "$wt" rev-parse HEAD)
+  remote_sha=$(git ls-remote origin "$branch" | cut -f1)
+  if [ "$local_sha" = "$remote_sha" ]; then
+    echo "✅ $branch: verified on origin ($local_sha)"
+  else
+    echo "❌ $branch: MISMATCH (local=$local_sha remote=$remote_sha)"
+  fi
+done
+```
+**PROOF**: Paste verification output. ALL branches must show ✅.
+**STOP**: Do NOT proceed to merge if any branch shows ❌.
+
+### Step 4e: Pre-merge safety check
 ```bash
 cd <PROJECT_ROOT>
 git status
@@ -200,11 +212,14 @@ spec-kitty merge --feature <SLUG> --dry-run
 - [ ] `git status` shows clean working tree
 - [ ] Dry-run shows no conflicts
 
-### Step 4e: Merge from main repo
+### Step 4f: Merge from main repo
 ```bash
 cd <PROJECT_ROOT>
-spec-kitty merge --feature <SLUG>
+spec-kitty merge --feature <SLUG> --push
 ```
+
+> **ALWAYS use `--push`** to ensure merged main is immediately backed up to origin.
+> Without `--push`, worktree cleanup can destroy the only copies of feature branches.
 
 > **LOCATION RULE**: ALWAYS run merge from the **main repository root**.
 > NEVER `cd` into a worktree to merge. The `@require_main_repo` decorator

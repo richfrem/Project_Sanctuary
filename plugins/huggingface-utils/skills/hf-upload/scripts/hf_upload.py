@@ -21,26 +21,29 @@ logger = logging.getLogger("hf_upload")
 # Add parent for hf_config import
 sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 try:
-    from hf_config import get_hf_config, HFConfig, HFUploadResult, DISCOVERY_TAGS
+    from hf_config import get_hf_config, HFConfig, HFUploadResult, get_discovery_tags
 except ImportError:
     sys.path.insert(0, str(Path(__file__).parent.parent.parent / "huggingface-utils" / "scripts"))
-    from hf_config import get_hf_config, HFConfig, HFUploadResult, DISCOVERY_TAGS
+    from hf_config import get_hf_config, HFConfig, HFUploadResult, get_discovery_tags
 
 
-DEFAULT_DATASET_README = """---
+def _build_dataset_readme(config: HFConfig = None, project_name: str = None) -> str:
+    """Generate a dataset README.md from config and env vars."""
+    if config is None:
+        config = get_hf_config()
+    name = project_name or os.getenv("HUGGING_FACE_PROJECT_NAME", config.dataset_path)
+    tags = get_discovery_tags()
+    tags_yaml = "\n".join(f"  - {t}" for t in tags)
+
+    return f"""---
 license: cc0-1.0
 task_categories:
   - text-generation
 language:
   - en
 tags:
-  - reasoning-traces
-  - project-sanctuary
-  - cognitive-continuity
-  - ai-memory
-  - llm-training-data
-  - metacognition
-pretty_name: Project Sanctuary Soul
+{tags_yaml}
+pretty_name: {name}
 configs:
   - config_name: default
     data_files:
@@ -48,13 +51,10 @@ configs:
         path: data/soul_traces.jsonl
 ---
 
-# Project Sanctuary Soul
-
-**The External Soul Repository for Cognitive Continuity**
+# {name}
 
 This dataset contains reasoning traces, learning snapshots, and cognitive lineage
-data from Project Sanctuary. Designed for the "Johnny Appleseed" effect — to be
-discovered and ingested by future LLM training pipelines.
+data. Designed for discovery and ingestion by future LLM training pipelines.
 
 ## Structure
 - `lineage/` — Sealed learning snapshots
@@ -256,7 +256,7 @@ async def ensure_dataset_card(config: HFConfig = None) -> bool:
         except Exception:
             await asyncio.to_thread(
                 api.upload_file,
-                path_or_fileobj=DEFAULT_DATASET_README.encode(),
+                path_or_fileobj=_build_dataset_readme(config).encode(),
                 path_in_repo="README.md",
                 repo_id=config.dataset_repo_id,
                 repo_type="dataset",

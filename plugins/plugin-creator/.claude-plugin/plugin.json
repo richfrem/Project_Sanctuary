@@ -1,8 +1,0 @@
-{
-    "name": "plugin-creator",
-    "description": "Scaffold new Claude Code plugins with proper directory structure and manifests.",
-    "version": "1.0.0",
-    "author": {
-        "name": "Project Sanctuary"
-    }
-}

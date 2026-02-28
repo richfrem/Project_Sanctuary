@@ -5,10 +5,14 @@ Purpose: Single source of truth for HuggingFace credentials, repo IDs, and
 environment variable resolution. All HF-consuming plugins import from here.
 
 Required .env variables:
-    HUGGING_FACE_USERNAME     - HF username (e.g., "richfrem")
+    HUGGING_FACE_USERNAME     - HF username
     HUGGING_FACE_TOKEN        - API token (via env or ~/.zshrc)
-    HUGGING_FACE_REPO         - Model repo name (optional, has default)
-    HUGGING_FACE_DATASET_PATH - Dataset path (optional, has default)
+    HUGGING_FACE_REPO         - Model repo name
+    HUGGING_FACE_DATASET_PATH - Dataset repo name
+
+Optional:
+    HUGGING_FACE_TAGS         - Comma-separated discovery tags for dataset card
+    SOUL_VALENCE_THRESHOLD    - Moral/emotional charge filter (default: -0.7)
 """
 import os
 import sys
@@ -20,14 +24,18 @@ from dataclasses import dataclass, asdict
 
 logger = logging.getLogger("hf_config")
 
-# Discovery tags for LLM retraining crawlers (Johnny Appleseed effect)
-DISCOVERY_TAGS = [
-    "reasoning-traces",
-    "project-sanctuary",
-    "cognitive-continuity",
-    "ai-memory",
-    "llm-training-data"
-]
+# Default discovery tags for LLM retraining crawlers — override via HUGGING_FACE_TAGS env var
+_DEFAULT_TAGS = ["reasoning-traces", "cognitive-continuity", "ai-memory", "llm-training-data"]
+
+def get_discovery_tags() -> list[str]:
+    """Get discovery tags from env var or defaults."""
+    custom = os.getenv("HUGGING_FACE_TAGS")
+    if custom:
+        return [t.strip() for t in custom.split(",") if t.strip()]
+    return _DEFAULT_TAGS
+
+# Backward-compat alias
+DISCOVERY_TAGS = _DEFAULT_TAGS
 
 
 @dataclass
@@ -128,16 +136,14 @@ def get_hf_config() -> HFConfig:
     Reads:
         HUGGING_FACE_USERNAME     (required)
         HUGGING_FACE_TOKEN        (required)
-        HUGGING_FACE_REPO         (optional, default: Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
-        HUGGING_FACE_DATASET_PATH (optional, default: Project_Sanctuary_Soul)
+        HUGGING_FACE_REPO         (required) - model repo name
+        HUGGING_FACE_DATASET_PATH (required) - dataset repo name
         SOUL_VALENCE_THRESHOLD    (optional, default: -0.7)
     """
     username = _get_env("HUGGING_FACE_USERNAME")
     token = _get_env("HUGGING_FACE_TOKEN")
-    body_repo = _get_env("HUGGING_FACE_REPO", required=False,
-                         default="Sanctuary-Qwen2-7B-v1.0-GGUF-Final")
-    dataset_path = _get_env("HUGGING_FACE_DATASET_PATH", required=False,
-                            default="Project_Sanctuary_Soul")
+    body_repo = _get_env("HUGGING_FACE_REPO")
+    dataset_path = _get_env("HUGGING_FACE_DATASET_PATH")
 
     # Sanitize dataset path (strip full URLs)
     if "hf.co/datasets/" in dataset_path:

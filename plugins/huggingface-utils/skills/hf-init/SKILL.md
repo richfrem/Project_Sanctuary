@@ -1,6 +1,6 @@
 ---
 name: hf-init
-description: "Initialize HuggingFace integration — validates .env variables, tests API connectivity, and ensures the dataset repository structure exists per ADR 081."
+description: "Initialize HuggingFace integration — validates .env variables, tests API connectivity, and ensures the dataset repository structure exists."
 ---
 
 # HuggingFace Init (Onboarding)
@@ -11,7 +11,7 @@ description: "Initialize HuggingFace integration — validates .env variables, t
 
 ## Purpose
 
-Sets up everything needed for HuggingFace Soul persistence. Run this once when
+Sets up everything needed for HuggingFace persistence. Run this once when
 onboarding a new project, or whenever credentials change.
 
 ## What It Does
@@ -19,18 +19,20 @@ onboarding a new project, or whenever credentials change.
 1. **Validates** required `.env` variables are set
 2. **Tests** API connectivity with the configured token
 3. **Ensures** the dataset repository exists on HF Hub
-4. **Creates** the ADR 081 folder structure (`lineage/`, `data/`, `metadata/`)
-5. **Uploads** the dataset card (README.md) with discovery tags
+4. **Creates** the standard folder structure (`lineage/`, `data/`, `metadata/`)
+5. **Uploads** the dataset card (README.md) with configurable discovery tags
 
 ## Required Environment Variables
 
-| Variable | Required | Default | Example |
-|:---------|:---------|:--------|:--------|
-| `HUGGING_FACE_USERNAME` | ✅ Yes | — | `richfrem` |
-| `HUGGING_FACE_TOKEN` | ✅ Yes | — | (via `~/.zshrc` or `.env`) |
-| `HUGGING_FACE_REPO` | ❌ No | `Sanctuary-Qwen2-7B-v1.0-GGUF-Final` | Model repo name |
-| `HUGGING_FACE_DATASET_PATH` | ❌ No | `Project_Sanctuary_Soul` | `hf.co/datasets/richfrem/Project_Sanctuary_Soul` |
-| `SOUL_VALENCE_THRESHOLD` | ❌ No | `-0.7` | Moral/emotional charge filter |
+| Variable | Required | Description |
+|:---------|:---------|:------------|
+| `HUGGING_FACE_USERNAME` | ✅ Yes | Your HF username |
+| `HUGGING_FACE_TOKEN` | ✅ Yes | API token (set in `~/.zshrc`, NOT `.env`) |
+| `HUGGING_FACE_REPO` | ✅ Yes | Model repo name |
+| `HUGGING_FACE_DATASET_PATH` | ✅ Yes | Dataset repo name |
+| `HUGGING_FACE_TAGS` | ❌ No | Comma-separated discovery tags for dataset card |
+| `HUGGING_FACE_PROJECT_NAME` | ❌ No | Pretty name for dataset card heading |
+| `SOUL_VALENCE_THRESHOLD` | ❌ No | Moral/emotional charge filter (default: `-0.7`) |
 
 ## Usage
 
@@ -52,11 +54,17 @@ python plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py --validate-on
 ## Quick Setup
 
 ```bash
-# Add to your .env or ~/.zshrc:
-export HUGGING_FACE_USERNAME=richfrem
+# Token goes in shell profile (never committed):
 export HUGGING_FACE_TOKEN=hf_xxxxxxxxxxxxx
-export HUGGING_FACE_REPO=Sanctuary-Qwen2-7B-v1.0-GGUF-Final
-export HUGGING_FACE_DATASET_PATH=hf.co/datasets/richfrem/Project_Sanctuary_Soul
+
+# Project vars go in .env:
+HUGGING_FACE_USERNAME=<your-username>
+HUGGING_FACE_REPO=<your-model-repo>
+HUGGING_FACE_DATASET_PATH=<your-dataset-repo>
+
+# Optional customization:
+HUGGING_FACE_TAGS=reasoning-traces,cognitive-continuity,your-project-tag
+HUGGING_FACE_PROJECT_NAME=My Project Soul
 
 # Run init
 python plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py

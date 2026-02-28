@@ -1,0 +1,35 @@
+{
+  "name": "sanctuary-guardian",
+  "description": "Project Sanctuary's cognitive continuity engine - manages Protocol 128 learning loop phases, session boot/closure, soul persistence, and all sanctuary-specific integration workflows.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Richard Fremmerlid"
+  },
+  "skills": [
+    "guardian-onboarding",
+    "session-bootloader",
+    "session-closure",
+    "forge-soul-exporter",
+    "sanctuary-soul-persistence",
+    "sanctuary-obsidian-integration",
+    "sanctuary-spec-kitty",
+    "sanctuary-memory"
+  ],
+  "scripts": [
+    "scripts/capture_snapshot.py",
+    "scripts/evolution_metrics.py",
+    "scripts/forge_llm.py",
+    "scripts/guardian_wakeup.py",
+    "scripts/learning_debrief.py",
+    "scripts/persist_soul.py"
+  ],
+  "dependencies": [
+    "huggingface-utils",
+    "obsidian-integration",
+    "spec-kitty-plugin",
+    "agent-loops",
+    "context-bundler",
+    "rlm-factory",
+    "vector-db"
+  ]
+}
