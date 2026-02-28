@@ -38,8 +38,8 @@ You are responsible for safely closing and persisting an agent's memory and work
 Trigger the RLM Synthesizer to update global memory, and execute the Iron Check to formally lock in the current context.
 
 ```bash
-# Update the Cognitive Hologram (RLM)
-python3 tools/cli.py codify
+# Update the Cognitive Hologram (RLM Cache)
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --profile project --since 24
 
 # Capture the technical seal (Context Bundler & Tests)
 python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
@@ -60,7 +60,7 @@ python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/le
 # python3 plugins/obsidian-integration/skills/forge-soul-exporter/scripts/forge_soul.py --vault-root . --full-sync
 
 # Ingest Changes into Vector DB
-python3 tools/cli.py ingest --incremental --hours 24
+python3 plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --incremental --since 24
 ```
 
 ### 3. Session Close (Phase VIII)

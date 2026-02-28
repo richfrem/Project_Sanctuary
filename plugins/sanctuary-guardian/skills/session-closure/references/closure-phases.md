@@ -26,10 +26,10 @@ After the local seal is applied, the Guardian broadcasts the verified state to t
 
 ```bash
 # Workflow: Persist
-python3 tools/cli.py persist-soul
+python3 plugins/sanctuary-guardian/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md
 
 # Optional: Ingest Changes
-python3 tools/cli.py ingest --incremental --hours 24
+python3 plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --incremental --since 24
 ```
 
 # Phase VIII: Session Closure

@@ -14,5 +14,5 @@ description: Protocol 128 Phase VII - Soul Persistence (Broadcast to Hugging Fac
 
 2. **Ingest Changes** (Optional - can also use `/sanctuary-ingest`):
    // turbo
-   python3 tools/cli.py ingest --incremental --hours 24
+   python3 plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --incremental --since 24
 
