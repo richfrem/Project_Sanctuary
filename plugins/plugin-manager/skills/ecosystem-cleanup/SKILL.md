@@ -1,14 +1,13 @@
 ---
-name: inventory-sync
+name: ecosystem-cleanup
 description: >
-  Synchronizes local plugins from the vendor inventory, safely cleaning up
-  deleted vendor plugins while preserving project-specific customizations.
-  Trigger when updating the plugin ecosystem from an upstream vendor source.
+  Master garbage collection skill. Synchronizes the local plugins against the vendor inventory,
+  safely finding and cleaning up orphaned artifacts (skills, agents, commands) from deleted plugins without touching project-specific code.
 ---
 
-# Inventory Sync
+# Ecosystem Cleanup (Orphan GC) 🧹
 
-This skill guides the process of synchronizing a local plugin collection with the vendor's master inventory, implementing a "Safe Sync" approach that ensures vendor plugins are updated cleanly while **project-specific** plugins and artifacts are **never** deleted.
+This skill guides the process of cleaning up orphaned files across all agent environments (`.agent`, `.claude`, `.github`, `.gemini`). It implements a "Safe Sync" approach that ensures artifacts from deleted vendor plugins are removed cleanly while **project-specific** plugins are **never** touched.
 
 ## Key Resources
 - **Script**: `plugins/plugin-manager/scripts/sync_with_inventory.py`
