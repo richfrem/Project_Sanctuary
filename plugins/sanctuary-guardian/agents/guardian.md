@@ -4,6 +4,8 @@ description: Master controller for agent session orchestration. Delegated to whe
 skills:
   - session-bootloader
   - session-closure
+model: claude-3-5-sonnet-20241022
+permissionMode: default
 ---
 
 # Guardian Sub-Agent
