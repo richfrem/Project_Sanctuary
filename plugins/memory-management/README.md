@@ -1,14 +1,20 @@
-# Memory Management Plugin
+# Memory Management Plugin 🧠
 
-"Tiered memory system for cognitive continuity in Project Sanctuary. Manages hot cache (cognitive_primer.md, guardian_boot_digest.md) and deep storage (LEARNING/, ADRs/, protocols). Use when: (1) starting a session and loading context, (2) deciding what to remember vs forget, (3) promoting/demoting knowledge between tiers, (4) user says 'remember this' or asks about project history, (5) managing the learning_package_snapshot.md hologram."
+Tiered memory system for cognitive continuity in Project Sanctuary. Manages hot cache (`cognitive_primer.md`, `guardian_boot_digest.md`) and deep storage (`LEARNING/`, `ADRs/`, protocols). 
 
-## Overview
-This plugin provides capabilities for the **memory-management** domain.
-It follows the standard Project Sanctuary plugin architecture.
+## Use Cases
+Use this plugin when:
+1. Starting a session and loading context
+2. Deciding what to remember vs forget
+3. Promoting/demoting knowledge between tiers
+4. The user says "remember this" or asks about project history
+5. Managing the `learning_package_snapshot.md` hologram
+
+## Core Capabilities
+| Skill | Purpose |
+| :--- | :--- |
+| **memory-management** | The primary skill for ingesting and retrieving long-term context. |
 
 ## Structure
 - `skills/`: Contains the agent skills instructions (`SKILL.md`) and executable scripts.
 - `.claude-plugin/`: Plugin manifest and configuration.
-
-## Usage
-This plugin is automatically loaded by the Agent Environment.
