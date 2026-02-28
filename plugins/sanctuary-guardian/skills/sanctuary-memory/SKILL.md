@@ -66,7 +66,7 @@ Loaded in order at every session start:
 | `rlm_summary_cache.json` | Code/doc summaries | `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py "keyword"` |
 | `rlm_tool_cache.json` | Tool/script discovery | `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --type tool "keyword"` |
 
-**Refresh**: `python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py`
+**Refresh**: `/rlm-factory_gap-fill` (Agent injection) OR `python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` (Local Ollama batch)
 
 ## Tier 3: Vector Store (ChromaDB)
 

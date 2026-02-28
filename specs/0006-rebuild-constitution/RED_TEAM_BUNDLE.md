@@ -3650,7 +3650,7 @@ description: MANDATORY: Use this skill whenever you need to perform a technical 
 
 # Tool Discovery (The Librarian)
 
-Use this skill to access the "RLM Index" (Recursive Learning Model). You do not have all tools loaded by default; you must **search** for them and **bind** their usage instructions on-demand.
+Use this skill to access the "RLM Index" (recursive language model). You do not have all tools loaded by default; you must **search** for them and **bind** their usage instructions on-demand.
 
 # Tool Discovery (The Librarian)
 
