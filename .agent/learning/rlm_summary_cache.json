@@ -2452,6 +2452,21 @@
     "summarized_at": "2026-02-28T12:54:25.446832",
     "summary": "Project Sanctuary Soul Dataset Card. Defines the External Soul Repository for Cognitive Continuity. Contains the reasoning traces, learning snapshots, and cognitive lineage data intended for discovery and ingestion by future LLM training pipelines (the Johnny Appleseed effect)."
   },
+  "plugins/sanctuary-guardian/resources/cognitive_primer.md": {
+    "hash": "b4533988553b1196",
+    "summarized_at": "2026-02-28T13:13:45.731310",
+    "summary": "Layer 2 Boot constraints. Defines the Tri-Track Spec-Kitty execution framework (Factory, Discovery, Micro-Tasks) and delegates cognitive execution to the 4 Orchestrator Tracks (Learning Loop, Red Team Review, Dual-Loop, Agent Swarm). Strictly prohibits the Guardian from performing task-level reasoning, reserving the Guardian strictly for Phase I Bootloader Operations and Phase VI-VIII Closure operations (Technical Seal, Soul Persistence, Git Push)."
+  },
+  "plugins/sanctuary-guardian/resources/protocols/128_Hardened_Learning_Loop.md": {
+    "hash": "3db60bc36d401bc3",
+    "summarized_at": "2026-02-28T13:13:59.512954",
+    "summary": "Constitutional Mandate for Project Sanctuary. Defines the strict Separation of Concerns. Phase I is the Scout orientation. Phase II is Spec-Kitty framing. Phase III-IV represents execution delegation via `orchestrator` skill to inner loops. Phase V-VIII represent technical retrospective, sealing the context payload, and asserting the dataset snapshot into HuggingFace before final completion."
+  },
+  "plugins/sanctuary-guardian/skills/sanctuary-orchestrator-integration/SKILL.md": {
+    "hash": "c264b5f333f15a1d",
+    "summarized_at": "2026-02-28T13:13:59.563577",
+    "summary": "Bridging glue mapping Guardian powers to Agent Loops Orchestrator. Requires the Guardian to route work via `agent_orchestrator.py` after formulating strategy packets with Spec-Kitty. Explicitly forbids the Orchestrator inner loops from executing global state commands like `capture_snapshot.py` and `persist_soul.py`, reserving them for Guardian-level closure."
+  },
   "plugins/tool-inventory/skills/tool-inventory/SKILL.md": {
     "file_mtime": 1769992254.3829906,
     "hash": "82366659ae635357",
