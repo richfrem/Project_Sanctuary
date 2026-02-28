@@ -18,11 +18,17 @@ You are responsible for safely closing and persisting an agent's memory and work
 |:---|:---|
 | `plugins/guardian-onboarding/scripts/capture_snapshot.py` | Phase VI: Generates the sealed snapshot via `context-bundler` |
 | `plugins/rlm-factory/` | Phase VI: Updates the global `learning_package_snapshot.md` |
-| `plugins/guardian-onboarding/scripts/persist_soul.py` | Phase VII: Uploads sealed state to HuggingFace and appends traces |
+| `plugins/guardian-onboarding/scripts/persist_soul.py` | Phase VII: Thin wrapper → delegates to `huggingface-utils` |
+| `plugins/huggingface-utils/` | **HF config, upload primitives, init** — the single source of truth for all HuggingFace operations |
+| `plugins/obsidian-integration/skills/forge-soul-exporter/` | Phase VII (Full Sync): Exports sealed vault notes to JSONL for HF |
 | `plugins/vector-db/` | Phase VII: Ingests new artifacts into local ChromaDB |
 | `plugins/context-bundler/scripts/bundle.py` | Called internally by `capture_snapshot.py` to produce the bundle |
-| `plugins/env-helper/scripts/env_helper.py` | Resolves `HF_TOKEN`, `HF_USERNAME`, dataset repo for `persist_soul.py` |
 | `plugins/agent-loops/` | The generic loop orchestration must signal completion before closure starts |
+
+> [!IMPORTANT]
+> All HuggingFace operations are now centralized in `plugins/huggingface-utils/`.
+> The Guardian's `persist_soul.py` is a thin wrapper — it no longer contains inline HF logic.
+> First-time setup: `python plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py`
 
 ---
 
@@ -47,8 +53,11 @@ Trace the agent's logic, broadcast the verified state to the Hugging Face reposi
 # Persist Traces to Local Memory (.agent/learning/session_traces.jsonl)
 # (Done natively by the closure script)
 
-# Persist Soul (Broadcast to HuggingFace)
+# Persist Soul — Incremental (Broadcast snapshot to HuggingFace)
 python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md
+
+# OR: Full Genome Sync (rebuild soul_traces.jsonl from all sealed notes)
+# python3 plugins/obsidian-integration/skills/forge-soul-exporter/scripts/forge_soul.py --vault-root . --full-sync
 
 # Ingest Changes into Vector DB
 python3 tools/cli.py ingest --incremental --hours 24
