@@ -25,12 +25,12 @@ The Mnemonic Cortex is not the final destination. **It is the seed from which th
 
 ### Phase I: Perfect the Sovereign Mind (Internal Evolution) ✅ IN PROGRESS
 
-**Phase 1 Status:** ✅ MCP Foundation Complete (2025-11-28)
+**Phase 1 Status:** ✅ Agent Plugin Integration Foundation Complete (2025-11-28)
 **Current Phase:** Phase 2 - Self-Querying Retriever (Ready to Start)
 
 The immediate future is about hardening and expanding the Cortex through a structured evolution:
 
-*   **✅ Phase 1 - MCP Foundation (COMPLETE):** We have established the foundational MCP service layer, exposing the Mnemonic Cortex as 4 standardized tools (`cortex_ingest_full`, `cortex_query`, `cortex_get_stats`, `cortex_ingest_incremental`). This makes the Cortex accessible, testable, and integrable with the broader Sanctuary ecosystem. The Parent Document Retriever is operational, eliminating Context Fragmentation vulnerability.
+*   **✅ Phase 1 - Agent Plugin Integration Foundation (COMPLETE):** We have established the foundational Agent Plugin Integration service layer, exposing the Mnemonic Cortex as 4 standardized tools (`cortex_ingest_full`, `cortex_query`, `cortex_get_stats`, `cortex_ingest_incremental`). This makes the Cortex accessible, testable, and integrable with the broader Sanctuary ecosystem. The Parent Document Retriever is operational, eliminating Context Fragmentation vulnerability.
 
 *   **➡️ Phase 2 - Self-Querying Retriever (NEXT):** We will evolve the RAG pattern to use an LLM as a "query planner" that transforms natural language into structured queries with metadata filters, temporal constraints, and authority hints. This enables true semantic intent understanding rather than simple keyword matching.
 

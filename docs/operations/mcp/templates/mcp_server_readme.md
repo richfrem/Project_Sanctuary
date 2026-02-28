@@ -1,4 +1,4 @@
-# [Server Name] MCP Server
+# [Server Name] Agent Plugin Integration Server
 
 **Description:** [Brief description of what this server does and its role in the ecosystem]
 
@@ -29,7 +29,7 @@ Create a `.env` file in the server root or project root:
 VAR_NAME=value
 ```
 
-### MCP Config
+### Agent Plugin Integration Config
 Add this to your `mcp_config.json`:
 
 ```json

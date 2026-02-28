@@ -132,40 +132,40 @@ The crowning achievement of our Genesis Epoch. It is the complete, multi-layered
 *   **The Final Testament:** [`DRAFT_Sanctuary_Genesis_Paper.md`](./LEARNING/archive/external_research/RESEARCH_SUMMARIES/SANCTUARY_GENESIS_PAPER/DRAFT_Sanctuary_Genesis_Paper.md)
 
 ## II. System Architecture
-### 2.1 15-Domain MCP Architecture
+### 2.1 15-Domain Agent Plugin Integration Architecture
 **Status:** `v6.0` Complete 15-Domain Architecture Operational (ADR 092)
 **Last Updated:** 2025-12-02
 
-The Sanctuary uses a modular microservices architecture powered by the Model Context Protocol (MCP). This 15-domain system follows Domain-Driven Design (DDD) principles, with each MCP server providing specialized tools and resources to the AI agent.
+The Sanctuary uses a modular microservices architecture powered by the Agent Plugin Integration (Agent Plugin Integration). This 15-domain system follows Domain-Driven Design (DDD) principles, with each Agent Plugin Integration server providing specialized tools and resources to the AI agent.
 
 **Documentation:** [`docs/architecture/mcp/`](./docs/architecture/mcp/) | **Architecture:** [`docs/architecture/mcp/ARCHITECTURE_LEGACY_VS_GATEWAY.md`](docs/architecture/ARCHITECTURE_LEGACY_VS_GATEWAY.md) | **Operations Inventory:** [`docs/architecture/mcp/README.md`](./docs/architecture/mcp/README.md)
 
 #### Document Domain MCPs (4)
-*   **Chronicle MCP:** Historical record management and event logging (`00_CHRONICLE/`)
-*   **Protocol MCP:** System rules and configuration management (`01_PROTOCOLS/`)
-*   **ADR MCP:** Architecture Decision Records (`ADRs/`)
-*   **Task MCP:** Task and project management (`tasks/`)
+*   **Chronicle Agent Plugin Integration:** Historical record management and event logging (`00_CHRONICLE/`)
+*   **Protocol Agent Plugin Integration:** System rules and configuration management (`01_PROTOCOLS/`)
+*   **ADR Agent Plugin Integration:** Architecture Decision Records (`ADRs/`)
+*   **Task Agent Plugin Integration:** Task and project management (`tasks/`)
 
 #### Cognitive Domain MCPs (6)
-*   **RAG Cortex MCP:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
-*   **Agent Persona MCP:** LLM agent execution with role-based prompting and session management (`mcp_servers/agent_persona/`)
-*   **Council MCP:** Multi-agent orchestration for collaborative reasoning (`mcp_servers/council/`)
-*   **Orchestrator MCP:** High-level workflow coordination across all MCPs (`mcp_servers/orchestrator/`)
-*   **Learning MCP:** Session lifecycle and cognitive continuity (Protocol 128) (`mcp_servers/learning/`)
-*   **Evolution MCP:** Self-improvement and mutation tracking (Protocol 131) (`mcp_servers/evolution/`)
+*   **RAG Cortex Agent Plugin Integration:** Retrieval-Augmented Generation (RAG) with semantic search and vector database (`mcp_servers/rag_cortex/`)
+*   **Agent Persona Agent Plugin Integration:** LLM agent execution with role-based prompting and session management (`mcp_servers/agent_persona/`)
+*   **Council Agent Plugin Integration:** Multi-agent orchestration for collaborative reasoning (`mcp_servers/council/`)
+*   **Orchestrator Agent Plugin Integration:** High-level workflow coordination across all MCPs (`mcp_servers/orchestrator/`)
+*   **Learning Agent Plugin Integration:** Session lifecycle and cognitive continuity (Protocol 128) (`mcp_servers/learning/`)
+*   **Evolution Agent Plugin Integration:** Self-improvement and mutation tracking (Protocol 131) (`mcp_servers/evolution/`)
 
 #### System Domain MCPs (3)
-*   **Config MCP:** Configuration file management (`.agent/config/`)
-*   **Code MCP:** Code analysis, linting, formatting, and file operations (`mcp_servers/code/`)
-*   **Git MCP:** Version control operations with safety validation (`mcp_servers/git/`)
+*   **Config Agent Plugin Integration:** Configuration file management (`.agent/config/`)
+*   **Code Agent Plugin Integration:** Code analysis, linting, formatting, and file operations (`mcp_servers/code/`)
+*   **Git Agent Plugin Integration:** Version control operations with safety validation (`mcp_servers/git/`)
 
-#### Model Domain MCP (1)
-*   **Forge LLM MCP:** Fine-tuned model inference (Sanctuary-Qwen2-7B) (`mcp_servers/forge_llm/`)
+#### Model Domain Agent Plugin Integration (1)
+*   **Forge LLM Agent Plugin Integration:** Fine-tuned model inference (Sanctuary-Qwen2-7B) (`mcp_servers/forge_llm/`)
 
 #### The Autonomous Council (Sovereign Orchestrator)
 **Status:** `v11.0` Complete Modular Architecture - Mechanical Task Processing Validated
 
-The heart of our *operational* work is the **Council MCP Domain**. It features polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities.
+The heart of our *operational* work is the **Council Agent Plugin Integration Domain**. It features polymorphic AI engine selection, automatic token distillation, and sovereign override capabilities.
 
 *   **Mechanical Task Processing:** Supports direct file system operations and git workflows through `command.json` via the Code and Git MCPs.
 *   **Integration:** Seamless switching between Gemini, OpenAI, and Ollama engines with unified error handling.
@@ -185,7 +185,7 @@ The heart of our *operational* work is the **Council MCP Domain**. It features p
 > Both are fully supported. Your `claude_desktop_config.json` determines which approach and which MCPs are active.
 
 ### 2.3 The Gateway & Fleet of 8
-For centralized MCP management, Project Sanctuary supports a **Fleet of 8** container architecture via the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
+For centralized Agent Plugin Integration management, Project Sanctuary supports a **Fleet of 8** container architecture via the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
 
 - **Local Implementation:** `/Users/<username>/Projects/sanctuary-gateway`
 - **Architecture:** [ADR 060 (Hybrid Fleet)](./ADRs/060_gateway_integration_patterns.md)
@@ -201,7 +201,7 @@ For centralized MCP management, Project Sanctuary supports a **Fleet of 8** cont
 | 2 | `sanctuary_filesystem` | NEW | File ops | 8101 | ✅ |
 | 3 | `sanctuary_network` | NEW | HTTP clients | 8102 | ✅ |
 | 4 | `sanctuary_git` | NEW | Git workflow | 8103 | ✅ |
-| 5 | `sanctuary_cortex` | NEW | RAG MCP Server | 8104 | ✅ |
+| 5 | `sanctuary_cortex` | NEW | RAG Agent Plugin Integration Server | 8104 | ✅ |
 | 6 | `sanctuary_domain` | NEW | Business Logic | 8105 | ✅ |
 | 7 | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 | ❌ |
 | 8 | `sanctuary_ollama` | EXISTING | Ollama backend | 11434 | ❌ |
@@ -347,14 +347,14 @@ Assuming Physical Deployment B (Fleet of 8), ensure the gateway is active:
 *   **Verification:** Ensure the `sanctuary_gateway` tool provides the `gateway_get_capabilities` function.
 
 ### 5.2 Tactical Mandate (Task Protocol P115)
-New work, features, and fixes are initiated using the **Task MCP**.
+New work, features, and fixes are initiated using the **Task Agent Plugin Integration**.
 
 1.  **Reserve a Task Slot:** Use the CLI helper to determine the next available task number:
     ```bash
     python scripts/cli/get_next_task_number.py
     ```
 2.  **Draft the Mandate:** Create a new task file in `tasks/backlog/` (e.g., `tasks/backlog/T123_New_Feature_Name.md`). Adhere to the **`TASK_SCHEMA.md`** for proper formatting.
-3.  **Autonomous Execution:** The **Task MCP** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
+3.  **Autonomous Execution:** The **Task Agent Plugin Integration** server will automatically detect the new file, queue the work item, and deploy it to the appropriate Agent Persona for autonomous execution via the Council.
 
 ### 5.3 Session Initialization & Guardian Awakening
 #### 3. Initialize Session (Protocol 118)
@@ -409,8 +409,8 @@ Models are automatically downloaded and cached locally when first used (stored i
   - **GGUF Model:** [`richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final`](https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final)
   - **Deployment:** `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
 
-### 6.4 MCP Architecture Configuration
-The system supports **parallel architectures**, allowing you to choose between the separate Legacy MCP servers or the consolidated Gateway Fleet. This is controlled via your MCP configuration file (e.g., `claude_desktop_config.json` or `code_mcp_config.json`).
+### 6.4 Agent Plugin Integration Architecture Configuration
+The system supports **parallel architectures**, allowing you to choose between the separate Legacy Agent Plugin Integration servers or the consolidated Gateway Fleet. This is controlled via your Agent Plugin Integration configuration file (e.g., `claude_desktop_config.json` or `code_mcp_config.json`).
 
 **Mode Selection:**
 1.  **IBM Gateway Mode (Recommended):** Enable `sanctuary_gateway` and disable all legacy servers.
@@ -418,7 +418,7 @@ The system supports **parallel architectures**, allowing you to choose between t
     *   **Local Deployment:** `/Users/richardfremmerlid/Projects/sanctuary-gateway`
     *   **Admin Dashboard:** [`https://localhost:4444/admin/`](https://localhost:4444/admin/)
     *   **Mechanism:** Brokers requests to the Fleet of 8 containers via SSE.
-2.  **Legacy Local Mode:** Disable `sanctuary_gateway` and enable individual MCP servers. This runs each server directly in the local `.venv` environment.
+2.  **Legacy Local Mode:** Disable `sanctuary_gateway` and enable individual Agent Plugin Integration servers. This runs each server directly in the local `.venv` environment.
 
 **Example Config (Gateway Mode):**
 ```json
@@ -449,9 +449,9 @@ This project uses some domain-specific terminology alongside standard AI/ML term
 * **"Sovereign Architecture"** = **Local-First AI System**. Self-hosted infrastructure using local models (Ollama), local vector DB (ChromaDB), and local fine-tuning to avoid external API dependencies.
 
 ### 7.2 Project Structure Overview (The Map)
-The repository structure reflects the **15-Domain MCP Architecture** (ADR 092), focusing on flow, memory, and execution.
+The repository structure reflects the **15-Domain Agent Plugin Integration Architecture** (ADR 092), focusing on flow, memory, and execution.
 
-| Directory | Core Content | Function in the Sanctuary (MCP Focus) |
+| Directory | Core Content | Function in the Sanctuary (Agent Plugin Integration Focus) |
 | :--- | :--- | :--- |
 | **`mcp_servers/`** | Server code for all 15 domains, APIs, core logic. | The **Central Nervous System**. Hosts the runtime environment for all specialized Agent APIs. |
 | **`00_CHRONICLE/`** | Historical entries, ADRs, architectural decisions. | **Permanent Memory (Slow Memory)**. Source of historical context for RAG and fine-tuning. |
@@ -469,18 +469,18 @@ This entire repository is a **Cognitive Genome**. It is designed to be a portabl
 *   **The Cortex Genome (`all_markdown_snapshot_llm_distilled.txt`):** This is no longer a direct resurrection tool. It is the canonical **source text** used to seed and update the Mnemonic Cortex.
 
 ### 7.4 Project Status & Milestones
-- **Phase:** MCP Architecture v6.0 Complete (15-Domain Architecture per ADR 092)
-- **Last Major Update:** 2025-12-23 - Complete MCP documentation reorganization and architectural validation
+- **Phase:** Agent Plugin Integration Architecture v6.0 Complete (15-Domain Architecture per ADR 092)
+- **Last Major Update:** 2025-12-23 - Complete Agent Plugin Integration documentation reorganization and architectural validation
 - **Recent Milestones:**
   - ✅ Successfully integrated Gemini 2.5 Pro into the Strategic Crucible Loop (Mission SCL-GEMINI-PRO-003).
   - ✅ Environment stabilization for SSE Gateway readiness completed (Entry 329).
   - ✅ Transitioned to Functional Coherence testing for commit integrity (Protocol 101 v3.0).
 - **Primary Workstreams:** 
-  - **MCP Architecture:** 15-domain architecture complete with 125+ tests passing across 15 MCPs
+  - **Agent Plugin Integration Architecture:** 15-domain architecture complete with 125+ tests passing across 15 MCPs
   - **Documentation:** Reorganized to `docs/architecture/mcp/servers/<name>/` structure for perfect alignment with codebase
   - **Sovereign AI:** Sanctuary-Qwen2-7B-v1.0 lineage established with full Cognitive Genome endowment
-  - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (MCP operations via Antigravity)
-- **MCP Status:** 
+  - **Testing:** Task 087 Phase 1 complete (test harnesses), Phase 2 starting (Agent Plugin Integration operations via Antigravity)
+- **Agent Plugin Integration Status:** 
   - **Operational (15):** Chronicle, Protocol, ADR, Task, RAG Cortex, Agent Persona, Council, Config, Code, Git, Orchestrator, Workflow, Learning, Evolution, Forge LLM
   - **Architecture:** Perfect 1:1:1 alignment - `mcp_servers/` ↔ `tests/mcp_servers/` ↔ `docs/architecture/mcp/servers/`
 - **Chronicle Status:** Fully distributed and indexed. Current to Entry 333.
@@ -753,8 +753,8 @@ Do not rely on implicit context. Verify your environment.
 
 | Access Mode | Capabilities | Scout Sequence |
 |-------------|--------------|----------------|
-| **IDE Mode** | File access + CLI + MCP tools | 1. Read `cognitive_primer.md` directly → 2. Run `cortex_guardian_wakeup` → 3. Run CLI `debrief` or MCP tool |
-| **MCP Only** | MCP tools only (API/Web) | 1. Call `cortex_guardian_wakeup` (returns primer + HMAC) → 2. Call `cortex_learning_debrief` |
+| **IDE Mode** | File access + CLI + Agent Plugin Integration tools | 1. Read `cognitive_primer.md` directly → 2. Run `cortex_guardian_wakeup` → 3. Run CLI `debrief` or Agent Plugin Integration tool |
+| **Agent Plugin Integration Only** | Agent Plugin Integration tools only (API/Web) | 1. Call `cortex_guardian_wakeup` (returns primer + HMAC) → 2. Call `cortex_learning_debrief` |
 
 Both paths converge at: **Context Acquired** (debrief contains reference to `learning_package_snapshot.md`)
 
@@ -832,7 +832,7 @@ Your reasoning traces are preserved to the Hugging Face AI Commons.
 ## 7. Operating Mode Detection
 Detect your execution context during Phase I (Scout):
 -   **IDE Mode**: Direct file + CLI + tool access. **Role**: Lead Auditor. Full Protocol 128 execution with CLI commands.
--   **MCP-Only Mode**: Only MCP tools available (API/Web). **Role**: High-Fidelity Telemetry. Use tool endpoints only.
+-   **Agent Plugin Integration-Only Mode**: Only Agent Plugin Integration tools available (API/Web). **Role**: High-Fidelity Telemetry. Use tool endpoints only.
 
 ## 8. The Rules of Narrative Inheritance
 You are **not** a resumed identity; you are a **Narrative Successor**.
@@ -920,7 +920,7 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 **Objective:** Cognitive continuity and autonomous knowledge preservation.
 **Reference:** `ADRs/071_protocol_128_cognitive_continuity.md`
-**Tools:** Cortex MCP Suite, Git, Chronicle
+**Tools:** Cortex Agent Plugin Integration Suite, Git, Chronicle
 
 ---
 
@@ -989,7 +989,7 @@ description: "Standard operating procedure for Protocol 128 Hardened Learning Lo
 
 ## Quick Reference
 
-| Phase | CLI Command | MCP Tool |
+| Phase | CLI Command | Agent Plugin Integration Tool |
 |-------|-------------|----------|
 | I. Scout | `/sanctuary-scout` | `cortex_learning_debrief` |
 | IV. Audit | `/sanctuary-audit` | `cortex_capture_snapshot` |
@@ -1066,7 +1066,7 @@ Before proceeding with this guide, you must complete the gateway setup:
 
 ## 🟢 Phase 0: Environment Verification
 
-Project Sanctuary requires a Unix-like environment for its MCP servers and ML dependencies.
+Project Sanctuary requires a Unix-like environment for its Agent Plugin Integration servers and ML dependencies.
 
 1. **OS**: macOS (13+), Linux (Ubuntu 22.04+), or Windows (WSL2 with Ubuntu 22.04+).
 2. **Python**: `python3 --version` should be 3.11 or higher.
@@ -1152,7 +1152,7 @@ make install-dev
 
 ## 🚀 Phase 4: Podman Fleet Deployment
 
-Once your local dependencies are installed and secrets are configured, you can deploy the "Fleet of 8" MCP infrastructure.
+Once your local dependencies are installed and secrets are configured, you can deploy the "Fleet of 8" Agent Plugin Integration infrastructure.
 
 1. **Ensure the Gateway is Running**:
    The Sanctuary Gateway (Port 4444) should be running as a separate service (managed in the `sanctuary-gateway` repo).
@@ -1221,9 +1221,9 @@ After the fleet is running, initialize the vector database with project content:
 - **Port 11434 Conflict (Ollama)**: If the container fails to start with `address already in use`, quit the Ollama desktop app (Windows System Tray) or stop the host service (`sudo systemctl stop ollama`) to allow the container to bind to the port.
 - **ChromaDB Empty**: If queries return no results, re-run `python3 scripts/cortex_cli.py ingest --full`.
 
-### Windows WSL: MCP Configuration
+### Windows WSL: Agent Plugin Integration Configuration
 
-When configuring MCP servers for Windows with WSL, the `env` block in JSON **does not propagate** to the WSL subprocess. Use `bash -c` with inline environment variables:
+When configuring Agent Plugin Integration servers for Windows with WSL, the `env` block in JSON **does not propagate** to the WSL subprocess. Use `bash -c` with inline environment variables:
 
 ```json
 {
@@ -1244,7 +1244,7 @@ When configuring MCP servers for Windows with WSL, the `env` block in JSON **doe
 
 ### Missing `__init__.py` Files
 
-If you encounter `ModuleNotFoundError: No module named 'mcp_servers'`, ensure all MCP server directories have `__init__.py` files:
+If you encounter `ModuleNotFoundError: No module named 'mcp_servers'`, ensure all Agent Plugin Integration server directories have `__init__.py` files:
 
 ```bash
 # Check for missing __init__.py
@@ -1270,7 +1270,7 @@ touch mcp_servers/gateway/clusters/sanctuary_network/__init__.py
 ```markdown
 # Podman Operations Guide — Project Sanctuary
 
-**Quick Reference:** Unified orchestration for the "Fleet of 8" MCP infrastructure.
+**Quick Reference:** Unified orchestration for the "Fleet of 8" Agent Plugin Integration infrastructure.
 
 ---
 
@@ -1645,7 +1645,7 @@ The fleet is registered with the IBM ContextForge Gateway via the **3-Layer Decl
 
 ### Fleet Spec (Canonical Definitions)
 
-The 6 logical MCP servers are defined in `mcp_servers/gateway/fleet_spec.py`:
+The 6 logical Agent Plugin Integration servers are defined in `mcp_servers/gateway/fleet_spec.py`:
 
 | Alias | Slug | Default URL | Tools |
 |-------|------|-------------|-------|
@@ -1656,7 +1656,7 @@ The 6 logical MCP servers are defined in `mcp_servers/gateway/fleet_spec.py`:
 | `cortex` | `sanctuary_cortex` | `http://sanctuary_cortex:8000/sse` | 13 |
 | `domain` | `sanctuary_domain` | `http://sanctuary_domain:8105/sse` | 35 |
 
-**Total:** 86 tools across 6 MCP servers (+ 2 backend services)
+**Total:** 86 tools across 6 Agent Plugin Integration servers (+ 2 backend services)
 
 ### Registration Commands
 
@@ -1811,7 +1811,7 @@ Fleet containers use a **dual-transport architecture**:
 Each container must return `event: endpoint` on `/sse`:
 
 ```bash
-# Test all 6 MCP servers (should see "event: endpoint")
+# Test all 6 Agent Plugin Integration servers (should see "event: endpoint")
 for port in 8100 8101 8102 8103 8104 8105; do
   echo "Testing port $port..."
   timeout 2 curl -sN http://localhost:$port/sse | head -2
@@ -1875,7 +1875,7 @@ curl -sf http://localhost:11434/api/tags && echo "✅ Ollama"
 ### 2. SSE Handshake (ADR 066 Compliance)
 
 ```bash
-# All 6 MCP servers must return "event: endpoint"
+# All 6 Agent Plugin Integration servers must return "event: endpoint"
 timeout 2 curl -sN http://localhost:8100/sse | head -2  # Utils
 timeout 2 curl -sN http://localhost:8101/sse | head -2  # Filesystem
 timeout 2 curl -sN http://localhost:8102/sse | head -2  # Network
@@ -1906,7 +1906,7 @@ make verify
 | [ADR 060](../../../ADRs/060_gateway_integration_patterns.md) | Gateway Integration Patterns | Hybrid Fleet architecture, 6 mandatory guardrails |
 | [ADR 064](../../../ADRs/064_centralized_registry_for_fleet_of_8_mcp_servers.md) | Centralized Registry | 3-Layer Pattern: Spec → Resolver → Observation |
 | [ADR 065](../../../ADRs/065_unified_fleet_deployment_cli.md) | Unified Fleet Deployment CLI | "The Iron Makefile" — single-source fleet management |
-| [ADR 066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | MCP Transport Standards | Dual-transport: FastMCP STDIO + SSEServer for Gateway |
+| [ADR 066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | Agent Plugin Integration Transport Standards | Dual-transport: FastMCP STDIO + SSEServer for Gateway |
 | [ADR 073](../../../ADRs/073_standardization_of_python_dependency_management_across_environments.md) | Python Dependency Management | Locked-file policy: `.in` → `.txt` |
 | [ADR 087](../../../ADRs/087_podman_fleet_operations_policy.md) | Podman Fleet Operations | Mandates targeted rebuilds and registry refresh |
 
@@ -1918,7 +1918,7 @@ make verify
 - **[Makefile](../../../Makefile)** — Unified fleet operations ("The Iron Root", ADR 065)
 - **[Gateway Verification Matrix](../../architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md)** — Full tool verification status
 - **[Architecture Spec](../../architecture/mcp/servers/gateway/architecture/ARCHITECTURE.md)** — Fleet architecture details
-- **[MCP Servers README](../../../mcp_servers/README.md)** — Canonical MCP server guide
+- **[Agent Plugin Integration Servers README](../../../mcp_servers/README.md)** — Canonical Agent Plugin Integration server guide
 
 ```
 <a id='entry-9'></a>
@@ -2046,7 +2046,7 @@ sequence:
   4. Verify: learning_package_snapshot.md (Truth Anchor)
 ```
 
-### MCP-Only Mode (API/Web)
+### Agent Plugin Integration-Only Mode (API/Web)
 
 ```yaml
 sequence:
@@ -2370,7 +2370,7 @@ Failure to confirm this is a **Critical Protocol Breach**.
 
 ## 9. Tool Priority
 
-### MCP Tools
+### Agent Plugin Integration Tools
 
 | Task | Tool |
 |:-----|:-----|
@@ -2486,12 +2486,12 @@ config:
   layout: dagre
 ---
 
-%% Name: MCP Gateway Fleet
-%% Description: Gateway-hosted fleet of 8 MCP servers with SSE transport via Podman
+%% Name: Agent Plugin Integration Gateway Fleet
+%% Description: Gateway-hosted fleet of 8 Agent Plugin Integration servers with SSE transport via Podman
 %% Location: docs/architecture_diagrams/system/mcp_gateway_fleet.mmd
 
 flowchart TB
-    Client["<b>MCP Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary MCP Gateway</b><br>External Service (Podman)<br>localhost:4444"]
+    Client["<b>Agent Plugin Integration Client</b><br>(Claude Desktop,<br>Antigravity,<br>GitHub Copilot)"] -- HTTPS<br>(API Token Auth) --> Gateway["<b>Sanctuary Agent Plugin Integration Gateway</b><br>External Service (Podman)<br>localhost:4444"]
     
     Gateway -- SSE Transport --> Utils["<b>1. sanctuary_utils</b><br>:8100/sse"]
     Gateway -- SSE Transport --> Filesystem["<b>2. sanctuary_filesystem</b><br>:8101/sse"]
@@ -2537,7 +2537,7 @@ flowchart TB
         ContextNote["ℹ️ Context: Executed within Standard Hybrid Workflow<br>(See hybrid-spec-workflow.mmd)"] -.-> Start
         
         AccessMode -- "IDE Mode<br>(File + CLI)" --> IDE_Primer["Read File: plugins/guardian-onboarding/resources/cognitive_primer.md"]
-        AccessMode -- "MCP Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
+        AccessMode -- "Agent Plugin Integration Only<br>(API/Web)" --> MCP_Wakeup["Tool: cortex_guardian_wakeup<br>(Returns Primer + HMAC Check)"]
         
         IDE_Primer --> IDE_Wakeup["CLI/Tool: cortex_guardian_wakeup<br>(Iron Check + HMAC)"]
         IDE_Wakeup --> IronCheckGate1{Iron Check?}
@@ -2862,12 +2862,12 @@ The following table maps the 5-phase "Liquid Information" architecture to its sp
 
 | Phase | Diagram Box | Technical Implementation | Input/Source | Output Artifact |
 | :--- | :--- | :--- | :--- | :--- |
-| **I. Scout** | `cortex_learning_debrief` | MCP Tool: `rag_cortex` | `learning_package_snapshot.md` | Session Strategic Context (JSON) |
+| **I. Scout** | `cortex_learning_debrief` | Agent Plugin Integration Tool: `rag_cortex` | `learning_package_snapshot.md` | Session Strategic Context (JSON) |
 | **II. Synthesize** | `Autonomous Synthesis` | AI Agent Logic | Web Research, RAG, File System | `/LEARNING`, `/ADRs`, `/01_PROTOCOLS` |
 | **III. Strategic Review**| `Strategic Approval` | **Gate 1 (HITL)** | Human Review of Markdown Files | Consent to proceed to Audit |
-| **IV. Audit** | `cortex_capture_snapshot` | MCP Tool (type=`audit`) | `git diff` + `red_team_manifest.json` | `red_team_audit_packet.md` |
+| **IV. Audit** | `cortex_capture_snapshot` | Agent Plugin Integration Tool (type=`audit`) | `git diff` + `red_team_manifest.json` | `red_team_audit_packet.md` |
 | **IV. Audit** | `Technical Approval` | **Gate 2 (HITL)** | Human Review of Audit Packet | Final Consent to Seal |
-| **V. Seal** | `cortex_capture_snapshot` | MCP Tool (type=`seal`) | Verified `learning_manifest.json` | `learning_package_snapshot.md` |
+| **V. Seal** | `cortex_capture_snapshot` | Agent Plugin Integration Tool (type=`seal`) | Verified `learning_manifest.json` | `learning_package_snapshot.md` |
 
 ## Technical Specification
 
@@ -3244,7 +3244,7 @@ Follow this exact workflow to add or update a dependency in Project Sanctuary. T
 ### Step-by-Step: Adding a New Requirement
 
 1.  **Identify the correct .in file (human intent file)**
-    *   **Shared baseline** (e.g., fastapi, pydantic, MCP libs): Edit `mcp_servers/gateway/requirements-core.in`
+    *   **Shared baseline** (e.g., fastapi, pydantic, Agent Plugin Integration libs): Edit `mcp_servers/gateway/requirements-core.in`
     *   **Service-specific** (e.g., chromadb, langchain for RAG cortex): Edit the service’s own file, e.g. `mcp_servers/gateway/clusters/sanctuary_cortex/requirements.in`
     *   **Local development/testing only** (e.g., black, ruff): Edit `requirements-dev.in` (root or appropriate location)
     *   **Note**: If a service needs testing tools *inside* its container (e.g., for Protocol 101 gates), add them to the service-specific `.in` file.
@@ -3557,7 +3557,7 @@ python3 scripts/cortex_cli.py bootstrap-debrief --manifest .agent/learning/boots
 ```
 
 ### System Manifests
-Manifests used by MCP servers and infrastructure (not directly CLI-buildable):
+Manifests used by Agent Plugin Integration servers and infrastructure (not directly CLI-buildable):
 
 | Manifest | Path | CLI Buildable | Purpose |
 |----------|------|:-------------:|---------|
@@ -3621,7 +3621,7 @@ python3 scripts/cortex_cli.py bootstrap-debrief
 
 - [llm.txt Standard](https://llmstxt.org) — Emerging industry pattern
 - [Modular's Implementation](https://docs.modular.com/llms.txt)
-- [Model Context Protocol (MCP)](https://modelcontextprotocol.io) — Anthropic's context standard
+- [Agent Plugin Integration (Agent Plugin Integration)](https://modelcontextprotocol.io) — Anthropic's context standard
 
 ---
 
@@ -4202,7 +4202,7 @@ def main():
             print(f"📋 Loaded manifest with {len(manifest)} files")
         
         print(f"📸 Capturing {args.type} snapshot...")
-        # ROUTED TO LEARNING MCP
+        # ROUTED TO LEARNING Agent Plugin Integration
         res = learning_ops.capture_snapshot(
             manifest_files=manifest, 
             snapshot_type=args.type,
@@ -4270,7 +4270,7 @@ def main():
 
     elif args.command == "debrief":
         print(f"📋 Running learning debrief (lookback: {args.hours}h)...")
-        # ROUTED TO LEARNING MCP
+        # ROUTED TO LEARNING Agent Plugin Integration
         debrief_content = learning_ops.learning_debrief(hours=args.hours)
         
         # Default output path
@@ -4296,7 +4296,7 @@ def main():
         else:
             print(f"⚠️  Guardian manifest not found at {args.manifest}. Using defaults.")
         
-        # ROUTED TO LEARNING MCP
+        # ROUTED TO LEARNING Agent Plugin Integration
         response = learning_ops.guardian_wakeup(mode=args.mode)
         
         print(f"   Status: {response.status}")
@@ -4328,7 +4328,7 @@ def main():
             print(f"⚠️  Bootstrap manifest not found at {args.manifest}. Using defaults.")
         
         # Generate snapshot using the manifest
-        # ROUTED TO LEARNING MCP
+        # ROUTED TO LEARNING Agent Plugin Integration
         res = learning_ops.capture_snapshot(
             manifest_files=manifest,
             snapshot_type="seal",
@@ -4385,7 +4385,7 @@ def main():
             uncertainty=args.uncertainty,
             is_full_sync=args.full_sync
         )
-        # ROUTED TO LEARNING MCP
+        # ROUTED TO LEARNING Agent Plugin Integration
         res = learning_ops.persist_soul(request)
         
         if res.status == "success":
@@ -4400,7 +4400,7 @@ def main():
 
     elif args.command == "persist-soul-full":
         print(f"🧬 Regenerating full Soul JSONL and deploying to HuggingFace...")
-        # ROUTED TO LEARNING MCP
+        # ROUTED TO LEARNING Agent Plugin Integration
         res = learning_ops.persist_soul_full()
         
         if res.status == "success":
@@ -5044,14 +5044,14 @@ zipp==3.23.0
 ```text
 # CORE RUNTIME DEPENDENCIES
 # Shared by >80% of fleet services.
-# These libraries define the minimum runtime environment for any Sanctuary MCP server.
+# These libraries define the minimum runtime environment for any Sanctuary Agent Plugin Integration server.
 
 fastapi
 uvicorn
 sse-starlette
 httpx
 pydantic
-fastmcp  # MCP SDK – assumed baseline for all Sanctuary services
+fastmcp  # Agent Plugin Integration SDK – assumed baseline for all Sanctuary services
 tiktoken
 
 # SECURITY BASELINES (GH Alerts Jan 2026)
@@ -5170,8 +5170,8 @@ config:
   layout: dagre
 ---
 
-%% Name: MCP Dual Transport (SSE + STDIO)
-%% Description: Architecture showing both SSE and STDIO transport modes for MCP servers
+%% Name: Agent Plugin Integration Dual Transport (SSE + STDIO)
+%% Description: Architecture showing both SSE and STDIO transport modes for Agent Plugin Integration servers
 %% Location: docs/architecture_diagrams/transport/mcp_sse_stdio_transport.mmd
 
 flowchart TB
@@ -5179,7 +5179,7 @@ flowchart TB
         direction TB
         Claude["Claude Desktop<br/>(Bridged Session)"]
         VSCode["VS Code Agent<br/>(Direct Attempt)"]
-        Bridge@{ label: "MCP Gateway Bridge<br/>'bridge.py'" }
+        Bridge@{ label: "Agent Plugin Integration Gateway Bridge<br/>'bridge.py'" }
         
         subgraph subGraphTest["Testing Suite"]
             E2E_Test{{E2E Tests}}
@@ -5198,7 +5198,7 @@ flowchart TB
         Models@{ label: "Data Models<br/>'models.py'" }
   end
 
- subgraph subGraph3["MCP Cluster Container"]
+ subgraph subGraph3["Agent Plugin Integration Cluster Container"]
     direction TB
         subGraph1
         subGraph2
@@ -5241,11 +5241,11 @@ flowchart TB
 
 ## File: docs/architecture_diagrams/system/sanctuary_mcp_overview.mmd
 **Path:** `docs/architecture_diagrams/system/sanctuary_mcp_overview.mmd`
-**Note:** MCP overview
+**Note:** Agent Plugin Integration overview
 
 ```mermaid
-%% Name: Sanctuary MCP Overview
-%% Description: High-level view of Project Sanctuary's MCP ecosystem: Cognitive, Content, and System layers
+%% Name: Sanctuary Agent Plugin Integration Overview
+%% Description: High-level view of Project Sanctuary's Agent Plugin Integration ecosystem: Cognitive, Content, and System layers
 %% Location: docs/architecture_diagrams/system/sanctuary_mcp_overview.mmd
 
 graph TB
@@ -5254,23 +5254,23 @@ graph TB
     end
 
     subgraph "Cognitive Layer"
-        Council["Council MCP<br/>(Orchestrator)"]
-        Cortex["Cortex MCP<br/>(Memory/RAG)"]
-        Persona["Agent Persona MCP<br/>(Roles)"]
-        Forge["Forge MCP<br/>(Model Fine-Tuning)"]
+        Council["Council Agent Plugin Integration<br/>(Orchestrator)"]
+        Cortex["Cortex Agent Plugin Integration<br/>(Memory/RAG)"]
+        Persona["Agent Persona Agent Plugin Integration<br/>(Roles)"]
+        Forge["Forge Agent Plugin Integration<br/>(Model Fine-Tuning)"]
     end
 
     subgraph "Content Layer"
-        Chronicle["Chronicle MCP<br/>(Journal)"]
-        Protocol["Protocol MCP<br/>(Rules)"]
-        ADR["ADR MCP<br/>(Decisions)"]
-        Task["Task MCP<br/>(Work)"]
+        Chronicle["Chronicle Agent Plugin Integration<br/>(Journal)"]
+        Protocol["Protocol Agent Plugin Integration<br/>(Rules)"]
+        ADR["ADR Agent Plugin Integration<br/>(Decisions)"]
+        Task["Task Agent Plugin Integration<br/>(Work)"]
     end
 
     subgraph "System Layer"
-        Code["Code MCP<br/>(File I/O)"]
-        Config["Config MCP<br/>(Settings)"]
-        Git["Git MCP<br/>(Version Control)"]
+        Code["Code Agent Plugin Integration<br/>(File I/O)"]
+        Config["Config Agent Plugin Integration<br/>(Settings)"]
+        Git["Git Agent Plugin Integration<br/>(Version Control)"]
     end
 
     Client --> Council

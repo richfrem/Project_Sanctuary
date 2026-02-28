@@ -1,4 +1,4 @@
-# MCP Gateway Reference
+# Agent Plugin Integration Gateway Reference
 
 **Status:** Pending Implementation  
 **Purpose:** Technical reference documentation
@@ -7,15 +7,15 @@
 
 ## Overview
 
-This section contains detailed technical reference material for the MCP Gateway.
+This section contains detailed technical reference material for the Agent Plugin Integration Gateway.
 
 ---
 
 ## Planned Reference Documentation
 
 ### API Reference
-- **[Gateway Client Library](../../../../../../mcp_servers/gateway/gateway_client.py)**: Canonical implementation and usage examples for all Gateway endpoints (`/gateways`, `/protocol/initialize`, `/tools`, `/rpc`).
-- Gateway MCP API
+- **[[gateway_client.py|Gateway Client Library]]**: Canonical implementation and usage examples for all Gateway endpoints (`/gateways`, `/protocol/initialize`, `/tools`, `/rpc`).
+- Gateway Agent Plugin Integration API
 - Registry API
 - Health check API
 - Admin API
@@ -33,7 +33,7 @@ This section contains detailed technical reference material for the MCP Gateway.
 - Error codes
 
 ### Protocol Specifications
-- MCP protocol compliance
+- Agent Plugin Integration protocol compliance
 - JSON-RPC 2.0 implementation
 - Transport protocols (stdio, HTTP)
 - Message formats

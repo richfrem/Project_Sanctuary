@@ -13,7 +13,7 @@ This file documents all environment variables used across the Project Sanctuary 
 
 ## Runtime Environments
 For details on the **Dual Environment Strategy** (`.venv` vs `ml_env`), see:
-👉 [**`docs/operations/processes/RUNTIME_ENVIRONMENTS.md`**](./RUNTIME_ENVIRONMENTS.md)
+👉 [[RUNTIME_ENVIRONMENTS|**`docs/operations/processes/RUNTIME_ENVIRONMENTS.md`**]]
 
 ## Environment Variables Reference
 

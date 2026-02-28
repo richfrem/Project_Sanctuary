@@ -2,7 +2,7 @@
 
 ## Objective
 Support two distinct deployment modes without conflict:
-1.  **Legacy/Direct Mode:** Standard MCP servers running locally (scripts).
+1.  **Legacy/Direct Mode:** Standard Agent Plugin Integration servers running locally (scripts).
 2.  **Gateway Mode:** Containerized "Fleet of 8" routed via Sanctuary Gateway.
 
 ## Definitive Port Source of Truth (Canonical)

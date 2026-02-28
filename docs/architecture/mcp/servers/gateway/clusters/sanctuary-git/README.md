@@ -25,5 +25,5 @@ The `sanctuary_git` cluster handles all version control operations. It resolves 
 | **Finish** | `sanctuary_git-git-finish-feature` | `git_finish_feature` | |
 
 ## Documentation Reference
-- **ADR 037**: MCP Git Migration Strategy.
+- **ADR 037**: Agent Plugin Integration Git Migration Strategy.
 - **Protocol 101**: Doctrine of the Unbreakable Commit.

@@ -1,21 +1,21 @@
 # Mnemonic Cortex Operations Guide
 
-**Version:** 2.0 (MCP Era)
-**Scope:** Execution instructions for all operations within the Mnemonic Cortex system (now Cortex MCP).
+**Version:** 2.0 (Agent Plugin Integration Era)
+**Scope:** Execution instructions for all operations within the Mnemonic Cortex system (now Cortex Agent Plugin Integration).
 
 ## 1. Architecture Overview
 
-The Mnemonic Cortex has migrated from a standalone script-based system to a fully integrated **Model Context Protocol (MCP)** server.
+The Mnemonic Cortex has migrated from a standalone script-based system to a fully integrated **Agent Plugin Integration (Agent Plugin Integration)** server.
 
 - **Server Location:** `mcp_servers/rag_cortex/`
 - **Data Store:** `.vector_data/` (ChromaDB via Podman container)
-- **Interface:** MCP Tools (via Claude Desktop, Antigravity, or Council)
+- **Interface:** Agent Plugin Integration Tools (via Claude Desktop, Antigravity, or Council)
 
-## 2. Operational Mapping (Scripts → MCP Tools)
+## 2. Operational Mapping (Scripts → Agent Plugin Integration Tools)
 
-All legacy scripts have been incorporated into the Cortex MCP. Use the corresponding MCP tools instead.
+All legacy scripts have been incorporated into the Cortex Agent Plugin Integration. Use the corresponding Agent Plugin Integration tools instead.
 
-| Legacy Script | New MCP Tool | Description |
+| Legacy Script | New Agent Plugin Integration Tool | Description |
 |---------------|--------------|-------------|
 | `ingest.py` | `cortex_ingest_full` | Full database rebuild |
 | `ingest_incremental.py` | `cortex_ingest_incremental` | Add new files |
@@ -23,8 +23,8 @@ All legacy scripts have been incorporated into the Cortex MCP. Use the correspon
 | `inspect_db.py` | `cortex_get_stats` | Database health & stats |
 | `cache_warmup.py` | `cortex_cache_warmup` | Pre-populate cache |
 | `agentic_query.py` | `cortex_query` | Semantic search |
-| `create_chronicle_index.py` | N/A (Handled by Chronicle MCP) | Redundant |
-| `train_lora.py` | N/A (Handled by Forge MCP) | See Forge MCP |
+| `create_chronicle_index.py` | N/A (Handled by Chronicle Agent Plugin Integration) | Redundant |
+| `train_lora.py` | N/A (Handled by Forge Agent Plugin Integration) | See Forge Agent Plugin Integration |
 
 ## 3. Core Operations
 
@@ -55,7 +55,7 @@ All legacy scripts have been incorporated into the Cortex MCP. Use the correspon
 **Tool:** `cortex_cache_get` / `cortex_cache_set`
 **Usage:**
 > "Get cached answer for 'What is Protocol 101?'"
-> "Cache the answer for the query 'MCP architecture'."
+> "Cache the answer for the query 'Agent Plugin Integration architecture'."
 
 **Tool:** `cortex_cache_stats`
 **Usage:**
@@ -72,7 +72,7 @@ The test suite is located in `tests/mcp_servers/rag_cortex/`.
 
 ### Running Tests
 ```bash
-# Run all Cortex MCP tests
+# Run all Cortex Agent Plugin Integration tests
 pytest tests/mcp_servers/rag_cortex/ -v
 ```
 
@@ -84,7 +84,7 @@ python3 mcp_servers/rag_cortex/run_cortex_integration.py
 
 ## 5. Troubleshooting
 
-- **Database Locks:** If ChromaDB is locked, ensure the MCP server process is not stuck.
+- **Database Locks:** If ChromaDB is locked, ensure the Agent Plugin Integration server process is not stuck.
 - **Import Errors:** Ensure `PYTHONPATH` includes the project root.
 - **Empty Results:** Check `cortex_get_stats` to ensure documents are indexed.
 

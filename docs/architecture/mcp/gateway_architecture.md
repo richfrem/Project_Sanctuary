@@ -1,4 +1,4 @@
-# MCP Gateway Fleet Architecture
+# Agent Plugin Integration Gateway Fleet Architecture
 
 **Version:** 1.0  
 **Status:** Production  
@@ -9,11 +9,11 @@
 
 ## Overview
 
-The Sanctuary MCP Gateway provides a **federated access layer** to 86 tools across 6 containerized clusters. This architecture enables any MCP-compatible client to access the complete tool ecosystem through a single Gateway endpoint.
+The Sanctuary Agent Plugin Integration Gateway provides a **federated access layer** to 86 tools across 6 containerized clusters. This architecture enables any Agent Plugin Integration-compatible client to access the complete tool ecosystem through a single Gateway endpoint.
 
-![gateway_production_flow](../../architecture_diagrams/transport/gateway_production_flow.png)
+![[gateway_production_flow.png|gateway_production_flow]]
 
-*[Source: gateway_production_flow.mmd](../../architecture_diagrams/transport/gateway_production_flow.mmd)*
+*[[gateway_production_flow.mmd|Source: gateway_production_flow.mmd]]*
 
 ---
 
@@ -49,9 +49,9 @@ Each Gateway cluster implements **two transport modes**:
 
 > **Important:** FastMCP's SSE is NOT compatible with the IBM ContextForge Gateway. Fleet containers MUST use SSEServer (`mcp_servers/lib/sse_adaptor.py`).
 
-![mcp_sse_stdio_transport](../../architecture_diagrams/transport/mcp_sse_stdio_transport.png)
+![[mcp_sse_stdio_transport.png|mcp_sse_stdio_transport]]
 
-*[Source: mcp_sse_stdio_transport.mmd](../../architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
+*[[mcp_sse_stdio_transport.mmd|Source: mcp_sse_stdio_transport.mmd]]*
 
 ---
 
@@ -111,9 +111,9 @@ if __name__ == "__main__":
 
 ## Testing Architecture
 
-![mcp_testing_dev_paths](../../architecture_diagrams/transport/mcp_testing_dev_paths.png)
+![[mcp_testing_dev_paths.png|mcp_testing_dev_paths]]
 
-*[Source: mcp_testing_dev_paths.mmd](../../architecture_diagrams/transport/mcp_testing_dev_paths.mmd)*
+*[[mcp_testing_dev_paths.mmd|Source: mcp_testing_dev_paths.mmd]]*
 
 ### Test Tiers
 
@@ -153,11 +153,11 @@ podman ps                 # Check status
 
 | Document | Purpose |
 |----------|---------|
-| [GATEWAY_VERIFICATION_MATRIX.md](servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md) | Complete 86-tool verification status |
-| [README.md](servers/gateway/operations/README.md) | Operations inventory |
-| [ADR-060](../../../ADRs/060_gateway_integration_patterns.md) | Hybrid Fleet strategy |
-| [ADR-066](../../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) | Dual-transport standards |
-| [ADR-076](../../../ADRs/076_sse_tool_metadata_decorator_pattern.md) | @sse_tool pattern |
+| [[GATEWAY_VERIFICATION_MATRIX|GATEWAY_VERIFICATION_MATRIX.md]] | Complete 86-tool verification status |
+| [[README|README.md]] | Operations inventory |
+| [[060_gateway_integration_patterns|ADR-060]] | Hybrid Fleet strategy |
+| [[066_standardize_on_fastmcp_for_all_mcp_server_implementations|ADR-066]] | Dual-transport standards |
+| [[076_sse_tool_metadata_decorator_pattern|ADR-076]] | @sse_tool pattern |
 
 ---
 
@@ -170,8 +170,8 @@ All architecture diagrams are stored in `docs/architecture/mcp_servers/architect
 | `architecture/` | Fleet of 8, domain architecture, system overview |
 | `transport/` | STDIO/SSE paths, dual-transport architecture |
 | `workflows/` | P128, RAG, Phoenix Forge pipelines |
-| `class/` | MCP server class diagrams |
+| `class/` | Agent Plugin Integration server class diagrams |
 
 ---
 
-*For complete tool listings, see [GATEWAY_VERIFICATION_MATRIX.md](servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md)*
+*For complete tool listings, see [[GATEWAY_VERIFICATION_MATRIX|GATEWAY_VERIFICATION_MATRIX.md]]*

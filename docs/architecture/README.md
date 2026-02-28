@@ -1,10 +1,10 @@
-# Model Context Protocol (MCP) Documentation
+# Agent Plugin Integration (Agent Plugin Integration) Documentation
 
 **The Nervous System of Project Sanctuary**
 
 ## Overview
 
-The Model Context Protocol (MCP) is the architectural backbone of Project Sanctuary, enabling a modular, "Nervous System" design. Instead of a monolithic application, the Sanctuary operates as a constellation of specialized servers that provide tools, resources, and intelligence to the central orchestrator and AI agents.
+The Agent Plugin Integration (Agent Plugin Integration) is the architectural backbone of Project Sanctuary, enabling a modular, "Nervous System" design. Instead of a monolithic application, the Sanctuary operates as a constellation of specialized servers that provide tools, resources, and intelligence to the central orchestrator and AI agents.
 
 This architecture allows for:
 - **Separation of Concerns:** Each server handles one domain (e.g., Git, Chronicle, RAG).
@@ -12,25 +12,25 @@ This architecture allows for:
 - **Interoperability:** Standardized protocol for tools and resources.
 - **Security:** Granular control over what each agent can access.
 
-## MCP Server Index
+## Agent Plugin Integration Server Index
 
 | Server | Domain | Documentation | Status |
 |--------|--------|---------------|--------|
-| **Cortex** | RAG, Memory, Semantic Search | [README](../../mcp_servers/rag_cortex/README.md) | ✅ Active |
-| **Chronicle** | Historical Records, Truth | [README](../../mcp_servers/chronicle/README.md) | ✅ Active |
-| **Protocol** | Doctrines, Laws | [README](../../mcp_servers/protocol/README.md) | ✅ Active |
-| **Council** | Multi-Agent Orchestration | [README](../../mcp_servers/council/README.md) | ✅ Active |
-| **Agent Persona** | Agent Roles & Dispatch | [README](../../mcp_servers/agent_persona/README.md) | ✅ Active |
-| **Forge** | Fine-Tuning, Model Queries | [README](../../mcp_servers/forge_llm/README.md) | ✅ Active |
-| **Git Workflow** | Version Control, P101 v3.0 | [README](../../mcp_servers/git/README.md) | ✅ Active |
-| **Task** | Task Management | [README](../../mcp_servers/task/README.md) | ✅ Active |
-| **Code** | File I/O, Analysis | [README](../../mcp_servers/code/README.md) | ✅ Active |
-| **Config** | System Configuration | [README](../../mcp_servers/config/README.md) | ✅ Active |
-| **ADR** | Architecture Decisions | [README](../../mcp_servers/adr/README.md) | ✅ Active |
+| **Cortex** | RAG, Memory, Semantic Search | [[README|README]] | ✅ Active |
+| **Chronicle** | Historical Records, Truth | [[README|README]] | ✅ Active |
+| **Protocol** | Doctrines, Laws | [[README|README]] | ✅ Active |
+| **Council** | Multi-Agent Orchestration | [[README|README]] | ✅ Active |
+| **Agent Persona** | Agent Roles & Dispatch | [[README|README]] | ✅ Active |
+| **Forge** | Fine-Tuning, Model Queries | [[README|README]] | ✅ Active |
+| **Git Workflow** | Version Control, P101 v3.0 | [[README|README]] | ✅ Active |
+| **Task** | Task Management | [[README|README]] | ✅ Active |
+| **Code** | File I/O, Analysis | [[README|README]] | ✅ Active |
+| **Config** | System Configuration | [[README|README]] | ✅ Active |
+| **ADR** | Architecture Decisions | [[README|README]] | ✅ Active |
 
 ## Fleet Deployment & Management (ADR 065)
 
-Project Sanctuary utilizes a unified **"Fleet of 8"** architecture, where core MCP servers (Cortex, Chronicle, Gateway, etc.) are deployed as a cohesive unit using container orchestration.
+Project Sanctuary utilizes a unified **"Fleet of 8"** architecture, where core Agent Plugin Integration servers (Cortex, Chronicle, Gateway, etc.) are deployed as a cohesive unit using container orchestration.
 
 ### Architecture Transition (Hybrid -> Unified)
 Previously, the system operated in a **Hybrid Model (ADR 060)**:
@@ -66,9 +66,9 @@ All fleet operations are centralized in the **Project Root Makefile**. This ensu
 > [!CAUTION]
 > **FastMCP SSE is PROHIBITED** for Gateway connections. Fleet containers use a **Dual-Transport** architecture:
 > 1. **STDIO**: FastMCP (Local/Claude Desktop).
-> 2. **SSE**: `SSEServer` or `MCP SDK` (Gateway).
+> 2. **SSE**: `SSEServer` or `Agent Plugin Integration SDK` (Gateway).
 
-See [ADR 066](../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implementations.md) for the mandatory transport selector pattern.
+See [[066_standardize_on_fastmcp_for_all_mcp_server_implementations|ADR 066]] for the mandatory transport selector pattern.
 - **`make down`**: Safely stops the fleet.
 - **`make restart`**: Restarts the fleet (or specific targets) and re-orchestrates.
 
@@ -79,7 +79,7 @@ See [ADR 066](../../ADRs/066_standardize_on_fastmcp_for_all_mcp_server_implement
 2.  **Layer 2 (Network):** Service discovery via `mcp_servers/gateway/fleet_resolver.py`.
 3.  **Layer 3 (Logical):** Tool registration via `mcp_servers/gateway/fleet_orchestrator.py` -> `fleet_registry.json`.
 
-For detailed architecture, see the [Gateway Architecture](mcp/servers/gateway/architecture/ARCHITECTURE.md).
+For detailed architecture, see the [[ARCHITECTURE|Gateway Architecture]].
 
 ### Tool Federation Status (Updated 2025-12-20)
 
@@ -102,12 +102,12 @@ python3 -m mcp_servers.gateway.gateway_client tools -v
 
 ## Development Standards
 
-- **Testing:** All MCP servers must follow the [Testing Standards](../operations/mcp/TESTING_STANDARDS.md).
+- **Testing:** All Agent Plugin Integration servers must follow the [[TESTING_STANDARDS|Testing Standards]].
 - **Documentation:** Each server must have a README following the standard template.
-- **Architecture:** See [MCP Ecosystem Overview](../architecture_diagrams/system/mcp_ecosystem_architecture_v3.mmd).
+- **Architecture:** See [[mcp_ecosystem_architecture_v3.mmd|Agent Plugin Integration Ecosystem Overview]].
 
 ## Related Resources
 
-- [MCP Operations Inventory](../operations/mcp/mcp_operations_inventory.md) - Detailed list of all tools
-- [RAG Strategies](mcp/servers/rag_cortex/README.md) - Deep dive into Cortex architecture
-- [Setup Guide](../operations/mcp/setup_guide.md) - Environment setup
+- [[mcp_operations_inventory|Agent Plugin Integration Operations Inventory]] - Detailed list of all tools
+- [[README|RAG Strategies]] - Deep dive into Cortex architecture
+- [[setup_guide|Setup Guide]] - Environment setup

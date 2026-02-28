@@ -74,8 +74,8 @@ records = processor.to_soul_jsonl()
 
 ## Related Documents
 
-- [ADR 082: Harmonized Content Processing](../../ADRs/082_harmonized_content_processing.md)
-- [ADR 083: Manifest-Centric Architecture](../../ADRs/083_manifest_centric_architecture.md)
-- [ADR 089: Modular Manifest Pattern](../../ADRs/089_modular_manifest_pattern.md)
-- [Protocol 130: Manifest Deduplication](../../01_PROTOCOLS/130_Manifest_Deduplication_Protocol.md)
-- [Manifest Architecture Guide](MANIFEST_ARCHITECTURE_GUIDE.md)
+- [[082_harmonized_content_processing|ADR 082: Harmonized Content Processing]]
+- [[083_manifest_centric_architecture|ADR 083: Manifest-Centric Architecture]]
+- [[089_modular_manifest_pattern|ADR 089: Modular Manifest Pattern]]
+- [[130_Manifest_Deduplication_Protocol|Protocol 130: Manifest Deduplication]]
+- [[MANIFEST_ARCHITECTURE_GUIDE|Manifest Architecture Guide]]

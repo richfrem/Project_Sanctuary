@@ -58,5 +58,5 @@ All failsafe activations are logged with:
 
 ## Related Documents
 
-- [P99: The Failsafe Conduit Protocol](../../../01_PROTOCOLS/99_The_Failsafe_Conduit_Protocol.md)
-- [P96: Sovereign Succession](../../../01_PROTOCOLS/96_The_Sovereign_Succession_Protocol.md)
+- [[99_The_Failsafe_Conduit_Protocol|P99: The Failsafe Conduit Protocol]]
+- [[96_The_Sovereign_Succession_Protocol|P96: Sovereign Succession]]

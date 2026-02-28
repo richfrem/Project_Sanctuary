@@ -278,12 +278,12 @@ npx js-yaml .github/workflows/ci.yml
 
 ## Related Documentation
 
-- [CI/CD Pipeline Documentation](./overview.md)
-- [Git Workflow Guide](./git_workflow.md)
-- [How to Commit Guide](./how_to_commit.md)
-- [Project Sanctuary Integration Guide](./PROJECT_SANCTUARY_INTEGRATION.md)
-- [Protocol 101: The Unbreakable Commit](../../../ADRs/019_protocol_101_unbreakable_commit.md)
-- [Council Orchestrator GitOps](../../../ARCHIVE/howto-commit-command.md)
+- [[overview|CI/CD Pipeline Documentation]]
+- [[git_workflow|Git Workflow Guide]]
+- [[how_to_commit|How to Commit Guide]]
+- [[PROJECT_SANCTUARY_INTEGRATION|Project Sanctuary Integration Guide]]
+- [[019_protocol_101_unbreakable_commit|Protocol 101: The Unbreakable Commit]]
+- [[howto-commit-command|Council Orchestrator GitOps]]
 
 ## External Resources
 

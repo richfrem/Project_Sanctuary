@@ -18,7 +18,7 @@ We have classified workflows into three distinct tracks, all governed by the Rou
     *   *Use Case*: "Fix typo" -> Direct execution or simple ticket.
 
 **Visual Architecture:**
-*   [Hybrid Spec-Driven Workflow (Includes Decision Router)](../diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd)
+*   [[hybrid-spec-workflow.mmd|Hybrid Spec-Driven Workflow (Includes Decision Router)]]
 
 ## 3. Tooling Modernization
 *   **Inventory Manager**: Updated `workflow_inventory_manager.py` to support `track` metadata.

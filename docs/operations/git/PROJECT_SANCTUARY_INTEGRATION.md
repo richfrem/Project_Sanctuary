@@ -268,7 +268,7 @@ updates:
 | **Dependency Scanning** | npm audit | safety, pip-audit | ✅ Adapt |
 | **SAST** | CodeQL (JS/TS) | CodeQL (Python), Bandit | ✅ Adapt |
 | **Secret Detection** | Pre-commit hook | Pre-commit hook + Protocol 101 v3.0 | ✅ Enhance |
-| **Container Scanning** | N/A | Trivy (for MCP RAG service) | ✅ Add |
+| **Container Scanning** | N/A | Trivy (for Agent Plugin Integration RAG service) | ✅ Add |
 | **Functional Integrity** | N/A | Protocol 101 v3.0 Test Suite | ✅ Unique |
 
 ### 6. Implementation Checklist
@@ -281,7 +281,7 @@ updates:
 - [ ] Adapt `docs/operations/git/how_to_commit.md` for Council Orchestrator
 - [ ] Create `docs/operations/git/protocol_101_v3_integration.md`
 - [ ] Update `.agent/git_safety_rules.md` with security scanning references
-- [ ] Add security scanning to Task #025 MCP RAG service
+- [ ] Add security scanning to Task #025 Agent Plugin Integration RAG service
 - [ ] Document emergency procedures for security incidents
 
 ## Recommended Security Tools for Python
@@ -336,14 +336,14 @@ trivy fs . --security-checks vuln,config,secret
 1. **Immediate**: Enhance pre-commit hook with test suite execution and secret detection
 2. **Short-term**: Update CI/CD workflows for Python security tools and functional coherence
 3. **Medium-term**: Adapt all `docs/operations/git/` documentation for Project Sanctuary
-4. **Long-term**: Integrate security scanning into MCP RAG Tool Server deployment
+4. **Long-term**: Integrate security scanning into Agent Plugin Integration RAG Tool Server deployment
 
 ## References
 
-- [Protocol 101 v3.0: The Doctrine of Absolute Stability](../../../01_PROTOCOLS/101_The_Doctrine_of_the_Unbreakable_Commit.md)
-- [Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization](../../../01_PROTOCOLS/102_The_Doctrine_of_Mnemonic_Synchronization.md)
-- [ADR-019: Protocol 101 - Cognitive Genome Publishing Architecture (Reforged)](../../../ADRs/019_protocol_101_unbreakable_commit.md)
-- [Council Orchestrator GitOps Documentation](../../../ARCHIVE/howto-commit-command.md)
+- [[101_The_Doctrine_of_the_Unbreakable_Commit|Protocol 101 v3.0: The Doctrine of Absolute Stability]]
+- [[102_The_Doctrine_of_Mnemonic_Synchronization|Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization]]
+- [[019_protocol_101_unbreakable_commit|ADR-019: Protocol 101 - Cognitive Genome Publishing Architecture (Reforged)]]
+- [[howto-commit-command|Council Orchestrator GitOps Documentation]]
 - [Safety Documentation](https://pyup.io/safety/)
 - [Bandit Documentation](https://bandit.readthedocs.io/)
 - [GitHub Advanced Security](https://docs.github.com/en/code-security)

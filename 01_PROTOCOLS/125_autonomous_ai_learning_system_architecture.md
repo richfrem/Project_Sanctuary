@@ -20,7 +20,7 @@ An earlier version mistakenly referenced "Protocol 056" (The Doctrine of Convers
 **Version History:**
 - **v1.0:** Initial architecture
 - **v1.1:** Knowledge lifecycle management, conflict resolution, semantic validation
-- **v1.2:** Gardener Protocol, Knowledge Graph linking, Escalation flags, corrected lineage, Chronicle references, MCP operations reference, snapshot utility
+- **v1.2:** Gardener Protocol, Knowledge Graph linking, Escalation flags, corrected lineage, Chronicle references, Agent Plugin Integration operations reference, snapshot utility
 
 ---
 
@@ -77,11 +77,11 @@ Every research session MUST complete all 5 steps. Partial completion = failure.
 - Two+ topics → moves to shared
 - Templates, tools, references → always shared
 
-### Rule 5: MCP Integration (Mandatory)
-- Code MCP → Write artifacts
-- RAG Cortex MCP → Ingest and query
-- Chronicle MCP → Audit trail
-- Protocol MCP → Formalize discoveries
+### Rule 5: Agent Plugin Integration Integration (Mandatory)
+- Code Agent Plugin Integration → Write artifacts
+- RAG Cortex Agent Plugin Integration → Ingest and query
+- Chronicle Agent Plugin Integration → Audit trail
+- Protocol Agent Plugin Integration → Formalize discoveries
 
 ### Rule 6: Knowledge Lifecycle
 - All notes MUST include YAML frontmatter with status tracking
@@ -126,7 +126,7 @@ LEARNING/
 
 ### Phase 2: Synthesis (Enhanced)
 **Objective:** Merge ephemeral session data into persistent topic truth.
-**Tools:** `code_write` (Code MCP)
+**Tools:** `code_write` (Code Agent Plugin Integration)
 
 1. **Conflict Check:** Before writing new topic notes, read existing topic notes.
    - Does the new finding confirm the old? → Add citation/strength
@@ -154,7 +154,7 @@ LEARNING/
 **Output:** `/topics/<topic>/notes/<subtopic>.md` with proper frontmatter
 
 ### Phase 3: Ingestion
-**Tools:** `cortex_ingest_incremental` (RAG Cortex MCP)
+**Tools:** `cortex_ingest_incremental` (RAG Cortex Agent Plugin Integration)
 
 1. Ingest markdown into vector database
 2. Wait 2-3 seconds for indexing
@@ -162,7 +162,7 @@ LEARNING/
 
 ### Phase 4: Validation (Enhanced)
 **Objective:** Ensure semantic accuracy, not just retrieval success.
-**Tools:** `cortex_query` (RAG Cortex MCP), internal LLM verification
+**Tools:** `cortex_query` (RAG Cortex Agent Plugin Integration), internal LLM verification
 
 1. **Retrieval Test:** Query for the key concept. (Pass if results found)
 
@@ -177,7 +177,7 @@ LEARNING/
 - Semantic round-trip accuracy >90%
 
 ### Phase 5: Chronicle
-**Tools:** `chronicle_create_entry` (Chronicle MCP)
+**Tools:** `chronicle_create_entry` (Chronicle Agent Plugin Integration)
 
 1. Log research milestone
 2. Include: topic, key findings, sources, any deprecations
@@ -203,17 +203,17 @@ LEARNING/
    - **Invalid:** Trigger **Phase 2 (Synthesis)** to refactor or deprecate.
    - **Missing:** If a linked `related_id` is missing, remove the link.
 
-**Tools:** `search_web`, `code_write` (Code MCP)
+**Tools:** `search_web`, `code_write` (Code Agent Plugin Integration)
 
 **Output:** Maintained knowledge base with <5% staleness
 
 ---
 
-## MCP Operations Reference (v1.2)
+## Agent Plugin Integration Operations Reference (v1.2)
 
-This section details the specific MCP server operations required to implement the autonomous learning loop.
+This section details the specific Agent Plugin Integration server operations required to implement the autonomous learning loop.
 
-### Code MCP Operations
+### Code Agent Plugin Integration Operations
 
 **Purpose:** File I/O for all learning artifacts
 
@@ -234,7 +234,7 @@ code_write(
 )
 ```
 
-### RAG Cortex MCP Operations
+### RAG Cortex Agent Plugin Integration Operations
 
 **Purpose:** Knowledge ingestion and semantic retrieval
 
@@ -264,7 +264,7 @@ cortex_query(
 )
 ```
 
-### Chronicle MCP Operations
+### Chronicle Agent Plugin Integration Operations
 
 **Purpose:** Immutable audit trail of learning milestones
 
@@ -297,7 +297,7 @@ chronicle_create_entry(
 )
 ```
 
-### Protocol MCP Operations
+### Protocol Agent Plugin Integration Operations
 
 **Purpose:** Formalize important discoveries as protocols
 
@@ -330,7 +330,7 @@ protocol_create(
 results = search_web("ChromaDB architecture best practices")
 content = read_url_content(results[0]['url'])
 
-# 2. Synthesis (Code MCP)
+# 2. Synthesis (Code Agent Plugin Integration)
 existing_notes = code_read("LEARNING/topics/vector-databases/README.md")
 new_notes = synthesize_with_conflict_check(content, existing_notes)
 code_write(
@@ -338,20 +338,20 @@ code_write(
     content=new_notes
 )
 
-# 3. Ingestion (RAG Cortex MCP)
+# 3. Ingestion (RAG Cortex Agent Plugin Integration)
 cortex_ingest_incremental(
     file_paths=["LEARNING/topics/vector-databases/notes/chromadb-best-practices.md"]
 )
 time.sleep(2)  # Wait for indexing
 
-# 4. Validation (RAG Cortex MCP)
+# 4. Validation (RAG Cortex Agent Plugin Integration)
 query_result = cortex_query(
     query="ChromaDB best practices for batch operations",
     max_results=1
 )
 assert "batch operations" in query_result['results'][0]['content']
 
-# 5. Chronicle (Chronicle MCP)
+# 5. Chronicle (Chronicle Agent Plugin Integration)
 chronicle_create_entry(
     title="ChromaDB Best Practices Research Complete",
     content="Documented best practices for batch operations...",
@@ -544,14 +544,14 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 - **Claude 4.5 Learning Loops:** Original framework for autonomous learning
 
 ### Technical Documentation
-- `docs/operations/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - MCP architecture analysis
+- `docs/operations/learning_loops/Protocol_056_MCP_Architecture_Analysis.md` - Agent Plugin Integration architecture analysis
 - `docs/operations/learning_loops/Protocol_056_Verification_Report_2025-12-06.md` - Validation report
 
-### MCP Server Documentation
-- **Code MCP:** `docs/architecture/mcp/servers/code/README.md`
-- **RAG Cortex MCP:** `docs/architecture/mcp/servers/rag_cortex/README.md`
-- **Chronicle MCP:** `docs/architecture/mcp/servers/chronicle/README.md`
-- **Protocol MCP:** `docs/architecture/mcp/servers/protocol/README.md`
+### Agent Plugin Integration Server Documentation
+- **Code Agent Plugin Integration:** `docs/architecture/mcp/servers/code/README.md`
+- **RAG Cortex Agent Plugin Integration:** `docs/architecture/mcp/servers/rag_cortex/README.md`
+- **Chronicle Agent Plugin Integration:** `docs/architecture/mcp/servers/chronicle/README.md`
+- **Protocol Agent Plugin Integration:** `docs/architecture/mcp/servers/protocol/README.md`
 
 ### Utilities
 - **Code Snapshot Tool:** `scripts/capture_code_snapshot.py` - Share learning artifacts with web-based LLMs
@@ -562,7 +562,7 @@ The original Strategic Crucible Loop validation produced a series of Chronicle e
 
 - **v1.0** (2025-12-14): Initial architecture established
 - **v1.1** (2025-12-14): Added knowledge lifecycle management (deprecation), conflict resolution protocol, and enhanced semantic validation (Gemini 3 Pro iteration)
-- **v1.2** (2025-12-14): Added Gardener Protocol for proactive maintenance, Knowledge Graph linking to break silos, Escalation flags for unresolvable disputes, corrected lineage to Task 056, added Chronicle references, comprehensive MCP operations reference, and knowledge sharing utilities (Gemini 3 Pro iteration)
+- **v1.2** (2025-12-14): Added Gardener Protocol for proactive maintenance, Knowledge Graph linking to break silos, Escalation flags for unresolvable disputes, corrected lineage to Task 056, added Chronicle references, comprehensive Agent Plugin Integration operations reference, and knowledge sharing utilities (Gemini 3 Pro iteration)
 
 ---
 
