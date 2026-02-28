@@ -73,8 +73,8 @@ python plugins/scripts/scaffold_agentic_workflow.py \
 ```
 
 **Mode flags:**
-- `--mode ide` → generates `.github/agents/name.agent.md` + `.github/prompts/name.prompt.md`
-- `--mode cicd` → generates `.github/agents/name.agent.md` + `.github/workflows/name-agent.yml` (or `.md` + `.lock.yml` for official format)
+- `--mode ide` → generates `.github/skills/name.agent.md` + `.github/prompts/name.prompt.md`
+- `--mode cicd` → generates `.github/skills/name.agent.md` + `.github/workflows/name-agent.yml` (or `.md` + `.lock.yml` for official format)
 - `--mode both` → generates all files
 
 **Format flags** *(cicd/both only)*:

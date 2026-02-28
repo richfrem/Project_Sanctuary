@@ -14,7 +14,7 @@ You are tasked with generating a new Sub-Agent context boundary using our determ
    Ask the user for:
    - The name of the sub-agent.
    - The core purpose (to form the `description` and system prompt).
-   - Where the agent should be placed (`.claude/agents/` or within a plugin's `/agents/` folder).
+   - Where the agent should be placed (`.claude/skills/` or within a plugin's `/agents/` folder).
 
 2. **Scaffold the Sub-Agent:**
    You must execute the hidden deterministic `scaffold.py` script.

@@ -1,6 +1,6 @@
 # RLM Distillation Tasks: PROJECT
 
-Generated: 383 missing files to distill into `rlm_summary_cache.json`.
+Generated: 663 missing files to distill into `rlm_summary_cache.json`.
 
 - [ ] `00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md`
   - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
@@ -676,95 +676,655 @@ Generated: 383 missing files to distill into `rlm_summary_cache.json`.
   - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "00_CHRONICLE/The_Ground_Control_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
 - [ ] `Living_Chronicle.md`
   - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "Living_Chronicle.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/analysis/speckit_analysis.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/analysis/speckit_analysis.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/guides/antigravity-readme.txt`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/guides/antigravity-readme.txt" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/guides/speckit-debrief.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/guides/speckit-debrief.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/guides/speckit-readme.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/guides/speckit-readme.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/rules/rule_inventory_and_analysis.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/rules/rule_inventory_and_analysis.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/workflow/WORKFLOW_INVENTORY.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/workflow/WORKFLOW_INVENTORY.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/workflow/workflow_inventory_and_analysis.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/workflow/workflow_inventory_and_analysis.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/antigravity/workflow/workflow_lifecycle.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/antigravity/workflow/workflow_lifecycle.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/bundling/bundling-architecture-proposal.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/bundling/bundling-architecture-proposal.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/mcp/mcp_commit_guide.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/mcp_commit_guide.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/mcp/mcp_ecosystem_architecture_v3.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/mcp_ecosystem_architecture_v3.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/servers/gateway/operations/GATEWAY_VERIFICATION_MATRIX.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/mcp/servers/rag_cortex/SETUP.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/mcp/servers/rag_cortex/SETUP.md" --summary "YOUR_SUMMARY_HERE"`
 - [ ] `docs/architecture/patterns/REACTIVE_LEDGER_MEMORY.md`
   - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/patterns/REACTIVE_LEDGER_MEMORY.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/defense_in_depth_strategy.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/defense_in_depth_strategy.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/implementation_plan.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/implementation_plan.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/initial_ideas.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/initial_ideas.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/openclaw_interface_spec.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/openclaw_interface_spec.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/operational_policy_matrix.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/operational_policy_matrix.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/operational_workflows.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/operational_workflows.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/red_team_findings.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_findings.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_review_prompt.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_review_prompt.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_REAL_RED_TEAM_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT_V1.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/CONSOLIDATED_RED_TEAM_REPORT_V1.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/REAL_RED_TEAM_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_2_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_2_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_3_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_3_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_4_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_4_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_5_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/claude_opus_ROUND_5_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gemini3_pro_REAL_RED_TEAM_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gemini3_pro_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gemini_COMPLEXITY_AUDIT_MANUAL.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gemini_COMPLEXITY_AUDIT_MANUAL.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gpt5_REAL_RED_TEAM_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gpt5_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/gpt_ROUND_2_FINDINGS_MANUAL.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/gpt_ROUND_2_FINDINGS_MANUAL.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/grok4.1_REAL_RED_TEAM_FINDINGS.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/grok4.1_REAL_RED_TEAM_FINDINGS.md" --summary "YOUR_SUMMARY_HERE"`
-- [ ] `docs/architecture/safe_agent_zero/red_team_reviews/grok_FINAL_AUDIT_MANUAL.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/red_team_reviews/grok_FINAL_AUDIT_MANUAL.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/architecture/safe_agent_zero/threat_model.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/architecture/safe_agent_zero/threat_model.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/operations/git/PROJECT_SANCTUARY_INTEGRATION.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/git/PROJECT_SANCTUARY_INTEGRATION.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/operations/git/git_workflow.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/git/git_workflow.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/operations/git/how_to_commit.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/git/how_to_commit.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/operations/mcp/mcp_operations_inventory.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/mcp/mcp_operations_inventory.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/operations/processes/DEPENDENCY_MANIFEST.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/processes/DEPENDENCY_MANIFEST.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `docs/tools/standalone/context-bundler/architecture.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "docs/tools/standalone/context-bundler/architecture.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `forge/huggingface/README_LORA.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "forge/huggingface/README_LORA.md" --summary "YOUR_SUMMARY_HERE"`
-- [x] `hugging_face_dataset_repo/metadata/README.md`
-  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "hugging_face_dataset_repo/metadata/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/adr-manager/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/adr-manager/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/adr-manager/skills/adr-management/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/adr-manager/skills/adr-management/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/adr-manager/skills/adr-management/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/adr-manager/skills/adr-management/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/adr-manager/templates/adr-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/adr-manager/templates/adr-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/agent-organizer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/agent-organizer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/business/product-manager.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/business/product-manager.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/ai-engineer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/ai-engineer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/data-engineer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/data-engineer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/data-scientist.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/data-scientist.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/database-optimizer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/database-optimizer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/graphql-architect.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/graphql-architect.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/ml-engineer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/ml-engineer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/postgres-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/postgres-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/data-ai/prompt-engineer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/data-ai/prompt-engineer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/backend-architect.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/backend-architect.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/dx-optimizer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/dx-optimizer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/electorn-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/electorn-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/frontend-developer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/frontend-developer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/full-stack-developer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/full-stack-developer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/golang-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/golang-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/legacy-modernizer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/legacy-modernizer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/mobile-developer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/mobile-developer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/nextjs-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/nextjs-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/python-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/python-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/react-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/react-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/typescript-pro.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/typescript-pro.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/ui-designer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/ui-designer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/development/ux-designer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/development/ux-designer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/infrastructure/cloud-architect.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/infrastructure/cloud-architect.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/infrastructure/deployment-engineer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/infrastructure/deployment-engineer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/infrastructure/devops-incident-responder.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/infrastructure/devops-incident-responder.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/infrastructure/incident-responder.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/infrastructure/incident-responder.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/infrastructure/performance-engineer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/infrastructure/performance-engineer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/quality-testing/architect-review.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/quality-testing/architect-review.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/quality-testing/code-reviewer.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/quality-testing/code-reviewer.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/quality-testing/debugger.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/quality-testing/debugger.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/quality-testing/qa-expert.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/quality-testing/qa-expert.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/quality-testing/test-automator.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/quality-testing/test-automator.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/security/security-auditor.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/security/security-auditor.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/specialization/api-documenter.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/specialization/api-documenter.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/personas/specialization/documentation-expert.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/personas/specialization/documentation-expert.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/dual-loop-meta-tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/dual-loop-meta-tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/learning-loop-meta-tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/learning-loop-meta-tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/learning_audit_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/learning_audit_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/loop_retrospective_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/loop_retrospective_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/red_team_briefing_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/red_team_briefing_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/scratchpad-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/scratchpad-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/sources_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/sources_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/strategy-packet-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/strategy-packet-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/resources/templates/workflow-retrospective-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/resources/templates/workflow-retrospective-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/agent-swarm/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/agent-swarm/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/dual-loop/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/dual-loop/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/learning-loop/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/learning-loop/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/learning-loop/references/phases.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/learning-loop/references/phases.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/learning-loop/references/self-correction.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/learning-loop/references/self-correction.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/orchestrator/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/orchestrator/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/orchestrator/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/orchestrator/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/orchestrator/references/cli-agent-executor.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/orchestrator/references/cli-agent-executor.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-loops/skills/red-team-review/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-loops/skills/red-team-review/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/audit-plugin/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/audit-plugin/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/audit-plugin/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/audit-plugin/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-agentic-workflow/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-agentic-workflow/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-azure-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-azure-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-github-action/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-github-action/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-hook/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-hook/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-hook/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-hook/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-legacy-command/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-legacy-command/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-legacy-command/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-legacy-command/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-mcp-integration/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-mcp-integration/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-mcp-integration/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-mcp-integration/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-plugin/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-plugin/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-plugin/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-plugin/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-skill/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-skill/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-skill/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-skill/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-sub-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-sub-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-sub-agent/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-scaffolders/skills/create-sub-agent/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/azure-foundry-agents.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/azure-foundry-agents.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/github-agentic-workflows.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/github-agentic-workflows.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/github-prompts.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/github-prompts.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/hooks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/hooks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/index.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/index.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/marketplace.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/marketplace.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/plugins.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/plugins.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/skills.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/skills.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/sub-agents.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/sub-agents.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/workflows.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/reference/workflows.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-authoritative-sources/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-standards/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-standards/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-skill-open-specifications/skills/ecosystem-standards/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/agent-skill-open-specifications/skills/ecosystem-standards/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/chronicle-manager/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/chronicle-manager/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/chronicle-manager/commands/create.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/chronicle-manager/commands/create.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/chronicle-manager/commands/manage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/chronicle-manager/commands/manage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/chronicle-manager/skills/chronicle-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/chronicle-manager/skills/chronicle-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/claude-cli/skills/claude-cli-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/claude-cli/skills/claude-cli-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/DEPENDENCY_MANAGEMENT.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/DEPENDENCY_MANAGEMENT.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/SECRETS_CONFIGURATION.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/SECRETS_CONFIGURATION.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/UIUX_styling_guidelines_and_guidance.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/UIUX_styling_guidelines_and_guidance.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/context-spiral-protocol.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/context-spiral-protocol.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/file-namespace-and-class-naming-conventions.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/file-namespace-and-class-naming-conventions.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/header_templates.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/header_templates.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/namespace-standardization.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/namespace-standardization.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/parent-project-folder-structure-overview.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/parent-project-folder-structure-overview.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/project-folder-structure-guidance.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/project-folder-structure-guidance.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/recent-updates-and-conventions.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/recent-updates-and-conventions.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/shared-block-component-pattern.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/shared-block-component-pattern.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/coding-conventions/references/std_workflow_definition.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/coding-conventions/references/std_workflow_definition.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/conventions-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/conventions-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/coding-conventions/skills/conventions-agent/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/coding-conventions/skills/conventions-agent/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/context-bundler/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/context-bundler/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/context-bundler/skills/context-bundling/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/context-bundler/skills/context-bundling/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/context-bundler/skills/context-bundling/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/context-bundler/skills/context-bundling/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/dependency-management/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/dependency-management/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/dependency-management/skills/dependency-management/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/dependency-management/skills/dependency-management/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/dependency-management/skills/dependency-management/references/DEPENDENCY_MANAGEMENT.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/dependency-management/skills/dependency-management/references/DEPENDENCY_MANAGEMENT.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/dependency-management/skills/dependency-management/references/DEPENDENCY_MANIFEST.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/dependency-management/skills/dependency-management/references/DEPENDENCY_MANIFEST.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/dependency-management/skills/dependency-management/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/dependency-management/skills/dependency-management/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/dependency-management/skills/dependency-management/references/policy_details.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/dependency-management/skills/dependency-management/references/policy_details.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/doc-coauthoring/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/doc-coauthoring/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/doc-coauthoring/skills/doc-coauthoring/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/doc-coauthoring/skills/doc-coauthoring/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/env-helper/skills/env-helper/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/env-helper/skills/env-helper/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/excel-to-csv/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/excel-to-csv/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/excel-to-csv/skills/excel-to-csv/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/excel-to-csv/skills/excel-to-csv/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/excel-to-csv/skills/excel-to-csv/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/excel-to-csv/skills/excel-to-csv/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/huggingface-utils/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/requirements.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/huggingface-utils/requirements.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/skills/hf-init/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/huggingface-utils/skills/hf-init/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/skills/hf-upload/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/huggingface-utils/skills/hf-upload/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/json-hygiene/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/json-hygiene/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/json-hygiene/skills/json-hygiene-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/json-hygiene/skills/json-hygiene-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/link-checker/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/link-checker/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/link-checker/skills/link-checker-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/link-checker/skills/link-checker-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/link-checker/skills/link-checker-agent/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/link-checker/skills/link-checker-agent/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/markdown-to-msword-converter/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/markdown-to-msword-converter/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/markdown-to-msword-converter/requirements.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/markdown-to-msword-converter/requirements.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/markdown-to-msword-converter/skills/markdown-to-msword-converter/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/markdown-to-msword-converter/skills/markdown-to-msword-converter/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/memory-management/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/memory-management/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/memory-management/skills/memory-management/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/memory-management/skills/memory-management/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/mermaid-to-png/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/mermaid-to-png/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/mermaid-to-png/skills/convert-mermaid/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/mermaid-to-png/skills/convert-mermaid/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/mermaid-to-png/skills/convert-mermaid/reference.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/mermaid-to-png/skills/convert-mermaid/reference.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/mermaid-to-png/skills/convert-mermaid/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/mermaid-to-png/skills/convert-mermaid/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/migration-utils/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/migration-utils/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/migration-utils/skills/migration-utils/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/migration-utils/skills/migration-utils/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/requirements.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/requirements.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/resources/architecture-background.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/resources/architecture-background.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/resources/kepano-analysis-summary.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/resources/kepano-analysis-summary.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/resources/safety-learnings.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/resources/safety-learnings.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-bases-manager/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/skills/obsidian-bases-manager/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-canvas-architect/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/skills/obsidian-canvas-architect/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-graph-traversal/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/skills/obsidian-graph-traversal/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-init/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/skills/obsidian-init/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-markdown-mastery/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/skills/obsidian-markdown-mastery/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-vault-crud/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/obsidian-integration/skills/obsidian-vault-crud/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/commands/cleanup.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/commands/cleanup.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/commands/install.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/commands/install.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/commands/update.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/commands/update.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/resources/cleanup_process.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/resources/cleanup_process.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/resources/plugin_replicator_overview.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/resources/plugin_replicator_overview.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/skills/agent-bridge/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/skills/agent-bridge/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/skills/ecosystem-cleanup-sync/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/skills/ecosystem-cleanup-sync/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/skills/plugin-bootstrap/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/skills/plugin-bootstrap/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/skills/plugin-maintenance/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/skills/plugin-maintenance/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-manager/skills/plugin-replicator/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-manager/skills/plugin-replicator/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-mapper/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-mapper/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-mapper/commands/install.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-mapper/commands/install.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-mapper/commands/update.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-mapper/commands/update.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-mapper/skills/agent-bridge/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-mapper/skills/agent-bridge/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-mapper/skills/agent-bridge/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-mapper/skills/agent-bridge/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/plugin-mapper/skills/agent-bridge/references/agent_bridge_overview.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/plugin-mapper/skills/agent-bridge/references/agent_bridge_overview.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/protocol-manager/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/protocol-manager/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/protocol-manager/commands/create.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/protocol-manager/commands/create.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/protocol-manager/commands/manage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/protocol-manager/commands/manage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/protocol-manager/skills/protocol-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/protocol-manager/skills/protocol-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/agents/rlm-gap-fill.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/agents/rlm-gap-fill.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/commands/audit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/commands/audit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/commands/cleanup.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/commands/cleanup.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/commands/distill.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/commands/distill.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/commands/query.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/commands/query.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/commands/rlm-factory_gap-fill.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/commands/rlm-factory_gap-fill.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/requirements.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/requirements.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_general.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/resources/prompts/rlm/rlm_summarize_general.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/ollama-launch/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/ollama-launch/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/BLUEPRINT.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/BLUEPRINT.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/Oracle_Forms_Modernization_Master_Strategy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/Oracle_Forms_Modernization_Master_Strategy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/RLM_ARCHITECTURE.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/RLM_ARCHITECTURE.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/RLM_TOOL_STRATEGY_ANALYSIS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/RLM_TOOL_STRATEGY_ANALYSIS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/gap_analysis_rlm_v1.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/gap_analysis_rlm_v1.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/prompt.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/prompt.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/references/research-summary.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-curator/references/research-summary.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-init/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/rlm-factory/skills/rlm-init/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/agents/guardian.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/agents/guardian.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-audit.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-audit.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-chronicle.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-chronicle.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-ingest.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-ingest.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-persist.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-persist.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-protocol.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-protocol.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-scout.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-scout.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/commands/sanctuary-seal.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/commands/sanctuary-seal.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/requirements.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/requirements.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/obsidian-overview.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/obsidian-overview.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/prompts/agentic-coding-prompt.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/prompts/agentic-coding-prompt.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/prompts/enhanced-research-prompt.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/prompts/enhanced-research-prompt.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/prompts/sanctuary-guardian-prompt.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/prompts/sanctuary-guardian-prompt.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/separation_of_concerns.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/separation_of_concerns.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/dual-loop-meta-tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/dual-loop-meta-tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/learning-loop-meta-tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/learning-loop-meta-tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/learning_audit_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/learning_audit_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/loop_retrospective_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/loop_retrospective_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/red_team_briefing_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/red_team_briefing_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/scratchpad-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/scratchpad-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/sources_template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/sources_template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/strategy-packet-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/strategy-packet-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/templates/workflow-retrospective-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/templates/workflow-retrospective-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/resources/vision-external-hippocampus.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/resources/vision-external-hippocampus.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/forge-soul-exporter/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/forge-soul-exporter/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/guardian-onboarding/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/guardian-onboarding/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/sanctuary-memory/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/sanctuary-memory/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/sanctuary-obsidian-integration/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/sanctuary-obsidian-integration/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/sanctuary-soul-persistence/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/sanctuary-soul-persistence/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/sanctuary-spec-kitty/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/sanctuary-spec-kitty/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-bootloader/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-bootloader/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-bootloader/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-bootloader/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-bootloader/references/architecture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-bootloader/references/architecture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-bootloader/references/spec-initialization.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-bootloader/references/spec-initialization.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-closure/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-closure/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-closure/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-closure/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-closure/references/architecture.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-closure/references/architecture.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-closure/references/closure-phases.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/sanctuary-guardian/skills/session-closure/references/closure-phases.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-accept/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-accept/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-analyze/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-analyze/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-checklist/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-checklist/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-clarify/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-clarify/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-constitution/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-constitution/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-dashboard/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-dashboard/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-implement/AUGMENTED.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-implement/AUGMENTED.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-implement/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-implement/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-merge/AUGMENTED.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-merge/AUGMENTED.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-merge/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-merge/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-plan/AUGMENTED.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-plan/AUGMENTED.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-plan/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-plan/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-review/AUGMENTED.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-review/AUGMENTED.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-review/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-review/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-specify/AUGMENTED.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-specify/AUGMENTED.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-specify/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-specify/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/commands/spec-kitty-status/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/commands/spec-kitty-status/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/references/agent-worktree-reference.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/references/agent-worktree-reference.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/references/spec_driven_development_policy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/references/spec_driven_development_policy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/references/standard-workflow-rules.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/references/standard-workflow-rules.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/resources/templates/tasks-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/resources/templates/tasks-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/rules/AGENTS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/rules/AGENTS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/rules/constitution.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/rules/constitution.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/rules/spec_driven_development_policy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/rules/spec_driven_development_policy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-accept/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-accept/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/LLM_UNPACKAGING_INSTRUCTIONS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/LLM_UNPACKAGING_INSTRUCTIONS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/OPERATIONS.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/OPERATIONS.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/agent-worktree-reference.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/agent-worktree-reference.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/bridge_architecture_overview.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/bridge_architecture_overview.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/bridge_mapping_matrix.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/bridge_mapping_matrix.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/kittify/standard-spec-kitty-workflow.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/kittify/standard-spec-kitty-workflow.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/standard-spec-kitty-workflow.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-agent/references/standard-spec-kitty-workflow.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-analyze/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-analyze/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-checklist/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-checklist/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-clarify/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-clarify/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-constitution/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-constitution/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-dashboard/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-dashboard/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-implement/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-implement/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-merge/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-merge/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-plan/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-plan/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-review/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-review/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-specify/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-specify/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-status/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-status/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-sync-plugin/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-sync-plugin/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/skills/spec-kitty-workflow/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/skills/spec-kitty-workflow/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/checklist-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/checklist-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/implement.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/implement.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/merge.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/merge.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/plan-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/plan-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/plan.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/plan.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/review.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/review.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/spec-kitty-meta-tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/spec-kitty-meta-tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/spec-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/spec-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/specify.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/specify.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/tasks-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/tasks-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/tasks.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/tasks.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/spec-kitty-plugin/templates/workflow-retrospective-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/spec-kitty-plugin/templates/workflow-retrospective-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/task-manager/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/task-manager/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/task-manager/skills/task-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/task-manager/skills/task-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/task-manager/skills/task-agent/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/task-manager/skills/task-agent/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/task-manager/templates/task-template.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/task-manager/templates/task-template.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/TOOL_INVENTORY.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/TOOL_INVENTORY.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/resources/prompts/rlm/rlm_summarize_tool.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/resources/prompts/rlm/rlm_summarize_tool.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/skills/tool-inventory-init/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/skills/tool-inventory-init/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/skills/tool-inventory-init/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/skills/tool-inventory-init/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/skills/tool-inventory/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/skills/tool-inventory/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/skills/tool-inventory/references/tool_discovery_enforcement_policy.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/skills/tool-inventory/references/tool_discovery_enforcement_policy.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/tool-inventory/workflows/tool-inventory-manage.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/tool-inventory/workflows/tool-inventory-manage.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/commands/cleanup.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/commands/cleanup.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/commands/ingest.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/commands/ingest.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/commands/query.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/commands/query.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/requirements.txt`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/requirements.txt" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/resources/rag_design_choices.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/resources/rag_design_choices.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/resources/stabilizers/README.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/resources/stabilizers/README.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/resources/stabilizers/vector_consistency_check.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/resources/stabilizers/vector_consistency_check.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/skills/vector-db-agent/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/skills/vector-db-agent/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/skills/vector-db-agent/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/skills/vector-db-agent/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/skills/vector-db-init/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/skills/vector-db-init/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/skills/vector-db-launch/SKILL.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/skills/vector-db-launch/SKILL.md" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/vector-db/skills/vector-db-launch/references/acceptance-criteria.md`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile project --file "plugins/vector-db/skills/vector-db-launch/references/acceptance-criteria.md" --summary "YOUR_SUMMARY_HERE"`
